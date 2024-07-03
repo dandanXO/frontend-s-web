@@ -181,7 +181,6 @@ import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "../../components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
 import { useI18n } from "vue-i18n";
@@ -389,8 +388,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -441,8 +439,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;
@@ -527,8 +524,7 @@ const initPay = () => {
         !(
           (Platform.is.desktop || Platform.is.webkit) &&
           !Platform.is.capacitor &&
-          Platform.is.name !== "webkit" &&
-          !liff.isInClient()
+          Platform.is.name !== "webkit"
         )
       ) {
         let isBacked = localStorage.getItem("isBacked");

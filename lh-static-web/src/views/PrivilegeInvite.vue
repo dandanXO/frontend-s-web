@@ -209,14 +209,14 @@
             <div class="rebate-list bg-dark">≥500,000元</div>
             <div class="rebate-list bg-dark">1%</div>
             <div class="rebate-list bg-dark">1%</div>
-            <div class="rebate-list bg-dark">8888元</div>
+            <div class="rebate-list bg-dark">8,888元</div>
             <div class="rebate-list bg-dark"></div>
 
-            <div class="rebate-list">VIP10</div>
+            <div class="rebate-list">VIP10-VIP12</div>
             <div class="rebate-list">≥1,000,000元</div>
             <div class="rebate-list">1%</div>
             <div class="rebate-list">1%</div>
-            <div class="rebate-list">88888元</div>
+            <div class="rebate-list">88,888元</div>
             <div class="rebate-list"></div>
           </div>
 

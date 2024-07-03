@@ -1036,14 +1036,14 @@
                 <div v-for="(ann, idx) in announcementList" :key="idx">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
-                      style="max-height: 65vh; overflow: auto"
+                      style="max-height: 75vh; overflow: auto"
                       group="somegroup"
                       icon="volume_up"
                       :label="ann.title"
                     >
                       <q-card>
                         <q-card-section>
-                          {{ ann.content }}
+                          <div v-html="processedContent(ann.content)" />
                         </q-card-section>
                       </q-card>
                     </q-expansion-item>
@@ -2999,12 +2999,18 @@ const gotoPromo = (banner) => {
   if (urlSplit.length >= 2) {
     const type = urlSplit[0];
     if (type === "open") {
-      if (gameSplit[1][1] === "LuckySport"){
-        playGame(gameSplit[1][0], gameSplit[1][1], '#/special/uefaeuro', gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      if (gameSplit[1][1] === "LuckySport") {
+        playGame(
+          gameSplit[1][0],
+          gameSplit[1][1],
+          "#/special/uefaeuro",
+          gameSplit[1][3],
+          gameSplit[1][4],
+          gameSplit[1][5]
+        );
       } else {
         playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
       }
-
     } else if (type === "page") {
       router.push(`/${urlSplit[1]}`);
     } else {
@@ -3316,6 +3322,10 @@ const downloadHeart = ref(false);
 //     downloadHeart.value = true;
 //   }
 // };
+
+const processedContent = (content) => {
+  return content.replace(/\n/g, "<br>");
+};
 
 onActivated(() => {
   store.getUnreadTotal();

@@ -275,6 +275,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #1d1d1e;
   justify-content: center;
   position: relative;
   padding-top: 40px;

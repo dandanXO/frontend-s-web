@@ -672,7 +672,7 @@ export default defineComponent({
     gap: 6px;
 
     .nickname-span {
-      color: $dark;
+      color: $white;
       font-size: 1.15rem;
       line-height: 1.15rem;
       font-weight: 700;
@@ -990,7 +990,7 @@ export default defineComponent({
     }
 
     .acct-title-link {
-      background: linear-gradient(271.61deg, #0d8be6 22.35%, #68e4eb 100%);
+      background: linear-gradient(271.61deg, #349bff 22.35%, #3b60ff 100%);
       color: #ffffff;
       position: absolute;
       top: 0;
@@ -1020,7 +1020,7 @@ export default defineComponent({
     background-color: $white;
     border-radius: 0px 0px 20px 20px;
     padding: 24px 0px 28px;
-    box-shadow: 0px -4px 4px 0px #E6C3C3 inset;
+    box-shadow: 0px -4px 4px 0px #96b3ff inset;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);

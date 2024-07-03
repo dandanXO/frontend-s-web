@@ -340,7 +340,7 @@ const onShowRebateClick = (flag) => {
 const vipTableData = ref([
   {
     name: "VIP 0",
-    qualification: 5000,
+    qualification: 0,
     oneOff: 0,
     monthly: 0
   },

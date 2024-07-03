@@ -53,8 +53,8 @@
 
       <div class="form-item">
         <label>{{ $t('lang.reg_phone_num') }}</label>
-        <q-input dense :placeholder="$t('lang.reg_phone_placeholder')" ref="telRef" outlined v-model="regForm.telephone"
-          lazy-rules :rules="[
+        <q-input type="number" dense :placeholder="$t('lang.reg_phone_placeholder')" ref="telRef" outlined
+          v-model="regForm.telephone" lazy-rules :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
             (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
           ]" clearable>

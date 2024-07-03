@@ -88,7 +88,7 @@ const loadAnnouncement = () => {
       if (res.data.type && res.data.type.length > 0) {
         announcementActive.value = res.data.type[0].name;
       }
-      announcementList.value = d;
+      announcementList.value = d ?? [];
       // announcementList.value = d.announcements
       // announcementList.value = res.data.announcements
     } else {
@@ -120,9 +120,11 @@ const openPopup = (noticeType) => {
 
 const calculateMaxContentLength = () => {
   let maxLength = 0;
-  for (const announcement of announcementList.value) {
-    if (announcement.content.length > maxLength) {
-      maxLength = announcement.content.length;
+  if(announcementList.value.length > 0) {
+    for (const announcement of announcementList.value) {
+      if (announcement.content.length > maxLength) {
+        maxLength = announcement.content.length;
+      }
     }
   }
   return maxLength;

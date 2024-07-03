@@ -9,12 +9,12 @@
       <div class="intro-container">
         <img
           :src="require(`../assets/app/toplabel-${languageVal}.png`)"
-          alt="TF88GamingApp"
+          alt="KAKAGamingApp"
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
         />
-        <img src="../assets/app/light.png" alt="TF88GamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
+        <img src="../assets/app/light.png" alt="KAKAGamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
         <div class="text-content">
           {{ $t('app.sports') }}
           <br />
@@ -70,7 +70,7 @@
           :allow-slide-next="false"
         >
           <swiper-slide style="position: relative" v-for="i in 3">
-            <img class="fadeIn" :src="require(`../assets/app/phone-${i}.png`)" />
+            <img class="fadeIn phone-img" :src="require(`../assets/app/phone1-${i}.png`)" />
             <img class="bounceIn" :src="require(`../assets/app/words-${i}-${languageVal}.png`)" />
             <img class="fadeInUp" :src="require(`../assets/app/bottom-${i}.png`)" />
             <img class="fadeInRight" :src="require(`../assets/app/right-${i}.png`)" />
@@ -82,7 +82,7 @@
   <GameModal ref="appGame"></GameModal>
 </template>
 <script>
-import { defineComponent, onMounted, ref, nextTick } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import GameModal from "@/components/modal/GameModal";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";

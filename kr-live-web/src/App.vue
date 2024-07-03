@@ -1,23 +1,19 @@
 <template>
   <router-view />
-  <PageModal ref="pageModalRef"></PageModal>
+  <component :is="PageModal"></component>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { defineAsyncComponent, defineComponent, markRaw, onMounted, ref } from "vue";
+import { useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
 import { userStore } from "stores/index";
-import isString from "lodash/isString";
 import { useRouter } from "vue-router";
 import { useUI } from "stores/ui";
-import PageModal from "components/modal/PageModal";
 
 export default defineComponent({
   name: "App",
-  components: { PageModal },
   setup() {
     var qs = require("qs");
     const ui = useUI();
@@ -26,6 +22,10 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
+
+    const PageModal = markRaw(defineAsyncComponent(() =>
+      import('components/modal/PageModal')
+    ))
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -48,48 +48,6 @@ export default defineComponent({
     };
 
     const store = userStore();
-
-    const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
-
-    let csclient;
-    const initCsWeb = () => {
-      csclient = new CsClient("12", regDevice, "kr", "3", "prod");
-
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("notification-type", {
-        type: "breathing",
-        color: "#FB4BFF"
-      });
-
-      csclient.set("design", {
-        bottom: "40px",
-        right: "20px",
-        icon: require("assets/images/index/cs-icon.png")
-      });
-
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
-
-      //客服初始化。
-      csclient.init();
-
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
-
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (isString(event.data)) {
-          if (event.data == "closenotice") {
-            router.go(-1);
-          }
-        }
-      });
-    };
 
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
@@ -142,7 +100,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       initStorage();
       checkAgentFrom();
 
@@ -154,6 +112,10 @@ export default defineComponent({
         false
       );
     });
+
+    return {
+      PageModal
+    }
   }
 });
 </script>

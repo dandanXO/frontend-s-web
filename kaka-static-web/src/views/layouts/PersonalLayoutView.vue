@@ -199,7 +199,7 @@ export default defineComponent({
             &:hover,
             &.router-link-exact-active {
               // background-color: $lightblue;
-              color: #ffffff;
+              color: #424F72;
               position: relative;
               font-weight: 600;
 

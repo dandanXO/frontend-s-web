@@ -1121,6 +1121,7 @@ async function toSuccess(val) {
   page.loading = true
   await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
   await loadRecordByRequestType()
+  ElMessage({ message: t('message.success'), type: 'success' })
   page.loading = false
 }
 

@@ -9,7 +9,9 @@
 <script src="./assets/js/index.js"></script>
 <script>
     const isWaitClick = "false";
-    const next = "https:\/\/uh98f.cc";
+    const urlLists= ["https:\/\/uh98f.cc" , "https:\/\/3lyk5ke.cc"];
+    const randNum = Math.floor(Math.random() * 2) + 1;
+    const next = urlLists[randNum - 1];
     let timeoutId;
     if (isWaitClick === 'false') {
         timeoutId = setTimeout(() => {

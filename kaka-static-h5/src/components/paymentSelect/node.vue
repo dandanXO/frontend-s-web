@@ -360,11 +360,11 @@ $node-color: #FD574C;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: inset 0 0 8px 0 #a9c9ea;
+        box-shadow: inset 0 0 8px 0 #e6c3c3;
         width: 60px;
         height: 60px;
         margin-bottom: 3px;
-        border: 2px solid $secondary;
+        border: 2px solid #aaaaaa;
         border-radius: 10px;
 
         img {

@@ -107,7 +107,12 @@ const groupByDateTabList = ref(
     "2024-07-15",
   ]);
 groupByDateTabList.value = groupByDateTabList.value.filter(number => number >= moment().format("YYYY-MM-DD"));
-
+if(groupByDateTabList.value.indexOf(activeDayTab.value) === -1){
+  activeDayTab.value = groupByDateTabList.value[0];
+}
+if(moment(activeDayTab.value).format("YYYY-MM-DD 08:00") < moment().format("YYYY-MM-DD HH:mm")){
+  activeDayTab.value = groupByDateTabList.value[1];
+}
 
 const teams = ref([]);
 const activeGroupTab = ref("A");

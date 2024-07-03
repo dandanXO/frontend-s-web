@@ -604,10 +604,10 @@ export default defineComponent({
 .login-container {
   position: relative;
   background: url(../assets/images/login/login-bg.png) no-repeat center 20%;
-  background-size: cover;
   // height: 100%;
   // min-height: 100vh;
-    background-position: center -120px;
+    background-size: contain;
+    background-position: center -30px;
 
   .back-left {
     // position: absolute;
@@ -735,6 +735,7 @@ export default defineComponent({
     width: $box-width;
     margin: 0 auto;
     background: $white;
+    color: #333333;
     border-radius: 10px;
     box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
     padding: 15px 12px 15px;

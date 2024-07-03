@@ -31,10 +31,10 @@
                         {{ match.matchTime }}
                         </div>
 
-                        <div class="match-btn" @click="matchSubmit(match, 0, '平局')"
-                        v-if="match.selectedTeamId === null">平</div>
-                        <button v-else-if="match.selectedTeamId === 0" class="match-btn active">已选</button>
-          <div v-else class="match-btn pseudo" />
+                        <!-- <div class="match-btn" @click="matchSubmit(match, 0, '平局')"
+                        v-if="match.selectedTeamId === null">平</div> -->
+                        <button v-if="match.selectedTeamId === 0" class="match-btn active">已选</button>
+                        <!-- <div v-else class="match-btn pseudo" /> -->
                     </div>
                     <div class="team teamB">
                         <div class="toprow team-details">

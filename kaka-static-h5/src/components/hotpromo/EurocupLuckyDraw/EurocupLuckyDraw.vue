@@ -49,7 +49,7 @@
         </div>
         <div class="luckydraw-line">
           <span class="luckydraw-line__head">Áp dụng</span>
-          <span class="luckydraw-line__sub">Cho tất cả các thành viên của TF88</span>
+          <span class="luckydraw-line__sub">Cho tất cả các thành viên của KAKA</span>
         </div>
         <div class="luckydraw-line">
           <span class="luckydraw-line__head">Sản phẩm</span>
@@ -248,12 +248,12 @@
           <p class="likeli"><span class="point">5</span> Trường hợp có quá nhiều Thành Viên trúng thưởng cùng 1 giải, tiền thưởng sẽ được chia theo thứ tự người đến trước nhận trước.</p>
           <p class="likeli"><span class="point">6</span> Số may mắn đã chọn thành công sẽ không thể thay đổi.</p>
           <p class="likeli"><span class="point">7</span> Tiền thưởng cần trải qua 03 vòng cược tại Thể Thao trước khi có thể rút tiền.</p>
-          <p class="likeli"><span class="point">8</span> Nếu TF88 kiểm tra thấy mỗi thành viên, mỗi địa chỉ email, mỗi số điện thoại sử dụng cùng một tài khoản ngân hàng hoặc trùng địa chỉ IP thì chỉ có một tài khoản được nhận tiền thưởng của Khuyến mãi này (nếu có nhiều thông đồng hoặc sử dụng nhiều tài khoản thì tất cả tiền thắng cược sẽ bị mất).</p>
-          <p class="likeli"><span class="point">9</span> Nếu TF88 phát hiện thành viên liên tục đăng ký tài khoản, lợi dụng sơ hở của trò chơi hoặc cố ý vi phạm, TF88 có quyền hủy hoặc rút lại tiền thưởng của Thành viên.</p>
+          <p class="likeli"><span class="point">8</span> Nếu KAKA kiểm tra thấy mỗi thành viên, mỗi địa chỉ email, mỗi số điện thoại sử dụng cùng một tài khoản ngân hàng hoặc trùng địa chỉ IP thì chỉ có một tài khoản được nhận tiền thưởng của Khuyến mãi này (nếu có nhiều thông đồng hoặc sử dụng nhiều tài khoản thì tất cả tiền thắng cược sẽ bị mất).</p>
+          <p class="likeli"><span class="point">9</span> Nếu KAKA phát hiện thành viên liên tục đăng ký tài khoản, lợi dụng sơ hở của trò chơi hoặc cố ý vi phạm, KAKA có quyền hủy hoặc rút lại tiền thưởng của Thành viên.</p>
           <p class="likeli"><span class="point">10</span> Tất cả cược HÒA, cược HỦY, cược 2 BÊN,  vé cược đặt tại tỷ lệ cược: DEC &lt; 1.75, MY -0.6 đến 0.75, Thể thao ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này.</p>
           <p class="likeli"><span class="point">11</span> Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình khuyến mãi này.</p>
-          <p class="likeli"><span class="point">12</span> Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại TF88.</p>
-          <p class="likeli"><span class="point">13</span> TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần báo trước.</p>
+          <p class="likeli"><span class="point">12</span> Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại KAKA.</p>
+          <p class="likeli"><span class="point">13</span> KAKA có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần báo trước.</p>
           <p class="likeli"><span class="point">14</span> Điều khoản & Điều kiện khuyến mãi chung được áp dụng.</p>
         </div>
       </div>

@@ -1,24 +1,34 @@
 <template>
   <div class="affiliate-container">
+    <div class="logo"><img src="../assets/logo-web-fire.svg"></div>
     <div class="page-title">{{ $t("lang.affiliate_title") }}</div>
-
     <div class="branding">
       <div class="branding-wrapper">
         <img class="hand-img" src="../assets/images/affiliate/hand.png" alt="" />
         <div class="desc-container">
-          <div class="title">{{ $t("lang.affiliate_professionalteam") }}</div>
+          <div class="title">
+            <div class="vn">Đội ngũ chuyên nghiệp nhất</div>
+            <div class="en">Professional Team</div>
+          </div>
         </div>
       </div>
       <div class="branding-wrapper">
         <img class="headset-img" src="../assets/images/affiliate/headset.png" alt="" />
         <div class="desc-container">
-          <div class="title">{{ $t("lang.affiliate_bestqualityservice") }}</div>
+          <div class="title">
+            <div class="vn">Đối tác chính thức của đội ngũ VG</div>
+            <div class="en">VG Official Partner</div>
+          </div>
         </div>
       </div>
       <div class="branding-wrapper">
         <img class="vg-img" src="../assets/images/affiliate/vg.png" alt="" />
         <div class="desc-container">
-          <div class="title">{{ $t("lang.affiliate_vgofficialpartner") }}</div>
+          <div class="title">
+
+            <div class="vn">Dịch vụ tốt nhất</div>
+            <div class="en">Best Quality Service</div>
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +37,7 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://ka1-os.cn23lh0d1nf.com/kaka/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_joinus')"
           no-caps
           size="md"
@@ -36,13 +46,13 @@
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
         <q-btn
-          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://ka1-os.cn23lh0d1nf.com/kaka/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_login')"
           no-caps
           size="md"
           class="login-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <!-- <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" /> -->
         </q-btn>
 
         <q-btn
@@ -199,7 +209,7 @@
     <div class="contact-us">
       <div class="register-btn-wrapper">
         <q-btn
-          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://ka1-os.cn23lh0d1nf.com/kaka/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_apply_agency')"
           size="lg"
           no-caps
@@ -234,7 +244,7 @@
         </div>
         <div class="contact-wrapper">
           <div class="contact-method">{{ $t("lang.affiliate_jointemail") }}</div>
-          <div class="contact-id">vnaffiliates@tf88.com</div>
+          <div class="contact-id">vnaffiliates@KAKA.com</div>
         </div>
         <div class="contact-wrapper">
           <div class="contact-method">{{ $t("lang.affiliate_jointskype") }}</div>
@@ -316,6 +326,14 @@ const rows = [
   background: url("../assets/images/affiliate/page-bg.png");
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: 50% 280px;
+  .logo {
+    width: 200px;
+    margin: 0 auto;
+    img{
+      width: 100%;
+    }
+  }
 
   .page-title {
     word-break: keep-all;
@@ -324,7 +342,7 @@ const rows = [
     // text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
     //   3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
     // font-family: FZTanHeiS-B-GB;
-    font-size: 3.46239rem;
+    font-size: 2.46239rem;
     font-weight: 400;
     // color: #88d0f7;
     // background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
@@ -340,35 +358,48 @@ const rows = [
   .branding {
     display: flex;
     justify-content: space-between;
-    padding: 0 1.25rem;
+    // padding: 0 1.25rem;
     margin: 1.25rem 0 2rem 0;
+    gap: 5px;
 
     .branding-wrapper {
       display: flex;
-
+      flex: 1;
+      flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
       .hand-img,
       .headset-img,
       .vg-img {
-        width: 1.25rem;
-        height: 1.25rem;
-        margin: 0.15rem 0.25rem 0 0;
+        width: 3.25rem;
       }
 
       .desc-container {
         .title {
           color: $font-2;
-          text-align: left;
-          text-shadow: 1.1197850704193115px 1.1197850704193115px 0px #9da6d4;
+          text-align: center;
+          // text-shadow: 1.1197850704193115px 1.1197850704193115px 0px #9da6d4;
           // font-family: FZTanHeiS-B-GB;
-          font-size: 1rem;
+          font-size: .8rem;
 
           font-weight: 400;
           line-height: normal;
         }
+        .title {
+
+          .vn {
+            color: #ffffff;
+          }
+          .en {
+            color: #FFFFFF99;
+            ;
+          }
+        }
 
         .desc {
           color: $font-2;
-          text-align: left;
+          text-align: center;
           // font-family: PingFang SC;
           font-size: 0.75rem;
 
@@ -383,22 +414,21 @@ const rows = [
   .ambassador {
     display: flex;
     justify-content: center;
-    padding: 0 1rem;
+    padding: 1rem;
     align-items: center;
 
     .ambassador-img {
       width: 50%;
       height: 100%;
-      display: block;
+      display: none;
     }
 
     .btn-wrapper {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      width: 7.5rem;
-      margin: 1.5rem 2rem 0 2rem;
 
+      width: 200px;
       color: #fff;
       text-align: center;
       // font-family: PingFang SC;
@@ -406,10 +436,10 @@ const rows = [
       line-height: normal;
       word-break: keep-all;
 
-      .join-btn,
-      .login-btn {
+      .join-btn {
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         box-shadow: 0px 4.58px 4.58px 0px #93c7ff inset, 0px -3.664px 3.664px 0px #275ec1 inset;
+        filter: hue-rotate(145deg);
         overflow: hidden;
 
         .mask {
@@ -419,7 +449,8 @@ const rows = [
         }
       }
 
-      .contact-btn {
+      .contact-btn,
+      .login-btn {
         background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
         box-shadow: 0px 4.58px 4.58px 0px #bbdcff inset, 0px -3.664px 3.664px 0px #a2bff4 inset;
         overflow: hidden;
@@ -435,6 +466,10 @@ const rows = [
   }
 
   .esport-commission {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0px -8px 8px 0px #E6C3C3 inset, 0px 4px 0px 0px #DDA7A7;
     ul {
       list-style-type: decimal;
       padding-inline-start: 0;
@@ -502,7 +537,7 @@ const rows = [
     .sample-container {
       border-radius: 1.25rem;
       background: #fcfdfe;
-      box-shadow: 0px -8px 8px 0px #E6C3C3 inset, 0px 4px 0px 0px #a7c2dd;
+          box-shadow: 0px -8px 8px 0px #E6C3C3 inset, 0px 4px 0px 0px #DDA7A7;
       padding: 1rem;
 
       color: $font-1;
@@ -532,8 +567,8 @@ const rows = [
         // font-family: PingFang SC;
         font-weight: 400;
         line-height: normal;
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        box-shadow: 0px 4.58px 4.58px 0px #93c7ff inset, 0px -3.664px 3.664px 0px #275ec1 inset;
+        background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+    box-shadow: 0px 4.58px 4.58px 0px #FFA09A inset, 0px -3.66px 3.66px 0px #FF736A inset;
       }
 
       .mask-img {
@@ -556,6 +591,7 @@ const rows = [
         display: flex;
         align-items: center;
         gap: 2.25rem;
+        justify-content: space-between;
 
         .two-four-hour-wrapper {
           position: relative;
@@ -565,11 +601,11 @@ const rows = [
           // width: 7rem;
           border-radius: 0.25rem;
           overflow: hidden;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          box-shadow: 0px 2.7097px 2.7097px 0px #93c7ff inset, 0px -2.16776px 2.16776px 0px #275ec1 inset;
-
+          background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+          box-shadow: 0px 4.58px 4.58px 0px #FFA09A inset, 0px -3.66px 3.66px 0px #FF736A inset;
           .two-four-mask {
             height: 2.5rem;
+            filter: hue-rotate(145deg);
           }
 
           .two-four-content {

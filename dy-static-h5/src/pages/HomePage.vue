@@ -1498,12 +1498,27 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isFirstView">
+  <!-- <q-dialog width="100%" v-model="isFirstView">
     <q-card style="width: 70%; max-width: 290px; margin: 0 auto" class="bg-white text-black">
       <q-card-section class="q-mb-md">
         <img :src="homePopupImg" alt="" class="alert-image" />
         <div class="close-alert" @click="closeAlert()">
-          <!--          <q-icon color="white" size="24px" name="close"></q-icon>-->
+                   <q-icon color="white" size="24px" name="close"></q-icon>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog> -->
+  <q-dialog width="100%" v-model="isImportantAnnouncementModal" @update:model-value="setExpiryBanner()">
+    <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">
+      <q-card-section style="background-color: transparent">
+        <div class="close-alert" @click="setExpiryBanner()">
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <div class="promo-banner-container">
+          <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
+          <div class="promo-banner-img" @click="clickHomePopupImg(homePopupPath)" v-else>
+            <img loading="lazy" :src="homePopupImg" class="alert-img" style="max-width: 100%" />
+          </div>
         </div>
       </q-card-section>
     </q-card>
@@ -1521,7 +1536,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 
 import { useUI } from "stores/ui";
 import { Scrollbar } from "swiper";
@@ -1533,7 +1547,6 @@ import { Thumbs, Controller, Grid } from "swiper";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/scrollbar";
-import * as _ from "lodash";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation, Navigation, Pagination]);
 
@@ -1541,6 +1554,7 @@ import PlatformBlock from "components/platform/PlatformBlock.vue";
 import { translateRecord } from "src/directives/translate";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
 import moment from "moment";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1553,10 +1567,6 @@ export default defineComponent({
   },
   setup() {
     const isFirstView = ref(false);
-    const closeAlert = () => {
-      localStorage.setItem("indexImgTop", new Date().getTime());
-      isFirstView.value = false;
-    };
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -2080,8 +2090,8 @@ export default defineComponent({
             }
           });
 
-          slot.value = _.orderBy(slot.value, ["num"], ["asc"]);
-          hotgames.value = _.orderBy(hotgames.value, ["order"], ["asc"]);
+          slot.value.sort((a, b) => a.num - b.num);
+          hotgames.value.sort((a, b) => a.order - b.order);
 
           // console.log(hotgames.value);
         })
@@ -2240,26 +2250,123 @@ export default defineComponent({
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const homePopupImg = ref("");
+    const isImportantAnnouncementModal = ref(false);
+    const homePopupContent = ref("");
+    const homePopupType = ref("");
+    const homePopupPath = ref("");
+    const homePopupId = ref(0);
+    const homePopupFrequency = ref(0);
+    const homePopupFrequencyNum = ref(0);
+
     const checkShowImgTop = () => {
-      const lastTime = localStorage.getItem("indexImgTop");
+      const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
         if (diff > 1000 * 60 * 60 * 12) {
-          localStorage.removeItem("indexImgTop");
+          sessionStorage.removeItem("indexImgTop");
         }
       } else {
         api
-          .get("/promo/banner?category=HOMEPOP")
+          .get("/member/ads-popout")
           .then((res) => {
+            // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+            //   res = apiMockData
+            // }
             if (res.code === 0) {
-              homePopupImg.value = res.data.length > 0 ? imgURL + res.data[0]["mobileImageUrl"] : "";
-              if (homePopupImg.value) {
+              // if (res.data[id] !== null) {
+              if (isImpt === null) {
+                switch (res.data["frequency"]) {
+                  case "EVERYTIME":
+                    homePopupFrequencyNum.value = 0;
+                    break;
+                  case "EVERYDAY":
+                    homePopupFrequencyNum.value = 86400000; // 24hrs
+                    break;
+                  case "SESSION":
+                    homePopupFrequencyNum.value = 7866432000; // 3months
+                    break;
+                  default:
+                    homePopupFrequencyNum.value = 10000;
+                    break;
+                }
+                isImportantAnnouncementModal.value = true;
+                homePopupImg.value =
+                  useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
+                console.log(homePopupImg.value);
+                homePopupContent.value = res.data["content"];
+                homePopupType.value = res.data["type"];
+                homePopupPath.value = res.data["path"];
+                homePopupId.value = res.data["id"];
+                homePopupFrequency.value = res.data["frequency"];
                 isFirstView.value = true;
               }
             }
           })
-          .catch(() => {});
+          .catch((e) => {
+            console.log(e);
+          });
       }
+    };
+
+    const setExpiryBanner = () => {
+      if (homePopupFrequencyNum.value !== 0) {
+        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+      }
+      isImportantAnnouncementModal.value = false;
+    };
+
+    const setWithExpiry = (key, value, interval) => {
+      const now = new Date();
+      const item = {
+        value: value,
+        expiry: now.getTime() + interval,
+        id: homePopupId.value,
+        frequency: homePopupFrequency.value
+      };
+      sessionStorage.setItem(key, JSON.stringify(item));
+    };
+
+    const getWithExpiry = (key) => {
+      const itemStr = sessionStorage.getItem(key);
+      if (!itemStr) {
+        return null;
+      }
+      const item = JSON.parse(itemStr);
+      const now = new Date();
+      if (now.getTime() > item.expiry) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
+      return item.value;
+    };
+    const isImpt = getWithExpiry("isImpt");
+
+    const clickHomePopupImg = (urlString) => {
+      // debugger;
+      const openPattern = /^\/open\/(.*)/;
+      if (urlString.match(openPattern)) {
+        const extractedUrl = urlString.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+        // /open/FB体育/FB/XXXX-123/OPEN
+
+        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+        return;
+      }
+
+      let regexUrl = new RegExp(/^(https:\/\/)/g);
+      if (regexUrl.test(urlString)) {
+        // 跳轉
+        location.href = urlString;
+        return;
+      }
+      let regexName = new RegExp(/^(name|\?name)/g);
+      if (regexName.test(urlString)) {
+        //去優惠
+        router.push(`/promo${urlString}`);
+        return;
+      }
+
+      router.push(`/promo?name=${urlString}`);
     };
 
     const downloadUrl = ref("");
@@ -2295,7 +2402,6 @@ export default defineComponent({
 
     onMounted(() => {
       console.log("Home Page");
-      checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
@@ -2304,6 +2410,10 @@ export default defineComponent({
       getAppDownloadUrl();
       if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock("portrait");
+      }
+      // TODO: remove TEST lock
+      if (store.token && store.memberType === "TEST") {
+        checkShowImgTop();
       }
     });
     const imageLoading = ref(false);
@@ -2374,7 +2484,6 @@ export default defineComponent({
       setSecondSwiper,
       setSelectedSwiper,
       isFirstView,
-      closeAlert,
       isAppUpdateModal,
       cancelUpdate,
       openDownloadPage,
@@ -2388,7 +2497,19 @@ export default defineComponent({
       isShowBackTop,
       isShowDownload,
       moment,
-      calculateMaxContentLength
+      calculateMaxContentLength,
+      isImportantAnnouncementModal,
+      homePopupContent,
+      homePopupType,
+      homePopupPath,
+      homePopupId,
+      homePopupFrequency,
+      homePopupFrequencyNum,
+      setExpiryBanner,
+      setWithExpiry,
+      getWithExpiry,
+      isImpt,
+      clickHomePopupImg
     };
   }
 });
@@ -3113,6 +3234,20 @@ export default defineComponent({
       }
     }
   }
+}
+
+.close-alert {
+  display: block;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 28px;
+  padding: 2px;
+  height: 28px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  color: #222a34 !important;
 }
 
 @media (max-width: 400px) {

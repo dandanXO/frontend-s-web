@@ -287,11 +287,17 @@
   </div>
   <GameModal ref="gameMenu"></GameModal>
 
-  <el-dialog @close="setExpiryBanner" class="imptann-modal" v-model="isImportantAnnoucementModal">
+  <el-dialog
+    @close="setWithExpiry('isImpt', true, 43200000)"
+    class="imptann-modal"
+    v-model="isImportantAnnouncementModal"
+  >
     <div class="promo-banner-container" :class="homePopupType === 'TEXT ' ? 'promo-text' : 'promo-img'">
       <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
       <div class="promo-banner-img" v-else>
-        <img :src="homePopupImg" class="alert-img" />
+        <a @click="clickHomePopupImg(homePopupPath)">
+          <img :src="homePopupImg" class="alert-img" />
+        </a>
       </div>
     </div>
   </el-dialog>
@@ -299,13 +305,13 @@
 
 <script>
 /* eslint-disable */
-import GameModal from "@/components/modal/GameModal";
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, watch } from "vue";
 import { loadPromoBanner, loadHomePromoBanner } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
 import Vue3autocounter from "vue3-autocounter";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
+import { userStore } from "@/store";
 
 export default defineComponent({
   // directives: {
@@ -325,7 +331,7 @@ export default defineComponent({
         src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
       }
     ]);
-    const isImportantAnnoucementModal = ref(false);
+    const isImportantAnnouncementModal = ref(false);
     const openGame = (gameName, platType, gameCode) => {
       gameMenu.value.open(gameName, platType, gameCode);
     };
@@ -338,6 +344,7 @@ export default defineComponent({
       });
     };
 
+    const store = userStore();
     // Pop out ads banner
     const homePopupImg = ref("");
     const homePopupContent = ref("");
@@ -345,12 +352,7 @@ export default defineComponent({
     const homePopupId = ref(0);
     const homePopupFrequency = ref("");
     const homePopupFrequencyNum = ref(0);
-
-    const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
-    };
+    const homePopupPath = ref("");
 
     const setWithExpiry = (key, value, interval) => {
       const now = new Date();
@@ -365,32 +367,19 @@ export default defineComponent({
 
     const getWithExpiry = (key) => {
       const itemStr = sessionStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
+      if (!itemStr) return null;
+
       const item = JSON.parse(itemStr);
       const now = new Date();
-      loadHomePromoBanner()
-        .then((res) => {
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
-            homePopupImg.value =
-              useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
-              "/adspopout/" +
-              res.data["desktopImgUrl"];
-            homePopupContent.value = res.data["content"];
-            homePopupType.value = res.data["type"];
-            homePopupId.value = res.data["id"];
-            homePopupFrequency.value = res.data["frequency"];
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 
     const isImpt = getWithExpiry("isImpt");
+    const isFirstView = ref(false);
 
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
@@ -420,10 +409,11 @@ export default defineComponent({
                     break;
                 }
 
-                isImportantAnnoucementModal.value = true;
+                isImportantAnnouncementModal.value = true;
+                homePopupPath.value = res.data["path"];
                 homePopupImg.value =
                   useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
-                  "/adspopout/" +
+                  "/promo/" +
                   res.data["desktopImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
@@ -434,12 +424,41 @@ export default defineComponent({
                 // }
               }
               // } else {
-              //   isImportantAnnoucementModal.value = false;
+              //   isImportantAnnouncementModal.value = false;
               // }
             }
           })
           .catch(() => {});
       }
+    };
+
+    const clickHomePopupImg = (urlString) => {
+      isImportantAnnouncementModal.value = false;
+
+      const openPattern = /^\/open\/(.*)/;
+      if (urlString.match(openPattern)) {
+        const extractedUrl = urlString.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+        gameMenu.value.open(gameName, platformCode, gameCode, "OPEN");
+        return;
+      }
+
+      // debugger;
+      let regexUrl = new RegExp(/^(https:\/\/)/g);
+      if (regexUrl.test(urlString)) {
+        // 跳轉
+        location.href = urlString;
+        return;
+      }
+      let regexName = new RegExp(/^(name|\?name)/g);
+      if (regexName.test(urlString)) {
+        //去優惠
+        router.push(`/promotion${urlString}`);
+        return;
+      }
+
+      router.push(`${urlString}`);
     };
 
     const router = useRouter();
@@ -466,17 +485,28 @@ export default defineComponent({
 
     onMounted(() => {
       loadBanners();
-      checkShowImgTop();
+      if (store.token && store.memberType === "TEST") {
+        checkShowImgTop();
+      }
     });
+
+    watch(
+      () => store.token,
+      () => {
+        if (store.token) {
+          checkShowImgTop();
+        }
+      }
+    );
+
     return {
       banners,
-      isImportantAnnoucementModal,
+      isImportantAnnouncementModal,
       gameMenu,
       openGame,
       imgURL,
       getWithExpiry,
       setWithExpiry,
-      setExpiryBanner,
       homePopupImg,
       homePopupContent,
       homePopupType,
@@ -485,7 +515,9 @@ export default defineComponent({
       homePopupFrequencyNum,
       checkMaintenance,
       isImpt,
-      goBannerPage
+      goBannerPage,
+      clickHomePopupImg,
+      homePopupPath
     };
   }
 });
@@ -865,12 +897,19 @@ export default defineComponent({
   }
 }
 .imptann-modal {
-  max-width: 700px;
-  background: transparent !important;
-  box-shadow: none !important;
   .alert-img {
     display: block;
     width: 100%;
+  }
+
+  &.el-dialog {
+    max-width: 1300px;
+    background: transparent;
+    box-shadow: none;
+    width: max-content;
+    margin-top: 25%;
+    transform: translate(0px, -50%);
+    padding: 20px;
   }
 
   .el-dialog__header {

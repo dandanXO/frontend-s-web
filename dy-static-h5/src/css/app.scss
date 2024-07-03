@@ -11,7 +11,8 @@ html {
 body {
   //font-family: "Jura";
   //font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Segoe UI,Arial,Roboto,"PingFang SC","miui","Hiragino Sans GB","Microsoft Yahei",sans-serif;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   background: #ffffff;
 }
 
@@ -28,10 +29,9 @@ body {
   margin: 0 auto;
 }
 
-.q-footer{
-  .filtericon{
+.q-footer {
+  .filtericon {
     filter: invert(34%) sepia(57%) saturate(3394%) hue-rotate(186deg) brightness(101%) contrast(101%);
-
   }
 }
 
@@ -103,7 +103,6 @@ body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100vh - 108px);
 }
 
-
 .page-title {
   margin: 5px;
   color: #bacef1;
@@ -121,7 +120,8 @@ body.platform-ios .q-dialog__inner--minimized > div {
     left: 0;
     padding: 0;
 
-    svg {
+    svg,
+    img {
       display: block;
       width: 30px;
       padding-left: 10px;
@@ -148,7 +148,8 @@ body.body--dark .q-footer {
   overflow: hidden;
 }
 
-svg {
+svg,
+img.svg {
   width: 25px;
   fill: #ffffff;
 }
@@ -165,7 +166,6 @@ svg {
   border-radius: 8px;
   box-shadow: none;
 
-
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
@@ -181,7 +181,7 @@ svg {
   height: 30vw;
   max-height: 130px;
   border-radius: 8px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 
   .q-panel > div {
     background-repeat: no-repeat;
@@ -227,7 +227,7 @@ svg {
 
     img {
       height: 22px;
-      margin-bottom:5px;
+      margin-bottom: 5px;
 
       &.inactive {
         display: block;
@@ -244,14 +244,16 @@ svg {
 
     &--inactive {
       opacity: 1;
-      &:active, &:hover {
+      &:active,
+      &:hover {
         filter: none;
       }
     }
 
     &--active {
-      color: #0089ED;
-      &:active, &:hover {
+      color: #0089ed;
+      &:active,
+      &:hover {
         filter: none;
       }
 
@@ -294,7 +296,7 @@ svg {
 
 .text-bright {
   // color: #33bcd4;
-  color: #0089ED;
+  color: #0089ed;
 }
 
 .bg-bright {
@@ -303,7 +305,7 @@ svg {
 }
 
 .bg-brightbtn {
-  background: #0089ED;
+  background: #0089ed;
   color: #ffffff;
 }
 
@@ -314,13 +316,13 @@ svg {
   color: #ffffff;
 }
 .bg-dygreen {
-  background: linear-gradient(180deg, #58DB8C, #0D932B);
+  background: linear-gradient(180deg, #58db8c, #0d932b);
   color: #ffffff;
 }
 
-.bg-greyblue{
+.bg-greyblue {
   background: #333;
-  color: #0089ED;
+  color: #0089ed;
 }
 
 .bg-darkbtn {
@@ -342,51 +344,50 @@ svg {
   color: #bacef1;
 }
 
-.gap-8{
+.gap-8 {
   gap: 8px;
 }
 
-.gap-3{
+.gap-3 {
   gap: 3px;
 }
 
-.gap-10{
+.gap-10 {
   gap: 10px;
 }
 
-.gap-5{
+.gap-5 {
   gap: 5px;
 }
 
-a:hover{
+a:hover {
   filter: brightness(0.8);
 }
 
-a:active{
+a:active {
   filter: brightness(0.8);
 }
 
-a:visited{
-  span{
+a:visited {
+  span {
     text-decoration: none;
   }
   text-decoration: none;
 }
 
-.txt-link{
+.txt-link {
   text-decoration: none;
-  color: #0089ED;
+  color: #0089ed;
 }
 
 .table-record {
   width: 100%;
   gap: 6px;
 
-
   .q-card {
     background: #ffffff !important;
     color: #000000 !important;
-    margin-bottom:20px;
+    margin-bottom: 20px;
   }
 
   .label {
@@ -401,31 +402,30 @@ a:visited{
   }
 }
 
-.swiper-horizontal>.swiper-scrollbar{
-  display:none !important;
+.swiper-horizontal > .swiper-scrollbar {
+  display: none !important;
 }
 
-.q-layout__shadow:after{
+.q-layout__shadow:after {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3);
 }
 
-.no-shadow{
-  &:before{
+.no-shadow {
+  &:before {
     transition: none !important;
-    box-shadow:none !important;
+    box-shadow: none !important;
   }
-
 }
 
 .btn-cfm-deposit {
-  background: #0089ED10 !important;
+  background: #0089ed10 !important;
   border-radius: 4px;
   padding: 4px 4px;
 
-  .on-left{
-    margin-right:3px;
+  .on-left {
+    margin-right: 3px;
   }
-  .q-icon{
-    margin-right:3px !important;
+  .q-icon {
+    margin-right: 3px !important;
   }
 }

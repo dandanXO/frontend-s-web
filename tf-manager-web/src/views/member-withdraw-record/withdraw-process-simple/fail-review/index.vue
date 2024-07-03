@@ -658,7 +658,7 @@ const siteList = reactive({
 });
 
 const request = reactive({
-  size: 20,
+  size: 50,
   current: 1,
   withdrawDate: [defaultStartDate, defaultEndDate],
   serialNumber: null,
@@ -714,11 +714,11 @@ function resetQuery() {
 
 function handleSelectionChange(val) {
   chooseRecord = val
-  if (chooseRecord.length > 10) {
+  if (chooseRecord.length > 50) {
     uiControl.toApproveBtn = true
     uiControl.toFailBtn = true
     uiControl.toAutoWithdrawBtn = true
-    ElMessage.warning("最多只能选择十条记录");
+    ElMessage.warning("最多只能选择五十条记录");
   } else {
     uiControl.toApproveBtn = false
     uiControl.toFailBtn = false
@@ -861,6 +861,7 @@ async function toSuccess(val) {
   await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
   await loadRecord()
   page.loading = false
+  ElMessage({ message: t('message.success'), type: 'success' })
 }
 
 async function showDialog(type, memberWithdrawRecord) {
@@ -933,12 +934,12 @@ async function toAutoPay() {
     }))
   )
   await loadRecord()
-  ElMessage({ message: t('message.success'), type: 'success' })
+  ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
 }
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = 11
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()

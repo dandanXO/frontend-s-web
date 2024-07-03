@@ -14,10 +14,7 @@
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <MeiZhouBeiPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao1' && store.token"
-      :promo-code="list.promoCode"
-    />
+
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
@@ -66,7 +63,12 @@
       :promoParam="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu' && store.token"
     />
-
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promoParam="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
+    />
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
@@ -342,7 +344,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
       this.list.redirectUrl === "fankuijianyi" ||
       this.list.redirectUrl === "dy2meizhoubei" ||
-      this.list.redirectUrl === "dy-ouzhoumianpei"
+      this.list.redirectUrl === "dy-ouzhoumianpei" ||
+      this.list.redirectUrl === "tiqianhongbao"
     ) {
       this.isCommonPromo = false;
     } else {

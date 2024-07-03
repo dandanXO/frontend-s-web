@@ -18,7 +18,7 @@
               </div>
             </div>
             <a @click="openDownloadAppLink(dn.downloadLink)">
-              <RiDownload2Fill />
+              <img class="svg" src="~assets/download/download-2-fill.svg" />
             </a>
           </div>
         </div>
@@ -36,7 +36,7 @@
               </div>
             </div>
             <a @click="openDownloadAppLink(dn.downloadLink)">
-              <RiDownload2Fill />
+              <img class="svg" src="~assets/download/download-2-fill.svg" />
             </a>
           </div>
         </div>
@@ -47,7 +47,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 
-import { RiDownload2Fill } from "vue-remix-icons";
 import { userStore } from "stores/index";
 
 const store = userStore();
@@ -214,7 +213,8 @@ onMounted(getAppDownloadUrl);
       justify-content: center;
       align-items: center;
       border-radius: 50%;
-      svg {
+      svg,
+      img.svg {
         fill: #0078e9;
         width: 18px;
       }

@@ -23,7 +23,6 @@
     "@vueuse/core": "^9.13.0",
     "axios": "^0.27.2",
     "core-js": "^3.6.5",
-    "cors": "^2.8.5",
     "csweb-client": "^1.4.2",
     "es6-promise-plugin": "^4.2.2",
     "fs-extra": "^11.2.0",

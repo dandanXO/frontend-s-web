@@ -136,7 +136,7 @@ const appleItems = computed(() => {
 
 const getAppDownloadUrl = () => {
   api
-    .get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
+    .get("/app/getAppData?siteCode=ka2&appType=ALL_SITE")
     .then((res) => {
       // console.log(res);
       downloadUrl.value = res.data.downloadPageUrl
@@ -153,7 +153,7 @@ onMounted(getAppDownloadUrl);
   margin-top: 10px;
 
   .q-tabs {
-    background: $white;
+    background: rgba(113, 125, 146, 0.2);
     width: $box-width;
     margin: 0 auto;
     padding: 15px 14px;

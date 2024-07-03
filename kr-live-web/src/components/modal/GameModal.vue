@@ -18,19 +18,6 @@
             <iframe @load="loadGame()" v-show="!logoShow" :src="src" id="game-iframe"
               :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
           </template>
-
-          <!--          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
-          <!--            <div class="q-pa-sm q-pt-sm">-->
-          <!--              <div>-->
-          <!--                <template v-if="!quickTransferTab">-->
-          <!--                  <div>-->
-          <!--                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
-          <!--                  </div>-->
-          <!--                  <DepositComponent />-->
-          <!--                </template>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </q-drawer>-->
         </div>
       </q-toolbar>
     </q-dialog>

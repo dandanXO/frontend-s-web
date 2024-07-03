@@ -193,7 +193,7 @@ export default defineComponent({
 
       // 'XFCS' / 2
       // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient("TF88", regDevice, "vn", "2", "prod", `https://${CSAUrl}`);
+      csclient = new CsClient("KAKA", regDevice, "vn", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("bottom", "77");
       csclient.set("pageurl", "/liveChat");
@@ -245,7 +245,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: "ka2"
           }
         });
       }
@@ -309,6 +309,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("Kaka H5")
       checkSID();
       // initCsWeb();
       getCSA();

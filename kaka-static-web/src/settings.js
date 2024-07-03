@@ -1,6 +1,6 @@
 module.exports = {
     title: "KAKA",
-    namePrefix: "VNM",
+    namePrefix: "KA2",
   };
 
   

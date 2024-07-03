@@ -155,7 +155,8 @@
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
-                  selectedPromo.promoCode !== 'lh1-aijiasu'
+                  selectedPromo.promoCode !== 'lh1-aijiasu' &&
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
                 "
               >
                 <img
@@ -173,12 +174,14 @@
                     selectedPromo.promoCode === 'lh-sport-zhongchao' ||
                     selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
+                  lhworldcup: selectedPromo.promoCode === 'lh1worldcup',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu:
                     selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
                   lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
                   meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
-                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu'
+                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
+                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
                 }"
                 :style="[
                   selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
@@ -843,6 +846,46 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         &.aijiasu {
+          width: 100%;
+          gap: 0px;
+          margin: 0px;
+        }
+        &.lhworldcup{
+          background: #E7F1Fd;
+          margin:0px;
+          width:100%;
+          padding: 0px 16px 20px;
+
+          img{
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+
+
+          table {
+
+            p{
+              margin: 0px;
+            }
+
+            tr:first-child{
+              td{
+                background-image: linear-gradient(0deg, #0094ff, #19c6ff), linear-gradient(#2e3039, #2e3039);
+                color: #fff;
+              }
+            }
+
+            th {
+              background-color:inherit;
+            }
+
+            td {
+              background-color: inherit;
+            }
+          }
+
+        }
+        &.euroRegen {
           width: 100%;
           gap: 0px;
           margin: 0px;

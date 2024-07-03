@@ -487,6 +487,11 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+.q-tab-panels {
+  color: #333333;
+  margin: 10px;
+    border-radius: 15px;
+}
 .table-data {
   font-size: 16px;
   display: flex;
@@ -527,8 +532,8 @@ export default defineComponent({
 
   .mailcontents {
     padding: 12px 12px 16px;
-    background: #e0f0ff;
-    color: $font-1;
+    background: #FFE0E0;
+    color: #FD574C;
     font-size: 1rem;
     height: auto;
     overflow: hidden;
@@ -550,6 +555,7 @@ export default defineComponent({
 
 .action-buttons {
   display: flex;
+  color: #374151;
   gap: 10px;
   justify-content: flex-start;
   margin: 0px 10px;

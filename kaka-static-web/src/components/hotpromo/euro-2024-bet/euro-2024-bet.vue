@@ -204,7 +204,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .container {
-  background-color: #e7f1fd;
+  background-color: #1e212c;
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -269,7 +269,7 @@ onMounted(() => {
       font-size: 20px;
       font-weight: 400;
       line-height: 28px;
-      color: #ffffff;
+      //color: #ffffff;
     }
   }
 
@@ -316,7 +316,7 @@ onMounted(() => {
 
         .blue-hexagon {
           font-weight: bold;
-          color: #fff;
+          //color: #fff;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -353,13 +353,13 @@ onMounted(() => {
       padding: 20px;
 
       .content {
-        color: #ffffff;
+        //color: #ffffff;
 
         .pill {
           white-space: nowrap;
           border-radius: 100px;
           padding: 2px 8px;
-          color: #ffffff;
+          //color: #ffffff;
           background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
         }
 
@@ -379,7 +379,7 @@ onMounted(() => {
           content: counter(item);
           background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
           border-radius: 100%;
-          color: white;
+          //color: white;
           width: 1.6em;
           text-align: center;
           display: inline-block;
