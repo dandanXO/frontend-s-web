@@ -139,8 +139,8 @@
         </q-route-tab>
 
         <q-route-tab to="/liveChat" name="chat">
-          <img class="inactive" src="../assets/images/index/livechat-icon.svg" />
-          <img class="hover filtericon" src="../assets/images/index/livechat-icon.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-livechat.svg" />
+          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.svg" />
           客服
         </q-route-tab>
 

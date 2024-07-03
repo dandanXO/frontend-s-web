@@ -1679,16 +1679,16 @@ export default defineComponent({
       {
         name: "slot",
         icon: "slide-slot-svg.svg",
-        label: "电子",
-        labelact: "电子",
+        label: "电子游艺",
+        labelact: "电子游艺",
         mb: 0,
         gap: 3
       },
       {
         name: "poker",
         icon: "slide-poker-svg.svg",
-        label: "棋牌游戏",
-        labelact: "棋牌游戏",
+        label: "棋牌",
+        labelact: "棋牌",
         mb: 0,
         gap: 3
       },
@@ -2533,7 +2533,7 @@ export default defineComponent({
     }
 
     span {
-      color: #0089ed;
+      color: #35648F;
       font-weight: 500;
       font-size: 12px;
     }
