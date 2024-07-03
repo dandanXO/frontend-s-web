@@ -151,10 +151,14 @@
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
-      <div class="list-item" @click="openTiktok()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-        <div>Tiktok</div>
+      <div class="list-item" @click="openInsta()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/insta-icon.png" />
+        <div>Instagram</div>
       </div>
+<!--      <div class="list-item" @click="openTiktok()">-->
+<!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
+<!--        <div>Tiktok</div>-->
+<!--      </div>-->
     </div>
 
     <div class="bottom-img">
@@ -345,6 +349,10 @@ export default defineComponent({
     const openWhatsApp = () => {
       window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
     };
+
+    const openInsta = () => {
+      window.open("https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr", "_blank");
+    }
 
     const openTiktok = () => {
       window.open("https://www.tiktok.com/@b9game", "_blank");
@@ -654,6 +662,7 @@ export default defineComponent({
       loadCustomerAddress,
       ui,
       openWhatsApp,
+      openInsta,
       openTiktok
     };
   }
