@@ -49,6 +49,27 @@
 
   <div
     class="rocket-wrapper"
+    v-if="showDomain"
+    :class="'show-domain'"
+    :style="{ top: domainPosition.top + 'px', left: domainPosition.left + 'px' }"
+    @mousedown="startDragging('domain', $event)"
+  >
+    <div>
+      <div class="close-btn" @click="hideDomain()">X</div>
+
+      <el-carousel height="130px" :indicator-position="floatDomain.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+        <el-carousel-item v-for="(game, i) in floatDomain" :key="i">
+          <div @click="openLink(game.code)" class="rocket-container">
+            <div class="rocket"><img :src="`${imgURL}/promo/${game.icon}`" /></div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+  </div>
+
+
+  <div
+    class="rocket-wrapper"
     v-if="showRocket"
     :class="'show-rocket'"
     :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
@@ -142,8 +163,16 @@ export default defineComponent({
     };
 
     const showRocket = ref(false);
+    const showDomain= ref(false);
     const hideRocket = () => {
       showRocket.value = false;
+      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+    };
+    const openLink= (link) => {
+      window.open(link, "_blank")
+    }
+    const hideDomain = () => {
+      showDomain.value = false;
       promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
     const showFloatPromo = ref(false);
@@ -152,6 +181,7 @@ export default defineComponent({
     };
     const floatPromo = ([]);
     const gamePromo = ([]);
+    const floatDomain = ([]);
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
@@ -165,6 +195,10 @@ export default defineComponent({
             if (element.type === 'GAME') {
               gamePromo.push(element)
               showRocket.value = true;
+            }
+            if (element.type === 'DOMAIN') {
+              floatDomain.push(element)
+              showDomain.value = true;
             }
           });
           checkFloatPromo();
@@ -182,6 +216,7 @@ export default defineComponent({
       }
     }
 
+    const domainPosition=  ref({ top: window.innerHeight - 440, left: window.innerWidth - 220 });
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
     const isDragging = ref(false);
@@ -271,6 +306,7 @@ export default defineComponent({
       openGame,
       showRocket,
       rocketPosition,
+      domainPosition,
       hideRocket,
       startDragging,
       showFloatPromo,
@@ -278,7 +314,11 @@ export default defineComponent({
       hideFloatPromo,
       imgURL,
       floatPromo,
+      openLink,
+      hideDomain,
+      showDomain,
       gamePromo,
+      floatDomain,
       currentPromo,
       currentPromoIndex,
       gotoPromo,
@@ -307,6 +347,10 @@ export default defineComponent({
   }
 
   &.show-rocket {
+    display: block;
+  }
+
+  &.show-domain {
     display: block;
   }
 

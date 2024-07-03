@@ -519,6 +519,35 @@
 
   <GameModal ref="allGames"></GameModal>
 
+  <q-page-sticky v-if="showDomain" position="bottom-right" :offset="domainPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingDomainFab" v-touch-pan.prevent.mouse="moveDomainFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <q-carousel
+        class="float"
+        :navigation="floatDomain.length > 1 ? true : false"
+        v-model="domainSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(game, i) in floatDomain"
+          :key="i"
+          :name="i"
+          @click="openLink(game.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket">
+              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${game.icon}`" />
+            </div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </q-page-sticky>
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
       <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
@@ -1594,9 +1623,14 @@ export default defineComponent({
     };
     const floatPromo = [];
     const gamePromo = [];
+    const floatDomain = [];
+    const openLink= (link) => {
+      window.open(link, "_blank");
+    }
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
+      floatDomain.value= [];
       api
         .get("/redirect")
         .then((res) => {
@@ -1609,6 +1643,10 @@ export default defineComponent({
               if (element.type === "GAME") {
                 gamePromo.push(element);
                 showRocket.value = true;
+              }
+              if (element.type === "DOMAIN") {
+                floatDomain.push(element);
+                showDomain.value = true;
               }
             });
             checkShowRocket();
@@ -1645,6 +1683,7 @@ export default defineComponent({
     const selectedLiveTab = ref();
 
     const showRocket = ref(false);
+    const showDomain= ref(false);
     const checkShowRocket = () => {
       // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
       //   showRocket.value = true;
@@ -1653,6 +1692,11 @@ export default defineComponent({
 
     const hideRocket = () => {
       showRocket.value = false;
+      promoPos.value = [18, 18];
+    };
+
+    const hideDomain = () => {
+      showDomain.value = false;
       promoPos.value = [18, 18];
     };
 
@@ -1669,12 +1713,25 @@ export default defineComponent({
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
+    const domainPos= ref([18,238]);
     const fabPos = ref([18, 18]);
     const promoPos = ref([18, 128]);
     const draggingRocketFab = ref(false);
+    const draggingDomainFab= ref(false);
     const draggingPromoFab = ref(false);
 
     const currentElement = ref(null);
+    const moveDomainFab = (ev) => {
+      // console.log(ev);
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingDomainFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = domainPos.value[0] - ev.delta.x;
+      let newY = domainPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      domainPos.value = [newX, newY];
+    };
     const moveRocketFab = (ev) => {
       // console.log(ev);
       const maxX = window.innerWidth - 70;
@@ -1809,10 +1866,13 @@ export default defineComponent({
       showRocket,
       checkShowRocket,
       fabPos,
+      domainPos,
       draggingRocketFab,
+      draggingDomainFab,
       draggingPromoFab,
       moveRocketFab,
       movePromoFab,
+      moveDomainFab,
       hideRocket,
       promoPos,
       hideFloatPromo,
@@ -1821,12 +1881,17 @@ export default defineComponent({
       currentPromoIndex,
       gotoFloatPromo,
       floatPromo,
+      floatDomain,
+      openLink,
       gamePromo,
+      hideDomain,
+      showDomain,
       currentElement,
       imgURLFloat,
       updateRocket,
       currentRocket,
       currentRocketIndex,
+      domainSlide: ref(0),
       rocketSlide: ref(0),
       promoSlide: ref(0),
       convertToCommaAmount
