@@ -163,7 +163,7 @@ export default {
     hotGames: "Trò chơi phổ biến",
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "EURO 2024 - CÒN ",
-    euroCountdown02: " NGÀY",
+    euroCountdown02: " NGÀY"
   },
   hotGame: {
     enterGame: "Vào game",
@@ -233,8 +233,8 @@ export default {
     noMatch: "Mật khẩu xác nhận không khớp với mật khẩu mới",
     verifyPhone: "Vui lòng xác minh số điện thoại di động",
     onlyNumber: "Chỉ cho phép nhập số",
-    invalidPhoneLength: 'Số điện thoại phải dài 10 chữ số.',
-    invalidPhoneStartsWith0: 'Số điện thoại phải bắt đầu bằng số 0.',
+    invalidPhoneLength: "Số điện thoại phải dài 10 chữ số.",
+    invalidPhoneStartsWith0: "Số điện thoại phải bắt đầu bằng số 0.",
     phoneVerification: "Vui lòng nhập mã xác minh điện thoại",
     min6: "Độ dài phải là 6 ký tự",
     lessthan50: "Độ dài phải ít hơn 50 ký tự",
@@ -290,13 +290,13 @@ export default {
 
     bonus: "Phần thưởng",
     // vi-daily-checkin end
-    
+
     // vi-mualixi-redpacket
     congrats: "Chúc mừng",
     claim: "Nhận",
-    
+
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng",
+    record_win_prize: "Giải thưởng"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -746,11 +746,11 @@ export default {
     tableHeader9: "Hạn Mức Rút Hàng Ngày",
     header1: "THĂNG VIP HOÀNG GIA, THẢ GA NHẬN THƯỞNG",
     target: "ĐỐI TƯỢNG THAM GIA: ",
-    targetdet: 'TẤT CẢ CÁC THÀNH VIÊN CỦA KAKAGAME',
+    targetdet: "TẤT CẢ CÁC THÀNH VIÊN CỦA KAKAGAME",
     duration: "THỜI GIAN DIỄN RA: ",
     durationdet: "BẮT ĐẦU TỪ LÚC ĐĂNG KÝ TÀI KHOẢN ĐẾN KHI CÓ THÔNG BÁO KẾT THÚC",
     note: "Chú ý: ",
-    notedet: '1 điểm = 1000VND'
+    notedet: "1 điểm = 1000VND"
   },
   app: {
     sports: "Các sự kiện Thể Thao và E-Sport hàng đầu với quy mô lớn.",
@@ -912,6 +912,11 @@ export default {
     1001: "Tài khoản đã đóng",
     1002: "Tài khoản dành cho đại lý",
     1004: "Tài khoản đang tạm khóa do nhập sai mật khẩu nhiều lần",
+    1011: "Tài khoản hiện tại đã liên kết số điện thoại",
+    1012: "Tài khoản hiện tại đã liên kết địa chỉ email",
+    1013: "Tài khoản hiện tại đã liên kết ngày sinh",
+    1014: "Tài khoản hiện tại đã liên kết tên",
+    1015: "Tài khoản hiện tại đã liên kết biệt danh",
     1300: "Số tiền phải là số lớn hơn 0",
     1301: "Thẻ này không được hỗ trợ",
     1302: "Loại tiền này không được hỗ trợ",
