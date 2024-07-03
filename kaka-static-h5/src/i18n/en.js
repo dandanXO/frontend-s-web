@@ -1,7 +1,7 @@
 export default {
   lang: {
     langVal: "en",
-    app_download_title: "KAKAappDownload",
+    app_download_title: "KAKA appDownload",
     app_download_desc: "Asia's No. 1 Live Roll",
     dowload_now: "Download Now",
     login: "Login",

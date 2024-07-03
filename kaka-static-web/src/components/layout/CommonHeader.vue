@@ -1904,11 +1904,11 @@ body {
       }
 
       .logo {
-        height: 64px;
+        height: 30px;
         //width: 102px;
 
         img {
-          width: 100%;
+          height: 100%;
           display: block;
         }
       }
