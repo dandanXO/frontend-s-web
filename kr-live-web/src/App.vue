@@ -8,7 +8,7 @@ import { defineAsyncComponent, defineComponent, markRaw, onMounted, ref } from "
 import { Platform, useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
+import CsClient from "boot/csweb/client.js";
 import { userStore } from "stores/index";
 import isString from "lodash/isString";
 import { useRouter } from "vue-router";
