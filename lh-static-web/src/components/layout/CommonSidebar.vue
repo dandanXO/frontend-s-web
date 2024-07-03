@@ -166,18 +166,27 @@ export default defineComponent({
     const showDomain= ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      rocketPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
     const openLink= (link) => {
-      window.open(link, "_blank")
+      if(link) {
+        if (link.indexOf(",") > -1) {
+          const splitLink = link.split(",");
+          const randomIndex = Math.floor(Math.random() * splitLink.length);
+          window.open(splitLink[randomIndex], "_blank");
+        } else {
+          window.open(link, "_blank");
+        }
+      }
     }
     const hideDomain = () => {
       showDomain.value = false;
-      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      domainPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
+      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
     const floatPromo = ([]);
     const gamePromo = ([]);
@@ -248,6 +257,9 @@ export default defineComponent({
         } else if (currentElement.value === 'promo') {
           promoPosition.value.left = event.clientX - shiftX.value;
           promoPosition.value.top = event.clientY - shiftY.value;
+        }else if (currentElement.value === 'domain') {
+          domainPosition.value.left = event.clientX - shiftX.value;
+          domainPosition.value.top = event.clientY - shiftY.value;
         }
       }
     };

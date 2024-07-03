@@ -1625,7 +1625,15 @@ export default defineComponent({
     const gamePromo = [];
     const floatDomain = [];
     const openLink= (link) => {
-      window.open(link, "_blank");
+      if(link) {
+        if (link.indexOf(",") > -1) {
+          const splitLink = link.split(",");
+          const randomIndex = Math.floor(Math.random() * splitLink.length);
+          window.open(splitLink[randomIndex], "_blank");
+        } else {
+          window.open(link, "_blank");
+        }
+      }
     }
     const initFloating = () => {
       floatPromo.value = [];
@@ -1713,7 +1721,7 @@ export default defineComponent({
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
-    const domainPos= ref([18,238]);
+    const domainPos= ref([18,258]);
     const fabPos = ref([18, 18]);
     const promoPos = ref([18, 128]);
     const draggingRocketFab = ref(false);
