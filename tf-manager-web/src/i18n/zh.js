@@ -1851,6 +1851,7 @@ export default {
     unsuccessIn10time: '未成功10次的渠道',
     platformAccountName: '平台账号名',
     memberShareRatio: '玩家返水比例',
+    updateShareRatio: '编辑返水比例',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

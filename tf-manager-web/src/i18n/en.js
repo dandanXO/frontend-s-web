@@ -1850,6 +1850,7 @@ export default {
     unsuccessIn10time: 'Channels with 10 Unsuccessful',
     platformAccountName: 'Platform Account Name',
     memberShareRatio: 'Member Share Ratio',
+    updateShareRatio: 'Update Share Ratio',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

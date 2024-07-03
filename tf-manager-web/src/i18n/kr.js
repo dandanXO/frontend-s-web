@@ -1727,6 +1727,7 @@ export default {
     miniGameRollingAmount: '미니게임 흐름',
     miniGameGrossProfit: '미니게임 순이익',
     memberShareRatio: '플레이어 리베이트 비율',
+    updateShareRatio: '리베이트 비율 수정',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
