@@ -1854,6 +1854,7 @@ export default {
     ftdDownlineAmount: 'FTD Downline Amount',
     changeReferrer: 'Change Referrer',
     memberShareRatio: 'Member Share Ratio',
+    updateShareRatio: 'Update Share Ratio',
     downlineMembers: 'Downline Members',
     todayRegCount: 'Today Register Count',
     yesterdayRegCount: 'Yesterday Register Count',

@@ -465,6 +465,29 @@
           <span v-if="memberDetail.sid !== null">{{ memberDetail.sid }}</span>
           <span v-if="memberDetail.sid === null">-</span>
         </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+          v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.memberShareRatio') }}
+            </div>
+          </template>
+          <el-button
+            type="info"
+            size="mini"
+            v-permission="['sys:member:update:shareRatio']"
+            @click="showDialog('UPDATE_SHARE_RATIO')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10" />
+        <el-descriptions-item v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10" />
       </el-descriptions>
     </el-card>
 
@@ -1369,6 +1392,33 @@
           </el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'UPDATE_SHARE_RATIO'"
+        ref="updateModelForm"
+        :model="modelForm"
+        :rules="modelFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.shareRatio')" prop="shareRatio">
+          <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+            <el-input
+              v-model="item.value"
+              style=" width:100px; margin-left: auto; order: 2"
+            />
+          </div>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="updateModel">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -1403,6 +1453,8 @@ import {
   getDnW,
   forceLogout,
   syncMemberDetail,
+  getShareRatio,
+  editShareRatio,
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1414,6 +1466,7 @@ import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
+import { getConfigListByGroup } from '../../../../../api/config'
 
 const store = useStore()
 export default defineComponent({
@@ -1465,6 +1518,7 @@ export default defineComponent({
     const unmaskedValue = ref(null)
     const updateUserTypeForm = ref(null)
     const changeAffForm = ref(null)
+    const updateModelForm = ref(null)
 
     const freezeType = reactive({
       list: [
@@ -1615,6 +1669,31 @@ export default defineComponent({
       affiliateCode: null,
     })
 
+    const modelForm = reactive({
+      shareRatio: null,
+    })
+
+    const shareRatioList = reactive({
+      list: [],
+    })
+
+    const validateShareRatio = (rule, value, callback) => {
+      if (memberDetail.commissionModel === 'DETAILS') {
+        shareRatioList.list.forEach((item) => {
+          if (item.value === '' || item.value < 0 || item.value > 1) {
+            callback(new Error(t('message.validateShareRatioFormat')))
+          }
+        })
+      }
+      callback()
+    }
+
+    const modelFormRules = reactive({
+      shareRatio: [
+        { validator: validateShareRatio, trigger: 'blur' },
+      ],
+    })
+
     const validatePassword = (rule, value, callback) => {
       if (value !== '' && passwordForm.reEnterPassword !== '') {
         updatePasswordForm.value.validateField('reEnterPassword')
@@ -1745,7 +1824,7 @@ export default defineComponent({
       }
     }
 
-    const showDialog = type => {
+    const showDialog = async type => {
       uiControl.dialogType = type
       if (type === 'UPDATE_PASSWORD') {
         if (updatePasswordForm.value) {
@@ -1834,6 +1913,9 @@ export default defineComponent({
         }
         affForm.affiliateCode = null
         uiControl.dialogTitle = t('fields.changeAffiliate')
+      } else if (type === 'UPDATE_SHARE_RATIO') {
+        await loadShareRatio()
+        uiControl.dialogTitle = t('fields.updateShareRatio')
       }
       uiControl.dialogVisible = true
     }
@@ -1853,6 +1935,46 @@ export default defineComponent({
           })
         }
       })
+    }
+
+    function updateModel() {
+      updateModelForm.value.validate(async valid => {
+        if (valid) {
+          const shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+          await editShareRatio(props.mbrId, shareRatio)
+          uiControl.dialogVisible = false
+          ElMessage({
+            message: t('message.updateCommissionModelSuccess'),
+            type: 'success',
+          })
+        }
+      })
+    }
+
+    const loadShareRatio = async () => {
+      const { data: shareRatio } = await getShareRatio(props.mbrId)
+      if (shareRatio.length > 0) {
+        shareRatioList.list = shareRatio
+        if (shareRatio.length !== 5) {
+          const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', site.id)
+          const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+          missingRatio.forEach(ratio => {
+            shareRatioList.list.push({
+              code: ratio.code,
+              value: 0
+            })
+          })
+        }
+      } else {
+        const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', site.id)
+        const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+        missingRatio.forEach(ratio => {
+          shareRatioList.list.push({
+            code: ratio.code,
+            value: 0
+          })
+        })
+      }
     }
 
     const transferFund = () => {
@@ -2295,6 +2417,11 @@ export default defineComponent({
       changeAffiliate,
       callPhone,
       stopPhone,
+      modelFormRules,
+      updateModel,
+      shareRatioList,
+      updateModelForm,
+      modelForm,
     }
   },
 })
