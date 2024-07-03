@@ -1,15 +1,6 @@
 <template>
-  <nav
-    class="sidebar"
-    :class="isExpanded ? 'expanded' : ''"
-    style="position: relative;"
-  >
-    <el-button
-      type="primary"
-      class="expansionbtn"
-      circle
-      @click="toggleExpansion"
-    >
+  <nav class="sidebar" :class="isExpanded ? 'expanded' : ''" style="position: relative;">
+    <el-button type="primary" class="expansionbtn" circle @click="toggleExpansion">
       <ArrowLeftBold style="width: 10px" v-if="isExpanded" />
       <ArrowRightBold style="width: 10px" v-if="!isExpanded" />
     </el-button>
@@ -18,84 +9,44 @@
       <Expand style="width: 20px" v-if="!isExpanded" />
     </el-button>
     <div class="navigation">
-      <div class="mini-profile" v-if="(parseInt(store.state.user.siteId) === 10) && isExpanded">
-        <div class="name">
-          <svg-icon
-            icon-class="user"
-            style="margin-right: 5px"
-          />
-          {{ store.state.user.name }}
-        </div>
-        <el-row justify="space-between">
-          <el-col :span="6"> {{ t('fields.recommenderCode') }} </el-col>
-          <el-col :span="6" style="flex: none"> {{ affInfo.affiliateCode }} </el-col>
-        </el-row>
-        <el-row justify="space-between">
-          <el-col :span="8"> {{ t('fields.rebateWallet') }} </el-col>
-          <el-col :span="4" style="flex: none"> {{ affBalance }} </el-col>
-        </el-row>
-        <el-row justify="space-between">
-          <el-col :span="6"> {{ t('fields.commissionWallet') }} </el-col>
-          <el-col :span="6" style="flex: none"> {{ commBalance }} </el-col>
-        </el-row>
+      <div class="logo-section">
       </div>
-      <RouterLink to="/affiliate/withdraw" class="route" v-if="(parseInt(store.state.user.siteId) === 10) && isExpanded">
-        <div class="route-content">
-          <svg-icon
-            icon-class="money-bag"
-          />
-          <span style="color:grey">
-            {{ t('fields.affiliateWithdraw') }}
-          </span>
+      <div class="row-item">
+        <div class="name-and-logout">
+          <div class="name-wrapper">
+            <div class="name">{{ store.state.user.name }}</div>
+            <div class="nickname">{{ store.state.user.name }}</div>
+          </div>
+          <div class="action-wrapper">
+            <svg-icon :icon-class="'lock'" />
+            <svg-icon :icon-class="'logout'" :title="$t('common.logout')" @click="logout" />
+          </div>
         </div>
-      </RouterLink>
-      <div
-        v-for="nav in navigationData"
-        :key="nav.id"
-        :class="`route-wrapper ${nav.active ? 'active' : ''}`"
-      >
-        <div
-          v-if="nav.display && isExpanded"
-          class="route-title"
-          @click="checkMenu(nav)"
-        >
+      </div>
+      <div class="row-item route-title">
+        <div class="icon-wrapper">
+          <svg-icon :icon-class="'right'" />
+          <span>유저사이트</span>
+        </div>
+      </div>
+      <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
+        <div v-if="nav.display && isExpanded" class="route-title row-item" @click="checkMenu(nav)">
           {{ nav.title }}
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
-        <div
-          v-for="child in nav.children"
-          :key="child.id"
-          :class="`route-container ${child.active ? 'active' : ''}`"
-          :style="
-            child.isMenuShow ? 'height: auto;' : 'height: 0px; overflow:hidden'
-          "
-        >
-          <template
-            v-if="(parseInt(store.state.user.siteId) === 10)
-              ? (child.path === '/commission-info' ? false : true)
-              : (child.path === '/rebate' ? false : true)
-            "
-          >
-            <RouterLink
-              :to="nav.path + child.path"
-              class="route"
-              v-if="child.isMainNav"
-            >
-              <div
-                class="route-content"
-                :style="
-                  !isExpanded && child.icon === 'speech-bubbles'
-                    ? 'margin-top: 50px'
-                    : ''
-                "
-              >
-                <svg-icon
-                  :icon-class="`${child.icon}`"
-                  :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''"
-                />
-                <span :class="child.active ? 'active' : ''" v-if="isExpanded">
+        <div v-for="child in nav.children" :key="child.id"
+          :class="`route-container ${child.active ? 'active' : ''} ${child.isMenuShow ? 'show-menu' : ''}`">
+          <template v-if="(parseInt(store.state.user.siteId) === 10) ? (child.path === '/commission-info' ? false : true)
+            : (child.path === '/rebate' ? false : true)">
+            <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
+              <div class="route-content" :style="!isExpanded && child.icon === 'speech-bubbles'
+                ? 'margin-top: 50px'
+                : ''
+                ">
+                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" />
+                <span class="route-label" :class="child.active ? 'active' : ''" v-if="isExpanded">
                   {{ child.title }}
                 </span>
               </div>
@@ -117,16 +68,19 @@ import {
   ArrowUpBold,
   ArrowDownBold,
   Expand,
-  Fold,
+  Fold
 } from '@element-plus/icons-vue'
+import { UserActionTypes } from "@/store/modules/user/action-types";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
 import { getAffiliateBalance, getAffiliateCommissionBalance, getAffiliateInfo } from '@/api/affiliate';
+import { useRouter } from 'vue-router';
 
-const { t } = useI18n()
-const route = useRoute()
-const navigationData = ref([])
+const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const navigationData = ref([]);
 const mainNavigationData = [
   'Dashboard',
   'Transfer',
@@ -164,8 +118,8 @@ const setActiveNav = () => {
       // referred icon is out of component scope
       // thus unable to style within component directly
       const iconEl = document.querySelector(`symbol#icon-${c.icon} > path`)
-      const activeIconColor = '#3f8cff'
-      const defaultIconColor = '#7D8592'
+      const activeIconColor = '#f2c46f'
+      const defaultIconColor = '#1e95ba'
       c.isMenuShow = true
       if (c.path === currentPath) {
         c.active = true
@@ -177,33 +131,13 @@ const setActiveNav = () => {
     })
   })
 }
-// const toggleExpansion = () => {
-//   isExpanded.value = !isExpanded.value
-//   if (mainNavigationData && navigationData.value) {
-//     navigationData.value.forEach((navItem, i) => {
-//       navItem.children[i].isMainNav = true
-//     })
-//     mainNavigationData.forEach((item) => {
-//     // Assuming navigationData is an array of objects with a 'title' property
-//       const foundItem = navigationData.value.find((navItem) => navItem.title === item);
-//       if (foundItem && !isExpanded.value) {
-//         foundItem.value = foundItem
-//         navigationData.value.forEach((navItem, i) => {
-//           navItem.children[i].isMainNav = false
-//           if (navItem.children[i].title === foundItem.children[i].title) {
-//             navItem.children[i].isMainNav = true
-//           }
-//         })
-//       }
-//     });
-//   }
-// }
+
 const toggleExpansion = () => {
   isExpanded.value = !isExpanded.value
   if (!isExpanded.value) {
     navigationData.value.forEach(item => {
       item.children.forEach(childItem => {
-        childItem.isMenuShow = true
+        childItem.isMenuShow = false
         childItem.isMainNav = false
         mainNavigationData.forEach(matchingItem => {
           if (matchingItem === childItem.label) {
@@ -226,6 +160,12 @@ const checkMenu = nav => {
     child.isMenuShow = !child.isMenuShow
   })
 }
+
+const logout = async () => {
+  await store.dispatch(UserActionTypes.ACTION_LOGOUT);
+  router.push("/kr/login");
+}
+
 const getNavigationData = () => {
   if (parseInt(store.state.user.siteId) === 5) {
     navigationData.value = [
@@ -325,14 +265,6 @@ const getNavigationData = () => {
             isMainNav: true,
             icon: 'money-bag',
           },
-          // {
-          //   path: '/withdraw-request',
-          //   title: t('menu.Bank Withdrawal'),
-          //   label: 'Bank Withdrawal',
-          //   active: false,
-          //   isMainNav: true,
-          //   icon: 'form-w-pencil',
-          // },
           {
             path: '/withdraw',
             title: t('fields.affiliateWithdraw'),
@@ -428,18 +360,6 @@ const getNavigationData = () => {
         display: true,
         path: '/personal',
         children: [
-          // {
-          //   path: '/vip',
-          //   title: 'VIP专享',
-          //   active: false,
-          //   icon: 'link',
-          // },
-          // {
-          //   path: '/overflow',
-          //   title: '溢出申请',
-          //   active: false,
-          //   icon: 'form',
-          // },
           {
             path: '',
             title: t('fields.personalInfo'),
@@ -494,25 +414,7 @@ onMounted(async () => {
   )
 
   getNavigationData()
-  // watch(isExpanded, () => {
-  //   if (mainNavigationData && navigationData.value) {
-  //     mainNavigationData.forEach((item) => {
-  //     // Assuming navigationData is an array of objects with a 'title' property
-  //       const foundItem = navigationData.value.find((navItem) => navItem.title === item);
-  //       if (foundItem && !isExpanded.value) {
-  //         foundItem.value = foundItem
-  //         navigationData.value.forEach((navItem, i) => {
-  //           navItem.children[i].isMainNav = false
-  //           console.log(navItem.children[i].title)
-  //           console.log(foundItem.children)
-  //           if (navItem.children[i].title === foundItem.children[i].title) {
-  //             navItem.children[i].isMainNav = true
-  //           }
-  //         })
-  //       }
-  //     });
-  //   }
-  // })
+
   setActiveNav()
   if (parseInt(store.state.user.siteId) === 10) {
     const { data: affBal } = await getAffiliateBalance(store.state.user.id);
@@ -534,26 +436,28 @@ watch(languageVal, newVal => {
 
 <style scoped lang="scss">
 .sidebar {
-  background: white;
+  background: #344151;
   display: flex;
   flex-direction: column;
-  border-radius: 1rem;
+  line-height: 1rem;
+
+
   &.expanded {
-    width: 90%;
-    max-width: 250px;
+    width: 100%;
+    max-width: 200px;
+
     .route-wrapper {
-      padding: 0.5rem 0 0.5rem 0;
-      .route-container.active {
-        border-right: 5px solid #3f8cff;
-      }
       .route-content {
         display: flex;
         gap: 0.5rem;
-        padding: 0.5rem 2rem 0.5rem 0.5rem;
-        margin: 0px 10px;
+
+        .route-label {
+          font-family: 'NanumNeo';
+        }
       }
     }
   }
+
   .expansionbtn {
     position: absolute;
     right: -10px;
@@ -562,6 +466,7 @@ watch(languageVal, newVal => {
     padding: 5px;
     top: -10px;
   }
+
   .mobilehamburg {
     display: none;
     position: fixed;
@@ -570,92 +475,131 @@ watch(languageVal, newVal => {
     padding: 0;
     border: 0;
     margin-left: 0;
+
     &:hover,
     &:focus {
       background: unset;
     }
   }
-  .home {
-    display: flex;
-    gap: 0.5rem;
-    margin: 0 0 0 2rem;
-
-    svg {
-      width: 1.5rem;
-    }
-
-    span {
-      font-size: 1.25rem;
-    }
-  }
-
-  .route-wrapper-home {
-    margin: 0 0 1rem 0;
-
-    .route {
-      color: #7d8592;
-      text-decoration: none;
-    }
-  }
 
   .navigation {
+    color: #fff;
     font-size: 1rem;
+
+    .logo-section {
+      display: flex;
+      background: url('../../assets/images/kr/kr-logo-long.png') no-repeat center center;
+      background-size: contain;
+      width: 100%;
+      height: 60px;
+      background-color: #192226;
+    }
+
     &::-webkit-scrollbar-track {
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       background-color: #ffffff;
     }
+
     &::-webkit-scrollbar {
       width: 5px;
       background-color: #ffffff;
     }
+
     &::-webkit-scrollbar-thumb {
       background-color: #98c0fc;
     }
 
     .route-title {
-      margin: 1rem;
-      font-weight: bold;
+      padding: 12px 13px;
       display: flex;
       justify-content: space-between;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     }
 
-    .route-title:has(~ .active) {
-      color: #3f8cff;
+    .row-item {
+      font-family: 'NanumNeo';
+      color: #fff;
+      font-size: 13px;
+      border-bottom: 1px solid #4d5a6a;
+
+      background-color: #344151;
+      padding: 12px 13px;
+      box-sizing: border-box;
+      cursor: pointer;
+      position: relative;
+
+      .icon-wrapper {
+        display: flex;
+        gap: 10px;
+      }
+    }
+
+    .name-and-logout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .name-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .nickname {
+          color: #b7b1b5;
+          font-size: 10px;
+        }
+      }
+
+      .action-wrapper {
+        display: flex;
+        gap: 10px;
+
+        >div {
+          align-items: center;
+        }
+      }
     }
 
     .route-wrapper {
-      // padding: 0.5rem 0 0.5rem 0;
-      padding: 0;
-      font-family: PFMed;
-
       .route {
-        color: #7d8592;
+        color: #fff;
         text-decoration: none;
-        font-size: 16px;
+        font-size: 13px;
       }
 
       .route-content {
         display: flex;
-        padding: 10px;
-        margin: 0 10px;
+        gap: 0.5rem;
+        background-color: #252e3b;
+        padding: 10px 10px 10px 20px;
+      }
 
-        svg {
-          width: 2rem;
-        }
+      &:last-child .route-title {
+        border: none;
       }
     }
   }
 
-  .route-container.active {
+  .route-container {
+    height: 0px;
+    overflow: hidden;
+
+    &.show-menu {
+      height: auto;
+    }
   }
 
   .route-container.active .route-content {
-    background-color: #ecf3ff;
-    border-radius: 0.5rem;
-    color: #3f8cff;
+    color: #f2c46f;
   }
+
   .mini-profile {
-    margin: 5px 20px;
+    padding: 12px 13px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     .name {
       display: flex;
       justify-content: center;
@@ -664,14 +608,23 @@ watch(languageVal, newVal => {
       border-radius: 0.5rem;
       margin-bottom: 10px;
     }
-  }
-  .route-content {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.5rem 2rem 0.5rem 0.5rem;
-    margin: 0px 10px;
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+
+      .key {
+        text-align: left;
+      }
+
+      .value {
+        text-align: right;
+      }
+    }
   }
 }
+
 @media (max-width: 992px) {
   .sidebar {
     .expansionbtn {
@@ -679,10 +632,12 @@ watch(languageVal, newVal => {
       top: -35px;
       display: none;
     }
+
     .mobilehamburg {
       display: block;
     }
   }
+
   .navbar .avatar-container {
     display: none;
   }

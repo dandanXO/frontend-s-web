@@ -1,15 +1,7 @@
 <template>
-  <div :="$attrs">
-    <div
-      v-if="isExternal"
-      :style="styleExternalIcon"
-      class="svg-external-icon svg-icon"
-    />
-    <svg
-      v-else
-      :class="svgClass"
-      aria-hidden="true"
-    >
+  <div :="$attrs" style="display:flex;align-items:center;">
+    <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" />
+    <svg v-else :class="svgClass" aria-hidden="true">
       <use :xlink:href="iconName" />
     </svg>
   </div>
@@ -64,7 +56,7 @@ export default {
 
 .svg-external-icon {
   background-color: currentColor;
-  mask-size: cover!important;
+  mask-size: cover !important;
   display: inline-block;
 }
 </style>

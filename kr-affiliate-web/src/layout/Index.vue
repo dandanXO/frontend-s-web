@@ -4,11 +4,7 @@
       <div class="fixed-header">
         <Navbar />
       </div>
-      <div
-        v-if="classObj.mobile && sidebar.opened"
-        class="drawer-bg"
-        @click="handleClickOutside"
-      />
+      <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
       <div class="main-container">
         <Sidebar class="sidebar-container" />
         <AppMain />
@@ -174,9 +170,10 @@ export default defineComponent({
     bottom: 0;
     left: 0;
     height: calc(100vh - 43px);
-    padding: 10px 0;
+    padding: 0;
     border-radius: 0;
   }
+
   :deep(.navigation) {
     height: 100%;
     overflow: auto;
@@ -194,8 +191,10 @@ export default defineComponent({
       transform: translate3d(-$sideBarWidth, 0, 0);
     }
   }
+
   .sidebar-container {
     left: -20%;
+
     &.expanded {
       left: 0;
     }
@@ -207,6 +206,7 @@ export default defineComponent({
 }
 
 .withoutAnimation {
+
   .main-container,
   .sidebar-container {
     transition: none;
