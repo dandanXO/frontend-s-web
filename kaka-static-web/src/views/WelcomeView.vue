@@ -183,7 +183,7 @@ const ui = uiStore()
         .slide-title {
             font-weight: 900;
             font-size: 24px;
-            color: #9AA8CB;
+            color: #ffffff;
         }
         .slide-content {
             text-align: center;
@@ -257,11 +257,12 @@ const ui = uiStore()
     background: url("../assets/home/auth/welcome-bg.png") no-repeat center center;
     background-size: cover;
     display: flex;
+    background-color: #1e212c;
     .logo {
         font-size: 50px;
         font-weight: bold;
         color: #ffffff;
-        text-shadow: 5px 5px 25px #5894ff;
+        text-shadow: 5px 5px 25px #ff5858;
         flex-direction: column;
         display: flex;
         justify-content: center;

@@ -653,6 +653,12 @@ svg {
   display: none;
 }
 
+.q-carousel {
+  .q-carousel__arrow {
+    color: #000;
+  }
+}
+
 .body--dark {
   --q-primary: #{$primary-dark};
 
@@ -742,6 +748,12 @@ svg {
 
   .q-drawer {
     background: $background-dark;
+  }
+
+  .q-carousel {
+    .q-carousel__arrow {
+      color: $white;
+    }
   }
 
   .common-sm-btn {

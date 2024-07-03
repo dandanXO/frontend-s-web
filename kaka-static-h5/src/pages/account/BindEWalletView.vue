@@ -29,7 +29,7 @@
         </q-input>
       </div>
 
-      <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
+      <q-card-actions style="margin: 0 auto" align="center" class="bg-new-dark text-white">
         <q-btn style="width: 100%" class="common-md-btn" flat label="发送验证码" @click="onCaptchaSubmit()" />
       </q-card-actions>
     </q-card>
@@ -47,7 +47,7 @@
         <p>操作成功，请查看手机验证码！</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="bg-new-dark text-white">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -65,7 +65,7 @@
         <p>{{ captchaFailedMessage || "验证码校验失败，请刷新" }}</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="bg-new-dark text-white">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -449,7 +449,7 @@ onMounted(() => {
       .q-field__control {
         border-radius: 0.5rem;
         background: #f7f8fb;
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
       }
 
       .get-otp-btn {

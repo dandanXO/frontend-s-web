@@ -19,7 +19,7 @@
               <template v-else>
                 {{ p.label }}
                 </template> -->
-                {{ $t(p.label)}}
+              {{ $t(p.label) }}
             </div>
           </div>
         </div>
@@ -59,9 +59,17 @@
             :style="'background-image: url(' + imgURL + selectedPromo.mobileImgUrl + ')'"
           />
         </div>
+        <div class="promo-content-inner">
+          <div class="content-title">{{ selectedPromo.title }}</div>
+          <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
+          <div class="content-date" v-if="parsedParamDate">
+            <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
+            {{ parsedParamDate }}
+          </div>
+        </div>
+
         <div class="inner" :class="{ hasMaxWidth: !isSpecialPromo }">
           <div v-if="selectedPromo.hasPromo" :class="{ 'hot-promo': !isSpecialPromo }">
-            <!-- {{ selectedPromo.id = 40 }} -->
             <HotPromotion :list="selectedPromo" />
           </div>
           <div
@@ -86,7 +94,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { RiFunctionLine } from 'vue-remix-icons'
 import { loadPromo } from "@/api/index/promo.js";
@@ -112,7 +120,7 @@ export default defineComponent({
     });
     const isSpecialPromo = ref(false);
     const isSpecialPromoBanner = ref(false);
-    const promoTypes = ref([  
+    const promoTypes = ref([
       {
         value: "ALL",
         label: 'promo.all',
@@ -226,6 +234,22 @@ export default defineComponent({
       loadAll();
     });
 
+    // promo param split.
+    const parsedParam = computed(() => {
+      try {
+        if (selectedPromo.value && selectedPromo.value.param) {
+          return JSON.parse(selectedPromo.value.param);
+        }
+        return {};
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return {};
+      }
+    });
+
+    const parsedParamSub = computed(() => parsedParam.value.sub || '');
+    const parsedParamDate = computed(() => parsedParam.value.date || '');
+
     // onMounted(() => {
     //   loadAll()
     //   if (route.query) {
@@ -245,7 +269,9 @@ export default defineComponent({
       imgURL,
       store,
       isSpecialPromo,
-      isSpecialPromoBanner
+      isSpecialPromoBanner,
+      parsedParamSub,
+      parsedParamDate
     }
   },
 });
@@ -308,7 +334,7 @@ export default defineComponent({
         display: flex;
         justify-content: flex-start;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
-        border-bottom: 3px solid #FFFFFF0D;
+        border-bottom: 3px solid #ffffff0d;
         .type-list {
           display: flex;
           justify-content: center;
@@ -340,16 +366,14 @@ export default defineComponent({
               position: relative;
               &:after {
                 content: "";
-                background: #70BC62;
+                background: #70bc62;
                 height: 2px;
                 width: 100%;
                 position: absolute;
                 bottom: 0;
                 border-radius: 4px;
                 left: 0;
-
               }
-
 
               img {
                 filter: grayscale(0);
@@ -569,6 +593,34 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+}
+
+// promo content-inner
+.promo-content-inner {
+  padding: 12px 0px;
+  margin: 0 12px;
+  border-bottom: 1px solid #ffffff1a;
+  .content-title {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .content-para {
+    font-size: 16px;
+    padding-top: 4px;
+    color: #9f9f9f;
+  }
+  .content-date {
+    padding-top: 6px;
+    color: #9f9f9f;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      display: block;
+      width: 30px;
     }
   }
 }

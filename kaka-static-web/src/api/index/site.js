@@ -7,7 +7,7 @@ export function getSiteParamFromServer() {
 
 export function getAppDownloadUrlFromServer() {
   return cached.get("APPDOWNLOAD_URL", () =>
-    server.REST.get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
+    server.REST.get("/app/getAppData?siteCode=ka2&appType=ALL_SITE")
   );
 }
 

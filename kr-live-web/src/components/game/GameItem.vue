@@ -1,5 +1,5 @@
 <template>
-    <q-skeleton v-show="!isImgFullyLoaded" type="rect" style="width:200px;height:365px;" class="scooped-skeleton" />
+    <q-skeleton v-show="!isImgFullyLoaded" type="rect" class="scooped-skeleton" />
     <div data-aos="zoom-in" v-show="isImgFullyLoaded" :class="`game-item ${game.name.toLowerCase()}`"
         @click="() => props.onClickGameItem(game)">
         <div class="game-item-content">

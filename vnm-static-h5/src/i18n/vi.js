@@ -588,8 +588,10 @@ export default {
     dv_bank_card_no: "Số thẻ ngân hàng",
     dv_deposit_amount: "Số tiền nạp",
     dv_submit: "Gửi",
-    dv_copy: "Sao chép",
+    dv_copy: "Copy",
     dv_copied: "Đã sao chép",
+    dv_branch: "Chi nhánh",
+    dv_remark: "Ghi chú",
 
     // affiliate
     affiliate_title: "Chương trình liên kết",

@@ -103,3 +103,15 @@ export const getVisitorId = async () => {
     return sidParam;
   }
 };
+
+export const throttle = (fn, delay = 500) => {
+  let timer = null;
+
+  return () => {
+    if (timer) return;
+    timer = setTimeout(() => {
+      fn();
+      timer = null;
+    }, delay);
+  };
+};

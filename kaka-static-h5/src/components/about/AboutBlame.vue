@@ -23,8 +23,8 @@
         <li>{{ $t("lang.about.advice4") }}</li>
         <li>{{ $t("lang.about.advice5") }}</li>
       </ul>
-      <span class="content">{{ $t("lang.about.tf88SupportTitle") }}</span>
-      <p>{{ $t("lang.about.tf88SupportContent") }}</p>
+      <span class="content">{{ $t("lang.about.KAKASupportTitle") }}</span>
+      <p>{{ $t("lang.about.KAKASupportContent") }}</p>
       <div class="note" style="color: orange; font-size: 16px">
         {{ $t("lang.about.ageRestriction") }}
       </div>

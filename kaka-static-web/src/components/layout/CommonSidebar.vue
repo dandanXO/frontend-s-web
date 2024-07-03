@@ -7,7 +7,7 @@
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
-        <span style="margin-left: 5px">vnsupport@tf88.com</span>
+        <span style="margin-left: 5px">vnsupport@kaka.com</span>
       </div>
       <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
@@ -21,7 +21,7 @@
       </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <span style="margin-left: 5px">@TF88_CS</span>
+        <span style="margin-left: 5px">@KAKA_CS</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
@@ -100,13 +100,14 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer, getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { uiStore } from "@/store/ui";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   components: {
@@ -363,13 +364,17 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    color: #9AA8CB;
+    color: #b20000;
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;
 
     &:hover {
-      background-color: #e5f5ff;
+      background-color: #ffe5e5;
+    }
+    img {
+      
+      width: 40px;
     }
   }
 }
@@ -394,13 +399,16 @@ export default defineComponent({
     color: #000;
     gap: 5px;
     cursor: pointer;
-
+    img {
+      
+      width: 50px;
+    }
     &:hover {
       img {
         filter: brightness(1.05);
       }
 
-      color: #4e93ff;
+      color: #ff4e4e;
     }
   }
 }

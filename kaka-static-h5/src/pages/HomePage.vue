@@ -318,37 +318,37 @@
         </template>
         <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
-      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/fish-icon.png" />
-        </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
-      </div>
+<!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
+<!--        <template v-if="tab === 'fishing'">-->
+<!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <img src="../assets/images/home/games/fish-icon.png" />-->
+<!--        </template>-->
+<!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
+<!--      </div>-->
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/minigame-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/minigame-icon.png" />
-        </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">
-          {{ $t("lang.menu_minigame") }}
-        </span>
-      </div>
-      <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="fishing-platform">
+<!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
+<!--        <template v-if="tab === 'casual'">-->
+<!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
+<!--        </template>-->
+<!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
+<!--          {{ $t("lang.menu_minigame") }}-->
+<!--        </span>-->
+<!--      </div>-->
+      <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="hashgame-platform">
         <template v-if="tab === 'hashgame'">
           <img src="../assets/images/home/games/hashgame-icon-active.png" />
         </template>
         <template v-else>
           <img src="../assets/images/home/games/hashgame-icon.png" />
         </template>
-        <span :class="tab === 'others' && 'active'">{{ $t("lang.menu_others") }}</span>
+        <span :class="tab === 'hashgame' && 'active'" style="top:30px;">{{ $t("lang.menu_hashgame") }}</span>
       </div>
-      <div @click="selectTab('others')" class="game-platform btn-pointer" id="fishing-platform">
+      <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
           <img src="../assets/images/home/games/others-icon-active.png" />
         </template>
@@ -640,7 +640,7 @@
 
   <div class="home-news">
     <div class="home-news-title-section">
-      <div class="news-title">{{ $t("lang.tf88_news") }}</div>
+      <div class="news-title">{{ $t("lang.KAKA_news") }}</div>
       <div class="news-see-all">
         <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToNewsPage">
           {{ $t("lang.see_all") }}
@@ -690,15 +690,15 @@
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a href="mailto:vnsupport@KAKA.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
       <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
-      <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
+      <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
       <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>
-      <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
+      <a href="https://www.facebook.com/KAKAvnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
       </a>
     </div>
@@ -1082,6 +1082,10 @@ export default defineComponent({
     };
 
     const onHomeScroll = (position) => {
+      if (isSelecting.value === true) {
+        return;
+      }
+
       if (route.path === "/") {
         if (!isScrolling.value) {
           const rightPlatform = document.getElementById("id-right-platform");
@@ -1113,11 +1117,11 @@ export default defineComponent({
           var windowHeight = window.innerHeight;
 
           if (windowHeight + 15 > bodyOffset.bottom) {
-            tab.value = "cockfight";
+            tab.value = "others";
           } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
-            tab.value = "fishing";
+            tab.value = "others";
           } else if (0 > positionTop6half - 5 && positionTop7 >= blockHeight) {
-            tab.value = "casual";
+            tab.value = "hashgame";
           } else if (0 > positionTop6 - 5 && positionTop6half >= blockHeight) {
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
@@ -1155,15 +1159,16 @@ export default defineComponent({
       if (tab === "esport") {
         scrollToSlide("esport-lists");
       }
-      if (tab === "fishing") {
+      if (tab === "fishing" || tab === "others") {
         scrollToSlide("fishing-lists");
       }
       if (tab === "cockfight") {
         scrollToSlide("cockfight-lists");
       }
-      if (tab === "casual") {
+      if (tab === "casual" || tab === "hashgame") {
         scrollToSlide("casual-lists");
       }
+
     };
 
     const onSlideChange = (swiper) => {
@@ -1509,9 +1514,19 @@ export default defineComponent({
     };
 
     const tab = ref("sport");
+    const isSelecting = ref(false);
+    const timerTimeout = ref(null);
     const selectTab = (item) => {
+      if (timerTimeout.value) {
+        clearTimeout(timerTimeout.value);
+      }
+      isSelecting.value = true;
       tab.value = item;
       setSelectedSwiper(item);
+
+      timerTimeout.value = setTimeout(() => {
+        isSelecting.value = false;
+      }, 750);
     };
 
     const liveTabs = ref("");
@@ -1606,7 +1621,7 @@ export default defineComponent({
 
     const getAppDownloadUrl = () => {
       api
-        .get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
+        .get("/app/getAppData?siteCode=ka2&appType=ALL_SITE")
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
@@ -1727,7 +1742,7 @@ export default defineComponent({
     const newsDetail_05 = ref([]);
 
     const goToNewsPage = () => {
-      window.open("http://tf88club.net");
+      window.open("http://KAKAclub.net");
     };
 
     const gotoPromo = (banner) => {
@@ -2142,6 +2157,7 @@ export default defineComponent({
 .home-news {
   width: calc(100% - 2rem);
   margin: 0 auto 32px;
+  display: none;
 
   .home-news-title-section {
     margin-bottom: 12px;
@@ -2151,7 +2167,7 @@ export default defineComponent({
     .news-title {
       font-size: 18px;
       font-weight: 700;
-      color: #313441;
+      color: #333333;
     }
   }
 

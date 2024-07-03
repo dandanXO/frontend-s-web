@@ -43,7 +43,7 @@ export default {
     rebate_claim_now: "Yêu cầu ngay",
     not_logged_in: "Bạn chưa đăng nhập",
     login_register_to_view: "Đăng nhập để kiểm tra số dư",
-    tf88_news: "Tin tức TF88",
+    KAKA_news: "Tin tức KAKA",
     see_all: "Đọc thêm",
     play_now: "Chơi Ngay",
     bet_now: "Cược Ngay",
@@ -82,7 +82,7 @@ export default {
 
     // login page
     login_title: "BẠN ĐÃ SẴN SÀNG",
-    login_desc: "ĐỂ CHIẾN THẮNG CÙNG TF88",
+    login_desc: "ĐỂ CHIẾN THẮNG CÙNG KAKA",
     please_enter_username: "Vui lòng nhập tên tài khoản",
     username: "Tên tài khoản",
     length_between_6_12: "Chiều dài nên từ 6-12",
@@ -257,7 +257,7 @@ export default {
     share_para_title: "Giới thiệu bạn bè",
     share_tnc_para_01: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8).",
     share_tnc_para_02:
-      "Chỉ cần giới thiệu thêm bạn tham gia tại TF88, bạn sẽ nhận được 300 VNDP trên mỗi một người giới thiệu thành công.",
+      "Chỉ cần giới thiệu thêm bạn tham gia tại KAKA, bạn sẽ nhận được 300 VNDP trên mỗi một người giới thiệu thành công.",
     share_tnc_para_03: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây:",
     share_tnc_para_03_a: "Thành viên giới thiệu (Khách hàng)",
     share_tnc_para_03_a_i: "Tổng tiền cược hợp lệ tối thiểu từ 10.000 VNDP trở lên",
@@ -265,7 +265,7 @@ export default {
     share_tnc_para_03_b: "Thành viên được giới thiệu(Bạn của bạn):",
     share_tnc_para_03_b_i:
       "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định",
-    share_tnc_para_03_b_ii: "Chưa từng đăng ký tại TF88 và không có bất kỳ tài khoản nào khác tại TF88",
+    share_tnc_para_03_b_ii: "Chưa từng đăng ký tại KAKA và không có bất kỳ tài khoản nào khác tại KAKA",
     share_tnc_para_03_b_iii:
       "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP.",
     share_tnc_para_04:
@@ -276,8 +276,8 @@ export default {
     share_tnc_para_07:
       "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
     share_tnc_para_08:
-      "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước.",
-    share_tnc_para_09: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại TF88.",
+      "KAKA có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước.",
+    share_tnc_para_09: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại KAKA.",
     share_tnc_para_10: "Điều khoản &amp; Điềukiện khuyến mãi chung được áp dụng.",
 
     // transfer
@@ -400,7 +400,7 @@ export default {
     bd_note_para_01:
       'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để" kịp thời xử lý. Chân thành cảm ơn!',
     bd_note_para_02:
-      "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! TF88 xin chân thành cảm ơn!",
+      "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!",
 
     // mine
     version_no: "Phiên bản",
@@ -514,24 +514,31 @@ export default {
     vip_24_7_cc_team: "Đội ngũ chăm sóc sách hàng VIP 24/7",
     vip_invitation_to_ee: "Thư mời tham gia các sự kiện độc quyền",
     vip_terms_title: "Quy tắc và Điều khoản",
-    vip_terms_para_01:
-      "Chương trình áp dụng cho tất cả các thành viên có tài khoản VNDP hợp lệ tại TF88. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của người chơi từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
-    vip_terms_para_02:
-      "Hệ thống sẽ tự động nâng cấp cấp độ VIP của tất cả các thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, miễn là tổng số tiền cược hợp lệ của thành viên phải đủ điều kiện để tiến lên cấp độ VIP tương ứng. Khuyến mãi sẽ không cần tuân thủ từng cấp độ VIP.",
-    vip_terms_para_03:
-      "Tiền thưởng Nâng cấp: sau khi thành viên được nâng cấp lên một cấp độ VIP mới, thành viên có thể nhấp vào nút NHẬN trên trang VIP. Số tiền thưởng sẽ dựa trên cấp độ VIP tương ứng và số tiền thưởng cần phải qua 1 vòng cược trước khi rút tiền.",
-    vip_terms_para_04:
-      "Tiền thưởng Nâng cấp không thể được nhận cùng lúc với Tiền thưởng Hàng tháng. Nếu thành viên được thăng cấp VIP trong tháng này, thành viên sẽ nhận được Tiền thưởng Nâng cấp. Hệ thống sẽ xem xét Tiền thưởng Hàng tháng cho các tài khoản chưa được thăng cấp VIP trong tháng này và đã đáp ứng yêu cầu để duy trì cấp độ VIP.",
-    vip_terms_para_05:
-      "Tiền thưởng Hàng tháng: Thành viên cần đáp ứng các yêu cầu duy trì cấp độ VIP hiện tại trước khi nhận tiền thưởng. (Ví dụ: Nếu thành viên ở cấp độ VIP3, sau đó trong tháng cần đạt ít nhất 600.000 VNDP tổng cược trong tháng). Sau khi đủ điều kiện, thành viên có thể nhấp vào nút NHẬN trên trang VIP vào ngày đầu tiên của tháng. Số tiền thưởng dựa trên cấp độ VIP tương ứng và số tiền thưởng cần phải qua 3 vòng cược trước khi rút tiền.",
-    vip_terms_para_06:
-      "Tiền thưởng Sinh nhật: Trong tháng sinh nhật, thành viên có thể liên hệ với Dịch vụ Khách hàng để được xác minh và nhận tiền thưởng tương ứng với cấp độ VIP hiện tại của thành viên. Lưu ý: tất cả thông tin xác minh với Dịch vụ Khách hàng",
-    vip_terms_para_07:
-      "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
-    vip_terms_para_08:
-      "Tất cả cược hòa, cược HỦY, cược 2 chiều, kèo châu Âu dưới 1,75, cược châu Á dưới 0,75, Trò chơi số, Thể thao ảo, Jackpot tiến triển RNG, Máy đánh bạc tiến triển RNG sẽ không được tính. doanh thu cược cho chương trình này. Điều khoản và điều kiện chung của chương trình áp dụng.",
-    vip_terms_para_09:
-      "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này vào bất kỳ thời điểm nào mà không cần thông báo trước.",
+    vip_terms_para_01: "Thành viên khi đủ điều kiện thăng cấp, hệ thống sẽ cập nhật ngay cấp VIP mới. Không giới hạn số lần thăng cấp VIP và số lần nhận tiền thưởng thăng VIP mỗi ngày.",
+    vip_terms_para_02: "Tiền thưởng thăng cấp: Sau khi được thăng cấp VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP để nhận tiền thưởng thăng cấp.",
+    vip_terms_para_03: "Điều kiện bảo lưu: Thành viên cần duy trì các cược hợp lệ như trên trong vòng 30 ngày sau khi thăng cấp để duy trì cấp độ, nếu các cược hợp lệ không được hoàn thành trong vòng 30 ngày sẽ bị hạ 1 cấp. Hệ thống kết thúc thống kê vào lúc 23:59 ngày của ngày thứ 30.",
+    vip_terms_para_04: "Tiền thưởng hàng tháng: Trong vòng từ lúc 01:00 ngày 01 đến 23:59 ngày 07 hàng tháng, thành viên cần liên hệ CSKH 24/7 để nhận tiền thưởng. Nếu quá hạn xem như từ bỏ.",
+    vip_terms_para_05: "Tiền thưởng sinh nhật: Thành viên sau khi đăng ký tài khoản, có lịch sử nạp tiền từ 15 ngày trở lên, cần liên hệ CSKH 24/7 ngay trong ngày sinh nhật để nhận thưởng.",
+    vip_terms_para_06: "Mỗi thành viên chỉ có thể nhận được 1 lần thưởng thăng cấp cho mỗi cấp VIP.",
+    vip_terms_para_07: "Tiền thưởng chỉ cần 1 vòng cược là có thể rút tiền.",
+    vip_terms_para_08: "Chương trình thành viên VIP này có thể áp dụng chung với các khuyến mãi khác của KAKAGAME.",
+    vip_terms_para_09: "Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKAGAME bảo lưu quyền giải thích cuối cùng, cũng như thay đổi, từ chối, hủy bỏ chương trình thành viên VIP này mà không cần báo trước.",
+    vip_tableHeader1: "Cấp VIP",
+    vip_tableHeader2: "Tổng Cược Hợp Lệ",
+    vip_tableHeader3: "Nạp Tích Lũy",
+    vip_tableHeader4: "Điều Kiện Bảo Lưu",
+    vip_tableHeader5: "Thưởng Thăng Cấp",
+    vip_tableHeader6: "Thưởng Tháng",
+    vip_tableHeader7: "Quà Sinh Nhật",
+    vip_tableHeader8: "Số Lần Rút Hàng Ngày",
+    vip_tableHeader9: "Hạn Mức Rút Hàng Ngày",
+    vip_header1: "THĂNG VIP HOÀNG GIA, THẢ GA NHẬN THƯỞNG",
+    vip_target: "ĐỐI TƯỢNG THAM GIA: ",
+    vip_targetdet: 'TẤT CẢ CÁC THÀNH VIÊN CỦA KAKAGAME',
+    vip_duration: "THỜI GIAN DIỄN RA: ",
+    vip_durationdet: "BẮT ĐẦU TỪ LÚC ĐĂNG KÝ TÀI KHOẢN ĐẾN KHI CÓ THÔNG BÁO KẾT THÚC",
+    vip_note: "Chú ý: ",
+    vip_notedet: '1 điểm = 1000VND',
     vip_sport_rebate: "Thể Thao",
     vip_esport_rebate: "E-Sport",
     vip_livecasino_rebate: "Live Casino",
@@ -611,7 +618,7 @@ export default {
     affiliate_01_para_03:
       "Hoa hồng sẽ được kiểm tra bởi ngày 5 của mỗi tháng, phát hành vào ngày 10 của mỗi tháng sử dụng loại tiền VND. Từ ngày 10 trở đi, đối tác có thể tiến hành rút hoa hồng của mình.",
     affiliate_01_para_04:
-      "TF88 theo dõi tất cả các người dùng của đối tác và có tiêu chí riêng (mức độ rủi ro, số tiền nạp, chỉ số cược...) khi đánh giá những người dùng này. Nếu họ không đáp ứng tiêu chí của chúng tôi, chúng tôi có quyền từ chối thanh toán hoa hồng cho đối tác.",
+      "KAKA theo dõi tất cả các người dùng của đối tác và có tiêu chí riêng (mức độ rủi ro, số tiền nạp, chỉ số cược...) khi đánh giá những người dùng này. Nếu họ không đáp ứng tiêu chí của chúng tôi, chúng tôi có quyền từ chối thanh toán hoa hồng cho đối tác.",
     affiliate_01_para_05: "Mỗi đối tác duy nhất phải đăng ký chỉ một Email, số điện thoại và Tên",
     affiliate_01_para_06:
       "Đại lý cũ mà giải quyết hoa hồng phải có không ít hơn 3 thành viên mới hoạt động trong tháng hiện tại, và tổng số thành viên hoạt động không được ít hơn năm.",
@@ -1309,31 +1316,31 @@ export default {
       affiliate: "Đại Lý",
       aboutus: "Về TFGaming",
       welcome:
-        "Chào mừng bạn đến với TF88 Gaming! Chúng tôi là một trong những nhà cung cấp cá cược trực tuyến hàng đầu tại Việt Nam, với sứ mệnh mang đến cho khách hàng giải trí tuyệt vời và cơ hội kiếm được nhiều phần thưởng.",
+        "Chào mừng bạn đến với KAKA Gaming! Chúng tôi là một trong những nhà cung cấp cá cược trực tuyến hàng đầu tại Việt Nam, với sứ mệnh mang đến cho khách hàng giải trí tuyệt vời và cơ hội kiếm được nhiều phần thưởng.",
       product: "SẢN PHẨM",
       productDescription:
-        "TF88 cung cấp một loạt các sản phẩm cá cược trực tuyến bao gồm sòng bạc trực tuyến, sổ sách thể thao, máy đánh bạc, e-sports và xổ số... Với những sản phẩm đa dạng này, chúng tôi tin rằng khách hàng sẽ có nhiều cơ hội để tìm thấy trò chơi phù hợp với sở thích và nhu cầu giải trí của mình.",
+        "KAKA cung cấp một loạt các sản phẩm cá cược trực tuyến bao gồm sòng bạc trực tuyến, sổ sách thể thao, máy đánh bạc, e-sports và xổ số... Với những sản phẩm đa dạng này, chúng tôi tin rằng khách hàng sẽ có nhiều cơ hội để tìm thấy trò chơi phù hợp với sở thích và nhu cầu giải trí của mình.",
       liquidity: "DUNG LƯỢNG",
       liquidityDescription:
-        "Sở hữu hệ thống thanh toán linh hoạt và đa dạng thông qua các ngân hàng địa phương, ví điện tử, thẻ di động, Usdt... TF88 cam kết xử lý các giao dịch của khách hàng càng nhanh càng tốt, trên cơ sở đảm bảo thông tin giao dịch tối đa.",
+        "Sở hữu hệ thống thanh toán linh hoạt và đa dạng thông qua các ngân hàng địa phương, ví điện tử, thẻ di động, Usdt... KAKA cam kết xử lý các giao dịch của khách hàng càng nhanh càng tốt, trên cơ sở đảm bảo thông tin giao dịch tối đa.",
       security: "BẢO MẬT",
       securityDescription:
-        "TF88 sử dụng các công nghệ bảo mật tiên tiến để đảm bảo rằng thông tin của khách hàng được bảo vệ một cách tốt nhất. Chúng tôi thực hiện các biện pháp bảo mật cần thiết để bảo vệ thông tin cá nhân và quyền riêng tư của các thành viên. Vì vậy, hãy yên tâm rằng thông tin bạn cung cấp luôn an toàn trong hệ thống dữ liệu bảo mật của chúng tôi.",
+        "KAKA sử dụng các công nghệ bảo mật tiên tiến để đảm bảo rằng thông tin của khách hàng được bảo vệ một cách tốt nhất. Chúng tôi thực hiện các biện pháp bảo mật cần thiết để bảo vệ thông tin cá nhân và quyền riêng tư của các thành viên. Vì vậy, hãy yên tâm rằng thông tin bạn cung cấp luôn an toàn trong hệ thống dữ liệu bảo mật của chúng tôi.",
       promotion: "KHUYẾN MÃI",
       promotionDescription:
-        "Chúng tôi hiểu rằng tỷ lệ cược không luôn đúng như bạn mong muốn, đó là lý do tại sao TF88 đã tạo ra nhiều chương trình khuyến mãi để đảm bảo bạn luôn nhận được ưu đãi tốt nhất trên mỗi cược. Chúng tôi luôn tìm cách tạo ra môi trường chơi game tốt nhất cho khách hàng của mình.",
+        "Chúng tôi hiểu rằng tỷ lệ cược không luôn đúng như bạn mong muốn, đó là lý do tại sao KAKA đã tạo ra nhiều chương trình khuyến mãi để đảm bảo bạn luôn nhận được ưu đãi tốt nhất trên mỗi cược. Chúng tôi luôn tìm cách tạo ra môi trường chơi game tốt nhất cho khách hàng của mình.",
       license: "GIẤY PHÉP",
       licenseDescription:
-        "TF88 được cấp phép bởi North Cagayan (NCGAC) dưới sự điều hành của chính phủ Philippin. Công ty có trụ sở tại Manila, Philippin.",
+        "KAKA được cấp phép bởi North Cagayan (NCGAC) dưới sự điều hành của chính phủ Philippin. Công ty có trụ sở tại Manila, Philippin.",
       collectInformation: "Thu Thập Thông Tin",
       policyMessage:
-        "Trong quá trình thăm quan, hệ thống và trình duyệt của bạn có thể truyền thông tin đến máy chủ của chúng tôi, thông tin này được dùng để thu thập và giúp TF88 luôn cải thiện chất lượng để bạn có trải nghiệm tốt hơn.",
+        "Trong quá trình thăm quan, hệ thống và trình duyệt của bạn có thể truyền thông tin đến máy chủ của chúng tôi, thông tin này được dùng để thu thập và giúp KAKA luôn cải thiện chất lượng để bạn có trải nghiệm tốt hơn.",
       personalInformation:
-        "Thông tin cá nhân của bạn khi đăng ký bao gồm: Họ và tên đầy đủ, email, số điện thoại, ngày sinh và các thông tin khác để TF88 hoàn thiện thông tin của bạn cho quản lý tài khoản.",
+        "Thông tin cá nhân của bạn khi đăng ký bao gồm: Họ và tên đầy đủ, email, số điện thoại, ngày sinh và các thông tin khác để KAKA hoàn thiện thông tin của bạn cho quản lý tài khoản.",
       processingPurposes: "Thông tin của bạn sẽ được xử lý cho nhiều mục đích, bao gồm:",
-      manageProcessInfo: "Trên trang web của TF88 để quản lý và xử lý thông tin của bạn.",
+      manageProcessInfo: "Trên trang web của KAKA để quản lý và xử lý thông tin của bạn.",
       offerGames: "Cung cấp trò chơi và chấp nhận cược cho bạn.",
-      determineLegalAge: "Xác định độ tuổi pháp lý của bạn khi tham gia trò chơi tại TF88.",
+      determineLegalAge: "Xác định độ tuổi pháp lý của bạn khi tham gia trò chơi tại KAKA.",
       meetProductPreferences: "Dựa trên sở thích để đáp ứng sản phẩm phù hợp.",
       webMaintenance: "Để bảo trì trang web và chẩn đoán vấn đề.",
       improveServiceQuality: "Để cải thiện chất lượng dịch vụ.",
@@ -1342,49 +1349,49 @@ export default {
       statisticalAnalysis:
         "Trong quá trình phục vụ bạn, chúng tôi tiến hành phân tích thống kê dựa trên các vùng khác nhau. Chúng tôi có thể cung cấp thông tin cho bên thứ ba để hiển thị quảng cáo.",
       cooperateSuppliers:
-        "TF88 hợp tác với nhiều nhà cung cấp, vì vậy thông tin của bạn có thể được cung cấp cho nhà cung cấp để tra cứu kết quả nhằm đảm bảo sự công bằng của kết quả và bảo vệ quyền lợi của bạn.",
+        "KAKA hợp tác với nhiều nhà cung cấp, vì vậy thông tin của bạn có thể được cung cấp cho nhà cung cấp để tra cứu kết quả nhằm đảm bảo sự công bằng của kết quả và bảo vệ quyền lợi của bạn.",
       promotionInformation: "Thông tin khuyến mãi",
       marketingPromotions:
-        "Để Marketing thực hiện các chương trình khuyến mãi và thông báo về giải thưởng của chương trình khuyến mãi chiến thắng, TF88 có thể công bố thông tin tài khoản nick của bạn hoặc các ký tự đầu tiên và số giải thưởng bạn nhận được.",
+        "Để Marketing thực hiện các chương trình khuyến mãi và thông báo về giải thưởng của chương trình khuyến mãi chiến thắng, KAKA có thể công bố thông tin tài khoản nick của bạn hoặc các ký tự đầu tiên và số giải thưởng bạn nhận được.",
       privacy: "Quyền riêng tư",
       privacyAssurance:
-        "TF88 sẽ đảm bảo an ninh thông tin cá nhân của bạn. Bởi vì TF88 sử dụng hệ thống tường lửa mạnh nhất để ngăn chặn sự xâm nhập của hành vi bất hợp pháp.",
+        "KAKA sẽ đảm bảo an ninh thông tin cá nhân của bạn. Bởi vì KAKA sử dụng hệ thống tường lửa mạnh nhất để ngăn chặn sự xâm nhập của hành vi bất hợp pháp.",
       dataSecurity: "Bảo mật dữ liệu",
       dataSecurityAssurance: "Đối với mọi dữ liệu và thông tin liên quan đến công ty, yêu cầu bảo mật khi xử lý.",
       // Legal Basis
       legalBasis: "Cơ Sở Pháp Lý",
       generalTermsMessage:
-        "Dưới đây là các điều khoản chung để sử dụng TF88. Bằng cách đăng ký tài khoản, bạn đồng ý tuân thủ các điều khoản chung của chúng tôi. Tất cả các hoạt động trong tài khoản của khách truy cập trên trang web đều phải tuân theo và được giám sát bởi các điều khoản sau:",
+        "Dưới đây là các điều khoản chung để sử dụng KAKA. Bằng cách đăng ký tài khoản, bạn đồng ý tuân thủ các điều khoản chung của chúng tôi. Tất cả các hoạt động trong tài khoản của khách truy cập trên trang web đều phải tuân theo và được giám sát bởi các điều khoản sau:",
       ageRequirement: "Thành viên phải ít nhất 18 tuổi và có khả năng trí tuệ để chịu trách nhiệm về hành động của họ.",
       singleAccount:
-        "Mỗi khách hàng chỉ được mở một tài khoản trên trang web TF88. Chúng tôi có thể đóng bất kỳ tài khoản bổ sung nào được mở và mọi khoản tiền còn lại trong tài khoản sẽ được xử lý theo quyết định duy nhất của TF88.",
+        "Mỗi khách hàng chỉ được mở một tài khoản trên trang web KAKA. Chúng tôi có thể đóng bất kỳ tài khoản bổ sung nào được mở và mọi khoản tiền còn lại trong tài khoản sẽ được xử lý theo quyết định duy nhất của KAKA.",
       personalInformation2:
-        "Khách hàng cung cấp thông tin cá nhân khi đăng ký tài khoản và cần đảm bảo rằng thông tin được cung cấp của họ được cập nhật đúng cách trên trang web. Nếu có sai sót trong thông tin đăng ký, TF88 không chịu trách nhiệm liên quan. Chúng tôi đảm bảo rằng thông tin của khách hàng được bảo mật và an toàn.",
+        "Khách hàng cung cấp thông tin cá nhân khi đăng ký tài khoản và cần đảm bảo rằng thông tin được cung cấp của họ được cập nhật đúng cách trên trang web. Nếu có sai sót trong thông tin đăng ký, KAKA không chịu trách nhiệm liên quan. Chúng tôi đảm bảo rằng thông tin của khách hàng được bảo mật và an toàn.",
       checkAccountBalance:
         "Khách hàng phải thường xuyên kiểm tra số dư tài khoản, khi có bất kỳ sai lệch nào, khách hàng phải chịu trách nhiệm báo cáo ngay cho Hỗ trợ Trực tuyến để kiểm tra và xác minh tài khoản.",
       accountSecurity:
-        "Khách hàng phải đảm bảo an ninh thông tin tài khoản của họ, khi khách hàng tiết lộ thông tin cho người khác, mọi tranh chấp hoặc xung đột sau này TF88 sẽ không chịu trách nhiệm.",
+        "Khách hàng phải đảm bảo an ninh thông tin tài khoản của họ, khi khách hàng tiết lộ thông tin cho người khác, mọi tranh chấp hoặc xung đột sau này KAKA sẽ không chịu trách nhiệm.",
       depositInstructions:
-        "Khách hàng cần nạp tiền phải tuân thủ thông tin và hướng dẫn trên trang web, TF88 không chịu trách nhiệm đối với tất cả các giao dịch không được thực hiện theo hướng dẫn.",
+        "Khách hàng cần nạp tiền phải tuân thủ thông tin và hướng dẫn trên trang web, KAKA không chịu trách nhiệm đối với tất cả các giao dịch không được thực hiện theo hướng dẫn.",
       accessFromRestrictedArea:
-        "TF88 không khuyến khích hoặc cấm cố gắng truy cập vào trang web từ khu vực không được chỉ định cho dịch vụ của chúng tôi.",
+        "KAKA không khuyến khích hoặc cấm cố gắng truy cập vào trang web từ khu vực không được chỉ định cho dịch vụ của chúng tôi.",
       entertainmentPurpose:
-        "TF88 cung cấp sản phẩm cho mục đích giải trí, khách hàng đồng ý tham gia TF88 sẽ có một số rủi ro nhất định. Khi sử dụng dịch vụ tại TF88, chúng tôi từ chối trách nhiệm của trang web đối với bất kỳ tổn thất nào của khách hàng.",
+        "KAKA cung cấp sản phẩm cho mục đích giải trí, khách hàng đồng ý tham gia KAKA sẽ có một số rủi ro nhất định. Khi sử dụng dịch vụ tại KAKA, chúng tôi từ chối trách nhiệm của trang web đối với bất kỳ tổn thất nào của khách hàng.",
       withdrawalRequest:
-        "TF88 có quyền từ chối yêu cầu rút tiền nếu thông tin đăng ký không chính xác, TF88 có quyền yêu cầu tài liệu liên quan để xác nhận thông tin đăng ký.",
+        "KAKA có quyền từ chối yêu cầu rút tiền nếu thông tin đăng ký không chính xác, KAKA có quyền yêu cầu tài liệu liên quan để xác nhận thông tin đăng ký.",
       honestyPolicy:
-        "Khách hàng phải đảm bảo không gian dối, biểu hiện sai sự thật hoặc tiết lộ thông tin không chính xác để làm ảnh hưởng đến TF88.",
+        "Khách hàng phải đảm bảo không gian dối, biểu hiện sai sự thật hoặc tiết lộ thông tin không chính xác để làm ảnh hưởng đến KAKA.",
       suspensionPolicyMessage:
-        "Nếu TF88 nghi ngờ rằng một khách hàng không tuân thủ các quy định trên, chúng tôi có quyền đình chỉ tài khoản để xử lý theo quy định.",
+        "Nếu KAKA nghi ngờ rằng một khách hàng không tuân thủ các quy định trên, chúng tôi có quyền đình chỉ tài khoản để xử lý theo quy định.",
 
       // Betting Rules
       bettingRules: "Quy Tắc Đặt Cược",
       familyRestriction:
-        "Mọi người cùng gia đình, cùng địa chỉ nhà, cùng số điện thoại, số tài khoản ngân hàng hoặc địa chỉ IP trên internet sẽ không được tham gia vào các chương trình khuyến mãi của TF88.",
+        "Mọi người cùng gia đình, cùng địa chỉ nhà, cùng số điện thoại, số tài khoản ngân hàng hoặc địa chỉ IP trên internet sẽ không được tham gia vào các chương trình khuyến mãi của KAKA.",
       entertainmentPurpose2:
-        "Tất cả các chương trình khuyến mãi tại TF88 chỉ dành cho mục đích giải trí, TF88 có quyền hạn chế quyền tham gia của khách hàng vào bất kỳ chương trình khuyến mãi nào.",
+        "Tất cả các chương trình khuyến mãi tại KAKA chỉ dành cho mục đích giải trí, KAKA có quyền hạn chế quyền tham gia của khách hàng vào bất kỳ chương trình khuyến mãi nào.",
       modifyPromotion:
-        "TF88 có quyền thay đổi, sửa đổi hoặc chấm dứt Chương trình khuyến mãi, hoặc một phần của nó, vào bất kỳ thời điểm nào và mà không cần thông báo trước.",
+        "KAKA có quyền thay đổi, sửa đổi hoặc chấm dứt Chương trình khuyến mãi, hoặc một phần của nó, vào bất kỳ thời điểm nào và mà không cần thông báo trước.",
       singleDeposit: "Mỗi lần nạp tiền chỉ có thể tham gia một Chương trình khuyến mãi.",
       refundBasedOnBetTurnover:
         "Hoàn tiền sẽ dựa trên tổng số tiền cược hợp lệ (tổng số lượt cược) của thành viên trong mỗi sản phẩm theo từng thị trường, từng trận đấu và từng cấp độ thành viên như sau:",
@@ -1397,7 +1404,7 @@ export default {
       requiredRounds:
         "Số lượt cược yêu cầu phải đạt được trong vòng 30 ngày để tránh việc mất đi tiền thưởng và số tiền thắng.",
       abuseDiscretion:
-        "Quyết định về những gì cấu thành việc lạm dụng tiền thưởng sẽ nằm trong thẩm quyền của TF88, bằng chứng rõ ràng về việc lạm dụng tiền thưởng sẽ bao gồm, nhưng không giới hạn ở các ví dụ sau:",
+        "Quyết định về những gì cấu thành việc lạm dụng tiền thưởng sẽ nằm trong thẩm quyền của KAKA, bằng chứng rõ ràng về việc lạm dụng tiền thưởng sẽ bao gồm, nhưng không giới hạn ở các ví dụ sau:",
       abuseExamples: {
         excludedGames: "Cược tiền thưởng trên các trò chơi được loại trừ",
         multipleAccounts: "Sử dụng nhiều tài khoản",
@@ -1411,18 +1418,18 @@ export default {
       excludedBets:
         "Tất cả các loại cược DRAW, cược HỦY, cược Tiến Jackpot, cược Tiến Slot, trò chơi thẻ và bàn, thể thao ảo, tỷ lệ dưới 1.75 Dec hoặc 0.75 Cn sẽ không được tính vào doanh số cược của chương trình khuyến mãi.",
       transactionRecordsCheck:
-        "TF88 giữ quyền kiểm tra hồ sơ giao dịch và thời gian đăng nhập bất kỳ lúc nào và vì bất kỳ lý do nào. Nếu, sau cuộc điều tra của chúng tôi, chúng tôi phát hiện ra rằng một người chơi đã hưởng lợi từ chương trình khuyến mãi bằng cách đặt cược theo cách được mô tả ở trên, hoặc chúng tôi xem xét rằng đã có các hành vi tham gia không công bằng, TF88 giữ quyền rút số tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm.",
+        "KAKA giữ quyền kiểm tra hồ sơ giao dịch và thời gian đăng nhập bất kỳ lúc nào và vì bất kỳ lý do nào. Nếu, sau cuộc điều tra của chúng tôi, chúng tôi phát hiện ra rằng một người chơi đã hưởng lợi từ chương trình khuyến mãi bằng cách đặt cược theo cách được mô tả ở trên, hoặc chúng tôi xem xét rằng đã có các hành vi tham gia không công bằng, KAKA giữ quyền rút số tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm.",
       falsifiedContentDisqualification:
         "Bất kỳ người nào làm giả nội dung khuyến mãi có thể bị loại, điều này có nghĩa là số tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm sẽ bị tịch thu.",
       amendTermsAndConditions:
-        "TF88 giữ quyền chấm dứt hoặc sửa đổi Điều khoản và Điều kiện của chương trình khuyến mãi vào bất kỳ thời điểm nào vì bất kỳ lý do nào mà không cần thông báo trước.",
+        "KAKA giữ quyền chấm dứt hoặc sửa đổi Điều khoản và Điều kiện của chương trình khuyến mãi vào bất kỳ thời điểm nào vì bất kỳ lý do nào mà không cần thông báo trước.",
       withdrawalVerification:
         "Các giao dịch rút tiền có thể được kiểm tra và/hoặc xác minh danh tính trước khi được xử lý. Thành viên có thể được yêu cầu cung cấp bằng chứng về danh tính, địa chỉ, tuổi và/hoặc biên nhận gửi tiền, bằng chứng về trò chơi đã chơi hoặc số điện thoại. Nếu không cung cấp thông tin cần thiết này cho chúng tôi trong vòng 72 giờ, có thể dẫn đến việc mất tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm.",
 
       // Blame
       blame: "Chơi Có Trách Nhiệm",
       intro:
-        "TF88 luôn cố gắng cung cấp một nền tảng an toàn cho người chơi để thư giãn và được giải trí. Chúng tôi hiểu rõ rằng cá cược có thể mang lại các rủi ro liên quan đến nghiện nằm. TF88 chịu trách nhiệm duy nhất về sự hiểu biết của người chơi về tất cả các nguy cơ có thể gặp phải. Đảm bảo bạn đang chơi một cách có trách nhiệm thông qua các câu hỏi tự đánh giá dưới đây:",
+        "KAKA luôn cố gắng cung cấp một nền tảng an toàn cho người chơi để thư giãn và được giải trí. Chúng tôi hiểu rõ rằng cá cược có thể mang lại các rủi ro liên quan đến nghiện nằm. KAKA chịu trách nhiệm duy nhất về sự hiểu biết của người chơi về tất cả các nguy cơ có thể gặp phải. Đảm bảo bạn đang chơi một cách có trách nhiệm thông qua các câu hỏi tự đánh giá dưới đây:",
       questions: {
         question1: "Bạn có bao giờ bỏ bê công việc để chơi cá cược?",
         question2: "Bạn có đặt cược để giết thời gian hoặc để tránh sự chán chường không?",
@@ -1446,24 +1453,24 @@ export default {
         "Khi bạn trải qua các cảm xúc tiêu cực, say rượu, không an toàn,... Tìm một sở thích khác thay vì cá cược.",
       advice5:
         "Đừng ngần ngại tìm sự giúp đỡ từ những người xung quanh khi bạn cảm thấy mọi thứ đang trở nên tồi tệ hơn.",
-      tf88SupportTitle: "Sự hỗ trợ từ cá cược có trách nhiệm của TF88",
-      tf88SupportContent:
-        "Là một trong những nền tảng game hàng đầu tại Việt Nam và châu Á. Chúng tôi đảm bảo các nguyên tắc tiêu cực của phòng ngừa và kiểm soát khi đặt cược trên tất cả các bên bao gồm cả nhà cung cấp và các cơ quan quản lý nền tảng. Ngoài ra, đội ngũ của TF88 luôn được trang bị đủ kiến thức và kỹ năng về cá cược có trách nhiệm sẵn sàng hỗ trợ bạn bất cứ lúc nào.",
+      KAKASupportTitle: "Sự hỗ trợ từ cá cược có trách nhiệm của KAKA",
+      KAKASupportContent:
+        "Là một trong những nền tảng game hàng đầu tại Việt Nam và châu Á. Chúng tôi đảm bảo các nguyên tắc tiêu cực của phòng ngừa và kiểm soát khi đặt cược trên tất cả các bên bao gồm cả nhà cung cấp và các cơ quan quản lý nền tảng. Ngoài ra, đội ngũ của KAKA luôn được trang bị đủ kiến thức và kỹ năng về cá cược có trách nhiệm sẵn sàng hỗ trợ bạn bất cứ lúc nào.",
       ageRestriction:
-        "TF88 CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI",
+        "KAKA CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI",
       partner: "Đối tác",
       paymentMethod: "Phương thức"
     },
     // Welcome
     firstSlide: "TẢI XUỐNG ỨNG DỤNG",
     depositNow: "GỬI TIỀN NGAY",
-    firstSlideContent: "Trải nghiệm siêu mượt trên ứng dụng đẳng cấp của TF88",
+    firstSlideContent: "Trải nghiệm siêu mượt trên ứng dụng đẳng cấp của KAKA",
     firstSlideSub: "TẢI XUỐNG +60VNPD",
     secondSlide: "THƯỞNG GỬI TIỀN HẤP DẪN",
     secondSlideContent: "THƯỞNG NẠP ĐẦU 100% LÊN ĐẾN 2,000 VNDP",
     thirdSlide: "NHÀ PHÁT TRIỂN ESPORTS",
     thirdSlideContent:
-      "TF88 là nhà phát triển tiên phong của cá cược E-Sports tại Châu Á. Cược ngay E-Sports với hơn 500 sự kiện mỗi ngày!"
+      "KAKA là nhà phát triển tiên phong của cá cược E-Sports tại Châu Á. Cược ngay E-Sports với hơn 500 sự kiện mỗi ngày!"
   },
   error: {
     101: "Không tìm thấy nền tảng",

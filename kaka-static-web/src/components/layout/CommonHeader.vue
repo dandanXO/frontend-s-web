@@ -133,25 +133,25 @@
                 class="profile-info-dropdown-content"
               >
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                     <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{ $t("menu.deposit") }}</span>
                   </div>
                 </el-dropdown-item>
                 <!-- <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
                   </div>
@@ -182,7 +182,7 @@
                 </span>
               </div>
               <el-icon>
-                <RiRefreshLine color="#468CFF" />
+                <RiRefreshLine color="#FD574C" />
               </el-icon>
             </a>
           </div>
@@ -316,11 +316,11 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container login-container" :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : '' ">
+      <div class="acc-dialog-container login-container" :class="isLandingClub == 'kakaclub' ? 'acc-dialog-landing' : '' ">
         <div class="acc-dialog-left" >
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
-          <img v-else  src="../../assets/home/tf88club-img.png">
+          <img v-if="isLandingClub !== 'kakaclub'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
+          <img v-else  src="../../assets/home/kakaclub-img.png">
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -1246,7 +1246,7 @@ export default defineComponent({
 
 
       // alert(isLanding);
-      if(isLandingClub.value === "tf88club"){
+      if(isLandingClub.value === "kakaclub"){
         loginDialogVisible.value = true;
       }
 
@@ -1590,7 +1590,7 @@ export default defineComponent({
 body {
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
-    background-color: #a8b5c3;
+    background-color: #ec0909;
   }
 
   .el-input.wTip .el-input-group__append {
@@ -1616,7 +1616,7 @@ body {
 
   .el-dropdown-menu__item {
     // min-width: 130px;
-    // color: #a8b5c3;
+    // color: #ec0909;
     // gap: 8px;
     width: 100%;
     justify-content: center;
@@ -1865,8 +1865,10 @@ body {
       }
       &.right {
         // right: 0px;
-    margin-right: -50px;
-        transform: rotateY(180deg);
+    margin-left: -70px;
+    transform: rotateY(180deg);
+    overflow: hidden;
+    padding-right: 60px;
       }
     }
     padding: 10px;    
@@ -2585,7 +2587,7 @@ body {
 
         &.acc-dialog-landing{
           .acc-dialog-left{
-            background-image: url(../../assets/home/tf88club.png);
+            background-image: url(../../assets/home/kakaclub.png);
             max-height:95vh;
 
             img{

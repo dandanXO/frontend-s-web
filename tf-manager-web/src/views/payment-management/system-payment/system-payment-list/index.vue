@@ -235,7 +235,7 @@ const paymentTypeList = reactive({
 const uiControl = reactive({
   statusType: [
     { key: 1, displayName: 'Open', value: 'OPEN' },
-    { key: 2, displayName: 'Close', value: 'STATUS' },
+    { key: 2, displayName: 'Close', value: 'CLOSE' },
   ],
   dialogVisible: false,
   dialogTitle: '',

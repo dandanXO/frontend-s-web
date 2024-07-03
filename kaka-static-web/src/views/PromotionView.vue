@@ -56,7 +56,7 @@
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
                 <div class="promo-details"
-                  :class="{
+                     :class="{
                     nopaddingtop : promo.labelType === 2
                   }"
                 >
@@ -350,14 +350,14 @@ export default defineComponent({
   min-height: 600px;
 
   .all-promotions {
-    background: url(../assets/promo/bg-top2.jpg) no-repeat center top;
+    background: url(../assets/promo/top-promo-icon.png) no-repeat center top;
     width: 100%;
     background-size: 100% auto;
     padding: 50px;
     position: relative;
     padding-top: max(270px, 15vw);
     background-color: #1E212C
-;
+  ;
   }
   .promo-view-container {
     line-height: 30px;
@@ -562,7 +562,7 @@ export default defineComponent({
             width: 100%;
             border-radius: 30px;
 
-box-shadow: 0px -1.66px 6.09px 0px #F4A2A2 inset;
+            box-shadow: 0px -1.66px 6.09px 0px #F4A2A2 inset;
 
             .label {
               z-index: 0;
@@ -859,12 +859,13 @@ box-shadow: 0px -1.66px 6.09px 0px #F4A2A2 inset;
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+        background-color: #1e212c;
 
         &.isEurocup24 {
           padding: 0px;
         }
         &.isEurocupLucky {
-          background: #E7F1FD;
+          //background: #E7F1FD;
         }
 
         .hot-promo {

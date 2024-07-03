@@ -1,10 +1,10 @@
 <template>
   <router-view />
-  <PageModal ref="pageModalRef"></PageModal>
+  <component :is="PageModal"></component>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineAsyncComponent, defineComponent, markRaw, onMounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
@@ -13,11 +13,9 @@ import { userStore } from "stores/index";
 import isString from "lodash/isString";
 import { useRouter } from "vue-router";
 import { useUI } from "stores/ui";
-import PageModal from "components/modal/PageModal";
 
 export default defineComponent({
   name: "App",
-  components: { PageModal },
   setup() {
     var qs = require("qs");
     const ui = useUI();
@@ -26,6 +24,10 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
+
+    const PageModal = markRaw(defineAsyncComponent(() =>
+      import('components/modal/PageModal')
+    ))
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -154,6 +156,10 @@ export default defineComponent({
         false
       );
     });
+
+    return {
+      PageModal
+    }
   }
 });
 </script>

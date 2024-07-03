@@ -16,20 +16,17 @@
 
       <img class="minigames-grid-item" :src="game.logo" />
 
-      <transition appear>
-        <div class="select-type-div" v-if="props.showMiniType == game.id">
-          <div class="game-type btn-pointer" id="copper-type"
-            @click="props.playGame(game.name, 'TFGaming', game.copper)">
-            1,000 - 65K
-          </div>
-          <div class="game-type btn-pointer" id="silver-type" @click="props.playGame(game.id, 'TFGaming', game.silver)">
-            100K - 130K
-          </div>
-          <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
-            1,000 - 20K
-          </div>
+      <div class="select-type-div" v-if="props.showMiniType == game.id">
+        <div class="game-type btn-pointer" id="copper-type" @click="props.playGame(game.name, 'TFGaming', game.copper)">
+          1,000 - 65K
         </div>
-      </transition>
+        <div class="game-type btn-pointer" id="silver-type" @click="props.playGame(game.id, 'TFGaming', game.silver)">
+          100K - 130K
+        </div>
+        <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
+          1,000 - 20K
+        </div>
+      </div>
     </div>
   </div>
 </template>

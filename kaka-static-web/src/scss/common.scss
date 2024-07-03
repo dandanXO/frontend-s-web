@@ -180,7 +180,7 @@ body {
 
   .el-carousel__indicators--outside {
     button {
-      background-color: #468cff33;
+      background-color: #fd574c33;
       opacity: 1;
     }
   }
@@ -404,7 +404,7 @@ body {
     min-width: 200px;
     border: 0;
     background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
-    border: 1px solid #fd897e;
+    border: 1px solid #fd897e !important;
   }
   &:hover {
     background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);

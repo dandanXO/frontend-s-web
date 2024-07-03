@@ -601,7 +601,7 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
+        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
           otag("event", "deposit");
         }
 
@@ -767,6 +767,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+
+.node-wrapper {
+  
+  background: #ffffff;
+    box-shadow: 0px -2px 6px 2px #e6c3c3 inset;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 25px 15px 0;
+}
 .submit-message {
   // width: calc(100% - 40px);
   border-radius: 10px;
@@ -820,7 +829,8 @@ onMounted(() => {
 }
 
 .q-select__dialog .q-field__control {
-  background: #4fb2ff !important;
+        background: #f7f8fb;
+        box-shadow: 0px -2px 6px 2px #e6c3c3 inset;
 }
 
 
@@ -839,6 +849,8 @@ onMounted(() => {
     min-height: 48px;
     height: 48px;
 
+    background: #f7f8fb;
+        box-shadow: 0px -2px 6px 2px #e6c3c3 inset;
     .q-field__control-container{
       padding-top: 0px;
     }
@@ -856,8 +868,8 @@ onMounted(() => {
 .deposit-field {
   &.q-field {
     border-radius: 10px;
-    padding: 0px 8px 5px;
-    background: rgba(0, 0, 0, 0.05);
+    padding: 5px 10px;
+    background: rgb(255 255 255);
     box-shadow: $shadow-bg;
   }
 

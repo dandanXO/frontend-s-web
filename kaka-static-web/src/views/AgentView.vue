@@ -11,9 +11,9 @@
         <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
-        <a class="outline" :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
-        <a class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
+        <a :href="affiliateUrl + 'kaka/login?isreg=1&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a class="outline" :href="affiliateUrl + 'kaka/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
+        <a class="outline" :href="affiliateUrl + 'kaka/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
           {{ $t('affiliate.contactus') }}
         </a>
       </div>
@@ -214,11 +214,11 @@
           </ul>
         </div></div>
       <div>
-        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' +
+        <a :href="affiliateUrl + 'kaka/login?isreg=1&agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
 
-        <a style="text-align: center; width:100%;margin:16px auto 0px;display:block;" class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
+        <a style="text-align: center; width:100%;margin:16px auto 0px;display:block;" class="outline" :href="affiliateUrl + 'kaka/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
           {{ $t('affiliate.contactus') }}
         </a>
       </div>
@@ -238,7 +238,7 @@ export default defineComponent({
   setup() {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const affiliateUrl = ref("https://vnm-affiliate.th80to83w1.com/");
+    const affiliateUrl = ref("https://ka1-os.cn23lh0d1nf.com/");
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;

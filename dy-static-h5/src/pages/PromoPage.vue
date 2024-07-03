@@ -86,6 +86,7 @@
               <div
                 class="inner"
                 :class="{
+                  lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
                   cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
@@ -140,7 +141,7 @@
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-right">
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
-          <RiErrorWarningLine />
+          <img class="svg" src="~assets/promo/error-warning-line.svg" />
           系统提示
         </strong>
         请登录后再操作
@@ -159,7 +160,6 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
-import {RiErrorWarningLine} from "vue-remix-icons";
 import {isAndroid} from "boot/utils";
 import {SessionStorage} from "quasar";
 import LocalStorage from "boot/local-storage";
@@ -171,7 +171,7 @@ import HotPromotion from "components/HotPromotion";
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion, RiErrorWarningLine,
+    HotPromotion,
   },
   setup() {
     const store = userStore();
@@ -336,12 +336,12 @@ export default defineComponent({
           promoItems.forEach((element) => {
             // if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
             // } else {
-              promoState.promoList.push(element);
-              // console.log(promoState.promoList);
+            promoState.promoList.push(element);
+            // console.log(promoState.promoList);
 
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
+            if (route.query.name && String(element.redirectUrl) === route.query.name) {
+              showPromoDetails(element);
+            }
             // }
           });
           // console.log("Final Promos");
@@ -726,6 +726,39 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lhworldcup {
+          background: #e7f1fd;
+          margin: 0px;
+          width: 100%;
+          padding: 0px 16px 20px;
+
+          img {
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+
+          table {
+            p {
+              margin: 0px;
+            }
+
+            tr:first-child {
+              td {
+                background-image: linear-gradient(0deg, #0094ff, #19c6ff), linear-gradient(#2e3039, #2e3039);
+                color: #fff;
+              }
+            }
+
+            th {
+              background-color: inherit;
+            }
+
+            td {
+              background-color: inherit;
+            }
+          }
+        }
 
         &.eurocupManual {
           margin: 0;

@@ -318,6 +318,7 @@ onMounted(() => {
           font-weight: bold;
           color: #fff;
           display: flex;
+          white-space: nowrap;
           justify-content: center;
           align-items: center;
           padding: 5px 15px;

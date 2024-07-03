@@ -523,7 +523,7 @@ export default defineComponent({
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
+                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
                   otag("event", "registration");
                 }
 
@@ -748,11 +748,14 @@ function charType(num) {
   height: 100%;
   padding: 12px 0px 0px;
   background-position: center -120px;
+    background-size: contain;
+    background-position: center -30px;
 
   .login-form-container {
     width: $box-width;
     margin: 0px auto 0px;
     background: $white;
+    color: #333333;
     border-radius: 10px;
     box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
     padding: 15px 12px 20px;

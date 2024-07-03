@@ -9,12 +9,12 @@
       <div class="intro-container">
         <img
           :src="require(`../assets/app/toplabel-${languageVal}.png`)"
-          alt="TF88GamingApp"
+          alt="KAKAGamingApp"
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
         />
-        <img src="../assets/app/light.png" alt="TF88GamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
+        <img src="../assets/app/light.png" alt="KAKAGamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
         <div class="text-content">
           {{ $t('app.sports') }}
           <br />

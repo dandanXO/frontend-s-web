@@ -111,3 +111,25 @@ export function getAdsPopupList() {
 export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }
+
+// hotpromo: pak-spin-wheel
+export function getAviatorWheelRecords() {
+  return server.EVENT.get("/aviatorWheel/records");
+}
+
+export function postAviatorWheelSpin() {
+  return server.EVENT.post("/aviatorWheel/spin");
+}
+
+export function getAviatorWheelInit() {
+  return server.EVENT.get("/aviatorWheel/init");
+}
+
+// hotpromo: pak-signin-bonus
+export function getNewRegcheckInInit() {
+  return server.EVENT.get("/newRegCheckIn/init");
+}
+
+export function claimNewRegCheckIn() {
+  return server.EVENT.post("/newRegCheckIn/claimBonus");
+}

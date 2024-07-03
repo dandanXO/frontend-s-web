@@ -58,13 +58,14 @@ export default defineComponent({
           params: {
             way: "web",
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: "ka2"
           }
         });
       }
     };
 
     onMounted(() => {
+      console.log("KAKA Web")
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);

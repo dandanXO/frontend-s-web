@@ -957,6 +957,13 @@ onActivated(() => {
     box-shadow: 0px 4.58px 4.58px 0px #bbdcff inset, 0px -3.664px 3.664px 0px #a2bff4 inset;
   }
 
+  .q-carousel--arrows-horizontal.q-carousel--with-padding {
+    .q-carousel__slide {
+      padding-left: 10vw;
+      padding-right: 10vw;
+    }
+  }
+
   .common-text {
     font-size: 1rem;
     font-weight: 400;
@@ -1022,6 +1029,24 @@ onActivated(() => {
 
     .vip-card-common-text {
       font-size: 1rem;
+    }
+
+    .q-carousel--arrows-horizontal.q-carousel--with-padding {
+    .q-carousel__slide {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+  }
+  }
+}
+
+@media (max-width: 400px) {
+  .vip-container {
+    .q-carousel--arrows-horizontal.q-carousel--with-padding {
+      .q-carousel__slide {
+        padding-left: 12vw;
+        padding-right: 12vw;
+      }
     }
   }
 }

@@ -1,5 +1,11 @@
 <template>
   <div class="vip-container">
+    <div class="details">
+      <h4 style="margin-top: 0; display: block; text-align: center;">{{$t('lang.vip_header1')}}</h4>
+      <p><strong>{{$t('lang.vip_target')}}</strong> {{$t('lang.vip_targetdet')}}</p>
+      <p><strong>{{$t('lang.vip_duration')}}</strong>{{$t('lang.vip_durationdet')}}</p>
+      <p><strong>{{$t('lang.vip_note')}}</strong>{{$t('lang.vip_notedet')}}</p>
+    </div>
     <q-carousel
       v-model="slide"
       transition-next="slide-left"
@@ -20,7 +26,7 @@
       >
         <div class="vip-card-container">
           <div class="card-img-wrap">
-            <img class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
+            <img class="card-img" :src="require(`../../assets/images/vip/vip${returnNumber(vip.level)}.png`)" alt="" />
           </div>
 
           <div class="status">
@@ -43,13 +49,13 @@
           <div class="vip-card-info">
             <div class="level q-mt-xs">
               <div class="vip-level">VIP{{ vipIndex + 1 }}</div>
-              <div class="vip-card-common-text">{{ vip.title }}</div>
+              <!-- <div class="vip-card-common-text">{{ vip.title }}</div> -->
             </div>
             <div class="amount q-mt-xs">
               <div class="vip-card-common-text">{{ $t("lang.vip_upgrade_require") }}</div>
               <div class="vip-card-common-text amount-text">
-                <span v-if="vipIndex === 0">{{ $t('lang.vip_3timedeposit') }}</span>
-                <span v-else>{{ $t('lang.totalBetMonth') }} {{ vip.amount }}</span>
+                <!-- <span v-if="vipIndex === 0">{{ $t('lang.vip_3timedeposit') }}</span> -->
+                <span>{{ $t('lang.totalBetMonth') }} {{ vip.amount }}</span>
               </div>
             </div>
             <div class="progress">
@@ -130,7 +136,7 @@
           </q-card-section>
         </q-card>
 
-        <q-card class="level-promo-container">
+        <!-- <q-card class="level-promo-container">
           <q-card-section class="level-promo-header">
             <div class="level-promo-title">{{ $t("lang.rebate_bonus") }}</div>
           </q-card-section>
@@ -164,11 +170,11 @@
               </div>
             </div>
           </q-card-section>
-        </q-card>
+        </q-card> -->
       </q-carousel-slide>
     </q-carousel>
-
     <div class="vip-detail-container">
+
       <!-- cannot flip cuz the border design will be upside down -->
       <!-- <q-tabs v-model="tab" dense align="center" narrow-indicator active-class="active-tab" class="vip-detail-tab">
         <q-tab name="rules" :ripple="false">
@@ -212,25 +218,35 @@
                 </q-th>
               </q-tr> -->
               <q-tr :props="props">
-                <q-th rowspan="2">{{ $t("lang.vip_level") }}</q-th>
+                <!-- <q-th rowspan="2">{{ $t("lang.vip_level") }}</q-th>
                 <q-th colspan="4">{{ $t("lang.vip_monthly_reload") }}</q-th>
                 <q-th colspan="4">{{ $t("lang.vip_exclusive_promotions") }}</q-th>
               </q-tr>
-              <q-tr>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_min_deposit") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_max_bonus") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_return_over") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_bet_limit") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_priority_payment_method") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_24_7_cc_team") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_invitation_to_ee") }}</q-th>
+              <q-tr> -->
+                <!-- <q-th style="background: #ffe7e7">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_min_deposit") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_max_bonus") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_return_over") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_bet_limit") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_priority_payment_method") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_24_7_cc_team") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_invitation_to_ee") }}</q-th>
+                 -->
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader1') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader2') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader3') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader4') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader5') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader6') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader7') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader8') }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t('lang.vip_tableHeader9') }}</q-th>
               </q-tr>
             </template>
             <template v-slot:body="props">
               <q-tr :props="props">
                 <q-td v-for="col in props.cols" :key="col.name" :props="props" class="common-text">
-                  {{ col.value }}
+                  {{ col.value.toLocaleString() }}
                 </q-td>
               </q-tr>
             </template>
@@ -248,7 +264,7 @@
         </q-tab-panel>
       </q-tab-panels>
 
-      <div class="q-mt-md vip-tips">{{ $t("lang.vip_notes") }}</div>
+      <!-- <div class="q-mt-md vip-tips">{{ $t("lang.vip_notes") }}</div> -->
     </div>
 
     <div class="tnc-container">
@@ -317,113 +333,247 @@ const tab = ref("rules");
 
 const slide = ref(0);
 const vipItems = ref([
-  {
-    level: "1",
-    title: t("lang.vip_iron"),
-    welcomeBonus: "-",
-    monthlyBonus: "-",
-    birthdayBonus: "-",
-    amount: "100",
-    rebateSport: "0.30%",
-    rebateEsports: "0.40%",
-    rebateLive: "0.40%",
-    rebatePoker: "0.40%",
-    rebateSlot: "0.60%",
-    rebateLottery: "0.30%",
-    progressBarVal: 0
-  },
-  {
-    level: "2",
-    title: t("lang.vip_bronze"),
-    welcomeBonus: "-",
-    monthlyBonus: "-",
-    birthdayBonus: "-",
-    amount: "380,000",
-    rebateSport: "0.38%",
-    rebateEsports: "0.48%",
-    rebateLive: "0.45%",
-    rebatePoker: "0.48%",
-    rebateSlot: "0.70%",
-    rebateLottery: "0.30%",
-    progressBarVal: 0
-  },
-  {
-    level: "3",
-    title: t("lang.vip_silver"),
-    welcomeBonus: "888",
-    monthlyBonus: "588",
-    birthdayBonus: "-",
-    amount: "1,000,000",
-    rebateSport: "0.48%",
-    rebateEsports: "0.58%",
-    rebateLive: "0.50%",
-    rebatePoker: "0.58%",
-    rebateSlot: "0.80%",
-    rebateLottery: "0.40%",
-    progressBarVal: 0
-  },
-  {
-    level: "4",
-    title: t("lang.vip_gold"),
-    welcomeBonus: "1,888",
-    monthlyBonus: "888",
-    birthdayBonus: "888",
-    amount: "3,000,000",
-    rebateSport: "0.58%",
-    rebateEsports: "0.68%",
-    rebateLive: "0.55%",
-    rebatePoker: "0.68%",
-    rebateSlot: "1.00%",
-    rebateLottery: "0.40%",
-    progressBarVal: 0
-  },
-  {
-    level: "5",
-    title: t("lang.vip_platinum"),
-    welcomeBonus: "3,888",
-    monthlyBonus: "1,888",
-    birthdayBonus: "2,888",
-    amount: "9,000,000",
-    rebateSport: "0.68%",
-    rebateEsports: "0.78%",
-    rebateLive: "0.60%",
-    rebatePoker: "0.78%",
-    rebateSlot: "1.20%",
-    rebateLottery: "0.50%",
-    progressBarVal: 0
-  },
-  {
-    level: "6",
-    title: t("lang.vip_ruby"),
-    welcomeBonus: "5,888",
-    monthlyBonus: "3,888",
-    birthdayBonus: "5,888",
-    amount: "20,000,000",
-    rebateSport: "0.78%",
-    rebateEsports: "0.88%",
-    rebateLive: "0.70%",
-    rebatePoker: "0.88%",
-    rebateSlot: "1.60%",
-    rebateLottery: "0.50%",
-    progressBarVal: 0
-  },
-  {
-    level: "7",
-    title: t("lang.vip_diamond"),
-    welcomeBonus: "10,888",
-    monthlyBonus: "5,888",
-    birthdayBonus: "8,888",
-    amount: "50,000,000",
-    rebateSport: "0.88%",
-    rebateEsports: "1.00%",
-    rebateLive: "0.80%",
-    rebatePoker: "1.00%",
-    rebateSlot: "2.00%",
-    rebateLottery: "0.60%",
-    progressBarVal: 0
-  }
-]);
-
+    {
+        "level": "1",
+        "welcomeBonus": "28",
+        "monthlyBonus": "0",
+        "birthdayBonus": "0",
+        "amount": "30,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "2",
+        "welcomeBonus": "58",
+        "monthlyBonus": "0",
+        "birthdayBonus": "0",
+        "amount": "60,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "3",
+        "welcomeBonus": "88",
+        "monthlyBonus": "188",
+        "birthdayBonus": "88",
+        "amount": "100,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "4",
+        "welcomeBonus": "188",
+        "monthlyBonus": "288",
+        "birthdayBonus": "88",
+        "amount": "150,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "5",
+        "welcomeBonus": "288",
+        "monthlyBonus": "388",
+        "birthdayBonus": "88",
+        "amount": "200,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "6",
+        "welcomeBonus": "388",
+        "monthlyBonus": "588",
+        "birthdayBonus": "88",
+        "amount": "300,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "7",
+        "welcomeBonus": "588",
+        "monthlyBonus": "688",
+        "birthdayBonus": "88",
+        "amount": "500,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "8",
+        "welcomeBonus": "888",
+        "monthlyBonus": "888",
+        "birthdayBonus": "188",
+        "amount": "800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "9",
+        "welcomeBonus": "1,288",
+        "monthlyBonus": "1,588",
+        "birthdayBonus": "188",
+        "amount": "1,500,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "10",
+        "welcomeBonus": "1,588",
+        "monthlyBonus": "1,888",
+        "birthdayBonus": "588",
+        "amount": "2,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "11",
+        "welcomeBonus": "2,888",
+        "monthlyBonus": "2,588",
+        "birthdayBonus": "588",
+        "amount": "5,000,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "12",
+        "welcomeBonus": "5,888",
+        "monthlyBonus": "2,888",
+        "birthdayBonus": "588",
+        "amount": "8,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "13",
+        "welcomeBonus": "8,888",
+        "monthlyBonus": "3,588",
+        "birthdayBonus": "888",
+        "amount": "12,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "14",
+        "welcomeBonus": "12,888",
+        "monthlyBonus": "3,888",
+        "birthdayBonus": "888",
+        "amount": "18,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "15",
+        "welcomeBonus": "18,888",
+        "monthlyBonus": "5,888",
+        "birthdayBonus": "2,888",
+        "amount": "25,000,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "16",
+        "welcomeBonus": "25,888",
+        "monthlyBonus": "8,888",
+        "birthdayBonus": "2,888",
+        "amount": "32,000,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "17",
+        "welcomeBonus": "38,888",
+        "monthlyBonus": "15,888",
+        "birthdayBonus": "5,888",
+        "amount": "42,000,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "18",
+        "welcomeBonus": "58,888",
+        "monthlyBonus": "18,888",
+        "birthdayBonus": "5,888",
+        "amount": "60,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "19",
+        "welcomeBonus": "78,888",
+        "monthlyBonus": "25,888",
+        "birthdayBonus": "8,888",
+        "amount": "77,300,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "20",
+        "welcomeBonus": "88,888",
+        "monthlyBonus": "28,888",
+        "birthdayBonus": "8,888",
+        "amount": "98,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "21",
+        "welcomeBonus": "128,888",
+        "monthlyBonus": "30,888",
+        "birthdayBonus": "8,888",
+        "amount": "128,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "22",
+        "welcomeBonus": "158,888",
+        "monthlyBonus": "35,888",
+        "birthdayBonus": "15,888",
+        "amount": "178,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "23",
+        "welcomeBonus": "188,888",
+        "monthlyBonus": "38,888",
+        "birthdayBonus": "15,888",
+        "amount": "268,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "24",
+        "welcomeBonus": "198,888",
+        "monthlyBonus": "52,888",
+        "birthdayBonus": "18,888",
+        "amount": "328,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "25",
+        "welcomeBonus": "208,888",
+        "monthlyBonus": "55,888",
+        "birthdayBonus": "18,888",
+        "amount": "398,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "26",
+        "welcomeBonus": "258,888",
+        "monthlyBonus": "58,888",
+        "birthdayBonus": "28,888",
+        "amount": "478,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "27",
+        "welcomeBonus": "288,888",
+        "monthlyBonus": "68,888",
+        "birthdayBonus": "28,888",
+        "amount": "568,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "28",
+        "welcomeBonus": "588,888",
+        "monthlyBonus": "88,888",
+        "birthdayBonus": "58,888",
+        "amount": "678,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "29",
+        "welcomeBonus": "1,588,888",
+        "monthlyBonus": "288,888",
+        "birthdayBonus": "88,888",
+        "amount": "1,158,800,000",
+        "progressBarVal": 0
+    },
+    {
+        "level": "30",
+        "welcomeBonus": "2,888,888",
+        "monthlyBonus": "888,888",
+        "birthdayBonus": "88,888",
+        "amount": "1,628,800,000",
+        "progressBarVal": 0
+    }
+])
 const vipClaimItems = [
   {
     benefit: "网站首存优惠",
@@ -533,6 +683,29 @@ const vipClaimItems = [
     progressBarVal: 0
   }
 ];
+const returnNumber = (vipLevel) => {
+  if (vipLevel <= 3) {
+    return '1'
+  } else if (vipLevel <= 6) {
+    return '2'
+  } else if (vipLevel <= 9) {
+    return '3'
+  } else if (vipLevel <= 12) {
+    return '4'
+  } else if (vipLevel <= 15) {
+    return '5'
+  } else if (vipLevel <= 18) {
+    return '6'
+  } else if (vipLevel <= 21) {
+    return '7'
+  } else if (vipLevel <= 24) {
+    return '8'
+  } else if (vipLevel <= 27) {
+    return '9'
+  } else if (vipLevel <= 30) {
+    return '10'
+  }
+}
 
 const claimDesc = ref(vipClaimItems[0]);
 const currentDeposit = ref(0);
@@ -652,138 +825,391 @@ const columns = [
   {
     name: "level",
     required: true,
-    label: t("lang.vip_level"),
+    label: t("lang.vip_header1"),
     align: "center",
-    field: (row) => row.name
-  },
-  // { name: "amount", label: t("lang.vip_monthly_reload"), field: "amount", align: "center" },
-  {
-    name: "monthly_reload",
-    align: "center",
-    field: (row) => row.monthly_reload
+    field: "level" // Use "name" directly since it's the property name in rows
   },
   {
-    name: "min_deposit",
+    name: "total_bet",
+    label: t("lang.vip_header2"),
     align: "center",
-    field: (row) => row.min_deposit
+    field: "total_bet"
   },
   {
-    name: "max_bonus",
+    name: "accumulated_deposit",
+    label: t("lang.vip_header3"),
     align: "center",
-    field: (row) => row.max_bonus
+    field: "accumulated_deposit"
   },
   {
-    name: "return_over",
+    name: "retain_amount",
+    label: t("lang.vip_header4"),
     align: "center",
-    field: (row) => row.return_over
+    field: "retain_amount"
   },
   {
-    name: "bet_limit",
+    name: "levelup_bonus",
+    label: t("lang.vip_header5"),
     align: "center",
-    field: (row) => row.bet_limit
+    field: "levelup_bonus"
   },
   {
-    name: "priority_payment_method",
+    name: "monthly_bonus",
+    label: t("lang.vip_header6"),
     align: "center",
-    field: (row) => row.priority_payment_method
+    field: "monthly_bonus"
   },
   {
-    name: "v24_7_cc_team",
+    name: "birthday_bonus",
+    label: t("lang.vip_header7"),
     align: "center",
-    field: (row) => row.v24_7_cc_team
+    field: "birthday_bonus" // Adjust based on your data structure
   },
   {
-    name: "invitation_to_ee",
+    name: "promotion_bonus",
+    label: t("lang.vip_header8"),
     align: "center",
-    field: (row) => row.invitation_to_ee
+    field: "promotion_bonus" // Adjust based on your data structure
+  },
+  {
+    name: "daily_withdrawal_limit",
+    label: t("lang.vip_header9"),
+    align: "center",
+    field: "daily_withdrawal_limit" // Adjust based on your data structure
   }
 ];
 const rows = [
   {
-    name: "VIP1",
-    amount: "一笔存款",
-    monthly_reload: "0",
-    min_deposit: "0",
-    max_bonus: "0",
-    return_over: "0",
-    bet_limit: t("lang.vip_bet_limit_standard"),
-    priority_payment_method: "",
-    v24_7_cc_team: "",
-    invitation_to_ee: ""
+    "level": "VIP1",
+    "total_bet": 30000,
+    "accumulated_deposit": 200,
+    "retain_amount": 500,
+    "levelup_bonus": 28,
+    "monthly_bonus": 0,
+    "birthday_bonus": 0,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
   },
   {
-    name: "VIP2",
-    amount: "3,000",
-    monthly_reload: "0",
-    min_deposit: "0",
-    max_bonus: "0",
-    return_over: "0",
-    bet_limit: t("lang.vip_bet_limit_standard"),
-    priority_payment_method: "",
-    v24_7_cc_team: "",
-    invitation_to_ee: ""
+    "level": "VIP2",
+    "total_bet": 60000,
+    "accumulated_deposit": 500,
+    "retain_amount": 1000,
+    "levelup_bonus": 58,
+    "monthly_bonus": 0,
+    "birthday_bonus": 0,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
   },
   {
-    name: "VIP3",
-    amount: "30,000",
-    monthly_reload: "0",
-    min_deposit: "0",
-    max_bonus: "0",
-    return_over: "0",
-    bet_limit: t("lang.vip_bet_limit_standard"),
-    priority_payment_method: "",
-    v24_7_cc_team: "",
-    invitation_to_ee: ""
+    "level": "VIP3",
+    "total_bet": 100000,
+    "accumulated_deposit": 1000,
+    "retain_amount": 2000,
+    "levelup_bonus": 88,
+    "monthly_bonus": 188,
+    "birthday_bonus": 88,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
   },
   {
-    name: "VIP4",
-    amount: "80,000",
-    monthly_reload: "0",
-    min_deposit: "0",
-    max_bonus: "0",
-    return_over: "0",
-    bet_limit: t("lang.vip_bet_limit_standard"),
-    priority_payment_method: "",
-    v24_7_cc_team: "",
-    invitation_to_ee: ""
+    "level": "VIP4",
+    "total_bet": 150000,
+    "accumulated_deposit": 3000,
+    "retain_amount": 5000,
+    "levelup_bonus": 188,
+    "monthly_bonus": 288,
+    "birthday_bonus": 88,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
   },
   {
-    name: "VIP5",
-    amount: "200,000",
-    monthly_reload: "30%",
-    min_deposit: "3,500",
-    max_bonus: "5,888",
-    return_over: "15",
-    bet_limit: t("lang.vip_bet_limit_highlimit"),
-    priority_payment_method: "✓",
-    v24_7_cc_team: "",
-    invitation_to_ee: ""
+    "level": "VIP5",
+    "total_bet": 200000,
+    "accumulated_deposit": 5000,
+    "retain_amount": 5000,
+    "levelup_bonus": 288,
+    "monthly_bonus": 388,
+    "birthday_bonus": 88,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
   },
   {
-    name: "VIP6",
-    amount: "400,000",
-    monthly_reload: "30%",
-    min_deposit: "3,500",
-    max_bonus: "8,888",
-    return_over: "15",
-    bet_limit: t("lang.vip_bet_limit_highlimit"),
-    priority_payment_method: "✓",
-    v24_7_cc_team: "✓",
-    invitation_to_ee: ""
+    "level": "VIP6",
+    "total_bet": 300000,
+    "accumulated_deposit": 10000,
+    "retain_amount": 10000,
+    "levelup_bonus": 388,
+    "monthly_bonus": 588,
+    "birthday_bonus": 88,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
   },
   {
-    name: "VIP7",
-    amount: "600,000",
-    monthly_reload: "30%",
-    min_deposit: "3,500",
-    max_bonus: "12,888",
-    return_over: "15",
-    bet_limit: t("lang.vip_bet_limit_highlimit"),
-    priority_payment_method: "✓",
-    v24_7_cc_team: "✓",
-    invitation_to_ee: "✓"
+    "level": "VIP7",
+    "total_bet": 500000,
+    "accumulated_deposit": 20000,
+    "retain_amount": 20000,
+    "levelup_bonus": 588,
+    "monthly_bonus": 688,
+    "birthday_bonus": 88,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
+  },
+  {
+    "level": "VIP8",
+    "total_bet": 800000,
+    "accumulated_deposit": 50000,
+    "retain_amount": 50000,
+    "levelup_bonus": 888,
+    "monthly_bonus": 888,
+    "birthday_bonus": 188,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
+  },
+  {
+    "level": "VIP9",
+    "total_bet": 1500000,
+    "accumulated_deposit": 75000,
+    "retain_amount": 75000,
+    "levelup_bonus": 1288,
+    "monthly_bonus": 1588,
+    "birthday_bonus": 188,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
+  },
+  {
+    "level": "VIP10",
+    "total_bet": 2800000,
+    "accumulated_deposit": 100000,
+    "retain_amount": 100000,
+    "levelup_bonus": 1588,
+    "monthly_bonus": 1888,
+    "birthday_bonus": 588,
+    "promotion_bonus": 10,
+    "daily_withdrawal_limit": 700000
+  },
+  {
+    "level": "VIP11",
+    "total_bet": 5000000,
+    "accumulated_deposit": 150000,
+    "retain_amount": 150000,
+    "levelup_bonus": 2888,
+    "monthly_bonus": 2588,
+    "birthday_bonus": 588,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP12",
+    "total_bet": 8800000,
+    "accumulated_deposit": 200000,
+    "retain_amount": 200000,
+    "levelup_bonus": 5888,
+    "monthly_bonus": 2888,
+    "birthday_bonus": 588,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP13",
+    "total_bet": 12800000,
+    "accumulated_deposit": 250000,
+    "retain_amount": 250000,
+    "levelup_bonus": 8888,
+    "monthly_bonus": 3588,
+    "birthday_bonus": 888,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP14",
+    "total_bet": 18800000,
+    "accumulated_deposit": 300000,
+    "retain_amount": 300000,
+    "levelup_bonus": 12888,
+    "monthly_bonus": 3888,
+    "birthday_bonus": 888,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP15",
+    "total_bet": 25000000,
+    "accumulated_deposit": 350000,
+    "retain_amount": 350000,
+    "levelup_bonus": 18888,
+    "monthly_bonus": 5888,
+    "birthday_bonus": 2888,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP16",
+    "total_bet": 32000000,
+    "accumulated_deposit": 500000,
+    "retain_amount": 500000,
+    "levelup_bonus": 25888,
+    "monthly_bonus": 8888,
+    "birthday_bonus": 2888,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP17",
+    "total_bet": 42000000,
+    "accumulated_deposit": 750000,
+    "retain_amount": 750000,
+    "levelup_bonus": 38888,
+    "monthly_bonus": 15888,
+    "birthday_bonus": 5888,
+    "promotion_bonus": 20,
+    "daily_withdrawal_limit": 1000000
+  },
+  {
+    "level": "VIP18",
+    "total_bet": 60800000,
+    "accumulated_deposit": 1000000,
+    "retain_amount": 1000000,
+    "levelup_bonus": 58888,
+    "monthly_bonus": 18888,
+    "birthday_bonus": 5888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP19",
+    "total_bet": 77300000,
+    "accumulated_deposit": 1200000,
+    "retain_amount": 1200000,
+    "levelup_bonus": 78888,
+    "monthly_bonus": 25888,
+    "birthday_bonus": 8888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP20",
+    "total_bet": 98800000,
+    "accumulated_deposit": 1400000,
+    "retain_amount": 1400000,
+    "levelup_bonus": 88888,
+    "monthly_bonus": 28888,
+    "birthday_bonus": 8888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP21",
+    "total_bet": 128800000,
+    "accumulated_deposit": 1600000,
+    "retain_amount": 1600000,
+    "levelup_bonus": 128888,
+    "monthly_bonus": 30888,
+    "birthday_bonus": 8888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP22",
+    "total_bet": 178800000,
+    "accumulated_deposit": 1800000,
+    "retain_amount": 1800000,
+    "levelup_bonus": 158888,
+    "monthly_bonus": 35888,
+    "birthday_bonus": 15888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP23",
+    "total_bet": 268800000,
+    "accumulated_deposit": 2000000,
+    "retain_amount": 2000000,
+    "levelup_bonus": 188888,
+    "monthly_bonus": 38888,
+    "birthday_bonus": 15888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP24",
+    "total_bet": 328800000,
+    "accumulated_deposit": 2200000,
+    "retain_amount": 2200000,
+    "levelup_bonus": 198888,
+    "monthly_bonus": 52888,
+    "birthday_bonus": 18888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP25",
+    "total_bet": 398800000,
+    "accumulated_deposit": 2400000,
+    "retain_amount": 2400000,
+    "levelup_bonus": 208888,
+    "monthly_bonus": 55888,
+    "birthday_bonus": 18888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP26",
+    "total_bet": 478800000,
+    "accumulated_deposit": 2600000,
+    "retain_amount": 2600000,
+    "levelup_bonus": 258888,
+    "monthly_bonus": 58888,
+    "birthday_bonus": 28888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP27",
+    "total_bet": 568800000,
+    "accumulated_deposit": 2800000,
+    "retain_amount": 2800000,
+    "levelup_bonus": 288888,
+    "monthly_bonus": 68888,
+    "birthday_bonus": 28888,
+    "promotion_bonus": 30,
+    "daily_withdrawal_limit": 1500000
+  },
+  {
+    "level": "VIP28",
+    "total_bet": 678800000,
+    "accumulated_deposit": 3000000,
+    "retain_amount": 3000000,
+    "levelup_bonus": 588888,
+    "monthly_bonus": 88888,
+    "birthday_bonus": 58888,
+    "promotion_bonus": "Không Giới Hạn",
+    "daily_withdrawal_limit": 2000000
+  },
+  {
+    "level": "VIP29",
+    "total_bet": 1158800000,
+    "accumulated_deposit": 3500000,
+    "retain_amount": 3500000,
+    "levelup_bonus": 1588888,
+    "monthly_bonus": 288888,
+    "birthday_bonus": 88888,
+    "promotion_bonus": "Không Giới Hạn",
+    "daily_withdrawal_limit": 2000000
+  },
+  {
+    "level": "VIP30",
+    "total_bet": 1628800000,
+    "accumulated_deposit": 4000000,
+    "retain_amount": 4000000,
+    "levelup_bonus": 2888888,
+    "monthly_bonus": 88888,
+    "birthday_bonus": 888888,
+    "promotion_bonus": "Không Giới Hạn",
+    "daily_withdrawal_limit": 2000000
   }
-];
+]
 
 const columns2 = [
   {
@@ -1000,6 +1426,7 @@ onActivated(() => {
           font-size: 8vw;
           font-weight: 700;
           line-height: 1;
+          color: #333333;
         }
       }
 
@@ -1089,7 +1516,7 @@ onActivated(() => {
       border-radius: 20px;
 
       .item-percent {
-        background: #e7f3ff;
+        background: #FFE7E7;
         border-radius: 24px;
         display: flex;
         justify-content: center;
@@ -1218,6 +1645,7 @@ onActivated(() => {
 
       .tnc-img {
         width: 95%;
+        filter: hue-rotate(145deg);
       }
 
       span {

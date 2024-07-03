@@ -72,7 +72,8 @@
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
             selectedPromo.promoCode !== 'lh1-ftd-promo' &&
-            selectedPromo.promoCode !== 'lh1-aijiasu'
+            selectedPromo.promoCode !== 'lh1-aijiasu' &&
+            selectedPromo.promoCode !== 'lh1-eurocup-regen'
           "
         >
           <div class="promo-bg isDesktop">
@@ -99,6 +100,7 @@
             backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
             backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : '',
             backgroundColor: selectedPromo?.promoCode === 'lh1-slot-lucky8' ? '#E7F1FD' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh1worldcup' ? '#E7F1FD' : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
@@ -114,7 +116,8 @@
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
               selectedPromo.promoCode === 'lh1-intel-esl' ||
-              selectedPromo.promoCode === 'lh1-aijiasu',
+              selectedPromo.promoCode === 'lh1-aijiasu' ||
+              selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
@@ -414,10 +417,10 @@ export default defineComponent({
         border: 0;
       }
       tr:first-child td:first-child {
-        border-top-left-radius: 16px;
+        border-top-left-radius: 10px;
       }
       tr:first-child td:last-child {
-        border-top-right-radius: 16px;
+        border-top-right-radius: 10px;
       }
 
       border-collapse: collapse;

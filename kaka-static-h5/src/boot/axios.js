@@ -13,7 +13,7 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-const globalLinks= ["tf88won"];
+const globalLinks= ["KAKAwon"];
 const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
 
 const q7yxLinks= ["q7yxpdxwxk"];
