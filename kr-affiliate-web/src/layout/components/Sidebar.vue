@@ -1,8 +1,7 @@
 <template>
   <nav class="sidebar" :class="isExpanded ? 'expanded' : ''" style="position: relative;">
     <div class="expansionbtn" @click="toggleExpansion">
-      <Fold style="width: 20px" v-if="isExpanded" />
-      <Expand style="width: 20px" v-if="!isExpanded" />
+      <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div>
 
     <div class="navigation">
@@ -35,7 +34,7 @@
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
         <div v-for="child in nav.children" :key="child.id"
-          :class="`route-container show-menu ${child.active ? 'active' : ''}`">
+          :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''}`">
           <template v-if="(parseInt(store.state.user.siteId) === 10) ? (child.path === '/commission-info' ? false : true)
             : (child.path === '/rebate' ? false : true)">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
@@ -61,9 +60,8 @@
 import { onMounted, ref, watch, reactive } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import $ from 'jquery'
 import {
-  ArrowLeftBold,
-  ArrowRightBold,
   ArrowUpBold,
   ArrowDownBold,
   Expand,
@@ -133,25 +131,28 @@ const setActiveNav = () => {
 }
 
 const toggleExpansion = () => {
+
   isExpanded.value = !isExpanded.value
   if (!isExpanded.value) {
-    navigationData.value.forEach(item => {
-      item.children.forEach(childItem => {
-        childItem.isMenuShow = false
-        childItem.isMainNav = false
-        mainNavigationData.forEach(matchingItem => {
-          if (matchingItem === childItem.label) {
-            childItem.isMainNav = true
-          }
-        })
-      })
-    })
+    $(".navigation").animate({ width: 0 })
+    // navigationData.value.forEach(item => {
+    //   item.children.forEach(childItem => {
+    //     childItem.isMenuShow = false
+    //     childItem.isMainNav = false
+    //     mainNavigationData.forEach(matchingItem => {
+    //       if (matchingItem === childItem.label) {
+    //         childItem.isMainNav = true
+    //       }
+    //     })
+    //   })
+    // })
   } else {
-    navigationData.value.forEach(item => {
-      item.children.forEach(childItem => {
-        childItem.isMainNav = true
-      })
-    })
+    $(".navigation").animate({ width: 200 })
+    // navigationData.value.forEach(item => {
+    //   item.children.forEach(childItem => {
+    //     childItem.isMainNav = true
+    //   })
+    // })
   }
 }
 const checkMenu = nav => {
@@ -415,12 +416,17 @@ watch(languageVal, newVal => {
 <style scoped lang="scss">
 .expansionbtn {
   position: absolute;
-  right: -30px;
-  top: 2px;
+  right: -35px;
+  top: 30px;
   width: 30px;
   min-height: 30px;
   padding: 5px;
   z-index: 1;
+
+  .hamburger-bars-img {
+    aspect-ratio: 448 / 512;
+    width: 20px;
+  }
 }
 
 .sidebar {
@@ -428,11 +434,14 @@ watch(languageVal, newVal => {
   display: flex;
   flex-direction: column;
   line-height: 1rem;
+  height: 100vh;
 
   .navigation {
     color: #fff;
     font-size: 1rem;
-    display: none;
+    overflow-y: auto;
+    max-height: 100vh;
+    width: 0px;
 
     .logo-section {
       display: flex;
@@ -533,7 +542,7 @@ watch(languageVal, newVal => {
     max-width: 200px;
 
     .navigation {
-      display: block;
+      width: 200px;
     }
 
     .route-wrapper {
