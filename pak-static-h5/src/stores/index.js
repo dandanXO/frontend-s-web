@@ -46,7 +46,7 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       visitorId: "",
-      h5Url: "http://m.b9mega1.com/",
+      h5Url: "https://m.b9mega1.com/",
       hasUpdatedOneSignal: false
     };
   },
