@@ -96,7 +96,7 @@
             <img src="../assets/images/index/icon-volume.png" />
           </div>
           <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 120">
+            <marquee-text :repeat="5" :duration="announcementList.length * 300">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
