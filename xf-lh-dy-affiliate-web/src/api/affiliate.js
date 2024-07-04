@@ -116,3 +116,7 @@ export const registerMember = (form) => {
 export const editMemberRatio = (memberId, ratio) => {
   return https().request(`/downline/${memberId}/editRatio?_method=PUT`, Method.POST, { memberShareRatio: ratio }, ContentType.form);
 };
+
+export const getDownlineShareRatio = (affId) => {
+  return https().request(`/affiliate/${affId}/getDownlineShareRatio`, Method.GET);
+};
