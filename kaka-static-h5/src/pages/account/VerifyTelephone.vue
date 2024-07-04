@@ -367,6 +367,6 @@ export default defineComponent({
 }
 
 .q-toolbar {
-  background: #33bcd4;
+  background: #fd574c;
 }
 </style>

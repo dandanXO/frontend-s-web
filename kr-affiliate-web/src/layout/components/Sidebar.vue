@@ -6,6 +6,15 @@
     <div class="navigation">
       <div class="logo-section" />
       <div class="row-item">
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+          <el-option key="1" value="en">en</el-option>
+          <el-option key="2" value="zh">zh</el-option>
+          <el-option key="3" value="th">th</el-option>
+          <el-option key="4" value="vi">vi</el-option>
+          <el-option key="5" value="kr">kr</el-option>
+        </el-select>
+      </div>
+      <div class="row-item">
         <div class="name-and-logout">
           <div class="name-wrapper">
             <div class="name">{{ store.state.user.name }}</div>
@@ -101,7 +110,8 @@ const navigationData = ref([])
 const store = useStore()
 
 const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { languageVal } = storeToRefs(i18nStoreLanguage);
+const { setLanguage } = i18nStoreLanguage;
 
 const affInfo = reactive({
   affiliateCode: null,
@@ -112,6 +122,10 @@ const affInfo = reactive({
   revenueShare: 0,
   shareRatio: [],
 })
+
+const handleLanguage = () => {
+  setLanguage(languageVal.value);
+}
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))

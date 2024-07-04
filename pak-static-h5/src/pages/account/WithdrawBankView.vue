@@ -62,9 +62,9 @@
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
-        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
-          <span>+ Add bank card</span>
-        </div> -->
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
+          <span>+ {{ $t("btn.addBankCard") }}</span>
+        </div>
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <span>+添加虚拟币账户</span>
         </div> -->
@@ -78,8 +78,11 @@
         </div> -->
       </div>
 
+      <!-- <pre>bankCardList[BANK_CARD]--{{ bankCardList[BANK_CARD] }}</pre> -->
+      <!-- <pre>bankCardList[EWALLET]--{{ bankCardList[EWALLET] }}</pre> -->
+
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
-        <div class="bank-detail-type">银行卡</div>
+        <div class="bank-detail-type">{{ t("form.bankCard") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[BANK_CARD] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[BANK_CARD]">
@@ -94,7 +97,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>ss卡号：</div>
+              <div>Bank Account:&nbsp;</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -103,7 +106,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
         </div>
       </template>
 
@@ -263,7 +266,7 @@ const getTitleText = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value;
 
   if (isAlipay(bankCode)) return "请输入解绑支付宝号";
-  else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
+  else if (bankType === BANK_CARD) return t("form.bankCard_untie");
   else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
   else if (bankType === EWALLET) return t("form.virtualWallet_untie");
 };
@@ -294,7 +297,7 @@ const isAlipay = (bankID) => {
 const unbindCardLabel = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value;
   if (isAlipay(bankCode)) return "支付宝号";
-  else if (bankType === BANK_CARD) return "银行卡号";
+  else if (bankType === BANK_CARD) return t("form.bankCard");
   else if (bankType === CRYPTO) return "钱包地址";
   else if (bankType === EWALLET) return t("form.virtualWallet");
 };
