@@ -88,12 +88,13 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       gap: 14px;
+      color: #9aa8cb;
       .account-balance {
         font-size: 14px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-    padding: 20px 40px;
+        padding: 20px 40px;
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
