@@ -50,7 +50,8 @@ elTables.forEach((elTable) => {
   width: 100%;
   position: relative;
   overflow: auto;
-  height: calc(100vh - 152px);
+  height: calc(100vh - 130px);
+  padding: 20px;
 }
 
 .fixed-header+.app-main {

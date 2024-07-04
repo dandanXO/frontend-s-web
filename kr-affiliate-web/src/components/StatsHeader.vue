@@ -1,6 +1,8 @@
 <template>
     <div class="stats-header-container">
         <div class="stats-row">
+            <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" @click="toggleExpansion" />
+
             <div class="stats">
                 <div class="stat-label">회원 머니</div>
                 <div class="stat-value green">2,289,553</div>
@@ -58,6 +60,9 @@
         </div>
 
         <div class="stats-row">
+            <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" @click="toggleExpansion"
+                style="visibility: hidden;" />
+
             <div class="stats">
                 <div class="stat-label">충전금액</div>
                 <div class="stat-value grey">0</div>
@@ -172,9 +177,30 @@
 </template>
 
 <script setup>
+import $ from 'jquery'
+
+const toggleExpansion = () => {
+    if ($(".navigation").width()) {
+        $(".navigation").animate({ width: 0 })
+    } else {
+        $(".navigation").animate({ width: 200 })
+    }
+}
 </script>
 
 <style lang="scss" scoped>
+.hamburger-bars-img {
+    aspect-ratio: 448 / 512;
+    width: 20px;
+    margin: 15px 10px 15px 15px;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+}
+
+
 .stats-header-container {
     background-color: #fff;
     font-family: 'NanumNeo';
@@ -184,7 +210,6 @@
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
-    padding-left: 40px;
     justify-content: center;
 
     &::-webkit-scrollbar-track {
@@ -203,6 +228,7 @@
     .stats-row {
         display: flex;
         gap: 5px;
+        align-items: center;
     }
 
     .stats {
