@@ -153,25 +153,39 @@ export default {
     commissionCalculatorNote:
       'Note: The simulator calculates based on the average rebate and bonus estimates, and the venue selection defaults to the situation where all members participate in the game at the same venue. The results are for reference only.',
     commissionRateInfo: 'Commission Rate Info',
-    commissionRateDescription: 'Affiliate commission rate is determined by monthly win loss and number of active member, when both conditions are met, affiliate will get the corresponding commission rate.',
-    activeMemberRequirement: 'Number of active members: Deposit for the month >= 100 or valid bet >= 500;',
+    commissionRateDescription:
+      'Affiliate commission rate is determined by monthly win loss and number of active member, when both conditions are met, affiliate will get the corresponding commission rate.',
+    activeMemberRequirement:
+      'Number of active members: Deposit for the month >= 100 or valid bet >= 500;',
     level: 'Level',
     companyMonthlyProfit: 'Company Monthly Profit',
     activeNumberRequirement: 'New/ Active Count Minimum Requirement',
     commissionRate: 'Commission Rate',
     commissionCalculateFormula: 'Commission Calculation',
-    commissionFormula: 'Commission = Net Profit After Correction * Commission Rate + Commission Adjustment + Commission Supplement; ',
-    correctionNetProfitFormula: 'Net Profit After Correction = Monthly Net Profit + Last Month Balance; ',
-    monthlyNetProfitFormula: 'Monthly Net Profit = Monthly Total Win Loss - Bonus - Rebate - Platform Fee - Account Adjustment + Supplement Win Loss - Deposit Withdrawal Processing Fee; ',
-    bonusFormula: 'Bonus = Total Amount of Bonus received by affiliate downline in current month; ',
-    rebateFormula: 'Rebate = Total Amount of Rebate received by affiliate downline in current month; ',
-    platformFeeFormula: 'Platform Fee = Total Win Loss of each Platform * Platform Fee Rate, But only when there is profit in that month, platform will charge platform fee; ',
-    adjustmentFormula: 'Account adjustment = When member rollover is abnormal, the site admin will make account adjustments to the member;',
-    supplementWinLossFormula: 'Supplement Win Loss = Last Month Real-time Data Net Profit - Net Profit of commission distributed last month; ',
-    depositFeeFormula: 'Deposit Fee = Downline Deposit Amount * Deposit Fee Rate + Affiliate Deposit Amount * Deposit Fee Rate; ',
-    withdrawalFeeFormula: 'Withdrawal Fee = Downline Withdrawal Amount * Withdrawal Fee Rate; ',
-    commissionAdjustmentNote: 'Commission Supplement: After the commission is released for the month, commission supplement will made based on relevant activities the affiliate participated in. ',
-    commissionNote: 'Note: Please remember that anyone who uses dishonest methods to defraud commissions will have their account permanently frozen and the partnership terminated. All commissions will not be paid. ',
+    commissionFormula:
+      'Commission = Net Profit After Correction * Commission Rate + Commission Adjustment + Commission Supplement; ',
+    correctionNetProfitFormula:
+      'Net Profit After Correction = Monthly Net Profit + Last Month Balance; ',
+    monthlyNetProfitFormula:
+      'Monthly Net Profit = Monthly Total Win Loss - Bonus - Rebate - Platform Fee - Account Adjustment + Supplement Win Loss - Deposit Withdrawal Processing Fee; ',
+    bonusFormula:
+      'Bonus = Total Amount of Bonus received by affiliate downline in current month; ',
+    rebateFormula:
+      'Rebate = Total Amount of Rebate received by affiliate downline in current month; ',
+    platformFeeFormula:
+      'Platform Fee = Total Win Loss of each Platform * Platform Fee Rate, But only when there is profit in that month, platform will charge platform fee; ',
+    adjustmentFormula:
+      'Account adjustment = When member rollover is abnormal, the site admin will make account adjustments to the member;',
+    supplementWinLossFormula:
+      'Supplement Win Loss = Last Month Real-time Data Net Profit - Net Profit of commission distributed last month; ',
+    depositFeeFormula:
+      'Deposit Fee = Downline Deposit Amount * Deposit Fee Rate + Affiliate Deposit Amount * Deposit Fee Rate; ',
+    withdrawalFeeFormula:
+      'Withdrawal Fee = Downline Withdrawal Amount * Withdrawal Fee Rate; ',
+    commissionAdjustmentNote:
+      'Commission Supplement: After the commission is released for the month, commission supplement will made based on relevant activities the affiliate participated in. ',
+    commissionNote:
+      'Note: Please remember that anyone who uses dishonest methods to defraud commissions will have their account permanently frozen and the partnership terminated. All commissions will not be paid. ',
   },
   sortType: {
     ASC: 'ASC',
@@ -242,7 +256,7 @@ export default {
     changeWithdrawPw: 'Change Withdraw Password',
     clearingSum: 'Clearing Sum',
     commission: 'Commission',
-    gamecommission: "Platform Commission",
+    gamecommission: 'Platform Commission',
     commissionBalance: 'Commission Balance',
     commissionPercent: 'Commission Percent',
     commissionRate: 'Commission Rate',
@@ -531,6 +545,19 @@ export default {
     todayWithdrawal: 'Today Withdrawal',
     depositWithdrawalDiff: 'Deposit Withdrawal Difference',
     recommenderCode: 'Recommender Code',
+    sendMessageType: 'Message Type',
+    message: 'Message',
+    messageType: 'Message Type',
+    messageTitle: 'Title',
+    messageContent: 'Content',
+    messageSendTime: 'Send Time',
+    addAffiliateMessage: 'Send Message to Downline Members',
+    editAffiliateMessage: 'Edit Send Message to Downline Members',
+    messageSend: 'Send',
+    receivedType: 'Received Type',
+    receivedMembers: 'Username',
+    example: 'Example',
+    memberUsername: 'Username',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -731,6 +758,7 @@ export default {
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
     'Rebate Report': 'Rebate Report',
+    message: 'Message',
   },
   posterType: {
     OVERALL: 'Overall Referral',
@@ -790,6 +818,13 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
     AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
+  },
+  sendMessageType: {
+    NOTIFICATION: 'Notification',
+    ACTIVITY: 'Activity',
+    ANNOUNCEMENT: 'Announcement',
+    ALL_DOWNLINE_MEMBER: 'All downline Members',
+    SELECTED_MEMBER: 'Selected Members',
   },
   error: {
     400: 'Bad Request',

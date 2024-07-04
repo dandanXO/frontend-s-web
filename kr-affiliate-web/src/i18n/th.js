@@ -190,7 +190,7 @@ export default {
     changeWithdrawPw: 'เปลี่ยนรหัสผ่านการถอน',
     clearingSum: 'ยอดการเคลียร์',
     commission: 'คอมมิชชัน',
-    gamecommission: "ค่าคอมมิชชั่นแพลตฟอร์ม",
+    gamecommission: 'ค่าคอมมิชชั่นแพลตฟอร์ม',
     commissionBalance: 'ยอดคงเหลือคอมมิชชัน',
     commissionPercent: 'ร้อยละคอมมิชชัน',
     commissionRate: 'อัตราคอมมิชชัน',
@@ -376,6 +376,19 @@ export default {
     withdrawPayoutBonus: 'การถอน/จ่ายเงิน/โบนัส/ปรับ',
     withdrawalAmount: 'จำนวนการถอน',
     yesterday: 'เมื่อวาน',
+    sendMessageType: 'ประเภทข้อมูล',
+    message: 'ข้อมูล',
+    messageType: 'ประเภทข้อมูล',
+    messageTitle: 'ชื่อข้อความ',
+    messageContent: 'ข้อมูล',
+    messageSendTime: 'เวลาส่งข้อความ',
+    addAffiliateMessage: 'เพิ่มข้อมูลผู้เล่นออฟไลน์',
+    editAffiliateMessage: 'แก้ไขข้อมูลสมาชิกดาวน์ไลน์',
+    messageSend: 'ส่ง',
+    receivedType: 'ประเภทการส่ง',
+    receivedMembers: 'บัญชีผู้เล่น',
+    example: 'ตัวอย่างเช่น',
+    memberUsername: 'บัญชี',
   },
   message: {
     addSuccess: 'เพิ่มสำเร็จ',
@@ -457,7 +470,7 @@ export default {
     depositNotification1:
       'คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าเว็บของธนาคารเพื่อทำธุรกรรมฝากเงิน',
     depositNotification2: 'หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่',
-    depositShouldBetween: 'จำนวนเงินฝากควรอยู่ระหว่าง '
+    depositShouldBetween: 'จำนวนเงินฝากควรอยู่ระหว่าง ',
   },
   menu: {
     undefined: '',
@@ -482,6 +495,14 @@ export default {
     'Personal Center': 'ศูนย์ส่วนบุคคล',
     'Settlement Center': 'ศูนย์การตัดยอดค่าคอมมิชชัน',
     Withdraw: 'การถอนเงินจากธนาคาร',
+    message: 'ข้อความของไซต์',
+  },
+  sendMessageType: {
+    NOTIFICATION: 'แจ้ง',
+    ACTIVITY: 'กิจกรรม',
+    ANNOUNCEMENT: 'ประกาศ',
+    ALL_DOWNLINE_MEMBER: 'ผู้เล่นออฟไลน์ทั้งหมด',
+    SELECTED_MEMBER: 'เลือกผู้เล่น',
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
