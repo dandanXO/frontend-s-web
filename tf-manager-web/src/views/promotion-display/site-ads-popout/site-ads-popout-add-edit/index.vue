@@ -25,6 +25,7 @@
           style="width: 260px"
           default-first-option
           @focus="loadSites"
+          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -45,7 +46,7 @@
           style="width: 260px"
         >
           <el-option
-            v-for="item in uiControl.type"
+            v-for="item in filterTypes"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
@@ -365,10 +366,10 @@ const uiControl = reactive({
     { key: 1, displayName: '开', value: true },
     { key: 2, displayName: '关', value: false },
   ],
-  type: [
-    { key: 1, displayName: '文字', value: 'TEXT' },
-    { key: 2, displayName: '图片', value: 'IMG' },
-  ],
+  // type: [
+  //   { key: 1, displayName: '文字', value: 'TEXT' },
+  //   { key: 2, displayName: '图片', value: 'IMG' },
+  // ],
   frequency: [
     { key: 1, displayName: '每次', value: 'EVERYTIME' },
     { key: 2, displayName: '每天', value: 'EVERYDAY' },
@@ -381,6 +382,23 @@ const uiControl = reactive({
   inputVisible: false,
   inputButtonVisible: false,
 })
+
+const filterTypes = computed(() => {
+  if (form.siteId === 8) {
+    return [
+      { key: 1, displayName: '文字', value: 'TEXT' },
+      { key: 2, displayName: '图片', value: 'IMG' },
+    ]
+  } else {
+    return [{ key: 2, displayName: '图片', value: 'IMG' }]
+  }
+})
+
+function changeSite() {
+  if (form.siteId !== 8) {
+    form.type = 'IMG'
+  }
+}
 
 const formRules = reactive({
   title: [required(t('message.validateTitleRequired'))],
@@ -484,7 +502,13 @@ function getContentInput(value) {
 }
 
 function create() {
-  form.contentList = uiControl.contentList.join('|')
+  if (uiControl.contentList !== null) {
+    form.contentList = uiControl.contentList.join('|')
+  }
+
+  if (form.type === 'IMG') {
+    form.contentList = null
+  }
 
   adsPopoutForm.value.validate(async valid => {
     if (valid) {
@@ -497,8 +521,13 @@ function create() {
 }
 
 function edit() {
-  form.contentList = uiControl.contentList.join('|')
+  if (uiControl.contentList !== null) {
+    form.contentList = uiControl.contentList.join('|')
+  }
 
+  if (form.type === 'IMG') {
+    form.contentList = ''
+  }
   adsPopoutForm.value.validate(async valid => {
     if (valid) {
       await updateAdsPopout(form)
@@ -532,10 +561,9 @@ async function loadForm(id, siteId) {
 
   nextTick(() => {
     for (const key in adspopout) {
-      if (adspopout.contentList !== null) {
+      if (adspopout.contentList !== null && adspopout.contentList !== '') {
         uiControl.contentList = adspopout.contentList.split('|')
       }
-
       if (Object.keys(form).find(k => k === key)) {
         form[key] = adspopout[key]
       }
@@ -611,7 +639,7 @@ watch(
       loadForm(route.params.id, route.params.siteId)
     } else {
       adsPopoutForm.value.resetFields()
-      form.type = uiControl.type[0].value
+      form.type = filterTypes.value[0].value
     }
   }
 )
@@ -624,7 +652,7 @@ onMounted(async () => {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)
   } else {
-    form.type = uiControl.type[0].value
+    form.type = filterTypes.value[0].value
   }
 })
 </script>

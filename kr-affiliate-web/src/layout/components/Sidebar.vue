@@ -1,9 +1,8 @@
 <template>
-  <nav class="sidebar" :class="isExpanded ? 'expanded' : ''" style="position: relative;">
-    <div class="expansionbtn" @click="toggleExpansion">
-      <Fold style="width: 20px" v-if="isExpanded" />
-      <Expand style="width: 20px" v-if="!isExpanded" />
-    </div>
+  <nav class="sidebar expanded" style="position: relative;">
+    <!-- <div class="expansionbtn" @click="toggleExpansion">
+      <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
+    </div> -->
 
     <div class="navigation">
       <div class="logo-section">
@@ -29,23 +28,19 @@
         </div>
       </div>
       <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
-        <div v-if="nav.display && isExpanded" class="route-title row-item" @click="checkMenu(nav)">
+        <div v-if="nav.display" class="route-title row-item" @click="checkMenu(nav)">
           {{ nav.title }}
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
         <div v-for="child in nav.children" :key="child.id"
-          :class="`route-container show-menu ${child.active ? 'active' : ''}`">
-          <template v-if="(parseInt(store.state.user.siteId) === 10) ? (child.path === '/commission-info' ? false : true)
-            : (child.path === '/rebate' ? false : true)">
+          :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''}`">
+          <template v-if="(child.path === '/commission-info' ? false : true)">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
-              <div class="route-content" :style="!isExpanded && child.icon === 'speech-bubbles'
-                ? 'margin-top: 50px'
-                : ''
-                ">
+              <div class="route-content">
                 <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
                   :className="child.active ? 'active-icon' : ''" />
-                <span class="route-label" :class="child.active ? 'active' : ''" v-if="isExpanded">
+                <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
               </div>
@@ -61,9 +56,8 @@
 import { onMounted, ref, watch, reactive } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import $ from 'jquery'
 import {
-  ArrowLeftBold,
-  ArrowRightBold,
   ArrowUpBold,
   ArrowDownBold,
   Expand,
@@ -81,17 +75,7 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const navigationData = ref([]);
-const mainNavigationData = [
-  'Dashboard',
-  'Transfer',
-  'Settlement Report',
-  'commissionInfo',
-  'Referral Link',
-  'contactUs',
-  'Daily Detail',
-  'Daily Summary',
-]
-const isExpanded = ref(true)
+
 const store = useStore()
 let affBalance = 0
 let commBalance = 0
@@ -133,25 +117,10 @@ const setActiveNav = () => {
 }
 
 const toggleExpansion = () => {
-  isExpanded.value = !isExpanded.value
-  if (!isExpanded.value) {
-    navigationData.value.forEach(item => {
-      item.children.forEach(childItem => {
-        childItem.isMenuShow = false
-        childItem.isMainNav = false
-        mainNavigationData.forEach(matchingItem => {
-          if (matchingItem === childItem.label) {
-            childItem.isMainNav = true
-          }
-        })
-      })
-    })
+  if ($(".navigation").width()) {
+    $(".navigation").animate({ width: 0 })
   } else {
-    navigationData.value.forEach(item => {
-      item.children.forEach(childItem => {
-        childItem.isMainNav = true
-      })
-    })
+    $(".navigation").animate({ width: 200 })
   }
 }
 const checkMenu = nav => {
@@ -377,15 +346,16 @@ const getNavigationData = () => {
 }
 onMounted(async () => {
   if (window.innerWidth < 768) {
-    isExpanded.value = false
+    $(".navigation").animate({ width: 0 })
   } else {
-    isExpanded.value = true
+    $(".navigation").animate({ width: 200 })
   }
+
   watch(
     () => route.path,
     async () => {
       setActiveNav()
-      if (isExpanded.value && window.innerWidth < 768) {
+      if (window.innerWidth < 768) {
         toggleExpansion()
       }
     }
@@ -394,16 +364,15 @@ onMounted(async () => {
   getNavigationData()
 
   setActiveNav()
-  if (parseInt(store.state.user.siteId) === 10) {
-    const { data: affBal } = await getAffiliateBalance(store.state.user.id);
-    affBalance = affBal
-    const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
-    commBalance = commBal
-    const { data: aff } = await getAffiliateInfo(store.state.user.id)
-    Object.keys({ ...aff }).forEach(field => {
-      affInfo[field] = aff[field]
-    })
-  }
+
+  const { data: affBal } = await getAffiliateBalance(store.state.user.id);
+  affBalance = affBal
+  const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
+  commBalance = commBal
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
 })
 
 watch(languageVal, newVal => {
@@ -415,12 +384,17 @@ watch(languageVal, newVal => {
 <style scoped lang="scss">
 .expansionbtn {
   position: absolute;
-  right: -30px;
-  top: 2px;
+  right: -35px;
+  top: 30px;
   width: 30px;
   min-height: 30px;
   padding: 5px;
   z-index: 1;
+
+  .hamburger-bars-img {
+    aspect-ratio: 448 / 512;
+    width: 20px;
+  }
 }
 
 .sidebar {
@@ -428,11 +402,14 @@ watch(languageVal, newVal => {
   display: flex;
   flex-direction: column;
   line-height: 1rem;
+  height: 100vh;
 
   .navigation {
     color: #fff;
     font-size: 1rem;
-    display: none;
+    overflow-y: auto;
+    max-height: 100vh;
+    width: 0px;
 
     .logo-section {
       display: flex;
@@ -444,17 +421,16 @@ watch(languageVal, newVal => {
     }
 
     &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #ffffff;
+      background-color: #d5d5d5;
     }
 
     &::-webkit-scrollbar {
-      width: 5px;
+      width: 3px;
       background-color: #ffffff;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #98c0fc;
+      background-color: #999999;
     }
 
     .route-title {
@@ -533,7 +509,7 @@ watch(languageVal, newVal => {
     max-width: 200px;
 
     .navigation {
-      display: block;
+      width: 200px;
     }
 
     .route-wrapper {

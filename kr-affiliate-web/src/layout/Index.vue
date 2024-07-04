@@ -116,18 +116,20 @@ export default defineComponent({
 }
 
 .main-container {
-  min-height: 100%;
+  height: 100vh;
   transition: margin-left 0.28s;
   display: flex;
   position: relative;
   background: #f3f8fc;
-  gap: 10px;
+  // gap: 10px;
   display: grid;
   grid-template-columns: auto 1fr;
 }
 
 .content-container {
-  padding: 20px;
+  max-height: 100%;
+  display: grid;
+  grid-template-rows: 130px 1fr;
 }
 
 .sidebar-container {

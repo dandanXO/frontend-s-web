@@ -3,6 +3,7 @@ import en from "./en";
 import zh from "./zh";
 import th from "./th";
 import kr from "./kr";
+import vn from "./vn";
 
 const i18n = createI18n({
   legacy: false,
@@ -12,7 +13,8 @@ const i18n = createI18n({
     en,
     zh,
     th,
-    kr
+    kr,
+    vn
   },
   globalInjection: true,
 });

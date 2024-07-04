@@ -1,16 +1,21 @@
 <template>
-  <section class="app-main">
-    <Suspense>
-      <router-view :key="key" />
-    </Suspense>
-  </section>
+  <div>
+    <StatsHeader />
+    <section class="app-main">
+      <Suspense>
+        <router-view :key="key" />
+      </Suspense>
+    </section>
+  </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
+import StatsHeader from "@/components/StatsHeader.vue";
 
 export default defineComponent({
+  components: { StatsHeader },
   setup() {
     const route = useRoute();
     const key = () => {
@@ -44,10 +49,12 @@ elTables.forEach((elTable) => {
 .app-main {
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
+  height: calc(100vh - 130px);
+  padding: 20px;
 }
 
-.fixed-header + .app-main {
+.fixed-header+.app-main {
   padding-top: 80px;
   height: 100vh;
   overflow: auto;
@@ -59,9 +66,11 @@ elTables.forEach((elTable) => {
   //width: 5px;
   //height: 10px;
 }
+
 .el-form-item {
   align-items: center;
 }
+
 .el-card {
   border-radius: 20px !important;
 }
@@ -69,33 +78,41 @@ elTables.forEach((elTable) => {
 .el-card__header {
   border: none !important;
 }
+
 .role-span {
   font-weight: bold;
   font-size: 30px;
 }
+
 .rightBtn {
   margin-left: 200px;
 }
+
 @media (max-width: 768px) {
   .el-form-item {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .role-span {
     font-weight: bold;
     font-size: 20px;
   }
+
   .inputs-wrap {
     margin: 0;
     flex-direction: column;
   }
+
   // .el-button {
   //   margin: 0 !important;
   // }
-  .el-button + .el-button {
+  .el-button+.el-button {
     // margin-left: 20px !important;
   }
+
   .el-form-item {
+
     // flex-direction: column;
     // align-items: flex-start !important;
     &__label {
@@ -103,49 +120,62 @@ elTables.forEach((elTable) => {
       width: unset !important;
       color: #7D8592;
     }
+
     &__content {
       margin-left: 0 !important;
     }
   }
+
   .el-space {
     flex-direction: column;
   }
+
   .inputs-wrap {
     align-items: flex-start;
   }
+
   .navbar .avatar-container {
     display: none;
   }
+
   .rightBtn {
     margin-left: 0;
   }
 }
+
 .el-dialog {
   border-radius: 20px !important;
+
   &__header {
     margin: 0 20px;
     border-bottom: 1px solid #eeeeee;
   }
+
   &__title {
     color: #0A1629;
     font-family: PFBold;
   }
 }
+
 .el-dialog__headerbtn .el-dialog__close {
   font-size: 25px;
 }
+
 .el-button {
   border-radius: 10px;
   box-shadow: 0px 6px 58px 0px #C4CBD61A;
 }
+
 .el-table__empty-block {
   width: unset !important;
 }
+
 .el-empty__image {
   width: 80% !important;
   margin: auto !important;
   max-width: 300px;
 }
+
 .el-table__empty-text {
   width: 100% !important;
 }
@@ -153,20 +183,26 @@ elTables.forEach((elTable) => {
 .custom-table {
   width: 100%;
   border: 0;
+
   th {
     background: #F4F9FD;
     text-align: left;
   }
-  th, td {
+
+  th,
+  td {
     padding: 12px;
   }
+
   tr:nth-child(even) {
     background: #F4F9FD;
   }
 }
+
 .el-form-item__content {
   width: 100%;
 }
+
 .el-input__inner {
   width: 100%;
 }
@@ -284,5 +320,4 @@ elTables.forEach((elTable) => {
     }
   }
 }
-
 </style>

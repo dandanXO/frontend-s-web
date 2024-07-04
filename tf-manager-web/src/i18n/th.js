@@ -645,6 +645,7 @@ export default {
     fundingInfo: 'ข้อมูลเงินทุน',
     gameAccountName: 'ชื่อบัญชีเกม',
     gameCode: 'รหัสเกม',
+    domainEasy: 'โดเมน ง่าย',
     gameConsolidateReport: 'รายงานเกม',
     gameName: 'ชื่อเกม',
     gameType: 'ประเภทเกม',

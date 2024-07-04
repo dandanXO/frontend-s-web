@@ -33,7 +33,7 @@
               </div>
               <div class="description">
 
-                <span v-if="vipIndex !==0">
+                <span>
                   {{ $t('vip.vipUpgradeRequired') }}:
                   <span style="color: #700900">
                   {{$t('vip.totalBetMonth')}} {{vip.upgrade}}
@@ -679,7 +679,7 @@ export default defineComponent({
   {
     vipLevel: "1",
     upgrade: "30,000",
-    maintain: "200",
+    maintain: "500",
     vipTitle: "VIP1",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -689,7 +689,7 @@ export default defineComponent({
   {
     vipLevel: "2",
     upgrade: "60,000",
-    maintain: "500",
+    maintain: "1,000",
     vipTitle: "VIP2",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -699,7 +699,7 @@ export default defineComponent({
   {
     vipLevel: "3",
     upgrade: "100,000",
-    maintain: "1,000",
+    maintain: "2,000",
     vipTitle: "VIP3",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -709,7 +709,7 @@ export default defineComponent({
   {
     vipLevel: "4",
     upgrade: "150,000",
-    maintain: "3,000",
+    maintain: "5,000",
     vipTitle: "VIP4",
     depositPromoAvailable: false,
     promoAvailable: false,
