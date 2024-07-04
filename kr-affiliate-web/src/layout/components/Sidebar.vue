@@ -3,10 +3,8 @@
     <!-- <div class="expansionbtn" @click="toggleExpansion">
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
-
     <div class="navigation">
-      <div class="logo-section">
-      </div>
+      <div class="logo-section" />
       <div class="row-item">
         <div class="name-and-logout">
           <div class="name-wrapper">
@@ -33,13 +31,11 @@
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
-        <div v-for="child in nav.children" :key="child.id"
-          :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''}`">
+        <div v-for="child in nav.children" :key="child.id" :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''}`">
           <template v-if="(child.path === '/commission-info' ? false : true)">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
               <div class="route-content">
-                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''" />
+                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''" :className="child.active ? 'active-icon' : ''" />
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -54,21 +50,18 @@
 
 <script setup>
 import { onMounted, ref, watch, reactive } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import $ from 'jquery'
 import {
   ArrowUpBold,
-  ArrowDownBold,
-  Expand,
-  Fold
+  ArrowDownBold
 } from '@element-plus/icons-vue'
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
 import { getAffiliateBalance, getAffiliateCommissionBalance, getAffiliateInfo } from '@/api/affiliate';
-import { useRouter } from 'vue-router';
 import ForgetPasswordModal from "@/components/forgetpassword-modal/Index.vue";
 
 const { t } = useI18n();
@@ -77,8 +70,6 @@ const router = useRouter();
 const navigationData = ref([]);
 
 const store = useStore()
-let affBalance = 0
-let commBalance = 0
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
@@ -342,7 +333,6 @@ const getNavigationData = () => {
       ],
     },
   ]
-
 }
 onMounted(async () => {
   if (window.innerWidth < 768) {
@@ -366,9 +356,8 @@ onMounted(async () => {
   setActiveNav()
 
   const { data: affBal } = await getAffiliateBalance(store.state.user.id);
-  affBalance = affBal
   const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
-  commBalance = commBal
+  console.log({ affBal, commBal })
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]
