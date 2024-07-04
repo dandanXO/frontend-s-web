@@ -52,8 +52,20 @@ elTables.forEach((elTable) => {
   width: 100%;
   position: relative;
   overflow: auto;
-  height: calc(100vh - 130px);
-  padding: 20px;
+  height: calc(100vh - 157px);
+
+  &::-webkit-scrollbar-track {
+    background-color: #d5d5d5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    background-color: #ffffff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #999999;
+  }
 }
 
 .fixed-header+.app-main {
@@ -74,7 +86,7 @@ elTables.forEach((elTable) => {
 }
 
 .el-card {
-  border-radius: 20px !important;
+  // border-radius: 20px !important;
 }
 
 .el-card__header {
@@ -185,24 +197,31 @@ elTables.forEach((elTable) => {
 .custom-table {
   width: 100%;
   border: 0;
+  border-collapse: collapse;
 
   th {
-    background: #F4F9FD;
+    background: #35414f;
     text-align: left;
+    color: #fff;
+    font-family: 'NanumNeo';
   }
 
   th,
   td {
-    padding: 12px;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    border-color: #cfd8dc;
   }
 
-  tr:nth-child(even) {
-    background: #F4F9FD;
-  }
+  // tr:nth-child(even) {
+  //   background: #F4F9FD;
+  // }
 }
 
 .el-form-item__content {
   width: 100%;
+  line-height: normal !important;
 }
 
 .el-input__inner {

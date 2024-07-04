@@ -105,6 +105,7 @@ export default defineComponent({
 .app-breadcrumb.el-breadcrumb {
   display: flex;
   align-items: center;
+  font-family: 'NanumNeo';
   font-size: 13px;
   background-color: #344151;
   padding: 5px 23px 5px;
