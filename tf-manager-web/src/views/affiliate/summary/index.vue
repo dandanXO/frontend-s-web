@@ -460,7 +460,9 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+            <span
+              v-formatter="{data: scope.row.platformFee, type: 'money'}"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -582,6 +584,7 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
+import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -721,6 +724,22 @@ function checkQuery() {
 }
 
 async function loadRecord() {
+  if (
+    !hasRole(['ADMIN']) &&
+    (request.siteId === 1 || request.siteId === 6 || request.siteId === 7)
+  ) {
+    if (
+      (request.loginName === null || request.loginName.trim().length === 0) &&
+      (request.affiliateCode === null ||
+        request.affiliateCode.trim().length === 0)
+    ) {
+      ElMessage({
+        message: t('message.pleaseEnterAffiliateNameOrAffiliateCode'),
+        type: 'error',
+      })
+      return
+    }
+  }
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
@@ -753,12 +772,15 @@ function showDialog(type, affiliateId) {
     memberPage.affiliateId = affiliateId
     memberRequest.current = 1
     loadNewMember(affiliateId)
+    popUpRequest.regTime = request.recordTime
   } else if (type === 'ALLMEMBER') {
     currentPageType.value = 'allMembers'
     uiControl.dialogTitle = t('fields.allmembers')
     allMemberPage.affiliateId = affiliateId
     allMemberRequest.current = 1
     loadAllMember(affiliateId)
+    // popUpRequest.recordTime = request.recordTime
+    popUpRequest.regTime = null
   }
   currentAffiliateId.value = affiliateId
   uiControl.dialogType = type
@@ -776,8 +798,6 @@ async function loadNewMember(affiliateId) {
       query[key] = value
     }
   })
-
-  popUpRequest.regTime = request.recordTime
 
   if (popUpRequest.regTime !== null) {
     if (popUpRequest.regTime.length === 2) {
@@ -827,22 +847,24 @@ async function loadAllMember(affiliateId) {
   query.loginName = popUpRequest.loginName
   query.memberType = popUpRequest.memberType
 
-  popUpRequest.recordTime = request.recordTime
+  if (popUpRequest.regTime !== null) {
+    if (popUpRequest.regTime.length === 2) {
+      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
 
-  // if (popUpRequest.regTime !== null) {
-  //   if (popUpRequest.regTime.length === 2) {
-  //     query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
+      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
 
-  //     query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
-  //     query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
+      query.regTime = query.regTime.join(',')
+    } else {
+      query.regTime = moment(popUpRequest.regTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
 
-  //     query.regTime = query.regTime.join(',')
-  //   } else {
-  //     query.regTime = moment(popUpRequest.regTime[0]).format(
-  //       'YYYY-MM-DD 00:00:00'
-  //     )
-  //   }
-  // }
+  if (popUpRequest.recordTime === null) {
+    popUpRequest.recordTime = request.recordTime
+  }
 
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {

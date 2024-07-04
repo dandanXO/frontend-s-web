@@ -15,12 +15,22 @@
     </q-tabs>
   </div>
 
+  <!-- <q-tabs
+    scroll-target=".q-tab--active"
+    v-if="!isPromoDetail"
+    v-model="tab"
+    align="justify"
+    class="promo-cat-tab extension-tab"
+  >
+    <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+  </q-tabs> -->
+
   <!-- <pre>promoState.promoList{{ promoState.promoList }}</pre> -->
 
-  <div class="promo-container" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+  <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="$t(tab.label)" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -94,6 +104,16 @@
                 />
                 <!-- </div> -->
               </div>
+
+              <div class="promo-content-inner">
+                <div class="content-title">{{ selectedPromo.title }}</div>
+                <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
+                <div class="content-date" v-if="parsedParamDate">
+                  <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
+                  {{ parsedParamDate }}
+                </div>
+              </div>
+
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -113,9 +133,7 @@
                     <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div> -->
-                  <div class="promo-content-inner">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
+
                   <div v-html="selectedPromo.pageContent"></div>
                   <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
@@ -166,7 +184,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -213,36 +231,36 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
-    const tab = ref("all");
-    const tabItems = [
+    // const tab = ref("all");
+    // const tabItems = [
 
-      {name: "all", label: '全部'},
-      // { name: "slot game", label: '电子'},
-      // { name: "fish", label: '捕鱼'},
-      // { name: "live casino", label: '真人'},
-      // { name: "poker", label: '棋牌'},
+    //   {name: "all", label: '全部'},
+    //   // { name: "slot game", label: '电子'},
+    //   // { name: "fish", label: '捕鱼'},
+    //   // { name: "live casino", label: '真人'},
+    //   // { name: "poker", label: '棋牌'},
 
-      // {
-      //   name: "all",
-      //   label: "全部",
-      // },
-      // {
-      //   name: "sport",
-      //   label: "体育",
-      // },
-      // {
-      //   name: "esport",
-      //   label: "电竞",
-      // },
-      // {
-      //   name: "live casino",
-      //   label: "真人",
-      // },
-      // {
-      //   name: "slot game",
-      //   label: "电游",
-      // },
-    ];
+    //   // {
+    //   //   name: "all",
+    //   //   label: "全部",
+    //   // },
+    //   // {
+    //   //   name: "sport",
+    //   //   label: "体育",
+    //   // },
+    //   // {
+    //   //   name: "esport",
+    //   //   label: "电竞",
+    //   // },
+    //   // {
+    //   //   name: "live casino",
+    //   //   label: "真人",
+    //   // },
+    //   // {
+    //   //   name: "slot game",
+    //   //   label: "电游",
+    //   // },
+    // ];
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
@@ -482,7 +500,7 @@ export default defineComponent({
     // });
 
     const swipeLeft = () => {
-      router.push('/vip')
+      // router.push('/vip')
     };
 
     // Handle swipe right
@@ -493,6 +511,34 @@ export default defineComponent({
     const closeFullGameDialog = () => {
       fullGameDialog.value = false;
     };
+
+    const tab = ref("all");
+    const tabItems = [
+      { name: "all", label: 'promo.all' },
+      { name: "earn", label: 'promo.earn' },
+      { name: "hot", label: 'promo.hot' },
+      { name: "new user", label: 'promo.new_user' },
+      { name: "sports", label: 'promo.sports' },
+      { name: "live", label: "promo.live" },
+      { name: "slot", label: "promo.slot" },
+      { name: "vip", label: "promo.vip" },
+    ];
+
+    // promo param split.
+    const parsedParam = computed(() => {
+      try {
+        if (selectedPromo.value && selectedPromo.value.param) {
+          return JSON.parse(selectedPromo.value.param);
+        }
+        return {};
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return {};
+      }
+    });
+
+    const parsedParamSub = computed(() => parsedParam.value.sub || '');
+    const parsedParamDate = computed(() => parsedParam.value.date || '');
 
     return {
       promoState,
@@ -523,7 +569,9 @@ export default defineComponent({
       swipeRight,
       route,
       allGames,
-      closeFullGameDialog
+      closeFullGameDialog,
+      parsedParamSub,
+      parsedParamDate
     }
   },
 });
@@ -941,10 +989,11 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 0 15px;
 
           li {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            color: #9f9f9f;
           }
         }
 
@@ -952,17 +1001,27 @@ export default defineComponent({
           width: 100%;
           border-spacing: 0;
           border-collapse: collapse;
+          margin-bottom: 20px;
 
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            // background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+
+            &:first-child {
+              border-top-left-radius: 8px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 8px;
+            }
           }
 
           td {
             padding: 5px;
             text-align: center;
-            background-color: #202228;
+            background-color: #1c241b;
             border: 1px solid #2e3039;
           }
         }
@@ -973,9 +1032,9 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
+          // background: #272c3d;
           border-radius: 10px;
-          display: none;
+          // display: none;
         }
 
         .promo-view-container {
@@ -1038,13 +1097,14 @@ export default defineComponent({
 .promo {
   .q-tabs {
     // background: rgba(113, 125, 146, 0.2);
-    background: #063c50;
-    width: 100%;
-    margin: 0 auto;
+    // background: #2b501d;
+    width: calc(100% - 40px);
+    margin: 10px 20px 0;
   }
 
   .q-tab {
     min-height: 40px;
+    color: #8c968f;
   }
 
   .q-tab__content {
@@ -1059,13 +1119,14 @@ export default defineComponent({
     font-size: 13px;
   }
 
+  .q-tab--inactive {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
   .q-tab--active .q-tab__indicator {
-    // background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
-    background-size: 20px 10px;
     width: 100%;
-    height: 10px;
-    // background: salmon !important;
-    filter: hue-rotate(311deg);
+    height: 2px;
+    background: #70bc62;
   }
 
   .q-tab__label {
@@ -1107,14 +1168,29 @@ export default defineComponent({
 
 // promo content-inner
 .promo-content-inner {
+  padding: 12px 0px;
+  margin: 0 12px;
+  border-bottom: 1px solid #ffffff1a;
   .content-title {
-    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
+    color: #ffffff;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: bold;
+  }
+  .content-para {
+    font-size: 14px;
+    padding-top: 4px;
+    color: #9f9f9f;
+  }
+  .content-date {
+    padding-top: 6px;
+    color: #9f9f9f;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      display: block;
+      width: 30px;
+    }
   }
 }
 

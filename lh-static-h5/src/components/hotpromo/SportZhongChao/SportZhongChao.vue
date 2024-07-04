@@ -35,7 +35,6 @@
         padding
         arrows
         infinite
-        control-color="black"
         class="bg-transparent"
       >
         <q-carousel-slide
@@ -139,7 +138,7 @@
               font-size: 14px;
               color: #ff5454;
               text-align: start;
-               background: #FFEFEF;
+              background: #FFEFEF;
               margin-top: 15px;
               border: 1px solid #FFCBCB;
             "
@@ -552,6 +551,18 @@ onMounted(async () => {
     color: #333;
     border: 1px solid #01A4FF;
     padding: 16px;
+  }
+}
+
+.body--dark {
+  .sport-zhongchao-container {
+    .sport-zhongchao-content-info,
+    .sport-zhongchao-notice {
+      color: $font-1;
+    }
+    .sport-zhongchao-match-game {
+      color: #000;
+    }
   }
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
     <div class="category-list">
-        <div :class="`category ${category.name} ${props.selectedCategory === category.name ? 'active' : ''}`" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex" 
+        <div :class="`category ${category.name} ${props.selectedCategory === category.name ? 'active' : ''}`"
+            v-for="(category, categoryIndex) in categoryList" :key="categoryIndex"
             @click="() => props.onClickGameCategory(category.name, categoryIndex)">
             <div class="category-labels">
-                <div class="category-kr-label" v-html="category.label"></div>
+                <div class="category-kr-label">{{ $t(category.label) }}</div>
                 <div class="category-en-label">{{ category.enLabel }}</div>
             </div>
         </div>
@@ -11,15 +12,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 const categoryList = [
-    { name: "live", label: "라이브<br/>카지노", enLabel: "LIVE CASINO" },
-    { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
-    // { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
-    { name: "sport", label: "스포츠", enLabel: "SPORTS" },
-    { name: "casual", label: "미니게임", enLabel: "MINI GAME" }
-    // { name: "fish", label: "낚시 게임" }
+    { name: "live", label: "lang.game_category_live", enLabel: "LIVE CASINO" },
+    { name: "slots", label: "lang.game_category_slot", enLabel: "SLOT GAME" },
+    { name: "sport", label: "lang.game_category_sport", enLabel: "SPORTS" },
+    { name: "casual", label: "lang.game_category_minigame", enLabel: "MINI GAME" }
 ];
 
 const props = defineProps(['onClickGameCategory', 'selectedCategory']);
@@ -33,7 +30,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     padding: 20px;
     justify-content: center;
 
-    
+
     @media (max-width: 768px) {
         padding: 5px 10px;
         gap: 0px;
@@ -90,6 +87,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             font-size: 22px;
             font-weight: bold;
             line-height: 1;
+            white-space: pre-line;
 
             @media (max-width: 768px) {
                 font-size: 14px;
@@ -159,7 +157,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         }
     }
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
         filter: grayscale(0);
         background-size: 130% 130%;
         border: 2px solid #5dd8ff;

@@ -34,10 +34,24 @@
           </q-btn>
         </div>
         <div class="line">
+          <span>{{ $t("lang.dv_branch") }}：</span>
+          <span class="info" ref="subMsg4">{{ submitMessage[4] }}</span>
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('4')" class="common-btn">
+            {{ copybtntxt4 }}
+          </q-btn>
+        </div>
+        <div class="line">
           <span>{{ $t("lang.dv_deposit_amount") }}：</span>
           <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('3')" class="common-btn">
             {{ copybtntxt3 }}
+          </q-btn>
+        </div>
+        <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+          <span>{{ $t("lang.dv_remark") }}：</span>
+          <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
+            {{ copybtntxt5 }}
           </q-btn>
         </div>
       </div>
@@ -277,10 +291,14 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
+const subMsg5 = ref();
 const copybtntxt0 = ref(t("lang.dv_copy"));
 const copybtntxt1 = ref(t("lang.dv_copy"));
 const copybtntxt2 = ref(t("lang.dv_copy"));
 const copybtntxt3 = ref(t("lang.dv_copy"));
+const copybtntxt4 = ref(t("lang.dv_copy"));
+const copybtntxt5 = ref(t("lang.dv_copy"));
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -295,14 +313,14 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = t("lang.dv_copied");
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
 };
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt.forEach((element) => {
     element.value = t("lang.dv_copy");
   });
@@ -791,7 +809,7 @@ onMounted(() => {
     font-size: 14px;
     align-items: center;
     background: #063c50;
-    padding: 15px 10px;
+    padding: 10px;
 
     span:first-child {
       // flex: 1;

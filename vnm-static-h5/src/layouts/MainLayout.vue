@@ -228,7 +228,7 @@ export default defineComponent({
         } else if (route.path === "/promo") {
           hasPage.value = true;
           pageName.value = t("lang.page_promotions");
-          hasShadow.value = false;
+          // hasShadow.value = false;
 
           if (route.query.name) {
             hasPage.value = true;

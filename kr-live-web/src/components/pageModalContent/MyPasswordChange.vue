@@ -1,38 +1,43 @@
 <template>
-    <div class="form-wrapper">
-        <form class="update-pwd-form form-template">
-            <div class="form-item">
-                <label>기존 비밀번호</label>
-                <q-input dense ref="oldPasswordRef" type="password" outlined v-model="updatePwdInfo.oldPassword"
-                    clearable :rules="[
+    <div class="page-container">
+        <div class="form-wrapper">
+            <form class="update-pwd-form form-template">
+                <div class="form-item">
+                    <label>{{ $t('lang.password_existing_password') }}</label>
+                    <q-input dense ref="oldPasswordRef" type="password" outlined v-model="updatePwdInfo.oldPassword"
+                        :loading="isSubmitting" :disable="isSubmitting" clearable :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                $t('lang.password_at_least_6_character')
+                        ]" />
+                </div>
+
+                <div class="form-item">
+                    <label>{{ $t('lang.password_new_password') }}</label>
+                    <q-input dense ref="passwordRef" type="password" outlined v-model="updatePwdInfo.password" :rules="[
                         (val) =>
                             (val && val.length >= 6) ||
-                            '는 6자 이상이어야 합니다.'
-                    ]" />
-            </div>
+                            $t('lang.password_at_least_6_character')
+                    ]" clearable :loading="isSubmitting" :disable="isSubmitting" />
+                </div>
 
-            <div class="form-item">
-                <label>변경할 비밀번호</label>
-                <q-input dense ref="passwordRef" type="password" outlined v-model="updatePwdInfo.password" :rules="[
-                    (val) =>
-                        (val && val.length >= 6) ||
-                        '는 6자 이상이어야 합니다.'
-                ]" clearable />
-            </div>
+                <div class="form-item">
+                    <label>{{ $t('lang.password_confirm_new_password') }}</label>
+                    <q-input dense ref="confirmRef" type="password" outlined v-model="updatePwdInfo.confirm_pass"
+                        :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                $t('lang.password_at_least_6_character'),
+                            (val) =>
+                                val === updatePwdInfo.password || $t('lang.password_password_mismatch')
+                        ]" clearable :loading="isSubmitting" :disable="isSubmitting" />
+                </div>
+            </form>
+        </div>
 
-            <div class="form-item">
-                <label>비밀번호 확인</label>
-                <q-input dense ref="confirmRef" type="password" outlined v-model="updatePwdInfo.confirm_pass" :rules="[
-                    (val) =>
-                        (val && val.length >= 6) ||
-                        '는 6자 이상이어야 합니다.',
-                    (val) =>
-                        val === updatePwdInfo.password || '비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다.'
-                ]" clearable />
-            </div>
-        </form>
         <div class="action-buttons">
-            <div class="primary-button blue" @click="submitUpdatePwd">변경완료</div>
+            <q-btn class="primary-button blue" @click="submitUpdatePwd" :label="$t('lang.password_change_password')"
+                :disable="isSubmitting" :loading="isSubmitting" />
         </div>
     </div>
 </template>
@@ -44,6 +49,7 @@ import { userStore } from "src/stores"
 import { useQuasar } from "quasar"
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { successNotify } from "src/boot/utils";
 
 const qs = require("qs");
 
@@ -56,6 +62,8 @@ const oldPasswordRef = ref();
 const passwordRef = ref();
 const confirmRef = ref();
 
+const isSubmitting = ref(false);
+
 const updatePwdInfo = reactive({
     oldPassword: "",
     password: "",
@@ -63,35 +71,38 @@ const updatePwdInfo = reactive({
 });
 
 const submitUpdatePwd = () => {
-    oldPasswordRef.value.validate()
-    passwordRef.value.validate()
+    oldPasswordRef.value.validate();
+    passwordRef.value.validate();
+    confirmRef.value.validate();
 
-    if (oldPasswordRef.value.hasError || passwordRef.value.hasError) {
+    if (oldPasswordRef.value.hasError || passwordRef.value.hasError || confirmRef.value.hasError) {
     } else {
+        isSubmitting.value = true;
         api.post("/session/password", qs.stringify({
             oldPassword: updatePwdInfo.oldPassword,
             password: updatePwdInfo.password
         })).then((res) => {
             const response = res.data
             if (response.code === 0) {
-                $q.notify({
-                    color: "positive",
-                    position: "top",
-                    message: t('lang.password_updated'),
-                    icon: "check_circle_outline"
-                });
+                successNotify(t('lang.password_updated'));
 
                 router.push('/');
                 store.memberLogout();
             } else {
 
             }
+
+            isSubmitting.value = false;
         }).catch((error) => {
             console.log("error", error);
+            isSubmitting.value = false;
         });
     }
 };
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper {
+    padding: 20px;
+}
 </style>

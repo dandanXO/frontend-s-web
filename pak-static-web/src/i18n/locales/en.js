@@ -25,6 +25,7 @@ export default {
         liveSupport: "Live SUpport",
         feedback: "Feedback",
         telegram: "Telegram",
+        tikTok: "Tik Tok",
         whatsapp: "Whatsapp",
         language: "Language"
       },
@@ -486,43 +487,133 @@ export default {
       newUserError: "Please fill in your personal details"
     }
   },
-  shareView: {
+  rewardView: {
     title: "Reward amount",
-    summary: {
-      income: "My Total Income",
-      invitees: "My Total Number Of Invitees"
+    tabs: {
+      reward: "Reward",
+      teamManagement: "Team management",
+      teamBetting: "Team betting",
+      profitAndLoss: "User profit and loss"
     },
-    inviteLink: {
-      title: "Invite friends via link",
-      description: "How to get invitation bonus",
-      step1: "Invite friends via invitation link",
-      step2: "Register via link",
-      step3: "Complete deposit after registration",
-      copyButton: "Copy link",
-      copySuccess: "Link copied to clipboard",
-      copyFail: "Failed to copy link"
-    },
-    earnYesterday: {
-      title: "Total amount sent as of yesterday",
-      table: {
-        header: {
-          player: "player",
-          money: "money"
+    reward: {
+      summary: {
+        income: "My Total Income",
+        invitees: "My Total Number Of Invitees"
+      },
+      inviteLink: {
+        title: "Invite friends via link",
+        description: "How to get invitation bonus",
+        step1: "Invite friends via invitation link",
+        step2: "Register via link",
+        step3: "Complete deposit after registration",
+        copyButton: "Copy link",
+        copySuccess: "Link copied to clipboard",
+        copyFail: "Failed to copy link",
+        shareText:
+          "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        shareTitle: "B9GAME Share and Earn"
+      },
+      earnYesterday: {
+        title: "Total amount sent as of yesterday",
+        table: {
+          header: {
+            player: "player",
+            money: "money"
+          }
         }
+      },
+      info: {
+        bet: "Bet",
+        eligibleRefer: "Eligible Refer",
+        invite: "Invite",
+        topUp: "Top Up"
+      },
+      bonus: {
+        table: {
+          header: {
+            friendCount: "Friend Count",
+            inviteBonus: "Invite Bonus"
+          }
+        }
+      },
+      shareModal: {
+        title: "Share and Earn"
       }
     },
-    info: {
-      bet: "Bet",
-      eligibleRefer: "Eligible Refer",
-      invite: "Invite",
-      topUp: "Top Up"
-    },
-    bonus: {
+    teamManagement: {
+      searchField: {
+        downLine: {
+          all: "All Down Lines",
+          direct: "Direct Down Lines"
+        },
+        username: {
+          placeholder: "User name"
+        },
+        searchButton: "Search"
+      },
       table: {
-        header: {
-          friendCount: "Friend Count",
-          inviteBonus: "Invite Bonus"
-        }
+        type: "Types",
+        username: "Username",
+        emark: "Emarks",
+        upLine: "Upline Agent",
+        registrationDate: "Registration Date",
+        balance: "Balance",
+        lastLogin: "Last Login Time",
+        lastDeposit: "Last Deposit Time"
+      }
+    },
+    teamBetting: {
+      searchField: {
+        date: {
+          today: "Today",
+          yesterday: "Yesterday"
+        },
+        gameType: {
+          label: "Game Type",
+          options: {
+            slot: "Slot",
+            live: "Live Casino",
+            sport: "Sports",
+            fish: "Fish",
+            poker: "Poker"
+          }
+        },
+        searchButton: "Search"
+      },
+      table: {
+        vendor: "Vendor",
+        gameType: "Game Type",
+        betAmount: "Bet Amount",
+        winning: "Winning",
+        validBet: "Valid Bet",
+        balance: "Win/Loss",
+        rounds: "Rounds",
+        player: "Player"
+      }
+    },
+    profitAndLoss: {
+      searchField: {
+        date: {
+          today: "Today",
+          yesterday: "Yesterday",
+          "7day": "7-Days"
+        },
+        username: {
+          placeholder: "User name"
+        },
+        searchButton: "Search"
+      },
+      table: {
+        username: "Username",
+        deposit: "Deposit",
+        withdraw: "Withdraw",
+        bonus: "Bonus",
+        validBet: "Valid Bet",
+        balance: "Win/Loss",
+        rebate: "Player Rebate",
+        referral: "Referral",
+        profitAndLoss: "Profit And Loss",
+        depositFee: "Deposit Fee"
       }
     }
   },
@@ -670,6 +761,30 @@ export default {
       }
     }
   },
+  promo: {
+    all: "ALL",
+    earn: "EARN",
+    hot: "HOT",
+    new_user: "NEW USER",
+    sports: "SPORTS",
+    live: "LIVE",
+    slot: "SLOT",
+    vip: "VIP"
+  },
+  hotPromo: {
+    aviatorWheel: {
+      remainingDrawTimes: "Remaining draw times",
+      congratulations: "Congratulations"
+    },
+    signIn7Days: {
+      continuousSignIn: "Continuous sign-in:",
+      expired: "Expired",
+      day: "day",
+      days: "days",
+      signIn: "Sign in",
+      signedIn: "Signed in"
+    }
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -703,6 +818,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "The account is temporarily locked due to entering the wrong password many times",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
@@ -767,6 +887,11 @@ export default {
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
     45000: "Not reaching the minimum withdrawal amount",
-    45001: "Received random bonus today"
+    45001: "Received random bonus today",
+    50000: "The maximum number of transfers for today has been reached",
+    50001: "The number of available transfers has been reached, please continue betting before transferring again",
+    51000: "Today's sign-in reward has already been claimed",
+    51001: "Requirements not met",
+    51002: "The reward has already been claimed by another account"
   }
 };

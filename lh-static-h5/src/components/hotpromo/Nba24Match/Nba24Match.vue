@@ -374,7 +374,6 @@ watch(tableRecordDialog, async () => {
 
 <style scoped lang="scss">
 .nba24-match-box {
-  font-family: PingFang TC;
   width: 100%;
   height: 100%;
   display: flex;

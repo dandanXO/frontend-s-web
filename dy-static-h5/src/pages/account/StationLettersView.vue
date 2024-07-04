@@ -12,7 +12,7 @@
           <!--          >-->
           <!--            {{ store.unreadInboxMail }}-->
           <!--          </q-chip>-->
-          <RiArrowRightSLine />
+          <img class="svg" src="~assets/records/arrow-right-s-line.svg" />
         </div>
       </router-link>
     </div>
@@ -21,13 +21,9 @@
 <script lang="js">
 import { defineComponent, ref, onMounted  } from "vue";
 import { userStore } from "../../stores/index";
-import { RiArrowRightSLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "IndexPage",
-  components: {
-    RiArrowRightSLine
-  },
   setup() {
 
     const store = userStore();
@@ -79,7 +75,7 @@ export default defineComponent({
     font-weight: 600;
     border-bottom: 1px solid #00000020;
 
-    img {
+    img:not(.svg) {
       width: 18px;
     }
 
@@ -92,6 +88,11 @@ export default defineComponent({
 
       svg {
         fill: #bbb;
+      }
+
+      img.svg {
+        filter: brightness(0) saturate(100%) invert(73%) sepia(0%) saturate(5%) hue-rotate(136deg) brightness(108%)
+          contrast(82%);
       }
     }
   }

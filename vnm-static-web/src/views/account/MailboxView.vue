@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="account-box account-contents">
     <div class="menu-title-container">
       <div class="menu-title">{{ $t('menu.mailbox') }}</div>
     </div>

@@ -70,7 +70,7 @@
             </div>
 
             <div class="mail-input-item">
-              <div class="input-title">内容</div>
+              <div class="input-title">内容<span class="red-note">注:若您的建议和反馈被本平台使用采纳，我们将奉送38~888元奖金</span></div>
               <div class="input-fill">
                 <el-input
                   v-model="mailboxState.mailboxList.write.content"
@@ -272,7 +272,7 @@
                 <div class="header-title-div" style="margin-top: 25px">
                   <span class="span3">
                     根据您填写的内容随机为您派发
-                    <span class="span1" style="color: #468cff">0-188元</span>
+                    <span class="span1">0-188元</span>
                   </span>
                 </div>
                 <div class="qr-code-div">
@@ -1070,6 +1070,7 @@ onUnmounted(() => {
     line-height: 30px;
     letter-spacing: 0em;
     text-align: center;
+    color: #468cff;
   }
   .span2 {
     font-family: PingFang SC;
@@ -1115,13 +1116,10 @@ onUnmounted(() => {
   }
 
   .url-input-fill {
+    --el-input-text-color: #3f8cff;
     width: 389px;
     :deep(.el-form-item__label) {
       width: 80px;
-    }
-
-    :deep(.el-input__inner) {
-      color: #3f8cff;
     }
 
     :deep(.el-input__wrapper) {
@@ -1232,6 +1230,10 @@ onUnmounted(() => {
     .input-title {
       font-size: 1rem;
       color: #424f72;
+      .red-note {
+        color: #ff0000;
+        margin-left: 10px;
+      }
     }
     .input-fill {
       :deep(.el-form-item__label) {
@@ -1366,6 +1368,12 @@ onUnmounted(() => {
   }
 
   .quiz-container {
+    .quiz-header {
+      padding-bottom: 60px;
+      margin-bottom: -44px;
+      background: $active-color-dark-linear;
+    }
+
     .quiz-content {
       @include content-block-dark;
       border-color: $background-content-block-lighter-dark;
@@ -1378,9 +1386,19 @@ onUnmounted(() => {
   }
 
   .questions-container {
+    .questions-header {
+      padding-bottom: 60px;
+      margin-bottom: -44px;
+      background: $active-color-dark-linear;
+    }
+
     .questions-content {
       @include content-block-dark;
       border-color: $background-content-block-lighter-dark;
+
+      .questions-title {
+        color: $active-color-dark;
+      }
 
       .answer-input-fill {
         :deep(.el-textarea__inner) {
@@ -1390,15 +1408,37 @@ onUnmounted(() => {
       }
 
       .url-input-fill {
+        --el-input-text-color: #{$active-color-dark};
+
         :deep(.el-input__wrapper) {
           box-shadow: none;
           background-color: $background-content-block-lighter-dark;
         }
       }
+
+      .span1 {
+        color: $active-color-dark;
+      }
+
+      .url-div {
+        color: $active-color-dark;
+      }
     }
 
     .header-title-div {
       color: $color-white;
+    }
+  }
+
+  .quiz-announcement-wrapper {
+    .quiz-announcement-inner {
+      color: $font-3-dark;
+
+      > div {
+        .amount {
+          color: $active-color-dark;
+        }
+      }
     }
   }
 }

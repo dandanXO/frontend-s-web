@@ -49,14 +49,9 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {api} from "boot/axios";
-import {RiArrowRightSLine} from "vue-remix-icons"
-import * as _ from "lodash"
 
 export default defineComponent({
   name: "AnnouncementView",
-  components: [
-    RiArrowRightSLine
-  ],
   setup() {
     const tab = ref("");
     const tabItems = ref([]);
@@ -90,11 +85,11 @@ export default defineComponent({
       }
       var hasAnnounce = true;
 
-      _.each(announcementsList.value, function (item, index) {
+      announcementsList.value.forEach(item => {
         if (item.typeId == id) {
           hasAnnounce = false;
         }
-      });
+      })
 
       return hasAnnounce;
     }

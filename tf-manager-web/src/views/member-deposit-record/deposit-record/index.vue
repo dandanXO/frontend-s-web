@@ -265,6 +265,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="realName"
+          :label="t('fields.realName')"
+          align="center"
+          min-width="110"
+        />
+        <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"
           align="center"

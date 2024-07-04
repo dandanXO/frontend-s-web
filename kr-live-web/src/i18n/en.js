@@ -10,23 +10,37 @@ export default {
     login_success_msg: "Login successfully",
     login_forget_pwd: "Forget Password",
     // login end
+    logout: "Log out",
     // register start
+    reg_withdraw_password: "Withdraw Password",
+    reg_withdraw_password_placeholder: "4 digit password for withdrawal",
+    reg_please_confirm_withdraw_password: "Please confirm withdraw password",
+    reg_withdraw_password_4_digits: "Withdraw password should be 4 digits",
+    reg_nickname: "Nickname",
     reg_referrer: "Referrer",
+    reg_referrer_placeholder: "Enter referral code",
     reg_userid: "User ID",
     reg_phone_num: "Phone Number",
     reg_phone_verification: "Verify",
     reg_phone_otp: "OTP",
+    reg_phone_placeholder: "Only numbers allowed",
     reg_pass: "Password",
+    reg_pass_placeholder: "Enter password",
     reg_confirm_pass: "Confirm Password",
+    reg_confirm_pass_placeholder: "Enter confirm password",
     reg_email: "Email",
     reg_bank: "Bank",
+    reg_bank_placeholder: "Select bank",
     reg_bank_acc_num: "Bank Account",
+    reg_bank_acc_num_placeholder: "Enter only numbers without '-'",
     reg_bank_acc_holder: "Bank Account Holder",
+    reg_bank_acc_holder_placeholder: "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
     reg_submit: "Register",
     reg_captcha_confirm: "Confirm",
     reg_captcha_verifying: "Verifying",
     reg_check_captcha: "Captcha Code Check",
     reg_enter_captcha: "Enter captcha code",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
     // register end
     // menu start
     menu_announcement: "Announcement",
@@ -36,11 +50,14 @@ export default {
     menu_customer_service: "Customer Service",
     menu_transaction_record: "Transaction Record",
     menu_rebates: "Rebates",
+    menu_my_page: "My Page",
+    menu_won: "Won",
     // menu end
     // page modal start
     page_modal_deposit: "Deposit",
     page_modal_withdraw: "Withdraw",
     page_modal_message: "Message",
+    page_modal_message_compose: "Compose Message",
     page_modal_customer_service: "Customer Service",
     page_modal_promo: "Promo",
     page_modal_personal_info: "Personal Info",
@@ -50,9 +67,23 @@ export default {
     page_modal_transaction_record: "Transaction Record",
     page_modal_change_password: "Change Password",
     // page modal end
+    // game category start
+    game_category_live: `Live Casino`,
+    game_category_slot: 'Slot Game',
+    game_category_sport: 'Sports',
+    game_category_minigame: 'Mini Game',
+    // game category end
+    // game item start
+    game_item_entry: "Game Entry",
+    // game item end
     // rolling text start
     roll_text_no_content: "No content yet",
+    roll_text_withdrawal_status: "Withdrawal status",
     // rolling text end
+    // withdraw records start
+    withdraw_record_withdrawal_status: "Withdrawal Status",
+    withdraw_record_no_content: "No content yet",
+    // withdraw records end
     // transaction record start
     date_picker_sunday: "Sunday",
     date_picker_sun: "Sun",
@@ -94,7 +125,64 @@ export default {
     date_picker_close: "Close",
     date_picker_confirm: "Confirm",
     // transaction record end
+    // announcement start
+    announcement_no_selected: "No selected",
+    announcement_total: "Total",
+    announcement_has_attachment: "Has attachment",
+    announcement_no_content: "No content yet",
+    announcement_see_more: "See more",
+    // announcement end
+    // feedback start
+    feedback_loading_content: "Loading content...",
+    feedback_unread: "Unread",
+    feedback_read: "Read",
+    feedback_read_at: "Read at",
+    feedback_compose: "Compose",
+    feedback_category: "Category",
+    feedback_category_select: "Please select",
+    feedback_title: "Title",
+    feedback_title_placeholder: "Please enter title",
+    feedback_cannot_be_empty: "Cannot be empty",
+    feedback_content: "Content",
+    feedback_compose_confirm: "Confirm",
+    feedback_previous_page: "Previous page",
+    // feedback end
+    // message start
+    message_loading_content: "Loading content...",
+    message_unread: "Unread",
+    message_read: "Read",
+    message_read_at: "Read at",
+    message_compose: "Compose",
+    message_title: "Title",
+    message_title_placeholder: "Please enter title",
+    message_cannot_be_empty: "Cannot be empty",
+    message_content: "Content",
+    message_compose_confirm: "Confirm",
+    message_previous_page: "Previous page",
+    message_type_announcement: "Announcement",
+    message_type_notification: "Notification",
+    message_type_activity: "Activity",
+    message_type_payment: "Payment",
+    message_type_all: "All",
+    message_type_outbox: "Outbox",
+    // message end
+    // deposit start
+    deposit_payment_channel: "Payment Channel",
+    deposit_confirm_deposit: "Deposit",
+    deposit_deposit_amount: "Deposit Amount",
+    deposit_depositor_name: "Depositor Name",
+    deposit_deposit_unit: "Deposit Unit",
+    deposit_ten_thousand_won: "Ten Thousand Won",
+    deposit_clear_amount: "Clear",
+    deposit_please_enter_amount: "Please enter amount",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
+    // deposit end
     // withdraw start
+    withdraw_bank_card: "Withdraw Bank Card",
+    withdraw_withdraw_amount: "Withdraw Amount",
+    withdraw_withdraw_password: "Withdraw Password",
+    withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
     withdraw_method: "Withdraw Method",
     withdraw_bank: "Bank",
     withdraw_bank_choose: "Select a bank",
@@ -105,19 +193,36 @@ export default {
     withdraw_bank_address_placeholder: "Account opening bank address",
     withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
     withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
+    withdraw_virtual_currency: "Virtual Currency",
+    withdraw_virtual_wallet: "Virtual Wallet",
+    withdraw_please_select: "Please select {currencyType}",
+    withdraw_no_card_available: "There is no option available",
+    withdraw_link_virtual_wallet: "Link virtual wallet",
+    withdraw_link_bank_card: "Link bank card",
+    withdraw_withdraw_amount_per_item: "Withdrawal amount/item",
+    withdraw_withdraw_amount_per_day: "Withdrawal amount/day",
+    withdraw_confirm_withdraw: "Confirm Withdraw",
     // withdraw end
-    // announcement start
-    announcement_no_selected: "No selected",
-    announcement_total: "Total",
-    announcement_has_attachment: "Has attachment",
-    // announcement end
-    // feedback start
-    feedback_loading_content: "Loading content...",
-    feedback_unread: "Unread",
-    feedback_read: "Read",
-    feedback_read_at: "Read at",
-    // feedback end
-    
+    // personal start
+    personal_nickname: "Nickname",
+    personal_real_name: "Real Name",
+    personal_id: "ID",
+    personal_phone: "Phone",
+    personal_close_btn: "Close",
+    personal_update_btn: "Update",
+    // personal end
+    // password start
+    password_existing_password: "Existing Password",
+    password_at_least_6_character: "Must be at least 6 characters",
+    password_new_password: "New Password",
+    password_confirm_new_password: "Confirm New Password",
+    password_password_mismatch: "Confirm Password must be the same as New Password",
+    password_change_password: "Change password",
+    // password end
+    // page modal start
+    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
+    // page modal end
+    file_too_large_or_invalid_file: "File is too large/ invalid file, please upload a new file",
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -328,7 +433,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",
@@ -612,6 +716,25 @@ export default {
     participate: "Participate",
     sent_success: "Sent Successfully"
   },
+  status: {
+    pending: "Pending",
+    closed: "Closed",
+    supplement_success: "Supplement Success",
+    success: "Success",
+    applying: "Applying",
+    reject: "Reject",
+    under_review: "Under Review",
+    to_be_paid: "To Be Paid",
+    payment_on_going: "Payment Ongoing",
+    paying: "Paying",
+    automatic_payment: "Automatic Payment",
+    sending: "Sending",
+    waiting_callback: "Waiting Callback",
+    success: "Success",
+    fail: "Fail",
+    suspend: "Suspend",
+    waiting_auto_payment: "Waiting Auto Payment",
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -643,6 +766,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "Username can only contains numbers and letters",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
@@ -664,7 +792,6 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
-    11000: "No bank card",
     11003: "Deposit failed",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
@@ -676,6 +803,7 @@ export default {
     14003: "Affiliate code not found",
     15201: "Incorrect old code",
     15202: "New code must match old code",
+    15206: "Duplicated nickname",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

@@ -326,7 +326,7 @@
           <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
         <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">
-          {{ $t("lang.menu_minigame") }}
+          {{ $t("lang.menu_hashgame") }}
         </span>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
@@ -751,7 +751,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%; padding: none" class="bg-bright text-black">
+    <q-card style="width: 100%; padding: 0px" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
@@ -1066,6 +1066,9 @@ export default defineComponent({
     };
 
     const onHomeScroll = (position) => {
+      if (isSelecting.value === true) {
+        return;
+      }
       if (route.path === "/") {
         if (!isScrolling.value) {
           const rightPlatform = document.getElementById("id-right-platform");
@@ -1500,9 +1503,19 @@ export default defineComponent({
     };
 
     const tab = ref("sport");
+    const isSelecting = ref(false);
+    const timerTimeout = ref(null);
     const selectTab = (item) => {
+      if (timerTimeout.value) {
+        clearTimeout(timerTimeout.value);
+      }
+      isSelecting.value = true;
       tab.value = item;
       setSelectedSwiper(item);
+
+      timerTimeout.value = setTimeout(() => {
+        isSelecting.value = false;
+      }, 750);
     };
 
     const liveTabs = ref("");
@@ -2366,9 +2379,10 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: $box-width;
+  width: 100%;
+  padding: 4px 1rem;
   margin: 0 auto;
-  padding: 4px;
+  box-shadow: 0px -2px 6px 0px #c3d4e6 inset;
 
   .header-left {
     // height: 50px;

@@ -143,8 +143,6 @@
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
 import { ref, defineExpose, reactive, shallowRef } from "vue";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
@@ -152,8 +150,6 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
-import liff from "@line/liff";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
 
 const store = userStore();
@@ -319,11 +315,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             .then((response) => {
               $q.loading.hide();
 
-              if (way == "ANDROID") {
-                var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
-              } else {
-                window.location.href = response.data;
-              }
+              window.location.href = response.data;
               // src.value = response.data;
               // visible.value = true;
             })
@@ -350,11 +342,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           .then((response) => {
             $q.loading.hide();
 
-            if (way === "ANDROID") {
-              var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
-            } else {
-              window.location.href = response.data;
-            }
+            window.location.href = response.data;
 
             // src.value = response.data;
             // visible.value = true;
@@ -418,9 +406,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               // newWin.location.href = response.data;
               var currentUrl = window.location.hostname;
               window.location.href = response.data + `&homeUrl=${currentUrl}`;
-            } else if (way == "ANDROID") {
-              var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
-            } else {
+            }  else {
               window.location.href = srcData;
             }
 

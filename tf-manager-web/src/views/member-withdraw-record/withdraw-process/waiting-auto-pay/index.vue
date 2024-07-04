@@ -550,7 +550,7 @@ const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
 
 const request = reactive({
-  size: 20,
+  size: 50,
   current: 1,
   withdrawDate: [defaultStartDate, defaultEndDate],
   serialNumber: null,

@@ -1,23 +1,27 @@
 <template>
-    <div class="rolling-text-container">
+    <div class="rolling-text-container" data-aos="flip-up">
         <div class="rolling-text-wrapper">
             <div class="volume">
                 <img src="../../assets/icon/icon-announcement.svg" />
                 <div class="box">
-                    <div class="text">출금현황</div>
+                    <div class="text">{{ $t('lang.roll_text_withdrawal_status') }}</div>
                 </div>
             </div>
-            <div  style="width:100%;text-align:center;"  v-if="isLoadingDepositRecordList">
-                <q-spinner-gears color="purple" size="2em"/>
+            <div style="width:100%;text-align:center;" v-if="isLoading">
+                <q-skeleton type="text" style="width:100%;" />
             </div>
-            <marquee-text :repeat="props.depositRecordList.length" :duration="props.depositRecordList.length * 20"
-                v-else-if="props.depositRecordList && props.depositRecordList.length > 0">
+            <marquee v-else-if="financeRecords.length > 0" scrollamount="3">
                 <div>
-                    <span style="color: #fff;" v-for="(a, i) in props.depositRecordList" :key="i">
-                       {{ formatTransactionType(a.transactionType) }} {{ a.loginName }} 환전 {{ `${a.amount}원` }}  {{ moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
+                    <span style="color: #fff;" v-for="(a, i) in financeRecords" :key="i">
+                        <span style="color:#03fff2;">{{ formatTransactionType(a.transactionType) }}</span> {{
+                            a.loginName
+                        }}
+                        환전
+                        <span style="font-family: 'Nanum';">{{ `${a.amount} 원` }}</span>
+                        <span class="text-caption text-grey">{{ getLocaleDateTime(a.transactionTime, true) }}</span>
                     </span>
                 </div>
-            </marquee-text>
+            </marquee>
             <div v-else style="width:100%;text-align:center;">
                 <span style="color: #fff;">
                     {{ $t('lang.roll_text_no_content') }}
@@ -28,19 +32,50 @@
 </template>
 
 <script setup>
-import MarqueeText from "vue-marquee-text-component";
-import moment from 'moment';
+import { ref, watch, onMounted } from 'vue';
 import { useI18n } from "vue-i18n";
+import { userStore } from "stores/index";
+import { useRoute } from 'vue-router';
+import { getLocaleDateTime } from '../../boot/utils';
 
-const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
 const { t } = useI18n();
+const isLoading = ref(false);
+const financeRecords = ref([]);
+const store = userStore();
+const route = useRoute();
+
+const loadFinanceRecords = () => {
+    isLoading.value = true;
+
+    store.getFinanceRecords().then((records) => {
+        financeRecords.value = records;
+        isLoading.value = false;
+    }).catch((err) => {
+        console.log(err)
+        isLoading.value = false;
+    });
+};
+
+watch(() => route.query.page, () => {
+    if (route.query.page) {
+    } else {
+        loadFinanceRecords();
+    }
+})
+
+onMounted(() => {
+    if (route.query.page) {
+    } else {
+        loadFinanceRecords();
+    }
+})
 
 const formatTransactionType = (transactionType) => {
-    if(transactionType === 'DEPOSIT') {
+    if (transactionType === 'DEPOSIT') {
         return `[${t('lang.menu_deposit')}]`;
     }
 
-    if(transactionType === 'WITHDRAW') {
+    if (transactionType === 'WITHDRAW') {
         return `[${t('lang.menu_withdraw')}]`;
     }
 
@@ -61,6 +96,7 @@ const formatTransactionType = (transactionType) => {
     }
 
     .rolling-text-wrapper {
+        max-width: 1400px;
         display: flex;
         border-radius: 8px;
         background-color: #151324;
@@ -95,10 +131,6 @@ const formatTransactionType = (transactionType) => {
                 display: flex;
                 justify-content: center;
                 white-space: nowrap;
-
-                @media (min-width: 769px) {
-                    width: 60px;
-                }
             }
         }
 

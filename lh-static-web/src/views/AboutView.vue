@@ -139,7 +139,7 @@ onMounted(() => {
 
 .dark {
   .about-container {
-    background-color: $background-dark;
+    background: $background-dark;
 
     :deep(.el-tabs__header),
     .about-content {

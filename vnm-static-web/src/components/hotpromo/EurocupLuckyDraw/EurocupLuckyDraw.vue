@@ -14,8 +14,8 @@
         </div>
         <div class="seperator"></div>
         <div class="jackpot-details">
-          <div class="jackpot-details__content">Kỳ I: từ 15-30/06/2024, nạp 1,800 VNDP mỗi ngày/lượt chọn số</div>
-          <div class="jackpot-details__date">Ngày mở thưởng: 01/07/2024</div>
+          <div class="jackpot-details__content">Kỳ II: từ 01-15/07/2024, nạp 3,500 VNDP mỗi ngày/lượt chọn số</div>
+          <div class="jackpot-details__date">Ngày mở thưởng: 16/07/2024</div>
         </div>
         <div class="number-container">
           <el-input
@@ -349,7 +349,7 @@ const getJackpotAmt = () => {
 const onSubmitJackpot = () => {
   isLoadingJackpot.value = true;
   const number = inputValues.value.join("");
-  selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
+  selectNumber("vvnm-euro-2024-lottery-stage-two", number).then((res) => {
     if (res.code === 0) {
       ElMessage.success(t("status.success"));
       isLoadingJackpot.value = false;

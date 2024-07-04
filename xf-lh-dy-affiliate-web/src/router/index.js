@@ -98,6 +98,24 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/kaka/login',
+    name: 'KAKA Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/kaka/login/index.vue'
+      ),
+  },
+  {
+    path: '/kaka/register',
+    name: 'KAKA Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/kaka/register/index.vue'
+      ),
+  },
+  {
     path: '/lh/login',
     name: 'LH Login',
     meta: { hidden: true },

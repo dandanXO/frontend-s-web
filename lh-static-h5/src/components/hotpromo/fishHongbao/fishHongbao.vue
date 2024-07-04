@@ -161,7 +161,6 @@ const claimHongBao = async () => {
 
 <style scoped lang="scss">
 .fish-match-box {
-  font-family: PingFang TC;
   width: 100%;
   height: 100%;
   display: flex;
@@ -458,7 +457,6 @@ const claimHongBao = async () => {
 }
 
 .fish-match-game-info-sub {
-  font-family: PingFang TC;
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;

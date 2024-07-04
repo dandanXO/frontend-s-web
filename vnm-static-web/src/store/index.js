@@ -126,7 +126,7 @@ export const userStore = defineStore("userStore", {
 
       return getCSAFromServer()
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           var lineUrl = "";
           const randNum = Math.floor(Math.random() * 2) + 1;
           if (randNum === 1) {

@@ -14,7 +14,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
-import moment from "moment/moment";
+import moment from "moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
