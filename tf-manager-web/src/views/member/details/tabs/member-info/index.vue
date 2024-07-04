@@ -1406,8 +1406,9 @@
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto"
             />
+            <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -1604,6 +1605,7 @@ export default defineComponent({
       affiliateLevel: null,
       startTime: null,
       endTime: null,
+      affiliateShareRatio: []
     })
 
     const page = reactive({
@@ -2300,12 +2302,18 @@ export default defineComponent({
       }
     }
 
+    function getAffiliateRatio(code) {
+      const shareRatio = affiliateDetail.affiliateShareRatio.filter(item => item.code === code);
+      return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+    }
+
     onMounted(async () => {
       loading.accountInfo = true
       loading.affiliateInfo = true
       loading.loginInfo = true
       loading.fundingInfo = true
       await setIpLabelsIfEmpty()
+      loading.accountInfo = false
       const data = await getMemberDetails(props.mbrId, site.id, 1)
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField]
@@ -2422,6 +2430,7 @@ export default defineComponent({
       shareRatioList,
       updateModelForm,
       modelForm,
+      getAffiliateRatio,
     }
   },
 })
