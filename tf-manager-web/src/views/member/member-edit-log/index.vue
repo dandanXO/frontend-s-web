@@ -350,7 +350,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n()
 const memberMainInfoForm = ref(null)
@@ -439,7 +439,7 @@ const editLogForm = reactive({
 })
 
 const memberInfoFormRules = reactive({
-  loginName: [required(t('message.validateLoginNameRequired'))]
+  loginName: [required(t('message.validateLoginNameRequired'))],
 })
 
 const editLogFormRules = reactive({
@@ -504,9 +504,17 @@ async function loadMemberEditLog() {
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
 
   if (request.createTime.length === 2) {
-    query.createTime = JSON.parse(JSON.stringify(request.createTime));
-    query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
-    query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+    query.createTime = JSON.parse(JSON.stringify(request.createTime))
+    query.createTime[0] = formatInputTimeZone(
+      query.createTime[0],
+      timeZone,
+      'start'
+    )
+    query.createTime[1] = formatInputTimeZone(
+      query.createTime[1],
+      timeZone,
+      'end'
+    )
     query.createTime = query.createTime.join(',')
   }
   if (hasPermission(['sys:member:editlog:check'])) {
@@ -535,7 +543,10 @@ async function toCheck(val) {
       if (action === 'cancel') {
         await fail(val.id, request.siteId)
         await loadMemberEditLog()
-        ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+        ElMessage({
+          message: t('message.updateToFailSuccess'),
+          type: 'success',
+        })
         done()
       } else if (action === 'close') {
         done()
@@ -546,9 +557,7 @@ async function toCheck(val) {
         done()
       }
     },
-  }).then(async () => {
-
-  })
+  }).then(async () => {})
 }
 
 onMounted(async () => {
@@ -560,7 +569,7 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   }
-  loadMemberEditLog()
+  // loadMemberEditLog()
 })
 
 function changePage(page) {
