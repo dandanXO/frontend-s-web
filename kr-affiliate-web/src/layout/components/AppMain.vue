@@ -53,6 +53,7 @@ elTables.forEach((elTable) => {
   position: relative;
   overflow: auto;
   height: calc(100vh - 157px);
+  background-color: #e4e5e6;
 
   &::-webkit-scrollbar-track {
     background-color: #d5d5d5;
@@ -87,6 +88,7 @@ elTables.forEach((elTable) => {
 
 .el-card {
   // border-radius: 20px !important;
+  border: none !important;
 }
 
 .el-card__header {

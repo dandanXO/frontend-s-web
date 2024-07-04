@@ -1174,6 +1174,47 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.roles-main {
+  margin: 10px 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #cfd8dc;
+}
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+
+  .filter-wrapper {
+    display: flex;
+    width: 100%;
+    min-width: 200px;
+
+    .filter-label {
+      color: #000;
+      background-color: #e4e5e6;
+      border: 1px solid #cfd8dc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.primary-button {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.default-button {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
 .header-container {
   margin: 40px 0 20px;
   display: flex;
@@ -1353,40 +1394,5 @@ onMounted(async () => {
 
 .dialog400 .el-dialog {
   max-width: 400px;
-}
-
-.filter-fields {
-  display: flex;
-  flex-wrap: wrap;
-
-  .filter-wrapper {
-    display: flex;
-    width: 100%;
-    min-width: 200px;
-
-    .filter-label {
-      color: #000;
-      background-color: #e4e5e6;
-      border: 1px solid #cfd8dc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-  }
-}
-
-.primary-button {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-}
-
-.default-button {
-  color: #333;
-  background-color: #fff;
-  border-color: #ccc;
 }
 </style>
