@@ -1841,6 +1841,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  console.log("NGA");
   isPlatLoading.value = true;
   getPlatList();
   loadData();
