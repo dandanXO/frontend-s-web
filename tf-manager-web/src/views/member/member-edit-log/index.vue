@@ -65,6 +65,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
+          :disabled="isSearchDisabled"
           @click="loadMemberEditLog"
         >
           {{ t('fields.search') }}
@@ -399,6 +400,10 @@ const request = reactive({
   createBy: null,
   siteId: null,
   createTime: [defaultStartDate, defaultEndDate],
+})
+
+const isSearchDisabled = computed(() => {
+  return !request.loginName && !request.type && !request.createBy
 })
 
 function convertDate(date) {
