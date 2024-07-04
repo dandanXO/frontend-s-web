@@ -62,9 +62,7 @@
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
-          <span>+ {{ $t("btn.addBankCard") }}</span>
-        </div>
+
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <span>+添加虚拟币账户</span>
         </div> -->
@@ -72,6 +70,11 @@
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addVirtualWallet") }}</span>
         </div>
+
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
+          <span>+ {{ $t("btn.addBankCard") }}</span>
+        </div>
+
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
@@ -350,7 +353,7 @@ onActivated(() => {
   .bank-detail-wrapper {
     width: calc(100% - 2rem);
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 0rem 0 1rem;
 
     .bank-bind-item {
       // background: $white;
@@ -361,8 +364,8 @@ onActivated(() => {
       justify-content: space-around;
       flex-wrap: wrap;
       margin: 0 auto 14px;
-      padding: 1.25rem;
-      gap: 15px;
+      padding: 1rem;
+      gap: 8px;
 
       .bank-bind-btn {
         display: flex;
@@ -370,11 +373,13 @@ onActivated(() => {
         justify-content: center;
         // width: 47.5%;
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        padding: 12px 12px;
+        padding: 12px 5px;
         border-radius: 8px;
         color: #000a01;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
+        white-space: nowrap;
         font-weight: 500;
+        flex: 1;
         //   font-weight: 500;
 
         .bank-bind-img {
