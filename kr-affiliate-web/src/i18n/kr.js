@@ -726,6 +726,7 @@ export default {
     Withdraw: '은행 출금',
     'Rebate Report': '리베이트 보고서',
     'Member Management': '회원관리',
+    'Member Tree': '트리뷰'
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',

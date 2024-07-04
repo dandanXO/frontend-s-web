@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import './app.scss';
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import StatsHeader from "@/components/StatsHeader.vue";

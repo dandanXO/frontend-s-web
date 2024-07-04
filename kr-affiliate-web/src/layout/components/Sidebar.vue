@@ -179,6 +179,14 @@ const getNavigationData = () => {
           icon: 'squares',
         },
         {
+          path: '/member-tree',
+          title: t('menu.Member Tree'),
+          label: 'Member Tree',
+          active: false,
+          isMainNav: true,
+          icon: 'squares',
+        },
+        {
           path: '/affiliate',
           title: t('menu.Affiliate'),
           label: 'Affiliate',

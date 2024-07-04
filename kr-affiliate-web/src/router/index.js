@@ -61,6 +61,15 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'member-tree',
+        component: () =>
+          import('../views/member-info/member-tree/index.vue'),
+        name: 'Member Tree',
+        meta: {
+          title: 'member-tree',
+        },
+      },
+      {
         path: 'tag-setting',
         component: () =>
           import(

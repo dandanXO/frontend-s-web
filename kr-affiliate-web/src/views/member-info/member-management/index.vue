@@ -1,11 +1,9 @@
 <template>
   <div class="roles-main">
-    <el-card class="box-card" shadow="never">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.downlineMember') }}</span>
-        </div>
-      </template>
+    <div class="panel-item">
+      <div class="clearfix">
+        <span class="role-span">{{ $t('fields.downlineMember') }}</span>
+      </div>
       <el-form @submit.prevent>
         <div style="margin: 20px;">
           <el-row :gutter="20" v-if="store.state.user.siteCode !== 'VNM'">
@@ -223,7 +221,7 @@
         </div>
         <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next" :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
-    </el-card>
+    </div>
   </div>
   <el-dialog :title="t('fields.memberInfo')" v-model="uiControl.infoDialogVisible" modal-class="dialog900" width="90%">
     <el-form>
@@ -1174,12 +1172,6 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.roles-main {
-  margin: 10px 20px;
-  padding: 15px;
-  background-color: #fff;
-  border: 1px solid #cfd8dc;
-}
 .filter-fields {
   display: flex;
   flex-wrap: wrap;
