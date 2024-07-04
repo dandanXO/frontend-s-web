@@ -194,7 +194,7 @@ export default defineComponent({
           orderBy: "sendTime"
         }
         $q.loading.show({
-          message: '加载信箱...'
+          message: t('lang.loading')
         })
         api.get("/session/inbox", {
           params: {
@@ -221,7 +221,7 @@ export default defineComponent({
           orderBy: "createTime"
         }
         $q.loading.show({
-          message: '加载信箱...'
+          message: t('lang.loading')
         })
         api.get("/session/outbox", {
           params: {
@@ -233,7 +233,7 @@ export default defineComponent({
         }).then((response) => {
           $q.loading.hide()
           if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
+            mailboxState.mailboxList[mailboxState.active].list = response.data.records;
             mailboxState.mailboxList[mailboxState.active].total = response.data.total;
           }
         }).catch((error) => {
