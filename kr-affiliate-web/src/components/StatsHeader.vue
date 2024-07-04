@@ -183,6 +183,7 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
 import $ from 'jquery'
 
 const toggleExpansion = () => {
@@ -192,6 +193,27 @@ const toggleExpansion = () => {
     $(".navigation").animate({ width: 200 })
   }
 }
+
+onMounted(() => {
+  // support vertical mousehweel scrolling in horiztonal scroll div
+  const scrollContainer = document.querySelector(".stats-header-container");
+
+  if (scrollContainer) {
+    scrollContainer.addEventListener("wheel", (evt) => {
+      /* eslint-disable */
+      if (evt.deltaY !== -0) {
+        evt.preventDefault();
+        scrollContainer.scrollLeft += evt.deltaY;
+      }
+    });
+  }
+})
+
+onUnmounted(() => {
+  const scrollContainer = document.querySelector(".stats-header-container");
+
+  scrollContainer.removeEventListener("wheel");
+})
 </script>
 
 <style lang="scss" scoped>
