@@ -149,7 +149,8 @@ export default {
     commissionCalculatorNote:
       '注：模拟器按照返水和红利均值预估，场馆选择默认会员都在统一场馆参与游戏的情况进行计算，结果仅供参考。',
     commissionRateInfo: '佣金比例说明',
-    commissionRateDescription: '代理的佣金比例由本月总输赢和活跃人数两项条件决定，同时满足时获取对应等级的佣金比例',
+    commissionRateDescription:
+      '代理的佣金比例由本月总输赢和活跃人数两项条件决定，同时满足时获取对应等级的佣金比例',
     activeMemberRequirement: '活跃人数：当月存款>=100或有效投注>=500；',
     level: '级别',
     companyMonthlyProfit: '公司本月总输赢',
@@ -158,16 +159,23 @@ export default {
     commissionCalculateFormula: '佣金计算方式',
     commissionFormula: '佣金 = 冲正后净输赢 * 佣金比例 + 佣金调整 + 佣金补调；',
     correctionNetProfitFormula: '冲正后净输赢 = 当月净输赢 + 上月结余；',
-    monthlyNetProfitFormula: '当月净输赢 = 当月总输赢 - 红利 - 返水 - 场馆费 - 账户调整 + 补单输赢 - 存提手续费；',
+    monthlyNetProfitFormula:
+      '当月净输赢 = 当月总输赢 - 红利 - 返水 - 场馆费 - 账户调整 + 补单输赢 - 存提手续费；',
     bonusFormula: '红利 = 代理下线会员当月领取的平台发放红利的总和；',
     rebateFormula: '返水 = 代理下线会员当月领取平台返水的总和；',
-    platformFeeFormula: '场馆费 = 各游戏场馆总输赢 * 平台费率，但只有当月产生盈利，平台才会收取场馆费；',
-    adjustmentFormula: '账户调整 = 当会员流水异常时，站点管理员对会员进行账户调整；',
-    supplementWinLossFormula: '补单输赢 = 上月实时数据净输赢 - 上月发放佣金净输赢；',
-    depositFeeFormula: '存款手续费 = 下级会员存款金额 * 存款费率 + 代理额度充值金额 * 存款费率；',
+    platformFeeFormula:
+      '场馆费 = 各游戏场馆总输赢 * 平台费率，但只有当月产生盈利，平台才会收取场馆费；',
+    adjustmentFormula:
+      '账户调整 = 当会员流水异常时，站点管理员对会员进行账户调整；',
+    supplementWinLossFormula:
+      '补单输赢 = 上月实时数据净输赢 - 上月发放佣金净输赢；',
+    depositFeeFormula:
+      '存款手续费 = 下级会员存款金额 * 存款费率 + 代理额度充值金额 * 存款费率；',
     withdrawalFeeFormula: '提款手续费 = 下级会员的取款金额 * 取款费率；',
-    commissionAdjustmentNote: '佣金补调：当月佣金发放后，根据代理参与的相关活动，或其它原因核实后进行补调。',
-    commissionNote: '注：请谨记任何使用无诚信的方法以骗取佣金将会被永久冻结账号，并终止合作关系，所有佣金一概不予发放。',
+    commissionAdjustmentNote:
+      '佣金补调：当月佣金发放后，根据代理参与的相关活动，或其它原因核实后进行补调。',
+    commissionNote:
+      '注：请谨记任何使用无诚信的方法以骗取佣金将会被永久冻结账号，并终止合作关系，所有佣金一概不予发放。',
   },
   sortType: {
     ASC: '顺序',
@@ -238,7 +246,7 @@ export default {
     changeWithdrawPw: '更改支付密码',
     clearingSum: '结算总和',
     commission: '佣金',
-    gamecommission: "游戏平台佣金",
+    gamecommission: '游戏平台佣金',
     commissionBalance: '佣金余额',
     commissionPercent: '分红 %',
     commissionRate: '佣金比例',
@@ -530,6 +538,19 @@ export default {
     todayWithdrawal: '今日总提款',
     depositWithdrawalDiff: '存提差',
     recommenderCode: '邀请码',
+    sendMessageType: '信息类型',
+    message: '信息',
+    messageType: '信息类型',
+    messageTitle: '信息标题',
+    messageContent: '信息内容',
+    messageSendTime: '信息发送时间',
+    addAffiliateMessage: '新增下线玩家信息',
+    editAffiliateMessage: '编辑下线成员信息',
+    messageSend: '发送',
+    receivedType: '发送类型',
+    receivedMembers: '玩家账号',
+    example: '例如',
+    memberUsername: '账号',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -687,7 +708,7 @@ export default {
     validateAppIconRequired: '应用图标必填',
     validateShareRatioFormat: '佣金比例必须介于 0 至 1 之间',
     depositShouldBetween: '存入金额介于 ',
-    requiredPositiveInteger: "金额应为正数",
+    requiredPositiveInteger: '金额应为正数',
   },
   menu: {
     undefined: '',
@@ -723,6 +744,7 @@ export default {
     'Daily Summary': '每日全总览',
     Withdraw: '银行提款',
     'Rebate Report': '返水报表',
+    message: '站内信',
   },
   posterType: {
     OVERALL: '综合推广图',
@@ -781,6 +803,13 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '净盈利佣金-电竞',
     AGENT_SHARE_PROFIT_RATIO_LIVE: '净盈利佣金-真人',
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
+  },
+  sendMessageType: {
+    NOTIFICATION: '通知',
+    ACTIVITY: '活动',
+    ANNOUNCEMENT: '公告',
+    ALL_DOWNLINE_MEMBER: '全部下线玩家',
+    SELECTED_MEMBER: '选择玩家',
   },
   error: {
     400: '请求无效',
