@@ -555,6 +555,8 @@ export default {
     receivedMembers: '플레이어 계정',
     example: '예를 들어',
     memberUsername: '계정',
+    memberShareRatio: '플레이어 리베이트 비율',
+    editShareRatio: '리베이트 수정',
   },
   google: {
     google_auth_menu: '구글 인증',
