@@ -390,7 +390,7 @@ export default defineComponent({
       }
       // console.log(updateInfo);
       updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
-      updateInfo.realName = formDetail.realName;
+      // updateInfo.realName = formDetail.realName;
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
