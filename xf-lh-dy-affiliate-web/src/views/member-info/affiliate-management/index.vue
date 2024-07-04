@@ -259,22 +259,22 @@
             :disabled="true"
           />
         </el-form-item>
-        <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
-            <el-select
-              v-model="cForm.affiliateLevel"
-              size="normal"
-              :placeholder="t('fields.affiliateLevel')"
-              class="filter-item"
-              style="width: 350px"
-            >
-              <el-option
-                v-for="item in uiControl.affiliateLevel"
-                :key="item.key"
-                :label="item.displayName"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item> -->
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')" prop="affiliateLevel">
+          <el-select
+            v-model="cForm.affiliateLevel"
+            size="normal"
+            :placeholder="t('fields.affiliateLevel')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in uiControl.affiliateLevel"
+              :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input
             v-model="cForm.loginName"
@@ -325,8 +325,9 @@
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto"
             />
+            <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -364,6 +365,22 @@
             :disabled="true"
           />
         </el-form-item>
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')" prop="affiliateLevel">
+          <el-select
+            v-model="eForm.affiliateLevel"
+            size="normal"
+            :placeholder="t('fields.affiliateLevel')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in uiControl.affiliateLevel"
+              :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
           <el-input
             v-model="eForm.commission"
@@ -377,8 +394,9 @@
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto"
             />
+            <span style="color:red"> &emsp; ( {{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -395,7 +413,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref, computed } from 'vue'
+import { nextTick, onMounted, reactive, ref } from 'vue'
 import { useStore } from '@/store'
 // import moment from 'moment'
 import {
@@ -403,6 +421,7 @@ import {
   regsterAffiliate,
   editAffiliateCommission,
   getAffiliateInfo,
+  getDownlineShareRatio,
 } from '../../../api/affiliate'
 import { getSite } from '../../../api/site'
 import { required, size } from '../../../utils/validate'
@@ -422,15 +441,16 @@ const uiControl = reactive({
   commissionMax: 2,
   revenueMax: 2,
   affiliateLevel: [
-    { key: 1, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
-    { key: 2, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
-    { key: 3, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 4, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
-    { key: 5, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
-    { key: 6, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
+    { key: 1, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
+    { key: 2, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
+    { key: 3, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
+    { key: 4, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 5, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
+    { key: 6, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
   ],
 })
 const affiliateLevel = ref(null)
+const affiliateLevelKey = ref(null)
 
 const site = ref(null)
 const affInfo = ref(null)
@@ -446,6 +466,9 @@ const affInfo = ref(null)
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
 const shareRatioList = reactive({
+  list: [],
+})
+const downlineShareRatioList = reactive({
   list: [],
 })
 // const shortcuts = [
@@ -588,6 +611,7 @@ const eForm = reactive({
   affiliateCode: null,
   commission: null,
   shareRatio: null,
+  affiliateLevel: null,
 })
 
 // function convertDate(date) {
@@ -635,7 +659,7 @@ const validateShareRatio = (rule, value, callback) => {
 }
 
 const cFormRules = reactive({
-  // affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
+  affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [
     required(t('message.requiredLoginName')),
     size(6, 12, t('message.length6To12')),
@@ -663,6 +687,7 @@ const eFormRules = reactive({
     { validator: validateCommission, trigger: 'blur' },
   ],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
+  affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
 })
 
 function restrictCommissionDecimalInput(event) {
@@ -742,7 +767,7 @@ function showDialog(type) {
 
 function showEdit(affiliate) {
   showDialog('EDIT')
-  nextTick(() => {
+  nextTick(async () => {
     for (const key in affiliate) {
       if (Object.keys(eForm).find(k => k === key)) {
         if (key === 'shareRatio') {
@@ -760,6 +785,8 @@ function showEdit(affiliate) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
+    const { data: downlineShareRatio } = await getDownlineShareRatio(eForm.id)
+    downlineShareRatioList.list = downlineShareRatio
   })
 }
 
@@ -788,6 +815,7 @@ async function editAffiliate() {
         // join share ratio by comma
         form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + item.value).join(',');
       }
+      form.affiliateLevel = eForm.affiliateLevel
       await editAffiliateCommission(eForm.id, form)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
@@ -831,10 +859,15 @@ function breadcrumbSearch(id, name) {
   }
 }
 
-const siteId = computed(() => {
-  return store.state.user.siteId
-})
-console.log(siteId);
+function getAffiliateRatio(code) {
+  const shareRatio = affInfo.value.shareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
+function getDownlineRatio(code) {
+  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
 
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel
@@ -845,8 +878,16 @@ onMounted(async () => {
   await loadAffiliateInfo()
   await loadDownlineAffiliates()
   getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
-    shareRatioList.list = res.data;
+    for (var item = 0; item < res.data.length; item++) {
+      shareRatioList.list.push({ code: res.data[item].code, value: 0 })
+    }
   });
+  affiliateLevelKey.value = uiControl.affiliateLevel.filter((level) => {
+    return level.value === affiliateLevel.value
+  })[0].key;
+  uiControl.affiliateLevel = uiControl.affiliateLevel.filter((level) => {
+    return level.key > affiliateLevelKey.value
+  })
 })
 </script>
 

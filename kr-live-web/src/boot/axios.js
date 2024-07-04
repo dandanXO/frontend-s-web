@@ -1,13 +1,30 @@
 import {boot, store} from "quasar/wrappers";
 import {createPinia} from "pinia";
 import {Loading, Notify, SessionStorage} from "quasar";
-import {ResponseCode} from "../api/response";
-import {stringify} from "qs";
 import i18n from "../i18n/index";
 import axios from "axios";
 import {getRndInteger} from "boot/utils";
 
 
+const ResponseCode = {
+    SUCCESS: 0,
+    ERROR_SYSTEM: 500,
+    TOO_OFTEN_REQUEST: 504,
+    ERROR_BAD_REQUEST: 400,
+    ERROR_UNAUTHORIZED: 401,
+    ERROR_FORBIDDEN: 403,
+    ERROR_NOT_FOUND: 404,
+    ERROR_METHOD_NOT_SUPPORT: 405,
+    ERROR_LOGIN_INVALID_SESSION: 501,
+    ERROR_LOGIN_EXPIRED_SESSION: 502,
+    ERROR_PASS_REPEAT: 600,
+    ERROR_NAME_EXIST: 601,
+    ERROR_TOKEN_EXPIRED: 602,
+    ERROR_TOKEN_LOGGED: 604,
+    ERROR_AMOUNT_DEPOSIT: 11003,
+  }
+
+  
 const rstArray = process.env.RST_API;
 const evtArray = process.env.EVT_API;
 const crtArray = process.env.CR_API;

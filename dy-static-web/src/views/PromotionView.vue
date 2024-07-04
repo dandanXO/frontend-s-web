@@ -102,7 +102,8 @@
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024',
-            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
+            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -732,6 +733,17 @@ export default defineComponent({
             border-radius: 0px;
           }
         }
+
+        &.dyworldcup {
+          width: 100%;
+          max-width: 1920px;
+          margin: 0 auto;
+          background-color: #e7f1fd;
+
+          table {
+            width: 1920px;
+          }
+        }
         &.duanwujie {
           width: 100%;
           max-width: 1920px;
@@ -785,30 +797,8 @@ export default defineComponent({
             }
           }
 
-          // background: #201f29;
-          // background-repeat: no-repeat;
-          // background-position: 95% 90%;
-          // padding: 20px;
-          // border-radius: 10px;
           overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
+
           .game-title {
             color: #ffd800;
             margin: 30px auto 50px;

@@ -584,6 +584,8 @@ export default {
     dv_submit: "Submit",
     dv_copy: "Copy",
     dv_copied: "Copied",
+    dv_branch: "Branch",
+    dv_remark: "Remark",
 
     // affiliate
     affiliate_title: "Affiliate program",
@@ -1497,6 +1499,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "The account is temporarily locked due to entering the wrong password many times",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",

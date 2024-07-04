@@ -669,4 +669,25 @@ function charType(num) {
     transform: translate(0px, 1px);
   }
 }
+
+.body--dark {
+  .forgot-pass-container {
+    background-image: url(../assets/images/login/login-bg-dark.jpg);
+  }
+  .fgtpwd-tabs-div {
+    .fgtpwd-item {
+      background-image: url("../assets/images/download/inactive-tab-bg-dark.png");
+      span {
+        color: $white;
+      }
+      &.is-active {
+        background-image: url("../assets/images/download/active-tab-bg-dark.png");
+      }
+    }
+  }
+
+  .common-large-btn {
+    background: $linear-bg-180-dark;
+  }
+}
 </style>

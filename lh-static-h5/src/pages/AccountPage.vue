@@ -11,7 +11,7 @@
           <span class="nickname-span">{{ store.nickName }}</span>
 
           <!-- <span class="join-span">加入雷火电竞第一天</span> -->
-          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+<!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
         </div>
       </div>
     </div>
@@ -22,7 +22,8 @@
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label">
-              <img src="../assets/images/account/account-wallet-icon.png" />
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" />
+              <img v-else src="../assets/images/account/account-wallet-icon.png" />
               <span>中心钱包</span>
               <div class="refresh-btn" @click="getBalance">
                 <img src="../assets/images/account/account-refresh-btn.png" />
@@ -158,66 +159,72 @@
 
     <q-item-section class="acct-nav">
       <div class="acct-title">
-        <div class="acct-title-1">福利中心 尽享优惠</div>
-        <router-link class="acct-title-link" to="/promo?redirect=account">
-          领取福利
-          <q-icon name="chevron_right" size="20px" />
-        </router-link>
+        <div class="acct-title-1">功能区</div>
+
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-personal-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-personal-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-personal-icon.png" />
             <div class="acct-nav-label">账户信息</div>
           </div>
         </router-link>
 
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-bank-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-bank-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-bank-icon.png" />
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
 
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-record-icon.png" />
             <div class="acct-nav-label">交易信息</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/records/bet">
+          <div class="acct-nav-item">
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-bet-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-record-bet-icon.png" />
+            <div class="acct-nav-label">投注记录</div>
           </div>
         </router-link>
 
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-notice-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.png" />
+          <img v-else src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">消息提醒</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-share-icon.png" />
-            <div class="acct-nav-label">呼朋唤友</div>
+            <div class="unread" v-if="store.unreadInboxMail > 0">{{store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString()}}</div>
           </div>
         </router-link>
 
         <router-link to="/account/letters">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/user-feedbakc-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/user-feedback-icon-dark.png" />
+            <img v-else src="../assets/images/account/user-feedback-icon.png" />
             <div class="acct-nav-label">意见反馈</div>
           </div>
         </router-link>
 
+      <router-link to="/account/vip?from=account">
+        <div class="acct-nav-item">
+          <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.png" />
+          <img v-else src="../assets/images/account/account-vip-icon.png" />
+          <div class="acct-nav-label">VIP 特权</div>
+        </div>
+      </router-link>
+
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-changepwd-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-changepwd-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-changepwd-icon.png" />
             <div class="acct-nav-label">修改密码</div>
-          </div>
-        </router-link>
-
-        <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">代理加盟</div>
           </div>
         </router-link>
 
@@ -257,6 +264,47 @@
         <!-- </router-link> -->
       </div>
     </q-item-section>
+
+<q-item-section class="acct-nav">
+  <div class="acct-title">
+    <div class="acct-title-1">热门推荐</div>
+  </div>
+  <div class="acct-menu" id="id-acct-menu">
+    <router-link to="/promo">
+      <div class="acct-nav-item">
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-promo-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-promo-icon.png" />
+        <div class="acct-nav-label">优惠活动</div>
+      </div>
+    </router-link>
+
+    <router-link to="/account/invite">
+      <div class="acct-nav-item">
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-share-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-share-icon.png" />
+        <div class="acct-nav-label">推广赚钱</div>
+      </div>
+    </router-link>
+
+    <router-link to="/account/invite#summon-share">
+      <div class="acct-nav-item">
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-summon-share-icon.png" />
+        <div class="acct-nav-label">召回奖金</div>
+      </div>
+    </router-link>
+
+
+    <router-link to="/affiliate">
+      <div class="acct-nav-item">
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-affiliate-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-affiliate-icon.png" />
+        <div class="acct-nav-label">合作加盟</div>
+      </div>
+    </router-link>
+
+  </div>
+</q-item-section>
 
     <q-card class="card-account-banner">
       <q-card-section>
@@ -306,7 +354,8 @@
     <a @click="isLogoutModal = true">
       <div class="acct-logout btn-pointer">
         <div class="acct-nav-label">退出登录</div>
-        <img src="../assets/images/account/account-logout-icon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-logout-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-logout-icon.png" />
       </div>
     </a>
   </q-page>
@@ -331,18 +380,18 @@
       </div>
     </q-card>
   </q-dialog>
-  <q-dialog
-    v-model="profileDialogVisible"
-    persistent
-    class="profile-dialog"
-  >
-    <q-card style="flex-direction: column; display: flex;">
-      <div class="header">
-        修改头像
-        <q-btn dense flat icon="close" v-close-popup>
-          <q-tooltip>Close</q-tooltip>
-        </q-btn>
-      </div>
+    <q-dialog
+      v-model="profileDialogVisible"
+      persistent
+      class="profile-dialog"
+    >
+      <q-card style="flex-direction: column; display: flex;">
+        <div class="header">
+          修改头像
+      <q-btn dense flat icon="close" v-close-popup>
+        <q-tooltip>Close</q-tooltip>
+      </q-btn>
+        </div>
 
       <div class="grid-container">
         <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
@@ -421,10 +470,9 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
+import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import {useLocalStorage} from "@vueuse/core"
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -468,7 +516,7 @@ export default defineComponent({
       });
     };
 
-    const appVersionNo = ref(null);
+    // const appVersionNo = ref(null);
     const vipLevel = computed(() => {
       if (store.vip == "VIP0") {
         return 0;
@@ -508,16 +556,16 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.6";
-      } else {
-      }
-    };
+    // const getVersionNo = async () => {
+    //   if (store.getDeviceType() == "ANDROID") {
+    //     const info = await App.getInfo();
+    //     var current_version = info.version + "." + info.build;
+    //     appVersionNo.value = current_version;
+    //   } else if (store.getDeviceType() == "IOS") {
+    //     appVersionNo.value = "iOS v0.6";
+    //   } else {
+    //   }
+    // };
     const isLoadingBalance = ref(false);
 
     const selfTgurl = ref("https://" + store.evip);
@@ -538,12 +586,13 @@ export default defineComponent({
         icon: "check_circle_outline"
       });
     };
-
+    onActivated(() => {
+      store.getUnreadTotal();
+    })
     onMounted(() => {
       getBalance();
       store.getBalance();
-      // store.getUnreadTotal();
-      getVersionNo();
+      // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
@@ -819,7 +868,6 @@ export default defineComponent({
       openDeposit,
       openWithdraw,
       openTransfer,
-      appVersionNo,
       isLoadingBalance,
       selfTgurl,
       vip_progress,
@@ -1190,9 +1238,20 @@ export default defineComponent({
     color: $font-2;
     // background-color: $lightblue;
     background: rgba(203, 229, 255, 1);
+    border-radius: 20px 20px 0 0;
     position: relative;
-    border-radius: 20px 20px 0px 0px;
-    position: relative;
+    &:before {
+      background: #458BFF;
+;
+      width: 5px;
+      height: 20px;
+      left: 0;
+      top: 5px;
+      bottom: 0;
+      margin: auto;
+      content: "";
+      position: absolute;
+    }
 
     .acct-title-1 {
       display: flex;
@@ -1225,15 +1284,16 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 10px;
-    gap: 10px;
-    row-gap: 10px;
+    grid-gap: 0px;
+    gap: 0px;
+    row-gap: 0px;
     height: auto;
+    max-height: 180px;
+
     margin-bottom: 10px;
     background-color: $white;
     border-radius: 0px 0px 20px 20px;
-    padding: 24px 0px 28px;
+    padding: 15px 0;
     box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
 
     &.shorter-menu {
@@ -1256,10 +1316,22 @@ export default defineComponent({
         text-decoration: none;
         padding: 6px;
         border-radius: 4px;
+        position: relative;
 
         .acct-nav-label {
           white-space: nowrap;
           color: $font-1;
+        }
+        .unread {
+          position: absolute;
+
+    border-radius: 50%;
+    background: #ff0000;
+    left: 80%;
+    top: -3px;
+    color: #ffffff;
+    padding: 1px 5px;
+    font-size: 10px;
         }
 
         img {
@@ -1434,6 +1506,46 @@ export default defineComponent({
   .acct-logout {
     @include content-block-dark;
   }
+
+  .vipcard {
+    .btn-main {
+      background-image: url("../assets/images/account/account-btn-dark.png");
+    }
+  }
+
+  .acct-nav {
+    .acct-title {
+      background: #FFFFFF1A;
+      &::before {
+        background: $primary-dark;
+      }
+      .acct-title-1 {
+        color: $white;
+      }
+    }
+  }
+
+  .profile-dialog {
+    .q-card {
+      box-shadow: none;
+    }
+    .submitImgBtn{
+      background-image: url("../assets/images/download/active-tab-bg-dark.png");
+    }
+  }
+
+  .vip-link {
+    background: $linear-bg-180-dark;
+    &::before {
+      background-image: url("../assets/images/account/vip-diamond-dark.png");
+    }
+  }
+
+  .vip-progress {
+    :deep(.q-linear-progress__model) {
+      background: $linear-bg-180-dark;
+    }
+  }
 }
 
 @media (max-width: 430px) {
@@ -1597,7 +1709,6 @@ export default defineComponent({
     gap: 10px;
     .cropped_title {
       color: #7A80A1;
-      font-family: PingFang SC;
       font-size: 20px;
       font-weight: 500;
       line-height: 28px;

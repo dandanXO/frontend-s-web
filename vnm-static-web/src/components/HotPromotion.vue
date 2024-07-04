@@ -17,6 +17,13 @@
       :params="list.param"
     />
 
+
+    <HongBaoYu2024
+      v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -309,10 +316,11 @@ export default defineComponent({
       this.list.redirectUrl === "vi-penny-bank" ||
       this.list.redirectUrl === "vi-slot-netloss" ||
       this.list.redirectUrl === "vi-poker-cashback" ||
-      this.list.redirectUrl === "vi-mualixi-redpacket" ||
+      this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24"||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
-      this.list.redirectUrl === "vnm-eurocup-luckydraw"
+      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
+      this.list.redirectUrl === "vi-mualixi-redpacket"
     ) {
       this.isCommonPromo = false;
     } else {

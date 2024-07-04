@@ -1,0 +1,55 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$primary: rgba(253, 49, 38, 1);
+$secondary: #1e212c;
+$accent: #ff8e8e;
+$new-primary: rgba(253, 49, 38, 1);
+
+$dark: #333333;
+$new-dark: rgba(30, 33, 44, 1);
+
+$dark-page: #666;
+
+$font-1: #7a80a1;
+$font-2: #424f72;
+$font-3: #6b7b95;
+$font-4: #313441;
+
+$grey-color: #a4aabb;
+
+$black: #000000;
+$white: #ffffff;
+$positive: #24ae4b;
+$negative: #f53434;
+
+$info: #458bff;
+$warning: #ffa031;
+
+$lightblue: #ffe7e7;
+
+$box-width: calc(100% - 2rem);
+
+$shadow-bg: 0px -2px 6px 2px #c3d4e6 inset;
+
+$linear-bg: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+$shadow-bg: 0px -2px 6px 2px #e6c3c3 inset;
+
+$linear-bg: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+$bg-red: #eaa9a9;
+$bg-blue: #e6c3c3;
+
+$md-size: 18px;
+$font-size: 16px;
+$small-size: 13px;

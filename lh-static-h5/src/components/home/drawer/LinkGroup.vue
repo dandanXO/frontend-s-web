@@ -12,12 +12,12 @@
 import { ref } from "vue";
 
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
-import LinkCommunicationImg from "assets/images/home/link-communication.png";
-import LinkVipImg from "assets/images/home/link-vip.png";
-import LinkCustomerServiceImg from "assets/images/home/link-customer-service.png";
-import LinkCommunicationDarkImg from "assets/images/home/link-communication-dark.png";
-import LinkVipDarkImg from "assets/images/home/link-vip-dark.png";
-import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service-dark.png";
+import LinkCommunicationImg from "assets/images/home/link-communication.svg";
+import LinkVipImg from "assets/images/home/link-vip.svg";
+import LinkCustomerServiceImg from "assets/images/home/link-customer-service.svg";
+import LinkCommunicationDarkImg from "assets/images/home/link-communication-dark.svg";
+import LinkVipDarkImg from "assets/images/home/link-vip-dark.svg";
+import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service-dark.svg";
 
 const links = ref([
   { icon: LinkCommunicationImg, label: "消息中心", href: "/account/inbox", iconDark: LinkCommunicationDarkImg },
@@ -44,5 +44,8 @@ const links = ref([
   display: flex;
   gap: 16px;
   align-items: center;
+  img {
+    max-width: 20px;
+  }
 }
 </style>

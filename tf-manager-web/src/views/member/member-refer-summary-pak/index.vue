@@ -58,6 +58,10 @@
           <span class="role-span">{{ t('fields.referrerList') }}</span>
           <el-row />
           <span v-if="uiControl.referrer"> {{ t('fields.referrer') }} : {{ uiControl.referrer }}</span>
+          <el-row />
+          <el-button v-if="uiControl.referrer" size="mini" type="primary" icon="el-icon-back" @click="goBackToPrevious()">
+            {{ t('fields.back') }}
+          </el-button>
         </div>
       </template>
       <el-table
@@ -90,7 +94,7 @@
             #default="scope"
             v-if="hasPermission(['sys:member:detail'])"
           >
-            <router-link :to="`details/${scope.row.memberId}?site=${request.siteId}`">
+            <router-link :to="`details/${scope.row.id}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -220,6 +224,8 @@ const uiControl = reactive({
   dialogTitle: '',
   dialogType: 'CREATE',
   referrer: null,
+  referrerPath: [],
+  referrerIdPath: [],
 })
 
 const page = reactive({
@@ -249,6 +255,21 @@ function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.referrerId = null
   uiControl.referrer = null
+  uiControl.referrerPath = []
+  uiControl.referrerIdPath = []
+}
+
+function goBackToPrevious() {
+  if (uiControl.referrerPath.length > 1) {
+    uiControl.referrerPath.pop()
+    uiControl.referrerIdPath.pop()
+    request.referrerId = uiControl.referrerIdPath[uiControl.referrerIdPath.length - 1]
+    uiControl.referrer = uiControl.referrerPath[uiControl.referrerPath.length - 1]
+    loadMembers()
+  } else {
+    resetQuery()
+    loadMembers()
+  }
 }
 
 function checkQuery() {
@@ -282,6 +303,8 @@ async function reloadMembers(loginName, uplineId) {
   request.referrerId = uplineId
   request.loginName = null
   uiControl.referrer = loginName
+  uiControl.referrerPath.push(loginName)
+  uiControl.referrerIdPath.push(uplineId)
   loadMembers()
 }
 
@@ -308,7 +331,9 @@ function getSummaries(val) {
     if (index === 0) {
       sums[index] = 'Total';
     } else if (sumKeys.includes(column.property)) {
-      sums[index] = page.sums[column.property];
+      sums[index] = page.sums[column.property].toFixed(2);
+    } else if (index === 10) {
+      sums[index] = (sums[8] - sums[9]).toFixed(2);
     }
   });
   return sums;

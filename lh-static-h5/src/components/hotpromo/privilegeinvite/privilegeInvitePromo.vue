@@ -193,7 +193,7 @@
                   <td>8888元</td>
                 </tr>
                 <tr>
-                  <td>VIP10</td>
+                  <td>VIP10-VIP12</td>
                   <td>≥1,000,000元</td>
                   <td>88888元</td>
                 </tr>
@@ -414,7 +414,6 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import moment from "moment";
-import Swal from "sweetalert2";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";

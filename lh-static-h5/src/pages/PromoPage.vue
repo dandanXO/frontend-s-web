@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                     </a>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
@@ -144,17 +144,23 @@
             }"
           >
             <div class="loader" v-if="isFetchingPromo" />
-            <div class="selected-promo-wrapper" :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;':'',]">
+            <div
+              class="selected-promo-wrapper"
+              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+            >
               <div
                 class="banner-container"
                 v-if="
                   selectedPromo &&
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
-                  selectedPromo.promoCode !== 'lh1-ftd-promo'
+                  selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+                  selectedPromo.promoCode !== 'lh1-aijiasu' &&
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
                 "
               >
                 <img
+                  loading="lazy"
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
@@ -163,27 +169,41 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
+                  lhstepgame:
+                    selectedPromo.promoCode === 'lh1-game-steps' ||
+                    selectedPromo.promoCode === 'lh-sport-zhongchao' ||
+                    selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
+                  lhworldcup: selectedPromo.promoCode === 'lh1worldcup',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
-                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'  || selectedPromo.promoCode === 'lh1-deposit-rebates' ,
-                  lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
+                  lhduanwu:
+                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
+                  lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
+                  meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
+                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
+                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
                 }"
                 :style="[
-                  selectedPromo.promoCode === 'lh-eurocup-manual' ||
-                 selectedPromo.promoCode === 'lh1-deposit-rebates'
+                  selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
                       ')'
-                    : (selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'')
-                  ]"
+                    : selectedPromo?.promoCode === 'lh1-intel-esl'
+                    ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
+                    : ''
+                ]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps' && selectedPromo.promoCode !== 'lh-eurocup-manual'"
+                  v-if="
+                    selectedPromo.promoType &&
+                    selectedPromo.promoCode !== 'lh1-game-steps' &&
+                    selectedPromo.promoCode !== 'lh-eurocup-manual' &&
+                    selectedPromo.promoCode !== 'lh1-aijiasu'
+                  "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -195,11 +215,9 @@
                 >
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
-                <div
-                  v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)"
-                  class="corner-decor"
-                >
+                <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
                   <img
+                    loading="lazy"
                     v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
@@ -246,6 +264,7 @@ import LocalStorage from "boot/local-storage";
 import {useLocalStorage} from "@vueuse/core"
 
 import HotPromotion from "components/HotPromotion";
+import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -826,11 +845,59 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
-
-        &.lheuromanual{
-          margin:0px;
+        &.aijiasu {
           width: 100%;
-          gap:0px;
+          gap: 0px;
+          margin: 0px;
+        }
+        &.lhworldcup{
+          background: #E7F1Fd;
+          margin:0px;
+          width:100%;
+          padding: 0px 16px 20px;
+
+          img{
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+
+
+          table {
+
+            p{
+              margin: 0px;
+            }
+
+            tr:first-child{
+              td{
+                background-image: linear-gradient(0deg, #0094ff, #19c6ff), linear-gradient(#2e3039, #2e3039);
+                color: #fff;
+              }
+            }
+
+            th {
+              background-color:inherit;
+            }
+
+            td {
+              background-color: inherit;
+            }
+          }
+
+        }
+        &.euroRegen {
+          width: 100%;
+          gap: 0px;
+          margin: 0px;
+        }
+        &.meizhoubei {
+          margin: 5px auto;
+        }
+
+        &.lheuromanual {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
 
           .hot-promo {
             border-radius: 0px;
@@ -848,15 +915,15 @@ export default defineComponent({
           }
         }
 
-        &.lhduanwu{
-          margin:0px;
-          background-image:url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
+        &.lhduanwu {
+          margin: 0px;
+          background-image: url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
           width: 100%;
           background-position: top center;
           background-size: 100% auto;
           background-repeat: no-repeat;
 
-          .hot-promo{
+          .hot-promo {
             padding: 15px;
           }
         }
@@ -871,9 +938,8 @@ export default defineComponent({
           }
         }
 
-        &.lhcs2{
+        &.lhcs2 {
           margin-top: 0px;
-
         }
 
         &:has(.corner-decor) {
@@ -932,6 +998,18 @@ export default defineComponent({
         //   background: #272c3d;
         //   border-radius: 10px;
         // }
+        .promo-card {
+          background-color: #FFFFFF;
+          color: #7A8EB9;
+        }
+
+        // for lh1ouzhoubeibaopei
+        .sport {
+          em {
+            color: #c24f4a;
+            font-style: normal;
+          }
+        }
       }
     }
   }
@@ -987,7 +1065,6 @@ export default defineComponent({
       opacity: 1;
 
       .q-tab__label {
-        color: $primary;
         font-weight: bold;
       }
     }
@@ -1052,7 +1129,7 @@ export default defineComponent({
 
 .promo-cat-tab {
   position: sticky;
-  top: 61px;
+  top: 51px;
   z-index: 3;
 
   &.extension-tab {
@@ -1069,7 +1146,7 @@ export default defineComponent({
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
             .promo-ribbon {
-              background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+              background: linear-gradient(90deg, #36CBD5 0%, #1D809A 100%);
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1095,12 +1172,29 @@ export default defineComponent({
           table {
             th {
               background: $background-dark-header;
-              color: $font-3-dark;
+              color: $white;
             }
             td {
               background: $background-dark-light;
               border-color: $border-dark;
-              color: #999999;
+              color: $white;
+            }
+            tbody > tr:first-child td {
+              background: $background-dark-header;
+              color: $white;
+            }
+          }
+
+          .promo-card {
+            @include content-block-dark;
+            color: $font-1;
+          }
+
+          // for lh1ouzhoubeibaopei
+          .sport {
+            em {
+              color: #F04918;
+              font-style: normal;
             }
           }
         }
@@ -1108,9 +1202,12 @@ export default defineComponent({
     }
   }
 
-  .promo {
+  .promo:not(.unfixed) {
     .q-tabs {
       background: $background-dark-light;
+      .q-tab--active {
+        color: $primary-dark;
+      }
     }
     .q-tab-panels {
       background: $background-dark;

@@ -25,6 +25,7 @@
           style="width: 260px"
           default-first-option
           @focus="loadSites"
+          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -45,7 +46,7 @@
           style="width: 260px"
         >
           <el-option
-            v-for="item in uiControl.type"
+            v-for="item in filterTypes"
             :key="item.key"
             :label="item.displayName"
             :value="item.value"
@@ -142,6 +143,63 @@
       >
         <!-- editor here -->
         <Editor v-model:value="form.content" @input="getInput"></Editor>
+      </el-form-item>
+    </el-row>
+    <el-row></el-row>
+    <el-row>
+      <el-form-item
+        :label="t('fields.contentList')"
+        v-if="form.type === 'TEXT'"
+      >
+        <div>
+          <draggable
+            v-model="uiControl.contentList"
+            handle=".drag-handle"
+            @end="onDragEnd"
+          >
+            <template #item="{ element }">
+              <div
+                style="display: flex; align-items: center; margin-bottom: 5px;"
+              >
+                <i
+                  class="drag-handle el-icon-rank"
+                  style="cursor: grab; margin-right: 5px;"
+                ></i>
+                <el-tag
+                  closable
+                  :disable-transitions="false"
+                  @close="removeContent(element)"
+                  style="margin-right: 5px; padding-top: 5px;"
+                  :title="element"
+                >
+                  {{ stripHtmlTags(element) }}
+                </el-tag>
+              </div>
+            </template>
+          </draggable>
+        </div>
+        <div style="padding-top: 5px;">
+          <Editor
+            v-if="uiControl.inputVisible"
+            ref="InputRef"
+            v-model="inputValue"
+            @input="getContentInput"
+          ></Editor>
+        </div>
+        <div style="float: right; padding-top: 5px;">
+          <el-button
+            v-if="uiControl.inputButtonVisible"
+            type="primary"
+            @click="handleInputConfirm"
+          >
+            {{ t('fields.add') }}
+          </el-button>
+        </div>
+        <div style="float: left; padding-top: 5px;">
+          <el-button class="button-new-tag" size="small" @click="showInput">
+            + {{ t('fields.AddList') }}
+          </el-button>
+        </div>
       </el-form-item>
     </el-row>
     <div class="form-footer">
@@ -275,6 +333,7 @@ import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
+import draggable from 'vuedraggable'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -285,6 +344,7 @@ const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 
 const adsPopoutForm = ref(null)
 
+const inputValue = ref('')
 const form = reactive({
   id: null,
   title: null,
@@ -296,6 +356,7 @@ const form = reactive({
   siteId: null,
   type: null,
   content: null,
+  contentList: null,
   status: false,
 })
 
@@ -305,10 +366,10 @@ const uiControl = reactive({
     { key: 1, displayName: '开', value: true },
     { key: 2, displayName: '关', value: false },
   ],
-  type: [
-    // { key: 1, displayName: '文字', value: 'TEXT' },
-    { key: 2, displayName: '图片', value: 'IMG' },
-  ],
+  // type: [
+  //   { key: 1, displayName: '文字', value: 'TEXT' },
+  //   { key: 2, displayName: '图片', value: 'IMG' },
+  // ],
   frequency: [
     { key: 1, displayName: '每次', value: 'EVERYTIME' },
     { key: 2, displayName: '每天', value: 'EVERYDAY' },
@@ -317,7 +378,27 @@ const uiControl = reactive({
   imageSelectionTitle: '',
   imageSelectionType: '',
   imageSelectionVisible: false,
+  contentList: [],
+  inputVisible: false,
+  inputButtonVisible: false,
 })
+
+const filterTypes = computed(() => {
+  if (form.siteId === 8) {
+    return [
+      { key: 1, displayName: '文字', value: 'TEXT' },
+      { key: 2, displayName: '图片', value: 'IMG' },
+    ]
+  } else {
+    return [{ key: 2, displayName: '图片', value: 'IMG' }]
+  }
+})
+
+function changeSite() {
+  if (form.siteId !== 8) {
+    form.type = 'IMG'
+  }
+}
 
 const formRules = reactive({
   title: [required(t('message.validateTitleRequired'))],
@@ -351,6 +432,34 @@ const imageRequest = reactive({
   siteId: null,
   category: 'PROMO',
 })
+
+const showInput = () => {
+  uiControl.inputVisible = true
+  uiControl.inputButtonVisible = true
+}
+
+const removeContent = content => {
+  uiControl.contentList.splice(uiControl.contentList.indexOf(content), 1)
+}
+
+const handleInputConfirm = () => {
+  if (inputValue.value) {
+    uiControl.contentList.push(inputValue.value)
+  }
+  uiControl.inputVisible = false
+  uiControl.inputButtonVisible = false
+  inputValue.value = ''
+}
+
+const onDragEnd = () => {
+  if (inputValue.value) {
+    inputValue.value = uiControl.contentList
+  }
+}
+
+const stripHtmlTags = htmlString => {
+  return htmlString.replace(/(&nbsp;|<([^>]+)>)/g, '')
+}
 
 function resetImageQuery() {
   imageRequest.name = null
@@ -388,7 +497,19 @@ function getInput(value) {
   form.content = value
 }
 
+function getContentInput(value) {
+  inputValue.value = value
+}
+
 function create() {
+  if (uiControl.contentList !== null) {
+    form.contentList = uiControl.contentList.join('|')
+  }
+
+  if (form.type === 'IMG') {
+    form.contentList = null
+  }
+
   adsPopoutForm.value.validate(async valid => {
     if (valid) {
       await createAdsPopout(form)
@@ -400,6 +521,13 @@ function create() {
 }
 
 function edit() {
+  if (uiControl.contentList !== null) {
+    form.contentList = uiControl.contentList.join('|')
+  }
+
+  if (form.type === 'IMG') {
+    form.contentList = ''
+  }
   adsPopoutForm.value.validate(async valid => {
     if (valid) {
       await updateAdsPopout(form)
@@ -433,6 +561,9 @@ async function loadForm(id, siteId) {
 
   nextTick(() => {
     for (const key in adspopout) {
+      if (adspopout.contentList !== null && adspopout.contentList !== '') {
+        uiControl.contentList = adspopout.contentList.split('|')
+      }
       if (Object.keys(form).find(k => k === key)) {
         form[key] = adspopout[key]
       }
@@ -508,7 +639,7 @@ watch(
       loadForm(route.params.id, route.params.siteId)
     } else {
       adsPopoutForm.value.resetFields()
-      form.type = uiControl.type[0].value
+      form.type = filterTypes.value[0].value
     }
   }
 )
@@ -521,7 +652,7 @@ onMounted(async () => {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)
   } else {
-    form.type = uiControl.type[0].value
+    form.type = filterTypes.value[0].value
   }
 })
 </script>

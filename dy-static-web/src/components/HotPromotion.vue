@@ -12,11 +12,9 @@
     <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
     <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
+    <MeiZhouBeiPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao1' && store.token"
-      :promo-code="list.promoCode"
-    />
+
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
@@ -28,8 +26,6 @@
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
-    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
-    <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite
       v-if="
         (list.redirectUrl === 'Dongying-refer' ||
@@ -65,9 +61,14 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu' && store.token"
+    />
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promoParam="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
     />
-
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
@@ -82,6 +83,10 @@
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/webfeedback.png"
       />
+    </div>
+
+    <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei' && store.token">
+      <div class="cs-btn" @click="store.openLiveChat()">联系客服</div>
     </div>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
@@ -106,6 +111,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import ESportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
 import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
+import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -150,6 +156,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
+    MeiZhouBeiPromo,
     PrizePoolVotePromo,
     ESportSafetyPromo,
     SportSafetyPromo,
@@ -334,8 +341,11 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-blast-2024" ||
       this.list.redirectUrl === "dy-sport-zhongchao" ||
       this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao" ||
-      this.list.redirectUrl === "fankuijianyi"
+      this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
+      this.list.redirectUrl === "fankuijianyi" ||
+      this.list.redirectUrl === "dy2meizhoubei" ||
+      this.list.redirectUrl === "dy-ouzhoumianpei" ||
+      this.list.redirectUrl === "tiqianhongbao"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -484,6 +494,30 @@ export default defineComponent({
         gap: 50px;
       }
     }
+  }
+}
+
+.cs-btn {
+  cursor: pointer;
+  display: block;
+  width: 198px;
+  height: 52px;
+  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
+  background-blend-mode: normal, normal;
+  border-radius: 26px;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 52px;
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 

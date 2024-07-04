@@ -47,6 +47,13 @@
             {{ copybtntxt3 }}
           </q-btn>
         </div>
+        <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+          <span>备注：</span>
+          <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
+            {{ copybtntxt5 }}
+          </q-btn>
+        </div>
       </div>
     </div>
     <div class="deposit-container" v-else>
@@ -175,6 +182,16 @@
             </q-item>
           </template>
         </q-select>
+
+        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">
+          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">
+            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}
+          </p>
+          <p v-else>
+            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍
+          </p>
+        </div>
+
         <!--        <div class="q-mt-xs" v-if="amountList.length !== 0">-->
         <!--          <q-btn-->
         <!--            class="common-large-btn"-->
@@ -241,13 +258,11 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, shallowRef } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { api, cashier } from "boot/axios";
+import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import { doIt } from "boot/action";
-import liff from "@line/liff";
 
 var qs = require("qs");
 
@@ -293,6 +308,7 @@ const amountList = ref([]);
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
+const selectedPromo = ref({});
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
@@ -305,11 +321,13 @@ const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
 const subMsg4 = ref();
+const subMsg5 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const copybtntxt4 = ref("复制");
+const copybtntxt5 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -324,18 +342,51 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
 };
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });
 };
+
+const getRollOverText = (rolltext) => {
+  const thetext= JSON.parse(rolltext);
+
+  var fulltext= '流水倍数要求（本金+彩金）：';
+  var rolloverlists= [];
+  if(thetext.sport){
+    rolloverlists.push("体育"+thetext.sport+"倍");
+  }
+  if(thetext.esport){
+    rolloverlists.push("电竞"+thetext.esport+"倍");
+  }
+  if(thetext.slot){
+    rolloverlists.push("电子"+thetext.slot+"倍");
+  }
+  if(thetext.live){
+    rolloverlists.push("真人"+thetext.live+"倍");
+  }
+  if(thetext.poker){
+    rolloverlists.push("棋牌"+thetext.poker+"倍");
+  }
+  if(thetext.fish){
+    rolloverlists.push("捕鱼"+thetext.fish+"倍");
+  }
+  if(thetext.lottery){
+    rolloverlists.push("彩票"+thetext.lottery+"倍");
+  }
+  if(thetext.casual){
+    rolloverlists.push("小游戏"+thetext.casual+"倍");
+  }
+  fulltext += rolloverlists.join("，")
+  return fulltext;
+}
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
@@ -389,8 +440,7 @@ const initPay = () => {
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -463,9 +513,6 @@ async function onSelect(value) {
 
   clearInfo();
   // if (!Platform.is.android || !Platform.is.capacitor) {
-  // }
-  // if (liff.isInClient()) {
-  //   clearInfo();
   // }
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
@@ -613,8 +660,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -664,8 +710,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;
@@ -743,6 +788,7 @@ const checkExtension = () => {
     console.log(store);
   }
 };
+
 
 onMounted(() => {
   initPay();
@@ -853,7 +899,7 @@ onMounted(() => {
     padding: 0px 8px 10px;
     background: rgba(0, 0, 0, 0.05);
     box-shadow: $shadow-bg;
-    margin-bottom: 18px;
+    margin-bottom: 4px;
     height: 56px;
   }
 
@@ -874,6 +920,10 @@ onMounted(() => {
   }
 }
 
+.rollover-info{
+  color:  #bd4646;
+  font-size: 12px;
+}
 
 </style>
 <style scoped lang="scss">

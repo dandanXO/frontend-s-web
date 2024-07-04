@@ -52,7 +52,6 @@
 
   .maintenance-title {
     margin-top: 10px;
-    font-family: PingFang SC;
     color: #4c88f8;
     font-size: 30px;
     font-weight: 600;
@@ -60,7 +59,6 @@
 
   .maintenance-desc {
     margin-top: 10px;
-    font-family: PingFang SC;
     color: #858585;
     font-size: 18px;
     line-height: 1.6;

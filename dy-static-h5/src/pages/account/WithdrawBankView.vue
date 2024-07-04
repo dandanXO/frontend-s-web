@@ -341,7 +341,6 @@
 import {defineComponent, reactive, ref, onMounted, computed, watch} from "vue";
 // import { Modal, message } from "ant-design-vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import {RiSpamLine, RiLink} from "vue-remix-icons";
 // import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
 import moment from "moment";
 import {api} from "boot/axios"
@@ -354,8 +353,6 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    // eslint-disable-next-line vue/no-unused-components
-    RiSpamLine, RiLink
   },
   setup() {
     const store = userStore();

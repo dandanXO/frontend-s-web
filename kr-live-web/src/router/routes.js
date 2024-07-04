@@ -4,7 +4,7 @@ const routes = [
     {
         path: "/",
         component: () => import("layouts/MainLayout.vue"),
-        children: [{path: "", component: () => import("pages/HomePage.vue")}]
+        children: [{ path: "", component: () => import(/* webpackChunkName: "home" */ "pages/HomePage.vue") }]
     },
     {
         path: "/welcome",
@@ -44,12 +44,12 @@ const routes = [
     },
     {
         path: "/affiliate",
-        component: () => import("layouts/MainLayout.vue"),
+        component: () => import(/* webpackChunkName: "main" */"layouts/MainLayout.vue"),
         children: [
             {
                 path: "",
                 name: "affiliate",
-                component: () => import("pages/AffiliateView.vue")
+                component: () => import(/* webpackChunkName: "affiliate" */"pages/AffiliateView.vue")
             }
         ]
     },
@@ -64,13 +64,11 @@ const routes = [
         name: "referCode",
         component: () => {
         }
-        // component: () => {},
     },
     {
       path: "/logintoken/:loginToken",
       name: "loginToken",
       component: () => {},
-      // component: () => {},
     },
     {
         path: "/depositLoading",
@@ -98,7 +96,7 @@ const routes = [
     {
         path: "/:catchAll(.*)*",
         redirect: '/',
-        component: () => import("pages/ErrorNotFound.vue")
+        component: () => import(/* webpackChunkName: "error" */"pages/ErrorNotFound.vue")
     }
 ];
 export default routes;

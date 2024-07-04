@@ -2,12 +2,12 @@
   <div class="welcome-page-container">
     <div class="center">
       <div class="logo">
-        <img src="@/assets/home/auth/welcome-congrats.png" />
+        <img :src="loadImg('welcome-congrats')" />
       </div>
       <div class="welcome-slides">
         <div class="welcome-slide card-bg">
           <div class="slide-title">完美兼容安全设备</div>
-          <img class="banner" src="../assets/home/auth/welcome-4-types-icon.png" />
+          <img class="banner" :src="loadImg('welcome-4-types-icon')" />
           <div>
             雷火用引领市场的卓越技术，自主研发了全套
             终端应用，让您畅享Web、H5、更有iOS、Android原生App,流畅游戏，让您尽在掌握！贴心服务，7x24在线客服全年伴您左右。
@@ -29,7 +29,7 @@
         <div class="welcome-slide center-slide card-bg">
           <img class="ribbon" src="../assets/home/auth/welcome-slide-ribbon.png" />
           <div class="slide-title">注册后即刻存款的玩家高达</div>
-          <img class="banner" src="../assets/home/auth/welcome-84-percent-icon.png" />
+          <img class="banner" :src="loadImg('welcome-84-percent-icon')" />
           <div class="grey-card-bg">
             <div class="list">您的首次存款，将激活以下优惠：</div>
             <div class="list white-space-nowrap">
@@ -57,7 +57,7 @@
         </div>
         <div class="welcome-slide card-bg">
           <div class="slide-title">最全的热门电竞赛事</div>
-          <img class="banner" src="../assets/home/auth/welcome-17-types-icon.png" />
+          <img class="banner" :src="loadImg('welcome-17-types-icon')" />
           <img class="hot-games-img" src="../assets/home/auth/welcome-hot-games.png" />
           <div style="margin: 15px 10px 5px">...等多款游戏</div>
           <router-link to="/esports" class="blue-bg proceed-btn">立即前往</router-link>
@@ -68,8 +68,11 @@
 </template>
 
 <script setup>
+import { useDark } from "@vueuse/core";
 import { ref } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
+
+const isDark = useDark();
 
 const platforms = ref([
   {
@@ -83,6 +86,18 @@ const platforms = ref([
     link: "https://m.e8386.com"
   }
 ]);
+
+const loadImg = (name) => {
+  if (isDark.value) {
+    try {
+      return require(`@/assets/home/auth/${name}-dark.png`);
+    } catch (error) {
+      return require(`@/assets/home/auth/${name}.png`);
+    }
+  } else {
+    return require(`@/assets/home/auth/${name}.png`);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -175,11 +190,12 @@ const platforms = ref([
     display: flex;
     flex-direction: column;
     width: 350px;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     color: #7a80a1;
     position: relative;
     padding: 25px;
+    height: 100%;
 
     .slide-title {
       font-weight: 700;
@@ -282,7 +298,22 @@ const platforms = ref([
       .grey-card-bg {
         background-color: $background-content-block-lighter-dark;
       }
+
+      .qr-codes {
+        .platform-qr-code {
+          .label-desc-wrapper {
+            .label {
+              color: $active-color-dark;
+            }
+          }
+        }
+      }
     }
+  }
+
+  .blue-bg {
+    background: $active-color-dark-linear;
+    box-shadow: $active-color-dark-shadow;
   }
 }
 </style>

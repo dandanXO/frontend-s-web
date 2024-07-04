@@ -7,25 +7,45 @@
     </div>
 
     <div class="tab-wrapper">
-      <div class="tab" :class="t === currentType ? 'active-tab' : ''" v-for="t, index in typesArr" @click="switchType(index)">{{ t }}首存</div>
+      <div
+        class="tab"
+        :class="t === currentType ? 'active-tab' : ''"
+        v-for="(t, index) in typesArr"
+        @click="switchType(index)"
+      >
+        {{ t }}首存
+      </div>
     </div>
   </div>
   <div class="content-wrapper">
     <div class="second-tab-wrapper">
       <img src="../../../assets/images/promotion/hotpromo/ftd/left-decor.png" />
       <div class="second-tab-content-wrapper" :class="tabArr.length === 1 ? 'mono-tab' : ''">
-        <div class="tab" v-for="t,index in tabArr" :class="t === currentTab ? 'active-tab' : ''" @click="switchTab(index)">
+        <div
+          class="tab"
+          v-for="(t, index) in tabArr"
+          :class="t === currentTab ? 'active-tab' : ''"
+          @click="switchTab(index)"
+        >
           <span class="tab-label">{{ t }}优惠</span>
         </div>
       </div>
       <img src="../../../assets/images/promotion/hotpromo/ftd/right-decor.png" />
     </div>
     <div class="separator-wrapper">
-      <img class="separator" v-if="currentTab === '首存'" src="../../../assets/images/promotion/hotpromo/ftd/first-deposit-separator.png" />
-      <img class="separator" v-else-if="currentTab === '复存'" src="../../../assets/images/promotion/hotpromo/ftd/consecutive-deposit-separator.png" />
+      <img
+        class="separator"
+        v-if="currentTab === '首存'"
+        src="../../../assets/images/promotion/hotpromo/ftd/first-deposit-separator.png"
+      />
+      <img
+        class="separator"
+        v-else-if="currentTab === '复存'"
+        src="../../../assets/images/promotion/hotpromo/ftd/consecutive-deposit-separator.png"
+      />
     </div>
 
-    <ActionButtons :tab="currentTab" :type="currentType"/>
+    <ActionButtons :tab="currentTab" :type="currentType" />
 
     <SportContent v-if="currentType === '体育'" :tab="currentTab" :type="currentType" />
     <EsportContent v-else-if="currentType === '电竞'" :tab="currentTab" :type="currentType" />
@@ -37,27 +57,27 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import SportContent from './SportContent.vue';
-import EsportContent from './EsportContent.vue';
-import LiveContent from './LiveContent.vue';
-import PokerContent from './PokerContent.vue';
-import SlotContent from './SlotContent.vue';
-import FishingContent from './FishingContent.vue';
-import ActionButtons from './ActionButtons.vue';
+import { ref, computed } from "vue";
+import SportContent from "./SportContent.vue";
+import EsportContent from "./EsportContent.vue";
+import LiveContent from "./LiveContent.vue";
+import PokerContent from "./PokerContent.vue";
+import SlotContent from "./SlotContent.vue";
+import FishingContent from "./FishingContent.vue";
+import ActionButtons from "./ActionButtons.vue";
 
-const typesArr = ref(['体育', '电竞', '真人', '棋牌', '电子', '捕鱼']);
+const typesArr = ref(["体育", "电竞", "真人", "棋牌", "电子", "捕鱼"]);
 const typeIndex = ref(0);
 const currentType = computed(() => {
   return typesArr.value[typeIndex.value];
 });
 
 const tabArr = computed(() => {
-  if(currentType.value === '体育' || currentType.value === '电竞') {
-    return ['首存'];
+  if (currentType.value === "体育" || currentType.value === "电竞") {
+    return ["首存"];
   }
 
-  return ['首存', '复存'];
+  return ["首存", "复存"];
 });
 const tabIndex = ref(0);
 const currentTab = computed(() => {
@@ -67,18 +87,18 @@ const currentTab = computed(() => {
 const switchType = (index) => {
   typeIndex.value = index;
   tabIndex.value = 0;
-}
+};
 
 const switchTab = (index) => {
   tabIndex.value = index;
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .banner-wrapper {
   width: 100%;
   min-height: 1073px;
-  background: url('../../../assets/images/promotion/hotpromo/ftd/banner.jpg') no-repeat top center;
+  background: url("../../../assets/images/promotion/hotpromo/ftd/banner.jpg") no-repeat top center;
   background-size: 100% 100%;
   position: relative;
 
@@ -112,8 +132,8 @@ const switchTab = (index) => {
 
     font-size: 40px;
     font-weight: bold;
-    font-family: 'FZHanZhenGuangBiaoS-GB';
-    background: -webkit-linear-gradient(180deg, #FFFFFF 0%, #D0ABFF 44%, #FFFFFF 100%);
+    font-family: "FZHanZhenGuangBiaoS-GB";
+    background: -webkit-linear-gradient(180deg, #ffffff 0%, #d0abff 44%, #ffffff 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -129,15 +149,15 @@ const switchTab = (index) => {
     .tab {
       width: 184px;
       height: 63px;
-      background: url('../../../assets/images/promotion/hotpromo/ftd/tab.png') no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/ftd/tab.png") no-repeat center center;
       background-size: 100% 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 18px;
-      color: #ffffff65;
-      font-weight: bold;
-      font-family: 'FZHanZhenGuangBiaoS-GB';
+      color: rgba(255, 255, 255, 0.8);
+      // font-weight: bold;
+      font-family: "FZHanZhenGuangBiaoS-GB";
       cursor: pointer;
 
       &:hover {
@@ -145,7 +165,7 @@ const switchTab = (index) => {
       }
 
       &.active-tab {
-        background: url('../../../assets/images/promotion/hotpromo/ftd/tab-active.png') no-repeat center center;
+        background: url("../../../assets/images/promotion/hotpromo/ftd/tab-active.png") no-repeat center center;
         background-size: 100% 100%;
         color: #fff;
       }
@@ -157,7 +177,7 @@ const switchTab = (index) => {
   width: 100%;
   padding-bottom: 60px;
   //min-height: 2533px;
-  background: url('../../../assets/images/promotion/hotpromo/ftd/content-bg.jpg') no-repeat top center;
+  background: url("../../../assets/images/promotion/hotpromo/ftd/content-bg.jpg") no-repeat top center;
   background-size: 100% 100%;
   position: relative;
   display: flex;
@@ -173,7 +193,7 @@ const switchTab = (index) => {
     .second-tab-content-wrapper {
       width: 821px;
       height: 91px;
-      background: url('../../../assets/images/promotion/hotpromo/ftd/second-tab-bg.png') no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/ftd/second-tab-bg.png") no-repeat center center;
       background-size: 100% 100%;
       display: flex;
       position: relative;
@@ -195,7 +215,7 @@ const switchTab = (index) => {
         font-weight: 700;
         line-height: 47.88px;
         text-align: center;
-        color: #FFFFFF99;
+        color: #ffffff99;
         position: absolute;
         cursor: pointer;
 
@@ -212,7 +232,7 @@ const switchTab = (index) => {
         }
 
         &.active-tab {
-          background: url('../../../assets/images/promotion/hotpromo/ftd/second-tab-active.png') no-repeat center center;
+          background: url("../../../assets/images/promotion/hotpromo/ftd/second-tab-active.png") no-repeat center center;
           background-size: 100% 100%;
           color: #fff;
         }

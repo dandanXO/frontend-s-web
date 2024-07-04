@@ -1,25 +1,19 @@
 <template>
   <router-view />
-  <PageModal ref="pageModalRef"></PageModal>
+  <component :is="PageModal"></component>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { defineAsyncComponent, defineComponent, markRaw, onMounted, ref } from "vue";
+import { useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
-//test-update
 import { userStore } from "stores/index";
-import isString from "lodash/isString";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
-import PageModal from "components/modal/PageModal";
 
 export default defineComponent({
   name: "App",
-  components: { PageModal },
   setup() {
     var qs = require("qs");
     const ui = useUI();
@@ -28,7 +22,10 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
-    const pageModalRef = ref(null);
+
+    const PageModal = markRaw(defineAsyncComponent(() =>
+      import('components/modal/PageModal')
+    ))
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -40,7 +37,7 @@ export default defineComponent({
         console.log(visitorId);
 
         const obj = {
-          identifier:  store.visitorId,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -52,79 +49,8 @@ export default defineComponent({
 
     const store = userStore();
 
-    const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
-
-    let csclient;
-    const initCsWeb = () => {
-      csclient = new CsClient("5", regDevice, "kr", "2", "prod");
-
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("notification-type", {
-        type: "breathing",
-        color: "#FB4BFF"
-      });
-
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
-
-      //客服初始化。
-      csclient.init();
-
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
-
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (isString(event.data)) {
-          if (event.data == "closenotice") {
-            router.go(-1);
-          }
-        }
-      });
-    };
-
-    // const getCSA = () => {
-    //   cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
-    //     return res
-    //   })).then((data) => {
-    //     // console.log("here");
-    //     // console.log(data);
-    //     const url = new URL(data);
-    //     CSAUrl = url.hostname;
-    //     initCsWeb();
-    //     console.log(CSAUrl)
-    //   }).catch((err) => {
-    //     console.log(err);
-    //     CSAUrl = "csweb01.c8nhwrqx4.com";
-    //   });
-    // };
-
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
-    };
-
-    const initListenApp = () => {
-      App.addListener("appUrlOpen", function (event) {
-        // Example url: https://beerswift.app/tabs/tabs2
-        // slug = /tabs/tabs2
-        const slug = event.url.split(".com").pop();
-
-        // alert(slug);
-        console.log(slug);
-        // We only push to the route if there is a slug present
-        if (slug) {
-          // alert("GO");
-          // alert(slug);
-          router.push({
-            path: slug
-          });
-        }
-      });
     };
 
     const checkAgentFrom = () => {
@@ -174,11 +100,9 @@ export default defineComponent({
 
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       initStorage();
       checkAgentFrom();
-      // initListenApp();
-      // getCSA();
 
       document.addEventListener(
         "deviceready",
@@ -188,6 +112,10 @@ export default defineComponent({
         false
       );
     });
+
+    return {
+      PageModal
+    }
   }
 });
 </script>

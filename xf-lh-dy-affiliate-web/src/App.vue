@@ -23,6 +23,8 @@ onMounted(() => {
     link.href = '/xf-favicon.ico';
   }else if(window.location.pathname.indexOf("vi") > -1 || window.location.host.indexOf("vnm") > -1){
     link.href = '/vi-favicon.ico';
+  }else if(window.location.pathname.indexOf("kaka") > -1 || window.location.host.indexOf("ka2") > -1 || window.location.host.indexOf("ka1") > -1){
+    link.href = '/kaka-favicon.ico';
   }else if(window.location.pathname.indexOf("my") > -1 || window.location.host.indexOf("my") > -1){
     link.href = '/my-favicon.ico';
   }else if(window.location.pathname.indexOf("lh") > -1 || window.location.host.indexOf("lh1-") > -1){
@@ -52,6 +54,8 @@ onMounted(() => {
       window.location.pathname = '/lh/login'
     }else if (window.location.host.indexOf('vnm') > -1 || window.location.hostname.indexOf("vnm-") > -1 || window.location.href.includes('vnm-')) {
       window.location.pathname = '/vi/login'
+    }else if (window.location.host.indexOf('ka1') > -1 || window.location.hostname.indexOf("ka1-") > -1 || window.location.href.includes('ka1-')) {
+      window.location.pathname = '/kaka/login'
     }else if (window.location.host.indexOf('krw') > -1 || window.location.hostname.indexOf("krw-") > -1 || window.location.href.includes('krw-')) {
       window.location.pathname = '/kr/login'
     } else if (window.location.host.indexOf('pak') > -1 || window.location.hostname.indexOf("pak-") > -1 || window.location.href.includes('pak-')) {

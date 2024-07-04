@@ -19,6 +19,11 @@
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
+    <upgradeHongBaoPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'"
+      :promo-code="list.promoCode"
+    />
+
 
     <upgradeHongBaoPromo
       v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'"
@@ -137,7 +142,8 @@ export default defineComponent({
       this.list.redirectUrl === "vi-mualixi-redpacket" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
-      this.list.redirectUrl === "vnm-euro-2024-bet-reward"
+      this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
+      this.list.redirectUrl === "vi-mualixi-redpacket"
     ) {
       this.isCommonPromo = false;
     } else {

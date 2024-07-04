@@ -1117,7 +1117,7 @@ function displayShareRatio() {
     uiControl.shareRatioSettingVisible = true
     uiControl.shareRatioSettingLoading = true
     getConfigListByGroup('AGENT_SHARE_RATIO', form.siteId).then(res => {
-      shareRatioList.list = res.data
+      shareRatioList.list = JSON.parse(JSON.stringify(res.data))
     })
     uiControl.shareRatioSettingLoading = false
   } else {

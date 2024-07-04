@@ -1,0 +1,7 @@
+{
+  "appId": "com.vnm.client",
+  "appName": "KAKA",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

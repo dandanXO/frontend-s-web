@@ -464,6 +464,11 @@ export default defineComponent({
 
 .body--dark {
   .share-container {
+    .personal-content-box {
+      #selfTgurl {
+        color: $primary-dark;
+      }
+    }
     .shadow-box {
       @include content-block-dark-with-border;
       .qr-title {

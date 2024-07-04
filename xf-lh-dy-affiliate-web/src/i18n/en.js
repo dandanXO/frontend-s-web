@@ -531,6 +531,8 @@ export default {
     todayWithdrawal: 'Today Withdrawal',
     depositWithdrawalDiff: 'Deposit Withdrawal Difference',
     recommenderCode: 'Recommender Code',
+    memberShareRatio: 'Member Share Ratio',
+    editShareRatio: 'Edit Share Ratio',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -694,7 +696,8 @@ export default {
     validateAppNameRequired: 'App Name is required',
     validateAppIconRequired: 'App Icon is required',
     validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
-    depositShouldBetween: 'Deposit amount should be between '
+    depositShouldBetween: 'Deposit amount should be between ',
+    requiredPositiveInteger: 'Required Positive Integer',
   },
   menu: {
     undefined: '',
@@ -842,5 +845,10 @@ export default {
     11011: 'Superior share ratio not set',
     11012: 'Superior share ratio not set for game type: ',
     11013: 'Affiliate share ratio cannot exceed superior ratio',
+    11014: 'Affiliate share ratio total for all downlines cannot exceed superior affiliate share ratio',
+    11015: 'Affiliate share ratio not set',
+    11016: 'Member share ratio cannot exceed affiliate share ratio',
+    14012: 'Can only create affiliate with lower level',
+    14013: 'Affiliate has downline, cannot set to lower level',
   },
 }

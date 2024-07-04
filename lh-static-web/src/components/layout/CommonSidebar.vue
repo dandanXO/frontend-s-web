@@ -2,15 +2,15 @@
   <div class="sticky-sidebar" @mouseleave="customerHovered = false">
     <div class="additional-info-items" v-if="customerHovered">
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
-        <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span>24小时在线客服</span>
       </div>
       <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" />
         <span style="margin-left: 5px">cs@lh8080.com</span>
       </div>
       <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />
         <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
       </div>
     </div>
@@ -20,31 +20,53 @@
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >
-        <img src="@/assets/images/home/sticky-sidebar-dark-mode-icon.png" />
+        <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
+        <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
         <div>{{ isDark ? "白天" : "黑暗" }}模式</div>
       </div>
-      <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
-        <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
+      <!-- <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
+        <img src="../../assets/images/home/sticky-sidebar/hot-promo-icon.svg" />
         <div>热门活动</div>
-      </router-link>
+      </router-link> -->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
-        <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <div>客服中心</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
-          <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
+          <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
           <div>APP下载</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
-        <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/back-top-icon.svg" />
         <div>返回顶部</div>
       </div>
     </div>
   </div>
 
   <GameModal ref="gameMenu" />
+
+  <div
+    class="rocket-wrapper"
+    v-if="showDomain"
+    :class="'show-domain'"
+    :style="{ top: domainPosition.top + 'px', left: domainPosition.left + 'px' }"
+    @mousedown="startDragging('domain', $event)"
+  >
+    <div>
+      <div class="close-btn" @click="hideDomain()">X</div>
+
+      <el-carousel height="130px" :indicator-position="floatDomain.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+        <el-carousel-item v-for="(game, i) in floatDomain" :key="i">
+          <div @click="openLink(game.code)" class="rocket-container">
+            <div class="rocket"><img :src="`${imgURL}/promo/${game.icon}`" /></div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+  </div>
+
 
   <div
     class="rocket-wrapper"
@@ -123,7 +145,9 @@ export default defineComponent({
 
     const gameMenu = ref(null);
     const openGame = (gameName, platType, gameCode, scrollingState) => {
-      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+      if (!isDragging.value && clickAllowed.value) {
+        gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+      }
     };
 
     const downloadUrl = ref("");
@@ -139,16 +163,34 @@ export default defineComponent({
     };
 
     const showRocket = ref(false);
+    const showDomain= ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      rocketPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+    };
+    const openLink= (link) => {
+      if(link) {
+        if (link.indexOf(",") > -1) {
+          const splitLink = link.split(",");
+          const randomIndex = Math.floor(Math.random() * splitLink.length);
+          window.open(splitLink[randomIndex], "_blank");
+        } else {
+          window.open(link, "_blank");
+        }
+      }
+    }
+    const hideDomain = () => {
+      showDomain.value = false;
+      domainPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
+      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
     const floatPromo = ([]);
     const gamePromo = ([]);
+    const floatDomain = ([]);
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
@@ -162,6 +204,10 @@ export default defineComponent({
             if (element.type === 'GAME') {
               gamePromo.push(element)
               showRocket.value = true;
+            }
+            if (element.type === 'DOMAIN') {
+              floatDomain.push(element)
+              showDomain.value = true;
             }
           });
           checkFloatPromo();
@@ -179,9 +225,11 @@ export default defineComponent({
       }
     }
 
+    const domainPosition=  ref({ top: window.innerHeight - 440, left: window.innerWidth - 220 });
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
     const isDragging = ref(false);
+    const clickAllowed = ref(true);
     const shiftX = ref(0);
     const shiftY = ref(0);
     const currentElement = ref(null);
@@ -190,7 +238,8 @@ export default defineComponent({
       const rect = event.target.getBoundingClientRect();
       shiftX.value = event.clientX - rect.left;
       shiftY.value = event.clientY - rect.top;
-      isDragging.value = true;
+      isDragging.value = false;
+      clickAllowed.value = true;
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", stopDragging);
 
@@ -199,6 +248,8 @@ export default defineComponent({
       event.target.style.cursor = "pointer";
     }
     const onMouseMove = (event) => {
+      isDragging.value = true;
+      clickAllowed.value = false;
       if (isDragging.value) {
         if (currentElement.value === 'rocket') {
           rocketPosition.value.left = event.clientX - shiftX.value;
@@ -206,6 +257,9 @@ export default defineComponent({
         } else if (currentElement.value === 'promo') {
           promoPosition.value.left = event.clientX - shiftX.value;
           promoPosition.value.top = event.clientY - shiftY.value;
+        }else if (currentElement.value === 'domain') {
+          domainPosition.value.left = event.clientX - shiftX.value;
+          domainPosition.value.top = event.clientY - shiftY.value;
         }
       }
     };
@@ -214,14 +268,18 @@ export default defineComponent({
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);
 
+      setTimeout(() => {
+        clickAllowed.value = true;
+      }, 1000); // Delay of 1 second
       // Reset cursor to default
       document.body.style.cursor = "default";
     };
     const currentPromo = ref(null)
     const currentPromoIndex = ref(0);
     const gotoPromo = (code) => {
-
-      router.push(`/promotion?name=${code}`)
+      if (!isDragging.value && clickAllowed.value) {
+        router.push(`/promotion?name=${code}`)
+      }
     }
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
@@ -260,6 +318,7 @@ export default defineComponent({
       openGame,
       showRocket,
       rocketPosition,
+      domainPosition,
       hideRocket,
       startDragging,
       showFloatPromo,
@@ -267,10 +326,16 @@ export default defineComponent({
       hideFloatPromo,
       imgURL,
       floatPromo,
+      openLink,
+      hideDomain,
+      showDomain,
       gamePromo,
+      floatDomain,
       currentPromo,
       currentPromoIndex,
-      gotoPromo
+      gotoPromo,
+      clickAllowed,
+      isDragging
     };
   }
 });
@@ -294,6 +359,10 @@ export default defineComponent({
   }
 
   &.show-rocket {
+    display: block;
+  }
+
+  &.show-domain {
     display: block;
   }
 
@@ -359,12 +428,17 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 28px;
   padding: 15px;
   background: #ffffff;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   box-shadow: 0px 0px 8px 0px #00000038;
+
+  > :first-child {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #7A80A14D;
+  }
 
   .sticky-sidebar-item {
     display: flex;
@@ -404,15 +478,27 @@ export default defineComponent({
 
 .dark {
   .sticky-sidebar-items {
-    @include content-block-dark;
+    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
+
+    > :first-child {
+      border-color: #FFFFFF1A;
+    }
 
     .sticky-sidebar-item {
       color: $color-white;
+
+      &:hover {
+        color: $active-color-dark;
+      }
+
+      img {
+        filter: $active-color-dark-filter;
+      }
     }
   }
 
   .additional-info-items {
-    @include content-block-dark;
+    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
 
     .additional-info-item {
       color: $color-white;
@@ -420,6 +506,17 @@ export default defineComponent({
       &:hover {
         background: rgba($font-1-dark, 10%);
       }
+
+      img {
+        filter: $active-color-dark-filter;
+      }
+    }
+  }
+
+  .rocket-wrapper {
+    .close-btn {
+      border-color: $font-3-dark;
+      color: $font-3-dark;
     }
   }
 }
