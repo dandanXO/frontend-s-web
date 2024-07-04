@@ -106,7 +106,7 @@
         </div>
       </a>
 
-      <a href="https://csweb.mh98q4u1yq.com/?partnerId=7&way=WEB&lang=vn" target="_blank">
+      <a :href="`https://csweb.mh98q4u1yq.com/?partnerId=4&way=${regDevice}&lang=vn`" target="_blank">
         <div class="main-sticky-btn customer-service">
           <div class="main-sticky-btn__text-wrapper">
             <span class="main-sticky-btn__title">LIÊN LẠC VỚI CHÚNG TÔI</span>
