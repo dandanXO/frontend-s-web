@@ -1,6 +1,7 @@
 <template>
   <div>
     <StatsHeader />
+    <Breadcrumb />
     <section class="app-main">
       <Suspense>
         <router-view :key="key" />
@@ -13,9 +14,10 @@
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import StatsHeader from "@/components/StatsHeader.vue";
+import Breadcrumb from "@/components/bread-crumb/Index.vue";
 
 export default defineComponent({
-  components: { StatsHeader },
+  components: { StatsHeader, Breadcrumb },
   setup() {
     const route = useRoute();
     const key = () => {
