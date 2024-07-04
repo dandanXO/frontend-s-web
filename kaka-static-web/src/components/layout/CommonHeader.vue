@@ -1590,7 +1590,7 @@ export default defineComponent({
 body {
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
-    background-color: #ec0909;
+    background-color: #ffc5c5;
   }
 
   .el-input.wTip .el-input-group__append {
@@ -2523,6 +2523,7 @@ body {
     box-shadow: none;
     border-radius: 20px;
     // overflow: hidden;
+    background: #fff;
 
     .el-dialog__body {
       padding: 0;
