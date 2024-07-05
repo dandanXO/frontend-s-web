@@ -72,7 +72,7 @@
             </td>
             <td :data-label="t('fields.betTime')">
               <span v-if="item.betTime === null">-</span>
-              <span v-if="item.betTime !== null">{{ item.betTime }}</span>
+              <span v-if="item.betTime !== null" v-formatter="{ data: item.betTime, type: 'date' }" />
             </td>
             <td :data-label="t('fields.settleTime')">
               <span v-if="
@@ -82,9 +82,7 @@
               </span>
               <span v-if="
                 item.settleTime !== null && item.betStatus !== 'UNSETTLED'
-              ">
-                {{ item.settleTime }}
-              </span>
+              " v-formatter="{ data: item.settleTime, type: 'date' }" />
             </td>
             <td :data-label="t('fields.platform')">
               <span v-if="item.platform === null">-</span>
@@ -100,10 +98,14 @@
                 {{ item.transactionId }}
               </span>
             </td>
-            <td :data-label="t('fields.bet')">$ {{ item.bet }}</td>
-            <td :data-label="t('fields.payout')">$ {{ item.payout }}</td>
+            <td :data-label="t('fields.bet')">
+              <div v-formatter="{ data: item.bet, type: 'money' }" />
+            </td>
+            <td :data-label="t('fields.payout')">
+              <div v-formatter="{ data: item.payout, type: 'money' }" />
+            </td>
             <td :data-label="t('fields.companyProfit')">
-              $ {{ item.companyProfit }}
+              <div v-formatter="{ data: item.companyProfit, type: 'money' }" />
             </td>
             <td :data-label="t('fields.status')">
               <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">
