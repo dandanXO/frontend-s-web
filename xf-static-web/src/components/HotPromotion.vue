@@ -1,31 +1,33 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token" />
-    <HongBaoYu2024Promo
-      :promo-code="list.promoCode"
-      v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu' && store.token"
+    <ClaimPromo
+      v-if="listParam.type === 'claimpromo'"
+      :promo-id="list.id"
+      :loading-claim="loadingClaim"
+      @daily-slot="handleSlot()"
     />
+    <TigerCardPromo v-if="list.redirectUrl === 'tigercard'" />
+    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
+    <HongBaoYuPromo v-if="list.redirectUrl === 'hongbaoyu' && store.token" />
+    <HongBaoYu2024Promo :promo-code="list.promoCode" v-if="list.redirectUrl === 'cny-hongbaoyu' && store.token" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao' && store.token"
+      v-if="list.redirectUrl === 'xf-eurocup-hongbao' && store.token"
     />
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
+      v-if="listParam.type === 'hongbaoyu' && store.token"
     />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser'" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-    <BonusSpinWheel v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
-    <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo' && !isCommonPromo" />
-    <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award' && !isCommonPromo" />
-    <div v-if="list.redirectUrl === 'fucaiiphone' && !isCommonPromo" class="promo-4">
+    <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'cny-spinwheel'" />
+    <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
+    <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
+    <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
           <el-tab-pane key="1" label="选择幸运号码">
@@ -217,7 +219,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isCommonPromo: null,
       emptyText: "ไม่มีข้อมูล",
       privilegeClaimedModalVisible: false,
       dataSource: [],
@@ -334,6 +335,16 @@ export default defineComponent({
         }
       ]
     };
+  },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
+    }
   },
   methods: {
     handleSlot() {
@@ -467,25 +478,6 @@ export default defineComponent({
     // console.log(this.list);
 
     // List for non common promo
-    if (
-      this.list.redirectUrl === "tigercard" ||
-      this.list.redirectUrl === "goldenegg" ||
-      this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "cny-hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "fucaiiphone" ||
-      this.list.redirectUrl === "cny-spinwheel" ||
-      this.list.redirectUrl === "xf-return-promo" ||
-      this.list.redirectUrl === "xf-deposit-award" ||
-      this.list.redirectUrl === "xf-eurocup-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao" ||
-      this.list.id === 40
-    ) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
-    }
     this.hotPromoList.forEach((element) => {
       if (this.list.id === element.id) {
         this.selectedHotPromo = element;
