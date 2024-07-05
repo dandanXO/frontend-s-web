@@ -176,7 +176,7 @@ const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).
   }
 
   .activities-stats-container {
-    background: linear-gradient(356.25deg, #00430b -0.21%, #027402 93.65%);
+    background: #5817AA99;
     padding: 1rem;
     border-radius: 8px;
     display: grid;
@@ -213,9 +213,9 @@ const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).
             font-size: 12px;
             color: #ffffff;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
-              -1px 1px 2px rgba(255, 255, 255, 0.7);
+            1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
+            -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
+            -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
         .info-linear-amt {
@@ -234,7 +234,8 @@ const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).
     row-gap: 1rem;
     margin-top: 1rem;
     .days-box {
-      background: linear-gradient(356.25deg, rgba(0, 67, 11, 0.3) -0.21%, rgba(2, 116, 2, 0.3) 93.65%);
+      background: #3B156E4D;
+
       padding: 12px;
       display: flex;
       flex-direction: column;
@@ -256,7 +257,7 @@ const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         color: rgba(255, 255, 255, 0.8);
-        background: #104f00;
+        background: #4F004B;
         width: 45px;
         display: flex;
         align-items: center;
