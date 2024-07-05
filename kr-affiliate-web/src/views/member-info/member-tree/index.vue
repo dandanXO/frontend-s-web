@@ -24,13 +24,13 @@
         <el-row :gutter="10">
           <el-col :xl="16" :lg="16" :md="16">
             <el-date-picker v-model="request.betTime" format="DD/MM/YYYY HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"
-              size="small" type="datetimerange" range-separator=":" :start-placeholder="t('fields.startDate')"
+              size="normal" type="datetimerange" range-separator=":" :start-placeholder="t('fields.startDate')"
               :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
               :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
           </el-col>
           <el-col :xl="8" :lg="8" :md="8">
             <div class="btn-grp">
-              <el-button icon="el-icon-search" type="primary" @click="loadBetRecords()" size="small">
+              <el-button icon="el-icon-search" type="primary" @click="loadBetRecords()" size="normal">
                 {{ $t('fields.search') }}
               </el-button>
             </div>
@@ -106,16 +106,16 @@
               $ {{ item.companyProfit }}
             </td>
             <td :data-label="t('fields.status')">
-              <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="small">
+              <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">
                 {{ t('betStatus.' + item.betStatus) }}
               </el-tag>
-              <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="small">
+              <el-tag v-else-if="item.betStatus === 'CANCEL'" type="danger" size="normal">
                 {{ t('betStatus.' + item.betStatus) }}
               </el-tag>
-              <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="small">
+              <el-tag v-else-if="item.betStatus === 'UNSETTLED'" type="warning" size="normal">
                 {{ t('betStatus.' + item.betStatus) }}
               </el-tag>
-              <el-tag v-else type="info" size="small">-</el-tag>
+              <el-tag v-else type="info" size="normal">-</el-tag>
             </td>
             <td :data-label="t('fields.operate')">
               <el-link type="primary" :underline="false" @click="viewDetails(item)">
@@ -148,7 +148,7 @@
     </div>
 
     <el-dialog :title="t('fields.betRecordDetails')" v-model="uiControl.dialogVisible" append-to-body width="800px">
-      <el-form :model="details" label-width="200px" label-suffix=":" size="small" :inline="true">
+      <el-form :model="details" label-width="200px" label-suffix=":" size="normal" :inline="true">
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.account')" prop="loginName">
@@ -215,16 +215,16 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.status')" prop="betStatus">
-              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="small">
+              <el-tag v-if="details.betStatus === 'SETTLED'" type="success" size="normal">
                 {{ t('betStatus.' + details.betStatus) }}
               </el-tag>
-              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="small">
+              <el-tag v-else-if="details.betStatus === 'CANCEL'" type="danger" size="normal">
                 {{ t('betStatus.' + details.betStatus) }}
               </el-tag>
-              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="small">
+              <el-tag v-else-if="details.betStatus === 'UNSETTLED'" type="warning" size="normal">
                 {{ t('betStatus.' + details.betStatus) }}
               </el-tag>
-              <el-tag v-else type="info" size="small">-</el-tag>
+              <el-tag v-else type="info" size="normal">-</el-tag>
             </el-form-item>
           </el-col>
         </el-row>

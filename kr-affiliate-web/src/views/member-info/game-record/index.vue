@@ -73,11 +73,12 @@
             </td>
             <td :data-label="t('fields.betTime')">
               <span v-if="item.betTime === null">-</span>
-              <span v-if="item.betTime !== null">{{ item.betTime }}</span>
+              <span v-if="item.betTime !== null" v-formatter="{ data: item.betTime, type: 'date' }" />
             </td>
             <td :data-label="t('fields.settleTime')">
               <span v-if="item.settleTime === null || item.betStatus === 'UNSETTLED'">-</span>
-              <span v-if="item.settleTime !== null && item.betStatus !== 'UNSETTLED'">{{ item.settleTime }}</span>
+              <span v-if="item.settleTime !== null && item.betStatus !== 'UNSETTLED'"
+                v-formatter="{ data: item.settleTime, type: 'date' }" />
             </td>
             <td :data-label="t('fields.platform')">
               <span v-if="item.platform === null">-</span>
@@ -91,9 +92,15 @@
               <span v-if="item.transactionId === null">-</span>
               <span v-if="item.transactionId !== null">{{ item.transactionId }}</span>
             </td>
-            <td :data-label="t('fields.bet')">$ {{ item.bet }}</td>
-            <td :data-label="t('fields.payout')">$ {{ item.payout }}</td>
-            <td :data-label="t('fields.companyProfit')">$ {{ item.companyProfit }}</td>
+            <td :data-label="t('fields.bet')">
+              <div v-formatter="{ data: item.bet, type: 'money' }" />
+            </td>
+            <td :data-label="t('fields.payout')">
+              <div v-formatter="{ data: item.payout, type: 'money' }" />
+            </td>
+            <td :data-label="t('fields.companyProfit')">
+              <div v-formatter="{ data: item.companyProfit, type: 'money' }" />
+            </td>
             <td :data-label="t('fields.status')">
               <el-tag v-if="item.betStatus === 'SETTLED'" type="success" size="normal">{{
                 t('betStatus.' + item.betStatus)
@@ -265,6 +272,10 @@ const uiControl = reactive({
     { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
   ]
 });
+
+const getVipLevel = (vip) => {
+  return vip.replace('VIP', '');
+}
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
