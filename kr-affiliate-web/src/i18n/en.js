@@ -758,6 +758,8 @@ export default {
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
     'Rebate Report': 'Rebate Report',
+    'Member Management': 'Member Management',
+    'Member Tree': 'Member Tree',
     message: 'Message',
   },
   posterType: {

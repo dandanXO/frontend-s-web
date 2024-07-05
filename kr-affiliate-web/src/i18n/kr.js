@@ -752,6 +752,7 @@ export default {
     'Rebate Report': '리베이트 보고서',
     message: '사이트 메시지',
     'Member Management': '회원관리',
+    'Member Tree': '트리뷰'
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',

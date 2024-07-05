@@ -1,11 +1,9 @@
 <template>
   <div class="roles-main">
-    <el-card class="box-card" shadow="never">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.downlineMember') }}</span>
-        </div>
-      </template>
+    <div class="panel-item">
+      <div class="clearfix">
+        <span class="role-span">{{ $t('fields.downlineMember') }}</span>
+      </div>
       <el-form @submit.prevent>
         <div style="margin: 20px;">
           <el-row :gutter="20" v-if="store.state.user.siteCode !== 'VNM'">
@@ -226,7 +224,7 @@
         </div>
         <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next" :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
-    </el-card>
+    </div>
   </div>
   <el-dialog :title="t('fields.memberInfo')" v-model="uiControl.infoDialogVisible" modal-class="dialog900" width="90%">
     <el-form>
@@ -1296,6 +1294,41 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+
+  .filter-wrapper {
+    display: flex;
+    width: 100%;
+    min-width: 200px;
+
+    .filter-label {
+      color: #000;
+      background-color: #e4e5e6;
+      border: 1px solid #cfd8dc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.primary-button {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.default-button {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
 .header-container {
   margin: 40px 0 20px;
   display: flex;
@@ -1475,40 +1508,5 @@ onMounted(async () => {
 
 .dialog400 .el-dialog {
   max-width: 400px;
-}
-
-.filter-fields {
-  display: flex;
-  flex-wrap: wrap;
-
-  .filter-wrapper {
-    display: flex;
-    width: 100%;
-    min-width: 200px;
-
-    .filter-label {
-      color: #000;
-      background-color: #e4e5e6;
-      border: 1px solid #cfd8dc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-  }
-}
-
-.primary-button {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-}
-
-.default-button {
-  color: #333;
-  background-color: #fff;
-  border-color: #ccc;
 }
 </style>

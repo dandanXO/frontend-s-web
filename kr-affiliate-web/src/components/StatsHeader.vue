@@ -233,26 +233,28 @@ async function loadReport() {
   })
 }
 
+const scrollWheelListener = (evt) => {
+  /* eslint-disable */
+  if (evt.deltaY !== -0) {
+    evt.preventDefault();
+    scrollContainer.scrollLeft += evt.deltaY;
+  }
+}
+
 onMounted(async () => {
   await loadReport()
   // support vertical mousehweel scrolling in horiztonal scroll div
   const scrollContainer = document.querySelector(".stats-header-container");
 
   if (scrollContainer) {
-    scrollContainer.addEventListener("wheel", (evt) => {
-      /* eslint-disable */
-      if (evt.deltaY !== -0) {
-        evt.preventDefault();
-        scrollContainer.scrollLeft += evt.deltaY;
-      }
-    });
+    scrollContainer.addEventListener("wheel", scrollWheelListener);
   }
 })
 
 onUnmounted(() => {
   const scrollContainer = document.querySelector(".stats-header-container");
 
-  scrollContainer.removeEventListener("wheel");
+  scrollContainer.removeEventListener("wheel", scrollWheelListener);
 })
 </script>
 
