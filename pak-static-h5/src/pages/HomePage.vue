@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart">
+      <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart && !ui.hideDownload">
         <img src="../assets/images/auth/app-icon.png" />
       </a>
     </div>

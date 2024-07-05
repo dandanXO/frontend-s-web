@@ -220,7 +220,7 @@
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
       </div>
-      <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
+      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>

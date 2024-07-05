@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 import { useRoute } from "vue-router";
+import { userStore } from ".";
 
 export const useUI = defineStore("ui-store", {
   state: () => {
@@ -44,6 +45,14 @@ export const useUI = defineStore("ui-store", {
           this.downloadAppUrl = res.data.url;
         }
       });
+    }
+  },
+  getters: {
+    hideDownload() {
+      const store = userStore()
+      const hasReferralCode = !!sessionStorage.getItem("REFERRAL_CODE");
+      if(!store.token && hasReferralCode) return true
+      return false
     }
   }
 });
