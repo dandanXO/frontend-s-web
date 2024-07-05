@@ -37,12 +37,11 @@
               <div class="filter-label">
                 {{ t('fields.depositAmount') }}
               </div>
-
-              <el-input v-model="request.depositMaxAmount" class="input-max" size="normal" />
-              <div class="filter-label">
-                -
-              </div>
-              <el-input v-model="request.depositMaxAmount" class="input-max" size="normal" />
+              <el-input size="normal" v-model="request.depositMinAmount" class="input-min">
+                <div class="filter-label">
+                  -
+                </div>
+                <el-input v-model="request.depositMaxAmount" class="input-max" size="normal" />
             </div>
           </el-form-item>
 
