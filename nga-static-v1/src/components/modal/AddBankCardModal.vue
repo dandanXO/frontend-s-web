@@ -25,7 +25,7 @@
               :options="cardType"
               @update:model-value="selectBankType(opt)"
             />
-          </div>
+          </div> -->
 
           <div class="q-my-sm">
             <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
@@ -45,7 +45,7 @@
               emit-value
               map-options
             />
-          </div> -->
+          </div>
 
             <div class="q-my-sm">
               <div class="input-title">Holder Name</div>
@@ -78,7 +78,7 @@
               />
             </div>
 
-            <div class="q-my-sm">
+            <!-- <div class="q-my-sm">
               <div class="input-title">IFSC Code</div>
               <q-input
                 standout
@@ -91,7 +91,7 @@
                 :rules="[(_) => isValidCardAddress()]"
                 label-color="secondary"
               />
-            </div>
+            </div> -->
           </q-form>
         </q-card-section>
 
@@ -101,7 +101,7 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
+              (isValidCardAccount() === true && isValidCardNumber() === true)
             ) || isDisableBtn
           "
         ></ConfirmButton>
@@ -254,7 +254,8 @@ const isValidCardAccount = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Account Number" : true;
+  const result = !cardNumber ? "Please Enter Account Number": cardNumber.length < 10
+  ? "Account Number Must Be More Than Or 10 Characters" : true;
   return result;
 };
 
