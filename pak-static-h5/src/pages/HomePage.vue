@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <a class="notice-download" :href="topDownloadUrl" v-if="downloadHeart">
+      <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart && !ui.hideDownload">
         <img src="../assets/images/auth/app-icon.png" />
       </a>
     </div>
@@ -3233,17 +3233,10 @@ const getWithExpiry = (key) => {
   }
   const item = JSON.parse(itemStr);
   const now = new Date();
-  api
-    .get("/member/ads-popout")
-    .then((res) => {
-      // debugger;
-      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-        localStorage.removeItem(key);
-        // isImportantAnnoucementModal.value = true;
-        return null;
-      }
-    })
-    .catch(() => {});
+  if(now.getTime() > item.expiry) {
+    sessionStorage.removeItem(key);
+    return null;
+  }
   return item.value;
 };
 
@@ -3302,17 +3295,6 @@ const checkShowImgTop = () => {
   }
 };
 
-const topDownloadUrl = ref("");
-
-const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-      ui.downloadAppUrl = res.data.url;
-    }
-  });
-};
-
 const downloadHeart = ref(false);
 
 // const getDownloadHeart = () => {
@@ -3345,7 +3327,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  getTopDownloadUrl();
+  ui.shouldFetchDownloadAppUrl = true
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
