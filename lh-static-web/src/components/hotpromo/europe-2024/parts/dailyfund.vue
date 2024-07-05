@@ -112,7 +112,7 @@
       <div class="bracket-info">
         <div class="bracket-info__info-wrapper">
           <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
-          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM HH:mm") }}</div>
+          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("MM/DD HH:mm") }}</div>
           <div class="bracket-info__info-wrapper-VS">VS</div>
           <button
             @click="matchSubmit(match, 0, '平局')"
