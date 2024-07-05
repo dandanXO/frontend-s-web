@@ -1120,7 +1120,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' ? 1 : 0
+        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' ? 1 : 0
         const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
