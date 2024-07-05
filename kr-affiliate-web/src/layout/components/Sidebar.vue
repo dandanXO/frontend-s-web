@@ -215,9 +215,25 @@ const getNavigationData = () => {
       path: '/bet-management',
       children: [
         {
-          path: '/game-record',
-          title: t('menu.Bet History'),
-          label: 'Bet History',
+          path: '/game-record?gameType=LIVE',
+          title: t('menu.Bet History LIVE'),
+          label: 'Bet History LIVE',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/game-record?gameType=SLOT',
+          title: t('menu.Bet History SLOT'),
+          label: 'Bet History SLOT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/game-record?gameType=SPORT',
+          title: t('menu.Bet History SPORT'),
+          label: 'Bet History SPORT',
           active: false,
           isMainNav: true,
           icon: 'clock',

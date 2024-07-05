@@ -429,6 +429,10 @@ async function loadBetRecords() {
     }
   }
   query.siteId = store.state.user.siteId;
+  if (query.gameType = 'SPORT') {
+    query.gameType = '';
+    query.gameTypes = ['SPORT', 'ESPORT'];
+  }
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;
@@ -470,6 +474,10 @@ async function getVip(memberId) {
 onMounted(() => {
   if (route.query.user) {
     request.loginName = route.query.user
+  }
+
+  if (route.query.gameType) {
+    request.gameType = route.query.gameType
   }
   loadPlatform();
   loadBetRecords();
