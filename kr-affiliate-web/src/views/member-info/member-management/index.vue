@@ -1,5 +1,5 @@
 <template>
-  <div class="roles-main">
+  <div class="page-container">
     <div class="panel-item">
       <div class="clearfix">
         <span class="role-span">{{ $t('fields.downlineMember') }}</span>
