@@ -96,7 +96,7 @@
 
       <div class="stats">
         <div class="stat-label">총손익</div>
-        <div class="stat-value green">{{ (records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount)
+        <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount)
           + (records.slotProfit - records.slotBetAmount - records.slotRollingAmount)
           + (records.sportProfit - records.sportBetAmount - records.sportRollingAmount)
           + (records.miniGameProfit - records.miniGameBetAmount - records.miniGameRollingAmount) }}</div>
@@ -186,7 +186,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, reactive } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery'
 import { getKoreaStatsReport } from '@/api/statistics'
 
@@ -198,7 +198,7 @@ const toggleExpansion = () => {
   }
 }
 
-const records = reactive({
+const records = ref({
   memberMoney: 0,
   memberPoint: 0,
   eggs: 0,
@@ -226,14 +226,25 @@ const records = reactive({
   miniGameRollingAmount: 0,
 })
 
-async function loadReport() {
-  const { data: ret } = await getKoreaStatsReport();
-  Object.keys({ ...ret }).forEach(field => {
-    records[field] = ret[field]
+const loadReport = () => {
+  return new Promise((resolve, reject) => {
+    getKoreaStatsReport().then(({data: statsData}) => {
+      records.value = {
+        ...records.value,
+        ...statsData
+      }
+
+      resolve();
+    }).catch((error) => {
+      console.log(error);
+      reject();
+    });
   })
 }
 
 const scrollWheelListener = (evt) => {
+  const scrollContainer = document.querySelector(".stats-header-container");
+  
   /* eslint-disable */
   if (evt.deltaY !== -0) {
     evt.preventDefault();
@@ -241,8 +252,9 @@ const scrollWheelListener = (evt) => {
   }
 }
 
-onMounted(async () => {
-  await loadReport()
+onMounted(() => {
+  loadReport();
+
   // support vertical mousehweel scrolling in horiztonal scroll div
   const scrollContainer = document.querySelector(".stats-header-container");
 
