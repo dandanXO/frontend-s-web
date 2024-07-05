@@ -1,85 +1,37 @@
 <template>
-  <div class="roles-main">
-    <el-card class="box-card" shadow="never">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.memberBetRecords') }}</span>
-        </div>
-      </template>
+  <div class="page-container">
+    <div class="panel-item">
+      <div class="panel-header">{{ $t('fields.memberBetRecords') }}</div>
+
       <div class="inputs-wrap">
         <el-row :gutter="10">
           <el-col :xl="6" :lg="10" :md="12">
-            <el-date-picker
-              v-model="request.betTime"
-              format="DD/MM/YYYY HH:mm:ss"
-              value-format="YYYY-MM-DD HH:mm:ss"
-              size="normal"
-              type="datetimerange"
-              range-separator=":"
-              :start-placeholder="t('fields.startDate')"
-              :end-placeholder="t('fields.endDate')"
-              :shortcuts="shortcuts"
-              :disabled-date="disabledDate"
-              :editable="false"
-              :clearable="false"
-              :default-time="defaultTime"
-              style="width: 100%;"
-            />
+            <el-date-picker v-model="request.betTime" format="DD/MM/YYYY HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"
+              size="normal" type="datetimerange" range-separator=":" :start-placeholder="t('fields.startDate')"
+              :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+              :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
             <el-input v-model="request.loginName" size="normal" class="input-small"
-                      :placeholder="t('fields.loginName')"
-            />
+              :placeholder="t('fields.loginName')" />
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
-            <el-select
-              v-model="request.platform"
-              size="normal"
-              :placeholder="t('fields.platform')"
-              class="filter-item"
-              style="width: 100%"
-              @focus="loadPlatform"
-              @change="populateGameType"
-            >
-              <el-option
-                v-for="item in list.platform"
-                :key="item.id"
-                :label="item.name"
-                :value="item.code"
-              />
+            <el-select v-model="request.platform" size="normal" :placeholder="t('fields.platform')" class="filter-item"
+              style="width: 100%" @focus="loadPlatform" @change="populateGameType">
+              <el-option v-for="item in list.platform" :key="item.id" :label="item.name" :value="item.code" />
             </el-select>
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
-            <el-select
-              v-model="request.gameType"
-              size="normal"
-              :placeholder="t('fields.gameType')"
-              class="filter-item"
-              style="width: 100%"
-            >
-              <el-option
-                v-for="item in list.gameType"
-                :key="item.key"
-                :label="item.displayName"
-                :value="item.value"
-              />
+            <el-select v-model="request.gameType" size="normal" :placeholder="t('fields.gameType')" class="filter-item"
+              style="width: 100%">
+              <el-option v-for="item in list.gameType" :key="item.key" :label="item.displayName" :value="item.value" />
             </el-select>
           </el-col>
           <el-col :xl="6" :lg="10" :md="12">
-            <el-select
-              multiple
-              v-model="request.status"
-              size="normal"
-              :placeholder="t('fields.status')"
-              class="filter-item"
-              style="width: 100%;"
-            >
-              <el-option
-                v-for="item in uiControl.status"
-                :key="item.key"
-                :label="item.displayName"
-                :value="item.value"
-              />
+            <el-select multiple v-model="request.status" size="normal" :placeholder="t('fields.status')"
+              class="filter-item" style="width: 100%;">
+              <el-option v-for="item in uiControl.status" :key="item.key" :label="item.displayName"
+                :value="item.value" />
             </el-select>
           </el-col>
           <el-col :xl="3" :lg="8" :md="12">
@@ -94,7 +46,7 @@
           </el-col>
         </el-row>
       </div>
-      <table cellpadding="0" cellspacing="0" border="0" class="custom-table" style="width: 98%; margin: 15px auto;">
+      <table cellpadding="0" cellspacing="0" border class="custom-table">
         <thead>
           <tr>
             <th scope="col">{{ t('fields.loginName') }}</th>
@@ -162,33 +114,18 @@
         <emptyComp />
       </div>
       <div class="table-footer">
-        <span style="margin-right:20px;">{{ t('fields.totalBet') }}: $ <span
-          v-formatter="{data: page.totalBet,type: 'money'}"
-        /></span>
-        <span style="margin-right:20px;">{{ t('fields.totalPayout') }}: $ <span
-          v-formatter="{data: page.totalPayout,type: 'money'}"
-        /></span>
-        <span style="margin-right:20px;">{{ t('fields.totalCompanyProfit') }}: $ <span
-          v-formatter="{data: page.totalBet-page.totalPayout,type: 'money'}"
-        /></span>
+        <span class="table-footer-item">{{ t('fields.totalBet') }}: $ <span
+            v-formatter="{ data: page.totalBet, type: 'money' }" /></span>
+        <span class="table-footer-item">{{ t('fields.totalPayout') }}: $ <span
+            v-formatter="{ data: page.totalPayout, type: 'money' }" /></span>
+        <span class="table-footer-item">{{ t('fields.totalCompanyProfit') }}: $ <span
+            v-formatter="{ data: page.totalBet - page.totalPayout, type: 'money' }" /></span>
       </div>
-      <el-pagination
-        class="pagination"
-        @current-change="changePage"
-        layout="total, prev, pager, next"
-        style="margin: 5px;"
-        :total="page.total"
-        :page-size="request.size"
-        :page-count="page.pages"
-        :current-page="request.current"
-      />
-    </el-card>
-    <el-dialog
-      :title="t('fields.betRecordDetails')"
-      v-model="uiControl.dialogVisible"
-      append-to-body
-      width="800px"
-    >
+      <el-pagination class="pagination" @current-change="changePage" layout="total, prev, pager, next"
+        style="margin:0;padding:0;" :total="page.total" :page-size="request.size" :page-count="page.pages"
+        :current-page="request.current" />
+    </div>
+    <el-dialog :title="t('fields.betRecordDetails')" v-model="uiControl.dialogVisible" append-to-body width="800px">
       <el-form :model="details" label-width="200px" label-suffix=":" size="normal" :inline="true">
         <el-row>
           <el-col :span="12">
@@ -209,7 +146,7 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.betTime')" prop="betTime">
-            <span v-formatter="{data: details.betTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}" />
+            <span v-formatter="{ data: details.betTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }" />
           </el-form-item>
         </el-row>
         <el-row>
@@ -232,19 +169,19 @@
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.bet')" prop="bet">
-              $ <span v-formatter="{data: details.bet,type: 'money'}" />
+              $ <span v-formatter="{ data: details.bet, type: 'money' }" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.payout')" prop="payout">
-              $ <span v-formatter="{data: details.payout,type: 'money'}" />
+              $ <span v-formatter="{ data: details.payout, type: 'money' }" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.companyProfit')" prop="companyProfit">
-              $ <span v-formatter="{data: details.companyProfit,type: 'money'}" />
+              $ <span v-formatter="{ data: details.companyProfit, type: 'money' }" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -265,10 +202,8 @@
         <el-row>
           <el-form-item :label="t('fields.settleTime')" prop="settleTime">
             <span v-if="details.settleTime === null || details.betStatus === 'UNSETTLED'">-</span>
-            <span
-              v-if="details.settleTime !== null && details.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: details.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}"
-            />
+            <span v-if="details.settleTime !== null && details.betStatus !== 'UNSETTLED'"
+              v-formatter="{ data: details.settleTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date' }" />
           </el-form-item>
         </el-row>
       </el-form>
@@ -538,13 +473,13 @@ onMounted(() => {
 }
 
 .inputs-wrap {
-  margin: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
 
   .input-small {
     width: 100%;
+
     // max-width: 200px;
     &.el-range-editor--small.el-input__inner {
       height: 40px;
@@ -559,15 +494,6 @@ onMounted(() => {
 
 .el-pagination {
   display: inline-block;
-}
-
-.table-footer {
-  float: right;
-  font-size: small;
-  margin: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 @media (max-width: 768px) {
