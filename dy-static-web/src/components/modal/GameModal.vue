@@ -212,7 +212,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           platformCode === "SGWin" ||
           platformCode === "TCG" ||
           platformCode === "PT" ||
-          (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc") ||
+          platformCode === "BBINDY" || 
           (platformCode === "onlyPlatform" && (gameCode === "IMES" || gameCode === "IM"))
         )
       ) {
@@ -245,7 +245,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
         platformCode === "PT" ||
-        (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
+        (platformCode === "BBINDY")
       ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
