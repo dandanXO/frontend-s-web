@@ -64,7 +64,13 @@
         </thead>
         <tbody>
           <tr v-for="item in page.records" :key="item.id">
-            <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
+            <td :data-label="t('fields.loginName')">
+              <div v-formatter="{
+                data: {
+                  loginName: item.loginName
+                }, type: 'loginName'
+              }" />
+            </td>
             <td :data-label="t('fields.betTime')">
               <span v-if="item.betTime === null">-</span>
               <span v-if="item.betTime !== null">{{ item.betTime }}</span>

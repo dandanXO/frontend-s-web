@@ -150,36 +150,29 @@
                 <input type="checkbox" :value="item.id" v-model="selectedMembers" @change="handleSelectionChange">
               </td>
               <td :data-label="t('fields.loginName')">
-                <div class="vip-name-wrapper">
-                  <div class="vip-badge">{{ getVipLevel(item.vip) }}</div>
-                  <div class="login-name">{{ item.loginName }}</div>
-                </div>
+                <div v-formatter="{
+                  data: {
+                    loginName: item.loginName,
+                    vip: item.vip
+                  }, type: 'loginName'
+                }" />
               </td>
               <td :data-label="t('fields.totalDeposit')">
-                <div class="money-wrapper">
-                  <div>{{ formatMoney(item.totalDeposit) }}</div>
-                  <div class="won-icon">₩</div>
-                </div>
+                <div v-formatter="{ data: item.totalDeposit, type: 'money' }" />
               </td>
               <td :data-label="t('fields.totalWithdraw')">
-                <div class="money-wrapper">
-                  <div>{{ formatMoney(item.totalWithdraw) }}</div>
-                  <div class="won-icon">₩</div>
-                </div>
+                <div v-formatter="{ data: item.totalWithdraw, type: 'money' }" />
               </td>
               <td :data-label="t('fields.netProfit')">
-                <div class="money-wrapper">
-                  <div>{{ formatMoney(item.revenueShare) }}</div>
-                  <div class="won-icon">₩</div>
-                </div>
+                <div v-formatter="{ data: item.revenueShare, type: 'money' }" />
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
-                <span>{{ formatDateTime(item.regTime) }}</span>
+                <span v-formatter="{ data: item.regTime, type: 'date' }" />
               </td>
               <td :data-label="t('fields.lastLoginTime')">
                 <span v-if="item.lastLoginTime === null">-</span>
-                <span>{{ formatDateTime(item.lastLoginTime) }}</span>
+                <span v-formatter="{ data: item.lastLoginTime, type: 'date' }" />
               </td>
               <td :data-label="t('fields.memberTag')">
                 {{ formatmTag(item.tags) }}
@@ -718,14 +711,6 @@ const formatMoney = value => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })
-}
-
-const formatDateTime = value => {
-  if (!value) {
-    return '-'
-  }
-
-  return moment(value).locale('ko').format('LLL');
 }
 
 const formatmTag = tags => {
@@ -1279,9 +1264,6 @@ function getAffiliateRatio(code) {
   return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
 }
 
-const getVipLevel = (vip) => {
-  return vip.replace('VIP', '');
-}
 
 onMounted(async () => {
   await loadAllTags()

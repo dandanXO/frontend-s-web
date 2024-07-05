@@ -64,7 +64,11 @@
         <tbody v-else-if="page.records.length > 0">
           <tr v-for="item in page.records" :key="item.id">
             <td :data-label="t('fields.loginName')">
-              {{ item.loginName }}
+              <div v-formatter="{
+                data: {
+                  loginName: item.loginName
+                }, type: 'loginName'
+              }" />
             </td>
             <td :data-label="t('fields.betTime')">
               <span v-if="item.betTime === null">-</span>
