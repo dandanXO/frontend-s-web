@@ -110,7 +110,7 @@ export const eSportsPlatforms = [
   {
     code: "TFGaming",
     name: "TF GAMING",
-    image: "lh",
+    image: "kaka",
     message: "TFGaming platform with hundreds of well-trained professional dealers, bring you just like real casino experience. We adopt state of the art equipment, and provide professional technical support",
     vimessage: "TFGaming Nền tảng với hàng trăm nhà cái chuyên nghiệp được đào tạo tốt, mang đến cho bạn trải nghiệm như ở casino thật. Chúng tôi áp dụng thiết bị tiên tiến và cung cấp hỗ trợ kỹ thuật chuyên nghiệp.",
     caption: "亚洲先驱 实时滚球",
