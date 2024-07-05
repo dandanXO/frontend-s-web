@@ -58,7 +58,7 @@
         <q-btn
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=vn&way=${regDevice}&token=${store.token}`,
+              `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
               'Chat Server',
               350,
               650
@@ -230,7 +230,7 @@
               class="two-four-content"
               @click.stop.prevent="
                 openWindow(
-                  `https://csweb01.amv4xjcbd.com/?partnerId=7&lang=vn&way=${regDevice}&token=${store.token}`,
+                  `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
                   'Chat Server',
                   350,
                   650

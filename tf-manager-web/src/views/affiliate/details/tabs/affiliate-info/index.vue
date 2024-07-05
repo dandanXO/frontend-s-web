@@ -1220,8 +1220,9 @@
             <el-input
               :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto;"
             />
+            <span style="color:red"> &emsp; ({{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -1516,6 +1517,7 @@ import {
   updateViewLoginName,
   getAffiliateShareRatio,
   updateLevel,
+  getDownlineShareRatio,
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1545,6 +1547,9 @@ const riskList = reactive({
   list: []
 });
 const shareRatioList = reactive({
+  list: [],
+})
+const downlineShareRatioList = reactive({
   list: [],
 })
 const selectedRiskColor = reactive({
@@ -1689,6 +1694,7 @@ const superiorAffiliateDetail = reactive({
   loginName: null,
   affiliateCode: null,
   affiliateLevel: null,
+  affiliateShareRatio: [],
 })
 
 const page = reactive({
@@ -1870,6 +1876,8 @@ const loadShareRatio = async () => {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
     shareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
   }
+  const { data: downlineShareRatio } = await getDownlineShareRatio(memberDetail.id)
+  downlineShareRatioList.list = downlineShareRatio
 }
 
 const populateRiskColor = () => {
@@ -2390,6 +2398,16 @@ async function changeViewLoginName() {
     await loadAffiliateRecord()
     ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   })
+}
+
+function getAffiliateRatio(code) {
+  const shareRatio = superiorAffiliateDetail.affiliateShareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? (superiorAffiliateDetail.loginName === null ? 1 : 0) : shareRatio[0].value;
+}
+
+function getDownlineRatio(code) {
+  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
 }
 
 onMounted(async () => {
