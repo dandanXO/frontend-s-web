@@ -6,7 +6,8 @@
       <div class="stats">
         <div class="stat-label">회원 머니
 
-          <el-popover placement="bottom" title="Title" :width="200" trigger="hover" content="this is content, this is content, this is content">
+          <el-popover placement="bottom" title="Title" :width="200" trigger="hover"
+            content="this is content, this is content, this is content">
             <template #reference>
               <span style="cursor:pointer;">&nbsp;▷</span>
             </template>
@@ -67,7 +68,8 @@
     </div>
 
     <div class="stats-row">
-      <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" @click="toggleExpansion" style="visibility: hidden;">
+      <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" @click="toggleExpansion"
+        style="visibility: hidden;">
 
       <div class="stats">
         <div class="stat-label">충전금액</div>
@@ -119,7 +121,8 @@
 
       <div class="stats">
         <div class="stat-label">카지노손익</div>
-        <div class="stat-value grey">{{ records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount }}</div>
+        <div class="stat-value grey">{{ records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount }}
+        </div>
       </div>
 
       <div class="stats">
@@ -159,7 +162,8 @@
 
       <div class="stats">
         <div class="stat-label">스포츠손익</div>
-        <div class="stat-value grey">{{ records.sportProfit - records.sportBetAmount - records.sportRollingAmount }}</div>
+        <div class="stat-value grey">{{ records.sportProfit - records.sportBetAmount - records.sportRollingAmount }}
+        </div>
       </div>
 
       <div class="stats">
@@ -179,7 +183,9 @@
 
       <div class="stats">
         <div class="stat-label">미니게임손익</div>
-        <div class="stat-value grey">{{ records.miniGameProfit - records.miniGameBetAmount - records.miniGameRollingAmount }}</div>
+        <div class="stat-value grey">{{ records.miniGameProfit - records.miniGameBetAmount -
+          records.miniGameRollingAmount
+          }}</div>
       </div>
     </div>
   </div>
@@ -228,7 +234,7 @@ const records = ref({
 
 const loadReport = () => {
   return new Promise((resolve, reject) => {
-    getKoreaStatsReport().then(({data: statsData}) => {
+    getKoreaStatsReport().then(({ data: statsData }) => {
       records.value = {
         ...records.value,
         ...statsData
@@ -244,7 +250,7 @@ const loadReport = () => {
 
 const scrollWheelListener = (evt) => {
   const scrollContainer = document.querySelector(".stats-header-container");
-  
+
   /* eslint-disable */
   if (evt.deltaY !== -0) {
     evt.preventDefault();
@@ -266,7 +272,9 @@ onMounted(() => {
 onUnmounted(() => {
   const scrollContainer = document.querySelector(".stats-header-container");
 
-  scrollContainer.removeEventListener("wheel", scrollWheelListener);
+  if (scrollContainer) {
+    scrollContainer.removeEventListener("wheel", scrollWheelListener);
+  }
 })
 </script>
 

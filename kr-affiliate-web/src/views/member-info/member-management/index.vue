@@ -1404,6 +1404,32 @@ onMounted(async () => {
   }
 }
 
+.inputs-wrap {
+  margin: 0px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .input-small {
+    width: 100%;
+    max-width: 200px;
+
+    &.el-range-editor--small.el-input__inner {
+      height: 40px;
+      max-width: 300px;
+    }
+  }
+
+  .btn-grp {
+    display: flex;
+  }
+
+  .el-row .el-col {
+    display: flex;
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 768px) {
   .memberTag {
     position: absolute;
