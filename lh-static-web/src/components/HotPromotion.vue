@@ -1,6 +1,6 @@
 <template>
   <div class="hot-promo" :class="list.redirectUrl === 'lh1-game-steps' && 'flat-border-radius'">
-    <ClaimPromo v-if="listParam === 'claimpromo'" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
+    <ClaimPromo v-if="listParam.type === 'claimpromo'" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
     <GoldenEggPromo v-if="list.redirectUrl === 'lh1-goldenegg' && store.token" />

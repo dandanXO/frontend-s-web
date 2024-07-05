@@ -1,7 +1,7 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-      v-if="listParam === 'claimpromo' && store.hasToken()"
+      v-if="listParam.type === 'claimpromo' && store.hasToken()"
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :loading-claim="btnLoading"
@@ -10,7 +10,7 @@
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
-    <HongBaoPreEurocup v-if="listParam === 'hongbaoyu' && store.token" :promo-code="list.promoCode" />
+    <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu' && store.token" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
     <UpcomingMatchPromo
