@@ -197,31 +197,6 @@ elTables.forEach((elTable) => {
   width: 100% !important;
 }
 
-.custom-table {
-  width: 100%;
-  border: 0;
-  border-collapse: collapse;
-
-  th {
-    background: #35414f;
-    text-align: left;
-    color: #fff;
-    font-family: 'NanumNeo';
-  }
-
-  th,
-  td {
-    padding: 5px;
-    font-size: 13px;
-    font-weight: 400;
-    border-color: #cfd8dc;
-  }
-
-  // tr:nth-child(even) {
-  //   background: #F4F9FD;
-  // }
-}
-
 .el-form-item__content {
   width: 100%;
   line-height: normal !important;
