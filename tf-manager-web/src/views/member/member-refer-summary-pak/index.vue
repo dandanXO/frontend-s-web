@@ -211,11 +211,11 @@ const siteList = reactive({
 })
 const shortcuts = getShortcuts(t)
 const startDate = new Date()
-startDate.setTime(
-  moment(startDate)
-    .startOf('month')
-    .format('x')
-)
+// startDate.setTime(
+//   moment(startDate)
+//     .startOf('month')
+//     .format('x')
+// )
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 
