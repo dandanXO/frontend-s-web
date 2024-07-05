@@ -472,6 +472,7 @@ export default {
     1013: "The current account has already bound a birthday",
     1014: "The current account has already bound a name",
     1015: "The current account has already bound a nickname",
+    1016: "The registration function is being upgraded. Please register after 9:00 a.m. local time. Thank you!",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
