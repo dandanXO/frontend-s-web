@@ -429,7 +429,7 @@ async function loadBetRecords() {
     }
   }
   query.siteId = store.state.user.siteId;
-  if (query.gameType = 'SPORT') {
+  if (query.gameType === 'SPORT') {
     query.gameType = '';
     query.gameTypes = ['SPORT', 'ESPORT'];
   }
