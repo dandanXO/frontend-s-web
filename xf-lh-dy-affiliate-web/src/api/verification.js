@@ -1,6 +1,6 @@
 import router from '../router';
 const axios = require('axios');
-export const getVerificationImage = async (type = 0) => {
+export const getVerificationImage = async (type) => {
   var url = '';
   if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
     url = 'https://api-gateway.mpg1cxp9.com/su/validator/img/1/200/100';

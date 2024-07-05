@@ -1107,7 +1107,7 @@ export default defineComponent({
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
-          } else if (state.loginForm.site === 'VNM') {
+          } else if (state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2') {
             methods.onFail()
           } else {
             state.showDialog = false
