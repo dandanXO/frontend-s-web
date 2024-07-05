@@ -14,7 +14,7 @@
         </a>
       </div> -->
       <div class="download-btn-yel">
-        <a :href="topDownloadUrl">{{ $t("header.download") }}</a>
+        <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
@@ -116,7 +116,7 @@
         {{ $t("sideNav.language") }}
       </div>
 
-      <a class="side-menu-item side-menu-item__download" :href="topDownloadUrl" v-if="isSideDownload">
+      <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="isSideDownload">
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
         </div>
@@ -416,16 +416,6 @@ const checkTopDownloadAppear = () => {
   }
 };
 
-const topDownloadUrl = ref("");
-
-const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-    }
-  });
-};
-
 const menuOpen = ref(false);
 
 const toggleMenuOpen = () => {
@@ -461,9 +451,9 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  getTopDownloadUrl();
   checkTopDownloadAppear();
   loadCustomerAddress();
+  ui.shouldFetchDownloadAppUrl = true
 
   sideLang.value = store.memberType === "TEST";
   if (isAndroid()) {

@@ -576,12 +576,7 @@ export default defineComponent({
       if (ui.downloadAppUrl) {
         window.open(ui.downloadAppUrl, "_blank");
       } else {
-        api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-          if (res.code === 0) {
-            ui.downloadAppUrl = res.data.url;
-            window.open(ui.downloadAppUrl, "_blank");
-          }
-        });
+        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"))
       }
     };
     const moveCsIcon = (ev) => {

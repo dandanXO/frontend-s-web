@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { api } from "src/boot/axios";
 import { useRoute } from "vue-router";
 
 export const useUI = defineStore("ui-store", {
@@ -13,7 +14,8 @@ export const useUI = defineStore("ui-store", {
       CSAUrl: "",
       LiveUrl: null,
       downloadAppUrl: "",
-      loggedIn: false
+      loggedIn: false,
+      shouldFetchDownloadAppUrl: false
     };
   },
   actions: {
@@ -35,6 +37,13 @@ export const useUI = defineStore("ui-store", {
     },
     showLoggedIn() {
       this.loggedIn = true;
+    },
+    getTopDownloadUrl() {
+      api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+        if (res.code === 0) {
+          this.downloadAppUrl = res.data.url;
+        }
+      });
     }
   }
 });
