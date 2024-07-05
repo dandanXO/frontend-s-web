@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="panel-item">
-      <!-- <div class="panel-header">{{ $t('fields.downlineMember') }}</div> -->
+      <div class="panel-header">{{ $t('fields.downlineMember') }}</div>
 
       <el-form @submit.prevent>
         <div>
@@ -136,7 +136,15 @@
               <th scope="col">{{ t('fields.operate') }}</th>
             </tr>
           </thead>
-          <tbody v-if="page.records.length > 0">
+          <tbody v-if="page.loading || page.records.length === 0">
+            <tr>
+              <td colspan="9">
+                <Loading v-if="page.loading" />
+                <emptyComp v-else-if="page.records.length === 0" />
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else-if="page.records.length > 0">
             <tr v-for="item in page.records" :key="item.id">
               <td :data-label="t('fields.sequence')">
                 <input type="checkbox" :value="item.id" v-model="selectedMembers" @change="handleSelectionChange">
@@ -218,9 +226,6 @@
             </tr>
           </tbody>
         </table>
-        <div v-if="page.records.length === 0">
-          <emptyComp />
-        </div>
         <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
           :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
@@ -587,6 +592,7 @@ import { ElMessage } from 'element-plus'
 import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
 import { getMemberPrivilegeRecords } from '../../../api/affiliate-privilege-record'
 import emptyComp from '@/components/empty'
+import Loading from '@/components/loading/Loading.vue';
 import { required, size } from '../../../utils/validate'
 import { getConfigListByGroup } from "../../../api/system-config";
 

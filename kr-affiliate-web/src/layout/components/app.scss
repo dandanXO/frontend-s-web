@@ -13,6 +13,11 @@
     gap: 20px;
 }
 
+.panel-header {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
 .custom-table {
     width: 100%;
     border: 0;
@@ -74,4 +79,11 @@
         }
       }
     }
+  }
+
+  .table-footer {
+    font-size: small;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
   }
