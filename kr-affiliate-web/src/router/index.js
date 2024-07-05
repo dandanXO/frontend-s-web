@@ -108,6 +108,20 @@ export const constantRoutes = [
     ],
   },
   {
+    path: '/bet-management',
+    component: Layout,
+    children: [
+      {
+        path: 'game-record',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'Game Record',
+        meta: {
+          title: 'game-record',
+        },
+      },
+    ],
+  },
+  {
     path: '/affiliate',
     component: Layout,
     children: [
