@@ -12,7 +12,7 @@ export const constantRoutes = [
     path: '/403',
     name: 'Forbidden',
     meta: { hidden: true },
-    component: Forbidden
+    component: Forbidden,
   },
   {
     path: '/kr/login',
@@ -58,6 +58,15 @@ export const constantRoutes = [
         name: 'Member Management',
         meta: {
           title: 'member-management',
+        },
+      },
+      {
+        path: 'member-tree',
+        component: () =>
+          import('../views/member-info/member-tree/index.vue'),
+        name: 'Member Tree',
+        meta: {
+          title: 'member-tree',
         },
       },
       {
@@ -227,6 +236,14 @@ export const constantRoutes = [
         name: 'Personal Info',
         meta: {
           title: 'personal',
+        },
+      },
+      {
+        path: 'message',
+        component: () => import('../views/personal/message/index.vue'),
+        name: 'Message',
+        meta: {
+          title: 'message',
         },
       },
       {

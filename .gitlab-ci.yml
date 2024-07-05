@@ -486,6 +486,20 @@ build-image-xf-lh-dy-affiliate-web:
 
 #===============================================================================================
 
+build-kr-affiliate-web:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-affiliate-web
+
+build-image-kr-affiliate-web:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-affiliate-web
+  needs:
+    - build-kr-affiliate-web
+
+#===============================================================================================
+
 build-lh-static-web:
   extends: .build-projects
   variables:
@@ -676,3 +690,17 @@ build-image-kaka-static-h5:
     PROJECT: kaka-static-h5
   needs:
     - build-kaka-static-h5
+
+#===============================================================================================
+
+build-nga-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: nga-static-v1
+
+build-image-nga-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: nga-static-v1
+  needs:
+    - build-nga-static-v1

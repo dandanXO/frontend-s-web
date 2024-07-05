@@ -2415,8 +2415,6 @@ export default defineComponent({
     margin-top: 3px;
     display: flex;
     gap: 12px;
-
-    color: #313441;
     :deep(.q-btn) {
       min-width: 80px;
       min-height: 12px;
@@ -2576,7 +2574,7 @@ export default defineComponent({
           }
         }
         &__title {
-          color: #000000;
+          color: #ffffff;
           font-size: 20px;
           font-weight: 900;
           line-height: 24.2px;
@@ -2602,7 +2600,7 @@ export default defineComponent({
           align-items: center;
           flex: 1;
           .main-header {
-            color: #ffffff;
+            color: #ff4f57;
             font-size: 16px;
             font-weight: 900;
             line-height: 19.36px;
@@ -2635,6 +2633,7 @@ export default defineComponent({
             display: flex;
             justify-content: center;
             align-items: center;
+            filter: hue-rotate(145deg);
           }
           .lastline {
             color: #ffffff;
@@ -2653,6 +2652,7 @@ export default defineComponent({
             background: url("../assets/images/welcome/title-bg-blue.png") no-repeat center center;
             background-size: contain;
             color: #ffffff;
+            filter: hue-rotate(145deg);
           }
         }
       }

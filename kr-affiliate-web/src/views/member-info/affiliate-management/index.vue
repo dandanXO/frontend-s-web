@@ -325,8 +325,9 @@
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto"
             />
+            <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -393,8 +394,9 @@
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto"
             />
+            <span style="color:red"> &emsp; ( {{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -419,6 +421,7 @@ import {
   regsterAffiliate,
   editAffiliateCommission,
   getAffiliateInfo,
+  getDownlineShareRatio,
 } from '../../../api/affiliate'
 import { getSite } from '../../../api/site'
 import { required, size } from '../../../utils/validate'
@@ -463,6 +466,9 @@ const affInfo = ref(null)
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
 const shareRatioList = reactive({
+  list: [],
+})
+const downlineShareRatioList = reactive({
   list: [],
 })
 // const shortcuts = [
@@ -761,7 +767,7 @@ function showDialog(type) {
 
 function showEdit(affiliate) {
   showDialog('EDIT')
-  nextTick(() => {
+  nextTick(async () => {
     for (const key in affiliate) {
       if (Object.keys(eForm).find(k => k === key)) {
         if (key === 'shareRatio') {
@@ -779,6 +785,8 @@ function showEdit(affiliate) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
+    const { data: downlineShareRatio } = await getDownlineShareRatio(eForm.id)
+    downlineShareRatioList.list = downlineShareRatio
   })
 }
 
@@ -851,6 +859,16 @@ function breadcrumbSearch(id, name) {
   }
 }
 
+function getAffiliateRatio(code) {
+  const shareRatio = affInfo.value.shareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
+function getDownlineRatio(code) {
+  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel
   checkId.value = store.state.user.id
@@ -860,7 +878,9 @@ onMounted(async () => {
   await loadAffiliateInfo()
   await loadDownlineAffiliates()
   getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
-    shareRatioList.list = res.data;
+    for (var item = 0; item < res.data.length; item++) {
+      shareRatioList.list.push({ code: res.data[item].code, value: 0 })
+    }
   });
   affiliateLevelKey.value = uiControl.affiliateLevel.filter((level) => {
     return level.value === affiliateLevel.value

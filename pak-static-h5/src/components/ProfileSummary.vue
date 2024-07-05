@@ -86,11 +86,18 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">
+<!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
+<!--        <div class="item-icon">-->
+<!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
+<!--        </div>-->
+<!--        Tik Tok-->
+<!--      </a>-->
+
+      <a class="side-menu-item side-menu-item__transparent" href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/auth/menu-tiktok.png" />
+          <img src="../assets/images/index/insta-web-icon.png" />
         </div>
-        Tik Tok
+        Instagram
       </a>
 
       <a

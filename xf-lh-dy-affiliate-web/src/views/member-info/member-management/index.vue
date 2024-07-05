@@ -551,8 +551,9 @@
           <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
           <el-input
             v-model="item.value"
-            style=" width:100px; margin-left: auto; order: 2"
+            style=" width:100px; margin-left: auto;"
           />
+          <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
         </div>
       </el-form-item>
     </el-form>
@@ -757,8 +758,9 @@
           <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
           <el-input
             v-model="item.value"
-            style=" width:100px; margin-left: auto; order: 2"
+            style=" width:100px; margin-left: auto;"
           />
+          <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
         </div>
       </el-form-item>
       <div class="dialog-footer">
@@ -784,6 +786,7 @@ import {
   assignRemark,
   registerMember,
   editMemberRatio,
+  getAffiliateInfo
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
@@ -794,6 +797,7 @@ import { getMemberPrivilegeRecords } from '../../../api/affiliate-privilege-reco
 import emptyComp from '@/components/empty'
 import { required, size } from '../../../utils/validate'
 import { getConfigListByGroup } from "../../../api/system-config";
+
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -1082,6 +1086,16 @@ const createMemberForm = reactive({
   email: null,
   siteId: null,
   memberShareRatio: null,
+})
+
+const affInfo = reactive({
+  affiliateCode: null,
+  affiliateLevel: null,
+  downlineAffiliate: 0,
+  downlineMember: 0,
+  commission: 0,
+  revenueShare: 0,
+  shareRatio: [],
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -1462,9 +1476,18 @@ async function createMember() {
   })
 }
 
+function getAffiliateRatio(code) {
+  const shareRatio = affInfo.shareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
   getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
     res.data.forEach(ratio => {
       memberShareRatioList.list.push({
