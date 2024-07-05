@@ -172,7 +172,7 @@
           style="width:100%;"
           ref="offerRef"
           class="deposit-selection q-mt-xs"
-          label="选择优惠"
+          :label="$t('deposit.select_privilege')"
           filled
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
@@ -193,14 +193,14 @@
           </template>
         </q-select>
 
-        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">
-          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">
-            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}
-          </p>
-          <p v-else>
-            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍
-          </p>
-        </div>
+<!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
+<!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
+<!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+<!--          </p>-->
+<!--          <p v-else>-->
+<!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
+<!--          </p>-->
+<!--        </div>-->
 
       </q-form>
     </div>
@@ -302,8 +302,6 @@ import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
-import PrimaryButton from "src/components/auth/PrimaryButton.vue";
-import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
 
 const imgURL = process.env.IMAGE_CDN;
@@ -1006,6 +1004,17 @@ onMounted(() => {
       margin: 20px auto 0 auto;
 
       .deposit-input {
+        background-color: #0b0e0d;
+        border-radius: 5px;
+        width: 100%;
+        height: 46px;
+
+        :deep(.q-field__control) {
+          height: 46px;
+        }
+      }
+
+      .deposit-selection{
         background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
