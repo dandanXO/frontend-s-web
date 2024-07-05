@@ -464,7 +464,6 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 const onSelect = (value) => {
-  // debugger;
   depositItems.value.forEach((item) => (item.isActive = false));
 
   isDisplay.value = false;
@@ -506,6 +505,35 @@ function checkMinDepositAmt() {
 
 function checkPrivilege(v) {
   selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = null;
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType == "FREE") {
+            freePrivilege.value = p;
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
 }
 
 function selectedBank(value) {
