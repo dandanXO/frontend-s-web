@@ -403,9 +403,12 @@ body {
     background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
     border: 1px solid #fd897e !important;
   }
-  &:hover {
+  &:hover,
+  &:focus,
+  &:focus-visible {
     background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
     border: 1px solid #fd897e !important;
+    outline: #fd897e !important;
   }
 }
 .common-btn,
@@ -452,7 +455,8 @@ body {
     background-color: #fd897e;
   }
   &:hover,
-  &:focus {
+  &:focus,
+  &:focus-visible {
     color: #ffffff;
     background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
     box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
