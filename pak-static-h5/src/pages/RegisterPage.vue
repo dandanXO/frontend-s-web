@@ -228,10 +228,10 @@
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/insta-icon.png" />
         <div>Instagram</div>
       </div>
-<!--      <div class="list-item" @click="openTiktok()">-->
-<!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
-<!--        <div>Tiktok</div>-->
-<!--      </div>-->
+      <!--      <div class="list-item" @click="openTiktok()">-->
+      <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
+      <!--        <div>Tiktok</div>-->
+      <!--      </div>-->
     </div>
 
     <div class="bottom-img">
@@ -465,15 +465,14 @@ export default defineComponent({
                 //   });
                 // }
 
-                store.autoLogin(res.data);
-
                 sessionStorage.removeItem("REFERRAL_CODE");
+
+                store.autoLogin(res.data);
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                   router.push(jumpUrl);
                 }
 
-                sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({
                   color: "negative",
