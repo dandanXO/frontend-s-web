@@ -142,7 +142,7 @@
 
       <div class="stats">
         <div class="stat-label">슬롯손익</div>
-        <div class="stat-value green">{{ records.slotProfit - records.slotBetAmount - records.slotRollingAmount }}</div>
+        <div class="stat-value grey">{{ records.slotProfit - records.slotBetAmount - records.slotRollingAmount }}</div>
       </div>
 
       <div class="stats">
