@@ -1,133 +1,124 @@
 <template>
   <div class="page-container">
     <div class="panel-item">
-      <div class="panel-header">{{ $t('fields.downlineMember') }}</div>
+      <!-- <div class="panel-header">{{ $t('fields.downlineMember') }}</div> -->
 
       <el-form @submit.prevent>
-        <div class="filter-fields">
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.memberTag') }}
-              </div>
+        <div>
+          <el-row :gutter="20" v-if="store.state.user.siteCode !== 'VNM'">
+            <el-col :xl="2" :lg="3" :md="4" :sm="24">
+              <el-form-item :label="t('fields.memberTag') + ' :'" />
+            </el-col>
+            <el-col :xl="18" :lg="16" :md="12" :sm="24">
               <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAll">
                 {{ t('fields.all') }}
               </el-checkbox>
               <el-checkbox-group v-model="selected.tags" @change="handleCheckedTags">
                 <el-checkbox v-for="tag in tagList.description" :key="tag" :label="tag" />
               </el-checkbox-group>
-              <el-button icon="el-icon-setting" type="primary" @click="goToTagSetting()" size="normal">
+            </el-col>
+            <el-col class="memberTag" :xl="3" :lg="4" :md="12" :sm="24" style="margin-left: auto; text-align: right;">
+              <el-button icon="el-icon-setting" type="primary" @click="goToTagSetting()" size="small">
                 {{ $t('fields.tagSetting') }}
               </el-button>
-            </div>
-          </el-form-item>
-
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.loginName') }}
+            </el-col>
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-row :gutter="20">
+            <el-col :xl="8" :lg="8" :md="6" :sm="6">
+              <el-form-item :label="t('fields.loginName') + ' :'">
+                <el-input size="small" v-model="request.loginName" />
+              </el-form-item>
+            </el-col>
+            <el-col :xl="8" :lg="8" :md="10" :sm="8">
+              <el-form-item :label="t('fields.depositAmount') + ' :'">
+                <el-input size="small" v-model="request.depositMinAmount" class="input-min">
+                  <template #append>
+                    -
+                  </template>
+                </el-input>
+                <el-input v-model="request.depositMaxAmount" class="input-max" size="small" />
+              </el-form-item>
+            </el-col>
+            <el-col :xl="8" :lg="8" :md="6" :sm="6">
+              <el-form-item :label="t('fields.betRecord') + ' :'">
+                <el-select style="width: 100%;" size="small" v-model="request.isBet">
+                  <el-option key="1" value="-1" :label="t('fields.all')">
+                    {{ t('fields.all') }}
+                  </el-option>
+                  <el-option key="2" value="1" :label="t('fields.yes')">
+                    {{ t('fields.yes') }}
+                  </el-option>
+                  <el-option key="3" value="0" :label="t('fields.no')">
+                    {{ t('fields.no') }}
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-row :gutter="20" style="gap: 10px;">
+            <el-col :xl="8" :lg="8" :md="12" :sm="12">
+              <el-form-item :label="t('fields.recordTime') + ' :'">
+                <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="small"
+                  class="input-small" type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" />
+              </el-form-item>
+            </el-col>
+            <el-col :xl="10" :lg="8" :md="12" :sm="12">
+              <el-form-item :label="t('fields.registerTime') + ' :'">
+                <el-date-picker v-model="request.regTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="small"
+                  class="input-small" type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-row :gutter="20" style="gap: 10px;">
+            <el-col :xl="7" :lg="7" :md="7" :sm="7">
+              <el-form-item :label="t('fields.orderBy') + ' :'">
+                <el-select style="width: 100%;" size="small" v-model="request.orderBy">
+                  <el-option v-for="item in uiControl.orderBy" :key="item.display" :label="t('fields.' + item.display)"
+                    :value="item.value" />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="7" :lg="7" :md="7" :sm="7">
+              <el-form-item :label="t('fields.sortType') + ' :'">
+                <el-select style="width: 100%;" size="small" v-model="request.sortType">
+                  <el-option v-for="item in uiControl.sortType" :key="item.display"
+                    :label="t('sortType.' + item.display)" :value="item.value" />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="8" :lg="8" :md="8">
+              <div style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center">
+                <el-button icon="el-icon-search" type="primary" @click="loadAffiliateMembers()" size="small">
+                  {{ $t('fields.search') }}
+                </el-button>
+                <el-button size="small" type="primary" plain @click="resetQuery()">
+                  {{ $t('fields.reset') }}
+                </el-button>
               </div>
-              <el-input el-input size="normal" v-model="request.loginName" />
-            </div>
-          </el-form-item>
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.depositAmount') }}
-              </div>
-              <el-input size="normal" v-model="request.depositMinAmount" class="input-min" />
-              <div class="filter-label">
-                -
-              </div>
-              <el-input v-model="request.depositMaxAmount" class="input-max" size="normal" />
-            </div>
-          </el-form-item>
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.betRecord') }}
-              </div>
-              <el-select style="width: 100%;" size="normal" v-model="request.isBet">
-                <el-option key="1" value="-1" :label="t('fields.all')">
-                  {{ t('fields.all') }}
-                </el-option>
-                <el-option key="2" value="1" :label="t('fields.yes')">
-                  {{ t('fields.yes') }}
-                </el-option>
-                <el-option key="3" value="0" :label="t('fields.no')">
-                  {{ t('fields.no') }}
-                </el-option>
-              </el-select>
-            </div>
-          </el-form-item>
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.recordTime') }}
-              </div>
-              <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
-                class="input-small" type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
-                :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
-                :editable="false" :clearable="false" />
-            </div>
-          </el-form-item>
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.registerTime') }}
-              </div>
-              <el-date-picker v-model="request.regTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
-                class="input-small" type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
-                :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
-                :editable="false" :clearable="false" />
-            </div>
-          </el-form-item>
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.orderBy') }}
-              </div>
-              <el-select style="width: 100%;" size="normal" v-model="request.orderBy">
-                <el-option v-for="item in uiControl.orderBy" :key="item.display" :label="t('fields.' + item.display)"
-                  :value="item.value" />
-              </el-select>
-            </div>
-          </el-form-item>
-
-          <el-form-item>
-            <div class="filter-wrapper">
-              <div class="filter-label">
-                {{ t('fields.sortType') }}
-              </div>
-              <el-select style="width: 100%;" size="normal" v-model="request.sortType">
-                <el-option v-for="item in uiControl.sortType" :key="item.display" :label="t('sortType.' + item.display)"
-                  :value="item.value" />
-              </el-select>
-            </div>
-          </el-form-item>
-
-          <el-button type="primary" icon="el-icon-search" @click="loadAffiliateMembers()" size="normal">
-            {{ $t('fields.search') }}
-          </el-button>
-          <el-button size="normal" plain @click="resetQuery()">
-            {{ $t('fields.reset') }}
-          </el-button>
-
-          <el-button v-if="store.state.user.siteCode === 'KRW'" icon="el-icon-plus" size="normal" type="primary"
+            </el-col>
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-button v-if="store.state.user.siteCode === 'KRW'" icon="el-icon-plus" size="small" type="primary"
             @click="showCreateMember()">
             {{ $t('fields.createMember') }}
           </el-button>
-          <el-button v-if="store.state.user.siteCode !== 'VNM'" size="normal" type="primary"
+          <el-button v-if="store.state.user.siteCode !== 'VNM'" size="small" type="primary"
             :disabled="uiControl.editBtn" @click="showBatchEditTag()">
             {{ $t('fields.batchEditTag') }}
           </el-button>
         </div>
+
       </el-form>
 
       <div class="custom-table-wrapper">
@@ -150,15 +141,29 @@
               <td :data-label="t('fields.sequence')">
                 <input type="checkbox" :value="item.id" v-model="selectedMembers" @change="handleSelectionChange">
               </td>
-              <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
+              <td :data-label="t('fields.loginName')">
+                <div class="vip-name-wrapper">
+                  <div class="vip-badge">{{ getVipLevel(item.vip) }}</div>
+                  <div class="login-name">{{ item.loginName }}</div>
+                </div>
+              </td>
               <td :data-label="t('fields.totalDeposit')">
-                {{ `₩ ${formatMoney(item.totalDeposit)}` }}
+                <div class="money-wrapper">
+                  <div>{{ formatMoney(item.totalDeposit) }}</div>
+                  <div class="won-icon">₩</div>
+                </div>
               </td>
               <td :data-label="t('fields.totalWithdraw')">
-                {{ `₩ ${formatMoney(item.totalWithdraw)}` }}
+                <div class="money-wrapper">
+                  <div>{{ formatMoney(item.totalWithdraw) }}</div>
+                  <div class="won-icon">₩</div>
+                </div>
               </td>
               <td :data-label="t('fields.netProfit')">
-                {{ `₩ ${formatMoney(item.revenueShare)}` }}
+                <div class="money-wrapper">
+                  <div>{{ formatMoney(item.revenueShare) }}</div>
+                  <div class="won-icon">₩</div>
+                </div>
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
@@ -230,13 +235,13 @@
           <el-col :xl="8" :lg="18" :md="16" :xs="16">
             <el-form-item :label="t('fields.recordTime') + ' :'">
               <el-date-picker v-model="memberRequest.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD"
-                size="normal" class="input-small" type="daterange" range-separator=":"
+                size="small" class="input-small" type="daterange" range-separator=":"
                 :start-placeholder="t('fields.startDate')" :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts"
                 :disabled-date="disabledDate" :editable="false" :clearable="false" />
             </el-form-item>
           </el-col>
           <el-col :xl="5" :lg="3" :md="3" :xs="3">
-            <el-button icon="el-icon-search" type="primary" @click="showMemberInfo()" size="normal">
+            <el-button icon="el-icon-search" type="primary" @click="showMemberInfo()" size="small">
               {{ $t('fields.search') }}
             </el-button>
           </el-col>
@@ -251,13 +256,13 @@
               {{ memberInfo.loginName }}
             </el-form-item>
             <el-form-item :label="t('fields.status')">
-              <el-tag v-if="memberInfo.status === 'NORMAL'" type="success" size="normal">
+              <el-tag v-if="memberInfo.status === 'NORMAL'" type="success" size="small">
                 {{ t('member.status.normal') }}
               </el-tag>
-              <el-tag v-if="memberInfo.status === 'FROZEN'" type="danger" size="normal">
+              <el-tag v-if="memberInfo.status === 'FROZEN'" type="danger" size="small">
                 {{ t('member.status.frozen') }}
               </el-tag>
-              <el-tag v-if="memberInfo.status === null" type="info" size="normal">
+              <el-tag v-if="memberInfo.status === null" type="info" size="small">
                 -
               </el-tag>
             </el-form-item>
@@ -525,7 +530,7 @@
   <el-dialog :title="t('fields.createMember')" v-model="uiControl.createMemberDialogVisible" append-to-body
     width="580px">
     <el-form ref="createForm" class="create-form" :model="createMemberForm" :rules="createFormRules" inline="true"
-      size="normal" label-width="150px">
+      size="small" label-width="150px">
       <el-form-item :label="t('fields.loginName')" prop="loginName">
         <el-input v-model="createMemberForm.loginName" style="width: 350px;" maxlength="11" />
       </el-form-item>
@@ -713,8 +718,8 @@ const formatDateTime = value => {
   if (!value) {
     return '-'
   }
-  const date = new Date(value)
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+
+  return moment(value).locale('ko').format('LLL');
 }
 
 const formatmTag = tags => {
@@ -1268,6 +1273,10 @@ function getAffiliateRatio(code) {
   return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
 }
 
+const getVipLevel = (vip) => {
+  return vip.replace('VIP', '');
+}
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
@@ -1287,30 +1296,6 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.filter-fields {
-  display: flex;
-  flex-wrap: wrap;
-
-  .filter-wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-width: 200px;
-    background-color: #e4e5e6;
-    border: 1px solid #cfd8dc;
-
-    .filter-label {
-      color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 10px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-  }
-}
-
 .header-container {
   margin: 40px 0 20px;
   display: flex;
