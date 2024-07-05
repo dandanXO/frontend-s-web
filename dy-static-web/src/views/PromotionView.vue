@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <img src="../assets/promo/bg-top.png" alt="" class="all-promotions-bg">
+      <img src="../assets/promo/bg-top.png" alt="" class="all-promotions-bg" />
     </div>
 
     <div
@@ -317,7 +317,7 @@ export default defineComponent({
     min-height: 40vh;
     padding: 50px;
     position: relative;
-    background-color: #EBF4FF;
+    background-color: #ebf4ff;
 
     margin: 0 auto;
     max-width: 1920px;
@@ -329,6 +329,7 @@ export default defineComponent({
     left: 0;
     width: 100%;
     opacity: 0.5;
+    pointer-events: none;
   }
 
   .promo-view-container {
@@ -493,7 +494,7 @@ export default defineComponent({
 
             .label {
               z-index: 0;
-              color: #414C74;
+              color: #414c74;
             }
 
             &:before {
@@ -607,12 +608,12 @@ export default defineComponent({
             .time {
               font-size: 12px;
               font-weight: 400;
-              color: #6F7582;
+              color: #6f7582;
               margin-bottom: 4px;
             }
 
             .viewdetail {
-              color: #414C74;
+              color: #414c74;
               font-size: 28px;
               overflow: hidden;
               text-align: left;
@@ -622,7 +623,7 @@ export default defineComponent({
             }
 
             .sub-viewdetail {
-              color: #5E73A1;
+              color: #5e73a1;
               font-size: 14px;
               font-weight: 600;
             }
