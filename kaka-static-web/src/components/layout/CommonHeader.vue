@@ -1884,10 +1884,10 @@ body {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      gap: 8px;
       z-index: 99;
       &.logged-in-nav {
-        max-width: 1530px;
+        max-width: 1575px;
       }
 
       .logospon {
@@ -1904,11 +1904,11 @@ body {
       }
 
       .logo {
-        height: 64px;
+        height: 30px;
         //width: 102px;
 
         img {
-          width: 100%;
+          height: 100%;
           display: block;
         }
       }

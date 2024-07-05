@@ -29,9 +29,6 @@ export default {
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",
 
-    i_agree_to: "I have Agree To The",
-    use_privacy: "Use Privacy Agreement",
-
     // vip
     level: "Level",
     upgrade: "Upgrade",
@@ -526,6 +523,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "Username can only contains numbers and letters",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",

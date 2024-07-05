@@ -8,7 +8,7 @@
       <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>
       <div class="maintenance-contact">
         <a href="mailto:vnsupport@kaka.com" class="email" target="_blank">{{$t('maintenance.email')}}: vnsupport@kaka.com</a>
-        <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${languageVal === 'vi' ? 'vn': 'en'}`" class="email" target="_blank">{{$t('maintenance.customerService')}}</a>
+        <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${languageVal === 'vi' ? 'vn': 'en'}`" class="email" target="_blank">{{$t('maintenance.customerService')}}</a>
         <a href="https://t.me/KAKA_CS" class="email" target="_blank">Telegram: @KAKA_CS</a>
       </div>
     </div>

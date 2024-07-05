@@ -23,7 +23,7 @@
               :key="depositAmtOption"
               @click="onDepositAmtQuickSelect(depositAmtOption)"
             >
-              {{ depositAmtOption }}
+              {{ convertToCommaAmount(depositAmtOption) }}
             </div>
           </div>
         </div>
@@ -162,6 +162,7 @@ import { userStore } from "@/store";
 import { getMobileOS } from "@/utils/utils";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { convertToCommaAmount } from "@/utils/utils";
 
 const { t } = useI18n();
 const store = userStore();
@@ -323,11 +324,13 @@ async function onSelect(value) {
       value.children.forEach((element) => {
         if (element.hasActive) {
           activeMethod.value = element;
+          depositAmtOptions.value = element.extra.amountArr.map((item) => parseInt(item));
           checkPrivilege(element);
         }
       });
     } else {
       activeMethod.value = value;
+      depositAmtOptions.value = value.extra.amountArr.map((item) => parseInt(item));
       checkPrivilege(value);
       formRef.value.resetFields();
     }

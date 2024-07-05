@@ -27,8 +27,6 @@ export default {
     logout: "Logout"
   },
   account: {
-    no_card_avail: "No cards available, proceed to ",
-    add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
     mainWallet: "Balance",
     reminder: "Require",
@@ -291,7 +289,7 @@ export default {
     // vi-mualixi-redpacket
     congrats: "Congratulations",
     claim: "Claim",
-
+    
     record_win_status: "Win status",
     record_win_prize: "Winner Prize",
   },
@@ -350,8 +348,7 @@ export default {
     enterDigits: "Please enter digits",
     lengthShouldBe: "The length should be",
     smsCodeRequired: "Please enter the SMS verification code",
-    bankBranchAddress: "Bank branch address",
-    settleWithdrawPwd: "Please settle withdraw password"
+    bankBranchAddress: "Bank branch address"
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
@@ -899,6 +896,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "The account is temporarily locked due to entering the wrong password many times",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",

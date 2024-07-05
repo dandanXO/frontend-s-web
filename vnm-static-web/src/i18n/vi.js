@@ -27,8 +27,6 @@ export default {
     rebate: "Hoàn Trả"
   },
   account: {
-    no_card_avail: "Không có thẻ sẵn có, tiến hành ",
-    add_a_bank_card: "Thêm thẻ ngân hàng",
     welcome: "Chào mừng",
     mainWallet: "Số dư",
     reminder: "Hỗ trợ",
@@ -347,8 +345,7 @@ export default {
     enterDigits: "Vui lòng nhập các chữ số",
     lengthShouldBe: "Chiều dài nên là",
     smsCodeRequired: "Vui lòng nhập mã xác minh qua tin nhắn SMS",
-    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng",
-    settleWithdrawPwd: "Vui lòng thêm mật khẩu rút tiền"
+    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng"
   },
   referTerms: {
     promotionStart: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8). ",
@@ -891,6 +888,11 @@ export default {
     1001: "Tài khoản đã đóng",
     1002: "Tài khoản dành cho đại lý",
     1004: "Tài khoản đang tạm khóa do nhập sai mật khẩu nhiều lần",
+    1011: "Tài khoản hiện tại đã liên kết số điện thoại",
+    1012: "Tài khoản hiện tại đã liên kết địa chỉ email",
+    1013: "Tài khoản hiện tại đã liên kết ngày sinh",
+    1014: "Tài khoản hiện tại đã liên kết tên",
+    1015: "Tài khoản hiện tại đã liên kết biệt danh",
     1300: "Số tiền phải là số lớn hơn 0",
     1301: "Thẻ này không được hỗ trợ",
     1302: "Loại tiền này không được hỗ trợ",

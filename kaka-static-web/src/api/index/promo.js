@@ -178,7 +178,7 @@ export function signIn() {
 }
 
 export function canRedeem() {
-  return server.EVENT.get("/vip-upgrade/lh/canRedeem");
+  return server.EVENT.get("/vip-upgrade/ka2/canRedeem");
 }
 export function canRedeemWelcome() {
   return server.EVENT.get("/vip-welcome/canRedeem");
@@ -188,7 +188,7 @@ export function canRedeemMonthly(promoCode) {
 }
 
 export function claim(level) {
-  return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
+  return server.EVENT.post("/vip-upgrade/ka2/claim", { vipLevel: level });
 }
 export function claimMonthly() {
   return server.EVENT.put("/bonus/claim/vnm-vip-monthly");

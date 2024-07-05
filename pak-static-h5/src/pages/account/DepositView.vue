@@ -28,7 +28,10 @@
       </div>
     </div> -->
 
+    <!-- <pre>activeMethod--{{ activeMethod }}</pre> -->
     <!-- <pre>payMethods-{{ payMethods }}</pre> -->
+    <!-- <pre>depositItems--{{ depositItems }}</pre> -->
+    <!-- <pre>selectedPayType-{{ selectedPayType }}</pre> -->
 
     <div class="node-wrapper">
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
@@ -87,8 +90,13 @@
 
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
-        <div class="deposit-enter-amt" v-if="amountList.length === 0">
-          <div class="lil-title flex-div">{{ $t("form.depositAmount") }}   <div class="tutorial-link" @click="openDepositPage" style="margin-left:25px;">{{ $t("deposit.depositTutorial") }}</div></div>
+        <div class="deposit-enter-amt">
+          <div class="lil-title flex-div">
+            {{ $t("form.depositAmount") }}
+            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+              {{ $t("deposit.depositTutorial") }}
+            </div>
+          </div>
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -109,7 +117,7 @@
           </q-input>
         </div>
 
-        <q-select
+        <!-- <q-select
           v-else
           ref="depositAmtRef"
           label="Select Amount"
@@ -126,7 +134,7 @@
               {{ store.currency.value }}
             </span>
           </template>
-        </q-select>
+        </q-select> -->
 
         <!-- <div class="q-mt-md q-mb-md text-grey-7">
           Minimum Amount:
@@ -175,10 +183,18 @@
     </div>
 
     <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">Picture</span> / <span class="tutorial-link" @click="openDepositVideo">Video</span></p>
+      <p>
+        1. Recharge tutorial:
+        <span class="tutorial-link" @click="openDepositPage">Picture</span>
+        /
+        <span class="tutorial-link" @click="openDepositVideo">Video</span>
+      </p>
       <p>2. Fill in the correct wallet account number</p>
       <p>3. Fill in the correct CNIC number</p>
-      <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
+      <p>
+        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+        credited.
+      </p>
     </div>
 
     <div class="bottom-content" style="height: 110px"></div>
@@ -350,22 +366,24 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 const calculatedMaxDeposit = ref("");
 
-const depositItems = reactive([
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 800, hotLabel: 40, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 2000, isActive: false },
-  { amount: 50000, hotLabel: 4000, isActive: false }
-  // { amount: 30000, hotLabel: 1500, isActive: false },
-  // { amount: 50000, hotLabel: 2500, isActive: false }
-]);
+// const depositItems = reactive([
+//   { amount: 300, hotLabel: 15, isActive: false },
+//   { amount: 500, hotLabel: 25, isActive: false },
+//   { amount: 800, hotLabel: 40, isActive: false },
+//   { amount: 1000, hotLabel: 50, isActive: false },
+//   { amount: 3000, hotLabel: 150, isActive: false },
+//   { amount: 5000, hotLabel: 250, isActive: false },
+//   { amount: 10000, hotLabel: 500, isActive: false },
+//   { amount: 30000, hotLabel: 2000, isActive: false },
+//   { amount: 50000, hotLabel: 4000, isActive: false }
+//   // { amount: 30000, hotLabel: 1500, isActive: false },
+//   // { amount: 50000, hotLabel: 2500, isActive: false }
+// ]);
+
+const depositItems = ref([]);
 
 const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
+  depositItems.value.forEach((item, i) => {
     item.isActive = i === index;
     if (i === index) {
       form.localAmount = item.amount;
@@ -447,7 +465,7 @@ function selectPayType(value) {
 const depositForm = ref(null);
 const onSelect = (value) => {
   // debugger;
-  depositItems.forEach((item) => (item.isActive = false));
+  depositItems.value.forEach((item) => (item.isActive = false));
 
   isDisplay.value = false;
 
@@ -461,11 +479,19 @@ const onSelect = (value) => {
       value.children.forEach((element) => {
         if (element.hasActive) {
           activeMethod.value = element;
+          depositItems.value = element.extra.amountArr.map((item) => ({
+            amount: parseInt(item),
+            isActive: false
+          }));
           checkPrivilege(element);
         }
       });
     } else {
       activeMethod.value = value;
+      depositItems.value = value.extra.amountArr.map((item) => ({
+        amount: parseInt(item),
+        isActive: false
+      }));
       checkPrivilege(value);
     }
     checkMinDepositAmt();
@@ -682,12 +708,12 @@ async function pDepo(deposit) {
       }
     })
     .catch((error) => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: error.message,
-      //   icon: "report_problem"
-      // });
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: error.message,
+        icon: "report_problem"
+      });
     })
     .then(() => {
       btnLoading.value = false;
@@ -742,25 +768,25 @@ const isDepositTutorial = ref(false);
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
-  if(selectedPayType.value === "EASYPAISA"){
-    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
-  }else if(selectedPayType.value === "JAZZCASH"){
+  if (selectedPayType.value === "EASYPAISA") {
+    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank");
+  } else if (selectedPayType.value === "JAZZCASH") {
     // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
-  }else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
+    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
   }
-}
+};
 
-const openDepositVideo =() => {
-  if(selectedPayType.value === "EASYPAISA"){
-    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank")
-  }else if(selectedPayType.value === "JAZZCASH"){
-    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank")
-  }else {
-    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank")
+const openDepositVideo = () => {
+  if (selectedPayType.value === "EASYPAISA") {
+    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
+  } else if (selectedPayType.value === "JAZZCASH") {
+    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   }
-}
+};
 
 onActivated(() => {
   checkNewUser();
@@ -1034,8 +1060,8 @@ onMounted(() => {
   }
 }
 
-.flex-div{
-  display:flex;
+.flex-div {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
 }
@@ -1066,10 +1092,10 @@ onMounted(() => {
   text-decoration: underline;
 }
 
-.step-desc-div{
+.step-desc-div {
   color: #bacef1;
 
-  p{
+  p {
     margin: 5px 0px;
   }
 }

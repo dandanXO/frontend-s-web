@@ -2,6 +2,14 @@
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
+        <div class="promo-top">
+          <div class="promo-top-img1">
+            <img src="../assets/promo/bg-top-img1.png" alt="" width="100%" />
+          </div>
+          <div class="promo-top-img2">
+            <img src="../assets/promo/bg-top-img2.png" alt="" width="100%" />
+          </div>
+        </div>
         <div class="promo-type-wrapper">
           <div class="type-list">
             <div
@@ -11,7 +19,7 @@
               :key="p.code"
               @click="switchPromoType(p.code)"
             >
-              <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
+              <img :src="require('../assets/promo/menu-' + p.img + '.svg')" />
               <span class="label">{{ p.label }}</span>
             </div>
           </div>
@@ -26,22 +34,25 @@
             data-aos-duration="1000"
           >
             <a @click="showPromoDetails(promo)">
+              <div class="promo-info">
+                <span class="time">{{ JSON.parse(promo.param).date }}</span>
+                <span class="viewdetail" v-html="JSON.parse(promo.param).title"></span>
+                <span class="sub-viewdetail">{{ JSON.parse(promo.param).sub }}</span>
+              </div>
               <div class="promo-img-wrapper">
                 <div class="promo-bg">
                   <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
                   <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
                 </div>
               </div>
-              <div class="promo-info">
-                <span class="viewdetail">{{ promo.title }}</span>
-              </div>
               <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
-                {{ getPromoLabel(promo.labelType) }}
+                <span>{{ getPromoLabel(promo.labelType) }}</span>
               </div>
             </a>
           </div>
         </div>
       </div>
+      <img src="../assets/promo/bg-top.png" alt="" class="all-promotions-bg" />
     </div>
 
     <div
@@ -135,7 +146,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
@@ -171,6 +182,7 @@ export default defineComponent({
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
+
     watch(() => route.query, () => {
       if (route.query === null) {
         isPromoDetail.value = false;
@@ -206,6 +218,8 @@ export default defineComponent({
           router.push("/vip");
         } else if (promo.redirectUrl.includes("Dongying-refer")) {
           router.push("/privilege/invite");
+        } else if (promo.redirectUrl.includes("hongbaoyu")) {
+          router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
           if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
@@ -252,6 +266,7 @@ export default defineComponent({
       loadPromo(isLogin).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
+
           res.data.forEach(element => {
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
@@ -301,18 +316,22 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    background-image: url(../assets/promo/bg-top.jpg);
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: contain;
     min-height: 40vh;
     padding: 50px;
     position: relative;
-    padding-top: 370px;
-    background-color: #f0f1f6;
+    background-color: #ebf4ff;
 
     margin: 0 auto;
     max-width: 1920px;
+  }
+
+  .all-promotions-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .promo-view-container {
@@ -392,6 +411,22 @@ export default defineComponent({
     min-height: 500px;
   }
 
+  .promo-top {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+
+    .promo-top-img1 {
+      width: 543px;
+    }
+
+    .promo-top-img2 {
+      width: 305px;
+    }
+  }
+
   .all-promotions {
     @keyframes fadein {
       100% {
@@ -419,14 +454,12 @@ export default defineComponent({
     .promo-main-container {
       width: 100%;
       max-width: $maxwidth;
-      background-color: #ffffff;
       margin: 0 auto;
       padding: 10px 0;
 
       .promo-type-wrapper {
         display: flex;
         justify-content: center;
-        // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         ::-webkit-scrollbar {
           width: 0px;
@@ -436,16 +469,15 @@ export default defineComponent({
 
         .type-list {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           padding: 20px 0;
           overflow: auto;
           width: 90%;
-          border-bottom: 1px solid #9ca5b9;
           margin-bottom: 20px;
+          margin-top: 16px;
 
           .type-item {
-            padding: 5px 10px;
             cursor: pointer;
             // border-radius: 20px;
             // background: #201f29;
@@ -453,17 +485,18 @@ export default defineComponent({
             // white-space: nowrap;
             margin: 0 10px;
             font-size: 14px;
+            font-weight: 600;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
-            padding: 12px 30px;
             position: relative;
-            width: 100%;
+            width: 122px;
+            height: 36px;
 
             .label {
               z-index: 0;
-              color: #626a7d;
+              color: #414c74;
             }
 
             &:before {
@@ -473,8 +506,7 @@ export default defineComponent({
               height: 100%;
               // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
               box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
-              transform: skewX(15deg);
-              border-radius: 4px 15px;
+              border-radius: 30px;
             }
 
             img {
@@ -492,7 +524,7 @@ export default defineComponent({
               }
 
               &:before {
-                background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
+                background-image: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
               }
 
               img {
@@ -508,7 +540,7 @@ export default defineComponent({
         margin: 0 auto;
         padding-bottom: 50px;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-gap: 15px;
 
         .promo-item {
@@ -517,20 +549,12 @@ export default defineComponent({
           cursor: pointer;
           background-color: #f2f6ff;
           box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
+          border-radius: 16px;
 
           a {
-            display: block;
-          }
-
-          &:hover {
-            .promo-info {
-              background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
-              background-blend-mode: normal, normal;
-
-              .viewdetail {
-                color: #fefefe;
-              }
-            }
+            display: flex;
+            flex-direction: column;
+            height: 100%;
           }
 
           img {
@@ -546,10 +570,6 @@ export default defineComponent({
               transition: all 0.5s ease;
               background-size: cover;
               background-position: center center;
-
-              &:hover {
-                transform: scale(1.2);
-              }
 
               display: flex;
               justify-content: center;
@@ -576,24 +596,38 @@ export default defineComponent({
           }
 
           .promo-info {
-            // position: absolute;
             text-align: right;
-            // border-radius: 0 0 10px 10px;
-
+            padding: 16px;
             left: 0;
             bottom: 0;
             width: 100%;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            align-items: start;
+            box-sizing: border-box;
+            flex: 1;
+
+            .time {
+              font-size: 12px;
+              font-weight: 400;
+              color: #6f7582;
+              margin-bottom: 4px;
+            }
 
             .viewdetail {
-              color: #232323;
-              padding: 20px 10px;
+              color: #414c74;
+              font-size: 28px;
               overflow: hidden;
-              font-size: 12px;
-              text-align: center;
+              text-align: left;
               width: 100%;
+              font-family: PingFang SC;
+              font-weight: 600;
+            }
+
+            .sub-viewdetail {
+              color: #5e73a1;
+              font-size: 14px;
+              font-weight: 600;
             }
 
             .detail-arrow {
@@ -604,21 +638,22 @@ export default defineComponent({
 
           .pad-label.label-new {
             font-size: 12px;
+            font-weight: 400;
             color: #ffffff;
-            padding: 5px;
             position: absolute;
             top: 0px;
-            left: 10px;
-            background: url("../assets/images/promotion/hotpromo/common/promo-label-ribbon.png") no-repeat center;
-            background-size: contain;
-            font-weight: 600;
-            text-orientation: upright;
-            writing-mode: vertical-rl;
-            height: 38px;
-            width: 18px;
+            right: 0px;
+            background: url("../assets/images/promotion/hotpromo/common/promo-label-ribbon.png") no-repeat 100%/100%;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: flex-end;
+            width: 60px;
+            height: 34px;
+
+            > span {
+              padding-right: 13px;
+              padding-bottom: 4px;
+            }
           }
         }
       }

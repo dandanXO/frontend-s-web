@@ -30,9 +30,7 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       appDownloadUrl: "",
       visitorId: "",
-      announcementList: undefined,
-      financeRecords: undefined,
-      isOffline: false,
+      announcementList: undefined
     };
   },
   actions: {
@@ -41,6 +39,14 @@ export const userStore = defineStore("userStore", {
     },
     getAppDownloadUrl() {
       return this.appDownloadUrl;
+    },
+    getUnreadTotal() {
+      api.get("/session/inbox/getUnreadTotal").then((ret) => {
+        const res = ret.data;
+        if (res.code === 0) {
+          this.unreadCount = res.data;
+        }
+      });
     },
     hasToken() {
       return !!SessionStorage.getItem("TOKEN") || !!this.token;
@@ -65,7 +71,6 @@ export const userStore = defineStore("userStore", {
           this.token = ret.data.data;
           this.getMemberInfo();
           this.getBalance();
-          this.getUnreadTotal();
         } else {
           Notify.create({
             color: "negative",
@@ -93,33 +98,6 @@ export const userStore = defineStore("userStore", {
               }));
               this.announcementList = announcementsFormattedData;
               resolve(this.announcementList);
-            }
-          })
-          .catch((err) => {
-              console.log(err);
-              reject();
-          });
-        }
-      })
-    },
-    getFinanceRecords() {
-      return new Promise((resolve, reject) => {
-        if(this.financeRecords === null) {
-          return;
-        } else if(Array.isArray(this.financeRecords)) {
-          return resolve(this.financeRecords);
-        } else {
-          if(this.financeRecords == undefined) {
-            this.financeRecords = null;
-          }
-
-          api.get("/member/withdraw-deposit-record").then((res) => {
-            const { data: { code, data } } = res;
-            
-            if (code === 0) {
-              const displayTypes = ['WITHDRAW']; 
-              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
-              resolve(this.financeRecords);
             }
           })
           .catch((err) => {
@@ -179,30 +157,22 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
-    getUnreadTotal() {
-      if (this.token && !this.isOffline) {
-        api.get("/session/inbox/getUnreadTotal").then((ret) => {
-          const res = ret.data;
-          if (res.code === 0) {
-            this.unreadCount = res.data;
-          }
-        });
-      }
-    },
     getBalance() {
-      if (this.token && !this.isOffline) {
-        api.get("/session/balance?v=123", {
-          params: {
-            platform: "MAIN"
-          }
-        }).then((ret) => {
-          const res = ret.data;
-          if (res.code === 0) {
-            this.balance = Math.floor(res.data);
-          } else {
-            this.balance = 0;
-          }
-        });
+      if (this.token) {
+        api
+          .get("/session/balance?v=123", {
+            params: {
+              platform: "MAIN"
+            }
+          })
+          .then((ret) => {
+            const res = ret.data;
+            if (res.code === 0) {
+              this.balance = Math.floor(res.data);
+            } else {
+              this.balance = 0;
+            }
+          });
       }
     },
     getDeviceType() {

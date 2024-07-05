@@ -54,7 +54,7 @@
       <tbody v-if="page.records.length > 0">
         <tr v-for="item in page.records" :key="item.id">
           <td>{{ item.serialNumber }}</td>
-          <td>$ {{ formatMoney(item.depositAmount) }}</td>
+          <td>$ {{ item.depositAmount }}</td>
           <td>
             <span v-if="item.depositDate === null">-</span>
             <span v-if="item.depositDate !== null">{{ item.depositDate }}</span>
@@ -97,7 +97,6 @@ import moment from 'moment';
 import { getDepositRecords, getTotal } from '@/api/affiliate-deposit-record';
 import { useI18n } from "vue-i18n";
 import emptyComp from "@/components/empty"
-import { formatMoney } from "@/utils/format-money";
 
 const store = useStore();
 const { t } = useI18n();

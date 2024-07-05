@@ -2,7 +2,11 @@
   <div>
     <div class="bank-card-list">
       <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
-        <div class="bank-card-item active" v-if="bc.bankName" @mouseover="showCard(bc, index)">
+        <div
+          class="bank-card-item active"
+          v-if="bc.bankName"
+          @mouseover="showCard(bc, index)"
+        >
           <div class="icon">
             <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
           </div>
@@ -12,7 +16,7 @@
             </div>
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
-            <img src="../../assets/images/bankCardList/unlink-btn.svg" width="20px" />
+              <RiLinkUnlink />
           </div>
           <div class="">
             <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
@@ -21,8 +25,10 @@
           </div>
         </div>
       </template>
-      <div v-if="personalState.bankCardList.length === 0"
-        class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card">
+      <div
+        v-if="personalState.bankCardList.length === 0"
+        class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
+      >
         <span>카드 없음</span>
       </div>
     </div>
@@ -37,19 +43,44 @@
         <q-form>
           <div class="row q-col-gutter-xs">
             <div class="col-12">
-              <q-select v-model="selectedBankType" filled :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
-                :label="$t('lang.withdraw_methods')" color="white" label-color="grey" option-label="name"
-                option-value="name" @update:model-value="selectBankType(opt)" emit-value map-options />
+              <q-select
+                v-model="selectedBankType"
+                filled
+                :options="[{ name: 'Bank' }, { name: 'Crypto' }]"
+                :label="$t('lang.withdraw_methods')"
+                color="white"
+                label-color="grey"
+                option-label="name"
+                option-value="name"
+                @update:model-value="selectBankType(opt)"
+                emit-value
+                map-options
+              />
             </div>
             <div class="col-12">
-              <q-select ref="bankCardRef" class="q-mb-md" color="white" filled label-color="grey"
-                v-model="bankCardInfo.bankId" :options="banksList" option-value="id" option-label="name"
+              <q-select
+                ref="bankCardRef"
+                class="q-mb-md"
+                color="white"
+                filled
+                label-color="grey"
+                v-model="bankCardInfo.bankId"
+                :options="banksList"
+                option-value="id"
+                option-label="name"
                 :label="$t('lang.select_account_add_different_banks')"
-                :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" lazy-rules emit-value map-options>
+                :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
+                lazy-rules
+                emit-value
+                map-options
+              >
                 <template v-slot:selected-item="scope">
                   <q-item-section avatar>
-                    <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                      :src="imgURL + scope.opt.bankIcon" />
+                    <img
+                      v-if="scope.opt.bankIcon"
+                      style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                      :src="imgURL + scope.opt.bankIcon"
+                    />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
@@ -60,8 +91,11 @@
                 <template v-slot:option="scope">
                   <q-item v-bind="scope.itemProps">
                     <q-item-section avatar>
-                      <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                        :src="imgURL + scope.opt.bankIcon" />
+                      <img
+                        v-if="scope.opt.bankIcon"
+                        style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                        :src="imgURL + scope.opt.bankIcon"
+                      />
                     </q-item-section>
                     <q-item-section>
                       <q-item-label>{{ scope.opt.name }}</q-item-label>
@@ -72,15 +106,40 @@
             </div>
           </div>
 
-          <q-input class="q-mb-md" filled v-model="bankCardInfo.cardAccount" :label="$t('lang.account_name_with_desc')"
-            :rules="cardAccountRules" lazy-rules :disable="true" ref="cardAccountRef" color="white" />
-          <q-input filled class="q-mb-md" v-model="bankCardInfo.cardNumber" :label="$t('lang.card_number')"
-            :rules="cardNumberRules" ref="cardNumberRef" color="white" />
+          <q-input
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAccount"
+            :label="$t('lang.account_name_with_desc')"
+            :rules="cardAccountRules"
+            lazy-rules
+            :disable="true"
+            ref="cardAccountRef"
+            color="white"
+          />
+          <q-input
+            filled
+            class="q-mb-md"
+            v-model="bankCardInfo.cardNumber"
+            :label="$t('lang.card_number')"
+            :rules="cardNumberRules"
+            ref="cardNumberRef"
+            color="white"
+          />
           <div v-if="isVirtual">
-            <q-input filled style="margin-bottom: 36px" ref="telRef" v-model="bankCardInfo.telephone"
-              :label="$t('lang.phone_number')" :hint="$t('lang.bind_crypto_need_phone_veri')" lazy-rules readonly
-              clearable :rules="[(val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')]"
-              color="white">
+            <q-input
+              filled
+              style="margin-bottom: 36px"
+              ref="telRef"
+              v-model="bankCardInfo.telephone"
+              :label="$t('lang.phone_number')"
+              :hint="$t('lang.bind_crypto_need_phone_veri')"
+              lazy-rules
+              readonly
+              clearable
+              :rules="[(val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')]"
+              color="white"
+            >
               <template v-slot:prepend>
                 <q-icon color="white" name="smartphone" />
               </template>
@@ -89,18 +148,35 @@
               </template>
             </q-input>
 
-            <q-input v-if="isSendOtp" filled class="q-mb-md" v-show="bankCardInfo.smsCodeId" ref="phoneVerificationRef"
-              type="text" v-model="bankCardInfo.smsCode" :label="$t('lang.phone_verification_code')" lazy-rules
-              color="white" maxlength="6"
-              :rules="[(val) => (val && val.length > 3) || $t('lang.please_enter_phone_code')]">
+            <q-input
+              v-if="isSendOtp"
+              filled
+              class="q-mb-md"
+              v-show="bankCardInfo.smsCodeId"
+              ref="phoneVerificationRef"
+              type="text"
+              v-model="bankCardInfo.smsCode"
+              :label="$t('lang.phone_verification_code')"
+              lazy-rules
+              color="white"
+              maxlength="6"
+              :rules="[(val) => (val && val.length > 3) || $t('lang.please_enter_phone_code')]"
+            >
               <template v-slot:prepend>
                 <q-icon color="white" name="shield" />
               </template>
             </q-input>
           </div>
 
-          <q-input class="q-mb-md" filled v-model="bankCardInfo.cardAddress" :label="$t('lang.branch_not_required')"
-            :rules="cardAddressRules" ref="cardAddressRef" color="white" />
+          <q-input
+            class="q-mb-md"
+            filled
+            v-model="bankCardInfo.cardAddress"
+            :label="$t('lang.branch_not_required')"
+            :rules="cardAddressRules"
+            ref="cardAddressRef"
+            color="white"
+          />
           <div class="flex flex-center">
             <q-btn class="q-mr-md" :label="$t('lang.cancel')" @click="bankCardModalState.visible = false" />
             <q-btn color="brand" :label="$t('lang.confirm')" @click="submitBankCard" />
@@ -119,12 +195,19 @@
         </q-card-section>
         <div style="padding: 20px">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input ref="refInnerCaptcha"
+            <q-input
+              ref="refInnerCaptcha"
               :rules="[(val) => (val && val.length > 3 && val.length < 5) || $t('lang.enter_captcha_code')]"
-              v-model="innerCaptchaRef" :placeholder="$t('lang.captcha_code')">
+              v-model="innerCaptchaRef"
+              :placeholder="$t('lang.captcha_code')"
+            >
               <template v-slot:append>
-                <img :src="phoneVerificationImg" :title="$t('lang.click_to_refresh_captcha')"
-                  style="margin-top: 6px; cursor: pointer" @click="getInnerCode" />
+                <img
+                  :src="phoneVerificationImg"
+                  :title="$t('lang.click_to_refresh_captcha')"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
               </template>
             </q-input>
           </q-card-section>
@@ -136,18 +219,21 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
-import { api } from "boot/axios"
-import { useQuasar } from "quasar";
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
-import { useUI } from "stores/ui";
+import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import { RiLinkUnlink } from "vue-remix-icons";
+// import moment from "moment";
+import {api} from "boot/axios"
+import {useQuasar} from "quasar";
+import {userStore} from "stores/index";
+import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
+import {useUI} from "stores/ui";
 
 var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
+    RiLinkUnlink
   },
   setup() {
     const store = userStore();
@@ -163,7 +249,7 @@ export default defineComponent({
         title: "Bank Name",
         dataIndex: "name",
         key: "name",
-        slots: { title: "customTitle", customRender: "name" }
+        slots: {title: "customTitle", customRender: "name"}
       },
       {
         title: "Account Number",
@@ -179,12 +265,12 @@ export default defineComponent({
         title: "Bind Time",
         key: "tags",
         dataIndex: "tags",
-        slots: { customRender: "tags" }
+        slots: {customRender: "tags"}
       },
       {
         title: "Unbind Time",
         key: "action",
-        slots: { customRender: "action" }
+        slots: {customRender: "action"}
       }
     ];
 
@@ -221,7 +307,7 @@ export default defineComponent({
         const response = res.data;
         if (response.code === 0) {
           response.data.forEach(element => {
-            if (element) {
+            if (element){
               personalState.bankCardList.push(element);
             }
           });
@@ -249,10 +335,10 @@ export default defineComponent({
       smsCodeId: "",
       smsCode: ""
     });
-    const { t } = useI18n();
+    const {t} = useI18n();
     const router = useRouter();
     const bankName = ref();
-    const ui = useUI()
+    const ui= useUI()
     const banksList = ref([]);
 
     const bankCardModal = (type) => {
@@ -474,13 +560,13 @@ export default defineComponent({
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({message, color});
           }
 
           console.log('onCaptchaSubmit', res)
         }).catch(() => {
-          getInnerCode();
-        })
+        getInnerCode();
+      })
     }
     let validateBankLength = (val) => {
       if (selectedBankType.value === 'Bank') {
@@ -492,7 +578,7 @@ export default defineComponent({
 
     const isValidCard = (val) => {
       const phonePattern = /^\d+$/;
-      return phonePattern.test(val) || t('lang.card_num_invalid');
+      return phonePattern.test(val) || t('lang.card_num_invalid') ;
     };
 
     return {
@@ -684,11 +770,6 @@ export default defineComponent({
     display: flex;
     justify-content: center;
 
-    @media (max-width: 768px) {
-      max-width: 300px;
-      margin: auto;
-    }
-
     cursor: pointer;
     transition: all 0.3s ease-in;
     background-repeat: no-repeat;
@@ -714,6 +795,9 @@ export default defineComponent({
     }
 
     &.active {
+      margin-bottom: 30%;
+      padding-bottom: 10%;
+
       filter: none;
 
       .icon {
@@ -804,7 +888,6 @@ export default defineComponent({
         left: 125%;
       }
     }
-
     @keyframes shine {
       100% {
         left: 125%;

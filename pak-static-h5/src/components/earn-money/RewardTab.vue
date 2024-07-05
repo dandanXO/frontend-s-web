@@ -441,7 +441,7 @@ onMounted(() => {
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
-    tgDomain = store.h5Url;
+    tgDomain = store.evip ? 'https://' + store.evip + '/' : store.h5Url;
   }
 
   api.get("/session/member/referralCode").then((res) => {

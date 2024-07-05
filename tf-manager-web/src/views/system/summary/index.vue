@@ -57,9 +57,6 @@
             :clearable="false"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.memberId')" prop="memberId">
-          <el-input v-model="form.memberId" style="width: 300px; margin-left: 5px;" />
-        </el-form-item>
         <div class="dialog-footer">
           <el-button
             v-if="hasRole(['ADMIN'])"
@@ -95,8 +92,7 @@ const uiControl = reactive({
 const form = reactive({
   date: [],
   siteId: null,
-  type: null,
-  memberId: null
+  type: null
 });
 const siteList = reactive({
   list: []

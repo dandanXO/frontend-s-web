@@ -37,21 +37,14 @@
     </div>
 
     <div class="agreement-and-forget-pass">
-      <div class="rememberMe">
-        <el-switch v-model="rememberMe" size="small" :active-text="$t('login.rememberMe')" inactive-text="" />
-      </div>
-      <div>
-        <a @click="openForgotpwdDialog">{{ $t("login.forgotPwd") }}</a>
-      </div>
+      <div class="rememberMe"><el-switch v-model="rememberMe" size="small" :active-text="$t('login.rememberMe')"
+              inactive-text="" /></div>
+      <div><a @click="openForgotpwdDialog">{{ $t('login.forgotPwd') }}</a></div>
     </div>
 
-    <button type="button" :loading="loadingBtn" size="large" class="primary-btn login-btn" @click="submitLogin">
-      {{ $t("login.login") }}
-    </button>
+    <button type="button" :loading="loadingBtn" size="large" class="primary-btn login-btn" @click="submitLogin">{{ $t('login.login') }}</button>
   </el-form>
-  <button type="button" :loading="loadingBtn" size="large" class="primary-btn reg-btn" @click="openRegDialog">
-    {{ $t("login.register") }}
-  </button>
+  <button type="button" :loading="loadingBtn" size="large" class="primary-btn reg-btn" @click="openRegDialog">{{ $t('login.register') }}</button>
   <!-- <div class="flex-div">
     <div style="visibility:hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
     
@@ -72,40 +65,40 @@ import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-const props = defineProps(["pageType"]);
-const rememberMe = ref(false);
+const props= defineProps(["pageType"]);
+const rememberMe = ref(false)
 
 const loginRules = {
   loginName: [
     {
       required: true,
-      message: t("placeholder.usernamereq"),
+      message: t('placeholder.usernamereq'),
       trigger: "blur"
     },
     {
       min: 6,
       max: 11,
-      message: t("placeholder.username"),
+      message: t('placeholder.username'),
       trigger: "blur"
     }
   ],
   password: [
     {
       required: true,
-      message: t("placeholder.passwordreq"),
+      message: t('placeholder.passwordreq'),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: t("placeholder.captchareq"),
+      message: t('placeholder.captchareq'),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: t("placeholder.captcha"),
+      message:t('placeholder.captcha'),
       trigger: "blur"
     }
   ]
@@ -131,11 +124,11 @@ const submitLogin = () => {
     if (rememberMe.value) {
       const obj = {
         loginName: loginForm.loginName,
-        password: loginForm.password
-      };
-      sessionStorage.setItem("loginPassword", JSON.stringify(obj));
+        password: loginForm.password,
+      }
+       sessionStorage.setItem("loginPassword", JSON.stringify(obj));
     } else {
-      sessionStorage.removeItem("loginPassword");
+      sessionStorage.removeItem("loginPassword")
     }
     loginRef.value
       .validate()
@@ -149,11 +142,7 @@ const submitLogin = () => {
             codeId: loginForm.codeId
           })
           .then(() => {
-            const jumpUrl = route.query.redirect
-              ? route.query.redirect.toString()
-              : props.pageType === "view"
-              ? "/"
-              : route.path;
+            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : props.pageType === 'view' ? '/' : route.path;
             if (store.token) {
               router.push(jumpUrl);
 
@@ -165,8 +154,9 @@ const submitLogin = () => {
 
               // FB tracking :: login-success
               if (store.isAffiliateA) {
-                fbq("track", "login-success");
-              }
+                  fbq("track", "login-success");
+                }
+
             } else {
               getCode();
             }
@@ -214,13 +204,13 @@ const openForgotpwdDialog = () => {
 
 onMounted(() => {
   getCode();
-
+  
   const hasPassword = sessionStorage.getItem("loginPassword");
   if (hasPassword) {
     const obj = JSON.parse(hasPassword);
-    loginForm.loginName = obj.loginName;
-    loginForm.password = obj.password;
-    rememberMe.value = true;
+    loginForm.loginName = obj.loginName
+    loginForm.password = obj.password
+    rememberMe.value = true
   }
 });
 </script>
@@ -242,8 +232,8 @@ onMounted(() => {
   gap: 10px;
   position: relative;
   width: 100%;
-  margin-top: 50px !important;
-  padding: 5px;
+    margin-top: 40px;
+    padding: 5px;
 
   .form-field-icon {
     margin: auto;
@@ -252,16 +242,17 @@ onMounted(() => {
 }
 :deep(.el-form-item--large .el-form-item__label) {
   position: absolute;
-  top: -40px;
-  left: 0;
+    top: -40px;
+    left: 0;
 }
 
 .agreement-and-forget-pass {
   display: flex;
   justify-content: space-between;
   .rememberMe {
-    display: flex;
+    display:flex;
     gap: 5px;
+
   }
   .highlight {
     color: #5e8aee;
@@ -284,17 +275,18 @@ onMounted(() => {
   color: #fff;
   font-size: 14px;
   border-radius: 8px;
-  background: url(../../assets/images/common/loginbtn.png) no-repeat center center;
+  background: url(../../assets/images/common/loginbtn.png)no-repeat center center;
   background-size: cover;
   padding: 10px 0;
 }
 .reg-btn {
-  background: #fcfdfe;
+  background: #FCFDFE;
 
   padding: 10px 0;
   border-radius: 8px;
   color: #000000;
-  box-shadow: 0px -3.5004611015319824px 3.5004611015319824px 0px #c3d4e6 inset;
+box-shadow: 0px -3.5004611015319824px 3.5004611015319824px 0px #C3D4E6 inset;
+
 }
 
 .flex-div {

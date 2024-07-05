@@ -191,7 +191,7 @@ export default defineComponent({
           hasDrawer.value = true;
           pageName.value = t("lang.page_game");
           if (route.query.platform) {
-            var platformName = translateRecord(route.query.platform + 'minigame');
+            var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName}`;
           }
         } else if (route.path === "/account/vip") {
@@ -228,7 +228,7 @@ export default defineComponent({
         } else if (route.path === "/promo") {
           hasPage.value = true;
           pageName.value = t("lang.page_promotions");
-          hasShadow.value = false;
+          // hasShadow.value = false;
 
           if (route.query.name) {
             hasPage.value = true;

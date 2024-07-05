@@ -49,7 +49,7 @@
           <td><img src="@/assets/images/vip/vip-table-icon.png" /></td>
           <td>{{ $t("personalView.vip.table.header.experience") }}</td>
           <td>{{ $t("personalView.vip.table.header.oneOffReward") }}</td>
-          <!-- <td>{{ $t("personalView.vip.table.header.monthlyReward") }}</td> -->
+          <td>{{ $t("personalView.vip.table.header.monthlyReward") }}</td>
         </tr>
       </thead>
       <tbody>
@@ -63,10 +63,10 @@
             <img src="@/assets/images/vip/vip-table-coin-icon.png" />
             {{ addThousandsComma(data.oneOff) }}
           </td>
-          <!-- <td>
+          <td>
             <img src="@/assets/images/vip/vip-table-coin-icon.png" />
             {{ addThousandsComma(data.monthly) }}
-          </td> -->
+          </td>
         </tr>
       </tbody>
     </table>
@@ -340,7 +340,7 @@ const onShowRebateClick = (flag) => {
 const vipTableData = ref([
   {
     name: "VIP 0",
-    qualification: 5000,
+    qualification: 0,
     oneOff: 0,
     monthly: 0
   },
@@ -560,23 +560,10 @@ const vipTableData = ref([
   }
 
   tbody {
-    > :nth-child(odd) {
-      background: #70bc621a;
-    }
-
-    tr {
-      td {
-        border: 1px solid #ffffff1a;
-        padding: 6px 0;
-      }
-
-      > :first-child {
-        border-left: none;
-      }
-
-      > :last-child {
-        border-right: none;
-      }
+    background: #70bc621a;
+    td {
+      border: 1px solid #ffffff1a;
+      padding: 6px 0;
     }
   }
 }

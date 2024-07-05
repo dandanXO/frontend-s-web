@@ -639,6 +639,7 @@ export default defineComponent({
   padding: 8px 15px 4px;
   gap: 10px;
   width: 100%;
+  box-shadow: 0px -2px 6px 0px #c3d4e6 inset;
 
   .left {
     display: flex;
@@ -651,8 +652,8 @@ export default defineComponent({
 
   .avatar {
     width: 50px;
-    max-width: 60px;
-    min-width: 60px;
+    max-width: 50px;
+    min-width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -701,7 +702,7 @@ export default defineComponent({
 }
 
 .vipcard {
-  margin: 5px auto;
+  margin: 8px auto 6px;
   border-radius: 15px;
   width: $box-width;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
@@ -768,7 +769,7 @@ export default defineComponent({
         span {
           font-size: 1rem;
           line-height: 1rem;
-          width: 55px;
+          width: 32px;
         }
 
         img {

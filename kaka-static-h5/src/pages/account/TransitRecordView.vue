@@ -874,6 +874,7 @@ export default defineComponent({
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
+  color: #333333;
 }
 .account-content.transit {
   min-height: 740px;

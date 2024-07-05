@@ -289,7 +289,7 @@ $node-color: #4873f1;
         display: block;
         // float: left;
         vertical-align: bottom;
-        margin-top: 0px;
+        margin-top: 25px;
         // min-width: 100px;
         text-align: left;
       }
@@ -343,7 +343,7 @@ $node-color: #4873f1;
       background-color: #f7f8fb;
       border-radius: 15px;
       box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-      margin-bottom: 22px;
+      margin-bottom: 30px;
       border: 2px solid;
       .payment-method-wrapper {
         display: none;

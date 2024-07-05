@@ -86,7 +86,7 @@
           <q-card-section class="level-promo-body">
             <div class="vip-promo-bonus">
               <div class="common-text">
-                {{ $t("lang.vip_welcome_bonus") }}
+                {{ $t("lang.vip_levelup_bonus") }}
               </div>
               <div class="common-amount">{{ vip.welcomeBonus }}</div>
               <div class="common-btn" v-if="vip.welcomeBonus !== '-'">
@@ -106,14 +106,20 @@
                 {{ $t("lang.vip_monthly_bonus") }}
               </div>
               <div class="common-amount">{{ vip.monthlyBonus }}</div>
-              <div class="common-btn" v-if="vip.monthlyBonus !== '-'">
-                <q-btn
+              <div class="common-btn" v-if="vip.monthlyBonus !== '0'">
+                <!-- <q-btn
                   class="btn-main"
                   no-caps
                   @click="claimMonthly()"
-                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
                 >
                   {{ $t("lang.vip_claim") }}
+                </q-btn> -->
+                <q-btn
+                  class="btn-main"
+                  no-caps
+                  @click="router.push('/liveChat')"
+                >
+                  {{ $t("lang.vip_contactcs") }}
                 </q-btn>
               </div>
             </div>
@@ -122,10 +128,9 @@
                 {{ $t("lang.vip_birthday_bonus") }}
               </div>
               <div class="common-amount">{{ vip.birthdayBonus }}</div>
-              <div class="common-btn" v-if="vip.birthdayBonus !== '-'">
+              <div class="common-btn" v-if="vip.birthdayBonus !== '0'">
                 <q-btn
                   class="btn-main"
-                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
                   no-caps
                   @click="router.push('/liveChat')"
                 >
@@ -684,26 +689,20 @@ const vipClaimItems = [
   }
 ];
 const returnNumber = (vipLevel) => {
-  if (vipLevel <= 3) {
+  if (vipLevel <= 5) {
     return '1'
-  } else if (vipLevel <= 6) {
-    return '2'
-  } else if (vipLevel <= 9) {
+  } else if (vipLevel <= 10) {
     return '3'
-  } else if (vipLevel <= 12) {
-    return '4'
   } else if (vipLevel <= 15) {
     return '5'
-  } else if (vipLevel <= 18) {
-    return '6'
-  } else if (vipLevel <= 21) {
+  } else if (vipLevel <= 20) {
     return '7'
-  } else if (vipLevel <= 24) {
-    return '8'
-  } else if (vipLevel <= 27) {
+  } else if (vipLevel <= 25) {
     return '9'
+  } else if (vipLevel <= 29) {
+    return '11'
   } else if (vipLevel <= 30) {
-    return '10'
+    return '12'
   }
 }
 
@@ -728,7 +727,7 @@ const checkVipRedeem = () => {
     });
   }
   getProgressBar();
-  eventapi.get("/vip-welcome/canRedeem").then((res) => {
+  eventapi.get("/vip-upgrade/ka2/canRedeem").then((res) => {
     if (res.code === 0) {
       // console.log(res.data);
       // Your arrays of elements
@@ -782,11 +781,11 @@ const checkVipRedeem = () => {
     }
   });
 
-  eventapi.get("/privi/vip/canRedeem", { promoCode: "vnm-vip-monthly" }).then((res) => {
-    if (res.code === 0) {
-      vipClaimItems[slide.value].monthlyBtn = res.data;
-    }
-  });
+  // eventapi.get("/privi/vip/canRedeem", { promoCode: "vnm-vip-monthly" }).then((res) => {
+  //   if (res.code === 0) {
+  //     vipClaimItems[slide.value].monthlyBtn = res.data;
+  //   }
+  // });
 };
 const getProgressBar = () => {
   vipItems.value.forEach((vip, i) => {
@@ -1311,7 +1310,7 @@ const claim = async () => {
 
   try {
     if (store.hasToken()) {
-      const res = await eventapi.post("/vip-welcome/claim", qs.stringify({ vipLevel: slide.value + 1 }));
+      const res = await eventapi.post("/vip-upgrade/ka2/claim", qs.stringify({ vipLevel: slide.value + 1 }));
       if (res.code === 0) {
         $q.notify({
           color: "positive",
@@ -1337,6 +1336,7 @@ onActivated(() => {
       vipLevel.value = +store.vip.replace("VIP", "");
       currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString("en-US", { maximumFractionDigits: 0 });
       checkVipRedeem();
+      slide.value = vipLevel.value
     });
   } else {
     claimDesc.value.vip = 0;
@@ -1391,14 +1391,14 @@ onActivated(() => {
     .status {
       position: absolute;
       left: 0;
-      top: 13%;
+      top: 11%;
       display: flex;
       align-items: center;
       justify-content: center;
 
       img {
-        height: 20px;
-        width: 120px;
+        height: 25px;
+        width: 100px;
       }
 
       span {
@@ -1724,6 +1724,7 @@ onActivated(() => {
       justify-content: center;
       min-height: 30px;
       background-color: transparent;
+      filter: hue-rotate(145deg);
       &:before {
         box-shadow: none;
       }
@@ -1743,7 +1744,7 @@ onActivated(() => {
   }
 
   .vip-card-current-num {
-    margin-top: 8px;
+    // margin-top: 8px;
     font-size: 11px;
   }
 }

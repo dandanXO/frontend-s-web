@@ -462,11 +462,7 @@ const uiControl = reactive({
     { key: 3, displayName: 'C', value: 'C' },
     { key: 4, displayName: 'D', value: 'D' },
     { key: 5, displayName: 'E', value: 'E' },
-    { key: 6, displayName: 'F', value: 'F' },
-    { key: 7, displayName: '16', value: '16' },
-    { key: 8, displayName: '8', value: '8' },
-    { key: 9, displayName: '4', value: '4' },
-    { key: 10, displayName: '2', value: '2' }
+    { key: 6, displayName: 'F', value: 'F' }
   ],
   imageSelectionTitle: '',
   imageSelectionVisible: false

@@ -593,16 +593,18 @@
     <el-dialog
       @close="setWithExpiry('isImpt', true, 43200000)"
       class="imptann-modal"
-      v-model="isImportantAnnoucementModal"
+      v-model="isImportantAnnouncementModal"
       v-if="!isImpt"
     >
-      <img :src="homePopupImg" class="alert-img" />
+      <a @click="clickHomePopupImg(homePopupPath)">
+        <img :src="homePopupImg" class="alert-img" />
+      </a>
     </el-dialog>
 
     <!-- <el-dialog
       @close="setWithExpiry('isImpt', true, 43200000)"
       class="imptann-modal"
-      v-model="isImportantAnnoucementModal"
+      v-model="isImportantAnnouncementModal"
     >
 
       <img src="../assets/images/index/popup-web.jpg" class="alert-img" />
@@ -610,7 +612,7 @@
     </el-dialog> -->
     <!-- <el-dialog
       class="imptann-modal"
-      v-model="isImportantAnnoucementModal"
+      v-model="isImportantAnnouncementModal"
       align-center
       title="重要公告"
     >
@@ -657,7 +659,7 @@
               >不再提醒</label
             >
           </div>
-          <el-button class="knew" @click="isImportantAnnoucementModal = false"
+          <el-button class="knew" @click="isImportantAnnouncementModal = false"
             >知道了
           </el-button>
           <el-button class="more" color="#434343"
@@ -670,131 +672,175 @@
   <GameModal ref="gameMenu" />
 </template>
 
-<script>
+<script setup>
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal.vue";
-import { defineComponent, ref, onMounted } from "vue";
-import { loadPromoBanner } from "@/api/index/promo";
+import { ref, onMounted, watch } from "vue";
+import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
 import { useRouter } from "vue-router";
+import { userStore } from "@/store";
 
-export default defineComponent({
-  // directives: {
-  //   "number-counter": numberCounter
+const store = userStore();
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const gameMenu = ref(null);
+const router = useRouter();
+const banners = ref([
+  // {
+  //   src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
   // },
-  components: {
-    Vue3autocounter,
-    GameModal
-  },
-  setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
-    const gameMenu = ref(null);
-    const router = useRouter();
-    const banners = ref([
-      // {
-      //   src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
-      // },
-      // {
-      //   src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
-      // }
-    ]);
-    const isImportantAnnoucementModal = ref(false);
-    const openGame = (gameName, platType, gameCode, scrollingState) => {
-      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
-    };
-    const setWithExpiry = (key, value, interval) => {
-      const now = new Date();
-      const item = {
-        value: value,
-        expiry: now.getTime() + interval
-      };
-      localStorage.setItem(key, JSON.stringify(item));
-    };
-    const getWithExpiry = (key) => {
-      const itemStr = localStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
-      const item = JSON.parse(itemStr);
-      const now = new Date();
-      if (now.getTime() > item.expiry) {
-        localStorage.removeItem(key);
-        return null;
-      }
-      return item.value;
-    };
-    const loadBanners = () => {
-      loadPromoBanner("HOME").then((res) => {
-        if (res.code === 0) {
-          banners.value = res.data;
-        }
-      });
-    };
-    const isFirstView = ref(false);
-    const isImpt = getWithExpiry("isImpt");
-    const homePopupImg = ref("");
-    const checkShowImgTop = () => {
-      const lastTime = localStorage.getItem("indexImgTop");
-      if (lastTime) {
-        const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
-        }
-      } else {
-        loadPromoBanner("HOMEPOP")
-          .then((res) => {
-            if (res.code === 0) {
-              if (res.data.length > 0) {
-                if (isImpt === null) {
-                  isImportantAnnoucementModal.value = true;
+  // {
+  //   src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
+  // }
+]);
+const isImportantAnnouncementModal = ref(false);
+const openGame = (gameName, platType, gameCode, scrollingState) => {
+  gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+};
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval
+  };
+  sessionStorage.setItem(key, JSON.stringify(item));
+};
+const getWithExpiry = (key) => {
+  const itemStr = sessionStorage.getItem(key);
+  if (!itemStr) {
+    return null;
+  }
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+  if (now.getTime() > item.expiry) {
+    sessionStorage.removeItem(key);
+    return null;
+  }
+  return item.value;
+};
+const loadBanners = () => {
+  loadPromoBanner("HOME").then((res) => {
+    if (res.code === 0) {
+      banners.value = res.data;
+    }
+  });
+};
+const isFirstView = ref(false);
+const isImpt = getWithExpiry("isImpt");
+const homePopupImg = ref("");
+const homePopupPath = ref("");
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
 
-                  homePopupImg.value = res.data.length > 0 ? imgURL + res.data[0]["desktopImageUrl"] : "";
-                  if (homePopupImg.value) {
-                    isFirstView.value = true;
-                  }
-                }
-              } else {
-                isImportantAnnoucementModal.value = false;
-              }
+const checkShowImgTop = () => {
+  const lastTime = sessionStorage.getItem("indexImgTop");
+  if (lastTime) {
+    const diff = new Date().getTime() - Number(lastTime);
+    if (diff > 1000 * 60 * 60 * 12) {
+      isFirstView.value = true;
+    }
+  } else {
+    loadHomePopup("")
+      .then((res) => {
+        // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        //   res = apiMockData;
+        // }
+        const { code, data } = res;
+        if (code === 0) {
+          if (isImpt === null) {
+            switch (data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
             }
-          })
-          .catch(() => {});
-      }
-    };
+            isImportantAnnouncementModal.value = true;
+            homePopupPath.value = data["path"];
+            homePopupImg.value = imgURL + data["desktopImgUrl"];
+            homePopupContent.value = data["content"];
+            homePopupType.value = data["type"];
+            homePopupId.value = data["id"];
+            homePopupFrequency.value = data["frequency"];
+            isFirstView.value = true;
+          } else {
+            isImportantAnnouncementModal.value = false;
+          }
+        }
+      })
+      .catch(() => {});
+  }
+};
 
-    const goBannerPage = (redirectUrl) => {
-      const openPattern = /^\/open\/(.*)/;
-      if (redirectUrl.match(openPattern)) {
-        const extractedUrl = redirectUrl.match(openPattern)[1];
-        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+const clickHomePopupImg = (urlString) => {
+  isImportantAnnouncementModal.value = false;
 
-        gameMenu.value.open(gameName, platformCode, gameCode, "OPEN");
-      } else if (redirectUrl == "app://deposit") {
-        router.push("/center/deposit");
-      } else {
-        router.push(`/promotion?name=${redirectUrl}`);
-      }
-    };
+  const openPattern = /^\/open\/(.*)/;
+  if (urlString.match(openPattern)) {
+    const extractedUrl = urlString.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
 
-    onMounted(() => {
-      loadBanners();
-      checkShowImgTop();
-    });
-    return {
-      banners,
-      isImportantAnnoucementModal,
-      gameMenu,
-      openGame,
-      imgURL,
-      getWithExpiry,
-      setWithExpiry,
-      homePopupImg,
-      isImpt,
-      goBannerPage
-    };
+    gameMenu.value.open(gameName, platformCode, gameCode, "OPEN");
+    return;
+  }
+
+  // debugger;
+  let regexUrl = new RegExp(/^(https:\/\/)/g);
+  if (regexUrl.test(urlString)) {
+    // 跳轉
+    location.href = urlString;
+    return;
+  }
+  let regexName = new RegExp(/^(name|\?name)/g);
+  if (regexName.test(urlString)) {
+    //去優惠
+    router.push(`/promotion${urlString}`);
+    return;
+  }
+
+  router.push(`${urlString}`);
+};
+
+const goBannerPage = (redirectUrl) => {
+  const openPattern = /^\/open\/(.*)/;
+  if (redirectUrl.match(openPattern)) {
+    const extractedUrl = redirectUrl.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+    gameMenu.value.open(gameName, platformCode, gameCode, "OPEN");
+  } else if (redirectUrl == "app://deposit") {
+    router.push("/center/deposit");
+  } else {
+    router.push(`/promotion?name=${redirectUrl}`);
+  }
+};
+
+onMounted(() => {
+  loadBanners();
+  if (store.token && store.memberType === "TEST") {
+    checkShowImgTop();
   }
 });
+
+watch(
+  () => store.token,
+  () => {
+    if (store.token && store.memberType === "TEST") {
+      checkShowImgTop();
+    }
+  }
+);
 </script>
 
 <style lang="scss">
@@ -1587,43 +1633,19 @@ export default defineComponent({
 }
 
 .imptann-modal {
-  // max-width: 600px;
-  max-width: 800px;
+  &.el-dialog {
+    max-width: 1300px;
+    width: max-content;
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+    margin-top: 25%;
+    transform: translate(0px, -50%);
+    padding: 20px;
+  }
 
   .el-dialog__body {
-    // padding: 50px 64px 40px;
     padding: 0;
-
-    // .inoticeContentList {
-    //   margin: 0;
-    //   padding: 0;
-
-    //   .inotice-title-li {
-    //     list-style: none;
-    //     color: #474747;
-    //     font-size: 16px;
-    //     letter-spacing: 2px;
-    //     line-height: 32px;
-
-    //     &:before {
-    //       content: "";
-    //       display: inline-block;
-    //       width: 12px;
-    //       height: 12px;
-    //       background-color: #0195ff;
-    //       border-radius: 50%;
-    //       margin-right: 5px;
-    //     }
-
-    //     .inotice-modal-content-title {
-    //       color: #0195ff;
-    //     }
-
-    //     .inotice-mod {
-    //       // padding: 0 22px;
-    //     }
-    //   }
-    // }
 
     .inotice-nomorecheck {
       position: absolute;
@@ -1693,12 +1715,12 @@ export default defineComponent({
   .alert-img {
     display: block;
     width: 100%;
+    border-radius: 12px;
   }
 
   .el-dialog__headerbtn {
     // background: #0fb0ff !important;
     // height: 36px !important;
-    opacity: 0;
   }
 }
 </style>

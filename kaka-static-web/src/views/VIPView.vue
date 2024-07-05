@@ -11,16 +11,16 @@
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3" @click="store.openLiveChat()" class="claimBtn vipBirthday">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" @click="store.openLiveChat()" class="claimBtn vipBirthday">
                 <RiCake2Line />
                 {{ $t('vip.birthday') }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel !== Number(vip.vipLevel) || !canClaimMonthly}"
-                 @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" 
+                 @click="store.openLiveChat()" class="claimBtn vipMonthly">
                 <RiCalendar2Line />
                 {{ $t('vip.monthly') }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
+              <a :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
                  @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
                 <RiMoneyDollarCircleLine />
                 {{ $t('vip.upgrade') }}
@@ -33,7 +33,7 @@
               </div>
               <div class="description">
 
-                <span v-if="vipIndex !==0">
+                <span>
                   {{ $t('vip.vipUpgradeRequired') }}:
                   <span style="color: #700900">
                   {{$t('vip.totalBetMonth')}} {{vip.upgrade}}
@@ -42,8 +42,9 @@
                 <br/>
 
                 {{ $t('vip.vipMaintainRequired') }}:
-                <span style="color: #700900"><span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span>
-                <span v-else>{{$t('vip.totalBetMonth')}} {{ vip.maintain }}
+                <span style="color: #700900">
+                  <!-- <span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span> -->
+                <span>{{$t('vip.totalBetMonth')}} {{ vip.maintain }}
                 </span>
                 </span>
 
@@ -494,7 +495,7 @@
 
 <script>
 import { ref, reactive, defineComponent, computed, onMounted } from "vue";
-import { canRedeemMonthly, canRedeemWelcome, claimMonthly, claimWelcome } from "@/api/index/promo";
+import { canRedeemMonthly, canRedeem, claimMonthly, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
@@ -569,11 +570,11 @@ export default defineComponent({
           }
         })
       } else if (vipType === "welcome") {
-        claimWelcome(vipLevel).then((res) => {
+        claim(vipLevel).then((res) => {
           if(res.code === 0) {
             amount.value = store.currency.label + res.data;
             privilegeClaimedModalVisible.value = true;
-            modalTitle.value = t('vip.welcomeBonus');
+            modalTitle.value = t('vip.levelUpBonus');
 
           } else {
             ElMessage.error(res.message)
@@ -678,7 +679,7 @@ export default defineComponent({
   {
     vipLevel: "1",
     upgrade: "30,000",
-    maintain: "200",
+    maintain: "500",
     vipTitle: "VIP1",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -688,7 +689,7 @@ export default defineComponent({
   {
     vipLevel: "2",
     upgrade: "60,000",
-    maintain: "500",
+    maintain: "1,000",
     vipTitle: "VIP2",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -698,7 +699,7 @@ export default defineComponent({
   {
     vipLevel: "3",
     upgrade: "100,000",
-    maintain: "1,000",
+    maintain: "2,000",
     vipTitle: "VIP3",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -708,7 +709,7 @@ export default defineComponent({
   {
     vipLevel: "4",
     upgrade: "150,000",
-    maintain: "3,000",
+    maintain: "5,000",
     vipTitle: "VIP4",
     depositPromoAvailable: false,
     promoAvailable: false,
@@ -984,7 +985,7 @@ export default defineComponent({
             canClaimMonthly.value = res.data
           }
         })
-        canRedeemWelcome().then((res) => {
+        canRedeem().then((res) => {
           if (res.code === 0) {
             // Your arrays of elements
             const promoAvailableElements = res.data.promoAvailable;
@@ -993,12 +994,14 @@ export default defineComponent({
 
             // Function to update properties based on the provided elements
             function updatePropertiesBasedOnElements(elements, property) {
-              elements.forEach((element) => {
-                const index = element - 1;
-                if (index >= 0 && index < vipItems.length) {
-                  vipItems[index][property] = true;
-                }
-              });
+              if (elements) {
+                elements.forEach((element) => {
+                  const index = element - 1;
+                  if (index >= 0 && index < vipItems.length) {
+                    vipItems[index][property] = true;
+                  }
+                });
+              }
             }
             // Call the function to update properties based on promoAvailable elements
             updatePropertiesBasedOnElements(promoAvailableElements, "promoAvailable");
@@ -1181,54 +1184,37 @@ $border-settings: 1px solid #e5e7eb;
         }
         svg{
           width: 18px;
-          fill: #000000;
+          fill: #ffffff;
         }
       }
     }
 
-    &4, &5, &6 {
+    &6, &7, &8, &9, &10 {
       background: url("../assets/vip/badge/banner-3.png") no-repeat top center;
       background-size: contain;
     }
 
-    &7, &8, &9 {
+    &11, &12, &13, &14, &15 {
       background: url("../assets/vip/badge/banner-5.png") no-repeat top center;
       background-size: contain;
     }
 
-    &10, &11, &12 {
-      background: url("../assets/vip/badge/banner-6.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &13, &14, &15 {
+    &16, &17, &18, &19, &20 {
       background: url("../assets/vip/badge/banner-7.png") no-repeat top center;
       background-size: contain;
     }
 
-    &16, &17, &18 {
-      background: url("../assets/vip/badge/banner-8.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &19, &20, &21 {
+    &21, &22, &23, &24, &25 {
       background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
       background-size: contain;
     }
 
-    &22, &23, &24 {
-      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-      background-size: contain;
-    }
-
-
-    &25, &26, &27 {
-      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &28, &29, &30 {
+    &26, &27, &28, &29 {
       background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+      background-size: contain;
+    }
+    &30 {
+      background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
       background-size: contain;
     }
 

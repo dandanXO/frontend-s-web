@@ -1,7 +1,7 @@
 export default {
   lang: {
     langVal: "en",
-    app_download_title: "KAKAappDownload",
+    app_download_title: "KAKA appDownload",
     app_download_desc: "Asia's No. 1 Live Roll",
     dowload_now: "Download Now",
     login: "Login",
@@ -476,6 +476,7 @@ export default {
     upgrade_bonus: "Upgrade bonus",
     return_bonus: "Return bonus",
     vip_welcome_bonus: "Welcome bonus",
+    vip_levelup_bonus: "Level Up bonus",
     vip_monthly_bonus: "Monthly bonus",
     vip_birthday_bonus: "Birthday bonus",
     vip_request: "Request",
@@ -1505,6 +1506,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "The account is temporarily locked due to entering the wrong password many times",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",

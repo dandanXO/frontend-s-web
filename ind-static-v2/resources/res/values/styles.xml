@@ -18,14 +18,4 @@
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
       <item name="android:windowBackground">@drawable/icon</item>
     </style>
-
-    <!-- Splash screen theme -->
-    <style name="Theme.App.Splash" parent="Theme.SplashScreen">
-      <!-- Set the splash screen background -->
-      <item name="windowSplashScreenBackground">@color/newSplashBackgroundColor</item>
-      <!-- Set the splash screen icon -->
-      <item name="windowSplashScreenAnimatedIcon">@drawable/icon_splash</item>
-      <!-- Set the splash screen icon background color -->
-      <item name="windowSplashScreenIconBackgroundColor">@color/newSplashBackgroundColor</item>
-    </style>
 </resources>

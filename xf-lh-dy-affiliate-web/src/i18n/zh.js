@@ -531,6 +531,7 @@ export default {
     depositWithdrawalDiff: '存提差',
     recommenderCode: '邀请码',
     memberShareRatio: '玩家返水比例',
+    editShareRatio: '编辑返水',
   },
   google: {
     google_auth_menu: '谷歌验证',

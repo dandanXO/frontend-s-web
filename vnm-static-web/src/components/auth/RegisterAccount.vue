@@ -503,7 +503,7 @@ onMounted(() => {
   width: 100%;
 
   margin: 15px 0px;
-  margin-top: 50px !important;
+  margin-top: 40px;
   padding: 5px;
 
   position: relative;

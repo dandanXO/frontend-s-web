@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-icon.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -2302,8 +2302,9 @@ export default defineComponent({
 
 .download-top-container {
   padding: 8px 10px;
-  background: $white;
-  box-shadow: 0px 5px 10px 0px #0000001f;
+  background: #1E212C;
+  border-bottom: 1px solid #FFFFFF66;
+  box-shadow: 0px 1.74px 3.47px 0px #0000001F;
 
   .download-top-box {
     display: flex;
@@ -2317,9 +2318,9 @@ export default defineComponent({
     }
 
     .headicon {
-      flex: 2;
-      width: 15%;
+      flex: 1;
       //width: 120px;
+    height: 40px;
     }
 
     .download-txt-container {
@@ -2328,14 +2329,14 @@ export default defineComponent({
       line-height: 1rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      gap: 8px;
+      gap: 4px;
       color: $font-1;
 
       .download-title {
         font-size: 1.2rem;
-        color: $font-3;
+        color: #ffffff;
         font-weight: 600;
       }
     }
@@ -2346,10 +2347,11 @@ export default defineComponent({
     }
 
     .top-btn {
-      font-size: 1rem;
-      border-radius: 10px;
+      font-size: 1.2rem;
+      border-radius: 5px;
       flex: 1;
       width: 15%;
+      padding: 10px 14px;
     }
   }
 }
@@ -2401,8 +2403,9 @@ export default defineComponent({
     img {
       // height: 100%;
       // width: auto;
-      width: 100%;
-      max-width: 180px;
+      width: 90%;
+    max-width: 200px;
+    margin-top: 10px;
     }
   }
 
