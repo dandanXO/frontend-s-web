@@ -136,7 +136,7 @@ if (siteId === 'dy') {
   title.innerText = 'TF88';
 } else if (siteId === 'ka1') {
   link.href = '/kaka-favicon.ico';
-  title.innerText = 'KAKA LIVE';
+  title.innerText = 'KAKA GAME';
 } else if (siteId === 'krw') {
   link.href = '/kr-favicon.ico';
   title.innerText = 'City8';
