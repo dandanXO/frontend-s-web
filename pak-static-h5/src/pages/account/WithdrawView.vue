@@ -297,8 +297,8 @@
           {{ $t("btn.submit") }}
         </q-btn>
 
-        <div class="q-mt-sm tutorial-link" @click="isWithdrawTutorial = true">
-          {{ $t("withdraw.withdrawTutorial") }}
+        <div class="q-mt-sm " >
+          {{ $t("withdraw.withdrawTutorial") }} <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span> / <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
         </div>
       </div>
     </template>
@@ -314,8 +314,8 @@
           {{ $t("btn.submit") }}
         </q-btn>
 
-        <div class="q-mt-sm tutorial-link" @click="isWithdrawTutorial = true">
-          {{ $t("withdraw.withdrawTutorial") }}
+        <div class="q-mt-sm">
+          {{ $t("withdraw.withdrawTutorial") }} <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span> / <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
         </div>
       </div>
     </template>
@@ -712,6 +712,15 @@ const goToBank = () => {
 };
 
 const isWithdrawTutorial = ref(false);
+const langSelect= localStorage.getItem("languageLocale") ?? "";
+
+const openWithdrawTutorialVideo = () => {
+  if(langSelect==='ur'){
+    window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
+  }else{
+    window.open("https://drive.google.com/file/d/1u796pIy2tqdLtRIqfGRDAQgKWa1guIG2/view?usp=sharing", "_blank");
+  }
+}
 </script>
 
 <style scoped lang="scss">
