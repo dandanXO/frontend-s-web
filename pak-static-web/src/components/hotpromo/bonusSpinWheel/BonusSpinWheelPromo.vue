@@ -2,7 +2,7 @@
   <div class="container">
     <div class="spin-wheel-container">
       <div
-        :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
+        :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`"
         @click="spinWheel"
       >
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
@@ -19,7 +19,7 @@
             <img
               id="spin-wheel-bg"
               class="wheel-bg"
-              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg.png"
+              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg1.png"
             />
             <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
           </div>
@@ -56,6 +56,7 @@
 import { ref, onMounted } from "vue";
 import { getAviatorWheelRecords, postAviatorWheelSpin, getAviatorWheelInit } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n();
 
@@ -64,7 +65,7 @@ const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [3888, 888, 388, 188, 28, 18, 0, 58888, 18888, 8888];
+const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997 ];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -170,17 +171,34 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+
+  //FOr TesTING START
+  // const res = {
+  //   data: {
+  //     bonusAmount: 388,
+  //     availableSpin: 0
+  //   }
+  // }
+  // var bonusIndex = res.data.bonusAmount;
+  // if (res.data.type === "CONSOLATION") {
+  //   bonusIndex = -1;
+  // }
+  // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+  //
+  // spin(prizeIndex, () => {
+  //   showPrizePopup.value = true;
+  //   prizePopupBonusAmt.value = res.data.bonusAmount;
+  //   remainingDraws.value = res.data.availableSpin;
+  // });
+  // return;
+  //FOr TesTING END
+
   if (spinButtonDisable.value === true) {
     return;
   }
 
   if (remainingDraws.value <= 0) {
-    // $q.notify({
-    //   color: "negative",
-    //   position: "top",
-    //   message: `t("hotPromo.avaitorWheel.remainingDrawTimes"): 0`,
-    //   icon: "report_problem"
-    // });
+    ElMessage.error(t("hotPromo.aviatorWheel.remainingDrawTimes") + `:0`);
     return;
   }
 
