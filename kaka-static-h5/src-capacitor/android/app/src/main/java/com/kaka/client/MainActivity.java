@@ -1,4 +1,4 @@
-package com.vnm.client;
+package com.kaka.client;
 
 import com.getcapacitor.BridgeActivity;
 
