@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TF APP</title>
+    <title>KAKA.Game APP</title>
     <!--<link rel="shortcut icon" href="images/test.ico" />-->
+    <link rel="icon" href="style/images/logo-icon.ico" />
     <link rel="stylesheet" type="text/css" href="/style/css/ba.css?v=3">
     <link rel="stylesheet" type="text/css" href="/style/css/download.css?v=1">
     <link rel="stylesheet" type="text/css" href="/style/css/swiper-3.4.1.min.css?v=3" />
@@ -60,8 +61,8 @@
 <div class="download" style="background-image:url('style/images/bg.png')">
     <div class="remind">
         <div class="content">
-            <a class="logo"><img src="/style/images/logo.png" width="73px" height="73px"/></a>
-            <h3>TF App <span id="ver-no">().</span></h3>
+            <a class="logo"><img src="/style/images/kaka-logo.png" width="73px" height="73px"/></a>
+            <h3>KAKA.Game App <span id="ver-no">().</span></h3>
             <div class="remind-txt">
                 Hỗ trợ tất cả các game thể thao, Live Casino, Slots, Bắn cá trong một ứng dụng<br>
                 đặt cược dễ dàng và nhanh chóng<br>
@@ -70,7 +71,8 @@
             <div class="load">
                 <a class="install" id="installButton">tải xuống</a>
             </div>
-            <p class="tuto">kéo xuống để xem chỉ dẫn</p>
+<!--            kéo xuống để xem chỉ dẫn-->
+            <p class="tuto"></p>
             <span id="consult"></span>
         </div>
     </div>
@@ -93,8 +95,7 @@
 </div>
 <script>
     //NEED TO CHANGE THIS VERSION NO.
-    var versionNo= "1.0.8";
-
+    var versionNo= "1.0.1";
 
     var andList=[
         {imgurl:'/style/images/web/android/1.png'},
@@ -147,7 +148,7 @@
         var apkUrl = '';
 
         if (!affidValue) {
-            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=vnm&appType=ALL_SITE`;
+            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=ka2&appType=ALL_SITE`;
             try {
                 const response = await fetch(apiUrl, {
                     method: 'GET',
@@ -170,7 +171,7 @@
             }
 
         } else {
-            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/vnm/${affidValue}`;
+            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/ka2/${affidValue}`;
             button = document.getElementById("installButton");
             // //Android or Browser.
             // //Change URL ./download/jb_app.apk when go Live.
@@ -188,7 +189,7 @@
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = apkUrl;
-        link.download = `tf88-app-${versionNo}.apk`
+        link.download = `kaka-app-${versionNo}.apk`
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -237,18 +238,20 @@
     });
 
     function showAndroid(){
-        for(var i=0;i<andList.length;i++){
-            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+andList[i].imgurl+'" alt=""/></div>')
-        };
-        // $('#download').attr('href',`https://file.rd7etvkrgt.com/apps/8/tf88-app-${versionNo}.apk?v=`+Math.random());
+        //TODO:: Hide 1st.
+        // for(var i=0;i<andList.length;i++){
+        //     $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+andList[i].imgurl+'" alt=""/></div>')
+        // };
+        // $('#download').attr('href',`https://file.rd7etvkrgt.com/apps/8/kaka-app-${versionNo}.apk?v=`+Math.random());
     }
 
     function showIOS()
     {
+
         $("#ver-no").html("(iOS " + versionNo + ")");
 
-        $("#installButton").attr("href", "./download/TF88.mobileconfig");
-        $("#installButton").attr("download", "TF88.mobileconfig");
+        $("#installButton").attr("href", "./download/KAKA.mobileconfig");
+        $("#installButton").attr("download", "KAKA.mobileconfig");
     }
     function getIosPath()
     {
