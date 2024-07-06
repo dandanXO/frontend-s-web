@@ -95,18 +95,18 @@
         <InputRowGrid>
           <template #fields>
             <!-- <InputField :label="$t('form.virtualWallet')"> -->
-            <InputField :label="'Bank Account Number'">
+            <InputField :label="$t('bankCard.bankAccountNum')">
               <template #input>
                 <q-input
                   outlined
                   clearable
                   ref="cardNumberRef"
-                  :placeholder="'Please enter bank account number'"
+                  :placeholder="$t('bankCard.pleaseEnterCardAccount')"
                   v-model="bankCardInfo.cardNumber"
                   hide-bottom-space
                   :rules="[
-                    (val) => (val && val.length > 0) || `Please enter bank account number`,
-                    (val) => (val && val.length >= 16) || 'Bank account number must be 16 numbers and above'
+                    (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterCardAccount'),
+                    (val) => (val && val.length >= 16) || $t('bankCard.bankCardMust16NumberandAbove')
                   ]"
                 ></q-input>
               </template>
@@ -116,17 +116,17 @@
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="`Account Bank Address`">
+            <InputField :label="$t('bankCard.nameofCardAcc')">
               <template #input>
                 <q-input
                   outlined
                   clearable
                   lazy-rules
-                  ref="cardAddress"
-                  placeholder="Please insert account bank address"
-                  v-model="bankCardInfo.cardAddress"
+                  ref="cardAccount"
+                  :placeholder="$t('bankCard.insertCardAccName')"
+                  v-model="bankCardInfo.cardAccount"
                   hide-bottom-space
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert account bank address']"
+                  :rules="[(val) => (val && val.length > 0) || $t('bankCard.insertCardAccName')]"
                 ></q-input>
               </template>
             </InputField>
@@ -236,10 +236,13 @@ import { reactive, ref, onMounted, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+
+const { t } = useI18n();
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);

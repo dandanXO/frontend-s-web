@@ -104,7 +104,7 @@
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
-              <div class="card-label">Add New Account</div>
+              <div class="card-label">{{ $t('btn.addNewAccount') }}</div>
             </div>
           </div>
         </q-card>

@@ -408,6 +408,13 @@ export default {
     cancel: "منسوخ کریں",
     updateNow: "ابھی اپ ڈیٹ کریں"
   },
+  bankCard:{
+    bankAccountNum : "بینک اکاؤنٹ نمبر",
+    pleaseEnterCardAccount : "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
+    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
+    nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
+    insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"
+  },
   promo: {
     all: "سب",
     earn: "کمائیں",

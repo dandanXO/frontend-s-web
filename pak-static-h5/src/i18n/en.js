@@ -409,6 +409,13 @@ export default {
     cancel: "Cancel",
     updateNow: "Update now"
   },
+  bankCard:{
+    bankAccountNum : "Bank Account Number",
+    pleaseEnterCardAccount : "Please enter bank account number",
+    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    nameofCardAcc: "Card Account Name",
+    insertCardAccName: "Please insert card account name"
+  },
   promo: {
     all: "ALL",
     earn: "EARN",
