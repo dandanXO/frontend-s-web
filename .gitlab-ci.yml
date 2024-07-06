@@ -289,6 +289,13 @@ deploy-vnm-maintenance:
 
 #===============================================================================================
 
+deploy-kaka-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: kaka-download
+
+#===============================================================================================
+
 build-tf-manager-web:
   extends: .build-projects
   variables:
