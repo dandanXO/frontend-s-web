@@ -2,7 +2,7 @@
   <div class="container">
     <div class="spin-wheel-container">
       <div
-        :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
+        :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`"
         @click="spinWheel"
       >
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
@@ -19,7 +19,7 @@
             <img
               id="spin-wheel-bg"
               class="wheel-bg"
-              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg.png"
+              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg1.png"
             />
             <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
           </div>
@@ -64,7 +64,7 @@ const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [3888, 888, 388, 188, 28, 18, 0, 58888, 18888, 8888];
+const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997 ];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -171,6 +171,27 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+  //FOr TesTING START
+  // const res = {
+  //   data: {
+  //     bonusAmount: 999999,
+  //     availableSpin: 0
+  //   }
+  // }
+  // var bonusIndex = res.data.bonusAmount;
+  // if (res.data.type === "CONSOLATION") {
+  //   bonusIndex = -1;
+  // }
+  // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+  //
+  // spin(prizeIndex, () => {
+  //   showPrizePopup.value = true;
+  //   prizePopupBonusAmt.value = res.data.bonusAmount;
+  //   remainingDraws.value = res.data.availableSpin;
+  // });
+  // return;
+  //FOr TesTING END
+
   if (spinButtonDisable.value === true) {
     return;
   }
@@ -179,7 +200,7 @@ const spinWheel = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: `t("hotPromo.avaitorWheel.remainingDrawTimes"): 0`,
+      message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
       icon: "report_problem"
     });
     return;
@@ -250,7 +271,7 @@ onMounted(() => {
   height: 330px;
   margin: 0 auto;
   background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-frame.png) no-repeat center
-    center;
+  center;
   background-size: 115%;
 }
 
@@ -466,7 +487,7 @@ onMounted(() => {
       font-size: 25px;
       letter-spacing: 2px;
       background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+      linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
