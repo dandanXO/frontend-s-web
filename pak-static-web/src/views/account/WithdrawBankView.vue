@@ -620,7 +620,7 @@ const handleSelectBank = (id) => {
 }
 
 .bankModal .ant-modal {
-  max-width: 520px;
+  max-width: 800px;
   width: 100%;
   top: 0;
   height: 100vh;
@@ -974,6 +974,8 @@ const handleSelectBank = (id) => {
 .bank-btn-wrapper {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+
   .bank-btn {
     display: flex;
     align-items: center;

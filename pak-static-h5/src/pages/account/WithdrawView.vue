@@ -378,7 +378,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { convertToCommaAmount } from "src/boot/utils";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
 const store = userStore();
@@ -706,7 +706,7 @@ const openEWalletTutorial = (code) => {
 const isLoadingBankCard = ref(false);
 const isLoadingWithdrawalMethod = ref(false);
 const isSubmitDisable = ref(false);
-
+const route= useRoute();
 const goToBank = () => {
   router.push("/account/bank?from=" + route.path);
 };
