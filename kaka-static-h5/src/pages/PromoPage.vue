@@ -891,6 +891,24 @@ export default defineComponent({
           border-spacing: 0;
           border-collapse: collapse;
 
+          tr {
+            &:first-child {
+              td:first-child {
+                border-radius: 20px 0 0 0;
+              }
+              td:last-child {
+                border-radius: 0 20px 0 0;
+              }
+            }
+            &:last-child {
+              td:first-child {
+                border-radius: 0 0 0 20px;
+              }
+              td:last-child {
+                border-radius: 0 0 20px 0;
+              }
+            }
+          }
           th {
             padding: 5px;
             text-align: center;
