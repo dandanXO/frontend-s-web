@@ -1836,7 +1836,6 @@ const returnBannerUrl = (banner) => {
     }
     return require(`../assets/images/banners/${bannerImg}`);
   } catch (e) {
-    console.log("WERR")
     return imgURLPromo + banner.mobileImageUrl;
   }
 }

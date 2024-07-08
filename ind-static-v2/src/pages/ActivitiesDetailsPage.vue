@@ -134,13 +134,27 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onActivated } from "vue";
+import { eventapi } from "boot/axios";
 
 const progressDeposit = ref(0.55);
 const progressDailyWager = ref(0.78);
 
 const progressDepositLabel = computed(() => (progressDeposit.value * 100).toFixed(2) + "%");
 const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).toFixed(2) + "%");
+
+const isLoading= ref(false);
+
+onActivated(() => {
+  console.log("Onmounted");
+  const acitivtyApi= "/session/ind/deposit/bonus";
+  eventapi.get(acitivtyApi).then((res) => {
+    isLoading.value = false;
+    var data = res.data.data;
+    console.log(data)
+  });
+})
+
 </script>
 
 <style lang="scss" scoped>
