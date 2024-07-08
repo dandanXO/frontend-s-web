@@ -40,7 +40,8 @@
       </div>
     </div>
     <div class="activities-days-container">
-      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="[i + 1 === 7 ? 'days-box__last' : 'days-box', {'isReceived': rules[bonusSeq] === rule || i < bonusSeq}]">
+      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="[i + 1 === 7 ? 'days-box__last' : 'days-box',
+      {'isReceived': (i===bonusSeq && isReceivedToday) || i < bonusSeq}]">
         <div class="box-ribbon">Day {{ i + 1 }}</div>
         <div class="box-img">
           <img v-if="rules[bonusSeq] === rule || i < bonusSeq" :src="require(`../assets/images/promotion/activities/day-received.png`)" />
@@ -206,9 +207,9 @@ onActivated(() => {
     margin-top: 1rem;
     .days-box {
       background: #3B156E4D;
-      &.isReceived {   
+      &.isReceived {
         background: linear-gradient(356.25deg, #3B156E -0.21%, #8100AE 93.65%);
-   
+
       }
       padding: 12px;
       display: flex;
