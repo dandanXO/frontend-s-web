@@ -1,63 +1,53 @@
 <template>
   <div class="main-section">
-
     <div class="share-wrapper">
       <div class="sharing-container">
         <div class="qr-container">
-          <VueQRCodeComponent size="150" :text="referralLink"/>
+          <VueQRCodeComponent size="150" :text="referralLink" />
           <!-- <qr-code :text="referralLink" error-level="L"></qr-code> -->
           <!-- <img src="../../assets/images/account/share/qr_code.png" /> -->
         </div>
         <div class="right-container">
           <div class="share-content">
-            {{ $t('lang.receive_a_daily_bonus_share_qr_code_with_friends') }}
+            {{ $t("lang.receive_a_daily_bonus_share_qr_code_with_friends") }}
           </div>
           <div class="share-link-wrapper">
-            <q-input style="width: 100%;" filled color="white"
-                     ref="copyinput"
-                     v-model="referralLink"
-                     @blur="blurCode"
-            />
-            <q-btn color="brand" class="common-btn copy-btn"
-                   @blur="blurCode" @click="copyCode">
+            <q-input style="width: 100%" filled color="white" ref="copyinput" v-model="referralLink" @blur="blurCode" />
+            <q-btn color="brand" class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
               {{ copybtntxt }}
             </q-btn>
           </div>
 
           <div class="share-table-div">
-            <div class="table-row first-row">{{ $t('lang.my_total_refer_friends_rebate') }}</div>
+            <div class="table-row first-row">{{ $t("lang.my_total_refer_friends_rebate") }}</div>
             <div class="table-row first-row">{{ referInfo.totalRebate }} baht</div>
-            <div class="empty-row" style="grid-column: 3/-1;">&nbsp;</div>
+            <div class="empty-row" style="grid-column: 3/-1">&nbsp;</div>
 
-            <div class="table-row">{{ $t('lang.my_a_line_refer_total') }}</div>
+            <div class="table-row">{{ $t("lang.my_a_line_refer_total") }}</div>
             <div class="table-row">{{ referInfo.alineCount }}</div>
-            <div class="table-row">{{ $t('lang.total_bets') }}：</div>
+            <div class="table-row">{{ $t("lang.total_bets") }}：</div>
             <div class="table-row">{{ referInfo.alineBet }}</div>
-            <div class="table-row">{{ $t('lang.total_rebate_return') }} ({{ referInfo.alinePercentage }}%):</div>
+            <div class="table-row">{{ $t("lang.total_rebate_return") }} ({{ referInfo.alinePercentage }}%):</div>
             <div class="table-row row-a-last">{{ referInfo.alineRebate }} baht</div>
 
-
-            <div class="table-row row-b-first">{{ $t('lang.my_b_line_refer_total') }}</div>
+            <div class="table-row row-b-first">{{ $t("lang.my_b_line_refer_total") }}</div>
             <div class="table-row row-b-first">{{ referInfo.blineCount }}</div>
-            <div class="table-row">{{ $t('lang.total_bets') }}：</div>
+            <div class="table-row">{{ $t("lang.total_bets") }}：</div>
             <div class="table-row">{{ referInfo.blineBet }}</div>
-            <div class="table-row">{{ $t('lang.total_rebate_return') }} ({{ referInfo.blinePercentage }}%):</div>
+            <div class="table-row">{{ $t("lang.total_rebate_return") }} ({{ referInfo.blinePercentage }}%):</div>
             <div class="table-row">{{ referInfo.blineRebate }} baht</div>
-
-
           </div>
-
         </div>
       </div>
       <div class="otherlinks">
-        <span class="note">{{ $t('lang.your_referral_bonus_has_not_been_shared') }}</span>
+        <span class="note">{{ $t("lang.your_referral_bonus_has_not_been_shared") }}</span>
 
         <div class="links">
-          <RiFacebookCircleLine/>
-          <RiWhatsappLine/>
-          <RiTelegramLine/>
-          <RiTwitterLine/>
-          <RiInstagramLine/>
+          <RiFacebookCircleLine />
+          <RiWhatsappLine />
+          <RiTelegramLine />
+          <RiTwitterLine />
+          <RiInstagramLine />
         </div>
       </div>
     </div>
@@ -131,7 +121,7 @@ export default defineComponent({
         const res = ret.data
         if (res.code === 0) {
           //TODO:: ADd Url After That.
-          const url = 'https://jolly88.com/';
+          const url = 'https://jolly8858.com/';
           referralLink.value = url + `refer/${res.data}`;
         }
       }).catch((err) => {
@@ -264,13 +254,12 @@ export default defineComponent({
   }
 
   .table-row {
-    white-space: nowrap;;
+    white-space: nowrap;
     height: 40px;
     line-height: 32px;
     background: $secondary;
     padding: 8px 8px;
   }
-
 }
 
 .preferred {
@@ -284,7 +273,7 @@ export default defineComponent({
 <style scoped lang="scss">
 @media (max-width: 991px) {
   .share-table-div {
-    grid-template-columns:  1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     .empty-row {
       display: none;
@@ -298,7 +287,6 @@ export default defineComponent({
       margin-top: 8px;
     }
   }
-
 }
 
 @media (max-width: 768px) {
@@ -320,9 +308,8 @@ export default defineComponent({
 @media (max-width: 500px) {
   .share-table-div {
     width: calc(100% - 20px);
-    grid-template-columns:  1fr;
+    grid-template-columns: 1fr;
     gap: 0px;
-
 
     .first-row {
       margin-bottom: 0px;
@@ -332,7 +319,7 @@ export default defineComponent({
       }
     }
 
-    .row-a-last{
+    .row-a-last {
       margin-bottom: 10px;
     }
     .row-b-first {
