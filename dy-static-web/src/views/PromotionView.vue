@@ -1,15 +1,11 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
+      <div class="promo-top">
+        <img src="../assets/promo/promo-top-bg1.jpg" alt="" class="all-promotions-bg" />
+      </div>
+
       <div class="promo-main-container">
-        <div class="promo-top">
-          <div class="promo-top-img1">
-            <img src="../assets/promo/bg-top-img1.png" alt="" width="100%" />
-          </div>
-          <div class="promo-top-img2">
-            <img src="../assets/promo/bg-top-img2.png" alt="" width="100%" />
-          </div>
-        </div>
         <div class="promo-type-wrapper">
           <div class="type-list">
             <div
@@ -52,7 +48,6 @@
           </div>
         </div>
       </div>
-      <img src="../assets/promo/bg-top.png" alt="" class="all-promotions-bg" />
     </div>
 
     <div
@@ -315,21 +310,12 @@ export default defineComponent({
   // background: #090b19;
   .all-promotions {
     min-height: 40vh;
-    padding: 50px;
+    padding: 0px 0px 50px 0px;
     position: relative;
     background-color: #ebf4ff;
 
     margin: 0 auto;
-    max-width: 1920px;
-  }
-
-  .all-promotions-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0.5;
-    pointer-events: none;
+    //max-width: 1920px;
   }
 
   .promo-view-container {
@@ -410,18 +396,15 @@ export default defineComponent({
   }
 
   .promo-top {
+    width: 100%;
     display: flex;
     justify-content: space-around;
-    padding: 0 20px;
+    padding: 0 0px;
     position: relative;
     z-index: 1;
 
-    .promo-top-img1 {
-      width: 543px;
-    }
-
-    .promo-top-img2 {
-      width: 305px;
+    img {
+      width: 100%;
     }
   }
 
@@ -453,7 +436,7 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 10px 0;
+      padding: 0px 0 10px;
 
       .promo-type-wrapper {
         display: flex;
