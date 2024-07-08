@@ -13,11 +13,11 @@
     const randNum = Math.floor(Math.random() * 2) + 1;
     const next = urlLists[randNum - 1];
     let timeoutId;
-    // if (isWaitClick === 'false') {
-    //     timeoutId = setTimeout(() => {
-    //         window.location = next;
-    //     }, 3000);
-    // }
+    if (isWaitClick === 'false') {
+        timeoutId = setTimeout(() => {
+            window.location = next;
+        }, 3000);
+    }
     const existsContent = "站点安全";
 </script>
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
