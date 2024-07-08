@@ -540,7 +540,7 @@ export default {
     deposit: "입금",
     applying: "처리 중",
     failed: "실패",
-    under_review: "검토 중",
+    under_review: "처리 중",
     to_be_paid: "지급 진행 중",
     payment_on_going: "이체 진행 중",
     automatic_payment: "자동 지급",
