@@ -341,12 +341,22 @@ export function duanwuDepositBet() {
     });
 }
 
-export function getNewUserInit() {
+export function getNewUserSetupBonusInit() {
   return server.EVENT.get("/new-user-setup-bonus/init");
 }
 
-export function putNewUserClaim(promocode) {
-  return server.EVENT.put("new-user-setup-bonus/claim", {
+export function putNewUserSetupBonusClaim(promocode) {
+  return server.EVENT.put("/new-user-setup-bonus/claim", {
     promocode,
   });
+}
+
+export function getNewUserAccumulateDepositInit() {
+  return server.EVENT.get("/new-user-accumulate-deposit/init")
+}
+
+export function putNewUserAccumulateDepositClaim(ruleAmount) {
+  return server.EVENT.put("/new-user-accumulate-deposit/claim", {
+    ruleAmount
+  })
 }

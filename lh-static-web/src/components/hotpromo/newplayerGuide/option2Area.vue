@@ -329,23 +329,54 @@
       
 
       <div class="rewards">
-        <div class="reward" v-for="(reward, index) in rewards" :key="index">
-          <p>{{ reward.earn }}元</p>
-          <p>累计充值值{{ reward.threshold }}元</p>
-          <button class="YES" v-if="reward.state === 'YES' "> 領取</button>
-          <button class="NO" v-if="reward.state === 'NO' "> 立即前往</button>
+        <div class="reward" v-for="(reward, index) in rewards1" :key="index">
+          <img :src="require(`@/assets/images/promotion/hotpromo/newplayerguide/bonus-${reward.amount}.png`)" alt="" width="100%" />
+          <button class="YES" v-if="reward.state === 'YES' " @click="handleRecieve(reward)"> 領取</button>
+          <button class="NO" v-if="reward.state === 'NO' " @click="handleRedirect"> 立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED' ">已领取</button>
         </div>
       </div>
     </div>
 
   </div>
+
+  <div class="promotion-container">
+    <div class="growth-strategy">
+      <div class="title-area">
+        <div style="display: flex; justify-content: start; align-items: center;">
+          <img  class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+          <div class="title">钱包冲刺</div>
+        </div>
+        <div class="title">已累计充值：<span style="color: rgba(0, 136, 215, 1);" >0</span> 元</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>18 元獎金</div>
+        <div>距 28 元奖金，还需充值 <span style="color: rgba(0, 136, 215, 1);"> 2271</span> 元</div>
+      </div>
+      
+
+      <div class="rewards">
+        <div class="reward" v-for="(reward, index) in rewards2" :key="index">
+          <img :src="require(`@/assets/images/promotion/hotpromo/newplayerguide/bonus-${reward.amount}.png`)" alt="" width="100%" />
+          <button class="YES" v-if="reward.state === 'YES' " @click="handleRecieve(reward)"> 領取</button>
+          <button class="NO" v-if="reward.state === 'NO' " @click="handleRedirect"> 立即前往</button>
+          <button class="CLAIMED" v-if="reward.state === 'CLAIMED' ">已领取</button>
+        </div>
+      </div>
+    </div>
+  </div>
  
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
 
+const router = useRouter();
 const selectedTab = ref('sports');
 
 function selectTab(tab) {
@@ -353,7 +384,7 @@ function selectTab(tab) {
 }
 
 const progressPercentage = ref(30);
-const rewards = ref([
+const rewards1 = ref([
   { amount: 1000, threshold: 1000, earn: 5, state: 'CLAIMED' },
   { amount: 1988, threshold: 1988, earn: 8, state: 'CLAIMED' },
   { amount: 3088, threshold: 3088, earn: 18, state: 'YES' },
@@ -361,6 +392,33 @@ const rewards = ref([
   { amount: 8888, threshold: 8888, earn: 38, state: 'CLAIMED' },
   { amount: 28888, threshold: 28888,earn: 58, state: 'CLAIMED' },
 ]);
+
+const rewards2 = ref([
+  { amount: 188, threshold: 1000, earn: 5, state: 'CLAIMED' },
+  { amount: 888, threshold: 1988, earn: 8, state: 'CLAIMED' },
+  { amount: 3588, threshold: 3088, earn: 18, state: 'YES' },
+  { amount: 6888, threshold: 5088, earn: 28, state: 'NO' },
+  { amount: 35888, threshold: 8888, earn: 38, state: 'CLAIMED' },
+  { amount: 88888, threshold: 28888,earn: 58, state: 'CLAIMED' },
+]);
+
+const handleRecieve = async (reward) => {
+  try {
+    const apiRes = await putNewUserAccumulateDepositClaim(reward.amount);
+    console.log(apiRes)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleRedirect = () => {
+  router.push({ path: '/home' })
+}
+
+onMounted(() => {
+  const apiRes = getNewUserAccumulateDepositInit();
+  console.log(apiRes)
+})
 </script>
 
 <style scoped lang="scss">
@@ -525,6 +583,11 @@ tbody tr:last-child  {
   padding: 5px;
   border-radius: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   .CLAIMED{
     width: 120px;
     background: rgba(217, 217, 217, 1);

@@ -34,11 +34,15 @@
           <p>自注册日起，限时第 7 日 23:59:59 前领取完毕</p>
         </div>
         <div class="steps">
-          <div class="step">
+          <div class="step" :class="{ 'incomplete': bankCardBindState === 'NO'}">
             <div class="step-number">1</div>
             <div class="step-content">
               绑定手机号
-              <span class="status" :class="getStatus(telephoneBindState).class" @click="handleClickStatusButton(telephoneBindState, 'new-user-setup-bonus-telephone')">
+              <span
+                class="status"
+                :class="getStatus(telephoneBindState).class"
+                @click="handleClickStatusButton(telephoneBindState, 'new-user-setup-bonus-telephone')"
+              >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
                   src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
@@ -48,11 +52,15 @@
               </span>
             </div>
           </div>
-          <div class="step">
+          <div class="step" :class="{ 'incomplete': bankCardBindState === 'NO'}">
             <div class="step-number">2</div>
             <div class="step-content">
               绑定银行卡
-              <span class="status" :class="getStatus(bankCardBindState).class" @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')">
+              <span
+                class="status"
+                :class="getStatus(bankCardBindState).class"
+                @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')"
+              >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
                   src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
@@ -62,11 +70,15 @@
               </span>
             </div>
           </div>
-          <div class="step">
+          <div class="step" :class="{ 'incomplete': bankCardBindState === 'NO'}">
             <div class="step-number">3</div>
             <div class="step-content">
               绑定 USDT 地址
-              <span class="status" :class="getStatus(usdtAddrBindState).class" @click="handleClickStatusButton(usdtAddrBindState, 'new-user-setup-bonus-usdt-addr')">
+              <span
+                class="status"
+                :class="getStatus(usdtAddrBindState).class"
+                @click="handleClickStatusButton(usdtAddrBindState, 'new-user-setup-bonus-usdt-addr')"
+              >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
                   src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
@@ -89,7 +101,7 @@
             <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
             <div class="title">首次提款</div>
           </div>
-          <button class="go-btn" :class="{ 'complete': firstWithdrawalState === 'CLAIMED' }">
+          <button class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
             <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
               <img
                 v-if="firstWithdrawalState === 'CLAIMED'"
@@ -121,48 +133,68 @@
         />
       </div>
     </div>
-    <div class="container">
-      <div class="left-panel">
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
-          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/mark.png" alt="Gift" width="32px"/>
-          <div class="title">活动规则</div>
-        </div>
-        <div>
-          <ol class="rules-content">
-            <li>
-              <span class="step-number">1</span>自注册日起算 30
-              天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
-            </li>
-            <li><span class="step-number">2</span>新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包</li>
-            <li>
-              <span class="step-number">3</span>每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2
-              倍流水。
-            </li>
-            <li><span class="step-number">4</span>完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。</li>
-            <li>
-              <span class="step-number">5</span>此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
-            </li>
-            <li>
-              <span class="step-number">6</span>每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
-              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
-            </li>
-            <li><span class="step-number">7</span>此活动最终解释权归雷火所有;</li>
-          </ol>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="option2" v-if="selected === 'option2'">
     <option2Area></option2Area>
+  </div>
+  <div class="container">
+    <div class="left-panel">
+      <div style="display: flex; align-items: center; margin-bottom: 12px">
+        <img
+          class="big-icon"
+          src="@/assets/images/promotion/hotpromo/newplayerguide/mark.png"
+          alt="Gift"
+          width="32px"
+        />
+        <div class="title">活动规则</div>
+      </div>
+      <div>
+        <ol class="rules-content">
+          <li>
+            <span class="step-number">1</span>
+            自注册日起算 30 天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2
+            倍流水。
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。
+          </li>
+          <li>
+            <span class="step-number">5</span>
+            此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+          </li>
+          <li>
+            <span class="step-number">6</span>
+            每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
+            地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+          </li>
+          <li>
+            <span class="step-number">7</span>
+            此活动最终解释权归雷火所有;
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { getNewUserInit, putNewUserClaim } from "@/api/index/promo";
+import { useRouter } from 'vue-router'
+import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
 import option2Area from "./option2Area.vue";
-const selected = ref("option1");
 
+const router = useRouter()
+
+const selected = ref("option1");
 const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
@@ -198,48 +230,46 @@ const getStatus = (status) => {
 const getStatus2 = (status) => {
   const statusTextMap = {
     NO: {
-      text: "立即前往",
+      text: "立即前往"
     },
     YES: {
-      text: "立即领取",
+      text: "立即领取"
     },
     CLAIMED: {
-      text: "已领取",
+      text: "已领取"
     }
   };
   return statusTextMap[status];
-}
+};
 
 const handleClickStatusButton = (status, promocode) => {
-  if (status === 'CLAIMED') return
+  if (status === "CLAIMED") return;
 
-  if (status === 'NO') {
-    // 跳轉到該頁面
-    console.log('跳轉到該頁面')
-  } else if (status === 'YES') {
-    getBonus(promocode)
+  if (status === "NO") {
+    router.push({ path: '/home' })
+  } else if (status === "YES") {
+    getBonus(promocode);
   }
-}
+};
 
 const getBonus = async (promocode) => {
   try {
-    const apiRes = await putNewUserClaim(promocode)
-    console.log(apiRes)
-
+    const apiRes = await putNewUserSetupBonusClaim(promocode);
+    console.log(apiRes);
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
 
 onMounted(async () => {
-  const apiRes = await getNewUserInit();
+  const apiRes = await getNewUserSetupBonusInit();
 
   bankCardBindState.value = apiRes.data.bankCardBindState;
   firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
   telephoneBindState.value = apiRes.data.telephoneBindState;
   usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
 
-  progress.value = apiRes.data.firstWithdrawalState === 'NO' ? 0 : 1
+  progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
 });
 </script>
 
@@ -396,12 +426,16 @@ h1 {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+
+  &.incomplete {
+    background: #D7EBFF;
+  }
 }
 
 .step-number {
   width: 30px;
   height: 30px;
-  background: linear-gradient(90deg, #89D3FF 8.15%, #0085E8 92.42%);
+  background: linear-gradient(90deg, #89d3ff 8.15%, #0085e8 92.42%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -416,6 +450,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
+  color: black;
 }
 
 .status {
