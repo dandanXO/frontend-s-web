@@ -145,18 +145,14 @@
         </div>
 
         <!-- K豆教程视频 -->
-        <div style="margin-left: 150px" v-else-if="isEWALLET">
+        <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
           <el-button
             class="common-btn"
             v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
-            @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+            @click="openEWalletTutorial"
           >
-            <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'BLBPAY'">808钱包教程视频</span>
-            <span v-else-if="selectedWithdrawalMethod.code === 'JDPAY'">JDPAY教程视频</span>
+            <span>{{ tutorialLabel }}</span>
           </el-button>
         </div>
 
@@ -183,7 +179,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -287,6 +283,24 @@ export default defineComponent({
         }
       ]
     };
+
+    const tutorialLabel = computed(() => {
+      switch(selectedWithdrawalMethod.value.code) {
+        case "KDPAY":
+          return "K豆教程视频";
+        case "EBPAY":
+          return "EB教程视频";
+        case "OKPAY":
+          return "OK教程视频";
+        case "BLBPAY":
+          return "808钱包教程视频";
+        case "JDPAY":
+          return "JDPAY教程视频";
+        default:
+          return "";
+      }
+    })
+
     const checkBankCards = () => {
 
       if (isUSDT.value) {
@@ -432,19 +446,9 @@ export default defineComponent({
         return "银行卡";
       }
     };
-    const openEWalletTutorial = (code) => {
-      const urlMap = {
-        "KDPAY": "https://kdzfxz.kdzf2345.com/home/#/transactionFlow",
-        "EBPAY": "https://www.ebpay.org/",
-        "OKPAY": "https://me-qr.com/l/okpay",
-        'BLBPAY': 'http://808.com/tutorial.html',
-        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
-      };
-
-      const url = urlMap[code];
-      if (url) {
-        window.open(url);
-      }
+    const openEWalletTutorial = () => {
+      if(!selectedWithdrawalMethod.value.url) return
+      window.open(selectedWithdrawalMethod.value.url);
     };
     return {
       formRef,
@@ -467,7 +471,8 @@ export default defineComponent({
       checkBankCards,
       cardLabel,
       openEWalletTutorial,
-      isLoaded
+      isLoaded,
+      tutorialLabel
     };
   }
 });
