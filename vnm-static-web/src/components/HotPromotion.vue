@@ -1,25 +1,17 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
-    <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
-    <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
-    <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
-    <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
-    <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo " :promo-code="list.promoCode" />
-    <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo " :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo " :promo-code="list.promoCode" />
+    <!-- <PrizePoolVotePromo v-if="list.redirectUrl === 'lh1-s13-vote'" /> -->
+    <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin'" />
+    <PennyBank v-if="list.redirectUrl === 'vi-penny-bank'" />
+    <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss'" />
+    <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' " :promo-code="list.promoCode" />
+    <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" :promo-code="list.promoCode" />
+    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' " :promo-code="list.promoCode" />
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' " :promo-code="list.promoCode" />
 
     <HongBaoYu2024
-      v-if="list.redirectUrl === 'vi-mualixi-redpacket' && !isCommonPromo && store.token"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
-
-
-    <HongBaoYu2024
-      v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
+      v-if="listParam.type === 'redpacket' && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -41,7 +33,6 @@
 <script>
 import { defineComponent } from "vue";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
@@ -60,7 +51,6 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo,
     DailyLoginPromo,
     LotteryPromo,
     PennyBank,
@@ -82,7 +72,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isCommonPromo: null,
       emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
       dataSource: [],
@@ -305,27 +294,21 @@ export default defineComponent({
       return moment(ts).format("YYYY-MM-DD");
     }
   },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param)
+      } catch(e) {
+        console.log(e)
+        return {}
+      }
+    }
+  },
   mounted() {
     // console.log("Mount");
     // console.log(this.list);
 
     // List for non common promo
-    if (
-      this.list.redirectUrl === "vnm-iphone" ||
-      this.list.redirectUrl === "vi-daily-checkin" ||
-      this.list.redirectUrl === "vi-penny-bank" ||
-      this.list.redirectUrl === "vi-slot-netloss" ||
-      this.list.redirectUrl === "vi-poker-cashback" ||
-      this.list.redirectUrl === "Red_pocket_euro2024" ||
-      this.list.redirectUrl === "vnm-eurocup24"||
-      this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
-      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
-      this.list.redirectUrl === "vi-mualixi-redpacket"
-    ) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
-    }
     this.hotPromoList.forEach((element) => {
       if (this.list.id === element.id) {
         this.selectedHotPromo = element;

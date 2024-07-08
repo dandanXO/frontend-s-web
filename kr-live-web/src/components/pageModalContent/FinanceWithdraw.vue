@@ -80,7 +80,8 @@
                   (val) => !!parseDigitsWithComma(val) || '출금 금액을 입력해주세요',
                   (val) => parseDigitsWithComma(val) >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
                   (val) => parseDigitsWithComma(val) <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
-                  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || '출금 금액에는 소수점을 사용할 수 없습니다'
+                  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || '출금 금액에는 소수점을 사용할 수 없습니다',
+                  (val) => (isDivisibleBy10000(val)) || '출금 금액은 10,000 단위여야 합니다.'
                 ]" clearable>
                 <template v-slot:prepend>
                   <span style="z-index:1;font-size:16px;">
@@ -220,7 +221,23 @@ const withdrawAmountFormatted = ref('');
 
 const parseDigitsWithComma = (value) => {
   const withdrawAmount = value?.replace(/\$\s?|(,*)/g, '');
+  // console.log(withdrawAmount)
+  // console.log(selectedWithdrawalMethod.value.withdrawMin)
   return withdrawAmount;
+}
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g , "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 watch(() => withdrawAmountFormatted.value, () => {

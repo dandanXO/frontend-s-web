@@ -384,10 +384,10 @@ export default {
     jackpot: "Jackpot",
     bonus: "Bonus",
     amount: "Amount",
-    applying: "Applying",
+    applying: "Processing",
     failed: "Failed",
     Success: "Success",
-    underReview: "Under review",
+    underReview: "Processing",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
     automaticPayment: "Automatic Payment",
@@ -408,6 +408,13 @@ export default {
     newAppVersionContent_01: "New Version Detected, Do You Want To Update?",
     cancel: "Cancel",
     updateNow: "Update now"
+  },
+  bankCard:{
+    bankAccountNum : "Bank Account Number",
+    pleaseEnterCardAccount : "Please enter bank account number",
+    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    nameofCardAcc: "Card Account Name",
+    insertCardAccName: "Please insert card account name"
   },
   promo: {
     all: "ALL",
@@ -472,6 +479,7 @@ export default {
     1013: "The current account has already bound a birthday",
     1014: "The current account has already bound a name",
     1015: "The current account has already bound a nickname",
+    1016: "The registration function is being upgraded. Please register after 9:00 a.m. local time. Thank you!",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",

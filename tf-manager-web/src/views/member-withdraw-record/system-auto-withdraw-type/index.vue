@@ -486,7 +486,7 @@ async function handleChangeSite() {
 }
 
 async function disableAll() {
-  await disableSystemAutoPaymentTypeBySite(request.siteId)
+  await disableSystemAutoPaymentTypeBySite(request)
   loadAutoPaymentType()
 }
 

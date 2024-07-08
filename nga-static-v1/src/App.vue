@@ -125,9 +125,9 @@ export default defineComponent({
 
       var affiliateCode = "";
       if (omitSites.includes(window.location.host)) {
-        affiliateCode = "E4B265";
+        affiliateCode = "E94ED4";
       } else {
-        affiliateCode = "8999B3";
+        affiliateCode = "E94ED4";
       }
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);

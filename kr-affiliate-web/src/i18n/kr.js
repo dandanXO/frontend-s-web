@@ -754,6 +754,9 @@ export default {
     'Rebate Report': '리베이트 보고서',
     message: '사이트 메시지',
     'Member Management': '회원관리',
+    'Member Tree': '트리뷰',
+    'Bet Management': '베팅관리',
+    'Bet History': '회원베팅기록',
     inquiry: '문의',
   },
   posterType: {

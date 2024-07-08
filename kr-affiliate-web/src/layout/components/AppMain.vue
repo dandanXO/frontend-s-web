@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import './app.scss';
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import StatsHeader from "@/components/StatsHeader.vue";
@@ -53,6 +54,7 @@ elTables.forEach((elTable) => {
   position: relative;
   overflow: auto;
   height: calc(100vh - 157px);
+  background-color: #e4e5e6;
 
   &::-webkit-scrollbar-track {
     background-color: #d5d5d5;
@@ -87,6 +89,7 @@ elTables.forEach((elTable) => {
 
 .el-card {
   // border-radius: 20px !important;
+  border: none !important;
 }
 
 .el-card__header {
@@ -192,31 +195,6 @@ elTables.forEach((elTable) => {
 
 .el-table__empty-text {
   width: 100% !important;
-}
-
-.custom-table {
-  width: 100%;
-  border: 0;
-  border-collapse: collapse;
-
-  th {
-    background: #35414f;
-    text-align: left;
-    color: #fff;
-    font-family: 'NanumNeo';
-  }
-
-  th,
-  td {
-    padding: 5px;
-    font-size: 13px;
-    font-weight: 400;
-    border-color: #cfd8dc;
-  }
-
-  // tr:nth-child(even) {
-  //   background: #F4F9FD;
-  // }
 }
 
 .el-form-item__content {

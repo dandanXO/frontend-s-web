@@ -185,14 +185,14 @@
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 2">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
+              <span style="flex: 2"  class="text-neontb">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27;">
-              <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
+              <span style="flex: 1; color: #17cd27;">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{  selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
                 ? "0.00"
@@ -673,6 +673,7 @@ export default defineComponent({
 
       .type-name {
         font-weight: bold;
+
       }
 
       // img {
@@ -681,6 +682,7 @@ export default defineComponent({
     }
 
     .type-name {
+      color:#000;
       line-height: 15px;
       // overflow-wrap: break-word;
       white-space: nowrap;
@@ -769,5 +771,9 @@ export default defineComponent({
       }
     }
   }
+}
+
+.text-neontb{
+  color:#17cd27;
 }
 </style>

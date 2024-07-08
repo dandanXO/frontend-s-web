@@ -29,11 +29,7 @@
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">
               <svg-icon :icon-class="'lock'" />
             </ForgetPasswordModal>
-            <svg-icon
-              :icon-class="'logout'"
-              :title="$t('common.logout')"
-              @click="logout"
-            />
+            <svg-icon :icon-class="'logout'" :title="$t('common.logout')" @click="logout" />
           </div>
         </div>
       </div>
@@ -43,41 +39,20 @@
           <span>유저사이트</span>
         </div>
       </div>
-      <div
-        v-for="nav in navigationData"
-        :key="nav.id"
-        :class="`route-wrapper ${nav.active ? 'active' : ''}`"
-      >
-        <div
-          v-if="nav.display"
-          class="route-title row-item"
-          @click="checkMenu(nav)"
-        >
+      <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
+        <div v-if="nav.display" class="route-title row-item" @click="checkMenu(nav)">
           {{ nav.title }}
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
-        <div
-          v-for="child in nav.children"
-          :key="child.id"
-          :class="
-            `route-container ${child.active ? 'active' : ''} ${
-              nav.menuShown ? 'show-menu' : ''
-            }`
-          "
-        >
+        <div v-for="child in nav.children" :key="child.id" :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''
+          }`
+          ">
           <template v-if="child.path === '/commission-info' ? false : true">
-            <RouterLink
-              :to="nav.path + child.path"
-              class="route"
-              v-if="child.isMainNav"
-            >
+            <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
               <div class="route-content">
-                <svg-icon
-                  :icon-class="`${child.icon}`"
-                  :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''"
-                />
+                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" />
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -213,6 +188,14 @@ const getNavigationData = () => {
           icon: 'squares',
         },
         {
+          path: '/member-tree',
+          title: t('menu.Member Tree'),
+          label: 'Member Tree',
+          active: false,
+          isMainNav: true,
+          icon: 'branch',
+        },
+        {
           path: '/affiliate',
           title: t('menu.Affiliate'),
           label: 'Affiliate',
@@ -227,11 +210,35 @@ const getNavigationData = () => {
           active: false,
           isMainNav: true,
           icon: 'report',
+        }
+      ],
+    },
+    {
+      title: t('menu.Bet Management'),
+      label: 'Bet Management',
+      display: true,
+      path: '/bet-management',
+      children: [
+        {
+          path: '/game-record?gameType=LIVE',
+          title: t('menu.Bet History LIVE'),
+          label: 'Bet History LIVE',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
         },
         {
-          path: '/game-record',
-          title: t('menu.Bet Record'),
-          label: 'Bet Record',
+          path: '/game-record?gameType=SLOT',
+          title: t('menu.Bet History SLOT'),
+          label: 'Bet History SLOT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/game-record?gameType=SPORT',
+          title: t('menu.Bet History SPORT'),
+          label: 'Bet History SPORT',
           active: false,
           isMainNav: true,
           icon: 'clock',
@@ -468,8 +475,7 @@ watch(languageVal, newVal => {
 
     .logo-section {
       display: flex;
-      background: url('../../assets/images/kr/kr-logo-long.png') no-repeat
-        center center;
+      background: url('../../assets/images/kr/kr-logo-long.png') no-repeat center center;
       background-size: contain;
       width: 100%;
       height: 60px;
@@ -534,7 +540,7 @@ watch(languageVal, newVal => {
         display: flex;
         gap: 10px;
 
-        > div {
+        >div {
           align-items: center;
         }
       }

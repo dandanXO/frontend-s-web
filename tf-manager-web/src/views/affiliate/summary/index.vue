@@ -584,7 +584,8 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
-import { ElMessage } from 'element-plus'
+/* import { ElMessage } from 'element-plus'
+import { useStore } from "@/store"; */
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -724,8 +725,8 @@ function checkQuery() {
 }
 
 async function loadRecord() {
-  if (
-    !hasRole(['ADMIN']) &&
+  /* if (
+    !hasRole(["ADMIN", "LH-ADMIN", "DY_admin", "XFADMIN"]) &&
     (request.siteId === 1 || request.siteId === 6 || request.siteId === 7)
   ) {
     if (
@@ -739,7 +740,7 @@ async function loadRecord() {
       })
       return
     }
-  }
+  } */
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)

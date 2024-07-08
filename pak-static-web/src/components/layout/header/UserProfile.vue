@@ -43,7 +43,7 @@ const { profilePhoto, nickName, balance } = storeToRefs(store);
       font-weight: 500;
       line-height: 20px;
       text-align: right;
-      color: #57585c;
+      color: #fff;
     }
   }
 

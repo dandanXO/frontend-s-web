@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, nextTick } from "vue";
+import { defineComponent, onMounted, ref, nextTick, watch } from "vue";
 import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -278,6 +278,8 @@ export default defineComponent({
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
     });
+
+    watch(() => ui.shouldFetchDownloadAppUrl, (value) => value && ui.getTopDownloadUrl())
   }
 });
 

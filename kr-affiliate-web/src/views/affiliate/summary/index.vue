@@ -1,22 +1,12 @@
 <template>
-  <div class="roles-main">
+  <div class="page-container">
     <div class="header-container">
       <div class="search">
         <div>
-          <el-input
-            v-model="request.loginName"
-            style="width: 200px"
-            size="small"
-            maxlength="50"
-            :placeholder="t('fields.loginName')"
-          />
-          <el-input
-            v-model="request.affiliateCode"
-            style="width: 200px; margin-left: 10px; margin-bottom: 10px;"
-            size="small"
-            maxlength="50"
-            :placeholder="t('fields.affiliateCode')"
-          />
+          <el-input v-model="request.loginName" style="width: 200px" size="small" maxlength="50"
+            :placeholder="t('fields.loginName')" />
+          <el-input v-model="request.affiliateCode" style="width: 200px; margin-left: 10px; margin-bottom: 10px;"
+            size="small" maxlength="50" :placeholder="t('fields.affiliateCode')" />
           <!-- <el-select
             v-model="request.siteId"
             size="small"
@@ -31,21 +21,10 @@
               :value="item.id"
             />
           </el-select> -->
-          <el-date-picker
-            v-model="request.recordTime"
-            format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
-            size="small"
-            type="daterange"
-            range-separator=":"
-            :start-placeholder="t('fields.startDate')"
-            :end-placeholder="t('fields.endDate')"
-            style="width: 300px; margin-left: 10px"
-            :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
-            :editable="false"
-            :clearable="false"
-          />
+          <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="small"
+            type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+            :end-placeholder="t('fields.endDate')" style="width: 300px; margin-left: 10px" :shortcuts="shortcuts"
+            :disabled-date="disabledDate" :editable="false" :clearable="false" />
         </div>
         <div style="margin-bottom: 10px;">
           <!--          <span style="font-size: small">-->
@@ -58,13 +37,7 @@
           <!--            maxlength="5"-->
           <!--            :label="t('fields.activeMember')"-->
           <!--          />-->
-          <el-button
-            style="margin-left: 20px"
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="loadRecord()"
-          >
+          <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRecord()">
             {{ t('fields.search') }}
           </el-button>
           <el-button size="mini" @click="resetQuery()">
@@ -179,7 +152,8 @@
               {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet }}
             </td>
             <td>
-              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet)).toFixed(0) }}
+              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet) +
+                (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet)).toFixed(0) }}
             </td>
             <td>
               {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet }}
@@ -196,7 +170,8 @@
               {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalPayout }}
             </td>
             <td>
-              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
+              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout) +
+                (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
             </td>
             <td>
               {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalPayout }}
@@ -210,44 +185,33 @@
               {{ t('fields.winLoss') }}
             </td>
             <td>
-              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet - gameTypeFilter("LIVE")[0].totalPayout }}
+              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet -
+                gameTypeFilter("LIVE")[0].totalPayout }}
             </td>
             <td>
-              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet - gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
+              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet -
+                gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 :
+                  gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
             </td>
             <td>
-              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet - gameTypeFilter("SLOT")[0].totalPayout }}
+              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet -
+                gameTypeFilter("SLOT")[0].totalPayout }}
             </td>
             <td>
-              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet - gameTypeFilter("FISH")[0].totalPayout }}
+              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet -
+                gameTypeFilter("FISH")[0].totalPayout }}
             </td>
           </tr>
         </table>
       </div>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
-      <el-table
-        height="600"
-        size="small"
-        :resizable="true"
-        :data="page.records"
-        v-loading="page.loading"
-        row-key="affiliateId"
-        :load="loadChildren"
-        lazy
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-        :empty-text="t('fields.noData')"
-        highlight-current-row
-      >
-        <el-table-column
-          prop="loginName"
-          :label="t('fields.loginName')"
-          align="left"
-          width="160"
-        >
-          <template
-            #default="scope"
-          >
+      <el-table height="600" size="small" :resizable="true" :data="page.records" v-loading="page.loading"
+        row-key="affiliateId" :load="loadChildren" lazy
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :empty-text="t('fields.noData')"
+        highlight-current-row>
+        <el-table-column prop="loginName" :label="t('fields.loginName')" align="left" width="160">
+          <template #default="scope">
             <!--            <router-link-->
             <!--              :to="-->
             <!--                `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`-->
@@ -257,152 +221,79 @@
             <!--            </router-link>-->
           </template>
         </el-table-column>
-        <el-table-column
-          prop="depositAmount"
-          :label="t('fields.depositAmount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
-            />
+            <span v-formatter="{ data: scope.row.depositAmount, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="withdrawAmount"
-          :label="t('fields.withdrawAmount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="withdrawAmount" :label="t('fields.withdrawAmount')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
-            />
+            <span v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="bonus"
-          :label="t('fields.bonus')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="rebate"
-          :label="t('fields.rebateAmount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="rebate" :label="t('fields.rebateAmount')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.rebate, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="bet"
-          :label="t('fields.totalBet')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="bet" :label="t('fields.totalBet')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="adjustment"
-          :label="t('fields.adjustment')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="adjustment" :label="t('fields.adjustment')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="payout"
-          :label="t('fields.totalPayout')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="payout" :label="t('fields.totalPayout')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="platformFee"
-          :label="t('fields.platformFee')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="platformFee" :label="t('fields.platformFee')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span
-              v-formatter="{data: scope.row.platformFee, type: 'money'}"
-            />
+            <span v-formatter="{ data: scope.row.platformFee, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="paymentFee"
-          :label="t('fields.paymentFee')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="paymentFee" :label="t('fields.paymentFee')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.paymentFee, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.ngr, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.ngr, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="ftdCount"
-          :label="t('fields.ftd')"
-          align="center"
-          min-width="50"
-        />
-        <el-table-column
-          prop="newMemberCount"
-          :label="t('fields.newMemberCount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="ftdCount" :label="t('fields.ftd')" align="center" min-width="50" />
+        <el-table-column prop="newMemberCount" :label="t('fields.newMemberCount')" align="center" width="120">
           <template #default="scope">
-            <el-link
-              v-if="scope.row.newMemberCount !== 0"
-              type="primary"
-              @click="showDialog('MEMBER', scope.row.affiliateId)"
-            >
+            <el-link v-if="scope.row.newMemberCount !== 0" type="primary"
+              @click="showDialog('MEMBER', scope.row.affiliateId)">
               {{ scope.row.newMemberCount }}
             </el-link>
             <span v-else>{{ scope.row.newMemberCount }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="activeMemberCount"
-          :label="t('fields.activeMemberCount')"
-          align="center"
-          width="120"
-        />
-        <el-table-column
-          prop="totalRegisterMemberCount"
-          :label="t('fields.totalRegisterCount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="activeMemberCount" :label="t('fields.activeMemberCount')" align="center" width="120" />
+        <el-table-column prop="totalRegisterMemberCount" :label="t('fields.totalRegisterCount')" align="center"
+          width="120">
           <template #default="scope">
             <!--            <el-link-->
             <!--              v-if="scope.row.totalRegisterMemberCount !== 0"-->
@@ -415,89 +306,34 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, pager, next"
-        style="margin-top: 10px"
-        v-model:page-size="request.size"
-        v-model:page-count="page.pages"
-        v-model:current-page="request.current"
-        @current-change="loadRecord"
-        @size-change="loadRecord"
-      />
+      <el-pagination :total="page.total" :page-sizes="[20, 50, 100, 150]" layout="total,sizes,prev, pager, next"
+        style="margin-top: 10px" v-model:page-size="request.size" v-model:page-count="page.pages"
+        v-model:current-page="request.current" @current-change="loadRecord" @size-change="loadRecord" />
     </el-card>
-    <el-dialog
-      :title="uiControl.dialogTitle"
-      v-model="uiControl.dialogVisible"
-      append-to-body
-      width="1200px"
-    >
+    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="1200px">
       <div>
         <div class="search">
-          <el-input
-            v-model="popUpRequest.loginName"
-            style="width: 200px"
-            size="small"
-            maxlength="50"
-            :placeholder="t('fields.loginName')"
-          />
-          <el-date-picker
-            v-model="popUpRequest.recordTime"
-            v-if="currentPageType === 'allMembers'"
-            format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
-            size="small"
-            type="daterange"
-            range-separator=":"
-            :start-placeholder="t('fields.startDate')"
-            :end-placeholder="t('fields.endDate')"
-            style="width: 300px; margin-left: 10px"
-            :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
-            :editable="false"
-            :clearable="false"
-          />
-          <el-date-picker
-            v-model="popUpRequest.regTime"
-            format="DD/MM/YYYY"
-            value-format="YYYY-MM-DD"
-            size="small"
-            type="daterange"
-            range-separator=":"
-            :start-placeholder="t('fields.regStartDate')"
-            :end-placeholder="t('fields.regEndDate')"
-            style="width: 300px; margin-left: 10px"
-            :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
-            :editable="false"
-            :clearable="false"
-          />
-          <el-select
-            v-model="popUpRequest.memberType"
-            size="small"
-            :placeholder="t('fields.memberType')"
-            class="filter-item"
-            style="width: 200px; margin-left: 10px;"
-          >
-            <el-option
-              v-for="item in uiControl.memberType"
-              :key="item.key"
-              :label="item.displayName"
-              :value="item.value"
-            />
+          <el-input v-model="popUpRequest.loginName" style="width: 200px" size="small" maxlength="50"
+            :placeholder="t('fields.loginName')" />
+          <el-date-picker v-model="popUpRequest.recordTime" v-if="currentPageType === 'allMembers'" format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD" size="small" type="daterange" range-separator=":"
+            :start-placeholder="t('fields.startDate')" :end-placeholder="t('fields.endDate')"
+            style="width: 300px; margin-left: 10px" :shortcuts="shortcuts" :disabled-date="disabledDate"
+            :editable="false" :clearable="false" />
+          <el-date-picker v-model="popUpRequest.regTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="small"
+            type="daterange" range-separator=":" :start-placeholder="t('fields.regStartDate')"
+            :end-placeholder="t('fields.regEndDate')" style="width: 300px; margin-left: 10px" :shortcuts="shortcuts"
+            :disabled-date="disabledDate" :editable="false" :clearable="false" />
+          <el-select v-model="popUpRequest.memberType" size="small" :placeholder="t('fields.memberType')"
+            class="filter-item" style="width: 200px; margin-left: 10px;">
+            <el-option v-for="item in uiControl.memberType" :key="item.key" :label="item.displayName"
+              :value="item.value" />
           </el-select>
-          <el-button
-            style="margin-left: 20px"
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="
-              currentPageType === 'newRegister'
-                ? loadNewMember(currentAffiliateId)
-                : loadAllMember(currentAffiliateId)
-            "
-          >
+          <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="
+            currentPageType === 'newRegister'
+              ? loadNewMember(currentAffiliateId)
+              : loadAllMember(currentAffiliateId)
+            ">
             {{ t('fields.search') }}
           </el-button>
           <el-button size="mini" @click="resetPopupQuery()">
@@ -505,181 +341,99 @@
           </el-button>
         </div>
       </div>
-      <el-table
-        height="600"
-        size="small"
-        :resizable="true"
-        :data="
-          currentPageType === 'newRegister'
-            ? memberPage.records
-            : allMemberPage.records
-        "
-        v-loading="
-          currentPageType === 'newRegister'
-            ? memberPage.loading
-            : allMemberPage.loading
-        "
-        row-key="id"
-        :empty-text="t('fields.noData')"
-      >
-        <el-table-column
-          prop="loginName"
-          :label="t('fields.loginName')"
-          align="left"
-          min-width="100"
-        >
-          <template
-            #default="scope"
-          >
-            <router-link
-              :to="
-                `/member/details/${scope.row.memberId}?site=${request.siteId}`
-              "
-            >
+      <el-table height="600" size="small" :resizable="true" :data="currentPageType === 'newRegister'
+        ? memberPage.records
+        : allMemberPage.records
+        " v-loading="currentPageType === 'newRegister'
+          ? memberPage.loading
+          : allMemberPage.loading
+          " row-key="id" :empty-text="t('fields.noData')">
+        <el-table-column prop="loginName" :label="t('fields.loginName')" align="left" min-width="100">
+          <template #default="scope">
+            <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`
+              ">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="depositAmount"
-          :label="t('fields.depositAmount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span
-              v-formatter="{data: scope.row.depositAmount, type: 'money'}"
-            />
+            <span v-formatter="{ data: scope.row.depositAmount, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="withdrawAmount"
-          :label="t('fields.withdrawAmount')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="withdrawAmount" :label="t('fields.withdrawAmount')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
-            />
+            <span v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="bonus"
-          :label="t('fields.bonus')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="bet"
-          :label="t('fields.totalBet')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="bet" :label="t('fields.totalBet')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.bet, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="adjustment"
-          :label="t('fields.adjustment')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="adjustment" :label="t('fields.adjustment')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="payout"
-          :label="t('fields.totalPayout')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="payout" :label="t('fields.totalPayout')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.payout, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="profit"
-          :label="t('fields.totalProfit')"
-          align="center"
-          width="120"
-        >
+        <el-table-column prop="profit" :label="t('fields.totalProfit')" align="center" width="120">
           <template #default="scope">
             {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-            <span v-formatter="{data: scope.row.profit, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="regTime"
-          :label="t('fields.registerTime')"
-          align="center"
-          min-width="120"
-        >
+        <el-table-column prop="regTime" :label="t('fields.registerTime')" align="center" min-width="120">
           <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.regTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
+            <span v-formatter="{
+              data: scope.row.regTime,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
+              type: 'date',
+            }" />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="lastLoginTime"
-          :label="t('fields.lastLoginTime')"
-          align="center"
-          min-width="120"
-        >
+        <el-table-column prop="lastLoginTime" :label="t('fields.lastLoginTime')" align="center" min-width="120">
           <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.lastLoginTime,
-                formatter: 'YYYY/MM/DD HH:mm:ss',
-                type: 'date',
-              }"
-            />
+            <span v-formatter="{
+              data: scope.row.lastLoginTime,
+              formatter: 'YYYY/MM/DD HH:mm:ss',
+              type: 'date',
+            }" />
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        class="pagination"
-        @current-change="changePage($event, currentPageType)"
-        layout="prev, pager, next"
-        :page-size="
-          currentPageType === 'main'
+      <el-pagination class="pagination" @current-change="changePage($event, currentPageType)" layout="prev, pager, next"
+        :page-size="currentPageType === 'main'
+          ? memberRequest.size
+          : currentPageType === 'newRegister'
             ? memberRequest.size
-            : currentPageType === 'newRegister'
-              ? memberRequest.size
-              : allMemberRequest.size
-        "
-        :page-count="
-          currentPageType === 'main'
+            : allMemberRequest.size
+          " :page-count="currentPageType === 'main'
             ? request.pages
             : currentPageType === 'newRegister'
               ? memberPage.pages
               : allMemberPage.pages
-        "
-        :current-page="
-          currentPageType === 'main'
+            " :current-page="currentPageType === 'main'
             ? request.current
             : currentPageType === 'newRegister'
               ? memberPage.current
               : allMemberPage.current
-        "
-      />
+            " />
     </el-dialog>
   </div>
 </template>
@@ -782,17 +536,17 @@ function convertDate(date) {
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
-        .subtract(13, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+    moment(new Date())
+      .subtract(13, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
   )
 }
 
 function gameTypeFilter(type) {
   if (affiliateSummary.gameTypeBetSummaryVOList === null ||
-  affiliateSummary.gameTypeBetSummaryVOList === undefined ||
-  affiliateSummary.gameTypeBetSummaryVOList.length === 0) {
+    affiliateSummary.gameTypeBetSummaryVOList === undefined ||
+    affiliateSummary.gameTypeBetSummaryVOList.length === 0) {
     return null;
   }
   const gameTypeSummary = affiliateSummary.gameTypeBetSummaryVOList.filter(rec => rec.gameType === type);
@@ -1077,7 +831,8 @@ onMounted(async () => {
   border-spacing: 10px;
 }
 
-.summary-stat, .summary-container td {
+.summary-stat,
+.summary-container td {
   display: table-cell;
   border: 1px solid black;
   border-radius: 0.5rem;
@@ -1091,6 +846,7 @@ onMounted(async () => {
       margin-top: 5px;
     }
   }
+
   .el-col {
     text-align: center;
   }

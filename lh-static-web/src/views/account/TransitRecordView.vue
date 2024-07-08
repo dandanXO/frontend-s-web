@@ -1321,13 +1321,13 @@ export default defineComponent({
         return "";
       }
       if (transferType === "APPLY") {
-        return "申请中"; //Applying
+        return "处理中"; //Applying
       } else if (transferType === "FAIL") {
         return "失败"; // Failed
       } else if (transferType === "SUCCESS") {
         return "成功"; // Success
       } else if (transferType === "STEP_1" || transferType === "PENDING") {
-        return "审核中"; //Under review
+        return "处理中"; //Under review
       } else if (transferType === "STEP_2") {
         return "待支付"; // To be paid
       } else if (transferType === "STEP_3") {
@@ -1477,13 +1477,13 @@ export default defineComponent({
 
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === "APPLY") {
-        return "申请中"; //Applying
+        return "处理中"; //Applying
       } else if (withdrawStatus === "FAIL") {
         return "失败"; // Failed
       } else if (withdrawStatus === "SUCCESS") {
         return "成功"; // Success
       } else if (withdrawStatus === "STEP_1" || withdrawStatus === "PENDING") {
-        return "审核中"; //Under review
+        return "处理中"; //Under review
       } else if (withdrawStatus === "STEP_2") {
         return "待支付"; // To be paid
       } else if (withdrawStatus === "STEP_3") {

@@ -61,6 +61,15 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'member-tree',
+        component: () =>
+          import('../views/member-info/member-tree/index.vue'),
+        name: 'Member Tree',
+        meta: {
+          title: 'member-tree',
+        },
+      },
+      {
         path: 'tag-setting',
         component: () =>
           import(
@@ -94,6 +103,20 @@ export const constantRoutes = [
         name: 'Affiliate Summary',
         meta: {
           title: 'affiliate-summary',
+        },
+      },
+    ],
+  },
+  {
+    path: '/bet-management',
+    component: Layout,
+    children: [
+      {
+        path: 'game-record',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'Game Record',
+        meta: {
+          title: 'game-record',
         },
       },
     ],
