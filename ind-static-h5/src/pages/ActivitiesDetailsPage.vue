@@ -40,16 +40,24 @@
       </div>
     </div>
     <div class="activities-days-container">
-      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="i + 1 === 7 ? 'days-box__last' : 'days-box'">
+      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="[i + 1 === 7 ? 'days-box__last' : 'days-box',
+      {'isReceived': (i===bonusSeq && isReceivedToday) || i < bonusSeq}]">
         <div class="box-ribbon">Day {{ i + 1 }}</div>
-        <div class="box-img"><img :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" /></div>
-        <div><div class="box-title">Free {{rule.bonus}}rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit {{ rule.deposit }}rs
+        <div class="box-img">
+          <img v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq" :src="require(`../assets/images/promotion/activities/day-received.png`)" />
+          <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" >
         </div>
-      </div></div>
+        <div>
+          <div class="box-title">Free {{rule.bonus}}rs</div>
+          <div class="box-subtitle" v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq">
+            <img :src="require(`../assets/images/promotion/activities/tick.png`)" /> Received
+          </div>
+          <div class="box-subtitle" v-else>
+            Wager x5
+            <br />
+            Deposit {{ rule.deposit }}rs
+          </div>
+        </div></div>
     </div>
     <div class="activities-notice">
       <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
@@ -87,9 +95,9 @@ const progressDepositLabel = computed(() => (progressDeposit.value * 100).toFixe
 const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).toFixed(2) + "%");
 
 const isLoading = ref(false);
-
 onActivated(() => {
   const acitivtyApi = "/session/ind/deposit/bonus";
+  rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
     const resp = res.data
     isLoading.value = false;
@@ -100,8 +108,8 @@ onActivated(() => {
     });
 
     if (resp.rules && resp.rules.length >= resp.bonusSeq + 1) {
-      progressDeposit.value = Number(resp.deposit) / Number(rules[resp.bonusSeq].deposit);
-      progressDailyWager.value = Number(resp.bet) / Number(rules[resp.bonusSeq].bet);
+      progressDeposit.value = resp.deposit >= rules.value[resp.bonusSeq].deposit ? 1 : Number(resp.deposit) / Number(rules.value[resp.bonusSeq].deposit);
+      progressDailyWager.value = resp.bet >= rules.value[resp.bonusSeq].bet ? 1 : Number(resp.bet) / Number(rules.value[resp.bonusSeq].bet);
     }
   });
 });
@@ -199,7 +207,10 @@ onActivated(() => {
     margin-top: 1rem;
     .days-box {
       background: #3B156E4D;
+      &.isReceived {
+        background: linear-gradient(356.25deg, #3B156E -0.21%, #8100AE 93.65%);
 
+      }
       padding: 12px;
       display: flex;
       flex-direction: column;
@@ -254,6 +265,13 @@ onActivated(() => {
         color: rgba(255, 255, 255, 0.6);
         text-align: center;
         margin-top: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        img {
+          width: 15px;
+        }
       }
     }
   }
