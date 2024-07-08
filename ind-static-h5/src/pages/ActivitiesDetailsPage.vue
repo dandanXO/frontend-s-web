@@ -152,7 +152,7 @@ onActivated(() => {
   eventapi.get(acitivtyApi).then((res) => {
     isLoading.value = false;
     console.log( res.data.data);
-    const {bonusSeq, isReceivedToday, bet, deposit}  = res.data.data;
+    const {bonusSeq, isReceivedToday, bet, deposit, rules}  = res.data.data;
 
 
 

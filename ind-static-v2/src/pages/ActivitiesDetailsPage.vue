@@ -116,7 +116,7 @@
     </div>
     <div class="activities-notice">
       <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
-      <div>Notice : This promotion is not counted towards CASINO and SPORTS wager!</div>
+      <div>Notice : This promotion is not counted towards CASINO and SPORTS wager!</div>
     </div>
     <div class="activities-title q-mt-md"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-rules-container">
@@ -137,24 +137,33 @@
 import { ref, computed, onMounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
 
-const progressDeposit = ref(0.55);
-const progressDailyWager = ref(0.78);
+const progressDeposit = ref(0);
+const progressDailyWager = ref(0);
+
+const bonusSeq = ref(0);
+const isReceivedToday = ref(false);
 
 const progressDepositLabel = computed(() => (progressDeposit.value * 100).toFixed(2) + "%");
 const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).toFixed(2) + "%");
 
-const isLoading= ref(false);
+const isLoading = ref(false);
 
 onActivated(() => {
-  console.log("Onmounted");
-  const acitivtyApi= "/session/ind/deposit/bonus";
+  const acitivtyApi = "/session/ind/deposit/bonus";
   eventapi.get(acitivtyApi).then((res) => {
     isLoading.value = false;
-    var data = res.data.data;
-    console.log(data)
-  });
-})
+    console.log(res.data.data);
+    const { bonusSeq, isReceivedToday, bet, deposit, rules } = res.data.data;
 
+    bonusSeq.value = bonusSeq;
+    isReceivedToday.value = isReceivedToday;
+
+    if (rules && rules.length >= bonusSeq + 1) {
+      progressDeposit.value = deposit / rules[bonusSeq];
+      progressDailyWager.value = bet / rules[bonusSeq];
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>
