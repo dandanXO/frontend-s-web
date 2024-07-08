@@ -839,6 +839,16 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        color: #ffffff;
+        table {
+          color: #333333;
+          tr:first-child {
+            td {
+              background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+              color: #ffffff;
+            }
+          }
+        }
 
         &.isEurocup24 {
           width: 100%;
@@ -890,8 +900,10 @@ export default defineComponent({
           td {
             padding: 5px;
             text-align: center;
-            background-color: #ffffff;
-            border: 1px solid #ecedf0;
+            // background-color: #ffffff;
+            background-color: #ffffff1f;
+            border: 1px solid #1e212c;
+            color: #ffffff;
           }
         }
 
