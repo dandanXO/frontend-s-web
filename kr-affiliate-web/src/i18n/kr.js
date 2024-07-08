@@ -557,6 +557,7 @@ export default {
     memberUsername: '계정',
     memberShareRatio: '플레이어 리베이트 비율',
     editShareRatio: '리베이트 수정',
+    inquiry: '문의',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -715,6 +716,7 @@ export default {
     validateShareRatioFormat: '공유 비율은 0에서 1 사이여야 합니다.',
     depositShouldBetween: '입금액은 다음 사이여야 합니다 ',
     requiredPositiveInteger: '숫자를 입력해주세요',
+    replySuccess: '성공적인 답변',
   },
   menu: {
     undefined: '',
@@ -754,7 +756,8 @@ export default {
     'Member Management': '회원관리',
     'Member Tree': '트리뷰',
     'Bet Management': '베팅관리',
-    'Bet History': '회원베팅기록'
+    'Bet History': '회원베팅기록',
+    inquiry: '문의',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',
