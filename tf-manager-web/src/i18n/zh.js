@@ -1860,6 +1860,8 @@ export default {
     downlineMembers: '下线人数',
     todayRegCount: '今日团队注册',
     yesterdayRegCount: '昨日团队注册',
+    displayStartTime: '显示开始时间',
+    displayEndTime: '显示结束时间',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
