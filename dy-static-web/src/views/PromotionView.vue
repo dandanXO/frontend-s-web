@@ -1,9 +1,9 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <div class="promo-top">
-        <img src="../assets/promo/promo-top-bg1.jpg" alt="" class="all-promotions-bg" />
-      </div>
+      <!--      <div class="promo-top">-->
+      <!--        <img src="../assets/promo/promo-top-bg1.jpg" alt="" class="all-promotions-bg" />-->
+      <!--      </div>-->
 
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
@@ -312,7 +312,11 @@ export default defineComponent({
     min-height: 40vh;
     padding: 0px 0px 50px 0px;
     position: relative;
+    background-image: url("../assets/promo/promo-bg-new.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
     background-color: #ebf4ff;
+    min-height: 100vh;
 
     margin: 0 auto;
     //max-width: 1920px;
@@ -436,7 +440,7 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 0px 0 10px;
+      padding: 280px 0 10px;
 
       .promo-type-wrapper {
         display: flex;
@@ -485,7 +489,7 @@ export default defineComponent({
               position: absolute;
               width: 100%;
               height: 100%;
-              // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
+              background: linear-gradient(180deg, #fcfeff 0%, #ebf5ff 52.01%, #fafdff 98%);
               box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
               border-radius: 30px;
             }
