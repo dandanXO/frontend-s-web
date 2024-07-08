@@ -100,8 +100,8 @@ onActivated(() => {
     });
 
     if (resp.rules && resp.rules.length >= resp.bonusSeq + 1) {
-      progressDeposit.value = Number(resp.deposit) / Number(rules[resp.bonusSeq].deposit);
-      progressDailyWager.value = Number(resp.bet) / Number(rules[resp.bonusSeq].bet);
+      progressDeposit.value = resp.deposit >= rules.value[resp.bonusSeq].deposit ? 1 : Number(resp.deposit) / Number(rules.value[resp.bonusSeq].deposit);
+      progressDailyWager.value = resp.bet >= rules.value[resp.bonusSeq].bet ? 1 : Number(resp.bet) / Number(rules.value[resp.bonusSeq].bet);
     }
   });
 });

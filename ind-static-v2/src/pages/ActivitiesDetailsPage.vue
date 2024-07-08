@@ -17,7 +17,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq]? rules[bonusSeq].deposit : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].deposit : 0 }}
             <br />
             RS
           </div>
@@ -42,14 +42,18 @@
     <div class="activities-days-container">
       <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="i + 1 === 7 ? 'days-box__last' : 'days-box'">
         <div class="box-ribbon">Day {{ i + 1 }}</div>
-        <div class="box-img"><img v-if="i + 1 < 8" :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" /></div>
-        <div><div class="box-title">Free {{rule.bonus}}rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit {{ rule.deposit }}rs
+        <div class="box-img">
+          <img v-if="i + 1 < 8" :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" />
         </div>
-      </div></div>
+        <div>
+          <div class="box-title">Free {{ rule.bonus }}rs</div>
+          <div class="box-subtitle">
+            Wager x5
+            <br />
+            Deposit {{ rule.deposit }}rs
+          </div>
+        </div>
+      </div>
     </div>
     <div class="activities-notice">
       <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
@@ -92,21 +96,25 @@ onActivated(() => {
   const acitivtyApi = "/session/ind/deposit/bonus";
   rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
-    const resp = res.data
+    const resp = res.data;
     isLoading.value = false;
     // const { bonusSeq, isReceivedToday, bet, deposit, rules } = res.data;
 
-      // bonusSeq.value = bonusSeq ? bonusSeq : 0;
-      // isReceivedToday.value = isReceivedToday ? isReceivedToday : 0;
-    bonusSeq.value = resp.bonusSeq
-    isReceivedToday.value = resp.isReceivedToday
-    resp.rules.forEach(element => {
-      rules.value.push(element)
+    // bonusSeq.value = bonusSeq ? bonusSeq : 0;
+    // isReceivedToday.value = isReceivedToday ? isReceivedToday : 0;
+    bonusSeq.value = resp.bonusSeq;
+    isReceivedToday.value = resp.isReceivedToday;
+    resp.rules.forEach((element) => {
+      rules.value.push(element);
     });
 
-    if (resp.rules && resp.rules.length >= resp.bonusSeq + 1 && rules[resp.bonusSeq]) {
-      progressDeposit.value = Number(resp.deposit) / Number(rules[resp.bonusSeq].deposit);
-      progressDailyWager.value = Number(resp.bet) / Number(rules[resp.bonusSeq].bet);
+    if (resp.rules && resp.rules.length >= resp.bonusSeq + 1) {
+      progressDeposit.value =
+        resp.deposit >= rules.value[resp.bonusSeq].deposit
+          ? 1
+          : Number(resp.deposit) / Number(rules.value[resp.bonusSeq].deposit);
+      progressDailyWager.value =
+        resp.bet >= rules.value[resp.bonusSeq].bet ? 1 : Number(resp.bet) / Number(rules.value[resp.bonusSeq].bet);
     }
   });
 });
