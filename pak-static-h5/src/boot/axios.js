@@ -135,9 +135,6 @@ export default boot(({ app, router }) => {
           return refreshTokenAndRetry(response);
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          if(response.config.url && response.config.url.indexOf("/balance") > -1){
-            return res;
-          }
           return Dialog.create({
             class: "login-card",
             title: "Please Login",
