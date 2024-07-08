@@ -3,7 +3,7 @@
   <!--  <pre>extensionToken: {{ extensionToken }}</pre>-->
   <!--  <pre>store:{{ store }}</pre>-->
 
-  <div class="q-pa-sm deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
+  <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
     <label class="label">请选择</label>
     <div class="node-wrapper q-mt-xs">
       <Node :level="1" :list="payMethods" ref="paymentNode" @clicked="onSelect" />
@@ -56,6 +56,7 @@
       </div>
     </div>
     <div class="deposit-container" v-else>
+      <label class="label">存款金额</label>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <div class="flex-c-center" v-if="amountList.length === 0">
           <q-input
@@ -102,7 +103,7 @@
           <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
         </div>
 
-        <div class="text-grey text-bold">
+        <div class="q-mt-sm text-grey text-bold">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -110,16 +111,16 @@
           {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="flex-center-div">
-          <label class="label" style="padding-bottom: 0px">实时汇率</label>
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
+          <label class="label">实时汇率</label>
           <span class="text-positive" style="font-size: 16px; font-weight: 600">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
           </span>
         </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="flex-center-div">
-          <label class="label" style="padding-bottom: 0px">预计到账</label>
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
+          <label class="label">预计到账</label>
           <span class="text-positive" style="font-size: 16px; font-weight: 600">
             {{
               calculatedMinDeposit && form.localAmount < calculatedMinDeposit
@@ -140,7 +141,7 @@
         ></BankComponent>
         <q-select
           ref="offerRef"
-          class="q-mt-sm"
+          class="q-mt-md"
           label="选择优惠"
           filled
           :options="unselectedPrivileges"
@@ -161,7 +162,7 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-xs" v-html="activeMethod.msg"></div>
+        <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
           <q-btn color="dygreen" :loading="btnLoading" class="fit" @click="confirmDeposit" label="确定存款" />
@@ -785,9 +786,9 @@ onActivated(() => {
 
 .deposit-section {
   .label {
-    //font-weight: 600;
-    font-size: 15px;
-    padding-bottom: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    padding-bottom: 6px;
     display: block;
   }
 
@@ -801,12 +802,5 @@ onActivated(() => {
     letter-spacing: 1px;
     border-radius: 12px;
   }
-}
-
-.flex-center-div {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
 }
 </style>

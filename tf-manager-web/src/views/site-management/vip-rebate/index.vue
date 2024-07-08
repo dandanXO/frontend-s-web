@@ -281,7 +281,6 @@ function showEdit(vipRebateRule) {
 function create() {
   vipRebateRuleForm.value.validate(async (valid) => {
     if (valid) {
-      form.id = null;
       await createVipRebateRule(form);
       uiControl.dialogVisible = false;
       await loadVipRebateRules();

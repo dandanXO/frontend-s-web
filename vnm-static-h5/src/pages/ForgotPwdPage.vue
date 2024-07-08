@@ -464,7 +464,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "OTP đã được gửi thành công ",
+              message: "请输入新密码",
               icon: "check_circle_outline"
             });
           })
@@ -488,7 +488,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "OTP đã được gửi thành công",
+              message: "请输入新密码",
               icon: "check_circle_outline"
             });
           })

@@ -109,7 +109,7 @@ module.exports = configure(function (ctx) {
       // directives: ["BackToTop"],
 
       // Quasar plugins
-      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog", "AppVisibility"]
+      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog"]
     },
 
     // animations: 'all', // --- includes all animations
