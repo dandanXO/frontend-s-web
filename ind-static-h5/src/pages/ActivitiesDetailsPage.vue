@@ -44,12 +44,12 @@
       {'isReceived': (i===bonusSeq && isReceivedToday) || i < bonusSeq}]">
         <div class="box-ribbon">Day {{ i + 1 }}</div>
         <div class="box-img">
-          <img v-if="rules[bonusSeq] === rule || i < bonusSeq" :src="require(`../assets/images/promotion/activities/day-received.png`)" />
+          <img v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq" :src="require(`../assets/images/promotion/activities/day-received.png`)" />
           <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" >
         </div>
         <div>
           <div class="box-title">Free {{rule.bonus}}rs</div>
-          <div class="box-subtitle" v-if="rules[bonusSeq] === rule || i < bonusSeq">
+          <div class="box-subtitle" v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq">
             <img :src="require(`../assets/images/promotion/activities/tick.png`)" /> Received
           </div>
           <div class="box-subtitle" v-else>
