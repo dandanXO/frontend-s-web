@@ -379,7 +379,7 @@ export default defineComponent({
       min-width: 80%;
       text-align: center;
       tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+        background-image: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
         color: #ffffff;
         border: 0;
       }
@@ -409,7 +409,7 @@ export default defineComponent({
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
-        color: $font-5;
+        color: #ffffff;
       }
       tr {
         &:last-child {
@@ -878,7 +878,7 @@ export default defineComponent({
           width: 100%;
           text-align: left;
           padding: 10px 0;
-          color: $font-5;
+          color: #ffffff;
           font-size: 20px;
           ol {
             li {
