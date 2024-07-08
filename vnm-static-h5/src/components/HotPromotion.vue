@@ -1,37 +1,23 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
-      :promo-id="list.id"
-      :promo-code="list.promoCode"
-      :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
-    />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && store.token" />
 
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" />
+    <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin'" />
 
-    <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
+    <ViPokerCashbackPromo v-if="list.redirectUrl === 'vi-poker-cashback'" />
 
-    <ViPokerCashbackPromo v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
+    <ViSlotNetLossPromo v-if="list.redirectUrl === 'vi-slot-netloss'" />
 
-    <ViSlotNetLossPromo v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
+    <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank'" />
 
-    <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
-
-    <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
+    <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" />
     <upgradeHongBaoPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'"
+      v-if="listParam.type === 'redpacket'"
       :promo-code="list.promoCode"
     />
 
-
-    <upgradeHongBaoPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'Red_pocket_euro2024'"
-      :promo-code="list.promoCode"
-    />
-
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo" />
-    <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo" />
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" />
+    <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -57,7 +43,6 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue";
@@ -73,7 +58,6 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo,
     LotteryPromo,
     DailyLoginPromo,
     ViPokerCashbackPromo,
@@ -95,7 +79,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isCommonPromo: null,
       activeKey: "1",
       hotPromoList: [],
       selectedHotPromo: {
@@ -104,6 +87,16 @@ export default defineComponent({
         contents: ""
       }
     };
+  },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param)
+      } catch(e) {
+        console.log(e)
+        return {}
+      }
+    }
   },
   methods: {
     handleSlot() {
@@ -133,22 +126,6 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (
-      this.list.redirectUrl === "vnm-iphone" ||
-      this.list.redirectUrl === "vi-daily-checkin" ||
-      this.list.redirectUrl === "vi-poker-cashback" ||
-      this.list.redirectUrl === "vi-slot-netloss" ||
-      this.list.redirectUrl === "vi-penny-bank" ||
-      this.list.redirectUrl === "Red_pocket_euro2024" ||
-      this.list.redirectUrl === "vnm-eurocup24" ||
-      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
-      this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
-      this.list.redirectUrl === "vi-mualixi-redpacket"
-    ) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
-    }
     const store = userStore();
 
     if (this.list.id == 30) {

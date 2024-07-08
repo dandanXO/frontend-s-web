@@ -95,7 +95,7 @@ onActivated(() => {
     const resp = res.data
     isLoading.value = false;
     // const { bonusSeq, isReceivedToday, bet, deposit, rules } = res.data;
-      
+
       // bonusSeq.value = bonusSeq ? bonusSeq : 0;
       // isReceivedToday.value = isReceivedToday ? isReceivedToday : 0;
     bonusSeq.value = resp.bonusSeq

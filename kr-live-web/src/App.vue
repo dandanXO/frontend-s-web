@@ -109,7 +109,7 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam) {
-        const sidPass = store.token ? "mid-" + store.nickName : sidParam
+        const sidPass = store.token ? "mid-" + store.memberId : sidParam
         const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
           params: {
             way: way,

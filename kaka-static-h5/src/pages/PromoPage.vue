@@ -132,7 +132,6 @@
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
                       <!-- <div class="promo-bg"> -->
-                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
                       <!-- </div> -->
                       <!-- </div> -->
                     </a>

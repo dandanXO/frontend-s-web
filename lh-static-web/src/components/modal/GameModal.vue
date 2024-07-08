@@ -11,6 +11,7 @@
 
     <template v-if="transferInfo.platform === 'PG'">
       <iframe
+        allow="fullscreen"
         @load="loadGame()"
         v-show="!logoShow"
         v-bind:srcdoc="src"
@@ -22,6 +23,7 @@
     </template>
     <template v-else>
       <iframe
+        allow="fullscreen"
         @load="loadGame()"
         v-show="!logoShow"
         :src="src"

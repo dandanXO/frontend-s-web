@@ -1,84 +1,77 @@
 <template>
   <div class="hot-promo" :class="list.redirectUrl === 'dy2-game-steps' && 'flat-border-radius'">
     <ClaimPromo
-      v-if="isCommonPromo"
+      v-if="listParam.type === 'claimpromo'"
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
-    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
-    <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
-    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
-    <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
-    <MeiZhouBeiPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
+    <TigerCardPromo v-if="list.redirectUrl === 'dy2-tiger-card'" />
+    <PrizePoolVotePromo v-if="list.redirectUrl === 'Dongying-team-vote'" />
+    <ESportSafetyPromo v-if="list.redirectUrl === 'dy2-esport-safety'" />
+    <SportSafetyPromo v-if="list.redirectUrl === 'sport-safety'" />
+    <NbaGamePromo v-if="list.redirectUrl === 'nba-game'" />
+    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" />
+    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
 
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
-    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
-    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
-    <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A' && !isCommonPromo && store.token"></AsianCup2024>
-    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo && store.token"></BasketballHot>
-    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
-    <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
-    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
-    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
+    <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser' && store.token" />
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
+    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
+    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && store.token"></LotteryPromo>
+    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && store.token"></GiftPromo>
+    <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A' && store.token"></AsianCup2024>
+    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && store.token"></BasketballHot>
+    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
+    <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && store.token"></LPLSummer>
+    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && store.token"></Cny2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && store.token"></BbDacha2024Promo>
     <PrivilegeInvite
       v-if="
         (list.redirectUrl === 'Dongying-refer' ||
           list.redirectUrl === 'dy2-refer-bonus' ||
           list.redirectUrl === 'dy2-refer-bonus') &&
-        !isCommonPromo &&
-        store.token
+          store.token
       "
     />
     <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'dy2-cny-step-game' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"
     ></CnyStepGame2024Promo>
 
     <Dy2StepGamePromo
-      v-if="list.redirectUrl === 'dy2-game-steps' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'dy2-game-steps' && store.token"
       :pageContent="list.pageContent"
     ></Dy2StepGamePromo>
 
     <CS2Sign
-      v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token"
       :promo-code="list.promoCode"
     />
-    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
-    <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && !isCommonPromo && store.token" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao' && store.token"
+      v-if="list.redirectUrl === 'dy2-eurocup-hongbao' && store.token"
     />
 
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu' && store.token"
+      v-if="listParam.type === 'hongbaoyu' && store.token"
     />
-    <HongBaoPreEurocupPromo
-      :promo-code="list.promoCode"
-      :pageContent="list.pageContent"
-      :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
-    />
-    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
-    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
-    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
+    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && store.token" />
+    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && store.token" />
+    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && store.token" />
     <BlastPremierPromo
-      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token"
       :promo-code="list.promoCode"
     />
-    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
-    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
-    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && !isCommonPromo && store.token">
+    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
+    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
+    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/webfeedback.png"
@@ -195,7 +188,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isCommonPromo: null,
       emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
       store: userStore(),
@@ -277,6 +269,17 @@ export default defineComponent({
       ]
     };
   },
+  computed: {
+    listParam() {
+      try {
+        console.log(JSON.parse(this.list.param))
+        return JSON.parse(this.list.param)
+      } catch(e) {
+        console.log(e)
+        return {}
+      }
+    }
+  },
   methods: {
     handleSlot() {
       this.loadingClaim = true;
@@ -305,52 +308,6 @@ export default defineComponent({
     console.log("Mount");
     // console.log(this.list);
     // List for non common promo
-
-    if (
-      this.list.redirectUrl === "dy2-tiger-card" ||
-      this.list.redirectUrl === "Dongying-team-vote" ||
-      this.list.redirectUrl === "dy2-esport-safety" ||
-      this.list.redirectUrl === "sport-safety" ||
-      this.list.redirectUrl === "nba-game" ||
-      this.list.redirectUrl === "goldenegg" ||
-      this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "dy2-lottery" ||
-      this.list.redirectUrl === "Dongying-quiz" ||
-      this.list.redirectUrl === "dy2-gift" ||
-      this.list.redirectUrl === "dy-promo-application-A" ||
-      this.list.redirectUrl === "/dy-promo-basketball" ||
-      this.list.redirectUrl === "dy-promo-application-B" ||
-      this.list.redirectUrl === "Dongying-refer" ||
-      this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
-      this.list.redirectUrl === "dy2-refer-bonus" ||
-      this.list.redirectUrl === "dy2-cny2024-promo" ||
-      this.list.redirectUrl === "dy2-asian-zone" ||
-      this.list.redirectUrl === "dy2-cny-step-game" ||
-      this.list.redirectUrl === "dy2-nba24-match" ||
-      this.list.redirectUrl === "dy2-game-steps" ||
-      this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
-      this.list.redirectUrl === "dy2-spin-wheel" ||
-      this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy2-eurocup-hongbao" ||
-      this.list.redirectUrl === "dy2-lpl-summer24" ||
-      this.list.redirectUrl === "dy-duanwujie24" ||
-      this.list.redirectUrl === "dy2-nba24-match" ||
-      this.list.redirectUrl === "dy2-eurocup-manual" ||
-      this.list.redirectUrl === "dy2-cs2-blast-2024" ||
-      this.list.redirectUrl === "dy-sport-zhongchao" ||
-      this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
-      this.list.redirectUrl === "fankuijianyi" ||
-      this.list.redirectUrl === "dy2meizhoubei" ||
-      this.list.redirectUrl === "dy-ouzhoumianpei" ||
-      this.list.redirectUrl === "tiqianhongbao"
-    ) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
-    }
     this.hotPromoList.forEach((element) => {
       if (this.list.id === element.id) {
         this.selectedHotPromo = element;

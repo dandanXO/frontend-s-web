@@ -324,7 +324,10 @@ import GameModal from "@/components/modal/GameModal";
 import { useLocalStorage } from "@vueuse/core";
 
 const platformGame = ref(null);
-const tab = ref("groupStage");
+const tab = ref("quarterFinal");
+if(moment().format("YYYY-MM-DD") > "2024-07-07"){
+  tab.value= "semiFinalAndFinal"
+}
 
 const groupStageTeamsList = ref([]);
 const roundOf16TeamsList = ref([]);
@@ -367,8 +370,8 @@ function filterTeamsByStage(teams) {
   const stages = {
     groupStage: ["A", "B", "C", "D", "E", "F"],
     roundOf16: "16",
-    quarterFinal: ["8", "4"],
-    semiFinalAndFinal: ["2", "1"]
+    quarterFinal: ["8" ],
+    semiFinalAndFinal: ["4", "2", "1"]
   };
 
   const teamsMoment = teams.map((team) => {

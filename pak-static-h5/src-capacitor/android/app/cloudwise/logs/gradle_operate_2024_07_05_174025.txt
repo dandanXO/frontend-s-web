@@ -1,0 +1,291 @@
+[2024-07-05 17:40:25] H5 extends#WebView ----- Class Name = [com/onesignal/inAppMessages/internal/display/impl/OSWebView], extends class.
+[2024-07-05 17:40:26] Http HttpURLConnection ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayBuilder], Method Name = [getBitmapFromURL], replace method = [openConnection]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayBuilder], Method Name = [getBitmapFromAssetsOrResourceName], replace method = [decodeStream]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayBuilder], Method Name = [getBitmapFromAssetsOrResourceName], replace method = [decodeStream]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayBuilder], Method Name = [getBitmapFromAssetsOrResourceName], replace method = [decodeResource]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayBuilder], Method Name = [getBitmapFromURL], replace method = [decodeStream]
+[2024-07-05 17:40:26] Http HttpURLConnection ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayer], Method Name = [getBitmapFromURL], replace method = [openConnection]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayer], Method Name = [getBitmapFromAssetsOrResourceName], replace method = [decodeStream]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayer], Method Name = [getBitmapFromAssetsOrResourceName], replace method = [decodeStream]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayer], Method Name = [getBitmapFromAssetsOrResourceName], replace method = [decodeResource]
+[2024-07-05 17:40:26] Bitmap ----- Class Name = [com/onesignal/notifications/internal/display/impl/NotificationDisplayer], Method Name = [getBitmapFromURL], replace method = [decodeStream]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [query], replace method = [query]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [query], replace method = [query]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [insert], replace method = [insert]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [insertOrThrow], replace method = [insertOrThrow]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [update], replace method = [update]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [delete], replace method = [delete]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onCreate], replace method = [execSQL]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onCreate], replace method = [execSQL]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onCreate], replace method = [execSQL]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onCreate], replace method = [execSQL]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onCreate], replace method = [execSQL]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [safeExecSQL], replace method = [execSQL]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onDowngrade], replace method = [rawQuery]
+[2024-07-05 17:40:26] Sqlite ----- Class Name = [com/onesignal/core/internal/database/impl/OSDatabase], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:26] Http HttpURLConnection ----- Class Name = [com/onesignal/core/internal/http/impl/HttpConnectionFactory], Method Name = [newHttpURLConnection], replace method = [openConnection]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision2To3], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision3To4], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision3To4], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision3To4], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision3To4], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeOutcomeTableRevision3To4], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Sqlite ----- Class Name = [com/onesignal/session/internal/outcomes/impl/OutcomeTableProvider], Method Name = [upgradeCacheOutcomeTableRevision1To2], replace method = [execSQL]
+[2024-07-05 17:40:27] Http HttpURLConnection ----- Class Name = [com/google/firebase/messaging/ImageDownload], Method Name = [blockingDownloadBytes], replace method = [openConnection]
+[2024-07-05 17:40:27] Bitmap ----- Class Name = [com/google/firebase/messaging/ImageDownload], Method Name = [blockingDownload], replace method = [decodeByteArray]
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/SyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/SyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/SyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/SyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/TopicsSyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/TopicsSyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/TopicsSyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/firebase/messaging/TopicsSyncTask], Method Name = [run], add method.
+[2024-07-05 17:40:27] Click Event ----- Class Name = [com/google/android/gms/common/SignInButton], Method Name = [onClick], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zaak], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zaav], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zaav], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zaav], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zaav], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabm], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabn], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabo], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabt], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabt], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabt], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabt], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zabt], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacb], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacf], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacg], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacj], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacq], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacr], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacy], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacy], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacy], Method Name = [run], add method.
+[2024-07-05 17:40:27] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zacy], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zao], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zao], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zao], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zao], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zao], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zav], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zav], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/zad], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zaa], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zaa], Method Name = [run], add method.
+[2024-07-05 17:40:28] Bitmap ----- Class Name = [com/google/android/gms/common/images/zaa], Method Name = [run], replace method = [decodeFileDescriptor]
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zab], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zab], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zab], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zab], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zac], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/images/zac], Method Name = [run], add method.
+[2024-07-05 17:40:28] Click Event ----- Class Name = [com/google/android/gms/dynamic/zae], Method Name = [onClick], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzab], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzab], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzf], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzg], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzg], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzg], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzg], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzh], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzh], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzh], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzi], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzj], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/cloudmessaging/zzl], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/android/gms/stats/zza], Method Name = [run], add method.
+[2024-07-05 17:40:28] Http HttpURLConnection ----- Class Name = [com/google/firebase/installations/remote/FirebaseInstallationServiceClient], Method Name = [openHttpURLConnection], replace method = [openConnection]
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/firebase/concurrent/SequentialExecutor$1], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/firebase/concurrent/SequentialExecutor$QueueWorker], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/firebase/concurrent/SequentialExecutor$QueueWorker], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [com/google/firebase/concurrent/SequentialExecutor$QueueWorker], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread run ----- Class Name = [kotlinx/coroutines/scheduling/CoroutineScheduler$Worker], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread ----- Class Name = [kotlinx/coroutines/scheduling/CoroutineScheduler$Worker], Method Name = [start], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/internal/LimitedDispatcher], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/internal/LimitedDispatcher], Method Name = [run], add method.
+[2024-07-05 17:40:28] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/internal/LimitedDispatcher], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/RunnableKt$Runnable$1], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/TimeoutCoroutine], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/selects/SelectBuilderImpl$onTimeout$$inlined$Runnable$1], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/ResumeUndispatchedRunnable], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/DefaultExecutor], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/DefaultExecutor], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/DefaultExecutor], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/DefaultExecutor], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zze], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zze], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zze], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zze], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zze], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzg], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzg], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzi], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzi], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzk], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzk], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzm], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzm], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzo], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzo], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzo], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzo], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzo], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzo], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzx], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzz], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzz], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/tasks/zzz], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zza], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zza], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:29] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/api/internal/zzc], Method Name = [run], add method.
+[2024-07-05 17:40:30] Thread Runnable$run ----- Class Name = [com/google/android/gms/common/util/concurrent/zza], Method Name = [run], add method.
+[2024-07-05 17:40:30] Thread run ----- Class Name = [com/google/android/gms/dynamite/zza], Method Name = [run], add method.
+[2024-07-05 17:40:30] Thread ----- Class Name = [com/google/android/gms/dynamite/zza], Method Name = [start], add method.
+[2024-07-05 17:40:30] Thread AsyncTask ----- Class Name = [com/google/android/gms/security/zza], Method Name = [doInBackground], add method.
+[2024-07-05 17:40:31] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/android/HandlerContext$scheduleResumeAfterDelay$$inlined$Runnable$1], Method Name = [run], add method.
+[2024-07-05 17:40:31] Thread Runnable$run ----- Class Name = [kotlinx/coroutines/android/HandlerDispatcherKt$awaitFrame$lambda-3$$inlined$Runnable$1], Method Name = [run], add method.
+[2024-07-05 17:40:31] Http HttpURLConnection ----- Class Name = [com/google/android/datatransport/cct/CctTransportBackend], Method Name = [doSend], replace method = [openConnection]
+[2024-07-05 17:40:31] Thread Runnable$run ----- Class Name = [com/google/android/datatransport/runtime/SafeLoggingExecutor$SafeLoggingRunnable], Method Name = [run], add method.
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [ensureTransportContext], replace method = [insert]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [getTransportContextId], replace method = [query]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [getNextCallTime], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [loadEvents], replace method = [query]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [readPayload], replace method = [query]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [loadMetadata], replace method = [query]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$getTimeWindow$22], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$loadClientMetrics$20], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$recordLogEventDropped$18], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$recordLogEventDropped$18], replace method = [insert]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$recordLogEventDropped$18], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$clearDb$13], replace method = [delete]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$clearDb$13], replace method = [delete]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$cleanUp$12], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$cleanUp$12], replace method = [delete]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$loadActiveContexts$10], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$recordNextCallTime$7], replace method = [update]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$recordNextCallTime$7], replace method = [insert]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$hasPendingEventsFor$6], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$recordFailure$4], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$persist$1], replace method = [insert]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$persist$1], replace method = [insert]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore], Method Name = [lambda$persist$1], replace method = [insert]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onConfigure], replace method = [rawQuery]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [onDowngrade], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$4], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$4], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$4], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$4], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$4], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$3], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$3], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$3], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$2], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$1], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$1], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$1], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$0], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$0], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$0], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$0], replace method = [execSQL]
+[2024-07-05 17:40:31] Sqlite ----- Class Name = [com/google/android/datatransport/runtime/scheduling/persistence/SchemaManager], Method Name = [lambda$static$0], replace method = [execSQL]
+[2024-07-05 17:40:32] Thread run ----- Class Name = [kotlin/concurrent/ThreadsKt$thread$thread$1], Method Name = [run], add method.
+[2024-07-05 17:40:32] Thread ----- Class Name = [kotlin/concurrent/ThreadsKt$thread$thread$1], Method Name = [start], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaActivity$2], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaActivity$3], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaActivity$4], Method Name = [run], add method.
+[2024-07-05 17:40:33] Http HttpURLConnection ----- Class Name = [org/apache/cordova/CordovaResourceApi], Method Name = [getMimeType], replace method = [openConnection]
+[2024-07-05 17:40:33] Http HttpURLConnection ----- Class Name = [org/apache/cordova/CordovaResourceApi], Method Name = [openForRead], replace method = [openConnection]
+[2024-07-05 17:40:33] Http HttpURLConnection ----- Class Name = [org/apache/cordova/CordovaResourceApi], Method Name = [createHttpConnection], replace method = [openConnection]
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaWebViewImpl$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaWebViewImpl$2], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaWebViewImpl$2], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaWebViewImpl$3], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaWebViewImpl$EngineClient$1$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CordovaWebViewImpl$EngineClient$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CoreAndroid$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CoreAndroid$2], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CoreAndroid$3], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/CoreAndroid$4], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/NativeToJsMessageQueue$EvalBridgeMode$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode$2], Method Name = [run], add method.
+[2024-07-05 17:40:33] H5 extends#WebView ----- Class Name = [org/apache/cordova/engine/SystemWebView], extends class.
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [org/apache/cordova/engine/SystemWebView], Method Name = [setWebViewClient], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] H5 extends#WebViewClient ----- Class Name = [org/apache/cordova/engine/SystemWebViewClient], extends class.
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [com/getcapacitor/Bridge], Method Name = [loadWebView], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [com/getcapacitor/Bridge], Method Name = [setWebViewClient], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] H5 extends#WebViewClient ----- Class Name = [com/getcapacitor/BridgeWebViewClient], extends class.
+[2024-07-05 17:40:33] H5 extends#WebView ----- Class Name = [com/getcapacitor/CapacitorWebView], extends class.
+[2024-07-05 17:40:33] Http HttpURLConnection ----- Class Name = [com/getcapacitor/WebViewLocalServer], Method Name = [handleProxyRequest], replace method = [openConnection]
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [com/getcapacitor/plugin/CapacitorHttp$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [com/getcapacitor/plugin/CapacitorHttp$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] Http HttpURLConnection ----- Class Name = [com/getcapacitor/plugin/util/AssetUtil], Method Name = [getUriFromRemote], replace method = [openConnection]
+[2024-07-05 17:40:33] Bitmap ----- Class Name = [com/getcapacitor/plugin/util/AssetUtil], Method Name = [getIconFromUri], replace method = [decodeStream]
+[2024-07-05 17:40:33] Http HttpURLConnection ----- Class Name = [com/getcapacitor/plugin/util/HttpRequestHandler$HttpURLConnectionBuilder], Method Name = [openConnection], replace method = [openConnection]
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/file/FileUtils$12], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/file/FileUtils$25], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$1], Method Name = [run], add method.
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$2], Method Name = [run], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$2], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$3], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$4], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$5], Method Name = [run], add method.
+[2024-07-05 17:40:33] H5 extends#WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$6$1], extends class.
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$6], Method Name = [run], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$6], Method Name = [run], add method.
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$6], Method Name = [run], add method.
+[2024-07-05 17:40:33] Click Event ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$7$1], Method Name = [onClick], add method.
+[2024-07-05 17:40:33] Click Event ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$7$2], Method Name = [onClick], add method.
+[2024-07-05 17:40:33] Click Event ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$7$3], Method Name = [onClick], add method.
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$7], Method Name = [run], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] Thread Runnable$run ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$7], Method Name = [run], add method.
+[2024-07-05 17:40:33] H5 extends#WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppBrowser$InAppBrowserClient], extends class.
+[2024-07-05 17:40:33] H5 extends#WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppChromeClient$1], extends class.
+[2024-07-05 17:40:33] H5 WebView$WebViewClient ----- Class Name = [org/apache/cordova/inappbrowser/InAppChromeClient], Method Name = [onCreateWindow], replace method = [setWebViewClient]
+[2024-07-05 17:40:33] Application ----- Class Name = [com/ind/appb9mega1/MyApplication], Method Name = [onCreate], add method.
+[2024-07-05 17:40:33] Application ----- Class Name = [com/ind/appb9mega1/MyApplication], Method Name = [attachBaseContext], add method.
+[2024-07-05 17:40:42] Thread run ----- Class Name = [junit/extensions/ActiveTestSuite$1], Method Name = [run], add method.
+[2024-07-05 17:40:42] Thread ----- Class Name = [junit/extensions/ActiveTestSuite$1], Method Name = [start], add method.
+[2024-07-05 17:40:42] Thread Runnable$run ----- Class Name = [org/junit/internal/runners/MethodRoadie$2], Method Name = [run], add method.
+[2024-07-05 17:40:42] Thread Runnable$run ----- Class Name = [org/junit/internal/runners/MethodRoadie$1], Method Name = [run], add method.
+[2024-07-05 17:40:42] Thread Runnable$run ----- Class Name = [org/junit/internal/runners/JUnit4ClassRunner$1], Method Name = [run], add method.
+[2024-07-05 17:40:42] Thread Runnable$run ----- Class Name = [org/junit/runners/ParentRunner$4], Method Name = [run], add method.

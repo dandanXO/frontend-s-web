@@ -4,9 +4,14 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
     <div class="navigation">
-      <div class="logo-section" />
+      <a :href="krwUrl" target="_blank"><div class="logo-section" /></a>
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-select
+          class="lang-container right-menu-item"
+          placeholder=""
+          v-model="languageVal"
+          @change="handleLanguage"
+        >
           <el-option key="1" value="en">en</el-option>
           <el-option key="2" value="zh">zh</el-option>
           <el-option key="3" value="th">th</el-option>
@@ -30,8 +35,10 @@
       </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
+          <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
           <svg-icon :icon-class="'right'" />
           <span>유저사이트</span>
+          </a>
         </div>
       </div>
       <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
@@ -40,11 +47,14 @@
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
-        <div v-for="child in nav.children" :key="child.id" :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''}`">
-          <template v-if="(child.path === '/commission-info' ? false : true)">
+        <div v-for="child in nav.children" :key="child.id" :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''
+          }`
+          ">
+          <template v-if="child.path === '/commission-info' ? false : true">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
               <div class="route-content">
-                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''" :className="child.active ? 'active-icon' : ''" />
+                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" />
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -62,27 +72,31 @@ import { onMounted, ref, watch, reactive } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import $ from 'jquery'
-import {
-  ArrowUpBold,
-  ArrowDownBold
-} from '@element-plus/icons-vue'
-import { UserActionTypes } from "@/store/modules/user/action-types";
+import { ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
+import { UserActionTypes } from '@/store/modules/user/action-types'
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
-import { getAffiliateBalance, getAffiliateCommissionBalance, getAffiliateInfo } from '@/api/affiliate';
-import ForgetPasswordModal from "@/components/forgetpassword-modal/Index.vue";
+import {
+  getAffiliateBalance,
+  getAffiliateCommissionBalance,
+  getAffiliateInfo,
+} from '@/api/affiliate'
+import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
-const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
-const navigationData = ref([]);
+const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
+const navigationData = ref([])
 
 const store = useStore()
 
+const krwUrl = ref("https://city8.vip");
+
+
 const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage);
-const { setLanguage } = i18nStoreLanguage;
+const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { setLanguage } = i18nStoreLanguage
 
 const affInfo = reactive({
   affiliateCode: null,
@@ -95,7 +109,7 @@ const affInfo = reactive({
 })
 
 const handleLanguage = () => {
-  setLanguage(languageVal.value);
+  setLanguage(languageVal.value)
 }
 
 const setActiveNav = () => {
@@ -122,10 +136,10 @@ const setActiveNav = () => {
 }
 
 const toggleExpansion = () => {
-  if ($(".navigation").width()) {
-    $(".navigation").animate({ width: 0 })
+  if ($('.navigation').width()) {
+    $('.navigation').animate({ width: 0 })
   } else {
-    $(".navigation").animate({ width: 200 })
+    $('.navigation').animate({ width: 200 })
   }
 }
 const checkMenu = nav => {
@@ -135,15 +149,15 @@ const checkMenu = nav => {
   })
 }
 
-const changePassword = async (formObj) => {
-  formObj.affId = store.state.user.id;
-  formObj.siteId = store.state.user.siteId;
-  await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
-};
+const changePassword = async formObj => {
+  formObj.affId = store.state.user.id
+  formObj.siteId = store.state.user.siteId
+  await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj)
+}
 
 const logout = async () => {
-  await store.dispatch(UserActionTypes.ACTION_LOGOUT);
-  router.push("/kr/login");
+  await store.dispatch(UserActionTypes.ACTION_LOGOUT)
+  router.push('/kr/login')
 }
 
 const getNavigationData = () => {
@@ -179,6 +193,14 @@ const getNavigationData = () => {
           icon: 'squares',
         },
         {
+          path: '/member-tree',
+          title: t('menu.Member Tree'),
+          label: 'Member Tree',
+          active: false,
+          isMainNav: true,
+          icon: 'branch',
+        },
+        {
           path: '/affiliate',
           title: t('menu.Affiliate'),
           label: 'Affiliate',
@@ -193,11 +215,35 @@ const getNavigationData = () => {
           active: false,
           isMainNav: true,
           icon: 'report',
+        }
+      ],
+    },
+    {
+      title: t('menu.Bet Management'),
+      label: 'Bet Management',
+      display: true,
+      path: '/bet-management',
+      children: [
+        {
+          path: '/game-record?gameType=LIVE',
+          title: t('menu.Bet History LIVE'),
+          label: 'Bet History LIVE',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
         },
         {
-          path: '/game-record',
-          title: t('menu.Bet Record'),
-          label: 'Bet Record',
+          path: '/game-record?gameType=SLOT',
+          title: t('menu.Bet History SLOT'),
+          label: 'Bet History SLOT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/game-record?gameType=SPORT',
+          title: t('menu.Bet History SPORT'),
+          label: 'Bet History SPORT',
           active: false,
           isMainNav: true,
           icon: 'clock',
@@ -321,6 +367,22 @@ const getNavigationData = () => {
           icon: 'user',
         },
         {
+          path: '/inquiry',
+          title: t('fields.inquiry'),
+          label: 'inquiry',
+          active: false,
+          isMainNav: true,
+          icon: 'email',
+        },
+        {
+          path: '/message',
+          title: t('fields.message'),
+          label: 'message',
+          active: false,
+          isMainNav: true,
+          icon: 'message',
+        },
+        {
           path: '/announcement',
           title: t('fields.systemAnnouncement'),
           label: 'systemAnnouncement',
@@ -350,9 +412,9 @@ const getNavigationData = () => {
 }
 onMounted(async () => {
   if (window.innerWidth < 768) {
-    $(".navigation").animate({ width: 0 })
+    $('.navigation').animate({ width: 0 })
   } else {
-    $(".navigation").animate({ width: 200 })
+    $('.navigation').animate({ width: 200 })
   }
 
   watch(
@@ -369,8 +431,10 @@ onMounted(async () => {
 
   setActiveNav()
 
-  const { data: affBal } = await getAffiliateBalance(store.state.user.id);
-  const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
+  const { data: affBal } = await getAffiliateBalance(store.state.user.id)
+  const { data: commBal } = await getAffiliateCommissionBalance(
+    store.state.user.id
+  )
   console.log({ affBal, commBal })
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {

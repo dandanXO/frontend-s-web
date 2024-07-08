@@ -1,11 +1,15 @@
-import moment from "moment";
+import moment from 'moment-timezone';
 
 export function formatTimeZone(time, timezone) {
   if (!timezone) {
     return moment(time).format('YYYY/MM/DD HH:mm:ss');
   }
-
-  var oriTimeZone = moment(time).subtract(8, 'hour');
+  var oriTimeZone;
+  if (typeof time === 'string') {
+    oriTimeZone = moment(time).subtract(8, 'hour');
+  } else {
+    oriTimeZone = moment(time).tz('Asia/Shanghai').subtract(8, 'hour');
+  }
   var hourDifferent = timezone.substring(1);
 
   var formattedTimeZone = timezone.charAt(0) === '+'

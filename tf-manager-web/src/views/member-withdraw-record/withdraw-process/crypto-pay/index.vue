@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -514,7 +513,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 250px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
             :default-time="defaultTime"
@@ -619,7 +617,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import moment from 'moment'
+/* import moment from 'moment' */
 import { ElMessage } from 'element-plus'
 import { getVipList } from '../../../../api/vip'
 import { getFinancialLevels } from '../../../../api/financial-level'
@@ -737,6 +735,7 @@ const request = reactive({
   siteId: null,
 })
 
+/*
 function disabledDate(time) {
   return (
     time.getTime() <=
@@ -745,6 +744,7 @@ function disabledDate(time) {
         .format('x') || time.getTime() > new Date().getTime()
   )
 }
+*/
 
 function resetQuery() {
   request.withdrawDate = [defaultStartDate, defaultEndDate]

@@ -827,7 +827,7 @@ export default defineComponent({
               if (res.code === 0) {
                 ElMessage({
                   type: "success",
-                  message: t('common.unbindSuccessful')
+                  message: t('withdraw.unbindSuccessful')
                 });
                 // loadCards();
                 searchRecord();

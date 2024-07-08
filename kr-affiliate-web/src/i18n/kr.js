@@ -150,25 +150,35 @@ export default {
     commissionCalculatorNote:
       '주의: 계산기는 평균 리베이트 및 배당금을 기준으로 하며, 결과는 참고용으로만 사용됩니다.',
     commissionRateInfo: '커미션 비율 정보',
-    commissionRateDescription: '대리 커미션 비율 이에 따라 두 조건을 모두 만족할 경우 제휴 관계에 참여하기로 결정합니다.',
-    activeMemberRequirement: '활성 회원 수: 해당 월의 예치금 >= 100 또는 유효한 베팅 >= 500;',
+    commissionRateDescription:
+      '대리 커미션 비율 이에 따라 두 조건을 모두 만족할 경우 제휴 관계에 참여하기로 결정합니다.',
+    activeMemberRequirement:
+      '활성 회원 수: 해당 월의 예치금 >= 100 또는 유효한 베팅 >= 500;',
     level: '수준',
     companyMonthlyProfit: '회사 월간 이익',
     activeNumberRequirement: '신규/활성 개수 최소 요구 사항',
     commissionRate: '커미션 비율',
     commissionCalculateFormula: '커미션 계산',
-    commissionFormula: '커미션 = 수정 후 순이익 * 수수료율 + 수수료 조정 + 수수료 보충; ',
+    commissionFormula:
+      '커미션 = 수정 후 순이익 * 수수료율 + 수수료 조정 + 수수료 보충; ',
     correctionNetProfitFormula: '수정 후 순이익 = 월 순이익 + 전월 잔액; ',
-    monthlyNetProfitFormula: '월 순이익 = 월별 총 승 손실 - 보너스 - 리베이트 - 플랫폼 수수료 - 계정 조정 + 보충 승 손실 - 입출금 처리 수수료; ',
+    monthlyNetProfitFormula:
+      '월 순이익 = 월별 총 승 손실 - 보너스 - 리베이트 - 플랫폼 수수료 - 계정 조정 + 보충 승 손실 - 입출금 처리 수수료; ',
     bonusFormula: '보너스 = 이번 달 제휴사 다운라인이 받은 보너스 총액; ',
     rebateFormula: '리베이트 = 이번 달 제휴사 다운라인이 받은 리베이트 총액; ',
-    platformFeeFormula: '플랫폼 수수료 = 각 플랫폼의 총 승패 * 플랫폼 수수료 요율. 단, 해당 월에 수익이 있을 경우에만 플랫폼에서 플랫폼 수수료를 부과합니다. ',
-    adjustmentFormula: '계정 조정 = 회원 롤오버가 비정상적인 경우 사이트 관리자가 해당 회원에 대한 계정 조정을 실시합니다.',
-    supplementWinLossFormula: '보충 승패 = 지난달 실시간 데이터 순이익 - 지난달 분배된 커미션 순이익; ',
-    depositFeeFormula: '입금 수수료 = 다운라인 입금액 * 입금 수수료 요율 + 제휴사 입금액 * 입금 수수료 요율',
+    platformFeeFormula:
+      '플랫폼 수수료 = 각 플랫폼의 총 승패 * 플랫폼 수수료 요율. 단, 해당 월에 수익이 있을 경우에만 플랫폼에서 플랫폼 수수료를 부과합니다. ',
+    adjustmentFormula:
+      '계정 조정 = 회원 롤오버가 비정상적인 경우 사이트 관리자가 해당 회원에 대한 계정 조정을 실시합니다.',
+    supplementWinLossFormula:
+      '보충 승패 = 지난달 실시간 데이터 순이익 - 지난달 분배된 커미션 순이익; ',
+    depositFeeFormula:
+      '입금 수수료 = 다운라인 입금액 * 입금 수수료 요율 + 제휴사 입금액 * 입금 수수료 요율',
     withdrawalFeeFormula: '출금수수료 = 다운라인 출금금액 * 출금수수료율; ',
-    commissionAdjustmentNote: '커미션 보충: 해당 월의 커미션이 출시된 후 제휴사가 참여한 관련 활동을 기반으로 커미션을 보충합니다. ',
-    commissionNote: '참고: 커미션을 사기 위해 부정직한 방법을 사용하는 사람은 계정이 영구적으로 동결되고 파트너십이 종료된다는 점을 기억하십시오. 모든 커미션은 지불되지 않습니다. ',
+    commissionAdjustmentNote:
+      '커미션 보충: 해당 월의 커미션이 출시된 후 제휴사가 참여한 관련 활동을 기반으로 커미션을 보충합니다. ',
+    commissionNote:
+      '참고: 커미션을 사기 위해 부정직한 방법을 사용하는 사람은 계정이 영구적으로 동결되고 파트너십이 종료된다는 점을 기억하십시오. 모든 커미션은 지불되지 않습니다. ',
   },
   sortType: {
     ASC: '오름차순',
@@ -239,7 +249,7 @@ export default {
     changeWithdrawPw: '출금 비밀번호 변경',
     clearingSum: '정산 총합',
     commission: '커미션',
-    gamecommission: "플랫폼 수수료",
+    gamecommission: '플랫폼 수수료',
     commissionBalance: '커미션 잔액',
     commissionPercent: '배당 %',
     commissionRate: '커미션 비율',
@@ -532,6 +542,22 @@ export default {
     todayWithdrawal: '금일총환전',
     depositWithdrawalDiff: '충환손익',
     recommenderCode: '추천인 코드',
+    sendMessageType: '정보 유형',
+    message: '정보',
+    messageType: '정보 유형',
+    messageTitle: '제목',
+    messageContent: '콘텐츠',
+    messageSendTime: '보내는 시간',
+    addAffiliateMessage: '오프라인 플레이어 정보 추가',
+    editAffiliateMessage: '하위라인 회원 정보 편집',
+    messageSend: '보내다',
+    receivedType: '전송 유형',
+    receivedMembers: '플레이어 계정',
+    example: '예를 들어',
+    memberUsername: '계정',
+    memberShareRatio: '플레이어 리베이트 비율',
+    editShareRatio: '리베이트 수정',
+    inquiry: '문의',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -690,6 +716,7 @@ export default {
     validateShareRatioFormat: '공유 비율은 0에서 1 사이여야 합니다.',
     depositShouldBetween: '입금액은 다음 사이여야 합니다 ',
     requiredPositiveInteger: '숫자를 입력해주세요',
+    replySuccess: '성공적인 답변',
   },
   menu: {
     undefined: '',
@@ -708,6 +735,9 @@ export default {
     'Affiliate Center': '대리점 센터',
     Deposit: '충전요청',
     'Bind Bank Cards': '환전계좌추가',
+    'Bet History LIVE' : "라이브 베팅 기록",
+    "Bet History SLOT" : "슬롯 베팅 기록",
+    "Bet History SPORT": "스포츠 베팅 기록",
     'Bank Withdrawal': '은행 출금',
     Transfer: '대리입금',
     'Referral Centre': '추천 센터',
@@ -725,7 +755,12 @@ export default {
     'Daily Summary': '일일 총괄',
     Withdraw: '은행 출금',
     'Rebate Report': '리베이트 보고서',
+    message: '사이트 메시지',
     'Member Management': '회원관리',
+    'Member Tree': '트리뷰',
+    'Bet Management': '베팅관리',
+    'Bet History': '회원베팅기록',
+    inquiry: '문의',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',
@@ -784,6 +819,13 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
     AGENT_SHARE_PROFIT_RATIO_LIVE: '이익률-LIVE',
     AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
+  },
+  sendMessageType: {
+    NOTIFICATION: '통지',
+    ACTIVITY: '활동',
+    ANNOUNCEMENT: '발표',
+    ALL_DOWNLINE_MEMBER: '모든 오프라인 플레이어',
+    SELECTED_MEMBER: '플레이어 선택',
   },
   error: {
     400: '잘못된 요청',

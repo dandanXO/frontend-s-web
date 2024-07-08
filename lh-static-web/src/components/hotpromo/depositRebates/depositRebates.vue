@@ -108,7 +108,7 @@ const depositCards = ref([
     title: "USDT",
     content:
       "充值即送<em>1.5%</em>彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限588元",
-    lesson: "https://fil2e5sal.vmip991b92n.com/media/deposit_guide.mp4"
+    lesson: "https://fi3j96ygol.gwo5mlgx98.com/media/deposit_guide.mp4"
   },
   {
     code: "okpay",
@@ -122,7 +122,7 @@ const depositCards = ref([
     title: "EBPAY",
     content:
       "充值即送<em>1.0%</em>彩金，活动期间，每位玩家每笔使用EBpay单笔充值成功存款即可享受存款金额的<em>1.0%</em>加码彩金，单日优惠最高上限200元",
-    lesson: "https://fil2e5sal.vmip991b92n.com/media/intro.mp4"
+    lesson: "https://fi3j96ygol.gwo5mlgx98.com/media/intro.mp4"
   },
   {
     code: "kdou",
