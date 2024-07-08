@@ -288,10 +288,10 @@ export default {
         withdraw: {
           title: "Withdraw",
           status: {
-            applying: "Applying",
+            applying: "Processing",
             failed: "Failed",
             success: "Success",
-            underReview: "Under review",
+            underReview: "Processing",
             toBePaid: "To be paid",
             paying: "Paying",
             automaticPayment: "Automatic Payment",
