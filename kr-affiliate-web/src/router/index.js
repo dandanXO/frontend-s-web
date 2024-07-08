@@ -230,6 +230,14 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'inquiry',
+        component: () => import('../views/personal/inquiry/index.vue'),
+        name: 'Inquiry',
+        meta: {
+          title: 'inquiry',
+        },
+      },
+      {
         path: 'message',
         component: () => import('../views/personal/message/index.vue'),
         name: 'Message',
