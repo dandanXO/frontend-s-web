@@ -7,13 +7,13 @@
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="list.redirectUrl === 'dy2-tiger-card'" />
-    <PrizePoolVotePromo v-if="list.redirectUrl === 'Dongying-team-vote'" />
-    <ESportSafetyPromo v-if="list.redirectUrl === 'dy2-esport-safety'" />
-    <SportSafetyPromo v-if="list.redirectUrl === 'sport-safety'" />
-    <NbaGamePromo v-if="list.redirectUrl === 'nba-game'" />
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" />
-    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
+    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
+    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
+    <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
+    <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
+    <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
+    <MeiZhouBeiPromoNew v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" />
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
 
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
@@ -104,7 +104,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import ESportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
 import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
-import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
+import MeiZhouBeiPromoNew from "../components/hotpromo/meizhoubei/MeiZhouBeiPromoNew.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -149,7 +149,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoNew,
     PrizePoolVotePromo,
     ESportSafetyPromo,
     SportSafetyPromo,

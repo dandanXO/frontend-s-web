@@ -1,15 +1,15 @@
 <template>
   <q-page>
-    <template v-if="props.type !== 'outbox'">
-      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
-        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-          <div class="tab-flex">
-            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
-            <div>{{ item.name }}</div>
-          </div>
-        </q-tab>
-      </q-tabs>
-    </template>
+    <!--    <template v-if="props.type !== 'outbox'">-->
+    <!--      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">-->
+    <!--        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">-->
+    <!--          <div class="tab-flex">-->
+    <!--            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />-->
+    <!--            <div>{{ item.name }}</div>-->
+    <!--          </div>-->
+    <!--        </q-tab>-->
+    <!--      </q-tabs>-->
+    <!--    </template>-->
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -66,7 +66,11 @@
                   </div>
                   <div class="right-title">
                     <img class="svg" v-if="isSelectedMail === det.id" src="~assets/account/mail/arrow-up-s-line.svg" />
-                    <img class="svg" v-if="isSelectedMail !== det.id" src="~assets/account/mail/arrow-down-s-line.svg" />
+                    <img
+                      class="svg"
+                      v-if="isSelectedMail !== det.id"
+                      src="~assets/account/mail/arrow-down-s-line.svg"
+                    />
                   </div>
                 </div>
               </div>

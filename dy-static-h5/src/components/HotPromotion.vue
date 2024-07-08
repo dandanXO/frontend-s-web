@@ -41,7 +41,7 @@
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
+    <MeiZhouBeiPromoNew v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
 
     <InsuranceSubmitPromo
       v-if="
@@ -130,38 +130,58 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 
-const ClaimPromo = defineAsyncComponent(() => import( "../components/hotpromo/claimPromo.vue"));
-const TigerCardPromo = defineAsyncComponent(() => import( "../components/hotpromo/tigercard/tigerCardPromo.vue"));
-const PrizePoolVotePromo = defineAsyncComponent(() => import( "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue"));
-const GoldenEggPromo = defineAsyncComponent(() => import( "../components/hotpromo/goldenegg/goldenEggPromo.vue"));
-const HongBaoPreEurocupPromo = defineAsyncComponent(() => import( "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue"));
-const HongBaoYu2024 = defineAsyncComponent(() => import( "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue"));
-const HongBaoYuEurocupPromo = defineAsyncComponent(() => import( "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue"));
-const UpcomingMatchPromo = defineAsyncComponent(() => import( "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue"));
-const InsuranceSubmitPromo = defineAsyncComponent(() => import( "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue"));
-const InviteFriendPromo = defineAsyncComponent(() => import( "../components/hotpromo/invitefriend/inviteFriendPromo.vue"));
-const EsportQuiz = defineAsyncComponent(() => import( "../components/hotpromo/esportquiz/EsportQuiz.vue"));
-const LotteryPromo = defineAsyncComponent(() => import( "../components/hotpromo/lottery/LotteryPromo.vue"));
-const GiftPromo = defineAsyncComponent(() => import( "../components/hotpromo/gift/GiftPromo.vue"));
-const PrivilegeInvite = defineAsyncComponent(() => import( "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue"));
-const AsiaCup2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
-const BasketballHot = defineAsyncComponent(() => import( "../components/hotpromo/basketballHot/BasketballHot.vue"));
-const LplSummerPromo = defineAsyncComponent(() => import( "../components/hotpromo/lplsummer/LplSummerPromo.vue"));
-const Cny2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/cny2024/Cny2024Promo.vue"));
-const BbDacha2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue"));
-const CnyStepGame2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue"));
-const Dy2StepGamePromo = defineAsyncComponent(() => import( "../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
-const CS2Sign = defineAsyncComponent(() => import( "../components/hotpromo/CS2Sign/CS2Sign.vue"));
-const BonusSpinWheel = defineAsyncComponent(() => import( "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
-const LOLMsi2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
-const Nba24Match = defineAsyncComponent(() => import( "../components/hotpromo/Nba24Match/Nba24Match.vue"));
-const LPLSummer24 = defineAsyncComponent(() => import( "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
-const DragonBoat = defineAsyncComponent(() => import( "../components/hotpromo/dragonboat/DragonBoat.vue"));
-const EurocupManual = defineAsyncComponent(() => import( "./hotpromo/EurocupManual/EurocupManual.vue"));
-const SportZhongChao = defineAsyncComponent(() => import( "../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
-const BlastPremierPromo = defineAsyncComponent(() => import( "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
-const fishHongbao = defineAsyncComponent(() => import( "../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromo = defineAsyncComponent(() => import( "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
+const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
+const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
+const PrizePoolVotePromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue")
+);
+const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
+const HongBaoPreEurocupPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue")
+);
+const HongBaoYu2024 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue"));
+const HongBaoYuEurocupPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue")
+);
+const UpcomingMatchPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue")
+);
+const InsuranceSubmitPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue")
+);
+const InviteFriendPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/invitefriend/inviteFriendPromo.vue")
+);
+const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
+const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
+const GiftPromo = defineAsyncComponent(() => import("../components/hotpromo/gift/GiftPromo.vue"));
+const PrivilegeInvite = defineAsyncComponent(() =>
+  import("../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue")
+);
+const AsiaCup2024Promo = defineAsyncComponent(() => import("../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
+const BasketballHot = defineAsyncComponent(() => import("../components/hotpromo/basketballHot/BasketballHot.vue"));
+const LplSummerPromo = defineAsyncComponent(() => import("../components/hotpromo/lplsummer/LplSummerPromo.vue"));
+const Cny2024Promo = defineAsyncComponent(() => import("../components/hotpromo/cny2024/Cny2024Promo.vue"));
+const BbDacha2024Promo = defineAsyncComponent(() => import("../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue"));
+const CnyStepGame2024Promo = defineAsyncComponent(() =>
+  import("../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue")
+);
+const Dy2StepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
+const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
+const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const LOLMsi2024Promo = defineAsyncComponent(() => import("../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
+const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
+const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
+const DragonBoat = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
+const EurocupManual = defineAsyncComponent(() => import("./hotpromo/EurocupManual/EurocupManual.vue"));
+const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
+const BlastPremierPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
+);
+const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
+const MeiZhouBeiPromoNew = defineAsyncComponent(() =>
+  import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoNew.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -174,7 +194,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoNew,
     PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYu2024,
