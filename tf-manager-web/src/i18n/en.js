@@ -1859,6 +1859,8 @@ export default {
     downlineMembers: 'Downline Members',
     todayRegCount: 'Today Register Count',
     yesterdayRegCount: 'Yesterday Register Count',
+    displayStartTime: 'Display Start Time',
+    displayEndTime: 'Display End Time',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
