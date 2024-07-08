@@ -62,8 +62,7 @@ export const constantRoutes = [
       },
       {
         path: 'member-tree',
-        component: () =>
-          import('../views/member-info/member-tree/index.vue'),
+        component: () => import('../views/member-info/member-tree/index.vue'),
         name: 'Member Tree',
         meta: {
           title: 'member-tree',
@@ -255,7 +254,7 @@ export const constantRoutes = [
       {
         path: 'inquiry',
         component: () => import('../views/personal/inquiry/index.vue'),
-        name: 'Inquiry',
+        name: 'inquiry',
         meta: {
           title: 'inquiry',
         },
