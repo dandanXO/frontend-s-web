@@ -6,7 +6,7 @@
         :class="{ active: selectedTab === 'sports' }" 
         @click="selectTab('sports')"
       >
-        <i class="icon sports-icon"></i>
+        <i class="icon sports-icon" :class="{ 'sports-icon-active': selectedTab === 'sports' }" ></i>
         体育首存
       </div>
       <div 
@@ -14,7 +14,7 @@
         :class="{ active: selectedTab === 'esports' }" 
         @click="selectTab('esports')"
       >
-        <i class="icon esports-icon"></i>
+        <i class="icon esports-icon" :class="{ 'esports-icon-active': selectedTab === 'esports' }"></i>
         电竞首存
       </div>
       <div 
@@ -22,7 +22,7 @@
         :class="{ active: selectedTab === 'live' }" 
         @click="selectTab('live')"
       >
-        <i class="icon live-icon"></i>
+        <i class="icon live-icon" :class="{ 'live-icon-active': selectedTab === 'live' }" ></i>
         真人首存
       </div>
       <div 
@@ -30,7 +30,7 @@
         :class="{ active: selectedTab === 'cards' }" 
         @click="selectTab('cards')"
       >
-        <i class="icon cards-icon"></i>
+        <i class="icon cards-icon" :class="{ 'cards-icon-active': selectedTab === 'cards' }"></i>
         棋牌首存
       </div>
       <div 
@@ -38,7 +38,7 @@
         :class="{ active: selectedTab === 'slots' }" 
         @click="selectTab('slots')"
       >
-        <i class="icon slots-icon"></i>
+        <i class="icon slots-icon" :class="{ 'slots-icon-active': selectedTab === 'slots' }" ></i>
         电子首存
       </div>
       <div 
@@ -46,7 +46,7 @@
         :class="{ active: selectedTab === 'fishing' }" 
         @click="selectTab('fishing')"
       >
-        <i class="icon fishing-icon"></i>
+        <i class="icon fishing-icon" :class="{ 'fishing-icon-active': selectedTab === 'fishing' }" ></i>
         捕鱼首存
       </div>
     </div>
@@ -627,35 +627,56 @@ button:disabled {
 }
 
 .sports-icon {
-  // <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" />
-  color: red;
-  fill: red;
-  background: url('@/assets/images/promotion/hotpromo/newplayerguide/sport-active.png') no-repeat center center;
+  background: url('@/assets/images/promotion/hotpromo/newplayerguide/sport.png') no-repeat center center;
   background-size: cover;
+  &-active {
+    background: url('@/assets/images/promotion/hotpromo/newplayerguide/sport-active.png') no-repeat center center;
+    background-size: cover;
+  }
 }
 
 .esports-icon {
   background: url('@/assets/images/promotion/hotpromo/newplayerguide/esport.png') no-repeat center center;
   background-size: cover;
+  &-active {
+    background: url('@/assets/images/promotion/hotpromo/newplayerguide/esport-active.png') no-repeat center center;
+    background-size: cover;
+  }
 }
 
 .live-icon {
   background: url('@/assets/images/promotion/hotpromo/newplayerguide/real.png') no-repeat center center;
   background-size: cover;
+  &-active {
+    background: url('@/assets/images/promotion/hotpromo/newplayerguide/real-active.png') no-repeat center center;
+    background-size: cover;
+  }
 }
 
 .cards-icon {
   background: url('@/assets/images/promotion/hotpromo/newplayerguide/card.png') no-repeat center center;
   background-size: cover;
+  &-active {
+    background: url('@/assets/images/promotion/hotpromo/newplayerguide/card-active.png') no-repeat center center;
+    background-size: cover;
+  }
 }
 
 .slots-icon {
   background: url('@/assets/images/promotion/hotpromo/newplayerguide/slot.png') no-repeat center center;
   background-size: cover;
+  &-active {
+    background: url('@/assets/images/promotion/hotpromo/newplayerguide/slot-active.png') no-repeat center center;
+    background-size: cover;
+  }
 }
 
 .fishing-icon {
   background: url('@/assets/images/promotion/hotpromo/newplayerguide/fish.png') no-repeat center center;
   background-size: cover;
+  &-active {
+    background: url('@/assets/images/promotion/hotpromo/newplayerguide/fish-active.png') no-repeat center center;
+    background-size: cover;
+  }
 }
 </style>
