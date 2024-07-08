@@ -4,7 +4,7 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
     <div class="navigation">
-      <div class="logo-section" />
+      <a :href="krwUrl" target="_blank"><div class="logo-section" /></a>
       <div class="row-item">
         <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
           <el-option key="1" value="en">en</el-option>
@@ -30,8 +30,10 @@
       </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
+          <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
           <svg-icon :icon-class="'right'" />
           <span>유저사이트</span>
+          </a>
         </div>
       </div>
       <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
@@ -83,6 +85,9 @@ const router = useRouter()
 const navigationData = ref([])
 
 const store = useStore()
+
+const krwUrl = ref("https://city8.vip");
+
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage);
