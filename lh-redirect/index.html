@@ -13,17 +13,19 @@
     const randNum = Math.floor(Math.random() * 2) + 1;
     const next = urlLists[randNum - 1];
     let timeoutId;
-    if (isWaitClick === 'false') {
-        timeoutId = setTimeout(() => {
-            window.location = next;
-        }, 3000);
-    }
+    // if (isWaitClick === 'false') {
+    //     timeoutId = setTimeout(() => {
+    //         window.location = next;
+    //     }, 3000);
+    // }
     const existsContent = "站点安全";
 </script>
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
 <script type="text/javascript">
     var hostname = window.location.hostname;
-    // console.log(hostname);
+    console.log(hostname);
+    // var hostname= "ozqak6.me"
+    // debugger;
     if (hostname.indexOf("ozqak6.me") > -1) {
         console.log("Track");
         LA.init({id:"KUuHLNSqfmpgTSpF",ck:"KUuHLNSqfmpgTSpF"})
