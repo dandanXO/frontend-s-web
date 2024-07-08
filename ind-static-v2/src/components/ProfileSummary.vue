@@ -56,7 +56,7 @@
         </div>
 
         <div>
-          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
+          <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
         </div>
         <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
@@ -156,7 +156,7 @@ const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
-const ui= useUI();
+const ui = useUI();
 
 // const balance = ref(19999999);
 
@@ -173,19 +173,19 @@ const goLogin = () => {
   router.push("/login");
 };
 
-const trackRegisterClickEvent= () => {
-  if(ui.adjust_click_register_event && isAndroid()){
-    console.log("Track Click Reg")
+const trackRegisterClickEvent = () => {
+  if (ui.adjust_click_register_event && isAndroid()) {
+    console.log("Track Click Reg");
     var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
     Adjust.trackEvent(adjustEvent);
   }
-}
+};
 
 const goToRegister = () => {
   trackRegisterClickEvent();
 
   router.push("/register");
-}
+};
 
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
@@ -279,6 +279,13 @@ const getTopDownloadUrl = () => {
       topDownloadUrl.value = res.data.url;
     }
   });
+};
+
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/deposit?from=" + route.path);
 };
 
 onMounted(() => {
