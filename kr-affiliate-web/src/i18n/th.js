@@ -389,6 +389,7 @@ export default {
     receivedMembers: 'บัญชีผู้เล่น',
     example: 'ตัวอย่างเช่น',
     memberUsername: 'บัญชี',
+    inquiry: 'สอบถามรายละเอียดเพิ่มเติม',
   },
   message: {
     addSuccess: 'เพิ่มสำเร็จ',
@@ -471,6 +472,7 @@ export default {
       'คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าเว็บของธนาคารเพื่อทำธุรกรรมฝากเงิน',
     depositNotification2: 'หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่',
     depositShouldBetween: 'จำนวนเงินฝากควรอยู่ระหว่าง ',
+    replySuccess: 'ตอบกลับสำเร็จ',
   },
   menu: {
     undefined: '',
@@ -496,6 +498,7 @@ export default {
     'Settlement Center': 'ศูนย์การตัดยอดค่าคอมมิชชัน',
     Withdraw: 'การถอนเงินจากธนาคาร',
     message: 'ข้อความของไซต์',
+    inquiry: 'สอบถามรายละเอียดเพิ่มเติม',
   },
   sendMessageType: {
     NOTIFICATION: 'แจ้ง',

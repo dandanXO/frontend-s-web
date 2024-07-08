@@ -508,6 +508,7 @@ export default {
     receivedMembers: 'tài khoản người chơi',
     example: 'Ví dụ',
     memberUsername: 'tài khoản',
+    inquiry: 'cuộc điều tra',
   },
   google: {
     google_auth_menu: 'Xác thực Google',
@@ -675,6 +676,7 @@ export default {
     validateAppNameRequired: 'Tên ứng dụng là bắt buộc',
     validateAppIconRequired: 'Biểu tượng ứng dụng là bắt buộc',
     depositShouldBetween: 'Số tiền gửi phải nằm trong khoảng ',
+    replySuccess: 'Trả lời thành công',
   },
   menu: {
     undefined: '',
@@ -710,6 +712,7 @@ export default {
     'Daily Summary': 'Tóm Tắt Hàng Ngày',
     Withdraw: 'Rút tiền ngân hàng',
     message: 'Thông báo trang web',
+    inquiry: 'cuộc điều tra',
   },
   posterType: {
     OVERALL: 'Giới Thiệu Tổng Quan',

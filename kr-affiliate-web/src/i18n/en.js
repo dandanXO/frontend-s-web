@@ -558,6 +558,8 @@ export default {
     receivedMembers: 'Username',
     example: 'Example',
     memberUsername: 'Username',
+    inquiry: 'Inquiry',
+    replySuccess: 'Reply Successfully',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -759,6 +761,7 @@ export default {
     Withdraw: 'Withdraw',
     'Rebate Report': 'Rebate Report',
     message: 'Message',
+    inquiry: 'Inquiry',
   },
   posterType: {
     OVERALL: 'Overall Referral',
