@@ -381,7 +381,6 @@ export default defineComponent({
       tr:first-child td {
         background-image: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
         color: #ffffff;
-        border: 0;
       }
       border-collapse: collapse;
       th,
@@ -408,13 +407,25 @@ export default defineComponent({
       }
       td {
         // background-color: #202228;
-        border: 1px solid #dcdce8;
+        border: 1px solid #1E212C;
         color: #ffffff;
+        background: #ffffff0d;
       }
       tr {
-        &:last-child {
+        &:first-child {
           td:first-child {
             border-radius: 20px 0 0 0;
+          }
+          td:last-child {
+            border-radius: 0 20px 0 0;
+          }
+        }
+        &:last-child {
+          td:first-child {
+            border-radius: 0 0 0 20px;
+          }
+          td:last-child {
+            border-radius: 0 0 20px 0;
           }
         }
       }
