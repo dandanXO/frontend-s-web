@@ -3,6 +3,7 @@
     <TFLoading v-if="logoShow"></TFLoading>
     <template v-if="transferInfo.platform === 'PG'">
       <iframe
+        allow="fullscreen"
         @load="loadGame()"
         v-show="!logoShow"
         v-bind:srcdoc="src"
@@ -14,6 +15,7 @@
     </template>
     <template v-else>
       <iframe
+        allow="fullscreen"
         @load="loadGame()"
         v-show="!logoShow"
         :src="src"
@@ -212,7 +214,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           platformCode === "SGWin" ||
           platformCode === "TCG" ||
           platformCode === "PT" ||
-          platformCode === "BBINDY" || 
+          platformCode === "BBINDY" ||
           (platformCode === "onlyPlatform" && (gameCode === "IMES" || gameCode === "IM"))
         )
       ) {
@@ -245,7 +247,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
         platformCode === "PT" ||
-        (platformCode === "BBINDY")
+        platformCode === "BBINDY"
       ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
