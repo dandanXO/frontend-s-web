@@ -3,12 +3,8 @@
         <img class="banner-img" src="@/assets/images/promotion/hotpromo/EuroRegen/banner.png" />
 
         <div class="promo-content-wrapper">
-          <div style="color:#ff0000;font-size:40px;text-align:center;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
-            还没完成，不要测试先。
-          </div>
-
             <div class="claim-wrapper">
-                <div class="claim-button">立即领取</div>
+                <div class="claim-button" @click="claimAmount">立即领取</div>
             </div>
 
             <div class="promo-content-header">活动内容：活动期间，欧洲杯每周负盈利≥500即可在固定活动时间范围内领取对应档位彩金；
@@ -77,10 +73,32 @@
 </template>
 
 <script setup>
-
 import { userStore } from "@/store";
+import { claimBonusItem } from "@/api/index/promo";
+import { ElMessage } from "element-plus";
+const store = userStore();
 
-const store= userStore();
+const claimAmount = () => {
+  claimBonusItem("lh1-sport-loss-refund")
+    .then((res) => {
+      if (res.code === 0) {
+        store.getBalance();
+        ElMessage({
+          message: `成功领取 ${res.data} 元`,
+          type: "success"
+        });
+      } else {
+        ElMessage.error({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // message.error(err.message, 4);
+    });
+};
 </script>
 
 <style lang="scss" scoped>
