@@ -6,7 +6,12 @@
     <div class="navigation">
       <div class="logo-section" />
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-select
+          class="lang-container right-menu-item"
+          placeholder=""
+          v-model="languageVal"
+          @change="handleLanguage"
+        >
           <el-option key="1" value="en">en</el-option>
           <el-option key="2" value="zh">zh</el-option>
           <el-option key="3" value="th">th</el-option>
@@ -110,8 +115,8 @@ const navigationData = ref([])
 const store = useStore()
 
 const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage);
-const { setLanguage } = i18nStoreLanguage;
+const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { setLanguage } = i18nStoreLanguage
 
 const affInfo = reactive({
   affiliateCode: null,
@@ -124,7 +129,7 @@ const affInfo = reactive({
 })
 
 const handleLanguage = () => {
-  setLanguage(languageVal.value);
+  setLanguage(languageVal.value)
 }
 
 const setActiveNav = () => {
@@ -348,6 +353,14 @@ const getNavigationData = () => {
           active: false,
           isMainNav: true,
           icon: 'user',
+        },
+        {
+          path: '/inquiry',
+          title: t('fields.inquiry'),
+          label: 'inquiry',
+          active: false,
+          isMainNav: true,
+          icon: 'email',
         },
         {
           path: '/message',
