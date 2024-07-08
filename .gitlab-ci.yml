@@ -289,6 +289,13 @@ deploy-vnm-maintenance:
 
 #===============================================================================================
 
+deploy-kaka-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: kaka-download
+
+#===============================================================================================
+
 build-tf-manager-web:
   extends: .build-projects
   variables:
@@ -483,6 +490,20 @@ build-image-xf-lh-dy-affiliate-web:
     PROJECT: xf-lh-dy-affiliate-web
   needs:
     - build-xf-lh-dy-affiliate-web
+
+#===============================================================================================
+
+build-kr-affiliate-web:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-affiliate-web
+
+build-image-kr-affiliate-web:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-affiliate-web
+  needs:
+    - build-kr-affiliate-web
 
 #===============================================================================================
 

@@ -11,9 +11,9 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-var rstApi = getInitApi(rstArray, "IND_RST_URL");
-var crtApi = getInitApi(crtArray, "IND_CRT_URL");
-var evtApi = getInitApi(evtArray, "IND_EVT_URL");
+var rstApi = getInitApi(rstArray, "NGA_RST_URL");
+var crtApi = getInitApi(crtArray, "NGA_CRT_URL");
+var evtApi = getInitApi(evtArray, "NGA_EVT_URL");
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });

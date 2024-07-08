@@ -1,50 +1,24 @@
 <template>
-  <div class="roles-main">
-    <el-card class="box-card" shadow="never">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.downlineMember') }}</span>
-        </div>
-      </template>
+  <div class="page-container">
+    <div class="panel-item">
+      <div class="panel-header">{{ $t('fields.downlineMember') }}</div>
+
       <el-form @submit.prevent>
-        <div style="margin: 20px;">
+        <div>
           <el-row :gutter="20" v-if="store.state.user.siteCode !== 'VNM'">
             <el-col :xl="2" :lg="3" :md="4" :sm="24">
               <el-form-item :label="t('fields.memberTag') + ' :'" />
             </el-col>
             <el-col :xl="18" :lg="16" :md="12" :sm="24">
-              <el-checkbox
-                :indeterminate="isIndeterminate"
-                v-model="checkAll"
-                @change="handleCheckAll"
-              >
+              <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAll">
                 {{ t('fields.all') }}
               </el-checkbox>
-              <el-checkbox-group
-                v-model="selected.tags"
-                @change="handleCheckedTags"
-              >
-                <el-checkbox
-                  v-for="tag in tagList.description"
-                  :key="tag"
-                  :label="tag"
-                />
+              <el-checkbox-group v-model="selected.tags" @change="handleCheckedTags">
+                <el-checkbox v-for="tag in tagList.description" :key="tag" :label="tag" />
               </el-checkbox-group>
             </el-col>
-            <el-col
-              class="memberTag"
-              :xl="3"
-              :lg="4"
-              :md="12"
-              :sm="24"
-              style="margin-left: auto; text-align: right;"
-            >
-              <el-button
-                icon="el-icon-setting"
-                type="primary"
-                @click="goToTagSetting()"
-                size="normal"
-              >
+            <el-col class="memberTag" :xl="3" :lg="4" :md="12" :sm="24" style="margin-left: auto; text-align: right;">
+              <el-button icon="el-icon-setting" type="primary" @click="goToTagSetting()" size="normal">
                 {{ $t('fields.tagSetting') }}
               </el-button>
             </el-col>
@@ -59,29 +33,17 @@
             </el-col>
             <el-col :xl="8" :lg="8" :md="10" :sm="8">
               <el-form-item :label="t('fields.depositAmount') + ' :'">
-                <el-input
-                  size="normal"
-                  v-model="request.depositMinAmount"
-                  class="input-min"
-                >
+                <el-input size="normal" v-model="request.depositMinAmount" class="input-min">
                   <template #append>
                     -
                   </template>
                 </el-input>
-                <el-input
-                  v-model="request.depositMaxAmount"
-                  class="input-max"
-                  size="normal"
-                />
+                <el-input v-model="request.depositMaxAmount" class="input-max" size="normal" />
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="8" :md="6" :sm="6">
               <el-form-item :label="t('fields.betRecord') + ' :'">
-                <el-select
-                  style="width: 100%;"
-                  size="normal"
-                  v-model="request.isBet"
-                >
+                <el-select style="width: 100%;" size="normal" v-model="request.isBet">
                   <el-option key="1" value="-1" :label="t('fields.all')">
                     {{ t('fields.all') }}
                   </el-option>
@@ -100,40 +62,18 @@
           <el-row :gutter="20" style="gap: 10px;">
             <el-col :xl="8" :lg="8" :md="12" :sm="12">
               <el-form-item :label="t('fields.recordTime') + ' :'">
-                <el-date-picker
-                  v-model="request.recordTime"
-                  format="DD/MM/YYYY"
-                  value-format="YYYY-MM-DD"
-                  size="normal"
-                  class="input-small"
-                  type="daterange"
-                  range-separator=":"
-                  :start-placeholder="t('fields.startDate')"
-                  :end-placeholder="t('fields.endDate')"
-                  :shortcuts="shortcuts"
-                  :disabled-date="disabledDate"
-                  :editable="false"
-                  :clearable="false"
-                />
+                <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
+                  class="input-small" type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" />
               </el-form-item>
             </el-col>
             <el-col :xl="10" :lg="8" :md="12" :sm="12">
               <el-form-item :label="t('fields.registerTime') + ' :'">
-                <el-date-picker
-                  v-model="request.regTime"
-                  format="DD/MM/YYYY"
-                  value-format="YYYY-MM-DD"
-                  size="normal"
-                  class="input-small"
-                  type="daterange"
-                  range-separator=":"
-                  :start-placeholder="t('fields.startDate')"
-                  :end-placeholder="t('fields.endDate')"
-                  :shortcuts="shortcuts"
-                  :disabled-date="disabledDate"
-                  :editable="false"
-                  :clearable="false"
-                />
+                <el-date-picker v-model="request.regTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
+                  class="input-small" type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -142,54 +82,26 @@
           <el-row :gutter="20" style="gap: 10px;">
             <el-col :xl="7" :lg="7" :md="7" :sm="7">
               <el-form-item :label="t('fields.orderBy') + ' :'">
-                <el-select
-                  style="width: 100%;"
-                  size="normal"
-                  v-model="request.orderBy"
-                >
-                  <el-option
-                    v-for="item in uiControl.orderBy"
-                    :key="item.display"
-                    :label="t('fields.' + item.display)"
-                    :value="item.value"
-                  />
+                <el-select style="width: 100%;" size="normal" v-model="request.orderBy">
+                  <el-option v-for="item in uiControl.orderBy" :key="item.display" :label="t('fields.' + item.display)"
+                    :value="item.value" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :xl="7" :lg="7" :md="7" :sm="7">
               <el-form-item :label="t('fields.sortType') + ' :'">
-                <el-select
-                  style="width: 100%;"
-                  size="normal"
-                  v-model="request.sortType"
-                >
-                  <el-option
-                    v-for="item in uiControl.sortType"
-                    :key="item.display"
-                    :label="t('sortType.' + item.display)"
-                    :value="item.value"
-                  />
+                <el-select style="width: 100%;" size="normal" v-model="request.sortType">
+                  <el-option v-for="item in uiControl.sortType" :key="item.display"
+                    :label="t('sortType.' + item.display)" :value="item.value" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="8" :md="8">
-              <div
-                style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center"
-              >
-                <el-button
-                  icon="el-icon-search"
-                  type="primary"
-                  @click="loadAffiliateMembers()"
-                  size="normal"
-                >
+              <div style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center">
+                <el-button icon="el-icon-search" type="primary" @click="loadAffiliateMembers()" size="normal">
                   {{ $t('fields.search') }}
                 </el-button>
-                <el-button
-                  size="normal"
-                  type="primary"
-                  plain
-                  @click="resetQuery()"
-                >
+                <el-button size="normal" type="primary" plain @click="resetQuery()">
                   {{ $t('fields.reset') }}
                 </el-button>
               </div>
@@ -197,28 +109,20 @@
           </el-row>
         </div>
         <div class="inputs-wrap">
-          <el-button
-            v-if="store.state.user.siteCode === 'KRW'"
-            icon="el-icon-plus"
-            size="normal"
-            type="primary"
-            @click="showCreateMember()"
-          >
+          <el-button v-if="store.state.user.siteCode === 'KRW'" icon="el-icon-plus" size="normal" type="primary"
+            @click="showCreateMember()">
             {{ $t('fields.createMember') }}
           </el-button>
-          <el-button
-            v-if="store.state.user.siteCode !== 'VNM'"
-            size="normal"
-            type="primary"
-            :disabled="uiControl.editBtn"
-            @click="showBatchEditTag()"
-          >
+          <el-button v-if="store.state.user.siteCode !== 'VNM'" size="normal" type="primary"
+            :disabled="uiControl.editBtn" @click="showBatchEditTag()">
             {{ $t('fields.batchEditTag') }}
           </el-button>
         </div>
+
       </el-form>
-      <div style="width: 98%; margin: 10px auto">
-        <table cellpadding="0" cellspacing="0" border="0" class="custom-table">
+
+      <div class="custom-table-wrapper">
+        <table cellspacing="0" border class="custom-table">
           <thead>
             <tr>
               <th scope="col">{{ t('fields.sequence') }}</th>
@@ -232,36 +136,43 @@
               <th scope="col">{{ t('fields.operate') }}</th>
             </tr>
           </thead>
-          <tbody v-if="page.records.length > 0">
+          <tbody v-if="page.loading || page.records.length === 0">
+            <tr>
+              <td colspan="9">
+                <Loading v-if="page.loading" />
+                <emptyComp v-else-if="page.records.length === 0" />
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else-if="page.records.length > 0">
             <tr v-for="item in page.records" :key="item.id">
               <td :data-label="t('fields.sequence')">
-                <input
-                  type="checkbox"
-                  :value="item.id"
-                  v-model="selectedMembers"
-                  @change="handleSelectionChange"
-                >
+                <input type="checkbox" :value="item.id" v-model="selectedMembers" @change="handleSelectionChange">
               </td>
-              <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
+              <td :data-label="t('fields.loginName')">
+                <div v-formatter="{
+                  data: {
+                    loginName: item.loginName,
+                    vip: item.vip
+                  }, type: 'loginName'
+                }" />
+              </td>
               <td :data-label="t('fields.totalDeposit')">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                {{ formatMoney(item.totalDeposit) }}
+                <div v-formatter="{ data: item.totalDeposit, type: 'money' }" />
               </td>
               <td :data-label="t('fields.totalWithdraw')">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                {{ formatMoney(item.totalWithdraw) }}
+                <div v-formatter="{ data: item.totalWithdraw, type: 'money' }" />
               </td>
               <td :data-label="t('fields.netProfit')">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                {{ formatMoney(item.revenueShare) }}
+                <div v-formatter="{ data: item.revenueShare, type: 'money' }" />
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
-                <span>{{ formatDateTime(item.regTime) }}</span>
+                <span v-formatter="{ data: item.regTime, type: 'date' }" />
               </td>
               <td :data-label="t('fields.lastLoginTime')">
                 <span v-if="item.lastLoginTime === null">-</span>
-                <span>{{ formatDateTime(item.lastLoginTime) }}</span>
+                <span v-formatter="{ data: item.lastLoginTime, type: 'date' }" />
               </td>
               <td :data-label="t('fields.memberTag')">
                 {{ formatmTag(item.tags) }}
@@ -279,9 +190,7 @@
                       <el-dropdown-item @click="showMemberInfo(item)">
                         {{ t('fields.memberInfo') }}
                       </el-dropdown-item>
-                      <el-dropdown-item
-                        @click="transferRedirect(item.loginName)"
-                      >
+                      <el-dropdown-item @click="transferRedirect(item.loginName)">
                         {{ t('menu.Transfer') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showEditTag(item)">
@@ -289,6 +198,10 @@
                       </el-dropdown-item>
                       <el-dropdown-item @click="showEditRemark(item)">
                         {{ t('fields.remark') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item v-if="parseInt(store.state.user.siteId) === 10"
+                        @click="showEditShareRatio(item)">
+                        {{ t('fields.editShareRatio') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showDepositRecord(item)">
                         {{ t('fields.depositRecord') }}
@@ -306,55 +219,27 @@
             </tr>
           </tbody>
         </table>
-        <div v-if="page.records.length === 0">
-          <emptyComp />
-        </div>
-        <el-pagination
-          class="pagination"
-          @current-change="changePage"
-          layout="prev, pager, next"
-          :page-size="request.size"
-          :page-count="page.pages"
-          :current-page="request.current"
-        />
+        <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+          :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
-    </el-card>
+    </div>
   </div>
-  <el-dialog
-    :title="t('fields.memberInfo')"
-    v-model="uiControl.infoDialogVisible"
-    modal-class="dialog900"
-    width="90%"
-  >
+
+
+  <el-dialog :title="t('fields.memberInfo')" v-model="uiControl.infoDialogVisible" modal-class="dialog900" width="90%">
     <el-form>
       <div style="display: flex; gap: 10px;">
         <el-row :gutter="20" style="gap: 10px">
           <el-col :xl="8" :lg="18" :md="16" :xs="16">
             <el-form-item :label="t('fields.recordTime') + ' :'">
-              <el-date-picker
-                v-model="memberRequest.recordTime"
-                format="DD/MM/YYYY"
-                value-format="YYYY-MM-DD"
-                size="normal"
-                class="input-small"
-                type="daterange"
-                range-separator=":"
-                :start-placeholder="t('fields.startDate')"
-                :end-placeholder="t('fields.endDate')"
-                :shortcuts="shortcuts"
-                :disabled-date="disabledDate"
-                :editable="false"
-                :clearable="false"
-              />
+              <el-date-picker v-model="memberRequest.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD"
+                size="normal" class="input-small" type="daterange" range-separator=":"
+                :start-placeholder="t('fields.startDate')" :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts"
+                :disabled-date="disabledDate" :editable="false" :clearable="false" />
             </el-form-item>
           </el-col>
           <el-col :xl="5" :lg="3" :md="3" :xs="3">
-            <el-button
-              icon="el-icon-search"
-              type="primary"
-              @click="showMemberInfo()"
-              size="normal"
-            >
+            <el-button icon="el-icon-search" type="primary" @click="showMemberInfo()" size="normal">
               {{ $t('fields.search') }}
             </el-button>
           </el-col>
@@ -369,25 +254,13 @@
               {{ memberInfo.loginName }}
             </el-form-item>
             <el-form-item :label="t('fields.status')">
-              <el-tag
-                v-if="memberInfo.status === 'NORMAL'"
-                type="success"
-                size="normal"
-              >
+              <el-tag v-if="memberInfo.status === 'NORMAL'" type="success" size="normal">
                 {{ t('member.status.normal') }}
               </el-tag>
-              <el-tag
-                v-if="memberInfo.status === 'FROZEN'"
-                type="danger"
-                size="normal"
-              >
+              <el-tag v-if="memberInfo.status === 'FROZEN'" type="danger" size="normal">
                 {{ t('member.status.frozen') }}
               </el-tag>
-              <el-tag
-                v-if="memberInfo.status === null"
-                type="info"
-                size="normal"
-              >
+              <el-tag v-if="memberInfo.status === null" type="info" size="normal">
                 -
               </el-tag>
             </el-form-item>
@@ -458,10 +331,7 @@
                 <emptyComp />
               </td>
             </tr>
-            <tr
-              v-for="(record, index) in memberInfo.memberBetRecordSummaryVOList"
-              :key="index"
-            >
+            <tr v-for="(record, index) in memberInfo.memberBetRecordSummaryVOList" :key="index">
               <td :data-label="t('fields.sequence')">{{ index + 1 }}</td>
               <td :data-label="t('fields.platform')">
                 {{ record.platform + ' - ' + record.gameType }}
@@ -474,13 +344,8 @@
       </div>
     </div>
   </el-dialog>
-  <el-dialog
-    :title="t('fields.editTag')"
-    v-model="uiControl.tagDialogVisible"
-    append-to-body
-    width="90%"
-    modal-class="dialog400"
-  >
+  <el-dialog :title="t('fields.editTag')" v-model="uiControl.tagDialogVisible" append-to-body width="90%"
+    modal-class="dialog400">
     <el-form @submit.prevent>
       <el-form-item :label="t('fields.loginName')">
         <b v-if="uiControl.editType === 'One'">
@@ -490,11 +355,7 @@
       </el-form-item>
       <el-form-item :label="t('fields.memberTag')">
         <el-checkbox-group v-model="tagRequest.tags">
-          <el-checkbox
-            v-for="tag in assignTaglist"
-            :key="tag.id"
-            :label="tag.description"
-          />
+          <el-checkbox v-for="tag in assignTaglist" :key="tag.id" :label="tag.description" />
         </el-checkbox-group>
       </el-form-item>
     </el-form>
@@ -508,22 +369,13 @@
       </el-button>
     </div>
   </el-dialog>
-  <el-dialog
-    :title="t('fields.editTag')"
-    v-model="uiControl.remarkDialogVisible"
-    append-to-body
-  >
+  <el-dialog :title="t('fields.editTag')" v-model="uiControl.remarkDialogVisible" append-to-body>
     <el-form @submit.prevent>
       <el-form-item :label="t('fields.loginName')">
         <b>{{ selectedMember.loginName }}</b>
       </el-form-item>
       <el-form-item :label="t('fields.remark')">
-        <el-input
-          v-model="selectedMember.remark"
-          :rows="2"
-          type="textarea"
-          :placeholder="t('message.remarkMessage')"
-        />
+        <el-input v-model="selectedMember.remark" :rows="2" type="textarea" :placeholder="t('message.remarkMessage')" />
       </el-form-item>
     </el-form>
     <div class="dialog-footer">
@@ -536,12 +388,28 @@
     </div>
   </el-dialog>
 
-  <el-dialog
-    :title="t('fields.depositRecord')"
-    v-model="uiControl.depositDialogVisible"
-    width="1100px"
-    append-to-body
-  >
+  <el-dialog :title="t('fields.editShareRatio')" v-model="uiControl.shareRatioDialogVisible" width="500px"
+    append-to-body>
+    <el-form @submit.prevent>
+      <el-form-item prop="memberShareRatio">
+        <div v-for="item in selectedMember.shareRatio" :key="item.code" style="display: flex; margin-bottom:5px;">
+          <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+          <el-input v-model="item.value" style=" width:100px; margin-left: auto;" />
+          <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
+        </div>
+      </el-form-item>
+    </el-form>
+    <div class="dialog-footer">
+      <el-button @click="uiControl.remarkDialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button type="primary" @click="submitShareRatio()">
+        {{ $t('fields.confirm') }}
+      </el-button>
+    </div>
+  </el-dialog>
+
+  <el-dialog :title="t('fields.depositRecord')" v-model="uiControl.depositDialogVisible" width="1100px" append-to-body>
     <el-form label-suffix=" : " style="margin-top: -20px;">
       <div class="info-row-container">
         <el-form-item :label="t('fields.loginName')">
@@ -567,14 +435,13 @@
           </tr>
         </thead>
         <tbody v-if="memberDepositInfo.page.records.length > 0">
-          <tr
-            v-for="(item, index) in memberDepositInfo.page.records"
-            :key="item.id"
-          >
+          <tr v-for="(item, index) in memberDepositInfo.page.records" :key="item.id">
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.paymentType }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
+            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{
+              parseInt(store.state.user.siteId)
+                === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
             <td>
               {{ formatDate(item.depositDate) }}
             </td>
@@ -582,9 +449,7 @@
               {{ formatDate(item.finishDate) }}
             </td>
             <td>
-              <span
-                v-if="['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(item.status)"
-              >
+              <span v-if="['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(item.status)">
                 <span class="success-tag">
                   {{ t('depositStatus.' + item.status) }}
                 </span>
@@ -609,23 +474,13 @@
       <div v-if="memberDepositInfo.page.records.length === 0">
         <emptyComp />
       </div>
-      <el-pagination
-        class="pagination"
-        @current-change="changeDepositPage"
-        layout="total, prev, pager, next"
-        :total="memberDepositInfo.page.total"
-        :page-size="depositRequest.size"
-        :page-count="memberDepositInfo.page.pages"
-        :current-page="depositRequest.current"
-      />
+      <el-pagination class="pagination" @current-change="changeDepositPage" layout="total, prev, pager, next"
+        :total="memberDepositInfo.page.total" :page-size="depositRequest.size"
+        :page-count="memberDepositInfo.page.pages" :current-page="depositRequest.current" />
     </el-form>
   </el-dialog>
-  <el-dialog
-    :title="t('fields.privilegeRecord')"
-    v-model="uiControl.privilegeDialogVisible"
-    width="1100px"
-    append-to-body
-  >
+  <el-dialog :title="t('fields.privilegeRecord')" v-model="uiControl.privilegeDialogVisible" width="1100px"
+    append-to-body>
     <el-form label-suffix=" : " style="margin-top: -20px;">
       <div class="info-row-container">
         <el-form-item :label="t('fields.loginName')">
@@ -652,7 +507,9 @@
           <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.privilegeName }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
+            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{
+              parseInt(store.state.user.siteId)
+                === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
             <td>{{ item.rollover }}</td>
             <td>
               {{ formatDate(item.recordTime) }}
@@ -663,64 +520,38 @@
       <div v-if="memberPrivilegeInfo.page.records.length === 0">
         <emptyComp />
       </div>
-      <el-pagination
-        class="pagination"
-        @current-change="changePrivilegePage"
-        layout="total, prev, pager, next"
-        :total="memberPrivilegeInfo.page.total"
-        :page-size="privilegeRequest.size"
-        :page-count="memberPrivilegeInfo.page.pages"
-        :current-page="privilegeRequest.current"
-      />
+      <el-pagination class="pagination" @current-change="changePrivilegePage" layout="total, prev, pager, next"
+        :total="memberPrivilegeInfo.page.total" :page-size="privilegeRequest.size"
+        :page-count="memberPrivilegeInfo.page.pages" :current-page="privilegeRequest.current" />
     </el-form>
   </el-dialog>
-  <el-dialog
-    :title="t('fields.createMember')"
-    v-model="uiControl.createMemberDialogVisible"
-    append-to-body
-    width="580px"
-  >
-    <el-form
-      ref="createForm"
-      class="create-form"
-      :model="createMemberForm"
-      :rules="createFormRules"
-      inline="true"
-      size="normal"
-      label-width="150px"
-    >
+  <el-dialog :title="t('fields.createMember')" v-model="uiControl.createMemberDialogVisible" append-to-body
+    width="580px">
+    <el-form ref="createForm" class="create-form" :model="createMemberForm" :rules="createFormRules" inline="true"
+      size="normal" label-width="150px">
       <el-form-item :label="t('fields.loginName')" prop="loginName">
-        <el-input
-          v-model="createMemberForm.loginName"
-          style="width: 350px;"
-          maxlength="11"
-        />
+        <el-input v-model="createMemberForm.loginName" style="width: 350px;" maxlength="11" />
       </el-form-item>
       <el-form-item :label="t('fields.password')" prop="password">
-        <el-input
-          v-model="createMemberForm.password"
-          type="password"
-          style="width: 350px;"
-          maxlength="11"
-        />
+        <el-input v-model="createMemberForm.password" type="password" style="width: 350px;" maxlength="11" />
       </el-form-item>
       <el-form-item :label="t('fields.reenterPassword')" prop="reEnterPassword">
-        <el-input
-          v-model="createMemberForm.reEnterPassword"
-          type="password"
-          style="width: 350px;"
-          maxlength="11"
-        />
+        <el-input v-model="createMemberForm.reEnterPassword" type="password" style="width: 350px;" maxlength="11" />
       </el-form-item>
       <el-form-item :label="t('fields.telephone')" prop="telephone">
-        <el-input
-          v-model="createMemberForm.telephone"
-          style="width: 350px;"
-          maxlength="20"
-        />
+        <el-input v-model="createMemberForm.telephone" style="width: 350px;" maxlength="20" />
       </el-form-item>
       <el-form-item :label="t('fields.email')" prop="email">
         <el-input v-model="createMemberForm.email" style="width: 350px;" />
+      </el-form-item>
+      <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.memberShareRatio')"
+        prop="memberShareRatio">
+        <div v-for="item in memberShareRatioList.list" :key="item.code"
+          style="width: 350px; display: flex; margin-bottom:5px;">
+          <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+          <el-input v-model="item.value" style=" width:100px; margin-left: auto;" />
+          <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
+        </div>
       </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.createMemberDialogVisible = false">
@@ -744,6 +575,8 @@ import {
   assignTag,
   assignRemark,
   registerMember,
+  editMemberRatio,
+  getAffiliateInfo
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
@@ -752,7 +585,10 @@ import { ElMessage } from 'element-plus'
 import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
 import { getMemberPrivilegeRecords } from '../../../api/affiliate-privilege-record'
 import emptyComp from '@/components/empty'
+import Loading from '@/components/loading/Loading.vue';
 import { required, size } from '../../../utils/validate'
+import { getConfigListByGroup } from "../../../api/system-config";
+
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -774,6 +610,9 @@ let assignTaglist = []
 const selected = reactive({
   tags: [],
 })
+const memberShareRatioList = reactive({
+  list: [],
+})
 
 const uiControl = reactive({
   infoDialogVisible: false,
@@ -782,6 +621,7 @@ const uiControl = reactive({
   depositDialogVisible: false,
   privilegeDialogVisible: false,
   createMemberDialogVisible: false,
+  shareRatioDialogVisible: false,
   editBtn: true,
   editType: 'One',
   orderBy: [
@@ -871,14 +711,6 @@ const formatMoney = value => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })
-}
-
-const formatDateTime = value => {
-  if (!value) {
-    return '-'
-  }
-  const date = new Date(value)
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
 }
 
 const formatmTag = tags => {
@@ -1013,6 +845,7 @@ const selectedMember = reactive({
   id: null,
   loginName: null,
   remark: null,
+  shareRatio: null,
 })
 
 const selectedMemberList = reactive({
@@ -1035,6 +868,17 @@ const createMemberForm = reactive({
   telephone: null,
   email: null,
   siteId: null,
+  memberShareRatio: null,
+})
+
+const affInfo = reactive({
+  affiliateCode: null,
+  affiliateLevel: null,
+  downlineAffiliate: 0,
+  downlineMember: 0,
+  commission: 0,
+  revenueShare: 0,
+  shareRatio: [],
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -1048,6 +892,15 @@ const validateReEnterPassword = (rule, value, callback) => {
   if (value !== createMemberForm.password) {
     callback(new Error(t('message.twoPasswordNotMatch')))
   }
+  callback()
+}
+
+const validateMemberShareRatio = (rule, value, callback) => {
+  memberShareRatioList.list.forEach((item) => {
+    if (item.value === '' || item.value < 0 || item.value > 1) {
+      callback(new Error(t('message.validateShareRatioFormat')))
+    }
+  })
   callback()
 }
 
@@ -1066,6 +919,7 @@ const createFormRules = reactive({
     { validator: validateReEnterPassword, trigger: 'blur' },
   ],
   telephone: [required(t('message.requiredTelephone'))],
+  memberShareRatio: [{ validator: validateMemberShareRatio, trigger: 'blur' }],
 })
 
 function convertDate(date) {
@@ -1128,11 +982,11 @@ async function loadAffiliateMembers() {
       query.isBet = false
       break
   }
-  query.memberTags = tagList.list.filter(function(obj) {
+  query.memberTags = tagList.list.filter(function (obj) {
     return selected.tags.includes(obj.description)
   })
   query.memberTags = query.memberTags
-    .map(function(obj) {
+    .map(function (obj) {
       return obj.id
     })
     .join(',')
@@ -1166,11 +1020,11 @@ function changePrivilegePage(page) {
 
 function formatTag(tags) {
   if (tags.length > 0) {
-    tags = tagList.list.filter(function(obj) {
+    tags = tagList.list.filter(function (obj) {
       return tags.includes(obj.id)
     })
     tags = tags
-      .map(function(obj) {
+      .map(function (obj) {
         return obj.description
       })
       .join(',')
@@ -1184,7 +1038,7 @@ async function loadAllTags() {
   tagList.list = ret
   assignTaglist = JSON.parse(JSON.stringify(ret))
   tagList.list.push(unAssigned)
-  tagList.description = tagList.list.map(function(obj) {
+  tagList.description = tagList.list.map(function (obj) {
     return obj.description
   })
 }
@@ -1283,10 +1137,10 @@ async function showMemberInfo(row) {
 function showEditTag(member) {
   selectedMember.id = member.id
   selectedMember.loginName = member.loginName
-  tagRequest.tags = assignTaglist.filter(function(obj) {
+  tagRequest.tags = assignTaglist.filter(function (obj) {
     return member.tags.includes(obj.id)
   })
-  tagRequest.tags = tagRequest.tags.map(function(obj) {
+  tagRequest.tags = tagRequest.tags.map(function (obj) {
     return obj.description
   })
   uiControl.editType = 'One'
@@ -1300,10 +1154,10 @@ function showBatchEditTag() {
 }
 
 async function submitTag() {
-  tagRequest.tags = assignTaglist.filter(function(obj) {
+  tagRequest.tags = assignTaglist.filter(function (obj) {
     return tagRequest.tags.includes(obj.description)
   })
-  tagRequest.tags = tagRequest.tags.map(function(obj) {
+  tagRequest.tags = tagRequest.tags.map(function (obj) {
     return obj.id
   })
   if (uiControl.editType === 'One') {
@@ -1323,10 +1177,10 @@ async function submitTag() {
 }
 
 function handleSelectionChange(val) {
-  selectedMemberList.loginName = val.map(function(item) {
+  selectedMemberList.loginName = val.map(function (item) {
     return item.loginName
   })
-  selectedMemberList.id = val.map(function(item) {
+  selectedMemberList.id = val.map(function (item) {
     return item.id
   })
   if (selectedMemberList.id.length === 0) {
@@ -1343,6 +1197,20 @@ function showEditRemark(member) {
   selectedMember.remark = member.remark
 }
 
+function showEditShareRatio(member) {
+  selectedMember.id = member.id
+  selectedMember.shareRatio = member.shareRatio
+  if (selectedMember.shareRatio === null || selectedMember.shareRatio === undefined) {
+    selectedMember.shareRatio = []
+  }
+  for (var item = 0; item < memberShareRatioList.list.length; item++) {
+    if (!selectedMember.shareRatio.some(child => child.code === memberShareRatioList.list[item].code)) {
+      selectedMember.shareRatio.push({ code: memberShareRatioList.list[item].code, value: 0 })
+    }
+  }
+  uiControl.shareRatioDialogVisible = true
+}
+
 async function submitRemark() {
   await assignRemark(
     store.state.user.id,
@@ -1353,6 +1221,18 @@ async function submitRemark() {
   await loadAffiliateMembers()
   uiControl.remarkDialogVisible = false
 }
+
+async function submitShareRatio() {
+  const editedRatio = selectedMember.shareRatio.map(item => item.code + ":" + item.value).join(',');
+  await editMemberRatio(
+    selectedMember.id,
+    editedRatio
+  )
+  ElMessage({ message: t('message.editSuccess'), type: 'success' })
+  await loadAffiliateMembers()
+  uiControl.shareRatioDialogVisible = false
+}
+
 function formatDate(date) {
   return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-'
 }
@@ -1368,6 +1248,9 @@ function showCreateMember() {
 async function createMember() {
   createForm.value.validate(async valid => {
     if (valid) {
+      if (parseInt(createMemberForm.siteId) === 10) {
+        createMemberForm.memberShareRatio = memberShareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+      }
       await registerMember(createMemberForm)
       uiControl.createMemberDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
@@ -1376,9 +1259,27 @@ async function createMember() {
   })
 }
 
+function getAffiliateRatio(code) {
+  const shareRatio = affInfo.shareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
+  getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
+    res.data.forEach(ratio => {
+      memberShareRatioList.list.push({
+        code: ratio.code,
+        value: 0
+      })
+    })
+  });
 })
 </script>
 
@@ -1386,34 +1287,6 @@ onMounted(async () => {
 .header-container {
   margin: 40px 0 20px;
   display: flex;
-}
-
-.box-card {
-  ::v-deep(.el-card__body) {
-    padding: 0;
-  }
-}
-
-.inputs-wrap {
-  margin: 0px 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  .input-small {
-    width: 100%;
-    max-width: 200px;
-    &.el-range-editor--small.el-input__inner {
-      height: 40px;
-      max-width: 300px;
-    }
-  }
-  .btn-grp {
-    display: flex;
-  }
-  .el-row .el-col {
-    display: flex;
-    margin-bottom: 10px;
-  }
 }
 
 .number-division {
@@ -1437,6 +1310,7 @@ onMounted(async () => {
 .el-input-group {
   vertical-align: unset;
 }
+
 .input-max {
   width: 40%;
 
@@ -1478,7 +1352,7 @@ onMounted(async () => {
   margin-bottom: 0;
 }
 
-.create-form > * {
+.create-form>* {
   margin-bottom: 22px;
 }
 
@@ -1490,9 +1364,11 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
 }
+
 .relativerow {
   position: relative;
 }
+
 .absbuttons {
   position: absolute;
   display: flex;
@@ -1501,16 +1377,44 @@ onMounted(async () => {
   box-shadow: var(--el-dropdown-menu-box-shadow);
   right: 0px;
   bottom: 0px;
+
   button {
     font-size: 12px;
     cursor: pointer;
     border: 0;
     padding: 10px;
     background: #ffffff;
+
     &:hover {
       background: #ecf5ff;
       color: #66b1ff;
     }
+  }
+}
+
+.inputs-wrap {
+  margin: 0px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .input-small {
+    width: 100%;
+    max-width: 200px;
+
+    &.el-range-editor--small.el-input__inner {
+      height: 40px;
+      max-width: 300px;
+    }
+  }
+
+  .btn-grp {
+    display: flex;
+  }
+
+  .el-row .el-col {
+    display: flex;
+    margin-bottom: 10px;
   }
 }
 
@@ -1520,34 +1424,17 @@ onMounted(async () => {
     top: -20px;
     right: 0;
   }
+
   .info-row-container {
     flex-direction: column;
   }
-  // .inputs-wrap {
-  //   flex-direction: column;
-  //   gap: 10px;
-  //   .el-input--small {
-  //     width: 100% !important;
-  //     max-width: unset !important;
-  //     margin: 0 !important;
-  //     .el-button {
-  //       margin: 0 !important;
-  //     }
-  //   }
-  //   .input-small {
-  //     max-width: unset;
-  //     width: 100%;
-  //     &.el-range-editor--small.el-input__inner {
-  //       max-width: unset;
-  //     }
-  //   }
-  // }
 }
 </style>
 <style>
 .dialog900 .el-dialog {
   max-width: 900px;
 }
+
 .dialog400 .el-dialog {
   max-width: 400px;
 }

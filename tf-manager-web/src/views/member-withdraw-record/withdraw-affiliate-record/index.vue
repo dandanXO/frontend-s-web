@@ -43,7 +43,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px;margin-left: 5px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -642,7 +641,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 250px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
             :default-time="defaultTime"
@@ -1023,7 +1021,7 @@ const searchFormRule = reactive({
   withdrawAmount: [{ validator: validateWithdrawAmount, trigger: 'blur' }],
 })
 
-function disabledDate(time) {
+/* function disabledDate(time) {
   return (
     time.getTime() <
       moment(new Date())
@@ -1031,7 +1029,7 @@ function disabledDate(time) {
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
-}
+} */
 
 function resetQuery() {
   // debugger;

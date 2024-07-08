@@ -12,7 +12,6 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
-          :disabled-date="disabledDate"
           @change="checkDateValue"
           :shortcuts="shortcuts"
           :editable="false"
@@ -298,15 +297,15 @@ function convertStartDate(date) {
     .format('YYYY-MM-DD HH:mm:ss')
 }
 
-function disabledDate(time) {
-  return (
-    time.getTime() <
-      moment(new Date())
-        .subtract(24, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
-}
+// function disabledDate(time) {
+//   return (
+//     time.getTime() <
+//       moment(new Date())
+//         .subtract(24, 'months')
+//         .startOf('month')
+//         .format('x') || time.getTime() > new Date().getTime()
+//   )
+// }
 
 function checkQuery() {
   const requestCopy = { ...request }
