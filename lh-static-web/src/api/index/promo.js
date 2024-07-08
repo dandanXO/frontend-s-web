@@ -340,3 +340,13 @@ export function duanwuDepositBet() {
       return Promise.reject(error);
     });
 }
+
+export function getNewUserInit() {
+  return server.EVENT.get("/new-user-setup-bonus/init");
+}
+
+export function putNewUserClaim(promocode) {
+  return server.EVENT.put("new-user-setup-bonus/claim", {
+    promocode,
+  });
+}

@@ -1,36 +1,35 @@
 <template>
-  <div class="switch-container">
-    <div 
-      :class="['switch-option', { active: selected === 'option1' }]" 
-      @click="selectOption('option1')"
-    >
-      新手礼包
-    </div>
-    <div 
-      :class="['switch-option', { active: selected === 'option2' }]" 
-      @click="selectOption('option2')"
-    >
-      新人指路
+  <div class="switch-wrapper">
+    <div class="switch-container">
+      <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
+        新手礼包
+      </div>
+      <div :class="['switch-option', { active: selected === 'option2' }]" @click="selectOption('option2')">
+        新人指路
+      </div>
     </div>
   </div>
-  <div class="option1" v-if="selected==='option1'">
+  <div class="option1" v-if="selected === 'option1'">
     <div class="container">
       <div class="left-panel">
-        <div style="display: flex; align-items: center;">
-          <img  class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
-          <div class="title">新手礼包 <span style="font-size: 16px; font-weight: 400;">(进行中)</span></div>
+        <div style="display: flex; align-items: center">
+          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
+          <div class="title">
+            新手礼包
+            <span style="font-size: 16px; font-weight: 400">(进行中)</span>
+          </div>
         </div>
         <div class="section">
-          <div style="display: flex;">
-            <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1);"></div>
-            <div class="title">奖励说明</div>
+          <div style="display: flex">
+            <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
+            <div class="subtitle">奖励说明</div>
           </div>
           <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
         </div>
         <div class="section2">
-          <div style="display: flex;">
-            <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1);"></div>
-            <div class="title">领奖期限</div>
+          <div style="display: flex">
+            <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
+            <div class="subtitle">领奖期限</div>
           </div>
           <p>自注册日起，限时第 7 日 23:59:59 前领取完毕</p>
         </div>
@@ -39,21 +38,42 @@
             <div class="step-number">1</div>
             <div class="step-content">
               绑定手机号
-              <span class="status complete"><img style="width: 16px; height: 16px; vertical-align:sub; margin-right: 4px;" src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png">完成</span>
+              <span class="status" :class="getStatus(telephoneBindState).class" @click="handleClickStatusButton(telephoneBindState, 'new-user-setup-bonus-telephone')">
+                <img
+                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                  src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                  v-if="telephoneBindState === 'CLAIMED'"
+                />
+                {{ getStatus(telephoneBindState).text }}
+              </span>
             </div>
           </div>
           <div class="step">
             <div class="step-number">2</div>
             <div class="step-content">
               绑定银行卡
-              <span class="status complete"><img style="width: 16px; height: 16px; vertical-align:sub; margin-right: 4px;" src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png">完成</span>
+              <span class="status" :class="getStatus(bankCardBindState).class" @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')">
+                <img
+                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                  src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                  v-if="bankCardBindState === 'CLAIMED'"
+                />
+                {{ getStatus(bankCardBindState).text }}
+              </span>
             </div>
           </div>
           <div class="step">
             <div class="step-number">3</div>
             <div class="step-content">
               绑定 USDT 地址
-              <span class="status incomplete">去完成</span>
+              <span class="status" :class="getStatus(usdtAddrBindState).class" @click="handleClickStatusButton(usdtAddrBindState, 'new-user-setup-bonus-usdt-addr')">
+                <img
+                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                  src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                  v-if="usdtAddrBindState === 'CLAIMED'"
+                />
+                {{ getStatus(usdtAddrBindState).text }}
+              </span>
             </div>
           </div>
         </div>
@@ -64,73 +84,170 @@
     </div>
     <div class="container2">
       <div class="left-panel">
-        <div style="display: flex; align-items: center;justify-content: space-between;">
-          <div style="display: flex; align-items: center;">
-            <img  class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <div style="display: flex; align-items: center">
+            <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
             <div class="title">首次提款</div>
           </div>
-          <button class="go-btn">
-            立即前往
+          <button class="go-btn" :class="{ 'complete': firstWithdrawalState === 'CLAIMED' }">
+            <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
+              <img
+                v-if="firstWithdrawalState === 'CLAIMED'"
+                style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+              />
+              <span>{{ getStatus2(firstWithdrawalState).text }}</span>
+            </div>
           </button>
         </div>
         <div class="section">
-            <span>完成以下任务领取礼金 8 元</span>
-            <div class="progress-bar-container">
-              <div class="progress-bar">
-                <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
-              </div>
-              <div class="progress-info">
-                <span>完成一次提款</span>
-                <span>{{ progressText }}</span>
-              </div>
+          <span>完成以下任务领取礼金 8 元</span>
+          <div class="progress-bar-container">
+            <div class="progress-bar">
+              <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
             </div>
+            <div class="progress-info">
+              <span>完成一次提款</span>
+              <span>{{ progressText }}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="right-panel">
-        <img style="height: 130px;" src="@/assets/images/promotion/hotpromo/newplayerguide/blueEnvelope.png" alt="Gift" />
+        <img
+          style="height: 130px"
+          src="@/assets/images/promotion/hotpromo/newplayerguide/blueEnvelope.png"
+          alt="Gift"
+        />
       </div>
     </div>
     <div class="container">
       <div class="left-panel">
-        <div  style="display: flex; align-items: center;">
-          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/mark.png" alt="Gift" />
+        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/mark.png" alt="Gift" width="32px"/>
           <div class="title">活动规则</div>
         </div>
         <div>
           <ol class="rules-content">
-            <li>自注册日起算 30 天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。</li>
-            <li>新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包</li>
-            <li>每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2 倍流水。</li>
-            <li>完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。</li>
-            <li>此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；</li>
-            <li>每位有效玩家、每个手机号码、电子邮箱、银行卡、IP 地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；</li>
-            <li>此活动最终解释权归雷火所有;</li>
-          </ol> 
+            <li>
+              <span class="step-number">1</span>自注册日起算 30
+              天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+            </li>
+            <li><span class="step-number">2</span>新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包</li>
+            <li>
+              <span class="step-number">3</span>每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2
+              倍流水。
+            </li>
+            <li><span class="step-number">4</span>完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。</li>
+            <li>
+              <span class="step-number">5</span>此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+            </li>
+            <li>
+              <span class="step-number">6</span>每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
+              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+            </li>
+            <li><span class="step-number">7</span>此活动最终解释权归雷火所有;</li>
+          </ol>
         </div>
       </div>
     </div>
   </div>
-  <div class="option2" v-if="selected==='option2'">
+  <div class="option2" v-if="selected === 'option2'">
     <option2Area></option2Area>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import option2Area from './option2Area.vue'
-const selected = ref('option1');
+import { ref, onMounted, computed } from "vue";
+import { getNewUserInit, putNewUserClaim } from "@/api/index/promo";
+import option2Area from "./option2Area.vue";
+const selected = ref("option1");
+
+const bankCardBindState = ref("NO");
+const firstWithdrawalState = ref("NO");
+const telephoneBindState = ref("NO");
+const usdtAddrBindState = ref("NO");
+
+const progress = ref(0);
+
+const progressPercentage = computed(() => progress.value * 100);
+const progressText = computed(() => `${progress.value}/1`);
 
 function selectOption(option) {
   selected.value = option;
 }
 
-const progress = ref(0);
+const getStatus = (status) => {
+  const statusTextMap = {
+    NO: {
+      text: "去完成",
+      class: "incomplete"
+    },
+    YES: {
+      text: "领取",
+      class: "incomplete"
+    },
+    CLAIMED: {
+      text: "完成",
+      class: "complete"
+    }
+  };
+  return statusTextMap[status];
+};
 
-const progressPercentage = progress.value * 100;
-const progressText = `${progress.value}/1`;
+const getStatus2 = (status) => {
+  const statusTextMap = {
+    NO: {
+      text: "立即前往",
+    },
+    YES: {
+      text: "立即领取",
+    },
+    CLAIMED: {
+      text: "已领取",
+    }
+  };
+  return statusTextMap[status];
+}
+
+const handleClickStatusButton = (status, promocode) => {
+  if (status === 'CLAIMED') return
+
+  if (status === 'NO') {
+    // 跳轉到該頁面
+    console.log('跳轉到該頁面')
+  } else if (status === 'YES') {
+    getBonus(promocode)
+  }
+}
+
+const getBonus = async (promocode) => {
+  try {
+    const apiRes = await putNewUserClaim(promocode)
+    console.log(apiRes)
+
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+onMounted(async () => {
+  const apiRes = await getNewUserInit();
+
+  bankCardBindState.value = apiRes.data.bankCardBindState;
+  firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
+  telephoneBindState.value = apiRes.data.telephoneBindState;
+  usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
+
+  progress.value = apiRes.data.firstWithdrawalState === 'NO' ? 0 : 1
+});
 </script>
 
 <style scoped lang="scss">
+.switch-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .switch-container {
   box-shadow: 0px 2px 4.58px 0px rgba(154, 206, 255, 1) inset;
 
@@ -138,30 +255,41 @@ const progressText = `${progress.value}/1`;
 
   display: flex;
   border: 1px solid rgba(154, 206, 255, 1);
-  border-radius: 25px;
+  border-radius: 30px;
   overflow: hidden;
-  width: 200px;
+  width: 400px;
 }
 
 .switch-option {
   flex: 1;
   padding: 10px;
   text-align: center;
+  font-size: 24px;
+  white-space: nowrap;
+  font-weight: 600;
   border-radius: 25px;
   cursor: pointer;
   background-color: transparent;
+  color: #7a80a1;
 }
 
 .switch-option.active {
-  background: linear-gradient(180deg, rgba(253, 137, 126, 0) 0%, rgba(253, 49, 38, 0) 100%),linear-gradient(90deg, #41B9FF 8.15%, #0085E8 92.42%);
+  background: linear-gradient(180deg, rgba(253, 137, 126, 0) 0%, rgba(253, 49, 38, 0) 100%),
+    linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
   color: white;
 }
-.go-btn{
-  background: linear-gradient(90deg, #41B9FF 8.15%, #0085E8 92.42%);
+.go-btn {
+  background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
   color: #fff;
   padding: 5px 28px;
   font-size: 16px;
   border-radius: 8px;
+
+  &.complete {
+    border: 1px solid rgba(0, 133, 232, 1);
+    background: white;
+    color: rgba(0, 133, 232, 1);
+  }
 }
 .container {
   background-color: #f9fbfe;
@@ -172,15 +300,15 @@ const progressText = `${progress.value}/1`;
   align-items: flex-start;
   margin-top: 20px;
   .left-panel {
-  .big-icon{
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-  }
+    .big-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+    }
     flex: 4;
-    .title{
+    .title {
       margin-top: 4px;
-      color:#000;
+      color: #000;
       font-weight: 600;
       font-size: 24px;
     }
@@ -194,7 +322,6 @@ const progressText = `${progress.value}/1`;
   }
 }
 
-
 .container2 {
   background-color: #f9fbfe;
   display: flex;
@@ -204,15 +331,15 @@ const progressText = `${progress.value}/1`;
   align-items: flex-start;
   margin-top: 20px;
   .left-panel {
-  .big-icon{
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-  }
+    .big-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
     flex: 2;
-    .title{
+    .title {
       margin-top: 4px;
-      color:#000;
+      color: #000;
       font-weight: 600;
       font-size: 24px;
     }
@@ -243,15 +370,15 @@ h1 {
 
 .section {
   margin-top: 18px;
-  .title {
+  .subtitle {
     color: rgba(65, 185, 255, 1);
     font-size: 16px;
     font-weight: 500;
   }
 }
-.section2{
+.section2 {
   margin-top: 12px;
-  .title {
+  .subtitle {
     color: rgba(65, 185, 255, 1);
     font-size: 16px;
     font-weight: 500;
@@ -274,7 +401,7 @@ h1 {
 .step-number {
   width: 30px;
   height: 30px;
-  background-color: #3498db;
+  background: linear-gradient(90deg, #89D3FF 8.15%, #0085E8 92.42%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -299,7 +426,6 @@ h1 {
   border: 1px solid rgba(0, 133, 232, 1);
 
   color: rgba(0, 133, 232, 1);
-
 }
 
 .complete {
@@ -307,7 +433,7 @@ h1 {
 }
 
 .incomplete {
-  background: linear-gradient(90deg, #41B9FF 8.15%, #0085E8 92.42%);
+  background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
   border: unset;
   color: #fff;
 }
@@ -343,14 +469,24 @@ h1 {
   color: #333;
 }
 .rules-content {
-    color: #000;
+  color: #000;
+  padding: 0;
 
-    li {
-      font-family: PingFang TC;
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 28.8px;
-      text-align: left; 
-    }
+  .step-number {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
   }
+
+  li {
+    font-family: PingFang TC;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28.8px;
+    text-align: left;
+    list-style-type: none;
+    display: flex;
+    margin-bottom: 4px;
+  }
+}
 </style>
