@@ -4,9 +4,9 @@
     <div class="activities-content">
       The more consecutive days of deposit requirements you complete, the more extra bonus you will get
     </div>
-    <div class="activities-btn">
+    <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
       <img src="../assets/images/promotion/activities/btn-deposit.png" />
-    </div>
+    </router-link>
     <div class="activities-stats-container">
       <div class="stats-info">
         <div class="info-title">Deposits of the day</div>
@@ -17,7 +17,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            5000
+            {{ rules[bonusSeq]? rules[bonusSeq].deposit : 0 }}
             <br />
             RS
           </div>
@@ -32,7 +32,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            25000
+            {{ rules[bonusSeq] ? rules[bonusSeq].bet : 0 }}
             <br />
             RS
           </div>
@@ -40,79 +40,16 @@
       </div>
     </div>
     <div class="activities-days-container">
-      <div class="days-box">
-        <div class="box-ribbon">Day1</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-01.png" /></div>
-        <div class="box-title">Free 88rs</div>
+      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="i + 1 === 7 ? 'days-box__last' : 'days-box'">
+        <div class="box-ribbon">Day {{ i + 1 }}</div>
+        <div class="box-img"><img v-if="i + 1 < 8" :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" /></div>
+        <div><div class="box-title">Free {{rule.bonus}}rs</div>
         <div class="box-subtitle">
           Wager x5
           <br />
-          Deposit 1000rs
+          Deposit {{ rule.deposit }}rs
         </div>
-      </div>
-      <div class="days-box">
-        <div class="box-ribbon">Day2</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-02.png" /></div>
-        <div class="box-title">Free 188rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit 2000rs
-        </div>
-      </div>
-      <div class="days-box">
-        <div class="box-ribbon">Day3</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-03.png" /></div>
-        <div class="box-title">Free 288rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit 3000rs
-        </div>
-      </div>
-      <div class="days-box">
-        <div class="box-ribbon">Day4</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-04.png" /></div>
-        <div class="box-title">Free 688rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit 4000rs
-        </div>
-      </div>
-      <div class="days-box">
-        <div class="box-ribbon">Day5</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-05.png" /></div>
-        <div class="box-title">Free 888rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit 5000rs
-        </div>
-      </div>
-      <div class="days-box">
-        <div class="box-ribbon">Day6</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-06.png" /></div>
-        <div class="box-title">Free 1288rs</div>
-        <div class="box-subtitle">
-          Wager x5
-          <br />
-          Deposit 6000rs
-        </div>
-      </div>
-      <div class="days-box days-box__last">
-        <div class="box-ribbon">Day7</div>
-        <div class="box-img"><img src="../assets/images/promotion/activities/day-07.png" /></div>
-        <div>
-          <div class="box-title">Free 1288rs</div>
-          <div class="box-subtitle">
-            Wager x5
-            <br />
-            Deposit 6000rs
-          </div>
-        </div>
-        <div>&nbsp;</div>
-      </div>
+      </div></div>
     </div>
     <div class="activities-notice">
       <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
@@ -136,12 +73,15 @@
 <script setup>
 import { ref, computed, onMounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
+import { useRoute } from "vue-router";
+const route = useRoute();
 
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
 
 const bonusSeq = ref(0);
 const isReceivedToday = ref(false);
+const rules = ref([]);
 
 const progressDepositLabel = computed(() => (progressDeposit.value * 100).toFixed(2) + "%");
 const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).toFixed(2) + "%");
@@ -150,17 +90,23 @@ const isLoading = ref(false);
 
 onActivated(() => {
   const acitivtyApi = "/session/ind/deposit/bonus";
+  rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
+    const resp = res.data
     isLoading.value = false;
-    console.log(res.data.data);
-    const { bonusSeq, isReceivedToday, bet, deposit, rules } = res.data.data;
+    // const { bonusSeq, isReceivedToday, bet, deposit, rules } = res.data;
+      
+      // bonusSeq.value = bonusSeq ? bonusSeq : 0;
+      // isReceivedToday.value = isReceivedToday ? isReceivedToday : 0;
+    bonusSeq.value = resp.bonusSeq
+    isReceivedToday.value = resp.isReceivedToday
+    resp.rules.forEach(element => {
+      rules.value.push(element)
+    });
 
-    bonusSeq.value = bonusSeq;
-    isReceivedToday.value = isReceivedToday;
-
-    if (rules && rules.length >= bonusSeq + 1) {
-      progressDeposit.value = deposit / rules[bonusSeq];
-      progressDailyWager.value = bet / rules[bonusSeq];
+    if (resp.rules && resp.rules.length >= resp.bonusSeq + 1 && rules[resp.bonusSeq]) {
+      progressDeposit.value = Number(resp.deposit) / Number(rules[resp.bonusSeq].deposit);
+      progressDailyWager.value = Number(resp.bet) / Number(rules[resp.bonusSeq].bet);
     }
   });
 });
@@ -190,6 +136,7 @@ onActivated(() => {
 
   .activities-btn {
     margin: 1rem 0;
+    display: block;
 
     img {
       display: block;
