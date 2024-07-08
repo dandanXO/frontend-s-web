@@ -104,7 +104,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:team-votes-answer:export']"
+          v-permission="['sys:team-votes:export']"
           @click="requestExportExcel"
         >
           {{ t('fields.requestExportToExcel') }}
