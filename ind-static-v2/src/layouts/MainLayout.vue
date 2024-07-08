@@ -22,11 +22,9 @@
           <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
         </router-link>
         <div class="page-title-wrapper">
-          <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
             <span class="title">{{ pageName }}</span>
           </div>
-          <!--          <img src="../assets/images/index/hot-elephant-right.png" alt="" />-->
         </div>
 
         <div
@@ -89,7 +87,7 @@ import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
-import FooterSection from '../layouts/FooterSection.vue';
+import FooterSection from "../layouts/FooterSection.vue";
 // import EssentialLink from "components/EssentialLink.vue";
 
 import { translateRecord } from "src/directives/translate";
@@ -197,6 +195,10 @@ export default defineComponent({
           prevPage.value = "/";
           // hasPage.value = true;
           pageName.value = "Daily Activity";
+        } else if (route.path === "/activities-details") {
+          prevPage.value = "/promo";
+          hasPage.value = true;
+          pageName.value = "Activities Details";
         } else if (route.path === "/vip") {
           // hasPage.value = true;
           pageName.value = "VIP Privileges";

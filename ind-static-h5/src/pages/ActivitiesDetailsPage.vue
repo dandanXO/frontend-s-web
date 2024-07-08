@@ -42,7 +42,7 @@
     <div class="activities-days-container">
       <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="i + 1 === 7 ? 'days-box__last' : 'days-box'">
         <div class="box-ribbon">Day {{ i + 1 }}</div>
-        <div class="box-img"><img v-if="i + 1 < 8" :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" /></div>
+        <div class="box-img"><img :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" /></div>
         <div><div class="box-title">Free {{rule.bonus}}rs</div>
         <div class="box-subtitle">
           Wager x5
@@ -90,21 +90,16 @@ const isLoading = ref(false);
 
 onActivated(() => {
   const acitivtyApi = "/session/ind/deposit/bonus";
-  rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
     const resp = res.data
     isLoading.value = false;
-    // const { bonusSeq, isReceivedToday, bet, deposit, rules } = res.data;
-
-      // bonusSeq.value = bonusSeq ? bonusSeq : 0;
-      // isReceivedToday.value = isReceivedToday ? isReceivedToday : 0;
     bonusSeq.value = resp.bonusSeq
     isReceivedToday.value = resp.isReceivedToday
     resp.rules.forEach(element => {
       rules.value.push(element)
     });
 
-    if (resp.rules && resp.rules.length >= resp.bonusSeq + 1 && rules[resp.bonusSeq]) {
+    if (resp.rules && resp.rules.length >= resp.bonusSeq + 1) {
       progressDeposit.value = Number(resp.deposit) / Number(rules[resp.bonusSeq].deposit);
       progressDailyWager.value = Number(resp.bet) / Number(rules[resp.bonusSeq].bet);
     }
@@ -137,7 +132,6 @@ onActivated(() => {
   .activities-btn {
     margin: 1rem 0;
     display: block;
-
     img {
       display: block;
       width: 100%;
@@ -146,7 +140,7 @@ onActivated(() => {
   }
 
   .activities-stats-container {
-    background: linear-gradient(356.25deg, #00430b -0.21%, #027402 93.65%);
+    background: #5817AA99;
     padding: 1rem;
     border-radius: 8px;
     display: grid;
@@ -183,9 +177,9 @@ onActivated(() => {
             font-size: 12px;
             color: #ffffff;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
-              -1px 1px 2px rgba(255, 255, 255, 0.7);
+            1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
+            -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
+            -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
         .info-linear-amt {
@@ -204,7 +198,8 @@ onActivated(() => {
     row-gap: 1rem;
     margin-top: 1rem;
     .days-box {
-      background: linear-gradient(356.25deg, rgba(0, 67, 11, 0.3) -0.21%, rgba(2, 116, 2, 0.3) 93.65%);
+      background: #3B156E4D;
+
       padding: 12px;
       display: flex;
       flex-direction: column;
@@ -226,7 +221,7 @@ onActivated(() => {
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         color: rgba(255, 255, 255, 0.8);
-        background: #104f00;
+        background: #4F004B;
         width: 45px;
         display: flex;
         align-items: center;
