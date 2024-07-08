@@ -1590,7 +1590,7 @@ export default defineComponent({
 body {
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
-    background-color: #ec0909;
+    background-color: #ffc5c5;
   }
 
   .el-input.wTip .el-input-group__append {
@@ -1884,10 +1884,10 @@ body {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      gap: 8px;
       z-index: 99;
       &.logged-in-nav {
-        max-width: 1530px;
+        max-width: 1575px;
       }
 
       .logospon {
@@ -1904,11 +1904,11 @@ body {
       }
 
       .logo {
-        height: 64px;
+        height: 30px;
         //width: 102px;
 
         img {
-          width: 100%;
+          height: 100%;
           display: block;
         }
       }
@@ -2523,6 +2523,7 @@ body {
     box-shadow: none;
     border-radius: 20px;
     // overflow: hidden;
+    background: #fff;
 
     .el-dialog__body {
       padding: 0;

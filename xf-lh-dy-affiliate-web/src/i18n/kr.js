@@ -533,6 +533,7 @@ export default {
     depositWithdrawalDiff: '충환손익',
     recommenderCode: '추천인 코드',
     memberShareRatio: '플레이어 리베이트 비율',
+    editShareRatio: '리베이트 수정',
   },
   google: {
     google_auth_menu: '구글 인증',

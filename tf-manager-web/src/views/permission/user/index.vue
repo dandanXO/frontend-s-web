@@ -283,7 +283,7 @@
           </el-select>
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button @click="cancel">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
@@ -638,6 +638,26 @@ function showChangePassword(user) {
   })
 }
 
+function resetFields() {
+  if (userForm.value) {
+    userForm.value.resetFields()
+  }
+  form.id = null
+  form.password = null
+  form.confirm = null
+  form.roles = null
+  form.siteId = null
+  form.userType =
+    LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
+  form.queryRestriction = null
+  form.queryNumber = 10
+  form.vcallId = null;
+  uiControl.dialogTitle = t('fields.addUser')
+  uiControl.userTypeSelect = false
+  uiControl.siteSelectVisible = false
+  uiControl.rolesSelect = true
+}
+
 /**
  * 新增用户
  */
@@ -645,9 +665,13 @@ function create() {
   userForm.value.validate(async valid => {
     if (valid) {
       await createUser(form)
-      uiControl.dialogVisible = false
+      uiControl.dialogVisible = false;
       await loadUser()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      ElMessage({ message: t('message.addSuccess'), type: 'success' });
+      resetFields();
+      // setTimeout(() => {
+      //   window.location.reload()
+      // }, 250)
     }
   })
 }
@@ -661,7 +685,8 @@ function edit() {
       await updateUser(form)
       uiControl.dialogVisible = false
       await loadUser()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      ElMessage({ message: t('message.editSuccess'), type: 'success' });
+      resetFields();
     }
   })
 }
@@ -703,6 +728,11 @@ async function removeUser(user) {
     await loadUser()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
   })
+}
+
+function cancel() {
+  uiControl.dialogVisible = false;
+  resetFields();
 }
 
 function submit() {

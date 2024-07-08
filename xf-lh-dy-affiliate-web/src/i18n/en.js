@@ -532,6 +532,7 @@ export default {
     depositWithdrawalDiff: 'Deposit Withdrawal Difference',
     recommenderCode: 'Recommender Code',
     memberShareRatio: 'Member Share Ratio',
+    editShareRatio: 'Edit Share Ratio',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

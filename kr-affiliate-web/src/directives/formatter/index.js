@@ -1,0 +1,45 @@
+import moment from "moment";
+import { formatMoney } from "@/utils/format-money";
+import { useStore } from '@/store'
+
+const store = useStore()
+
+const getVipLevel = (vip) => {
+  return vip.replace('VIP', '');
+}
+
+export const formatter = {
+  beforeMount(el, binding) {
+    if (binding.value.type === "date") {
+      if (binding.value.data) {
+        el.innerHTML = moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL');
+      } else {
+        el.innerHTML = "-";
+      }
+    } else if (binding.value.type === "money") {
+      el.innerHTML = `<div class="money-wrapper">
+                        <div>${formatMoney(binding.value.data, 0)}</div>
+                        <div class="won-icon">₩</div>
+                      </div>`;
+    } else if (binding.value.type === "loginName") {
+      el.innerHTML = `<div class="vip-name-wrapper">
+                        ${binding.value.data.vip ? `<div class="vip-badge">${getVipLevel(binding.value.data.vip)}</div>` : ''}
+                        <div class="login-name">${binding.value.data.loginName}</div>
+                      </div>`;
+    }
+  },
+  updated(el, binding) {
+    if (binding.value.type === "date") {
+      if (binding.value.data) {
+        el.innerHTML = moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL');
+      } else {
+        el.innerHTML = "";
+      }
+    } else if (binding.value.type === "money") {
+      el.innerHTML =`<div class="money-wrapper">
+                        <div>${formatMoney(binding.value.data, 0)}</div>
+                        <div class="won-icon">₩</div>
+                      </div>`;
+    }
+  }
+};

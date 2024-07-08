@@ -1220,18 +1220,9 @@
             <el-input
               :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto;"
             />
-          </div>
-        </el-form-item>
-        <el-form-item v-if="modelForm.commissionModel === 'DETAILS'" :label="t('fields.memberShareRatio')" prop="memberShareRatio">
-          <div v-for="item in memberShareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
-            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
-              v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
-            />
+            <span style="color:red"> &emsp; ({{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -1526,7 +1517,7 @@ import {
   updateViewLoginName,
   getAffiliateShareRatio,
   updateLevel,
-  getAffiliateMemberShareRatio,
+  getDownlineShareRatio,
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1558,7 +1549,7 @@ const riskList = reactive({
 const shareRatioList = reactive({
   list: [],
 })
-const memberShareRatioList = reactive({
+const downlineShareRatioList = reactive({
   list: [],
 })
 const selectedRiskColor = reactive({
@@ -1703,6 +1694,7 @@ const superiorAffiliateDetail = reactive({
   loginName: null,
   affiliateCode: null,
   affiliateLevel: null,
+  affiliateShareRatio: [],
 })
 
 const page = reactive({
@@ -1742,7 +1734,6 @@ const financialForm = reactive({
 const modelForm = reactive({
   commissionModel: null,
   shareRatio: null,
-  memberShareRatio: null,
 })
 
 const commForm = reactive({
@@ -1803,17 +1794,6 @@ const validateShareRatio = (rule, value, callback) => {
   callback()
 }
 
-const validateMemberShareRatio = (rule, value, callback) => {
-  if (memberDetail.commissionModel === 'DETAILS') {
-    memberShareRatioList.list.forEach((item) => {
-      if (item.value === '' || item.value < 0 || item.value > 1) {
-        callback(new Error(t('message.validateShareRatioFormat')))
-      }
-    })
-  }
-  callback()
-}
-
 const passwordFormRules = reactive({
   password: [
     required(t('message.validatePasswordRequired')),
@@ -1851,9 +1831,6 @@ const modelFormRules = reactive({
   shareRatio: [
     { validator: validateShareRatio, trigger: 'blur' },
   ],
-  memberShareRatio: [
-    { validator: validateMemberShareRatio, trigger: 'blur' },
-  ],
 })
 
 const remarkFormRules = reactive({
@@ -1883,22 +1860,13 @@ const loadRiskLevels = async () => {
 
 const loadShareRatio = async () => {
   const { data: shareRatio } = await getAffiliateShareRatio(memberDetail.id)
-  const { data: memberShareRatio } = await getAffiliateMemberShareRatio(memberDetail.id)
   if (shareRatio.length > 0) {
     shareRatioList.list = shareRatio
-    memberShareRatioList.list = memberShareRatio
-    if (memberShareRatio.length === 0 || shareRatio.length !== 5) {
+    if (shareRatio.length !== 5) {
       const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
       const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
-      const missingMemberRatio = shareRatio.filter(item => !memberShareRatioList.list.some(ratio => ratio.code === item.code))
       missingRatio.forEach(ratio => {
         shareRatioList.list.push({
-          code: ratio.code,
-          value: 0
-        })
-      })
-      missingMemberRatio.forEach(ratio => {
-        memberShareRatioList.list.push({
           code: ratio.code,
           value: 0
         })
@@ -1907,8 +1875,9 @@ const loadShareRatio = async () => {
   } else {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
     shareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
-    memberShareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
   }
+  const { data: downlineShareRatio } = await getDownlineShareRatio(memberDetail.id)
+  downlineShareRatioList.list = downlineShareRatio
 }
 
 const populateRiskColor = () => {
@@ -2129,8 +2098,7 @@ function updateModel() {
     if (valid) {
       if (modelForm.commissionModel === 'DETAILS' && hasPermission(['sys:affiliate:update:share-ratio'])) {
         const shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
-        const memberShareRatio = memberShareRatioList.list.map(item => item.code + ":" + item.value).join(',');
-        await updateCommissionModel(props.affId, modelForm.commissionModel, shareRatio, memberShareRatio)
+        await updateCommissionModel(props.affId, modelForm.commissionModel, shareRatio)
       } else {
         await updateCommissionModel(props.affId, modelForm.commissionModel, null)
       }
@@ -2430,6 +2398,16 @@ async function changeViewLoginName() {
     await loadAffiliateRecord()
     ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   })
+}
+
+function getAffiliateRatio(code) {
+  const shareRatio = superiorAffiliateDetail.affiliateShareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? (superiorAffiliateDetail.loginName === null ? 1 : 0) : shareRatio[0].value;
+}
+
+function getDownlineRatio(code) {
+  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
 }
 
 onMounted(async () => {

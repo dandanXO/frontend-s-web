@@ -293,23 +293,6 @@
               />
             </div>
           </el-form-item>
-          <el-form-item
-            v-if="form.commissionModel === 'DETAILS'"
-            :label="t('fields.memberShareRatio')"
-            prop="memberShareRatio"
-          >
-            <div
-              v-for="item in memberShareRatioList.list"
-              :key="item.code"
-              style="width: 350px; display: flex; margin-bottom:5px;"
-            >
-              <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-              <el-input
-                v-model="item.value"
-                style=" width:100px; margin-left: auto; order: 2"
-              />
-            </div>
-          </el-form-item>
           <el-form-item :label="t('fields.belongType')" prop="belongType">
             <el-select
               v-model="form.belongType"
@@ -714,9 +697,6 @@ const riskList = reactive({
 const shareRatioList = reactive({
   list: [],
 })
-const memberShareRatioList = reactive({
-  list: [],
-})
 const selectedRiskColor = reactive({
   levelColor: null,
 })
@@ -822,7 +802,6 @@ const form = reactive({
   timeType: null,
   belongType: null,
   shareRatio: null,
-  memberShareRatio: null,
 })
 
 const freezeForm = reactive({
@@ -861,17 +840,6 @@ const validateCommission = (rule, value, callback) => {
 const validateShareRatio = (rule, value, callback) => {
   if (form.commissionModel === 'DETAILS') {
     shareRatioList.list.forEach(item => {
-      if (item.value === '' || item.value < 0 || item.value > 1) {
-        callback(new Error(t('message.validateShareRatioFormat')))
-      }
-    })
-  }
-  callback()
-}
-
-const validateMemberShareRatio = (rule, value, callback) => {
-  if (form.commissionModel === 'DETAILS') {
-    memberShareRatioList.list.forEach(item => {
       if (item.value === '' || item.value < 0 || item.value > 1) {
         callback(new Error(t('message.validateShareRatioFormat')))
       }
@@ -958,7 +926,6 @@ const formRules = reactive({
   commissionModel: [required(t('message.validateCommissionModelRequired'))],
   timeType: [required(t('message.validateTimeTypeRequired'))],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
-  memberShareRatio: [{ validator: validateMemberShareRatio, trigger: 'blur' }],
 })
 
 const freezeFormRules = reactive({
@@ -1078,9 +1045,6 @@ function addAffiliate() {
         form.shareRatio = shareRatioList.list
           .map(item => item.code + ':' + item.value)
           .join(',')
-        form.memberShareRatio = memberShareRatioList.list
-          .map(item => item.code + ':' + item.value)
-          .join(',')
       }
       await registerAffiliate(form)
       uiControl.dialogVisible = false
@@ -1154,7 +1118,6 @@ function displayShareRatio() {
     uiControl.shareRatioSettingLoading = true
     getConfigListByGroup('AGENT_SHARE_RATIO', form.siteId).then(res => {
       shareRatioList.list = JSON.parse(JSON.stringify(res.data))
-      memberShareRatioList.list = JSON.parse(JSON.stringify(res.data))
     })
     uiControl.shareRatioSettingLoading = false
   } else {

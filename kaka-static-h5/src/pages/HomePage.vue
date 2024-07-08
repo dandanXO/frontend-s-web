@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-icon.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -318,27 +318,27 @@
         </template>
         <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
-<!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
-<!--        <template v-if="tab === 'fishing'">-->
-<!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <img src="../assets/images/home/games/fish-icon.png" />-->
-<!--        </template>-->
-<!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
-<!--      </div>-->
+      <!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
+      <!--        <template v-if="tab === 'fishing'">-->
+      <!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/fish-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
+      <!--      </div>-->
 
-<!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
-<!--        <template v-if="tab === 'casual'">-->
-<!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
-<!--        </template>-->
-<!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
-<!--          {{ $t("lang.menu_minigame") }}-->
-<!--        </span>-->
-<!--      </div>-->
+      <!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
+      <!--        <template v-if="tab === 'casual'">-->
+      <!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
+      <!--          {{ $t("lang.menu_minigame") }}-->
+      <!--        </span>-->
+      <!--      </div>-->
       <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="hashgame-platform">
         <template v-if="tab === 'hashgame'">
           <img src="../assets/images/home/games/hashgame-icon-active.png" />
@@ -1589,6 +1589,11 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
+        //For TEstING.
+        // const info = {
+        //   build: "1",
+        //   version: "1.0"
+        // }
         var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -2302,8 +2307,9 @@ export default defineComponent({
 
 .download-top-container {
   padding: 8px 10px;
-  background: $white;
-  box-shadow: 0px 5px 10px 0px #0000001f;
+  background: #1E212C;
+  border-bottom: 1px solid #FFFFFF66;
+  box-shadow: 0px 1.74px 3.47px 0px #0000001F;
 
   .download-top-box {
     display: flex;
@@ -2317,9 +2323,9 @@ export default defineComponent({
     }
 
     .headicon {
-      flex: 2;
-      width: 15%;
+      flex: 1;
       //width: 120px;
+      height: 40px;
     }
 
     .download-txt-container {
@@ -2328,14 +2334,14 @@ export default defineComponent({
       line-height: 1rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      gap: 8px;
+      gap: 4px;
       color: $font-1;
 
       .download-title {
         font-size: 1.2rem;
-        color: $font-3;
+        color: #ffffff;
         font-weight: 600;
       }
     }
@@ -2346,10 +2352,11 @@ export default defineComponent({
     }
 
     .top-btn {
-      font-size: 1rem;
-      border-radius: 10px;
+      font-size: 1.2rem;
+      border-radius: 5px;
       flex: 1;
       width: 15%;
+      padding: 10px 14px;
     }
   }
 }
@@ -2401,8 +2408,9 @@ export default defineComponent({
     img {
       // height: 100%;
       // width: auto;
-      width: 100%;
-      max-width: 180px;
+      width: 90%;
+      max-width: 200px;
+      margin-top: 10px;
     }
   }
 
@@ -2412,8 +2420,6 @@ export default defineComponent({
     margin-top: 3px;
     display: flex;
     gap: 12px;
-
-    color: #313441;
     :deep(.q-btn) {
       min-width: 80px;
       min-height: 12px;
@@ -2573,7 +2579,7 @@ export default defineComponent({
           }
         }
         &__title {
-          color: #000000;
+          color: #ffffff;
           font-size: 20px;
           font-weight: 900;
           line-height: 24.2px;
@@ -2599,7 +2605,7 @@ export default defineComponent({
           align-items: center;
           flex: 1;
           .main-header {
-            color: #ffffff;
+            color: #ff4f57;
             font-size: 16px;
             font-weight: 900;
             line-height: 19.36px;
@@ -2632,6 +2638,7 @@ export default defineComponent({
             display: flex;
             justify-content: center;
             align-items: center;
+            filter: hue-rotate(145deg);
           }
           .lastline {
             color: #ffffff;
@@ -2650,6 +2657,7 @@ export default defineComponent({
             background: url("../assets/images/welcome/title-bg-blue.png") no-repeat center center;
             background-size: contain;
             color: #ffffff;
+            filter: hue-rotate(145deg);
           }
         }
       }

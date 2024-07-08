@@ -4,15 +4,14 @@
 </template>
 
 <script>
-import { defineAsyncComponent, defineComponent, markRaw, onMounted, ref } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { defineAsyncComponent, defineComponent, markRaw, onUnmounted ,onMounted, ref } from "vue";
+import { useQuasar, Platform } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
 import { userStore } from "stores/index";
-import isString from "lodash/isString";
 import { useRouter } from "vue-router";
 import { useUI } from "stores/ui";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -21,6 +20,10 @@ export default defineComponent({
     const ui = useUI();
     const router = useRouter();
     const $q = useQuasar();
+
+    const onlineStatTimeout = ref();
+    const onlineStatInterval = ref();
+
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
@@ -50,48 +53,6 @@ export default defineComponent({
     };
 
     const store = userStore();
-
-    const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
-
-    let csclient;
-    const initCsWeb = () => {
-      csclient = new CsClient("12", regDevice, "kr", "3", "prod");
-
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("notification-type", {
-        type: "breathing",
-        color: "#FB4BFF"
-      });
-
-      csclient.set("design", {
-        bottom: "40px",
-        right: "20px",
-        icon: require("assets/images/index/cs-icon.png")
-      });
-
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
-
-      //客服初始化。
-      csclient.init();
-
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
-
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (isString(event.data)) {
-          if (event.data == "closenotice") {
-            router.go(-1);
-          }
-        }
-      });
-    };
 
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
@@ -142,9 +103,26 @@ export default defineComponent({
       );
     };
 
+    const getOnlineStatApi = async () => {
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+
+      if (sidParam) {
+        const sidPass = store.token ? "mid-" + store.id : sidParam
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: sidPass,
+            siteCode: "krw"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       initStorage();
       checkAgentFrom();
 
@@ -155,6 +133,14 @@ export default defineComponent({
         },
         false
       );
+
+      onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
+      onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
+    });
+
+    onUnmounted(() => {
+      clearTimeout(onlineStatTimeout.value);
+      clearInterval(onlineStatInterval.value);
     });
 
     return {

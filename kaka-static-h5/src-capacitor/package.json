@@ -1,7 +1,7 @@
 {
   "name": "KAKA",
-  "version": "1.0.8",
-  "description": "KAKA - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
+  "version": "1.0.1",
+  "description": "KAKA VN - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
   "productName": "KAKA",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
@@ -11,7 +11,7 @@
     "buildios": "npx cap sync && npx cap update ios && npx cap run ios -l"
   },
   "dependencies": {
-    "@capacitor/android": "^5.2.1",
+    "@capacitor/android": "^5.7.6",
     "@capacitor/app": "^5.0.0",
     "@capacitor/browser": "^5.0.0",
     "@capacitor/clipboard": "^5.0.0",
@@ -20,10 +20,10 @@
     "@capacitor/preferences": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.0",
     "com.adjust.sdk": "^4.38.1",
+    "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",
     "es6-promise-plugin": "^4.2.2",
-    "cordova-plugin-file": "^8.0.0",
     "onesignal-cordova-plugin": "^5.1.3"
   }
 }

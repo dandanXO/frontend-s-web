@@ -177,9 +177,6 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
-      if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
-        return res;
-      }
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return res;
       }

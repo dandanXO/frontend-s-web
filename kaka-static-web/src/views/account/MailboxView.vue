@@ -286,7 +286,7 @@ const loadPersonalMailbox = () => {
       isLoading["inbox"]=true;
       if (res.code === 0) {
         const response = res.data
-        mailboxState.mailboxList["inbox"].list.push(...response.records);
+        mailboxState.mailboxList["inbox"].list = response.records;
         mailboxState.mailboxList["inbox"].total = (response.total);
       }
     }).catch((error) => {
@@ -304,7 +304,7 @@ const loadPersonalMailbox = () => {
     mailOutbox(mailboxData.value).then((response) => {
       isLoading["outbox"]=true;
       if (response.code === 0) {
-        mailboxState.mailboxList["sent"].list.push(...response.data.records);
+        mailboxState.mailboxList["sent"].list = response.data.records;
         mailboxState.mailboxList["sent"].total = response.data.total;
       }
     }).catch((error) => {

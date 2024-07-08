@@ -34,7 +34,6 @@
     "cordova-plugin-file": "^8.0.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
-    "csweb-client": "^1.4.4",
     "dotenv-cli": "^7.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
