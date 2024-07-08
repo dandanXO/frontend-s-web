@@ -1,8 +1,8 @@
 <template>
-  <div style="height: 56px" v-if="topDownload"></div>
+  <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
   <div style="height: 70px"></div>
 
-  <div class="top-download" v-if="topDownload">
+  <div class="top-download" v-if="topDownload && !ui.hideDownload">
     <div class="download-container">
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
@@ -14,14 +14,14 @@
         </a>
       </div> -->
       <div class="download-btn-yel">
-        <a :href="topDownloadUrl">{{ $t("header.download") }}</a>
+        <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
 
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
-    <div style="height: 56px" v-if="topDownload"></div>
+    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
     <div class="side-menu" @click.stop>
       <div class="side-menu-item side-menu-item__invite" @click="handleMenuRouteClick('/earn-money')">
         <div>
@@ -116,7 +116,7 @@
         {{ $t("sideNav.language") }}
       </div>
 
-      <a class="side-menu-item side-menu-item__download" :href="topDownloadUrl" v-if="isSideDownload">
+      <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="isSideDownload && !ui.hideDownload">
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
         </div>
@@ -129,7 +129,7 @@
     </div>
   </div>
 
-  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
+  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }">
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-menu">
@@ -416,16 +416,6 @@ const checkTopDownloadAppear = () => {
   }
 };
 
-const topDownloadUrl = ref("");
-
-const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-    }
-  });
-};
-
 const menuOpen = ref(false);
 
 const toggleMenuOpen = () => {
@@ -461,9 +451,9 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  getTopDownloadUrl();
   checkTopDownloadAppear();
   loadCustomerAddress();
+  ui.shouldFetchDownloadAppUrl = true
 
   sideLang.value = store.memberType === "TEST";
   if (isAndroid()) {

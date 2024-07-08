@@ -33,6 +33,16 @@
           </div>
         </router-link>
       </div>
+
+      <div v-if="isStickyGameType" class="home-header-section" style="height: 68px; width: 95%; margin: 0 auto">
+        <GameTypeSwiper
+          v-model="selectedTab"
+          scroll-to-center
+          :list="tabs"
+          @swiper="setSecondSwiper"
+          @select-swiper="setSelectedSwiper"
+        />
+      </div>
     </div>
 
     <div class="home-all-slider" :class="isShowDownload && isH5 ? '' : 'padding-normal'" v-scroll="onHomeScroll">
@@ -146,52 +156,17 @@
       </div>
 
       <div class="home-header-section" style="height: 68px; width: 95%; margin: 0 auto">
-        <swiper
-          :modules="[Thumbs, Controller]"
-          slides-per-view="auto"
-          :freeMode="true"
-          :set-wrapper-size="true"
-          :scrollbar="{ draggable: true }"
-          :mousewheel="true"
-          :space-between="8"
-          :breakpoints="{
-            0: {
-              slidesPerView: 5,
-              spaceBetween: 8
-            },
-            380: {
-              slidesPerView: 5,
-              spaceBetween: 8
-            },
-            440: {
-              slidesPerView: 5,
-              spaceBetween: 8
-            }
-          }"
-          watch-slides-progress
+        <GameTypeSwiper
+          v-if="!isStickyGameType"
+          scroll-to-center
+          :list="tabs"
+          v-model="selectedTab"
           @swiper="setSecondSwiper"
-          :controller="{ control: firstSwiper }"
-          class="firstSwiper"
-        >
-          <swiper-slide
-            :class="tab.name && { tbact: selectedTab === tab.name }"
-            @click="setSelectedSwiper(tab)"
-            v-for="(tab, i) in tabs"
-            :key="i"
-          >
-            <div
-              class="home-select-slide column items-center justify-center gap-3"
-              :class="selectedTab == tab.name ? 'selected' : ''"
-              :style="`gap:${tab.gap}px`"
-            >
-              <img :style="`margin-top:${tab.mb}px;`" :src="require('../assets/index/' + tab.icon)" />
-              <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
-            </div>
-          </swiper-slide>
-        </swiper>
+          @select-swiper="setSelectedSwiper"
+        />
       </div>
 
-      <div class="swiper-container">
+      <div ref="swiperContainerRef" class="swiper-container">
         <!-- Thumbs Swiper -> store swiper instance -->
 
         <div class="index-platform-container" style="overflow: hidden">
@@ -1575,6 +1550,7 @@ import { translateRecord } from "src/directives/translate";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
+import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1583,10 +1559,12 @@ export default defineComponent({
     SwiperSlide,
     GameModal,
     MarqueeText,
-    PlatformBlock
+    PlatformBlock,
+    GameTypeSwiper
   },
   setup() {
     const isFirstView = ref(false);
+    const isStickyGameType = ref(false);
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -1607,36 +1585,29 @@ export default defineComponent({
     };
 
     const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
       // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "live") {
         scrollToSlide("id-live-slide");
-        // firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
         scrollToSlide("id-sport-slide");
-        // firstSwiper.value?.slideTo(1, 500);
       }
       if (tab.name === "esport") {
         scrollToSlide("id-esport-slide");
-        // firstSwiper.value?.slideTo(2, 500);
       }
       if (tab.name === "slot") {
         scrollToSlide("id-slot-slide");
-        // firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "fish") {
         scrollToSlide("id-fish-slide");
       }
       if (tab.name === "poker") {
         scrollToSlide("id-poker-slide");
-        // firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "lottery") {
         scrollToSlide("id-lottery-slide");
         // window.scrollTo(0, 0);
-        // firstSwiper.value?.slideTo(6, 500);
       }
     };
 
@@ -1766,13 +1737,16 @@ export default defineComponent({
     };
 
     const isScrolling = ref(false);
+    const swiperContainerRef = ref(null);
     const scrollToSlide = (slide_id) => {
       isScrolling.value = true;
       var slideItem = document.getElementById(slide_id);
       if (slideItem) {
-        var positionY = slideItem.offsetTop;
-        // console.log(positionY);
-        var y_axis = positionY + 215;
+        const positionY = slideItem.offsetTop;
+        const topHeight = document.getElementById("id-sticky-header").offsetHeight;
+        const parentOffset = swiperContainerRef.value.offsetTop ?? 0;
+        let offset = isStickyGameType.value ? 0 : 60;
+        const y_axis = positionY + parentOffset - topHeight - offset;
 
         window.scroll({
           top: y_axis,
@@ -1813,56 +1787,56 @@ export default defineComponent({
         }
         // }
 
+        if (position > 350) {
+          isStickyGameType.value = true;
+        } else {
+          isStickyGameType.value = false;
+        }
+
         if (position > 400) {
           isShowBackTop.value = true;
         } else {
           isShowBackTop.value = false;
         }
 
-        if (!isScrolling.value) {
-          var topHeight = document.getElementById("id-sticky-header").offsetHeight + 15;
-          var checkItem1 = document.getElementById("id-esport-slide");
-          var checkItem2 = document.getElementById("id-sport-slide");
-          var checkItem3 = document.getElementById("id-live-slide");
-          var checkItem4 = document.getElementById("id-slot-slide");
-          var checkItem42 = document.getElementById("id-poker-slide");
-          var checkItem5 = document.getElementById("id-lottery-slide");
-          var checkItem6 = document.getElementById("id-fish-slide");
+        const minScrollTop = swiperContainerRef.value.offsetTop;
+        if (!isScrolling.value && position > minScrollTop) {
+          const stickyHeight = document.getElementById("id-sticky-header").offsetHeight;
 
-          var positionTop1 = checkItem1.getBoundingClientRect().top;
-          var positionTop2 = checkItem2.getBoundingClientRect().top;
-          var positionTop3 = checkItem3.getBoundingClientRect().top;
-          var positionTop4 = checkItem4.getBoundingClientRect().top;
-          var positionTop42 = checkItem42.getBoundingClientRect().top;
+          const esportSlide = document.getElementById("id-esport-slide");
+          const sportSlide = document.getElementById("id-sport-slide");
+          const liveSlide = document.getElementById("id-live-slide");
+          const slotSlide = document.getElementById("id-slot-slide");
+          const pokerSlide = document.getElementById("id-poker-slide");
+          const lotterySlide = document.getElementById("id-lottery-slide");
+          const fishSlide = document.getElementById("id-fish-slide");
 
-          var positionTop5 = checkItem5.getBoundingClientRect().top;
-          var positionTop6 = checkItem6.getBoundingClientRect().top;
+          const esportTop = esportSlide.getBoundingClientRect().top;
+          const sportTop = sportSlide.getBoundingClientRect().top;
+          const liveTop = liveSlide.getBoundingClientRect().top;
+          const slotTop = slotSlide.getBoundingClientRect().top;
+          const pokerTop = pokerSlide.getBoundingClientRect().top;
+          const lotteryTop = lotterySlide.getBoundingClientRect().top;
+          const fishTop = fishSlide.getBoundingClientRect().top;
 
           // console.log(topHeight);
           // console.log(positionTop6);
           // console.log(positionTop6 - 40 <= topHeight);
 
-          if (positionTop6 - 100 <= topHeight) {
+          if (fishTop - 100 <= stickyHeight) {
             selectedTab.value = "fish";
-            secondSwiper.value?.slideTo(6, 500);
-          } else if (positionTop5 <= topHeight) {
+          } else if (lotteryTop <= stickyHeight) {
             selectedTab.value = "lottery";
-            secondSwiper.value?.slideTo(5, 500);
-          } else if (positionTop42 <= topHeight) {
+          } else if (slotTop <= stickyHeight) {
             selectedTab.value = "slot";
-            secondSwiper.value?.slideTo(4, 500);
-          } else if (positionTop4 <= topHeight) {
+          } else if (pokerTop <= stickyHeight) {
             selectedTab.value = "poker";
-            secondSwiper.value?.slideTo(3, 500);
-          } else if (positionTop3 <= topHeight) {
+          } else if (liveTop <= stickyHeight) {
             selectedTab.value = "live";
-            secondSwiper.value?.slideTo(2, 500);
-          } else if (positionTop2 <= topHeight) {
+          } else if (sportTop <= stickyHeight) {
             selectedTab.value = "sport";
-            secondSwiper.value?.slideTo(1, 500);
-          } else if (positionTop1 <= topHeight) {
+          } else if (esportTop <= stickyHeight) {
             selectedTab.value = "esport";
-            secondSwiper.value?.slideTo(0, 500);
           }
         }
       }
@@ -2530,7 +2504,9 @@ export default defineComponent({
       setWithExpiry,
       getWithExpiry,
       isImpt,
-      clickHomePopupImg
+      clickHomePopupImg,
+      isStickyGameType,
+      swiperContainerRef
     };
   }
 });

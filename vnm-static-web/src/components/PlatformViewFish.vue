@@ -202,7 +202,7 @@
               v-for="game in platformsListDisplay2"
               :key="game.id"
             >
-              <a @click="openGame(game, selectedPlat, game.code)">
+              <a @click="openGame(game, game.code, game.gameCode)" >
                 <div class="cockfight-img">
                   <div class="platform-menu-img">
                     <img
@@ -227,12 +227,11 @@
                   <div class="slot-fav">
                   </div>
                 </div>
+                <div class="play-btn">
+                  {{ $t('common.playnow') }}
+                </div>
 
               </a>
-
-              <div @click="openGame(game, game.code, game.gameCode)" class="play-btn">
-                {{ $t('common.playnow') }}
-              </div>
             </div>
           </div>
         </div>

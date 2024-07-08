@@ -335,7 +335,10 @@ import { getEurocupManualSchedule } from "../../../api/index/promo";
 import GameModal from "components/modal/GameModal.vue";
 import moment from "moment";
 import {useLocalStorage} from "@vueuse/core"
-const tab = ref("groupStage");
+const tab = ref("quarterFinal");
+if(moment().format("YYYY-MM-DD") > "2024-07-07"){
+  tab.value= "semiFinalAndFinal"
+}
 
 const groupStageTeamsList = ref([]);
 const roundOf16TeamsList = ref([]);
@@ -373,8 +376,8 @@ function filterTeamsByStage(teams) {
   const stages = {
     groupStage: ["A", "B", "C", "D", "E", "F"],
     roundOf16: "16",
-    quarterFinal: ["8", "4"],
-    semiFinalAndFinal: ["2", "1"]
+    quarterFinal: ["8"],
+    semiFinalAndFinal: ["2", "4" ,"1"]
   };
 
   const teamsMoment = teams.map((team) => {
@@ -551,13 +554,13 @@ onMounted(() => {
   gap: 10px;
   margin: 10px 0;
   .info-item {
-      padding: 5px;
-      position: relative;
-      gap: 10px;
-      display: flex;
-      flex-direction: column;
-      background: url(../../../assets/promo/lh-eurocup-manual/info-bg.png)no-repeat center center;
-      background-size: cover;
+    padding: 5px;
+    position: relative;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    background: url(../../../assets/promo/lh-eurocup-manual/info-bg.png)no-repeat center center;
+    background-size: cover;
     width: 30%;
     .title {
       display: flex;
@@ -590,7 +593,7 @@ onMounted(() => {
   gap: 15px;
 
   @media(max-width: 410px){
-      display: grid;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -624,7 +627,7 @@ onMounted(() => {
       line-height: 20px;
       color: #ffffff1a;
       font-family: FZHanZhenGuangBiaoS-GB;
-        width: 20px;
+      width: 20px;
     }
     .time {
       font-size: 12px;

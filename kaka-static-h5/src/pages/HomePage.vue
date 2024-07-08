@@ -318,27 +318,27 @@
         </template>
         <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
-<!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
-<!--        <template v-if="tab === 'fishing'">-->
-<!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <img src="../assets/images/home/games/fish-icon.png" />-->
-<!--        </template>-->
-<!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
-<!--      </div>-->
+      <!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
+      <!--        <template v-if="tab === 'fishing'">-->
+      <!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/fish-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
+      <!--      </div>-->
 
-<!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
-<!--        <template v-if="tab === 'casual'">-->
-<!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
-<!--        </template>-->
-<!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
-<!--          {{ $t("lang.menu_minigame") }}-->
-<!--        </span>-->
-<!--      </div>-->
+      <!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
+      <!--        <template v-if="tab === 'casual'">-->
+      <!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
+      <!--          {{ $t("lang.menu_minigame") }}-->
+      <!--        </span>-->
+      <!--      </div>-->
       <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="hashgame-platform">
         <template v-if="tab === 'hashgame'">
           <img src="../assets/images/home/games/hashgame-icon-active.png" />
@@ -1589,6 +1589,11 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
+        //For TEstING.
+        // const info = {
+        //   build: "1",
+        //   version: "1.0"
+        // }
         var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -2320,7 +2325,7 @@ export default defineComponent({
     .headicon {
       flex: 1;
       //width: 120px;
-    height: 40px;
+      height: 40px;
     }
 
     .download-txt-container {
@@ -2404,8 +2409,8 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 90%;
-    max-width: 200px;
-    margin-top: 10px;
+      max-width: 200px;
+      margin-top: 10px;
     }
   }
 
@@ -2415,8 +2420,6 @@ export default defineComponent({
     margin-top: 3px;
     display: flex;
     gap: 12px;
-
-    color: #313441;
     :deep(.q-btn) {
       min-width: 80px;
       min-height: 12px;
@@ -2576,7 +2579,7 @@ export default defineComponent({
           }
         }
         &__title {
-          color: #000000;
+          color: #ffffff;
           font-size: 20px;
           font-weight: 900;
           line-height: 24.2px;
@@ -2602,7 +2605,7 @@ export default defineComponent({
           align-items: center;
           flex: 1;
           .main-header {
-            color: #ffffff;
+            color: #ff4f57;
             font-size: 16px;
             font-weight: 900;
             line-height: 19.36px;
@@ -2635,6 +2638,7 @@ export default defineComponent({
             display: flex;
             justify-content: center;
             align-items: center;
+            filter: hue-rotate(145deg);
           }
           .lastline {
             color: #ffffff;
@@ -2653,6 +2657,7 @@ export default defineComponent({
             background: url("../assets/images/welcome/title-bg-blue.png") no-repeat center center;
             background-size: contain;
             color: #ffffff;
+            filter: hue-rotate(145deg);
           }
         }
       }

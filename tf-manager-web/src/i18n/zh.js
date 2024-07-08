@@ -93,7 +93,7 @@ export default {
     PENDING: '中止',
     REJECT: '驳回',
     SENDING: '发送中',
-    WAITING_CALLBACK: '自动支付中',
+    WAITING_CALLBACK: '等待回调',
     PAYING: '支付',
     WAITING_AUTO_PAY: '待自动支付',
     FAIL_REVIEW: '失败审核',

@@ -17,7 +17,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px;margin-left:20px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -79,7 +78,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px;margin-left:30px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -360,7 +358,7 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
-import moment from 'moment'
+// import moment from 'moment'
 import {
   getFinanceFeedback,
   updateFinanceFeedback,
@@ -432,14 +430,15 @@ const uiControl = reactive({
 })
 
 const shortcuts = getShortcuts(t);
-function disabledDate(time) {
-  return (
-    time.getTime() <=
-      moment(new Date())
-        .subtract(4, 'weeks')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
-}
+
+// function disabledDate(time) {
+//   return (
+//     time.getTime() <=
+//       moment(new Date())
+//         .subtract(4, 'weeks')
+//         .format('x') || time.getTime() > new Date().getTime()
+//   )
+// }
 
 // function convertDate(date) {
 //   return moment(date).format('YYYY-MM-DD')
