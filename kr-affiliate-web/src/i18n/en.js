@@ -39,7 +39,7 @@ export default {
     // Downline Info Start
     'Downline Info': 'Downline Info',
     Member: 'Member',
-    'Member Tree': 'Member Tree',
+    MemberTree: 'Member Tree',
     Affiliate: 'Affiliate',
     AffiliateSummary: 'Affiliate Summary',
     // Downline Info End
@@ -54,6 +54,7 @@ export default {
     // Settlement Management Start
     SettlementManagement: 'Settlement Management',
     MonthlyStepByStep: 'Monthly Step By Step',
+    SettlementByCasinoSlotVendor: 'Settlement By Casino / Slot Vendor',
     // Settlement Management End
 
     gameRecord: 'Game Record',
@@ -83,7 +84,6 @@ export default {
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
     'Rebate Report': 'Rebate Report',
-    'Member Management': 'Member Management',
     message: 'Message',
     inquiry: 'Inquiry',
   },

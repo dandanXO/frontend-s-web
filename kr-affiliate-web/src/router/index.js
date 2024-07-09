@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/Index.vue'
 import Forbidden from '@/views/Forbidden.vue'
+
 export const constantRoutes = [
   {
     path: '/login',
@@ -55,7 +56,7 @@ export const constantRoutes = [
         path: 'member',
         component: () =>
           import('../views/member-info/member-management/index.vue'),
-        name: 'Member Management',
+        name: 'Member',
         meta: {
           title: 'member-management',
         },
@@ -63,7 +64,7 @@ export const constantRoutes = [
       {
         path: 'member-tree',
         component: () => import('../views/member-info/member-tree/index.vue'),
-        name: 'Member Tree',
+        name: 'MemberTree',
         meta: {
           title: 'member-tree',
         },
@@ -83,7 +84,7 @@ export const constantRoutes = [
         path: 'affiliate',
         component: () =>
           import('../views/member-info/affiliate-management/index.vue'),
-        name: 'Affiliate Management',
+        name: 'Affiliate',
         meta: {
           title: 'affiliate-management',
         },
@@ -99,7 +100,7 @@ export const constantRoutes = [
       {
         path: 'summary',
         component: () => import('../views/affiliate/summary/index.vue'),
-        name: 'Affiliate Summary',
+        name: 'AffiliateSummary',
         meta: {
           title: 'affiliate-summary',
         },
@@ -111,43 +112,33 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'game-record',
+        path: 'live-bet-history',
         component: () => import('../views/member-info/game-record/index.vue'),
-        name: 'Game Record',
+        name: 'LiveBetHistory',
         meta: {
-          title: 'game-record',
+          title: 'game-record-live',
+          gameType: 'live'
         },
-        children: [
-          {
-            path: 'live',
-            component: () => import('../views/member-info/game-record/index.vue'),
-            name: 'Game Record (Live)',
-            meta: {
-              title: 'game-record-live',
-              gameType: 'live'
-            },
-          },
-          {
-            path: 'slot',
-            component: () => import('../views/member-info/game-record/index.vue'),
-            name: 'Game Record (Slot)',
-            meta: {
-              title: 'game-record-slot',
-              gameType: 'slot'
-            },
-          },
-          {
-            path: 'sport',
-            component: () => import('../views/member-info/game-record/index.vue'),
-            name: 'Game Record (Sport)',
-            meta: {
-              title: 'game-record-sport',
-              gameType: 'sport'
-            },
-          },
-        ]
       },
-    ],
+      {
+        path: 'slot-bet-history',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'SlotBetHistory',
+        meta: {
+          title: 'game-record-slot',
+          gameType: 'slot'
+        },
+      },
+      {
+        path: 'sport-bet-history',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'SportBetHistory',
+        meta: {
+          title: 'game-record-sport',
+          gameType: 'sport'
+        },
+      },
+    ]
   },
   {
     path: '/settlement-management',
@@ -156,9 +147,17 @@ export const constantRoutes = [
       {
         path: 'monthly-step-by-step-settlement',
         component: () => import('../views/settlement-management/MonthlyStepByStepSettlement.vue'),
-        name: 'Monthly Step By Step Settlement',
+        name: 'MonthlyStepByStep',
         meta: {
           title: 'monthly-step-by-step-settlement',
+        },
+      },
+      {
+        path: 'settlement-by-casino-slot-vendor',
+        component: () => import('../views/settlement-management/SettlementByCasinoSlotVendor.vue'),
+        name: 'SettlementByCasinoSlotVendor',
+        meta: {
+          title: 'settlement-by-casino-slot-vendor',
         },
       },
     ],

@@ -39,20 +39,22 @@ export default {
     // Downline Info Start
     'Downline Info': '파트너정보',
     Member: '회원관리',
+    MemberTree: '트리뷰',
     Affiliate: '파트너관리',
     AffiliateSummary: '파트너리스트(계총)',
     // Downline Info End
 
     // Bet Management Start
-    BetManagement: '베팅 관리',
+    BetManagement: '베팅관리',
     LiveBetHistory : '라이브 베팅 기록',
     SlotBetHistory : '슬롯 베팅 기록',
     SportBetHistory : '스포츠 베팅 기록',
     // Bet Management End
 
     // Settlement Management Start
-    SettlementManagement: '정산관리',
-    MonthlyStepByStep: '월별 단계별',
+    SettlementManagement: '베팅관리',
+    MonthlyStepByStep: '월별/단계별 정산',
+    SettlementByCasinoSlotVendor: '카지노/슬롯 판매업체별 정산',
     // Settlement Management End
 
     gameRecord: '게임 기록',
@@ -83,8 +85,6 @@ export default {
     Withdraw: '은행 출금',
     'Rebate Report': '리베이트 보고서',
     message: '사이트 메시지',
-    'Member Management': '회원관리',
-    'Member Tree': '트리뷰',
     'Bet Management': '베팅관리',
     'Bet History': '회원베팅기록',
     inquiry: '문의',
