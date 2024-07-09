@@ -7,9 +7,11 @@
       <div class="maintenance-title" v-html="$t('maintenance.title')"></div>
       <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>
       <div class="maintenance-contact">
-        <a href="mailto:vnsupport@kaka.com" class="email" target="_blank">{{$t('maintenance.email')}}: vnsupport@kaka.com</a>
+        <a href="mailto:kakagame1688@gmail.com" class="email" target="_blank">{{$t('maintenance.email')}}: kakagame1688@gmail.com</a>
         <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${languageVal === 'vi' ? 'vn': 'en'}`" class="email" target="_blank">{{$t('maintenance.customerService')}}</a>
         <a href="https://t.me/KAKA_CS" class="email" target="_blank">Telegram: @KAKA_CS</a>
+        <a href="https://t.me/trangchukakagame1" class="email" target="_blank">Telegram: @trangchukakagame1</a>
+        <a href="https://t.me/trangchukakagame2" class="email" target="_blank">Telegram:  @trangchukakagame2</a>
       </div>
     </div>
     <div class="maintenance-img">
