@@ -58,7 +58,7 @@
       <div class="close-btn" @click="hideDomain()">X</div>
 
       <el-carousel
-        height="70px"
+        height="110px"
         :indicator-position="floatDomain.length > 1 ? 'outside' : 'none'"
         arrow="never"
         :autoplay="true"
@@ -196,10 +196,7 @@ export default defineComponent({
         }
       }
     };
-    const hideDomain = () => {
-      showDomain.value = false;
-      domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
-    };
+
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
@@ -242,7 +239,12 @@ export default defineComponent({
       }
     };
 
-    const domainPosition = ref({ top: window.innerHeight - 410, left: window.innerWidth - 230 });
+    const hideDomain = () => {
+      showDomain.value = false;
+      domainPosition.value = { top: window.innerHeight - 430, left: window.innerWidth - 260 };
+    };
+
+    const domainPosition = ref({ top: window.innerHeight - 430, left: window.innerWidth - 240 });
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
     const isDragging = ref(false);
@@ -377,12 +379,12 @@ export default defineComponent({
 
   &.domain-wrapper {
     height: auto;
-    width: 120px;
+    width: 155px;
 
     .rocket {
       img {
         display: block;
-        width: 120px;
+        width: 155px;
         cursor: pointer;
       }
     }
