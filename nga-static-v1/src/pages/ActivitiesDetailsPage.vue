@@ -1,11 +1,14 @@
 <template>
   <div class="activities-container">
+    <div class="activity-banner">
+      <img src="../assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
+    </div>
     <div class="activities-title"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-content">
       The more consecutive days of deposit requirements you complete, the more extra bonus you will get
     </div>
     <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
-      <img src="../assets/images/promotion/activities/btn-deposit.png" />
+      <img src="../assets/images/promotion/activities/deposit-btn-1.png" />
     </router-link>
     <div class="activities-stats-container">
       <div class="stats-info">
@@ -17,7 +20,7 @@
             </div>
           </q-linear-progress>
           <div class="info-linear-amt">
-            {{ rules[bonusSeq]? rules[bonusSeq].deposit : 0 }}
+            {{ rules[bonusSeq] ? rules[bonusSeq].deposit : 0 }}
             <br />
             RS
           </div>
@@ -40,24 +43,36 @@
       </div>
     </div>
     <div class="activities-days-container">
-      <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="[i + 1 === 7 ? 'days-box__last' : 'days-box',
-      {'isReceived': (i===bonusSeq && isReceivedToday) || i < bonusSeq}]">
+      <div
+        class="days-box"
+        v-for="(rule, i) in rules"
+        :key="rule"
+        :class="[
+          i + 1 === 7 ? 'days-box__last' : 'days-box',
+          { isReceived: (i === bonusSeq && isReceivedToday) || i < bonusSeq }
+        ]"
+      >
         <div class="box-ribbon">Day {{ i + 1 }}</div>
         <div class="box-img">
-          <img v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq" :src="require(`../assets/images/promotion/activities/day-received.png`)" />
-          <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" >
+          <img
+            v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq"
+            :src="require(`../assets/images/promotion/activities/day-received.png`)"
+          />
+          <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" />
         </div>
         <div>
-          <div class="box-title">Free {{rule.bonus}}rs</div>
-          <div class="box-subtitle" v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq">
-            <img :src="require(`../assets/images/promotion/activities/tick.png`)" /> Received
+          <div class="box-title">Free {{ rule.bonus }}rs</div>
+          <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
+            <img :src="require(`../assets/images/promotion/activities/tick.png`)" />
+            Received
           </div>
           <div class="box-subtitle" v-else>
             Wager x5
             <br />
             Deposit {{ rule.deposit }}rs
           </div>
-        </div></div>
+        </div>
+      </div>
     </div>
     <div class="activities-notice">
       <div class="notice-img"><img src="../assets/images/promotion/activities/alert-img.png" /></div>
@@ -99,17 +114,21 @@ onActivated(() => {
   const acitivtyApi = "/session/ind/deposit/bonus";
   rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
-    const resp = res.data
+    const resp = res.data;
     isLoading.value = false;
-    bonusSeq.value = resp.bonusSeq
-    isReceivedToday.value = resp.isReceivedToday
-    resp.rules.forEach(element => {
-      rules.value.push(element)
+    bonusSeq.value = resp.bonusSeq;
+    isReceivedToday.value = resp.isReceivedToday;
+    resp.rules.forEach((element) => {
+      rules.value.push(element);
     });
 
     if (resp.rules && resp.rules.length >= resp.bonusSeq + 1) {
-      progressDeposit.value = resp.deposit >= rules.value[resp.bonusSeq].deposit ? 1 : Number(resp.deposit) / Number(rules.value[resp.bonusSeq].deposit);
-      progressDailyWager.value = resp.bet >= rules.value[resp.bonusSeq].bet ? 1 : Number(resp.bet) / Number(rules.value[resp.bonusSeq].bet);
+      progressDeposit.value =
+        resp.deposit >= rules.value[resp.bonusSeq].deposit
+          ? 1
+          : Number(resp.deposit) / Number(rules.value[resp.bonusSeq].deposit);
+      progressDailyWager.value =
+        resp.bet >= rules.value[resp.bonusSeq].bet ? 1 : Number(resp.bet) / Number(rules.value[resp.bonusSeq].bet);
     }
   });
 });
@@ -117,7 +136,7 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .activities-container {
-  padding: 1rem;
+  padding: 0px 1rem 1rem;
 
   .activities-title {
     display: flex;
@@ -148,7 +167,7 @@ onActivated(() => {
   }
 
   .activities-stats-container {
-    background: #5817AA99;
+    background: #5817aa99;
     padding: 1rem;
     border-radius: 8px;
     display: grid;
@@ -184,10 +203,15 @@ onActivated(() => {
             z-index: 2;
             font-size: 12px;
             color: #ffffff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
-            1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
-            -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
-            -1px 1px 2px rgba(255, 255, 255, 0.7);
+            text-shadow:
+              1px 1px 2px rgba(0, 0, 0, 0.7),
+              -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7),
+              -1px 1px 2px rgba(0, 0, 0, 0.7),
+              1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7),
+              1px -1px 2px rgba(255, 255, 255, 0.7),
+              -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }
         .info-linear-amt {
@@ -206,10 +230,9 @@ onActivated(() => {
     row-gap: 1rem;
     margin-top: 1rem;
     .days-box {
-      background: #3B156E4D;
+      background: #3b156e4d;
       &.isReceived {
-        background: linear-gradient(356.25deg, #3B156E -0.21%, #8100AE 93.65%);
-
+        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
       }
       padding: 12px;
       display: flex;
@@ -232,7 +255,7 @@ onActivated(() => {
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         color: rgba(255, 255, 255, 0.8);
-        background: #4F004B;
+        background: #4f004b;
         width: 45px;
         display: flex;
         align-items: center;
@@ -308,6 +331,11 @@ onActivated(() => {
     padding: 1rem;
     color: #98a6b4;
     margin-top: 6px;
+  }
+  .activity-banner {
+    img {
+      width: 100%;
+    }
   }
 }
 </style>
