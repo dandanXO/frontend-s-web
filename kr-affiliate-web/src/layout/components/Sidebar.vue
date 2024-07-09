@@ -4,14 +4,11 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
     <div class="navigation">
-      <a :href="krwUrl" target="_blank"><div class="logo-section" /></a>
+      <a :href="krwUrl" target="_blank">
+        <div class="logo-section" />
+      </a>
       <div class="row-item">
-        <el-select
-          class="lang-container right-menu-item"
-          placeholder=""
-          v-model="languageVal"
-          @change="handleLanguage"
-        >
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
           <el-option key="1" value="en">en</el-option>
           <el-option key="2" value="zh">zh</el-option>
           <el-option key="3" value="th">th</el-option>
@@ -36,8 +33,8 @@
       <div class="row-item route-title">
         <div class="icon-wrapper">
           <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
-          <svg-icon :icon-class="'right'" />
-          <span>유저사이트</span>
+            <svg-icon :icon-class="'right'" />
+            <span>유저사이트</span>
           </a>
         </div>
       </div>
@@ -244,6 +241,22 @@ const getNavigationData = () => {
           path: '/game-record?gameType=SPORT',
           title: t('menu.Bet History SPORT'),
           label: 'Bet History SPORT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+      ],
+    },
+    {
+      title: t('menu.Settlement Management'),
+      label: 'Settlement Management',
+      display: true,
+      path: '/settlement-management',
+      children: [
+        {
+          path: '/monthly-step-by-step-settlement',
+          title: t('menu.Monthly Step By Step'),
+          label: 'Monthly Step By Step',
           active: false,
           isMainNav: true,
           icon: 'clock',
