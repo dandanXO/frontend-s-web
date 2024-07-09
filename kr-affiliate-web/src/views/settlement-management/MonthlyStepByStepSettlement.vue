@@ -46,30 +46,42 @@
                     </tbody>
                     <tbody v-else-if="page.records.length > 0">
                         <tr v-for="item in page.records" :key="item.id">
-                            <td :data-label="t('fields.date')">
+                            <td class="textCenter" :data-label="t('fields.date')">
                                 {{ item.date }}
                             </td>
-                            <td class="bgGreen textGreen" :data-label="t('fields.secondCol')">
-                                {{ formatMoney(item.secondCol) }}
+                            <td class=" textRight" :data-label="t('fields.secondCol')"
+                                v-formatter="{ data: item.secondCol, type: 'p&l' }">
                             </td>
-                            <td class="bgRed textRed" :data-label="t('fields.thirdCol')">
-                                {{ formatMoney(item.thirdCol) }}
+                            <td class=" textRight" :data-label="t('fields.thirdCol')"
+                                v-formatter="{ data: item.thirdCol, type: 'p&l' }">
                             </td>
-                            <td class="bgYellow textRed" :data-label="t('fields.fourthCol')">
-                                {{ formatMoney(item.fourthCol) }}
+                            <td class=" textRed textRight" :data-label="t('fields.fourthCol')"
+                                v-formatter="{ data: item.fourthCol, type: 'p&l' }">
                             </td>
-                            <td class="bgYellow textGreen" :data-label="t('fields.fifthCol')">
-                                {{ formatMoney(item.fifthCol) }}
+                            <td class=" textGreen textRight" :data-label="t('fields.fifthCol')"
+                                v-formatter="{ data: item.fifthCol, type: 'p&l' }">
                             </td>
-                            <td class="bgYellow" :data-label="t('fields.sixthCol')">
-                                {{ formatMoney(item.sixthCol) }}
+                            <td class=" textRight" :data-label="t('fields.sixthCol')"
+                                v-formatter="{ data: item.sixthCol, type: 'p&l' }">
                             </td>
-                            <td class="bgYellow" :data-label="t('fields.seventhCol')">
-                                {{ formatMoney(item.seventhCol) }}
+                            <td class=" textRight" :data-label="t('fields.seventhCol')"
+                                v-formatter="{ data: item.seventhCol, type: 'p&l' }">
                             </td>
-                            <td class="bgRed textRed" :data-label="t('fields.eightCol')">
-                                {{ formatMoney(item.eightCol) }}
+                            <td class=" textRed textRight" :data-label="t('fields.eightCol')"
+                                v-formatter="{ data: item.eightCol, type: 'p&l' }">
                             </td>
+                        </tr>
+                        <tr>
+                            <td class="bgGrey textCenter">
+                                총 합계
+                            </td>
+                            <td class="textRight" v-formatter="{ data: totals.secondCol, type: 'p&l' }"></td>
+                            <td class="textRight" v-formatter="{ data: totals.thirdCol, type: 'p&l' }"></td>
+                            <td class="textRight" v-formatter="{ data: totals.fourthCol, type: 'p&l' }"></td>
+                            <td class="textRight" v-formatter="{ data: totals.fifthCol, type: 'p&l' }"></td>
+                            <td class="textRight" v-formatter="{ data: totals.sixthCol, type: 'p&l' }"></td>
+                            <td class="textRight" v-formatter="{ data: totals.seventhCol, type: 'p&l' }"></td>
+                            <td class="textRight" v-formatter="{ data: totals.eightCol, type: 'p&l' }"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,7 +94,6 @@
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n'
 import Loading from '@/components/loading/Loading.vue';
-import { formatMoney } from "@/utils/format-money";
 import moment from 'moment';
 
 const { t } = useI18n();
@@ -211,18 +222,114 @@ const shortcuts = [
 
 const page = reactive({
     pages: 0,
-    records: [{
-        date: '2024-07-02 (Tue)',
-        secondCol: 100000,
-        thirdCol: -50000,
-        fourthCol: 50000,
-        fifthCol: 81721,
-        sixthCol: 165756,
-        seventhCol: 0,
-        eightCol: -84035
-    }],
+    records: [
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        },
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        },
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        },
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        },
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        },
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        },
+        {
+            date: '2024-07-02 (Tue)',
+            secondCol: 100000,
+            thirdCol: -50000,
+            fourthCol: 50000,
+            fifthCol: 81721,
+            sixthCol: 165756,
+            seventhCol: 0,
+            eightCol: -84035
+        }
+    ],
     loading: false,
 });
+
+const totals = page.records.reduce((acc, curr) => {
+    acc.secondCol += curr.secondCol;
+    acc.thirdCol += curr.thirdCol;
+    acc.fourthCol += curr.fourthCol;
+    acc.fifthCol += curr.fifthCol;
+    acc.sixthCol += curr.sixthCol;
+    acc.seventhCol += curr.seventhCol;
+    acc.eightCol += curr.eightCol;
+
+    return acc;
+}, {
+    secondCol: 0,
+    thirdCol: 0,
+    fourthCol: 0,
+    fifthCol: 0,
+    sixthCol: 0,
+    seventhCol: 0,
+    eightCol: 0
+})
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.custom-table tr {
+    td:nth-child(2) {
+        background-color: #f4fff8;
+    }
+
+    td:nth-child(3) {
+        background-color: #fff5f5;
+    }
+
+    td:nth-child(4) {
+        background-color: #fffef7;
+    }
+}
+</style>
