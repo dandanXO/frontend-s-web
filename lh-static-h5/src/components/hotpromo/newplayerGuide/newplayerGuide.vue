@@ -13,7 +13,7 @@
     <div class="container">
       <div class="left-panel">
         <div style="display: flex; align-items: center">
-          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
+          <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
           <div class="title">
             新手礼包
             <span style="font-size: 16px; font-weight: 400">(进行中)</span>
@@ -45,7 +45,7 @@
               >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
-                  src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                  src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="telephoneBindState === 'CLAIMED'"
                 />
                 {{ getStatus(telephoneBindState).text }}
@@ -63,7 +63,7 @@
               >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
-                  src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                  src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="bankCardBindState === 'CLAIMED'"
                 />
                 {{ getStatus(bankCardBindState).text }}
@@ -81,7 +81,7 @@
               >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
-                  src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                  src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="usdtAddrBindState === 'CLAIMED'"
                 />
                 {{ getStatus(usdtAddrBindState).text }}
@@ -90,15 +90,16 @@
           </div>
         </div>
       </div>
-      <div class="right-panel">
-        <img src="@/assets/images/promotion/hotpromo/newplayerguide/bigGift.png" alt="Gift" />
-      </div>
     </div>
     <div class="container2">
       <div class="left-panel">
         <div style="display: flex; align-items: center; justify-content: space-between">
           <div style="display: flex; align-items: center">
-            <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+            <img
+              class="big-icon"
+              src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png"
+              alt="Gift"
+            />
             <div class="title">首次提款</div>
           </div>
           <button class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
@@ -106,7 +107,7 @@
               <img
                 v-if="firstWithdrawalState === 'CLAIMED'"
                 style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
-                src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+                src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
               />
               <span>{{ getStatus2(firstWithdrawalState).text }}</span>
             </div>
@@ -125,13 +126,6 @@
           </div>
         </div>
       </div>
-      <div class="right-panel">
-        <img
-          style="height: 130px"
-          src="@/assets/images/promotion/hotpromo/newplayerguide/blueEnvelope.png"
-          alt="Gift"
-        />
-      </div>
     </div>
   </div>
   <div class="option2" v-if="selected === 'option2'">
@@ -142,7 +136,7 @@
       <div style="display: flex; align-items: center; margin-bottom: 12px">
         <img
           class="big-icon"
-          src="@/assets/images/promotion/hotpromo/newplayerguide/mark.png"
+          src="../../../assets/images/promotion/hotpromo/newplayerguide/mark.png"
           alt="Gift"
           width="32px"
         />
@@ -152,33 +146,45 @@
         <ol class="rules-content">
           <li>
             <span class="step-number">1</span>
-            自注册日起算 30 天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+            <div class="content">
+              自注册日起算 30
+              天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+            </div>
           </li>
           <li>
             <span class="step-number">2</span>
-            新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包
+            <div class="content">
+              新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包
+            </div>
           </li>
           <li>
             <span class="step-number">3</span>
-            每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2
-            倍流水。
+            <div class="content">
+              每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2
+              倍流水。
+            </div>
           </li>
           <li>
             <span class="step-number">4</span>
-            完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。
+            <div class="content">完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。</div>
           </li>
           <li>
             <span class="step-number">5</span>
-            此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+            <div class="content">
+              此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+            </div>
           </li>
           <li>
             <span class="step-number">6</span>
-            每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
-            地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+            <div class="content">
+              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
+              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+            </div>
           </li>
+
           <li>
             <span class="step-number">7</span>
-            此活动最终解释权归雷火所有;
+            <div class="content">此活动最终解释权归雷火所有;</div>
           </li>
         </ol>
       </div>
@@ -189,7 +195,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
+import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
 
 const router = useRouter();
@@ -263,6 +269,7 @@ const getBonus = async (promocode) => {
 
 onMounted(async () => {
   const apiRes = await getNewUserSetupBonusInit();
+  console.log('res',apiRes);
 
   bankCardBindState.value = apiRes.data.bankCardBindState;
   firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
@@ -287,14 +294,14 @@ onMounted(async () => {
   border: 1px solid rgba(154, 206, 255, 1);
   border-radius: 30px;
   overflow: hidden;
-  width: 400px;
+  width: 200px;
 }
 
 .switch-option {
   flex: 1;
   padding: 10px;
   text-align: center;
-  font-size: 24px;
+  font-size: 16px;
   white-space: nowrap;
   font-weight: 600;
   border-radius: 25px;
@@ -331,7 +338,7 @@ onMounted(async () => {
   margin-top: 20px;
   .left-panel {
     .big-icon {
-      width: 32px;
+      width: 32px !important;
       height: 32px;
       margin-right: 8px;
     }
@@ -362,7 +369,7 @@ onMounted(async () => {
   margin-top: 20px;
   .left-panel {
     .big-icon {
-      width: 24px;
+      width: 24px !important;
       height: 24px;
       margin-right: 8px;
     }
@@ -505,12 +512,16 @@ h1 {
 }
 .rules-content {
   color: #000;
-  padding: 0;
+  padding: 0 !important;
 
   .step-number {
     width: 20px;
     height: 20px;
     font-size: 14px;
+  }
+
+  .content {
+    width: calc(100% - 25px);
   }
 
   li {

@@ -29,7 +29,7 @@
 
     <div v-if="selectedTab === 'sports'" class="promotion-block">
       <div class="first-title">
-        <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
       <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
@@ -78,7 +78,7 @@
 
     <div v-if="selectedTab === 'esports'" class="promotion-block">
       <div class="first-title">
-        <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
       <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
@@ -127,7 +127,7 @@
 
     <div v-if="selectedTab === 'live'" class="promotion-block">
       <div class="first-title">
-        <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
       <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
@@ -176,7 +176,7 @@
 
     <div v-if="selectedTab === 'cards'" class="promotion-block">
       <div class="first-title">
-        <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
       <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
@@ -225,7 +225,7 @@
 
     <div v-if="selectedTab === 'slots'" class="promotion-block">
       <div class="first-title">
-        <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
       <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
@@ -260,7 +260,7 @@
           <div
             style="
               width: 2px;
-              height: 12px;
+              height: 40px;
               margin-top: 4px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
@@ -274,7 +274,7 @@
 
     <div v-if="selectedTab === 'fishing'" class="promotion-block">
       <div class="first-title">
-        <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+        <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
       <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
@@ -325,7 +325,7 @@
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
-          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
+          <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
           <div class="title">成长攻略</div>
         </div>
         <div class="title">
@@ -349,7 +349,7 @@
       <div class="rewards">
         <div class="reward" v-for="(reward, index) in rewards1" :key="index">
           <img
-            :src="require(`@/assets/images/promotion/hotpromo/newplayerguide/bonus-${reward.ruleAmount}.png`)"
+            :src="require(`../../../assets/images/promotion/hotpromo/newplayerguide/bonus-${reward.ruleAmount}.png`)"
             alt=""
             width="100%"
           />
@@ -365,7 +365,7 @@
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
-          <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
+          <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
           <div class="title">钱包冲刺</div>
         </div>
         <div class="title">
@@ -389,7 +389,7 @@
       <div class="rewards">
         <div class="reward" v-for="(reward, index) in rewards2" :key="index">
           <img
-            :src="require(`@/assets/images/promotion/hotpromo/newplayerguide/bonus-${reward.ruleAmount}.png`)"
+            :src="require(`../../../assets/images/promotion/hotpromo/newplayerguide/bonus-${reward.ruleAmount}.png`)"
             alt=""
             width="100%"
           />
@@ -405,12 +405,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
+import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 
 const router = useRouter();
 const selectedTab = ref("sports");
 
 function selectTab(tab) {
+  console.log("123");
   selectedTab.value = tab;
 }
 
@@ -433,7 +434,8 @@ const handleRedirect = () => {
 };
 
 onMounted(async () => {
-  //const apiRes =await getNewUserAccumulateDepositInit();
+  const apiRes1 =await getNewUserAccumulateDepositInit();
+  console.log(apiRes1);
   const apiRes = [
     { ruleAmount: 188, state: "CLAIMED" },
     { ruleAmount: 888, state: "CLAIMED" },
@@ -499,8 +501,9 @@ onMounted(async () => {
 
 .switch-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .switch-option {
@@ -511,7 +514,7 @@ onMounted(async () => {
   border-radius: 25px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -534,7 +537,7 @@ onMounted(async () => {
     align-items: center;
   }
   .big-icon {
-    width: 24px;
+    width: 24px !important;
     height: 24px;
     margin-right: 8px;
   }
@@ -602,12 +605,13 @@ td {
 }
 
 thead {
-  background: linear-gradient(180deg, #41b9ff -21.81%, #0085e8 95.54%);
+  background: linear-gradient(180deg, #41b9ff -21.81%, #0085e8 95.54%) !important;
 
   color: white;
 }
 thead th {
   border: none;
+  background: linear-gradient(180deg, #41b9ff -21.81%, #0085e8 95.54%) !important;
 }
 thead th:first-child {
   border-top-left-radius: 10px;
@@ -641,7 +645,10 @@ tbody tr:last-child {
 
 .rewards {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 5px;
+  column-gap: 5px;
 }
 
 .reward {
@@ -693,55 +700,56 @@ button:disabled {
 }
 
 .sports-icon {
-  background: url("@/assets/images/promotion/hotpromo/newplayerguide/sport.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/newplayerguide/sport.png") no-repeat center center;
   background-size: cover;
   &-active {
-    background: url("@/assets/images/promotion/hotpromo/newplayerguide/sport-active.png") no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/newplayerguide/sport-active.png") no-repeat center center;
     background-size: cover;
   }
 }
 
 .esports-icon {
-  background: url("@/assets/images/promotion/hotpromo/newplayerguide/esport.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/newplayerguide/esport.png") no-repeat center center;
   background-size: cover;
   &-active {
-    background: url("@/assets/images/promotion/hotpromo/newplayerguide/esport-active.png") no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/newplayerguide/esport-active.png") no-repeat center
+      center;
     background-size: cover;
   }
 }
 
 .live-icon {
-  background: url("@/assets/images/promotion/hotpromo/newplayerguide/real.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/newplayerguide/real.png") no-repeat center center;
   background-size: cover;
   &-active {
-    background: url("@/assets/images/promotion/hotpromo/newplayerguide/real-active.png") no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/newplayerguide/real-active.png") no-repeat center center;
     background-size: cover;
   }
 }
 
 .cards-icon {
-  background: url("@/assets/images/promotion/hotpromo/newplayerguide/card.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/newplayerguide/card.png") no-repeat center center;
   background-size: cover;
   &-active {
-    background: url("@/assets/images/promotion/hotpromo/newplayerguide/card-active.png") no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/newplayerguide/card-active.png") no-repeat center center;
     background-size: cover;
   }
 }
 
 .slots-icon {
-  background: url("@/assets/images/promotion/hotpromo/newplayerguide/slot.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/newplayerguide/slot.png") no-repeat center center;
   background-size: cover;
   &-active {
-    background: url("@/assets/images/promotion/hotpromo/newplayerguide/slot-active.png") no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/newplayerguide/slot-active.png") no-repeat center center;
     background-size: cover;
   }
 }
 
 .fishing-icon {
-  background: url("@/assets/images/promotion/hotpromo/newplayerguide/fish.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/newplayerguide/fish.png") no-repeat center center;
   background-size: cover;
   &-active {
-    background: url("@/assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
+    background: url("../../../assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
     background-size: cover;
   }
 }
