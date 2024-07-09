@@ -152,6 +152,14 @@ export const constantRoutes = [
           title: 'monthly-step-by-step-settlement',
         },
       },
+      {
+        path: 'settlement-by-casino-slot-vendor',
+        component: () => import('../views/settlement-management/SettlementByCasinoSlotVendor.vue'),
+        name: 'SettlementByCasinoSlotVendor',
+        meta: {
+          title: 'settlement-by-casino-slot-vendor',
+        },
+      },
     ],
   },
   {

@@ -260,6 +260,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'clock',
         },
+        {
+          path: '/settlement-by-casino-slot-vendor',
+          title: t('menu.SettlementByCasinoSlotVendor'),
+          label: 'Settlement By Casino / Slot Vendor',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
       ],
     },
     {

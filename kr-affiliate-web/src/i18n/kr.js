@@ -45,15 +45,16 @@ export default {
     // Downline Info End
 
     // Bet Management Start
-    BetManagement: '베팅 관리',
+    BetManagement: '베팅관리',
     LiveBetHistory : '라이브 베팅 기록',
     SlotBetHistory : '슬롯 베팅 기록',
     SportBetHistory : '스포츠 베팅 기록',
     // Bet Management End
 
     // Settlement Management Start
-    SettlementManagement: '정산관리',
-    MonthlyStepByStep: '월별 단계별',
+    SettlementManagement: '베팅관리',
+    MonthlyStepByStep: '월별/단계별 정산',
+    SettlementByCasinoSlotVendor: '카지노/슬롯 판매업체별 정산',
     // Settlement Management End
 
     gameRecord: '게임 기록',
