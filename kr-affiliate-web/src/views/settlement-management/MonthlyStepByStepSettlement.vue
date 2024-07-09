@@ -319,30 +319,35 @@ const totals = page.records.reduce((acc, curr) => {
 </script>
 
 <style lang="scss" scoped>
-.custom-table tr {
+.custom-table {
 
-    th:nth-child(1),
-    td:nth-child(1),
-    th:nth-child(4),
-    td:nth-child(4) {
-        border-right: 2px solid #cfd8dc;
+    tr {
+
+        th:nth-child(1),
+        td:nth-child(1),
+        th:nth-child(4),
+        td:nth-child(4) {
+            border-right: 2px solid #cfd8dc;
+        }
+
+        td:nth-child(2) {
+            background-color: #f4fff8;
+        }
+
+        td:nth-child(3) {
+            background-color: #fff5f5;
+        }
+
+        td:nth-child(4) {
+            background-color: #fffef7;
+        }
     }
 
-    &:last-child {
-        border-top-style: double;
-        border-color: #cfd8dc;
-    }
-
-    td:nth-child(2) {
-        background-color: #f4fff8;
-    }
-
-    td:nth-child(3) {
-        background-color: #fff5f5;
-    }
-
-    td:nth-child(4) {
-        background-color: #fffef7;
+    tbody tr {
+        &:last-child {
+            border-top-style: double;
+            border-color: #cfd8dc;
+        }
     }
 }
 </style>
