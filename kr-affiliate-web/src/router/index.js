@@ -121,6 +121,20 @@ export const constantRoutes = [
     ],
   },
   {
+    path: '/settlement-management',
+    component: Layout,
+    children: [
+      {
+        path: 'monthly-step-by-step-settlement',
+        component: () => import('../views/settlement-management/MonthlyStepByStepSettlement.vue'),
+        name: 'Monthly Step By Step Settlement',
+        meta: {
+          title: 'monthly-step-by-step-settlement',
+        },
+      },
+    ],
+  },
+  {
     path: '/affiliate',
     component: Layout,
     children: [

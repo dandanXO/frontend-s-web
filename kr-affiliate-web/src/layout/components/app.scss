@@ -44,6 +44,28 @@
     }
 
     td {
+      &.bgGreen {
+        background-color: #f4fff8;
+      }
+
+      &.textGreen {
+        color: #4dbd74;
+        font-weight: bold;
+      }
+
+      &.bgRed {
+        background-color: #fff5f5;
+      }
+
+      &.textRed {
+        color: #f86c6b;
+        font-weight: bold;
+      }
+
+      &.bgYellow {
+        background-color: #fffef7;
+      }
+      
       .money-wrapper {
         display: grid;
         grid-template-columns: 1fr 20px;
