@@ -2979,8 +2979,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
-          color: $font-4;
-          display: none;
+          color: #000000;
         }
 
         .platform-subtitle {
