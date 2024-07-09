@@ -117,6 +117,35 @@ export const constantRoutes = [
         meta: {
           title: 'game-record',
         },
+        children: [
+          {
+            path: 'live',
+            component: () => import('../views/member-info/game-record/index.vue'),
+            name: 'Game Record (Live)',
+            meta: {
+              title: 'game-record-live',
+              gameType: 'live'
+            },
+          },
+          {
+            path: 'slot',
+            component: () => import('../views/member-info/game-record/index.vue'),
+            name: 'Game Record (Slot)',
+            meta: {
+              title: 'game-record-slot',
+              gameType: 'slot'
+            },
+          },
+          {
+            path: 'sport',
+            component: () => import('../views/member-info/game-record/index.vue'),
+            name: 'Game Record (Sport)',
+            meta: {
+              title: 'game-record-sport',
+              gameType: 'sport'
+            },
+          },
+        ]
       },
     ],
   },

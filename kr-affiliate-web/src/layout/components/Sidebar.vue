@@ -222,7 +222,7 @@ const getNavigationData = () => {
       path: '/bet-management',
       children: [
         {
-          path: '/game-record?gameType=LIVE',
+          path: '/game-record/live',
           title: t('menu.Bet History LIVE'),
           label: 'Bet History LIVE',
           active: false,
@@ -230,7 +230,7 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
-          path: '/game-record?gameType=SLOT',
+          path: '/game-record/slot',
           title: t('menu.Bet History SLOT'),
           label: 'Bet History SLOT',
           active: false,
@@ -238,7 +238,7 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
-          path: '/game-record?gameType=SPORT',
+          path: '/game-record/sport',
           title: t('menu.Bet History SPORT'),
           label: 'Bet History SPORT',
           active: false,

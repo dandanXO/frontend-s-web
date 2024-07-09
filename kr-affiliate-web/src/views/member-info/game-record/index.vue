@@ -2,7 +2,6 @@
   <div class="page-container">
     <div class="panel-item">
       <div class="panel-header">{{ $t('fields.memberBetRecords') }}</div>
-
       <div class="inputs-wrap">
         <el-row :gutter="10">
           <el-col :xl="6" :lg="10" :md="12">
@@ -225,7 +224,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
 import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../api/affiliate-bet-record';
@@ -471,14 +470,22 @@ async function getVip(memberId) {
   details.vipName = vip;
 }
 
+const initGameType = () => {
+  if (route.meta?.gameType) {
+    request.gameType = route.meta.gameType.toUpperCase();
+  }
+}
+
+watch(() => route.meta?.gameType, () => {
+  initGameType();
+})
+
 onMounted(() => {
   if (route.query.user) {
     request.loginName = route.query.user
   }
 
-  if (route.query.gameType) {
-    request.gameType = route.query.gameType
-  }
+  initGameType();
   loadPlatform();
   loadBetRecords();
   populateGameType();
