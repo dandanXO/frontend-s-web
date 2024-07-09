@@ -566,13 +566,14 @@ export default defineComponent({
           background-image: url(../assets/images/promo/promo-item-bg.png);
           background-size: 100% 100%;
           background-repeat: no-repeat;
-          padding: 32px 24px 16px;
+          // padding: 32px 24px 16px;
           position: relative;
           border-radius: 12px;
 
           .promo-label {
             height: 24px;
             display: flex;
+            display: none;
             align-items: center;
             position: absolute;
             top: 0;
@@ -637,13 +638,14 @@ export default defineComponent({
             font-size: 1rem;
             max-width: 160px;
             font-family: "Roboto";
-            display: -webkit-box;
+            // display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             height: 3.3rem;
-            display: flex;
+            // display: flex;
+            display: none;
             align-items: center;
 
             @media (min-width: 500px) {
@@ -672,21 +674,22 @@ export default defineComponent({
             border-radius: 8px;
             font-size: 0.75rem;
             margin-top: 6px;
+            display: none;
           }
 
           .promo-item-side-img {
-            position: absolute;
-            right: 0px;
-            top: 50%;
-            transform: translateY(-50%);
+            // position: absolute;
+            // right: 0px;
+            // top: 50%;
+            // transform: translateY(-50%);
             // height: 70%;
 
             img {
               display: block;
-              height: 100%;
-              max-height: 112px;
-              width: auto;
-              margin-left: auto;
+              // height: 100%;
+              max-height: 140px;
+              // width: auto;
+              // margin-left: auto;
 
               @media (min-width: 500px) {
                 max-height: 130px;

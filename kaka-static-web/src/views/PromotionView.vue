@@ -650,10 +650,10 @@ export default defineComponent({
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
-            display: flex;
+            // display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 50px;
+            // padding: 0 50px;
             // border-radius: 10px 10px 0 0;
             position: relative;
 
@@ -661,7 +661,8 @@ export default defineComponent({
               position: absolute;
               left: 0;
               top: 0;
-              display: flex;
+              // display: flex;
+              display:none;
               align-items: center;
               height: 42px;
               .label-type {
@@ -733,6 +734,7 @@ export default defineComponent({
               }
             }
             .promo-type {
+              display: none;
               position: absolute;
               left: 0;
               top: 0;
@@ -754,7 +756,8 @@ export default defineComponent({
               font-family: "Roboto";
               margin: 20px 0;
               padding: 50px 0 10px 0;
-              display: flex;
+              // display: flex;
+              display: none;
               gap: 5px;
               flex-direction: column;
               justify-content: flex-start;
