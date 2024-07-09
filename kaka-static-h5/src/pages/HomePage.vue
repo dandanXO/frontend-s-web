@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper">
+  <div class="hot-matches-wrapper" v-if="hotMatches.length > 1">
     <div class="euro-countdown">
       <div class="euro-countdown-fly-01">
         <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
@@ -173,7 +173,7 @@
     <!--      </div>-->
     <!--    </div>-->
 
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" v-if="hotMatches.length > 1">
       <swiper
         :slides-per-view="1"
         :modules="modules"
@@ -690,17 +690,23 @@
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@KAKA.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a href="mailto:kakagame1688@gmail.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
       <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
       <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+      <a href="https://t.me/trangchukakagame1" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <a href="https://t.me/trangchukakagame2" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>
       <a href="https://www.facebook.com/KAKAvnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
-      </a>
+      </a> -->
     </div>
   </div>
 
@@ -2973,7 +2979,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
-          color: $font-4;
+          color: #000000;
         }
 
         .platform-subtitle {

@@ -37,7 +37,7 @@
 <!--      </div>-->
 <!--    </div>-->
 
-    <div class="hot-matches-title-wrapper">
+    <div class="hot-matches-title-wrapper" v-if="hotMatches.length > 1">
       <div class="hot-matches-title">
         <div>
           <img src="../../assets/images/home/icon-hot-matches.png" />
@@ -50,7 +50,7 @@
       <!--        </router-link>-->
       <!--      </div>-->
     </div>
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" v-if="hotMatches.length > 1">
       <swiper
         :slides-per-view="hotMatches.length > 2 ? '3' : hotMatches.length"
         :modules="modules"
