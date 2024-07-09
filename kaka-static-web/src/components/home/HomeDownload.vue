@@ -2,34 +2,32 @@
   <div class="download-section">
     <HomeTitle :title="t('home.appDownload')"></HomeTitle>
     <div class="download-container">
-      <div class="left-container"
-           data-aos="fade-left">
-        <img src="../../assets/home/download/download-bg.png" width="100%" />
+      <div class="left-container" data-aos="fade-left">
+        <img src="../../assets/home/download/download-bg-1.png" width="100%" />
       </div>
 
-      <div class="right-container"
-           data-aos="fade-right">
+      <div class="right-container" data-aos="fade-right">
         <HomeContentTitle :title="t('home.downloadTheApp')"></HomeContentTitle>
 
         <div class="tab-wrapper">
           <div class="dl-tab">
-            <div class="tab-title"><img src="../../assets/logo.svg"></div>
+            <div class="tab-title"><img src="../../assets/logo.svg" /></div>
             <div class="tab-desc">
-              {{ $t('home.futureGaming') }}
+              {{ $t("home.futureGaming") }}
             </div>
             <div class="download-desc">
-              {{ $t('home.scanToDownload') }}
+              {{ $t("home.scanToDownload") }}
             </div>
             <div class="download">
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
-                <img src="../../assets/home/download/ios.png" >
+                <img src="../../assets/home/download/ios.png" />
               </div>
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
                 <!-- <div class="link-desc">手机免费下载地址</div>
                 <div class="link"><a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a></div> -->
-                <img src="../../assets/home/download/android.png" >
+                <img src="../../assets/home/download/android.png" />
               </div>
             </div>
           </div>
@@ -164,7 +162,7 @@ onMounted(() => {});
           }
 
           .tab-desc {
-            color: #A4AABB;
+            color: #a4aabb;
             font-size: 1.25rem;
             font-weight: 400;
             line-height: 1.875rem;
@@ -228,14 +226,13 @@ onMounted(() => {});
               }
 
               .link {
-                color:  #FD3C31;
+                color: #fd3c31;
                 font-family: PingFang SC;
                 font-size: 0.75rem;
                 text-align: center;
-                margin:0 auto;
+                margin: 0 auto;
                 font-weight: 400;
                 line-height: 116.5%; /* 1.165rem */
-
               }
             }
 
@@ -257,9 +254,9 @@ onMounted(() => {});
               justify-content: center;
               border-radius: 3.0625rem;
               background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-              box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
+              box-shadow: 0px 2px 4.58px 0px #ffa09a inset, 0px -1px 3.664px 0px #ffa09a inset;
               padding: 0.25rem 0;
-              color:  #FD3C31;
+              color: #fd3c31;
               font-size: 0.875rem;
               font-weight: 400;
               line-height: normal;
