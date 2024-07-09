@@ -34,7 +34,7 @@
           <p>自注册日起，限时第 7 日 23:59:59 前领取完毕</p>
         </div>
         <div class="steps">
-          <div class="step" :class="{ incomplete: bankCardBindState === 'NO' }">
+          <div class="step" :class="{ incomplete: telephoneBindState === 'NO' }">
             <div class="step-number">1</div>
             <div class="step-content">
               绑定手机号
@@ -70,7 +70,7 @@
               </span>
             </div>
           </div>
-          <div class="step" :class="{ incomplete: bankCardBindState === 'NO' }">
+          <div class="step" :class="{ incomplete: usdtAddrBindState === 'NO' }">
             <div class="step-number">3</div>
             <div class="step-content">
               绑定 USDT 地址
@@ -255,21 +255,41 @@ const handleClickStatusButton = (status, promocode) => {
 const getBonus = async (promocode) => {
   try {
     const apiRes = await putNewUserSetupBonusClaim(promocode);
-    console.log(apiRes);
+
+    if (apiRes.code === 0) {
+      if (promocode === "new-user-setup-bonus-first-withdrawal") {
+        firstWithdrawalState.value = "CLAIMED";
+        progress.value = 1;
+      } else if (promocode === "new-user-setup-bonus-telephone") {
+        telephoneBindState.value = "CLAIMED";
+      } else if (promocode === "new-user-setup-bonus-bankcard") {
+        bankCardBindState.value = "CLAIMED";
+      } else if (promocode === "new-user-setup-bonus-usdt-addr") {
+        usdtAddrBindState.value = "CLAIMED";
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getData = async () => {
+  try {
+    const apiRes = await getNewUserSetupBonusInit();
+
+    bankCardBindState.value = apiRes.data.bankCardBindState;
+    firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
+    telephoneBindState.value = apiRes.data.telephoneBindState;
+    usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
+
+    progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
     console.error(err);
   }
 };
 
 onMounted(async () => {
-  const apiRes = await getNewUserSetupBonusInit();
-
-  bankCardBindState.value = apiRes.data.bankCardBindState;
-  firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
-  telephoneBindState.value = apiRes.data.telephoneBindState;
-  usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
-
-  progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
+  await getData();
 });
 </script>
 
