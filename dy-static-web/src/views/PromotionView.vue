@@ -32,7 +32,13 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-info">
                 <span class="time">{{ JSON.parse(promo.param).date }}</span>
-                <span class="viewdetail" v-html="JSON.parse(promo.param).title"></span>
+                <template v-if="JSON.parse(promo.param).title">
+                  <span class="viewdetail" v-html="JSON.parse(promo.param).title"></span>
+                </template>
+                <template v-else>
+                  <span class="viewdetail" v-html="promo.title"></span>
+                </template>
+
                 <span class="sub-viewdetail">{{ JSON.parse(promo.param).sub }}</span>
               </div>
               <div class="promo-img-wrapper">
