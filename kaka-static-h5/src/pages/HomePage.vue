@@ -2980,6 +2980,7 @@ export default defineComponent({
           margin-top: 10%;
           text-align: left;
           color: $font-4;
+          display: none;
         }
 
         .platform-subtitle {
