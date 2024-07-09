@@ -21,6 +21,8 @@ export const formatter = {
                         <div>${formatMoney(binding.value.data, 0)}</div>
                         <div class="won-icon">₩</div>
                       </div>`;
+    } else if (binding.value.type === "p&l") {
+      el.innerHTML = `<div class="${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
     } else if (binding.value.type === "loginName") {
       el.innerHTML = `<div class="vip-name-wrapper">
                         ${binding.value.data.vip ? `<div class="vip-badge">${getVipLevel(binding.value.data.vip)}</div>` : ''}
