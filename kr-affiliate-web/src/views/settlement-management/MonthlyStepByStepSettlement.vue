@@ -320,6 +320,19 @@ const totals = page.records.reduce((acc, curr) => {
 
 <style lang="scss" scoped>
 .custom-table tr {
+
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(4),
+    td:nth-child(4) {
+        border-right: 2px solid #cfd8dc;
+    }
+
+    &:last-child {
+        border-top-style: double;
+        border-color: #cfd8dc;
+    }
+
     td:nth-child(2) {
         background-color: #f4fff8;
     }

@@ -6,7 +6,7 @@
                     <el-row :gutter="20">
                         <el-col :xl="8" :lg="8" :md="6" :sm="6">
                             <el-form-item :label="t('fields.vendorName') + ' :'">
-                                <el-input v-model="request.vendorName" style="width: 350px;" maxlength="11" />
+                                <el-input v-model="request.vendorName" maxlength="11" />
                             </el-form-item>
                         </el-col>
                         <el-col :xl="8" :lg="8" :md="10" :sm="8">
@@ -61,14 +61,12 @@
                             <td :data-label="t('fields.fifthCol')">
                                 {{ item.fifthCol }}
                             </td>
-                            <td class="textGreen" :data-label="t('fields.sixthCol')">
-                                {{ formatMoney(item.sixthCol) }}
+                            <td :data-label="t('fields.sixthCol')" v-formatter="{ data: item.sixthCol, type: 'p&l' }">
                             </td>
                             <td :data-label="t('fields.seventhCol')">
                                 {{ formatMoney(item.seventhCol) }}
                             </td>
-                            <td class="textRed" :data-label="t('fields.eightCol')">
-                                {{ formatMoney(item.eightCol) }}
+                            <td :data-label="t('fields.eightCol')" v-formatter="{ data: item.eightCol, type: 'p&l' }">
                             </td>
                         </tr>
                     </tbody>
@@ -211,16 +209,58 @@ const shortcuts = [
 
 const page = reactive({
     pages: 0,
-    records: [{
-        firstCol: 'Asian Casino',
-        secondCol: 157,
-        thirdCol: 749000,
-        fourthCol: 637350,
-        fifthCol: '85.09%',
-        sixthCol: 111650,
-        seventhCol: -510500,
-        eightCol: -398850
-    }],
+    records: [
+        {
+            firstCol: 'Asian Casino',
+            secondCol: 157,
+            thirdCol: 749000,
+            fourthCol: 637350,
+            fifthCol: '85.09%',
+            sixthCol: 111650,
+            seventhCol: -510500,
+            eightCol: -398850
+        },
+        {
+            firstCol: 'Asian Casino',
+            secondCol: 157,
+            thirdCol: 749000,
+            fourthCol: 637350,
+            fifthCol: '85.09%',
+            sixthCol: 111650,
+            seventhCol: -510500,
+            eightCol: -398850
+        },
+        {
+            firstCol: 'Asian Casino',
+            secondCol: 157,
+            thirdCol: 749000,
+            fourthCol: 637350,
+            fifthCol: '85.09%',
+            sixthCol: 111650,
+            seventhCol: -510500,
+            eightCol: -398850
+        },
+        {
+            firstCol: 'Asian Casino',
+            secondCol: 157,
+            thirdCol: 749000,
+            fourthCol: 637350,
+            fifthCol: '85.09%',
+            sixthCol: 111650,
+            seventhCol: -510500,
+            eightCol: -398850
+        },
+        {
+            firstCol: 'Asian Casino',
+            secondCol: 157,
+            thirdCol: 749000,
+            fourthCol: 637350,
+            fifthCol: '85.09%',
+            sixthCol: 111650,
+            seventhCol: -510500,
+            eightCol: -398850
+        }
+    ],
     loading: false,
 });
 </script>
