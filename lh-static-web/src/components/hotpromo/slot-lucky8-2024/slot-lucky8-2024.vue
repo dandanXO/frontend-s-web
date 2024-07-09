@@ -47,7 +47,7 @@
           <div class="little-title">
             <div class="left">活动场馆</div>
             <div class="right">
-              PG电子、PT电子
+              PG电子、PT电子、XIN电子
             </div>
           </div>
         <div class="little-title">
