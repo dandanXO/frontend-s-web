@@ -620,11 +620,11 @@ export default {
     affiliate_01_para_07:
       "Affiliate manipulation (faking downline account, interfere downline’s betting behavior, multiple device login...) intercepted by our system or specialist will be punished.",
     affiliate_01_para_08:
-      "TF.com reserves the right to change or correct the commission percentage we deem appropriate.",
+      "Kaka.game reserves the right to change or correct the commission percentage we deem appropriate.",
     affiliate_01_para_09:
-      "TF.com reserves the right to change or modify the above terms or add any additional terms as necessary.",
+      "Kaka.game reserves the right to change or modify the above terms or add any additional terms as necessary.",
     affiliate_01_para_10:
-      "TF.com reserves the right to cancel the affiliate status at any time without prior notice in the event that affiliate accounts do not meet the requirements of TF.com given within a certain time and have acts of cheating and violation.",
+      "Kaka.game reserves the right to cancel the affiliate status at any time without prior notice in the event that affiliate accounts do not meet the requirements of Kaka.game given within a certain time and have acts of cheating and violation.",
     affiliate_02_head_title: "COMMISSION PLAN TABLE",
     affiliate_02_note:
       "Note: Profit = total wins and losses of offline members in all venues minus all discounts applied by members",
@@ -677,9 +677,9 @@ export default {
     affiliate_04_para_03:
       "Complaint and dispute about commission must be submit to Affiliate cares before 10th of each month, otherwise paid commission cannot be changed.",
     affiliate_04_para_04:
-      "TF.com reserves the right to change or correct the commission percentage we deem appropriate.",
+      "Kaka.game reserves the right to change or correct the commission percentage we deem appropriate.",
     affiliate_04_para_05:
-      "TF.com reserves the right to change or modify the above terms or add any additional terms as necessary.",
+      "Kaka.game reserves the right to change or modify the above terms or add any additional terms as necessary.",
     affiliate_apply_agency: "Apply for agency now",
     affiliate_online_cs: "24-hour online customer service",
     affiliate_jointemail: "Joint venture department email",
