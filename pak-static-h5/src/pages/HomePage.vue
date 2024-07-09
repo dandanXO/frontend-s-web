@@ -3571,6 +3571,9 @@ watch(
 
     .marquee-container {
       width: calc(100% - 28px);
+      :deep(.marquee-text-content) {
+        width: max-content;
+      }
     }
 
     span {
