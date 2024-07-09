@@ -330,18 +330,18 @@
         </div>
         <div class="title">
           已累计充值：
-          <span style="color: rgba(0, 136, 215, 1)">0</span>
+          <span style="color: rgba(0, 136, 215, 1)">{{ depositAmount }}</span>
           元
         </div>
       </div>
       <div class="progress-bar">
-        <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
+        <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>18 元獎金</div>
+        <div>{{ matchRewardItem1?.earn }} 元獎金</div>
         <div>
-          距 28 元奖金，还需充值
-          <span style="color: rgba(0, 136, 215, 1)">2271</span>
+          距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
+          <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
           元
         </div>
       </div>
@@ -370,18 +370,18 @@
         </div>
         <div class="title">
           已累计充值：
-          <span style="color: rgba(0, 136, 215, 1)">0</span>
+          <span style="color: rgba(0, 136, 215, 1)">{{ depositAmount }}</span>
           元
         </div>
       </div>
       <div class="progress-bar">
-        <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
+        <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>18 元獎金</div>
+        <div>{{ matchRewardItem2?.earn }} 元獎金</div>
         <div>
-          距 28 元奖金，还需充值
-          <span style="color: rgba(0, 136, 215, 1)">2271</span>
+          距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
+          <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
           元
         </div>
       </div>
@@ -403,27 +403,78 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
+
+const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
+const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
+
+const earnData = [
+  { amount: 1000, earn: 5 },
+  { amount: 1988, earn: 8 },
+  { amount: 3088, earn: 18 },
+  { amount: 5088, earn: 28 },
+  { amount: 8888, earn: 38 },
+  { amount: 28888, earn: 58 },
+  { amount: 188, earn: 8 },
+  { amount: 888, earn: 18 },
+  { amount: 3588, earn: 28 },
+  { amount: 6888, earn: 88 },
+  { amount: 35888, earn: 238 },
+  { amount: 88888, earn: 588 }
+];
 
 const router = useRouter();
 const selectedTab = ref("sports");
 
+const depositAmount = ref(0);
+const updatedApiRes = ref([]);
+
+const rewards1 = computed(() => {
+  return updatedApiRes.value.filter((item) => targetRuleAmount1.includes(item.ruleAmount));
+});
+const rewards2 = computed(() => {
+  return updatedApiRes.value.filter((item) => targetRuleAmount2.includes(item.ruleAmount));
+});
+const matchRewardItem1 = computed(() => {
+  return rewards1.value.find((item) => item.ruleAmount >= depositAmount.value);
+});
+const matchRewardItem2 = computed(() => {
+  return rewards2.value.find((item) => item.ruleAmount >= depositAmount.value);
+});
+const progressPercentage1 = computed(() => {
+  if (matchRewardItem1.value) {
+    return (depositAmount.value / matchRewardItem1.value.ruleAmount) * 100;
+  }
+  return 100;
+});
+const progressPercentage2 = computed(() => {
+  if (matchRewardItem2.value) {
+    return (depositAmount.value / matchRewardItem2.value.ruleAmount) * 100;
+  }
+  return 100;
+});
+
 function selectTab(tab) {
-  console.log("123");
   selectedTab.value = tab;
 }
 
-const progressPercentage = ref(30);
-const rewards1 = ref([]);
-
-const rewards2 = ref([]);
-
 const handleRecieve = async (reward) => {
   try {
-    const apiRes = await putNewUserAccumulateDepositClaim(reward.amount);
-    console.log(apiRes);
+    const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
+
+    if (apiRes.code === 0) {
+      updatedApiRes.value = updatedApiRes.value.map((item) => {
+        if (item.ruleAmount === reward.ruleAmount) {
+          return {
+            ...item,
+            state: "CLAIMED"
+          };
+        }
+        return item;
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -433,57 +484,31 @@ const handleRedirect = () => {
   router.push({ path: "/home" });
 };
 
-onMounted(async () => {
-  const apiRes1 =await getNewUserAccumulateDepositInit();
-  console.log(apiRes1);
-  const apiRes = [
-    { ruleAmount: 188, state: "CLAIMED" },
-    { ruleAmount: 888, state: "CLAIMED" },
-    { ruleAmount: 1000, state: "CLAIMED" },
-    { ruleAmount: 1988, state: "YES" },
-    { ruleAmount: 3088, state: "NO" },
-    { ruleAmount: 3588, state: "NO" },
-    { ruleAmount: 5088, state: "NO" },
-    { ruleAmount: 6888, state: "NO" },
-    { ruleAmount: 8888, state: "NO" },
-    { ruleAmount: 28888, state: "NO" },
-    { ruleAmount: 35888, state: "NO" },
-    { ruleAmount: 88888, state: "NO" }
-  ];
-  const earnData = [
-    { amount: 1000, earn: 5 },
-    { amount: 1988, earn: 8 },
-    { amount: 3088, earn: 18 },
-    { amount: 5088, earn: 28 },
-    { amount: 8888, earn: 38 },
-    { amount: 28888, earn: 58 },
-    { amount: 188, earn: 5 },
-    { amount: 888, earn: 8 },
-    { amount: 3588, earn: 18 },
-    { amount: 6888, earn: 28 },
-    { amount: 35888, earn: 38 },
-    { amount: 88888, earn: 58 }
-  ];
-  const updatedApiRes = apiRes.map((item) => {
-    const matchingItem = earnData.find((newItem) => newItem.amount === item.ruleAmount);
-    if (matchingItem) {
-      return {
-        ...item,
-        earn: matchingItem.earn
-      };
-    } else {
-      return item;
-    }
-  });
+const getData = async () => {
+  try {
+    const apiRes = await getNewUserAccumulateDepositInit();
+    depositAmount.value = apiRes.data.depositAmount || 0;
 
-  const targetRuleAmounts = [1000, 1988, 3088, 5088, 8888, 28888];
-  updatedApiRes.forEach((item) => {
-    if (targetRuleAmounts.includes(item.ruleAmount)) {
-      rewards1.value.push(item);
-    } else {
-      rewards2.value.push(item);
-    }
-  });
+    const parseApiRes = JSON.parse(apiRes.data.state);
+
+    updatedApiRes.value = parseApiRes.map((item) => {
+      const matchingItem = earnData.find((newItem) => newItem.amount === item.ruleAmount);
+      if (matchingItem) {
+        return {
+          ...item,
+          earn: matchingItem.earn
+        };
+      } else {
+        return item;
+      }
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+onMounted(async () => {
+  await getData();
 });
 </script>
 
