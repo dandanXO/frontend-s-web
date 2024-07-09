@@ -47,7 +47,7 @@
       </div>
 
       <div class="stats">
-        <div class="stat-label">{{ t('Affiliate Application') }}</div>
+        <div class="stat-label">{{ t('statsHeader.affiliateApplication') }}</div>
         <div class="stat-value grey">{{ records.affiliateApplication }}</div>
       </div>
 
