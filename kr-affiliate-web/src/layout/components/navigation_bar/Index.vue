@@ -274,11 +274,4 @@ export default {
     border-radius: 10px;
   }
 }
-
-.lang-container {
-  .el-input__inner {
-    background: none;
-    border: none;
-  }
-}
 </style>

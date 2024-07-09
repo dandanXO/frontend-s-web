@@ -8,11 +8,9 @@
         <div class="logo-section" />
       </a>
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
+          size="small">
           <el-option key="1" value="en">en</el-option>
-          <el-option key="2" value="zh">zh</el-option>
-          <el-option key="3" value="th">th</el-option>
-          <el-option key="4" value="vi">vi</el-option>
           <el-option key="5" value="kr">kr</el-option>
         </el-select>
       </div>
@@ -50,8 +48,8 @@
           <template v-if="child.path === '/commission-info' ? false : true">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
               <div class="route-content">
-                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''" />
+                <!-- <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" /> -->
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -121,7 +119,8 @@ const setActiveNav = () => {
       const activeIconColor = '#f2c46f'
       const defaultIconColor = '#1e95ba'
       c.isMenuShow = true
-      if (c.path === currentPath) {
+
+      if (c.path === currentPath || c.path.endsWith(currentPath)) {
         c.active = true
         iconEl.style.fill = activeIconColor
       } else {
@@ -216,14 +215,14 @@ const getNavigationData = () => {
       ],
     },
     {
-      title: t('menu.Bet Management'),
+      title: t('menu.BetManagement'),
       label: 'Bet Management',
       display: true,
       path: '/bet-management',
       children: [
         {
           path: '/game-record/live',
-          title: t('menu.Bet History LIVE'),
+          title: t('menu.LiveBetHistory'),
           label: 'Bet History LIVE',
           active: false,
           isMainNav: true,
@@ -231,7 +230,7 @@ const getNavigationData = () => {
         },
         {
           path: '/game-record/slot',
-          title: t('menu.Bet History SLOT'),
+          title: t('menu.SlotBetHistory'),
           label: 'Bet History SLOT',
           active: false,
           isMainNav: true,
@@ -239,7 +238,7 @@ const getNavigationData = () => {
         },
         {
           path: '/game-record/sport',
-          title: t('menu.Bet History SPORT'),
+          title: t('menu.SportBetHistory'),
           label: 'Bet History SPORT',
           active: false,
           isMainNav: true,
@@ -248,14 +247,14 @@ const getNavigationData = () => {
       ],
     },
     {
-      title: t('menu.Settlement Management'),
+      title: t('menu.SettlementManagement'),
       label: 'Settlement Management',
       display: true,
       path: '/settlement-management',
       children: [
         {
           path: '/monthly-step-by-step-settlement',
-          title: t('menu.Monthly Step By Step'),
+          title: t('menu.MonthlyStepByStep'),
           label: 'Monthly Step By Step',
           active: false,
           isMainNav: true,
