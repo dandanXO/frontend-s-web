@@ -61,7 +61,15 @@
             <th scope="col">{{ t('fields.operate') }}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="page.loading || page.records.length === 0">
+          <tr>
+            <td colspan="11">
+              <Loading v-if="page.loading" />
+              <emptyComp v-else-if="page.records.length === 0" />
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else-if="page.records.length > 0">
           <tr v-for="item in page.records" :key="item.id">
             <td :data-label="t('fields.loginName')">
               <div v-formatter="{
@@ -122,9 +130,6 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="page.records.length === 0">
-        <emptyComp />
-      </div>
       <div class="table-footer">
         <span class="table-footer-item">{{ t('fields.totalBet') }}: $ <span
             v-formatter="{ data: page.totalBet, type: 'money' }" /></span>
@@ -231,6 +236,7 @@ import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../ap
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import emptyComp from "@/components/empty"
+import Loading from '@/components/loading/Loading.vue';
 
 const store = useStore();
 const { t } = useI18n();
