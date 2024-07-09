@@ -8,11 +8,9 @@
         <div class="logo-section" />
       </a>
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
+          size="small">
           <el-option key="1" value="en">en</el-option>
-          <el-option key="2" value="zh">zh</el-option>
-          <el-option key="3" value="th">th</el-option>
-          <el-option key="4" value="vi">vi</el-option>
           <el-option key="5" value="kr">kr</el-option>
         </el-select>
       </div>
