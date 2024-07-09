@@ -190,7 +190,7 @@ const getNavigationData = () => {
         },
         {
           path: '/member-tree',
-          title: t('menu.Member Tree'),
+          title: t('menu.MemberTree'),
           label: 'Member Tree',
           active: false,
           isMainNav: true,
@@ -221,7 +221,7 @@ const getNavigationData = () => {
       path: '/bet-management',
       children: [
         {
-          path: '/game-record/live',
+          path: '/live-bet-history',
           title: t('menu.LiveBetHistory'),
           label: 'Bet History LIVE',
           active: false,
@@ -229,7 +229,7 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
-          path: '/game-record/slot',
+          path: '/slot-bet-history',
           title: t('menu.SlotBetHistory'),
           label: 'Bet History SLOT',
           active: false,
@@ -237,7 +237,7 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
-          path: '/game-record/sport',
+          path: '/sport-bet-history',
           title: t('menu.SportBetHistory'),
           label: 'Bet History SPORT',
           active: false,

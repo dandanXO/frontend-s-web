@@ -39,6 +39,7 @@ export default {
     // Downline Info Start
     'Downline Info': '파트너정보',
     Member: '회원관리',
+    MemberTree: '트리뷰',
     Affiliate: '파트너관리',
     AffiliateSummary: '파트너리스트(계총)',
     // Downline Info End
@@ -83,8 +84,6 @@ export default {
     Withdraw: '은행 출금',
     'Rebate Report': '리베이트 보고서',
     message: '사이트 메시지',
-    'Member Management': '회원관리',
-    'Member Tree': '트리뷰',
     'Bet Management': '베팅관리',
     'Bet History': '회원베팅기록',
     inquiry: '문의',
