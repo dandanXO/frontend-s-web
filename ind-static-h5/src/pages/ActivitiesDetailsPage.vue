@@ -1,11 +1,14 @@
 <template>
   <div class="activities-container">
+    <div class="activity-banner">
+      <img src="../assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
+    </div>
     <div class="activities-title"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-content">
       The more consecutive days of deposit requirements you complete, the more extra bonus you will get
     </div>
     <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
-      <img src="../assets/images/promotion/activities/btn-deposit.png" />
+      <img src="../assets/images/promotion/activities/deposit-btn-1.png" />
     </router-link>
     <div class="activities-stats-container">
       <div class="stats-info">
@@ -117,7 +120,7 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .activities-container {
-  padding: 1rem;
+  padding: 0px 1rem 1rem;
 
   .activities-title {
     display: flex;
@@ -308,6 +311,11 @@ onActivated(() => {
     padding: 1rem;
     color: #98a6b4;
     margin-top: 6px;
+  }
+  .activity-banner{
+    img{
+      width: 100%;
+    }
   }
 }
 </style>
