@@ -63,14 +63,13 @@
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
-              <th scope="col">{{ t('fields.date') }}</th>
-              <th scope="col">{{ t('fields.secondCol') }}</th>
-              <th scope="col">{{ t('fields.thirdCol') }}</th>
-              <th scope="col">{{ t('fields.fourthCol') }}</th>
-              <th scope="col">{{ t('fields.fifthCol') }}</th>
-              <th scope="col">{{ t('fields.sixthCol') }}</th>
-              <th scope="col">{{ t('fields.seventhCol') }}</th>
-              <th scope="col">{{ t('fields.eightCol') }}</th>
+              <th scope="col">{{ t('fields.type') }}</th>
+              <th scope="col">{{ t('fields.loginName') }}</th>
+              <th scope="col">{{ t('fields.beforeBalance') }}</th>
+              <th scope="col">{{ t('fields.amount') }}</th>
+              <th scope="col">{{ t('fields.applicationDate') }}</th>
+              <th scope="col">{{ t('fields.processingDate') }}</th>
+              <th scope="col">{{ t('fields.status') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
@@ -84,28 +83,31 @@
           <tbody v-else-if="page.records.length > 0">
             <tr v-for="item in page.records" :key="item.id">
               <td :data-label="t('fields.date')">
-                {{ item.date }}
+                {{ item.type }}
               </td>
               <td class="bgGreen textGreen" :data-label="t('fields.secondCol')">
-                {{ formatMoney(item.secondCol) }}
+                {{ formatMoney(item.memberName) }}
               </td>
               <td class="bgRed textRed" :data-label="t('fields.thirdCol')">
-                {{ formatMoney(item.thirdCol) }}
+                {{ formatMoney(item.memberMoney) }}
               </td>
               <td class="bgYellow textRed" :data-label="t('fields.fourthCol')">
-                {{ formatMoney(item.fourthCol) }}
+                {{
+                  formatMoney(
+                    item.type === 'DEPOSIT'
+                      ? item.todayDepositAmount
+                      : item.todayWithdrawAmount
+                  )
+                }}
               </td>
               <td class="bgYellow textGreen" :data-label="t('fields.fifthCol')">
-                {{ formatMoney(item.fifthCol) }}
+                {{ formatDate(item.applicationDate) }}
               </td>
               <td class="bgYellow" :data-label="t('fields.sixthCol')">
-                {{ formatMoney(item.sixthCol) }}
+                {{ formatDate(item.processingDate) }}
               </td>
               <td class="bgYellow" :data-label="t('fields.seventhCol')">
-                {{ formatMoney(item.seventhCol) }}
-              </td>
-              <td class="bgRed textRed" :data-label="t('fields.eightCol')">
-                {{ formatMoney(item.eightCol) }}
+                {{ item.status }}
               </td>
             </tr>
           </tbody>
@@ -147,6 +149,18 @@ function convertStartDate(date) {
   return moment(date).startOf('day').format('YYYY-MM-DD');
 }
 
+function formatDate(date) {
+  if (date === null || date.length === 0) {
+    return "-"
+  } else {
+    return date[0] + "-" + zeroPad(date[1]) + "-" + zeroPad(date[2]) + " " + zeroPad(date[3]) + ":" + zeroPad(date[4]) + ":" + zeroPad(date[5])
+  }
+}
+
+function zeroPad(num) {
+  return String(num).padStart(2, '0')
+}
+
 async function loadRecords() {
   page.loading = true;
   const requestCopy = { ...request }
@@ -163,7 +177,6 @@ async function loadRecords() {
   page.total = ret.total
   page.loading = false
 }
-
 </script>
 
 <style lang="scss" scoped></style>

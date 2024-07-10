@@ -12,7 +12,34 @@ export const getDepositWithdrawRecord = query => {
 
 export const getMonthlySettlement = query => {
   return https().request(
-    '/affiliate-report//daily-summary',
+    '/affiliate-report/daily-summary',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const getMemberSummary = query => {
+  return https().request(
+    '/affiliate-report/member-summary',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const getPlatformSettlement = query => {
+  return https().request(
+    '/affiliate-report/platform-summary',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const getCommissionRecord = query => {
+  return https().request(
+    '/affiliate-report/rebate-list',
     Method.GET,
     query,
     ContentType.form
