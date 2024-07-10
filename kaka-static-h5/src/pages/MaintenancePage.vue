@@ -30,7 +30,8 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-01.png" /></div>
           <div>
             <!-- <router-link to="/liveChat">24/7 Customer Service</router-link> -->
-            <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=${regDevice}&lang=vn`" target="_blank">
+            <!-- <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=${regDevice}&lang=vn`" target="_blank"> -->
+              <a :href="`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`" target="_blank">
               {{ $t("lang.maintenance_contact_02") }}
             </a>
           </div>

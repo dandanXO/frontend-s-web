@@ -58,7 +58,8 @@
         <q-btn
           @click.stop.prevent="
             openWindow(
-              `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
+              // `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
+              `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
               'Chat Server',
               350,
               650
@@ -230,7 +231,8 @@
               class="two-four-content"
               @click.stop.prevent="
                 openWindow(
-                  `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
+                  // `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
+                  `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
                   'Chat Server',
                   350,
                   650
