@@ -13,6 +13,7 @@
     <SportSafetyPromo v-if="list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="list.redirectUrl === 'nba-game'" />
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" />
+    <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
 
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser' && store.token" />
@@ -135,6 +136,8 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 
+import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -176,7 +179,8 @@ export default defineComponent({
     HongBaoPreEurocupPromo,
     LPLSummer24,
     DragonBoat,
-    EurocupManual
+    EurocupManual,
+    OuZuLianPromo
   },
   props: {
     list: {

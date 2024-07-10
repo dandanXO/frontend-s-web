@@ -21,6 +21,7 @@
       :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" platformType="COPA" />
+    <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
 
     <InsuranceSubmitPromo
       v-if="
@@ -175,6 +176,7 @@ const DepositRebates = defineAsyncComponent(() => import("../components/hotpromo
 const WinLossPromo = defineAsyncComponent(() => import("../components/hotpromo/winloss/WinLoss.vue"));
 const AijiasuPromo = defineAsyncComponent(() => import("../components/hotpromo/aijiasu/AijiasuPromo.vue"));
 const EuroRegen = defineAsyncComponent(() => import("../components/hotpromo/EuroRegen/EuroRegen.vue"));
+const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -221,7 +223,8 @@ export default defineComponent({
     DepositRebates,
     WinLossPromo,
     AijiasuPromo,
-    EuroRegen
+    EuroRegen,
+    OuZuLianPromo
   },
   props: {
     list: {

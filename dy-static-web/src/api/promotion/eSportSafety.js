@@ -17,3 +17,7 @@ export function submitESportInsurance() {
 export function getESportInsuranceRecords(params) {
   return server.EVENT.get(`/game-match/records/${params.gameType}?size=${params.size}&current=${params.current}`);
 }
+
+export function submitUefaForm() {
+  return server.EVENT.post("/game-match/submit/UEFA", {});
+}

@@ -15,6 +15,7 @@
     <EsportSafetyPromo v-if="list.redirectUrl === 'lh1-esport-safety'" />
     <SportSafetyPromo v-if="list.redirectUrl === 'lh1-sport-safety'" />
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" />
+    <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote'" />
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign'" />
     <NbaGamePromo v-if="list.redirectUrl === 'lh1-nba-safety'" />
@@ -151,6 +152,8 @@ import DepositRebates from "../components/hotpromo/depositRebates/depositRebates
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
 import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
+import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -210,7 +213,8 @@ export default defineComponent({
     WinLossPromo,
     MeiZhouBeiPromo,
     Aijiasu,
-    EuroRegen
+    EuroRegen,
+    OuZuLianPromo
   },
   props: {
     list: {
