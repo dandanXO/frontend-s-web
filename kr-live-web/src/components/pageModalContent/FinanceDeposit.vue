@@ -293,8 +293,23 @@ const verifyDepositAmount = ref([
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
-    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다."  //存款金额必须以 10000 为单位
 ]);
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g , "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 async function confirmDeposit() {
   if (btnLoading.value) {

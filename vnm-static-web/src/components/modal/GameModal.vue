@@ -3,6 +3,7 @@
     <TFLoading v-if="logoShow"></TFLoading>
     <template v-if="transferInfo.platform === 'PG'">
       <iframe
+        allow="fullscreen"
         @load="loadGame()"
         v-show="!logoShow"
         v-bind:srcdoc="src"
@@ -14,6 +15,7 @@
     </template>
     <template v-else>
       <iframe
+        allow="fullscreen"
         @load="loadGame()"
         v-show="!logoShow"
         :src="src"
@@ -239,18 +241,21 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
         platformCode === "PT" ||
-        (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc") ||
-        (platformCode === 'GA')
+        platformCode === "WS" ||
+        (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
       ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
           if(res.code===0) {
+            var screenWidth = window.screen.width;
+            var screenHeight = window.screen.height;
+
             window.open(
               res.data,
               "popUpWindow",
-              "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+              `fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,width=${screenWidth},height=${screenHeight}`
             );
           }else{
             ElMessage.error(t('response.' + res.code) || res.message);

@@ -1,12 +1,18 @@
 <template>
-  <nav class="sidebar" :class="isExpanded ? 'expanded' : ''" style="position: relative;">
-    <div class="expansionbtn" @click="toggleExpansion">
-      <Fold style="width: 20px" v-if="isExpanded" />
-      <Expand style="width: 20px" v-if="!isExpanded" />
-    </div>
-
+  <nav class="sidebar expanded" style="position: relative;">
+    <!-- <div class="expansionbtn" @click="toggleExpansion">
+      <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
+    </div> -->
     <div class="navigation">
-      <div class="logo-section">
+      <a :href="krwUrl" target="_blank">
+        <div class="logo-section" />
+      </a>
+      <div class="row-item">
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
+          size="small">
+          <el-option key="1" value="en">en</el-option>
+          <el-option key="5" value="kr">kr</el-option>
+        </el-select>
       </div>
       <div class="row-item">
         <div class="name-and-logout">
@@ -24,28 +30,27 @@
       </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
-          <svg-icon :icon-class="'right'" />
-          <span>유저사이트</span>
+          <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
+            <svg-icon :icon-class="'right'" />
+            <span>유저사이트</span>
+          </a>
         </div>
       </div>
       <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
-        <div v-if="nav.display && isExpanded" class="route-title row-item" @click="checkMenu(nav)">
+        <div v-if="nav.display" class="route-title row-item" @click="checkMenu(nav)">
           {{ nav.title }}
           <ArrowUpBold style="width: 10px" v-if="nav.menuShown" />
           <ArrowDownBold style="width: 10px" v-if="!nav.menuShown" />
         </div>
-        <div v-for="child in nav.children" :key="child.id"
-          :class="`route-container show-menu ${child.active ? 'active' : ''}`">
-          <template v-if="(parseInt(store.state.user.siteId) === 10) ? (child.path === '/commission-info' ? false : true)
-            : (child.path === '/rebate' ? false : true)">
+        <div v-for="child in nav.children" :key="child.id" :class="`route-container ${child.active ? 'active' : ''} ${nav.menuShown ? 'show-menu' : ''
+          }`
+          ">
+          <template v-if="child.path === '/commission-info' ? false : true">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
-              <div class="route-content" :style="!isExpanded && child.icon === 'speech-bubbles'
-                ? 'margin-top: 50px'
-                : ''
-                ">
-                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''" />
-                <span class="route-label" :class="child.active ? 'active' : ''" v-if="isExpanded">
+              <div class="route-content">
+                <!-- <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" /> -->
+                <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
               </div>
@@ -59,45 +64,34 @@
 
 <script setup>
 import { onMounted, ref, watch, reactive } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import {
-  ArrowLeftBold,
-  ArrowRightBold,
-  ArrowUpBold,
-  ArrowDownBold,
-  Expand,
-  Fold
-} from '@element-plus/icons-vue'
-import { UserActionTypes } from "@/store/modules/user/action-types";
+import $ from 'jquery'
+import { ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
+import { UserActionTypes } from '@/store/modules/user/action-types'
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
-import { getAffiliateBalance, getAffiliateCommissionBalance, getAffiliateInfo } from '@/api/affiliate';
-import { useRouter } from 'vue-router';
-import ForgetPasswordModal from "@/components/forgetpassword-modal/Index.vue";
+import {
+  getAffiliateBalance,
+  getAffiliateCommissionBalance,
+  getAffiliateInfo,
+} from '@/api/affiliate'
+import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
-const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
-const navigationData = ref([]);
-const mainNavigationData = [
-  'Dashboard',
-  'Transfer',
-  'Settlement Report',
-  'commissionInfo',
-  'Referral Link',
-  'contactUs',
-  'Daily Detail',
-  'Daily Summary',
-]
-const isExpanded = ref(true)
+const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
+const navigationData = ref([])
+
 const store = useStore()
-let affBalance = 0
-let commBalance = 0
+
+const krwUrl = ref("https://city8.vip");
+
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { setLanguage } = i18nStoreLanguage
 
 const affInfo = reactive({
   affiliateCode: null,
@@ -108,6 +102,10 @@ const affInfo = reactive({
   revenueShare: 0,
   shareRatio: [],
 })
+
+const handleLanguage = () => {
+  setLanguage(languageVal.value)
+}
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
@@ -121,7 +119,8 @@ const setActiveNav = () => {
       const activeIconColor = '#f2c46f'
       const defaultIconColor = '#1e95ba'
       c.isMenuShow = true
-      if (c.path === currentPath) {
+
+      if (c.path === currentPath || c.path.endsWith(currentPath)) {
         c.active = true
         iconEl.style.fill = activeIconColor
       } else {
@@ -133,25 +132,10 @@ const setActiveNav = () => {
 }
 
 const toggleExpansion = () => {
-  isExpanded.value = !isExpanded.value
-  if (!isExpanded.value) {
-    navigationData.value.forEach(item => {
-      item.children.forEach(childItem => {
-        childItem.isMenuShow = false
-        childItem.isMainNav = false
-        mainNavigationData.forEach(matchingItem => {
-          if (matchingItem === childItem.label) {
-            childItem.isMainNav = true
-          }
-        })
-      })
-    })
+  if ($('.navigation').width()) {
+    $('.navigation').animate({ width: 0 })
   } else {
-    navigationData.value.forEach(item => {
-      item.children.forEach(childItem => {
-        childItem.isMainNav = true
-      })
-    })
+    $('.navigation').animate({ width: 200 })
   }
 }
 const checkMenu = nav => {
@@ -161,15 +145,15 @@ const checkMenu = nav => {
   })
 }
 
-const changePassword = async (formObj) => {
-  formObj.affId = store.state.user.id;
-  formObj.siteId = store.state.user.siteId;
-  await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj);
-};
+const changePassword = async formObj => {
+  formObj.affId = store.state.user.id
+  formObj.siteId = store.state.user.siteId
+  await store.dispatch(UserActionTypes.ACTION_UPDATE_LOGIN, formObj)
+}
 
 const logout = async () => {
-  await store.dispatch(UserActionTypes.ACTION_LOGOUT);
-  router.push("/kr/login");
+  await store.dispatch(UserActionTypes.ACTION_LOGOUT)
+  router.push('/kr/login')
 }
 
 const getNavigationData = () => {
@@ -205,6 +189,14 @@ const getNavigationData = () => {
           icon: 'squares',
         },
         {
+          path: '/member-tree',
+          title: t('menu.MemberTree'),
+          label: 'Member Tree',
+          active: false,
+          isMainNav: true,
+          icon: 'branch',
+        },
+        {
           path: '/affiliate',
           title: t('menu.Affiliate'),
           label: 'Affiliate',
@@ -219,11 +211,82 @@ const getNavigationData = () => {
           active: false,
           isMainNav: true,
           icon: 'report',
+        }
+      ],
+    },
+    {
+      title: t('menu.BetManagement'),
+      label: 'Bet Management',
+      display: true,
+      path: '/bet-management',
+      children: [
+        {
+          path: '/live-bet-history',
+          title: t('menu.LiveBetHistory'),
+          label: 'Bet History LIVE',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
         },
         {
-          path: '/game-record',
-          title: t('menu.Bet Record'),
-          label: 'Bet Record',
+          path: '/slot-bet-history',
+          title: t('menu.SlotBetHistory'),
+          label: 'Bet History SLOT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/sport-bet-history',
+          title: t('menu.SportBetHistory'),
+          label: 'Bet History SPORT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+      ],
+    },
+    {
+      title: t('menu.SettlementManagement'),
+      label: 'Settlement Management',
+      display: true,
+      path: '/settlement-management',
+      children: [
+        {
+          path: '/monthly-step-by-step-settlement',
+          title: t('menu.MonthlyStepByStep'),
+          label: 'Monthly Step By Step',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/statistics-by-member',
+          title: t('menu.StatisticsByMember'),
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/settlement-by-casino-slot-vendor',
+          title: t('menu.SettlementByCasinoSlotVendor'),
+          label: 'Settlement By Casino / Slot Vendor',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/commission-history-list',
+          title: t('menu.CommissionHistoryList'),
+          label: 'CommissionHistoryList',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/deposit-withdraw-management',
+          title: t('menu.DepositWithdrawManagement'),
+          label: 'DepositWithdrawManagement',
           active: false,
           isMainNav: true,
           icon: 'clock',
@@ -347,6 +410,22 @@ const getNavigationData = () => {
           icon: 'user',
         },
         {
+          path: '/inquiry',
+          title: t('fields.inquiry'),
+          label: 'inquiry',
+          active: false,
+          isMainNav: true,
+          icon: 'email',
+        },
+        {
+          path: '/message',
+          title: t('fields.message'),
+          label: 'message',
+          active: false,
+          isMainNav: true,
+          icon: 'message',
+        },
+        {
           path: '/announcement',
           title: t('fields.systemAnnouncement'),
           label: 'systemAnnouncement',
@@ -373,19 +452,19 @@ const getNavigationData = () => {
       ],
     },
   ]
-
 }
 onMounted(async () => {
   if (window.innerWidth < 768) {
-    isExpanded.value = false
+    $('.navigation').animate({ width: 0 })
   } else {
-    isExpanded.value = true
+    $('.navigation').animate({ width: 200 })
   }
+
   watch(
     () => route.path,
     async () => {
       setActiveNav()
-      if (isExpanded.value && window.innerWidth < 768) {
+      if (window.innerWidth < 768) {
         toggleExpansion()
       }
     }
@@ -394,16 +473,16 @@ onMounted(async () => {
   getNavigationData()
 
   setActiveNav()
-  if (parseInt(store.state.user.siteId) === 10) {
-    const { data: affBal } = await getAffiliateBalance(store.state.user.id);
-    affBalance = affBal
-    const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
-    commBalance = commBal
-    const { data: aff } = await getAffiliateInfo(store.state.user.id)
-    Object.keys({ ...aff }).forEach(field => {
-      affInfo[field] = aff[field]
-    })
-  }
+
+  const { data: affBal } = await getAffiliateBalance(store.state.user.id)
+  const { data: commBal } = await getAffiliateCommissionBalance(
+    store.state.user.id
+  )
+  console.log({ affBal, commBal })
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
 })
 
 watch(languageVal, newVal => {
@@ -415,12 +494,17 @@ watch(languageVal, newVal => {
 <style scoped lang="scss">
 .expansionbtn {
   position: absolute;
-  right: -30px;
-  top: 2px;
+  right: -35px;
+  top: 30px;
   width: 30px;
   min-height: 30px;
   padding: 5px;
   z-index: 1;
+
+  .hamburger-bars-img {
+    aspect-ratio: 448 / 512;
+    width: 20px;
+  }
 }
 
 .sidebar {
@@ -428,11 +512,14 @@ watch(languageVal, newVal => {
   display: flex;
   flex-direction: column;
   line-height: 1rem;
+  height: 100vh;
 
   .navigation {
     color: #fff;
     font-size: 1rem;
-    display: none;
+    overflow-y: auto;
+    max-height: 100vh;
+    width: 0px;
 
     .logo-section {
       display: flex;
@@ -444,17 +531,16 @@ watch(languageVal, newVal => {
     }
 
     &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #ffffff;
+      background-color: #d5d5d5;
     }
 
     &::-webkit-scrollbar {
-      width: 5px;
+      width: 3px;
       background-color: #ffffff;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #98c0fc;
+      background-color: #999999;
     }
 
     .route-title {
@@ -533,7 +619,7 @@ watch(languageVal, newVal => {
     max-width: 200px;
 
     .navigation {
-      display: block;
+      width: 200px;
     }
 
     .route-wrapper {

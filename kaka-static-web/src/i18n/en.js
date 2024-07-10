@@ -485,10 +485,10 @@ export default {
       "The old agent who settles the commission must have no less than 3 new active members in the current month, and the total number of active members must not be less than five.",
     afftnc7:
       "Affiliate manipulation (faking downline account, interfering with downline’s betting behavior, multiple device login...) intercepted by our system or specialist will be punished.",
-    afftnc8: "TF.com reserves the right to change or correct the commission percentage it deems appropriate.",
-    afftnc9: "TF.com reserves the right to change or modify the above terms or add any additional terms as necessary.",
+    afftnc8: "Kaka.game reserves the right to change or correct the commission percentage it deems appropriate.",
+    afftnc9: "Kaka.game reserves the right to change or modify the above terms or add any additional terms as necessary.",
     afftnc10:
-      "TF.com reserves the right to cancel the affiliate status at any time without prior notice in the event that affiliate accounts do not meet the requirements given within a certain time and have acts of cheating and violation.",
+      "Kaka.game reserves the right to cancel the affiliate status at any time without prior notice in the event that affiliate accounts do not meet the requirements given within a certain time and have acts of cheating and violation.",
     CommissionPlan: "Commission Plan Table",
     deposit1000: "Affiliate A earns a monthly commission profit of 40%",
     deposit130000: "Affiliate B earns a monthly commission profit of 55%",
@@ -519,9 +519,9 @@ export default {
     paymentMethods2: "Commission will be paid in VND.",
     paymentMethods3:
       "Complaint and dispute about commission must be submit to Affiliate cares before 10th of each month, otherwise paid commission cannot be changed",
-    paymentMethods4: "TF.com reserves the right to change or correct the commission percentage we deem appropriate.",
+    paymentMethods4: "Kaka.game reserves the right to change or correct the commission percentage we deem appropriate.",
     paymentMethods5:
-      "TF.com reserves the right to change or modify the above terms or add any additional terms as necessary.",
+      "Kaka.game reserves the right to change or modify the above terms or add any additional terms as necessary.",
     activeUser: "Active user",
     bronze: "Bronze",
     lessThanW: "<10W",
@@ -857,10 +857,10 @@ export default {
     deposit: "Deposit",
     transfer: "Transfer",
     adjustment: "Adjustment",
-    applying: "Applying",
+    applying: "Processing",
     failed: "Failed",
     success: "Success",
-    underReview: "Under review",
+    underReview: "Processing",
     toBePaid: "To be paid",
     normalPayment: "Normal payment",
     automaticPayment: "Automatic Paying",

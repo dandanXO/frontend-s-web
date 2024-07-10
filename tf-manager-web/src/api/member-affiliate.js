@@ -265,3 +265,10 @@ export const updateLevel = (id, level) => {
     ContentType.form
   )
 }
+
+export const getDownlineShareRatio = (id) => {
+  return https().request(
+    `/affiliate/${id}/getLowestShareRatio`,
+    Method.GET
+  )
+}

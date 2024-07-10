@@ -3,35 +3,62 @@ import { formatMoney } from "@/utils/format-money";
 import { useStore } from '@/store'
 
 const store = useStore()
+
+const getVipLevel = (vip) => {
+  return vip.replace('VIP', '');
+}
+
 export const formatter = {
   beforeMount(el, binding) {
     if (binding.value.type === "date") {
       if (binding.value.data) {
-        el.innerHTML = moment(binding.value.data).format(binding.value.formatter);
+        el.innerHTML = moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL');
       } else {
-        el.innerHTML = "";
+        el.innerHTML = "-";
       }
     } else if (binding.value.type === "money") {
-      if (parseInt(store.state.user.siteId) === 10) {
-        el.innerHTML = formatMoney(binding.value.data, 0);
-      } else {
-        el.innerHTML = formatMoney(binding.value.data, 2);
-      }
+      el.innerHTML = `<div class="money-wrapper">
+                        <div>${formatMoney(binding.value.data, 0)} ₩</div>
+                      </div>`;
+    } else if (binding.value.type === "p&l") {
+      el.innerHTML = `<div class="textRight ${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
+    } else if (binding.value.type === "loginName") {
+      el.innerHTML = `<div class="vip-name-wrapper">
+                        ${binding.value.data.vip ? `<div class="vip-badge">${getVipLevel(binding.value.data.vip)}</div>` : ''}
+                        <div class="login-name">${binding.value.data.loginName}</div>
+                      </div>`;
+    } else if (binding.value.type === "gameType") {
+      el.innerHTML = `<div class="colorBoxOrange">
+                        ${binding.value.data}
+                      </div>`;
+    } else if (binding.value.type === "decimal") {
+      el.innerHTML = `<div>${formatMoney(binding.value.data, 2)}</div>`;
     }
   },
   updated(el, binding) {
     if (binding.value.type === "date") {
       if (binding.value.data) {
-        el.innerHTML = moment(binding.value.data).format(binding.value.formatter);
+        el.innerHTML = moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL');
       } else {
         el.innerHTML = "";
       }
     } else if (binding.value.type === "money") {
-      if (parseInt(store.state.user.siteId) === 10) {
-        el.innerHTML = formatMoney(binding.value.data, 0);
-      } else {
-        el.innerHTML = formatMoney(binding.value.data, 2);
-      }
+      el.innerHTML =`<div class="money-wrapper">
+                        <div>${formatMoney(binding.value.data, 0)} ₩</div>
+                      </div>`;
+    } else if (binding.value.type === "p&l") {
+      el.innerHTML = `<div class="textRight ${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
+    } else if (binding.value.type === "loginName") {
+      el.innerHTML = `<div class="vip-name-wrapper">
+                        ${binding.value.data.vip ? `<div class="vip-badge">${getVipLevel(binding.value.data.vip)}</div>` : ''}
+                        <div class="login-name">${binding.value.data.loginName}</div>
+                      </div>`;
+    } else if (binding.value.type === "gameType") {
+      el.innerHTML = `<div class="colorBoxOrange">
+                        ${binding.value.data}
+                      </div>`;
+    } else if (binding.value.type === "decimal") {
+      el.innerHTML = `<div>${formatMoney(binding.value.data, 2)}</div>`;
     }
   }
 };

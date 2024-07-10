@@ -344,11 +344,13 @@ function initPay() {
 
     if (res.code === 0) {
       const d = res.data;
-      d.payments.forEach((element) => {
-        element.promoValue = "";
-        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        payMethods.value.push(element);
-      });
+      if (!payMethods.value.length) {
+        d.payments.forEach((element) => {
+          element.promoValue = "";
+          element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
+          payMethods.value.push(element);
+        });
+      }
       if (payMethods.value.length > 0) {
         activeMethod.value = payMethods.value[0];
       }

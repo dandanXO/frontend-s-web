@@ -979,7 +979,7 @@ onMounted(() => {
 
     span:first-child {
       flex: 1;
-      color: #4669f8;
+      color: #fd574c;
     }
 
     span.info {

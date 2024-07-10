@@ -220,6 +220,10 @@ export default defineComponent({
           prevPage.value = "/";
           // hasPage.value = true;
           pageName.value = "Daily Activity";
+        } else if (route.path === "/activities-details") {
+          prevPage.value = "/promo";
+          hasPage.value = true;
+          pageName.value = "Activities Details";
         } else if (route.path === "/vip") {
           // hasPage.value = true;
           pageName.value = "VIP Privileges";

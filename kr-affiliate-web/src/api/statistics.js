@@ -16,3 +16,7 @@ export const countChild = (id, query) => {
 export const getMemberGameStats = (id, query) => {
   return https().request(`/gameStats/${id}/member`, Method.GET, query, ContentType.form);
 };
+
+export const getKoreaStatsReport = () => {
+  return https().request("/affiliate-statistics", Method.GET);
+};

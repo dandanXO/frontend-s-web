@@ -769,7 +769,7 @@ onMounted(() => {
 <style lang="scss">
 
 .node-wrapper {
-  
+
   background: #ffffff;
     box-shadow: 0px -2px 6px 2px #e6c3c3 inset;
     border-radius: 10px;
@@ -837,6 +837,8 @@ onMounted(() => {
 .deposit-selection {
   &.q-field {
     border-radius: 10px;
+    padding: 5px 10px;
+    background: rgb(255 255 255);
     box-shadow: $shadow-bg;
   }
   &.q-field--float .q-field__label{
@@ -849,8 +851,8 @@ onMounted(() => {
     min-height: 48px;
     height: 48px;
 
-    background: #f7f8fb;
-        box-shadow: 0px -2px 6px 2px #e6c3c3 inset;
+    //background: #f7f8fb;
+        //box-shadow: 0px -2px 6px 2px #e6c3c3 inset;
     .q-field__control-container{
       padding-top: 0px;
     }

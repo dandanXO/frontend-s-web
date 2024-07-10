@@ -9,12 +9,21 @@
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon && !nav.isTest">
-              <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
-                <img v-if="nav.code === 'sports'"
-                     class="hot-label"
-                     :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
+              <div
+                class="header-menu-item"
+                :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
+              >
+                <img
+                  v-if="nav.code === 'sports'"
+                  class="hot-label"
+                  :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
                 />
-                <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
+                <a
+                  v-if="nav.code === 'minigame'"
+                  @click="openMiniGame"
+                  @mouseup="selectedMenu = ''"
+                  @mouseover="showSubMenu(nav)"
+                >
                   <h2 class="nav-title cn">{{ nav.name }}</h2>
                   <h2 class="nav-title">{{ nav.enName }}</h2>
                 </a>
@@ -39,14 +48,8 @@
               </div>
             </template>
           </template>
-          <div
-            class="header-menu-item"
-            @mouseover="selectedMenu = ''"
-            @click="getPlatformListAndGoImSport">
-            <img
-              class="eroup-menu-icon"
-              :src="require(`../../assets/images/home/header-eroup.png`)"
-            />
+          <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
+            <img class="eroup-menu-icon" :src="require(`../../assets/images/home/header-eroup.png`)" />
           </div>
         </div>
 
@@ -133,8 +136,16 @@
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
                 <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
+                <img
+                  v-if="store.profilePhoto && store.profilePhoto.includes('default')"
+                  class="profile-img"
+                  :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)"
+                />
+                <img
+                  v-if="store.profilePhoto && !store.profilePhoto.includes('default')"
+                  class="profile-img"
+                  :src="imageDir + store.profilePhoto + '?v=' + timestamp"
+                />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
@@ -142,25 +153,25 @@
             <template #dropdown>
               <el-dropdown-menu class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div class="profile-info-dropdown-content-item" >
+                  <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('personal')" />
                     <span>个人信息</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div class="profile-info-dropdown-content-item" >
+                  <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('deposit')" />
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
-                  <div class="profile-info-dropdown-content-item" >
+                  <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('transfer')" />
                     <span>快速转账</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
-                  <div class="profile-info-dropdown-content-item" >
+                  <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('promo')" />
                     <span>优惠领取</span>
                   </div>
@@ -445,7 +456,6 @@
 </template>
 
 <script lang="js">
-
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -454,10 +464,7 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
-import {
-  RiRefreshLine,
-  RiChatUploadLine
-} from "vue-remix-icons";
+import { RiRefreshLine } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
@@ -477,9 +484,9 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
-import { uploadImage, saveImage } from '@/api/personal/common'
+import { uploadImage, saveImage } from "@/api/personal/common";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
-import floor from 'lodash/floor';
+import floor from "lodash/floor";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -497,13 +504,12 @@ export default defineComponent({
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
-    RegisterAccount,
-    RiChatUploadLine
+    RegisterAccount
   },
   setup() {
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
-    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
+    const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
@@ -524,20 +530,19 @@ export default defineComponent({
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
 
-
     const loadingBtn = ref(false);
     const store = userStore();
 
     const checkToken = () => {
       if (store.token) {
-        if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
-          return false
+        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+          return false;
         }
-        return true
+        return true;
       } else {
-        return true
+        return true;
       }
-    }
+    };
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
@@ -548,11 +553,19 @@ export default defineComponent({
       { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
-      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true, isTest: false },
+      {
+        code: "Promotion",
+        name: "优惠",
+        enName: "Promotion",
+        path: "/promotion",
+        submenu: false,
+        hasicon: true,
+        isTest: false
+      },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
       { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false }
-    ])
+    ]);
     const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
@@ -562,12 +575,11 @@ export default defineComponent({
     const noticeDialogVisible = ref(false);
     const logoutDialogVisible = ref(false);
     const captchaDialogVisible = ref(false);
-    const profileDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const { height } = useElementSize(el);
-    const isDark = useDark()
+    const isDark = useDark();
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -614,7 +626,7 @@ export default defineComponent({
     };
 
     let validatePassStrength = (r, v) => {
-      var strength = "";
+      // var strength = "";
       var pwd = v;
       var result = 0;
       for (var i = 0, len = pwd.length; i < len; ++i) {
@@ -708,12 +720,6 @@ export default defineComponent({
     const hasAffiliate = ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
     const loginCountdown = ref(0);
-    const uploadedImage = reactive({
-      url: null,
-    })
-    const imageForm = reactive({
-      path: null,
-    })
     const loginRules = {
       loginName: [
         {
@@ -809,7 +815,6 @@ export default defineComponent({
     });
 
     const regRules = {
-
       realName: [
         {
           required: false,
@@ -934,7 +939,6 @@ export default defineComponent({
 
     const passRef = ref([]);
     const forgetPassRules = {
-
       email: [
         {
           required: true,
@@ -952,7 +956,6 @@ export default defineComponent({
           trigger: "blur"
         }
       ]
-
     };
     const passRules = {
       loginName: [
@@ -1010,63 +1013,60 @@ export default defineComponent({
     };
 
     const sendOtp = async () => {
-
       if (captchaForm.type === "REGISTER") {
         const smsDetail = {
           telephone: regForm.telephone,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
         };
-        sendSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              disableSendVerificationButton.value = true;
+        sendSms(smsDetail).then((response) => {
+          if (response.code == 0) {
+            disableSendVerificationButton.value = true;
 
-              regForm.smsCodeId = response.data.codeId;
+            regForm.smsCodeId = response.data.codeId;
 
-              ElMessage({
-                type: "success",
-                message: "发送手机验证码成功"
-              });
+            ElMessage({
+              type: "success",
+              message: "发送手机验证码成功"
+            });
 
-              captchaDialogVisible.value = false;
+            captchaDialogVisible.value = false;
 
-              regCountdown.value = registerSendOtpDisabledTimeout;
+            regCountdown.value = registerSendOtpDisabledTimeout;
 
-              const now = new Date();
+            const now = new Date();
 
-              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
+            now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-              lsStore(registerSendOtpDisabledKey, now.getTime());
-              lsStore(registerTelephoneKey, regForm.telephone);
+            lsStore(registerSendOtpDisabledKey, now.getTime());
+            lsStore(registerTelephoneKey, regForm.telephone);
 
-              countdownTimer("REGISTER");
-            } else {
-              getCode();
-            }
-          });
+            countdownTimer("REGISTER");
+          } else {
+            getCode();
+          }
+        });
       } else if (captchaForm.type === "LOGIN") {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
         };
-        sendSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              loginForm.smsCodeId = response.data.codeId;
-              ElMessage({
-                type: "success",
-                message: "发送手机验证码成功"
-              });
-              captchaDialogVisible.value = false;
-              getCode();
-              loginCountdown.value = 30;
-              countdownTimer("LOGIN");
-            } else {
-              getCode();
-            }
-          });
+        sendSms(smsDetail).then((response) => {
+          if (response.code == 0) {
+            loginForm.smsCodeId = response.data.codeId;
+            ElMessage({
+              type: "success",
+              message: "发送手机验证码成功"
+            });
+            captchaDialogVisible.value = false;
+            getCode();
+            loginCountdown.value = 30;
+            countdownTimer("LOGIN");
+          } else {
+            getCode();
+          }
+        });
       }
     };
 
@@ -1107,26 +1107,25 @@ export default defineComponent({
           const sidParam = store.visitorId;
           (async () => {
             regForm.sid = sidParam;
-            register(regForm)
-              .then((response) => {
-                const regResult = response.code;
-                if (regResult === 0) {
-                  ElMessage({
-                    type: "success",
-                    message: "注册成功"
-                  });
-                  store.autoLogin(response.data);
-                  registerDialogVisible.value = false;
-                  store.regPageVisible = false;
-                  // loginDialogVisible.value = true;
+            register(regForm).then((response) => {
+              const regResult = response.code;
+              if (regResult === 0) {
+                ElMessage({
+                  type: "success",
+                  message: "注册成功"
+                });
+                store.autoLogin(response.data);
+                registerDialogVisible.value = false;
+                store.regPageVisible = false;
+                // loginDialogVisible.value = true;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  // getCode();
-                } else {
-                  getCode();
-                  // message.error(response.message);
-                }
-              });
+                sessionStorage.removeItem("REFERRAL_CODE");
+                // getCode();
+              } else {
+                getCode();
+                // message.error(response.message);
+              }
+            });
           })();
         } else {
           getCode();
@@ -1140,20 +1139,18 @@ export default defineComponent({
     };
 
     const getPlatformListAndGoImSport = () => {
-      selectedMenu.value = ''
+      selectedMenu.value = "";
 
       const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
 
       fetchFunction().then((res) => {
-        const imSport = res.filter(item=> item.code==='IM')
-        openGame(imSport[0].name,imSport[0].code,imSport[0].gameType)
-
+        const imSport = res.filter((item) => item.code === "IM");
+        openGame(imSport[0].name, imSport[0].code, imSport[0].gameType);
       });
     };
 
     onMounted(() => {
-      if (regCountdown.value > 0)
-        countdownTimer("REGISTER");
+      if (regCountdown.value > 0) countdownTimer("REGISTER");
       getAffiliateCode();
       getCode();
       getReferalCode();
@@ -1178,32 +1175,36 @@ export default defineComponent({
 
       // console.log(route);
       // alert(route.name)
-
-
     });
 
-    watch(() => store.loginPageVisible, () => {
-      if (store.loginPageVisible) {
-        loginDialogVisible.value = true;
-        // router.push('/login');
-        return;
-      } else {
-        loginDialogVisible.value = false;
+    watch(
+      () => store.loginPageVisible,
+      () => {
+        if (store.loginPageVisible) {
+          loginDialogVisible.value = true;
+          // router.push('/login');
+          return;
+        } else {
+          loginDialogVisible.value = false;
+        }
+        // Optionally you can set immediate: true config for the watcher to run on init
+        // }, { immediate: true });
       }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
-    watch(() => store.regPageVisible, () => {
-      if (store.regPageVisible) {
-        // registerDialogVisible.value = true
-        router.push("/register");
-        return;
-      } else {
-        registerDialogVisible.value = false;
+    );
+    watch(
+      () => store.regPageVisible,
+      () => {
+        if (store.regPageVisible) {
+          // registerDialogVisible.value = true
+          router.push("/register");
+          return;
+        } else {
+          registerDialogVisible.value = false;
+        }
+        // Optionally you can set immediate: true config for the watcher to run on init
+        // }, { immediate: true });
       }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
+    );
 
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
@@ -1214,7 +1215,6 @@ export default defineComponent({
         regForm.referrer = referCode;
       }
     };
-
 
     const isLoadingBalance = ref(false);
     const refreshBalance = () => {
@@ -1275,11 +1275,12 @@ export default defineComponent({
                 // loginForm.captchaCode = null
                 getCode();
               }
-            }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-            getCode();
-          });
+            })
+            .catch((error) => {
+              // message.error(error.message);
+              console.log(error.message);
+              getCode();
+            });
         });
         loadingBtn.value = false;
       })();
@@ -1289,7 +1290,6 @@ export default defineComponent({
       loadingBtn.value = true;
       const sidParam = store.visitorId;
       (async () => {
-
         mobileLoginRef.value.validate().then(() => {
           store
             .telephoneLogin({
@@ -1310,10 +1310,11 @@ export default defineComponent({
                 loginForm.phoneNumber = null;
                 loginForm.code = null;
               }
-            }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-          });
+            })
+            .catch((error) => {
+              // message.error(error.message);
+              console.log(error.message);
+            });
         });
       })();
       loadingBtn.value = false;
@@ -1335,7 +1336,7 @@ export default defineComponent({
     // }
     const pwdStrength = ref();
     const openMiniGame = () => {
-      openGame("TFGaming", "TFGaming", 0)
+      openGame("TFGaming", "TFGaming", 0);
     };
     function charType(num) {
       if (num >= 48 && num <= 57) {
@@ -1392,17 +1393,23 @@ export default defineComponent({
       // },
     );
     const todayDate = () => {
-      return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
+      return (
+        "GTM+8 " +
+        moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") +
+        moment(new Date()).locale("zh-cn").format("dddd")
+      );
     };
 
     const getUnreadMail = () => {
-      getUnreadTotal().then((response) => {
-        if (response.code === 0) {
-          store.unreadTotal = response.data;
-        }
-      }).catch((error) => {
-        // console.log("error===", error)
-      });
+      getUnreadTotal()
+        .then((response) => {
+          if (response.code === 0) {
+            store.unreadTotal = response.data;
+          }
+        })
+        .catch((error) => {
+          // console.log("error===", error)
+        });
     };
 
     const openLoginDialog = () => {
@@ -1436,16 +1443,16 @@ export default defineComponent({
     };
 
     const loadIcon = (name) => {
-      if(isDark.value) {
+      if (isDark.value) {
         try {
-          return require(`@/assets/images/home/header-dropdown-${name}-icon-dark.png`)
-        }catch(error) {
-          return require(`@/assets/images/home/header-dropdown-${name}-icon.png`)
+          return require(`@/assets/images/home/header-dropdown-${name}-icon-dark.png`);
+        } catch (error) {
+          return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
         }
       } else {
-        return require(`@/assets/images/home/header-dropdown-${name}-icon.png`)
+        return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
       }
-    }
+    };
 
     return {
       floor,
@@ -1658,7 +1665,7 @@ body {
       }
 
       .reload-btn {
-        fill: #468CFF;
+        fill: #468cff;
       }
     }
   }
@@ -1879,18 +1886,18 @@ body {
           margin-left: auto;
           margin-right: auto;
           gap: 9px;
-          padding-left:5px;
+          padding-left: 5px;
           padding-right: 5px;
         }
-        .eroup-menu-icon{
+        .eroup-menu-icon {
           cursor: pointer;
           width: 58px;
           height: 58px;
 
-          &:hover{
+          &:hover {
             filter: brightness(0.9);
           }
-          &:active{
+          &:active {
             transform: translate(0px, 1px);
           }
         }
@@ -1909,7 +1916,7 @@ body {
           &:hover {
             //filter: brightness(0.85);
 
-            .nav-title{
+            .nav-title {
               color: #333;
               font-weight: bold;
             }
@@ -1947,7 +1954,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -1955,7 +1962,9 @@ body {
         .sub-menu {
           transition: $page-trans;
           background: rgba(239, 242, 245, 0.95);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+          box-shadow:
+            0px -8px 8px 0px #c3d4e6 inset,
+            0px 4px 0px 0px #a7c2dd;
           backdrop-filter: blur(24.5px);
           overflow: hidden;
           height: 0px;
@@ -2578,7 +2587,9 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+  box-shadow:
+    0px 2px 4.58px 0px #bbdcff inset,
+    0px -1px 3.664px 0px #a2bff4 inset;
   cursor: pointer;
   transition: 0.3s all;
 
@@ -2588,13 +2599,17 @@ body {
 
   &.btn-color-blue {
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    box-shadow:
+      0px -2px 4.58px 0px #b1d7ff inset,
+      0px -1px 3.664px 0px #5894ff inset;
     color: $color-white;
   }
 
   &.btn-color-white {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+    box-shadow:
+      0px 2px 4.58px 0px #bbdcff inset,
+      0px -1px 3.664px 0px #a2bff4 inset;
     color: $font-1;
   }
 }
@@ -2611,7 +2626,7 @@ body {
   &.active {
     &:after {
       content: "";
-      background: #468CFF;
+      background: #468cff;
       width: 80%;
       height: 5px;
       bottom: -24px;
@@ -2628,7 +2643,7 @@ body {
   }
   .hot-label {
     width: 12px;
-    height:12px;
+    height: 12px;
     position: absolute;
     right: -10px;
     top: -7px;
@@ -2652,15 +2667,14 @@ body {
     }
 
     &.active {
-
-      color: #468CFF;
+      color: #468cff;
     }
   }
 }
 
 .dark {
   .acc-dialog.el-dialog {
-    --el-dialog-bg-color: linear-gradient(180deg, #191B27 0%, #0A0C16 100%);
+    --el-dialog-bg-color: linear-gradient(180deg, #191b27 0%, #0a0c16 100%);
 
     .el-dialog__header {
       .el-dialog__close {
@@ -2689,13 +2703,13 @@ body {
               .nav-title {
                 color: $active-color-dark;
               }
-              &::after{
+              &::after {
                 background: $active-color-dark;
               }
             }
             > a {
               .nav-title {
-                color: #7A91A1;
+                color: #7a91a1;
               }
               &:hover {
                 .nav-title {
@@ -2713,7 +2727,9 @@ body {
 
           .sub-menu {
             background: $background-content-block-dark;
-            box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
+            box-shadow:
+              0px -8px 8px 0px #1f2836 inset,
+              0px 4px 0px 0px #142b41;
           }
 
           &.second-nav {
@@ -2721,7 +2737,8 @@ body {
               > a {
                 color: $font-3-dark;
                 .hover-icon {
-                  filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg) brightness(92%) contrast(82%);
+                  filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg)
+                    brightness(92%) contrast(82%);
                 }
 
                 &:hover {
@@ -2740,17 +2757,17 @@ body {
         .right-contents {
           .header-btn {
             &.btn-color-blue {
-              background: #394A65;
+              background: #394a65;
               box-shadow: none;
             }
-            &.btn-color-white{
+            &.btn-color-white {
               background: $active-color-dark-linear;
               position: relative;
-              box-shadow: 0px 0px 16.4px 0px #00D1FFCC;
+              box-shadow: 0px 0px 16.4px 0px #00d1ffcc;
               color: $color-white;
 
-              &::before{
-                @include gradient-border(linear-gradient(180deg, #2EC0FF 0%, #F6FFFF 50%, #2EC0FF 100%));
+              &::before {
+                @include gradient-border(linear-gradient(180deg, #2ec0ff 0%, #f6ffff 50%, #2ec0ff 100%));
                 border-radius: 2rem;
               }
             }
@@ -2788,7 +2805,6 @@ body {
         }
       }
     }
-
   }
   .profile-info-dropdown-content {
     .profile-info-dropdown-content-item {
@@ -2827,15 +2843,15 @@ body {
 }
 
 .grid-item.selected {
-  position:relative;
+  position: relative;
   color: #ffffff;
   img {
-    border: 3px solid #33BC03;
+    border: 3px solid #33bc03;
   }
   &:after {
     content: "✓";
     position: absolute;
-    background: #33BC03;
+    background: #33bc03;
     font-size: 15px;
     width: 25px;
     height: 25px;
@@ -2849,8 +2865,7 @@ body {
   }
 }
 
-
-.profile-dialog{
+.profile-dialog {
   max-width: 660px;
 }
 
@@ -2866,8 +2881,7 @@ body {
   border-radius: 40px;
 }
 .profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
-
-  background: #7A8EB966;
+  background: #7a8eb966;
   border-radius: 25px;
   top: 8px;
 }

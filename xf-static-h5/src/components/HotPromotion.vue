@@ -1,41 +1,40 @@
 <template>
   <div :class="list.redirectUrl === 'cny-spinwheel' ? '' : 'hot-promo'">
     <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
+      v-if="listParam.type === 'claimpromo' && store.hasToken()"
       :promo-id="list.id"
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser'" />
+    <TigerCardPromo v-if="list.redirectUrl === 'tigercard'" />
+    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
+    <HongBaoYuPromo v-if="list.redirectUrl === 'hongbaoyu'" />
+    <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <PrivilegeInvite
       v-if="
-        !isCommonPromo &&
         store.token &&
         (list.redirectUrl === 'invitefriend')
       "
     />
-    <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
-    <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo' && !isCommonPromo" />
-    <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award' && !isCommonPromo" />
+    <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
+    <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
+    <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
     <HongBaoYu2024Promo
       :promo-code="list.promoCode"
-      v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
+      v-if="list.redirectUrl === 'cny-hongbaoyu'"
     />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao'"
+      v-if="list.redirectUrl === 'xf-eurocup-hongbao'"
     />
 
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'"
+      v-if="listParam.type === 'hongbaoyu'"
     />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' " class="promo-4">
@@ -250,7 +249,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isCommonPromo: null,
       activeKey: "1",
       hotPromoList: [],
       selectedHotPromo: {
@@ -259,6 +257,16 @@ export default defineComponent({
         contents: ""
       }
     };
+  },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param)
+      } catch(e) {
+        console.log(e)
+        return {}
+      }
+    }
   },
   methods: {
     handleSlot() {
@@ -288,25 +296,6 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (
-      this.list.redirectUrl === "tigercard" ||
-      this.list.redirectUrl === "goldenegg" ||
-      this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "cny-hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "fucaiiphone" ||
-      this.list.redirectUrl === "cny-spinwheel" ||
-      this.list.redirectUrl === "xf-return-promo" ||
-      this.list.redirectUrl === "xf-deposit-award" ||
-      this.list.redirectUrl === "xf-eurocup-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao" ||
-      this.list.id === 40
-    ) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
-    }
     const store = userStore();
 
     if (this.list.id == 30) {

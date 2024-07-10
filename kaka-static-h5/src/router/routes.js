@@ -41,11 +41,6 @@ const routes = [
     meta: { requiresAuth: true, isApp: true }
   },
   {
-    path: "/liveChat",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
-  },
-  {
     path: "/maintenance",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "maintenance", component: () => import("pages/MaintenancePage.vue") }]
@@ -367,11 +362,6 @@ const routes = [
     path: "/about",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "about", component: () => import("pages/AboutView.vue") }]
-  },
-  {
-    path: "/landing",
-    name: "landing",
-    component: () => import("pages/LandingPage.vue")
   },
   // Always leave this as last one,
   // but you can also remove it

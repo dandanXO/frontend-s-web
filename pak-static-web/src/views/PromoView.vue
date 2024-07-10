@@ -165,7 +165,7 @@ export default defineComponent({
     const router = useRouter();
     watch(() => route.query, () => {
       if (route.query === null) {
-       isPromoDetail.value = false
+        isPromoDetail.value = false
       } else {
         isPromoDetail.value = route.query.code
         loadAll()
@@ -176,7 +176,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         }
       })
     }
@@ -210,21 +210,21 @@ export default defineComponent({
       loadPromo().then((res) => {
         if(res.code === 0) {
 
-        // if (store.memberType !== 'TEST' ) {
-        //   res.data = res.data.filter((privilege) => {
-        //     return privilege.privilegeStatus === 'OPEN';
-        //   });
-        //   res.data.forEach((privilege) => {
-        //     console.log(privilege.privilegeStatus)
-        //   })
-        // }
+          // if (store.memberType !== 'TEST' ) {
+          //   res.data = res.data.filter((privilege) => {
+          //     return privilege.privilegeStatus === 'OPEN';
+          //   });
+          //   res.data.forEach((privilege) => {
+          //     console.log(privilege.privilegeStatus)
+          //   })
+          // }
 
-        promoState.promoList.push(...res.data);
-        promoState.promoList.forEach(element => {
-          if (element.redirectUrl.toString() === route.query.code) {
-            showPromoDetails(element)
-          }
-        });
+          promoState.promoList.push(...res.data);
+          promoState.promoList.forEach(element => {
+            if (element.redirectUrl.toString() === route.query.code) {
+              showPromoDetails(element)
+            }
+          });
         }
       }).catch((e) => { console.log("error", e); });
       switchPromoType(promoState.active)
@@ -476,7 +476,7 @@ export default defineComponent({
         margin: 0px auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 4px;
         .hot-promo {
           padding: 20px;
           border-radius: 10px;
@@ -484,7 +484,7 @@ export default defineComponent({
         .promo-view-container {
           background-repeat: no-repeat;
           background-position: 95% 90%;
-          padding: 20px;
+          padding: 10px 20px;
           border-radius: 10px;
           overflow: auto;
           &.welcome {

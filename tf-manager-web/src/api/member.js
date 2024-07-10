@@ -209,3 +209,11 @@ export const requestMemberMoneyChangeExport = query => {
 export const unbindBankCard = (cardId) => {
   return https().request(`/member/bankCard/${cardId}?_method=PUT`, Method.POST, ContentType.form);
 };
+
+export const getShareRatio = (memberId) => {
+  return https().request(`/member/${memberId}/getShareRatio`, Method.GET);
+};
+
+export const editShareRatio = (memberId, ratio) => {
+  return https().request(`/member/${memberId}/editShareRatio?_method=PUT`, Method.POST, { memberShareRatio: ratio }, ContentType.form);
+};

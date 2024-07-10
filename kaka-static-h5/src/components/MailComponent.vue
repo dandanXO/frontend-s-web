@@ -170,7 +170,7 @@ export default defineComponent({
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
-      mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
+      mailboxMessageTab.value = mailboxMessageTypeData.value[0].type;
     }
     const $q = useQuasar();
 

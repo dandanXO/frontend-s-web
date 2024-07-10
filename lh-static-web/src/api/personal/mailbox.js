@@ -20,7 +20,7 @@ export function mailInbox(mailQuery) {
   });
 }
 
-export function mailOutbox(mailQuery) {
+export function mailOutbox() {
   return server.REST.get("/session/feedback/replies", {});
 }
 

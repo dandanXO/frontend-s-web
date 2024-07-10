@@ -34,15 +34,15 @@
           <img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png">
           <img v-else-if="props.siteId === '8' || props.siteId === '15'" src="../../assets/images/login/cus-girl-vn.png">
           <img v-else src="../../assets/images/login/cus-girl.png">
-          <div v-if="props.siteId === '15'" class="kaka-cs-24">
-            <img src="../../assets/images/kaka/cs-24-kaka.svg">
-            <p>
-              {{ $t('common.24.line1') }}
-              <br>
-              <br>
-              {{ $t('common.24.line2') }}
-            </p>
-          </div>
+          <!--          <div v-if="props.siteId === '15'" class="kaka-cs-24">-->
+          <!--            <img src="../../assets/images/kaka/cs-24-kaka.svg">-->
+          <!--            <p>-->
+          <!--              {{ $t('common.24.line1') }}-->
+          <!--              <br>-->
+          <!--              <br>-->
+          <!--              {{ $t('common.24.line2') }}-->
+          <!--            </p>-->
+          <!--          </div>-->
         </div>
       </div>
     </div>
@@ -79,6 +79,8 @@ const qqLink = () => {
 const telegramLink = () => {
   if (props.siteId === '7') {
     return '@LH18668'
+  } else if (props.siteId === '15') {
+    return '@dailykakagame'
   } else if (props.siteId === '8') {
     return '@dailitf88'
   } else {
@@ -206,41 +208,6 @@ const initContactList = () => {
   if (props.siteId === '15') {
     contactlist.value = [
       {
-        icon: 'cmail-kaka',
-        type: t('common.email'),
-        link: mailLink(),
-        btns: [{
-          text: t('common.askus'),
-          action: ''
-        }]
-      },
-      {
-        icon: 'cqq-kaka',
-        type: t('common.qq'),
-        link: qqLink(),
-        btns: [{
-          text: t('common.copy'),
-          action: ''
-        },
-        {
-          text: t('common.download'),
-          action: 'https://im.qq.com/index/'
-        }]
-      },
-      {
-        icon: 'cskype-kaka',
-        type: t('common.skype'),
-        link: 'live:.cid.1b8d9a018a52a8f5',
-        btns: [{
-          text: t('common.copy'),
-          action: ''
-        },
-        {
-          text: t('common.download'),
-          action: 'https://www.skype.com/zh-Hans/get-skype/'
-        }]
-      },
-      {
         icon: 'cflygram-kaka',
         type: 'Telegram',
         link: telegramLink(),
@@ -251,19 +218,6 @@ const initContactList = () => {
         {
           text: t('common.download'),
           action: 'https://telegram.org/'
-        }]
-      },
-      {
-        icon: 'ccon-doi-kaka',
-        type: t('common.paopao'),
-        link: 'LH10086',
-        btns: [{
-          text: t('common.copy'),
-          action: ''
-        },
-        {
-          text: t('common.download'),
-          action: 'https://paopaoim.com/index.html'
         }]
       }
     ]

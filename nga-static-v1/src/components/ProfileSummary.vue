@@ -62,7 +62,7 @@
         </div>
 
         <div>
-          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
+          <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
         </div>
         <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
@@ -262,11 +262,18 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=NGA&affiliateCode=8999B3").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=NGA&affiliateCode=E94ED4").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
   });
+};
+
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/deposit?from=" + route.path);
 };
 
 onMounted(() => {
