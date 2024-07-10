@@ -173,7 +173,6 @@
         row-key="id"
         size="small"
         highlight-current-row
-        @selection-change="handleSelectionChange"
         :empty-text="t('fields.noData')"
         style="width: 100%;"
       >
@@ -231,7 +230,7 @@
               </el-table-column>
               <el-table-column :label="t('fields.sequence')" prop="sequence">
                 <template #default="scope">
-                  <el-input-number v-model="scope.row.sequence" :min="1" :max="50" @change="handleChange" size="small" />
+                  <el-input-number v-model="scope.row.sequence" :min="1" :max="50" size="small" />
                 </template>
               </el-table-column>
               <el-table-column align="right">
@@ -505,6 +504,21 @@ async function saveOrder(data) {
 
 async function batchSave(data) {
   console.log(data)
+  var sequenceList = []
+  var isDuplicate = false
+  data.forEach(setting => {
+    if (!isDuplicate && setting.status) {
+      if (sequenceList.includes(setting.sequence)) {
+        isDuplicate = true
+      } else {
+        sequenceList.push(setting.sequence)
+      }
+    }
+  })
+  if (isDuplicate) {
+    ElMessage({ message: t('message.validateWithdrawChannel'), type: 'error' })
+    return
+  }
   await batchupdateWithdrawalOrder(data)
   await loadAutoPaymentType()
   ElMessage({ message: t('message.addSuccess'), type: 'success' })
