@@ -2,7 +2,9 @@
     <q-page-sticky position="bottom-right" :offset="[20, 40]" style="z-index:999999" class="floating">
         <div class="floating-cs-img">
             <q-popup-proxy>
-                <iframe src="https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr" class="cs-iframe" />
+                <q-banner style="background:transparent;padding:0;">
+                    <iframe src="https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr&way=H5" class="cs-iframe" />
+                </q-banner>
             </q-popup-proxy>
         </div>
     </q-page-sticky>
@@ -40,8 +42,8 @@
     border-radius: 12px;
 
     @media (max-width: 600px) {
-        width: 300px;
-        height: 400px;
+        width: 80vw;
+        height: 80vh;
     }
 }
 </style>
