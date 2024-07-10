@@ -22,12 +22,18 @@ export const formatter = {
                         <div class="won-icon">₩</div>
                       </div>`;
     } else if (binding.value.type === "p&l") {
-      el.innerHTML = `<div class="${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
+      el.innerHTML = `<div class="textRight ${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
     } else if (binding.value.type === "loginName") {
       el.innerHTML = `<div class="vip-name-wrapper">
                         ${binding.value.data.vip ? `<div class="vip-badge">${getVipLevel(binding.value.data.vip)}</div>` : ''}
                         <div class="login-name">${binding.value.data.loginName}</div>
                       </div>`;
+    } else if (binding.value.type === "gameType") {
+      el.innerHTML = `<div class="colorBoxOrange">
+                        ${binding.value.data}
+                      </div>`;
+    } else if (binding.value.type === "decimal") {
+      el.innerHTML = `<div>${formatMoney(binding.value.data, 2)}</div>`;
     }
   },
   updated(el, binding) {
@@ -42,6 +48,19 @@ export const formatter = {
                         <div>${formatMoney(binding.value.data, 0)}</div>
                         <div class="won-icon">₩</div>
                       </div>`;
+    } else if (binding.value.type === "p&l") {
+      el.innerHTML = `<div class="textRight ${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
+    } else if (binding.value.type === "loginName") {
+      el.innerHTML = `<div class="vip-name-wrapper">
+                        ${binding.value.data.vip ? `<div class="vip-badge">${getVipLevel(binding.value.data.vip)}</div>` : ''}
+                        <div class="login-name">${binding.value.data.loginName}</div>
+                      </div>`;
+    } else if (binding.value.type === "gameType") {
+      el.innerHTML = `<div class="colorBoxOrange">
+                        ${binding.value.data}
+                      </div>`;
+    } else if (binding.value.type === "decimal") {
+      el.innerHTML = `<div>${formatMoney(binding.value.data, 2)}</div>`;
     }
   }
 };

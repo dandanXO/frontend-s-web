@@ -153,11 +153,35 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'statistics-by-member',
+        component: () => import('../views/settlement-management/StatisticsByMember.vue'),
+        name: 'StatisticsByMember',
+        meta: {
+          title: 'statistics-by-member',
+        },
+      },
+      {
         path: 'settlement-by-casino-slot-vendor',
         component: () => import('../views/settlement-management/SettlementByCasinoSlotVendor.vue'),
         name: 'SettlementByCasinoSlotVendor',
         meta: {
           title: 'settlement-by-casino-slot-vendor',
+        },
+      },
+      {
+        path: 'commission-history-list',
+        component: () => import('../views/settlement-management/CommissionHistoryList.vue'),
+        name: 'CommissionHistoryList',
+        meta: {
+          title: 'commission-history-list',
+        },
+      },
+      {
+        path: 'deposit-withdraw-management',
+        component: () => import('../views/settlement-management/deposit-withdraw/index.vue'),
+        name: 'DepositWithdrawManagement',
+        meta: {
+          title: 'deposit-withdraw-management',
         },
       },
     ],
