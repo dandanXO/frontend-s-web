@@ -668,7 +668,7 @@ async function loadRecord() {
       query.withdrawDate = request.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.siteId = request.siteId;
   const { data: ret } = await getMemberWithdrawRecordAutopay(query)
   page.pages = ret.pages

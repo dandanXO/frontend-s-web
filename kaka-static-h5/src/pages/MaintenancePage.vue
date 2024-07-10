@@ -23,14 +23,15 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-02.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_01") }}
-            <a href="mailto:vnsupport@KAKA.com">vnsupport@KAKA.com</a>
+            <a href="mailto:kakagame1688@gmail.com">kakagame1688@gmail.com</a>
           </div>
         </div>
         <div class="contact-item">
           <div class="contact-img"><img src="../assets/images/home/float-cs-01.png" /></div>
           <div>
             <!-- <router-link to="/liveChat">24/7 Customer Service</router-link> -->
-            <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=${regDevice}&lang=vn`" target="_blank">
+            <!-- <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=${regDevice}&lang=vn`" target="_blank"> -->
+              <a :href="`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`" target="_blank">
               {{ $t("lang.maintenance_contact_02") }}
             </a>
           </div>
@@ -40,6 +41,20 @@
           <div>
             {{ $t("lang.maintenance_contact_03") }}
             <a href="https://t.me/KAKA_CS" target="_blank">@KAKA_CS</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
+          <div>
+            {{ $t("lang.maintenance_contact_03") }}
+            <a href="https://t.me/trangchukakagame1" target="_blank">@trangchukakagame1</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
+          <div>
+            {{ $t("lang.maintenance_contact_03") }}
+            <a href="https://t.me/trangchukakagame2" target="_blank">@trangchukakagame2</a>
           </div>
         </div>
       </div>

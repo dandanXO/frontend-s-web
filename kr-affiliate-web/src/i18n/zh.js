@@ -551,6 +551,7 @@ export default {
     receivedMembers: '玩家账号',
     example: '例如',
     memberUsername: '账号',
+    inquiry: '询问',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -709,6 +710,7 @@ export default {
     validateShareRatioFormat: '佣金比例必须介于 0 至 1 之间',
     depositShouldBetween: '存入金额介于 ',
     requiredPositiveInteger: '金额应为正数',
+    replySuccess: '成功回复',
   },
   menu: {
     undefined: '',
@@ -727,6 +729,9 @@ export default {
     'Affiliate Center': '代理中心',
     Deposit: '额度充值',
     'Bind Bank Cards': '绑定银行卡',
+    'Bet History LIVE' : "真人投注历史",
+    "Bet History SLOT" : "老虎机投注历史",
+    "Bet History SPORT": "体育投注历史",
     'Bank Withdrawal': '银行提款',
     Transfer: '代理代存',
     'Referral Centre': '推广中心',
@@ -745,6 +750,7 @@ export default {
     Withdraw: '银行提款',
     'Rebate Report': '返水报表',
     message: '站内信',
+    inquiry: '询问',
   },
   posterType: {
     OVERALL: '综合推广图',

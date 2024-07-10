@@ -49,20 +49,12 @@
             :value="item.name"
           />
         </el-select>
-        <el-select
-          clearable
+        <el-input
           v-model="request.gameName"
           size="small"
+          style="width: 200px; margin-left: 5px"
           :placeholder="t('fields.gameName')"
-          style="width: 150px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in gameName.list"
-            :key="item"
-            :label="item"
-            :value="item"
-          />
-        </el-select>
+        />
         <el-input
           v-model="request.competitionName"
           size="small"
@@ -184,20 +176,17 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.gameName')" prop="gameName">
-          <el-select
-            v-model="form.gameName"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-          >
-            <el-option
-              v-for="item in dialogGameName.list"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
+        <el-form-item
+          :label="t('fields.gameName')"
+          prop="gameName"
+        >
+          <el-input v-model="form.gameName" style="width: 350px" />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.gameCode')"
+          prop="gameCode"
+        >
+          <el-input v-model="form.gameCode" style="width: 350px" />
         </el-form-item>
         <el-form-item
           :label="t('fields.competitionName')"
@@ -297,6 +286,34 @@
             <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
             <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
+        </el-form-item>
+        <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
+          <el-date-picker
+            v-model="form.displayStartTime"
+            format="DD/MM/YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            size="small"
+            type="datetime"
+            range-separator=":"
+            :placeholder="t('fields.displayStartTime')"
+            style="width: 250px"
+            :editable="false"
+            :clearable="false"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
+          <el-date-picker
+            v-model="form.displayEndTime"
+            format="DD/MM/YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            size="small"
+            type="datetime"
+            range-separator=":"
+            :placeholder="t('fields.displayEndTime')"
+            style="width: 250px"
+            :editable="false"
+            :clearable="false"
+          />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -441,6 +458,8 @@
       <el-table-column prop="teamTwoName" :label="t('fields.teamTwo')" />
       <el-table-column prop="sequence" :label="t('fields.sequence')" />
       <el-table-column prop="status" :label="t('fields.status')" />
+      <el-table-column prop="displayStartTime" :label="t('fields.displayStartTime')" />
+      <el-table-column prop="displayEndTime" :label="t('fields.displayEndTime')" />
       <el-table-column
         :label="t('fields.operate')"
         v-if="
@@ -581,6 +600,7 @@ const formRules = reactive({
   platformId: [required(t('message.validatePlatformRequired'))],
   competitionType: [required(t('message.validateCompetitionTypeRequired'))],
   gameName: [required(t('message.validateGameNameRequired'))],
+  gameCode: [required(t('message.validateGameCodeRequired'))],
   competitionName: [required(t('message.validateCompetitionNameRequired'))],
   competitionTime: [required(t('message.validateCompetitionTimeRequired'))],
   teamOneName: [required(t('message.validateTeamOneRequired'))],
@@ -589,6 +609,8 @@ const formRules = reactive({
   teamTwoLogo: [required(t('message.validateTeamTwoIconRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
   status: [required(t('message.validateStatusRequired'))],
+  displayStartTime: [required(t('message.validateDateRequired'))],
+  displayEndTime: [required(t('message.validateDateRequired'))],
 })
 
 const platforms = reactive({
@@ -672,7 +694,7 @@ async function selectRequestPlatform() {
 }
 
 async function selectFormPlatform() {
-  form.gameName = null
+  // form.gameName = null
   const { data: ret } = await getCompetitionGameList(form.platformId)
   dialogGameName.list = ret
 }
@@ -757,8 +779,8 @@ function showEdit(competition) {
       if (Object.keys(form).find(k => k === key)) {
       }
       form[key] = competition[key]
-      form.siteId = selectedPlatform.siteId
     }
+    form.siteId = selectedPlatform.siteId
     loadPlatformsForForm(form.siteId)
   })
 }

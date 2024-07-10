@@ -288,10 +288,10 @@ export default {
         withdraw: {
           title: "نکلوانا",
           status: {
-            applying: "درخواست دی گئی",
+            applying: "پروسیسنگ",
             failed: "ناکام",
             success: "کامیاب",
-            underReview: "جائزہ لینے پر ہے",
+            underReview: "پروسیسنگ",
             toBePaid: "ادائیگی کے لیے",
             paying: "ادائیگی جاری",
             automaticPayment: "خود بخود ادائیگی",

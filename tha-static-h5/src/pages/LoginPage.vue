@@ -142,7 +142,7 @@ export default defineComponent({
     const clientSecret = isH5() ? "6625f545954c947d95864a7c9cc144d9" : "4e90ef3551da974394de3486261f0b7f";
     const redirectUrl = isH5()
       ? encodeURI(`https://p8s1-files.camestible.com/login`)
-      : encodeURI(`https://jolly88.com/login`);
+      : encodeURI(`https://jolly8858.com/login`);
     // const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
     const nonce = `jolly88`;
     const stateId = uuid.v1();

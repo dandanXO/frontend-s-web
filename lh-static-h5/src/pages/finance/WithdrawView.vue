@@ -151,12 +151,12 @@
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
           <!--          </div>-->
-          <div v-else-if="isEWALLET">
+          <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
             <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
             <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
-                @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+                @click="openEWalletTutorial"
                 :label="tutorialLabel()"
               />
             </div>
@@ -502,19 +502,9 @@ export default defineComponent({
         return 'JDPAY教程视频'
       }
     }
-    const openEWalletTutorial = (code) => {
-      const urlMap = {
-        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
-        'EBPAY': 'https://www.ebpay.org/',
-        'OKPAY': 'https://me-qr.com/l/okpay',
-        'BLBPAY': 'http://808.com/tutorial.html',
-        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
-      };
-
-      const url = urlMap[code];
-      if (url) {
-        window.open(url);
-      }
+    const openEWalletTutorial = () => {
+      if(!selectedWithdrawalMethod.value.url) return
+      window.open(selectedWithdrawalMethod.value.url);
     };
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',

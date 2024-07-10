@@ -10,7 +10,7 @@
 
   <RollingText />
 
-  <JackpotPrize />
+  <!-- <JackpotPrize /> -->
 
   <GamesList />
 

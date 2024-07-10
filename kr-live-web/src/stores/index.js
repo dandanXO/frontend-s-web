@@ -11,6 +11,7 @@ export const userStore = defineStore("userStore", {
   state: () => {
     return {
       id: 0,
+      memberId: "",
       profilePicture: "",
       displayName: "",
       nickName: "",
@@ -30,7 +31,9 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       appDownloadUrl: "",
       visitorId: "",
-      announcementList: undefined
+      announcementList: undefined,
+      financeRecords: undefined,
+      isOffline: false,
     };
   },
   actions: {
@@ -39,14 +42,6 @@ export const userStore = defineStore("userStore", {
     },
     getAppDownloadUrl() {
       return this.appDownloadUrl;
-    },
-    getUnreadTotal() {
-      api.get("/session/inbox/getUnreadTotal").then((ret) => {
-        const res = ret.data;
-        if (res.code === 0) {
-          this.unreadCount = res.data;
-        }
-      });
     },
     hasToken() {
       return !!SessionStorage.getItem("TOKEN") || !!this.token;
@@ -71,6 +66,7 @@ export const userStore = defineStore("userStore", {
           this.token = ret.data.data;
           this.getMemberInfo();
           this.getBalance();
+          this.getUnreadTotal();
         } else {
           Notify.create({
             color: "negative",
@@ -88,9 +84,9 @@ export const userStore = defineStore("userStore", {
         } else {
           api.get("/announcement").then((res) => {
             const { data: { code, data: { announcements } } } = res;
-            
+
             const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-            
+
             if (code === 0) {
               const announcementsFormattedData = announcements.map((item) => ({
                 ...item,
@@ -98,6 +94,33 @@ export const userStore = defineStore("userStore", {
               }));
               this.announcementList = announcementsFormattedData;
               resolve(this.announcementList);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
+    getFinanceRecords() {
+      return new Promise((resolve, reject) => {
+        if(this.financeRecords === null) {
+          return;
+        } else if(Array.isArray(this.financeRecords)) {
+          return resolve(this.financeRecords);
+        } else {
+          if(this.financeRecords == undefined) {
+            this.financeRecords = null;
+          }
+
+          api.get("/member/withdraw-deposit-record").then((res) => {
+            const { data: { code, data } } = res;
+
+            if (code === 0) {
+              const displayTypes = ['WITHDRAW'];
+              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
+              resolve(this.financeRecords);
             }
           })
           .catch((err) => {
@@ -128,6 +151,7 @@ export const userStore = defineStore("userStore", {
         const ret = res.data;
         if (ret.code === 0) {
           this.id = ret.data.id;
+          this.memberId= ret.data.memberId;
           this.nickName = ret.data.loginName;
           this.name2 = ret.data.name2;
           this.realName = ret.data.realName;
@@ -157,22 +181,30 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
+    getUnreadTotal() {
+      if (this.token && !this.isOffline) {
+        api.get("/session/inbox/getUnreadTotal").then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.unreadCount = res.data;
+          }
+        });
+      }
+    },
     getBalance() {
-      if (this.token) {
-        api
-          .get("/session/balance?v=123", {
-            params: {
-              platform: "MAIN"
-            }
-          })
-          .then((ret) => {
-            const res = ret.data;
-            if (res.code === 0) {
-              this.balance = Math.floor(res.data);
-            } else {
-              this.balance = 0;
-            }
-          });
+      if (this.token && !this.isOffline) {
+        api.get("/session/balance?v=123", {
+          params: {
+            platform: "MAIN"
+          }
+        }).then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.balance = Math.floor(res.data);
+          } else {
+            this.balance = 0;
+          }
+        });
       }
     },
     getDeviceType() {

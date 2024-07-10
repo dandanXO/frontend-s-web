@@ -12,13 +12,9 @@
             <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
               <img
                 :src="
-                  require('../assets/' +
-                    platformType +
-                    '/' +
-                    platformType +
-                    '-item-' +
-                    item.code.toLowerCase() +
-                    '.png')
+                  require(
+                    '../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png'
+                  )
                 "
               />
             </div>
@@ -54,13 +50,15 @@
                     <span>
                       <img
                         :src="
-                          require('../assets/' +
-                            platformType +
-                            '/' +
-                            platformType +
-                            '-logo-' +
-                            plat.code.toLowerCase() +
-                            '.png')
+                          require(
+                            '../assets/' +
+                              platformType +
+                              '/' +
+                              platformType +
+                              '-logo-' +
+                              plat.code.toLowerCase() +
+                              '.png'
+                          )
                         "
                       />
                     </span>
@@ -229,7 +227,6 @@ import {
 } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import { Search } from "@element-plus/icons-vue";
-import { RiHeartLine, RiHeartFill } from "vue-remix-icons";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
 import { useDark, useLocalStorage } from "@vueuse/core";
@@ -383,7 +380,7 @@ const loadGameList = () => {
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default.png");
-          var imageUrl= useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value ;
+          var imageUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
           element.icon = `${imageUrl}/game/${element.icon}`;
         });
         gameListData.value = data;

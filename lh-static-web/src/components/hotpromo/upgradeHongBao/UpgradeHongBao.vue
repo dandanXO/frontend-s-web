@@ -82,7 +82,7 @@ const promoCode = ref("hongbaoyu");
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
-const promoNotReady = ref(false);
+// const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);

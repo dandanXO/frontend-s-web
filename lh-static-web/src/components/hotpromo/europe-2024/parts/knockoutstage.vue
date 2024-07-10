@@ -15,105 +15,123 @@
       :style="{ top: date.top + 'px', left: date.left + 'px' }"
     >
       <!-- <span v-html="formatDate(date.matchTime)" />   -->
+      <span class="match-name" v-if="date.group === '16'">
+        1/8决赛
+        <br />
+      </span>
+      <span class="match-name" v-else-if="date.group === '8'">
+        1/4决赛
+        <br />
+      </span>
+      <span class="match-name" v-else-if="date.group === '4'">
+        半决赛
+        <br />
+      </span>
+
       <span v-if="date.matchTime" v-html="formatDate(date.matchTime)"></span>
       <span v-else>待定中</span>
     </div>
     <div class="bracket-final">
       <span class="bracket-final__title">决赛</span>
       <div class="bracket-final__date" v-if="finalDate" v-html="formatDate(finalDate)"></div>
-      <div class="bracket-final__date" v-else style="line-height: 56px;">待定中</div>
+      <div class="bracket-final__date" v-else style="line-height: 56px">待定中</div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
+// import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
 import BracketTeam from "./components/BracketTeam.vue";
-import { euroMatchAll } from '@/api/promotion/eurocup';
+import { euroMatchAll } from "@/api/promotion/eurocup";
 import { useLocalStorage } from "@vueuse/core";
-const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
+const imgUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const pageLoading = ref(true);
 const finalDate = ref(null);
 const bracketTeamList = ref([
   // left side round of 16
-  { top: -9,   left:-2, seg: 1, group: '16', team: 'A' },
-  { top: 144,  left:-2, seg: 1, group: '16', team: 'B' },
-  { top: 292,  left:-2, seg: 2, group: '16', team: 'A' },
-  { top: 445,  left:-2, seg: 2, group: '16', team: 'B' },
-  { top: 568,  left:-2, seg: 3, group: '16', team: 'A' },
-  { top: 721, left: -2, seg: 3, group: '16', team: 'B' },
-  { top: 869, left: -2, seg: 4, group: '16', team: 'A' },
-  { top: 1022, left:-2, seg: 4, group: '16', team: 'B' },
+  { top: -9, left: -2, seg: 1, group: "16", team: "A" },
+  { top: 144, left: -2, seg: 1, group: "16", team: "B" },
+  { top: 292, left: -2, seg: 2, group: "16", team: "A" },
+  { top: 445, left: -2, seg: 2, group: "16", team: "B" },
+  { top: 568, left: -2, seg: 3, group: "16", team: "A" },
+  { top: 721, left: -2, seg: 3, group: "16", team: "B" },
+  { top: 869, left: -2, seg: 4, group: "16", team: "A" },
+  { top: 1022, left: -2, seg: 4, group: "16", team: "B" },
   // left side quarterfinal
-  { top: 69,   left: 178, seg: 1, group: '8', team: 'A' },
-  { top: 370,  left: 178, seg: 1, group: '8', team: 'B' },
-  { top: 646,  left: 178, seg: 2, group: '8', team: 'A' },
-  { top: 947,  left: 178, seg: 2, group: '8', team: 'B' },
+  { top: 69, left: 178, seg: 1, group: "8", team: "A" },
+  { top: 370, left: 178, seg: 1, group: "8", team: "B" },
+  { top: 646, left: 178, seg: 2, group: "8", team: "A" },
+  { top: 947, left: 178, seg: 2, group: "8", team: "B" },
   // left side semifinal
-  { top: 219,  left: 376, seg: 1, group: '4', team: 'A' },
-  { top: 796,  left: 376, seg: 1, group: '4', team: 'B' },
+  { top: 219, left: 376, seg: 1, group: "4", team: "A" },
+  { top: 796, left: 376, seg: 1, group: "4", team: "B" },
   // left side final
-  { top: 501,  left: 543, seg: 1, group: '2', team: 'A' },
+  { top: 501, left: 543, seg: 1, group: "2", team: "A" },
   // right side final
-  { top: 501,  left: 743, seg: 1, group: '2', team: 'B' },
+  { top: 501, left: 743, seg: 1, group: "2", team: "B" },
   // right side semifinal
-  { top: 219,  left: 913, seg: 2, group: '4', team: 'A' },
-  { top: 796,  left: 913, seg: 2, group: '4', team: 'B' },
+  { top: 219, left: 913, seg: 2, group: "4", team: "A" },
+  { top: 796, left: 913, seg: 2, group: "4", team: "B" },
   // right side quarterfinal
-  { top: 69,   left: 1110, seg: 3, group: '8', team: 'A' },
-  { top: 370,  left: 1110, seg: 3, group: '8', team: 'B' },
-  { top: 646,  left: 1110, seg: 4, group: '8', team: 'A' },
-  { top: 947,  left: 1110, seg: 4, group: '8', team: 'B' },
+  { top: 69, left: 1110, seg: 3, group: "8", team: "A" },
+  { top: 370, left: 1110, seg: 3, group: "8", team: "B" },
+  { top: 646, left: 1110, seg: 4, group: "8", team: "A" },
+  { top: 947, left: 1110, seg: 4, group: "8", team: "B" },
   // right side round of 16
-  { top: -9,   left: 1290, seg: 5, group: '16', team: 'A' },
-  { top: 144,  left: 1290, seg: 5, group: '16', team: 'B' },
-  { top: 292,  left: 1290, seg: 6, group: '16', team: 'A' },
-  { top: 445,  left: 1290, seg: 6, group: '16', team: 'B' },
-  { top: 568,  left: 1290, seg: 7, group: '16', team: 'A' },
-  { top: 721,  left: 1290, seg: 7, group: '16', team: 'B' },
-  { top: 869,  left: 1290, seg: 8, group: '16', team: 'A' },
-  { top: 1022, left: 1290, seg: 8, group: '16', team: 'B' }
+  { top: -9, left: 1290, seg: 5, group: "16", team: "A" },
+  { top: 144, left: 1290, seg: 5, group: "16", team: "B" },
+  { top: 292, left: 1290, seg: 6, group: "16", team: "A" },
+  { top: 445, left: 1290, seg: 6, group: "16", team: "B" },
+  { top: 568, left: 1290, seg: 7, group: "16", team: "A" },
+  { top: 721, left: 1290, seg: 7, group: "16", team: "B" },
+  { top: 869, left: 1290, seg: 8, group: "16", team: "A" },
+  { top: 1022, left: 1290, seg: 8, group: "16", team: "B" }
 ]);
 
 const bracketDateList = ref([
   // left side round of 16
-  { top: 100,  left: 45, seg: 1, group: '16' },
-  { top: 390,  left: 45, seg: 2, group: '16' },
-  { top: 670,  left: 45, seg: 3, group: '16' },
-  { top: 975,  left: 45, seg: 4, group: '16' },
+  { top: 100, left: 45, seg: 1, group: "16" },
+  { top: 390, left: 45, seg: 2, group: "16" },
+  { top: 670, left: 45, seg: 3, group: "16" },
+  { top: 975, left: 45, seg: 4, group: "16" },
   // left side quarterfinal
-  { top: 240,  left: 212, seg: 1, group: '8' },
-  { top: 815,  left: 212, seg: 2, group: '8' },
+  { top: 240, left: 212, seg: 1, group: "8" },
+  { top: 815, left: 212, seg: 2, group: "8" },
   // left side semifinal
-  { top: 520,  left: 406, seg: 1, group: '4' },
+  { top: 520, left: 406, seg: 1, group: "4" },
   // right side semifinal
-  { top: 520,  left: 833, seg: 2, group: '4' },
+  { top: 520, left: 833, seg: 2, group: "4" },
   // right side quarterfinal
-  { top: 240,  left: 1028, seg: 3, group: '8' },
-  { top: 815,  left: 1028, seg: 4, group: '8' },
+  { top: 240, left: 1028, seg: 3, group: "8" },
+  { top: 815, left: 1028, seg: 4, group: "8" },
   // right side round of 16
-  { top: 100,  left: 1192, seg: 5, group: '16' },
-  { top: 390,  left: 1192, seg: 6, group: '16' },
-  { top: 670,  left: 1192, seg: 7, group: '16' },
-  { top: 975,  left: 1192, seg: 8, group: '16' }
+  { top: 100, left: 1192, seg: 5, group: "16" },
+  { top: 390, left: 1192, seg: 6, group: "16" },
+  { top: 670, left: 1192, seg: 7, group: "16" },
+  { top: 975, left: 1192, seg: 8, group: "16" }
 ]);
-const teams = ref([
-])
+const teams = ref([]);
 const populateTeams = () => {
-  pageLoading.value = true
+  pageLoading.value = true;
 
   euroMatchAll().then((res) => {
     if (res.code === 0) {
-      teams.value = res.data
-      teams.value.forEach(team => {
+      teams.value = res.data;
+      teams.value.forEach((team) => {
         const teamEntry = {
           teamIcon: null,
           teamName: null
         };
 
-        const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
-        const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
-        const date = bracketDateList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup);
+        const indexA = bracketTeamList.value.findIndex(
+          (entry) => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === "A"
+        );
+        const indexB = bracketTeamList.value.findIndex(
+          (entry) => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === "B"
+        );
+        const date = bracketDateList.value.findIndex(
+          (entry) => entry.seg === team.sequence && entry.group === team.teamGroup
+        );
         // Update Team A entry
         if (indexA !== -1) {
           bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
@@ -130,40 +148,39 @@ const populateTeams = () => {
           console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
         }
         if (date !== -1) {
-          bracketDateList.value[date].matchTime = team.matchTime
+          bracketDateList.value[date].matchTime = team.matchTime;
         }
-        if (team.teamGroup === '2' || team.teamGroup === 2) {
-          finalDate.value = team.matchTime
+        if (team.teamGroup === "2" || team.teamGroup === 2) {
+          finalDate.value = team.matchTime;
         }
       });
 
-      pageLoading.value = false
+      pageLoading.value = false;
     }
-  })
-
+  });
 };
 const formatDate = (matchTime) => {
-      if (!matchTime) return ''; // Return empty string if matchTime is not available
+  if (!matchTime) return ""; // Return empty string if matchTime is not available
 
-      const dateObj = new Date(matchTime);
-      const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-      const day = dateObj.getDate().toString().padStart(2, '0');
-      const hour = dateObj.getHours().toString().padStart(2, '0');
-      const minute = dateObj.getMinutes().toString().padStart(2, '0');
+  const dateObj = new Date(matchTime);
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateObj.getDate().toString().padStart(2, "0");
+  const hour = dateObj.getHours().toString().padStart(2, "0");
+  const minute = dateObj.getMinutes().toString().padStart(2, "0");
 
-      return `${month}月${day}日<br>${hour}:${minute}`;
-    }
+  return `${month}月${day}日<br>${hour}:${minute}`;
+};
 
 onMounted(() => {
-  populateTeams()
-})
+  populateTeams();
+});
 </script>
 <style scoped lang="scss">
 .bracket-wrapper {
   position: relative;
   width: 1360px;
   height: 1215px;
-  background: url(@/components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
+  background: url(@/components/hotpromo/europe-2024/images/knockoutstage-bg1.png) no-repeat;
   background-position: center top;
   color: #ffffff;
   margin: auto;
@@ -181,6 +198,11 @@ onMounted(() => {
     line-height: 18px;
     letter-spacing: 0.12em;
     text-align: center;
+
+    .match-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
   }
   .bracket-final {
     position: absolute;

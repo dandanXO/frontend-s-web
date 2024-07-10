@@ -839,7 +839,7 @@ async function loadRecord() {
       query.withdrawDate = request.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.withdrawCode = "KDPAY,EBPAY,OKPAY,SZPAY,BLBPAY,JDPAY,JAZZCASH,EASYPAISA";
   const { data: ret } = await getMemberWithdrawRecordEwalltPay(query)
   page.pages = ret.pages
