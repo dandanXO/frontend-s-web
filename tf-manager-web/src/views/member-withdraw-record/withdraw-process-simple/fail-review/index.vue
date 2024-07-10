@@ -826,7 +826,7 @@ async function loadRecord() {
       query.withdrawDate = query.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   const { data: ret } = await getMemberWithdrawRecordFailReview(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
