@@ -1,4 +1,7 @@
 <template>
+  <div style="color: #ff0000; font-size: 40px" v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'">
+    还没完成，不要测试先。
+  </div>
   <div class="switch-wrapper">
     <div class="switch-container">
       <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
@@ -252,10 +255,10 @@ const handleClickStatusButton = (status, promocode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    if (promocode === 'new-user-setup-bonus-telephone') {
+    if (promocode === "new-user-setup-bonus-telephone") {
       router.push({ path: "/account/personal" });
-    } else if (promocode === 'new-user-setup-bonus-first-withdrawal') {
-      router.push({ path: '/finance/withdraw' })
+    } else if (promocode === "new-user-setup-bonus-first-withdrawal") {
+      router.push({ path: "/finance/withdraw" });
     } else {
       router.push({ path: "/account/withdraw" });
     }
