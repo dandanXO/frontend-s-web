@@ -48,7 +48,7 @@
         <div>
             <router-link to="/about?id=aboutus">
               <div style="display:flex;align-items:center;gap:5px;">
-                <img src="@/assets/footer/logo.png" />
+                <img src="@/assets/footer/logo-bebest.svg" />
               </div>
             </router-link>
           </div>
@@ -57,7 +57,7 @@
           <li><router-link to="/about?id=info">{{ $t('about.collectInformation') }}</router-link></li>
           <li><router-link to="/about?id=law">{{ $t('about.legalBasis') }}</router-link></li>
           <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
-          <li><a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
+          <li><a :href="affiliateUrl + 'kaka/login?agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
           <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
@@ -128,6 +128,7 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: {},
   setup() {
+    const affiliateUrl = ref("https://ka1-os.cn23lh0d1nf.com/");
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const isFireFox = ref(false);
@@ -143,7 +144,8 @@ export default defineComponent({
       store,
       openRegPage,
       affCode,
-      languageVal
+      languageVal,
+      affiliateUrl
     };
   }
 });
@@ -268,8 +270,9 @@ export default defineComponent({
       margin: 0 auto;
       padding: 20px 0px;
       gap: 50px;
+      align-items: center;
       img {
-        height: 60px;
+        height: 30px;
       }
       ul {
         width: 100%;
