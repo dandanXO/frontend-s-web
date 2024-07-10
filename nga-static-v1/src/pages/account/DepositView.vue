@@ -26,11 +26,11 @@
 
     <div class="lil-title q-mt-lg">Select Amount</div>
     <div class="deposit-item-container q-mt-sm">
-      <template v-for="(item, index) in depositItems" :key="index">
-        <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge>
-          <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
-          <div :class="['deposit-svg', item.isActive && 'active']">
+      <template v-for="(amount, index) in depositItems" :key="index">
+        <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
+          <!-- <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge> -->
+          <div :class="['deposit-amt', form.localAmount === amount && 'active']">{{ convertToCommaAmount(amount) }}</div>
+          <div :class="['deposit-svg', form.localAmount === amount && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
                 d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
@@ -199,7 +199,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -300,31 +300,19 @@ const form = reactive({
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
-const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 2000, hotLabel: 100, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 20000, hotLabel: 1000, isActive: false }
-  // { amount: 30000, hotLabel: 1500, isActive: false },
-  // { amount: 50000, hotLabel: 2500, isActive: false }
-]);
+const depositItems = computed(() => {
+  if (!activeMethod.value.amountArr) return []
+  return activeMethod.value.amountArr.map(amount => Number(amount))
+})
 
-const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
-    item.isActive = i === index;
-    if (i === index) {
-      form.localAmount = item.amount;
-    }
-  });
+const handleDepositItemClick = (amount) => {
+  form.localAmount = amount;
 };
 
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
+  form.localAmount = null;
+  nextTick(() => depositAmtRef.value.resetValidation())
 };
 
 const isLoadingInitPay = ref(true);
