@@ -481,7 +481,7 @@ const handleRecieve = async (reward) => {
 };
 
 const handleRedirect = () => {
-  router.push({ path: "/home" });
+  router.push({ path: "/center/deposit" });
 };
 
 const getData = async () => {
@@ -531,15 +531,18 @@ onMounted(async () => {
 }
 
 .switch-option {
-  padding: 10px 20px;
+  width: 144px;
+  height: 44px;
   text-align: center;
   cursor: pointer;
 
   border-radius: 25px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   transition: background-color 0.3s, color 0.3s;
+  font-size: 20px;
 }
 
 .switch-option.active {
@@ -715,8 +718,8 @@ button:disabled {
 
 /* Icon styles */
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 .sports-icon {
