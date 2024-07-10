@@ -47,6 +47,10 @@
             23:59:59内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
         </div>
+        <div class="little-title" style="margin-bottom: 0px">
+          <div class="" style="width: 116px; margin-right: 16px"></div>
+          <div class="right red-font">注意：获奖的注单可能会有延迟，请每 5~10 分钟刷新一次活动页面</div>
+        </div>
       </div>
       <div class="luck8-game-info">
         <div class="title"></div>
@@ -436,6 +440,10 @@ onMounted(getSlotLucky8Data);
       line-height: 28px;
       color: #000000;
       width: 100%;
+
+      &.red-font {
+        color: #f53434;
+      }
     }
   }
 }
