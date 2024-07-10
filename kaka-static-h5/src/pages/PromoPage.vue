@@ -315,31 +315,31 @@ export default defineComponent({
           router.push("/account/vip?from=promo");
         } else {
 
-          if(isAndroid()){
-            // modalVisible.value= true;
-            var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
-            // alert(preUrl);
-            console.log(preUrl)
-            // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(
-              preUrl,
-              "_blank",
-              "location=no,zoom=no,footer=no"
-            );
-
-            ref.addEventListener('loadstart', function(event) {
-              var url = event.url;
-              // alert("This" + url);
-              if (url.indexOf("vnmapp:") > -1) {
-                var message = url.split("vnmapp:")[1];
-                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
-                // alert(message);
-                ref.close();
-                router.push(message)
-              }
-            });
-
-          }else{
+          // if(isAndroid()){
+          //   // modalVisible.value= true;
+          //   var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
+          //   // alert(preUrl);
+          //   console.log(preUrl)
+          //   // promoSrc.value= preUrl;
+          //   var ref = cordova.InAppBrowser.open(
+          //     preUrl,
+          //     "_blank",
+          //     "location=no,zoom=no,footer=no"
+          //   );
+          //
+          //   ref.addEventListener('loadstart', function(event) {
+          //     var url = event.url;
+          //     // alert("This" + url);
+          //     if (url.indexOf("vnmapp:") > -1) {
+          //       var message = url.split("vnmapp:")[1];
+          //       console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+          //       // alert(message);
+          //       ref.close();
+          //       router.push(message)
+          //     }
+          //   });
+          //
+          // }else{
             if (route.query.fromAccount) {
               router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
             } else {
@@ -348,7 +348,7 @@ export default defineComponent({
             isPromoDetail.value = true;
             selectedPromo.value = promo;
 
-          }
+          // }
 
         }
         // }
