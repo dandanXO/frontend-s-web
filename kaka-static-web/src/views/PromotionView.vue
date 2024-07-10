@@ -350,12 +350,12 @@ export default defineComponent({
   min-height: 600px;
 
   .all-promotions {
-    background: url(../assets/promo/top-promo-icon.png) no-repeat center top;
+    // background: url(../assets/promo/top-promo-icon.png) no-repeat center top; 
     width: 100%;
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(270px, 15vw);
+    // padding-top: max(270px, 15vw);
     background-color: #1E212C
   ;
   }
@@ -794,14 +794,17 @@ export default defineComponent({
             }
             .promo-bg {
               transition: all 0.5s ease;
-              background-size: cover;
+              // background-size: cover;
+              background-size: 100% 100%;
               background-position: center center;
               display: flex;
               justify-content: center;
               align-items: center;
-              gap: 30px;
-              height: 250px;
+              // gap: 30px;
+              height: 230px;
               .promo-content {
+                // height: 100%;
+                width: 100%;
                 height: 100%;
                 &.isDesktop {
                   display: block;
@@ -811,7 +814,7 @@ export default defineComponent({
                 }
               }
               .promo-img {
-                height: 200px;
+                // height: 200px;
               }
             }
           }
