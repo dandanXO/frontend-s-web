@@ -36,13 +36,13 @@
             </a>
           </div>
         </div>
-        <div class="contact-item">
+        <!-- <div class="contact-item">
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_03") }}
             <a href="https://t.me/KAKA_CS" target="_blank">@KAKA_CS</a>
           </div>
-        </div>
+        </div> -->
         <div class="contact-item">
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
@@ -50,13 +50,13 @@
             <a href="https://t.me/trangchukakagame1" target="_blank">@trangchukakagame1</a>
           </div>
         </div>
-        <div class="contact-item">
+        <!-- <div class="contact-item">
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_03") }}
             <a href="https://t.me/trangchukakagame2" target="_blank">@trangchukakagame2</a>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- <div class="maintenance-btn">
