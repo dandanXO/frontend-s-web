@@ -57,13 +57,7 @@
 
         <q-btn
           @click.stop.prevent="
-            openWindow(
-              // `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
-              `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
-              'Chat Server',
-              350,
-              650
-            )
+           openCSChat
           "
           :label="$t('lang.affiliate_contactus')"
           no-caps
@@ -230,13 +224,7 @@
             <div
               class="two-four-content"
               @click.stop.prevent="
-                openWindow(
-                  // `https://csweb01.amv4xjcbd.com/?partnerId=4&lang=vn&way=${regDevice}&token=${store.token}`,
-                  `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
-                  'Chat Server',
-                  350,
-                  650
-                )
+                   openCSChat
               "
             >
               <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
@@ -276,6 +264,13 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
     "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
   );
 };
+
+const openCSChat = () => {
+  window.open(
+    `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
+    '_blank'
+  )
+}
 
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const regDevice = Platform.is.mobile ? "H5" : "WEB";

@@ -132,7 +132,7 @@
                 <q-btn
                   class="btn-main"
                   no-caps
-                  @click="router.push('/liveChat')"
+                  @click="goToChat"
                 >
                   {{ $t("lang.vip_contactcs") }}
                 </q-btn>
@@ -335,6 +335,10 @@ const router = useRouter();
 const { t } = useI18n();
 
 const tab = ref("rules");
+
+const goToChat= () => {
+  window.open("https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11", "_blank");
+}
 
 const slide = ref(0);
 const vipItems = ref([

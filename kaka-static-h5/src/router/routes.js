@@ -41,11 +41,6 @@ const routes = [
     meta: { requiresAuth: true, isApp: true }
   },
   {
-    path: "/liveChat",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
-  },
-  {
     path: "/maintenance",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "maintenance", component: () => import("pages/MaintenancePage.vue") }]
