@@ -276,6 +276,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'clock',
         },
+        {
+          path: '/deposit-withdraw-management',
+          title: t('menu.DepositWithdrawManagement'),
+          label: 'DepositWithdrawManagement',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
       ],
     },
     {

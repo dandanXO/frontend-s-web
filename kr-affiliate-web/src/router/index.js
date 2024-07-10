@@ -168,6 +168,14 @@ export const constantRoutes = [
           title: 'commission-history-list',
         },
       },
+      {
+        path: 'deposit-withdraw-management',
+        component: () => import('../views/settlement-management/deposit-withdraw/index.vue'),
+        name: 'DepositWithdrawManagement',
+        meta: {
+          title: 'deposit-withdraw-management',
+        },
+      },
     ],
   },
   {
