@@ -180,3 +180,23 @@ export function duanwuVipUpgrade() {
 export function duanwuDepositBet() {
   return eventapi.post("/duan-wu/deposit-bet");
 }
+
+export function getNewUserSetupBonusInit() {
+  return eventapi.get("/new-user-setup-bonus/init");
+}
+
+export function putNewUserSetupBonusClaim(promocode) {
+  return eventapi.put("/new-user-setup-bonus/claim", {
+    promocode,
+  });
+}
+
+export function getNewUserAccumulateDepositInit() {
+  return eventapi.get("/new-user-accumulate-deposit/init")
+}
+
+export function putNewUserAccumulateDepositClaim(ruleAmount) {
+  return eventapi.put("/new-user-accumulate-deposit/claim", {
+    ruleAmount
+  })
+}
