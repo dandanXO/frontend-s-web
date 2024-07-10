@@ -15,11 +15,7 @@
     </q-tabs>
   </div>
 
-  <div
-    class="promo-container"
-    v-touch-swipe.left="swipeLeft"
-    v-touch-swipe.right="swipeRight"
-  >
+  <div class="promo-container" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
@@ -318,6 +314,8 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
+        }else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
+          router.push({path: '/activities-details'});
         } else {
           if (route.query.fromAccount) {
             router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
@@ -540,7 +538,6 @@ export default defineComponent({
     margin-bottom: 4px;
     margin-top: 5px;
     padding: 1px;
-    
 
     :deep(.q-tab__label) {
       font-weight: 400;
@@ -729,7 +726,7 @@ export default defineComponent({
           overflow: hidden;
           // padding-top: 40px;
           border-radius: 17px;
-          background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+          background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
           box-shadow: 0px 7.5px 20px 0px #1411321a;
 
           img {
@@ -1111,7 +1108,7 @@ export default defineComponent({
 
 // join now
 .join-container {
-  background: #252B37;
+  background: #252b37;
   padding: 12px 12px;
   position: fixed;
   //top: calc(100vh - 127px);
