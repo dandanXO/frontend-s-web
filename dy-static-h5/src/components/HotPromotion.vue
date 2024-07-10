@@ -42,7 +42,7 @@
     />
 
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
-
+    <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <InsuranceSubmitPromo
       v-if="
         (list.redirectUrl === 'dy2-esport-safety') ||
@@ -162,6 +162,7 @@ const SportZhongChao = defineAsyncComponent(() => import( "../components/hotprom
 const BlastPremierPromo = defineAsyncComponent(() => import( "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
 const fishHongbao = defineAsyncComponent(() => import( "../components/hotpromo/fishHongbao/fishHongbao.vue"));
 const MeiZhouBeiPromo = defineAsyncComponent(() => import( "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
+const OuZuLianPromo = defineAsyncComponent(() => import( "../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -199,7 +200,8 @@ export default defineComponent({
     HongBaoPreEurocupPromo,
     LPLSummer24,
     DragonBoat,
-    EurocupManual
+    EurocupManual,
+    OuZuLianPromo
   },
   props: {
     list: {
