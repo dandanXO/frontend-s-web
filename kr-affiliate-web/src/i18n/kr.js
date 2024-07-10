@@ -56,6 +56,7 @@ export default {
     MonthlyStepByStep: '월별/단계별 정산',
     SettlementByCasinoSlotVendor: '카지노/슬롯 판매업체별 정산',
     CommissionHistoryList: '커미션내역 목록',
+    StatisticsByMember: '회원별 통계',
     // Settlement Management End
 
     gameRecord: '게임 기록',

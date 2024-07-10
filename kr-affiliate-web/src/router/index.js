@@ -153,6 +153,14 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'statistics-by-member',
+        component: () => import('../views/settlement-management/StatisticsByMember.vue'),
+        name: 'StatisticsByMember',
+        meta: {
+          title: 'statistics-by-member',
+        },
+      },
+      {
         path: 'settlement-by-casino-slot-vendor',
         component: () => import('../views/settlement-management/SettlementByCasinoSlotVendor.vue'),
         name: 'SettlementByCasinoSlotVendor',

@@ -261,6 +261,13 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
+          path: '/statistics-by-member',
+          title: t('menu.StatisticsByMember'),
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
           path: '/settlement-by-casino-slot-vendor',
           title: t('menu.SettlementByCasinoSlotVendor'),
           label: 'Settlement By Casino / Slot Vendor',
