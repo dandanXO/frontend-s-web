@@ -12,7 +12,6 @@
                   size="small"
                   :placeholder="t('fields.type')"
                   class="filter-item"
-                  style="width: 120px; margin-left: 5px"
                 >
                   <el-option :label="t('fields.all')" value="" />
                   <el-option :label="t('fields.deposit')" value="DEPOSIT" />

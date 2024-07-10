@@ -6,7 +6,7 @@
           <el-row :gutter="20">
             <el-col :xl="8" :lg="8" :md="6" :sm="6">
               <el-form-item :label="t('fields.vendorName') + ' :'">
-                <el-input v-model="request.gameType" />
+                <el-input v-model="request.platformName" />
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="8" :md="10" :sm="8">
@@ -236,7 +236,7 @@ const request = reactive({
   current: 1,
   recordTime: [convertStartDate(new Date()), convertDate(new Date())],
   loginName: null,
-  gameType: '',
+  platformName: '',
 })
 
 async function loadRecords() {
