@@ -38,6 +38,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/activities-details",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/ActivitiesDetailsPage.vue") }]
+  },
+  {
     path: "/earn-money",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/EarnMoneyPage.vue") }],

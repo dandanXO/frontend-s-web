@@ -1,8 +1,5 @@
 import { server } from "@/utils/request";
-const transferUrl = [
-  "/session/balance/transfer/deposit",
-  "/session/balance/transfer/withdraw",
-];
+const transferUrl = ["/session/balance/transfer/deposit", "/session/balance/transfer/withdraw"];
 export function transfer(type, ti) {
   return server.REST.post(transferUrl[type], ti);
 }
@@ -14,13 +11,13 @@ export function getPlatforms() {
 }
 
 export function getLoggedInPlatformList() {
-  return server.REST.get("/session/loggedInPlatform")
+  return server.REST.get("/session/loggedInPlatform");
 }
 
 export function updateAutoTransferState(state) {
-  return server.REST.put("/session/updateAutoTransferState/"+state);
-};
+  return server.REST.put("/session/updateAutoTransferState/" + state);
+}
 
 export function getAutoTransferState() {
   return server.REST.get("/session/getAutoTransferState");
-};
+}

@@ -54,7 +54,7 @@
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
 
-                <div class="balance-add" @click="router.push('/deposit?from=' + route.path)">
+                <div class="balance-add" @click="handleBackBtn">
                   <img src="../assets/images/index/money-plus.png" width="20" />
                 </div>
               </div>
@@ -289,6 +289,13 @@ const getTopDownloadUrl = () => {
     }
   });
 };
+
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push('/deposit?from=' + route.path)
+}
 
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {

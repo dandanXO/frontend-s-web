@@ -1860,6 +1860,8 @@ export default {
     downlineMembers: '下线人数',
     todayRegCount: '今日团队注册',
     yesterdayRegCount: '昨日团队注册',
+    displayStartTime: '显示开始时间',
+    displayEndTime: '显示结束时间',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2244,6 +2246,7 @@ export default {
     validateWebMessageRequired: '网页提示信息必填',
     validateWholeNumberOnly: '请输入整数',
     validateWinnerRequired: '获胜队伍必选',
+    validateWithdrawChannel: '排序不可重复',
     validateWithdrawExchangeRateRequired: '提款兑换率必填',
     validateWithdrawPlatformNameRequired: '提款平台名称必填',
     validateTigerCardPeriodRequired: '期数必填',

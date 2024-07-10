@@ -23,8 +23,8 @@
     border: 0;
     border-collapse: collapse;
 
-    tr:hover {
-      background-color: #ddecf3;
+    tr:hover > td {
+      background-color: #ddecf3 !important;
     }
   
     th {
@@ -32,6 +32,7 @@
       text-align: left;
       color: #fff;
       font-family: 'NanumNeo';
+      white-space: nowrap;
     }
   
     th,
@@ -78,6 +79,58 @@
           font-weight: bold;
         }
       }
+    }
+
+    .bgGreen {
+      background-color: #f4fff8;
+    }
+
+    .textGreen {
+      color: #4dbd74;
+      font-weight: bold;
+    }
+
+    .bgRed {
+      background-color: #fff5f5;
+    }
+
+    .textRed {
+      color: #f86c6b;
+      font-weight: bold;
+    }
+
+    .bgYellow {
+      background-color: #fffef7;
+    }
+
+    .bgGrey {
+      background-color: #eceff1;
+    }
+
+    .textCenter {
+      text-align: center;
+    }
+    
+    .textRight {
+      text-align: right;
+    }
+
+    .colorBoxOrange {
+      background-color: #f0ad4e;
+      color: #fff;
+      font-size: 11px;
+      padding: 5px;
+      border-radius: 3px;
+      width: fit-content;
+    }
+
+    .colorBoxBlue {
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 11px;
+      padding: 5px;
+      border-radius: 3px;
+      width: fit-content;
     }
   }
 

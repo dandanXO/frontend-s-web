@@ -1723,6 +1723,8 @@ export default {
     miniGameGrossProfit: 'Tổng lợi nhuận mini game',
     memberShareRatio: 'Tỷ lệ hoàn trả thành viên',
     updateShareRatio: 'Cập nhật tỷ lệ hoàn trả',
+    displayStartTime: 'Hiển thị thời gian bắt đầu',
+    displayEndTime: 'Hiển thị thời gian kết thúc',
   },
   message: {
     startenddatemore3months: 'Ngày bắt đầu và kết thúc không được vượt quá 3 tháng',

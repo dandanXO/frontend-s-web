@@ -241,6 +241,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "SGWin" ||
         platformCode === "TCG" ||
         platformCode === "PT" ||
+        platformCode === "WS" ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc")
       ) {
         launchSessionGame(platformCode, {
@@ -248,10 +249,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           isMobile: isMobile()
         }).then((res) => {
           if(res.code===0) {
+            var screenWidth = window.screen.width;
+            var screenHeight = window.screen.height;
+
             window.open(
               res.data,
               "popUpWindow",
-              "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+              `fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,width=${screenWidth},height=${screenHeight}`
             );
           }else{
             ElMessage.error(t('response.' + res.code) || res.message);

@@ -4,7 +4,7 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" @click="toggleExpansion">
 
       <div class="stats">
-        <div class="stat-label">회원 머니
+        <div class="stat-label">{{ t('statsHeader.memberMoney') }}
 
           <el-popover placement="bottom" title="Title" :width="200" trigger="hover"
             content="this is content, this is content, this is content">
@@ -17,12 +17,12 @@
       </div>
 
       <div class="stats">
-        <div class="stat-label">회원 포인트</div>
+        <div class="stat-label">{{ t('statsHeader.memberPoint') }}</div>
         <div class="stat-value green">{{ records.memberPoint }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">보유알</div>
+        <div class="stat-label">{{ t('statsHeader.eggs') }}</div>
         <div class="stat-value blue">{{ records.eggs }}</div>
       </div>
 
@@ -32,22 +32,22 @@
       </div> -->
 
       <div class="stats">
-        <div class="stat-label">고객문의</div>
+        <div class="stat-label">{{ t('statsHeader.memberInquiry') }}</div>
         <div class="stat-value grey">{{ records.memberInquiry }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">충전신청(대기)</div>
+        <div class="stat-label">{{ t('statsHeader.depositApplication') }}</div>
         <div class="stat-value grey">{{ records.depositApplication }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">환전신청(대기)</div>
+        <div class="stat-label">{{ t('statsHeader.withdrawApplication') }}</div>
         <div class="stat-value grey">{{ records.withdrawApplication }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">회원인증</div>
+        <div class="stat-label">{{ t('statsHeader.affiliateApplication') }}</div>
         <div class="stat-value grey">{{ records.affiliateApplication }}</div>
       </div>
 
@@ -57,12 +57,12 @@
       </div> -->
 
       <div class="stats">
-        <div class="stat-label">전체회원</div>
+        <div class="stat-label">{{ t('statsHeader.totalMembers') }}</div>
         <div class="stat-value grey">{{ records.totalMembers }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">현재접속자</div>
+        <div class="stat-label">{{ t('statsHeader.currentMembers') }}</div>
         <div class="stat-value grey">{{ records.currentMembers }}</div>
       </div>
     </div>
@@ -72,32 +72,32 @@
         style="visibility: hidden;">
 
       <div class="stats">
-        <div class="stat-label">충전금액</div>
+        <div class="stat-label">{{ t('statsHeader.todayDepositAmount') }}</div>
         <div class="stat-value grey">{{ records.todayDepositAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">환전금액</div>
+        <div class="stat-label">{{ t('statsHeader.todayWithdrawAmount') }}</div>
         <div class="stat-value grey">{{ records.todayWithdrawAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">충환손익</div>
+        <div class="stat-label">{{ t('statsHeader.refundProfitAndLoss') }}</div>
         <div class="stat-value grey">{{ records.todayDepositAmount - records.todayWithdrawAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">수동머니</div>
+        <div class="stat-label">{{ t('statsHeader.manualMoney') }}</div>
         <div class="stat-value blue">{{ records.manualMoney }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">수동포인트</div>
+        <div class="stat-label">{{ t('statsHeader.manualPoint') }}</div>
         <div class="stat-value blue">{{ records.manualPoint }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">총손익</div>
+        <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
         <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount)
           + (records.slotProfit - records.slotBetAmount - records.slotRollingAmount)
           + (records.sportProfit - records.sportBetAmount - records.sportRollingAmount)
@@ -105,84 +105,84 @@
       </div>
 
       <div class="stats">
-        <div class="stat-label">카지노베팅</div>
+        <div class="stat-label">{{ t('statsHeader.casinoBetAmount') }}</div>
         <div class="stat-value grey">{{ records.casinoBetAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">카지노당첨</div>
+        <div class="stat-label">{{ t('statsHeader.casinoProfit') }}</div>
         <div class="stat-value grey">{{ records.casinoProfit }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">카지노롤링</div>
+        <div class="stat-label">{{ t('statsHeader.casinoRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.casinoRollingAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">카지노손익</div>
+        <div class="stat-label">{{ t('statsHeader.casinoProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount }}
         </div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">슬롯베팅</div>
+        <div class="stat-label">{{ t('statsHeader.slotBetAmount') }}</div>
         <div class="stat-value grey">{{ records.slotBetAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">슬롯당첨</div>
+        <div class="stat-label">{{ t('statsHeader.slotProfit') }}</div>
         <div class="stat-value grey">{{ records.slotProfit }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">슬롯롤링</div>
+        <div class="stat-label">{{ t('statsHeader.slotRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.slotRollingAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">슬롯손익</div>
+        <div class="stat-label">{{ t('statsHeader.slotProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.slotProfit - records.slotBetAmount - records.slotRollingAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">스포츠베팅</div>
+        <div class="stat-label">{{ t('statsHeader.sportBetAmount') }}</div>
         <div class="stat-value grey">{{ records.sportBetAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">스포츠당첨</div>
+        <div class="stat-label">{{ t('statsHeader.sportProfit') }}</div>
         <div class="stat-value grey">{{ records.sportProfit }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">스포츠롤링</div>
+        <div class="stat-label">{{ t('statsHeader.sportRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.sportRollingAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">스포츠손익</div>
+        <div class="stat-label">{{ t('statsHeader.sportProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.sportProfit - records.sportBetAmount - records.sportRollingAmount }}
         </div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">미니게임베팅</div>
+        <div class="stat-label">{{ t('statsHeader.miniGameBetAmount') }}</div>
         <div class="stat-value grey">{{ records.miniGameBetAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">미니게임당첨</div>
+        <div class="stat-label">{{ t('statsHeader.miniGameProfit') }}</div>
         <div class="stat-value grey">{{ records.miniGameProfit }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">미니게임롤링</div>
+        <div class="stat-label">{{ t('statsHeader.miniGameRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.miniGameRollingAmount }}</div>
       </div>
 
       <div class="stats">
-        <div class="stat-label">미니게임손익</div>
+        <div class="stat-label">{{ t('statsHeader.miniGameProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.miniGameProfit - records.miniGameBetAmount -
           records.miniGameRollingAmount
           }}</div>
@@ -195,6 +195,9 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery'
 import { getKoreaStatsReport } from '@/api/statistics'
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const toggleExpansion = () => {
   if ($(".navigation").width()) {

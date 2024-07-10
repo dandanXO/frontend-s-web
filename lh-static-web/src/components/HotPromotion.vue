@@ -1,6 +1,11 @@
 <template>
   <div class="hot-promo" :class="list.redirectUrl === 'lh1-game-steps' && 'flat-border-radius'">
-    <ClaimPromo v-if="listParam.type === 'claimpromo'" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
+    <ClaimPromo
+      v-if="listParam.type === 'claimpromo'"
+      :promo-id="list.id"
+      :loading-claim="loadingClaim"
+      @daily-slot="handleSlot()"
+    />
     <TigerCardPromo v-if="list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
     <GoldenEggPromo v-if="list.redirectUrl === 'lh1-goldenegg' && store.token" />
@@ -41,49 +46,30 @@
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
     </div>
-    <div style="text-align: center;" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token"  >
-      <div class="cs-btn" @click="store.openLiveChat()">
-        联系客服
-      </div>
+    <div style="text-align: center" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token">
+      <div class="cs-btn" @click="store.openLiveChat()">联系客服</div>
     </div>
     <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone' && store.token"></BbDacha2024Promo>
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite' && store.token" />
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight' && store.token" />
 
-    <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'lh1-cny-step-game' && store.token"
-    ></CnyStepGame2024Promo>
-    <CS2Sign
-      v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game' && store.token"></CnyStepGame2024Promo>
+    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
     <LhStepGamePromo
       v-if="list.redirectUrl === 'lh1-game-steps' && store.token"
       :pageContent="list.pageContent"
     ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && store.token" />
-    <Summoner
-      v-if="list.redirectUrl === 'lh1-summon-event' && store.token"
-      :promo-code="list.promoCode"
-    />
-    <Europe2024
-      v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && store.token" :promo-code="list.promoCode" />
+    <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token" :promo-code="list.promoCode" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && store.token" />
     <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && store.token" />
-    <BlastPremierPromo
-      v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && store.token" />
-    <slotLucky8
-      v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && store.token" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
 
@@ -135,7 +121,7 @@ import FootballFight from "../components/hotpromo/footballfight/FootballFight.vu
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
 import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
-import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
+// import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
@@ -201,7 +187,7 @@ export default defineComponent({
     BbDacha2024Promo,
     CnyStepGame2024Promo,
     UpgradeHongBao,
-    HongBaoYu2024,
+    // HongBaoYu2024,
     DragonCardPromo,
     CS2Sign,
     BonusSpinWheel,
@@ -354,9 +340,9 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        return {};
       }
     }
   },
@@ -737,7 +723,7 @@ export default defineComponent({
   }
 }
 
-.cs-btn{
+.cs-btn {
   cursor: pointer;
   color: #ffffff;
   padding: 5px 30px;

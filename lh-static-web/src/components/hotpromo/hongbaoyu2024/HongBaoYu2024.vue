@@ -94,14 +94,14 @@ import { ElMessage } from "element-plus";
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 
-const startTime= reactive({
+const startTime = reactive({
   time1: "17:00 ~ 18:00",
   time2: "19:00 ~ 20:00"
-})
+});
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
-const promoNotReady = ref(false);
+// const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
@@ -174,12 +174,12 @@ const getPromotionListing = () => {
 onMounted(() => {
   getPromotionListing();
 
-  const params= props.params ? JSON.parse(props.params) : "";
-  if(params?.time1){
-    startTime.time1= params.time1;
+  const params = props.params ? JSON.parse(props.params) : "";
+  if (params?.time1) {
+    startTime.time1 = params.time1;
   }
-  if(params?.time2){
-    startTime.time2= params.time2;
+  if (params?.time2) {
+    startTime.time2 = params.time2;
   }
 });
 </script>
