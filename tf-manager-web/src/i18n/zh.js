@@ -300,6 +300,7 @@ export default {
     COCKFIGHT: '斗鸡',
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
+    UEFA: '欧足联',
   },
   homeBannerType: {
     HOME: '首页',
