@@ -435,8 +435,7 @@ async function loadBetRecords() {
   }
   query.siteId = store.state.user.siteId;
   if (query.gameType === 'SPORT') {
-    query.gameType = '';
-    query.gameTypes = ['SPORT', 'ESPORT'];
+    query.gameType = 'SPORT,ESPORT';
   }
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
