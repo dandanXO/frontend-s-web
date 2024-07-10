@@ -30,13 +30,13 @@
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
-              <th scope="col">{{ t('fields.loginName') }}</th>
-              <th scope="col">{{ t('fields.deposit') }}</th>
-              <th scope="col">{{ t('fields.withdraw') }}</th>
-              <th scope="col">{{ t('fields.bet') }}</th>
-              <th scope="col">{{ t('fields.payout') }}</th>
-              <th scope="col">{{ t('fields.rolling') }}</th>
-              <th scope="col">{{ t('fields.profit') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.loginName') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.deposit') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.withdraw') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.bet') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.payout') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.rolling') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.profit') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
@@ -88,6 +88,8 @@
             </tr>
           </tbody>
         </table>
+        <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+          :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
     </div>
   </div>
@@ -114,6 +116,13 @@ const request = reactive({
   recordTime: [convertStartDate(new Date()), convertDate(new Date())],
   loginName: null,
 })
+
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadRecords()
+  }
+}
 
 function convertStartDate(date) {
   return moment(date)

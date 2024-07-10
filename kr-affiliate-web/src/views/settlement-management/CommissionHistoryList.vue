@@ -79,6 +79,9 @@
             </tr>
           </tbody>
         </table>
+
+        <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+          :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
     </div>
   </div>
@@ -107,6 +110,13 @@ const request = reactive({
   loginName: null,
   gameTypes: '',
 })
+
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadRecords()
+  }
+}
 
 function convertStartDate(date) {
   return moment(date)
