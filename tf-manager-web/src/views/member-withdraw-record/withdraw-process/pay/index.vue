@@ -852,7 +852,7 @@ async function loadRecord() {
       query.withdrawDate = request.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.withdrawCode = "BANK";
   const { data: ret } = await getMemberWithdrawRecordPay(query)
   page.pages = ret.pages

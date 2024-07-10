@@ -220,7 +220,7 @@
       >
         <template #default="scope">
           <el-button
-            v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA'"
+            v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA' && scope.row.gameType !== 'UEFA'"
             size="small"
             type="success"
             v-permission="['sys:game-match-record:update']"
@@ -230,7 +230,7 @@
             {{ t('fields.settle') }}
           </el-button>
           <el-button
-            v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA'"
+            v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA' && scope.row.gameType !== 'UEFA'"
             size="small"
             type="danger"
             v-permission="['sys:game-match-record:update']"
@@ -319,7 +319,8 @@ const uiControl = reactive({
     { key: 2, displayName: 'SPORT', value: 'SPORT' },
     { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
     { key: 4, displayName: 'MSI', value: 'MSI' },
-    { key: 5, displayName: 'COPA', value: 'COPA' }
+    { key: 5, displayName: 'COPA', value: 'COPA' },
+    { key: 5, displayName: 'UEFA', value: 'UEFA' }
   ],
 });
 const page = reactive({
