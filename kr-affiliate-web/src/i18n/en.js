@@ -55,6 +55,7 @@ export default {
     SettlementManagement: 'Settlement Management',
     MonthlyStepByStep: 'Monthly Step By Step',
     SettlementByCasinoSlotVendor: 'Settlement By Casino / Slot Vendor',
+    CommissionHistoryList: 'Commission History List',
     // Settlement Management End
 
     gameRecord: 'Game Record',

@@ -160,6 +160,14 @@ export const constantRoutes = [
           title: 'settlement-by-casino-slot-vendor',
         },
       },
+      {
+        path: 'commission-history-list',
+        component: () => import('../views/settlement-management/CommissionHistoryList.vue'),
+        name: 'CommissionHistoryList',
+        meta: {
+          title: 'commission-history-list',
+        },
+      },
     ],
   },
   {

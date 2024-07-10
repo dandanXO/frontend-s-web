@@ -268,6 +268,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'clock',
         },
+        {
+          path: '/commission-history-list',
+          title: t('menu.CommissionHistoryList'),
+          label: 'CommissionHistoryList',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
       ],
     },
     {

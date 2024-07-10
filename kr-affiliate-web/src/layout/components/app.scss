@@ -113,6 +113,24 @@
     .textRight {
       text-align: right;
     }
+
+    .colorBoxOrange {
+      background-color: #f0ad4e;
+      color: #fff;
+      font-size: 11px;
+      padding: 5px;
+      border-radius: 3px;
+      width: fit-content;
+    }
+
+    .colorBoxBlue {
+      background-color: #337ab7;
+      color: #fff;
+      font-size: 11px;
+      padding: 5px;
+      border-radius: 3px;
+      width: fit-content;
+    }
   }
 
   .table-footer {
