@@ -1,8 +1,5 @@
 <template>
   <div class="sport-zhongchao-container">
-
-
-
     <div class="sport-zhongchao-tab">
       <div
         class="sport-zhongchao-tab-item"
@@ -28,7 +25,7 @@
     </div>
 
     <div class="sport-zhongchao-match-game-wrapper" v-if="matchList.length > 0">
-      <match-game v-for="match in matchList" :key="match.id" :match="match"/>
+      <match-game v-for="match in matchList" :key="match.id" :match="match" />
     </div>
 
     <div
@@ -65,8 +62,8 @@
               color: #05a5ff;
               line-height: 60px;
               font-size: 20px;
-              border-left: 2px solid #05A5FF;
-              border-right: 2px solid #05A5FF;
+              border-left: 2px solid #05a5ff;
+              border-right: 2px solid #05a5ff;
             "
           >
             <div>角球+1分</div>
@@ -115,16 +112,16 @@
       <div
         v-if="tab === 'first'"
         style="
-              line-height: 40px;
-              font-size: 20px;
-              width:100%;
-              margin-top: 16px;
-              color: #ff5454;
-              background: #FFEFEF;
-              text-align: start;
-               padding: 16px;
-              border: 1px solid #FFCBCB;
-            "
+          line-height: 40px;
+          font-size: 20px;
+          width: 100%;
+          margin-top: 16px;
+          color: #ff5454;
+          background: #ffefef;
+          text-align: start;
+          padding: 16px;
+          border: 1px solid #ffcbcb;
+        "
       >
         注：奖金不累积，根据当场指定赛事触发事件总分派发。
       </div>
@@ -151,11 +148,10 @@
         </div>
       </div>
 
-
       <table class="second-table" v-if="tab === 'second'">
         <tr>
           <th rowspan="2">累计有效投注</th>
-          <th colspan="2" style="border-right: 2px solid #05A5FF; border-left: 2px solid #05A5FF">投注指定一场</th>
+          <th colspan="2" style="border-right: 2px solid #05a5ff; border-left: 2px solid #05a5ff">投注指定一场</th>
           <th colspan="2">投注指定两场</th>
         </tr>
         <tr>
@@ -169,7 +165,7 @@
               font-size: 20px;
               line-height: 28px;
               font-weight: 500;
-              border-right: 2px solid #05A5FF;
+              border-right: 2px solid #05a5ff;
             "
           >
             <div>两队总比分</div>
@@ -186,55 +182,54 @@
         </tr>
         <tr>
           <td>≥1,000</td>
-          <td style="border-left: 2px solid #05A5FF">5</td>
-          <td style="border-right: 2px solid #05A5FF">6</td>
+          <td style="border-left: 2px solid #05a5ff">5</td>
+          <td style="border-right: 2px solid #05a5ff">6</td>
           <td>8</td>
           <td>10</td>
         </tr>
         <tr>
           <td>≥5,000</td>
-          <td style="border-left: 2px solid #05A5FF">18</td>
-          <td style="border-right: 2px solid #05A5FF">26</td>
+          <td style="border-left: 2px solid #05a5ff">18</td>
+          <td style="border-right: 2px solid #05a5ff">26</td>
           <td>28</td>
           <td>38</td>
         </tr>
         <tr>
           <td>≥10,000</td>
-          <td style="border-left: 2px solid #05A5FF">28</td>
-          <td style="border-right: 2px solid #05A5FF">38</td>
+          <td style="border-left: 2px solid #05a5ff">28</td>
+          <td style="border-right: 2px solid #05a5ff">38</td>
           <td>58</td>
           <td>68</td>
         </tr>
         <tr>
           <td>≥50,000</td>
-          <td style="border-left: 2px solid #05A5FF">158</td>
-          <td style="border-right: 2px solid #05A5FF">188</td>
+          <td style="border-left: 2px solid #05a5ff">158</td>
+          <td style="border-right: 2px solid #05a5ff">188</td>
           <td>288</td>
           <td>388</td>
         </tr>
         <tr>
           <td>≥100,000</td>
-          <td style="border-left: 2px solid #05A5FF">328</td>
-          <td style="border-right: 2px solid #05A5FF">388</td>
+          <td style="border-left: 2px solid #05a5ff">328</td>
+          <td style="border-right: 2px solid #05a5ff">388</td>
           <td>588</td>
           <td>888</td>
         </tr>
       </table>
 
-
       <div
         v-if="tab === 'second'"
         style="
-              line-height: 40px;
-              font-size: 20px;
-              width:100%;
-              margin-top: 16px;
-              color: #ff5454;
-              background: #FFEFEF;;
-              text-align: start;
-              padding: 16px;
-              border: 1px solid #FFCBCB;
-            "
+          line-height: 40px;
+          font-size: 20px;
+          width: 100%;
+          margin-top: 16px;
+          color: #ff5454;
+          background: #ffefef;
+          text-align: start;
+          padding: 16px;
+          border: 1px solid #ffcbcb;
+        "
       >
         注：彩金奖励不叠加，根据会员所投注的场次以及档位进行派彩；若比分为0:0按双数计算
       </div>
@@ -264,43 +259,35 @@
       <table class="third-table" v-if="tab === 'third'">
         <tr>
           <th style="width: 340px">指定赛事</th>
-          <th style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF ;width: 330px;">注单条件</th>
+          <th style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff; width: 330px">注单条件</th>
           <th>逢8奖金</th>
         </tr>
         <tr>
-          <td
-            rowspan="6"
-            style="
-              color: #05a5ff;
-              line-height: 60px;
-              font-size: 20px;
-              border-right: 2px solid #05A5FF;
-            "
-          >
+          <td rowspan="6" style="color: #05a5ff; line-height: 60px; font-size: 20px; border-right: 2px solid #05a5ff">
             <div>首战告捷</div>
             <div>乘胜追击</div>
           </td>
-          <td style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF">尾号连续两个8</td>
+          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续两个8</td>
           <td>28</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF">尾号连续三个8</td>
+          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续三个8</td>
           <td>88</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF">尾号连续四个8</td>
+          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续四个8</td>
           <td>188</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF">尾号连续五个8</td>
+          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续五个8</td>
           <td>688</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF">尾号连续六个8</td>
+          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续六个8</td>
           <td>1,888</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #05A5FF; border-right: 2px solid #05A5FF">尾号连续七个或以上8</td>
+          <td style="border-left: 2px solid #05a5ff; border-right: 2px solid #05a5ff">尾号连续七个或以上8</td>
           <td>2,888</td>
         </tr>
       </table>
@@ -308,20 +295,18 @@
       <div
         v-if="tab === 'third'"
         style="
-              line-height: 60px;
-              font-size: 20px;
-              width:100%;
-              margin-top: 16px;
-              color: #ff5454;
-              background: #FFEFEF;;
-              text-align: start;
-              padding: 16px;
-              border: 1px solid #FFCBCB;
-            "
+          line-height: 60px;
+          font-size: 20px;
+          width: 100%;
+          margin-top: 16px;
+          color: #ff5454;
+          background: #ffefef;
+          text-align: start;
+          padding: 16px;
+          border: 1px solid #ffcbcb;
+        "
       >
-        <div style="line-height: 32px">
-          注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。
-        </div>
+        <div style="line-height: 32px">注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。</div>
       </div>
 
       <div v-if="tab === 'third'">
@@ -346,33 +331,29 @@
           <div class="sport-zhongchao-notice-item">5.为避免文字理解差异，本站体育保留本活动最终解释权。</div>
         </div>
       </div>
-
-
     </div>
   </div>
-
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { getSportMatch } from "@/api/index/promo";
-import MatchGame from './components/MatchGame.vue';
+import MatchGame from "./components/MatchGame.vue";
 import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value+ "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const tab = ref("first");
 const matchList = ref([]);
 
 onMounted(async () => {
-  const apiRes = await getSportMatch()
-  matchList.value = apiRes.data.map(match => ({
+  const apiRes = await getSportMatch();
+  matchList.value = apiRes.data.map((match) => ({
     ...match,
     awayTeamIcon: imgURL + match.awayTeamIcon,
     homeTeamIcon: imgURL + match.homeTeamIcon
-  }))
-})
-
+  }));
+});
 </script>
 <style lang="scss" scoped>
 .sport-zhongchao-container {
@@ -457,9 +438,9 @@ onMounted(async () => {
     width: 100%;
     text-align: center;
     vertical-align: middle;
-    border-left:1px solid #05A5FF;
-    border-right:1px solid #05A5FF;
-    border-color:#05A5FF;
+    border-left: 1px solid #05a5ff;
+    border-right: 1px solid #05a5ff;
+    border-color: #05a5ff;
 
     th {
       height: 72px;
@@ -481,20 +462,21 @@ onMounted(async () => {
       font-weight: 500;
       color: #333;
       background-color: #fff;
-      border-bottom: 2px solid #05A5FF;
+      border-bottom: 2px solid #05a5ff;
     }
   }
 
-  .first-table,.third-table{
-    tr:first-child{
-      background: linear-gradient(180deg, #05D2FF 0%, #0070F4 100%);
+  .first-table,
+  .third-table {
+    tr:first-child {
+      background: linear-gradient(180deg, #05d2ff 0%, #0070f4 100%);
     }
   }
 
-  .second-table{
-    tr:first-child{
-      th{
-        background: linear-gradient(180deg, #05D2FF 0%, #0070F4 100%);
+  .second-table {
+    tr:first-child {
+      th {
+        background: linear-gradient(180deg, #05d2ff 0%, #0070f4 100%);
       }
     }
   }
@@ -505,7 +487,7 @@ onMounted(async () => {
     line-height: 40px;
     font-weight: 500;
     color: #333;
-    border: 1px solid #01A4FF;
+    border: 1px solid #01a4ff;
     padding: 16px;
   }
 }

@@ -267,7 +267,7 @@ const iconInfo = reactive([
   .sidebar-section-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 
     .sidebar-section-title {
@@ -302,7 +302,7 @@ const iconInfo = reactive([
       &.top {
         border-radius: 6px;
         background-color: #1D243D;
-        padding: 20px;
+        padding: 10px 20px;
 
         .sidebar-section-item img {
           background-color: #00FFFF1A;

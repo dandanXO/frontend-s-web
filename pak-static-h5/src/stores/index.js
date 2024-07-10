@@ -195,6 +195,7 @@ export const userStore = defineStore("userStore", {
         req.headers.TOKEN = token;
         return req;
       });
+      this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -280,7 +281,6 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       const ui = useUI();
-      this.token = token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
         ui.showLoggedIn();

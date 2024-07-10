@@ -60,9 +60,9 @@
             <div class="card-num">{{ bc.cardNumber }}</div>
             <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
-          <div class="card-num-wrapper">
+          <!-- <div class="card-num-wrapper">
             <div class="">IFSC: {{ bc.cardAddress }}</div>
-          </div>
+          </div> -->
           <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
             <q-icon size="sm" name="settings" />
           </div>

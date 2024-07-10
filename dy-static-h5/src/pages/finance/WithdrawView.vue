@@ -154,12 +154,12 @@
             </div>
             <div class="q-mt-md text-neontb">*提币手续费：1.00 USDT</div>
           </div>
-          <div v-else-if="isEWALLET">
+          <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
-                @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+                @click="openEWalletTutorial"
                 :label="tutorialLabel()"
               />
             </div>
@@ -461,19 +461,10 @@ export default defineComponent({
         return 'JDPAY教程视频'
       }
     }
-    const openEWalletTutorial = (code) => {
-      const urlMap = {
-        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
-        'EBPAY': 'https://www.ebpay.org/',
-        'OKPAY': 'https://me-qr.com/l/okpay',
-        'BLBPAY': 'http://808.com/tutorial.html',
-        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
-      };
+    const openEWalletTutorial = () => {
+      if(!selectedWithdrawalMethod.value.url) return
+      window.open(selectedWithdrawalMethod.value.url);
 
-      const url = urlMap[code];
-      if (url) {
-        window.open(url);
-      }
     };
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',

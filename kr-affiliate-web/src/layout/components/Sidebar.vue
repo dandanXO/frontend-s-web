@@ -4,13 +4,13 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
     <div class="navigation">
-      <div class="logo-section" />
+      <a :href="krwUrl" target="_blank">
+        <div class="logo-section" />
+      </a>
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
+          size="small">
           <el-option key="1" value="en">en</el-option>
-          <el-option key="2" value="zh">zh</el-option>
-          <el-option key="3" value="th">th</el-option>
-          <el-option key="4" value="vi">vi</el-option>
           <el-option key="5" value="kr">kr</el-option>
         </el-select>
       </div>
@@ -30,8 +30,10 @@
       </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
-          <svg-icon :icon-class="'right'" />
-          <span>유저사이트</span>
+          <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
+            <svg-icon :icon-class="'right'" />
+            <span>유저사이트</span>
+          </a>
         </div>
       </div>
       <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
@@ -46,8 +48,8 @@
           <template v-if="child.path === '/commission-info' ? false : true">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
               <div class="route-content">
-                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''" />
+                <!-- <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" /> -->
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -84,9 +86,12 @@ const navigationData = ref([])
 
 const store = useStore()
 
+const krwUrl = ref("https://city8.vip");
+
+
 const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage);
-const { setLanguage } = i18nStoreLanguage;
+const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { setLanguage } = i18nStoreLanguage
 
 const affInfo = reactive({
   affiliateCode: null,
@@ -99,7 +104,7 @@ const affInfo = reactive({
 })
 
 const handleLanguage = () => {
-  setLanguage(languageVal.value);
+  setLanguage(languageVal.value)
 }
 
 const setActiveNav = () => {
@@ -114,7 +119,8 @@ const setActiveNav = () => {
       const activeIconColor = '#f2c46f'
       const defaultIconColor = '#1e95ba'
       c.isMenuShow = true
-      if (c.path === currentPath) {
+
+      if (c.path === currentPath || c.path.endsWith(currentPath)) {
         c.active = true
         iconEl.style.fill = activeIconColor
       } else {
@@ -184,7 +190,7 @@ const getNavigationData = () => {
         },
         {
           path: '/member-tree',
-          title: t('menu.Member Tree'),
+          title: t('menu.MemberTree'),
           label: 'Member Tree',
           active: false,
           isMainNav: true,
@@ -209,31 +215,78 @@ const getNavigationData = () => {
       ],
     },
     {
-      title: t('menu.Bet Management'),
+      title: t('menu.BetManagement'),
       label: 'Bet Management',
       display: true,
       path: '/bet-management',
       children: [
         {
-          path: '/game-record?gameType=LIVE',
-          title: t('menu.Bet History LIVE'),
+          path: '/live-bet-history',
+          title: t('menu.LiveBetHistory'),
           label: 'Bet History LIVE',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
         {
-          path: '/game-record?gameType=SLOT',
-          title: t('menu.Bet History SLOT'),
+          path: '/slot-bet-history',
+          title: t('menu.SlotBetHistory'),
           label: 'Bet History SLOT',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
         {
-          path: '/game-record?gameType=SPORT',
-          title: t('menu.Bet History SPORT'),
+          path: '/sport-bet-history',
+          title: t('menu.SportBetHistory'),
           label: 'Bet History SPORT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+      ],
+    },
+    {
+      title: t('menu.SettlementManagement'),
+      label: 'Settlement Management',
+      display: true,
+      path: '/settlement-management',
+      children: [
+        {
+          path: '/monthly-step-by-step-settlement',
+          title: t('menu.MonthlyStepByStep'),
+          label: 'Monthly Step By Step',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/statistics-by-member',
+          title: t('menu.StatisticsByMember'),
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/settlement-by-casino-slot-vendor',
+          title: t('menu.SettlementByCasinoSlotVendor'),
+          label: 'Settlement By Casino / Slot Vendor',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/commission-history-list',
+          title: t('menu.CommissionHistoryList'),
+          label: 'CommissionHistoryList',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/deposit-withdraw-management',
+          title: t('menu.DepositWithdrawManagement'),
+          label: 'DepositWithdrawManagement',
           active: false,
           isMainNav: true,
           icon: 'clock',
@@ -355,6 +408,14 @@ const getNavigationData = () => {
           active: false,
           isMainNav: true,
           icon: 'user',
+        },
+        {
+          path: '/inquiry',
+          title: t('fields.inquiry'),
+          label: 'inquiry',
+          active: false,
+          isMainNav: true,
+          icon: 'email',
         },
         {
           path: '/message',

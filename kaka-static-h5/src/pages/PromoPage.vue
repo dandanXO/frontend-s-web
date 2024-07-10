@@ -315,31 +315,31 @@ export default defineComponent({
           router.push("/account/vip?from=promo");
         } else {
 
-          if(isAndroid()){
-            // modalVisible.value= true;
-            var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
-            // alert(preUrl);
-            console.log(preUrl)
-            // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(
-              preUrl,
-              "_blank",
-              "location=no,zoom=no,footer=no"
-            );
-
-            ref.addEventListener('loadstart', function(event) {
-              var url = event.url;
-              // alert("This" + url);
-              if (url.indexOf("vnmapp:") > -1) {
-                var message = url.split("vnmapp:")[1];
-                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
-                // alert(message);
-                ref.close();
-                router.push(message)
-              }
-            });
-
-          }else{
+          // if(isAndroid()){
+          //   // modalVisible.value= true;
+          //   var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
+          //   // alert(preUrl);
+          //   console.log(preUrl)
+          //   // promoSrc.value= preUrl;
+          //   var ref = cordova.InAppBrowser.open(
+          //     preUrl,
+          //     "_blank",
+          //     "location=no,zoom=no,footer=no"
+          //   );
+          //
+          //   ref.addEventListener('loadstart', function(event) {
+          //     var url = event.url;
+          //     // alert("This" + url);
+          //     if (url.indexOf("vnmapp:") > -1) {
+          //       var message = url.split("vnmapp:")[1];
+          //       console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+          //       // alert(message);
+          //       ref.close();
+          //       router.push(message)
+          //     }
+          //   });
+          //
+          // }else{
             if (route.query.fromAccount) {
               router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
             } else {
@@ -348,7 +348,7 @@ export default defineComponent({
             isPromoDetail.value = true;
             selectedPromo.value = promo;
 
-          }
+          // }
 
         }
         // }
@@ -566,13 +566,14 @@ export default defineComponent({
           background-image: url(../assets/images/promo/promo-item-bg.png);
           background-size: 100% 100%;
           background-repeat: no-repeat;
-          padding: 32px 24px 16px;
+          // padding: 32px 24px 16px;
           position: relative;
           border-radius: 12px;
 
           .promo-label {
             height: 24px;
             display: flex;
+            display: none;
             align-items: center;
             position: absolute;
             top: 0;
@@ -637,13 +638,14 @@ export default defineComponent({
             font-size: 1rem;
             max-width: 160px;
             font-family: "Roboto";
-            display: -webkit-box;
+            // display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             height: 3.3rem;
-            display: flex;
+            // display: flex;
+            display: none;
             align-items: center;
 
             @media (min-width: 500px) {
@@ -672,21 +674,22 @@ export default defineComponent({
             border-radius: 8px;
             font-size: 0.75rem;
             margin-top: 6px;
+            display: none;
           }
 
           .promo-item-side-img {
-            position: absolute;
-            right: 0px;
-            top: 50%;
-            transform: translateY(-50%);
+            // position: absolute;
+            // right: 0px;
+            // top: 50%;
+            // transform: translateY(-50%);
             // height: 70%;
 
             img {
               display: block;
-              height: 100%;
-              max-height: 112px;
-              width: auto;
-              margin-left: auto;
+              // height: 100%;
+              max-height: 140px;
+              // width: auto;
+              // margin-left: auto;
 
               @media (min-width: 500px) {
                 max-height: 130px;
@@ -839,6 +842,16 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        color: #ffffff;
+        table {
+          color: #333333;
+          tr:first-child {
+            td {
+              background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+              color: #ffffff;
+            }
+          }
+        }
 
         &.isEurocup24 {
           width: 100%;
@@ -881,6 +894,24 @@ export default defineComponent({
           border-spacing: 0;
           border-collapse: collapse;
 
+          tr {
+            &:first-child {
+              td:first-child {
+                border-radius: 20px 0 0 0;
+              }
+              td:last-child {
+                border-radius: 0 20px 0 0;
+              }
+            }
+            &:last-child {
+              td:first-child {
+                border-radius: 0 0 0 20px;
+              }
+              td:last-child {
+                border-radius: 0 0 20px 0;
+              }
+            }
+          }
           th {
             padding: 5px;
             text-align: center;
@@ -890,8 +921,10 @@ export default defineComponent({
           td {
             padding: 5px;
             text-align: center;
-            background-color: #ffffff;
-            border: 1px solid #ecedf0;
+            // background-color: #ffffff;
+            background-color: #ffffff1f;
+            border: 1px solid #1e212c;
+            color: #ffffff;
           }
         }
 

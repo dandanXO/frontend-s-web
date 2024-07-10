@@ -54,10 +54,10 @@
                         scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                       }}
                     </q-item-label>
-                    <q-item-label>
+                    <!-- <q-item-label>
                       IFSC
                       {{ scope.opt.cardAddress }}
-                    </q-item-label>
+                    </q-item-label> -->
                   </q-item-section>
                 </q-item>
               </template>
@@ -72,10 +72,10 @@
                   <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                     Acc No. {{ scope.opt.cardNumber }}
                   </q-item-label>
-                  <q-item-label>
+                  <!-- <q-item-label>
                     IFSC
                     {{ scope.opt.cardAddress }}
-                  </q-item-label>
+                  </q-item-label> -->
                 </q-item-section>
               </template>
             </q-select>
@@ -315,6 +315,14 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Please add a bank card first.",
+            icon: "report_problem"
+          });
+          router.push('/account/bank')
         }
       }
     })

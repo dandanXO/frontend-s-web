@@ -268,6 +268,10 @@ export default defineComponent({
               prevPage.value = "/promo";
             }
           }
+        }else if (route.path === "/activities-details") {
+          prevPage.value = "/promo";
+          hasPage.value = true;
+          pageName.value = "Activities Details";
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = "Deposit";

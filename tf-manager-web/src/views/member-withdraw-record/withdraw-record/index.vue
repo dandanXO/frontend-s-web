@@ -1249,7 +1249,7 @@ function checkQuery() {
   query.checkTime = null
   query.payTime = null
   query.totalTime = null
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   return query
 }
 

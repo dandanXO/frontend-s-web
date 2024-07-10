@@ -2,7 +2,6 @@
   <div class="page-container">
     <div class="panel-item">
       <div class="panel-header">{{ $t('fields.memberBetRecords') }}</div>
-
       <div class="inputs-wrap">
         <el-row :gutter="10">
           <el-col :xl="6" :lg="10" :md="12">
@@ -62,7 +61,15 @@
             <th scope="col">{{ t('fields.operate') }}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="page.loading || page.records.length === 0">
+          <tr>
+            <td colspan="11">
+              <Loading v-if="page.loading" />
+              <emptyComp v-else-if="page.records.length === 0" />
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else-if="page.records.length > 0">
           <tr v-for="item in page.records" :key="item.id">
             <td :data-label="t('fields.loginName')">
               <div v-formatter="{
@@ -123,9 +130,6 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="page.records.length === 0">
-        <emptyComp />
-      </div>
       <div class="table-footer">
         <span class="table-footer-item">{{ t('fields.totalBet') }}: $ <span
             v-formatter="{ data: page.totalBet, type: 'money' }" /></span>
@@ -225,13 +229,14 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
 import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../api/affiliate-bet-record';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
 import emptyComp from "@/components/empty"
+import Loading from '@/components/loading/Loading.vue';
 
 const store = useStore();
 const { t } = useI18n();
@@ -430,8 +435,7 @@ async function loadBetRecords() {
   }
   query.siteId = store.state.user.siteId;
   if (query.gameType === 'SPORT') {
-    query.gameType = '';
-    query.gameTypes = ['SPORT', 'ESPORT'];
+    query.gameType = 'SPORT,ESPORT';
   }
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
@@ -471,14 +475,22 @@ async function getVip(memberId) {
   details.vipName = vip;
 }
 
+const initGameType = () => {
+  if (route.meta?.gameType) {
+    request.gameType = route.meta.gameType.toUpperCase();
+  }
+}
+
+watch(() => route.meta?.gameType, () => {
+  initGameType();
+})
+
 onMounted(() => {
   if (route.query.user) {
     request.loginName = route.query.user
   }
 
-  if (route.query.gameType) {
-    request.gameType = route.query.gameType
-  }
+  initGameType();
   loadPlatform();
   loadBetRecords();
   populateGameType();

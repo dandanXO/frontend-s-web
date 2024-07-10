@@ -35,8 +35,11 @@
         <div class="little-title">
           <div class="left">申请方式</div>
           <div class="right" style="margin-top: 4px;">
-            会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+            会员获得符合活动金额注单号，注单产生当日 23:59:59内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
+        </div>
+        <div class="little-title">
+          <div class="right red-font">注意：获奖的注单可能会有延迟，请每 5~10 分钟刷新一次活动页面</div>
         </div>
       </div>
       <div class="slot-lacky8-game-info">
@@ -47,6 +50,12 @@
 <!--            永久有效-->
 <!--          </div>-->
 <!--        </div>-->
+        <div class="little-title">
+          <div class="left">活动场馆</div>
+          <div class="right" style="margin-top: 4px;">
+            PG电子、PT电子、XIN电子
+          </div>
+        </div>
         <div class="little-title" style="flex-direction: column;align-items:unset;">
           <div class="left">活动内容</div>
           <div class="right" style="margin-top: 4px;">
@@ -91,14 +100,14 @@
           <div class="item">
             1.所中奖的注单请在北京时间当天 23:59 分前通过优惠活动详情页点击领取彩金 (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
           </div>
-          <div class="item">2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小於 10 的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；</div>
           <div class="item">
-            3.彩金不可购买免费旋转机会，不可投注以下游戏：古怪猴子、舞龙、高速公路之王、凤凰多旋转类游戏、能量累积类游戏、桌面游戏、街机游戏、捕鱼游戏；
-
+            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于5元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
+          </div>
+          <div class="item">
+            3.彩金不可购买免费旋转机会，不可投注捕鱼游戏；
           </div>
           <div class="item">
             4.同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
-
           </div>
           <div class="item">
             5.为避免文字理解差异，如有疑问可联系在线客服，雷火电竞保留活动最终解释权；
@@ -478,7 +487,7 @@ onMounted(getSlotLucky8Data);
     display: flex;
     width: 100%;
     align-items: center;
-    margin: 12px 0;
+    margin: 12px 0 6px;
     gap: 16px;
     .left {
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
@@ -499,6 +508,10 @@ onMounted(getSlotLucky8Data);
       font-weight: 400;
       line-height: 18px;
       color: #000000;
+
+      &.red-font{
+        color: #f53434;
+      }
     }
   }
 }
