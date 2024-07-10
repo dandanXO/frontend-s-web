@@ -1,25 +1,53 @@
+<!-- <template>
+  <div class="luckyspin-container">
+    <div class="luckyspin-header">
+      <img src="../../../assets/images/index/modal/luckyspin-title.png" />
+    </div>
+    <div class="luckyspin-title"></div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.luckyspin-container {
+  background-image: url(../../../assets/images/index/modal/luckyspin-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-posiiton: center center;
+
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+  padding: 16px;
+
+  .luckyspin-header {
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+</style> -->
+
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div
-        :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`"
-        @click="spinWheel"
-      >
-        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
+      <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
+        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-btn.png" />
       </div>
       <div class="wheel-top-btn">
-        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-top.png" />
+        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" />
       </div>
-      <!-- <div class="wheel-stage">
-        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-stg.png" />
-      </div> -->
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
           <div id="spin-wheel-id" class="spin-wheel">
             <img
               id="spin-wheel-bg"
               class="wheel-bg"
-              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg1.png"
+              src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-bg.png"
             />
             <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
           </div>
@@ -29,23 +57,24 @@
 
     <div class="remaining-draw-wrapper">
       <p class="remaining-draw-text">
-        {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}
+        {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}:
         <span id="remaning-draw-amt">{{ remainingDraws }}</span>
       </p>
     </div>
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-    <div class="prize-popup">
-      <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" />
-      <div class="prize-gold">
-        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-gold.png" width="80" />
-        <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
+    <div class="congrats-container">
+      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
+      <div class="congrats-highlight">Rs58</div>
+
+      <div class="congrats-button">
+        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
+          {{ $t("btn.recharge") }}
+        </q-btn>
       </div>
-
-      <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
-
-      <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">{{ $t("btn.confirm") }}</q-btn>
     </div>
   </q-dialog>
 </template>
@@ -55,16 +84,18 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 const $q = useQuasar();
+const router = useRouter();
 
 // spin wheel constants
-const TOTAL_ITEMS = 10;
+const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997 ];
+const SPIN_WHEEL_PRIZES = [58, 999999, 188, 888, 999998, 388, 488, 588];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -256,13 +287,15 @@ onMounted(() => {
 <style lang="scss" scoped>
 #remaning-draw-amt {
   font-size: 20px;
-  color: #ffffff;
+  color: #61ff00;
   font-weight: bold;
 }
 .spin-wheel-container {
   position: relative;
-  margin: 25px 0px 25px;
+  margin: 0px auto;
   text-align: center;
+  width: 330px;
+  height: 330px;
 }
 
 .spin-wheel-frame {
@@ -270,8 +303,9 @@ onMounted(() => {
   width: 330px;
   height: 330px;
   margin: 0 auto;
-  background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-frame.png) no-repeat center
-  center;
+  // background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
+  //   center;
+  // background: salmon;
   background-size: 115%;
 }
 
@@ -307,6 +341,7 @@ onMounted(() => {
 .wheel-bg {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 .spin-wheel-cny-hat {
   width: 100%;
@@ -327,18 +362,22 @@ onMounted(() => {
   height: 100%;
 }
 .wheel-top-btn {
-  width: 30px;
+  width: 132px;
+  height: 123px;
   position: absolute;
-  top: -20px;
-  left: 0;
+  top: 22px;
+  left: 131px;
   right: 0;
-  margin: auto;
   z-index: 25;
+  img {
+    width: 132px;
+    height: 123px;
+  }
 }
 .draw-btn {
-  width: 80px;
+  width: 130px;
   height: auto;
-  aspect-ratio: 206/220;
+  aspect-ratio: 1/1;
   z-index: 25;
   position: absolute;
   top: calc(50%);
@@ -463,8 +502,7 @@ onMounted(() => {
     // width: 300px;
     // height: 345px;
     gap: 0px;
-    // background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png");
-    // background-size: 100% 100%;
+
     position: relative;
     .close {
       position: absolute;
@@ -487,7 +525,7 @@ onMounted(() => {
       font-size: 25px;
       letter-spacing: 2px;
       background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-      linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -528,8 +566,6 @@ onMounted(() => {
       margin-right: 10px;
 
       .action-btn {
-        // background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png")
-        // no-repeat center center;
         // background-size: contain;
         // width: 100%;
         // height: 100%;
@@ -547,29 +583,22 @@ onMounted(() => {
 }
 
 .remaining-draw-wrapper {
+  background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
+  background-size: 75% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 2px;
+
   .remaining-draw-text {
-    color: #9f9f9f;
+    color: #ffffff;
     font-size: 20px;
-    margin: 10px auto 15px;
+    // margin: 0px auto 15px;
+    margin: auto;
     text-align: center;
     width: 300px;
     position: relative;
     z-index: 23;
   }
-}
-
-.evt-top-header {
-  background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/top-header.png") no-repeat center center;
-  background-size: 100% auto;
-  display: flex;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: bold;
-  font-size: 14px;
-  max-width: 400px;
-  margin: 0 auto 24px;
 }
 
 .promo-info-container {
@@ -650,6 +679,88 @@ onMounted(() => {
         color: #3f8cff;
       }
     }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.congrats-button {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.congrats-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.congrats-container {
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+
+  &:before {
+    content: "";
+    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 2px 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
   }
 }
 </style>

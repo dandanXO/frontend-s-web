@@ -165,7 +165,9 @@ export default {
     moreGames: "مزید کھیل",
     addCash: "کیش شامل کریں",
     search: "تلاش",
-    downloadApp: "ایپ ڈاؤن لوڈ کریں"
+    downloadApp: "ایپ ڈاؤن لوڈ کریں",
+    downloadNow: "ابھی ڈاؤنلوڈ کریں",
+    recharge: "ری چارج کریں"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -408,9 +410,9 @@ export default {
     cancel: "منسوخ کریں",
     updateNow: "ابھی اپ ڈیٹ کریں"
   },
-  bankCard:{
-    bankAccountNum : "بینک اکاؤنٹ نمبر",
-    pleaseEnterCardAccount : "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
+  bankCard: {
+    bankAccountNum: "بینک اکاؤنٹ نمبر",
+    pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
     bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"

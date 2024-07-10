@@ -62,7 +62,11 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
-          <a class="cs-icon tiktok" href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr" target="_blank">
+          <a
+            class="cs-icon tiktok"
+            href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr"
+            target="_blank"
+          >
             <img src="../assets/images/index/insta-icon.png" />
           </a>
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
@@ -1278,6 +1282,14 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="isLuckyDrawModal">
+    <LuckySpinWheel />
+  </q-dialog>
+
+  <q-dialog v-model="isCongratsModal">
+    <CongratsModal />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1299,6 +1311,8 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import CongratsModal from "../components/modal/CongratsModal.vue";
+import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -1320,6 +1334,9 @@ const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+
+const isLuckyDrawModal = ref(false);
+const isCongratsModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -3233,7 +3250,7 @@ const getWithExpiry = (key) => {
   }
   const item = JSON.parse(itemStr);
   const now = new Date();
-  if(now.getTime() > item.expiry) {
+  if (now.getTime() > item.expiry) {
     localStorage.removeItem(key);
     return null;
   }
@@ -3320,7 +3337,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  ui.shouldFetchDownloadAppUrl = true
+  ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -3337,6 +3354,18 @@ watch(
       checkHash();
     }
   }
+);
+
+watch(
+  () => route.query.register,
+  (newValue) => {
+    if (newValue === "true") {
+      if (!isAndroid) {
+        isCongratsModal.value = true;
+      }
+    }
+  },
+  { immediate: true } // to check immediately when the component is mounted
 );
 </script>
 
@@ -3549,11 +3578,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 2.05%,
-        rgba(255, 255, 255, 0.05) 44.93%,
-        rgba(255, 255, 255, 0.05) 53.13%,
-        rgba(255, 255, 255, 0) 98.21%
+      90deg,
+      rgba(255, 255, 255, 0) 2.05%,
+      rgba(255, 255, 255, 0.05) 44.93%,
+      rgba(255, 255, 255, 0.05) 53.13%,
+      rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -4647,10 +4676,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-        180deg,
-        rgba(115, 115, 115, 0) 0%,
-        rgba(153, 153, 153, 0.4) 48.5%,
-        rgba(115, 115, 115, 0) 100%
+      180deg,
+      rgba(115, 115, 115, 0) 0%,
+      rgba(153, 153, 153, 0.4) 48.5%,
+      rgba(115, 115, 115, 0) 100%
     );
   }
 

@@ -433,7 +433,6 @@ export default defineComponent({
             }
           }
 
-
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
@@ -470,9 +469,8 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.push(jumpUrl);
+                  router.push({ path: jumpUrl, query: { register: "true" } });
                 }
-
               } else {
                 $q.notify({
                   color: "negative",
@@ -681,7 +679,7 @@ export default defineComponent({
 
     const openInsta = () => {
       window.open("https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr", "_blank");
-    }
+    };
 
     const openTiktok = () => {
       window.open("https://www.tiktok.com/@b9game", "_blank");
@@ -696,7 +694,7 @@ export default defineComponent({
       if (ui.downloadAppUrl) {
         window.open(ui.downloadAppUrl, "_blank");
       } else {
-        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"))
+        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
       }
     };
 
