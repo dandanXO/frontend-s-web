@@ -10,6 +10,13 @@
     <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
       <img src="../assets/images/promotion/activities/deposit-btn-1.png" />
     </router-link>
+    <div class="current-signin">
+      <div class="current">
+      <img src="../assets/images/promotion/activities/daycal.png">
+      Current Sign-in:
+      </div>
+      <div class="noOfDays">Day {{ bonusSeq + 1 }} </div>
+    </div>
     <div class="activities-stats-container">
       <div class="stats-info">
         <div class="info-title">Deposits of the day</div>
@@ -46,6 +53,10 @@
       <div class="days-box" v-for="(rule, i) in rules" :key="rule" :class="[i + 1 === 7 ? 'days-box__last' : 'days-box',
       {'isReceived': (i===bonusSeq && isReceivedToday) || i < bonusSeq}]">
         <div class="box-ribbon">Day {{ i + 1 }}</div>
+        <div class="box-cal">
+          <img v-if="i === bonusSeq && !isReceivedToday" src="../assets/images/promotion/activities/cal-active.png">
+          <img v-if="i > bonusSeq && !isReceivedToday" src="../assets/images/promotion/activities/cal.png">
+        </div>
         <div class="box-img">
           <img v-if="(i===bonusSeq && isReceivedToday) || i < bonusSeq" :src="require(`../assets/images/promotion/activities/day-received.png`)" />
           <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" >
@@ -150,6 +161,20 @@ onActivated(() => {
     }
   }
 
+  .current-signin {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+    .current {
+      img {
+        width: 15px;
+      }
+    }
+    .noOfDays {
+      font-weight: bold;
+    }
+  }
   .activities-stats-container {
     background: #5817AA99;
     padding: 1rem;
@@ -212,7 +237,9 @@ onActivated(() => {
       background: #3B156E4D;
       &.isReceived {
         background: linear-gradient(356.25deg, #3B156E -0.21%, #8100AE 93.65%);
-
+        .box-img {
+          background:unset;
+        }
       }
       padding: 12px;
       display: flex;
@@ -245,10 +272,22 @@ onActivated(() => {
         font-size: 12px;
       }
 
+      .box-cal {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        img {
+          width: 15px;
+        }
+      }
+
       .box-img {
-        height: 50px;
+        // height: 50px;
         display: flex;
         align-items: center;
+        background: url(../assets/images/promotion/activities/blink.png)no-repeat center center;
+        background-size: contain;
+        padding: 15px;
         img {
           display: block;
         }
