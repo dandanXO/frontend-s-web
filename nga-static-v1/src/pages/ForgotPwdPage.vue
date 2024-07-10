@@ -84,7 +84,7 @@
         <div>
           <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
         </div>
-        
+
         <div class="forgot-password-form-logo-img" style="margin-top: 50px;">
           <img src="../assets/55-ace-logo.png" />
         </div>
@@ -107,6 +107,7 @@
         label-color="brand"
         color="white"
         class="landing-input"
+        name="otp"
       ></q-input>
 
       <q-input
@@ -165,7 +166,7 @@
         </template>
       </q-input>
 
-      <div v-if="verificationForm.newPassword" class="password-str-div">
+      <!-- <div v-if="verificationForm.newPassword" class="password-str-div">
         <span
           :class="{
             'weak-pwd': pwdStrength == 'weak',
@@ -203,7 +204,7 @@
         <template v-slot:append>
           <img :src="verificationImg" @click="getCode()" />
         </template>
-      </q-input>
+      </q-input> -->
 
       <ConfirmButton label="Submit" :confirmFunc="onVerifyForgotPassword"></ConfirmButton>
     </q-form>
@@ -385,7 +386,6 @@ const onVerifyForgotPassword = () => {
   codeRef.value.validate();
   newPwdRef.value.validate();
   newConfirmPwdRef.value.validate();
-  captchaRef.value.validate();
 
   $q.loading.show({
     message: "Submitting..."
@@ -394,8 +394,7 @@ const onVerifyForgotPassword = () => {
   if (
     codeRef.value.hasError ||
     newPwdRef.value.hasError ||
-    newConfirmPwdRef.value.hasError ||
-    captchaRef.value.hasError
+    newConfirmPwdRef.value.hasError
   ) {
     $q.loading.hide();
   } else {
