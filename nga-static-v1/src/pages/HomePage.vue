@@ -148,8 +148,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <div
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -178,8 +177,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
                   >
-                    <div
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -217,18 +215,18 @@
                       <div
                         class="game--bg"
                         :style="{
-                            backgroundImage: (() => {
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
                               try {
-                                return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                                return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                try {
-                                  return `url(${imgURLGame}${item.icon})`;
-                                } catch (e) {
-                                  return `url(https://m.55ace.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
-                                }
+                                return `url(https://m.55ace.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
-                            })()
-                          }"
+                            }
+                          })()
+                        }"
                       ></div>
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
@@ -513,8 +511,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
                 >
-                  <div
-                  >
+                  <div>
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -544,8 +541,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
                 >
-                  <div
-                  >
+                  <div>
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -691,18 +687,18 @@
                 <div
                   class="game--bg"
                   :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              try {
-                                return `url(${imgURLGame}${item.icon})`;
-                              } catch (e) {
-                                return `url(https://m.55ace.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                              }
-                            }
-                          })()
-                        }"
+                    backgroundImage: (() => {
+                      try {
+                        return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                      } catch (e) {
+                        try {
+                          return `url(${imgURLGame}${item.icon})`;
+                        } catch (e) {
+                          return `url(https://m.55ace.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                        }
+                      }
+                    })()
+                  }"
                 ></div>
               </div>
               <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
@@ -1077,8 +1073,6 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1176,10 +1170,446 @@ const depositItems = reactive([
 
 const esport = ref([]);
 const sport = ref([]);
-const livecasino = ref([{"id":4,"name":"Awc","code":"AWC","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":0},{"id":123,"name":"Evo","code":"WCEvo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":0},{"id":103,"name":"WCPT","code":"WCPT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PlayTech","sequence":901},{"id":5,"name":"Ezugi","code":"EZUGI","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Ezugi","sequence":902},{"id":102,"name":"WCSW","code":"WCSW","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":101,"name":"WCMG","code":"WCMG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":100,"name":"WCOT","code":"WCOT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":99,"name":"WCAG","code":"WCAG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":98,"name":"WCBG","code":"WCBG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000}]);
+const livecasino = ref([
+  {
+    id: 4,
+    name: "Awc",
+    code: "AWC",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 0
+  },
+  {
+    id: 123,
+    name: "Evo",
+    code: "WCEvo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Evolution",
+    sequence: 0
+  },
+  {
+    id: 103,
+    name: "WCPT",
+    code: "WCPT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "PlayTech",
+    sequence: 901
+  },
+  {
+    id: 5,
+    name: "Ezugi",
+    code: "EZUGI",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Ezugi",
+    sequence: 902
+  },
+  {
+    id: 102,
+    name: "WCSW",
+    code: "WCSW",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 101,
+    name: "WCMG",
+    code: "WCMG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 100,
+    name: "WCOT",
+    code: "WCOT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 99,
+    name: "WCAG",
+    code: "WCAG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 98,
+    name: "WCBG",
+    code: "WCBG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  }
+]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([{"id":124,"name":"Turbo","code":"Turbo","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":890},{"id":21,"name":"PG","code":"PG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PG","sequence":900},{"id":31,"name":"JDB","code":"JDB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JDB","sequence":901},{"id":8,"name":"JiliGames","code":"JILI","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JiliGames","sequence":902},{"id":111,"name":"Relax","code":"WCRelax","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":121,"name":"Spinix","code":"WCSpinix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":120,"name":"World Match","code":"WCWM","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":119,"name":"PT","code":"WCPTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":118,"name":"MG","code":"WCMGS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":116,"name":"Habanero","code":"WCHB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":115,"name":"Playson","code":"WCPS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":114,"name":"BNG","code":"WCBNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":113,"name":"PNG","code":"WCPNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":112,"name":"Quick Spin","code":"WCQS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":51,"name":"JOKER","code":"JOKER","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JOKER","sequence":1000},{"id":110,"name":"Skywind","code":"WCSWS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":109,"name":"One touch","code":"WCOTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":108,"name":"Wazdan","code":"WCWazdan","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":107,"name":"Big time Gaming","code":"WCBTG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":106,"name":"No limit city","code":"WCNLC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":105,"name":"Red tiger","code":"WCRT","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":104,"name":"Netent","code":"WCNetent","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000}]);
+const slot = ref([
+  {
+    id: 124,
+    name: "Turbo",
+    code: "Turbo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 890
+  },
+  {
+    id: 21,
+    name: "PG",
+    code: "PG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "PG",
+    sequence: 900
+  },
+  {
+    id: 31,
+    name: "JDB",
+    code: "JDB",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JDB",
+    sequence: 901
+  },
+  {
+    id: 8,
+    name: "JiliGames",
+    code: "JILI",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JiliGames",
+    sequence: 902
+  },
+  {
+    id: 111,
+    name: "Relax",
+    code: "WCRelax",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 121,
+    name: "Spinix",
+    code: "WCSpinix",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 120,
+    name: "World Match",
+    code: "WCWM",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 119,
+    name: "PT",
+    code: "WCPTS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 118,
+    name: "MG",
+    code: "WCMGS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 116,
+    name: "Habanero",
+    code: "WCHB",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 115,
+    name: "Playson",
+    code: "WCPS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 114,
+    name: "BNG",
+    code: "WCBNG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 113,
+    name: "PNG",
+    code: "WCPNG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 112,
+    name: "Quick Spin",
+    code: "WCQS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 51,
+    name: "JOKER",
+    code: "JOKER",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JOKER",
+    sequence: 1000
+  },
+  {
+    id: 110,
+    name: "Skywind",
+    code: "WCSWS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 109,
+    name: "One touch",
+    code: "WCOTS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 108,
+    name: "Wazdan",
+    code: "WCWazdan",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 107,
+    name: "Big time Gaming",
+    code: "WCBTG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 106,
+    name: "No limit city",
+    code: "WCNLC",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 105,
+    name: "Red tiger",
+    code: "WCRT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  },
+  {
+    id: 104,
+    name: "Netent",
+    code: "WCNetent",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 1000
+  }
+]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -1270,7 +1700,247 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([{"id":9568,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":900,"siteName":null,"platformId":93,"platformName":null,"platformCode":"Spribe","gameType":"CASUAL","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Spribe"},{"code":"WCEvo","type":"platform","id":123,"name":"Evo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":0},{"code":"WCPT","type":"platform","id":103,"name":"WCPT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PlayTech","sequence":901},{"id":14326,"name":"Aero","code":"aero","status":"OPEN","icon":"5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png","sequence":700,"siteName":null,"platformId":124,"platformName":null,"platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":14327,"name":"Crash X","code":"crash","status":"OPEN","icon":"5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg","sequence":800,"siteName":null,"platformId":124,"platformName":null,"platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":8996,"name":"Teen Patti","code":"72","status":"OPEN","icon":"5/JILI/097df233-0329-427c-a596-9af968062624.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT,NEW","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":8997,"name":"Teen Patti Joker","code":"159","status":"OPEN","icon":"5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"LISTHOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":8999,"name":"Ludo Quick","code":"163","status":"OPEN","icon":"5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":9000,"name":"Andar Bahar","code":"79","status":"OPEN","icon":"5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":9001,"name":"TeenPatti 20-20","code":"161","status":"OPEN","icon":"5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":9002,"name":"Dragon & Tiger","code":"123","status":"OPEN","icon":"5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":9003,"name":"7up7down","code":"124","status":"OPEN","icon":"5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":9004,"name":"Baccarat","code":"152","status":"OPEN","icon":"5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"}]);
+const hotGameList = ref([
+  {
+    id: 9568,
+    name: "Aviator",
+    code: "aviator",
+    status: "OPEN",
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
+    sequence: 900,
+    siteName: null,
+    platformId: 93,
+    platformName: null,
+    platformCode: "Spribe",
+    gameType: "CASUAL",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Spribe"
+  },
+  {
+    code: "WCEvo",
+    type: "platform",
+    id: 123,
+    name: "Evo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Evolution",
+    sequence: 0
+  },
+  {
+    code: "WCPT",
+    type: "platform",
+    id: 103,
+    name: "WCPT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "PlayTech",
+    sequence: 901
+  },
+  {
+    id: 14326,
+    name: "Aero",
+    code: "aero",
+    status: "OPEN",
+    icon: "5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
+    sequence: 700,
+    siteName: null,
+    platformId: 124,
+    platformName: null,
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Turbo"
+  },
+  {
+    id: 14327,
+    name: "Crash X",
+    code: "crash",
+    status: "OPEN",
+    icon: "5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
+    sequence: 800,
+    siteName: null,
+    platformId: 124,
+    platformName: null,
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "Turbo"
+  },
+  {
+    id: 8996,
+    name: "Teen Patti",
+    code: "72",
+    status: "OPEN",
+    icon: "5/JILI/097df233-0329-427c-a596-9af968062624.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT,NEW",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 8997,
+    name: "Teen Patti Joker",
+    code: "159",
+    status: "OPEN",
+    icon: "5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "LISTHOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 8999,
+    name: "Ludo Quick",
+    code: "163",
+    status: "OPEN",
+    icon: "5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 9000,
+    name: "Andar Bahar",
+    code: "79",
+    status: "OPEN",
+    icon: "5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 9001,
+    name: "TeenPatti 20-20",
+    code: "161",
+    status: "OPEN",
+    icon: "5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 9002,
+    name: "Dragon & Tiger",
+    code: "123",
+    status: "OPEN",
+    icon: "5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 9003,
+    name: "7up7down",
+    code: "124",
+    status: "OPEN",
+    icon: "5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 9004,
+    name: "Baccarat",
+    code: "152",
+    status: "OPEN",
+    icon: "5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  }
+]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -1291,9 +1961,8 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        .get("/sitePlatformAndGamesByLabel", {
+        .get("/member/hot", {
           params: {
-            gameLabel: "HOT",
             device: regDevice
           }
         })
@@ -1383,7 +2052,127 @@ const loadJILIFishGameList = () => {
     });
 };
 
-const fishGameJDBList = ref([{"id":9765,"name":"Dragon Fishing","code":"7001","status":"OPEN","icon":"5/JDB/7001.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":9766,"name":"Dragon Fishing II","code":"7002","status":"OPEN","icon":"5/JDB/7002.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":9767,"name":"Cai Shen Fishing","code":"7003","status":"OPEN","icon":"5/JDB/7003.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":9768,"name":"Shade Dragons Fishing","code":"7004","status":"OPEN","icon":"5/JDB/7004.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":9769,"name":"Fishing YiLuFa","code":"7005","status":"OPEN","icon":"5/JDB/7005.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":9770,"name":"Dragon Master","code":"7006","status":"OPEN","icon":"5/JDB/7006.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":9771,"name":"Fishing Disco","code":"7007","status":"OPEN","icon":"5/JDB/7007.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"}]);
+const fishGameJDBList = ref([
+  {
+    id: 9765,
+    name: "Dragon Fishing",
+    code: "7001",
+    status: "OPEN",
+    icon: "5/JDB/7001.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  },
+  {
+    id: 9766,
+    name: "Dragon Fishing II",
+    code: "7002",
+    status: "OPEN",
+    icon: "5/JDB/7002.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  },
+  {
+    id: 9767,
+    name: "Cai Shen Fishing",
+    code: "7003",
+    status: "OPEN",
+    icon: "5/JDB/7003.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  },
+  {
+    id: 9768,
+    name: "Shade Dragons Fishing",
+    code: "7004",
+    status: "OPEN",
+    icon: "5/JDB/7004.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  },
+  {
+    id: 9769,
+    name: "Fishing YiLuFa",
+    code: "7005",
+    status: "OPEN",
+    icon: "5/JDB/7005.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  },
+  {
+    id: 9770,
+    name: "Dragon Master",
+    code: "7006",
+    status: "OPEN",
+    icon: "5/JDB/7006.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  },
+  {
+    id: 9771,
+    name: "Fishing Disco",
+    code: "7007",
+    status: "OPEN",
+    icon: "5/JDB/7007.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "admin",
+    updateTime: "1/5/24, 5:18 PM"
+  }
+]);
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1410,8 +2199,8 @@ const loadJDBFishGameList = () => {
     .then((res) => {
       fishGameJDBList.value = res;
 
-      console.log("JSD")
-      console.log(JSON.stringify(fishGameJDBList.value))
+      console.log("JSD");
+      console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
@@ -1538,8 +2327,8 @@ const getPlatList = () => {
       var pf = data;
       ui.slotLists = [];
       // console.log(pf);
-      slot.value= [];
-      livecasino.value= [];
+      slot.value = [];
+      livecasino.value = [];
 
       pf.forEach((element) => {
         const { status } = element;
@@ -1667,7 +2456,6 @@ const gotoPromo = (banner) => {
   }
 };
 
-
 const returnBannerUrl = (banner) => {
   try {
     var bannerImg = "";
@@ -1712,6 +2500,7 @@ const getVersionNo = async () => {
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
+      var min_version = res.data.minVersion;
       var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
       // alert(latest_ver_no);
       download_url.value = res.data.downloadUrl;
@@ -1721,6 +2510,13 @@ const getVersionNo = async () => {
       store.h5Url = res.data.h5Url;
       if (latest_ver_no > current_version) {
         isAppUpdateModal.value = true;
+      }
+
+      if (min_version) {
+        var min_ver_no = parseInt(min_version.replaceAll(".", ""));
+        if (min_ver_no > current_version) {
+          isOutdatedApp.value = true;
+        }
       }
     }
   }
@@ -1749,6 +2545,9 @@ const cancelUpdate = () => {
 // };
 
 const truncateText = (text, maxLength) => {
+  if (!text) {
+    return "";
+  }
   if (text === "JiliGames") {
     text = "JILI";
   } else if (text.startsWith("WC")) {
@@ -1842,7 +2641,6 @@ onActivated(() => {
 });
 
 onMounted(() => {
-  console.log("NGA");
   isPlatLoading.value = true;
   getPlatList();
   loadData();
@@ -1851,7 +2649,6 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadCustomerAddress();
-  AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
