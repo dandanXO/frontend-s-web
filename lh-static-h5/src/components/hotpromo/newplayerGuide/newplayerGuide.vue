@@ -252,7 +252,13 @@ const handleClickStatusButton = (status, promocode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    router.push({ path: "/home" });
+    if (promocode === 'new-user-setup-bonus-telephone') {
+      router.push({ path: "/account/personal" });
+    } else if (promocode === 'new-user-setup-bonus-first-withdrawal') {
+      router.push({ path: '/finance/withdraw' })
+    } else {
+      router.push({ path: "/account/withdraw" });
+    }
   } else if (status === "YES") {
     getBonus(promocode);
   }

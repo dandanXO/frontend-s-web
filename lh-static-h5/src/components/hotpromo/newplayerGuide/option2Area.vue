@@ -475,7 +475,7 @@ const handleRecieve = async (reward) => {
 };
 
 const handleRedirect = () => {
-  router.push({ path: "/home" });
+  router.push({ path: "/finance/deposit" });
 };
 
 const getData = async () => {
