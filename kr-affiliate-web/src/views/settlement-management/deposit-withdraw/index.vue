@@ -84,13 +84,13 @@
               <td :data-label="t('fields.date')">
                 {{ item.type }}
               </td>
-              <td class="bgGreen textGreen" :data-label="t('fields.secondCol')">
+              <td class="bgGreen textGreen">
                 {{ formatMoney(item.memberName) }}
               </td>
-              <td class="bgRed textRed" :data-label="t('fields.thirdCol')">
+              <td class="bgRed textRed">
                 {{ formatMoney(item.memberMoney) }}
               </td>
-              <td class="bgYellow textRed" :data-label="t('fields.fourthCol')">
+              <td class="bgYellow textRed">
                 {{
                   formatMoney(
                     item.type === 'DEPOSIT'
@@ -99,13 +99,13 @@
                   )
                 }}
               </td>
-              <td class="bgYellow textGreen" :data-label="t('fields.fifthCol')">
+              <td class="bgYellow textGreen">
                 {{ formatDate(item.applicationDate) }}
               </td>
-              <td class="bgYellow" :data-label="t('fields.sixthCol')">
+              <td class="bgYellow">
                 {{ formatDate(item.processingDate) }}
               </td>
-              <td class="bgYellow" :data-label="t('fields.seventhCol')">
+              <td class="bgYellow">
                 {{ item.status }}
               </td>
             </tr>
