@@ -115,7 +115,7 @@
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
-            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup'
+            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl

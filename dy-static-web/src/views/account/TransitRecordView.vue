@@ -403,14 +403,12 @@
                 :label="tbl.title"
               >
                 <template v-if="tbl.dataIndex === 'betId'" #default="scope">
-                  <div style="display: flex; align-items: center;">
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="scope.row.betId"
-                      placement="top-start"
-                    >
-                      <a @click="copy(scope.row.betId)">复制 <span style="color: black">{{scope.row.betId.slice(0, 1)}}...</span></a>
+                  <div style="display: flex; align-items: center">
+                    <el-tooltip class="box-item" effect="dark" :content="scope.row.betId" placement="top-start">
+                      <a @click="copy(scope.row.betId)">
+                        复制
+                        <span style="color: black">{{ scope.row.betId.slice(0, 1) }}...</span>
+                      </a>
                     </el-tooltip>
                   </div>
                 </template>
@@ -1390,13 +1388,13 @@ export default defineComponent({
 
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
-        return '申请中' //Applying
+        return '处理中' //Applying
       } else if (withdrawStatus === 'FAIL') {
         return '失败' // Failed
       } else if (withdrawStatus === 'SUCCESS') {
         return '成功' // Success
       } else if (withdrawStatus === 'STEP_1' || withdrawStatus === 'PENDING') {
-        return '审核中' //Under review
+        return '处理中' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return '待支付' // To be paid
       } else if (withdrawStatus === 'STEP_3') {

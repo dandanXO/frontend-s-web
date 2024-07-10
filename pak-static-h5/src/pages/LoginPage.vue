@@ -147,7 +147,7 @@
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
       </div>
-      <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
+      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
@@ -576,12 +576,7 @@ export default defineComponent({
       if (ui.downloadAppUrl) {
         window.open(ui.downloadAppUrl, "_blank");
       } else {
-        api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-          if (res.code === 0) {
-            ui.downloadAppUrl = res.data.url;
-            window.open(ui.downloadAppUrl, "_blank");
-          }
-        });
+        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"))
       }
     };
     const moveCsIcon = (ev) => {

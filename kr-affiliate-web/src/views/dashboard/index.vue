@@ -1,5 +1,5 @@
 <template>
-  <div class="roles-main">
+  <div class="page-container">
     <el-row>
       <el-col v-loading="uiControl.profitLoading">
         <div class="clearfix">
@@ -19,88 +19,69 @@
               <el-row>
                 <el-col :lg="19" class="total-title">{{ t('fields.lastMonthTotal') }}</el-col>
                 <el-col :lg="5" class="total-text">
-                  {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                  <span
-                    v-formatter="{
-                      data: totalCommission.lastMonthTotal,
-                      type: 'money',
-                    }"
-                  />
+                  <span v-formatter="{
+                    data: totalCommission.lastMonthTotal,
+                    type: 'money',
+                  }" />
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :lg="19" class="total-title">{{ t('fields.monthBeforeLastTotal') }}</el-col>
                 <el-col :lg="5" class="total-text">
-                  {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                  <span
-                    v-formatter="{
-                      data: totalCommission.monthBeforeLastTotal,
-                      type: 'money',
-                    }"
-                  />
+                  <span v-formatter="{
+                    data: totalCommission.monthBeforeLastTotal,
+                    type: 'money',
+                  }" />
                 </el-col>
               </el-row>
             </div>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/profit.svg"></el-icon>
                 <span class="sub-title-span">{{ $t('fields.profit') }}</span>
               </div>
             </template>
-            <el-row style="margin-bottom: 10px;"
-                    :class="'row-data-' + index"
-                    v-for="(item, index) in memberSummary"
-                    :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.profit, type: 'money'}" />
+                <span v-formatter="{ data: item.profit, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/netprofit.svg"></el-icon>
                 <span class="sub-title-span">{{ $t('fields.netProfit') }}</span>
               </div>
             </template>
-            <el-row style="margin-bottom: 10px;"
-                    :class="'row-data-' + index"
-                    v-for="(item, index) in memberSummary"
-                    :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.netProfit, type: 'money'}" />
+                <span v-formatter="{ data: item.netProfit, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/bonus.svg"></el-icon>
                 <span class="sub-title-span">{{ $t('fields.bonus') }}</span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.bonus, type: 'money'}" />
+                <span v-formatter="{ data: item.bonus, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
@@ -109,76 +90,56 @@
                 </span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.commission, type: 'money'}" />
+                <span v-formatter="{ data: item.commission, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
                 <span class="sub-title-span">{{ $t('fields.platformFee') }}</span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.platformFee, type: 'money'}" />
+                <span v-formatter="{ data: item.platformFee, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/payment.svg"></el-icon>
                 <span class="sub-title-span">{{ $t('fields.paymentFee') }}</span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.paymentFee, type: 'money'}" />
+                <span v-formatter="{ data: item.paymentFee, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card class="box-card" :body-style="{padding: '0px 20px 20px'}">
+          <el-card class="box-card" :body-style="{ padding: '0px 20px 20px' }">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/rebate.svg"></el-icon>
                 <span class="sub-title-span">{{ $t('fields.rebate') }}</span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in memberSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in memberSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.rebate, type: 'money'}" />
+                <span v-formatter="{ data: item.rebate, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
@@ -203,60 +164,37 @@
                 </span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in commissionSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in commissionSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span
-                  v-formatter="{data: item.estimatedCommission, type: 'money'}"
-                />
+                <span v-formatter="{ data: item.estimatedCommission, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-          <el-card
-            v-if="
-              affiliateLevel === 'MASTER_AFFILIATE' ||
-                affiliateLevel === 'SUPER_AFFILIATE'
-            "
-            class="box-card"
-          >
+          <el-card v-if="
+            affiliateLevel === 'MASTER_AFFILIATE' ||
+            affiliateLevel === 'SUPER_AFFILIATE'
+          " class="box-card">
             <template #header>
               <div class="clearfix">
                 <el-icon><img src="../../assets/images/home/money.svg"></el-icon>
-                <span
-                  v-if="affiliateLevel === 'MASTER_AFFILIATE'"
-                  class="sub-title-span"
-                >
+                <span v-if="affiliateLevel === 'MASTER_AFFILIATE'" class="sub-title-span">
                   {{ $t('fields.secondLevelAffiliateCommission') }}
                 </span>
-                <span
-                  v-else-if="affiliateLevel === 'SUPER_AFFILIATE'"
-                  class="sub-title-span"
-                >
+                <span v-else-if="affiliateLevel === 'SUPER_AFFILIATE'" class="sub-title-span">
                   {{ $t('fields.thirdLevelAffiliateCommission') }}
                 </span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in commissionSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in commissionSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span
-                  v-formatter="{
-                    data: item.secondLevelCommission,
-                    type: 'money',
-                  }"
-                />
+                <span v-formatter="{
+                  data: item.secondLevelCommission,
+                  type: 'money',
+                }" />
               </el-col>
             </el-row>
           </el-card>
@@ -269,22 +207,16 @@
                 </span>
               </div>
             </template>
-            <el-row
-              style="margin-bottom: 10px;"
-              :class="'row-data-' + index"
-              v-for="(item, index) in commissionSummary"
-              :key="item.id"
-            >
+            <el-row style="margin-bottom: 10px;" :class="'row-data-' + index" v-for="(item, index) in commissionSummary"
+              :key="item.id">
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span
-                  v-formatter="{data: item.thirdLevelCommission, type: 'money'}"
-                />
+                <span v-formatter="{ data: item.thirdLevelCommission, type: 'money' }" />
               </el-col>
             </el-row>
           </el-card>
-        </el-row></el-col>
+        </el-row>
+      </el-col>
     </el-row>
 
     <el-row style="width: 100%; margin-top: 20px;" v-loading="uiControl.opsLoading">
@@ -294,11 +226,7 @@
         </div>
         <el-card>
           <el-row class="radiorow">
-            <el-radio-group
-              v-model="request.queryDate"
-              size="normal"
-              @change="loadOpsSummary"
-            >
+            <el-radio-group v-model="request.queryDate" size="normal" @change="loadOpsSummary">
               <el-radio-button label="today">
                 {{ t('fields.today') }}
               </el-radio-button>
@@ -316,12 +244,8 @@
               <el-col :span="4" align="center" class="total-title">{{ t('fields.depositUsers') }}</el-col>
               <el-col :span="4" align="center" class="total-title">{{ t('fields.transferUsers') }}</el-col>
             </el-row>
-            <el-row
-              :class="'ops-row-data-' + index"
-              v-for="(item, index) in summary"
-              :key="item.id"
-              style="margin-bottom: 20px;"
-            >
+            <el-row :class="'ops-row-data-' + index" v-for="(item, index) in summary" :key="item.id"
+              style="margin-bottom: 20px;">
               <el-col :span="4" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :span="4" align="center">{{ item.registerMemberCount }}</el-col>
               <el-col :span="4" align="center">{{ item.betMemberCount }}</el-col>
@@ -338,34 +262,23 @@
               <el-col :span="4" align="center" class="total-title">{{ t('fields.depositAmount') }}</el-col>
               <el-col :span="4" align="center" class="total-title">{{ t('fields.transferAmount') }}</el-col>
             </el-row>
-            <el-row
-              :class="'ops-row-data-' + index"
-              v-for="(item, index) in summary"
-              :key="item.id"
-              style="margin-bottom: 20px;"
-            >
+            <el-row :class="'ops-row-data-' + index" v-for="(item, index) in summary" :key="item.id"
+              style="margin-bottom: 20px;">
               <el-col :span="4" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :span="4" align="center">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.profit, type: 'money'}" />
+                <span v-formatter="{ data: item.profit, type: 'money' }" />
               </el-col>
               <el-col :span="4" align="center">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.bet, type: 'money'}" />
+                <span v-formatter="{ data: item.bet, type: 'money' }" />
               </el-col>
               <el-col :span="4" align="center">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.ftdAmount, type: 'money'}" />
+                <span v-formatter="{ data: item.ftdAmount, type: 'money' }" />
               </el-col>
               <el-col :span="4" align="center">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span v-formatter="{data: item.depositAmount, type: 'money'}" />
+                <span v-formatter="{ data: item.depositAmount, type: 'money' }" />
               </el-col>
               <el-col :span="4" align="center">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                <span
-                  v-formatter="{data: item.affiliateTransferAmount, type: 'money'}"
-                />
+                <span v-formatter="{ data: item.affiliateTransferAmount, type: 'money' }" />
               </el-col>
             </el-row>
           </span>
@@ -639,13 +552,16 @@ onMounted(() => {
   border: 0;
   box-shadow: none;
 }
+
 .htitle {
   font-size: 30px;
   font-weight: bold;
 }
+
 .sub-title-span {
   font-weight: bold;
 }
+
 .profit-summary {
   width: 100%;
   display: grid;
@@ -676,6 +592,7 @@ onMounted(() => {
   font-weight: normal;
   margin-bottom: 5px;
 }
+
 .total-text {
   color: #3F8CFF;
   /* font-weight: bold; */
@@ -707,15 +624,18 @@ onMounted(() => {
   width: 80px;
   height: 80px; */
 }
+
 .box-card .el-card__header .clearfix {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .box-card .el-card__header .clearfix .el-icon {
   width: 20px;
   height: 20px;
 }
+
 .box-card .el-icon img {
   width: 100%;
   display: block;
@@ -756,9 +676,12 @@ onMounted(() => {
   font-weight: bold;
   color: var(--el-text-color-regular);
 }
+
 .radiorow {
-  overflow: auto;justify-content: flex-end
+  overflow: auto;
+  justify-content: flex-end
 }
+
 .ops-row-header {
   width: 100%;
   padding-left: 20px;
@@ -793,6 +716,7 @@ onMounted(() => {
   .profit-summary {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .commission-summary {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -801,10 +725,12 @@ onMounted(() => {
     margin-top: 20px;
   }
 }
+
 @media (max-width: 500px) {
   .profit-summary {
     grid-template-columns: repeat(1, 1fr);
   }
+
   .role-span {
     font-size: 18px;
   }
@@ -812,33 +738,39 @@ onMounted(() => {
 </style>
 
 <style>
+.role-span {
+  font-size: 30px;
+  color: #0A1629;
+  font-weight: bold;
+}
+
+.el-radio-group {
+  background: #F4F9FD;
+  padding: 2px;
+  border-radius: 20px;
+}
+
+.el-radio-button .el-radio-button__inner {
+  background: #F4F9FD;
+}
+
+.el-radio-button:first-child .el-radio-button__inner {
+  border-radius: 20px 0 0 20px;
+  border: 0;
+}
+
+.el-radio-button:last-child .el-radio-button__inner {
+  border-radius: 0 20px 20px 0;
+  border: 0;
+}
+
+.el-loading-mask {
+  background: rgb(243 248 252 / 90%) !important;
+}
+
+@media (max-width: 500px) {
   .role-span {
-    font-size: 30px;
-    color: #0A1629;
-    font-weight: bold;
+    font-size: 18px;
   }
-  .el-radio-group {
-    background: #F4F9FD;
-    padding: 2px;
-    border-radius: 20px;
-  }
-  .el-radio-button .el-radio-button__inner {
-    background: #F4F9FD;
-  }
-  .el-radio-button:first-child .el-radio-button__inner {
-    border-radius: 20px 0 0 20px;
-    border: 0;
-  }
-  .el-radio-button:last-child .el-radio-button__inner {
-    border-radius: 0 20px 20px 0;
-    border: 0;
-  }
-  .el-loading-mask {
-    background: rgb(243 248 252 / 90%) !important;
-  }
-  @media (max-width: 500px) {
-    .role-span {
-      font-size: 18px;
-    }
-  }
+}
 </style>

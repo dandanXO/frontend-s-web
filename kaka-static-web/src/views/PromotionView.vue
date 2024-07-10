@@ -350,12 +350,12 @@ export default defineComponent({
   min-height: 600px;
 
   .all-promotions {
-    background: url(../assets/promo/top-promo-icon.png) no-repeat center top;
+    // background: url(../assets/promo/top-promo-icon.png) no-repeat center top; 
     width: 100%;
     background-size: 100% auto;
     padding: 50px;
     position: relative;
-    padding-top: max(270px, 15vw);
+    // padding-top: max(270px, 15vw);
     background-color: #1E212C
   ;
   }
@@ -379,9 +379,8 @@ export default defineComponent({
       min-width: 80%;
       text-align: center;
       tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+        background-image: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
         color: #ffffff;
-        border: 0;
       }
       border-collapse: collapse;
       th,
@@ -408,13 +407,25 @@ export default defineComponent({
       }
       td {
         // background-color: #202228;
-        border: 1px solid #dcdce8;
-        color: $font-5;
+        border: 1px solid #1E212C;
+        color: #ffffff;
+        background: #ffffff0d;
       }
       tr {
-        &:last-child {
+        &:first-child {
           td:first-child {
             border-radius: 20px 0 0 0;
+          }
+          td:last-child {
+            border-radius: 0 20px 0 0;
+          }
+        }
+        &:last-child {
+          td:first-child {
+            border-radius: 0 0 0 20px;
+          }
+          td:last-child {
+            border-radius: 0 0 20px 0;
           }
         }
       }
@@ -639,10 +650,10 @@ export default defineComponent({
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
-            display: flex;
+            // display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 50px;
+            // padding: 0 50px;
             // border-radius: 10px 10px 0 0;
             position: relative;
 
@@ -650,7 +661,8 @@ export default defineComponent({
               position: absolute;
               left: 0;
               top: 0;
-              display: flex;
+              // display: flex;
+              display:none;
               align-items: center;
               height: 42px;
               .label-type {
@@ -722,6 +734,7 @@ export default defineComponent({
               }
             }
             .promo-type {
+              display: none;
               position: absolute;
               left: 0;
               top: 0;
@@ -743,7 +756,8 @@ export default defineComponent({
               font-family: "Roboto";
               margin: 20px 0;
               padding: 50px 0 10px 0;
-              display: flex;
+              // display: flex;
+              display: none;
               gap: 5px;
               flex-direction: column;
               justify-content: flex-start;
@@ -780,14 +794,17 @@ export default defineComponent({
             }
             .promo-bg {
               transition: all 0.5s ease;
-              background-size: cover;
+              // background-size: cover;
+              background-size: 100% 100%;
               background-position: center center;
               display: flex;
               justify-content: center;
               align-items: center;
-              gap: 30px;
-              height: 250px;
+              // gap: 30px;
+              height: 230px;
               .promo-content {
+                // height: 100%;
+                width: 100%;
                 height: 100%;
                 &.isDesktop {
                   display: block;
@@ -797,7 +814,7 @@ export default defineComponent({
                 }
               }
               .promo-img {
-                height: 200px;
+                // height: 200px;
               }
             }
           }
@@ -878,7 +895,7 @@ export default defineComponent({
           width: 100%;
           text-align: left;
           padding: 10px 0;
-          color: $font-5;
+          color: #ffffff;
           font-size: 20px;
           ol {
             li {

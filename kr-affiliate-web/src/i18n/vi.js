@@ -214,7 +214,7 @@ export default {
     changeWithdrawPw: 'Thay đổi Mật khẩu Rút tiền',
     clearingSum: 'Tổng số rõ',
     commission: 'Hoa hồng',
-    gamecommission: "Hoa hồng nền tản",
+    gamecommission: 'Hoa hồng nền tản',
     commissionBalance: 'Số dư Hoa hồng',
     commissionPercent: 'Phần trăm Hoa hồng',
     commissionRate: 'Tỷ lệ Hoa hồng',
@@ -495,6 +495,20 @@ export default {
     mobileWay: 'Di Động',
     forgetPassword: 'Quên Mật khẩu',
     authenticator: 'Ứng dụng Xác thực',
+    sendMessageType: 'Loại thông tin',
+    message: 'thông tin',
+    messageType: 'Loại thông tin',
+    messageTitle: 'tiêu đề',
+    messageContent: 'nội dung',
+    messageSendTime: 'Gửi thời gian',
+    addAffiliateMessage: 'Thêm thông tin người chơi ngoại tuyến',
+    editAffiliateMessage: 'Chỉnh sửa thông tin thành viên tuyến dưới',
+    messageSend: 'gửi',
+    receivedType: 'Kiểu gửi',
+    receivedMembers: 'tài khoản người chơi',
+    example: 'Ví dụ',
+    memberUsername: 'tài khoản',
+    inquiry: 'cuộc điều tra',
   },
   google: {
     google_auth_menu: 'Xác thực Google',
@@ -661,7 +675,8 @@ export default {
     channelPackUrlCopied: 'Url gói kênh đã được sao chép vào bảng ghi tạm.',
     validateAppNameRequired: 'Tên ứng dụng là bắt buộc',
     validateAppIconRequired: 'Biểu tượng ứng dụng là bắt buộc',
-    depositShouldBetween: 'Số tiền gửi phải nằm trong khoảng '
+    depositShouldBetween: 'Số tiền gửi phải nằm trong khoảng ',
+    replySuccess: 'Trả lời thành công',
   },
   menu: {
     undefined: '',
@@ -696,6 +711,8 @@ export default {
     'Daily Detail': 'Chi Tiết Hàng Ngày',
     'Daily Summary': 'Tóm Tắt Hàng Ngày',
     Withdraw: 'Rút tiền ngân hàng',
+    message: 'Thông báo trang web',
+    inquiry: 'cuộc điều tra',
   },
   posterType: {
     OVERALL: 'Giới Thiệu Tổng Quan',
@@ -742,7 +759,13 @@ export default {
     ANDROID: 'ANDROID',
     IOS: 'IOS',
   },
-
+  sendMessageType: {
+    NOTIFICATION: 'thông báo',
+    ACTIVITY: 'Hoạt động',
+    ANNOUNCEMENT: 'thông báo',
+    ALL_DOWNLINE_MEMBER: 'Tất cả người chơi ngoại tuyến',
+    SELECTED_MEMBER: 'Chọn máy nghe nhạc',
+  },
   error: {
     400: 'Yêu cầu không hợp lệ',
     403: 'Cấm truy cập',

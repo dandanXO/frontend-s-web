@@ -11,6 +11,7 @@ export const userStore = defineStore("userStore", {
   state: () => {
     return {
       id: 0,
+      memberId: "",
       profilePicture: "",
       displayName: "",
       nickName: "",
@@ -83,9 +84,9 @@ export const userStore = defineStore("userStore", {
         } else {
           api.get("/announcement").then((res) => {
             const { data: { code, data: { announcements } } } = res;
-            
+
             const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-            
+
             if (code === 0) {
               const announcementsFormattedData = announcements.map((item) => ({
                 ...item,
@@ -115,9 +116,9 @@ export const userStore = defineStore("userStore", {
 
           api.get("/member/withdraw-deposit-record").then((res) => {
             const { data: { code, data } } = res;
-            
+
             if (code === 0) {
-              const displayTypes = ['WITHDRAW']; 
+              const displayTypes = ['WITHDRAW'];
               this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
               resolve(this.financeRecords);
             }
@@ -150,6 +151,7 @@ export const userStore = defineStore("userStore", {
         const ret = res.data;
         if (ret.code === 0) {
           this.id = ret.data.id;
+          this.memberId= ret.data.memberId;
           this.nickName = ret.data.loginName;
           this.name2 = ret.data.name2;
           this.realName = ret.data.realName;

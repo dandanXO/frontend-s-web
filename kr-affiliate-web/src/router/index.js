@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/Index.vue'
 import Forbidden from '@/views/Forbidden.vue'
+
 export const constantRoutes = [
   {
     path: '/login',
@@ -12,7 +13,7 @@ export const constantRoutes = [
     path: '/403',
     name: 'Forbidden',
     meta: { hidden: true },
-    component: Forbidden
+    component: Forbidden,
   },
   {
     path: '/kr/login',
@@ -55,9 +56,17 @@ export const constantRoutes = [
         path: 'member',
         component: () =>
           import('../views/member-info/member-management/index.vue'),
-        name: 'Member Management',
+        name: 'Member',
         meta: {
           title: 'member-management',
+        },
+      },
+      {
+        path: 'member-tree',
+        component: () => import('../views/member-info/member-tree/index.vue'),
+        name: 'MemberTree',
+        meta: {
+          title: 'member-tree',
         },
       },
       {
@@ -75,7 +84,7 @@ export const constantRoutes = [
         path: 'affiliate',
         component: () =>
           import('../views/member-info/affiliate-management/index.vue'),
-        name: 'Affiliate Management',
+        name: 'Affiliate',
         meta: {
           title: 'affiliate-management',
         },
@@ -91,9 +100,88 @@ export const constantRoutes = [
       {
         path: 'summary',
         component: () => import('../views/affiliate/summary/index.vue'),
-        name: 'Affiliate Summary',
+        name: 'AffiliateSummary',
         meta: {
           title: 'affiliate-summary',
+        },
+      },
+    ],
+  },
+  {
+    path: '/bet-management',
+    component: Layout,
+    children: [
+      {
+        path: 'live-bet-history',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'LiveBetHistory',
+        meta: {
+          title: 'game-record-live',
+          gameType: 'live'
+        },
+      },
+      {
+        path: 'slot-bet-history',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'SlotBetHistory',
+        meta: {
+          title: 'game-record-slot',
+          gameType: 'slot'
+        },
+      },
+      {
+        path: 'sport-bet-history',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'SportBetHistory',
+        meta: {
+          title: 'game-record-sport',
+          gameType: 'sport'
+        },
+      },
+    ]
+  },
+  {
+    path: '/settlement-management',
+    component: Layout,
+    children: [
+      {
+        path: 'monthly-step-by-step-settlement',
+        component: () => import('../views/settlement-management/MonthlyStepByStepSettlement.vue'),
+        name: 'MonthlyStepByStep',
+        meta: {
+          title: 'monthly-step-by-step-settlement',
+        },
+      },
+      {
+        path: 'statistics-by-member',
+        component: () => import('../views/settlement-management/StatisticsByMember.vue'),
+        name: 'StatisticsByMember',
+        meta: {
+          title: 'statistics-by-member',
+        },
+      },
+      {
+        path: 'settlement-by-casino-slot-vendor',
+        component: () => import('../views/settlement-management/SettlementByCasinoSlotVendor.vue'),
+        name: 'SettlementByCasinoSlotVendor',
+        meta: {
+          title: 'settlement-by-casino-slot-vendor',
+        },
+      },
+      {
+        path: 'commission-history-list',
+        component: () => import('../views/settlement-management/CommissionHistoryList.vue'),
+        name: 'CommissionHistoryList',
+        meta: {
+          title: 'commission-history-list',
+        },
+      },
+      {
+        path: 'deposit-withdraw-management',
+        component: () => import('../views/settlement-management/deposit-withdraw/index.vue'),
+        name: 'DepositWithdrawManagement',
+        meta: {
+          title: 'deposit-withdraw-management',
         },
       },
     ],
@@ -227,6 +315,22 @@ export const constantRoutes = [
         name: 'Personal Info',
         meta: {
           title: 'personal',
+        },
+      },
+      {
+        path: 'inquiry',
+        component: () => import('../views/personal/inquiry/index.vue'),
+        name: 'inquiry',
+        meta: {
+          title: 'inquiry',
+        },
+      },
+      {
+        path: 'message',
+        component: () => import('../views/personal/message/index.vue'),
+        name: 'Message',
+        meta: {
+          title: 'message',
         },
       },
       {

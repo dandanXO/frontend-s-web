@@ -1,23 +1,13 @@
 <template>
-  <el-breadcrumb
-    class="app-breadcrumb"
-    separator-class="el-icon-arrow-right"
-  >
-    <transition-group name="breadcrumb">
-      <el-breadcrumb-item
-        v-for="(item, index) in breadcrumbs"
-        :key="item.path"
-      >
-        <span
-          v-if="item.redirect === 'noredirect' || index === breadcrumbs.length-1"
-          class="no-redirect"
-        >{{ $t('menu.' + item.name) }}</span>
-        <a
-          v-else
-          @click.prevent="handleLink(item)"
-        >{{ $t('menu.' + item.name) }}</a>
-      </el-breadcrumb-item>
-    </transition-group>
+  <el-breadcrumb class="app-breadcrumb" separator-class="el-icon-arrow-right" color="white">
+    <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
+      <span v-if="item.redirect === 'noredirect' || index === breadcrumbs.length - 1" class="no-redirect">
+        {{
+          $t('menu.'
+            + (item.name || item.meta.title)) }}</span>
+      <a class="redirect-link" v-else @click.prevent="handleLink(item)">{{
+        $t('menu.' + (item.name || item.meta.title)) }}</a>
+    </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
@@ -27,6 +17,7 @@ import { useRoute } from 'vue-router'
 import { compile } from 'path-to-regexp'
 import router from '@/router'
 import { useI18n } from "vue-i18n";
+
 export default defineComponent({
   setup() {
     const currentRoute = useRoute()
@@ -110,13 +101,24 @@ export default defineComponent({
 }
 
 .app-breadcrumb.el-breadcrumb {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  font-family: 'NanumNeo';
+  font-size: 13px;
+  background-color: #344151;
+  padding: 5px 23px 5px;
+  border-top: 3px solid #344151;
+
+  :deep(.el-breadcrumb__separator) {
+    color: #fff;
+  }
+
+  .redirect-link {
+    color: #fff;
+  }
 
   .no-redirect {
-    color: #97a8be;
+    color: #fff;
     cursor: text;
   }
 }

@@ -130,7 +130,7 @@
         </el-form-item>
         <el-form-item :label="t('fields.homeTeamIcon')" prop="homeTeamIcon">
           <el-row :gutter="5" style="width: 350px">
-            <el-col v-if="form.homeTeamIcon" :span="18">
+            <el-col v-if="form.homeTeamIcon">
               <el-image
                 v-if="form.homeTeamIcon"
                 :src="promoDir + form.homeTeamIcon"
@@ -139,7 +139,15 @@
                 :preview-src-list="[promoDir + form.homeTeamIcon]"
               />
             </el-col>
-            <el-col :span="6">
+            <el-col>
+              <el-button
+                icon="el-icon-plus"
+                size="mini"
+                type="primary"
+                @click="showImageDialog()"
+              >
+                {{ t('fields.upload') }}
+              </el-button>
               <el-button
                 icon="el-icon-search"
                 size="mini"
@@ -156,7 +164,7 @@
         </el-form-item>
         <el-form-item :label="t('fields.awayTeamIcon')" prop="awayTeamIcon">
           <el-row :gutter="5" style="width: 350px">
-            <el-col v-if="form.awayTeamIcon" :span="18">
+            <el-col v-if="form.awayTeamIcon">
               <el-image
                 v-if="form.awayTeamIcon"
                 :src="promoDir + form.awayTeamIcon"
@@ -165,7 +173,15 @@
                 :preview-src-list="[promoDir + form.awayTeamIcon]"
               />
             </el-col>
-            <el-col :span="6">
+            <el-col>
+              <el-button
+                icon="el-icon-plus"
+                size="mini"
+                type="primary"
+                @click="showImageDialog()"
+              >
+                {{ t('fields.upload') }}
+              </el-button>
               <el-button
                 icon="el-icon-search"
                 size="mini"
@@ -764,6 +780,102 @@
       </div>
     </div>
   </el-dialog>
+  <el-dialog
+    :title="uiControl.imageDialogTitle"
+    v-model="uiControl.imageDialogVisible"
+    append-to-body
+    width="600px"
+    :close-on-press-escape="false"
+  >
+    <el-form
+      ref="imageFormRef"
+      :model="imageForm"
+      :rules="imageFormRules"
+      :inline="true"
+      size="small"
+      label-width="180px"
+    >
+      <div id="preview">
+        <el-image
+          v-if="uploadedImage.url"
+          :src="uploadedImage.url"
+          :fit="contain"
+          :preview-src-list="[uploadedImage.url]"
+        />
+      </div>
+      <el-form-item :label="t('fields.image')" prop="path">
+        <el-row :gutter="10">
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadFile"
+              type="file"
+              ref="inputImage"
+              style="display: none"
+              accept="image/*"
+              @change="attachImage"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputImage.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+          <el-col :span="1" />
+        </el-row>
+      </el-form-item>
+      <el-form-item :label="t('fields.imageName')" prop="name">
+        <el-input v-model="imageForm.name" style="width: 350px" />
+      </el-form-item>
+      <el-form-item :label="t('fields.category')" prop="category">
+        <span style="width: 350px">{{ t('fields.promo') }}</span>
+      </el-form-item>
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="imageForm.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 350px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        :label="t('fields.promoType')"
+        prop="promoType"
+      >
+        <span style="width: 350px">{{ t('fields.teamIcon') }}</span>
+      </el-form-item>
+      <el-form-item :label="t('fields.remark')" prop="remark">
+        <el-input
+          v-model="imageForm.remark"
+          :rows="2"
+          type="textarea"
+          :placeholder="t('fields.pleaseInput')"
+          style="width: 350px"
+        />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImageUpload">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -780,7 +892,8 @@ import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
-import { getSiteImage } from "@/api/site-image";
+import { createSiteImage, getSiteImage } from "@/api/site-image";
+import { uploadImage } from '../../../../api/image'
 
 const { t } = useI18n();
 const store = useStore();
@@ -790,6 +903,8 @@ const site = ref(null);
 const choiceOne = ref([]);
 const choiceTwo = ref([]);
 const choiceThree = ref([]);
+const inputImage = ref(null)
+const imageFormRef = ref(null)
 const imageList = reactive({
   dataList: [],
   pages: 0,
@@ -867,7 +982,9 @@ const uiControl = reactive({
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
-  imageSelectionVisible: false
+  imageSelectionVisible: false,
+  imageDialogVisible: false,
+  imageDialogTitle: '',
 });
 const page = reactive({
   pages: 0,
@@ -941,6 +1058,30 @@ const viewForm = reactive({
   matchTime: null,
   startTime: null,
   endTime: null
+})
+
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  imageDimension: null,
+  promoType: 'TEAM_ICON',
+})
+
+const uploadedImage = reactive({
+  url: null,
+})
+
+const imageFormRules = reactive({
+  path: [required(t('message.validateImageRequired'))],
+  name: [required(t('message.validateImageNameRequired'))],
+  category: [required(t('message.validateCategoryRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  promoType: [required(t('messsage.validatePromoTypeRequired'))],
 })
 
 const validateChoiceOne = (rule, value, callback) => {
@@ -1334,6 +1475,65 @@ function submitImage() {
       break
   }
   uiControl.imageSelectionVisible = false
+}
+
+function showImageDialog() {
+  if (imageFormRef.value) {
+    imageFormRef.value.resetFields()
+    uploadedImage.url = null
+    imageForm.id = null
+  }
+  imageForm.category = 'PROMO'
+  uiControl.imageDialogTitle = t('fields.addImage')
+  uiControl.imageDialogVisible = true
+}
+
+async function attachImage(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    imageForm.path = data.data
+    inputImage.value.value = ''
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+
+  // record file dimension
+  var fr = new FileReader()
+  fr.onload = function() {
+    var img = new Image()
+    img.onload = function() {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  const dir = 'temp'
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    uploadedImage.url = URL.createObjectURL(files)
+    return await uploadImage(formData)
+  }
+}
+
+function submitImageUpload() {
+  imageFormRef.value.validate(async valid => {
+    if (valid) {
+      await createSiteImage(imageForm)
+      uiControl.imageDialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
 }
 
 onMounted(async () => {

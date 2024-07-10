@@ -1,11 +1,7 @@
 <template>
-  <div class="roles-main">
-    <el-card class="box-card" shadow="never">
-      <template #header>
-        <div class="clearfix">
-          <span class="role-span">{{ $t('fields.downlineAffiliate') }}</span>
-        </div>
-      </template>
+  <div class="page-container">
+    <div class="panel-item">
+      <div class="panel-header">{{ $t('fields.downlineAffiliate') }}</div>
       <div class="inputs-wrap">
         <el-form @submit.prevent inline="true">
           <!--          <el-form-item :label="t('fields.registerTime') + ' :'">-->
@@ -26,30 +22,15 @@
           <!--            />-->
           <!--          </el-form-item>-->
           <el-form-item :label="t('fields.loginName') + ' :'">
-            <el-input
-              class="input-small"
-              v-model="request.loginName"
-              maxlength="50"
-              :placeholder="t('fields.loginName')"
-              size="normal"
-            />
+            <el-input class="input-small" v-model="request.loginName" maxlength="50"
+              :placeholder="t('fields.loginName')" size="normal" />
           </el-form-item>
           <el-form-item>
             <div class="grp-btn">
-              <el-button
-                icon="el-icon-search"
-                type="primary"
-                @click="search()"
-                size="normal"
-              >
+              <el-button icon="el-icon-search" type="primary" @click="search()" size="normal">
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button
-                size="normal"
-                type="primary"
-                plain
-                @click="resetQuery()"
-              >
+              <el-button size="normal" type="primary" plain @click="resetQuery()">
                 {{ $t('fields.reset') }}
               </el-button>
             </div>
@@ -57,35 +38,21 @@
         </el-form>
       </div>
       <div class="btn-group">
-        <el-button
-          v-if="parseInt(store.state.user.siteId) === 10
-            ? affiliateLevel === 'JUNIOR_AFFILIATE' ? false : true
-            : affiliateLevel === 'AFFILIATE' ? false : true"
-          icon="el-icon-plus"
-          size="normal"
-          type="primary"
-          @click="showDialog('CREATE')"
-        >
+        <el-button v-if="parseInt(store.state.user.siteId) === 10
+          ? affiliateLevel === 'JUNIOR_AFFILIATE' ? false : true
+          : affiliateLevel === 'AFFILIATE' ? false : true" icon="el-icon-plus" size="normal" type="primary"
+          @click="showDialog('CREATE')">
           {{ $t('fields.add') }}
         </el-button>
       </div>
       <el-breadcrumb separator=" > " class="breadcrumb">
-        <el-breadcrumb-item
-          v-for="item in breadcrumbNameList"
-          :key="item.id"
-          @click="breadcrumbSearch(item.id, item.name)"
-        >
+        <el-breadcrumb-item v-for="item in breadcrumbNameList" :key="item.id"
+          @click="breadcrumbSearch(item.id, item.name)">
           {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb>
 
-      <table
-        style="width: 98%; margin: 0 auto;"
-        cellpadding="0"
-        cellspacing="0"
-        border="0"
-        class="custom-table"
-      >
+      <table cellpadding="0" cellspacing="0" border class="custom-table">
         <thead>
           <tr>
             <th>{{ t('fields.loginName') }}</th>
@@ -106,10 +73,7 @@
         <tbody>
           <tr v-for="record in page.records" :key="record.id">
             <td>
-              <el-link
-                type="primary"
-                @click="searchDownline(record.id, record.loginName)"
-              >
+              <el-link type="primary" @click="searchDownline(record.id, record.loginName)">
                 {{ record.loginName }}
               </el-link>
             </td>
@@ -147,43 +111,28 @@
               <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">
                 {{ t('affiliate.status.' + record.affiliateStatus) }}
               </el-tag>
-              <el-tag
-                v-if="record.affiliateStatus === 'NORMAL'"
-                type="success"
-                size="normal"
-              >
+              <el-tag v-if="record.affiliateStatus === 'NORMAL'" type="success" size="normal">
                 {{ t('affiliate.status.' + record.affiliateStatus) }}
               </el-tag>
-              <el-tag
-                v-if="record.affiliateStatus === 'DISABLE'"
-                type="danger"
-                size="normal"
-              >
+              <el-tag v-if="record.affiliateStatus === 'DISABLE'" type="danger" size="normal">
                 {{ t('affiliate.status.' + record.affiliateStatus) }}
               </el-tag>
-              <el-tag
-                v-if="record.affiliateStatus === null"
-                type="info"
-                size="normal"
-              >
+              <el-tag v-if="record.affiliateStatus === null" type="info" size="normal">
                 -
               </el-tag>
             </td>
             <td>{{ record.site }}</td>
             <td>
               $
-              <span v-formatter="{data: record.balance, type: 'money'}" />
+              <span v-formatter="{ data: record.balance, type: 'money' }" />
             </td>
             <td>
               <span v-if="record.regTime === null">-</span>
-              <span
-                v-if="record.regTime !== null"
-                v-formatter="{
-                  data: record.regTime,
-                  formatter: 'YYYY/MM/DD HH:mm:ss',
-                  type: 'date',
-                }"
-              />
+              <span v-if="record.regTime !== null" v-formatter="{
+                data: record.regTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }" />
             </td>
             <!--            <td>-->
             <!--              $-->
@@ -198,14 +147,8 @@
             <!--              />-->
             <!--            </td>-->
             <td>
-              <el-button
-                icon="el-icon-edit"
-                size="normal"
-                type="success"
-                :disabled="breadcrumbNameList.length > 1"
-                v-if="store.state.user.siteCode !== 'VNM'"
-                @click="showEdit(record)"
-              />
+              <el-button icon="el-icon-edit" size="normal" type="success" :disabled="breadcrumbNameList.length > 1"
+                v-if="store.state.user.siteCode !== 'VNM'" @click="showEdit(record)" />
             </td>
           </tr>
         </tbody>
@@ -213,120 +156,52 @@
       <div v-if="page.records.length === 0">
         <emptyComp />
       </div>
-      <el-pagination
-        class="pagination"
-        @current-change="changePage"
-        layout="prev, pager, next"
-        :page-size="request.size"
-        :page-count="page.pages"
-        :current-page="request.current"
-      />
-    </el-card>
+      <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+        :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
+    </div>
 
-    <el-dialog
-      :title="uiControl.dialogTitle"
-      v-model="uiControl.dialogVisible"
-      append-to-body
-      width="580px"
-    >
-      <el-form
-        v-if="uiControl.dialogType === 'CREATE'"
-        ref="createForm"
-        :model="cForm"
-        :rules="cFormRules"
-        :inline="true"
-        size="normal"
-        label-width="150px"
-      >
+    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
+      <el-form v-if="uiControl.dialogType === 'CREATE'" ref="createForm" :model="cForm" :rules="cFormRules"
+        :inline="true" size="normal" label-width="150px">
         <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="cForm.siteId"
-            size="normal"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-            :disabled="true"
-          >
+          <el-select v-model="cForm.siteId" size="normal" :placeholder="t('fields.site')" class="filter-item"
+            style="width: 350px;" default-first-option :disabled="true">
             <el-option :key="site.id" :label="site.siteCode" :value="site.id" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
-          <el-input
-            v-model="cForm.affiliateCode"
-            style="width: 350px;"
-            maxlength="11"
-            :disabled="true"
-          />
+          <el-input v-model="cForm.affiliateCode" style="width: 350px;" maxlength="11" :disabled="true" />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')" prop="affiliateLevel">
-          <el-select
-            v-model="cForm.affiliateLevel"
-            size="normal"
-            :placeholder="t('fields.affiliateLevel')"
-            class="filter-item"
-            style="width: 350px"
-          >
-            <el-option
-              v-for="item in uiControl.affiliateLevel"
-              :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)"
-              :value="item.value"
-            />
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')"
+          prop="affiliateLevel">
+          <el-select v-model="cForm.affiliateLevel" size="normal" :placeholder="t('fields.affiliateLevel')"
+            class="filter-item" style="width: 350px">
+            <el-option v-for="item in uiControl.affiliateLevel" :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input
-            v-model="cForm.loginName"
-            style="width: 350px;"
-            maxlength="11"
-          />
+          <el-input v-model="cForm.loginName" style="width: 350px;" maxlength="11" />
         </el-form-item>
         <el-form-item :label="t('fields.password')" prop="password">
-          <el-input
-            v-model="cForm.password"
-            type="password"
-            style="width: 350px;"
-            maxlength="11"
-          />
+          <el-input v-model="cForm.password" type="password" style="width: 350px;" maxlength="11" />
         </el-form-item>
-        <el-form-item
-          :label="t('fields.reenterPassword')"
-          prop="reEnterPassword"
-        >
-          <el-input
-            v-model="cForm.reEnterPassword"
-            type="password"
-            style="width: 350px;"
-            maxlength="11"
-          />
+        <el-form-item :label="t('fields.reenterPassword')" prop="reEnterPassword">
+          <el-input v-model="cForm.reEnterPassword" type="password" style="width: 350px;" maxlength="11" />
         </el-form-item>
         <el-form-item :label="t('fields.telephone')" prop="telephone">
-          <el-input
-            v-model="cForm.telephone"
-            style="width: 350px;"
-            maxlength="20"
-          />
+          <el-input v-model="cForm.telephone" style="width: 350px;" maxlength="20" />
         </el-form-item>
-        <el-form-item
-          :label="t('fields.commission')"
-          prop="commission"
-          v-if="store.state.user.siteCode !== 'VNM'"
-        >
-          <el-input
-            v-model="cForm.commission"
-            style="width: 350px;"
-            :maxlength="uiControl.commissionMax"
-            @keypress="restrictCommissionDecimalInput($event)"
-          />
+        <el-form-item :label="t('fields.commission')" prop="commission" v-if="store.state.user.siteCode !== 'VNM'">
+          <el-input v-model="cForm.commission" style="width: 350px;" :maxlength="uiControl.commissionMax"
+            @keypress="restrictCommissionDecimalInput($event)" />
         </el-form-item>
         <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.shareRatio')" prop="shareRatio">
-          <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+          <div v-for="item in shareRatioList.list" :key="item.code"
+            style="width: 350px; display: flex; margin-bottom:5px;">
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
-            />
+            <el-input v-model="item.value" style=" width:100px; margin-left: auto" />
+            <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -339,62 +214,34 @@
         </div>
       </el-form>
 
-      <el-form
-        v-if="uiControl.dialogType === 'EDIT'"
-        ref="editForm"
-        :model="eForm"
-        :rules="eFormRules"
-        :inline="true"
-        size="normal"
-        label-width="150px"
-      >
+      <el-form v-if="uiControl.dialogType === 'EDIT'" ref="editForm" :model="eForm" :rules="eFormRules" :inline="true"
+        size="normal" label-width="150px">
         <el-form-item :label="t('fields.loginName')" prop="loginName">
-          <el-input
-            v-model="eForm.loginName"
-            style="width: 350px"
-            maxlength="50"
-            :disabled="true"
-          />
+          <el-input v-model="eForm.loginName" style="width: 350px" maxlength="50" :disabled="true" />
         </el-form-item>
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
-          <el-input
-            v-model="eForm.affiliateCode"
-            style="width: 350px"
-            maxlength="50"
-            :disabled="true"
-          />
+          <el-input v-model="eForm.affiliateCode" style="width: 350px" maxlength="50" :disabled="true" />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')" prop="affiliateLevel">
-          <el-select
-            v-model="eForm.affiliateLevel"
-            size="normal"
-            :placeholder="t('fields.affiliateLevel')"
-            class="filter-item"
-            style="width: 350px"
-          >
-            <el-option
-              v-for="item in uiControl.affiliateLevel"
-              :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)"
-              :value="item.value"
-            />
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.affiliateLevel')"
+          prop="affiliateLevel">
+          <el-select v-model="eForm.affiliateLevel" size="normal" :placeholder="t('fields.affiliateLevel')"
+            class="filter-item" style="width: 350px">
+            <el-option v-for="item in uiControl.affiliateLevel" :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
-          <el-input
-            v-model="eForm.commission"
-            style="width: 350px"
-            :maxlength="uiControl.commissionMax"
-            @keypress="restrictCommissionDecimalInput($event)"
-          />
+          <el-input v-model="eForm.commission" style="width: 350px" :maxlength="uiControl.commissionMax"
+            @keypress="restrictCommissionDecimalInput($event)" />
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10 && eForm.shareRatio !== null" :label="t('fields.shareRatio')" prop="shareRatio">
-          <div v-for="item in eForm.shareRatio" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10 && eForm.shareRatio !== null"
+          :label="t('fields.shareRatio')" prop="shareRatio">
+          <div v-for="item in eForm.shareRatio" :key="item.code"
+            style="width: 350px; display: flex; margin-bottom:5px;">
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
-            />
+            <el-input v-model="item.value" style=" width:100px; margin-left: auto" />
+            <span style="color:red"> &emsp; ( {{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }})
+            </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -419,6 +266,7 @@ import {
   regsterAffiliate,
   editAffiliateCommission,
   getAffiliateInfo,
+  getDownlineShareRatio,
 } from '../../../api/affiliate'
 import { getSite } from '../../../api/site'
 import { required, size } from '../../../utils/validate'
@@ -463,6 +311,9 @@ const affInfo = ref(null)
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
 const shareRatioList = reactive({
+  list: [],
+})
+const downlineShareRatioList = reactive({
   list: [],
 })
 // const shortcuts = [
@@ -761,7 +612,7 @@ function showDialog(type) {
 
 function showEdit(affiliate) {
   showDialog('EDIT')
-  nextTick(() => {
+  nextTick(async () => {
     for (const key in affiliate) {
       if (Object.keys(eForm).find(k => k === key)) {
         if (key === 'shareRatio') {
@@ -779,6 +630,8 @@ function showEdit(affiliate) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
+    const { data: downlineShareRatio } = await getDownlineShareRatio(eForm.id)
+    downlineShareRatioList.list = downlineShareRatio
   })
 }
 
@@ -851,6 +704,16 @@ function breadcrumbSearch(id, name) {
   }
 }
 
+function getAffiliateRatio(code) {
+  const shareRatio = affInfo.value.shareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
+function getDownlineRatio(code) {
+  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel
   checkId.value = store.state.user.id
@@ -860,7 +723,9 @@ onMounted(async () => {
   await loadAffiliateInfo()
   await loadDownlineAffiliates()
   getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
-    shareRatioList.list = res.data;
+    for (var item = 0; item < res.data.length; item++) {
+      shareRatioList.list.push({ code: res.data[item].code, value: 0 })
+    }
   });
   affiliateLevelKey.value = uiControl.affiliateLevel.filter((level) => {
     return level.value === affiliateLevel.value
@@ -883,11 +748,6 @@ onMounted(async () => {
   }
 }
 
-.btn-group {
-  margin-top: 15px;
-  margin-left: 20px;
-}
-
 .dialog-footer {
   display: flex;
   justify-content: center;
@@ -897,12 +757,6 @@ onMounted(async () => {
   ::v-deep(.el-card__body) {
     padding: 0;
   }
-}
-
-.breadcrumb {
-  margin-left: 20px;
-  margin-top: 25px;
-  margin-bottom: 25px;
 }
 
 :deep(.el-breadcrumb__inner) {
@@ -924,17 +778,19 @@ onMounted(async () => {
 }
 
 .inputs-wrap {
-  margin: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
+
   .input-small {
     width: 100%;
     max-width: 200px;
+
     &.el-range-editor--small.el-input__inner {
       max-width: 300px;
     }
   }
+
   .btn-grp {
     display: flex;
   }
@@ -944,17 +800,21 @@ onMounted(async () => {
   .inputs-wrap {
     flex-direction: column;
     gap: 10px;
+
     .el-input--small {
       width: 100% !important;
       max-width: unset !important;
       margin: 0 !important;
+
       .el-button {
         margin: 0 !important;
       }
     }
+
     .input-small {
       max-width: unset;
       width: 100%;
+
       &.el-range-editor--small.el-input__inner {
         max-width: unset;
       }

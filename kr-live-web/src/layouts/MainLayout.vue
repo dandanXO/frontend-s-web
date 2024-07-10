@@ -266,26 +266,26 @@ export default defineComponent({
   flex-direction: column;
   position: relative;
   width: 100%;
-  background: url("../assets/home/home-banner-sm.jpg") no-repeat top center;
+  background: url("../assets/home/home-banner.jpg") no-repeat top center;
   background-size: cover;
   height: 228px;
   margin-top: 60px;
 
   @media (min-width: 620px) {
-    background: url("../assets/home/home-banner-md.jpg") no-repeat top center;
+    background: url("../assets/home/home-banner.jpg") no-repeat top center;
     background-size: cover;
     height: 228px;
   }
 
   @media (min-width: 769px) {
-    background: url("../assets/home/home-banner-lg.jpg") no-repeat top center;
+    background: url("../assets/home/home-banner.jpg") no-repeat top center;
     background-size: cover;
     margin-top: 0px;
     height: 345px;
   }
 
   @media (min-width: 1200px) {
-    background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
+    background: url("../assets/home/home-banner.jpg") no-repeat top center;
     background-size: cover;
     height: 380px;
   }

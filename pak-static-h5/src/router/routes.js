@@ -233,6 +233,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/withdraw/bank-card",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/BindBankCardView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/message",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/MessageView.vue") }],

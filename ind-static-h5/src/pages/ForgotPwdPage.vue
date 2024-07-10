@@ -11,7 +11,6 @@
     </div>
   -->
 
-
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
       <!-- <q-input
         hide-bottom-space
@@ -107,6 +106,7 @@
         label-color="brand"
         color="white"
         class="landing-input"
+        name="otp"
       ></q-input>
 
       <q-input
@@ -165,7 +165,7 @@
         </template>
       </q-input>
 
-      <div v-if="verificationForm.newPassword" class="password-str-div">
+      <!-- <div v-if="verificationForm.newPassword" class="password-str-div">
         <span
           :class="{
             'weak-pwd': pwdStrength == 'weak',
@@ -184,9 +184,9 @@
           Normal
         </span>
         <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-      </div>
+      </div> -->
 
-      <q-input
+      <!-- <q-input
         ref="captchaRef"
         hide-bottom-space
         type="text"
@@ -203,7 +203,7 @@
         <template v-slot:append>
           <img :src="verificationImg" @click="getCode()" />
         </template>
-      </q-input>
+      </q-input> -->
 
       <ConfirmButton label="Submit" :confirmFunc="onVerifyForgotPassword"></ConfirmButton>
     </q-form>
@@ -385,18 +385,13 @@ const onVerifyForgotPassword = () => {
   codeRef.value.validate();
   newPwdRef.value.validate();
   newConfirmPwdRef.value.validate();
-  captchaRef.value.validate();
+  // captchaRef.value.validate();
 
   $q.loading.show({
     message: "Submitting..."
   });
 
-  if (
-    codeRef.value.hasError ||
-    newPwdRef.value.hasError ||
-    newConfirmPwdRef.value.hasError ||
-    captchaRef.value.hasError
-  ) {
+  if (codeRef.value.hasError || newPwdRef.value.hasError || newConfirmPwdRef.value.hasError) {
     $q.loading.hide();
   } else {
     verificationForm.codeId = SessionStorage.getItem("emailCodeId");
@@ -479,7 +474,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .forgot-password-container {
   // min-height: 100vh;
-    padding: 16px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

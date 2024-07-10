@@ -2,7 +2,7 @@
   <div>
     <q-select
       filled
-      class="q-mt-md"
+      class="deposit-selection q-mt-md"
       :label="t('lang.deposit_bank')"
       color="white"
       ref="refSelectBank"
@@ -85,4 +85,7 @@ async function submitDeposit(deposit) {
 defineExpose({ submitDeposit, validateBank });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+
+</style>

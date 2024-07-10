@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper">
+  <div class="hot-matches-wrapper" v-if="hotMatches.length > 1">
     <div class="euro-countdown">
       <div class="euro-countdown-fly-01">
         <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
@@ -173,7 +173,7 @@
     <!--      </div>-->
     <!--    </div>-->
 
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" v-if="hotMatches.length > 1">
       <swiper
         :slides-per-view="1"
         :modules="modules"
@@ -318,27 +318,27 @@
         </template>
         <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
-<!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
-<!--        <template v-if="tab === 'fishing'">-->
-<!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <img src="../assets/images/home/games/fish-icon.png" />-->
-<!--        </template>-->
-<!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
-<!--      </div>-->
+      <!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
+      <!--        <template v-if="tab === 'fishing'">-->
+      <!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/fish-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
+      <!--      </div>-->
 
-<!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
-<!--        <template v-if="tab === 'casual'">-->
-<!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
-<!--        </template>-->
-<!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
-<!--          {{ $t("lang.menu_minigame") }}-->
-<!--        </span>-->
-<!--      </div>-->
+      <!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
+      <!--        <template v-if="tab === 'casual'">-->
+      <!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
+      <!--          {{ $t("lang.menu_minigame") }}-->
+      <!--        </span>-->
+      <!--      </div>-->
       <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="hashgame-platform">
         <template v-if="tab === 'hashgame'">
           <img src="../assets/images/home/games/hashgame-icon-active.png" />
@@ -689,18 +689,24 @@
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
-      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@KAKA.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a href="https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11" target="_blank" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></a>
+      <a href="mailto:kakagame1688@gmail.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
       <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
       <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+      <a href="https://t.me/trangchukakagame1" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <a href="https://t.me/trangchukakagame2" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>
       <a href="https://www.facebook.com/KAKAvnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
-      </a>
+      </a> -->
     </div>
   </div>
 
@@ -1589,6 +1595,11 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
+        //For TEstING.
+        // const info = {
+        //   build: "1",
+        //   version: "1.0"
+        // }
         var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
@@ -2320,7 +2331,7 @@ export default defineComponent({
     .headicon {
       flex: 1;
       //width: 120px;
-    height: 40px;
+      height: 40px;
     }
 
     .download-txt-container {
@@ -2404,8 +2415,8 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 90%;
-    max-width: 200px;
-    margin-top: 10px;
+      max-width: 200px;
+      margin-top: 10px;
     }
   }
 
@@ -2415,8 +2426,6 @@ export default defineComponent({
     margin-top: 3px;
     display: flex;
     gap: 12px;
-
-    color: #313441;
     :deep(.q-btn) {
       min-width: 80px;
       min-height: 12px;
@@ -2576,7 +2585,7 @@ export default defineComponent({
           }
         }
         &__title {
-          color: #000000;
+          color: #ffffff;
           font-size: 20px;
           font-weight: 900;
           line-height: 24.2px;
@@ -2602,7 +2611,7 @@ export default defineComponent({
           align-items: center;
           flex: 1;
           .main-header {
-            color: #ffffff;
+            color: #ff4f57;
             font-size: 16px;
             font-weight: 900;
             line-height: 19.36px;
@@ -2635,6 +2644,7 @@ export default defineComponent({
             display: flex;
             justify-content: center;
             align-items: center;
+            filter: hue-rotate(145deg);
           }
           .lastline {
             color: #ffffff;
@@ -2653,6 +2663,7 @@ export default defineComponent({
             background: url("../assets/images/welcome/title-bg-blue.png") no-repeat center center;
             background-size: contain;
             color: #ffffff;
+            filter: hue-rotate(145deg);
           }
         }
       }
@@ -2968,7 +2979,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
-          color: $font-4;
+          color: #000000;
         }
 
         .platform-subtitle {

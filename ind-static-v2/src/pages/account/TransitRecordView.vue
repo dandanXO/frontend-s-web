@@ -779,13 +779,13 @@ export default defineComponent({
     }
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
-        return 'Applying' //Applying
+        return 'Processing' //Applying
       } else if (withdrawStatus === 'FAIL') {
         return 'Failed' // Failed
       } else if (withdrawStatus === 'SUCCESS') {
         return 'Success' // Success
       } else if (withdrawStatus === 'STEP_1') {
-        return 'Under review' //Under review
+        return 'Processing' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return 'To be paid' // To be paid
       }  else if (withdrawStatus === 'STEP_3') {

@@ -1,6 +1,7 @@
 <template>
   <div>
     <StatsHeader />
+    <Breadcrumb />
     <section class="app-main">
       <Suspense>
         <router-view :key="key" />
@@ -10,12 +11,14 @@
 </template>
 
 <script>
+import './app.scss';
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import StatsHeader from "@/components/StatsHeader.vue";
+import Breadcrumb from "@/components/bread-crumb/Index.vue";
 
 export default defineComponent({
-  components: { StatsHeader },
+  components: { StatsHeader, Breadcrumb },
   setup() {
     const route = useRoute();
     const key = () => {
@@ -50,8 +53,21 @@ elTables.forEach((elTable) => {
   width: 100%;
   position: relative;
   overflow: auto;
-  height: calc(100vh - 130px);
-  padding: 20px;
+  height: calc(100vh - 157px);
+  background-color: #e4e5e6;
+
+  &::-webkit-scrollbar-track {
+    background-color: #d5d5d5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    background-color: #ffffff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #999999;
+  }
 }
 
 .fixed-header+.app-main {
@@ -72,7 +88,8 @@ elTables.forEach((elTable) => {
 }
 
 .el-card {
-  border-radius: 20px !important;
+  // border-radius: 20px !important;
+  border: none !important;
 }
 
 .el-card__header {
@@ -180,27 +197,9 @@ elTables.forEach((elTable) => {
   width: 100% !important;
 }
 
-.custom-table {
-  width: 100%;
-  border: 0;
-
-  th {
-    background: #F4F9FD;
-    text-align: left;
-  }
-
-  th,
-  td {
-    padding: 12px;
-  }
-
-  tr:nth-child(even) {
-    background: #F4F9FD;
-  }
-}
-
 .el-form-item__content {
   width: 100%;
+  line-height: normal !important;
 }
 
 .el-input__inner {

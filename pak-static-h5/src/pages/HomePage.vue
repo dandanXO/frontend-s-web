@@ -65,9 +65,9 @@
           <a class="cs-icon tiktok" href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
-<!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
-<!--            <img src="../assets/images/index/cs-tiktok.png" />-->
-<!--          </a>-->
+          <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
+          <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
+          <!--          </a>-->
           <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <a class="notice-download" :href="topDownloadUrl" v-if="downloadHeart">
+      <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart && !ui.hideDownload">
         <img src="../assets/images/auth/app-icon.png" />
       </a>
     </div>
@@ -3233,84 +3233,59 @@ const getWithExpiry = (key) => {
   }
   const item = JSON.parse(itemStr);
   const now = new Date();
-  api
-    .get("/member/ads-popout")
-    .then((res) => {
-      // debugger;
-      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-        localStorage.removeItem(key);
-        // isImportantAnnoucementModal.value = true;
-        return null;
-      }
-    })
-    .catch(() => {});
+  if(now.getTime() > item.expiry) {
+    localStorage.removeItem(key);
+    return null;
+  }
   return item.value;
 };
 
 const isImpt = getWithExpiry("isImpt");
 
 const checkShowImgTop = () => {
-  const lastTime = sessionStorage.getItem("indexImgTop");
-  if (lastTime) {
-    const diff = new Date().getTime() - Number(lastTime);
-    if (diff > 1000 * 60 * 60 * 12) {
-      isFirstView.value = true;
-    }
-  } else {
-    api
-      .get("/member/ads-popout")
-      .then((res) => {
-        if (res.code === 0) {
-          if (isImpt === null) {
-            switch (res.data["frequency"]) {
-              case "EVERYTIME":
-                homePopupFrequencyNum.value = 0;
-                break;
-              case "EVERYDAY":
-                homePopupFrequencyNum.value = 86400000; // 24hrs
-                break;
-              case "SESSION":
-                homePopupFrequencyNum.value = 7866432000; // 3months
-                break;
-              default:
-                homePopupFrequencyNum.value = 10000;
-                break;
-            }
-            isImportantAnnoucementModal.value = true;
-            homePopupImg.value = imgURLPromo + res.data["mobileImgUrl"];
-            homePopupContent.value = res.data["content"];
-            homePopupType.value = res.data["type"];
-            homePopupId.value = res.data["id"];
-            homePopupFrequency.value = res.data["frequency"];
-
-            if (res.data["path"].includes("http")) {
-              homePopupLink.value = res.data["path"];
-              homePopupLinkOut.value = true;
-            } else {
-              homePopupLink.value = `/promo?name=${res.data["path"]}`;
-            }
-
-            if (homePopupFrequencyNum.value !== 0) {
-              setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-            }
-
-            isFirstView.value = true;
+  const isImpt = getWithExpiry("isImpt");
+  api
+    .get("/member/ads-popout")
+    .then((res) => {
+      if (res.code === 0) {
+        if (isImpt === null) {
+          switch (res.data["frequency"]) {
+            case "EVERYTIME":
+              homePopupFrequencyNum.value = 0;
+              break;
+            case "EVERYDAY":
+              homePopupFrequencyNum.value = 86400000; // 24hrs
+              break;
+            case "SESSION":
+              homePopupFrequencyNum.value = 7866432000; // 3months
+              break;
+            default:
+              homePopupFrequencyNum.value = 10000;
+              break;
           }
+          isImportantAnnoucementModal.value = true;
+          homePopupImg.value = imgURLPromo + res.data["mobileImgUrl"];
+          homePopupContent.value = res.data["content"];
+          homePopupType.value = res.data["type"];
+          homePopupId.value = res.data["id"];
+          homePopupFrequency.value = res.data["frequency"];
+
+          if (res.data["path"].includes("http")) {
+            homePopupLink.value = res.data["path"];
+            homePopupLinkOut.value = true;
+          } else {
+            homePopupLink.value = `/promo?name=${res.data["path"]}`;
+          }
+
+          if (homePopupFrequencyNum.value !== 0) {
+            setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+          }
+
+          isFirstView.value = true;
         }
-      })
-      .catch(() => {});
-  }
-};
-
-const topDownloadUrl = ref("");
-
-const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-      ui.downloadAppUrl = res.data.url;
-    }
-  });
+      }
+    })
+    .catch(() => {});
 };
 
 const downloadHeart = ref(false);
@@ -3345,7 +3320,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  getTopDownloadUrl();
+  ui.shouldFetchDownloadAppUrl = true
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -3574,11 +3549,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 2.05%,
-      rgba(255, 255, 255, 0.05) 44.93%,
-      rgba(255, 255, 255, 0.05) 53.13%,
-      rgba(255, 255, 255, 0) 98.21%
+        90deg,
+        rgba(255, 255, 255, 0) 2.05%,
+        rgba(255, 255, 255, 0.05) 44.93%,
+        rgba(255, 255, 255, 0.05) 53.13%,
+        rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -3596,6 +3571,9 @@ watch(
 
     .marquee-container {
       width: calc(100% - 28px);
+      :deep(.marquee-text-content) {
+        width: max-content;
+      }
     }
 
     span {
@@ -4669,10 +4647,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-      180deg,
-      rgba(115, 115, 115, 0) 0%,
-      rgba(153, 153, 153, 0.4) 48.5%,
-      rgba(115, 115, 115, 0) 100%
+        180deg,
+        rgba(115, 115, 115, 0) 0%,
+        rgba(153, 153, 153, 0.4) 48.5%,
+        rgba(115, 115, 115, 0) 100%
     );
   }
 

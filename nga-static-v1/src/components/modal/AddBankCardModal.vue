@@ -25,7 +25,7 @@
               :options="cardType"
               @update:model-value="selectBankType(opt)"
             />
-          </div>
+          </div> -->
 
           <div class="q-my-sm">
             <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
@@ -38,14 +38,19 @@
               :label="dialogDisplays.selectionPlaceholder"
               :rules="[(_) => isValidBank()]"
               label-color="secondary"
-              :options="currBankList"
+              :options="filteredBankList"
               option-value="id"
               option-label="name"
               lazy-rules
               emit-value
               map-options
+              use-input
+              input-debounce="100"
+              fill-input
+              hide-selected
+              @filter="filterBank"
             />
-          </div> -->
+          </div>
 
             <div class="q-my-sm">
               <div class="input-title">Holder Name</div>
@@ -78,7 +83,7 @@
               />
             </div>
 
-            <div class="q-my-sm">
+            <!-- <div class="q-my-sm">
               <div class="input-title">IFSC Code</div>
               <q-input
                 standout
@@ -91,7 +96,7 @@
                 :rules="[(_) => isValidCardAddress()]"
                 label-color="secondary"
               />
-            </div>
+            </div> -->
           </q-form>
         </q-card-section>
 
@@ -101,7 +106,7 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
+              (isValidCardAccount() === true && isValidCardNumber() === true)
             ) || isDisableBtn
           "
         ></ConfirmButton>
@@ -132,6 +137,7 @@ const currentCardType = ref("Bank");
 
 // display
 const currBankList = ref([]);
+const filteredBankList = ref([])
 
 // cache
 const bankList = [];
@@ -203,18 +209,21 @@ const selectBankType = () => {
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
+    filteredBankList.value = currBankList.value
     dialogDisplays.title = "Add Bank Account";
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
   } else if (currentCardType.value === "Crypto") {
     currBankList.value = cryptoList;
+    filteredBankList.value = currBankList.value
     dialogDisplays.title = "Add Crypto Wallet";
     dialogDisplays.selectionTitle = "Crypto";
     dialogDisplays.selectionPlaceholder = "Select Crypto";
     dialogDisplays.selectionError = "Please Select A Crypto";
   } else if (currentCardType.value === "EWallet") {
     currBankList.value = ewalletList;
+    filteredBankList.value = currBankList.value
     dialogDisplays.title = "Add A Virtual Currency";
     dialogDisplays.selectionTitle = "eWallet";
     dialogDisplays.selectionPlaceholder = "Select eWallet";
@@ -254,7 +263,8 @@ const isValidCardAccount = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber ? "Please Enter Account Number" : true;
+  const result = !cardNumber ? "Please Enter Account Number": cardNumber.length < 10
+  ? "Account Number Must Be More Than Or 10 Characters" : true;
   return result;
 };
 
@@ -291,6 +301,25 @@ const addCard = () => {
       isDisableBtn.value = false;
     });
 };
+
+const filterBank = (val, update) => {
+  if(currentCardType.value !== 'Bank') return
+
+  if(!val) {
+    update(() => {
+      filteredBankList.value = currBankList.value
+    })
+    return
+  }
+  update(() => {
+    const result = currBankList.value.filter(bank => {
+      const bankName = bank.name.toLowerCase()
+      const lowerCaseVal = val.toLowerCase()
+      return bankName.includes(lowerCaseVal)
+    })
+    filteredBankList.value = result
+  })
+}
 
 defineExpose({
   onAddCardClick
