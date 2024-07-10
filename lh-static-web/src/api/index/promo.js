@@ -275,7 +275,7 @@ export function claimSummon(promoCode) {
   return server.EVENT.post("/member-summon/claim", { promoCode });
 }
 
-export function loadAffiliateByDomain(host){
+export function loadAffiliateByDomain(host) {
   return server.REST.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`);
 }
 
@@ -299,44 +299,10 @@ export function getLplSummer24Match() {
   return server.EVENT.get("game-match/upcoming/MSI");
 }
 
-
 export function duanwuVipUpgrade() {
   return server.EVENT.post("/duan-wu/vip-upgrade");
-
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      token: `${userStore().token}`,
-      "Content-Type": "application/json"
-    }
-  };
-  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
-
-  return fetch(evtUrl + "/duan-wu/vip-upgrade", requestOptions)
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
 }
 
 export function duanwuDepositBet() {
   return server.EVENT.post("/duan-wu/deposit-bet");
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      token: `${userStore().token}`,
-      "Content-Type": "application/json"
-    }
-  };
-  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
-
-  return fetch(evtUrl + "/duan-wu/deposit-bet", requestOptions)
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
 }
