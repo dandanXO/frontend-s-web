@@ -60,12 +60,11 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex">
+        <div style="display: flex;align-items: center;">
           <div
             style="
               width: 2px;
-              height: 12px;
-              margin-top: 4px;
+              height: 24px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
             "
@@ -109,12 +108,11 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex">
+        <div style="display: flex; align-items: center;">
           <div
             style="
               width: 2px;
-              height: 12px;
-              margin-top: 4px;
+              height: 24px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
             "
@@ -158,12 +156,11 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex">
+        <div style="display: flex;align-items: center;">
           <div
             style="
               width: 2px;
-              height: 12px;
-              margin-top: 4px;
+              height: 24px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
             "
@@ -207,12 +204,11 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex">
+        <div style="display: flex; align-items: center;">
           <div
             style="
               width: 2px;
-              height: 12px;
-              margin-top: 4px;
+              height: 24px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
             "
@@ -256,12 +252,11 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex">
+        <div style="display: flex; align-items: center;">
           <div
             style="
               width: 2px;
-              height: 40px;
-              margin-top: 4px;
+              height: 24px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
             "
@@ -305,12 +300,11 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex">
+        <div style="display: flex; align-items: center;">
           <div
             style="
               width: 2px;
-              height: 12px;
-              margin-top: 4px;
+              height: 24px;
               margin-right: 5px;
               background-color: rgba(65, 185, 255, 1);
             "
