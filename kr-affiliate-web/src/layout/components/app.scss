@@ -18,6 +18,10 @@
     font-weight: 700;
 }
 
+.custom-table-wrapper {
+  overflow: auto;
+}
+
 .custom-table {
     width: 100%;
     border: 0;
@@ -115,22 +119,26 @@
       text-align: right;
     }
 
-    .colorBoxOrange {
-      background-color: #f0ad4e;
+    .colorBox {
       color: #fff;
       font-size: 11px;
       padding: 5px;
       border-radius: 3px;
-      width: fit-content;
+      width: 60px;
+      margin: auto;
+      text-align: center;
     }
 
-    .colorBoxBlue {
-      background-color: #337ab7;
-      color: #fff;
-      font-size: 11px;
-      padding: 5px;
-      border-radius: 3px;
-      width: fit-content;
+    .orange {
+      background-color: #f0ad4e;
+    }
+
+    .purple {
+      background-color: #a462dd;
+    }
+
+    .blue {
+      background-color: #0384fc;
     }
   }
 

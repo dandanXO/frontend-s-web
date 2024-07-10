@@ -11,39 +11,22 @@
             </el-col>
             <el-col :xl="8" :lg="8" :md="10" :sm="8">
               <el-form-item :label="t('fields.recordTime') + ' :'">
-                <el-date-picker
-                  v-model="request.recordTime"
-                  format="DD/MM/YYYY"
-                  value-format="YYYY-MM-DD"
-                  size="normal"
-                  type="daterange"
-                  range-separator=":"
-                  :start-placeholder="t('fields.startDate')"
-                  :end-placeholder="t('fields.endDate')"
-                  :shortcuts="shortcuts"
-                  :disabled-date="disabledDate"
-                  :editable="false"
-                  :clearable="false"
-                  :default-time="defaultTime"
-                  style="width: 100%;"
-                />
+                <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
+                  type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
               </el-form-item>
             </el-col>
             <el-col :span="4">
-              <el-button
-                style="margin-left: 20px"
-                icon="el-icon-search"
-                size="normal"
-                type="success"
-                @click="loadRecords()"
-              >
+              <el-button style="margin-left: 20px" icon="el-icon-search" size="normal" type="success"
+                @click="loadRecords()">
                 {{ t('fields.search') }}
               </el-button>
             </el-col>
           </el-row>
         </el-form>
       </div>
-      <div style="overflow:scroll">
+      <div class="custom-table-wrapper">
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
@@ -58,7 +41,7 @@
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
             <tr>
-              <td colspan="11">
+              <td colspan="7">
                 <Loading v-if="page.loading" />
                 <emptyComp v-else-if="page.records.length === 0" />
               </td>
@@ -69,54 +52,38 @@
               <td class="textCenter">
                 Total
               </td>
-              <td
-                v-formatter="{ data: totals.todayDepositAmount, type: 'p&l' }"
-              ></td>
-              <td
-                v-formatter="{ data: totals.todayWithdrawAmount, type: 'p&l' }"
-              ></td>
-              <td
-                v-formatter="{ data: totals.casinoBetAmount, type: 'p&l' }"
-              ></td>
+              <td v-formatter="{ data: totals.todayDepositAmount, type: 'p&l' }"></td>
+              <td v-formatter="{ data: totals.todayWithdrawAmount, type: 'p&l' }"></td>
+              <td v-formatter="{ data: totals.casinoBetAmount, type: 'p&l' }"></td>
               <td v-formatter="{ data: totals.casinoProfit, type: 'p&l' }"></td>
-              <td
-                v-formatter="{ data: totals.casinoRollingAmount, type: 'p&l' }"
-              ></td>
-              <td
-                v-formatter="{
-                  data:
-                    totals.casinoProfit -
-                    totals.casinoBetAmount +
-                    totals.casinoRollingAmount,
-                  type: 'p&l',
-                }"
-              ></td>
+              <td v-formatter="{ data: totals.casinoRollingAmount, type: 'p&l' }"></td>
+              <td v-formatter="{
+                data:
+                  totals.casinoProfit -
+                  totals.casinoBetAmount +
+                  totals.casinoRollingAmount,
+                type: 'p&l',
+              }"></td>
             </tr>
             <tr v-for="item in page.records" :key="item.id">
-              <td>
+              <td class="textCenter">
                 {{ item.memberName }}
               </td>
-              <td>
-                {{ item.todayDepositAmount }}
+              <td v-formatter="{ data: item.todayDepositAmount, type: 'p&l' }">
               </td>
-              <td>
-                {{ item.todayWithdrawAmount }}
+              <td v-formatter="{ data: item.todayWithdrawAmount, type: 'p&l' }">
               </td>
-              <td>
-                {{ item.casinoBetAmount }}
+              <td v-formatter="{ data: item.casinoBetAmount, type: 'p&l' }">
               </td>
-              <td>
-                {{ item.casinoProfit }}
+              <td v-formatter="{ data: item.casinoProfit, type: 'p&l' }">
               </td>
-              <td>
-                {{ item.casinoRollingAmount }}
+              <td v-formatter="{ data: item.casinoRollingAmount, type: 'p&l' }">
               </td>
-              <td>
-                {{
-                  item.casinoProfit -
-                    item.casinoBetAmount +
-                    item.casinoRollingAmount
-                }}
+              <td v-formatter="{
+                data: item.casinoProfit -
+                  item.casinoBetAmount +
+                  item.casinoRollingAmount, type: 'p&l'
+              }">
               </td>
             </tr>
           </tbody>
@@ -127,10 +94,9 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Loading from '@/components/loading/Loading.vue'
-import { formatMoney } from '@/utils/format-money'
 import { getMemberSummary } from '@/api/affiliate-report'
 import moment from 'moment'
 
@@ -265,13 +231,13 @@ const shortcuts = [
   },
 ]
 
-let totals = {
+const totals = reactive({
   todayDepositAmount: 0,
   todayWithdrawAmount: 0,
   casinoBetAmount: 0,
   casinoProfit: 0,
   casinoRollingAmount: 0,
-}
+})
 
 async function loadRecords() {
   page.loading = true
@@ -297,6 +263,10 @@ async function loadRecords() {
     return acc
   })
 }
+
+onMounted(() => {
+  loadRecords();
+})
 </script>
 
 <style lang="scss" scoped>

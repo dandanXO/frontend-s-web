@@ -12,7 +12,7 @@ export const formatter = {
   beforeMount(el, binding) {
     if (binding.value.type === "date") {
       if (binding.value.data) {
-        el.innerHTML = moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL');
+        el.innerHTML = `<div class="textCenter">${moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL')}</div>`;
       } else {
         el.innerHTML = "-";
       }
@@ -28,7 +28,7 @@ export const formatter = {
                         <div class="login-name">${binding.value.data.loginName}</div>
                       </div>`;
     } else if (binding.value.type === "gameType") {
-      el.innerHTML = `<div class="colorBoxOrange">
+      el.innerHTML = `<div class="colorBox ${binding.value.data === 'SLOT' ? 'orange' : (binding.value.data === 'SPORT' || binding.value.data === 'ESPORT') ? 'purple' : 'blue'}">
                         ${binding.value.data}
                       </div>`;
     } else if (binding.value.type === "decimal") {
@@ -38,7 +38,7 @@ export const formatter = {
   updated(el, binding) {
     if (binding.value.type === "date") {
       if (binding.value.data) {
-        el.innerHTML = moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL');
+        el.innerHTML = `<div class="textCenter">${moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL')}</div>`;
       } else {
         el.innerHTML = "";
       }
@@ -54,7 +54,7 @@ export const formatter = {
                         <div class="login-name">${binding.value.data.loginName}</div>
                       </div>`;
     } else if (binding.value.type === "gameType") {
-      el.innerHTML = `<div class="colorBoxOrange">
+      el.innerHTML = `<div class="colorBox ${binding.value.data === 'SLOT' ? 'orange' : (binding.value.data === 'SPORT' || binding.value.data === 'ESPORT') ? 'purple' : 'blue'}">
                         ${binding.value.data}
                       </div>`;
     } else if (binding.value.type === "decimal") {
