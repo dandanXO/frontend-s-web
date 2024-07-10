@@ -75,6 +75,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_PAK_SOCKET;
     siteId = 'pak';
     break;
+  case process.env.VUE_APP_NGA_HOST:
+    baseApi = process.env.VUE_APP_NGA_API;
+    baseWss = process.env.VUE_APP_NGA_SOCKET;
+    siteId = 'nga';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;

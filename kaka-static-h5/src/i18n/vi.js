@@ -398,7 +398,7 @@ export default {
     bd_length_between_34_36: "Chiều dài nên từ 34-36",
     bd_note: "Lưu ý",
     bd_note_para_01:
-      'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để" kịp thời xử lý. Chân thành cảm ơn!',
+      'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!',
     bd_note_para_02:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!",
 
@@ -625,11 +625,11 @@ export default {
       "Đại lý cũ mà giải quyết hoa hồng phải có không ít hơn 3 thành viên mới hoạt động trong tháng hiện tại, và tổng số thành viên hoạt động không được ít hơn năm.",
     affiliate_01_para_07:
       "Sự can thiệp của đối tác liên kết (giả mạo tài khoản hạ tầng, can thiệp vào hành vi cược của hạ tầng, đăng nhập từ nhiều thiết bị...) bị chặn bởi hệ thống hoặc chuyên gia của chúng tôi sẽ bị phạt.",
-    affiliate_01_para_08: "TF.com có quyền thay đổi hoặc sửa đổi tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
+    affiliate_01_para_08: "Kaka.game có quyền thay đổi hoặc sửa đổi tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
     affiliate_01_para_09:
-      "TF.com có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào khi cần thiết.",
+      "Kaka.game có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào khi cần thiết.",
     affiliate_01_para_10:
-      "TF.com có quyền hủy bỏ tình trạng đối tác vào bất kỳ thời điểm nào mà không cần thông báo trước trong trường hợp tài khoản đối tác không đáp ứng đủ yêu cầu của TF.com được quy định trong một khoảng thời gian nhất định và có hành vi gian lận và vi phạm.",
+      "Kaka.game có quyền hủy bỏ tình trạng đối tác vào bất kỳ thời điểm nào mà không cần thông báo trước trong trường hợp tài khoản đối tác không đáp ứng đủ yêu cầu của Kaka.game được quy định trong một khoảng thời gian nhất định và có hành vi gian lận và vi phạm.",
     affiliate_02_head_title: "BẢNG KẾ HOẠCH HOA HỒNG",
     affiliate_02_note:
       "Lưu ý: Lợi nhuận = tổng số tiền thắng và thua của các thành viên ngoại tuyến tại tất cả các địa điểm trừ tất cả các chiết khấu được áp dụng bởi các thành viên",
@@ -682,9 +682,9 @@ export default {
     affiliate_04_para_02: "Hoa hồng sẽ được thanh toán bằng VND.",
     affiliate_04_para_03:
       "Khiếu nại và tranh chấp về hoa hồng phải được nộp cho chăm sóc Đối tác trước ngày 10 của mỗi tháng, nếu không, hoa hồng đã thanh toán không thể thay đổi.",
-    affiliate_04_para_04: "TF.com có quyền thay đổi hoặc sửa đổi tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
+    affiliate_04_para_04: "Kaka.game có quyền thay đổi hoặc sửa đổi tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
     affiliate_04_para_05:
-      "TF.com có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào khi cần thiết.",
+      "Kaka.game có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào khi cần thiết.",
     affiliate_apply_agency: "Đăng ký đại lý ngay",
     affiliate_online_cs: "Dịch vụ khách hàng trực tuyến 24 giờ",
     affiliate_jointemail: "Email phòng hợp tác",

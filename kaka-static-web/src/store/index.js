@@ -138,7 +138,8 @@ export const userStore = defineStore("userStore", {
           }
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${vueI18n.global.locale.value === 'vi'? 'vn' : vueI18n.global.locale.value}&token=${this.token}`,
+            // `https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${vueI18n.global.locale.value === 'vi'? 'vn' : vueI18n.global.locale.value}&token=${this.token}`,
+            `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
             `${lineUrl}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left

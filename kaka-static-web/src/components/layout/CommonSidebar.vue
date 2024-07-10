@@ -7,7 +7,7 @@
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
-        <span style="margin-left: 5px">vnsupport@kaka.com</span>
+        <span style="margin-left: 5px">kakagame1688@gmail.com</span>
       </div>
       <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
@@ -22,6 +22,14 @@
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@KAKA_CS</span>
+      </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
+        <span style="margin-left: 5px">@trangchukakagame1</span>
+      </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
+        <span style="margin-left: 5px">@trangchukakagame2</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">

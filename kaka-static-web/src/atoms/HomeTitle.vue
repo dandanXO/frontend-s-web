@@ -18,7 +18,7 @@ defineProps(["title", "subtitle"]);
 
 <style scoped lang="scss">
 .home-title-container {
-  margin: 2.5rem 0 0 0;
+  margin: 2.5rem 0 50px 0;
 
   .home-title {
     display: flex;
@@ -44,7 +44,8 @@ defineProps(["title", "subtitle"]);
 
       .title-text {
         word-break: keep-all;
-        font-size: 2.82869rem;
+        // font-size: 2.82869rem;
+        font-size: 2.12869rem;
         font-weight: 600;
         letter-spacing: 0.14144rem;
         font-family: 'Play';

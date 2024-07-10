@@ -199,7 +199,7 @@ export default {
     common_and_new_password_not_match: "Xác nhận mật khẩu chưa chính xác.",
     forgetWithdrawPassword: "Quên mật khẩu rút tiền?",
     bankCardReminder1:
-      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
+      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
     bankCardReminder2:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!"
   },
@@ -467,26 +467,26 @@ export default {
     eSportsCommissionProgram: "KẾ HOẠCH CHIẾT KHÂU HOA HỒNG",
     bonusTerms: "Điều khoản khuyến mãi",
     afftnc1:
-      "Tỷ lệ % hoa hồng được tính dựa trên tổng số tiền thua cược của các thành viên hàng tháng của Đại lý tại TF.com và số lượng thành viên hoạt động trong từng giai đoạn trong tháng.",
+      "Tỷ lệ % hoa hồng được tính dựa trên tổng số tiền thua cược của các thành viên hàng tháng của Đại lý tại Kaka.game và số lượng thành viên hoạt động trong từng giai đoạn trong tháng.",
     afftnc2:
-      " Phần trăm hoa hồng của đại lý sẽ được dựa vào tổng doanh thu từ tất cả các khách hàng của đại lý đang cược tại TF.com và thỏa mãn những điều kiện để nhận thanh toán Hoa hồng:",
+      " Phần trăm hoa hồng của đại lý sẽ được dựa vào tổng doanh thu từ tất cả các khách hàng của đại lý đang cược tại Kaka.game và thỏa mãn những điều kiện để nhận thanh toán Hoa hồng:",
     "afftnc2-1": "Phí gửi rút tiền của ngân hàng.",
     "afftnc2-2": "Phí tiền thưởng khách nhận.",
     "afftnc2-3": "Phí dịch vụ hệ thống trò chơi. (thanh toán trả nhà cung cấp dịch vụ).",
     afftnc3:
-      "Với 55% hoa hồng cho đại lý, Lợi nhuận hoa hồng sẽ dựa vào 55% và được tính trên tổng số tiền thua cược của các thành viên tham gia đặt cược tại Công ty TF.com. ( tổng tiền thua cược sau khi trừ mọi chi phí ) sẽ là tổng số tiền hoa hồng của đại lý được nhận.",
+      "Với 55% hoa hồng cho đại lý, Lợi nhuận hoa hồng sẽ dựa vào 55% và được tính trên tổng số tiền thua cược của các thành viên tham gia đặt cược tại Công ty Kaka.game. ( tổng tiền thua cược sau khi trừ mọi chi phí ) sẽ là tổng số tiền hoa hồng của đại lý được nhận.",
     afftnc4:
-      "Với ít nhất 05 thành viên có hoạt động động trong tháng (Nếu số thành viên hoạt động ít hơn 05 sẽ không được tính hoa hồng) thì đại lý sẽ có cơ hội nhận được hoa hồng từ TF.com. Phần trăm hoa hồng tăng hay giảm sẽ phụ thuộc vào số lượng thành viên hoạt động và số tiền thua cược của các thành viên trong tháng.",
+      "Với ít nhất 05 thành viên có hoạt động động trong tháng (Nếu số thành viên hoạt động ít hơn 05 sẽ không được tính hoa hồng) thì đại lý sẽ có cơ hội nhận được hoa hồng từ Kaka.game. Phần trăm hoa hồng tăng hay giảm sẽ phụ thuộc vào số lượng thành viên hoạt động và số tiền thua cược của các thành viên trong tháng.",
     afftnc5:
       "Nếu tài khoản đại lý có lợi nhuận hoa hồng là số âm trong tháng (lợi nhuận âm: là số tiền nợ của đại lý với Công ty) thì số tiền âm đó sẽ được chuyển sang những tháng tiếp theo để khấu trừ cho đến hết thì đại lý mới được tiếp tục nhận tiền hoa hồng.",
     afftnc6:
       "Thanh toán hoa hồng đại lí cũ: trong tháng ít nhất có 3 khách mới và tổng khách hoạt động 5 khách trở lên",
     afftnc7: "Tất cả các thành viên đại lý phải thanh toán chi phí.",
-    afftnc8: "TF.com có quyền thay đổi hoặc điều chỉnh tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
+    afftnc8: "Kaka.game có quyền thay đổi hoặc điều chỉnh tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
     afftnc9:
-      "TF.com có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào nếu cần thiết.",
+      "Kaka.game có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào nếu cần thiết.",
     afftnc10:
-      "TF.com có quyền hủy tư cách đối tác bất cứ lúc nào mà không cần thông báo trước trong trường hợp tài khoản đối tác không đáp ứng các yêu cầu được đề ra trong một khoảng thời gian nhất định và có hành vi gian lận và vi phạm.",
+      "Kaka.game có quyền hủy tư cách đối tác bất cứ lúc nào mà không cần thông báo trước trong trường hợp tài khoản đối tác không đáp ứng các yêu cầu được đề ra trong một khoảng thời gian nhất định và có hành vi gian lận và vi phạm.",
     CommissionPlan: "Kế hoạch hoa hồng",
     deposit1000: "Đại lí A đạt lợi nhuận hoa hồng trong tháng là 40%",
     deposit130000: "Đại lí B đạt lợi nhuận hoa hồng trong tháng là 55%",
@@ -509,15 +509,15 @@ export default {
     downlineAffiliatept2:
       "10% hoa hồng từ các đại lý tuyến dưới của mình. ( khi giới thiệu thành viên thường khi đã đăng ký tài khoản dưới mã đại lý (đại lý A) của mình. Thành viên đó đăng ký và trở thành đại lý (đại lý B). Đại lý A sẽ được nhận 10% hoa hồng trên tổng tiền hoa hồng đại lý B được nhận, với điều kiện Đại lý A tháng đó cũng phải có tiền hoa hồng.",
     downlineAffiliate2:
-      "Ví dụ: Đại lý của bạn Đại lý A -> bạn giới thiệu 1 người nào đó làm đại lý của TF.com (Đại lý B) Thu nhập của đại lý A trong tháng = 10,000 VND. Tiền hoa hồng của Đại lý B trong tháng = 20,000 VND⇨Đại lý A sẽ được nhận 10% hoa hồng từ Đại lý B: 10% x 20,000 = 2000 VND Tổng thu nhập Đại lý A sẽ được nhận: 10,000 + 2000 = 12,000 VND",
+      "Ví dụ: Đại lý của bạn Đại lý A -> bạn giới thiệu 1 người nào đó làm đại lý của Kaka.game (Đại lý B) Thu nhập của đại lý A trong tháng = 10,000 VND. Tiền hoa hồng của Đại lý B trong tháng = 20,000 VND⇨Đại lý A sẽ được nhận 10% hoa hồng từ Đại lý B: 10% x 20,000 = 2000 VND Tổng thu nhập Đại lý A sẽ được nhận: 10,000 + 2000 = 12,000 VND",
     paymentMethods: "PHƯƠNG THỨC THANH TOÁN",
     paymentMethods1: "Tiền hoa hồng sẽ được thanh toán vào ngày 5 hàng tháng.",
     paymentMethods2: "Tiền hoa hồng sẽ được thanh toán VND.",
     paymentMethods3:
-      "Tiền hoa hồng hàng tháng sẽ được chốt tổng kết và chốt vào ngày 5 hàng tháng và hệ thống sẽ cập tiền hoa hồng vào tài khoản của đại lý trên TF.com vào ngày 5 hàng tháng. Từ ngày 5 trở đi đại lý có thể thực hiện lệnh rút tiền về tài khoản.",
-    paymentMethods4: "TF.com có quyền thay đổi hoặc chỉnh sửa về tỷ lệ phần trăm hoa hồng mà chúng tôi cho là phù hợp.",
+      "Tiền hoa hồng hàng tháng sẽ được chốt tổng kết và chốt vào ngày 5 hàng tháng và hệ thống sẽ cập tiền hoa hồng vào tài khoản của đại lý trên Kaka.game vào ngày 5 hàng tháng. Từ ngày 5 trở đi đại lý có thể thực hiện lệnh rút tiền về tài khoản.",
+    paymentMethods4: "Kaka.game có quyền thay đổi hoặc chỉnh sửa về tỷ lệ phần trăm hoa hồng mà chúng tôi cho là phù hợp.",
     paymentMethods5:
-      "TF.com có quyền thay đổi hoặc chỉnh sửa các điều khoản bên trên hoặc thêm bất kỳ điều khoản nào trong trường hợp cần thiết.",
+      "Kaka.game có quyền thay đổi hoặc chỉnh sửa các điều khoản bên trên hoặc thêm bất kỳ điều khoản nào trong trường hợp cần thiết.",
     activeUser: "Thành viên hoạt động",
     bronze: "Đồng",
     lessThanW: "<10W",

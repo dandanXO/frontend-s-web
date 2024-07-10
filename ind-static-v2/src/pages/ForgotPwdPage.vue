@@ -120,6 +120,7 @@
                 outlined
                 label-color="brand"
                 color="white"
+                name="otp"
               ></q-input>
             </template>
           </InputField>
@@ -205,7 +206,7 @@
             </template>
           </InputField>
 
-          <InputField>
+          <!-- <InputField>
             <template #input>
               <q-input
                 ref="captchaRef"
@@ -225,7 +226,7 @@
                 </template>
               </q-input>
             </template>
-          </InputField>
+          </InputField> -->
 
           <PrimaryButton :label="'Submit'" :onClick="onVerifyForgotPassword"></PrimaryButton>
         </template>
@@ -412,7 +413,6 @@ const onVerifyForgotPassword = () => {
   codeRef.value.validate();
   newPwdRef.value.validate();
   newConfirmPwdRef.value.validate();
-  captchaRef.value.validate();
 
   $q.loading.show({
     message: "Submitting..."
@@ -421,8 +421,7 @@ const onVerifyForgotPassword = () => {
   if (
     codeRef.value.hasError ||
     newPwdRef.value.hasError ||
-    newConfirmPwdRef.value.hasError ||
-    captchaRef.value.hasError
+    newConfirmPwdRef.value.hasError
   ) {
     $q.loading.hide();
   } else {

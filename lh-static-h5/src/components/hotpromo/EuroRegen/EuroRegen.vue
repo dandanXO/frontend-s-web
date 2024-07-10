@@ -2,13 +2,9 @@
     <div class="euro-regen-container">
         <img class="banner-img" src="../../../assets/images/promo/hotpromo/EuroRegen/banner.png" />
 
-
-       <div style="color:#ff0000;font-size:40px;text-align:center;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
-          还没完成，不要测试先。
-        </div>
         <div class="promo-content-wrapper">
             <div class="claim-wrapper">
-                <div class="claim-button">立即领取</div>
+                <div class="claim-button" @click="claimAmount">立即领取</div>
             </div>
 
             <div class="promo-content-header">活动内容：活动期间，欧洲杯每周负盈利≥500即可在固定活动时间范围内领取对应档位彩金；
@@ -80,8 +76,31 @@
 <script setup>
 
 import { userStore } from "src/stores";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
 
-const store= userStore();
+const $q = useQuasar();
+const store = userStore();
+
+
+const claimAmount = () => {
+      eventapi
+        .put("/bonus/claim/" + "lh1-sport-loss-refund")
+        .then((res) => {
+          if (res.code === 0) {
+            store.getBalance();
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: `成功领取 ${res.data} 元`,
+              icon: "check_circle_outline"
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
 </script>
 
 <style lang="scss" scoped>
