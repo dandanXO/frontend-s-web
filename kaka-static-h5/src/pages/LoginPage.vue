@@ -219,9 +219,9 @@
         </div>
       </div>
       <div class="text-center q-pb-lg">
-        <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
+        <div class="cs-web-id" id="cs-web-id" @click="openCSChat">
           {{ $t("lang.contact_customer_service") }}
-        </router-link>
+        </div>
       </div>
     </q-form>
 
@@ -321,6 +321,13 @@ export default defineComponent({
           });
         });
     };
+
+    const openCSChat = () => {
+      window.open(
+        `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
+        '_blank'
+      )
+    }
 
     const isCheckRmb = ref(false);
 
@@ -590,6 +597,7 @@ export default defineComponent({
       telephoneRef,
       LangOptions,
       appVersionNo,
+      openCSChat,
       getVersionNo,
       languageVal,
       trackRegisterClickEvent,
@@ -739,7 +747,7 @@ export default defineComponent({
     border-radius: 10px;
     box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
     padding: 15px 12px 15px;
-    
+
 .q-field__prepend {
 
 img {
