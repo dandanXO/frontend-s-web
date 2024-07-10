@@ -295,6 +295,7 @@ export default {
     COCKFIGHT: 'COCKFIGHT',
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
+    UEFA: 'UEFA EUROPA',
   },
   homeBannerType: {
     HOME: 'Home',
