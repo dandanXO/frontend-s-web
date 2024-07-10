@@ -1,5 +1,12 @@
 <template>
-  <div style="max-width: 1200px; margin: 0 auto;">
+  <div style="max-width: 1200px; margin: 0 auto">
+    <div
+      style="color: #ff0000; font-size: 40px"
+      v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
+    >
+      还没完成，不要测试先。
+    </div>
+
     <div class="switch-wrapper">
       <div class="switch-container">
         <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
@@ -153,7 +160,8 @@
           <ol class="rules-content">
             <li>
               <span class="step-number">1</span>
-              自注册日起算 30 天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+              自注册日起算 30
+              天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
             </li>
             <li>
               <span class="step-number">2</span>
@@ -248,8 +256,8 @@ const handleClickStatusButton = (status, promocode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    if (promocode === 'new-user-setup-bonus-first-withdrawal') {
-      router.push({ path: '/center/withdraw' });
+    if (promocode === "new-user-setup-bonus-first-withdrawal") {
+      router.push({ path: "/center/withdraw" });
     } else {
       router.push({ path: "/center/personal" });
     }
