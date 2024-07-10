@@ -261,6 +261,9 @@ onActivated(() => {
       position: relative;
       &.isReceived {
         background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+        .box-img {
+          background:unset;
+        }
       }
 
       &__last {
