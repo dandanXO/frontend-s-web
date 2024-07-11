@@ -52,16 +52,6 @@
     }
 
     td {
-      .money-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 20px;
-        text-align: right;
-      
-        .won-icon {
-          color: #9f9f9f;
-        }
-      }
-      
       .vip-name-wrapper {
         display: flex;
         gap: 8px;
@@ -150,4 +140,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+  }
+
+  .money-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    text-align: right;
+  
+    .won-icon {
+      color: #9f9f9f;
+    }
   }
