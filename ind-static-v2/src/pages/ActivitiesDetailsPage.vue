@@ -122,7 +122,7 @@ const progressDailyWagerLabel = computed(() => (progressDailyWager.value * 100).
 
 const isLoading = ref(false);
 onActivated(() => {
-  const acitivtyApi = "/session/ind/deposit/bonus";
+  const acitivtyApi = "/ind/deposit/bonus";
   rules.value = [];
   eventapi.get(acitivtyApi).then((res) => {
     const resp = res.data;
@@ -178,7 +178,7 @@ onActivated(() => {
     }
   }
   .current-signin {
-    display: flex; 
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px auto;
