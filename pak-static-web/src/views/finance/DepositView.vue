@@ -47,6 +47,7 @@ const checkRoute = () => {
   }
 };
 const checkNewUser = () => {
+  if (route.query.tab !== "withdraw") return;
   if (store.realName == "" || store.realName == null) {
     ElMessage.error(t("personalView.finance.newUserError"));
     router.push(`/center/personal`);
