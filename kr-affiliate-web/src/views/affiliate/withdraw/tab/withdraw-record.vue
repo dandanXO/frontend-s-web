@@ -104,7 +104,7 @@
     </div>
     <div class="table-footer">
       <span style="margin-right:20px;">
-        {{ t('fields.totalWithdraw') }}: $
+        {{ t('fields.totalWithdraw') }}: 
         <span v-formatter="{data: page.totalWithdraw, type: 'money'}" />
       </span>
     </div>

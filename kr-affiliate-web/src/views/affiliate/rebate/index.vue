@@ -86,15 +86,13 @@
             <td>
               <span v-if="record.betAmount === null">-</span>
               <span v-if="record.betAmount !== null">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                {{ record.betAmount }}
+                <span v-formatter="{data: record.betAmount,type: 'money'}" />
               </span>
             </td>
             <td>
               <span v-if="record.rebateAmount === null">-</span>
               <span v-if="record.rebateAmount !== null">
-                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
-                {{ record.rebateAmount }}
+                <span v-formatter="{data: record.rebateAmount,type: 'money'}" />
               </span>
             </td>
             <td>
