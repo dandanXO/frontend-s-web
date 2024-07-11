@@ -12,8 +12,8 @@
     </router-link>
     <div class="current-signin">
       <div class="current">
-      <img src="../assets/images/promotion/activities/daycal.png">
-      Current Sign-in:
+        <img src="../assets/images/promotion/activities/daycal.png" />
+        Current Sign-in:
       </div>
       <div class="noOfDays">Day {{ bonusSeq + 1 }}</div>
     </div>
@@ -61,8 +61,8 @@
       >
         <div class="box-ribbon">Day {{ i + 1 }}</div>
         <div class="box-cal">
-          <img v-if="i === bonusSeq && !isReceivedToday" src="../assets/images/promotion/activities/cal-active.png">
-          <img v-if="i > bonusSeq && !isReceivedToday" src="../assets/images/promotion/activities/cal.png">
+          <img v-if="i === bonusSeq && !isReceivedToday" src="../assets/images/promotion/activities/cal-active.png" />
+          <img v-if="i > bonusSeq && !isReceivedToday" src="../assets/images/promotion/activities/cal.png" />
         </div>
         <div class="box-img">
           <img
@@ -107,8 +107,13 @@
 <script setup>
 import { ref, computed, onMounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { userStore } from "src/stores";
+import { Dialog } from "quasar";
+
+const store = userStore();
 const route = useRoute();
+const router = useRouter();
 
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
@@ -124,6 +129,21 @@ const isLoading = ref(false);
 onActivated(() => {
   const acitivtyApi = "/ind/deposit/bonus";
   rules.value = [];
+
+  if (!store.token) {
+    return Dialog.create({
+      class: "login-card",
+      title: "Please Login",
+      message: "Please log in to operate",
+      cancel: { color: "negative", label: "Cancel" },
+      ok: { color: "brightbtn", label: "Login" },
+      padding: "20px",
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+  }
+
   eventapi.get(acitivtyApi).then((res) => {
     const resp = res.data;
     isLoading.value = false;
@@ -262,7 +282,7 @@ onActivated(() => {
       &.isReceived {
         background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
         .box-img {
-          background:unset;
+          background: unset;
         }
       }
 
@@ -298,7 +318,7 @@ onActivated(() => {
         // height: 50px;
         display: flex;
         align-items: center;
-        background: url(../assets/images/promotion/activities/blink.png)no-repeat center center;
+        background: url(../assets/images/promotion/activities/blink.png) no-repeat center center;
         background-size: contain;
         padding: 15px;
         img {
