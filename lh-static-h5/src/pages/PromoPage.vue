@@ -146,7 +146,7 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div
               class="selected-promo-wrapper"
-              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+              :class="selectedPromoWrapperClass"
             >
               <div
                 class="banner-container"
@@ -290,6 +290,11 @@ export default defineComponent({
     const $q = useQuasar();
     const ui = useUI();
     const isDisplayLogin = ref(false);
+
+    const selectedPromoWrapperClass = computed(() => ({
+      "challenge-comeback": selectedPromo.value.promoCode === 'lh1-challenge-comeback',
+      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot'
+    }))
 
     // const routeQuery  = computed(() => route.query || {});
 
@@ -509,7 +514,8 @@ export default defineComponent({
       extensionState,
       extensionToken,
       isFetchingPromo,
-      isSpecialPromo
+      isSpecialPromo,
+      selectedPromoWrapperClass
       // routeQuery
     };
   }
@@ -1016,6 +1022,11 @@ export default defineComponent({
         @media (max-width: 350px) {
           width: calc(100% - 12px);
         }
+      }
+
+      &.slot-lucky8,
+      &.challenge-comeback {
+        background:#E7F1FD;
       }
     }
   }

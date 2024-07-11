@@ -86,6 +86,7 @@
     <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu' && store.token" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -174,6 +175,7 @@ const AijiasuPromo = defineAsyncComponent(() => import("../components/hotpromo/a
 const EuroRegen = defineAsyncComponent(() => import("../components/hotpromo/EuroRegen/EuroRegen.vue"));
 const newplayerGuide = defineAsyncComponent(() => import("../components/hotpromo/newplayerGuide/newplayerGuide.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
+const ChallengeComebackPromo = defineAsyncComponent(() => import("../components/hotpromo/challengeComeback/ChallengeComeback.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -222,7 +224,8 @@ export default defineComponent({
     AijiasuPromo,
     EuroRegen,
     newplayerGuide,
-    OuZuLianPromo
+    OuZuLianPromo,
+    ChallengeComebackPromo
   },
   props: {
     list: {
