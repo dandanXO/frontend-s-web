@@ -196,13 +196,11 @@
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.bet')" prop="bet">
-              $
               <span v-formatter="{ data: details.bet, type: 'money' }" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.payout')" prop="payout">
-              $
               <span v-formatter="{ data: details.payout, type: 'money' }" />
             </el-form-item>
           </el-col>
@@ -210,7 +208,6 @@
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.companyProfit')" prop="companyProfit">
-              $
               <span v-formatter="{ data: details.companyProfit, type: 'money' }" />
             </el-form-item>
           </el-col>
@@ -258,7 +255,7 @@ import { useStore } from '@/store'
 import { getAffiliateTree } from '../../../api/affiliate'
 import { useI18n } from 'vue-i18n'
 import moment from 'moment'
-import { getMemberBetRecords } from '../../../api/affiliate-bet-record'
+import { getMemberBetRecords, getVipName } from '../../../api/affiliate-bet-record'
 import emptyComp from '@/components/empty';
 import Loading from '@/components/loading/Loading.vue';
 
@@ -402,6 +399,21 @@ const page = reactive({
   totalCompanyProfit: 0,
 })
 
+const details = reactive({
+  loginName: null,
+  vipName: null,
+  transactionId: null,
+  betTime: null,
+  platform: null,
+  gameType: null,
+  gameName: null,
+  bet: 0,
+  payout: 0,
+  companyProfit: 0,
+  betStatus: null,
+  settleTime: null
+})
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
@@ -462,6 +474,27 @@ function changePage(page) {
     request.current = page
     loadBetRecords()
   }
+}
+
+function viewDetails(betRecord) {
+  uiControl.dialogVisible = true;
+  details.loginName = betRecord.loginName;
+  details.transactionId = betRecord.transactionId;
+  details.betTime = betRecord.betTime;
+  details.platform = betRecord.platform;
+  details.gameType = betRecord.gameType;
+  details.gameName = betRecord.gameName;
+  details.bet = betRecord.bet;
+  details.payout = betRecord.payout;
+  details.companyProfit = betRecord.companyProfit;
+  details.betStatus = betRecord.betStatus;
+  details.settleTime = betRecord.settleTime;
+  getVip(betRecord.memberId)
+}
+
+async function getVip(memberId) {
+  const { data: vip } = await getVipName(memberId, store.state.user.siteId);
+  details.vipName = vip;
 }
 
 function handleNodeClick(node) {
