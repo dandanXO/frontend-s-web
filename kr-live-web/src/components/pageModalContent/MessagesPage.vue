@@ -62,6 +62,10 @@
                     <template v-else>
                         <div v-if="selected" class="message-content">
                             <div>
+                                <div class="message-actions">
+                                    <q-icon v-if="inboxCategory !== 'Outbox'" :name="'delete'" class="message-action"
+                                        @click="deleteMessage(selected.id)" />
+                                </div>
                                 <div class="title">{{ selected.title }}</div>
                             </div>
                             <div class="date-time-wrapper">
@@ -174,6 +178,33 @@ const initOutbox = (page = 1) => {
     }).finally(() => {
         isLoading.value = false;
     })
+}
+
+const deleteMessage = (id) => {
+    api.post("/session/inbox/delete",
+        qs.stringify({
+            id: id
+        })
+    ).then((res) => {
+        const { code, data } = res.data
+
+        if (code === 0) {
+            $q.notify({
+                message: "삭제됨",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+            });
+
+            inboxMessages.value.records = inboxMessages.value.records.filter(({ id: messageId }) => messageId !== id);
+        }
+
+        isFetchingContent.value = false;
+    })
+        .catch((error) => {
+            console.log(error);
+            isFetchingContent.value = false;
+        });
 }
 
 const readMessage = (id, showReadNotify = true) => {
@@ -325,6 +356,15 @@ onMounted(() => {
             max-height: 100%;
             overflow-y: auto;
             padding-right: 10px;
+
+            .message-actions {
+                display: flex;
+                justify-content: flex-end;
+
+                .message-action {
+                    cursor: pointer;
+                }
+            }
 
             .title {
                 font-size: 2.4rem;
