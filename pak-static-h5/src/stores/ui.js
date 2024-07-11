@@ -16,6 +16,7 @@ export const useUI = defineStore("ui-store", {
       LiveUrl: null,
       downloadAppUrl: "",
       loggedIn: false,
+      luckyDraw: false,
       shouldFetchDownloadAppUrl: false
     };
   },

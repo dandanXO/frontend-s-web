@@ -3344,9 +3344,9 @@ watch(
 );
 
 watch(
-  () => route.query.login,
+  () => ui.loggedIn,
   (newValue) => {
-    if (newValue === "true") {
+    if (newValue === true) {
       if (isAndroid()) {
         showSpinWheel();
       }

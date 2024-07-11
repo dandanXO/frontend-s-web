@@ -405,8 +405,9 @@ export default defineComponent({
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-                  // router.go(jumpUrl);
-                  router.push({ path: jumpUrl, query: { login: "true" } });
+                  ui.showLoggedIn();
+                  router.go(jumpUrl);
+                  // router.push({ path: jumpUrl, query: { login: "true" } });
                 }
 
 
