@@ -37,7 +37,7 @@
               <th scope="col">{{ t('fields.totalBet') }}</th>
               <th scope="col">{{ t('fields.totalPayout') }}</th>
               <th scope="col">{{ t('fields.totalRolling') }}</th>
-              <th scope="col">{{ t('fields.totalProfitLoss') }}</th>
+              <th scope="col">{{ t('statsHeader.totalProfitLoss') }}</th>
               <th scope="col">{{ t('statsHeader.casinoBetAmount') }}</th>
               <th scope="col">{{ t('statsHeader.casinoProfit') }}</th>
               <th scope="col">{{ t('statsHeader.casinoRollingAmount') }}</th>
