@@ -321,7 +321,7 @@
       </div>
     </div>
   </div>
-  <div class="promotion-container">
+  <div class="promotion-container" v-if="isEligibleState">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -361,7 +361,7 @@
     </div>
   </div>
 
-  <div class="promotion-container">
+  <div class="promotion-container" v-if="isEligibleState">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -461,6 +461,8 @@ function selectTab(tab) {
   selectedTab.value = tab;
 }
 
+const isEligibleState = ref(true);
+
 const handleRecieve = async (reward) => {
   try {
     const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
@@ -490,6 +492,11 @@ const handleRedirect = () => {
 const getData = async () => {
   try {
     const apiRes = await getNewUserAccumulateDepositInit();
+    if (apiRes.data.state === "NOT_ELIGIBLE") {
+      isEligibleState.value = false;
+      ElMessage.error("此账号无法参与此优惠。");
+      return;
+    }
     depositAmount.value = apiRes.data.depositAmount || 0;
 
     const parseApiRes = JSON.parse(apiRes.data.state);
