@@ -101,6 +101,7 @@ import { useI18n } from 'vue-i18n'
 import Loading from '@/components/loading/Loading.vue'
 import { getMemberSummary } from '@/api/affiliate-report'
 import moment from 'moment'
+import emptyComp from '@/components/empty';
 
 const { t } = useI18n()
 

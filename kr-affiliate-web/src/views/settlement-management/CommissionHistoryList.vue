@@ -94,6 +94,7 @@ import Loading from '@/components/loading/Loading.vue'
 import { formatMoney } from '@/utils/format-money'
 import moment from 'moment'
 import { getCommissionRecord } from '@/api/affiliate-report'
+import emptyComp from '@/components/empty';
 
 const { t } = useI18n()
 
