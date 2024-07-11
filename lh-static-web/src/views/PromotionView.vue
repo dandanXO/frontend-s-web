@@ -136,7 +136,8 @@
               eSport: selectedPromo.promoType?.toLowerCase() === 'esport',
               fish: selectedPromo.promoType?.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType?.toLowerCase() === 'slot game',
+              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual'"
           >
@@ -883,6 +884,17 @@ export default defineComponent({
           // &.slot {
           //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
           // }
+          &.olympicCheckin {
+            border: 1px solid #ACD4F6;
+            border-radius: 10px;
+            padding: 10px 10px 10px 30px;
+            background: #F2F8FE;
+            max-width: 1200px;
+            margin: 0 auto;
+            img:nth-child(1) {
+              padding: 0;
+            }
+          }
           .game-title {
             color: #ffd800;
             margin: 30px auto 50px;

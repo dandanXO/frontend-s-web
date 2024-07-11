@@ -211,7 +211,8 @@
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'       
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
@@ -847,6 +848,12 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        .olympicCheckin {
+          border: 1px solid #ACD4F6;
+          border-radius: 10px;
+          padding: 10px;
+          background: #F2F8FE;
+        }
         &.aijiasu {
           width: 100%;
           gap: 0px;
