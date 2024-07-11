@@ -19,18 +19,18 @@
         <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
         <span style="margin-left: 5px"> +63967 254 1561</span>
       </div> -->
-      <div class="additional-info-item">
+      <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@KAKA_CS</span>
-      </div>
+      </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@trangchukakagame1</span>
       </div>
-      <div class="additional-info-item">
+      <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@trangchukakagame2</span>
-      </div>
+      </div> -->
     </div>
     <div class="sticky-sidebar-items">
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">

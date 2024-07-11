@@ -439,9 +439,9 @@
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.paymentType }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{
-              parseInt(store.state.user.siteId)
-                === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
+            <td>
+              <div v-formatter="{ data: item.depositAmount, type: 'money' }"></div>
+            </td>
             <td>
               {{ formatDate(item.depositDate) }}
             </td>
@@ -507,9 +507,9 @@
           <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.privilegeName }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{
-              parseInt(store.state.user.siteId)
-                === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
+            <td>
+              <div v-formatter="{ data: item.amount, type: 'money' }" />
+            </td>
             <td>{{ item.rollover }}</td>
             <td>
               {{ formatDate(item.recordTime) }}

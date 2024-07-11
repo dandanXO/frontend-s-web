@@ -104,10 +104,6 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { getReferralLink, getInviteFriendListCount, getSummonListCount } from "@/api/personal/share"
-import {
-  RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
-} from "vue-remix-icons"
-import { UserFilled, Money } from "@element-plus/icons-vue";
 import moment from 'moment'
 import VueQRCodeComponent from 'vue-qrcode-component'
 import { useRouter } from "vue-router";
@@ -116,9 +112,6 @@ import { userStore } from "@/store";
 
 export default defineComponent({
   name: "ShareView",
-  components: {
-    RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent, UserFilled, Money
-  },
   setup() {
     const store= userStore();
     const router = useRouter()
@@ -224,7 +217,7 @@ export default defineComponent({
   .share-content {
     width: 100%;
     .desc {
-      height:90px;
+      height: 90px;
       padding: 0 10px;
       p {
         width: 60%;

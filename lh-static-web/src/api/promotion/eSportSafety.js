@@ -24,6 +24,10 @@ export function submitCopaForm() {
   return server.EVENT.post("/game-match/submit/COPA", {});
 }
 
+export function submitUefaForm() {
+  return server.EVENT.post("/game-match/submit/UEFA", {});
+}
+
 
 export function submitESportInsurance() {
   return server.EVENT.post("/game-match/submit/ESPORT");

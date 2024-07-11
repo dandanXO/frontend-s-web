@@ -49,12 +49,16 @@ export default {
     LiveBetHistory : 'Live Bet History',
     SlotBetHistory : 'Slot Bet History',
     SportBetHistory : 'Sport Bet History',
+    MiniGameBetHistory: 'Mini Game Bet History',
     // Bet Management End
 
     // Settlement Management Start
     SettlementManagement: 'Settlement Management',
     MonthlyStepByStep: 'Monthly Step By Step',
     SettlementByCasinoSlotVendor: 'Settlement By Casino / Slot Vendor',
+    CommissionHistoryList: 'Commission History List',
+    StatisticsByMember: 'Statistics By Member',
+    DepositWithdrawManagement: 'Deposit/Withdraw Management',
     // Settlement Management End
 
     gameRecord: 'Game Record',
@@ -648,6 +652,16 @@ export default {
     memberUsername: 'Username',
     inquiry: 'Inquiry',
     replySuccess: 'Reply Successfully',
+    totalRolling: 'Total Rolling',
+    rolling: 'Rolling',
+    numberOfbets: 'Bet Count',
+    redemptionRate: 'Redemption Rate',
+    profitLoss: 'Profit Loss',
+    rebatePercentage: 'Rebate Percentage',
+    type: 'Type',
+    beforeBalance: 'Before Balance',
+    applicationDate: 'Application Date',
+    processingDate: 'Processing Date',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

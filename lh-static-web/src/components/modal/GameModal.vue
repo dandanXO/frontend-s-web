@@ -131,13 +131,10 @@ import { ref, defineExpose, computed } from "vue";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
 import { transfer } from "@/api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox } from "element-plus";
-import { useRouter } from "vue-router";
 import { uiStore } from "@/store/ui";
-// import { Modal } from "ant-design-vue";
 
 const store = userStore();
 const UI = uiStore();
@@ -191,7 +188,6 @@ const destroyGame = () => {
   // logoShow.value = true;
   // src.value = "";
 };
-// const router = useRouter();
 // const route = useRoute();
 const visible = ref(false);
 const visibleComingSoon = ref(false);
@@ -199,7 +195,6 @@ const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
 const iframeScroll = ref(true);
-const router = useRouter();
 
 const transferInfo = ref({
   amount: null,
@@ -292,7 +287,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
       }
     } else {
-      // router.push("/login");
       ElMessageBox.alert("请登录后再操作", "系统提示", {
         // if you want to disable its autofocus
         // autofocus: false,
@@ -435,7 +429,16 @@ defineExpose({
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+      background-size:
+        10% 10%,
+        20% 20%,
+        15% 15%,
+        20% 20%,
+        18% 18%,
+        10% 10%,
+        15% 15%,
+        10% 10%,
+        18% 18%;
     }
 
     &:after {
@@ -445,7 +448,14 @@ defineExpose({
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+      background-size:
+        15% 15%,
+        20% 20%,
+        18% 18%,
+        20% 20%,
+        15% 15%,
+        10% 10%,
+        20% 20%;
     }
 
     &.animate {
@@ -468,26 +478,86 @@ defineExpose({
 
     @keyframes topBubbles {
       0% {
-        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+        background-position:
+          5% 90%,
+          10% 90%,
+          10% 90%,
+          15% 90%,
+          25% 90%,
+          25% 90%,
+          40% 90%,
+          55% 90%,
+          70% 90%;
       }
       50% {
-        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+        background-position:
+          0% 80%,
+          0% 20%,
+          10% 40%,
+          20% 0%,
+          30% 30%,
+          22% 50%,
+          50% 50%,
+          65% 20%,
+          90% 30%;
       }
       100% {
-        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
-        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+        background-position:
+          0% 70%,
+          0% 10%,
+          10% 30%,
+          20% -10%,
+          30% 20%,
+          22% 40%,
+          50% 40%,
+          65% 10%,
+          90% 20%;
+        background-size:
+          0% 0%,
+          0% 0%,
+          0% 0%,
+          0% 0%,
+          0% 0%,
+          0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+        background-position:
+          10% -10%,
+          30% 10%,
+          55% -10%,
+          70% -10%,
+          85% -10%,
+          70% -10%,
+          70% 0%;
       }
       50% {
-        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+        background-position:
+          0% 80%,
+          20% 80%,
+          45% 60%,
+          60% 100%,
+          75% 70%,
+          95% 60%,
+          105% 0%;
       }
       100% {
-        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
-        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+        background-position:
+          0% 90%,
+          20% 90%,
+          45% 70%,
+          60% 110%,
+          75% 80%,
+          95% 70%,
+          110% 10%;
+        background-size:
+          0% 0%,
+          0% 0%,
+          0% 0%,
+          0% 0%,
+          0% 0%,
+          0% 0%;
       }
     }
   }

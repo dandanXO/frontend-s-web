@@ -364,6 +364,20 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.push('')" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -379,6 +393,9 @@ import { convertToCommaAmount } from "src/boot/utils";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import { useRoute, useRouter } from "vue-router";
+import KYCGuestForm from "../../components/KYCGuestForm.vue";
+import KYCUserForm from "../../components/KYCUserForm.vue";
+import { useCheckKYC } from "src/hooks/checkKYC";
 
 const router = useRouter();
 const store = userStore();
@@ -386,6 +403,13 @@ const isNewUser = ref(false);
 const { t } = useI18n();
 const $q = useQuasar();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
+const {
+  userKYCDialog,
+  guestKYCDialog,
+  closeGuestKYCDialog,
+  closeUserKYCDialog
+} = useCheckKYC(['mounted', 'activated'])
+
 const amountRef = ref();
 const withdrawPwdRef = ref();
 const cardRef = ref();

@@ -324,11 +324,10 @@ onUnmounted(() => {
   }
 
   .stats {
-    min-width: 100px;
-    min-height: 50px;
     border: 1px solid #9e9e9e;
     display: grid;
     grid-template-rows: 1fr 1fr;
+    grid-template-columns: max-content;
 
     .stat-label,
     .stat-value {
@@ -342,6 +341,8 @@ onUnmounted(() => {
       font-size: 12px;
       font-weight: 500;
       padding: 5px;
+      white-space: nowrap;
+      min-width: 100px;
     }
 
     .stat-value {

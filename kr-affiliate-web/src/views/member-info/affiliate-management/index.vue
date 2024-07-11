@@ -123,7 +123,6 @@
             </td>
             <td>{{ record.site }}</td>
             <td>
-              $
               <span v-formatter="{ data: record.balance, type: 'money' }" />
             </td>
             <td>

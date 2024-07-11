@@ -295,6 +295,7 @@ export default {
     COCKFIGHT: 'COCKFIGHT',
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
+    UEFA: 'UEFA EUROPA',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -2288,6 +2289,7 @@ export default {
     validateWebMessageRequired: 'Web Message is required',
     validateWholeNumberOnly: 'Please enter whole number only',
     validateWinnerRequired: 'Winner is required',
+    validateWithdrawChannel: 'Sequence cannot be repeated',
     validateWithdrawExchangeRateRequired: 'Withdraw Exchange Rate is required',
     validateWithdrawPlatformNameRequired: 'Withdraw Platform Name is required',
     validateTigerCardPeriodRequired: 'Period required',

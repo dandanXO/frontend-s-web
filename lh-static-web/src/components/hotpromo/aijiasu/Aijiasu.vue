@@ -13,7 +13,7 @@
       <div class="black-bg"></div>
       <div class="title1">无法打开网址？</div>
       <div class="title2">来试试爱加速</div>
-      <div class="title3">稳定方便快捷</div>
+      <!--      <div class="title3">稳定方便快捷</div>-->
       <div class="title4">
         如果您无法访问本平台请使用爱加速VPN
         <span>首月赠送爱加速VIP会员</span>
@@ -94,19 +94,47 @@
               v-if="activeTab !== 0"
               style="margin-right: 8px"
             />
-            <img src="../../../assets/promo/aijiasu/window-black.png" alt="" v-if="activeTab === 0" style="margin-right:
-            8px;"> Windows教程
+            <img
+              src="../../../assets/promo/aijiasu/window-black.png"
+              alt=""
+              v-if="activeTab === 0"
+              style="margin-right: 8px"
+            />
+            Windows教程
           </div>
           <div :class="`tab ${activeTab === 1 ? 'active' : 'inactive'}`" @click="handleActiveClick(1)">
-            <img src="../../../assets/promo/aijiasu/apple-icon.png" alt="" v-if="activeTab !== 1"  style="margin-right:
-            8px;"> <img src="../../../assets/promo/aijiasu/apple-black.png" alt="" v-if="activeTab === 1" width="23"
-            height="23"  style="margin-right:
-            8px;"/> 苹果手机教程
+            <img
+              src="../../../assets/promo/aijiasu/apple-icon.png"
+              alt=""
+              v-if="activeTab !== 1"
+              style="margin-right: 8px"
+            />
+            <img
+              src="../../../assets/promo/aijiasu/apple-black.png"
+              alt=""
+              v-if="activeTab === 1"
+              width="23"
+              height="23"
+              style="margin-right: 8px"
+            />
+            苹果手机教程
           </div>
           <div :class="`tab ${activeTab === 2 ? 'active' : 'inactive'}`" @click="handleActiveClick(2)">
-            <img src="../../../assets/promo/aijiasu/android-icon.png" alt="" v-if="activeTab !== 2"  style="margin-right:
-            8px;"> <img src="../../../assets/promo/aijiasu/android-black.png" alt="" v-if="activeTab === 2"width="19"
-            height="19" style="margin-right: 8px;"> 安卓手机教程
+            <img
+              src="../../../assets/promo/aijiasu/android-icon.png"
+              alt=""
+              v-if="activeTab !== 2"
+              style="margin-right: 8px"
+            />
+            <img
+              src="../../../assets/promo/aijiasu/android-black.png"
+              alt=""
+              v-if="activeTab === 2"
+              width="19"
+              height="19"
+              style="margin-right: 8px"
+            />
+            安卓手机教程
           </div>
         </div>
         <div class="slider" style="position: relative" v-if="activeTab === 0">
@@ -167,14 +195,15 @@
 
         <div class="content">
           <div>
-            1. 此活动需要在IP域名注册后的用户来申请，只限新用户，需要账号首存，提供有下载爱加速以及开通爱加速首月会员截图才可申请；
+            1.
+            此活动需要在IP域名注册后的用户来申请，只限新用户，需要账号首存，提供有下载爱加速以及开通爱加速首月会员截图才可申请；
           </div>
           <div>2. 符合以上条件情况下联系在线客服即可申请，优惠以彩金发放一倍流水即可提款；</div>
+          <div>3. 活动期间，会员可申请其他VPN的首月开通服务，使用其他VPN方式最高可申请40元彩金；</div>
           <div>
-            3. 活动期间，会员可申请其他VPN的首月开通服务，使用其他VPN方式最高可申请40元彩金；
-          </div>
-          <div>
-            4. 此次优惠每位玩家﹑每户﹑每一住址 、每一电子邮箱地址﹑每一电话号码﹑相同支付方式(相同借记卡/信用卡/银行账户/姓名及号码) 只能享有一次优惠,一旦确认为套利玩家，立即没收盈利和本金；
+            4. 此次优惠每位玩家﹑每户﹑每一住址
+            、每一电子邮箱地址﹑每一电话号码﹑相同支付方式(相同借记卡/信用卡/银行账户/姓名及号码)
+            只能享有一次优惠,一旦确认为套利玩家，立即没收盈利和本金；
           </div>
           <div>5. 雷火电竞对本次活动拥有最终解释权；</div>
         </div>
@@ -219,17 +248,17 @@ const nextSlide = () => {
   left: 0px;
   bottom: 0px;
   z-index: -2;
-  width:100%;
+  width: 100%;
 
-  .backgroun-top{
-    img{
+  .backgroun-top {
+    img {
       width: 100%;
     }
   }
-  .backgroun-bottom{
+  .backgroun-bottom {
     height: 100%;
 
-    img{
+    img {
       width: 100%;
       height: 100%;
     }

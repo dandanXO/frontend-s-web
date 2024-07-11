@@ -219,9 +219,9 @@
         </div>
       </div>
       <div class="text-center q-pb-lg">
-        <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
+        <div class="cs-web-id" id="cs-web-id" @click="openCSChat">
           {{ $t("lang.contact_customer_service") }}
-        </router-link>
+        </div>
       </div>
     </q-form>
 
@@ -322,6 +322,10 @@ export default defineComponent({
         });
     };
 
+    const openCSChat = () => {
+      window.open(`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`, "_blank");
+    };
+
     const isCheckRmb = ref(false);
 
     const phoneVerificationRef = ref();
@@ -413,7 +417,6 @@ export default defineComponent({
       const sidParam = store.visitorId;
 
       (async () => {
-
         const appVer = appVersionNo.value;
 
         if (loginType.value === false) {
@@ -590,6 +593,7 @@ export default defineComponent({
       telephoneRef,
       LangOptions,
       appVersionNo,
+      openCSChat,
       getVersionNo,
       languageVal,
       trackRegisterClickEvent,
@@ -606,8 +610,8 @@ export default defineComponent({
   background: url(../assets/images/login/login-bg.png) no-repeat center 20%;
   // height: 100%;
   // min-height: 100vh;
-    background-size: contain;
-    background-position: center -30px;
+  background-size: contain;
+  background-position: center -30px;
 
   .back-left {
     // position: absolute;
@@ -660,8 +664,13 @@ export default defineComponent({
     // display: flex;
     // justify-content: center;
     // position: relative;
-    height: 20vh;
+    height: 22vh;
     min-height: 140px;
+
+    @media only screen and (min-width: 400px) {
+      height: 35vh;
+    }
+
     img {
       // display: block;
       // width: 110%;
@@ -737,15 +746,14 @@ export default defineComponent({
     background: $white;
     color: #333333;
     border-radius: 10px;
-    box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
+    box-shadow: 0px -8px 8px 0px #e6c3c3 inset;
     padding: 15px 12px 15px;
-    
-.q-field__prepend {
 
-img {
-  filter: hue-rotate(140deg);
-}
-}
+    .q-field__prepend {
+      img {
+        filter: hue-rotate(140deg);
+      }
+    }
     q-label {
       padding-top: 3px;
       padding-left: 8px;
@@ -802,7 +810,7 @@ img {
 }
 
 .checked {
-  color: #FD574C;
+  color: #fd574c;
 }
 
 .home-header {

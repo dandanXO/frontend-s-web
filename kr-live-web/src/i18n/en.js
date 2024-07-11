@@ -165,6 +165,7 @@ export default {
     message_type_payment: "Payment",
     message_type_all: "All",
     message_type_outbox: "Outbox",
+    message_type_inbox: "Inbox",
     // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",

@@ -129,15 +129,14 @@
       </table>
       <div class="table-footer">
         <span class="table-footer-item">
-          {{ t('fields.totalBet') }}: $
-          <span v-formatter="{ data: page.totalBet, type: 'money' }" />
+          {{ t('fields.totalBet') }}: <span v-formatter="{ data: page.totalBet, type: 'money' }" />
         </span>
         <span class="table-footer-item">
-          {{ t('fields.totalPayout') }}: $
+          {{ t('fields.totalPayout') }}:
           <span v-formatter="{ data: page.totalPayout, type: 'money' }" />
         </span>
         <span class="table-footer-item">
-          {{ t('fields.totalCompanyProfit') }}: $
+          {{ t('fields.totalCompanyProfit') }}:
           <span v-formatter="{
             data: page.totalBet - page.totalPayout,
             type: 'money',
@@ -493,7 +492,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .member-tree-container {
   display: grid;
-  grid-template-columns: 0.5fr 1fr;
+  grid-template-columns: 0.3fr 1fr;
   gap: 10px;
 }
 

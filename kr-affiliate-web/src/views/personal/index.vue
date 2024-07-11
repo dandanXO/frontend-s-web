@@ -82,7 +82,6 @@
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.balance')">
-                $
                 <span v-formatter="{data: balance, type: 'money'}" />
               </el-form-item>
             </el-row>
@@ -91,7 +90,6 @@
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.commissionBalance')">
-                $
                 <span v-formatter="{data: commissionBalance, type: 'money'}" />
               </el-form-item>
             </el-row>

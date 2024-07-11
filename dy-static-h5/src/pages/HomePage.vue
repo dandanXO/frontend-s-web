@@ -915,7 +915,7 @@
                 <h2 class="row items-center justify-between">
                   电子游戏
 
-                  <div class="row items-center justify-center">
+                  <div class="row items-center justify-center" v-if="!isSlotSlideBegin && !isSlotSlideEnd">
                     <q-btn
                       flat
                       size="xs"

@@ -49,12 +49,16 @@ export default {
     LiveBetHistory : '라이브 베팅 기록',
     SlotBetHistory : '슬롯 베팅 기록',
     SportBetHistory : '스포츠 베팅 기록',
+    MiniGameBetHistory: '미니게임 베팅 기록',
     // Bet Management End
 
     // Settlement Management Start
     SettlementManagement: '베팅관리',
     MonthlyStepByStep: '월별/단계별 정산',
     SettlementByCasinoSlotVendor: '카지노/슬롯 판매업체별 정산',
+    CommissionHistoryList: '커미션내역 목록',
+    StatisticsByMember: '회원별 통계',
+    DepositWithdrawManagement: '입출금 관리',
     // Settlement Management End
 
     gameRecord: '게임 기록',
@@ -648,6 +652,16 @@ export default {
     memberShareRatio: '플레이어 리베이트 비율',
     editShareRatio: '리베이트 수정',
     inquiry: '문의',
+    totalRolling: '총 압연',
+    rolling: '구르는',
+    numberOfbets: '베팅 횟수',
+    redemptionRate: '상환율',
+    profitLoss: '이익 손실',
+    rebatePercentage: '리베이트 비율',
+    type: '유형',
+    beforeBalance: '잔액 전',
+    applicationDate: '지원 날짜',
+    processingDate: '처리 날짜',
   },
   google: {
     google_auth_menu: '구글 인증',

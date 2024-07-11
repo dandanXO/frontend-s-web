@@ -689,18 +689,18 @@
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
-      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
+      <a href="https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11" target="_blank" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></a>
       <a href="mailto:kakagame1688@gmail.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
       <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
-      <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
+      <!-- <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
-      </a>
+      </a> -->
       <a href="https://t.me/trangchukakagame1" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <a href="https://t.me/trangchukakagame2" target="_blank" class="menu-item">
+      <!-- <a href="https://t.me/trangchukakagame2" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
-      </a>
+      </a> -->
       <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>

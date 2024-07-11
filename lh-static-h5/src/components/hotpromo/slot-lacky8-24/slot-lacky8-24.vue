@@ -38,6 +38,9 @@
             会员获得符合活动金额注单号，注单产生当日 23:59:59内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
         </div>
+        <div class="little-title">
+          <div class="right red-font">注意：获奖的注单可能会有延迟，请每 5~10 分钟刷新一次活动页面</div>
+        </div>
       </div>
       <div class="slot-lacky8-game-info">
         <div class="title"></div>
@@ -463,8 +466,7 @@ onMounted(getSlotLucky8Data);
   height: 100%;
   margin-top: 20px;
   background: #f2f8fe;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  border-radius: 12px;
   padding: 16px 8px;
   // border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
@@ -484,7 +486,7 @@ onMounted(getSlotLucky8Data);
     display: flex;
     width: 100%;
     align-items: center;
-    margin: 12px 0;
+    margin: 12px 0 6px;
     gap: 16px;
     .left {
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
@@ -505,6 +507,10 @@ onMounted(getSlotLucky8Data);
       font-weight: 400;
       line-height: 18px;
       color: #000000;
+
+      &.red-font{
+        color: #f53434;
+      }
     }
   }
 }
