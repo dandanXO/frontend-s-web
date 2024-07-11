@@ -1,12 +1,5 @@
 <template>
   <div style="max-width: 1200px; margin: 0 auto">
-    <div
-      style="color: #ff0000; font-size: 40px"
-      v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
-    >
-      还没完成，不要测试先。
-    </div>
-
     <div class="switch-wrapper">
       <div class="switch-container">
         <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
@@ -201,7 +194,9 @@ import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
 import option2Area from "./option2Area.vue";
+import { userStore } from "@/store";
 
+const store = userStore();
 const router = useRouter();
 
 const selected = ref("option1");

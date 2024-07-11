@@ -9,7 +9,10 @@ module.exports = defineConfig({
   runtimeCompiler: true,
   devServer: {
     hot: true,
-    port: 8089
+    port: 8089,
+    client: {
+      overlay: false
+    }
   },
   assetsDir: "static",
   transpileDependencies: true,
@@ -46,14 +49,14 @@ module.exports = defineConfig({
       return args;
     });
 
-    config.plugin('define').tap((definitions) => {
+    config.plugin("define").tap((definitions) => {
       Object.assign(definitions[0], {
-        __VUE_OPTIONS_API__: 'true',
-        __VUE_PROD_DEVTOOLS__: 'false',
-        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
-      })
-      return definitions
-    })
+        __VUE_OPTIONS_API__: "true",
+        __VUE_PROD_DEVTOOLS__: "false",
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false"
+      });
+      return definitions;
+    });
   },
   css: {
     loaderOptions: {

@@ -81,7 +81,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次电竞首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -130,7 +130,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次真人首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -179,7 +179,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次棋牌首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -228,7 +228,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次电子首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -277,7 +277,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次捕鱼首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -406,6 +406,7 @@
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
+import { ElMessage } from "element-plus";
 
 const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
 const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
@@ -474,6 +475,8 @@ const handleRecieve = async (reward) => {
         }
         return item;
       });
+    } else {
+      ElMessage.error(apiRes.message);
     }
   } catch (error) {
     console.log(error);
@@ -527,7 +530,7 @@ onMounted(async () => {
 .switch-bar {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .switch-option {
@@ -541,7 +544,10 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  color: #7a80a1;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   font-size: 20px;
 }
 
@@ -683,6 +689,16 @@ tbody tr:last-child {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  button {
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 
   .CLAIMED {
     width: 120px;
