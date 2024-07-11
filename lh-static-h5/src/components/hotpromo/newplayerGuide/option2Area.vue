@@ -273,7 +273,7 @@
       </div>
     </div>
   </div>
-  <div class="promotion-container">
+  <div class="promotion-container" v-if="isEligibleState">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -313,7 +313,7 @@
     </div>
   </div>
 
-  <div class="promotion-container">
+  <div class="promotion-container" v-if="isEligibleState">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -356,6 +356,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 
@@ -436,9 +437,22 @@ const handleRedirect = () => {
   router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
 };
 
+const $q = useQuasar();
+const isEligibleState = ref(true);
+
 const getData = async () => {
   try {
     const apiRes = await getNewUserAccumulateDepositInit();
+    if (apiRes.data.state === "NOT_ELIGIBLE") {
+      isEligibleState.value = false;
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "此账号要求不达标，无法参与此优惠。",
+        icon: "report_problem"
+      });
+      return;
+    }
     depositAmount.value = apiRes.data.depositAmount || 0;
 
     const parseApiRes = JSON.parse(apiRes.data.state);
