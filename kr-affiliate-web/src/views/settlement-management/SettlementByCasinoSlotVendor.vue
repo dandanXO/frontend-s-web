@@ -5,7 +5,7 @@
         <el-form @submit.prevent>
           <el-row :gutter="20">
             <el-col :xl="8" :lg="8" :md="6" :sm="6">
-              <el-form-item :label="t('fields.vendorName') + ' :'">
+              <el-form-item :label="t('fields.platform') + ' :'">
                 <el-input v-model="request.platformName" />
               </el-form-item>
             </el-col>
@@ -30,14 +30,14 @@
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
-              <th scope="col" class="textCenter">{{ t('fields.platformName') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.platform') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.numberOfbets') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.bettingAmount') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.prizeMoney') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.betAmount') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.bonusAmount') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.redemptionRate') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.profitAndLoss') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.rollingFee') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.finalProfitAndLoss') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.profitLoss') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.rolling') }}</th>
+              <th scope="col" class="textCenter">{{ t('statsHeader.totalProfitLoss') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">

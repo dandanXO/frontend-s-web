@@ -1,18 +1,13 @@
 <template>
     <div class="message-page">
-        <div class="message-category-dropdown">
-            <q-btn-dropdown flat :label="$t(inboxCategoryLabel)" dense>
-                <q-list>
-                    <q-item clickable v-close-popup @click="inboxCategory = category.type"
-                        v-for="category in inboxCategories" :key="category.type">
-                        <q-item-section>
-                            <q-item-label>{{ $t(category.label) }}</q-item-label>
-                        </q-item-section>
-                    </q-item>
-
-                </q-list>
-            </q-btn-dropdown>
-        </div>
+        <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
+            <q-tab name="ALL" :label="$t('lang.message_type_all')" />
+            <q-tab name="NOTIFICATION" :label="$t('lang.message_type_inbox')" />
+            <q-tab name="Outbox" :label="$t('lang.message_type_outbox')" />
+        </q-tabs>
+        <q-tab-panels v-model="recordActive" animated style="background: #212632;">
+            <q-tab-panel name="NOTIFICATION"></q-tab-panel>
+        </q-tab-panels>
 
         <div class="message-compose-form">
             <div class="message-container">
@@ -50,6 +45,9 @@
                                         <span class="date-time">{{ getLocaleDateTime(item.sendTime || item.createTime)
                                             }}</span>
                                     </q-item-label>
+                                    <q-item-label caption><q-badge v-if="item.type && inboxCategory === 'ALL'"
+                                            style="font-size:10px;"
+                                            :label="$t(getMessageTypeLabel(item.type))" /></q-item-label>
                                 </q-item-section>
                             </q-item>
                         </template>
@@ -93,7 +91,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
@@ -105,20 +103,21 @@ const $q = useQuasar();
 const selected = ref();
 const isLoading = ref(false);
 const inboxCategory = ref('ALL');
-const inboxCategoryLabel = computed(() => {
-    const category = inboxCategories.find(({ type }) => type === inboxCategory.value);
-
-    if (category) {
-        return category.label;
-    }
-
-    return '';
-})
 const store = userStore();
 
 const inboxCategories = [
-    // { type: 'Outbox', label: 'lang.message_type_outbox' },
-    { type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }];
+    { type: 'Outbox', label: 'lang.message_type_outbox' },
+    { type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_inbox' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }];
+
+const getMessageTypeLabel = (messageType) => {
+    const selectedMessageType = inboxCategories.find(({ type }) => type === messageType);
+
+    if (selectedMessageType) {
+        return selectedMessageType.label;
+    }
+
+    return '';
+}
 
 const isFetchingContent = ref(false);
 const inboxMessages = ref([]);
@@ -222,7 +221,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .message-page {
     height: 100%;
-    padding: 20px;
+    padding: 0px 20px 20px;
     position: relative;
 }
 
@@ -245,7 +244,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     margin: 0;
-    height: 100%;
+    height: calc(100% - 40px);
 }
 
 .back-btn {
