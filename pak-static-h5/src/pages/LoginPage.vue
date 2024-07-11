@@ -347,7 +347,7 @@ export default defineComponent({
     };
 
     const openWhatsApp = () => {
-      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+      window.open("https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l", "_blank");
     };
 
     const openInsta = () => {

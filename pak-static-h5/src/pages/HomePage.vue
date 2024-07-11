@@ -68,7 +68,7 @@
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
           <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
           <!--          </a>-->
-          <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l" target="_blank">
+          <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
