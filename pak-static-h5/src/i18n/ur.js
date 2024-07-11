@@ -229,7 +229,8 @@ export default {
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
-    depositTutorial: "جمع کرنے کا ٹیوٹوریل"
+    depositTutorial: "جمع کرنے کا ٹیوٹوریل",
+    select_privilege: "خصوصی اختیار منتخب کریں"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
