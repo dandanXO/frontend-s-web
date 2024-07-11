@@ -327,12 +327,12 @@ onActivated(() => {
       }
 
       .box-title {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         color: #ffffff;
         text-align: center;
         margin-top: 4px;
-        white-space: nowrap;
+        // white-space: nowrap;
       }
 
       .box-subtitle {
