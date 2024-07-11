@@ -3348,7 +3348,9 @@ watch(
   (newValue) => {
     if (newValue === true) {
       if (isAndroid()) {
-        showSpinWheel();
+        setTimeout(() => {
+          showSpinWheel();
+        }, 750);
       }
     }
   }
