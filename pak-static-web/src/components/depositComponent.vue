@@ -81,23 +81,23 @@
               @selected="selectedBank"
             />
           </a-form-item>
-          <template v-if="hasPrivilege && !isUSDT">
-            <div class="deposit-amt-quick-select-title">
-              {{ $t("personalView.finance.deposit.form.privilege.label") }}
-            </div>
-            <a-form-item class="helptxt" ref="privilegeId" name="privilegeId">
-              <a-select
-                v-model:value="selectedPrivilege"
-                :placeholder="$t('personalView.finance.deposit.form.privilege.placeholder')"
-                @select="checkMinDepositAmt"
-                allowClear
-              >
-                <a-select-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id">
-                  {{ p.name }}
-                </a-select-option>
-              </a-select>
-            </a-form-item>
-          </template>
+<!--          <template v-if="hasPrivilege && !isUSDT">-->
+<!--            <div class="deposit-amt-quick-select-title">-->
+<!--              {{ $t("personalView.finance.deposit.form.privilege.label") }}-->
+<!--            </div>-->
+<!--            <a-form-item class="helptxt" ref="privilegeId" name="privilegeId">-->
+<!--              <a-select-->
+<!--                v-model:value="selectedPrivilege"-->
+<!--                :placeholder="$t('personalView.finance.deposit.form.privilege.placeholder')"-->
+<!--                @select="checkMinDepositAmt"-->
+<!--                allowClear-->
+<!--              >-->
+<!--                <a-select-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id">-->
+<!--                  {{ p.name }}-->
+<!--                </a-select-option>-->
+<!--              </a-select>-->
+<!--            </a-form-item>-->
+<!--          </template>-->
           <!-- <a-form-item v-if="selectedPayType" class="tip">
             <span v-if="activeMethod.msg" class="account-tip-text activemethod" style="margin-bottom: 10px">
               <div v-html="activeMethod.msg" />

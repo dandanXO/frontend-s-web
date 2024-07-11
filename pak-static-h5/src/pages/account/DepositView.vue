@@ -167,41 +167,39 @@
 
         <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
 
+        <!--        <q-select-->
+        <!--          style="width:100%;"-->
+        <!--          ref="offerRef"-->
+        <!--          class="deposit-selection q-mt-xs"-->
+        <!--          :label="$t('deposit.select_privilege')"-->
+        <!--          filled-->
+        <!--          :options="unselectedPrivileges"-->
+        <!--          v-model="selectedPrivilege"-->
+        <!--          emit-value-->
+        <!--          v-if="hasPrivilege && !isUSDT"-->
+        <!--          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"-->
+        <!--          clearable-->
+        <!--          @update:model-value="checkMinDepositAmt"-->
+        <!--        >-->
+        <!--          <template v-slot:option="scope">-->
+        <!--            <q-item v-bind="scope.itemProps">-->
+        <!--              <q-item-section>-->
+        <!--                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">-->
+        <!--                  {{ scope.opt.name }}-->
+        <!--                </q-item-label>-->
+        <!--              </q-item-section>-->
+        <!--            </q-item>-->
+        <!--          </template>-->
+        <!--        </q-select>-->
 
-        <q-select
-          style="width:100%;"
-          ref="offerRef"
-          class="deposit-selection q-mt-xs"
-          :label="$t('deposit.select_privilege')"
-          filled
-          :options="unselectedPrivileges"
-          v-model="selectedPrivilege"
-          emit-value
-          v-if="hasPrivilege && !isUSDT"
-          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          clearable
-          @update:model-value="checkMinDepositAmt"
-        >
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
-                  {{ scope.opt.name }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-
-<!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
-<!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
-<!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
-<!--          </p>-->
-<!--          <p v-else>-->
-<!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
-<!--          </p>-->
-<!--        </div>-->
-
+        <!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          </p>-->
+        <!--          <p v-else>-->
+        <!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
+        <!--          </p>-->
+        <!--        </div>-->
       </q-form>
     </div>
 
@@ -1014,7 +1012,7 @@ onMounted(() => {
         }
       }
 
-      .deposit-selection{
+      .deposit-selection {
         background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
