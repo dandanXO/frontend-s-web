@@ -1,5 +1,6 @@
 <template>
   <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
+
   <q-carousel
     v-model="slide"
     id="home"
@@ -1317,6 +1318,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { useI18n } from "vue-i18n";
+import { eventapi } from "src/boot/axios";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -3360,13 +3362,38 @@ watch(
   () => route.query.register,
   (newValue) => {
     if (newValue === "true") {
-      if (!isAndroid) {
+      if (!isAndroid()) {
         isCongratsModal.value = true;
       }
     }
-  },
-  { immediate: true } // to check immediately when the component is mounted
+  }
 );
+
+watch(
+  () => route.query.login,
+  (newValue) => {
+    if (newValue === "true") {
+      if (isAndroid()) {
+        showSpinWheel();
+      }
+    }
+  }
+);
+
+const showSpinWheel = () => {
+  eventapi
+    .get("/new-user-roulette/init")
+    .then((res) => {
+      if (res.code == 0) {
+        if (res.data.showRoulette === "YES") {
+          isLuckyDrawModal.value = true;
+        }
+      }
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+};
 </script>
 
 <style scoped lang="scss">

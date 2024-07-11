@@ -405,8 +405,11 @@ export default defineComponent({
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-                  router.go(jumpUrl);
+                  // router.go(jumpUrl);
+                  router.push({ path: jumpUrl, query: { login: "true" } });
                 }
+
+
               })
               .catch((error) => {
                 loginForm.captchaCode = "0000";

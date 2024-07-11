@@ -238,7 +238,7 @@ const spinWheel = () => {
   }
 
   eventapi
-    .post("/aviatorWheel/spin")
+    .post("/new-user-roulette/spin")
     .then((res) => {
       if (res.code == 0) {
         var bonusIndex = res.data.bonusAmount;
@@ -247,10 +247,10 @@ const spinWheel = () => {
         }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(prizeIndex, () => {
+        spin(4, () => {
           showPrizePopup.value = true;
           prizePopupBonusAmt.value = res.data.bonusAmount;
-          remainingDraws.value = res.data.availableSpin;
+          remainingDraws.value = 0;
         });
       }
     })
@@ -260,13 +260,13 @@ const spinWheel = () => {
 };
 
 const initSpinWheel = () => {
-  eventapi.get("/aviatorWheel/init").then((res) => {
+  eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
-      remainingDraws.value = res.data.availableSpin;
+      remainingDraws.value = res.data.spinChance;
     }
   });
 
-  getRecords();
+  // getRecords();
 };
 
 onMounted(() => {
@@ -336,6 +336,7 @@ onMounted(() => {
   left: 0px;
   width: 330px;
   height: 330px;
+  overflow: hidden;
 }
 
 .wheel-bg {
@@ -362,15 +363,15 @@ onMounted(() => {
   height: 100%;
 }
 .wheel-top-btn {
-  width: 132px;
+  width: 137px;
   height: 123px;
   position: absolute;
-  top: 22px;
-  left: 131px;
+  top: 24px;
+  left: 129px;
   right: 0;
   z-index: 25;
   img {
-    width: 132px;
+    width: 137px;
     height: 123px;
   }
 }
