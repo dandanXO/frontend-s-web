@@ -243,7 +243,7 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="step === 2 && props.siteId === '8'">
+                <div v-if="step === 2 && (props.siteId === '8' || props.siteId === '15')">
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
@@ -623,7 +623,7 @@ export default defineComponent({
     const validateRealName = async (r, v) => {
       if (v === '') {
         return Promise.reject(new Error(t('message.requiredRealName')))
-      } else if (!checkRealName(v) && props.siteId !== '8') {
+      } else if (!checkRealName(v) && props.siteId !== '8' && props.siteId !== '15') {
         return Promise.reject(new Error('请输入中文字符'))
       } else {
         return Promise.resolve()
@@ -1564,11 +1564,11 @@ a {
   padding: 20px;
   position: relative;
   background: url('../../assets/images/login/firstbg.svg') no-repeat center
-    center;
+  center;
   background-size: cover;
   &.lh {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
-      center;
+    center;
   }
   &.vi,  &.kaka {
     font-family: 'Roboto';
@@ -1685,10 +1685,10 @@ a {
       .first-liner {
         margin-bottom: 3rem;
         background: linear-gradient(
-          180deg,
-          #f6d99e 13.1%,
-          #ffe3bd 50.03%,
-          #fbbd68 79.37%
+            180deg,
+            #f6d99e 13.1%,
+            #ffe3bd 50.03%,
+            #fbbd68 79.37%
         );
         text-shadow: 0px 4px 4px 0px #1c1614;
         font-size: 5rem;
@@ -1710,7 +1710,7 @@ a {
       }
       .top {
         background: url(../../assets/images/login/top.png) no-repeat center
-          center;
+        center;
         background-size: cover;
         padding: 20px;
         position: relative;
@@ -1718,8 +1718,8 @@ a {
           font-weight: bold;
           //font-family: fzh;
           font-family: Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI,
-            Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
-            Microsoft YaHei, Arial, sans-serif;
+          Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+          Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }
@@ -1740,7 +1740,7 @@ a {
       }
       .mid {
         background: url(../../assets/images/login/mid.png) no-repeat center
-          center;
+        center;
         background-size: cover;
         margin: 0 10px;
         padding: 25px 20px;
@@ -1751,7 +1751,7 @@ a {
       }
       .bot {
         background: url(../../assets/images/login/dow.png) no-repeat center
-          bottom;
+        bottom;
         background-size: cover;
         padding: 10px;
       }
