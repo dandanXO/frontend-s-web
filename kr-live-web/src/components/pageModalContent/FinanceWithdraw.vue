@@ -185,11 +185,14 @@ import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import ReminderText from 'components/finance/ReminderText';
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 const $q = useQuasar();
 const { t } = useI18n();
 const store = userStore();
 const { realName } = storeToRefs(store);
+const router = useRouter();
+
 const imgURL = process.env.IMAGE_CDN;
 
 const isLoading = ref(false);
