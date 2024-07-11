@@ -628,7 +628,7 @@ export default defineComponent({
         } else if (route.path === "/account/vip") {
           prevPage.value = "";
           hasPage.value = true;
-          pageName.value = "VIP优惠";
+          pageName.value = "VIP 优惠";
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
@@ -778,8 +778,7 @@ svg path {
 }
 
 .page-wrapper {
-  background: #4fb2ff;
-  background: url(../assets/images/common/bgheader.png) no-repeat center center;
+  background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
   padding-top: 0px;
   background-size: cover;
 }

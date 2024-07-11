@@ -1,10 +1,6 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <!--      <div class="promo-top">-->
-      <!--        <img src="../assets/promo/promo-top-bg1.jpg" alt="" class="all-promotions-bg" />-->
-      <!--      </div>-->
-
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
           <div class="type-list">
@@ -316,16 +312,20 @@ export default defineComponent({
   // background: #090b19;
   .all-promotions {
     min-height: 40vh;
-    padding: 0px 0px 50px 0px;
+    padding: 50px;
     position: relative;
-    background-image: url("../assets/promo/promo-bg-new.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-color: #ebf4ff;
-    min-height: 100vh;
+    background-color: #EBF4FF;
 
     margin: 0 auto;
-    //max-width: 1920px;
+    max-width: 1920px;
+  }
+
+  .all-promotions-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0.5;
   }
 
   .promo-view-container {
@@ -406,15 +406,18 @@ export default defineComponent({
   }
 
   .promo-top {
-    width: 100%;
     display: flex;
     justify-content: space-around;
-    padding: 0 0px;
+    padding: 0 20px;
     position: relative;
     z-index: 1;
 
-    img {
-      width: 100%;
+    .promo-top-img1 {
+      width: 543px;
+    }
+
+    .promo-top-img2 {
+      width: 305px;
     }
   }
 
@@ -446,7 +449,7 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 280px 0 10px;
+      padding: 10px 0;
 
       .promo-type-wrapper {
         display: flex;
@@ -487,7 +490,7 @@ export default defineComponent({
 
             .label {
               z-index: 0;
-              color: #414c74;
+              color: #414C74;
             }
 
             &:before {
@@ -495,7 +498,7 @@ export default defineComponent({
               position: absolute;
               width: 100%;
               height: 100%;
-              background: linear-gradient(180deg, #fcfeff 0%, #ebf5ff 52.01%, #fafdff 98%);
+              // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
               box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
               border-radius: 30px;
             }
@@ -601,12 +604,12 @@ export default defineComponent({
             .time {
               font-size: 12px;
               font-weight: 400;
-              color: #6f7582;
+              color: #6F7582;
               margin-bottom: 4px;
             }
 
             .viewdetail {
-              color: #414c74;
+              color: #414C74;
               font-size: 28px;
               overflow: hidden;
               text-align: left;
@@ -616,7 +619,7 @@ export default defineComponent({
             }
 
             .sub-viewdetail {
-              color: #5e73a1;
+              color: #5E73A1;
               font-size: 14px;
               font-weight: 600;
             }

@@ -7,7 +7,175 @@
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
+
           <div class="all-promotions" v-if="!isPromoDetail">
+            <div class="promo-main-container">
+              <div class="promo-type-wrapper"></div>
+              <div class="promo-list-wrapper">
+                <div
+                  v-for="(promo, i) in filteredArray"
+                  :key="i"
+                  data-aos="zoom-in"
+                  data-aos-easing="ease-out"
+                  data-aos-duration="1000"
+                >
+                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                    <a @click="showPromoDetails(promo)">
+                      <div>
+                        <div class="promo-label">
+                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
+                        <div>
+                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class="promo-item" v-if="tab.name === 'all'">
+                    <a @click="showPromoDetails(promo)">
+                      <div>
+                        <div class="promo-label">
+                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
+                        <div>
+                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            v-else
+            class="selected-promo"
+            :class="{
+              euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
+              'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
+            }"
+          >
+            <div class="loader" v-if="isFetchingPromo" />
+            <div
+              class="selected-promo-wrapper"
+              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+            >
+              <div
+                class="banner-container"
+                v-if="
+                  selectedPromo &&
+                  selectedPromo.mobileBannerUrl &&
+                  !isSpecialPromo &&
+                  selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+                  selectedPromo.promoCode !== 'lh1-aijiasu' &&
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
+                "
+              >
+                <img
+                  loading="lazy"
+                  class="promo-content"
+                  :src="imgURL + selectedPromo.mobileBannerUrl"
+                  style="display: block; width: 100%"
+                />
+              </div>
+              <div
+                class="inner"
+                :class="{
+                  lhstepgame:
+                    selectedPromo.promoCode === 'lh1-game-steps' ||
+                    selectedPromo.promoCode === 'lh-sport-zhongchao' ||
+                    selectedPromo.promoCode === 'lh-lpl-summer24',
+                  lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
+                  lhworldcup: selectedPromo.promoCode === 'lh1worldcup',
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
+                  lhduanwu:
+                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
+                  lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
+                  meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
+                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
+                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
+                }"
+                :style="[
+                  selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
+                    ? 'background-image: url(' +
+                      imgURL +
+                      (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+                      ')'
+                    : selectedPromo?.promoCode === 'lh1-intel-esl'
+                    ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
+                    : ''
+                ]"
+              >
+                <div v-if="selectedPromo.hasPromo">
+                  <HotPromotion :list="selectedPromo" />
+                </div>
+                <div
+                  v-if="
+                    selectedPromo.promoType &&
+                    selectedPromo.promoCode !== 'lh1-game-steps' &&
+                    selectedPromo.promoCode !== 'lh-eurocup-manual' &&
+                    selectedPromo.promoCode !== 'lh1-aijiasu'
+                  "
+                  :class="{
+                    welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
+                    sport: selectedPromo.promoType.toLowerCase() === 'sport',
+                    eSport: selectedPromo.promoType.toLowerCase() === 'esport',
+                    fish: selectedPromo.promoType.toLowerCase() === 'fish',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                  }"
+                >
+                  <div v-html="selectedPromo.pageContent"></div>
+                </div>
+                <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
+                  <img
+                    loading="lazy"
+                    v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
+                    src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- <div class="all-promotions" v-if="!isPromoDetail">
             <div class="promo-main-container">
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
@@ -28,7 +196,6 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                        <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
                       <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
                         {{ getPromoLabel(promo.labelType) }}
@@ -45,17 +212,12 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                        <!-- <span class="detaildate">活动时间：{{ promo.date }}</span> -->
                       </div>
                       <div class="pad-label label-new" v-if="!!getPromoLabel(promo.labelType)">
                         {{ getPromoLabel(promo.labelType) }}
                       </div>
                     </a>
                   </template>
-
-                  <!-- <template v-if="tab.name === promo.promoType.toLowerCase()"> -->
-
-                  <!-- </template> -->
                 </div>
               </div>
             </div>
@@ -64,17 +226,6 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
               <div class="banner-container" v-if="!isSpecialPromo">
-                <!-- <div
-                  class="promo-bg"
-                  :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl
-                      ? selectedPromo.mobileBannerUrl
-                      : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
                 <div>
                   <img
                     v-if="!!imgURL && !!selectedPromo.mobileBannerUrl"
@@ -131,7 +282,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -163,11 +314,8 @@ import {userStore} from "stores/index";
 import {isAndroid} from "boot/utils";
 import {SessionStorage} from "quasar";
 import LocalStorage from "boot/local-storage";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
-
 import HotPromotion from "components/HotPromotion";
-// import HotPromotion from 'components/HotPromotion'
+
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -242,29 +390,15 @@ export default defineComponent({
         isPromoDetail.value = false;
       } else {
         isPromoDetail.value = route.query.name;
-        // ui.setScrollPosition("vertical", 0, 200);
       }
     });
     const loadBanner = () => {
-      // loadPromoBanner("PROMO").then((res) => {
-      //   if (res.code === 0) {
-      //       banner.value = res.data[0]
-      //   }
-      // })
       api
         .get("/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
           }
-          // banners.value = response.data;
         });
     };
     const isSpecialPromo= ref(false);
@@ -316,11 +450,16 @@ export default defineComponent({
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function (promo) {
 
-          return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase());
+          return (promo.promoType.toLowerCase()).includes(type.value.toLowerCase()) && promo.param !== null && parsedParam(promo.param).date !== '' && parsedParam(promo.param).sub !== '';
         });
       } else {
-        filteredArray.value = promoState.promoList;
+        filteredArray.value = promoState.promoList.filter((promo) => promo.param !== null && parsedParam(promo.param).date !== '' && parsedParam(promo.param).sub !== '');
       }
+    };
+
+    const parsedParam = (paramData) => {
+      const newData = JSON.parse(paramData);
+      return newData;
     };
 
     const loadAll = () => {
@@ -334,18 +473,11 @@ export default defineComponent({
           var promoItems = res.data;
 
           promoItems.forEach((element) => {
-            // if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
-            // } else {
             promoState.promoList.push(element);
-            // console.log(promoState.promoList);
-
             if (route.query.name && String(element.redirectUrl) === route.query.name) {
               showPromoDetails(element);
             }
-            // }
           });
-          // console.log("Final Promos");
-          // console.log(promoState.promoList);
           switchPromoType(promoState.active);
           isFetchingPromo.value = false;
         }
@@ -363,7 +495,6 @@ export default defineComponent({
 
     const checkExtension = () => {
       if (currentPath.value === "/promotion") {
-        // const eToken = ref(route.query.name);
         extensionToken.value = route.query.token;
         extensionState.value = true;
       }
@@ -402,7 +533,8 @@ export default defineComponent({
       extensionState,
       extensionToken,
       isFetchingPromo,
-      isSpecialPromo
+      isSpecialPromo,
+      parsedParam
     };
   }
 });
@@ -488,9 +620,6 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      // height: 40vw;
-      // max-height: 130px;
-      // margin: 10px;
 
       img {
         width: 100%;
@@ -498,57 +627,16 @@ export default defineComponent({
     }
 
     .promo-main-container {
-      max-width: 1400px;
-      width: 95%;
+      width: calc(100% - 2rem);
       margin-left: auto;
       margin-right: auto;
 
       .promo-type-wrapper {
         display: flex;
         justify-content: center;
-        // border-bottom: 4px solid rgb(255 255 255 / 15%);
+
         ::-webkit-scrollbar {
           display: none;
-        }
-
-        .type-list {
-          display: flex;
-          align-items: center;
-          border-radius: 20px;
-          overflow: auto;
-          gap: 20px;
-          padding: 10px;
-
-          .type-item {
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 20px;
-            background: #272c3d;
-            box-shadow: 0 0 10px -3px #000000;
-            white-space: nowrap;
-
-            svg {
-              width: 20px;
-              fill: white;
-              display: block;
-              padding: 0;
-            }
-
-            img {
-              max-height: 20px;
-              filter: grayscale(1);
-            }
-
-            &.active,
-            &:hover {
-              background: #4b4e66;
-              box-shadow: 0 0 5px #ffffff;
-
-              img {
-                filter: grayscale(0);
-              }
-            }
-          }
         }
       }
 
@@ -562,56 +650,152 @@ export default defineComponent({
       }
 
       .promo-list-wrapper {
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        margin-top: 1rem;
+        flex-direction: column;
 
         .promo-item {
           position: relative;
-          // overflow: hidden;
-          cursor: pointer;
           transform: scale(1);
           animation-name: scalein;
           animation-duration: 1s;
           transition: 0.4s ease-in;
+          margin-bottom: 1rem;
+          overflow: hidden;
+          cursor: pointer;
+          background-image: url(../assets/images/promo/promo-item-bg.png);
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          padding: 32px 24px 16px;
+          position: relative;
+          border-radius: 12px;
 
-          a {
-            margin-bottom: 15px;
-            display: block;
-            box-shadow: 0px 0px 30px -15px #000;
-            border-radius: 10px;
+          .promo-label {
+            height: 24px;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .promo-ribbon {
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            position: relative;
+            color: #ffffff;
+            font-size: 0.75rem;
             overflow: hidden;
+            padding: 4px 20px 4px 8px;
+            background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+
+            &:after {
+              content: "";
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 0;
+              height: 0;
+              border-style: solid;
+              border-width: 40px 25px 30px 0;
+              border-color: transparent #f6f8fc transparent transparent;
+              overflow: hidden;
+            }
+          }
+
+          .promo-item-date {
+            color: #606479;
+            font-size: 0.825rem;
+            font-weight: bold;
+            padding-left: 12px;
+            // position: absolute;
+            // top: 5px;
+            // left: 100px;
+          }
+
+          .promo-item-title {
+            color: $primary;
+            font-weight: bold;
+            font-size: 1rem;
+            max-width: 160px;
+
+            @media (min-width: 500px) {
+              max-width: calc(100% - 220px);
+            }
+          }
+
+          .promo-item-deal {
+            color: #a4aabb;
+            font-weight: bold;
+            font-size: 0.875rem;
+            max-width: 160px;
+
+            @media (min-width: 500px) {
+              max-width: calc(100% - 220px);
+            }
+
+            & > span {
+              color: $primary;
+            }
+          }
+
+          .promo-item-btn {
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            margin-top: 6px;
+          }
+
+          .promo-item-side-img {
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            // height: 70%;
+
+            img {
+              display: block;
+              // height: 100%;
+              // width: auto;
+              width: 100%;
+              max-width: calc(100% - 180px);
+              margin-left: auto;
+            }
           }
 
           img {
+            width: 100%;
+            height: auto;
           }
-
-          cursor: pointer;
 
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
-            // border-radius: 10px 10px 0 0;
 
             .promo-bg {
               transition: all 0.5s ease;
               background-size: cover;
               background-position: center center;
               margin: 0;
-              background: #ffffff;
-              // border-radius: 4px;
-              border-radius: 10px 10px 0 0;
-
-              &:hover {
-                transform: scale(1.2);
-              }
-
               display: flex;
               justify-content: center;
               align-items: center;
               gap: 30px;
 
+              &:hover {
+                opacity: 0.9;
+              }
+
+              &:active {
+                filter: brightness(0.85);
+                transform: translate(0px, 1px);
+              }
+
               .promo-content {
                 width: 100%;
+                //width: unset;
+                height: auto;
 
                 &.isDesktop {
                   display: block;
@@ -620,10 +804,6 @@ export default defineComponent({
                 &.isMobile {
                   display: none;
                 }
-              }
-
-              .promo-img {
-                height: 200px;
               }
             }
           }
@@ -642,54 +822,46 @@ export default defineComponent({
             // align-items: center;
             display: flex;
             justify-content: flex-start;
-            align-items: flex-start;
-            padding: 10px;
-            flex-direction: column;
+            align-items: center;
 
             .viewdetail {
-              // color: #000;
-              // padding: 0 4px;
-              // position: absolute;
-              // top: -5px;
-              // left: -2px;
-              // font-size: 12px;
-              // color: #3a3a3a;
-              // z-index: 2;
-              // width: 100%;
-              // // padding: 4px;
-              // background: #d2d2de;
+              background: #002a35;
+              color: #ffffff;
+              font-size: 12px;
+              position: absolute;
+              width: 100%;
+              z-index: 2;
+              top: 0;
+              height: 30px;
+              overflow: hidden;
+              line-height: 27px;
+              padding: 0 100px 0 10px;
 
-              // &:before {
-              //   display: block;
-              //   content: "";
-              //   background: #ffffff;
-              //   height: 100%;
-              //   width: 70px;
-              //   position: absolute;
-              //   top: -2px;
-              //   right: -2px;
-              // }
+              &:before {
+                background: #043d4f;
+                content: "";
+                display: block;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 70px;
+              }
 
-              // &:after {
-              //   display: block;
-              //   content: "";
-              //   top: -2px;
-              //   right: 48px;
-              //   position: absolute;
-              //   width: 0;
-              //   height: 0;
-              //   border-left: 20px solid transparent;
-              //   border-right: 20px solid transparent;
-              //   border-top: 20px solid #ffffff;
-              //   transform: rotate(180deg);
-              //   clear: both;
-              // }
-            }
-
-            .detaildate {
-              color: #858585;
-              font-weight: 400;
-              font-size: 14px;
+              &:after {
+                border-left: 20px solid transparent;
+                border-right: 30px solid transparent;
+                border-top: 30px solid #043d4f;
+                clear: both;
+                content: "";
+                display: block;
+                height: 0;
+                position: absolute;
+                right: 50px;
+                top: 0;
+                transform: rotate(180deg);
+                width: 0;
+              }
             }
 
             .detail-arrow {
@@ -951,8 +1123,9 @@ export default defineComponent({
   .q-tab {
     min-height: unset;
     border-radius: 50px;
-    color: #858585;
+    color: #414C74;
     padding: 2px 10px 0;
+    background: transparent;
   }
 
   .q-tab__content {
@@ -961,7 +1134,7 @@ export default defineComponent({
   }
 
   .q-tab--active {
-    background: #68bcec;
+    background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
     color: #ffffff;
   }
 
