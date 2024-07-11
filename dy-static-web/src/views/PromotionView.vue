@@ -2,14 +2,6 @@
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
-        <div class="promo-top">
-          <div class="promo-top-img1">
-            <img src="../assets/promo/bg-top-img1.png" alt="" width="100%" />
-          </div>
-          <div class="promo-top-img2">
-            <img src="../assets/promo/bg-top-img2.png" alt="" width="100%" />
-          </div>
-        </div>
         <div class="promo-type-wrapper">
           <div class="type-list">
             <div
@@ -52,7 +44,6 @@
           </div>
         </div>
       </div>
-      <img src="../assets/promo/bg-top.png" alt="" class="all-promotions-bg">
     </div>
 
     <div

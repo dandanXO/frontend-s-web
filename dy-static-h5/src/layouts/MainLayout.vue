@@ -778,8 +778,7 @@ svg path {
 }
 
 .page-wrapper {
-  background: #4fb2ff;
-  background: url(../assets/images/common/bgheader.png) no-repeat center center;
+  background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
   padding-top: 0px;
   background-size: cover;
 }
