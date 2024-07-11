@@ -676,7 +676,7 @@ export default defineComponent({
       whatDragPos.value = [whatDragPos.value[0] - ev.delta.x, whatDragPos.value[1] - ev.delta.y];
     };
     const openWhatsApp = () => {
-      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+      window.open("https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l", "_blank");
     };
 
     const openInsta = () => {
