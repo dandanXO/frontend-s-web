@@ -167,6 +167,7 @@ export default {
     message_type_payment: "입출금",
     message_type_all: "모두",
     message_type_outbox: "보낸 문의함",
+    message_type_inbox: "답변 완료",
     // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
