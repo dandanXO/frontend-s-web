@@ -2349,7 +2349,6 @@ export default defineComponent({
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
-
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
@@ -2362,6 +2361,9 @@ export default defineComponent({
 }
 
 :deep(.q-carousel.float) {
+  .swiper-wrapper {
+    margin-bottom: 25px;
+  }
   height: unset;
   background: transparent;
 }
@@ -3198,6 +3200,7 @@ export default defineComponent({
   margin: auto;
   // margin: 20px auto 0px;
 
+
   .euro-countdown {
     display: flex;
     justify-content: center;
@@ -3395,8 +3398,9 @@ export default defineComponent({
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
-      margin-top: 10px;
-      transform: scale(0.75)
+      // margin-top: 10px;
+      transform: scale(0.75);
+      margin-top: -10px;
     }
   }
 
@@ -3427,6 +3431,7 @@ export default defineComponent({
     justify-content: space-between;
     flex-wrap: wrap;
     box-shadow: 0px 0px 6px 0px #00324433;
+    padding-bottom: 15px;
 
 
     .top-match-title {
