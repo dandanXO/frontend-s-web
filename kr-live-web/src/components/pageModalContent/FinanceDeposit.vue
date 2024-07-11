@@ -299,7 +299,7 @@ const verifyDepositAmount = ref([
 
 function isDivisibleBy10000(val) {
   // Convert input to a number
-  const input = val.replace(/,/g , "");
+  const input = val.replace(/,/g, "");
   const number = Number(input);
   // console.log(number)
 
@@ -310,6 +310,23 @@ function isDivisibleBy10000(val) {
     return false;
   }
 }
+
+const checkIsRealNameBinded = () => {
+  if (!realName.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '실명이 필요합니다',
+      icon: "report_problem"
+    });
+
+    router.push('/?page=personal/info');
+  }
+}
+
+watch(() => realName.value, () => {
+  checkIsRealNameBinded();
+})
 
 async function confirmDeposit() {
   if (btnLoading.value) {
@@ -671,6 +688,7 @@ function checkPrivilege(v) {
 }
 
 onMounted(() => {
+  checkIsRealNameBinded();
   initPay();
   // checkNewUser();
 });

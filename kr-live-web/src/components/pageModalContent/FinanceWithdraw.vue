@@ -184,10 +184,12 @@ import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import ReminderText from 'components/finance/ReminderText';
+import { storeToRefs } from "pinia";
 
 const $q = useQuasar();
 const { t } = useI18n();
 const store = userStore();
+const { realName } = storeToRefs(store);
 const imgURL = process.env.IMAGE_CDN;
 
 const isLoading = ref(false);
@@ -228,7 +230,7 @@ const parseDigitsWithComma = (value) => {
 
 function isDivisibleBy10000(val) {
   // Convert input to a number
-  const input = val.replace(/,/g , "");
+  const input = val.replace(/,/g, "");
   const number = Number(input);
   // console.log(number)
 
@@ -239,6 +241,23 @@ function isDivisibleBy10000(val) {
     return false;
   }
 }
+
+const checkIsRealNameBinded = () => {
+  if (!realName.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '실명이 필요합니다',
+      icon: "report_problem"
+    });
+
+    router.push('/?page=personal/info');
+  }
+}
+
+watch(() => realName.value, () => {
+  checkIsRealNameBinded();
+})
 
 watch(() => withdrawAmountFormatted.value, () => {
   const withdrawAmount = withdrawAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
@@ -397,6 +416,7 @@ const initWithdraw = () => {
 }
 
 onMounted(() => {
+  checkIsRealNameBinded();
   initWithdraw();
 });
 </script>
