@@ -130,20 +130,6 @@ onActivated(() => {
   const acitivtyApi = "/ind/deposit/bonus";
   rules.value = [];
 
-  if (!store.token) {
-    return Dialog.create({
-      class: "login-card",
-      title: "Please Login",
-      message: "Please log in to operate",
-      cancel: { color: "negative", label: "Cancel" },
-      ok: { color: "brightbtn", label: "Login" },
-      padding: "20px",
-      persistent: true
-    }).onOk(() => {
-      router.push("/login");
-    });
-  }
-
   eventapi.get(acitivtyApi).then((res) => {
     const resp = res.data;
     isLoading.value = false;
@@ -162,6 +148,20 @@ onActivated(() => {
         resp.bet >= rules.value[resp.bonusSeq].bet ? 1 : Number(resp.bet) / Number(rules.value[resp.bonusSeq].bet);
     }
   });
+
+  if (!store.token) {
+    return Dialog.create({
+      class: "login-card",
+      title: "Please Login",
+      message: "Please log in to operate",
+      cancel: { color: "negative", label: "Cancel" },
+      ok: { color: "brightbtn", label: "Login" },
+      padding: "20px",
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+  }
 });
 </script>
 
