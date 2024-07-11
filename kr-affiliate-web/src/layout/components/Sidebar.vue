@@ -244,6 +244,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'clock',
         },
+        {
+          path: '/minigame-bet-history',
+          title: t('menu.MiniGameBetHistory'),
+          label: 'Bet History Mini Game',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
       ],
     },
     {

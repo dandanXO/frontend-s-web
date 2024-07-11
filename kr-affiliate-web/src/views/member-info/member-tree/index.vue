@@ -129,15 +129,14 @@
       </table>
       <div class="table-footer">
         <span class="table-footer-item">
-          {{ t('fields.totalBet') }}: $
-          <span v-formatter="{ data: page.totalBet, type: 'money' }" />
+          {{ t('fields.totalBet') }}: <span v-formatter="{ data: page.totalBet, type: 'money' }" />
         </span>
         <span class="table-footer-item">
-          {{ t('fields.totalPayout') }}: $
+          {{ t('fields.totalPayout') }}:
           <span v-formatter="{ data: page.totalPayout, type: 'money' }" />
         </span>
         <span class="table-footer-item">
-          {{ t('fields.totalCompanyProfit') }}: $
+          {{ t('fields.totalCompanyProfit') }}:
           <span v-formatter="{
             data: page.totalBet - page.totalPayout,
             type: 'money',

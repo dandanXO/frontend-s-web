@@ -17,7 +17,6 @@
         <span v-else>
           <span v-if="showBalance" class="card-panel-num">
             <span v-formatter="{data: balance, type: 'money'}" />
-            {{ returnCurrency() }}
           </span>
           <span v-else>****</span>
           <el-icon
@@ -84,13 +83,13 @@
           {{ $t('message.singleLimit') }} :
           {{
             formatMoney(selectedWithdrawalMethod.withdrawMin) +
-              ' - ' +
-              formatMoney(selectedWithdrawalMethod.withdrawMax)
+              ' ₩ - ' +
+              formatMoney(selectedWithdrawalMethod.withdrawMax) + ' ₩'
           }}
         </div>
         <div v-if="selectedWithdrawalMethod.withdrawMaxAmount">
           {{ $t('message.withdrawalToday') }} :
-          {{ formatMoney(selectedWithdrawalMethod.withdrawMaxAmount) }}
+          {{ formatMoney(selectedWithdrawalMethod.withdrawMaxAmount) + ' ₩'}}
         </div>
         <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
           {{ $t('message.remaining') }} :
