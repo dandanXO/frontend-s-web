@@ -420,13 +420,13 @@ const submitRegisterForm = async (elForm) => {
                 });
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                router.push("/welcome");
+                router.push("/");
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  router.push("/welcome");
+                  router.push("/");
                 }
               } else {
                 ElMessage.error(response.message);
