@@ -179,7 +179,7 @@ import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "../../components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
@@ -308,6 +308,24 @@ function isDivisibleBy10000(val) {
     return true;
   } else {
     return false;
+  }
+}
+
+const checkIsGotBankCard = () => {
+  if(realName.value){
+    api.get("/session/allBankCard").then((res) => {
+      const response = res.data;
+      if (response.data.length === 0) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: '먼저 은행 카드를 연결하세요',
+          icon: "report_problem"
+        });
+
+        router.push('/?page=bankcardlist');
+      }
+    });
   }
 }
 
@@ -688,6 +706,7 @@ function checkPrivilege(v) {
 }
 
 onMounted(() => {
+  checkIsGotBankCard();
   checkIsRealNameBinded();
   initPay();
   // checkNewUser();
