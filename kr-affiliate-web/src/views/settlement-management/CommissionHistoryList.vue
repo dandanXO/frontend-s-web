@@ -6,13 +6,8 @@
           <el-row :gutter="20">
             <el-col :span="4">
               <el-form-item :label="t('fields.gameType') + ' :'">
-                <el-select
-                  clearable
-                  v-model="request.gameTypes"
-                  size="small"
-                  :placeholder="t('fields.gameType')"
-                  class="filter-item"
-                >
+                <el-select clearable v-model="request.gameTypes" size="small" :placeholder="t('fields.gameType')"
+                  class="filter-item">
                   <el-option :label="t('fields.all')" value="" />
                   <el-option :label="t('gameType.SLOT')" value="SLOT" />
                   <el-option :label="t('gameType.LIVE')" value="LIVE" />
@@ -28,48 +23,31 @@
             </el-col>
             <el-col :span="10">
               <el-form-item :label="t('fields.recordTime') + ' :'">
-                <el-date-picker
-                  v-model="request.recordTime"
-                  format="DD/MM/YYYY"
-                  value-format="YYYY-MM-DD"
-                  size="normal"
-                  type="daterange"
-                  range-separator=":"
-                  :start-placeholder="t('fields.startDate')"
-                  :end-placeholder="t('fields.endDate')"
-                  :shortcuts="shortcuts"
-                  :disabled-date="disabledDate"
-                  :editable="false"
-                  :clearable="false"
-                  :default-time="defaultTime"
-                  style="width: 100%;"
-                />
+                <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
+                  type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
               </el-form-item>
             </el-col>
             <el-col :span="4">
-              <el-button
-                style="margin-left: 20px"
-                icon="el-icon-search"
-                size="normal"
-                type="success"
-                @click="loadRecords()"
-              >
+              <el-button style="margin-left: 20px" icon="el-icon-search" size="normal" type="success"
+                @click="loadRecords()">
                 {{ t('fields.search') }}
               </el-button>
             </el-col>
           </el-row>
         </el-form>
       </div>
-      <div style="overflow:scroll">
+      <div class="custom-table-wrapper">
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
-              <th scope="col">{{ t('fields.gameType') }}</th>
-              <th scope="col">{{ t('fields.loginName') }}</th>
-              <th scope="col">{{ t('fields.bet') }}</th>
-              <th scope="col">{{ t('fields.rebatePercentage') }}</th>
-              <th scope="col">{{ t('fields.rebate') }}</th>
-              <th scope="col">{{ t('fields.recordTime') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.gameType') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.loginName') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.bet') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.rebatePercentage') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.rebate') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.recordTime') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
@@ -82,39 +60,41 @@
           </tbody>
           <tbody v-else-if="page.records.length > 0">
             <tr v-for="item in page.records" :key="item.id">
-              <td class="textCenter">
-                {{ item.gameType }}
+              <td v-formatter="{ data: item.gameType, type: 'gameType' }">
               </td>
               <td class="textCenter">
-                {{ item.memberName }}
+                <strong>{{ item.memberName }}</strong>
               </td>
-              <td class="textCenter">
+              <td class="textRight">
                 {{ formatMoney(item.betAmount) }}
               </td>
-              <td class="textCenter">
+              <td class="textRight">
                 {{ item.rebatePercentage * 100 }} %
               </td>
-              <td class="textCenter">
+              <td class="textRight">
                 {{ formatMoney(item.rebateAmount) }}
               </td>
-              <td class="textCenter">
-                {{ item.recordTime }}
+              <td v-formatter="{ data: item.recordTime, type: 'date' }">
               </td>
             </tr>
           </tbody>
         </table>
+
+        <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+          :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Loading from '@/components/loading/Loading.vue'
 import { formatMoney } from '@/utils/format-money'
 import moment from 'moment'
 import { getCommissionRecord } from '@/api/affiliate-report'
+import emptyComp from '@/components/empty';
 
 const { t } = useI18n()
 
@@ -131,6 +111,13 @@ const request = reactive({
   loginName: null,
   gameTypes: '',
 })
+
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadRecords()
+  }
+}
 
 function convertStartDate(date) {
   return moment(date)
@@ -267,6 +254,10 @@ async function loadRecords() {
   page.total = ret.total
   page.loading = false
 }
+
+onMounted(() => {
+  loadRecords();
+})
 </script>
 
 <style lang="scss" scoped></style>
