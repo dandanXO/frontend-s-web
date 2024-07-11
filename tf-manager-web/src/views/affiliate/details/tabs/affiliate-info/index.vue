@@ -2210,6 +2210,15 @@ function updateAffiliateLevel() {
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField]
       })
+      const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+      superiorAffiliateDetail.id = 0
+      superiorAffiliateDetail.loginName = null
+      superiorAffiliateDetail.affiliateCode = null
+      superiorAffiliateDetail.affiliateLevel = null
+      superiorAffiliateDetail.affiliateShareRatio = []
+      Object.keys({ ...aff }).forEach(detailField => {
+        superiorAffiliateDetail[detailField] = aff[detailField]
+      })
       uiControl.dialogVisible = false
       affiliateDetails.affiliateLevel = levelForm.level
       ElMessage({
