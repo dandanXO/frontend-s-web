@@ -34,20 +34,14 @@
 
     <UpcomingMatchPromo v-if="list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
-      v-if="
-        (list.redirectUrl === 'dy2-esport-safety') ||
-        (list.redirectUrl === 'sport-safety')
-      "
+      v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
+    <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <InsuranceSubmitPromo
-      v-if="
-        (list.redirectUrl === 'dy2-esport-safety') ||
-        (list.redirectUrl === 'sport-safety')
-      "
+      v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
@@ -57,17 +51,11 @@
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && store.token"></GiftPromo>
 
     <AsiaCup2024Promo
-      v-if="
-        (list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') &&
-        store.token
-      "
+      v-if="(list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') && store.token"
     ></AsiaCup2024Promo>
     <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball'"></BasketballHot>
     <LplSummerPromo
-      v-if="
-        (list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B') &&
-        store.token
-      "
+      v-if="(list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B') && store.token"
     ></LplSummerPromo>
 
     <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei' && store.token">
@@ -76,17 +64,12 @@
 
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && store.token"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && store.token"></BbDacha2024Promo>
-    <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"
-    ></CnyStepGame2024Promo>
+    <CnyStepGame2024Promo v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"></CnyStepGame2024Promo>
     <Dy2StepGamePromo
       v-if="list.redirectUrl === 'dy2-game-steps' && store.token"
       :pageContent="list.pageContent"
     ></Dy2StepGamePromo>
-    <CS2Sign
-      v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
@@ -94,10 +77,7 @@
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && store.token" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && store.token" />
 
-    <BlastPremierPromo
-      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
 
@@ -130,39 +110,59 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 
-const ClaimPromo = defineAsyncComponent(() => import( "../components/hotpromo/claimPromo.vue"));
-const TigerCardPromo = defineAsyncComponent(() => import( "../components/hotpromo/tigercard/tigerCardPromo.vue"));
-const PrizePoolVotePromo = defineAsyncComponent(() => import( "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue"));
-const GoldenEggPromo = defineAsyncComponent(() => import( "../components/hotpromo/goldenegg/goldenEggPromo.vue"));
-const HongBaoPreEurocupPromo = defineAsyncComponent(() => import( "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue"));
-const HongBaoYu2024 = defineAsyncComponent(() => import( "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue"));
-const HongBaoYuEurocupPromo = defineAsyncComponent(() => import( "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue"));
-const UpcomingMatchPromo = defineAsyncComponent(() => import( "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue"));
-const InsuranceSubmitPromo = defineAsyncComponent(() => import( "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue"));
-const InviteFriendPromo = defineAsyncComponent(() => import( "../components/hotpromo/invitefriend/inviteFriendPromo.vue"));
-const EsportQuiz = defineAsyncComponent(() => import( "../components/hotpromo/esportquiz/EsportQuiz.vue"));
-const LotteryPromo = defineAsyncComponent(() => import( "../components/hotpromo/lottery/LotteryPromo.vue"));
-const GiftPromo = defineAsyncComponent(() => import( "../components/hotpromo/gift/GiftPromo.vue"));
-const PrivilegeInvite = defineAsyncComponent(() => import( "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue"));
-const AsiaCup2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
-const BasketballHot = defineAsyncComponent(() => import( "../components/hotpromo/basketballHot/BasketballHot.vue"));
-const LplSummerPromo = defineAsyncComponent(() => import( "../components/hotpromo/lplsummer/LplSummerPromo.vue"));
-const Cny2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/cny2024/Cny2024Promo.vue"));
-const BbDacha2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue"));
-const CnyStepGame2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue"));
-const Dy2StepGamePromo = defineAsyncComponent(() => import( "../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
-const CS2Sign = defineAsyncComponent(() => import( "../components/hotpromo/CS2Sign/CS2Sign.vue"));
-const BonusSpinWheel = defineAsyncComponent(() => import( "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
-const LOLMsi2024Promo = defineAsyncComponent(() => import( "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
-const Nba24Match = defineAsyncComponent(() => import( "../components/hotpromo/Nba24Match/Nba24Match.vue"));
-const LPLSummer24 = defineAsyncComponent(() => import( "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
-const DragonBoat = defineAsyncComponent(() => import( "../components/hotpromo/dragonboat/DragonBoat.vue"));
-const EurocupManual = defineAsyncComponent(() => import( "./hotpromo/EurocupManual/EurocupManual.vue"));
-const SportZhongChao = defineAsyncComponent(() => import( "../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
-const BlastPremierPromo = defineAsyncComponent(() => import( "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
-const fishHongbao = defineAsyncComponent(() => import( "../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromo = defineAsyncComponent(() => import( "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
-const OuZuLianPromo = defineAsyncComponent(() => import( "../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
+const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
+const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
+const PrizePoolVotePromo = defineAsyncComponent(
+  () => import("../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue")
+);
+const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
+const HongBaoPreEurocupPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue")
+);
+const HongBaoYu2024 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue"));
+const HongBaoYuEurocupPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue")
+);
+const UpcomingMatchPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue")
+);
+const InsuranceSubmitPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue")
+);
+const InviteFriendPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/invitefriend/inviteFriendPromo.vue")
+);
+const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
+const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
+const GiftPromo = defineAsyncComponent(() => import("../components/hotpromo/gift/GiftPromo.vue"));
+const PrivilegeInvite = defineAsyncComponent(
+  () => import("../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue")
+);
+const AsiaCup2024Promo = defineAsyncComponent(() => import("../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
+const BasketballHot = defineAsyncComponent(() => import("../components/hotpromo/basketballHot/BasketballHot.vue"));
+const LplSummerPromo = defineAsyncComponent(() => import("../components/hotpromo/lplsummer/LplSummerPromo.vue"));
+const Cny2024Promo = defineAsyncComponent(() => import("../components/hotpromo/cny2024/Cny2024Promo.vue"));
+const BbDacha2024Promo = defineAsyncComponent(() => import("../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue"));
+const CnyStepGame2024Promo = defineAsyncComponent(
+  () => import("../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue")
+);
+const Dy2StepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
+const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
+const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const LOLMsi2024Promo = defineAsyncComponent(() => import("../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
+const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
+const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
+const DragonBoat = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
+const EurocupManual = defineAsyncComponent(() => import("./hotpromo/EurocupManual/EurocupManual.vue"));
+const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
+const BlastPremierPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
+);
+const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
+const MeiZhouBeiPromoPage = defineAsyncComponent(
+  () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
+);
+const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -175,7 +175,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYu2024,
@@ -225,10 +225,10 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },

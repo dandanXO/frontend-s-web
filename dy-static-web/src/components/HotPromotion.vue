@@ -12,7 +12,7 @@
     <ESportSafetyPromo v-if="list.redirectUrl === 'dy2-esport-safety'" />
     <SportSafetyPromo v-if="list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="list.redirectUrl === 'nba-game'" />
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" />
+    <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
 
@@ -32,22 +32,17 @@
         (list.redirectUrl === 'Dongying-refer' ||
           list.redirectUrl === 'dy2-refer-bonus' ||
           list.redirectUrl === 'dy2-refer-bonus') &&
-          store.token
+        store.token
       "
     />
-    <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"
-    ></CnyStepGame2024Promo>
+    <CnyStepGame2024Promo v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"></CnyStepGame2024Promo>
 
     <Dy2StepGamePromo
       v-if="list.redirectUrl === 'dy2-game-steps' && store.token"
       :pageContent="list.pageContent"
     ></Dy2StepGamePromo>
 
-    <CS2Sign
-      v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
     <HongBaoYuEurocupPromo
@@ -66,10 +61,7 @@
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && store.token" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && store.token" />
-    <BlastPremierPromo
-      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token"
-      :promo-code="list.promoCode"
-    />
+    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
@@ -105,7 +97,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import ESportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
 import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
-import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
+import MeiZhouBeiPromoPage from "./hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -152,7 +144,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     ESportSafetyPromo,
     SportSafetyPromo,
@@ -276,11 +268,11 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        console.log(JSON.parse(this.list.param))
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        console.log(JSON.parse(this.list.param));
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },
