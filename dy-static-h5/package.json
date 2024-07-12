@@ -10,6 +10,7 @@
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "android": "quasar build -m capacitor -T android",
+    "dev": "dotenv -e .dev.env quasar dev",
     "dev:test": "dotenv -e .test.env quasar dev",
     "build:test": "dotenv -e .test.env quasar build",
     "build:prod": "dotenv -e .prod.env quasar build",
