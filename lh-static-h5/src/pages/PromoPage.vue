@@ -146,7 +146,11 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div
               class="selected-promo-wrapper"
-              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+              :style="[
+                selectedPromo.promoCode === 'lh1-slot-lucky8' || selectedPromo.promoCode === 'lh1-olympic-checkin'
+                  ? 'background:#E7F1FD;'
+                  : ''
+              ]"
             >
               <div
                 class="banner-container"
@@ -212,7 +216,7 @@
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game',
-                    olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'       
+                    olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
@@ -849,10 +853,10 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         .olympicCheckin {
-          border: 1px solid #ACD4F6;
+          border: 1px solid #acd4f6;
           border-radius: 10px;
           padding: 10px;
-          background: #F2F8FE;
+          background: #f2f8fe;
         }
         &.aijiasu {
           width: 100%;

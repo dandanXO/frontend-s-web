@@ -101,7 +101,9 @@
             backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : '',
             backgroundColor: selectedPromo?.promoCode === 'lh1-slot-lucky8' ? '#E7F1FD' : '',
             backgroundColor:
-              selectedPromo?.promoCode === 'lh1worldcup' || selectedPromo?.promoCode === 'lh1worldcupdota2'
+              selectedPromo?.promoCode === 'lh1worldcup' ||
+              selectedPromo?.promoCode === 'lh1worldcupdota2' ||
+              selectedPromo?.promoCode === 'lh1-olympic-checkin'
                 ? '#E7F1FD'
                 : '',
             backgroundImage:
@@ -885,10 +887,10 @@ export default defineComponent({
           //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
           // }
           &.olympicCheckin {
-            border: 1px solid #ACD4F6;
+            border: 1px solid #acd4f6;
             border-radius: 10px;
             padding: 10px 10px 10px 30px;
-            background: #F2F8FE;
+            background: #f2f8fe;
             max-width: 1200px;
             margin: 0 auto;
             img:nth-child(1) {
