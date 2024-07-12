@@ -326,3 +326,11 @@ export function putNewUserAccumulateDepositClaim(ruleAmount) {
     ruleAmount
   });
 }
+
+export function initUefaCheckin() {
+  return server.EVENT.get("/lh-uefa-check-in/init")
+}
+export function claimUefaCheckin() {
+  return server.EVENT.put("/lh-uefa-check-in/claim")
+}
+

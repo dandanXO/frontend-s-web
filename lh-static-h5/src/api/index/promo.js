@@ -200,3 +200,10 @@ export function putNewUserAccumulateDepositClaim(ruleAmount) {
     ruleAmount
   });
 }
+export function initUefaCheckin() {
+  return eventapi.get("/lh-uefa-check-in/init")
+}
+export function claimUefaCheckin() {
+  return eventapi.put("/lh-uefa-check-in/claim")
+}
+
