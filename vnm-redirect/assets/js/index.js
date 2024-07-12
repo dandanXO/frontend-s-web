@@ -26,31 +26,31 @@ const contendI18nMap = {
   }
 };
 
-let language = "zh";
-
-const setContendI18n = () => {
-  try {
-    const lang = navigator.language.split("-")[0];
-    if (contendI18nMap["network"][lang]) {
-      language = lang;
-    }
-
-    if (document.getElementById("redirect-btn")) {
-      document.getElementById("redirect-btn").innerHTML = contendI18nMap["enter"][language];
-    }
-    if (document.getElementById("contend")) {
-      if (existsContent == contendI18nMap["network"][language]) {
-        document.getElementById("contend").innerHTML = contendI18nMap["network"][language];
-      } else {
-        document.getElementById("contend").innerHTML = contendI18nMap["security"][language];
-      }
-    }
-
-    document.getElementById("footer-text").innerHTML = contendI18nMap["footer"][language];
-  } catch (error) {
-    console.error(error);
-  }
-};
+// let language = "zh";
+//
+// const setContendI18n = () => {
+//   try {
+//     const lang = navigator.language.split("-")[0];
+//     if (contendI18nMap["network"][lang]) {
+//       language = lang;
+//     }
+//
+//     if (document.getElementById("redirect-btn")) {
+//       document.getElementById("redirect-btn").innerHTML = contendI18nMap["enter"][language];
+//     }
+//     if (document.getElementById("contend")) {
+//       if (existsContent == contendI18nMap["network"][language]) {
+//         document.getElementById("contend").innerHTML = contendI18nMap["network"][language];
+//       } else {
+//         document.getElementById("contend").innerHTML = contendI18nMap["security"][language];
+//       }
+//     }
+//
+//     document.getElementById("footer-text").innerHTML = contendI18nMap["footer"][language];
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 const setFooterYear = () => {
   const year = new Date().getFullYear();
