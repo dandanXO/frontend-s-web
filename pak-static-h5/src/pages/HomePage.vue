@@ -3377,9 +3377,9 @@ const showSpinWheel = () => {
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        if (res.data.showRoulette === "YES" || res.data.hasUnusedCoupon === "YES") {
+        if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
-        } else if (res.data.showRoulette === "YES" || res.data.hasUnusedCoupon === "NO") {
+        } else if (res.data.showRoulette === "YES") {
           isLuckyDrawModal.value = true;
         }
       }
