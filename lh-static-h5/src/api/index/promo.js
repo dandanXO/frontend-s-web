@@ -167,7 +167,7 @@ export function getEurocupManualSchedule() {
 }
 
 export function getSportMatch() {
-  return eventapi.get('/sport-match/today')
+  return eventapi.get("/sport-match/today");
 }
 
 export function getLplSummer24Match() {
@@ -185,18 +185,18 @@ export function getNewUserSetupBonusInit() {
   return eventapi.get("/new-user-setup-bonus/init");
 }
 
-export function putNewUserSetupBonusClaim(promocode) {
+export function putNewUserSetupBonusClaim(promoCode) {
   return eventapi.put("/new-user-setup-bonus/claim", {
-    promocode,
+    promoCode
   });
 }
 
 export function getNewUserAccumulateDepositInit() {
-  return eventapi.get("/new-user-accumulate-deposit/init")
+  return eventapi.get("/new-user-accumulate-deposit/init");
 }
 
 export function putNewUserAccumulateDepositClaim(ruleAmount) {
   return eventapi.put("/new-user-accumulate-deposit/claim", {
     ruleAmount
-  })
+  });
 }
