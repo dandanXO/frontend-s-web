@@ -12,12 +12,14 @@ const existsContent = "An ninh trang web";
 
 var hostname = window.location.hostname;
 console.log(hostname);
-// var hostname= "ozqak6.me"
-// debugger;
-if (hostname.indexOf("ozqak6.me") > -1) {
-  console.log("Track");
-  LA.init({ id: "KUuHLNSqfmpgTSpF", ck: "KUuHLNSqfmpgTSpF" });
-} else if (hostname.indexOf("w6krqopavplu.com") > -1) {
-  console.log("Track 2");
-  LA.init({ id: "KUuHT7D1qIZ0U9N0", ck: "KUuHT7D1qIZ0U9N0" });
-}
+
+const handleClick = () => {
+  // show loading
+  document.querySelector(".status .loader").style.display = "flex";
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  setTimeout(() => {
+    window.location = next;
+  }, 1000);
+};
