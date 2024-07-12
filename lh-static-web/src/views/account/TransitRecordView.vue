@@ -224,7 +224,7 @@
 
                   <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" color="red" @click="openWithdrawCancel(scope.row)">取消</el-button>
+                      <el-button size="small" color="red" class="common-btn cancel" @click="openWithdrawCancel(scope.row)">取消</el-button>
                     </div>
                   </template>
 
@@ -1699,6 +1699,9 @@ export default defineComponent({
         margin-top: 0;
         padding: 3px 5px;
         font-size: 14px;
+      }
+      &.cancel {
+        background: var(--el-button-bg-color);
       }
     }
 
