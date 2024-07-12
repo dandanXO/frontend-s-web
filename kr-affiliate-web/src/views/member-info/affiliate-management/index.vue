@@ -730,7 +730,7 @@ onMounted(async () => {
     return level.value === affiliateLevel.value
   })[0].key;
   uiControl.affiliateLevel = uiControl.affiliateLevel.filter((level) => {
-    return level.key > affiliateLevelKey.value
+    return level.key >= affiliateLevelKey.value
   })
 })
 </script>
