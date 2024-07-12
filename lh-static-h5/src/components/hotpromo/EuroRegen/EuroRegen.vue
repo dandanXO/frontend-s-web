@@ -132,10 +132,10 @@ const claimAmount = () => {
         color: #FFF;
         position: absolute;
         transform: translate(25%, -55%);
-        right: 50px;
+        right: 30px;
         top: 50%;
         aspect-ratio: 190 / 66;
-        width: 120px;
+        width: 80px;
         border-radius: 12px;
         display: flex;
         justify-content: center;
