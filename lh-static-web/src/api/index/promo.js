@@ -312,9 +312,7 @@ export function getNewUserSetupBonusInit() {
 }
 
 export function putNewUserSetupBonusClaim(promoCode) {
-  return server.EVENT.put("/new-user-setup-bonus/claim", {
-    promoCode
-  });
+  return server.EVENT.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
 }
 
 export function getNewUserAccumulateDepositInit() {
@@ -322,15 +320,12 @@ export function getNewUserAccumulateDepositInit() {
 }
 
 export function putNewUserAccumulateDepositClaim(ruleAmount) {
-  return server.EVENT.put("/new-user-accumulate-deposit/claim", {
-    ruleAmount
-  });
+  return server.EVENT.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
 }
 
 export function initUefaCheckin() {
-  return server.EVENT.get("/lh-uefa-check-in/init")
+  return server.EVENT.get("/lh-uefa-check-in/init");
 }
 export function claimUefaCheckin() {
-  return server.EVENT.put("/lh-uefa-check-in/claim")
+  return server.EVENT.put("/lh-uefa-check-in/claim");
 }
-

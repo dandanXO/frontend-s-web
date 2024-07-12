@@ -186,9 +186,7 @@ export function getNewUserSetupBonusInit() {
 }
 
 export function putNewUserSetupBonusClaim(promoCode) {
-  return eventapi.put("/new-user-setup-bonus/claim", {
-    promoCode
-  });
+  return eventapi.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
 }
 
 export function getNewUserAccumulateDepositInit() {
@@ -196,14 +194,11 @@ export function getNewUserAccumulateDepositInit() {
 }
 
 export function putNewUserAccumulateDepositClaim(ruleAmount) {
-  return eventapi.put("/new-user-accumulate-deposit/claim", {
-    ruleAmount
-  });
+  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
 }
 export function initUefaCheckin() {
-  return eventapi.get("/lh-uefa-check-in/init")
+  return eventapi.get("/lh-uefa-check-in/init");
 }
 export function claimUefaCheckin() {
-  return eventapi.put("/lh-uefa-check-in/claim")
+  return eventapi.put("/lh-uefa-check-in/claim");
 }
-
