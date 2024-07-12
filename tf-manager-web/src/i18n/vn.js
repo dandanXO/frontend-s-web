@@ -404,7 +404,8 @@ export default {
     DAILY: 'Hàng ngày',
     FTD: 'Nạp tiền đầu tiên',
     LOTTERY: 'Xổ số',
-    OTHER: 'Khác'
+    OTHER: 'Khác',
+    LIMITED: 'LIMITED'
   },
   scheduleType: {
     NORMAL: 'Bình thường',

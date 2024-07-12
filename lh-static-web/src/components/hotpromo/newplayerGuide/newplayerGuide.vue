@@ -247,33 +247,33 @@ const getStatus2 = (status) => {
   return statusTextMap[status];
 };
 
-const handleClickStatusButton = (status, promocode) => {
+const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    if (promocode === "new-user-setup-bonus-first-withdrawal") {
+    if (promoCode === "new-user-setup-bonus-first-withdrawal") {
       router.push({ path: "/center/withdraw" });
     } else {
       router.push({ path: "/center/personal" });
     }
   } else if (status === "YES") {
-    getBonus(promocode);
+    getBonus(promoCode);
   }
 };
 
-const getBonus = async (promocode) => {
+const getBonus = async (promoCode) => {
   try {
-    const apiRes = await putNewUserSetupBonusClaim(promocode);
+    const apiRes = await putNewUserSetupBonusClaim(promoCode);
 
     if (apiRes.code === 0) {
-      if (promocode === "new-user-setup-bonus-first-withdrawal") {
+      if (promoCode === "new-user-setup-bonus-first-withdrawal") {
         firstWithdrawalState.value = "CLAIMED";
         progress.value = 1;
-      } else if (promocode === "new-user-setup-bonus-telephone") {
+      } else if (promoCode === "new-user-setup-bonus-telephone") {
         telephoneBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-bankcard") {
+      } else if (promoCode === "new-user-setup-bonus-bankcard") {
         bankCardBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-usdt-addr") {
+      } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
     }

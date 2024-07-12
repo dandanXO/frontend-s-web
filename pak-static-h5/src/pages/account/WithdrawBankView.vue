@@ -466,6 +466,7 @@ onActivated(() => {
         color: #3dff47;
         font-size: 1rem;
         font-weight: 400;
+        display:none;
       }
     }
   }

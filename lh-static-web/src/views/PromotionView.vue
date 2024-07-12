@@ -96,16 +96,20 @@
         <div
           class="inner"
           :style="{
-            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh1-slot-lucky8' ? '#E7F1FD' : '',
             backgroundColor:
               selectedPromo?.promoCode === 'lh1worldcup' ||
               selectedPromo?.promoCode === 'lh1worldcupdota2' ||
+              selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
+              selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
+              selectedPromo?.promoCode === 'lh-nba24-match' ||
+              selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
               selectedPromo?.promoCode === 'lh1-olympic-checkin'
                 ? '#E7F1FD'
-                : '',
+                : selectedPromo?.promoCode === 'lh-sport-zhongchao'
+                  ? '#F5F6F8'
+                  : selectedPromo?.promoCode === 'lh-lpl-summer24'
+                    ? '#1D1D1E'
+                    : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
