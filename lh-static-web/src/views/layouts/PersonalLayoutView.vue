@@ -11,7 +11,7 @@
               <div>账户余额：</div>
               <div class="balance-txt">
                 <span v-if="isLoadingBalance">加载中...</span>
-                <span v-if="!isLoadingBalance">￥{{ convertToCommaAmount(store.balance, true) }}</span>
+                <span v-if="!isLoadingBalance">￥{{ floor(store.balance, 2) }}</span>
               </div>
               <el-icon><Refresh /></el-icon>
               <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
@@ -44,7 +44,7 @@ import AccountMenu from "@/components/account/AccountMenu.vue";
 import "@/scss/account.scss";
 import { userStore } from "@/store";
 import { Refresh } from '@element-plus/icons-vue'
-import { convertToCommaAmount } from "@/utils/utils";
+import floor from "lodash/floor";
 
 export default defineComponent({
   name: "PersonalLayoutView",
@@ -68,7 +68,7 @@ export default defineComponent({
       evips,
       isLoadingBalance,
       refreshBalance,
-      convertToCommaAmount
+      floor
     };
   }
 });
