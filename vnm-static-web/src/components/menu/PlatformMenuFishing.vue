@@ -146,7 +146,7 @@ const gotoGame = (item, platformType) => {
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
   }else if (platformType === "COCKFIGHT") {
-    router.push(`/others?type=cockfight`);
+    router.push(`/others?type=cockfight&plat=${item.code}`);
   } else if (platformType === "fishing") {
     router.push(`/others?plat=${item.code}`);
   } else if (platformType === "casual") {
