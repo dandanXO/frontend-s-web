@@ -618,6 +618,10 @@ export default defineComponent({
     color: #000000;
     font-weight: 600;
     font-size: 17px;
+
+    &:hover {
+      filter: inherit;
+    }
   }
 }
 </style>
