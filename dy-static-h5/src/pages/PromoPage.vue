@@ -335,7 +335,7 @@ export default defineComponent({
       { code: "POKER", img: "poker", label: "棋牌" },
       { code: "SLOT", img: "game", label: "电子" },
       { code: "VIP", img: "game", label: "VIP" },
-      { code: "OTHER", img: "live", label: "限时" },
+      { code: "LIMITED", img: "live", label: "限时" },
       { code: "FTD", img: "live", label: "充提" }
       // { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
       // { code: "FISH", img: "game", label: "老虎机/捕鱼" }
@@ -388,7 +388,7 @@ export default defineComponent({
         label: "VIP"
       },
       {
-        name: "other",
+        name: "limited",
         label: "限时"
       },
       {

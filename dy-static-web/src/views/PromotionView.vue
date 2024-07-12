@@ -174,7 +174,7 @@ export default defineComponent({
       { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
       { code: "SLOT GAME", img: "game", label: "电游活动" },
       { code: "VIP", img: "vip", label: "VIP特权" },
-      { code: "OTHER", img: "other", label: "限时热门" },
+      { code: "LIMITED", img: "other", label: "限时热门" },
       { code: "FTD", img: "ftd", label: "充提优惠" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
