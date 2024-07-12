@@ -108,7 +108,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.downlineFtdAmount, type: 'money'}"
+              v-formatter="{data: Math.floor(scope.row.downlineFtdAmount), type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -121,7 +121,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.downlineDepositAmount, type: 'money'}"
+              v-formatter="{data: Math.floor(scope.row.downlineDepositAmount), type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -133,7 +133,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.downlineWithdrawAmount, type: 'money'}"
+              v-formatter="{data: Math.floor(scope.row.downlineWithdrawAmount), type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -145,7 +145,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.downlineBetAmount, type: 'money'}"
+              v-formatter="{data: Math.floor(scope.row.downlineBetAmount), type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -157,7 +157,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.downlinePayoutAmount, type: 'money'}"
+              v-formatter="{data: Math.floor(scope.row.downlinePayoutAmount), type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -169,7 +169,7 @@
           <template #default="scope">
             $
             <span
-              v-formatter="{data: scope.row.downlinePayoutAmount - scope.row.downlineBetAmount, type: 'money'}"
+              v-formatter="{data: Math.floor(scope.row.downlinePayoutAmount - scope.row.downlineBetAmount), type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -331,9 +331,9 @@ function getSummaries(val) {
     if (index === 0) {
       sums[index] = 'Total';
     } else if (sumKeys.includes(column.property)) {
-      sums[index] = page.sums[column.property].toFixed(2);
+      sums[index] = Math.floor(page.sums[column.property]);
     } else if (index === 10) {
-      sums[index] = (sums[8] - sums[9]).toFixed(2);
+      sums[index] = Math.floor(sums[9] - sums[8]);
     }
   });
   return sums;
