@@ -2367,7 +2367,11 @@ async function unmaskDetail(type) {
 
 async function changeAffiliate() {
   if (!affForm.affiliateCode) {
-    ElMessageBox.confirm('确认解绑上级代理?')
+    ElMessageBox.confirm(t('message.confirmUnbindAffiliateAccesss'), {
+      title: t('message.confirmUnbindAffiliateAccesss'),
+      confirmButtonText: t('fields.confirm'), // Replace with your translation key for "OK"
+      cancelButtonText: t('fields.cancel') // Optional: Replace with your translation key for "Cancel"
+    })
       .then(async () => {
         await changeNewAffilaite(
           props.affId,

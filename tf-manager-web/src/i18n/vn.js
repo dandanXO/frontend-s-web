@@ -1741,6 +1741,7 @@ export default {
     cancelQuizSuccess: 'Hủy bài kiểm tra thành công',
     cancelRolloverRecordSuccess: 'Hủy thành công bản ghi Rollover',
     changeAffiliateSuccess: 'Thay đổi đối tác liên kết thành công',
+    confirmUnbindAffiliateAccesss: 'Xác nhận gỡ ràng buộc đại lý cấp trên',
     changeSuccess: 'Thay đổi thành công',
     commissionPaySuccess: 'Thanh toán hoa hồng thành công',
     confirmToAdjust: 'Bạn có chắc chắn muốn điều chỉnh không? Sau khi xác nhận, điều chỉnh không thể hoàn tác.',

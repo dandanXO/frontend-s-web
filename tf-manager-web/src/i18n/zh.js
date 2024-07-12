@@ -1879,6 +1879,7 @@ export default {
     cancelQuizSuccess: '此赛事已取消',
     cancelRolloverRecordSuccess: '取消流水记录成功',
     changeAffiliateSuccess: '更换代理成功',
+    confirmUnbindAffiliateAccesss: '确认解绑上级代理',
     changeSuccess: '更改成功',
     commissionPaySuccess: '佣金发放成功',
     confirmCancel: '请确认是否要取消此记录, 此操作不可撤销',

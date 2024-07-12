@@ -1745,6 +1745,7 @@ export default {
     cancelQuizSuccess: '퀴즈 취소 성공',
     cancelRolloverRecordSuccess: '롤오버 레코드 취소 성공',
     changeAffiliateSuccess: '제휴 변경 성공',
+    confirmUnbindAffiliateAccesss: '상위 대리인 연결 해제 확인',
     changeSuccess: '변경 성공',
     commissionPaySuccess: '커미션 지급 성공',
     confirmToAdjust: '조정하시겠습니까? 확인 후 조정이 불가능합니다.',

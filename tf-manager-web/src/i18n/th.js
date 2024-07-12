@@ -1211,6 +1211,7 @@ export default {
     cancelDepositSuccess: 'ยกเลิกการฝากเงินสำเร็จ',
     cancelRolloverRecordSuccess: 'ยกเลิกความสำเร็จในการบันทึกแบบโรลโอเวอร์',
     changeAffiliateSuccess: 'เปลี่ยนความสำเร็จของพันธมิตร',
+    confirmUnbindAffiliateAccesss: 'ยืนยันการยกเลิกตัวแทนระดับสูง',
     changeSuccess: 'เปลี่ยนความสำเร็จ',
     commissionPaySuccess: 'ความสำเร็จในการจ่ายค่าคอมมิชชั่น',
     confirmToAdjust:
