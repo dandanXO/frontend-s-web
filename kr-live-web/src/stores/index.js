@@ -34,6 +34,7 @@ export const userStore = defineStore("userStore", {
       announcementList: undefined,
       financeRecords: undefined,
       isOffline: false,
+      pendingRebateAmt: 0
     };
   },
   actions: {
@@ -66,6 +67,7 @@ export const userStore = defineStore("userStore", {
           this.token = ret.data.data;
           this.getMemberInfo();
           this.getBalance();
+          this.getPendingRebateAmt();
           this.getUnreadTotal();
         } else {
           Notify.create({
@@ -203,6 +205,22 @@ export const userStore = defineStore("userStore", {
             this.balance = Math.floor(res.data);
           } else {
             this.balance = 0;
+          }
+        });
+      }
+    },
+    getPendingRebateAmt() {
+      if (this.token && !this.isOffline) {
+        api.get("/session/member/pendingRebateAmount", {
+          params: {
+            platform: "MAIN"
+          }
+        }).then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.pendingRebateAmt = Math.floor(res.data);
+          } else {
+            this.pendingRebateAmt = 0;
           }
         });
       }
