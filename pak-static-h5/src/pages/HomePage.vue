@@ -1291,6 +1291,21 @@
   <q-dialog v-model="isCongratsModal">
     <CongratsModal />
   </q-dialog>
+
+  <q-dialog v-model="isShowPrizeModal">
+    <div class="congrats-container">
+      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
+      <div class="congrats-highlight">Rs58</div>
+
+      <div class="congrats-button">
+        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
+          {{ $t("btn.recharge") }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1338,6 +1353,7 @@ const { t } = useI18n();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
+const isShowPrizeModal = ref(true);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -3361,7 +3377,9 @@ const showSpinWheel = () => {
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        if (res.data.showRoulette === "YES") {
+        if (res.data.showRoulette === "YES" || res.data.hasUnusedCoupon === "YES") {
+          isShowPrizeModal.value = true;
+        } else if (res.data.showRoulette === "YES" || res.data.hasUnusedCoupon === "NO") {
           isLuckyDrawModal.value = true;
         }
       }
@@ -4831,6 +4849,95 @@ const showSpinWheel = () => {
 .modal-home-popup {
   .q-card {
     background: transparent;
+  }
+}
+
+// congrats container
+// .congrats-button {
+//   position: absolute;
+//   bottom: -60px;
+//   left: 50%;
+//   transform: translateX(-50%);
+// }
+
+.congrats-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.congrats-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.congrats-container {
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+
+  &:before {
+    content: "";
+    background-image: url(../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background-image: url(../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 2px 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
   }
 }
 </style>
