@@ -62,16 +62,13 @@
   }
 }
 
-.span-username{
+.span-username {
   color: lightblue;
   font-weight: bold;
   text-decoration: underline;
 }
 
 .result-table {
-
-
-
   .q-table__container {
     background-color: transparent;
 
@@ -115,29 +112,26 @@
 }
 
 .sum-wrapper {
-  position:relative;
+  position: relative;
   margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 
-  .loading-board{
+  .loading-board {
     position: absolute;
-    background: rgba(0,0,0,0.3);
-    left:0px;
-    right:0px;
-    top:0px;
-    bottom:0px;
+    background: rgba(0, 0, 0, 0.3);
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    .loading-spinner{
-
-
+    .loading-spinner {
     }
   }
-
 
   .sum-item {
     display: flex;
@@ -161,4 +155,11 @@
       color: #8c968f;
     }
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  align-items: center;
 }

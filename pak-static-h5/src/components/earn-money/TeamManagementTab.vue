@@ -92,6 +92,18 @@
           <!--          </q-tr>-->
         </template>
       </q-table>
+
+      <div class="pagination">
+        <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" round color="green"></q-btn>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <q-btn
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
+          icon="chevron_right"
+          round
+          color="green"
+        ></q-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -163,33 +175,61 @@ const searchByReferral = (props) => {
   getDownlines();
 };
 
-const getDownlines = () => {
+const currentPage = ref(1);
+const totalPages = ref(1);
+const itemsPerPage = 10;
+
+const fetchDownlines = () => {
   const { username, startDate, endDate, referrerId } = form.value;
   loading.value = true;
 
-  let url = `/session/downlines`;
+  let url = `/session/downlines?`;
+  let queryParams = [];
 
   if (username) {
-    url = `/session/downlines?loginName=${username}`;
+    queryParams.push(`loginName=${username}`);
   }
   if (referrerId) {
-    url = `/session/downlines?referrerId=${referrerId}`;
+    queryParams.push(`referrerId=${referrerId}`);
   }
+
+  queryParams.push(`size=${itemsPerPage}`);
+  queryParams.push(`page=${currentPage.value}`);
+
+  url += queryParams.join('&');
 
   tableData.value = [];
   api
     .get(url)
-    // .get(`/session/downlines?loginName=${form.value.username}&regTime=${form.value.startDate}&regTime=${form.value.endDate}`)
     .then((response) => {
       loading.value = false;
       if (response.code === 0) {
         tableData.value = response.data.records;
+        totalPages.value = Math.ceil(response.data.total / itemsPerPage);
       }
     })
-    .catch((e) => {
+    .catch(() => {
       loading.value = false;
-      console.log(e);
     });
+};
+
+const getDownlines = () => {
+  currentPage.value = 1;
+  fetchDownlines();
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+    fetchDownlines();
+  }
+};
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+    fetchDownlines();
+  }
 };
 
 const closeReferral = () => {

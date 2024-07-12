@@ -50,7 +50,14 @@
             Referral:
             <span class="span-username">{{ referralName }}</span>
             &nbsp;
-            <q-btn size="xs" style="min-height: 24px; height:24px;" round color="red" icon="close" @click="closeReferral()" />
+            <q-btn
+              size="xs"
+              style="min-height: 24px; height: 24px"
+              round
+              color="red"
+              icon="close"
+              @click="closeReferral()"
+            />
           </span>
         </div>
 
@@ -110,6 +117,18 @@
           </q-tr>
         </template>
       </q-table>
+
+      <div class="pagination">
+        <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" round color="green"></q-btn>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <q-btn
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
+          icon="chevron_right"
+          round
+          color="green"
+        ></q-btn>
+      </div>
     </div>
 
     <div class="sum-wrapper">
@@ -259,18 +278,28 @@ const searchByReferral = (props) => {
   getDownlineProfitSummary();
 };
 
-const getDownlineProfitSummary = () => {
+const currentPage = ref(1);
+const totalPages = ref(1);
+const itemsPerPage = 10;
+
+const fetchDownlineProfitSummary = () => {
   const { username, startDate, endDate, referrerId } = form.value;
   loading.value = true;
 
-  let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}`;
+  let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}&`;
+  let queryParams = [];
 
   if (username) {
-    url = `/session/downline-profit-summary?siteId=11&loginName=${username}&recordTime=${startDate}&recordTime=${endDate}`;
+    queryParams.push(`loginName=${username}`);
   }
   if (referrerId) {
-    url = `/session/downline-profit-summary?siteId=11&referrerId=${referrerId}&recordTime=${startDate}&recordTime=${endDate}`;
+    queryParams.push(`referrerId=${referrerId}`);
   }
+
+  queryParams.push(`size=${itemsPerPage}`);
+  queryParams.push(`page=${currentPage.value}`);
+
+  url += queryParams.join("&");
 
   tableData.value = [];
   api
@@ -279,14 +308,61 @@ const getDownlineProfitSummary = () => {
       loading.value = false;
       if (response.code === 0) {
         tableData.value = response.data.records;
-        sumsData.value = response.data.sums;
+        totalPages.value = Math.ceil(response.data.total / itemsPerPage);
       }
     })
-    .catch((e) => {
+    .catch(() => {
       loading.value = false;
-      console.log(e);
     });
 };
+
+const getDownlineProfitSummary = () => {
+  currentPage.value = 1;
+  fetchDownlineProfitSummary();
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+    fetchDownlineProfitSummary();
+  }
+};
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+    fetchDownlineProfitSummary();
+  }
+};
+
+// const getDownlineProfitSummary = () => {
+//   const { username, startDate, endDate, referrerId } = form.value;
+//   loading.value = true;
+
+//   let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}`;
+
+//   if (username) {
+//     url = `/session/downline-profit-summary?siteId=11&loginName=${username}&recordTime=${startDate}&recordTime=${endDate}`;
+//   }
+//   if (referrerId) {
+//     url = `/session/downline-profit-summary?siteId=11&referrerId=${referrerId}&recordTime=${startDate}&recordTime=${endDate}`;
+//   }
+
+//   tableData.value = [];
+//   api
+//     .get(url)
+//     .then((response) => {
+//       loading.value = false;
+//       if (response.code === 0) {
+//         tableData.value = response.data.records;
+//         sumsData.value = response.data.sums;
+//       }
+//     })
+//     .catch((e) => {
+//       loading.value = false;
+//       console.log(e);
+//     });
+// };
 
 const closeReferral = () => {
   referralName.value = "";
