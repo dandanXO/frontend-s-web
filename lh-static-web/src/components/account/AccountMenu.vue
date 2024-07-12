@@ -13,7 +13,7 @@
           <span>总资产:</span>
           <span class="amount">
             <span v-if="isLoadingBalance">加载中...</span>
-            <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ convertToCommaAmount(store.balance, true) }}</span>
+            <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ floor(store.balance, 2) }}</span>
           </span>
           <el-icon style="cursor: pointer;">
             <RiRefreshLine color="#468CFF" />
@@ -151,7 +151,7 @@ import { Cropper, CircleStencil } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 import { useDark, useLocalStorage } from "@vueuse/core";
-import { convertToCommaAmount } from "@/utils/utils";
+import floor from "lodash/floor";
 components: {
   Cropper,
   CircleStencil
