@@ -1,37 +1,3 @@
-<!-- <template>
-  <div class="luckyspin-container">
-    <div class="luckyspin-header">
-      <img src="../../../assets/images/index/modal/luckyspin-title.png" />
-    </div>
-    <div class="luckyspin-title"></div>
-  </div>
-</template>
-
-<style lang="scss" scoped>
-.luckyspin-container {
-  background-image: url(../../../assets/images/index/modal/luckyspin-bg.png);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-posiiton: center center;
-
-  background-color: #113413;
-  max-width: 400px;
-  width: 100%;
-  padding: 16px;
-  position: relative;
-  overflow: visible;
-  border-radius: 12px;
-  padding: 16px;
-
-  .luckyspin-header {
-    img {
-      display: block;
-      width: 100%;
-    }
-  }
-}
-</style> -->
-
 <template>
   <div class="container">
     <div class="spin-wheel-container">
@@ -78,6 +44,7 @@
     </div>
   </q-dialog>
 </template>
+
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";

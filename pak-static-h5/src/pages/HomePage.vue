@@ -1285,7 +1285,18 @@
   </q-dialog>
 
   <q-dialog v-model="isLuckyDrawModal">
-    <LuckySpinWheel />
+    <div class="luckyspin-wrapper">
+      <div class="luckyspin-header">
+        <img src="../assets/images/index/modal/luckyspin-title.png" />
+      </div>
+      <div class="luckyspin-container">
+        <div class="luckyspin-title">
+          <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+        </div>
+
+        <LuckySpinWheel />
+      </div>
+    </div>
   </q-dialog>
 
   <q-dialog v-model="isCongratsModal">
@@ -1353,7 +1364,7 @@ const { t } = useI18n();
 
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
-const isShowPrizeModal = ref(true);
+const isShowPrizeModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -4937,6 +4948,44 @@ const showSpinWheel = () => {
     background-repeat: no-repeat;
     background-size: 70% 100%;
     background-position: center;
+    margin-top: 16px;
+  }
+}
+
+.luckyspin-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.luckyspin-header {
+  margin: 0 auto -5%;
+  width: 90%;
+  z-index: 2;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.luckyspin-container {
+  background-image: url(../assets/images/index/modal/luckyspin-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  // overflow: visible !important;
+  border-radius: 12px;
+  padding: 16px;
+
+  .luckyspin-title {
+    display: flex;
+    justify-content: center;
     margin-top: 16px;
   }
 }
