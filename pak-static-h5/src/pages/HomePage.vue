@@ -1296,6 +1296,9 @@
 
         <LuckySpinWheel />
       </div>
+      <div class="q-mt-md">
+        <q-icon name="highlight_off" size="md" v-close-popup />
+      </div>
     </div>
   </q-dialog>
 
