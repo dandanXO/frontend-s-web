@@ -424,6 +424,7 @@ export default {
     FTD: '首存',
     LOTTERY: '彩票',
     OTHER: '其他',
+    LIMITED: '限时热门'
   },
   scheduleType: {
     NORMAL: '普通',
