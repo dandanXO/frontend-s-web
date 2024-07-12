@@ -50,7 +50,7 @@ export const getTimeout = key => {
   const cached_timeout = lsGet(key) ?? 0
   const now = new Date()
 
-  return cached_timeout > now.getTime() 
+  return cached_timeout > now.getTime()
     ? Math.ceil((cached_timeout - now.getTime()) / 1000) // Seconds left
     : 0  // No timeout found
 }
@@ -88,7 +88,14 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+
+  const digits = isForceDecimal ? 2 : 0;
+
+  if(typeof amount === 'number') {
+    return amount.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  } else {
+    return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  }
 };
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
@@ -103,7 +110,7 @@ export function getFormattedDateComponents(dateStr) {
     "星期日", "星期一", "星期二", "星期三",
     "星期四", "星期五", "星期六"
   ];
-  
+
   const month = months[date.getMonth()];
   const day = `${date.getDate()}日`;
   const weekday = weekdays[date.getDay()];
