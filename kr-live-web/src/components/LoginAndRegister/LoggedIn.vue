@@ -12,6 +12,12 @@
           <span>원</span>
         </div>
       </div>
+      <div class="money">
+        <img src="../../assets/images/login/money.svg" alt="" />
+        <div>
+          {{ store.pendingRebateAmt }}
+        </div>
+      </div>
     </div>
     <div class="btn-group">
       <div class="left-group">
@@ -61,7 +67,6 @@
 <script setup>
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-
 const props = defineProps(['isH5TopBar']);
 const store = userStore();
 const router = useRouter();

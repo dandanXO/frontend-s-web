@@ -125,6 +125,7 @@ export default defineComponent({
       checkBalanceInterval.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();
+          store.getPendingRebateAmt();
         }
       }, 20000);
 
@@ -147,6 +148,7 @@ export default defineComponent({
     onMounted(() => {
       if (store.hasToken()) {
         store.getBalance();
+        store.getPendingRebateAmt();
         store.getUnreadTotal();
 
         startAllIntervals();
