@@ -106,10 +106,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: Math.floor(scope.row.downlineFtdAmount), type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineFtdAmount) }}
           </template>
         </el-table-column>
         <el-table-column prop="downlineDepositCount" :label="t('fields.depositDownlineCount')" width="120" />
@@ -119,10 +116,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: Math.floor(scope.row.downlineDepositAmount), type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineDepositAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -131,10 +125,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: Math.floor(scope.row.downlineWithdrawAmount), type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineWithdrawAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -143,10 +134,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: Math.floor(scope.row.downlineBetAmount), type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineBetAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -155,10 +143,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: Math.floor(scope.row.downlinePayoutAmount), type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlinePayoutAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -167,10 +152,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: Math.floor(scope.row.downlinePayoutAmount - scope.row.downlineBetAmount), type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlinePayoutAmount - scope.row.downlineBetAmount) }}
           </template>
         </el-table-column>
       </el-table>
