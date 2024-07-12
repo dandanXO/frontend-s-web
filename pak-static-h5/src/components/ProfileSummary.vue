@@ -86,27 +86,28 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-<!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
-<!--        <div class="item-icon">-->
-<!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
-<!--        </div>-->
-<!--        Tik Tok-->
-<!--      </a>-->
+      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
+      <!--        <div class="item-icon">-->
+      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
+      <!--        </div>-->
+      <!--        Tik Tok-->
+      <!--      </a>-->
 
-      <a class="side-menu-item side-menu-item__transparent" href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr" target="_blank">
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/insta-web-icon.png" />
         </div>
         Instagram
       </a>
 
-      <a
-        class="side-menu-item side-menu-item__transparent"
-        href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
-        target="_blank"
-      >
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
+      </a>
+
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
+        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
+        TikTok
       </a>
 
       <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
@@ -116,7 +117,11 @@
         {{ $t("sideNav.language") }}
       </div>
 
-      <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="isSideDownload && !ui.hideDownload">
+      <a
+        class="side-menu-item side-menu-item__download"
+        :href="ui.downloadAppUrl"
+        v-if="isSideDownload && !ui.hideDownload"
+      >
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
         </div>
@@ -129,7 +134,10 @@
     </div>
   </div>
 
-  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }">
+  <div
+    class="infoboard-container"
+    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+  >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-menu">
@@ -297,6 +305,21 @@ const loadCustomerAddress = () => {
     });
 };
 
+const loadSocialMediaLinks = () => {
+  cached
+    .get("socialMediaLinks", () =>
+      api.get("/config/uiconfigs").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      // console.log("socialMediaLinks", data);
+      ui.instagramUrl = data.instagram;
+      ui.tiktokUrl = data.tiktok;
+      ui.whatsappUrl = data.whatsapp;
+    });
+};
+
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
@@ -453,7 +476,8 @@ onMounted(() => {
 
   checkTopDownloadAppear();
   loadCustomerAddress();
-  ui.shouldFetchDownloadAppUrl = true
+  loadSocialMediaLinks();
+  ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
   if (isAndroid()) {
