@@ -194,6 +194,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
@@ -207,6 +208,8 @@ const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
+
+const $q = useQuasar();
 
 const progress = ref(0);
 
@@ -281,6 +284,13 @@ const getBonus = async (promoCode) => {
       } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "领取成功！",
+        icon: "check_circle_outline"
+      });
     }
   } catch (err) {
     console.error(err);

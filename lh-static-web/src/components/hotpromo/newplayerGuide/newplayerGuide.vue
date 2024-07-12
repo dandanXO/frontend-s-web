@@ -195,6 +195,7 @@ import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
 import option2Area from "./option2Area.vue";
 import { userStore } from "@/store";
+import { ElMessage } from "element-plus";
 
 const store = userStore();
 const router = useRouter();
@@ -276,6 +277,11 @@ const getBonus = async (promoCode) => {
       } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
+
+      ElMessage.success({
+        type: "success",
+        message: "领取成功"
+      });
     }
   } catch (err) {
     console.error(err);
