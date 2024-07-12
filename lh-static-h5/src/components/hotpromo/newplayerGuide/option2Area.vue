@@ -60,15 +60,8 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex;align-items: center;">
-          <div
-            style="
-              width: 2px;
-              height: 24px;
-              margin-right: 5px;
-              background-color: rgba(65, 185, 255, 1);
-            "
-          ></div>
+        <div style="display: flex; align-items: center">
+          <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
         <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
@@ -80,7 +73,7 @@
         <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次电竞首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -108,15 +101,8 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex; align-items: center;">
-          <div
-            style="
-              width: 2px;
-              height: 24px;
-              margin-right: 5px;
-              background-color: rgba(65, 185, 255, 1);
-            "
-          ></div>
+        <div style="display: flex; align-items: center">
+          <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
         <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
@@ -128,7 +114,7 @@
         <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次真人首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -156,15 +142,8 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex;align-items: center;">
-          <div
-            style="
-              width: 2px;
-              height: 24px;
-              margin-right: 5px;
-              background-color: rgba(65, 185, 255, 1);
-            "
-          ></div>
+        <div style="display: flex; align-items: center">
+          <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
         <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
@@ -176,7 +155,7 @@
         <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次棋牌首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -204,15 +183,8 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex; align-items: center;">
-          <div
-            style="
-              width: 2px;
-              height: 24px;
-              margin-right: 5px;
-              background-color: rgba(65, 185, 255, 1);
-            "
-          ></div>
+        <div style="display: flex; align-items: center">
+          <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
         <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
@@ -224,7 +196,7 @@
         <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次电子首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -252,15 +224,8 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex; align-items: center;">
-          <div
-            style="
-              width: 2px;
-              height: 24px;
-              margin-right: 5px;
-              background-color: rgba(65, 185, 255, 1);
-            "
-          ></div>
+        <div style="display: flex; align-items: center">
+          <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
         <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
@@ -272,7 +237,7 @@
         <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次捕鱼首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -300,22 +265,15 @@
         </tbody>
       </table>
       <div class="reward-description">
-        <div style="display: flex; align-items: center;">
-          <div
-            style="
-              width: 2px;
-              height: 24px;
-              margin-right: 5px;
-              background-color: rgba(65, 185, 255, 1);
-            "
-          ></div>
+        <div style="display: flex; align-items: center">
+          <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
         <p>自注册日起，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
   </div>
-  <div class="promotion-container">
+  <div class="promotion-container" v-if="isEligibleState">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -355,7 +313,7 @@
     </div>
   </div>
 
-  <div class="promotion-container">
+  <div class="promotion-container" v-if="isEligibleState">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -398,6 +356,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 
@@ -475,12 +434,25 @@ const handleRecieve = async (reward) => {
 };
 
 const handleRedirect = () => {
-  router.push({ path: "/finance/deposit" });
+  router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
 };
+
+const $q = useQuasar();
+const isEligibleState = ref(true);
 
 const getData = async () => {
   try {
     const apiRes = await getNewUserAccumulateDepositInit();
+    if (apiRes.data.state === "NOT_ELIGIBLE") {
+      isEligibleState.value = false;
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "此账号要求不达标，无法参与此优惠。",
+        icon: "report_problem"
+      });
+      return;
+    }
     depositAmount.value = apiRes.data.depositAmount || 0;
 
     const parseApiRes = JSON.parse(apiRes.data.state);
@@ -523,6 +495,10 @@ onMounted(async () => {
   justify-content: center;
   margin-bottom: 20px;
   flex-wrap: wrap;
+
+  @media (max-width: 400px) {
+    justify-content: space-evenly;
+  }
 }
 
 .switch-option {
@@ -534,7 +510,10 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 15px;
-  transition: background-color 0.3s, color 0.3s;
+  color: #7a80a1;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .switch-option.active {
@@ -567,6 +546,19 @@ onMounted(async () => {
     font-size: 24px;
   }
 }
+
+.promotion-block {
+  @media (max-width: 400px) {
+    padding: 16px 10px;
+  }
+}
+
+.growth-strategy {
+  @media (max-width: 400px) {
+    padding: 16px 0px;
+  }
+}
+
 .title-area {
   display: flex;
   justify-content: space-between;
@@ -580,6 +572,10 @@ onMounted(async () => {
     color: #000;
     font-weight: 600;
     font-size: 24px;
+
+    @media (max-width: 400px) {
+      font-size: 18px;
+    }
   }
 }
 .reward-description {
@@ -668,6 +664,10 @@ tbody tr:last-child {
   flex-wrap: wrap;
   row-gap: 5px;
   column-gap: 5px;
+
+  @media (max-width: 400px) {
+    justify-content: space-evenly;
+  }
 }
 
 .reward {
@@ -679,6 +679,16 @@ tbody tr:last-child {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  button {
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
 
   .CLAIMED {
     width: 120px;

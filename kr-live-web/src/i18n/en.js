@@ -165,6 +165,7 @@ export default {
     message_type_payment: "Payment",
     message_type_all: "All",
     message_type_outbox: "Outbox",
+    message_type_inbox: "Inbox",
     // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",
@@ -762,7 +763,7 @@ export default {
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
-    1004: "Username can only contains numbers and letters",
+    1004: "The account has been locked. Please try again after 60 minutes or contact customer service to unlock it.",
     1011: "The current account has already bound a phone number",
     1012: "The current account has already bound an email address",
     1013: "The current account has already bound a birthday",

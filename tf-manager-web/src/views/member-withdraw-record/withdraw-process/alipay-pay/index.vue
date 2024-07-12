@@ -839,7 +839,7 @@ async function loadRecord() {
       query.withdrawDate = request.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.withdrawCode = "ALIPAY";
   const { data: ret } = await getMemberWithdrawRecordAliPay(query)
   page.pages = ret.pages

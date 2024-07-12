@@ -138,6 +138,15 @@ export const constantRoutes = [
           gameType: 'sport'
         },
       },
+      {
+        path: 'minigame-bet-history',
+        component: () => import('../views/member-info/game-record/index.vue'),
+        name: 'MiniGameBetHistory',
+        meta: {
+          title: 'game-record-minigame',
+          gameType: 'fish'
+        },
+      },
     ]
   },
   {

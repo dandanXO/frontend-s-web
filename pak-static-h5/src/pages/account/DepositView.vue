@@ -239,7 +239,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
@@ -251,7 +251,7 @@
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script setup>
@@ -264,8 +264,8 @@ import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
-import KYCGuestForm from "../../components/KYCGuestForm.vue";
-import KYCUserForm from "../../components/KYCUserForm.vue";
+// import KYCGuestForm from "../../components/KYCGuestForm.vue";
+// import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
@@ -277,18 +277,18 @@ const store = userStore();
 const router = useRouter();
 const emits = defineEmits(["closeModal"]);
 
-const checkNewUser = () => {
-  if (store.realName == "" || store.realName == null) {
-    emits("closeModal");
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "Please fill in your personal details",
-      icon: "report_problem"
-    });
-    // router.push(`/account/profile`);
-  }
-};
+// const checkNewUser = () => {
+//   if (store.realName == "" || store.realName == null) {
+//     emits("closeModal");
+//     $q.notify({
+//       color: "negative",
+//       position: "top",
+//       message: "Please fill in your personal details",
+//       icon: "report_problem"
+//     });
+//     // router.push(`/account/profile`);
+//   }
+// };
 
 const isFormFilled = ref(false);
 const isDeposited = ref(false);
@@ -720,44 +720,6 @@ async function pDepo(deposit) {
     });
 }
 
-// KYC Dialog
-const personalState = reactive({
-  memberInfo: {}
-});
-const userKYCDialog = ref(false);
-const openUserKYCDialog = () => {
-  userKYCDialog.value = true;
-};
-const closeUserKYCDialog = () => {
-  store.getMemberInfo().then(() => {
-    loadInfo();
-    userKYCDialog.value = false;
-  });
-};
-
-const guestKYCDialog = ref(false);
-const openGuestKYCDialog = () => {
-  guestKYCDialog.value = true;
-};
-const closeGuestKYCDialog = () => {
-  store.getMemberInfo().then(() => {
-    loadInfo();
-    guestKYCDialog.value = false;
-  });
-};
-
-const loadInfo = () => {
-  personalState.memberInfo = userStore();
-
-  if (store.guest && personalState.memberInfo.realName === null) {
-    openGuestKYCDialog();
-  }
-
-  if (!store.guest && personalState.memberInfo.realName === null) {
-    openUserKYCDialog();
-  }
-};
-
 const nodeKey = ref(0);
 const refreshNode = () => {
   // Update the key to force re-render
@@ -796,16 +758,14 @@ const openDepositVideo = () => {
 };
 
 onActivated(() => {
-  checkNewUser();
-  loadInfo();
+  // checkNewUser();
   // refreshNode();
   // console.log("onActivated deposit");
 });
 
 onMounted(() => {
   initPay();
-  checkNewUser();
-  loadInfo();
+  // checkNewUser();
   refreshNode();
   // console.log("onMounted deposit");
 });

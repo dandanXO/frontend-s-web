@@ -319,6 +319,8 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
+        }else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
+          router.push({path: '/activities-details'});
         } else {
           if (route.query.fromAccount) {
             router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})

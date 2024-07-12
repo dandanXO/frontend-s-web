@@ -255,6 +255,7 @@ export default {
     FTD: 'FTD',
     LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
+    LIMITED: 'LIMITED'
   },
   scheduleType: {
     NORMAL: 'โดยปกติ',

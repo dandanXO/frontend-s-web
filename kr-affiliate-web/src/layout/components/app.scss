@@ -1,6 +1,8 @@
 .page-container {
     margin: 10px 20px;
     font-family: 'NanumNeo';
+    display: flex;
+    flex-direction: column;
 }
 
 .panel-item {
@@ -16,6 +18,10 @@
 .panel-header {
     font-size: 1.5em;
     font-weight: 700;
+}
+
+.custom-table-wrapper {
+  overflow: auto;
 }
 
 .custom-table {
@@ -37,24 +43,15 @@
   
     th,
     td {
-      padding: 15px;
+      padding: 5px;
       font-family: 'NanumNeo';
       font-size: 13px;
       font-weight: 400;
       border-color: #cfd8dc;
+      height: 40px;
     }
 
     td {
-      .money-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 20px;
-        text-align: right;
-      
-        .won-icon {
-          color: #9f9f9f;
-        }
-      }
-      
       .vip-name-wrapper {
         display: flex;
         gap: 8px;
@@ -115,22 +112,26 @@
       text-align: right;
     }
 
-    .colorBoxOrange {
-      background-color: #f0ad4e;
+    .colorBox {
       color: #fff;
       font-size: 11px;
       padding: 5px;
       border-radius: 3px;
-      width: fit-content;
+      width: 60px;
+      margin: auto;
+      text-align: center;
     }
 
-    .colorBoxBlue {
-      background-color: #337ab7;
-      color: #fff;
-      font-size: 11px;
-      padding: 5px;
-      border-radius: 3px;
-      width: fit-content;
+    .orange {
+      background-color: #f0ad4e;
+    }
+
+    .purple {
+      background-color: #a462dd;
+    }
+
+    .blue {
+      background-color: #0384fc;
     }
   }
 
@@ -139,4 +140,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+  }
+
+  .money-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    text-align: right;
+  
+    .won-icon {
+      color: #9f9f9f;
+    }
   }

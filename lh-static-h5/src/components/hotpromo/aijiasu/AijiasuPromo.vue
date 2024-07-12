@@ -3,13 +3,12 @@
     <div class="backgroun-top">
       <img src="../../../assets/promo/aijiasu/background-top.png" alt="" style="margin: 0px" />
     </div>
-    <div class="backgroun-bottom">
-    </div>
+    <div class="backgroun-bottom"></div>
   </div>
   <div class="main">
     <div class="banner-info">
       <div class="title1">无法打开网址？</div>
-      <div class="title2">来试试爱加速 稳定 方便 快捷</div>
+      <div class="title2">来试试爱加速</div>
       <div class="title4">
         如果您无法访问本平台请使用爱加速VPN
         <span>首月赠送爱加速VIP会员</span>
@@ -79,8 +78,8 @@
         <img src="../../../assets/promo/aijiasu/title2.png" alt="" />
         <div class="content">
           <img src="../../../assets/promo/aijiasu/session2-1.png" alt="" style="width: 80%" />
-          <img src="../../../assets/promo/aijiasu/session2-2.png" alt="" style="width: 80%"/>
-          <img src="../../../assets/promo/aijiasu/session2-3.png" alt="" style="width: 80%"/>
+          <img src="../../../assets/promo/aijiasu/session2-2.png" alt="" style="width: 80%" />
+          <img src="../../../assets/promo/aijiasu/session2-3.png" alt="" style="width: 80%" />
         </div>
       </div>
       <div class="session4">
@@ -88,14 +87,15 @@
 
         <div class="content">
           <div>
-            1. 此活动需要在IP域名注册后的用户来申请，只限新用户，需要账号首存，提供有下载爱加速以及开通爱加速首月会员截图才可申请；
+            1.
+            此活动需要在IP域名注册后的用户来申请，只限新用户，需要账号首存，提供有下载爱加速以及开通爱加速首月会员截图才可申请；
           </div>
           <div>2. 符合以上条件情况下联系在线客服即可申请，优惠以彩金发放一倍流水即可提款；</div>
+          <div>3. 活动期间，会员可申请其他VPN的首月开通服务，使用其他VPN方式最高可申请40元彩金；</div>
           <div>
-            3. 活动期间，会员可申请其他VPN的首月开通服务，使用其他VPN方式最高可申请40元彩金；
-          </div>
-          <div>
-            4. 此次优惠每位玩家﹑每户﹑每一住址 、每一电子邮箱地址﹑每一电话号码﹑相同支付方式(相同借记卡/信用卡/银行账户/姓名及号码) 只能享有一次优惠,一旦确认为套利玩家，立即没收盈利和本金；
+            4. 此次优惠每位玩家﹑每户﹑每一住址
+            、每一电子邮箱地址﹑每一电话号码﹑相同支付方式(相同借记卡/信用卡/银行账户/姓名及号码)
+            只能享有一次优惠,一旦确认为套利玩家，立即没收盈利和本金；
           </div>
           <div>5. 雷火电竞对本次活动拥有最终解释权；</div>
         </div>
@@ -105,27 +105,26 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import QrcodeVue from "qrcode.vue";
 const value = ref("https://example.com");
 
-
-const mobileOS = ref('unknown');
+const mobileOS = ref("unknown");
 
 const getMobileOperatingSystem = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   // iOS detection
   if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    return 'iOS';
+    return "iOS";
   }
 
   // Android detection
   if (/android/i.test(userAgent)) {
-    return 'Android';
+    return "Android";
   }
 
-  return 'unknown';
+  return "unknown";
 };
 
 onMounted(() => {
@@ -140,11 +139,11 @@ onMounted(() => {
   left: 0px;
   z-index: 0;
   height: 100%;
-  .backgroun-bottom{
+  .backgroun-bottom {
     height: calc(100% - 10px);
-    background-image: url('../../../assets/promo/aijiasu/background-bottom.png');
+    background-image: url("../../../assets/promo/aijiasu/background-bottom.png");
     background-size: cover;
-  background-position: center center;
+    background-position: center center;
   }
 }
 .main {

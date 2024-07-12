@@ -292,7 +292,7 @@ const selectTab = (type) => {
 const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
-    console.log(res,'dan')
+    // console.log(res,'dan')
     platformsList.value = res;
 
     // console.log(platformsList.value);
@@ -314,8 +314,8 @@ const getPlatList = () => {
       return { ...matchingItem, ...item1 };
     });
 
-    console.log("polat2")
-    console.log(platformsListDisplay2.value)
+    // console.log("polat2")
+    // console.log(platformsListDisplay2.value)
 
     setFilteredPlatforms();
   });
@@ -485,7 +485,7 @@ watch(
   () => route.query.plat,
   () => {
     if (route.path === route.path) {
-      selectedTab.value= 'fishing'
+      selectedTab.value= route.query.type ?? 'fishing'
       platformsListDisplay.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);

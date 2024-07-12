@@ -130,6 +130,7 @@
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
               <th scope="col">{{ t('fields.netProfit') }}</th>
+              <th scope="col">{{ t('fields.pendingRebate') }}</th>
               <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th>
@@ -165,6 +166,9 @@
               </td>
               <td :data-label="t('fields.netProfit')">
                 <div v-formatter="{ data: item.revenueShare, type: 'money' }" />
+              </td>
+              <td :data-label="t('fields.pendingRebate')">
+                <div v-formatter="{ data: item.pendingRebate, type: 'money' }" />
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
@@ -439,9 +443,9 @@
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.paymentType }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{
-              parseInt(store.state.user.siteId)
-                === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
+            <td>
+              <div v-formatter="{ data: item.depositAmount, type: 'money' }"></div>
+            </td>
             <td>
               {{ formatDate(item.depositDate) }}
             </td>
@@ -507,9 +511,9 @@
           <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.privilegeName }}</td>
-            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{
-              parseInt(store.state.user.siteId)
-                === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
+            <td>
+              <div v-formatter="{ data: item.amount, type: 'money' }" />
+            </td>
             <td>{{ item.rollover }}</td>
             <td>
               {{ formatDate(item.recordTime) }}

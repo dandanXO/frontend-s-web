@@ -1,12 +1,5 @@
 <template>
   <div style="max-width: 1200px; margin: 0 auto">
-    <div
-      style="color: #ff0000; font-size: 40px"
-      v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
-    >
-      还没完成，不要测试先。
-    </div>
-
     <div class="switch-wrapper">
       <div class="switch-container">
         <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
@@ -201,7 +194,10 @@ import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
 import option2Area from "./option2Area.vue";
+import { userStore } from "@/store";
+import { ElMessage } from "element-plus";
 
+const store = userStore();
 const router = useRouter();
 
 const selected = ref("option1");
@@ -252,35 +248,40 @@ const getStatus2 = (status) => {
   return statusTextMap[status];
 };
 
-const handleClickStatusButton = (status, promocode) => {
+const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    if (promocode === "new-user-setup-bonus-first-withdrawal") {
+    if (promoCode === "new-user-setup-bonus-first-withdrawal") {
       router.push({ path: "/center/withdraw" });
     } else {
       router.push({ path: "/center/personal" });
     }
   } else if (status === "YES") {
-    getBonus(promocode);
+    getBonus(promoCode);
   }
 };
 
-const getBonus = async (promocode) => {
+const getBonus = async (promoCode) => {
   try {
-    const apiRes = await putNewUserSetupBonusClaim(promocode);
+    const apiRes = await putNewUserSetupBonusClaim(promoCode);
 
     if (apiRes.code === 0) {
-      if (promocode === "new-user-setup-bonus-first-withdrawal") {
+      if (promoCode === "new-user-setup-bonus-first-withdrawal") {
         firstWithdrawalState.value = "CLAIMED";
         progress.value = 1;
-      } else if (promocode === "new-user-setup-bonus-telephone") {
+      } else if (promoCode === "new-user-setup-bonus-telephone") {
         telephoneBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-bankcard") {
+      } else if (promoCode === "new-user-setup-bonus-bankcard") {
         bankCardBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-usdt-addr") {
+      } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
+
+      ElMessage.success({
+        type: "success",
+        message: "领取成功"
+      });
     }
   } catch (err) {
     console.error(err);

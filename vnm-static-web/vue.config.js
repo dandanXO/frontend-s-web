@@ -9,7 +9,10 @@ module.exports = defineConfig({
   runtimeCompiler: true,
   devServer: {
     hot: true,
-    port: 8089
+    port: 8089,
+    client: {
+      overlay: false
+    }
   },
   assetsDir: "static",
   transpileDependencies: true,

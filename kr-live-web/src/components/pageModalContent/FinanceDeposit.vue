@@ -179,7 +179,7 @@ import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "../../components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
@@ -299,7 +299,7 @@ const verifyDepositAmount = ref([
 
 function isDivisibleBy10000(val) {
   // Convert input to a number
-  const input = val.replace(/,/g , "");
+  const input = val.replace(/,/g, "");
   const number = Number(input);
   // console.log(number)
 
@@ -310,6 +310,41 @@ function isDivisibleBy10000(val) {
     return false;
   }
 }
+
+const checkIsGotBankCard = () => {
+  if(realName.value){
+    api.get("/session/allBankCard").then((res) => {
+      const response = res.data;
+      if (response.data.length === 0) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: '먼저 은행 카드를 연결하세요',
+          icon: "report_problem"
+        });
+
+        router.push('/?page=bankcardlist');
+      }
+    });
+  }
+}
+
+const checkIsRealNameBinded = () => {
+  if (!realName.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '실명이 필요합니다',
+      icon: "report_problem"
+    });
+
+    router.push('/?page=personal/info');
+  }
+}
+
+watch(() => realName.value, () => {
+  checkIsRealNameBinded();
+})
 
 async function confirmDeposit() {
   if (btnLoading.value) {
@@ -671,6 +706,8 @@ function checkPrivilege(v) {
 }
 
 onMounted(() => {
+  checkIsGotBankCard();
+  checkIsRealNameBinded();
   initPay();
   // checkNewUser();
 });

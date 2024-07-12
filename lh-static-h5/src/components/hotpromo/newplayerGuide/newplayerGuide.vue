@@ -1,7 +1,4 @@
 <template>
-  <div style="color: #ff0000; font-size: 40px" v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'">
-    还没完成，不要测试先。
-  </div>
   <div class="switch-wrapper">
     <div class="switch-container">
       <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
@@ -197,10 +194,13 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
+import { userStore } from "src/stores";
 
+const store = userStore();
 const router = useRouter();
 
 const selected = ref("option1");
@@ -208,6 +208,8 @@ const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
+
+const $q = useQuasar();
 
 const progress = ref(0);
 
@@ -251,37 +253,44 @@ const getStatus2 = (status) => {
   return statusTextMap[status];
 };
 
-const handleClickStatusButton = (status, promocode) => {
+const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    if (promocode === "new-user-setup-bonus-telephone") {
-      router.push({ path: "/account/personal" });
-    } else if (promocode === "new-user-setup-bonus-first-withdrawal") {
-      router.push({ path: "/finance/withdraw" });
+    if (promoCode === "new-user-setup-bonus-telephone") {
+      router.push("/account/personal?redirect=promo?name=lh1-newplayer-guide");
+    } else if (promoCode === "new-user-setup-bonus-first-withdrawal") {
+      router.push("/finance/withdraw?redirect=promo?name=lh1-newplayer-guide");
     } else {
-      router.push({ path: "/account/withdraw" });
+      router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
     }
   } else if (status === "YES") {
-    getBonus(promocode);
+    getBonus(promoCode);
   }
 };
 
-const getBonus = async (promocode) => {
+const getBonus = async (promoCode) => {
   try {
-    const apiRes = await putNewUserSetupBonusClaim(promocode);
+    const apiRes = await putNewUserSetupBonusClaim(promoCode);
 
     if (apiRes.code === 0) {
-      if (promocode === "new-user-setup-bonus-first-withdrawal") {
+      if (promoCode === "new-user-setup-bonus-first-withdrawal") {
         firstWithdrawalState.value = "CLAIMED";
         progress.value = 1;
-      } else if (promocode === "new-user-setup-bonus-telephone") {
+      } else if (promoCode === "new-user-setup-bonus-telephone") {
         telephoneBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-bankcard") {
+      } else if (promoCode === "new-user-setup-bonus-bankcard") {
         bankCardBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-usdt-addr") {
+      } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "领取成功！",
+        icon: "check_circle_outline"
+      });
     }
   } catch (err) {
     console.error(err);
@@ -322,7 +331,7 @@ onMounted(async () => {
   border: 1px solid rgba(154, 206, 255, 1);
   border-radius: 30px;
   overflow: hidden;
-  width: 200px;
+  width: 260px;
 }
 
 .switch-option {
@@ -470,6 +479,7 @@ h1 {
 .step-number {
   width: 30px;
   height: 30px;
+  margin-top: 4px;
   background: linear-gradient(90deg, #89d3ff 8.15%, #0085e8 92.42%);
   color: white;
   border-radius: 50%;

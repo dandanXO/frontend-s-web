@@ -311,18 +311,21 @@ export function getNewUserSetupBonusInit() {
   return server.EVENT.get("/new-user-setup-bonus/init");
 }
 
-export function putNewUserSetupBonusClaim(promocode) {
-  return server.EVENT.put("/new-user-setup-bonus/claim", {
-    promocode,
-  });
+export function putNewUserSetupBonusClaim(promoCode) {
+  return server.EVENT.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
 }
 
 export function getNewUserAccumulateDepositInit() {
-  return server.EVENT.get("/new-user-accumulate-deposit/init")
+  return server.EVENT.get("/new-user-accumulate-deposit/init");
 }
 
 export function putNewUserAccumulateDepositClaim(ruleAmount) {
-  return server.EVENT.put("/new-user-accumulate-deposit/claim", {
-    ruleAmount
-  })
+  return server.EVENT.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
+}
+
+export function initUefaCheckin() {
+  return server.EVENT.get("/lh-uefa-check-in/init");
+}
+export function claimUefaCheckin() {
+  return server.EVENT.put("/lh-uefa-check-in/claim");
 }
