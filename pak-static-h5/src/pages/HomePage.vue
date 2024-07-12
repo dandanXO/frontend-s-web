@@ -3332,6 +3332,8 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
   checkShowImgTop();
+
+  checkSpinWheel();
 });
 
 onMounted(() => {
@@ -3369,18 +3371,26 @@ watch(
   }
 );
 
-watch(
-  () => ui.loggedIn,
-  (newValue) => {
-    if (newValue === true) {
-      if (isAndroid()) {
-        setTimeout(() => {
-          showSpinWheel();
-        }, 750);
-      }
-    }
+const checkSpinWheel = () => {
+  if (store.hasToken() && isAndroid()) {
+    setTimeout(() => {
+      showSpinWheel();
+    }, 750);
   }
-);
+};
+
+// watch(
+//   () => ui.loggedIn,
+//   (newValue) => {
+//     if (newValue === true) {
+//       if (isAndroid()) {
+//         setTimeout(() => {
+//           showSpinWheel();
+//         }, 750);
+//       }
+//     }
+//   }
+// );
 
 const showSpinWheel = () => {
   eventapi
