@@ -662,6 +662,7 @@ export default {
     beforeBalance: '잔액 전',
     applicationDate: '지원 날짜',
     processingDate: '처리 날짜',
+    pendingRebate: '보류 중인 리베이트',
   },
   google: {
     google_auth_menu: '구글 인증',

@@ -662,6 +662,7 @@ export default {
     beforeBalance: 'Before Balance',
     applicationDate: 'Application Date',
     processingDate: 'Processing Date',
+    pendingRebate: 'Pending Rebate',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
