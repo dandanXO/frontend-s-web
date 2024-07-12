@@ -167,11 +167,15 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code: "ALL", img: "all", label: "所有优惠" },
-      { code: "ESPORT", img: "esport", label: "电竞" },
-      { code: "SPORT", img: "sport", label: "体育" },
+      { code: "WELCOME", img: "all", label: "新人优惠" },
+      { code: "ESPORT", img: "esport", label: "电竞活动" },
+      { code: "SPORT", img: "sport", label: "体育活动" },
       // { code: "POKER", img: 'poker', label: '棋牌'},
-      { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
-      { code: "FISH", img: "game", label: "老虎机/捕鱼" }
+      { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
+      { code: "SLOT GAME", img: "game", label: "电游活动" },
+      { code: "VIP", img: "vip", label: "VIP特权" },
+      { code: "OTHER", img: "other", label: "限时热门" },
+      { code: "FTD", img: "ftd", label: "充提优惠" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -312,9 +316,9 @@ export default defineComponent({
   // background: #090b19;
   .all-promotions {
     min-height: 40vh;
-    padding: 50px;
+    padding: 16px 50px 50px;
     position: relative;
-    background-color: #EBF4FF;
+    background-color: #ebf4ff;
 
     margin: 0 auto;
     max-width: 1920px;
@@ -465,11 +469,11 @@ export default defineComponent({
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 20px 0;
+          padding: 10px 0 20px;
           overflow: auto;
           width: 90%;
           margin-bottom: 20px;
-          margin-top: 16px;
+          margin-top: 10px;
 
           .type-item {
             cursor: pointer;
@@ -490,7 +494,7 @@ export default defineComponent({
 
             .label {
               z-index: 0;
-              color: #414C74;
+              color: #414c74;
             }
 
             &:before {
@@ -604,12 +608,12 @@ export default defineComponent({
             .time {
               font-size: 12px;
               font-weight: 400;
-              color: #6F7582;
+              color: #6f7582;
               margin-bottom: 4px;
             }
 
             .viewdetail {
-              color: #414C74;
+              color: #414c74;
               font-size: 28px;
               overflow: hidden;
               text-align: left;
@@ -619,7 +623,7 @@ export default defineComponent({
             }
 
             .sub-viewdetail {
-              color: #5E73A1;
+              color: #5e73a1;
               font-size: 14px;
               font-weight: 600;
             }
