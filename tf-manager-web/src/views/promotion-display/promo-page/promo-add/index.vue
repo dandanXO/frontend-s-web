@@ -827,6 +827,8 @@ function loadPromoTypes() {
       { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
       { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
       { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+      { typeName: 'VIP', value: 15, displayName: 'VIP' },
+      { typeName: 'LIMITED', value: 15, displayName: t('promoType.LIMITED') },
     ]
   }
 }

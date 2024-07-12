@@ -405,6 +405,7 @@ export default {
     FTD: '첫 입금',
     LOTTERY: '복권',
     OTHER: '기타',
+    LIMITED: 'LIMITED'
   },
   scheduleType: {
     NORMAL: '일반',

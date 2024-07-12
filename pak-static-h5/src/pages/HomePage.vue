@@ -63,17 +63,13 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
-          <a
-            class="cs-icon tiktok"
-            href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr"
-            target="_blank"
-          >
+          <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
           <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
           <!--          </a>-->
-          <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l" target="_blank">
+          <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">

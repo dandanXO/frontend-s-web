@@ -347,15 +347,15 @@ export default defineComponent({
     };
 
     const openWhatsApp = () => {
-      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+      window.open(ui.whatsappUrl, "_blank");
     };
 
     const openInsta = () => {
-      window.open("https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr", "_blank");
+      window.open(ui.instagramUrl, "_blank");
     };
 
     const openTiktok = () => {
-      window.open("https://www.tiktok.com/@b9game", "_blank");
+      window.open(ui.tiktokUrl, "_blank");
     };
 
     const onSubmit = () => {
