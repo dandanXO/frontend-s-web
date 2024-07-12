@@ -13,7 +13,7 @@
       <div class="item start active">
         <img src="./images/start-icon.png">
       </div>
-       <div class="item" @click="checkInToday(i)" v-for="(item, i) in 10" :key="i" :class="{active: i + 1 < todayCheckInDay || (i + 1 > 5 && i + 1 <= todayCheckInDay), todayActive: todayCheckInState !== 'NO' && i + 1 === todayCheckInDay}">
+       <div class="item" @click="checkInToday(i)" v-for="(item, i) in 10" :key="i" :class="{active: i + 1 < todayCheckInDay || (i + 1 > 5 && i + 1 <= todayCheckInDay), todayActive: i + 1 === todayCheckInDay}">
         <div class="item-bg"> 
           <img style="width: 28%; z-index: 1; position: absolute; top: 30%;" v-if="i <= 1" :src="require(`./images/money-01.png`)">
           <img style="width: 40%; z-index: 1; position: absolute; top: 22%;" v-else-if="i <= 3" :src="require(`./images/money-02.png`)">
