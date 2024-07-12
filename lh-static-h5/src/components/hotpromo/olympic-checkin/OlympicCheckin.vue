@@ -15,7 +15,7 @@
       <div class="item start active">
         <img src="./images/start-icon.png">
       </div>
-       <div class="item" @click="checkInToday(i)" v-for="(item, i) in 10" :key="i" :class="{active: i < continuousCheckedIn || (i > 5 && i <= continuousCheckedIn), todayActive: todayCheckInState !== 'NO' && i === continuousCheckedIn}">
+       <div class="item" @click="checkInToday(i)" v-for="(item, i) in 10" :key="i" :class="{active: i + 1 < todayCheckInDay || ((i + 1 > 3 && (i + 1 < 8)) && i + 1 <= todayCheckInDay) || ((i + 1 > 8) && i < todayCheckInDay), todayActive: todayCheckInState !== 'NO' && i + 1 === todayCheckInDay}">
         <div class="item-bg"> 
           <img style="width: 28%; z-index: 1; position: absolute; top: 25%;" v-if="i <= 1" :src="require(`./images/money-01.png`)">
           <img style="width: 40%; z-index: 1; position: absolute; top: 22%;" v-else-if="i <= 3" :src="require(`./images/money-02.png`)">
@@ -23,12 +23,12 @@
           <img style="width: 40%; z-index: 1; position: absolute; top: 24%;" v-else-if="i <= 7" :src="require(`./images/money-04.png`)">
           <img style="width: 40%; z-index: 1; position: absolute; top: 20%;" v-else-if="i <= 9" :src="require(`./images/money-05.png`)">
           <img src="./images/bg-badge.png" class="default-badge">
-          <div class="button" :class="{ claimed: todayCheckInState === 'CLAIMED' }" v-if="(todayCheckInState !== 'CLAIMED' || todayCheckInState !== 'YES') && i === continuousCheckedIn">{{ todayCheckInState !== 'CLAIMED' ? '立即签到' : '已签到' }}</div>
+          <div class="button" :class="{ claimed: todayCheckInState === 'CLAIMED' }" v-if="(todayCheckInState !== 'CLAIMED' || todayCheckInState !== 'YES') && i + 1 === todayCheckInDay">{{ todayCheckInState !== 'CLAIMED' ? '立即签到' : '已签到' }}</div>
           <div class="button" v-else>第 {{ numberToChinese(i + 1) }} 天</div>
         </div>
        </div>
        
-      <div class="item end" :class="{ active: continuousCheckedIn === 10 }">
+      <div class="item end" :class="{ active: todayCheckInDay === 10 }">
         <img src="./images/end-icon.png">
       </div>
      </div>
@@ -46,31 +46,52 @@
  
  <script setup>
  import { onMounted, ref } from "vue";
+import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
+import { initUefaCheckin, claimUefaCheckin } from "../../../api/index/promo";
+
+const $q = useQuasar();
+const store = userStore();
+
+
  const numberToChinese = (num) => {
     const chineseNums = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
     return chineseNums[num - 1] || num;
 }
  const todayCheckInState = ref('');
- const continuousCheckedIn = ref(0);
+ const todayCheckInDay = ref(0);
  
  const init = () => {
-   const res = {
-    "code": 0,
-    "data": {
-          "continuousCheckedIn": 0,
-          "todayCheckInState": "YES",
-      }
-  };
- 
-   todayCheckInState.value = res.data.todayCheckInState;
-   continuousCheckedIn.value = res.data.continuousCheckedIn;
+  initUefaCheckin().then((res) => {
+    todayCheckInState.value = res.data.todayCheckInState;
+    todayCheckInDay.value = res.data.todayCheckInDay;
+  })
  };
+ 
  const checkInToday = (i) => {
-  if (i === continuousCheckedIn.value) {
-    todayCheckInState.value = 'CLAIMED';
+  if (todayCheckInState.value === 'CLAIMED') {
+    return;
+  }
+  if (i + 1 === todayCheckInDay.value) {
+    claimUefaCheckin()
+    .then((res) => {
+      if (res.code === 0) {
+        store.getBalance();
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: `成功领取 ${res.data} 元`,
+          icon: "check_circle_outline"
+        });
+        init();
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // message.error(err.message, 4);
+    });
   }
  }
- 
  onMounted(() => {
    init();
  });
