@@ -165,7 +165,9 @@ export default {
     moreGames: "More Games",
     addCash: "Add Cash",
     search: "Search",
-    downloadApp: "Download App"
+    downloadApp: "Download App",
+    downloadNow: "Download Now",
+    recharge: "Recharge",
   },
   notify: {
     noRecord: "No Record",
@@ -227,7 +229,8 @@ export default {
   },
   deposit: {
     selectAmount: "Select Amount",
-    depositTutorial: "Deposit Tutorial"
+    depositTutorial: "Deposit Tutorial",
+    select_privilege: "Select Privilege"
   },
   withdraw: {
     cashBalance: "Cash Balance",

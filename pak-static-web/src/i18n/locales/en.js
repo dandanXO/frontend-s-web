@@ -420,16 +420,18 @@ export default {
         title: "Deposit",
         recharge: "Recharge amount",
         form: {
-          label: {
-            title: "Amount"
-          },
           amount: {
+            label: "Amount",
             placeholder: "Enter an amount",
             error: {
               required: "Deposit amount is required",
               pattern: "Amount should be a positive number",
               range: "Deposit should be between {min} - {max}"
             }
+          },
+          privilege: {
+            label: "Select Privilege",
+            placeholder: "Select Privilege"
           }
         },
         modal: {
