@@ -468,6 +468,11 @@ const handleRecieve = async (reward) => {
     const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
 
     if (apiRes.code === 0) {
+      ElMessage.success({
+        type: "success",
+        message: `成功领取 ￥${apiRes.data}`
+      });
+
       updatedApiRes.value = updatedApiRes.value.map((item) => {
         if (item.ruleAmount === reward.ruleAmount) {
           return {
@@ -552,9 +557,7 @@ onMounted(async () => {
   justify-content: center;
   gap: 5px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   font-size: 20px;
 }
 
