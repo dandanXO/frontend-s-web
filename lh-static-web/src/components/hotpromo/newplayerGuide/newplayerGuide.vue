@@ -280,7 +280,7 @@ const getBonus = async (promoCode) => {
 
       ElMessage.success({
         type: "success",
-        message: "领取成功"
+        message: `成功领取 ￥${apiRes.data}`
       });
     }
   } catch (err) {
@@ -294,7 +294,7 @@ const getData = async () => {
 
     bankCardBindState.value = apiRes.data.bankCardBindState;
     firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
-    telephoneBindState.value = apiRes.data.telephoneBindState;
+    telephoneBindState.value = apiRes.data.telephoneBindState; 
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
