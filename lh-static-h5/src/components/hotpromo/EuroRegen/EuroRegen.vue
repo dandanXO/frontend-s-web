@@ -7,7 +7,7 @@
                 <div class="claim-button" @click="claimAmount">立即领取</div>
             </div>
 
-            <div class="promo-content-header">活动内容：活动期间，欧洲杯每周负盈利≥500即可在固定活动时间范围内领取对应档位彩金；
+            <div class="promo-content-header">活动内容：在欧洲杯期间负盈利≥500即可在活动时间内领取回血礼包
             </div>
 
             <div class="promo-content-table-wrapper">
