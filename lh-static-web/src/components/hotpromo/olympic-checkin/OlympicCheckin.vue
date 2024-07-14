@@ -6,7 +6,7 @@
      <div class="checkin-header__date">(2024年07月14日~2024年07月24日)</div>
    </div>
    <div class="checkin-content">
-     活动期间，登录期间即可免费打卡一次打次数越高对应档位彩金越高；
+    活动期间，当日任意存款一笔即可参与打卡一次，打次数越高对应档位彩金越高；
    </div>
    <div class="checkin-section">
      <div class="items">
