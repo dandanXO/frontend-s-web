@@ -4,10 +4,14 @@
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img :src="currentSite.logo">
+            <img :src="krLogo">
           </div>
-          <div class="first-liner" v-html="currentSite.firstLiner" />
-          <div class="second-liner" v-html="currentSite.secondLiner" />
+          <div class="first-liner">
+            Start From CITY8
+          </div>
+          <div class="second-liner">
+            Become a legend<br>Or become the eulogist of legend?
+          </div>
         </div>
         <div class="right">
           <div class="bg">
@@ -360,7 +364,7 @@ export default defineComponent({
       loginForm: {
         userName: '',
         password: '',
-        site: 'DY2',
+        site: 'KRW',
         key: '',
         coordinates: '',
         captchaCode: '',
@@ -385,41 +389,6 @@ export default defineComponent({
             required: true,
             message: t('message.requiredPassword'),
             trigger: 'blur',
-          },
-        ],
-      },
-      loginRulesVi: {
-        userName: [
-          {
-            required: true,
-            message: t('message.requiredLoginName'),
-            trigger: 'blur',
-          },
-          {
-            required: true,
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: t('common.affiliateaccountcanonlycontainnumchar'),
-            trigger: 'blur',
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: t('message.requiredPassword'),
-            trigger: 'blur',
-          },
-        ],
-        captchaCode: [
-          {
-            required: true,
-            message: t('message.required_captcha'),
-            trigger: 'blur',
-          },
-          {
-            min: 4,
-            max: 4,
-            message: t('message.required_4_digits'),
-            trigger: 'change',
           },
         ],
       },
@@ -920,13 +889,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      if (props.siteId !== '10') {
-        var myElement = document.getElementById('login-swiper')
-        console.log(myElement)
-        myElement.swiper.slideTo(1)
-      } else {
-        window.open('https://t.me/city88888', '_blank').focus();
-      }
+      window.open('https://t.me/city88888', '_blank').focus();
     }
 
     const getCaptcha = () => {
@@ -945,19 +908,9 @@ export default defineComponent({
       })
     }
 
-    const currentSite = ref({})
     const i18nStoreLanguage = i18nStore()
     const { setLanguage, languageVal } = i18nStoreLanguage
-    const populateCurrentSiteData = () => {
-      if (props.siteId === '10') {
-        currentSite.value.firstLiner = 'Start From CITY8'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = krLogo
-        state.loginForm.site = 'KRW'
-        setLanguage('kr')
-      }
-    }
+
     onMounted(() => {
       if (route.query.agent) {
         hasAffiliate.value = true
@@ -978,7 +931,7 @@ export default defineComponent({
       var dialog = document.querySelector('.el-overlay-dialog')
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
-      populateCurrentSiteData()
+      setLanguage('kr');
     })
     return {
       userNameRef,
@@ -999,7 +952,6 @@ export default defineComponent({
       hasAffiliate,
       step,
       isReg,
-      currentSite,
       props,
       t,
       swipeToContactUs,
@@ -1009,6 +961,7 @@ export default defineComponent({
       resetFormRef,
       getCaptcha,
       captchaImg,
+      krLogo
     }
   },
 })
@@ -1194,24 +1147,6 @@ a {
   background: url('../../assets/images/login/bg_login.jpg') no-repeat center center;
   background-size: cover;
 
-  &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center center;
-  }
-
-  &.vi {
-    font-family: 'Roboto';
-
-    .loginPage .right .top .log {
-      font-family: 'Roboto';
-    }
-
-    .loginPage .left {
-      .second-liner {
-        font-family: 'Roboto';
-      }
-    }
-  }
-
   .inner {
     max-width: 1200px;
     width: 100%;
@@ -1331,37 +1266,6 @@ a {
       }
     }
   }
-
-  &.ind-firstPage {
-    background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
-    height: 100vh;
-
-    .logo {
-      position: absolute;
-      left: 70px;
-      top: 40px;
-      width: 207px;
-    }
-
-    .loginPage .left .first-liner {
-      max-width: 750px;
-      width: 750px;
-    }
-
-    .loginPage .left .second-liner {
-      max-width: 600px;
-      width: 600px;
-    }
-
-    .inner {
-      max-width: 1300px;
-    }
-
-    .common-btn {
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      color: #fff;
-    }
-  }
 }
 
 .flex-c-center-div {
@@ -1467,37 +1371,6 @@ a {
       top: 20px;
       width: 120px;
     }
-
-    &.ind-firstPage {
-      .logo {
-        position: absolute;
-        left: 20px;
-        top: 20px;
-        width: 150px;
-      }
-
-      .loginPage {
-        padding-top: 30px;
-      }
-
-      .loginPage .left {
-        width: calc(100% - 20px);
-      }
-
-      .loginPage .left .first-liner {
-        max-width: none;
-        width: 100%;
-      }
-
-      .loginPage .left .second-liner {
-        max-width: none;
-        width: 100%;
-      }
-
-      .common-btn {
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      }
-    }
   }
 
   .wrapper {
@@ -1585,6 +1458,56 @@ a {
 
   .verification-title {
     font-size: 0.8rem;
+  }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+
+  10% {
+    transform: translate(-1px, -2px);
+  }
+
+  20% {
+    transform: translate(-3px, 0px);
+  }
+
+  30% {
+    transform: translate(3px, 2px);
+  }
+
+  40% {
+    transform: translate(1px, -1px);
+  }
+
+  50% {
+    transform: translate(-1px, 2px);
+  }
+
+  60% {
+    transform: translate(-3px, 1px);
+  }
+
+  70% {
+    transform: translate(3px, 1px);
+  }
+
+  80% {
+    transform: translate(-1px, -1px);
+  }
+
+  90% {
+    transform: translate(1px, 2px);
+  }
+
+  100% {
+    transform: translate(1px, -2px);
   }
 }
 </style>
