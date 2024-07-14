@@ -360,8 +360,8 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 
-const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
-const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
+const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
+const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
 
 const earnData = [
   { amount: 1000, earn: 5 },
