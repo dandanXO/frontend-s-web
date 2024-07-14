@@ -698,9 +698,9 @@
       <a href="https://t.me/kakagamecskh247" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <!-- <a href="https://t.me/trangchukakagame2" target="_blank" class="menu-item">
+       <a href="https://t.me/CSKHkakagame247" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
-      </a> -->
+      </a>
       <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>
