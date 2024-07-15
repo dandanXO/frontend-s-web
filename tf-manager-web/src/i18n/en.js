@@ -419,7 +419,7 @@ export default {
     FTD: 'FTD',
     LOTTERY: 'LOTTERY',
     OTHER: 'OTHER',
-    LIMITED: 'LIMITED'
+    LIMITED: 'LIMITED',
   },
   scheduleType: {
     NORMAL: 'Normal',
@@ -1127,6 +1127,10 @@ export default {
     mobileWay: 'Mobile',
     moneyChange: 'Money Change',
     month: 'Month',
+    mqLogProcessWithTitle: 'MQ Title (SummaryDoris)',
+    mqLogProcessTopic: 'Topic',
+    mqLogProcessTimestamp: 'Current Timestamp',
+    mqLogTimestampWithTimezone: 'Site Timestamp',
     name: 'Name',
     nbaMatchRecord: 'NBA Playoffs Match Record',
     nbaMatchSetting: 'NBA Playoffs Match Setting',
@@ -1969,7 +1973,8 @@ export default {
       'The password cannot be less than 6 digits or more than 12 digits',
     paymentUpdate: 'Copy to other way or level? if not just press update',
     paySuccess: 'Pay Success',
-    pleaseEnterAffiliateNameOrAffiliateCode: 'Please enter affiliate name or affiliate code',
+    pleaseEnterAffiliateNameOrAffiliateCode:
+      'Please enter affiliate name or affiliate code',
     promoDistributionSuccess: 'Promo Distribution Success',
     redeemCashSuccess: 'Redeem Cash Success',
     reenterPassword: 'Please re-enter the password',
@@ -2574,6 +2579,7 @@ export default {
     'KRW Stats Report': 'KRW Statistics Report',
     'Member Refer Pak': 'Member Refer Pak',
     'Member Refer Summary Pak': 'Member Refer Summary Pak',
+    'MQ Log': 'MQ Log',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
