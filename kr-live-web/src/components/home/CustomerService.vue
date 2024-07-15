@@ -1,6 +1,6 @@
 <template>
-    <q-page-sticky position="bottom-right" :offset="[40, 40]" style="z-index:999999" class="floating">
-        <div class="floating-cs-img">
+    <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999999" class="floating">
+        <div class="floating-cs-img" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <q-popup-proxy>
                 <q-banner style="background:transparent;padding:0;">
                     <iframe src="https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr&way=H5" class="cs-iframe" />
@@ -11,6 +11,19 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const fabPos = ref([40, 40])
+const draggingFab = ref(false)
+
+const moveFab = (ev) => {
+    draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+
+    fabPos.value = [
+        fabPos.value[0] - ev.delta.x,
+        fabPos.value[1] - ev.delta.y
+    ]
+}
 </script>
 
 <style lang="scss" scoped>
