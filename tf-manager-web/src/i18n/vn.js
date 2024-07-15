@@ -2424,6 +2424,7 @@ export default {
     'Affiliate Bet Rebate Record': 'Nhật ký Hoàn trả Cược Đối tác liên kết',
     'KRW Stats Report': 'Báo cáo Thống kê KRW của Trang web',
     'MQ Log': 'Nhật ký MQ',
+    'Promotion Coupon': 'phiếu mua hàng',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

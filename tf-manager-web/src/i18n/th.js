@@ -1705,6 +1705,7 @@ export default {
     'User Login Log': 'บันทึกการเข้าสู่ระบบของผู้ใช้',
     'User Action Log': 'บันทึกการดำเนินการของผู้ใช้',
     'MQ Log': 'บันทึก MQ',
+    'Promotion Coupon': 'คูปอง',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

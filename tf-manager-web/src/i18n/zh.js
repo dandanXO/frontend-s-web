@@ -2537,6 +2537,7 @@ export default {
     'Member Refer Pak': '邀请列表-巴基斯坦',
     'Member Refer Summary Pak': '会员邀请统计-巴基斯坦',
     'MQ Log': 'MQ日志',
+    'Promotion Coupon': '存款券',
   },
   google: {
     google_auth_menu: '谷歌验证',

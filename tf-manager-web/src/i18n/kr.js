@@ -2410,6 +2410,7 @@ export default {
     'Affiliate Bet Rebate Record': '제휴 베팅 리베이트 기록',
     'KRW Stats Report': '한국 사이트 데이터 보고서',
     'MQ Log': 'MQ 로그',
+    'Promotion Coupon': '쿠폰',
   },
   google: {
     google_auth_menu: 'Google 인증자',
