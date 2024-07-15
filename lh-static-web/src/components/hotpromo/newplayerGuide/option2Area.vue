@@ -529,11 +529,12 @@ onMounted(async () => {
     background-color 0.3s,
     color 0.3s;
   font-size: 20px;
+  border: 1px solid #7a80a1;
 }
 
 .switch-option.active {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-
+  border: 0px;
   color: white;
 }
 

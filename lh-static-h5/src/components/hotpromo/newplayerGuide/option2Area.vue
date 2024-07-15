@@ -460,9 +460,10 @@ onMounted(async () => {
 
 .switch-bar {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
   flex-wrap: wrap;
+  gap: 6px;
 
   @media (max-width: 400px) {
     justify-content: space-evenly;
@@ -482,11 +483,17 @@ onMounted(async () => {
   transition:
     background-color 0.3s,
     color 0.3s;
+  border: 1px solid #7a80a1;
+
+  @media (max-width: 450px) {
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 .switch-option.active {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-
+  border: 0px;
   color: white;
 }
 
