@@ -1,5 +1,5 @@
 <template>
-    <q-page-sticky position="bottom-right" :offset="[20, 40]" style="z-index:999999" class="floating">
+    <q-page-sticky position="bottom-right" :offset="[40, 40]" style="z-index:999999" class="floating">
         <div class="floating-cs-img">
             <q-popup-proxy>
                 <q-banner style="background:transparent;padding:0;">
@@ -17,9 +17,9 @@
 .floating-cs-img {
     background: url("../../assets/images/index/cs-icon.png") no-repeat center center;
     background-size: 100% 100%;
-    width: 120px;
-    height: 83px;
-    aspect-ratio: 120/83;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 60/60;
     cursor: pointer;
 
     &:hover {
@@ -31,8 +31,9 @@
     }
 
     @media (max-width: 600px) {
-        width: 102px;
-        height: 72px;
+        width: 40px;
+        height: 40px;
+        margin: 0px -5px;
     }
 }
 
