@@ -103,14 +103,14 @@
             <q-skeleton type="text" v-if="isFetchingApi" />
             <div v-else class="text-grey text-bold text-caption">
               {{ $t('lang.deposit_deposit_unit') }}：{{
-                calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만"
+                calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "원"
                   :
                   store.currency.value) : 0
               }}
               -
               {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value ===
                 "₩"
-                ? "만" :
+                ? "원" :
                 store.currency.value) : " " }}
             </div>
 
