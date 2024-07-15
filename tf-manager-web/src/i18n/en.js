@@ -1129,7 +1129,7 @@ export default {
     month: 'Month',
     mqLogProcessWithTitle: 'MQ Title (SummaryDoris)',
     mqLogProcessTopic: 'Topic',
-    mqLogProcessTimestamp: 'Current Timestamp',
+    mqLogProcessTimestamp: 'System Timestamp',
     mqLogTimestampWithTimezone: 'Site Timestamp',
     name: 'Name',
     nbaMatchRecord: 'NBA Playoffs Match Record',
