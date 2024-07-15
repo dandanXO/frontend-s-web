@@ -3360,37 +3360,26 @@ watch(
   }
 );
 
-watch(
-  () => route.query.register,
-  (newValue) => {
-    if (newValue === "true") {
-      if (!isAndroid()) {
-        isCongratsModal.value = true;
-      }
-    }
-  }
-);
+// watch(
+//   () => route.query.register,
+//   (newValue) => {
+//     if (newValue === "true") {
+//       if (!isAndroid()) {
+//         isCongratsModal.value = true;
+//       }
+//     }
+//   }
+// );
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
     setTimeout(() => {
       showSpinWheel();
     }, 750);
+  } else if (store.hasToken() && !isAndroid()) {
+    showCongratsModal();
   }
 };
-
-// watch(
-//   () => ui.loggedIn,
-//   (newValue) => {
-//     if (newValue === true) {
-//       if (isAndroid()) {
-//         setTimeout(() => {
-//           showSpinWheel();
-//         }, 750);
-//       }
-//     }
-//   }
-// );
 
 const showSpinWheel = () => {
   eventapi
@@ -3407,6 +3396,16 @@ const showSpinWheel = () => {
     .catch((err) => {
       console.log("error", err);
     });
+};
+
+const showCongratsModal = () => {
+  eventapi.get("/new-user-roulette/init").then((res) => {
+    if (res.code == 0) {
+      if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
+        isCongratsModal.value = true;
+      }
+    }
+  });
 };
 </script>
 
