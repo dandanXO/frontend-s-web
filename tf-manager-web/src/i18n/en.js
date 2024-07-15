@@ -2580,6 +2580,7 @@ export default {
     'Member Refer Pak': 'Member Refer Pak',
     'Member Refer Summary Pak': 'Member Refer Summary Pak',
     'MQ Log': 'MQ Log',
+    'Promotion Coupon': 'Deposit Coupon',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
