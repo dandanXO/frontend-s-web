@@ -3372,12 +3372,14 @@ watch(
 // );
 
 const checkSpinWheel = () => {
-  if (store.hasToken() && isAndroid()) {
-    setTimeout(() => {
-      showSpinWheel();
-    }, 750);
-  } else if (store.hasToken() && !isAndroid()) {
-    showCongratsModal();
+  if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+    if (store.hasToken() && isAndroid()) {
+      setTimeout(() => {
+        showSpinWheel();
+      }, 750);
+    } else if (store.hasToken() && !isAndroid()) {
+      showCongratsModal();
+    }
   }
 };
 
