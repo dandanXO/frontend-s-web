@@ -1131,7 +1131,7 @@ export default {
     month: '月份',
     mqLogProcessWithTitle: '标题 (SummaryDoris)',
     mqLogProcessTopic: '主题',
-    mqLogProcessTimestamp: '当前时间',
+    mqLogProcessTimestamp: '系统时间',
     mqLogTimestampWithTimezone: '站点时间',
     name: '名称',
     nbaMatchRecord: 'NBA季后赛记录',

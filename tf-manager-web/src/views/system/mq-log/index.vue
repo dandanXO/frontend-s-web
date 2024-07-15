@@ -7,11 +7,11 @@
     <el-table :data="item.list">
       <el-table-column prop="siteName" :label="t('fields.siteName')" />
       <el-table-column
-        prop="processTimestamp"
+        prop="systemTimestamp"
         :label="t('fields.mqLogProcessTimestamp')"
       />
       <el-table-column
-        prop="timestampWithTimeZone"
+        prop="siteTimestamp"
         :label="t('fields.mqLogTimestampWithTimezone')"
       />
     </el-table>
