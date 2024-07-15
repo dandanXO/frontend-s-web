@@ -1,6 +1,7 @@
 <template>
     <div class="page-container">
         <div class="form-wrapper">
+            <div style="margin:0;" class="primary-button blue-square" @click="props?.onClickBack">{{ $t('lang.feedback_previous_page') }}</div>
             <form class="content-form form-template">
                 <div class="form-item">
                     <label>{{ $t('lang.feedback_category') }}</label>
@@ -45,6 +46,7 @@ var qs = require("qs");
 const $q = useQuasar();
 const titleRef = ref();
 const contentRef = ref();
+const props = defineProps(['onClickBack'])
 
 const composeForm = reactive({
     title: "",
