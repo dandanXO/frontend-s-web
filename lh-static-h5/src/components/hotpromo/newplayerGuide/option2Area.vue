@@ -50,11 +50,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -91,11 +91,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -126,18 +126,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15真人</td>
           </tr>
         </tbody>
       </table>
@@ -167,18 +159,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15棋牌</td>
           </tr>
         </tbody>
       </table>
@@ -208,18 +192,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15电子</td>
           </tr>
         </tbody>
       </table>
@@ -249,18 +225,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15捕鱼</td>
           </tr>
         </tbody>
       </table>
@@ -290,7 +258,7 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元獎金</div>
+        <div>{{ matchRewardItem1?.earn }} 元奖金</div>
         <div>
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
@@ -330,7 +298,7 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元獎金</div>
+        <div>{{ matchRewardItem2?.earn }} 元奖金</div>
         <div>
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
