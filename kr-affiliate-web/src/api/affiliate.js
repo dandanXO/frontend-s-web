@@ -124,3 +124,7 @@ export const getDownlineShareRatio = (affId) => {
 export const getAffiliateTree = (affId) => {
   return https().request(`/affiliate/${affId}/getTree`, Method.GET);
 };
+
+export const recycleMemberBalance = (recycleForm) => {
+  return https().request(`/downline/${recycleForm.memberId}/recycleBalance?_method=PUT`, Method.POST, { amount: recycleForm.amount }, ContentType.form);
+};
