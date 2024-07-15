@@ -601,9 +601,9 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
-          otag("event", "deposit");
-        }
+
+        // FB tracking :: rechargeClick
+        fbq("track", "rechargeClick");
 
         console.log(res);
         const response = res.data.result;
