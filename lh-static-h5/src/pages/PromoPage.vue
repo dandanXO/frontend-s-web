@@ -139,7 +139,7 @@
             v-else
             class="selected-promo"
             :class="{
-              euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
+              // euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
               'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
             }"
           >

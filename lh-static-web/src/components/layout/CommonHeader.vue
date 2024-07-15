@@ -48,9 +48,9 @@
               </div>
             </template>
           </template>
-          <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
+          <!-- <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
             <img class="eroup-menu-icon" :src="require(`../../assets/images/home/header-eroup.png`)" />
-          </div>
+          </div> -->
         </div>
 
         <div class="navigations second-nav">
@@ -335,7 +335,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img src="../../assets/home/acc-dialog-img.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -364,7 +364,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img src="../../assets/home/acc-dialog-img.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -413,7 +413,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img src="../../assets/home/acc-dialog-img.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
