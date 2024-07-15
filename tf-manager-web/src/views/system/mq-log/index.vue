@@ -1,10 +1,19 @@
 <template>
-  {{ t('fields.mqLogProcessWithTitle') }}
+  <div>
+    {{ t('fields.mqLogProcessWithTitle') }}
+    <el-button
+      style="margin-left: 20px"
+      icon="el-icon-refresh"
+      size="mini"
+      type="success"
+      @click="refresh()"
+    />
+  </div>
   <div v-for="item in page.records" :key="item.topic">
     <div>
       <h5>{{ t('fields.mqLogProcessTopic') }} : {{ item.topic }}</h5>
     </div>
-    <el-table :data="item.list">
+    <el-table :data="item.list" v-loading="page.loading">
       <el-table-column prop="siteName" :label="t('fields.siteName')" />
       <el-table-column
         prop="systemTimestamp"
@@ -26,13 +35,21 @@ const { t } = useI18n()
 
 const page = reactive({
   records: [],
+  loading: false,
 })
 
 async function loadMQLog() {
+  page.loading = true
   const query = {}
   const { data: ret } = await getMQLog(query)
 
   page.records = ret
+
+  page.loading = false
+}
+
+function refresh() {
+  loadMQLog()
 }
 
 onMounted(() => {
