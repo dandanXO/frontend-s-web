@@ -120,8 +120,8 @@
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_item') }}</span>
                 <span>：</span>
-                <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMin} 만 -
-                  ${selectedWithdrawalMethod.withdrawMax} 만` }}</span>
+                <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMin} 원 -
+                  ${selectedWithdrawalMethod.withdrawMax} 원` }}</span>
               </template>
               <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
                 <span>{{
