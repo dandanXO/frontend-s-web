@@ -47,6 +47,7 @@ export default {
     menu_deposit: "충전",
     menu_withdraw: "환전",
     menu_message: "문의",
+    menu_system_message: "쪽지",
     menu_customer_service: "고객센터",
     menu_transaction_record: "내역",
     menu_rebates: "리베이트",

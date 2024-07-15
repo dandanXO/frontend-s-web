@@ -103,7 +103,7 @@ const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/AddWithdrawBankCard.vue')
 ))
 const MessagesPage = markRaw(defineAsyncComponent(() =>
-  import('components/pageModalContent/MessagesPage.vue')
+  import('components/pageModalContent/message/index.vue')
 ))
 const RegisterComponent = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/RegisterComponent.vue')
@@ -118,7 +118,7 @@ const MyPasswordChange = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/MyPasswordChange.vue')
 ))
 const MessageCompose = markRaw(defineAsyncComponent(() =>
-  import('components/pageModalContent/MessageCompose.vue')
+  import('src/components/pageModalContent/message/MessageCompose.vue')
 ))
 
 const pagesInfo = reactive([
@@ -146,26 +146,48 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "message",
-    page: "personal/messages",
-    info: 'lang.page_modal_message',
+    page: "personal/messages/all",
+    info: 'lang.message_type_all',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     component: MessagesPage,
     headerInfo: {
-      title: 'lang.page_modal_message',
+      title: 'lang.message_type_all',
       description: "lang.page_modal_desc_text"
     }
   },
   {
     tabIndex: "message",
-    page: "personal/messages/create",
-    info: 'lang.page_modal_message_compose',
-    iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
-    component: MessageCompose,
+    page: "personal/messages/inbox",
+    info: 'lang.message_type_inbox',
+    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    component: MessagesPage,
     headerInfo: {
-      title: 'lang.page_modal_message_compose',
+      title: 'lang.message_type_inbox',
       description: "lang.page_modal_desc_text"
     }
   },
+  {
+    tabIndex: "message",
+    page: "personal/messages/outbox",
+    info: 'lang.message_type_outbox',
+    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    component: MessagesPage,
+    headerInfo: {
+      title: 'lang.message_type_outbox',
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  // {
+  //   tabIndex: "message",
+  //   page: "personal/messages/create",
+  //   info: 'lang.page_modal_message_compose',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
+  //   component: MessageCompose,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_message_compose',
+  //     description: "lang.page_modal_desc_text"
+  //   }
+  // },
   {
     tabIndex: "message",
     page: "announcement",

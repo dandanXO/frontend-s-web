@@ -1,18 +1,11 @@
 <template>
     <div class="message-page">
-        <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
-            <q-tab name="ALL" :label="$t('lang.message_type_all')" />
-            <q-tab name="NOTIFICATION" :label="$t('lang.message_type_inbox')" />
-            <q-tab name="Outbox" :label="$t('lang.message_type_outbox')" />
-        </q-tabs>
-        <q-tab-panels v-model="recordActive" animated style="background: #212632;">
-            <q-tab-panel name="NOTIFICATION"></q-tab-panel>
-        </q-tab-panels>
-
         <div class="message-compose-form">
-            <div class="message-container">
+            <MessageCompose v-if="isCompose" :onClickBack="() => isCompose = false" />
+            <div v-else class="message-container">
                 <div class="message-list-wrapper">
                     <div class="header">
+                        <q-icon :name="'edit'" style="cursor:pointer;" @click="isCompose = true" />
                         <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
                             :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
                                 initOutbox(currentPage)
@@ -45,9 +38,9 @@
                                         <span class="date-time">{{ getLocaleDateTime(item.sendTime || item.createTime)
                                             }}</span>
                                     </q-item-label>
-                                    <q-item-label caption><q-badge v-if="item.type && inboxCategory === 'ALL'"
+                                    <q-item-label caption><q-badge v-if="item.hasOwnProperty('readTime')"
                                             style="font-size:10px;"
-                                            :label="$t(getMessageTypeLabel(item.type))" /></q-item-label>
+                                            :label="!item.readTime ? $t('lang.message_unread') : $t('lang.message_read')" /></q-item-label>
                                 </q-item-section>
                             </q-item>
                         </template>
@@ -101,6 +94,7 @@ import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import { userStore } from "src/stores";
+import MessageCompose from "./MessageCompose.vue";
 var qs = require("qs");
 
 const $q = useQuasar();
@@ -108,6 +102,8 @@ const selected = ref();
 const isLoading = ref(false);
 const inboxCategory = ref('ALL');
 const store = userStore();
+const props = defineProps(['inboxType']);
+const isCompose = ref(false);
 
 const inboxCategories = [
     { type: 'Outbox', label: 'lang.message_type_outbox' },
@@ -138,6 +134,10 @@ const selectFirstMessage = () => {
         }, 100)
     }
 }
+
+watch(() => props.inboxType, () => {
+    inboxCategory.value = props.inboxType;
+})
 
 watch(() => inboxCategory.value, () => {
     initOutbox();
@@ -275,7 +275,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     margin: 0;
-    height: calc(100% - 40px);
+    height: 100%;
 }
 
 .back-btn {

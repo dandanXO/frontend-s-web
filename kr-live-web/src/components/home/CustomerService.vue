@@ -1,6 +1,6 @@
 <template>
-    <q-page-sticky position="bottom-right" :offset="[20, 40]" style="z-index:999999" class="floating">
-        <div class="floating-cs-img">
+    <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999999" class="floating">
+        <div class="floating-cs-img" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <q-popup-proxy>
                 <q-banner style="background:transparent;padding:0;">
                     <iframe src="https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr&way=H5" class="cs-iframe" />
@@ -11,15 +11,28 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const fabPos = ref([40, 40])
+const draggingFab = ref(false)
+
+const moveFab = (ev) => {
+    draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+
+    fabPos.value = [
+        fabPos.value[0] - ev.delta.x,
+        fabPos.value[1] - ev.delta.y
+    ]
+}
 </script>
 
 <style lang="scss" scoped>
 .floating-cs-img {
     background: url("../../assets/images/index/cs-icon.png") no-repeat center center;
     background-size: 100% 100%;
-    width: 120px;
-    height: 83px;
-    aspect-ratio: 120/83;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 60/60;
     cursor: pointer;
 
     &:hover {
@@ -31,8 +44,9 @@
     }
 
     @media (max-width: 600px) {
-        width: 102px;
-        height: 72px;
+        width: 40px;
+        height: 40px;
+        margin: 0px -5px;
     }
 }
 
