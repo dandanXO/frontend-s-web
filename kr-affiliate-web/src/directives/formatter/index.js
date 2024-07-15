@@ -19,7 +19,7 @@ export const formatter = {
     } else if (binding.value.type === "money") {
       el.innerHTML = `<div class="money-wrapper">
                         <div>${formatMoney(binding.value.data, 0)}</div>
-                        <div>₩</div>
+                        <div>원</div>
                       </div>`;
     } else if (binding.value.type === "p&l") {
       el.innerHTML = `<div class="textRight ${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;
@@ -46,7 +46,7 @@ export const formatter = {
     } else if (binding.value.type === "money") {
       el.innerHTML =`<div class="money-wrapper">
                         <div>${formatMoney(binding.value.data, 0)}</div>
-                        <div>₩</div>
+                        <div>원</div>
                       </div>`;
     } else if (binding.value.type === "p&l") {
       el.innerHTML = `<div class="textRight ${binding.value.data < 0 ? 'textRed' : binding.value.data > 0 ? 'textGreen' : ''}">${formatMoney(binding.value.data, 0)}</div>`;

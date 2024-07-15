@@ -1,5 +1,7 @@
 export default {
   statsHeader: {
+    myMoney: 'My Money',
+    myPoint: 'My Point',
     memberMoney: 'Member Money',
     memberPoint: 'Member Point',
     eggs: 'Eggs',
@@ -21,7 +23,7 @@ export default {
     casinoProfitLoss: 'Casino Profit and Loss',
     slotBetAmount: 'Slot Bet Amount',
     slotProfit: 'Slot Profit',
-    slotRollingAmount: 'Rolling Amount',
+    slotRollingAmount: 'Slot Rolling Amount',
     slotProfitLoss: 'Slot Profit and Loss',
     sportBetAmount: 'Sport Bet Amount',
     sportProfit: 'Sport Profit',
@@ -663,6 +665,9 @@ export default {
     applicationDate: 'Application Date',
     processingDate: 'Processing Date',
     pendingRebate: 'Pending Rebate',
+    recycle: 'Recycle',
+    nickName: 'Nickname',
+    afterBalance: 'After Balance',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -828,6 +833,8 @@ export default {
     validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
     depositShouldBetween: 'Deposit amount should be between ',
     requiredPositiveInteger: 'Required Positive Integer',
+    confirmRecycle: 'Confirm Recycle Balance for Member ',
+    recycleSuccess: 'Recycle Success',
   },
   posterType: {
     OVERALL: 'Overall Referral',

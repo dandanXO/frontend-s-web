@@ -1,5 +1,7 @@
 export default {
   statsHeader: {
+    myMoney: '내 머니',
+    myPoint: '내 포인트',
     memberMoney: '회원 머니',
     memberPoint: '회원 포인트',
     eggs: '보유알',
@@ -227,19 +229,19 @@ export default {
     commissionInfo: '커미션 정보',
     affiliateCommissionInfo: '대리 커미션 정보',
     commissionCalculator: '커미션 계산기',
-    monthlyTotalEffectiveTurnover: '이번 달 총 수익 (₩)',
+    monthlyTotalEffectiveTurnover: '이번 달 총 수익 (원)',
     pleaseInsertMonthlyTotalEffectiveTurnover:
-      '이번 달 총 수익을 입력해주세요 (₩)',
+      '이번 달 총 수익을 입력해주세요 (원)',
     monthlySettlement: '이번 달 정산',
     pleaseInsertMonthlySettlement: '이번 달 정산을 입력해주세요',
     monthlyDividen: '이번 달 배당금',
     pleaseInsertMonthlyDividen: '이번 달 배당금을 입력해주세요',
     platformFee: '플랫폼 비용',
-    monthlyTotalDeposit: '이번 달 회원 입금 (₩)',
-    pleaseInsertMonthlyTotalDeposit: '이번 달 회원 입금을 입력해주세요 (₩)',
-    monthlyTotalWithdrawal: '이번 달 회원 출금 (₩)',
-    pleaseInsertMonthlyTotalWithdrawal: '이번 달 회원 출금을 입력해주세요 (₩)',
-    totalCommissionAbleClaim: '이번 달 받을 수 있는 커미션 (₩)',
+    monthlyTotalDeposit: '이번 달 회원 입금 (원)',
+    pleaseInsertMonthlyTotalDeposit: '이번 달 회원 입금을 입력해주세요 (원)',
+    monthlyTotalWithdrawal: '이번 달 회원 출금 (원)',
+    pleaseInsertMonthlyTotalWithdrawal: '이번 달 회원 출금을 입력해주세요 (원)',
+    totalCommissionAbleClaim: '이번 달 받을 수 있는 커미션 (원)',
     calculate: '계산',
     commissionCalculatorNote:
       '주의: 계산기는 평균 리베이트 및 배당금을 기준으로 하며, 결과는 참고용으로만 사용됩니다.',
@@ -663,6 +665,9 @@ export default {
     applicationDate: '지원 날짜',
     processingDate: '처리 날짜',
     pendingRebate: '보류 중인 리베이트',
+    recycle: '머니회수',
+    nickName: '별명',
+    afterBalance: '잔액 후',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -822,6 +827,8 @@ export default {
     depositShouldBetween: '입금액은 다음 사이여야 합니다 ',
     requiredPositiveInteger: '숫자를 입력해주세요',
     replySuccess: '성공적인 답변',
+    confirmRecycle: '회원의 재활용 잔액 확인 ',
+    recycleSuccess: '돈 회수 성공',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',
