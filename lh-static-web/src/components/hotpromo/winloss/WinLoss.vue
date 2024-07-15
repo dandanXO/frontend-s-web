@@ -6,7 +6,7 @@
         {{ formattedDate }}
       </div>
       <div class="match-details">
-        免费参与竞猜，{{matchText}}（共3轮）
+        免费参与竞猜，{{ matchText }}
       </div>
       <div class="winloss-matches">
         <div class="match" v-for="(match, i) in ongoingMatches" :key="i">

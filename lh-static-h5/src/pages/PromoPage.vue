@@ -139,7 +139,7 @@
             v-else
             class="selected-promo"
             :class="{
-              euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
+              // euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
               'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
             }"
           >
@@ -211,7 +211,8 @@
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
@@ -293,7 +294,7 @@ export default defineComponent({
 
     const selectedPromoWrapperClass = computed(() => ({
       "challenge-comeback": selectedPromo.value.promoCode === 'lh1-challenge-comeback',
-      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot'
+      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin'
     }))
 
     // const routeQuery  = computed(() => route.query || {});
@@ -853,6 +854,12 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        .olympicCheckin {
+          border: 1px solid #acd4f6;
+          border-radius: 10px;
+          padding: 10px;
+          background: #f2f8fe;
+        }
         &.aijiasu {
           width: 100%;
           gap: 0px;

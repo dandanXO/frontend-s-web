@@ -47,7 +47,7 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_03") }}
-            <a href="https://t.me/trangchukakagame1" target="_blank">@trangchukakagame1</a>
+            <a href="https://t.me/kakagamecskh247" target="_blank">@trangchukakagame1</a>
           </div>
         </div>
         <!-- <div class="contact-item">

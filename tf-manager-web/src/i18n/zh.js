@@ -424,7 +424,7 @@ export default {
     FTD: '首存',
     LOTTERY: '彩票',
     OTHER: '其他',
-    LIMITED: '限时热门'
+    LIMITED: '限时热门',
   },
   scheduleType: {
     NORMAL: '普通',
@@ -1129,6 +1129,10 @@ export default {
     mobileWay: '移动端',
     moneyChange: '账变',
     month: '月份',
+    mqLogProcessWithTitle: '标题 (SummaryDoris)',
+    mqLogProcessTopic: '主题',
+    mqLogProcessTimestamp: '系统时间',
+    mqLogTimestampWithTimezone: '站点时间',
     name: '名称',
     nbaMatchRecord: 'NBA季后赛记录',
     nbaMatchSetting: 'NBA季后赛配置',
@@ -1879,6 +1883,7 @@ export default {
     cancelQuizSuccess: '此赛事已取消',
     cancelRolloverRecordSuccess: '取消流水记录成功',
     changeAffiliateSuccess: '更换代理成功',
+    confirmUnbindAffiliateAccesss: '确认解绑上级代理',
     changeSuccess: '更改成功',
     commissionPaySuccess: '佣金发放成功',
     confirmCancel: '请确认是否要取消此记录, 此操作不可撤销',
@@ -2531,6 +2536,7 @@ export default {
     'KRW Stats Report': '韩国站点数据报表',
     'Member Refer Pak': '邀请列表-巴基斯坦',
     'Member Refer Summary Pak': '会员邀请统计-巴基斯坦',
+    'MQ Log': 'MQ日志',
   },
   google: {
     google_auth_menu: '谷歌验证',

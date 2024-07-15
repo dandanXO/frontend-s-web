@@ -188,6 +188,16 @@
           min-width="120"
         />
         <el-table-column
+          prop="riskLevel"
+          :label="t('fields.riskLevel')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.riskLevelColor}">{{ scope.row.riskLevel }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="300"

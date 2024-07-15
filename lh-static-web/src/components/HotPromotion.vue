@@ -83,6 +83,7 @@
     <Aijiasu v-if="list.redirectUrl === 'lh1-aijiasu'" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
+    <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -155,6 +156,7 @@ import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
 import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
 import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide.vue"
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+import OlympicCheckin from "../components/hotpromo/olympic-checkin/OlympicCheckin.vue";
 import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/ChallengeComeback.vue";
 
 import { ElMessage } from "element-plus";
@@ -219,6 +221,7 @@ export default defineComponent({
     Aijiasu,
     EuroRegen,
     OuZuLianPromo,
+    OlympicCheckin,
     ChallengeComeBackPromo
   },
   props: {

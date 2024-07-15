@@ -24,7 +24,7 @@
         </el-input>
       </el-form-item>
     </div>
-<!-- 
+    <!-- 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item :label="$t('login.confirmPwd')" prop="confirmPwd">
@@ -71,12 +71,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
       <el-form-item :label="$t('login.mobileNo')" prop="telephone">
-        <el-input
-          class="wTip"
-          v-model="regForm.telephone"
-          :placeholder="$t('login.mobileNo')"
-          clearable
-        >
+        <el-input class="wTip" v-model="regForm.telephone" :placeholder="$t('login.mobileNo')" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -200,7 +195,7 @@ let validatePhoneNumber = async (r, v) => {
     return Promise.reject(t("placeholder.onlyNumber"));
   } else if (v.length !== 10) {
     return Promise.reject(t("placeholder.invalidPhoneLength"));
-  } else if (v.charAt(0) !== '0') {
+  } else if (v.charAt(0) !== "0") {
     return Promise.reject(t("placeholder.invalidPhoneStartsWith0"));
   } else {
     return Promise.resolve();
@@ -400,6 +395,8 @@ const submitRegisterForm = async (elForm) => {
     .validate((valid) => {
       if (valid) {
         (async () => {
+          fbq("track", "registerClick");
+
           const sidParam = store.visitorId;
           regForm.sid = sidParam;
           register(regForm)
@@ -412,16 +409,11 @@ const submitRegisterForm = async (elForm) => {
                 });
 
                 // FB tracking :: signup-success
-                if (store.isAffiliateA) {
-                  fbq("track", "signup-success");
-                }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("kakabof.com") > -1) {
-                  otag("event", "registration");
-                }
+                fbq("track", "register");
 
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                emits("open-welcome-dialog")
+                emits("open-welcome-dialog");
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
@@ -488,7 +480,7 @@ onMounted(() => {
   font-size: 14px;
   background-color: #f7f8fb;
   border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #FFA09A inset;;
+  box-shadow: 0px 0px 8px 0px #ffa09a inset;
   margin-bottom: 30px;
 }
 
@@ -516,7 +508,7 @@ onMounted(() => {
 }
 
 .blue-bg {
-  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+  background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
   box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
   color: #fff;
   font-size: 14px;

@@ -255,7 +255,7 @@ export default {
     FTD: 'FTD',
     LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
-    LIMITED: 'LIMITED'
+    LIMITED: 'LIMITED',
   },
   scheduleType: {
     NORMAL: 'โดยปกติ',
@@ -754,6 +754,10 @@ export default {
     mobileWay: 'มือถือ',
     moneyChange: 'การแลกเงิน',
     month: 'เดือน',
+    mqLogProcessWithTitle: 'ชื่อ (SummaryDoris)',
+    mqLogProcessTopic: 'หัวข้อ',
+    mqLogProcessTimestamp: 'การประทับเวลาปัจจุบัน',
+    mqLogTimestampWithTimezone: 'การประทับเวลาของไซต์',
     name: 'ชื่อ',
     needRegister: 'ต้องการลงทะเบียน',
     netProfit: 'กำไรสุทธิ',
@@ -1211,6 +1215,7 @@ export default {
     cancelDepositSuccess: 'ยกเลิกการฝากเงินสำเร็จ',
     cancelRolloverRecordSuccess: 'ยกเลิกความสำเร็จในการบันทึกแบบโรลโอเวอร์',
     changeAffiliateSuccess: 'เปลี่ยนความสำเร็จของพันธมิตร',
+    confirmUnbindAffiliateAccesss: 'ยืนยันการยกเลิกตัวแทนระดับสูง',
     changeSuccess: 'เปลี่ยนความสำเร็จ',
     commissionPaySuccess: 'ความสำเร็จในการจ่ายค่าคอมมิชชั่น',
     confirmToAdjust:
@@ -1267,7 +1272,8 @@ export default {
     passwordLength: 'รหัสผ่านต้องไม่น้อยกว่า 6 หลักหรือมากกว่า 12 หลัก',
     paymentUpdate: 'คัดลอกไปยังวิธีหรือระดับอื่น? หากไม่ก็กดอัปเดต',
     paySuccess: 'การชำระเงินสำเร็จ',
-    pleaseEnterAffiliateNameOrAffiliateCode: 'กรุณากรอกชื่อพันธมิตรหรือรหัสพันธมิตร',
+    pleaseEnterAffiliateNameOrAffiliateCode:
+      'กรุณากรอกชื่อพันธมิตรหรือรหัสพันธมิตร',
     promoDistributionSuccess: 'การแจกจ่ายโปรโมชั่นสำเร็จ',
     reenterPassword: 'กรุณากรอกรหัสผ่านอีกครั้ง',
     rebateSuccess: 'การจ่ายเงินคืน สำเร็จ',
@@ -1698,6 +1704,7 @@ export default {
     GoogleAuth: 'Google อัตโนมัติ',
     'User Login Log': 'บันทึกการเข้าสู่ระบบของผู้ใช้',
     'User Action Log': 'บันทึกการดำเนินการของผู้ใช้',
+    'MQ Log': 'บันทึก MQ',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

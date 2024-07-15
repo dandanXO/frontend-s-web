@@ -405,7 +405,7 @@ export default {
     FTD: '첫 입금',
     LOTTERY: '복권',
     OTHER: '기타',
-    LIMITED: 'LIMITED'
+    LIMITED: 'LIMITED',
   },
   scheduleType: {
     NORMAL: '일반',
@@ -1060,6 +1060,10 @@ export default {
     mobileWay: '모바일',
     moneyChange: '자금 이동',
     month: '월',
+    mqLogProcessWithTitle: '제목 (SummaryDoris)',
+    mqLogProcessTopic: '주제',
+    mqLogProcessTimestamp: '현재 타임스탬프',
+    mqLogTimestampWithTimezone: '사이트 타임스탬프',
     name: '이름',
     needRegister: '등록 필요',
     needSpecify: '지정 필요',
@@ -1745,6 +1749,7 @@ export default {
     cancelQuizSuccess: '퀴즈 취소 성공',
     cancelRolloverRecordSuccess: '롤오버 레코드 취소 성공',
     changeAffiliateSuccess: '제휴 변경 성공',
+    confirmUnbindAffiliateAccesss: '상위 대리인 연결 해제 확인',
     changeSuccess: '변경 성공',
     commissionPaySuccess: '커미션 지급 성공',
     confirmToAdjust: '조정하시겠습니까? 확인 후 조정이 불가능합니다.',
@@ -1829,7 +1834,8 @@ export default {
     paymentUpdate:
       '다른 방법이나 레벨에 복사하시겠습니까? 그렇지 않으면 업데이트를 누르십시오',
     paySuccess: '결제 성공',
-    pleaseEnterAffiliateNameOrAffiliateCode: '제휴 이름 또는 제휴 코드를 입력하세요',
+    pleaseEnterAffiliateNameOrAffiliateCode:
+      '제휴 이름 또는 제휴 코드를 입력하세요',
     promoDistributionSuccess: '프로모션 분배 성공',
     redeemCashSuccess: '현금 교환 성공',
     reenterPassword: '비밀번호를 다시 입력하십시오',
@@ -2403,6 +2409,7 @@ export default {
     'Member Summon List': '회원 소환 목록',
     'Affiliate Bet Rebate Record': '제휴 베팅 리베이트 기록',
     'KRW Stats Report': '한국 사이트 데이터 보고서',
+    'MQ Log': 'MQ 로그',
   },
   google: {
     google_auth_menu: 'Google 인증자',

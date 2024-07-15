@@ -147,44 +147,36 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算 30
-              天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+              自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
             </div>
           </li>
           <li>
             <span class="step-number">2</span>
             <div class="content">
-              新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包
+              每位新用户会员可选择各场馆参与1次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
             </div>
           </li>
           <li>
             <span class="step-number">3</span>
             <div class="content">
-              每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金 5 倍水即可提款，首次提款彩金为 2
-              倍流水。
+              新人指路任务完成后点击领取即可获得，首存活动（本+彩）15倍流水，成长攻略以及钱包冲刺彩金均为5倍流水。
             </div>
           </li>
           <li>
             <span class="step-number">4</span>
-            <div class="content">完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅。</div>
+            <div class="content">此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；</div>
           </li>
           <li>
             <span class="step-number">5</span>
             <div class="content">
-              此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
             </div>
           </li>
           <li>
             <span class="step-number">6</span>
             <div class="content">
-              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
-              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+              此活动最终解释权归雷火所有；
             </div>
-          </li>
-
-          <li>
-            <span class="step-number">7</span>
-            <div class="content">此活动最终解释权归雷火所有;</div>
           </li>
         </ol>
       </div>
@@ -194,6 +186,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
@@ -207,6 +200,8 @@ const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
+
+const $q = useQuasar();
 
 const progress = ref(0);
 
@@ -250,37 +245,44 @@ const getStatus2 = (status) => {
   return statusTextMap[status];
 };
 
-const handleClickStatusButton = (status, promocode) => {
+const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    if (promocode === "new-user-setup-bonus-telephone") {
+    if (promoCode === "new-user-setup-bonus-telephone") {
       router.push("/account/personal?redirect=promo?name=lh1-newplayer-guide");
-    } else if (promocode === "new-user-setup-bonus-first-withdrawal") {
+    } else if (promoCode === "new-user-setup-bonus-first-withdrawal") {
       router.push("/finance/withdraw?redirect=promo?name=lh1-newplayer-guide");
     } else {
       router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
     }
   } else if (status === "YES") {
-    getBonus(promocode);
+    getBonus(promoCode);
   }
 };
 
-const getBonus = async (promocode) => {
+const getBonus = async (promoCode) => {
   try {
-    const apiRes = await putNewUserSetupBonusClaim(promocode);
+    const apiRes = await putNewUserSetupBonusClaim(promoCode);
 
     if (apiRes.code === 0) {
-      if (promocode === "new-user-setup-bonus-first-withdrawal") {
+      if (promoCode === "new-user-setup-bonus-first-withdrawal") {
         firstWithdrawalState.value = "CLAIMED";
         progress.value = 1;
-      } else if (promocode === "new-user-setup-bonus-telephone") {
+      } else if (promoCode === "new-user-setup-bonus-telephone") {
         telephoneBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-bankcard") {
+      } else if (promoCode === "new-user-setup-bonus-bankcard") {
         bankCardBindState.value = "CLAIMED";
-      } else if (promocode === "new-user-setup-bonus-usdt-addr") {
+      } else if (promoCode === "new-user-setup-bonus-usdt-addr") {
         usdtAddrBindState.value = "CLAIMED";
       }
+
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "领取成功！",
+        icon: "check_circle_outline"
+      });
     }
   } catch (err) {
     console.error(err);
