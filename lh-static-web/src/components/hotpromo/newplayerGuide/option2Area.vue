@@ -183,7 +183,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥100</td>
+            <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
             <td>（本金+红利）X15棋牌</td>
@@ -525,7 +525,9 @@ onMounted(async () => {
   justify-content: center;
   gap: 5px;
   color: #7a80a1;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   font-size: 20px;
 }
 
