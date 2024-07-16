@@ -2432,6 +2432,7 @@ export default {
     'KRW Stats Report': '한국 사이트 데이터 보고서',
     'MQ Log': 'MQ 로그',
     'Promotion Coupon': '쿠폰',
+    'Member Invite Limit': '회원 초대 제한'
   },
   google: {
     google_auth_menu: 'Google 인증자',

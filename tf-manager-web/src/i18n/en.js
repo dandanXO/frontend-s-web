@@ -1095,6 +1095,7 @@ export default {
     memberFeedbackType: 'Feedback Type',
     memberId: 'Member ID',
     memberInfo: 'Member Info',
+    memberInviteLimit: 'Member Invite Limit',
     memberList: 'Member List',
     memberMessage: 'Member Message',
     memberName: 'Member Name',
@@ -2602,6 +2603,7 @@ export default {
     'Member Refer Summary Pak': 'Member Refer Summary Pak',
     'MQ Log': 'MQ Log',
     'Promotion Coupon': 'Deposit Coupon',
+    'Member Invite Limit': 'Member Invite Limit',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
