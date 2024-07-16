@@ -177,7 +177,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
-                  Deposit ₹
+                  Deposit ₦
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -233,7 +233,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
-                  ₹
+                  ₦
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -284,7 +284,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 <div style="text-align: right">
-                  ₹
+                  ₦
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -337,7 +337,7 @@
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
-                ₹
+                ₦
                 <span class="amt-text">{{ col.value }}</span>
               </template>
               <template v-else>{{ col.value }}</template>
