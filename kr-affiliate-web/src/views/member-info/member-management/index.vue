@@ -275,6 +275,7 @@
                       style="display:inline-block"
                     />
                     <el-button
+                      v-if="affInfo.recycleMoney"
                       size="small"
                       style="float:right"
                       @click="openRecycle(item)"
@@ -1324,6 +1325,7 @@ const affInfo = reactive({
   commission: 0,
   revenueShare: 0,
   shareRatio: [],
+  recycleMoney: null,
 })
 
 const recycleForm = reactive({
