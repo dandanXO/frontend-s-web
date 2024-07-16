@@ -1883,6 +1883,7 @@ export default {
     liveRolling: '下线总真人流水',
     slotRolling: '下线总老虎机流水',
     sportRolling: '下线总体育流水',
+    recycleMoney: '回收余额',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

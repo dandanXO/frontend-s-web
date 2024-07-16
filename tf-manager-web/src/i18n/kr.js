@@ -1749,6 +1749,7 @@ export default {
     liveRolling: '하부총카지노롤링',
     slotRolling: '하부총슬롯롤링',
     sportRolling: '하부총스포츠롤링',
+    recycleMoney: '머니회수',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',

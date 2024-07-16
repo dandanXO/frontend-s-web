@@ -1883,6 +1883,7 @@ export default {
     liveRolling: 'Live Rolling Amount',
     slotRolling: 'Slot Rolling Amount',
     sportRolling: 'Sport Rolling Amount',
+    recycleMoney: 'Recycle Money',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
