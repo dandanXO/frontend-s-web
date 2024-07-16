@@ -8,15 +8,15 @@
     :space-between="8"
     :breakpoints="{
       0: {
-        slidesPerView: 5,
+        slidesPerView: 5.5,
         spaceBetween: 8
       },
       380: {
-        slidesPerView: 5,
+        slidesPerView: 5.5,
         spaceBetween: 8
       },
       440: {
-        slidesPerView: 5,
+        slidesPerView: 5.5,
         spaceBetween: 8
       }
     }"
