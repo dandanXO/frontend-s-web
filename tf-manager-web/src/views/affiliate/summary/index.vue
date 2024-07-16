@@ -89,6 +89,8 @@
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
+        :default-expand-all="parseInt(request.siteId) === 10 ? true : false"
+        node-key="affiliateId"
       >
         <el-table-column
           prop="loginName"
@@ -264,6 +266,153 @@
               {{ scope.row.totalRegisterMemberCount }}
             </el-link>
             <span v-else>{{ scope.row.totalRegisterMemberCount }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="affiliateBalance"
+          :label="t('fields.affiliateBalance')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateBalance, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="memberBalance"
+          :label="t('fields.memberBalance')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.memberBalance, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="affiliatePoint"
+          :label="t('fields.affiliatePoint')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliatePoint, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="memberPoint"
+          :label="t('fields.memberPoint')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.memberPoint, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="memberCount"
+          :label="t('fields.memberCount')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        />
+        <el-table-column
+          prop="affiliateTransferAmount"
+          :label="t('fields.affiliateTransferAmount')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateTransferAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="affiliateWithdrawAmount"
+          :label="t('fields.affiliateWithdrawAmount')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawTransferDiff"
+          :label="t('fields.withdrawTransferDiff')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateTransferAmount - scope.row.affiliateWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="liveRolling"
+          :label="t('fields.liveRolling')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.liveRolling, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="slotRolling"
+          :label="t('fields.slotRolling')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.slotRolling, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="sportRolling"
+          :label="t('fields.sportRolling')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.sportRolling, type: 'money'}"
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -752,6 +901,9 @@ async function loadRecord() {
 }
 
 async function loadChildren(tree, treeNode, resolve) {
+  if (request.siteId === 10) {
+    resolve(tree.children)
+  }
   const query = {}
 
   query.parentAffiliateId = tree.affiliateId

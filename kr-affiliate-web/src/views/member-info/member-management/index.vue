@@ -245,173 +245,239 @@
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
             <tr>
-              <td colspan="9">
+              <td colspan="13">
                 <Loading v-if="page.loading" />
                 <emptyComp v-else-if="page.records.length === 0" />
               </td>
             </tr>
           </tbody>
           <tbody v-else-if="page.records.length > 0">
-            <tr v-for="item in page.records" :key="item.id">
-              <td :data-label="t('fields.sequence')" rowspan="4">
-                <input
-                  type="checkbox"
-                  :value="item.id"
-                  v-model="selectedMembers"
-                  @change="handleSelectionChange"
-                />
-              </td>
-              <td :data-label="t('fields.loginName')" rowspan="4">
-                <div>
+            <template v-for="item in page.records" :key="item.id">
+              <tr>
+                <td :data-label="t('fields.sequence')" rowspan="4">
+                  <input
+                    type="checkbox"
+                    :value="item.id"
+                    v-model="selectedMembers"
+                    @change="handleSelectionChange"
+                  />
+                </td>
+                <td :data-label="t('fields.loginName')" rowspan="4">
+                  <div>
+                    <div
+                      v-formatter="{
+                        data: {
+                          loginName: item.loginName,
+                          vip: item.vip,
+                        },
+                        type: 'loginName',
+                      }"
+                      style="display:inline-block"
+                    />
+                    <el-button
+                      size="small"
+                      style="float:right"
+                      @click="openRecycle(item)"
+                    >
+                      {{ t('fields.recycle') }}
+                    </el-button>
+                  </div>
+                  <span>{{ item.nickName }}</span>
+                </td>
+                <td :data-label="t('fields.balance')" rowspan="4">
+                  <div v-formatter="{ data: item.balance, type: 'money' }" />
+                </td>
+                <td :data-label="t('fields.totalDeposit')" rowspan="4">
+                  <div
+                    v-formatter="{ data: item.totalDeposit, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.totalWithdraw')" rowspan="4">
+                  <div
+                    v-formatter="{ data: item.totalWithdraw, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.netProfit')" rowspan="4">
+                  <div
+                    v-formatter="{ data: item.revenueShare, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.pendingRebate')" rowspan="4">
+                  <div
+                    v-formatter="{ data: item.pendingRebate, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.gameType')">
+                  {{ t('gameType.LIVE') }}
+                </td>
+                <td :data-label="t('fields.betAmount')">
+                  <div
+                    v-formatter="{ data: item.casinoBetAmount, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.profit')">
+                  <div
+                    v-formatter="{ data: item.casinoProfit, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.rebate')">
+                  <div
+                    v-formatter="{ data: item.casinoRebate, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.winLoss')">
                   <div
                     v-formatter="{
-                      data: {
-                        loginName: item.loginName,
-                        vip: item.vip,
-                      },
-                      type: 'loginName',
+                      data:
+                        item.casinoBetAmount -
+                        item.casinoRebate -
+                        item.casinoProfit,
+                      type: 'money',
                     }"
-                    style="display:inline-block"
                   />
-                  <el-button
-                    size="small"
-                    style="float:right"
-                    @click="openRecycle(item)"
-                  >
-                    {{ t('fields.recycle') }}
-                  </el-button>
-                </div>
-                <span>{{ item.nickName }}</span>
-              </td>
-              <td :data-label="t('fields.balance')" rowspan="4">
-                <div v-formatter="{ data: item.balance, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.totalDeposit')" rowspan="4">
-                <div v-formatter="{ data: item.totalDeposit, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.totalWithdraw')" rowspan="4">
-                <div
-                  v-formatter="{ data: item.totalWithdraw, type: 'money' }"
-                />
-              </td>
-              <td :data-label="t('fields.netProfit')" rowspan="4">
-                <div v-formatter="{ data: item.revenueShare, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.pendingRebate')" rowspan="4">
-                <div
-                  v-formatter="{ data: item.pendingRebate, type: 'money' }"
-                />
-              </td>
-              <td :data-label="t('fields.gameType')">
-                {{ t('gameType.LIVE') }}
-              </td>
-              <td :data-label="t('fields.betAmount')">
-                <div v-formatter="{ data: item.casinoBetAmount, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.profit')">
-                <div v-formatter="{ data: item.casinoProfit, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.rebate')">
-                <div v-formatter="{ data: item.casinoRebate, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.winLoss')">
-                <div v-formatter="{ data: item.casinoBetAmount - item.casinoRebate - item.casinoProfit, type: 'money' }" />
-              </td>
-              <td class="relativerow" :data-label="t('fields.operate')" rowspan="4">
-                <el-dropdown>
-                  <span class="el-dropdown-link">
-                    {{ t('fields.more') }}
-                    <el-icon class="el-icon--right">
-                      <arrow-down />
-                    </el-icon>
-                  </span>
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item @click="showMemberInfo(item)">
-                        {{ t('fields.memberInfo') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item
-                        @click="transferRedirect(item.loginName)"
-                      >
-                        {{ t('menu.Transfer') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showEditTag(item)">
-                        {{ t('fields.editTag') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showEditRemark(item)">
-                        {{ t('fields.remark') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item
-                        v-if="parseInt(store.state.user.siteId) === 10"
-                        @click="showEditShareRatio(item)"
-                      >
-                        {{ t('fields.editShareRatio') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showDepositRecord(item)">
-                        {{ t('fields.depositRecord') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showGameRecord(item.loginName)">
-                        {{ t('fields.betRecord') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item @click="showPrivilegeRecord(item)">
-                        {{ t('fields.privilegeRecord') }}
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </td>
-            </tr>
-            <tr v-for="item in page.records" :key="item.id">
-              <td :data-label="t('fields.gameType')">
-                {{ t('gameType.SLOT') }}
-              </td>
-              <td :data-label="t('fields.betAmount')">
-                <div v-formatter="{ data: item.slotBetAmount, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.profit')">
-                <div v-formatter="{ data: item.slotProfit, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.rebate')">
-                <div v-formatter="{ data: item.slotRebate, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.winLoss')">
-                <div v-formatter="{ data: item.slotBetAmount - item.slotRebate - item.slotProfit, type: 'money' }" />
-              </td>
-            </tr>
-            <tr v-for="item in page.records" :key="item.id">
-              <td :data-label="t('fields.gameType')">
-                {{ t('gameType.SPORT') }}
-              </td>
-              <td :data-label="t('fields.betAmount')">
-                <div v-formatter="{ data: item.sportBetAmount, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.profit')">
-                <div v-formatter="{ data: item.sportProfit, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.rebate')">
-                <div v-formatter="{ data: item.sportRebate, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.winLoss')">
-                <div v-formatter="{ data: item.sportBetAmount - item.sportRebate - item.sportProfit, type: 'money' }" />
-              </td>
-            </tr>
-            <tr v-for="item in page.records" :key="item.id">
-              <td :data-label="t('fields.gameType')">
-                {{ t('gameType.MINIGAME') }}
-              </td>
-              <td :data-label="t('fields.betAmount')">
-                <div v-formatter="{ data: item.miniGameBetAmount, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.profit')">
-                <div v-formatter="{ data: item.miniGameProfit, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.rebate')">
-                <div v-formatter="{ data: item.miniGameRebate, type: 'money' }" />
-              </td>
-              <td :data-label="t('fields.winLoss')">
-                <div v-formatter="{ data: item.miniGameBetAmount - item.miniGameRebate - item.miniGameProfit, type: 'money' }" />
-              </td>
-            </tr>
+                </td>
+                <td
+                  class="relativerow"
+                  :data-label="t('fields.operate')"
+                  rowspan="4"
+                >
+                  <el-dropdown>
+                    <span class="el-dropdown-link">
+                      {{ t('fields.more') }}
+                      <el-icon class="el-icon--right">
+                        <arrow-down />
+                      </el-icon>
+                    </span>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item @click="showMemberInfo(item)">
+                          {{ t('fields.memberInfo') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item
+                          @click="transferRedirect(item.loginName)"
+                        >
+                          {{ t('menu.Transfer') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="showEditTag(item)">
+                          {{ t('fields.editTag') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="showEditRemark(item)">
+                          {{ t('fields.remark') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item
+                          v-if="parseInt(store.state.user.siteId) === 10"
+                          @click="showEditShareRatio(item)"
+                        >
+                          {{ t('fields.editShareRatio') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="showDepositRecord(item)">
+                          {{ t('fields.depositRecord') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item
+                          @click="showGameRecord(item.loginName)"
+                        >
+                          {{ t('fields.betRecord') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="showPrivilegeRecord(item)">
+                          {{ t('fields.privilegeRecord') }}
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </td>
+              </tr>
+
+              <tr>
+                <td :data-label="t('fields.gameType')">
+                  {{ t('gameType.SLOT') }}
+                </td>
+                <td :data-label="t('fields.betAmount')">
+                  <div
+                    v-formatter="{ data: item.slotBetAmount, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.profit')">
+                  <div v-formatter="{ data: item.slotProfit, type: 'money' }" />
+                </td>
+                <td :data-label="t('fields.rebate')">
+                  <div v-formatter="{ data: item.slotRebate, type: 'money' }" />
+                </td>
+                <td :data-label="t('fields.winLoss')">
+                  <div
+                    v-formatter="{
+                      data:
+                        item.slotBetAmount - item.slotRebate - item.slotProfit,
+                      type: 'money',
+                    }"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td :data-label="t('fields.gameType')">
+                  {{ t('gameType.SPORT') }}
+                </td>
+                <td :data-label="t('fields.betAmount')">
+                  <div
+                    v-formatter="{ data: item.sportBetAmount, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.profit')">
+                  <div
+                    v-formatter="{ data: item.sportProfit, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.rebate')">
+                  <div
+                    v-formatter="{ data: item.sportRebate, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.winLoss')">
+                  <div
+                    v-formatter="{
+                      data:
+                        item.sportBetAmount -
+                        item.sportRebate -
+                        item.sportProfit,
+                      type: 'money',
+                    }"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td :data-label="t('fields.gameType')">
+                  {{ t('gameType.MINIGAME') }}
+                </td>
+                <td :data-label="t('fields.betAmount')">
+                  <div
+                    v-formatter="{
+                      data: item.miniGameBetAmount,
+                      type: 'money',
+                    }"
+                  />
+                </td>
+                <td :data-label="t('fields.profit')">
+                  <div
+                    v-formatter="{ data: item.miniGameProfit, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.rebate')">
+                  <div
+                    v-formatter="{ data: item.miniGameRebate, type: 'money' }"
+                  />
+                </td>
+                <td :data-label="t('fields.winLoss')">
+                  <div
+                    v-formatter="{
+                      data:
+                        item.miniGameBetAmount -
+                        item.miniGameRebate -
+                        item.miniGameProfit,
+                      type: 'money',
+                    }"
+                  />
+                </td>
+              </tr>
+            </template>
 
             <!-- <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
@@ -1852,5 +1918,9 @@ onMounted(async () => {
 
 .dialog400 .el-dialog {
   max-width: 400px;
+}
+
+.custom-table tr:hover > td {
+  background: none !important;
 }
 </style>
