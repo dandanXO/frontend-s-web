@@ -267,7 +267,7 @@
         <div class="amount-container">
           <div class="amount-text">Bet Amount</div>
           <div class="amount">
-            RS
+            NGN
             <span>{{ convertToCommaAmount(e.validBet, false) }}</span>
           </div>
         </div>
@@ -275,7 +275,7 @@
         <div class="amount-container">
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
-            RS
+            NGN
             <span>{{ convertToCommaAmount(e.rebateAmount, false) }}</span>
           </div>
         </div>
