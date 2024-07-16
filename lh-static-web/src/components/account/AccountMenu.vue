@@ -146,18 +146,20 @@ import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
 import { RiRefreshLine, RiAddLine } from "vue-remix-icons";
 import { uploadImage, saveImage } from '@/api/personal/common';
-import { ElMessage } from "element-plus";
 import { Cropper, CircleStencil } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 import { useDark, useLocalStorage } from "@vueuse/core";
 import floor from "lodash/floor";
+import { useNotify } from "@/hooks/notify";
+
 components: {
   Cropper,
   CircleStencil
 }
 
 const isDark = useDark()
+const notify = useNotify();
 
 const timestamp = moment().unix();
 
@@ -269,7 +271,10 @@ async function saveCroppedImage() {
 
 async function attachImage(event) {
   if (event.target.files[0].size > 1000000) {
-    return ElMessage.error('图片必须小于1MB,请重新上传');
+    return notify({
+      type: "error",
+      message: "图片必须小于1MB,请重新上传"
+    });
   } else {
     const file = event.target.files[0];
     uploadedImage.url = URL.createObjectURL(file);
@@ -313,12 +318,12 @@ async function attachPhoto(fileImg) {
   const dir = 'temp';
 
   if (!file || !allowFileTypes.includes(file.type)) {
-    ElMessage({ message: '照片格式错误', type: 'error' });
+    notify({ message: '照片格式错误', type: 'error' });
     isLoadingUpload.value = false;
     return null; // Exit the function if file is not valid
   }
   if(file && file.size > 1024000){
-    ElMessage({ message: '上传的图片已大于1mb，请刷新页面重新上传', type: 'error' });
+    notify({ message: '上传的图片已大于1mb，请刷新页面重新上传', type: 'error' });
     isLoadingUpload.value = false;
     return null; // Exit the function if file is not valid
   }
@@ -334,14 +339,14 @@ async function attachPhoto(fileImg) {
 const submitPhotoLoading = ref(false)
 async function submitPhoto() {
   if (!selectedImage.value) {
-    return ElMessage.warning('请选择图片');
+    return notify({type: 'warning', message: '请选择图片'});
   }
   submitPhotoLoading.value = true
   isLoadingUpload.value = true
   const data = await saveImage(selectedImage.value);
   profileDialogVisible.value = false
   updateDialogVisible.value = false
-  ElMessage({ message: '修改成功', type: 'success' })
+  notify({ message: '修改成功', type: 'success' })
   store.profilePhoto = data.data
   store.getMemberInfo();
   window.location.reload();

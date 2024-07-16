@@ -1,5 +1,13 @@
 import { defineStore } from "pinia";
-import { useRoute } from "vue-router";
+
+/**
+ * @typedef {Object} NotificationOptions
+ * @property {'success'|'error'|'warning'|'red-packet'|'info'} type - The type of notification.
+ * @property {Object} [params] - Additional parameters for the notification.
+ * @property {String} [message] - The notification message.
+ * @property {Number} [timeout] - The notification duration.
+ * @property {Function} [onClose] - The notification close callback.
+ */
 
 export const useUI = defineStore("ui-store", {
   state: () => {
@@ -10,7 +18,9 @@ export const useUI = defineStore("ui-store", {
       themeColor: "primary",
       pageName: "优惠详细信息",
       slotLists: [],
-      CSAUrl: ""
+      CSAUrl: "",
+      notificationQueue: [],
+      notificationZIndex: 9500
     };
   },
   actions: {
@@ -29,6 +39,26 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
+    },
+    /**
+     * Adds a notification to the queue with a unique ID and z-index.
+     *
+     * @param {NotificationOptions} options - The notification options.
+     */
+    notify(options) {
+      const id = `${Date.now()}-${Math.floor(Math.random() * 100)}`;
+      this.notificationQueue.push({
+        ...options,
+        id,
+        zIndex: this.notificationZIndex++,
+        timeout: options.timeout ?? 3000
+      });
+    },
+    async removeNotification(id) {
+      const index = this.notificationQueue.findIndex((notification) => notification.id === id);
+      if (index < 0) return;
+      if (this.notificationQueue[index].onClose) await this.notificationQueue[index].onClose();
+      this.notificationQueue.splice(index, 1);
     }
   }
 });

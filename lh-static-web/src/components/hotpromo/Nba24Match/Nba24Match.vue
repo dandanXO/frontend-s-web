@@ -223,8 +223,10 @@
 import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
+
+const notify = useNotify();
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
@@ -245,17 +247,17 @@ const handleSubmitVote = () => {
   submitNbaMatch(submitParam)
     .then((res) => {
       if(res.code === 0) {
-        ElMessage.success({
+        notify.success({
           type: "success",
           message: "成功投票"
         });
         getNbaMatchData()
       }else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch(() => {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     })
     .finally(() => {
       confirmVoteDialog.value = false;

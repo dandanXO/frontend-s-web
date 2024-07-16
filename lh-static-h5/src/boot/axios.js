@@ -1,10 +1,11 @@
 import { boot, store } from "quasar/wrappers";
 import { createPinia } from "pinia";
-import { Loading, Notify, SessionStorage, Dialog, Platform } from "quasar";
+import { Loading, SessionStorage, Dialog, Platform } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
+import { useUI } from "src/stores/ui";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -151,10 +152,9 @@ export default boot(({ app, router }) => {
     // message.error(error.message);
     const errorType = getErrorType(error.config.baseURL);
 
-    Notify.create({
-      type: "negative",
+    useUI().notify({
+      type: "error",
       timeout: 2500,
-      position: "top",
       message: error.message + ` (${errorType})`
     });
     Loading.hide();
@@ -225,10 +225,9 @@ export default boot(({ app, router }) => {
           window.location.href = "/";
         }
 
-        Notify.create({
-          type: "negative",
+        useUI().notify({
+          type: "error",
           timeout: 2500,
-          position: "top",
           message: res.message + ` (${errorType} ${res.code})` || "错误"
         });
       }

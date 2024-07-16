@@ -359,6 +359,9 @@ import { ref, onMounted, computed } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 
 const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
 const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
@@ -445,11 +448,9 @@ const getData = async () => {
     const apiRes = await getNewUserAccumulateDepositInit();
     if (apiRes.data.state === "NOT_ELIGIBLE") {
       isEligibleState.value = false;
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "此账号要求不达标，无法参与此优惠。",
-        icon: "report_problem"
       });
       return;
     }

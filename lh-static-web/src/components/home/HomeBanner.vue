@@ -38,12 +38,13 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import GameModal from "@/components/modal/GameModal.vue";
+import { useNotify } from "@/hooks/notify";
 
+const notify = useNotify();
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
@@ -84,7 +85,7 @@ const loadBanners = () => {
         });
       }
     } else
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

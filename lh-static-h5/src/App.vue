@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <notification-wrapper/>
 </template>
 
 <script>
@@ -14,8 +15,13 @@ import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
 import { useLocalStorage } from "@vueuse/core";
 
+import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
+
 export default defineComponent({
   name: "App",
+  components: {
+    NotificationWrapper
+  },
   setup() {
     var qs = require("qs");
     const store = userStore();

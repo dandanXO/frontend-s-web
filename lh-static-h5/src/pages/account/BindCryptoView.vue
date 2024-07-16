@@ -192,6 +192,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import {useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -206,6 +207,7 @@ const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;
 };
 
+const notify = useNotify();
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -311,19 +313,15 @@ const bankList = ref([]);
 const loadBankCards = () => {
   store.getMemberInfo().then(() => {
     if (!store.realName) {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "请输入您的真实姓名",
-        icon: "report_problem"
       });
       router.push("/account/personal");
     } else if (!store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "请输入您的电话号码",
-        icon: "report_problem"
       });
       router.push("/account/verifyTelephone");
     } else {
@@ -356,11 +354,9 @@ const submitBankCard = () => {
   }
 
   if (!isOtpSent.value) {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: "请点击获取验证码，并输入您的注册手机验证",
-      icon: "report_problem"
     });
   } else if (phoneVerificationRef.value) {
     phoneVerificationRef.value.validate();
@@ -378,11 +374,9 @@ const submitBankCard = () => {
       .post("/session/bankCard", qs.stringify(bankCardInfo))
       .then((response) => {
         if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "已添加银行卡",
-            icon: "check_circle_outline"
           });
           router.push("/account/withdraw");
         }

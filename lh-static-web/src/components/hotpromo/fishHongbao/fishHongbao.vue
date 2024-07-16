@@ -125,8 +125,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getHongbaoInfo, getHongbaoMoney } from "@/api/promotion/fishHongbao";
-import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
 
 const availableDraw = ref(0);
 const validBet = ref(0);
@@ -151,7 +153,7 @@ const claimHongBao = async () => {
     tableRecordDialog.value = true;
     rewardMoney.value = res.data;
   } else {
-    ElMessage.error(res.message);
+    notify.error(res.message);
   }
 };
 

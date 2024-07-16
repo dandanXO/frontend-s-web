@@ -125,11 +125,13 @@
 import {userStore} from "@/store";
 import {defineComponent, ref, reactive, onMounted} from "vue";
 import {getInviteFriendList} from "@/api/index/promo";
-import { ElMessage } from "element-plus"
+import { useNotify } from "@/hooks/notify";
+
 
 export default defineComponent({
   name: "InviteFriendPromo",
   setup() {
+    const notify = useNotify();
     const btnLoading = ref(false);
     const loading = ref(true);
     const pagination = reactive({
@@ -189,7 +191,7 @@ export default defineComponent({
               dataSource.splice(0);
               dataSource.push(...response.data.records);
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: response.message
               });

@@ -4,7 +4,7 @@
       <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-1.png" /></div>
       <div class="tips">
         <div class="tips-inner">
-          参与BLAST Premier 春季总决赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。 
+          参与BLAST Premier 春季总决赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。
         </div>
       </div>
       <div class="content">
@@ -50,7 +50,7 @@
       <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-2.png" /></div>
       <div class="tips">
         <div class="tips-inner">
-          活动期间，连续投注BLAST Premier 春季总决赛≥1000元则视为签到成功，根据对应累计的签到天数开启宝箱  
+          活动期间，连续投注BLAST Premier 春季总决赛≥1000元则视为签到成功，根据对应累计的签到天数开启宝箱
         </div>
       </div>
       <div class="content">
@@ -171,10 +171,12 @@ import {
   getOpenRecord,
   claimCheckInTreasure
 } from "@/api/index/promo";
-import { ElMessage, ElLoading } from "element-plus";
+import { ElLoading } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode"]);
 const store = userStore();
+const notify = useNotify();
 
 const keyNumber = ref(0);
 const signNumber = ref(0);
@@ -217,7 +219,7 @@ const openBox = (item) => {
       openModal("amt", res.data);
       init();
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -329,7 +331,7 @@ const openModal = (modal, item, itemIndex) => {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     });
     setTimeout(() => {

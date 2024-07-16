@@ -88,10 +88,12 @@ import {
   verifyForgetPasswordEmail
 } from "@/api/index/forgotPwd";
 import CaptchaVerify from "./CaptchaVerify.vue";
-import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
 
 const emits = defineEmits(["open-login-dialog, close-dialog"]);
+
+const notify = useNotify();
 
 const openLoginDialog = () => {
   emits("open-login-dialog");
@@ -258,13 +260,16 @@ const submitForm = () => {
         sendForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到手机");
+              notify({
+                type: 'success',
+                message: '验证码已经发送到手机'
+              })
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
               // emits("close-dialog");
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -285,13 +290,16 @@ const submitForm = () => {
         sendForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到邮箱");
+              notify({
+                type: 'success',
+                message: '验证码已经发送到邮箱'
+              })
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
               // emits("close-dialog");
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -329,10 +337,13 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              notify({
+                type: 'success',
+                message: '成功'
+              })
               openLoginDialog();
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -352,10 +363,13 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              notify({
+                type: 'success',
+                message: '成功'
+              })
               openLoginDialog();
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });

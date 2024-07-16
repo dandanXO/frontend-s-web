@@ -483,6 +483,17 @@ button {
   color: #555;
 }
 
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  transition: opacity .5s ease, top .5s ease;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
+}
+
 .dark {
   #app {
     background: $background-dark;

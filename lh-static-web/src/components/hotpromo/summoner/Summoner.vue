@@ -225,8 +225,9 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { claimSummon, getSummonRewardRecord } from "@/api/index/promo.js";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 const tabPosition = ref('first');
-import { ElMessage } from "element-plus";
 const isShowFriendDialog = ref(false);
 const tableData = ref([]);
 const page = reactive({
@@ -247,9 +248,9 @@ const claimReward = () => {
   // debugger;
   claimSummon(props.promoCode).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("成功领取奖励 " + res.data + "元。");
+      notify.redPacket("成功领取奖励", res.data)
     }else{
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   })
 }
