@@ -2550,6 +2550,7 @@ export default {
     'Member Refer Summary Pak': '会员邀请统计-巴基斯坦',
     'MQ Log': 'MQ日志',
     'Promotion Coupon': '存款券',
+    'Member Invite Limit': '会员邀请限制',
   },
   google: {
     google_auth_menu: '谷歌验证',

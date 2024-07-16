@@ -2437,6 +2437,7 @@ export default {
     'KRW Stats Report': 'Báo cáo Thống kê KRW của Trang web',
     'MQ Log': 'Nhật ký MQ',
     'Promotion Coupon': 'phiếu mua hàng',
+    'Member Invite Limit': 'Giới hạn mời thành viên',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
