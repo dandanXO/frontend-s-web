@@ -161,7 +161,7 @@ const EurocupManual = defineAsyncComponent(() => import( "./hotpromo/EurocupManu
 const SportZhongChao = defineAsyncComponent(() => import( "../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
 const BlastPremierPromo = defineAsyncComponent(() => import( "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
 const fishHongbao = defineAsyncComponent(() => import( "../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromo = defineAsyncComponent(() => import( "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
+const MeiZhouBeiPromo = defineAsyncComponent(() => import( "../components/hotpromo/meizhoubei/MeiZhouBeiPromoNew.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import( "../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 
 export default defineComponent({
