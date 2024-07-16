@@ -121,7 +121,8 @@
               </div>
               <div class="progress-info">
                 <span>完成一次提款</span>
-                <span>{{ progressText }}</span>
+                <!-- <span>{{ progressText }}</span> -->
+              <span>USDT/钱包提款 ≥100 元</span>
               </div>
             </div>
           </div>

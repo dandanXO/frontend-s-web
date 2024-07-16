@@ -102,7 +102,7 @@
             />
             <div class="title">首次提款</div>
           </div>
-          <button class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
+          <q-btn class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
             <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
               <img
                 v-if="firstWithdrawalState === 'CLAIMED'"
@@ -111,7 +111,7 @@
               />
               <span>{{ getStatus2(firstWithdrawalState).text }}</span>
             </div>
-          </button>
+          </q-btn>
         </div>
         <div class="section">
           <span>完成以下任务领取礼金 8 元</span>
@@ -121,7 +121,8 @@
             </div>
             <div class="progress-info">
               <span>完成一次提款</span>
-              <span>{{ progressText }}</span>
+              <!-- <span>{{ progressText }}</span> -->
+              <span>USDT/钱包提款 ≥100 元</span>
             </div>
           </div>
         </div>
