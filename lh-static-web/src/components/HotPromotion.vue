@@ -79,6 +79,7 @@
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && store.token" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
+    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
     <Aijiasu v-if="list.redirectUrl === 'lh1-aijiasu'" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
@@ -151,6 +152,7 @@ import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
+import DepositRebate2 from "../components/hotpromo/depositRebate2/depositRebate2.vue";
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
 import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
@@ -215,6 +217,7 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
+    DepositRebate2,
     HongBaoPreEurocup,
     WinLossPromo,
     MeiZhouBeiPromo,
