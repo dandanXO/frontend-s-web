@@ -2488,6 +2488,8 @@ export default {
     if_not_google_auth_then:
       'Google 인증자를 바인딩하지 않았다면 작성할 필요가 없습니다.',
     google_auth_code: '6자리 Google 인증자 코드를 입력하세요.',
+    register_count: "오늘 등록된 수",
+    register_limit: "오늘 등록 가능한 수"
   },
   posterType: {
     overall: '전체 추천',

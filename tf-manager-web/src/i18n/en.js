@@ -2657,6 +2657,8 @@ export default {
     if_not_google_auth_then:
       "If you haven't bound Google Authenticator, there's no need to fill it out.",
     google_auth_code: 'Enter 6 digits Google Authenticator Code',
+    register_count: "Today Register Count:",
+    register_limit: "Today Register Limit:"
   },
   posterType: {
     overall: 'Overall Referral',
