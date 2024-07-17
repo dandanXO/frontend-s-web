@@ -207,11 +207,17 @@
         <el-form-item :label="t('fields.dailyMaxRegLimit')" prop="maxDayRegLimit">
           <el-input-number v-model="form.maxDayRegLimit" style="width: 150px;" />
         </el-form-item>
+        <el-form-item :label="t('fields.dailyRegProbabilty')" prop="dayRegProbability">
+          <el-input-number v-model="form.dayRegProbability" style="width: 150px;" />
+        </el-form-item>
         <el-form-item :label="t('fields.dailyMinFirstDepositLimit')" prop="minDayFirstDepositLimit">
           <el-input-number v-model="form.minDayFirstDepositLimit" style="width: 150px;" />
         </el-form-item>
         <el-form-item :label="t('fields.dailyMaxFirstDepositLimit')" prop="maxDayFirstDepositLimit">
           <el-input-number v-model="form.maxDayFirstDepositLimit" style="width: 150px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.dailyFirstDepositProbability')" prop="dayFirstDepositProbability">
+          <el-input-number v-model="form.dayFirstDepositProbability" style="width: 150px;" />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -410,8 +416,10 @@ const form = reactive({
   siteId: null,
   minDayRegLimit: 0,
   maxDayRegLimit: 0,
+  dayRegProbability: 0,
   minDayFirstDepositLimit: 0,
   maxDayFirstDepositLimit: 0,
+  dayFirstDepositProbability: 0,
   dayFirstDepositLimit: '',
   dayRegLimit: ''
 })
@@ -421,8 +429,10 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   minDayRegLimit: [required(t('message.validateMinDayRegLimitRequired'))],
   maxDayRegLimit: [required(t('message.validateMaxDayRegLimitRequired'))],
+  dayRegProbability: [required(t('message.validateDayRegProbabilityRequired'))],
   minDayFirstDepositLimit: [required(t('message.validateMinDayDepositAmountRequired'))],
   maxDayFirstDepositLimit: [required(t('message.validateMaxDayDepositAmountRequired'))],
+  dayFirstDepositProbability: [required(t('message.validateDayDepositAmountProbabilityRequired'))],
 })
 
 const sites = reactive({
@@ -438,7 +448,7 @@ function resetQuery() {
 
 function splitStrAndDisplay(limit) {
   const limitArr = limit.split(',');
-  return limitArr[0] + "-" + limitArr[1]
+  return limitArr[0] + "-" + limitArr[1] + " ( " + limitArr[2] + " % ) "
 }
 
 function handleSelectionChange(val) {
@@ -537,9 +547,9 @@ function create() {
         });
         return;
       }
-      var dayRegLimit = form.minDayRegLimit + "," + form.maxDayRegLimit + ","
+      var dayRegLimit = form.minDayRegLimit + "," + form.maxDayRegLimit + "," + form.dayRegProbability + ","
       form.dayRegLimit = dayRegLimit;
-      var dayFirstDepositLimit = form.minDayFirstDepositLimit + "," + form.maxDayFirstDepositLimit + ","
+      var dayFirstDepositLimit = form.minDayFirstDepositLimit + "," + form.maxDayFirstDepositLimit + "," + form.dayFirstDepositProbability + ","
       form.dayFirstDepositLimit = dayFirstDepositLimit;
       await createMemberInviteLimit(form)
       uiControl.dialogVisible = false
@@ -566,9 +576,9 @@ function edit() {
         });
         return;
       }
-      var dayRegLimit = form.minDayRegLimit + "," + form.maxDayRegLimit + ","
+      var dayRegLimit = form.minDayRegLimit + "," + form.maxDayRegLimit + "," + form.dayRegProbability + ","
       form.dayRegLimit = dayRegLimit;
-      var dayFirstDepositLimit = form.minDayFirstDepositLimit + "," + form.maxDayFirstDepositLimit + ","
+      var dayFirstDepositLimit = form.minDayFirstDepositLimit + "," + form.maxDayFirstDepositLimit + "," + form.dayFirstDepositProbability + ","
       form.dayFirstDepositLimit = dayFirstDepositLimit;
       await updateMemberInviteLimit(form)
       uiControl.dialogVisible = false
