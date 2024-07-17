@@ -315,7 +315,7 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    //min-height: 40vh;
+    min-height: calc(100vh - 310px);
     padding: 16px 50px 50px;
     position: relative;
     background-color: #ebf4ff;
