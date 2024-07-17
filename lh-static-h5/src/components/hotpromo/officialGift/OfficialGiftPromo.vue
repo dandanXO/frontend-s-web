@@ -1,0 +1,296 @@
+<template>
+  <div class="official-gift-container">
+    <div class="official-gift-block detail-block">
+      <div class="detail-block-title">
+        <img src="./img/gift.svg"/>
+        <span>认准雷火电竞官方福利群管理</span>
+      </div>
+      <div class="detail-block-content">
+        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
+        <div class="detail-block-content-voxis">
+          <img src="./img/voxis.svg"/>
+          <span class="detail-block-content-voxis__url">Voxis管理号：{{ paramsObj?.voxis_id }}</span>
+          <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="official-gift-block reason-block">
+      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <div class="reason-block-content">
+        <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
+          <div class="reason-block-content-reason__inner">
+            <img :src="reason.icon"/>
+            <span>{{ reason.description }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="official-gift-block download-block">
+      <div class="download-block-left-side">
+        <span class="download-block-title">添加雷火电竞指定管理账号，尽享全方位服务优待</span>
+        <button class="download-block-btn">点击进入</button>
+        <span class="download-block-description">请<a :href="paramsObj.voxis_url" target="_blank">下载</a>“Voxis”立即添加</span>
+      </div>
+      <div class="download-block-qr-code-wrapper">
+        <img src="./img/download-qr-code.png"/>
+        <span>管理员：初夏</span>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { computed, ref } from 'vue';
+import { writeClipboard } from "boot/utils";
+
+import BeautySvg from "./img/beauty.svg"
+import Clock24Svg from "./img/clock-24.svg"
+import QuestionSvg from "./img/question.svg"
+import StackSvg from "./img/stack.svg"
+import ClockSvg from "./img/clock.svg"
+import DateSvg from "./img/date.svg"
+import GiftLineSvg from "./img/gift-line.svg"
+import ThumbSvg from "./img/thumb.svg"
+
+const props = defineProps({
+  params: String
+})
+
+const reasons = ref([
+  {icon:BeautySvg, description: '美女专属客服1对1优质服务'},
+  {icon:Clock24Svg, description: '客服全天7*24小时在线'},
+  {icon:QuestionSvg, description: '优先解答您游戏中各种问题'},
+  {icon:StackSvg, description: '提供各种优惠活动信息资料'},
+  {icon:ClockSvg, description: '每日活动领取提醒专业引导'},
+  {icon:DateSvg, description: '各种游戏类型专业投资计划'},
+  {icon:ThumbSvg, description: '体育电竞游戏专家赛事推荐'},
+  {icon:GiftLineSvg, description: '添加客服成功入群即领彩金'},
+])
+
+const paramsObj = computed(() => {
+  try {
+    return JSON.parse(props.params)
+  }catch(e){
+    return {}
+  }
+})
+
+const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
+</script>
+<style lang="scss" scoped>
+.official-gift-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: PingFang SC;
+  color: #000;
+  img {
+    margin-bottom: 0 !important;
+  }
+  > :not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
+.official-gift-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f2f8fe;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 12px;
+  border: 1px solid #f2f8fe;
+  border-radius: 12px;
+
+  .official-gift-block-title {
+    background: url(./img/block-title-bg.png) no-repeat;
+    background-size: contain;
+    aspect-ratio: 337 / 20;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.45rem;
+    text-align: center;
+    color: #4c4c6c;
+  }
+}
+
+.detail-block {
+  gap: 8px;
+  .detail-block-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    img {
+      max-width: 1.2rem;
+    }
+
+    span {
+      font-size: .9rem;
+      font-weight: 600;
+      line-height: 1.3rem;
+    }
+  }
+
+  .detail-block-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 12px;
+
+    .detail-block-content-description {
+      font-size: .7rem;
+      font-weight: 600;
+      line-height: 1.07rem;
+      color: #00000099;
+    }
+
+    .detail-block-content-voxis {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ACD4F6;
+      max-width: 720px;
+      color: #0092FF;
+
+      img {
+        max-width: 1.5rem;
+        margin-right: 4px;
+      }
+
+      .detail-block-content-voxis__url {
+        flex-grow: 1;
+        font-size: 1.07rem;
+        font-weight: 600;
+        line-height: 1.5rem;
+      }
+
+      .detail-block-content-voxis__btn {
+        background-color: transparent;
+        border: 1px solid #0092FF;
+        border-radius: 100px;
+        padding: 1px 18px;
+        font-size: .9rem;
+        line-height: 1.3rem;
+        color: #0092FF;
+        &:hover {
+          filter: brightness(.7);
+        }
+      }
+    }
+  }
+}
+
+.reason-block {
+  .reason-block-content {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    .reason-block-content-reason {
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 4px;
+      .reason-block-content-reason__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid #ACD4F6;
+        img {
+          margin-bottom: 4px !important;
+          margin-top: -10px;
+          max-width: 2.5rem;
+        }
+        span {
+          font-size: .7rem;
+          font-weight: 400;
+          line-height: 1.3rem;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+.download-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  .download-block-left-side {
+    flex-basis: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+
+    .download-block-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      line-height: 1.7rem;
+      color: #0092FF;
+    }
+    .download-block-btn {
+      background: linear-gradient(180deg, #41B9FF -11.36%, #0085E8 111.36%);
+      border-radius: 100px;
+      padding: 6px 16px;
+      border: none;
+      font-family: HYYakuHei;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3rem;
+      color: #fff;
+      &:hover {
+        filter: brightness(1.2);
+      }
+    }
+    .download-block-description {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1rem;
+      color: #00000099;
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .download-block-qr-code-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ACD4F6;
+    border-radius: 12px;
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 1rem;
+    color: #0092FF;
+    img {
+      max-width: 5.5rem;
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .official-gift-block {
+    .official-gift-block-title {
+      line-height: 1.5rem;
+    }
+  }
+
+  .reason-block {
+    .reason-block-content {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+</style>
