@@ -314,6 +314,7 @@ export default {
     addSite: 'เพิ่มไซต์',
     addSitePlatform: 'เพิ่มแพลตฟอร์มไซต์',
     addSystemMessage: 'เพิ่มข้อความระบบ',
+    addSyncDefault: 'การแข่งขันซิงค์ภายใน 3 วัน',
     addTelephone: 'เพิ่มหมายเลขโทรศัพท์',
     addTicket: 'เพิ่มตั๋ว',
     addUser: 'เพิ่มผู้ใช้',

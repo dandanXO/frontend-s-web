@@ -491,6 +491,7 @@ export default {
     addSitePlatform: '사이트 플랫폼 추가',
     addStage: '단계 추가',
     addSystemMessage: '시스템 메시지 추가',
+    addSyncDefault: '3일 이내 동기화 경쟁',
     addTelephone: '전화번호 추가',
     addTicket: '티켓 추가',
     addUser: '사용자 추가',
@@ -1811,8 +1812,10 @@ export default {
     copySuccess: '복사 성공',
     deleteSuccess: '삭제 성공',
     runAtOnceSuccess: '작업 실행 성공',
-    dailyMinRegLimitCannotExceedMax: '일일 최소 등록 제한은 최대 등록 제한을 초과할 수 없습니다',
-    dailyMinFirstDepositCannotExceedMax: '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
+    dailyMinRegLimitCannotExceedMax:
+      '일일 최소 등록 제한은 최대 등록 제한을 초과할 수 없습니다',
+    dailyMinFirstDepositCannotExceedMax:
+      '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
     depositSuccess: '입금 성공',
     editAmountSuccess: '금액 편집 성공',
     editRemarkSuccess: '비고 편집 성공',
@@ -2436,7 +2439,7 @@ export default {
     'KRW Stats Report': '한국 사이트 데이터 보고서',
     'MQ Log': 'MQ 로그',
     'Promotion Coupon': '쿠폰',
-    'Member Invite Limit': '회원 초대 제한'
+    'Member Invite Limit': '회원 초대 제한',
   },
   google: {
     google_auth_menu: 'Google 인증자',

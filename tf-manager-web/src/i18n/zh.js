@@ -545,6 +545,7 @@ export default {
     addSitePlatform: '新增平台站点',
     addStage: '新增关卡',
     addSystemMessage: '新增系统信息',
+    addSyncDefault: '同步三天内的赛事',
     addTelephone: '新增手机号码',
     addTicket: '加票',
     addUser: '新增用户',

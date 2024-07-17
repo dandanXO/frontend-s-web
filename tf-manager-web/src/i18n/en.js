@@ -542,6 +542,7 @@ export default {
     addSitePlatform: 'Add Site Platform',
     addStage: 'Add Stage',
     addSystemMessage: 'Add System Message',
+    addSyncDefault: 'Sync Competition List Within 3 Days',
     addTelephone: 'Add Telephone Number',
     addTicket: 'Add Ticket',
     addUser: 'Add User',
@@ -1949,8 +1950,10 @@ export default {
     copySuccess: 'Copy Success',
     deleteSuccess: 'Delete Success',
     runAtOnceSuccess: 'Run job Success',
-    dailyMinRegLimitCannotExceedMax: 'Daily Minimum Register Limit Cannot Exceed Max Register Limit',
-    dailyMinFirstDepositCannotExceedMax: '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
+    dailyMinRegLimitCannotExceedMax:
+      'Daily Minimum Register Limit Cannot Exceed Max Register Limit',
+    dailyMinFirstDepositCannotExceedMax:
+      '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
     depositSuccess: 'Deposit Success',
     editAmountSuccess: 'Edit Amount Success',
     editRemarkSuccess: 'Edit Remark Success',
@@ -2356,8 +2359,10 @@ export default {
     updateAffiliateLevelSuccess: 'Update Affiliate Level Success',
     validateMinDayRegLimitRequired: 'Daily Minimum Register Limit is required',
     validateMaxDayRegLimitRequired: 'Daily Maximum Register Limit is required',
-    validateMinDayDepositAmountRequired: 'Daily Minimum Deposit Amount is required',
-    validateMaxDayDepositAmountRequired: 'Daily Maximum Deposit Amount is required',
+    validateMinDayDepositAmountRequired:
+      'Daily Minimum Deposit Amount is required',
+    validateMaxDayDepositAmountRequired:
+      'Daily Maximum Deposit Amount is required',
   },
   menu: {
     undefined: '',
