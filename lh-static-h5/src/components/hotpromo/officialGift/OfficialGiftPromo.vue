@@ -2,13 +2,13 @@
   <div class="official-gift-container">
     <div class="official-gift-block detail-block">
       <div class="detail-block-title">
-        <img src="./img/gift.svg"/>
+        <img src="./img/gift.svg" />
         <span>认准雷火电竞官方福利群管理</span>
       </div>
       <div class="detail-block-content">
         <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
         <div class="detail-block-content-voxis">
-          <img src="./img/voxis.svg"/>
+          <img src="./img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Voxis管理号：{{ paramsObj?.voxis_id }}</span>
           <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
         </div>
@@ -20,7 +20,7 @@
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
-            <img :src="reason.icon"/>
+            <img :src="reason.icon" />
             <span>{{ reason.description }}</span>
           </div>
         </div>
@@ -31,58 +31,61 @@
       <div class="download-block-left-side">
         <span class="download-block-title">添加雷火电竞指定管理账号，尽享全方位服务优待</span>
         <button class="download-block-btn">点击进入</button>
-        <span class="download-block-description">请<a :href="paramsObj.voxis_url" target="_blank">下载</a>“Voxis”立即添加</span>
+        <span class="download-block-description">
+          请
+          <a :href="paramsObj.voxis_url" target="_blank">下载</a>
+          “Voxis”立即添加
+        </span>
       </div>
       <div class="download-block-qr-code-wrapper">
-        <img src="./img/download-qr-code.png"/>
+        <img src="./img/download-qr-code.png" />
         <span>管理员：初夏</span>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref } from "vue";
 import { writeClipboard } from "boot/utils";
 
-import BeautySvg from "./img/beauty.svg"
-import Clock24Svg from "./img/clock-24.svg"
-import QuestionSvg from "./img/question.svg"
-import StackSvg from "./img/stack.svg"
-import ClockSvg from "./img/clock.svg"
-import DateSvg from "./img/date.svg"
-import GiftLineSvg from "./img/gift-line.svg"
-import ThumbSvg from "./img/thumb.svg"
+import BeautySvg from "./img/beauty.svg";
+import Clock24Svg from "./img/clock-24.svg";
+import QuestionSvg from "./img/question.svg";
+import StackSvg from "./img/stack.svg";
+import ClockSvg from "./img/clock.svg";
+import DateSvg from "./img/date.svg";
+import GiftLineSvg from "./img/gift-line.svg";
+import ThumbSvg from "./img/thumb.svg";
 
 const props = defineProps({
   params: String
-})
+});
 
 const reasons = ref([
-  {icon:BeautySvg, description: '美女专属客服1对1优质服务'},
-  {icon:Clock24Svg, description: '客服全天7*24小时在线'},
-  {icon:QuestionSvg, description: '优先解答您游戏中各种问题'},
-  {icon:StackSvg, description: '提供各种优惠活动信息资料'},
-  {icon:ClockSvg, description: '每日活动领取提醒专业引导'},
-  {icon:DateSvg, description: '各种游戏类型专业投资计划'},
-  {icon:ThumbSvg, description: '体育电竞游戏专家赛事推荐'},
-  {icon:GiftLineSvg, description: '添加客服成功入群即领彩金'},
-])
+  { icon: BeautySvg, description: "美女专属客服1对1优质服务" },
+  { icon: Clock24Svg, description: "客服全天7*24小时在线" },
+  { icon: QuestionSvg, description: "优先解答您游戏中各种问题" },
+  { icon: StackSvg, description: "提供各种优惠活动信息资料" },
+  { icon: ClockSvg, description: "每日活动领取提醒专业引导" },
+  { icon: DateSvg, description: "各种游戏类型专业投资计划" },
+  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" },
+  { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
+]);
 
 const paramsObj = computed(() => {
   try {
-    return JSON.parse(props.params)
-  }catch(e){
-    return {}
+    return JSON.parse(props.params);
+  } catch (e) {
+    return {};
   }
-})
+});
 
-const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
+const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id);
 </script>
 <style lang="scss" scoped>
 .official-gift-container {
   max-width: 1200px;
   margin: 0 auto;
-  font-family: PingFang SC;
   color: #000;
   img {
     margin-bottom: 0 !important;
@@ -127,7 +130,7 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
     }
 
     span {
-      font-size: .9rem;
+      font-size: 0.9rem;
       font-weight: 600;
       line-height: 1.3rem;
     }
@@ -143,7 +146,7 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
     border-radius: 12px;
 
     .detail-block-content-description {
-      font-size: .7rem;
+      font-size: 0.7rem;
       font-weight: 600;
       line-height: 1.07rem;
       color: #00000099;
@@ -154,9 +157,9 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
       align-items: center;
       padding: 12px;
       border-radius: 12px;
-      border: 1px solid #ACD4F6;
+      border: 1px solid #acd4f6;
       max-width: 720px;
-      color: #0092FF;
+      color: #0092ff;
 
       img {
         max-width: 1.5rem;
@@ -172,14 +175,14 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
 
       .detail-block-content-voxis__btn {
         background-color: transparent;
-        border: 1px solid #0092FF;
+        border: 1px solid #0092ff;
         border-radius: 100px;
         padding: 1px 18px;
-        font-size: .9rem;
+        font-size: 0.9rem;
         line-height: 1.3rem;
-        color: #0092FF;
+        color: #0092ff;
         &:hover {
-          filter: brightness(.7);
+          filter: brightness(0.7);
         }
       }
     }
@@ -200,14 +203,14 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
         flex-direction: column;
         align-items: center;
         border-radius: 10px;
-        border: 1px solid #ACD4F6;
+        border: 1px solid #acd4f6;
         img {
           margin-bottom: 4px !important;
           margin-top: -10px;
           max-width: 2.5rem;
         }
         span {
-          font-size: .7rem;
+          font-size: 0.7rem;
           font-weight: 400;
           line-height: 1.3rem;
           margin-bottom: 10px;
@@ -235,10 +238,10 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
       font-size: 1.3rem;
       font-weight: 600;
       line-height: 1.7rem;
-      color: #0092FF;
+      color: #0092ff;
     }
     .download-block-btn {
-      background: linear-gradient(180deg, #41B9FF -11.36%, #0085E8 111.36%);
+      background: linear-gradient(180deg, #41b9ff -11.36%, #0085e8 111.36%);
       border-radius: 100px;
       padding: 6px 16px;
       border: none;
@@ -268,12 +271,12 @@ const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id)
     align-items: center;
     padding: 10px;
     background-color: #fff;
-    border: 1px solid #ACD4F6;
+    border: 1px solid #acd4f6;
     border-radius: 12px;
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-weight: 600;
     line-height: 1rem;
-    color: #0092FF;
+    color: #0092ff;
     img {
       max-width: 5.5rem;
     }
