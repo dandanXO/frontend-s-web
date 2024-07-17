@@ -2489,6 +2489,8 @@ export default {
     if_not_google_auth_then:
       'Nếu bạn chưa liên kết Google Xác thực, bạn có thể bỏ qua bước này.',
     google_auth_code: 'Vui lòng nhập mã xác thực Google 6 chữ số.',
+    register_count: "Số người đăng ký hôm nay",
+    register_limit: "Số lượng có thể đăng ký hôm nay"
   },
   posterType: {
     overall: 'Tổng quan',

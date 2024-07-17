@@ -166,6 +166,27 @@
     </el-dialog> -->
 
     <el-dialog
+      :title="$t('menu.Member Invite Limit')"
+      v-model="uiControl.dialogVisible2"
+      append-to-body
+      width="580px"
+      :close-on-press-escape="false"
+    >
+      <div>
+        <table class="info-table">
+          <tr>
+            <td>{{ $t('google.register_count') }}</td>
+            <td>{{ regLimitData.regCount }}</td>
+          </tr>
+          <tr>
+            <td>{{ $t('google.register_limit') }}</td>
+            <td>{{ regLimitData.regLimit }}</td>
+          </tr>
+        </table>
+      </div>
+    </el-dialog>
+
+    <el-dialog
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
@@ -277,6 +298,12 @@
         v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:member-invite-limit:update']) || hasPermission(['sys:member-invite-limit:del']) )"
       >
         <template #default="scope">
+          <el-button size="mini" icon="el-icon-search"
+                     type="primary"
+                     @click="checkInviteLimit(scope.row)"
+                     v-permission="['sys:member-invite-limit:update']"
+          />
+
           <el-button
             icon="el-icon-edit"
             size="mini"
@@ -321,7 +348,13 @@ import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 // import * as XLSX from 'xlsx'
 import { required } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getSiteMemberInviteLimitRecords, createMemberInviteLimit, updateMemberInviteLimit, deleteMemberInviteLimit } from '../../../api/site-member-invite-limit';
+import {
+  getSiteMemberInviteLimitRecords,
+  createMemberInviteLimit,
+  updateMemberInviteLimit,
+  deleteMemberInviteLimit,
+  checkMemberInviteLimit
+} from '../../../api/site-member-invite-limit';
 // import {
 //   getPlatformExcelMapping, getPlatformsBySite,
 // } from '../../../api/platform'
@@ -384,6 +417,7 @@ const uiControl = reactive({
   importDialogVisible: false,
   messageVisible: false,
   editVisible: false,
+  dialogVisible2: false
 })
 const page = reactive({
   pages: 0,
@@ -605,6 +639,22 @@ async function removeLimit(limit) {
     await loadMemberInviteLimitRecords()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
   })
+}
+
+const regLimitData = reactive({
+  regCount: "",
+  regLimit: ""
+})
+const checkInviteLimit = async (user) => {
+  // console.log(user);
+  const apiResponse = await checkMemberInviteLimit({
+    loginName: user.loginName
+  });
+  // debugger;
+  console.log(apiResponse);
+  regLimitData.regCount = apiResponse.data.regCount;
+  regLimitData.regLimit = apiResponse.data.regLimit;
+  uiControl.dialogVisible2 = true
 }
 
 function submit() {
@@ -854,5 +904,18 @@ onMounted(async () => {
 .smallPreview {
   width: 100px;
   height: 100px;
+}
+
+.info-table{
+  width:100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 18px;
+}
+
+</style>
+<style lang="scss">
+.info-table td{
+  padding: 10px 5px;
 }
 </style>
