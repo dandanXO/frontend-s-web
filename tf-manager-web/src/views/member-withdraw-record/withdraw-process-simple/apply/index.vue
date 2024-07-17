@@ -676,6 +676,7 @@ async function loadWithdrawPlatforms(id, wd) {
 }
 
 async function toCheck(memberWithdrawRecord) {
+  page.loading = true
   if (memberWithdrawRecord) {
     await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
     await fromApplyToAutopay(memberWithdrawRecord.id, withdrawPlatformList.list[0].id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
@@ -686,6 +687,7 @@ async function toCheck(memberWithdrawRecord) {
     }));
   }
   await loadRecord()
+  page.loading = false
   ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
   checkBtnRef.value.blur();
   checkBtnsRef.value.blur();
