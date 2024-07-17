@@ -5,7 +5,7 @@
     <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <q-toolbar>
         <div class="topActions">
-          <q-toolbar-title></q-toolbar-title>
+          <q-toolbar-title>{{ title }}</q-toolbar-title>
           <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
         </div>
 

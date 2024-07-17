@@ -1,5 +1,5 @@
 <template>
-    <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999999" class="floating">
+    <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:5999" class="floating">
         <div class="floating-cs-img" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <q-popup-proxy>
                 <q-banner style="background:transparent;padding:0;">
@@ -13,7 +13,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const fabPos = ref([40, 40])
+const fabPos = ref([20, 20])
 const draggingFab = ref(false)
 
 const moveFab = (ev) => {
