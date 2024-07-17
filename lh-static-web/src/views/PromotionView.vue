@@ -100,6 +100,7 @@
               selectedPromo?.promoCode === 'lh1worldcup' ||
               selectedPromo?.promoCode === 'lh1worldcupdota2' ||
               selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
+              selectedPromo?.promoCode === 'lh-official-gift' ||
               selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh1-slot-lucky8' ||

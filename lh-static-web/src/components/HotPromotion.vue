@@ -86,6 +86,7 @@
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -160,6 +161,7 @@ import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import OlympicCheckin from "../components/hotpromo/olympic-checkin/OlympicCheckin.vue";
 import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/ChallengeComeback.vue";
+import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue"
 
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
@@ -225,7 +227,8 @@ export default defineComponent({
     EuroRegen,
     OuZuLianPromo,
     OlympicCheckin,
-    ChallengeComeBackPromo
+    ChallengeComeBackPromo,
+    OfficialGiftPromo
   },
   props: {
     list: {
