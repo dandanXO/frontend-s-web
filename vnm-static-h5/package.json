@@ -39,7 +39,7 @@
     "cordova-plugin-screen-orientation": "^3.0.3",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
-    "csweb-client": "^1.4.2",
+    "csweb-client": "1.4.3",
     "es6-promise-plugin": "^4.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

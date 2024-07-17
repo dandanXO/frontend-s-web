@@ -230,7 +230,7 @@ export default defineComponent({
           this.btnLoading = false;
           if (res.code === 0) {
             var rebatePoint = res.data;
-            this.claimMsg = "₹" + rebatePoint;
+            this.claimMsg = "₦" + rebatePoint;
             this.isClaimModal = true;
           } else {
             this.btnLoading = false;

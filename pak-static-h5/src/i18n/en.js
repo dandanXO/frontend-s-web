@@ -509,7 +509,7 @@ export default {
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
-    12104: "This bank card number has been blocked",
+    12104: "This feature is disabled, please contact customer service",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",
