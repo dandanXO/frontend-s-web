@@ -1744,6 +1744,7 @@ export default {
     slotRolling: '하부총슬롯롤링',
     sportRolling: '하부총스포츠롤링',
     recycleMoney: '머니회수',
+    shareRatio: '지분율',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2196,6 +2197,8 @@ export default {
     wrongPopupTime: '선택한 팝업 시간이 유효하지 않습니다',
     selectPopupTime: '팝업 시간을 선택하세요.',
     updateAffiliateLevelSuccess: '가맹점 레벨 변경 성공',
+    updateShareRatioSuccess: '공유율 업데이트 성공',
+    validateShareRatioFormat: '공유 비율은 0에서 1 사이여야 합니다.',
   },
   menu: {
     undefined: '',
@@ -2555,6 +2558,20 @@ export default {
     DOWNLOAD: '다운로드 페이지',
     AFFILIATE: '연기',
     HOME: '첫 장',
+  },
+  affiliateShareRatio: {
+    AGENT_SHARE_BET_RATIO_FISH: '배팅비율-FISH',
+    AGENT_SHARE_BET_RATIO_SLOT: '배팅비율-SLOT',
+    AGENT_SHARE_BET_RATIO_ESPORT: '배팅비율-ESPORT',
+    AGENT_SHARE_BET_RATIO_LIVE: '배팅비율-LIVE',
+    AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
+    AGENT_SHARE_BET_RATIO_CASUAL: '배팅비율-CASUAL',
+    AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
+    AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
+    AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
+    AGENT_SHARE_PROFIT_RATIO_LIVE: '이익률-LIVE',
+    AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
+    AGENT_SHARE_PROFIT_RATIO_CASUAL: '이익률-CASUAL',
   },
   error: {
     400: '잘못된 요청',

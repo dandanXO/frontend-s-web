@@ -2684,11 +2684,13 @@ export default {
     AGENT_SHARE_BET_RATIO_ESPORT: '有效投注佣金-电竞',
     AGENT_SHARE_BET_RATIO_LIVE: '有效投注佣金-真人',
     AGENT_SHARE_BET_RATIO_SPORT: '有效投注佣金-体育',
+    AGENT_SHARE_BET_RATIO_CASUAL: '有效投注佣金-小游戏',
     AGENT_SHARE_PROFIT_RATIO_FISH: '净盈利佣金-捕鱼',
     AGENT_SHARE_PROFIT_RATIO_SLOT: '净盈利佣金-老虎机',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '净盈利佣金-电竞',
     AGENT_SHARE_PROFIT_RATIO_LIVE: '净盈利佣金-真人',
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
+    AGENT_SHARE_PROFIT_RATIO_CASUAL: '净盈利佣金-小游戏',
   },
   domainType: {
     LANDING: '落地页',
