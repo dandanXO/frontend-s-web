@@ -315,13 +315,13 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    min-height: 40vh;
+    //min-height: 40vh;
     padding: 16px 50px 50px;
     position: relative;
     background-color: #ebf4ff;
 
     margin: 0 auto;
-    max-width: 1920px;
+    //max-width: 1920px;
   }
 
   .all-promotions-bg {
