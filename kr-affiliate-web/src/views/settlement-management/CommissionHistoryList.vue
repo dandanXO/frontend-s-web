@@ -44,8 +44,6 @@
             <tr>
               <th scope="col" class="textCenter">{{ t('fields.gameType') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.loginName') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.beforeBalance') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.afterBalance') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.bet') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.rebatePercentage') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.rebate') }}</th>
@@ -66,12 +64,6 @@
               </td>
               <td class="textCenter">
                 <strong>{{ item.memberName }}</strong>
-              </td>
-              <td class="textRight">
-                {{ formatMoney(item.beforeBalance) }}
-              </td>
-              <td class="textRight">
-                {{ formatMoney(item.afterBalance) }}
               </td>
               <td class="textRight">
                 {{ formatMoney(item.betAmount) }}
