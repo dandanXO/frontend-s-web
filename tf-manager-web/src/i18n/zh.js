@@ -1026,6 +1026,7 @@ export default {
     jobType: '任务类型',
     label: '标签',
     labelCancel: '取消',
+    lastDepositTime: '最后存款时间',
     lastDigit: '尾数',
     lastDigitMinDayDeposit: '尾数红包当日最小存款',
     lastDigitRules: '尾数红包规则',

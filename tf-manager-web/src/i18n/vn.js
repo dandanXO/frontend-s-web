@@ -961,6 +961,7 @@ export default {
     jobType: 'Loại công việc',
     label: 'Nhãn',
     labelCancel: 'Hủy bỏ',
+    lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Chữ số cuối',
     lastDigitMinDayDeposit: 'Số tiền gửi tối thiểu hàng ngày cho gói cuối cùng',
     lastDigitRules: 'Quy tắc gói cuối cùng',

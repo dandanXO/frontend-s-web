@@ -960,6 +960,7 @@ export default {
     jobType: '작업 유형',
     label: '라벨',
     labelCancel: '취소',
+    lastDepositTime: 'Last Deposit Time',
     lastDigit: '마지막 숫자',
     lastDigitMinDayDeposit: '마지막 숫자 레드 패킷을 위한 최소 일일 입금 금액',
     lastDigitRules: '마지막 숫자 레드 패킷 규칙',

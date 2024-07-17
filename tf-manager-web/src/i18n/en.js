@@ -1023,6 +1023,7 @@ export default {
     jobType: 'Job Type',
     label: 'Label',
     labelCancel: 'cancel',
+    lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',
     lastDigitRules: 'Last Digit Red Packet Rules',

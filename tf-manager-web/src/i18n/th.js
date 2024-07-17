@@ -668,6 +668,7 @@ export default {
     jobType: 'ประเภทงาน',
     label: 'ฉลาก',
     labelCancel: 'ยกเลิก',
+    lastDepositTime: 'Last Deposit Time',
     lastLogin: 'เข้าสู่ระบบครั้งล่าสุด',
     lastLoginAddress: 'ที่อยู่เข้าสู่ระบบล่าสุด',
     lastLoginIp: 'IP เข้าสู่ระบบล่าสุด',
