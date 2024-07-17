@@ -1,0 +1,7 @@
+{
+  "appId": "com.vnm.client",
+  "appName": "TF88",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

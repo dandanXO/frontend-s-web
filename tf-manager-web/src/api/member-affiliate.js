@@ -272,3 +272,12 @@ export const getDownlineShareRatio = (id) => {
     Method.GET
   )
 }
+
+export const updateRecycleMoneyState = (id, state) => {
+  return https().request(
+    `/affiliate/${id}/updateRecycleMoney?_method=PUT`,
+    Method.POST,
+    { state: state },
+    ContentType.form
+  )
+}

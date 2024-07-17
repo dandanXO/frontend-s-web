@@ -253,7 +253,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #remaning-draw-amt {
   font-size: 20px;
   color: #ffffff;

@@ -321,7 +321,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -361,7 +361,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -529,11 +529,12 @@ onMounted(async () => {
     background-color 0.3s,
     color 0.3s;
   font-size: 20px;
+  border: 1px solid #7a80a1;
 }
 
 .switch-option.active {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-
+  border: 0px;
   color: white;
 }
 

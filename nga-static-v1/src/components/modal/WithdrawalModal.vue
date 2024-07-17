@@ -154,7 +154,7 @@
           <div class="top-wrapper">
             <div class="title">
               Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} NGN)
             </div>
           </div>
 
@@ -189,7 +189,7 @@
                 <div class="desc">Withdrew Amount</div>
               </div>
               <div class="desc">
-                RS:{{
+                NGN:{{
                   withdrawalMethods[withdrawalDialogTab].withdrawMax -
                   withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
                 }}
@@ -200,14 +200,14 @@
                 <div class="yel-dot"></div>
                 <div class="desc">{{ store.vip }} Daily Limit</div>
               </div>
-              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
+              <div class="desc">NGN:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
                 <div class="desc">Remain Wagers</div>
               </div>
-              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
+              <div class="desc">NGN:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
             </div>
           </div>
         </q-card>
@@ -230,7 +230,7 @@
         <div class="bottom-tnc">
           <div class="note-title">Note:</div>
           <div class="note">
-            <span>3%+6Rs</span>
+            <span>3%+6NGN</span>
             of the withdrawal amount will be deducted as
             <span>bank commission</span>
           </div>

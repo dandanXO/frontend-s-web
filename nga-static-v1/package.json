@@ -1,8 +1,8 @@
 {
-  "name": "ind-project",
+  "name": "nga-project",
   "version": "1.0.1",
-  "description": "55Ace App",
-  "productName": "55Ace",
+  "description": "NGA App",
+  "productName": "NGA",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
   "scripts": {
