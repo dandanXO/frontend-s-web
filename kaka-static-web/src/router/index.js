@@ -222,7 +222,7 @@ router.beforeEach((to, from, next) => {
     fbq("init", "836424235042431");
     fbq("track", "PageView");
   } else if (window.location.href.indexOf("kakaag.shop") > -1) {
-    fbq("init", "348832381615734");
+    fbq("init", "7664966013612459");
     fbq("track", "PageView");
   } else if (window.location.href.indexOf("kakavn.app") > -1) {
     fbq("init", "463504196607854");
