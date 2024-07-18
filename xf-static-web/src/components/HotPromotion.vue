@@ -25,6 +25,7 @@
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <BonusSpinWheel v-if="list.redirectUrl === 'cny-spinwheel'" />
+    <slotLucky8 v-if="list.redirectUrl === 'xf-slot-lucky8' && store.token" :promo-code="list.promoCode" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
@@ -185,6 +186,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
+import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024.vue";
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -206,6 +208,7 @@ export default defineComponent({
     BonusSpinWheel,
     ReturnPromo,
     DepositAwardPromo,
+    slotLucky8,
     HongBaoPreEurocupPromo
     // DailyBonus
   },

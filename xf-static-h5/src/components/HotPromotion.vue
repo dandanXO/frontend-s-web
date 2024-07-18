@@ -16,6 +16,7 @@
         (list.redirectUrl === 'invitefriend')
       "
     />
+    <SlotLacky8 v-if="list.redirectUrl === 'xf-slot-lucky8' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
@@ -216,6 +217,7 @@ import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEur
 import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
+import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue";
 // import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
@@ -237,6 +239,7 @@ export default defineComponent({
     HongBaoPreEurocupPromo,
     BonusSpinWheelPromo,
     ReturnPromo,
+    SlotLacky8,
     DepositAwardPromo
   },
   props: {
