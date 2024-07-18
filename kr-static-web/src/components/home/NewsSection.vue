@@ -1,7 +1,7 @@
 <template>
   <div class="news-section">
     <el-card>
-      <img src="../../assets/logo.svg" />
+      <img class="logo" src="../../assets/logo.svg" />
       <el-tabs v-model="activeName" class="demo-tabs" >
         <el-tab-pane :label="t('home.footballNews')" name="first">
           <div class="news-listing">
@@ -109,7 +109,11 @@ onMounted(() => {
 .news-section {
   max-width: 1350px;
   margin: 30px auto 50px;
-
+img {
+  &.logo {
+    max-width: 100px;
+  }
+}
   .el-tabs{
     margin-top: -40px;
   }

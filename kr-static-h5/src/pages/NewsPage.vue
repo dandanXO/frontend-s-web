@@ -146,7 +146,7 @@ const newsItems = ref([
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 135px;
+      max-width: 75px;
     }
   }
 
