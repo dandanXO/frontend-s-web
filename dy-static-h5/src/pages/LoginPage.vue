@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="height: 48px; text-align: center;">
+    <div style="height: 48px; text-align: center">
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
@@ -8,7 +8,7 @@
       <img src="../assets/login/login-top-bg.png" />
     </div>
 
-    <div style="padding: 15px 20px;">
+    <div v-if="tab === 'login'" style="padding: 15px 20px">
       <img src="../assets/login/login-top.png" width="100%" />
     </div>
 
@@ -37,7 +37,7 @@
               >
                 <template v-slot:prepend>
                   <img src="../assets/login/user-icon.svg" width="14" />
-                  <span style="color: #424F72; font-size: 14px; margin-left: 8px;">账号</span>
+                  <span style="color: #424f72; font-size: 14px; margin-left: 8px">账号</span>
                 </template>
                 <template v-slot:append>
                   <img
@@ -65,7 +65,7 @@
               >
                 <template v-slot:prepend>
                   <img src="../assets/login/pass-icon.svg" width="14" />
-                  <span style="color: #424F72; font-size: 14px; margin-left: 8px;">密码</span>
+                  <span style="color: #424f72; font-size: 14px; margin-left: 8px">密码</span>
                 </template>
                 <template v-slot:append>
                   <img
@@ -110,7 +110,7 @@
                 </template>
                 <template v-slot:prepend>
                   <img src="../assets/login/pass-icon.svg" width="14" />
-                  <span style="color: #424F72; font-size: 14px; margin-left: 8px;">验证码</span>
+                  <span style="color: #424f72; font-size: 14px; margin-left: 8px">验证码</span>
                 </template>
               </q-input>
             </div>
@@ -165,9 +165,7 @@
 
             <div class="forgetpass-div">
               <router-link class="txt-tip align-right" to="/forgot-account">
-                <span>
-                  忘记密码？
-                </span>
+                <span>忘记密码？</span>
               </router-link>
 
               <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
@@ -187,7 +185,13 @@
               class="q-mt-md"
               label="登录"
               width="100%"
-              style="width: 100%; letter-spacing: 2px; margin-top: 40px; background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%); color: white;"
+              style="
+                width: 100%;
+                letter-spacing: 2px;
+                margin-top: 40px;
+                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+                color: white;
+              "
               size="16px"
             />
 
@@ -199,7 +203,7 @@
               width="100%"
               color="white"
               text-color="#4A4A4A"
-              style="width: 100%; letter-spacing: 2px; box-shadow: 0px -2px 4px 0px #5A9DFF80 inset;"
+              style="width: 100%; letter-spacing: 2px; box-shadow: 0px -2px 4px 0px #5a9dff80 inset"
               size="16px"
             />
           </q-form>
@@ -216,19 +220,19 @@
         <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
             <img src="../assets/login/home-icon.svg" width="16px" />
-            <span style="color: #458BFF;">先去逛逛</span>
+            <span style="color: #458bff">先去逛逛</span>
           </div>
         </router-link>
       </div>
 
       <div class="row justify-center items-center full-width q-mb-md">
         <router-link class="txt-tip" to="/liveChat">
-          <div style="width: 60px; height: 1px; background-color: #7A80A199"></div>
+          <div style="width: 60px; height: 1px; background-color: #7a80a199"></div>
           <div class="row items-center gap-8">
             <img src="../assets/login/service-icon.svg" width="16px" />
             <span>联系客服</span>
           </div>
-          <div style="width: 60px; height: 1px; background-color: #7A80A199"></div>
+          <div style="width: 60px; height: 1px; background-color: #7a80a199"></div>
         </router-link>
       </div>
     </div>
@@ -634,7 +638,6 @@ export default defineComponent({
   }
 
   .login-bottom-section {
-
     > div {
       gap: 40px;
     }
@@ -724,11 +727,11 @@ export default defineComponent({
 
   .q-field--standout.q-field--rounded .q-field__control {
     border-radius: 8px;
-    box-shadow: 0px 0px 2.91px 0px #A9C9EA inset;
+    box-shadow: 0px 0px 2.91px 0px #a9c9ea inset;
   }
 
   .q-field--standout .q-field__control {
-    background: #F7F8FB;
+    background: #f7f8fb;
   }
 
   .q-checkbox__bg {
