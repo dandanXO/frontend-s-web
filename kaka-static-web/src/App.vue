@@ -73,8 +73,8 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      clearTimeout(onlineStatTimeout);
-      clearInterval(onlineStatInterval);
+      // clearTimeout(onlineStatTimeout);
+      // clearInterval(onlineStatInterval);
     });
     return {
       languageVal,

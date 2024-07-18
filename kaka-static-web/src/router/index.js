@@ -213,24 +213,22 @@ router.beforeEach((to, from, next) => {
   }
 
   // FB tracking
-  fbq("init", "1017493646609680");
-  fbq("track", "PageView");
-  // if (window.location.href.indexOf("kakaking.com") > -1) {
-  //   fbq("init", "888951505918547");
-  //   fbq("track", "PageView");
-  //   store.isAffiliateA= true;
-  // } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-  //   fbq("init", "3658633674357920");
-  //   fbq("track", "PageView");
-  //   store.isAffiliateA= true;
-  // } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("kakabof.com") > -1) {
-  //   // console.log("5svn88.com 2")
-  //   otag("init", "adv10336256983680");
-  // } else if (window.location.href.indexOf("tf68688.com") > -1) {
-  //   fbq("init", "1123673335564806");
-  //   fbq("track", "PageView");
-  //   store.isAffiliateA= true;
-  // }else if (window.location.href.indexOf("wintf99.com") > -1) {
+  console.log("Href");
+  console.log(window.location.href);
+  if (window.location.href.indexOf("kakaag.app") > -1) {
+    fbq("init", "1163176251398453");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakaag.vip") > -1) {
+    fbq("init", "836424235042431");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakaag.shop") > -1) {
+    fbq("init", "348832381615734");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakavn.app") > -1) {
+    fbq("init", "463504196607854");
+    fbq("track", "PageView");
+  }
+  // else if (window.location.href.indexOf("wintf99.com") > -1) {
   //   fbq("init", "441415921872746");
   //   fbq("track", "PageView");
   //   store.isAffiliateA= true;
