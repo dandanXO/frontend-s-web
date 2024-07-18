@@ -146,8 +146,8 @@ module.exports = configure(function (ctx) {
             },
 
             manifest: {
-                name: `TF88`,
-                short_name: `TF88`,
+                name: `City8`,
+                short_name: `City8`,
                 description: `APP`,
                 display: "standalone",
                 orientation: "portrait",
@@ -192,7 +192,7 @@ module.exports = configure(function (ctx) {
         capacitor: {
             hideSplashscreen: true,
             // (Optional) If not present, will look for package.json > name
-            appName: 'TF88', // string
+            appName: 'City8', // string
             backButtonExit: '*',
         },
 

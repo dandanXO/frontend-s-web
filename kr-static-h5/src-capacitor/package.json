@@ -1,8 +1,8 @@
 {
-  "name": "TF88",
+  "name": "City8",
   "version": "1.0.8",
-  "description": "TF88 - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
-  "productName": "TF88",
+  "description": "City8 - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
+  "productName": "City8",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {
