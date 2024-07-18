@@ -1,12 +1,14 @@
 <template>
   <div class="cs2">
     <div class="section first">
-      <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" /></div>
-      <!-- <div class="tips">
+      <div class="title">
+        <img class="logo" src="../../../assets/images/promo/hotpromo/blastpremier/spring-logo.png" />
+        <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" /></div>
+      <div class="tips">
         <div class="tips-inner">
-          参与BLAST Premier 春季总决赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。
+          参与BLAST Premier 秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙，系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
         </div>
-      </div> -->
+      </div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -55,12 +57,12 @@
       </div>
     </div>
     <div class="section second">
-      <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-2-spring.png" /></div>
-      <!-- <div class="tips">
+      <div class="title"><img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" /></div>
+      <div class="tips">
         <div class="tips-inner">
-          活动期间，连续投注BLAST Premier 春季总决赛≥1000元则视为签到成功，根据对应累计的签到天数开启宝箱
+          活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
         </div>
-      </div> -->
+      </div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -97,14 +99,14 @@
     <div class="section third">
       <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-3-spring.png" /></div>
       <div class="content">
-        <p>1.活动期间,每日投注BLAST Premier 春季总决赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；</p>
-        <p>2.活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿；</p>
-        <p>3.开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金3倍流水即可出款；</p>
-        <p>4,活动期间,参与BLAST Premier 春季总决赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个签到宝箱每位用户仅可开启一次；</p>
-        <p>5.活动期间,若用户连续签到中断,则重新开始计算,已开启过的签到宝箱无法二次开启；</p>
-        <p>6.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利； </p>
-        <p>7，任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；</p>
-        <p>8.为避免文字理解差异,本站保留本活动最终解释权；</p>
+        <p>1. 活动期间,每日投注BLAST Premier 秋季小组赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；</p>
+        <p>2. 活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿；</p>
+        <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金3倍流水即可出款；</p>
+        <p>4. 活动期间,参与BLAST Premier 秋季小组赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个签到宝箱每位用户仅可开启一次；</p>
+        <p>5. 活动期间,若用户连续签到中断,则重新开始计算,已开启过的签到宝箱无法二次开启；</p>
+        <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；</p>
+        <p>7. 任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；</p>
+        <p>8. 为避免文字理解差异,本站保留本活动最终解释权；</p>
       </div>
     </div>
 
@@ -407,40 +409,50 @@ onMounted(() => {
   text-align: center;
   .title {
     margin: 10px auto;
+    img {
+      margin: 0 auto;
+      &.logo {
+        max-width: 150px;
+      }
+      &.top {
+        max-width: 250px;
+      }
+    }
   }
 
   .tips {
+    color: #fffd66;
     margin: 0 auto;
     text-align: center;
-    color: #00d6d6;
-    font-weight: 700;
-    font-family: Microsoft Yahei UI;
-    position: relative;
+    // color: #00d6d6;
+    // font-weight: 700;
+    // font-family: Microsoft Yahei UI;
+    // position: relative;
 
-    &::before,
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      right: 0;
-      background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 50%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
-        center center;
-      height: 1px;
-    }
+    // &::before,
+    // &::after {
+    //   content: "";
+    //   display: block;
+    //   position: absolute;
+    //   left: 0;
+    //   right: 0;
+    //   background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 50%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
+    //     center center;
+    //   height: 1px;
+    // }
 
-    &::before {
-      top: 0;
-    }
+    // &::before {
+    //   top: 0;
+    // }
 
-    & ::after {
-      bottom: 0;
-    }
+    // & ::after {
+    //   bottom: 0;
+    // }
 
     .tips-inner {
-      background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 20%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
-        center center;
-      padding: 6px 30px;
+      // background: linear-gradient(90deg, rgba(#FFFD66, 0) 0%, rgba(#FFFD66, 20%) 50%, rgba(#FFFD66, 0) 100%) no-repeat
+      //   center center;
+      // padding: 6px 30px;
     }
   }
   .second .content {
