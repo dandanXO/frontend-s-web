@@ -2237,6 +2237,7 @@ export default {
     'Member Rollover Record': 'Lịch sử 롤오버 thành viên',
     'Member Distribute Privilege': 'Phân phối đặc quyền thành viên',
     'Member Profit Ranking': 'Thứ hạng lợi nhuận thành viên',
+    'Member Affiliate Change Log': 'Member Affiliate Change Log',
     Affiliate: 'Đối tác liên kết',
     'Affiliate Amount Adjust': 'Điều chỉnh số tiền Đối tác liên kết',
     'Affiliate Summary': 'Tóm tắt Đối tác liên kết',

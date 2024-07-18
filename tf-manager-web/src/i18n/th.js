@@ -1553,6 +1553,7 @@ export default {
     'Member Privilege': 'สิทธิพิเศษของสมาชิก',
     'Member Rollover Record': 'บันทึกการโรลโอเวอร์ของสมาชิก',
     'Member Distribute Privilege': 'สมาชิกที่ได้รับสิทธิพิเศษ',
+    'Member Affiliate Change Log': 'Member Affiliate Change Log',
     Affiliate: 'พันธมิตร',
     'Affiliate Amount Adjust': 'ปรับจำนวนให่สมาชิก',
     'Affiliate Summary': 'สรุปพันธมิตร',
