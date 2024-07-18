@@ -394,6 +394,7 @@ export default {
         payout: "Payout",
         deposit: "Deposit",
         withdraw: "Withdraw",
+        firstdepositcount: "First Deposit Count"
       }
     }
   },
