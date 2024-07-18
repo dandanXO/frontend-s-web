@@ -67,12 +67,12 @@
           <td>≥300</td>
           <td>100</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>支付宝转卡</td>
           <td>0.5%</td>
           <td>任意金额</td>
           <td>100</td>
-        </tr>
+        </tr> -->
         <tr>
           <td>808钱包</td>
           <td>1.5%</td>
@@ -109,6 +109,13 @@ const depositCards = ref([
     content:
       "充值即送<em>1.5%</em>彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限588元",
     lesson: "https://fi3j96ygol.gwo5mlgx98.com/media/deposit_guide.mp4"
+  },
+  {
+    code: "blbpay",
+    title: "808钱包",
+    content:
+      "充值即送<em>1.5%</em>彩金，808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限200元",
+    lesson: "http://808.com/tutorial.html"
   },
   {
     code: "okpay",
@@ -149,13 +156,7 @@ const depositCards = ref([
   //   content:
   //     "充值即送<em>0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em>0.5%</em>的彩金返还，单日优惠最高上限100元"
   // },
-  {
-    code: "blbpay",
-    title: "808钱包",
-    content:
-      "充值即送<em>1.5%</em>彩金，808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限200元",
-    lesson: "http://808.com/tutorial.html"
-  }
+  
 ]);
 </script>
 <style lang="scss">
