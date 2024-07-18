@@ -456,6 +456,7 @@ onMounted(getSlotLucky8Data);
   .little2-content{
     width: 100%;
     font-size: 15px;
+    color: #000;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: -0.02em;
@@ -617,6 +618,7 @@ onMounted(getSlotLucky8Data);
     font-weight: 400;
     line-height: 18px;
     color: #000000;
+    background:#fff !important;
   }
 }
 
@@ -670,6 +672,7 @@ onMounted(getSlotLucky8Data);
     font-weight: 400;
     line-height: 18px;
     color: #000000;
+    background:#fff !important;
   }
 }
 

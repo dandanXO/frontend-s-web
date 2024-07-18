@@ -25,7 +25,7 @@
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <BonusSpinWheel v-if="list.redirectUrl === 'cny-spinwheel'" />
-    <slotLucky8 v-if="list.redirectUrl === 'xf-slot-lucky8' && store.token" :promo-code="list.promoCode" />
+    <slotLucky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">

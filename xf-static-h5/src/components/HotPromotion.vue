@@ -16,7 +16,7 @@
         (list.redirectUrl === 'invitefriend')
       "
     />
-    <SlotLacky8 v-if="list.redirectUrl === 'xf-slot-lucky8' && store.token" :promo-code="list.promoCode" />
+    <SlotLacky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
