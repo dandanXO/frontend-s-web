@@ -171,7 +171,7 @@ router.beforeEach((to, from, next) => {
   const store = userStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-    next(`/register`);
+    next(`/`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);

@@ -20,8 +20,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -42,16 +42,15 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/privilege/invite" ||
-      to.path === "/maintenance" || to.path==="/promoapp"
+      to.path === "/maintenance" ||
+      to.path === "/promoapp"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
     }
 
-    if (
-      to.path === "/promoapp"
-    ) {
+    if (to.path === "/promoapp") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
@@ -60,7 +59,6 @@ export default route(function (/* { store, ssrContext } */) {
 
       user.token = to.query.token;
     }
-
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -83,7 +81,6 @@ export default route(function (/* { store, ssrContext } */) {
       // console.log("user", user.token);
     }
 
-
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       // if (to.query.reg) {
@@ -91,7 +88,7 @@ export default route(function (/* { store, ssrContext } */) {
       // } else {
       //   next(`/`);
       // }
-      next(`/register`);
+      next(`/`);
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -120,7 +117,6 @@ export default route(function (/* { store, ssrContext } */) {
       }
     }
 
-
     // FB tracking
     fbq("init", "1017493646609680");
     fbq("track", "PageView");
@@ -148,7 +144,6 @@ export default route(function (/* { store, ssrContext } */) {
     //   fbq("track", "PageView");
     //   user.isAffiliateA= true;
     // }
-
   });
 
   return Router;
