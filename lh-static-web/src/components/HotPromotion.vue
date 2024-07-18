@@ -70,6 +70,7 @@
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && store.token" />
+    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match' && store.token" />
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && store.token" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
@@ -85,8 +86,8 @@
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
-    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
-    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param"/>
+    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -157,21 +158,23 @@ import DepositRebate2 from "../components/hotpromo/depositRebate2/depositRebate2
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
 import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
-import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide.vue"
+import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide.vue";
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import OlympicCheckin from "../components/hotpromo/olympic-checkin/OlympicCheckin.vue";
 import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/ChallengeComeback.vue";
-import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue"
+import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
+import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Olympic24Match,
     newplayerGuide,
     slotLucky8,
     intelEsl2024,
