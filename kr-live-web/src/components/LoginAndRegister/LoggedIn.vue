@@ -63,27 +63,15 @@
     </div>
   </div>
 
-  <q-dialog v-model="redeemDialogVisible" no-route-dismiss persistent>
-    <q-card style="padding: 20px">
-      <p>Your current point : <b>100</b></p>
-      <p>Do you want to redeem?</p>
-
-      <div style="display:flex;justify-content: flex-end;">
-        <q-button class="primary-button yellow-square" @click="redeemDialogVisible = false">
-          {{ $t('lang.cancel') }}
-        </q-button>
-        <q-button class="primary-button blue-square" @click="() => { }">
-          {{ $t('lang.confirm') }}
-        </q-button>
-      </div>
-    </q-card>
-  </q-dialog>
+  <RedeemPointDialog :redeemDialogVisible="redeemDialogVisible" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import RedeemPointDialog from '../home/RedeemPointDialog.vue';
+
 const props = defineProps(['isH5TopBar']);
 const store = userStore();
 const router = useRouter();
