@@ -259,7 +259,7 @@ import {
   convertDateToStart,
   getShortcuts,
 } from '@/utils/datetime'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
+// import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -278,7 +278,7 @@ const financialLevelList = reactive({
 const riskList = reactive({
   list: []
 });
-let timeZone = null;
+// let timeZone = null;
 
 const sortList = reactive({
   list: [
@@ -364,12 +364,12 @@ async function loadMemberRecord() {
       }
     })
 
-    timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+    // timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
     if (request.recordTime !== null) {
       if (request.recordTime.length === 2) {
-        query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+        /* query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
         query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
-        query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+        query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone); */
         query.recordTime = query.recordTime.join(',')
       }
     }
