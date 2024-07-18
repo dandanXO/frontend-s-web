@@ -297,11 +297,12 @@ const fetchDownlineProfitSummary = () => {
   }
 
   queryParams.push(`size=${itemsPerPage}`);
-  queryParams.push(`page=${currentPage.value}`);
+  queryParams.push(`current=${currentPage.value}`);
 
   url += queryParams.join("&");
 
   tableData.value = [];
+
   api
     .get(url)
     .then((response) => {
@@ -309,6 +310,7 @@ const fetchDownlineProfitSummary = () => {
       if (response.code === 0) {
         tableData.value = response.data.records;
         totalPages.value = Math.ceil(response.data.total / itemsPerPage);
+        sumsData.value = response.data.sums;
       }
     })
     .catch(() => {
