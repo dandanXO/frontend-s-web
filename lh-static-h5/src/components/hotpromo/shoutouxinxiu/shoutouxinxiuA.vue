@@ -2,7 +2,7 @@
   <div class="europe-container">
     <div class="tab-content">
       <div class="sched-buttons">
-        <div v-for="(tab, index) in schedTabs" :key="index" style="position: relative">
+        <div v-for="(tab, index) in schedTabs" :key="index" style="position: relative; flex: 1;">
           <div class="bar" v-show="schedActiveTab === index"></div>
           <button @click="activateSchedTab(index)" :class="{ active: schedActiveTab === index }">
             {{ tab.name }}
@@ -36,12 +36,13 @@ function activateSchedTab(index) {
 </script>
 <style scoped lang="scss">
 .sched-buttons {
-  width: 100%;
+  width: 260px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   max-width: 1400px;
   margin: 10px auto;
+  gap: 8px;
 
   .bar {
     position: absolute;
@@ -55,13 +56,11 @@ function activateSchedTab(index) {
   }
 
   button {
-    background: url(./images/schedinactive-tab.png) no-repeat center center;
-    width: 216px;
-    height: 95px;
+    background: url(./images/schedinactive-tab.png) no-repeat;
     background-size: contain;
     color: #ffffff;
     font-weight: bold;
-    font-size: 21px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 34.75px;
     letter-spacing: 0.12em;
@@ -70,11 +69,13 @@ function activateSchedTab(index) {
     display: inline-flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 16px;
+    padding-top: 4px;
+    width: 100%;
+    height: 70px;
+    white-space: nowrap;
 
     &.active {
       background-image: url(./images/schedactive-tab.png);
-      height: 112px;
     }
   }
 }

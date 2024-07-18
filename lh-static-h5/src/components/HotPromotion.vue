@@ -160,7 +160,7 @@ const EuroCup2024 = defineAsyncComponent(() => import("../components/hotpromo/eu
 const EuroCup2024FirstShoot = defineAsyncComponent(() =>
   import("./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue")
 );
-const Shoutouxinxiu = defineAsyncComponent(() => import("./hotpromo/shoutouxinxiu/Shoutouxinxiu.vue"));
+const Shoutouxinxiu = defineAsyncComponent(() => import("./hotpromo/shoutouxinxiu/shoutouxinxiuA.vue"));
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );

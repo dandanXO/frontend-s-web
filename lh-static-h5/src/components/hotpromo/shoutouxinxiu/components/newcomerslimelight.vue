@@ -1,10 +1,12 @@
 <template>
   <div class="newcomers-intro">
-    活动期间，会员当日场馆有效投注额满足且产生对应负盈利金额，即可获得最高<span>388元</span>返还。
+    活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足
+    <span>≥500</span>
+    即可获得体验彩金。
   </div>
   <div class="newcomers-grid">
     <div class="item" v-for="item in items" :key="item.bonusType" @click="getBonus(item.bonusType)">
-      <img :src=" require(`../images/newcomers-${item.bonusType.toLowerCase()}.png`)">
+      <img :src="require(`../images/newcomers-${item.bonusType.toLowerCase()}.png`)" />
     </div>
   </div>
 
@@ -19,7 +21,7 @@
       <td rowspan="2">投注电竞馆</td>
       <td>18</td>
       <td>18</td>
-      <td rowspan="2">1倍</td>
+      <td rowspan="2">1 倍</td>
     </tr>
     <tr>
       <td>28</td>
@@ -27,30 +29,32 @@
     </tr>
   </table>
 
-  <div class="emergency-hint" style="margin-top: 12px;">
+  <div class="emergency-hint" style="margin-top: 12px">
     注：符合条件的会员仅限参与本活动一次，仅限领取一次优惠奖励。
   </div>
 
-
-  <el-dialog align-center centered class="winDialog" v-model="bonusOpened">
-    <div class="dialog-congrats">恭喜您，获得奖金</div>
-    <div class="hongbao-angbao">{{ winAmount }} 元</div>
-    <img src="../images/hongbaobonus.png">
-    <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png"></div>
-  </el-dialog>
+  <q-dialog align-center centered class="winDialog" v-model="bonusOpened">
+    <div class="blue-card">
+      <div class="dialog-congrats">恭喜您，获得奖金</div>
+      <div class="hongbao-angbao">{{ winAmount }} 元</div>
+      <img src="../images/hongbaobonus.png" />
+      <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png" /></div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
-import { eventapi } from "boot/axios"
-var qs = require("qs")
+import { eventapi } from "boot/axios";
+
+var qs = require("qs");
 const store = userStore();
 const $q = useQuasar();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const getBonus = (type) => {
-  eventapi.post("/first-bet/claim", qs.stringify({gameType: type})).then((res) => {
+  eventapi.post("/first-bet/claim", qs.stringify({ gameType: type })).then((res) => {
     if (res.code === 0) {
       winAmount.value = res.data;
       bonusOpened.value = true;
@@ -64,16 +68,10 @@ const getBonus = (type) => {
 
       bonusOpened.value = false;
     }
-  })
-}
+  });
+};
 
-const items = ref([
-  { bonusType: 'ESPORT' },
-  { bonusType: 'LIVE' },
-  { bonusType: 'POKER' },
-  { bonusType: 'SLOT' },
-  { bonusType: 'SPORT' },
-])
+const items = ref([{ bonusType: "ESPORT" }, { bonusType: "LIVE" }, { bonusType: "POKER" }, { bonusType: "SLOT" }]);
 const refreshBal = () => {
   store.getBalance();
   bonusOpened.value = false;
@@ -82,7 +80,7 @@ const refreshBal = () => {
 <style lang="scss" scoped>
 .newcomers-intro {
   font-family: Microsoft YaHei UI;
-  font-size: 32px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 31.92px;
   letter-spacing: 0.12em;
@@ -93,15 +91,14 @@ const refreshBal = () => {
     line-height: 31.92px;
     letter-spacing: 0.12em;
     text-align: center;
-    color: #FF881A;
-
+    color: #ff881a;
   }
 }
 .newcomers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   .item {
-    position:relative;
+    position: relative;
     cursor: pointer;
     img {
       width: 100%;
@@ -124,20 +121,20 @@ const refreshBal = () => {
   }
 }
 .emergency-hint {
-  font-size: 24px;
+  font-size: 16px;
   color: white;
   font-family: Microsoft YaHei UI;
 }
 .el-dialog.winDialog {
   background: unset;
-  background: #0D317399;
+  background: #0d317399;
   max-width: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px 0;
   .dialog-congrats {
-    color: #FFFFFFCC;
+    color: #ffffffcc;
     font-family: Microsoft YaHei UI;
     font-size: 24px;
     font-weight: 400;
@@ -148,10 +145,10 @@ const refreshBal = () => {
   .el-dialog__header {
     .el-dialog__headerbtn {
       .el-dialog__close {
-        background: #FFFFFF66;
+        background: #ffffff66;
         border-radius: 50%;
         padding: 3px;
-        color: #0D3173;
+        color: #0d3173;
         font-weight: bold;
       }
     }
@@ -159,7 +156,7 @@ const refreshBal = () => {
       display: none;
     }
   }
-  .el-dialog__body{
+  .el-dialog__body {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -169,12 +166,11 @@ const refreshBal = () => {
       width: 200px;
     }
     .hongbao-angbao {
-      color: #FAFF00;
+      color: #faff00;
       font-family: Microsoft YaHei UI;
       font-size: 24px;
       font-weight: 700;
       line-height: 31.92px;
-
     }
     .confirm {
       cursor: pointer;
@@ -184,43 +180,37 @@ const refreshBal = () => {
     }
   }
 }
-table {
-    width: 100%;
-    tr {
-      th,
-      td {
-        padding: 20px;
-        text-align: center;
-        font-size: 24px;
-      }
-      th {
-        background: #3998DC;
-        color: #ffffff;
-      }
-      &:nth-child(2) {
-        td {
-          border-top: 0;
-        }
-      }
-      &:last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-      td {
-        background: #2D517C6B;
-        color: #ffffff;
-        border: 2px solid #ffffff33;
-        &:first-child {
-          border-left: 0;
-          border-top: 0;
-          border-bottom: 0;
-        }
-        &:last-child {
-          border-right: 0;
-          border-bottom: 0;
-        }
-      }
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table th {
+  background-color: #3998dc;
+  color: #ffffff;
+}
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table td {
+  border: 1px solid #FFFFFF33;
+  color: #ffffff;
+}
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table tr {
+  &:nth-child(2) {
+    td {
+      border-top: 0;
     }
   }
+}
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table td {
+  background-color: #2d517c6b;
+
+  &:first-child {
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+  }
+  &:last-child {
+    border-right: 0;
+    border-bottom: 0;
+    border-top: 0;
+  }
+}
 </style>
