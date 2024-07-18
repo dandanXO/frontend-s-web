@@ -190,10 +190,10 @@
       </div> -->
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
-        <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount)
-          + (records.slotProfit - records.slotBetAmount - records.slotRollingAmount)
-          + (records.sportProfit - records.sportBetAmount - records.sportRollingAmount)
-          + (records.miniGameProfit - records.miniGameBetAmount - records.miniGameRollingAmount) }}</div>
+        <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount)
+          + (records.slotProfit - records.slotBetAmount)
+          + (records.sportProfit - records.sportBetAmount)
+          + (records.miniGameProfit - records.miniGameBetAmount) }}</div>
       </div>
     </div>
   </div>
