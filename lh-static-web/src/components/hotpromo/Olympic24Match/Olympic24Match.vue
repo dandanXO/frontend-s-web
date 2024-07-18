@@ -1,166 +1,156 @@
 <template>
-  <div class="nba24-match-box">
-    <div class="nba24-match-container">
-      <div class="nba24-match-game" v-for="(match, index) in matchList" :key="index">
-        <div class="nba24-match-game-status">进行中</div>
-        <div class="nba24-match-game-content">
-          <div class="nba24-match-game-content-left">
-            <div class="nba24-match-game-content-team">
-              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
+  <div class="olympic24-match-box">
+    <div class="olympic24-match-container">
+      <div class="olympic24-match-section">
+        <div class="olympic24-match-section-title">
+          <div><img src="../../../assets/promo/lh-olympic-match/section-title-img.png" /></div>
+          冠军竞猜
+        </div>
+        <div class="olympic24-match-game" v-for="(match, index) in matchList" :key="index">
+          <div class="olympic24-match-game-status">{{ match.matchTime }}</div>
+          <div class="olympic24-match-game-content">
+            <div class="olympic24-match-game-content-left">
+              <div class="olympic24-match-game-content-team">
+                <img :src="match.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
+                <div class="olympic24-match-game-content-team-name">{{ match.homeTeam }}</div>
+                <div
+                  v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
+                  class="olympic24-match-game-content-btn"
+                >
+                  已投票
+                </div>
+                <div
+                  v-else-if="match.teamChosen == null"
+                  class="olympic24-match-game-content-btn"
+                  @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+                >
+                  投票
+                </div>
+                <div v-else class="nba2-match-game-content-btn__pseudo" />
+              </div>
+            </div>
+            <div class="olympic24-match-game-content-center">
+              <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
+              <div class="olympic24-match-game-content-center-title">{{ match.title }}</div>
               <div
-                v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
-                class="nba24-match-game-content-btn"
+                v-if="match.teamChosen != null && match.teamChosen == 'DRAW'"
+                class="olympic24-match-game-content-btn"
               >
-                已投票
+                已投平局
               </div>
               <div
                 v-else-if="match.teamChosen == null"
-                class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+                class="olympic24-match-game-content-btn"
+                @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })"
               >
-                投票
+                平局
               </div>
               <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
-          </div>
-          <div class="nba24-match-game-content-center">
-            <div class="nba24-match-game-content-center-time">{{ match.matchTime }}</div>
-            <div class="nba24-match-game-content-center-schedule">季后总决赛</div>
-            <div v-if="match.teamChosen != null && match.teamChosen == 'DRAW'" class="nba24-match-game-content-btn">
-              已投平局
+            <div class="olympic24-match-game-content-right">
+              <div class="olympic24-match-game-content-team">
+                <img :src="match.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
+                <div class="olympic24-match-game-content-team-name">{{ match.awayTeam }}</div>
+                <div
+                  v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
+                  class="olympic24-match-game-content-btn"
+                >
+                  已投票
+                </div>
+                <div
+                  v-else-if="match.teamChosen == null"
+                  class="olympic24-match-game-content-btn"
+                  @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+                >
+                  投票
+                </div>
+                <div v-else class="nba2-match-game-content-btn__pseudo" />
+              </div>
             </div>
-            <div
-              v-else-if="match.teamChosen == null"
-              class="nba24-match-game-content-btn"
-              @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })"
-            >
-              平局
-            </div>
-            <div v-else class="nba2-match-game-content-btn__pseudo" />
           </div>
-          <div class="nba24-match-game-content-right">
+        </div>
+        <div class="olympic24-match-game-bottom">
+          <div class="olympic24-match-game-bottom-left-title">
+            注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
+          </div>
+          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
+        </div>
+      </div>
 
-            <div class="nba24-match-game-content-team">
-              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
-              <div
-                v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
-                class="nba24-match-game-content-btn"
-              >
-                已投票
-              </div>
-              <div
-                v-else-if="match.teamChosen == null"
-                class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
-              >
-                投票
-              </div>
-              <div v-else class="nba2-match-game-content-btn__pseudo" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="nba24-match-game-bottom">
-        <div class="nba24-match-game-bottom-left-title">
-          例：用户当日早盘投注 NBA 季后赛总决赛 30,000 元，且用户参与活动选择队伍胜利，用户则获得 188 元
-        </div>
-        <div class="nba24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
-      </div>
-      <div class="nba24-match-game-info">
+      <div class="olympic24-match-game-info">
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">
-            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。 每日最高可获 2,888 元。
-          </div>
+          <div class="right">活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金</div>
         </div>
-        <table class="nba24-match-game-info-table">
+        <table class="olympic24-match-game-info-table">
           <tr>
-            <th>有效投注</th>
-            <th>竞猜正确</th>
-            <th>竞猜失败</th>
-            <th>流水倍数</th>
+            <th>竞猜正确场次</th>
+            <th>投注反比</th>
+            <th>彩金上线</th>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
-            <td rowspan="10">5倍/不限场馆</td>
-          </tr>
-          <tr>
-            <td>≥1,500</td>
-            <td>18</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>≥3,000</td>
-            <td>28</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>≥5,000</td>
-            <td>38</td>
-            <td>18</td>
-          </tr>
-          <tr>
-            <td>≥10,000</td>
+            <td>≥3</td>
+            <td>0.8%</td>
             <td>88</td>
-            <td>58</td>
           </tr>
           <tr>
-            <td>≥30,000</td>
+            <td>≥5</td>
+            <td>1.0%</td>
             <td>188</td>
-            <td>88</td>
           </tr>
           <tr>
-            <td>≥80,000</td>
+            <td>≥6</td>
+            <td>1.5%</td>
             <td>388</td>
-            <td>188</td>
           </tr>
           <tr>
-            <td>≥150,000</td>
-            <td>588</td>
-            <td>288</td>
-          </tr>
-          <tr>
-            <td>≥500,000</td>
-            <td>1,088</td>
+            <td>≥8</td>
+            <td>3.0%</td>
             <td>888</td>
           </tr>
-          <tr>
-            <td>≥1,000,000</td>
-            <td>2,888</td>
-            <td>1,888</td>
-          </tr>
         </table>
+
+        <div class="olympic24-match-game-bottom">
+          <div class="olympic24-match-game-bottom-left-title">
+            <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">| 注意事项</div>
+            用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+          </div>
+        </div>
       </div>
-      <div class="nba24-match-game-bottom-rule">
+      <div class="olympic24-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金；
+            <div class="item-num">1</div>
+            活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
-          <div class="item">2.活动期间，每日符合条件的会员彩金于次日 24 小时内派发，彩金 5 倍流水即可提款；</div>
           <div class="item">
-            3.本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不
+            <div class="item-num">2</div>
+            活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；
+          </div>
+          <div class="item">
+            <div class="item-num">3</div>
+            活动期间会员竞猜正确场次≥3次且会员当日未进行世预赛投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+          </div>
+          <div class="item">
+            <div class="item-num">4</div>
+            本活动仅计算FB体育、IM体育、熊猫体育场馆世预赛总有效投注。沙巴体育与AP体育不在统计范围内；
+          </div>
+          <div class="item">
+            <div class="item-num">5</div>
+            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不
             计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70
             水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
           </div>
           <div class="item">
-            4.若指定赛事发生因故改期、未开盘或其他不可控原因导致活动不能如期进行，本站保有将根据具体情况取消优惠活动或采取其
-            他适当的措施；
+            <div class="item-num">6</div>
+            每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
           </div>
           <div class="item">
-            5.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不
-            通知的情况下冻结或关闭相关账户；
+            <div class="item-num">7</div>
+            为避免文字理解差异，本站保留该活动的最终解释权；
           </div>
-          <div class="item">
-            6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一 账户，若有违规者，将不享受此红利；
-          </div>
-          <div class="item">7.为避免文字理解差异，本站保留此活动最终解释权；</div>
         </div>
       </div>
 
@@ -169,7 +159,7 @@
         width="800px"
         align-center
         :close-on-click-modal="false"
-        class="nba24-match-table-record-dialog"
+        class="olympic24-match-table-record-dialog"
       >
         <template #header>
           <div class="title"></div>
@@ -186,7 +176,7 @@
             </thead>
             <tbody>
               <tr v-for="(record, index) in recordList" :key="index">
-                <td>{{ moment(record.createTime).format('YYYY-MM-DD HH:mm') }}</td>
+                <td>{{ moment(record.createTime).format("YYYY-MM-DD HH:mm") }}</td>
                 <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
                 <td>{{ displayTeamVictory(record) }}</td>
                 <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
@@ -244,13 +234,13 @@ const handleSubmitVote = () => {
   console.log(submitParam);
   submitNbaMatch(submitParam)
     .then((res) => {
-      if(res.code === 0) {
+      if (res.code === 0) {
         ElMessage.success({
           type: "success",
           message: "成功投票"
         });
-        getNbaMatchData()
-      }else {
+        getNbaMatchData();
+      } else {
         ElMessage.error(res.message);
       }
     })
@@ -262,10 +252,10 @@ const handleSubmitVote = () => {
     });
 };
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const displayTeamVictory = (record) => {
-  if(record.teamChosen === 'DRAW') return '平局'
-  return record.teamChosen + '胜'
+  if (record.teamChosen === "DRAW") return "平局";
+  return record.teamChosen + "胜";
 };
 const displayGuessResult = (record) => {
   if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
@@ -297,11 +287,11 @@ const getNbaMatchData = async () => {
   const res = await getNbaMatch();
   matchList.value = res.data.map((res) => ({
     ...res,
-    matchTime: moment(res.matchTime).locale("zh-cn").format("MMMDo HH:mm"),
+    matchTime: moment(res.matchTime).locale("zh-cn").format("YYYY年MMMDo HH:mm"),
     awayTeamIcon: imgURL + res.awayTeamIcon,
     homeTeamIcon: imgURL + res.homeTeamIcon
   }));
-}
+};
 
 onMounted(getNbaMatchData);
 
@@ -318,7 +308,7 @@ watch(tableRecordDialog, async () => {
 </script>
 
 <style scoped lang="scss">
-.nba24-match-box {
+.olympic24-match-box {
   font-family: PingFang TC;
   width: 100%;
   height: 100%;
@@ -326,23 +316,41 @@ watch(tableRecordDialog, async () => {
   justify-content: center;
   align-items: center;
 }
-.nba24-match-container {
+.olympic24-match-container {
   width: 1200px;
   height: 100%;
 }
 
-.nba24-match-game {
+.olympic24-match-section {
+  background-color: #f2f8fe;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+
+  .olympic24-match-section-title {
+    color: #000000;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+.olympic24-match-game {
   width: 100%;
   height: 302px;
   border-radius: 12px;
-  border: 1px solid #51acff;
+  // border: 1px solid #51acff;
   background-color: #fff;
   position: relative;
   margin-bottom: 12px;
-  .nba24-match-game-status {
-    width: 240px;
+  .olympic24-match-game-status {
+    width: 280px;
     height: 40px;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    // background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     font-size: 20px;
     font-weight: 500;
     line-height: 28px;
@@ -353,33 +361,38 @@ watch(tableRecordDialog, async () => {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     position: absolute;
-    top: 0;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
+
+    background-image: url("../../../assets/promo/lh-olympic-match/date-header.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
 }
 
-.nba24-match-game-content {
+.olympic24-match-game-content {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: end;
   padding-bottom: 40px;
+  margin-top: 40px;
 
-  .nba24-match-game-content-left,
-  .nba24-match-game-content-right {
+  .olympic24-match-game-content-left,
+  .olympic24-match-game-content-right {
     flex: 1;
-    .nba24-match-game-content-team {
+    .olympic24-match-game-content-team {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      .nba24-match-game-icon {
+      .olympic24-match-game-icon {
         width: 80px;
         height: 80px;
       }
-      .nba24-match-game-content-team-name {
+      .olympic24-match-game-content-team-name {
         font-size: 20px;
         font-weight: 600;
         line-height: 28px;
@@ -388,14 +401,14 @@ watch(tableRecordDialog, async () => {
       }
     }
   }
-  .nba24-match-game-content-center {
+  .olympic24-match-game-content-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex: 1;
 
-    .nba24-match-game-content-center-time {
+    .olympic24-match-game-content-center-time {
       font-size: 24px;
       font-weight: 600;
       line-height: 33.6px;
@@ -405,47 +418,63 @@ watch(tableRecordDialog, async () => {
       background: #edf4ff;
       margin-bottom: 15px;
     }
-    .nba24-match-game-content-center-schedule {
-      font-size: 20px;
+    .olympic24-match-game-content-center-venue {
+      font-size: 18px;
       font-weight: 600;
       line-height: 28px;
-      color: #1b1b1b99;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+    .olympic24-match-game-content-center-title {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #000000;
       margin-bottom: 33px;
     }
   }
 }
 
-.nba24-match-game-content-btn {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 28px;
-  color: #00000066;
-  background-image: url("../../../assets/promo/lh-nba24-match/btn.png");
+.olympic24-match-game-content-btn {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  color: #000000;
+  background-color: #f2f2f2;
+  // background-image: url("../../../assets/promo/lh-olympic-match/active-btn.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 180px;
-  height: 58px;
+  height: 40px;
+  border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: 0.3 all;
+
+  &:hover,
+  &:focus {
+    color: #ffffff;
+    background-image: url("../../../assets/promo/lh-olympic-match/active-btn.png");
+  }
 }
 
 .nba2-match-game-content-btn__pseudo {
   height: 58px;
 }
 
-.nba24-match-game-bottom {
+.olympic24-match-game-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .nba24-match-game-bottom-left-title {
+  .olympic24-match-game-bottom-left-title {
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;
-    color: #000000;
+    color: #00000099;
   }
-  .nba24-match-game-bottom-left-btn {
+  .olympic24-match-game-bottom-left-btn {
     font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
@@ -454,7 +483,7 @@ watch(tableRecordDialog, async () => {
   }
 }
 
-.nba24-match-game-info {
+.olympic24-match-game-info {
   width: 100%;
   height: 100%;
   margin-top: 40px;
@@ -465,27 +494,30 @@ watch(tableRecordDialog, async () => {
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
+  gap: 20px;
 
   .title {
-    background-image: url("../../../assets/promo/lh-nba24-match/info-title.png");
+    background-image: url("../../../assets/promo/lh-olympic-match/info-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 738px;
     height: 44px;
-    margin-bottom: 40px;
+    // margin-bottom: 40px;
+    margin: 0 auto 40px;
   }
   .little-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    margin-right: auto;
     .left {
-      background-image: url("../../../assets/promo/lh-nba24-match/info-little-title-bg.png");
+      background-image: url("../../../assets/promo/lh-olympic-match/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 120px;
-      height: 46px;
+      height: 36px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -504,7 +536,7 @@ watch(tableRecordDialog, async () => {
   }
 }
 
-.nba24-match-game-info-table {
+.olympic24-match-game-info-table {
   width: 100%;
   height: 100%;
   border-collapse: separate;
@@ -529,14 +561,14 @@ watch(tableRecordDialog, async () => {
     &:last-child {
       td {
         &:first-child {
-          border-bottom-left-radius: 12px;
+          // border-bottom-left-radius: 12px;
         }
       }
     }
     &:nth-child(2) {
       td {
         &:last-child {
-          border-bottom-right-radius: 12px;
+          // border-bottom-right-radius: 12px;
         }
       }
     }
@@ -551,7 +583,7 @@ watch(tableRecordDialog, async () => {
   }
 }
 
-.nba24-match-game-bottom-rule {
+.olympic24-match-game-bottom-rule {
   width: 100%;
   height: 100%;
   margin-top: 40px;
@@ -564,7 +596,7 @@ watch(tableRecordDialog, async () => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/promo/lh-nba24-match/rule-title.png");
+    background-image: url("../../../assets/promo/lh-olympic-match/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 738px;
@@ -577,13 +609,30 @@ watch(tableRecordDialog, async () => {
     line-height: 36px;
     color: #000000;
     .item {
-      text-indent: -16px;
+      // text-indent: -16px;
       padding-left: 24px;
+      display: flex;
+      gap: 10px;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      }
     }
   }
 }
 
-:deep(.nba24-match-table-record-dialog) {
+:deep(.olympic24-match-table-record-dialog) {
   width: 1000px;
   height: 652px;
   .el-dialog__header {
@@ -593,7 +642,7 @@ watch(tableRecordDialog, async () => {
     justify-content: center;
   }
   .el-dialog__header .el-dialog__headerbtn {
-    background: url(../../../assets/promo/lh-nba24-match/close-btn.png);
+    background: url(../../../assets/promo/lh-olympic-match/close-btn.png);
     content-visibility: hidden;
     background-size: contain;
     width: 24px;
@@ -611,7 +660,7 @@ watch(tableRecordDialog, async () => {
   }
 
   .title {
-    background-image: url("../../../assets/promo/lh-nba24-match/record-title.png");
+    background-image: url("../../../assets/promo/lh-olympic-match/record-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 536px;
