@@ -305,20 +305,6 @@ const loadCustomerAddress = () => {
     });
 };
 
-const loadSocialMediaLinks = () => {
-  cached
-    .get("socialMediaLinks", () =>
-      api.get("/config/uiconfigs").then((res) => {
-        return res;
-      })
-    )
-    .then((data) => {
-      // console.log("socialMediaLinks", data);
-      ui.instagramUrl = data.instagram;
-      ui.tiktokUrl = data.tiktok;
-      ui.whatsappUrl = data.whatsapp;
-    });
-};
 
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
@@ -476,7 +462,6 @@ onMounted(() => {
 
   checkTopDownloadAppear();
   loadCustomerAddress();
-  loadSocialMediaLinks();
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";

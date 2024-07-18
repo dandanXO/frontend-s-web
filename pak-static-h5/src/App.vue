@@ -15,6 +15,7 @@ import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
+import { cached } from "boot/cache";
 
 export default defineComponent({
   name: "App",
@@ -251,6 +252,21 @@ export default defineComponent({
       }
     };
 
+    const loadSocialMediaLinks = async () => {
+      cached
+        .get("socialMediaLinks", () =>
+          api.get("/config/uiconfigs").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          // console.log("socialMediaLinks", data);
+          ui.instagramUrl = data.instagram;
+          ui.tiktokUrl = data.tiktok;
+          ui.whatsappUrl = data.whatsapp;
+        });
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -259,6 +275,7 @@ export default defineComponent({
       // getCSA();
       getAppInfo();
       initOrientation();
+      loadSocialMediaLinks();
 
       if (isAndroid()) {
         document.addEventListener(
@@ -279,7 +296,10 @@ export default defineComponent({
       setInterval(getOnlineStatApi, 60000);
     });
 
-    watch(() => ui.shouldFetchDownloadAppUrl, (value) => value && ui.getTopDownloadUrl())
+    watch(
+      () => ui.shouldFetchDownloadAppUrl,
+      (value) => value && ui.getTopDownloadUrl()
+    );
   }
 });
 
