@@ -1,7 +1,6 @@
 <template>
   <div class="olympic24-match-box">
     <div class="olympic24-match-container">
-
       <div class="olympic24-match-game-info">
         <div class="title"></div>
         <div class="little-title">
@@ -10,7 +9,9 @@
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金</div>
+          <div class="right">
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+          </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
@@ -47,7 +48,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="olympic24-match-section">
         <div class="olympic24-match-section-title">
           <div><img src="../../../assets/promo/lh-olympic-match/section-title-img.png" /></div>
@@ -69,7 +70,7 @@
                 <div
                   v-else-if="match.teamChosen == null"
                   class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.homeTeam })"
                 >
                   投票
                 </div>
@@ -78,9 +79,9 @@
             </div>
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
-              <div class="olympic24-match-game-content-center-title">{{ match.title }}</div>
+              <div class="olympic24-match-game-content-center-title">{{ match.quizTitle }}</div>
               <div
-                v-if="match.teamChosen != null && match.teamChosen == 'DRAW'"
+                v-if="match.teamChosen != null && match.teamChosen == 'draw'"
                 class="olympic24-match-game-content-btn active"
               >
                 已投平局
@@ -88,7 +89,7 @@
               <div
                 v-else-if="match.teamChosen == null"
                 class="olympic24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })"
+                @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: 'draw' })"
               >
                 平局
               </div>
@@ -107,7 +108,7 @@
                 <div
                   v-else-if="match.teamChosen == null"
                   class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.awayTeam })"
                 >
                   投票
                 </div>
@@ -144,7 +145,9 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不 计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70 水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
+            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不
+            计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70
+            水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -249,7 +252,7 @@
       <q-dialog v-model="confirmVoteDialog" persistent>
         <q-card class="confirm-vote-card">
           <q-card-section class="q-mb-md row justify-center">
-            <div class="text-h6" v-if="submitParam.team === 'DRAW'">您确定要投"平局"吗？</div>
+            <div class="text-h6" v-if="submitParam.team === 'draw'">您确定要投"平局"吗？</div>
             <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
           </q-card-section>
 
@@ -268,7 +271,13 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
-import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
+import {
+  getBBDachaUpcoming,
+  getBBDachaAnsweredRecords,
+  submitBBDacha,
+  getBBDachaRecordsCount
+} from "../../../api/index/promo";
+// import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 import { useQuasar } from "quasar";
 import { useLocalStorage } from "@vueuse/core";
 const $q = useQuasar();
@@ -280,7 +289,7 @@ const matchList = ref([]);
 
 const recordList = ref([]);
 
-let submitParam = reactive({ matchId: 0, team: "" });
+let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
@@ -289,7 +298,7 @@ const handleVoteClick = (selectedData) => {
 
 const handleSubmitVote = () => {
   console.log(submitParam);
-  submitNbaMatch(submitParam)
+  submitBBDacha(submitParam)
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -315,13 +324,13 @@ const handleSubmitVote = () => {
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const displayTeamVictory = (record) => {
-  if (record.teamChosen === "DRAW") return "平局";
+  if (record.teamChosen === "draw") return "平局";
   return record.teamChosen + "胜";
 };
 const displayGuessResult = (record) => {
   if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
     return { text: "结果未出", color: "#7a8eb9" };
-  } else if (record.teamChosen === "DRAW") {
+  } else if (record.teamChosen === "draw") {
     if (record.homeTeamResult === record.awayTeamResult) {
       return { text: "正确", color: "#51acff" };
     } else {
@@ -345,7 +354,7 @@ const displayGuessResult = (record) => {
 };
 
 const getNbaMatchData = async () => {
-  const res = await getNbaMatch();
+  const res = await getBBDachaUpcoming();
   matchList.value = res.data.map((res) => ({
     ...res,
     matchTime: moment(res.matchTime).locale("zh-cn").format("MMMDo HH:mm"),
@@ -358,8 +367,8 @@ onMounted(getNbaMatchData);
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {
-    const res = await getNbaRecord();
-    recordList.value = res.data.map((res) => ({
+    const res = await getBBDachaAnsweredRecords();
+    recordList.value = res.data.records.map((res) => ({
       ...res,
       updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
     }));

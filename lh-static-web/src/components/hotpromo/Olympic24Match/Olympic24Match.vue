@@ -9,7 +9,9 @@
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金</div>
+          <div class="right">
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+          </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
@@ -67,7 +69,7 @@
                 <div
                   v-else-if="match.teamChosen == null"
                   class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.homeTeam })"
                 >
                   投票
                 </div>
@@ -76,7 +78,7 @@
             </div>
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
-              <div class="olympic24-match-game-content-center-title">{{ match.title }}</div>
+              <div class="olympic24-match-game-content-center-title">{{ match.quizTitle }}</div>
               <div
                 v-if="match.teamChosen != null && match.teamChosen == 'DRAW'"
                 class="olympic24-match-game-content-btn"
@@ -86,7 +88,7 @@
               <div
                 v-else-if="match.teamChosen == null"
                 class="olympic24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })"
+                @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: 'draw' })"
               >
                 平局
               </div>
@@ -105,7 +107,7 @@
                 <div
                   v-else-if="match.teamChosen == null"
                   class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.awayTeam })"
                 >
                   投票
                 </div>
@@ -142,7 +144,9 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不 计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70 水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
+            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不
+            计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70
+            水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -199,8 +203,8 @@
         </div>
       </el-dialog>
       <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
-        <div class="dialog-header" v-if="submitParam.team === 'DRAW'">您确定要投"平局"吗？</div>
-        <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+        <div class="dialog-header" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+        <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
         <div class="dialog-footer">
           <el-button color="grey" @click="confirmVoteDialog = false">取消</el-button>
           <el-button type="primary" @click="handleSubmitVote()">确定</el-button>
@@ -213,7 +217,13 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
-import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
+// import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
+import {
+  getBBDachaUpcoming,
+  getBBDachaAnsweredRecords,
+  submitBBDacha,
+  getBBDachaRecordsCount
+} from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -224,7 +234,7 @@ const matchList = ref([]);
 
 const recordList = ref([]);
 
-let submitParam = reactive({ matchId: 0, team: "" });
+let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
@@ -233,7 +243,7 @@ const handleVoteClick = (selectedData) => {
 
 const handleSubmitVote = () => {
   console.log(submitParam);
-  submitNbaMatch(submitParam)
+  submitBBDacha(submitParam)
     .then((res) => {
       if (res.code === 0) {
         ElMessage.success({
@@ -285,7 +295,7 @@ const displayGuessResult = (record) => {
 };
 
 const getNbaMatchData = async () => {
-  const res = await getNbaMatch();
+  const res = await getBBDachaUpcoming();
   matchList.value = res.data.map((res) => ({
     ...res,
     matchTime: moment(res.matchTime).locale("zh-cn").format("YYYY年MMMDo HH:mm"),
@@ -298,9 +308,9 @@ onMounted(getNbaMatchData);
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {
-    const res = await getNbaRecord();
+    const res = await getBBDachaAnsweredRecords();
 
-    recordList.value = res.data.map((res) => ({
+    recordList.value = res.data.records.map((res) => ({
       ...res,
       updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
     }));
