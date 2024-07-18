@@ -67,6 +67,7 @@ export default {
     page_modal_bank_card_list: "은행 카드 목록",
     page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
+    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
     // page modal end
     // game category start
     game_category_live: `라이브
@@ -238,9 +239,15 @@ export default {
     password_password_mismatch: "비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다",
     password_change_password: "변경완료",
     // password end
-    // page modal start
-    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
-    // page modal end
+    // redeem point start
+    redeem_point_pending_list: "보류 목록",
+    redeem_point_redeem: "상환하다",
+    redeem_point_points: "포인트들",
+    redeem_point_date: "날짜",
+    redeem_point_source: "원천",
+    redeem_point_condition: "탈퇴 조건",
+    redeem_point_actions: "액션 버튼",
+    // redeem point end
     file_too_large_or_invalid_file: "파일이 너무 크거나 잘못된 파일입니다. 새 파일을 업로드하세요.",
     langVal: "en",
     register: "Register",
@@ -843,6 +850,7 @@ export default {
     34002: "생일에 수령하십시오",
     35000: "35000 회원은 이 혜택을 받을 수 없음",
     35001: "회원이 이미 이 혜택을 받았음",
-    35002: "자격이 있는"
+    35002: "자격이 있는",
+    40006: "회원포인트가 부족합니다.",
   }
 };
