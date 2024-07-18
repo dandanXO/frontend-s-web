@@ -1,6 +1,6 @@
 export default {
   lang: {
-    langVal: "vi",
+    langVal: "kr",
     app_download_title: "앱 다운로드",
     app_download_desc: "아시아 1위 라이브 베팅",
     dowload_now: "지금 다운로드",
