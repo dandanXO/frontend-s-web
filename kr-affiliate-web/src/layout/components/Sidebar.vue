@@ -28,6 +28,16 @@
           </div>
         </div>
       </div>
+      <div class="row-item">
+        <div class="balance-item" @click="redeemDialogVisible = true">
+          <span>Balance 1</span>
+          <span>1000</span>
+        </div>
+        <div class="balance-item" @click="redeemDialogVisible = true">
+          <span>Balance 2</span>
+          <span>2000</span>
+        </div>
+      </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
           <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
@@ -60,6 +70,18 @@
       </div>
     </div>
   </nav>
+
+  <el-dialog :title="'Redeem Point'" v-model="redeemDialogVisible" width="580px" append-to-body>
+    <p>Your current point : <b>100</b></p>
+    <p>Do you want to redeem?</p>
+
+    <div class="redeemDialogActionButtons">
+      <el-button size="normal" @click="redeemDialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button size="normal" type="primary" @click="() => { }">{{ $t('fields.confirm') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -83,6 +105,7 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const navigationData = ref([])
+const redeemDialogVisible = ref(false);
 
 const store = useStore()
 
@@ -574,6 +597,12 @@ watch(languageVal, newVal => {
         display: flex;
         gap: 10px;
       }
+
+      .balance-item {
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Jura';
+      }
     }
 
     .name-and-logout {
@@ -685,5 +714,10 @@ watch(languageVal, newVal => {
       }
     }
   }
+}
+
+.redeemDialogActionButtons {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

@@ -2345,6 +2345,7 @@ export default {
     'Member Rollover Record': '会员流水记录',
     'Member Distribute Privilege': '会员发放奖金',
     'Member Profit Ranking': '盈利排名',
+    'Member Affiliate Change Log': '会员代理更换记录',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',
