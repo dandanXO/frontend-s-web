@@ -406,7 +406,7 @@ watch(tableRecordDialog, async () => {
 
 .olympic24-match-game {
   width: 100%;
-  height: 158px;
+  height: 144px;
   border-radius: 12px;
   // border: 1px solid #51acff;
   background-color: #fff;
