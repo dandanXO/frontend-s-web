@@ -227,10 +227,10 @@
               <th scope="col">{{ t('fields.sequence') }}</th>
               <th scope="col">{{ t('fields.loginName') }}</th>
               <th scope="col">{{ t('fields.balance') }}</th>
+              <th scope="col">{{ t('statsHeader.memberPoint') }}</th>
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
               <th scope="col">{{ t('fields.netProfit') }}</th>
-              <th scope="col">{{ t('fields.pendingRebate') }}</th>
               <!-- <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th> -->
@@ -288,6 +288,11 @@
                 <td :data-label="t('fields.balance')" rowspan="4">
                   <div v-formatter="{ data: item.balance, type: 'money' }" />
                 </td>
+                <td :data-label="t('statsHeader.memberPoint')" rowspan="4">
+                  <div
+                    v-formatter="{ data: item.point, type: 'money' }"
+                  />
+                </td>
                 <td :data-label="t('fields.totalDeposit')" rowspan="4">
                   <div
                     v-formatter="{ data: item.totalDeposit, type: 'money' }"
@@ -301,11 +306,6 @@
                 <td :data-label="t('fields.netProfit')" rowspan="4">
                   <div
                     v-formatter="{ data: item.revenueShare, type: 'money' }"
-                  />
-                </td>
-                <td :data-label="t('fields.pendingRebate')" rowspan="4">
-                  <div
-                    v-formatter="{ data: item.pendingRebate, type: 'money' }"
                   />
                 </td>
                 <td :data-label="t('fields.gameType')">
