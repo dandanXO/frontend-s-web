@@ -166,6 +166,7 @@
                   style="display: block; width: 100%"
                 />
               </div>
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
               <div
                 class="inner"
                 :class="{
@@ -267,11 +268,13 @@ import { useLocalStorage } from "@vueuse/core";
 
 import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
+import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const store = userStore();

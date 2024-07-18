@@ -93,6 +93,7 @@
             "
           ></div>
         </div>
+        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
         <div
           class="inner"
           :style="{
@@ -182,10 +183,13 @@ import { useDark } from "@vueuse/core";
 
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
+import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const isDark = useDark();
