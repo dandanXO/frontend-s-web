@@ -155,7 +155,7 @@ const claimPromo= () => {
   letter-spacing: 0.12em;
   text-align: left;
   color: #ffffff;
-  margin: 30px 0 60px;
+  margin: 30px 0 0;
   background-color: #2d517c6b;
   padding: 20px;
   &__rule-title {
@@ -178,36 +178,41 @@ const claimPromo= () => {
   }
 }
 
-.promo-container .selected-promo .selected-promo-wrapper .inner table th {
-  background-color: #3998dc;
-  color: #ffffff;
-}
-
-.promo-container .selected-promo .selected-promo-wrapper .inner table td {
-  border: 1px solid #FFFFFF33;
-  color: #ffffff;
-}
-
-.promo-container .selected-promo .selected-promo-wrapper .inner table tr {
-  &:nth-child(2) {
+.promo-container .selected-promo .selected-promo-wrapper .inner table {
+  tr {
+    th,
     td {
-      border-top: 0;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
     }
-  }
-}
-
-.promo-container .selected-promo .selected-promo-wrapper .inner table td {
-  background-color: #2d517c6b;
-
-  &:first-child {
-    border-left: 0;
-    border-top: 0;
-    border-bottom: 0;
-  }
-  &:last-child {
-    border-right: 0;
-    border-bottom: 0;
-    border-top: 0;
+    th {
+      background: #3998dc;
+      color: #ffffff;
+    }
+    &:nth-child(2) {
+      td {
+        border-top: 0;
+      }
+    }
+    &:last-child {
+      td {
+        border-bottom: 0;
+      }
+    }
+    td {
+      background: #2d517c6b;
+      color: #ffffff;
+      border: 2px solid #ffffff33;
+      &:first-child {
+        border-left: 0;
+        border-top: 0;
+      }
+      &:last-child {
+        border-right: 0;
+        border-bottom: 0;
+      }
+    }
   }
 }
 </style>
