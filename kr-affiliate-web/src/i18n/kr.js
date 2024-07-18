@@ -668,6 +668,7 @@ export default {
     recycle: '머니회수',
     nickName: '별명',
     afterBalance: '잔액 후',
+    redeemPoint: '포인트 교환',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -829,6 +830,9 @@ export default {
     replySuccess: '성공적인 답변',
     confirmRecycle: '회원의 재활용 잔액 확인 ',
     recycleSuccess: '돈 회수 성공',
+    yourCurrentPoint: '현재 포인트 :',
+    confirmRedeem: '당신은 상환하고 싶나요 ?',
+    redeemSuccess: '성공적인 상환',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',
@@ -909,6 +913,7 @@ export default {
     602: '토큰 만료됨',
     603: '토큰을 찾을 수 없음',
     604: '계정이 이미 로그인됨',
+    608: '사용자 작업이 너무 빈번함',
     707: '잔액 부족',
     709: '대리점 수수료 잔액 부족',
     800: '인증 코드 실패',
@@ -951,5 +956,6 @@ export default {
     11013: '계열사 지분 비율은 우월 비율을 초과할 수 없습니다.',
     14012: '낮은 레벨의 제휴만 생성 가능',
     14013: '제휴사에는 다운라인이 있으므로 더 낮은 수준으로 설정할 수 없습니다.',
+    40006: '제휴사에 사용할 포인트가 부족합니다.',
   },
 }

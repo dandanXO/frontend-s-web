@@ -545,6 +545,7 @@ export default {
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
     confirm: "Confirm",
+    redeem: "Redeem",
     security_check: "Security Check",
     fish2_list: "Aviator",
     lottery_list: "Lottery",

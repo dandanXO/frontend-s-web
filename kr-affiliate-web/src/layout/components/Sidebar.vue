@@ -28,14 +28,14 @@
           </div>
         </div>
       </div>
-      <div class="row-item">
-        <div class="balance-item" @click="redeemDialogVisible = true">
-          <span>Balance 1</span>
-          <span>1000</span>
+      <div class="row-item" style="cursor: auto">
+        <div class="balance-item">
+          <span>{{ t('statsHeader.myMoney') }}</span>
+          <span>{{ affInfo.balance }}</span>
         </div>
-        <div class="balance-item" @click="redeemDialogVisible = true">
-          <span>Balance 2</span>
-          <span>2000</span>
+        <div class="balance-item" style="margin-top: 10px; cursor: pointer" @click="redeemDialogVisible = true">
+          <span>{{ t('statsHeader.myPoint') }}</span>
+          <span>{{ affInfo.point }}</span>
         </div>
       </div>
       <div class="row-item route-title">
@@ -71,15 +71,15 @@
     </div>
   </nav>
 
-  <el-dialog :title="'Redeem Point'" v-model="redeemDialogVisible" width="580px" append-to-body>
-    <p>Your current point : <b>100</b></p>
-    <p>Do you want to redeem?</p>
+  <el-dialog :title="t('fields.redeemPoint')" v-model="redeemDialogVisible" width="580px" append-to-body>
+    <p>{{ t('message.yourCurrentPoint') }} <b> {{ affInfo.point }}</b></p>
+    <p>{{ t('message.confirmRedeem') }}</p>
 
     <div class="redeemDialogActionButtons">
       <el-button size="normal" @click="redeemDialogVisible = false">
         {{ $t('fields.cancel') }}
       </el-button>
-      <el-button size="normal" type="primary" @click="() => { }">{{ $t('fields.confirm') }}</el-button>
+      <el-button size="normal" type="primary" @click="onRedeem" :disabled="affInfo.point <= 0">{{ $t('fields.confirm') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -96,9 +96,11 @@ import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
 import {
   getAffiliateBalance,
-  getAffiliateCommissionBalance,
+  getAffiliatePoint,
   getAffiliateInfo,
+  redeemPoint,
 } from '@/api/affiliate'
+import { ElMessage } from 'element-plus'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
 const { t } = useI18n()
@@ -124,6 +126,8 @@ const affInfo = reactive({
   commission: 0,
   revenueShare: 0,
   shareRatio: [],
+  balance: 0,
+  point: 0,
 })
 
 const handleLanguage = () => {
@@ -484,6 +488,15 @@ const getNavigationData = () => {
     },
   ]
 }
+const onRedeem = async () => {
+  await redeemPoint();
+  ElMessage({ message: t('message.redeemSuccess'), type: 'success' })
+  redeemDialogVisible.value = false
+  const { data: affBal } = await getAffiliateBalance(store.state.user.id)
+  affInfo.balance = affBal
+  const { data: affPoint } = await getAffiliatePoint()
+  affInfo.point = affPoint
+}
 onMounted(async () => {
   if (window.innerWidth < 768) {
     $('.navigation').animate({ width: 0 })
@@ -506,10 +519,9 @@ onMounted(async () => {
   setActiveNav()
 
   const { data: affBal } = await getAffiliateBalance(store.state.user.id)
-  const { data: commBal } = await getAffiliateCommissionBalance(
-    store.state.user.id
-  )
-  console.log({ affBal, commBal })
+  affInfo.balance = affBal
+  const { data: affPoint } = await getAffiliatePoint()
+  affInfo.point = affPoint
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]

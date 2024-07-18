@@ -128,3 +128,11 @@ export const getAffiliateTree = (affId) => {
 export const recycleMemberBalance = (recycleForm) => {
   return https().request(`/downline/${recycleForm.memberId}/recycleBalance?_method=PUT`, Method.POST, { amount: recycleForm.amount }, ContentType.form);
 };
+
+export const getAffiliatePoint = () => {
+  return https().request('/affiliate/point', Method.GET);
+};
+
+export const redeemPoint = () => {
+  return https().request('/affiliate/redeem-point?_method=PUT', Method.POST);
+};
