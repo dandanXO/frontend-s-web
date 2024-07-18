@@ -562,7 +562,7 @@ export default {
     please_enter_bank_account: "Please enter bank account",
     branch_not_required: "Branch (not required)",
     cancel: "취소",
-    confirm: "Confirm",
+    confirm: "확인하다",
     security_check: "Security Check",
     fish2_list: "Aviator",
     lottery_list: "Lottery",

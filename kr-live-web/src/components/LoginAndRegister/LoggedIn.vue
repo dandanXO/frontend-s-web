@@ -12,7 +12,7 @@
           <span>원</span>
         </div>
       </div>
-      <div class="money">
+      <div class="money" @click="redeemDialogVisible = true" style="cursor:pointer;">
         <img src="../../assets/images/login/money.svg" alt="" />
         <div>
           {{ store.pendingRebateAmt }}
@@ -62,14 +62,32 @@
       </div>
     </div>
   </div>
+
+  <q-dialog v-model="redeemDialogVisible" no-route-dismiss persistent>
+    <q-card style="padding: 20px">
+      <p>Your current point : <b>100</b></p>
+      <p>Do you want to redeem?</p>
+
+      <div style="display:flex;justify-content: flex-end;">
+        <q-button class="primary-button yellow-square" @click="redeemDialogVisible = false">
+          {{ $t('lang.cancel') }}
+        </q-button>
+        <q-button class="primary-button blue-square" @click="() => { }">
+          {{ $t('lang.confirm') }}
+        </q-button>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 const props = defineProps(['isH5TopBar']);
 const store = userStore();
 const router = useRouter();
+const redeemDialogVisible = ref(false);
 
 const goToPersonalInfo = () => {
   router.push("/?page=personal/info");
