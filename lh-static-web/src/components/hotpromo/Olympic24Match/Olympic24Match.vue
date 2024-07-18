@@ -1,6 +1,51 @@
 <template>
   <div class="olympic24-match-box">
     <div class="olympic24-match-container">
+      <div class="olympic24-match-game-info">
+        <div class="title"></div>
+        <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">2024年7月26日—2024年8月12日</div>
+        </div>
+        <div class="little-title">
+          <div class="left">活动内容</div>
+          <div class="right">活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金</div>
+        </div>
+        <table class="olympic24-match-game-info-table">
+          <tr>
+            <th>竞猜正确场次</th>
+            <th>投注反比</th>
+            <th>彩金上限</th>
+          </tr>
+          <tr>
+            <td>≥3</td>
+            <td>0.8%</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>≥5</td>
+            <td>1.0%</td>
+            <td>188</td>
+          </tr>
+          <tr>
+            <td>≥6</td>
+            <td>1.5%</td>
+            <td>388</td>
+          </tr>
+          <tr>
+            <td>≥8</td>
+            <td>3.0%</td>
+            <td>888</td>
+          </tr>
+        </table>
+
+        <div class="olympic24-match-game-bottom">
+          <div class="olympic24-match-game-bottom-left-title">
+            <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
+            用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+          </div>
+        </div>
+      </div>
       <div class="olympic24-match-section">
         <div class="olympic24-match-section-title">
           <div><img src="../../../assets/promo/lh-olympic-match/section-title-img.png" /></div>
@@ -76,54 +121,12 @@
           <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
         </div>
       </div>
-
-      <div class="olympic24-match-game-info">
-        <div class="title"></div>
-        <div class="little-title">
-          <div class="left">活动内容</div>
-          <div class="right">活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金</div>
-        </div>
-        <table class="olympic24-match-game-info-table">
-          <tr>
-            <th>竞猜正确场次</th>
-            <th>投注反比</th>
-            <th>彩金上线</th>
-          </tr>
-          <tr>
-            <td>≥3</td>
-            <td>0.8%</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>≥5</td>
-            <td>1.0%</td>
-            <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>1.5%</td>
-            <td>388</td>
-          </tr>
-          <tr>
-            <td>≥8</td>
-            <td>3.0%</td>
-            <td>888</td>
-          </tr>
-        </table>
-
-        <div class="olympic24-match-game-bottom">
-          <div class="olympic24-match-game-bottom-left-title">
-            <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
-            用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
-          </div>
-        </div>
-      </div>
       <div class="olympic24-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -131,7 +134,7 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            活动期间会员竞猜正确场次≥3次且会员当日未进行世预赛投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            活动期间会员竞猜正确场次≥3次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -139,9 +142,7 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不
-            计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70
-            水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
+            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不 计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70 水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -327,6 +328,7 @@ watch(tableRecordDialog, async () => {
   padding: 30px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
+  margin-top: 40px;
 
   .olympic24-match-section-title {
     color: #000000;
@@ -510,8 +512,9 @@ watch(tableRecordDialog, async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    margin-right: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     .left {
       background-image: url("../../../assets/promo/lh-olympic-match/info-little-title-bg.png");
       background-repeat: no-repeat;
