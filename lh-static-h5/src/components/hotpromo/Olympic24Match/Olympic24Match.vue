@@ -113,7 +113,7 @@
 
         <div class="olympic24-match-game-bottom">
           <div class="olympic24-match-game-bottom-left-title">
-            <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">| 注意事项</div>
+            <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
             用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
           </div>
         </div>
@@ -380,7 +380,7 @@ watch(tableRecordDialog, async () => {
 .olympic24-match-section {
   background-color: #f2f8fe;
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  padding: 20px 20px;
+  padding: 20px 8px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
 
