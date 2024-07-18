@@ -2211,6 +2211,7 @@ export default {
     'Member Rollover Record': '회원 롤오버 기록',
     'Member Distribute Privilege': '회원 특권 배포',
     'Member Profit Ranking': '회원 수익 순위',
+    'Member Affiliate Change Log': 'Member Affiliate Change Log',
     Affiliate: '제휴사',
     'Affiliate Amount Adjust': '제휴사 금액 조정',
     'Affiliate Summary': '제휴사 요약',
