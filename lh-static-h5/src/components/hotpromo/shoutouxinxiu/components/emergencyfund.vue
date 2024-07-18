@@ -41,9 +41,9 @@
   </table>
   <div class="emergency-rules">
     <div class="emergency-rules__rule-title">
-      <img :src="require(`../images/title-left.png`)" alt="">
+      <img :src="require(`../images/title-left.png`)" alt="" style="width: 40px; margin-bottom: 0px;">
       活动规则
-      <img :src="require(`../images/title-right.png`)" alt="">
+      <img :src="require(`../images/title-right.png`)" alt="" style="width: 40px; margin-bottom: 0px;">
     </div>
     <ol class="emergency-rules__rule-content">
       <li>会员需每日通过点击【立即申请】按钮方可报名参与，未点击申请按钮视为自动放弃参与该活动；</li>
@@ -136,7 +136,7 @@ const claimPromo= () => {
 
 .emergency-intro {
   font-family: Microsoft YaHei UI;
-  font-size: 32px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 31.92px;
   letter-spacing: 0.12em;
@@ -149,7 +149,7 @@ const claimPromo= () => {
 }
 .emergency-rules {
   font-family: Microsoft YaHei UI;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 42.6px;
   letter-spacing: 0.12em;
@@ -159,15 +159,18 @@ const claimPromo= () => {
   background-color: #2d517c6b;
   padding: 20px;
   &__rule-title {
-    margin: 10px 0;
     text-align: center;
     background: linear-gradient(180deg, #FFFFFF 0%, #6CB8FF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    display: flex;
+    justify-content: center;
+    gap: 8px; 
+    align-items: center;
   }
   &__rule-content {
     font-family: Microsoft YaHei UI;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 31.95px;
     letter-spacing: 0.12em;
@@ -175,42 +178,36 @@ const claimPromo= () => {
   }
 }
 
-table {
-  width: 100%;
-  tr {
-    th,
+.promo-container .selected-promo .selected-promo-wrapper .inner table th {
+  background-color: #3998dc;
+  color: #ffffff;
+}
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table td {
+  border: 1px solid #FFFFFF33;
+  color: #ffffff;
+}
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table tr {
+  &:nth-child(2) {
     td {
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
+      border-top: 0;
     }
-    th {
-      background: #3998dc;
-      color: #ffffff;
-    }
-    &:nth-child(2) {
-      td {
-        border-top: 0;
-      }
-    }
-    &:last-child {
-      td {
-        border-bottom: 0;
-      }
-    }
-    td {
-      background: #2d517c6b;
-      color: #ffffff;
-      border: 2px solid #ffffff33;
-      &:first-child {
-        border-left: 0;
-        border-top: 0;
-      }
-      &:last-child {
-        border-right: 0;
-        border-bottom: 0;
-      }
-    }
+  }
+}
+
+.promo-container .selected-promo .selected-promo-wrapper .inner table td {
+  background-color: #2d517c6b;
+
+  &:first-child {
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+  }
+  &:last-child {
+    border-right: 0;
+    border-bottom: 0;
+    border-top: 0;
   }
 }
 </style>
