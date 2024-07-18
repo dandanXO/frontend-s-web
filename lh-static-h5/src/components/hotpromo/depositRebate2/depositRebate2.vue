@@ -60,13 +60,13 @@
           <td>588</td>
         </tr>
         <tr>
-          <td>EBPAY</td>
+          <td>808钱包</td>
           <td>1.0%</td>
           <td>任意金额</td>
           <td>200</td>
         </tr>
         <tr>
-          <td>OKPAY</td>
+          <td>EBPAY</td>
           <td>1.0%</td>
           <td>任意金额</td>
           <td>200</td>
@@ -84,22 +84,22 @@
           <td>200</td>
         </tr>
         <tr>
+          <td>OKPAY</td>
+          <td>1.0%</td>
+          <td>任意金额</td>
+          <td>200</td>
+        </tr>
+        <tr>
           <td>数字人民币</td>
           <td>1.0%</td>
-          <td>≥300</td>
+          <td>≥1,000</td>
           <td>100</td>
         </tr>
         <tr>
           <td>支付宝转卡</td>
-          <td>0.5%</td>
-          <td>任意金额</td>
+          <td>1.0%</td>
+          <td>≥1,000</td>
           <td>100</td>
-        </tr>
-        <tr>
-          <td>808钱包</td>
-          <td>1.5%</td>
-          <td>任意金额</td>
-          <td>200</td>
         </tr>
       </tbody>
     </table>
@@ -168,12 +168,12 @@ const depositCards = ref([
     content:
       `充值即送<em class="light-bg">1.0%</em>彩金数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥300元，即可享受存款金额的<em>1.0%</em>加码彩金，单日优惠最高上限100元`
   },
-  // {
-  //   code: "zfb",
-  //   title: "支付宝转卡",
-  //   content:
-  //     `充值即送<em class="light-bg">0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em>0.5%</em>的彩金返还，单日优惠最高上限100元`
-  // },
+  {
+    code: "zfb",
+    title: "支付宝转卡",
+    content:
+      `充值即送<em class="light-bg">0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em class="light-bg">0.5%</em>的彩金返还，单日优惠最高上限50元。`
+  },
   {
     code: "blbpay",
     title: "808钱包",
