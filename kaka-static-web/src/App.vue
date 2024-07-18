@@ -65,7 +65,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("KAKA Web")
+      console.log("KAKA Web 22");
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
