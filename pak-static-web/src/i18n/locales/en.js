@@ -884,6 +884,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
     21000: "This game is already in your favorite games list.",
