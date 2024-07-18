@@ -4,13 +4,7 @@ const randNum = Math.floor(Math.random() * 2) + 1;
 var next = urlLists[randNum - 1];
 var hostname = window.location.hostname;
 console.log(hostname);
-if (
-  hostname.indexOf("ft609.cc") > -1 ||
-  hostname.indexOf("ro396.cc") > -1 ||
-  hostname.indexOf("pt505.cc") > -1 ||
-  hostname.indexOf("ai007.cc") > -1 ||
-  hostname.indexOf("qa289.cc") > -1
-) {
+if (hostname.indexOf("ft609.cc") > -1 || hostname.indexOf("ro396.cc") > -1 || hostname.indexOf("pt505.cc") > -1) {
   next = "https://vb88123.com/register";
 }
 

@@ -773,10 +773,12 @@ export default {
     dailyFirstDepositLimit: 'Daily First Deposit Limit',
     dailyMinFirstDepositLimit: 'Daily Minimum First Deposit Limit',
     dailyMaxFirstDepositLimit: 'Daily Maximum First Deposit Limit',
+    dailyFirstDepositProbability: 'Daily First Deposit Probability',
     dailyMemberFailDeposit: 'Daily Member Fail Deposit',
     dailyFailWithdraw: 'Daily Fail Withdraw',
     dailyMax: 'Daily Max Spin',
     dailyMaxRegLimit: 'Daily Max Register Limit',
+    dailyRegProbabilty: 'Daily Register Probability',
     dailyMemberFailWithdraw: 'Daily Member Fail Withdraw',
     dailyRainDuration: 'Rain Duration',
     dailyRefreshDuration: 'Refresh Duration',
@@ -1021,6 +1023,7 @@ export default {
     jobType: 'Job Type',
     label: 'Label',
     labelCancel: 'cancel',
+    lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',
     lastDigitRules: 'Last Digit Red Packet Rules',
@@ -2358,6 +2361,8 @@ export default {
     validateMaxDayRegLimitRequired: 'Daily Maximum Register Limit is required',
     validateMinDayDepositAmountRequired: 'Daily Minimum Deposit Amount is required',
     validateMaxDayDepositAmountRequired: 'Daily Maximum Deposit Amount is required',
+    validateDayRegProbabilityRequired: 'Daily Register Probability is required',
+    validateDayDepositAmountProbabilityRequired: 'Daily First Deposit Probability is required',
   },
   menu: {
     undefined: '',
@@ -2652,6 +2657,8 @@ export default {
     if_not_google_auth_then:
       "If you haven't bound Google Authenticator, there's no need to fill it out.",
     google_auth_code: 'Enter 6 digits Google Authenticator Code',
+    register_count: "Today Register Count:",
+    register_limit: "Today Register Limit:"
   },
   posterType: {
     overall: 'Overall Referral',
@@ -2742,11 +2749,13 @@ export default {
     AGENT_SHARE_BET_RATIO_ESPORT: 'Bet Ratio-ESPORT',
     AGENT_SHARE_BET_RATIO_LIVE: 'Bet Ratio-LIVE',
     AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
+    AGENT_SHARE_BET_RATIO_CASUAL: 'Bet Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
     AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
+    AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
   },
   domainType: {
     LANDING: 'Landing',

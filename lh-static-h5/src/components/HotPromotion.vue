@@ -82,12 +82,14 @@
     <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && store.token" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && store.token" />
+    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2' && store.token" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess' && store.token" />
     <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu' && store.token" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
-    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -171,6 +173,7 @@ const LPLSummer2024 = defineAsyncComponent(() => import("../components/hotpromo/
 const IntelEls24 = defineAsyncComponent(() => import("../components/hotpromo/intel-els-24/intel-els-24.vue"));
 const DuanWuJiePromo = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
 const DepositRebates = defineAsyncComponent(() => import("../components/hotpromo/depositRebates/depositRebates.vue"));
+const DepositRebate2 = defineAsyncComponent(() => import("../components/hotpromo/depositRebate2/depositRebate2.vue"));
 const WinLossPromo = defineAsyncComponent(() => import("../components/hotpromo/winloss/WinLoss.vue"));
 const AijiasuPromo = defineAsyncComponent(() => import("../components/hotpromo/aijiasu/AijiasuPromo.vue"));
 const EuroRegen = defineAsyncComponent(() => import("../components/hotpromo/EuroRegen/EuroRegen.vue"));
@@ -178,6 +181,7 @@ const newplayerGuide = defineAsyncComponent(() => import("../components/hotpromo
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const OlympicCheckin = defineAsyncComponent(() => import("../components/hotpromo/olympic-checkin/OlympicCheckin.vue"));
 const ChallengeComebackPromo = defineAsyncComponent(() => import("../components/hotpromo/challengeComeback/ChallengeComeback.vue"));
+const OfficialGiftPromo = defineAsyncComponent(() => import("../components/hotpromo/officialGift/OfficialGiftPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -222,13 +226,15 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
+    DepositRebate2,
     WinLossPromo,
     AijiasuPromo,
     EuroRegen,
     newplayerGuide,
     OuZuLianPromo,
     OlympicCheckin,
-    ChallengeComebackPromo
+    ChallengeComebackPromo,
+    OfficialGiftPromo
   },
   props: {
     list: {

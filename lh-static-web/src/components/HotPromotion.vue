@@ -79,12 +79,14 @@
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && store.token" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
+    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
     <Aijiasu v-if="list.redirectUrl === 'lh1-aijiasu'" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -151,6 +153,7 @@ import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
+import DepositRebate2 from "../components/hotpromo/depositRebate2/depositRebate2.vue";
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
 import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
@@ -158,6 +161,7 @@ import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import OlympicCheckin from "../components/hotpromo/olympic-checkin/OlympicCheckin.vue";
 import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/ChallengeComeback.vue";
+import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue"
 
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
@@ -215,6 +219,7 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
+    DepositRebate2,
     HongBaoPreEurocup,
     WinLossPromo,
     MeiZhouBeiPromo,
@@ -222,7 +227,8 @@ export default defineComponent({
     EuroRegen,
     OuZuLianPromo,
     OlympicCheckin,
-    ChallengeComeBackPromo
+    ChallengeComeBackPromo,
+    OfficialGiftPromo
   },
   props: {
     list: {

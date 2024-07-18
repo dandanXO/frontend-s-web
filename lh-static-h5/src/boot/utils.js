@@ -1,6 +1,7 @@
 import { Platform } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { Notify } from 'quasar'
 
 
 export const MAIN = "MAIN";
@@ -129,10 +130,47 @@ export function getFormattedDateComponents(dateStr) {
     "星期日", "星期一", "星期二", "星期三",
     "星期四", "星期五", "星期六"
   ];
-  
+
   const month = months[date.getMonth()];
   const day = `${date.getDate()}日`;
   const weekday = weekdays[date.getDay()];
 
   return `${month}${day} ${weekday}`;
+}
+
+const requestClipboardPermission = () => {
+  return navigator.permissions.query({
+    name: 'clipboard-write',
+  })
+}
+
+export const writeClipboard = async (content) => {
+  try {
+    if (window.isSecureContext && navigator.clipboard) {
+      const permission = await requestClipboardPermission()
+      if (permission.state !== 'granted') throw new Error()
+      await navigator.clipboard.writeText(content)
+    } else {
+      const textArea = document.createElement('textarea')
+      textArea.value = content
+      textArea.style.position = 'absolute'
+      textArea.style.opacity = '0'
+      document.body.prepend(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      textArea.remove()
+    }
+    Notify.create({
+      type: "positive",
+      position: "top",
+      message: '复制成功'
+    })
+  } catch (error) {
+    Notify.create({
+      type: "negative",
+      timeout: 2500,
+      position: "top",
+      message: '复制失败',
+    })
+  }
 }

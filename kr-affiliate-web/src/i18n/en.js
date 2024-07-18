@@ -668,6 +668,8 @@ export default {
     recycle: 'Recycle',
     nickName: 'Nickname',
     afterBalance: 'After Balance',
+    memberShareRatio: 'Member Share Ratio',
+    editShareRatio: 'Edit Share Ratio',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -889,11 +891,13 @@ export default {
     AGENT_SHARE_BET_RATIO_ESPORT: 'Bet Ratio-ESPORT',
     AGENT_SHARE_BET_RATIO_LIVE: 'Bet Ratio-LIVE',
     AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
+    AGENT_SHARE_BET_RATIO_CASUAL: 'Bet Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
     AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
     AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
+    AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
   },
   sendMessageType: {
     NOTIFICATION: 'Notification',

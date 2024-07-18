@@ -668,6 +668,7 @@ export default {
     jobType: 'ประเภทงาน',
     label: 'ฉลาก',
     labelCancel: 'ยกเลิก',
+    lastDepositTime: 'Last Deposit Time',
     lastLogin: 'เข้าสู่ระบบครั้งล่าสุด',
     lastLoginAddress: 'ที่อยู่เข้าสู่ระบบล่าสุด',
     lastLoginIp: 'IP เข้าสู่ระบบล่าสุด',
@@ -1752,6 +1753,8 @@ export default {
     if_not_google_auth_then:
       'หากคุณไม่ได้ผูก Google Authenticator ก็ไม่จำเป็นต้องกรอก',
     google_auth_code: 'กรอกรหัส Google Authenticator 6 หลัก',
+    register_count: "จำนวนผู้ลงทะเบียนวันนี้",
+    register_limit: "จำนวนที่สามารถลงทะเบียนวันนี้"
   },
   loginDevice: {
     WEB: 'WEB',

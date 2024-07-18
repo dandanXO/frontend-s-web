@@ -1,8 +1,5 @@
 <template>
   <div class="main-section">
-    <q-ajax-bar ref="ajaxBarRef" position="top" size="5px" skip-hijack
-      style="background:linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%)" />
-
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)"
       :selectedCategory="currentSelectedMenu" data-aos="zoom-in-up" />
 
@@ -176,7 +173,6 @@ export default defineComponent({
     SlotGrid
   },
   setup() {
-    const ajaxBarRef = ref(null)
     const $q = useQuasar();
     const { t } = useI18n();
     const siteId = process.env.SITEID;
@@ -201,13 +197,9 @@ export default defineComponent({
         return;
       }
 
-      ajaxBarRef.value.start();
 
-      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus)?.then(() => {
-        ajaxBarRef.value.stop();
-      })?.catch(() => {
-        ajaxBarRef.value.stop();
-      });
+
+      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
     };
 
     const openGame = debounce((p) => {
@@ -223,7 +215,6 @@ export default defineComponent({
         return;
       }
 
-      ajaxBarRef.value.start();
       // debugger;
       console.log(p);
       const gameType = p.gameType;
@@ -240,11 +231,7 @@ export default defineComponent({
       }
 
 
-      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
-        ajaxBarRef.value.stop();
-      })?.catch(() => {
-        ajaxBarRef.value.stop();
-      });
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     }, 500);
 
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
@@ -260,13 +247,7 @@ export default defineComponent({
         return;
       }
 
-      ajaxBarRef.value.start();
-
-      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
-        ajaxBarRef.value.stop();
-      })?.catch(() => {
-        ajaxBarRef.value.stop();
-      });
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
@@ -612,7 +593,6 @@ export default defineComponent({
     };
 
     return {
-      ajaxBarRef,
       imageLoading,
       imgURL: process.env.IMAGE_CDN + "/promo/",
       gameImgURL: process.env.IMAGE_CDN + "/game/",
