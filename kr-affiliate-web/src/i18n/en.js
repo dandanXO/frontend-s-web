@@ -670,6 +670,7 @@ export default {
     afterBalance: 'After Balance',
     memberShareRatio: 'Member Share Ratio',
     editShareRatio: 'Edit Share Ratio',
+    redeemPoint: 'Redeem Point',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -837,6 +838,9 @@ export default {
     requiredPositiveInteger: 'Required Positive Integer',
     confirmRecycle: 'Confirm Recycle Balance for Member ',
     recycleSuccess: 'Recycle Success',
+    yourCurrentPoint: 'Your Current Point :',
+    confirmRedeem: 'Do you want to redeeem?',
+    redeemSuccess: 'Redeem Successful',
   },
   posterType: {
     OVERALL: 'Overall Referral',
@@ -918,6 +922,7 @@ export default {
     602: 'Token has expired',
     603: 'Token is missed',
     604: 'Account already login',
+    608: 'User Action Too Frequent',
     707: 'Insufficient balance',
     709: 'Insufficient commission balance',
     800: 'Captcha verification error',
@@ -960,5 +965,6 @@ export default {
     11013: 'Affiliate share ratio cannot exceed superior ratio',
     14012: 'Can only create affiliate with lower level',
     14013: 'Affiliate has downline, cannot set to lower level',
+    40006: 'Affiliate does not have enough point to redeem',
   },
 }
