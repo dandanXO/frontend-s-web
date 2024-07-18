@@ -63,7 +63,7 @@
     </div>
   </div>
 
-  <RedeemPointDialog :redeemDialogVisible="redeemDialogVisible" />
+  <RedeemPointDialog :redeemDialogVisible="redeemDialogVisible" :closeDialog="() => redeemDialogVisible = false" />
 </template>
 
 <script setup>

@@ -1,104 +1,129 @@
 <template>
     <q-dialog v-model="props.redeemDialogVisible" no-route-dismiss persistent>
-        <q-card style="padding: 20px">
-            <p>Your current point : <b>100</b></p>
-            <p>Do you want to redeem?</p>
-
-            <div style="display:flex;justify-content: flex-end;margin-bottom:20px;">
-                <q-button class="primary-button yellow-square" @click="redeemDialogVisible = false">
-                    {{ $t('lang.cancel') }}
-                </q-button>
-                <q-button class="primary-button blue-square" @click="() => { }">
-                    {{ $t('lang.confirm') }}
-                </q-button>
+        <div class="redeem-point-dialog-container">
+            <div class="header">
+                <div style="text-align: right;">
+                    <img class="header-close-btn" @click="props.closeDialog"
+                        src="../../assets/images/index/modal-close-btn.svg" />
+                </div>
             </div>
-
-            <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns" :dataState="tableData"
-                @onChangePage="(currentPage) => {
-                    pagination.current = currentPage;
-                    recordPage(pagination)
-                }">
-                <template #body-cell-operation="props">
-                    <q-td>
-                        <div style="display:flex;justify-content: flex-end;">
-                            <q-button style="min-width:60px;width:60px;height:30px;"
-                                class="primary-button yellow-square" @click="redeemDialogVisible = false">
-                                {{ $t('lang.cancel') }}
-                            </q-button>
-                            <q-button style="min-width:60px;width:60px;height:30px;" class="primary-button blue-square"
-                                @click="() => { }">
-                                {{ $t('lang.redeem') }}
-                            </q-button>
-                        </div>
-                    </q-td>
-                </template>
-            </DataTable>
-        </q-card>
+            <q-card style="padding: 20px;background-color: #212632;box-shadow: none;">
+                <div class="title">{{ $t('lang.redeem_point_pending_list') }}</div>
+                <DataTable :loading="isLoading" :pagination="pagination" :tableColumns="tableColumns"
+                    :dataState="tableData" @onChangePage="(currentPage) => {
+                        pagination.current = currentPage;
+                        recordPage(pagination)
+                    }">
+                    <template #body-cell-rollover="props">
+                        <q-td class="text-center">
+                            x{{ props?.props?.row.rollover }}
+                        </q-td>
+                    </template>
+                    <template #body-cell-operation="props">
+                        <q-td>
+                            <div style="display:flex;justify-content: flex-end;">
+                                <q-button style="min-width:60px;width:60px;height:30px;"
+                                    class="primary-button blue-square"
+                                    @click="redeemPoint(props?.props?.row.privilegeId)">
+                                    {{ $t('lang.redeem') }}
+                                </q-button>
+                            </div>
+                        </q-td>
+                    </template>
+                </DataTable>
+            </q-card>
+        </div>
     </q-dialog>
 </template>
 
 <script setup>
+import { watch, ref } from 'vue';
 import DataTable from 'components/transaction/DataTable';
+import { eventapi } from 'src/boot/axios';
 import { useI18n } from "vue-i18n";
 
+const isLoading = ref(false);
 const { t } = useI18n();
-const props = defineProps(['redeemDialogVisible']);
+const props = defineProps(['redeemDialogVisible', 'closeDialog']);
+
+const redeemPoint = (privilegeId) => {
+    eventapi.post("/member-point/redeem-point/" + privilegeId + "?_method=PUT")
+}
+
 const tableColumns = [
     {
-        label: 'point金额',
-        field: "point",
-        name: "point",
+        label: t('lang.redeem_point_points'),
+        field: "amount",
+        name: "amount",
         align: 'center'
     },
     {
-        label: '日期',
-        field: "date",
-        name: "date",
+        label: t('lang.redeem_point_date'),
+        field: "recordTime",
+        name: "recordTime",
         align: 'center'
     },
     {
-        label: '来源',
-        field: "source",
-        name: "source",
+        label: t('lang.redeem_point_source'),
+        field: "privilege",
+        name: "privilege",
         align: 'center'
     },
     {
-        label: '提款条件',
-        field: "condition",
-        name: "condition",
+        label: t('lang.redeem_point_condition'),
+        field: "rollover",
+        name: "rollover",
         align: 'center'
     },
     {
-        label: '操作按钮',
+        label: t('lang.redeem_point_actions'),
         field: "operation",
         name: "operation",
         align: 'center'
     },
 ];
-const tableData = [
-    {
-        point: 10000,
-        date: Date.now(),
-        source: '首存奖金',
-        condition: 'x5',
-        action: null,
-    },
-    {
-        point: 20000,
-        date: Date.now(),
-        source: '15分更新一次返水',
-        condition: 'x10',
-        action: null,
-    },
-    {
-        point: 30000,
-        date: Date.now(),
-        source: '代理转账',
-        condition: 'x15',
-        action: null,
-    },
-]
+const tableData = ref([]);
+
+const getTableData = () => {
+    isLoading.value = true;
+    eventapi.get("/member-point/pending-list").then((ret) => {
+        isLoading.value = false;
+
+        const res = ret.data;
+        if (res.code === 0) {
+            tableData.value = res.data;
+        }
+
+    }).catch(() => {
+        isLoading.value = false;
+    });
+}
+
+watch(() => props.redeemDialogVisible, () => {
+    if (props.redeemDialogVisible) {
+        getTableData();
+    }
+});
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.redeem-point-dialog-container {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        font-size: large;
+        padding: 5px 0;
+    }
+
+    .header-close-btn {
+        width: 40px;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(0.9);
+        }
+    }
+}
+</style>

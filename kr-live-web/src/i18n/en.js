@@ -66,6 +66,7 @@ export default {
     page_modal_bank_card_list: "Bank Card List",
     page_modal_transaction_record: "Transaction Record",
     page_modal_change_password: "Change Password",
+    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
     // page modal end
     // game category start
     game_category_live: `Live Casino`,
@@ -220,9 +221,15 @@ export default {
     password_password_mismatch: "Confirm Password must be the same as New Password",
     password_change_password: "Change password",
     // password end
-    // page modal start
-    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
-    // page modal end
+    // redeem point start
+    redeem_point_pending_list: "Pending List",
+    redeem_point_redeem: "Redeem",
+    redeem_point_points: "Points",
+    redeem_point_date: "Date",
+    redeem_point_source: "Source",
+    redeem_point_condition: "Condition",
+    redeem_point_actions: "Actions",
+    // redeem point end
     file_too_large_or_invalid_file: "File is too large/ invalid file, please upload a new file",
     langVal: "en",
     register: "Register",
@@ -831,6 +838,7 @@ export default {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege."
+    35011: "35011 Member cannot receive this privilege.",
+    40006: "Insufficient points",
   }
 };

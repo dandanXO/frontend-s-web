@@ -211,7 +211,7 @@ export const userStore = defineStore("userStore", {
     },
     getPendingRebateAmt() {
       if (this.token && !this.isOffline) {
-        api.get("/session/member/pendingRebateAmount", {
+        eventapi.get("/member-point", {
           params: {
             platform: "MAIN"
           }
