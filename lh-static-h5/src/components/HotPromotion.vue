@@ -72,6 +72,7 @@
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && store.token" />
     <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token" :promo-code="list.promoCode" />
     <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && store.token" />
+    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu' && store.token" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
@@ -163,6 +164,7 @@ const EuroCup2024 = defineAsyncComponent(() => import("../components/hotpromo/eu
 const EuroCup2024FirstShoot = defineAsyncComponent(() =>
   import("./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue")
 );
+const Shoutouxinxiu = defineAsyncComponent(() => import("./hotpromo/shoutouxinxiu/shoutouxinxiuA.vue"));
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
@@ -226,6 +228,7 @@ export default defineComponent({
     LOLMsi2024Promo,
     EuroCup2024,
     EuroCup2024FirstShoot,
+    Shoutouxinxiu,
     BlastPremierPromo,
     EurocupManual,
     SportZhongChao,

@@ -130,6 +130,7 @@
               selectedPromo.promoCode === 'lh1-aijiasu' ||
               selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            'shoutouxinxiu': selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
