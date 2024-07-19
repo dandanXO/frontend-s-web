@@ -14,7 +14,7 @@
         <img class="logo-img" @click="backHome" src="../assets/images/login/logo-login.png" />
       </div>
 
-      <img class="login-banner-img" src="../assets/images/login/login-banner-paris.png" />
+      <img class="login-banner-img" :src="bannerImage" />
 
       <q-form ref="loginFormRef" @submit="onSubmit">
         <div v-if="!loginType">
@@ -149,6 +149,7 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
+import {useLocalStorage} from "@vueuse/core"
 import qs from "qs";
 
 export default defineComponent({
@@ -177,6 +178,9 @@ export default defineComponent({
     const verificationRef = ref();
     const router = useRouter();
     const route = useRoute();
+
+    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+
     const getCode = () => {
       api
         .get("/member/verificationCode")
@@ -401,6 +405,19 @@ export default defineComponent({
         loginForm.summoner = summonCode;
       }
     };
+
+    const bannerImage = ref('')
+
+    const getBannerImage = () => {
+      api
+        .get("/promo/banner?category=LOGIN")
+        .then((res) => {
+          if (res.code === 0) {
+            bannerImage.value = imageDir + res.data[0].mobileImageUrl;
+          }
+        })
+        .catch(() => {});
+    };
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -411,6 +428,7 @@ export default defineComponent({
     onActivated(() => {
       getCode();
       getSummonCode();
+      getBannerImage();
     });
 
     return {
@@ -440,7 +458,8 @@ export default defineComponent({
       phoneVerificationImg,
       getInnerCode,
       isValidCnPhone,
-      telephoneRef
+      telephoneRef,
+      bannerImage
     };
   }
 });
