@@ -458,24 +458,17 @@ onMounted(() => {
         }
     }
 
-    .message-content-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        min-height: 100%;
-    }
-
     .message-actions {
         display: flex;
         justify-content: flex-end;
-
-        .message-action {
-            cursor: pointer;
-        }
     }
 
     .message-content-wrapper {
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-height: 100%;
 
         .date-time-wrapper {
             display: flex;

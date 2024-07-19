@@ -122,7 +122,7 @@ const logout = () => {
 const iconInfo = reactive([
   {
     info: 'lang.menu_announcement',
-    iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/loudspeaker-icon.svg"),
     page: 'announcement',
   },
   {
@@ -148,13 +148,13 @@ const iconInfo = reactive([
   {
     type: 'inquiry',
     info: "lang.menu_inquiry",
-    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/inquiry-icon.svg"),
     page: 'personal/inquiry',
   },
   {
     type: 'message',
     info: "lang.menu_message",
-    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/mails-icon.svg"),
     page: 'personal/message',
   },
 ]);
