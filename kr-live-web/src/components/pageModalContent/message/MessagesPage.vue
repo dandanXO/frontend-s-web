@@ -5,12 +5,12 @@
     <template v-else>
         <div class="message-page">
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;" v-if="!isCompose">
-                <div style="margin:0;" @click="isCompose = true">
+                <!-- <div style="margin:0;" @click="isCompose = true">
                     <div style="display:flex;align-items:center;gap:3px;cursor:pointer;">
                         <q-icon :name="'edit'" />
                         {{ $t('lang.message_compose') }}
                     </div>
-                </div>
+                </div> -->
 
                 <!-- <q-tabs v-model="inboxCategory" dense inline-label class="inbox-type-tabs">
                     <q-tab name="ALL">
@@ -393,7 +393,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     margin: 0;
-    height: calc(100% - 40px);
+    height: 100%;
 }
 
 .back-btn {
