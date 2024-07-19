@@ -263,21 +263,33 @@ const tableHeaders = computed(() => [
 const handleDateSelect = (value) => {
   switch (value) {
     case "today":
-      form.value.startDate = updateDate(0);
-      form.value.endDate = updateDate(0);
+      form.value.startDate = getTimeDiff(0);
+      form.value.endDate = getTimeDiff(0);
       getDownlineProfitSummary();
       break;
     case "yesterday":
-      form.value.startDate = updateDate(1);
-      form.value.endDate = updateDate(1);
+      form.value.startDate = getTimeDiff(1);
+      form.value.endDate = getTimeDiff(1);
       getDownlineProfitSummary();
       break;
     case "7days":
-      form.value.startDate = updateDate(7);
-      form.value.endDate = updateDate(0);
+      form.value.startDate = getTimeDiff(7);
+      form.value.endDate = getTimeDiff(0);
       getDownlineProfitSummary();
       break;
   }
+};
+
+const getTimeDiff = (val) => {
+  const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
+  const oldDate = new Date(gapDate);
+
+  const newDate = {
+    Y: oldDate.getFullYear() + "-",
+    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
+  };
+  return newDate.Y + newDate.M + newDate.D;
 };
 
 const searchByReferral = (props) => {
