@@ -153,6 +153,7 @@ export default {
     feedback_previous_page: "전 페이지로 이동",
     feedback_waiting_admin_reply: "답변대기",
     feedback_admin_replied: "답변완료",
+    feedback_delete_selected: "선택내역삭제",
     // feedback end
     // message start
     message_loading_content: "콘텐츠 로드 중...",

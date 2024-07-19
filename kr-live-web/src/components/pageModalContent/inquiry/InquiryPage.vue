@@ -55,11 +55,9 @@
               <div class="feedback-content-wrapper">
                 <div class="feedback-actions">
                   <q-btn-group flat>
-                    <q-btn size="md" :label="$t('lang.message_process_all_read')" @click="readMAllMessage" />
                     <q-btn v-if="selectedMessages?.length" size="md"
-                      :label="$t('lang.message_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
+                      :label="$t('lang.feedback_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
                       @click="deleteSelectedMessage" />
-                    <q-btn size="md" :label="$t('lang.message_delete_read')" />
                   </q-btn-group>
                 </div>
               </div>
@@ -110,6 +108,8 @@ const isFetchingContent = ref(false);
 const inquiriesList = ref([]);
 const replyInquiries = ref([]);
 
+const selectedMessages = computed(() => inquiriesList.value.records?.filter((item) => item.selected).map(({ id }) => id));
+
 const selectFirstFeedback = () => {
   if (inquiriesList.value.records) {
     // if don't have timeout, ellipsis for title won't show
@@ -131,6 +131,46 @@ onMounted(() => {
     selectFirstFeedback();
   }
 })
+
+const deleteSelectedMessage = () => {
+  const mailIdArr = selectedMessages.value;
+  const formattedIds = mailIdArr.join(",");
+  // api
+  //   .post(
+  //     "/session/inbox/deleteMultiple",
+  //     qs.stringify({
+  //       ids: formattedIds
+  //     })
+  //   )
+  //   .then((res) => {
+  //     const { code, data } = res.data
+
+  //     if (code === 0) {
+  //       $q.notify({
+  //         message: t('lang.message_delete_selected_message'),
+  //         type: "positive",
+  //         position: "top",
+  //         icon: "check_circle_outline"
+  //       });
+
+  //       const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
+  //       inboxMessages.value.records = newRecords
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+
+  const newRecords = inquiriesList.value.records.filter((data) => !selectedMessages.value.includes(data.id));
+  inquiriesList.value.records = newRecords
+
+  $q.notify({
+    message: "공사중",
+    type: "positive",
+    position: "top",
+    icon: "check_circle_outline"
+  });
+};
 
 const repliesOfInquiries = computed(() => replyInquiries.value.records.filter(({ id }) => id === selected.value.replyId));
 
