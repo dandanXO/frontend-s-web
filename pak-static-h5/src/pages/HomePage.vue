@@ -1316,6 +1316,11 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal">
+    <MoneyRainModal />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1338,6 +1343,7 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
+import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -1364,6 +1370,7 @@ const { t } = useI18n();
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
+const isMoneyRainModal = ref(true);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -4996,5 +5003,12 @@ const showCongratsModal = () => {
     justify-content: center;
     margin-top: 16px;
   }
+}
+
+.money-rain-close {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
