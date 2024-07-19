@@ -28,6 +28,16 @@
           </div>
         </div>
       </div>
+      <div class="row-item" style="cursor: auto">
+        <div class="balance-item">
+          <span>{{ t('statsHeader.myMoney') }}</span>
+          <span>{{ affInfo.balance }}</span>
+        </div>
+        <div class="balance-item" style="margin-top: 10px; cursor: pointer" @click="redeemDialogVisible = true">
+          <span>{{ t('statsHeader.myPoint') }}</span>
+          <span>{{ affInfo.point }}</span>
+        </div>
+      </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
           <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
@@ -60,6 +70,18 @@
       </div>
     </div>
   </nav>
+
+  <el-dialog :title="t('fields.redeemPoint')" v-model="redeemDialogVisible" width="580px" append-to-body>
+    <p>{{ t('message.yourCurrentPoint') }} <b> {{ affInfo.point }}</b></p>
+    <p>{{ t('message.confirmRedeem') }}</p>
+
+    <div class="redeemDialogActionButtons">
+      <el-button size="normal" @click="redeemDialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button size="normal" type="primary" @click="onRedeem" :disabled="affInfo.point <= 0">{{ $t('fields.confirm') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -74,15 +96,18 @@ import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
 import {
   getAffiliateBalance,
-  getAffiliateCommissionBalance,
+  getAffiliatePoint,
   getAffiliateInfo,
+  redeemPoint,
 } from '@/api/affiliate'
+import { ElMessage } from 'element-plus'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const navigationData = ref([])
+const redeemDialogVisible = ref(false);
 
 const store = useStore()
 
@@ -101,6 +126,8 @@ const affInfo = reactive({
   commission: 0,
   revenueShare: 0,
   shareRatio: [],
+  balance: 0,
+  point: 0,
 })
 
 const handleLanguage = () => {
@@ -461,6 +488,15 @@ const getNavigationData = () => {
     },
   ]
 }
+const onRedeem = async () => {
+  await redeemPoint();
+  ElMessage({ message: t('message.redeemSuccess'), type: 'success' })
+  redeemDialogVisible.value = false
+  const { data: affBal } = await getAffiliateBalance(store.state.user.id)
+  affInfo.balance = affBal
+  const { data: affPoint } = await getAffiliatePoint()
+  affInfo.point = affPoint
+}
 onMounted(async () => {
   if (window.innerWidth < 768) {
     $('.navigation').animate({ width: 0 })
@@ -483,10 +519,9 @@ onMounted(async () => {
   setActiveNav()
 
   const { data: affBal } = await getAffiliateBalance(store.state.user.id)
-  const { data: commBal } = await getAffiliateCommissionBalance(
-    store.state.user.id
-  )
-  console.log({ affBal, commBal })
+  affInfo.balance = affBal
+  const { data: affPoint } = await getAffiliatePoint()
+  affInfo.point = affPoint
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]
@@ -573,6 +608,12 @@ watch(languageVal, newVal => {
       .icon-wrapper {
         display: flex;
         gap: 10px;
+      }
+
+      .balance-item {
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Jura';
       }
     }
 
@@ -685,5 +726,10 @@ watch(languageVal, newVal => {
       }
     }
   }
+}
+
+.redeemDialogActionButtons {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

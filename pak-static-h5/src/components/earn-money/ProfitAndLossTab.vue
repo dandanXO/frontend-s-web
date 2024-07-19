@@ -199,6 +199,7 @@ import { DATE_FORMAT } from "../../constant/format";
 import { useI18n } from "vue-i18n";
 import { convertToCommaAmount, updateDate } from "src/boot/utils";
 import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 
 const { t } = useI18n();
 
@@ -380,7 +381,20 @@ const closeReferral = () => {
   getDownlineProfitSummary();
 };
 
+const $q = useQuasar();
+
 const handleSubmit = () => {
+  console.log(form.value);
+  if (form.value.startDate < "2024-07-10" || form.value.endDate < "2024-07-10") {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: t("error.15011"),
+      icon: "report_problem"
+    });
+    return;
+  }
+
   form.value.referrerId = "";
   referralName.value = "";
   getDownlineProfitSummary();

@@ -72,22 +72,26 @@
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && store.token" />
     <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token" :promo-code="list.promoCode" />
     <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && store.token" />
+    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu' && store.token" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && store.token" />
+    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match' && store.token" />
     <SlotLacky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token" :promo-code="list.promoCode" />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && store.token" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && store.token" />
     <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && store.token" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && store.token" />
+    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2' && store.token" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess' && store.token" />
     <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu' && store.token" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
-    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -115,6 +119,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 
+const Olympic24Match = defineAsyncComponent(() => import("../components/hotpromo/Olympic24Match/Olympic24Match.vue"));
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const EurocupVotePromo = defineAsyncComponent(() =>
@@ -159,6 +164,7 @@ const EuroCup2024 = defineAsyncComponent(() => import("../components/hotpromo/eu
 const EuroCup2024FirstShoot = defineAsyncComponent(() =>
   import("./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue")
 );
+const Shoutouxinxiu = defineAsyncComponent(() => import("./hotpromo/shoutouxinxiu/shoutouxinxiuA.vue"));
 const BlastPremierPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
@@ -171,19 +177,26 @@ const LPLSummer2024 = defineAsyncComponent(() => import("../components/hotpromo/
 const IntelEls24 = defineAsyncComponent(() => import("../components/hotpromo/intel-els-24/intel-els-24.vue"));
 const DuanWuJiePromo = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
 const DepositRebates = defineAsyncComponent(() => import("../components/hotpromo/depositRebates/depositRebates.vue"));
+const DepositRebate2 = defineAsyncComponent(() => import("../components/hotpromo/depositRebate2/depositRebate2.vue"));
 const WinLossPromo = defineAsyncComponent(() => import("../components/hotpromo/winloss/WinLoss.vue"));
 const AijiasuPromo = defineAsyncComponent(() => import("../components/hotpromo/aijiasu/AijiasuPromo.vue"));
 const EuroRegen = defineAsyncComponent(() => import("../components/hotpromo/EuroRegen/EuroRegen.vue"));
 const newplayerGuide = defineAsyncComponent(() => import("../components/hotpromo/newplayerGuide/newplayerGuide.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const OlympicCheckin = defineAsyncComponent(() => import("../components/hotpromo/olympic-checkin/OlympicCheckin.vue"));
-const ChallengeComebackPromo = defineAsyncComponent(() => import("../components/hotpromo/challengeComeback/ChallengeComeback.vue"));
+const ChallengeComebackPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/challengeComeback/ChallengeComeback.vue")
+);
+const OfficialGiftPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Olympic24Match,
     SlotLacky8,
     IntelEls24,
     fishHongbao,
@@ -215,6 +228,7 @@ export default defineComponent({
     LOLMsi2024Promo,
     EuroCup2024,
     EuroCup2024FirstShoot,
+    Shoutouxinxiu,
     BlastPremierPromo,
     EurocupManual,
     SportZhongChao,
@@ -222,13 +236,15 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
+    DepositRebate2,
     WinLossPromo,
     AijiasuPromo,
     EuroRegen,
     newplayerGuide,
     OuZuLianPromo,
     OlympicCheckin,
-    ChallengeComebackPromo
+    ChallengeComebackPromo,
+    OfficialGiftPromo
   },
   props: {
     list: {

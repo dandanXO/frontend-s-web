@@ -420,6 +420,9 @@ function showDialog(type) {
     }
     uiControl.dialogTitle = t('fields.addWithdrawPlatform');
     form.id = null
+    if (form.siteId) {
+      filterPayTypeByCurrency(form.siteId)
+    }
   } else if (type === "EDIT") {
     uiControl.dialogTitle = t('fields.editWithdrawPlatform');
   }

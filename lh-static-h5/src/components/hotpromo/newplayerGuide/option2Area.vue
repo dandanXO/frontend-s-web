@@ -50,11 +50,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -91,11 +91,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -126,18 +126,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15真人</td>
           </tr>
         </tbody>
       </table>
@@ -167,18 +159,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15棋牌</td>
           </tr>
         </tbody>
       </table>
@@ -208,18 +192,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15电子</td>
           </tr>
         </tbody>
       </table>
@@ -249,18 +225,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15捕鱼</td>
           </tr>
         </tbody>
       </table>
@@ -290,7 +258,7 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元獎金</div>
+        <div>{{ matchRewardItem1?.earn }} 元奖金</div>
         <div>
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
@@ -305,7 +273,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -330,7 +298,7 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元獎金</div>
+        <div>{{ matchRewardItem2?.earn }} 元奖金</div>
         <div>
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
@@ -345,7 +313,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -360,8 +328,8 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 
-const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
-const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
+const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
+const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
 
 const earnData = [
   { amount: 1000, earn: 5 },
@@ -492,9 +460,10 @@ onMounted(async () => {
 
 .switch-bar {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
   flex-wrap: wrap;
+  gap: 6px;
 
   @media (max-width: 400px) {
     justify-content: space-evenly;
@@ -514,11 +483,17 @@ onMounted(async () => {
   transition:
     background-color 0.3s,
     color 0.3s;
+  border: 1px solid #7a80a1;
+
+  @media (max-width: 450px) {
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 .switch-option.active {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-
+  border: 0px;
   color: white;
 }
 

@@ -174,3 +174,5 @@ export const getLocaleDateTime = (dateTimeStr, isIncludeTime = false) => {
 
   return moment(dateTimeStr).locale('ko').format(isIncludeTime ? "LLL" : "LL");
 }
+
+export const formatNumberComma = (amt) => `${amt}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
