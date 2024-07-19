@@ -1861,17 +1861,14 @@ const loadRiskLevels = async () => {
 const loadShareRatio = async () => {
   const { data: shareRatio } = await getAffiliateShareRatio(memberDetail.id)
   if (shareRatio.length > 0) {
-    shareRatioList.list = shareRatio
-    if (shareRatio.length !== 5) {
-      const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
-      const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
-      missingRatio.forEach(ratio => {
-        shareRatioList.list.push({
-          code: ratio.code,
-          value: 0
-        })
+    const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
+    const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+    missingRatio.forEach(ratio => {
+      shareRatioList.list.push({
+        code: ratio.code,
+        value: 0
       })
-    }
+    })
   } else {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
     shareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
