@@ -12,18 +12,34 @@
                     </div>
                 </div>
 
-                <!-- <div class="q-px-md">
-                    <q-btn-toggle style="white-space: nowrap;" v-model="inboxCategory" toggle-color="primary" :options="[
-                        { label: $t('lang.message_type_all'), value: 'ALL' },
-                        { label: $t('lang.message_type_outbox'), value: 'Outbox' },
-                        { label: $t('lang.message_type_inbox'), value: 'NOTIFICATION' }
-                    ]" />
-                </div> -->
-
-                <q-tabs v-model="inboxCategory" dense>
-                    <q-tab name="ALL" :label="$t('lang.message_type_all')" />
-                    <q-tab name="Outbox" :label="$t('lang.message_type_outbox')" />
-                    <q-tab name="NOTIFICATION" :label="$t('lang.message_type_inbox')" />
+                <q-tabs v-model="inboxCategory" dense inline-label class="inbox-type-tabs">
+                    <q-tab name="ALL">
+                        <div style="display:flex; align-items: center;gap:5px;"> <img
+                                :src="require('../../../assets/icon/pageModal/all-message-icon.svg')"
+                                :style="inboxCategory === 'ALL' ? '' : 'filter:contrast(0)'" />
+                            <div class="inbox-type" :style="inboxCategory === 'ALL' ? 'color: #00FFFF' : ''">{{
+                                $t('lang.message_type_all')
+                                }}</div>
+                        </div>
+                    </q-tab>
+                    <q-tab name="Outbox">
+                        <div style="display:flex; align-items: center;gap:5px;"> <img
+                                :src="require('../../../assets/icon/pageModal/outbox-icon.svg')"
+                                :style="inboxCategory === 'Outbox' ? '' : 'filter:contrast(0)'" />
+                            <div class="inbox-type" :style="inboxCategory === 'Outbox' ? 'color: #00FFFF' : ''">{{
+                                $t('lang.message_type_outbox')
+                                }}</div>
+                        </div>
+                    </q-tab>
+                    <q-tab name="NOTIFICATION">
+                        <div style="display:flex; align-items: center;gap:5px;"> <img
+                                :src="require('../../../assets/icon/pageModal/inbox-icon.svg')"
+                                :style="inboxCategory === 'NOTIFICATION' ? '' : 'filter:contrast(0)'" />
+                            <div class="inbox-type" :style="inboxCategory === 'NOTIFICATION' ? 'color: #00FFFF' : ''">{{
+                                $t('lang.message_type_inbox')
+                                }}</div>
+                        </div>
+                    </q-tab>
                 </q-tabs>
             </div>
 
@@ -36,9 +52,9 @@
                                 :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
                                     initOutbox(currentPage)
                                 }" boundary-links input color="white" input-class="text-white-10" dense />
-                            <span v-if="selectedMessages?.length">{{ `${$t('lang.message_selected')}
+                            <!-- <span v-if="selectedMessages?.length">{{ `${$t('lang.message_selected')}
                                 (${selectedMessages?.length})`
-                                }}</span>
+                                }}</span> -->
                             <span>{{ $t('lang.announcement_total')
                                 }} {{ inboxMessages.total }}</span>
                         </div>
@@ -90,15 +106,14 @@
                         </template>
                         <template v-else>
                             <div class="message-content-wrapper">
-                                <div class="message-actions"
-                                    :style="selectedMessages?.length ? 'visibility:visible' : 'visibility:hidden'">
+                                <div class="message-actions">
                                     <q-btn-group flat>
+                                        <q-btn size="md" :label="$t('lang.message_process_all_read')"
+                                            @click="readMAllMessage" />
                                         <q-btn :disable="!selectedMessages?.length" size="md"
-                                            :label="$t('lang.message_process_all_read')" />
-                                        <q-btn :disable="!selectedMessages?.length" size="md"
-                                            :label="$t('lang.message_delete_selected')" />
-                                        <q-btn :disable="!selectedMessages?.length" size="md"
-                                            :label="$t('lang.message_delete_read')" />
+                                            :label="$t('lang.message_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
+                                            @click="deleteSelectedMessage" />
+                                        <q-btn size="md" :label="$t('lang.message_delete_read')" />
                                     </q-btn-group>
                                 </div>
                                 <div v-if="selected" class="message-content">
@@ -137,6 +152,8 @@ import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import { userStore } from "src/stores";
 import MessageCompose from "./MessageCompose.vue";
+import { useI18n } from "vue-i18n";
+
 var qs = require("qs");
 
 const $q = useQuasar();
@@ -146,6 +163,7 @@ const inboxCategory = ref('ALL');
 const store = userStore();
 const props = defineProps(['inboxType']);
 const isCompose = ref(false);
+const { t } = useI18n();
 
 const selectedMessages = computed(() => inboxMessages.value.records?.filter((item) => item.selected).map(({ id }) => id));
 
@@ -282,12 +300,71 @@ const readMessage = (id, showReadNotify = true) => {
     }
 }
 
+const readMAllMessage = () => {
+    api
+        .post("/session/inbox/readAll")
+        .then((res) => {
+            const { code, data } = res.data
+
+            if (code === 0) {
+                $q.notify({
+                    message: t('lang.message_read_all_message'),
+                    type: "positive",
+                    position: "top",
+                    icon: "check_circle_outline"
+                });
+
+                initOutbox();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+const deleteSelectedMessage = () => {
+    const mailIdArr = selectedMessages.value;
+    const formattedIds = mailIdArr.join(",");
+    api
+        .post(
+            "/session/inbox/deleteMultiple",
+            qs.stringify({
+                ids: formattedIds
+            })
+        )
+        .then((res) => {
+            const { code, data } = res.data
+
+            if (code === 0) {
+                $q.notify({
+                    message: t('lang.message_delete_selected_message'),
+                    type: "positive",
+                    position: "top",
+                    icon: "check_circle_outline"
+                });
+
+                const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
+                inboxMessages.value.records = newRecords
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+};
+
 onMounted(() => {
     initOutbox();
 })
 </script>
 
 <style lang="scss" scoped>
+.inbox-type-tabs {
+    .inbox-type {
+        text-transform: capitalize;
+    }
+}
+
 .message-page {
     height: 100%;
     padding: 20px;

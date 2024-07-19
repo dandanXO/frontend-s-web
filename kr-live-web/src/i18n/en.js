@@ -173,6 +173,8 @@ export default {
     message_delete_read: "Delete Read",
     message_no_selected: "No message selected",
     message_selected: "Selected",
+    message_read_all_message: "Read all messages",
+    message_delete_selected_message: "Deleted selected messages",
     // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",
