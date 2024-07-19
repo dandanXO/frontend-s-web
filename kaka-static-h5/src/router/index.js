@@ -20,8 +20,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -42,16 +42,15 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/privilege/invite" ||
-      to.path === "/maintenance" || to.path==="/promoapp"
+      to.path === "/maintenance" ||
+      to.path === "/promoapp"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
     }
 
-    if (
-      to.path === "/promoapp"
-    ) {
+    if (to.path === "/promoapp") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
@@ -60,7 +59,6 @@ export default route(function (/* { store, ssrContext } */) {
 
       user.token = to.query.token;
     }
-
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -83,7 +81,6 @@ export default route(function (/* { store, ssrContext } */) {
       // console.log("user", user.token);
     }
 
-
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       // if (to.query.reg) {
@@ -91,7 +88,7 @@ export default route(function (/* { store, ssrContext } */) {
       // } else {
       //   next(`/`);
       // }
-      next(`/register`);
+      next(`/`);
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -120,33 +117,46 @@ export default route(function (/* { store, ssrContext } */) {
       }
     }
 
-
     // FB tracking
+    console.log("Href");
     console.log(window.location.href);
-    if (window.location.href.indexOf("KAKAking.com") > -1) {
-      fbq("init", "888951505918547");
+    if (window.location.href.indexOf("kakaag.app") > -1) {
+      fbq("init", "1163176251398453");
       fbq("track", "PageView");
-      user.isAffiliateA= true;
-    } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-      fbq("init", "3658633674357920");
+    } else if (window.location.href.indexOf("kakaag.vip") > -1) {
+      fbq("init", "836424235042431");
       fbq("track", "PageView");
-      user.isAffiliateA= true;
-    } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
-      otag("init", "adv10336256983680");
-    } else if (window.location.href.indexOf("tf68688.com") > -1) {
-      fbq("init", "1123673335564806");
+    } else if (window.location.href.indexOf("kakaag.shop") > -1) {
+      fbq("init", "7664966013612459");
       fbq("track", "PageView");
-      user.isAffiliateA= true;
-    }else if (window.location.href.indexOf("wintf99.com") > -1) {
-      fbq("init", "441415921872746");
+    } else if (window.location.href.indexOf("kakavn.app") > -1) {
+      fbq("init", "463504196607854");
       fbq("track", "PageView");
-      user.isAffiliateA= true;
-    }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
-      fbq("init", "1862869640792398");
-      fbq("track", "PageView");
-      user.isAffiliateA= true;
     }
-
+    // console.log(window.location.href);
+    // if (window.location.href.indexOf("KAKAking.com") > -1) {
+    //   fbq("init", "888951505918547");
+    //   fbq("track", "PageView");
+    //   user.isAffiliateA= true;
+    // } else if (window.location.href.indexOf("tfgame88.com") > -1) {
+    //   fbq("init", "3658633674357920");
+    //   fbq("track", "PageView");
+    //   user.isAffiliateA= true;
+    // } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
+    //   otag("init", "adv10336256983680");
+    // } else if (window.location.href.indexOf("tf68688.com") > -1) {
+    //   fbq("init", "1123673335564806");
+    //   fbq("track", "PageView");
+    //   user.isAffiliateA= true;
+    // }else if (window.location.href.indexOf("wintf99.com") > -1) {
+    //   fbq("init", "441415921872746");
+    //   fbq("track", "PageView");
+    //   user.isAffiliateA= true;
+    // }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
+    //   fbq("init", "1862869640792398");
+    //   fbq("track", "PageView");
+    //   user.isAffiliateA= true;
+    // }
   });
 
   return Router;

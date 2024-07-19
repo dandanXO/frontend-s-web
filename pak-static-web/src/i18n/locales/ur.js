@@ -419,16 +419,18 @@ export default {
         title: "ڈیپازت ",
         recharge: "ریچارج رقم",
         form: {
-          label: {
-            title: "رقم"
-          },
           amount: {
+            label: "رقم",
             placeholder: "رقم درج کریں",
             error: {
               required: "ودیعت کی رقم درکار ہے",
               pattern: "رقم مثبت ہونی چاہیے",
               range: "وداعت {min} سے {max} کے درمیان ہونی چاہئے"
             }
+          },
+          privilege: {
+            label: "خصوصی اختیار منتخب کریں",
+            placeholder: "خصوصی اختیار منتخب کریں"
           }
         },
         modal: {

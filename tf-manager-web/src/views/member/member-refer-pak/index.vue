@@ -23,6 +23,21 @@
             :value="item.id"
           />
         </el-select>
+        <el-date-picker
+          v-model="request.regTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          class="input-small"
+          style="margin-left: 5px;"
+          type="daterange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          :shortcuts="shortcuts"
+          :disabled-date="disabledDate"
+          :editable="false"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -159,6 +174,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { required } from "@/utils/validate";
+import { getShortcuts } from "@/utils/datetime";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -171,6 +187,7 @@ const siteList = reactive({
   list: [],
 })
 let timeZone = null
+const shortcuts = getShortcuts(t)
 
 const form = reactive({
   memberId: null,
@@ -199,6 +216,7 @@ const request = reactive({
   siteId: null,
   memberRemark: null,
   referrerId: null,
+  regTime: [],
 })
 
 function resetQuery() {
@@ -206,6 +224,7 @@ function resetQuery() {
   request.memberRemark = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.referrerId = null
+  request.regTime = []
   uiControl.referrer = null
 }
 
@@ -213,9 +232,19 @@ function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
-    query[key] = value
+    if (key === 'regTime') {
+      query[key] = [...requestCopy.regTime]
+    } else {
+      query[key] = value
+    }
   })
+  query.regTime = joinRecordTime(query.regTime)
   return query
+}
+
+function joinRecordTime(recordTime) {
+  const string = JSON.parse(JSON.stringify(recordTime))
+  return string.join(',')
 }
 
 function search() {

@@ -244,6 +244,24 @@
             <el-button size="mini" type="primary" @click="toApply(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toApplying') }}
             </el-button>
+            <el-button
+              v-if="request.siteId === 11"
+              size="mini"
+              type="danger"
+              @click="showDialog('FAIL', scope.row)" @keydown.enter.prevent
+              v-permission="['sys:withdraw:simple:fail']"
+            >
+              {{ t('fields.fail') }}
+            </el-button>
+            <el-button
+              v-if="request.siteId === 11"
+              v-permission="['sys:withdraw:simple:fail']"
+              size="mini"
+              type="success"
+              @click="toSuccess(scope.row)" @keydown.enter.prevent
+            >
+              {{ t('fields.success') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -479,8 +497,8 @@ import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordWaitingAutopay,
   fromWaitingAutoPayToApply,
-  fromAutopayToFail,
-
+  autoWithdrawToFail,
+  autoWithdrawToSuccess
 } from '../../../../api/member-withdraw-record'
 import { getConfigList } from '../../../../api/config'
 import { getSiteListSimple } from '../../../../api/site'
@@ -712,6 +730,14 @@ async function toApply(memberWithdrawRecord) {
   ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })
 }
 
+async function toSuccess(val) {
+  page.loading = true
+  await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
+  await loadRecord()
+  page.loading = false
+  ElMessage({ message: t('message.success'), type: 'success' })
+}
+
 async function showDialog(type, memberWithdrawRecord) {
   if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
@@ -736,7 +762,7 @@ async function fail() {
   toFailForm.value.validate(async valid => {
     if (valid) {
       clickedFail.value = true
-      await fromAutopayToFail(
+      await autoWithdrawToFail(
         failForm.id,
         failForm.reasonType,
         failForm.failReason,

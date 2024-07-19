@@ -56,7 +56,7 @@
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
-          RS
+          NGN
           <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 

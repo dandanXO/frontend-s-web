@@ -577,7 +577,7 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="toAutoPay">
+          <el-button type="primary" @click="toAutoPay" :disabled="uiControl.clickedAutoPay">
             {{ t('fields.confirm') }}
           </el-button>
         </div>
@@ -645,6 +645,7 @@ const uiControl = reactive({
   toApproveBtn: true,
   toFailBtn: true,
   toAutoWithdrawBtn: true,
+  clickedAutoPay: false,
 })
 
 let chooseRecord = []
@@ -885,6 +886,7 @@ async function showDialog(type, memberWithdrawRecord) {
   } else if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
   } else if (type === 'AUTOPAY') {
+    uiControl.clickedAutoPay = false
     loadWithdrawPlatform()
     uiControl.dialogTitle = t('fields.autopay')
   }
@@ -925,6 +927,7 @@ async function fail() {
 }
 
 async function toAutoPay() {
+  uiControl.clickedAutoPay = true
   await fromApplyToAutopayBatch(
     chooseRecord.map(a => ({
       id: a.id,

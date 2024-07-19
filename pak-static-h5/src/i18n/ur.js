@@ -165,7 +165,9 @@ export default {
     moreGames: "مزید کھیل",
     addCash: "کیش شامل کریں",
     search: "تلاش",
-    downloadApp: "ایپ ڈاؤن لوڈ کریں"
+    downloadApp: "ایپ ڈاؤن لوڈ کریں",
+    downloadNow: "ابھی ڈاؤنلوڈ کریں",
+    recharge: "ری چارج کریں"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -227,7 +229,8 @@ export default {
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
-    depositTutorial: "جمع کرنے کا ٹیوٹوریل"
+    depositTutorial: "جمع کرنے کا ٹیوٹوریل",
+    select_privilege: "خصوصی اختیار منتخب کریں"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",

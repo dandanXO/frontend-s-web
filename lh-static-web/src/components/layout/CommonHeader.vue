@@ -48,9 +48,9 @@
               </div>
             </template>
           </template>
-          <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
+          <!-- <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
             <img class="eroup-menu-icon" :src="require(`../../assets/images/home/header-eroup.png`)" />
-          </div>
+          </div> -->
         </div>
 
         <div class="navigations second-nav">
@@ -335,7 +335,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img src="../../assets/home/acc-dialog-img-paris.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -364,7 +364,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img src="../../assets/home/acc-dialog-img-paris.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -413,7 +413,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img src="../../assets/home/acc-dialog-img-paris.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -2506,7 +2506,7 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        background-image: url(../../assets/home/acc-dialog-bg-eurocup.png);
+        background-image: url(../../assets/home/acc-dialog-bg-paris.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2516,8 +2516,9 @@ body {
         padding: 8px;
 
         .acc-dialog-img {
-          margin-top: -70px;
-          margin-left: -80px;
+          // margin-top: -70px;
+          // margin-left: -80px; */
+          margin-left: -20px;
           margin-right: 0px;
           margin-bottom: -7px;
 

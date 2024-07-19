@@ -525,7 +525,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .member-tree-container {
   display: grid;
-  grid-template-columns: 0.3fr 1fr;
+  grid-template-columns: auto 1fr;
   gap: 10px;
 }
 

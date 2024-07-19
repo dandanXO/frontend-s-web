@@ -38,7 +38,7 @@
           autocomplete="off"
           label-align="left"
         >
-          <div class="deposit-amt-quick-select-title">{{ $t("personalView.finance.deposit.form.label.title") }}</div>
+          <div class="deposit-amt-quick-select-title">{{ $t("personalView.finance.deposit.form.amount.label") }}</div>
           <a-form-item class="helptxt" name="localAmount">
             <a-input
               :prefix="store.currency.value"
@@ -81,37 +81,23 @@
               @selected="selectedBank"
             />
           </a-form-item>
-          <!-- <a-form-item
-            class="helptxt"
-            v-if="hasPrivilege"
-            ref="privilegeId"
-            name="privilegeId"
-            label="Select promotion"
-            style="margin-bottom: 0px"
-          >
-            <a-select
-              v-model:value="selectedPrivilege"
-              placeholder="Please select an offer"
-              @select="checkMinDepositAmt"
-              allowClear
-            >
-              <a-select-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id">
-                {{ p.name }}
-              </a-select-option>
-            </a-select>
-            <div class="account-tip text-red" v-if="promoBonus">Bonus Amount {{ promoBonus }}</div>
-            <div class="account-tip-text text-red" v-if="!selectedPrivilege">
-              If the first-time deposit promotion is not selected, it is considered as
-              <br />
-              giving up the second and third deposit promotions.
-            </div>
-            <div
-              class="account-tip text-red"
-              v-else-if="selectedPrivilege == 5 || selectedPrivilege == 6 || selectedPrivilege == 7"
-            >
-              {{ promoRollOver }}X turnover
-            </div>
-          </a-form-item> -->
+<!--          <template v-if="hasPrivilege && !isUSDT">-->
+<!--            <div class="deposit-amt-quick-select-title">-->
+<!--              {{ $t("personalView.finance.deposit.form.privilege.label") }}-->
+<!--            </div>-->
+<!--            <a-form-item class="helptxt" ref="privilegeId" name="privilegeId">-->
+<!--              <a-select-->
+<!--                v-model:value="selectedPrivilege"-->
+<!--                :placeholder="$t('personalView.finance.deposit.form.privilege.placeholder')"-->
+<!--                @select="checkMinDepositAmt"-->
+<!--                allowClear-->
+<!--              >-->
+<!--                <a-select-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id">-->
+<!--                  {{ p.name }}-->
+<!--                </a-select-option>-->
+<!--              </a-select>-->
+<!--            </a-form-item>-->
+<!--          </template>-->
           <!-- <a-form-item v-if="selectedPayType" class="tip">
             <span v-if="activeMethod.msg" class="account-tip-text activemethod" style="margin-bottom: 10px">
               <div v-html="activeMethod.msg" />
@@ -236,16 +222,16 @@ const allowedDepositAmtOptions = computed(() => {
   );
 });
 const route = useRoute();
-const checkWelcome = () => {
-  if (route.query && route.query.isFromWelcomePromo) {
-    unselectedPrivileges.value.forEach((p) => {
-      if (p.name === "P4W-FIRST-DEPOSIT") {
-        selectedPrivilege.value = p.id;
-      }
-    });
-    onDepositAmtQuickSelect(300);
-  }
-};
+// const checkWelcome = () => {
+//   if (route.query && route.query.isFromWelcomePromo) {
+//     unselectedPrivileges.value.forEach((p) => {
+//       if (p.name === "P4W-FIRST-DEPOSIT") {
+//         selectedPrivilege.value = p.id;
+//       }
+//     });
+//     onDepositAmtQuickSelect(300);
+//   }
+// };
 const onDepositAmtQuickSelect = (amt) => {
   form.localAmount = amt.toString();
 };
@@ -272,9 +258,9 @@ function initPay() {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
-  await loadPrivileges(val.paymentId).then((d) => {
-    if (d.code == 0) {
-      privilegeList.value = d.data.privileges;
+  await loadPrivileges(val.paymentId).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       freePrivilege.value = null;
       unselectedPrivileges.value = [];
@@ -287,7 +273,7 @@ async function loadPrivilege(val) {
           }
         }
       });
-      checkWelcome();
+      // checkWelcome();
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
@@ -353,16 +339,18 @@ const promoBonus = computed(() => {
 });
 
 function checkMinDepositAmt(value, option) {
-  if (!selectedPrivilege.value || !option) {
-    calculatedMinDeposit.value = activeMethod.value.depositMin;
-  } else {
-    unselectedPrivileges.value.forEach((element) => {
-      if (element.id === option.key) {
-        calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
-        promoRollOver.value = element.rollover;
-      }
-    });
-  }
+  calculatedMinDeposit.value = 300;
+  activeMethod.value.depositMax = 50000;
+  // if (!selectedPrivilege.value || !option) {
+  //   calculatedMinDeposit.value = activeMethod.value.depositMin;
+  // } else {
+  //   unselectedPrivileges.value.forEach((element) => {
+  //     if (element.id === option.key) {
+  //       calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+  //       promoRollOver.value = element.rollover;
+  //     }
+  //   });
+  // }
 }
 
 function checkPrivilege(v) {
