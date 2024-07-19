@@ -308,6 +308,13 @@ export default {
         searchButton: "SEARCH"
       },
       table: {
+        id: "ID",
+        downlineMember: "Downline Member",
+        todayRegCount: "Today Register Count",
+        ytdRegCount: "Yesterday Register Count",
+        downlineDepositMember: "Downline Deposit Member",
+        vip: "VIP",
+        uplineLoginName: "Upline Username",
         type: "Types",
         username: "Username",
         emark: "Emarks",
@@ -345,7 +352,11 @@ export default {
         validBet: "Valid Bet",
         balance: "Win/Loss",
         rounds: "Rounds",
-        player: "Player"
+        player: "Player",
+        platform: "Platform",
+        players: "Players",
+        bet: "Bet",
+        payout: "Payout"
       }
     },
     profitAndLoss: {
@@ -370,7 +381,22 @@ export default {
         rebate: "Player Rebate",
         referral: "Referral",
         profitAndLoss: "Profit And Loss",
-        depositFee: "Deposit Fee"
+        ftdamount: "FTD Amount",
+        ftdcount: "FTD Count",
+        depositcount: "Deposit Count",
+        depositFee: "Deposit Fee",
+        bet: "Bet",
+        payout: "Payout"
+      },
+      sums: {
+        bet: "Bet",
+        betamount: "Bet Amount",
+        depositcount: "Deposit Count",
+        validBet: "Valid Bet",
+        bonus: "Bonus",
+        payout: "Payout",
+        deposit: "Deposit",
+        withdraw: "Withdraw"
       }
     }
   },
@@ -518,6 +544,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
     21000: "This game is already in your favorite games list.",

@@ -32,7 +32,7 @@ const animationName = ref("slide-right");
 const tabs = computed(() => [
   { key: "reward", label: t("rewardView.tabs.reward") },
   { key: "team-management", label: t("rewardView.tabs.teamManagement") },
-  { key: "team-betting", label: t("rewardView.tabs.teamBetting") },
+  // { key: "team-betting", label: t("rewardView.tabs.teamBetting") },
   { key: "profit-and-loss", label: t("rewardView.tabs.profitAndLoss") }
 ]);
 
