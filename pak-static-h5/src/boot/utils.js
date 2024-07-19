@@ -3,7 +3,6 @@ import moment from "moment/moment";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
-
 export const MAIN = "MAIN";
 
 export const getRndInteger = (min, max) => {
@@ -99,7 +98,7 @@ export const updateDate = (val) => {
 };
 
 export const convertToGMT55 = (dateTime) => {
-  return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD HH:mm:ss");
+  return moment(dateTime).add(-3, "hours").format("YYYY-MM-DD HH:mm:ss");
 };
 export const convertToGMT8 = (dateTime) => {
   return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD");
