@@ -270,11 +270,23 @@ const handleClickStatusButton = (status, promoCode) => {
 
   if (status === "NO") {
     if (promoCode === "new-user-setup-bonus-telephone") {
-      router.push("/account/personal?redirect=promo?name=lh1-newplayer-guide");
+      if (window.location.pathname === "/promotion") {
+        document.location.href = `app://account-info`;
+      } else {
+        router.push("/account/personal?redirect=promo?name=lh1-newplayer-guide");
+      }
     } else if (promoCode === "new-user-setup-bonus-first-withdrawal") {
-      router.push("/finance/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      if (window.location.pathname === "/promotion") {
+        document.location.href = `app://withdraw`;
+      } else {
+        router.push("/finance/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      }
     } else {
-      router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      if (window.location.pathname === "/promotion") {
+        document.location.href = `app://deposit`;
+      } else {
+        router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      }
     }
   } else if (status === "YES") {
     getBonus(promoCode);
