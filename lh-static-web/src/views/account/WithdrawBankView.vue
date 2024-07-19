@@ -895,6 +895,13 @@ export default defineComponent({
           }
       )
           .then((inputValue) => {
+            if (!inputValue.value) {
+              ElMessage({
+                type: 'error',
+                message: '请输入卡号',
+              });
+              return
+            }
             deleteBankCardByNumber(inputValue.value).then((res) => {
                 if (res.code === 0) {
                   ElMessage({
