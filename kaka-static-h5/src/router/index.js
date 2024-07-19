@@ -127,7 +127,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "836424235042431");
       fbq("track", "PageView");
     } else if (window.location.href.indexOf("kakaag.shop") > -1) {
-      fbq("init", "7664966013612459");
+      fbq("init", "1567716440818798");
       fbq("track", "PageView");
     } else if (window.location.href.indexOf("kakavn.app") > -1) {
       fbq("init", "463504196607854");
