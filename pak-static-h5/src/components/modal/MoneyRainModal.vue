@@ -32,7 +32,11 @@
           <div><img src="../../assets/images/index/money-rain/treassure-img.png" /></div>
           <div class="rewind-title">
             Rewind time
-            <span>starts at {{ nextRainTime.rainStartNext }}</span>
+            <span>
+              <template v-if="nextRainTime.nowIsRain">starts now</template>
+
+              <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
+            </span>
           </div>
           <div class="go-btn" v-if="nextRainTime.nowIsRain">
             <img src="../../assets/images/index/money-rain/go-btn.png" @click="onClaimBonus" />
@@ -77,7 +81,11 @@
           <div><img src="../../assets/images/index/money-rain/treassure-img.png" /></div>
           <div class="rewind-title">
             Rewind time
-            <span>starts at {{ nextRainTime.rainStartNext }}</span>
+            <span>
+              <template v-if="nextRainTime.nowIsRain">starts now</template>
+
+              <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
+            </span>
           </div>
         </div>
 
@@ -227,13 +235,21 @@ const selectMoneyRainTab = (tab) => {
 
 const tableContainer = ref(null);
 
+let scrollIntervalId = null;
+
 const startAutoScroll = () => {
   const container = tableContainer.value;
-  // if (!container) return;
+
+  if (!container) return;
 
   let scrollPosition = 0;
 
-  setInterval(() => {
+  // Clear any existing interval before starting a new one
+  if (scrollIntervalId) {
+    clearInterval(scrollIntervalId);
+  }
+
+  scrollIntervalId = setInterval(() => {
     scrollPosition += 30;
 
     container.scrollTo({
@@ -248,13 +264,19 @@ const startAutoScroll = () => {
   }, 2000);
 };
 
+const stopAutoScroll = () => {
+  if (scrollIntervalId) {
+    clearInterval(scrollIntervalId);
+    scrollIntervalId = null;
+  }
+};
+
 const getListing = () => {
   eventapi
     .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
     .then((res) => {
       if (res.code === 0) {
         // listingData.value = res.data;
-
         for (let i = 0; i < 100; i++) {
           listingData.value.push({ ...res.data[0] });
         }
@@ -276,7 +298,33 @@ const getNextRainTime = () => {
     .then((res) => {
       if (res.code === 0) {
         nextRainTime.nowIsRain = res.data.nowIsRain;
-        nextRainTime.rainStartNext = res.data.rainDuration.startTime.slice(-5);
+
+        // Parse the start time
+        const dateTimeString = res.data.rainDuration.startTime;
+
+        // Split the date and time parts
+        const [datePart, timePart] = dateTimeString.split("-").reduce(
+          (acc, part, index, array) => {
+            if (index < 3) acc[0] += (index > 0 ? "-" : "") + part;
+            else acc[1] += (index > 3 ? ":" : "") + part;
+            return acc;
+          },
+          ["", ""]
+        );
+
+        // Split into individual components
+        const [year, month, day] = datePart.split("-").map(Number);
+        const [hours, minutes] = timePart.split(":").map(Number);
+
+        // Create a Date object
+        const startTime = new Date(year, month - 1, day, hours, minutes);
+
+        // Subtract 3 hours
+        startTime.setHours(startTime.getHours() - 3);
+
+        const formattedHours = String(startTime.getHours()).padStart(2, "0");
+        const formattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
+        nextRainTime.rainStartNext = `${formattedHours}:${formattedMinutes}`;
       }
     })
     .catch((err) => {
