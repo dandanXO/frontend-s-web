@@ -402,7 +402,11 @@ const handleRecieve = async (reward) => {
 };
 
 const handleRedirect = () => {
-  router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
+  if (window.location.pathname === "/promotion") {
+    document.location.href = `app://deposit`;
+  } else {
+    router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
+  }
 };
 
 const $q = useQuasar();
@@ -480,9 +484,7 @@ onMounted(async () => {
   align-items: center;
   gap: 15px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   border: 1px solid #7a80a1;
 
   @media (max-width: 450px) {
