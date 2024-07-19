@@ -61,6 +61,7 @@ export default {
     CommissionHistoryList: '커미션내역 목록',
     StatisticsByMember: '회원별 통계',
     DepositWithdrawManagement: '입출금 관리',
+    MemberPointRecord: 'Member Point Record',
     // Settlement Management End
 
     gameRecord: '게임 기록',
