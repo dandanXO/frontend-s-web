@@ -179,6 +179,16 @@
     >
       <el-table-column prop="memberName" :label="t('fields.name')" />
       <el-table-column prop="privilege" :label="t('fields.privilege')" />
+      <el-table-column prop="gameType" :label="t('fields.gameType')">
+        <template #default="scope">
+          <span v-if="scope.row.gameType !== null">
+            {{ t(`gameType.${scope.row.gameType}`) }}
+          </span>
+          <span v-else>
+            -
+          </span>
+        </template>  
+      </el-table-column>
       <el-table-column prop="amount" :label="t('fields.bonusAmount')">
         <template #default="scope">
           <span v-formatter="{data: scope.row.amount, type: 'money'}" />
