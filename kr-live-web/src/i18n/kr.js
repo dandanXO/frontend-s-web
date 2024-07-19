@@ -154,6 +154,7 @@ export default {
     feedback_waiting_admin_reply: "답변대기",
     feedback_admin_replied: "답변완료",
     feedback_delete_selected: "선택내역삭제",
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     // feedback end
     // message start
     message_loading_content: "콘텐츠 로드 중...",

@@ -148,14 +148,14 @@ const deleteSelectedMessage = () => {
 
       if (code === 0) {
         $q.notify({
-          message: t('lang.message_delete_selected_message'),
+          message: t('lang.feedback_delete_selected_message'),
           type: "positive",
           position: "top",
           icon: "check_circle_outline"
         });
 
-        const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
-        inboxMessages.value.records = newRecords
+        const newRecords = inquiriesList.value.records.filter((data) => !selectedMessages.value.includes(data.id));
+        inquiriesList.value.records = newRecords
       }
     })
     .catch((error) => {
