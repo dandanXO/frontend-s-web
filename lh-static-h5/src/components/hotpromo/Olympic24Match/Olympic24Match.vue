@@ -55,15 +55,19 @@
           冠军竞猜
         </div>
         <div class="olympic24-match-game" v-for="(data, index) in upcomingData" :key="index">
-          <div class="olympic24-match-game-status">
-            {{ convertDateTime(data.matchTime) }}
+          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status==='ENDED'">
+            已结束
+          </div>
+            <div v-else class="olympic24-match-game-status">
+              {{ convertDateTime(data.matchTime) }}
           </div>
           <div class="olympic24-match-game-content">
             <div class="olympic24-match-game-content-left">
-              <div class="olympic24-match-game-content-team">
+              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.homeTeam ? 'olympic24-match-game-content-team--voted': ''}`">
                 <img :src="imgURL + data.homeTeamIcon" alt="" class="olympic24-match-game-content-team-img" />
                 <div class="olympic24-match-game-content-team-name">{{ data.homeTeam }}</div>
-                <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
+                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam">获胜</div>
+                <div v-else-if="((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
@@ -78,9 +82,11 @@
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
               <div class="olympic24-match-game-content-center-title">{{ data.quizTitle }}</div>
-
+              <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'">
+                平局
+              </div>
               <div
-                v-if="data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)"
+                v-else-if="data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)"
                 class="team-vote"
               >
                 <button
@@ -95,10 +101,11 @@
               <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
             <div class="olympic24-match-game-content-right">
-              <div class="olympic24-match-game-content-team">
+              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.awayTeam ? 'olympic24-match-game-content-team--voted': ''}`">
                 <img :src="imgURL + data.awayTeamIcon" alt="" class="olympic24-match-game-content-team-img" />
                 <div class="olympic24-match-game-content-team-name">{{ data.awayTeam }}</div>
-                <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
+                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam">获胜</div>
+                <div v-else-if="((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
@@ -444,7 +451,8 @@ onMounted(() => {
 
 .olympic24-match-game {
   width: 100%;
-  height: 144px;
+  // height: 144px;
+  padding-top: 20px;
   border-radius: 12px;
   // border: 1px solid #51acff;
   background-color: #fff;
@@ -452,6 +460,9 @@ onMounted(() => {
   margin-top: 20px;
   margin-bottom: 20px;
   .olympic24-match-game-status {
+    &-ended {
+      filter: grayscale(1);
+    }
     width: 120px;
     height: 24px;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
@@ -495,6 +506,22 @@ onMounted(() => {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
+      &--voted {
+        &:before {
+          content: "";
+          background-image: url("../../../assets/images/promo/hotpromo/bbdacha2024/red-flag-voted.png");
+          display: block;
+          position: absolute;
+          height: 50px;
+          width: 50px;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+          top: -10px;
+          right: 0px;
+        }
+      }
       .olympic24-match-game-content-team-name {
         font-size: 0.875rem;
         font-weight: 600;
@@ -545,7 +572,25 @@ onMounted(() => {
     }
   }
 }
-
+.olympic24-match-game-content-center-btn {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16.8px;
+  // color: #000000;
+  // background-color: #f2f2f2;
+  color:  #ff0000;
+  transition: 0.3 all;
+  // background-image: url("../../../assets/promo/lh-olympic-match/btn.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 72px;
+  height: 24px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+}
 .olympic24-match-game-content-btn {
   font-size: 12px;
   font-weight: 600;
