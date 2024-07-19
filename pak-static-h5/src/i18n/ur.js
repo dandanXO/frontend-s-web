@@ -394,7 +394,8 @@ export default {
         bonus: "بونس",
         payout: "ادائیگی",
         deposit: "ڈپازٹ",
-        withdraw: "نکالنا"
+        withdraw: "نکالنا",
+        firstdepositcount: "پہلی جمع"
       }
     }
   },

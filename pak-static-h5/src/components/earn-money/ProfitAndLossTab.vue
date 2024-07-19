@@ -182,6 +182,13 @@
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.withdraw") }}</div>
       </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          <span>{{ sumsData.downlineFtdCount }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.firstdepositcount") }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -203,7 +210,8 @@ const sumsData = ref({
   downlineDepositCount: 0,
   downlinePayoutAmount: 0.0,
   downlineDepositAmount: 0.0,
-  downlineWithdrawAmount: 0.0
+  downlineWithdrawAmount: 0.0,
+  downlineFtdCount: 0
 });
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
@@ -298,11 +306,12 @@ const fetchDownlineProfitSummary = () => {
   }
 
   queryParams.push(`size=${itemsPerPage}`);
-  queryParams.push(`page=${currentPage.value}`);
+  queryParams.push(`current=${currentPage.value}`);
 
   url += queryParams.join("&");
 
   tableData.value = [];
+
   api
     .get(url)
     .then((response) => {
@@ -310,6 +319,7 @@ const fetchDownlineProfitSummary = () => {
       if (response.code === 0) {
         tableData.value = response.data.records;
         totalPages.value = Math.ceil(response.data.total / itemsPerPage);
+        sumsData.value = response.data.sums;
       }
     })
     .catch(() => {
