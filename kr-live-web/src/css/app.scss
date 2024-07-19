@@ -713,6 +713,7 @@ input:internal-autofill-selected {
 
 .primary-button {
   min-width: 124px;
+  min-height: 30px;
   width: fit-content;
   height: 36px;
   display: flex;
@@ -808,4 +809,9 @@ input:internal-autofill-selected {
     max-width: 130px;
     max-height: 238px;
   }
+}
+
+.q-checkbox__inner--truthy .q-checkbox__bg {
+  background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
+  border: none;
 }
