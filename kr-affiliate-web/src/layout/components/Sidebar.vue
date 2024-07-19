@@ -319,6 +319,14 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
+          path: '/member-point-record-list',
+          title: t('menu.MemberPointRecord'),
+          label: 'MemberPointRecord',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
           path: '/deposit-withdraw-management',
           title: t('menu.DepositWithdrawManagement'),
           label: 'DepositWithdrawManagement',
