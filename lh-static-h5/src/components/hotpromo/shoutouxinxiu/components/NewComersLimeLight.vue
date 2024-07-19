@@ -7,6 +7,7 @@
   <div class="newcomers-grid">
     <div class="item" v-for="item in items" :key="item.bonusType" @click="getBonus(item.bonusType)">
       <img :src="require(`../images/newcomers-${item.bonusType.toLowerCase()}.png`)" />
+      <div class="button">点击领取</div>
     </div>
   </div>
 
@@ -108,7 +109,7 @@ const refreshBal = () => {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 28%;
+      bottom: 18%;
       text-align: center;
       display: flex;
       justify-content: center;
@@ -117,6 +118,11 @@ const refreshBal = () => {
       border-radius: 50px;
       margin: auto;
       color: #ffffff;
+    }
+
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
     }
   }
 }
@@ -187,7 +193,7 @@ const refreshBal = () => {
 }
 
 .promo-container .selected-promo .selected-promo-wrapper .inner table td {
-  border: 1px solid #FFFFFF33;
+  border: 1px solid #ffffff33;
   color: #ffffff;
 }
 
