@@ -46,6 +46,7 @@ export default {
     menu_announcement: "Announcement",
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",
+    menu_inquiry: "Inquiry",
     menu_message: "Message",
     menu_customer_service: "Customer Service",
     menu_transaction_record: "Transaction Record",
@@ -167,6 +168,13 @@ export default {
     message_type_all: "All",
     message_type_outbox: "Outbox",
     message_type_inbox: "Inbox",
+    message_process_all_read: "Process All Read",
+    message_delete_selected: "Delete Selected",
+    message_delete_read: "Delete Read",
+    message_no_selected: "No message selected",
+    message_selected: "Selected",
+    message_read_all_message: "Read all messages",
+    message_delete_selected_message: "Deleted selected messages",
     // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",

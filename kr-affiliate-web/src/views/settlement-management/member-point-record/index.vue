@@ -9,8 +9,8 @@
                 <el-select clearable v-model="request.type" size="small" :placeholder="t('fields.type')"
                   class="filter-item">
                   <el-option :label="t('fields.all')" value="" />
-                  <el-option :label="t('fields.deposit')" value="DEPOSIT" />
-                  <el-option :label="t('fields.withdraw')" value="WITHDRAW" />
+                  <el-option :label="t('fields.rebate')" value="EARN" />
+                  <el-option :label="t('fields.redeem')" value="REDEEM" />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -40,13 +40,11 @@
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
-              <th scope="col">{{ t('fields.type') }}</th>
               <th scope="col">{{ t('fields.loginName') }}</th>
-              <th scope="col">{{ t('fields.beforeBalance') }}</th>
+              <th scope="col">{{ t('fields.type') }}</th>
               <th scope="col">{{ t('fields.amount') }}</th>
-              <th scope="col">{{ t('fields.applicationDate') }}</th>
-              <th scope="col">{{ t('fields.processingDate') }}</th>
-              <th scope="col">{{ t('fields.status') }}</th>
+              <th scope="col">{{ t('fields.afterBalance') }}</th>
+              <th scope="col">{{ t('fields.recordTime') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
@@ -59,32 +57,21 @@
           </tbody>
           <tbody v-else-if="page.records.length > 0">
             <tr v-for="item in page.records" :key="item.id">
-              <td :data-label="t('fields.date')">
-                {{ item.type }}
-              </td>
-              <td class="bgGreen textGreen">
+              <td>
                 {{ item.memberName }}
               </td>
-              <td class="bgRed textRed">
-                {{ formatMoney(item.memberMoney) }}
+              <td :class="item.type === 'EARN' ? 'bgGreen textGreen' : 'bgRed textRed'">
+                {{ item.type === 'EARN' ? t('fields.rebate') : t('fields.redeem') }}
               </td>
-              <td class="bgYellow textRed">
+              <td :class="item.type === 'EARN' ? 'bgGreen textGreen' : 'bgRed textRed'">
+                {{ formatMoney(item.rebateAmount) }}
+              </td>
+              <td>
                 {{
-                  formatMoney(
-                    item.type === 'DEPOSIT'
-                      ? item.todayDepositAmount
-                      : item.todayWithdrawAmount
-                  )
+                  formatMoney(item.afterBalance)
                 }}
               </td>
-              <td class="bgYellow textGreen">
-                {{ formatDate(item.applicationDate) }}
-              </td>
-              <td class="bgYellow">
-                {{ formatDate(item.processingDate) }}
-              </td>
-              <td class="bgYellow">
-                {{ item.status }}
+              <td class="bgYellow textGreen" v-formatter="{ data: item.recordTime, type: 'date' }">
               </td>
             </tr>
           </tbody>
@@ -99,7 +86,7 @@ import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Loading from '@/components/loading/Loading.vue'
 import { formatMoney } from '@/utils/format-money'
-import { getDepositWithdrawRecord } from '@/api/affiliate-report'
+import { getMemberPointRecordList } from '@/api/affiliate-report'
 import moment from "moment";
 import emptyComp from '@/components/empty';
 
@@ -149,7 +136,7 @@ async function loadRecords() {
     }
   })
   query.recordTime = query.recordTime.join(',')
-  const { data: ret } = await getDepositWithdrawRecord(query)
+  const { data: ret } = await getMemberPointRecordList(query)
   page.records = ret.records
   page.pages = ret.pages
   page.total = ret.total

@@ -186,6 +186,14 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'member-point-record-list',
+        component: () => import('../views/settlement-management/member-point-record/index.vue'),
+        name: 'MemberPointRecord',
+        meta: {
+          title: 'member-point-record-list',
+        },
+      },
+      {
         path: 'deposit-withdraw-management',
         component: () => import('../views/settlement-management/deposit-withdraw/index.vue'),
         name: 'DepositWithdrawManagement',

@@ -680,6 +680,7 @@ export default {
     sportRolling: '하부총스포츠롤링',
     memberPoint: '회원 포인트',
     affiliateTransferAmount: '송금 금액',
+    redeem: '상환하다',
   },
   google: {
     google_auth_menu: '구글 인증',

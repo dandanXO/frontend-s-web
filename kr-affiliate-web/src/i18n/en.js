@@ -682,6 +682,7 @@ export default {
     sportRolling: 'Sport Rolling Amount',
     memberPoint: 'Member Point',
     affiliateTransferAmount: 'Affiliate Transfer Amount',
+    redeem: 'Redeem',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

@@ -102,8 +102,11 @@ const AnnouncementComponent = markRaw(defineAsyncComponent(() =>
 const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/AddWithdrawBankCard.vue')
 ))
+const FeedbackPage = markRaw(defineAsyncComponent(() =>
+  import('src/components/pageModalContent/FeedbackPage.vue')
+))
 const MessagesPage = markRaw(defineAsyncComponent(() =>
-  import('components/pageModalContent/message/index.vue')
+  import('components/pageModalContent/message/MessagesPage.vue')
 ))
 const RegisterComponent = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/RegisterComponent.vue')
@@ -116,9 +119,6 @@ const TransitRecord = markRaw(defineAsyncComponent(() =>
 ))
 const MyPasswordChange = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/MyPasswordChange.vue')
-))
-const MessageCompose = markRaw(defineAsyncComponent(() =>
-  import('src/components/pageModalContent/message/MessageCompose.vue')
 ))
 
 const pagesInfo = reactive([
@@ -146,10 +146,21 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "message",
-    page: "personal/messages/all",
-    info: 'lang.message_type_all',
+    page: "announcement",
+    info: 'lang.page_modal_announcement',
+    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
+    component: AnnouncementComponent,
+    headerInfo: {
+      title: 'lang.page_modal_announcement',
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  {
+    tabIndex: "message",
+    page: "personal/inquiry",
+    info: 'lang.menu_inquiry',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: MessagesPage,
+    component: FeedbackPage,
     headerInfo: {
       title: 'lang.message_type_all',
       description: "lang.page_modal_desc_text"
@@ -157,23 +168,12 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "message",
-    page: "personal/messages/inbox",
-    info: 'lang.message_type_inbox',
+    page: "personal/message",
+    info: 'lang.menu_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     component: MessagesPage,
     headerInfo: {
-      title: 'lang.message_type_inbox',
-      description: "lang.page_modal_desc_text"
-    }
-  },
-  {
-    tabIndex: "message",
-    page: "personal/messages/outbox",
-    info: 'lang.message_type_outbox',
-    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: MessagesPage,
-    headerInfo: {
-      title: 'lang.message_type_outbox',
+      title: 'lang.menu_message',
       description: "lang.page_modal_desc_text"
     }
   },
@@ -188,17 +188,6 @@ const pagesInfo = reactive([
   //     description: "lang.page_modal_desc_text"
   //   }
   // },
-  {
-    tabIndex: "message",
-    page: "announcement",
-    info: 'lang.page_modal_announcement',
-    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
-    component: AnnouncementComponent,
-    headerInfo: {
-      title: 'lang.page_modal_announcement',
-      description: "lang.page_modal_desc_text"
-    }
-  },
   {
     tabIndex: "personal",
     page: "personal/info",

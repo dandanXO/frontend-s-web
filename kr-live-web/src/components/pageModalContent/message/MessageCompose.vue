@@ -1,7 +1,12 @@
 <template>
     <div class="page-container">
         <div class="form-wrapper">
-            <div style="margin:0;" class="primary-button blue-square" @click="props?.onClickBack">{{ $t('lang.feedback_previous_page') }}</div>
+            <div style="margin:0;" @click="props?.onClickBack">
+                <div style="display:flex;align-items:center;cursor:pointer;">
+                    <q-icon :name="'arrow_back_ios'" />
+                    {{ $t('lang.feedback_previous_page') }}
+                </div>
+            </div>
             <form class="content-form form-template">
                 <div class="form-item">
                     <label>{{ $t('lang.feedback_category') }}</label>

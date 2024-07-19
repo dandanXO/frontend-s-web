@@ -146,16 +146,16 @@ const iconInfo = reactive([
   //   page: 'transaction/records&tab=rebates',
   // },
   {
+    type: 'inquiry',
+    info: "lang.menu_inquiry",
+    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    page: 'personal/inquiry',
+  },
+  {
     type: 'message',
     info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    page: 'personal/messages/inbox',
-  },
-  {
-    type: 'system_message',
-    info: "lang.menu_system_message",
-    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    page: 'personal/messages/all',
+    page: 'personal/message',
   },
 ]);
 </script>
