@@ -144,10 +144,7 @@
             }"
           >
             <div class="loader" v-if="isFetchingPromo" />
-            <div
-              class="selected-promo-wrapper"
-              :class="selectedPromoWrapperClass"
-            >
+            <div class="selected-promo-wrapper" :class="selectedPromoWrapperClass">
               <div
                 class="banner-container"
                 v-if="
@@ -181,7 +178,8 @@
                   lhduanwu:
                     selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
                   lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
-                  meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
+                  meizhoubei:
+                    selectedPromo.promoCode === 'lh1meizhoubei' || selectedPromo.promoCode === 'lh1-olympic-fund',
                   aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
                   euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
                 }"
@@ -192,8 +190,8 @@
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
                       ')'
                     : selectedPromo?.promoCode === 'lh1-intel-esl'
-                      ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
-                      : ''
+                    ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
+                    : ''
                 ]"
               >
                 <div v-if="selectedPromo.hasPromo">
@@ -296,7 +294,7 @@ export default defineComponent({
     const isDisplayLogin = ref(false);
 
     const selectedPromoWrapperClass = computed(() => ({
-      "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift'].includes(selectedPromo.value.promoCode),
+      "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
       "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin'
     }))
 
@@ -1036,7 +1034,7 @@ export default defineComponent({
 
       &.slot-lucky8,
       &.challenge-comeback {
-        background:#E7F1FD;
+        background: #e7f1fd;
       }
     }
   }
