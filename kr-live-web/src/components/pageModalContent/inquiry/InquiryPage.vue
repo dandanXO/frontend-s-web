@@ -96,12 +96,14 @@ import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import WriteInquiry from 'components/pageModalContent/inquiry/WriteInquiry.vue';
+import { useI18n } from "vue-i18n";
 
 var qs = require("qs");
 const $q = useQuasar();
 const isCreateMode = ref(false);
 const selected = ref();
 const isLoading = ref(false);
+const { t } = useI18n();
 
 const isFetchingContent = ref(false);
 
