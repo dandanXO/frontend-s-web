@@ -154,6 +154,7 @@ export default {
     feedback_waiting_admin_reply: "답변대기",
     feedback_admin_replied: "답변완료",
     feedback_delete_selected: "선택내역삭제",
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     // feedback end
     // message start
     message_loading_content: "콘텐츠 로드 중...",
@@ -181,6 +182,7 @@ export default {
     message_selected: "선택된",
     message_read_all_message: "모든 메시지 읽기",
     message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
+    message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
     // message end
     // deposit start
     deposit_payment_channel: "결제 채널",

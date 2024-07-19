@@ -108,12 +108,13 @@
                             <div class="message-content-wrapper">
                                 <div class="message-actions">
                                     <q-btn-group flat>
-                                        <q-btn size="md" :label="$t('lang.message_process_all_read')"
-                                            @click="readMAllMessage" />
+                                        <q-btn :disable="!selectedMessages?.length" size="md"
+                                            :label="$t('lang.message_process_all_read')" @click="readMAllMessage" />
                                         <q-btn v-if="selectedMessages?.length" size="md"
                                             :label="$t('lang.message_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
                                             @click="deleteSelectedMessage" />
-                                        <q-btn size="md" :label="$t('lang.message_delete_read')" />
+                                        <q-btn :disable="!selectedMessages?.length" size="md"
+                                            :label="$t('lang.message_delete_read')" @click="deleteAllMessage" />
                                     </q-btn-group>
                                 </div>
                                 <div v-if="selected" class="message-content">
@@ -175,7 +176,7 @@ const isFetchingContent = ref(false);
 const inboxMessages = ref([]);
 
 const selectFirstMessage = () => {
-    if (inboxMessages.value.records) {
+    if (inboxMessages.value.records?.length) {
         // if don't have timeout, ellipsis for title won't show
         setTimeout(() => {
             const message = inboxMessages.value.records[0];
@@ -315,6 +316,30 @@ const readMAllMessage = () => {
                 });
 
                 initOutbox();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+const deleteAllMessage = () => {
+    api
+        .post("/session/inbox/deleteAll")
+        .then((res) => {
+            const { code, data } = res.data
+
+            if (code === 0) {
+                $q.notify({
+                    message: t('lang.message_delete_all_message'),
+                    type: "positive",
+                    position: "top",
+                    icon: "check_circle_outline"
+                });
+
+                initOutbox();
+
+                selected.value = null;
             }
         })
         .catch((error) => {

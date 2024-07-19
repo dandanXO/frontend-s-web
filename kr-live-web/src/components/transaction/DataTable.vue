@@ -10,6 +10,11 @@
         <template v-slot:item="props" v-if="slots.item">
             <slot name="item" :props="props"></slot>
         </template>
+        <template v-slot:body-cell-recordTime="props">
+            <q-td :props="props">
+                {{ getLocaleDateTime(props.value, true) }}
+            </q-td>
+        </template>
         <template v-slot:body-cell-status="props">
             <q-td :props="props">
                 {{ getAllStatus(props.value) }}
@@ -41,6 +46,8 @@
 <script setup>
 import { useSlots } from 'vue';
 import { useI18n } from "vue-i18n";
+import { getLocaleDateTime } from '../../boot/utils';
+
 const { t } = useI18n();
 
 const slots = useSlots();
