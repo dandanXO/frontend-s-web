@@ -191,8 +191,8 @@
       <div class="congrats-highlight">Rs {{ prizeAmount }}</div>
 
       <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
-          {{ $t("btn.recharge") }}
+        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="showPrizePopup = false">
+          {{ $t("btn.confirm") }}
         </q-btn>
       </div>
     </div>
@@ -411,6 +411,9 @@ onMounted(() => {
 
 .rain-money-tab-content {
   background: #00d461;
+  min-height: 44vh;
+  height: calc(100vh - 400px);
+  overflow-y: auto;
   padding: 16px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -617,7 +620,7 @@ onMounted(() => {
   background-image: url("../../assets/images/index/money-rain/money-img.png");
   background-size: cover;
   animation: fall linear infinite;
-  animation-duration: calc(2s + var(--random-duration) * 5s); // Random duration between 2s and 5s
+  animation-duration: calc(4s + var(--random-duration) * 10s); // Random duration between 2s and 5s
   animation-delay: calc(var(--random-delay) * 2s); // Random delay between 0s and 2s
   --random-x: calc(var(--random-x));
   left: -100px;
