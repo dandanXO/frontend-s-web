@@ -88,6 +88,7 @@
     <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param" />
+    <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund' && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -168,6 +169,7 @@ import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
+import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -231,7 +233,8 @@ export default defineComponent({
     OuZuLianPromo,
     OlympicCheckin,
     ChallengeComeBackPromo,
-    OfficialGiftPromo
+    OfficialGiftPromo,
+    OlympicFund
   },
   props: {
     list: {

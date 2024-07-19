@@ -296,7 +296,7 @@ export default defineComponent({
     const isDisplayLogin = ref(false);
 
     const selectedPromoWrapperClass = computed(() => ({
-      "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift'].includes(selectedPromo.value.promoCode),
+      "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
       "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin'
     }))
 
