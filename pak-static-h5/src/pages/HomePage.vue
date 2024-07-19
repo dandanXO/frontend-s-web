@@ -1370,7 +1370,7 @@ const { t } = useI18n();
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
-const isMoneyRainModal = ref(true);
+const isMoneyRainModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -3074,7 +3074,11 @@ const gotoPromo = (banner) => {
     if (banner.redirectUrl.includes("https://")) {
       window.open(banner.redirectUrl, "_blank");
     } else {
-      router.push(`/promo?name=${banner.redirectUrl}`);
+      if (banner.redirectUrl === "redpacketrain") {
+        isMoneyRainModal.value = true;
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
   }
 };

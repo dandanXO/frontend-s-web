@@ -32,10 +32,10 @@
           <div><img src="../../assets/images/index/money-rain/treassure-img.png" /></div>
           <div class="rewind-title">
             Rewind time
-            <span>starts at 23:00</span>
+            <span>starts at {{ nextRainTime.rainStartNext }}</span>
           </div>
-          <div class="go-btn">
-            <img src="../../assets/images/index/money-rain/go-btn.png" @click="goToShowPrize" />
+          <div class="go-btn" v-if="nextRainTime.nowIsRain">
+            <img src="../../assets/images/index/money-rain/go-btn.png" @click="onClaimBonus" />
           </div>
         </div>
         <div class="content-timing">
@@ -77,11 +77,11 @@
           <div><img src="../../assets/images/index/money-rain/treassure-img.png" /></div>
           <div class="rewind-title">
             Rewind time
-            <span>starts at 23:00</span>
+            <span>starts at {{ nextRainTime.rainStartNext }}</span>
           </div>
         </div>
 
-        <div class="content-table">
+        <!-- <div class="content-table">
           <div class="table-title">Personal records</div>
 
           <div class="table-data">
@@ -102,7 +102,7 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> -->
 
         <div class="content-table">
           <div class="table-title">List of winners</div>
@@ -111,9 +111,9 @@
             <table border="0" cellpadding="4" cellspacing="0" width="100%">
               <thead>
                 <tr>
-                  <td>Role ID</td>
-                  <td>Amount obtained</td>
-                  <td>Get time</td>
+                  <td>Name</td>
+                  <td>Date</td>
+                  <td>Amount</td>
                 </tr>
               </thead>
               <!-- <tbody>
@@ -154,17 +154,17 @@
               <table border="0" cellpadding="4" cellspacing="0" width="100%">
                 <thead style="opacity: 0">
                   <tr>
-                    <td>Role ID</td>
-                    <td>Amount obtained</td>
-                    <td>Get time</td>
+                    <td>Name</td>
+                    <td>Date</td>
+                    <td>Amount</td>
                   </tr>
                 </thead>
                 <tbody>
-                  <template v-for="(item, index) in draftListing" :key="index">
+                  <template v-for="(item, index) in listingData" :key="index">
                     <tr>
-                      <td>{{ item.roleId }}</td>
-                      <td>Rs {{ item.amount }}</td>
-                      <td>{{ item.time }}</td>
+                      <td>{{ item.name }}</td>
+                      <td style="font-size: 70%">{{ item.date }}</td>
+                      <td style="font-size: 80%">Rs {{ item.amount }}</td>
                     </tr>
                   </template>
                 </tbody>
@@ -180,8 +180,7 @@
     <div class="congrats-container">
       <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div>
-      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
-      <div class="congrats-highlight">Rs58</div>
+      <div class="congrats-highlight">Rs {{ prizeAmount }}</div>
 
       <div class="congrats-button">
         <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
@@ -193,14 +192,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useRouter } from "vue-router";
+import { userStore } from "stores/index";
 
 const router = useRouter();
+const store = userStore();
 const moneyRainTab = ref("events");
 const showPrizePopup = ref(false);
-const listingData = ref();
+const listingData = ref([]);
 const draftListing = ref([]);
 
 const oriListing = {
@@ -209,9 +210,9 @@ const oriListing = {
   time: "11:00"
 };
 
-for (let i = 0; i < 100; i++) {
-  draftListing.value.push({ ...oriListing });
-}
+// for (let i = 0; i < 100; i++) {
+//   draftListing.value.push({ ...oriListing });
+// }
 
 const selectMoneyRainTab = (tab) => {
   moneyRainTab.value = tab;
@@ -220,9 +221,9 @@ const selectMoneyRainTab = (tab) => {
   }
 };
 
-const goToShowPrize = () => {
-  showPrizePopup.value = true;
-};
+// const goToShowPrize = () => {
+//   showPrizePopup.value = true;
+// };
 
 const tableContainer = ref(null);
 
@@ -252,7 +253,11 @@ const getListing = () => {
     .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
     .then((res) => {
       if (res.code === 0) {
-        listingData.value = res.data;
+        // listingData.value = res.data;
+
+        for (let i = 0; i < 100; i++) {
+          listingData.value.push({ ...res.data[0] });
+        }
       }
     })
     .catch((err) => {
@@ -260,9 +265,49 @@ const getListing = () => {
     });
 };
 
+const nextRainTime = reactive({
+  nowIsRain: false,
+  rainStartNext: ""
+});
+
+const getNextRainTime = () => {
+  eventapi
+    .get("/redPacketVip/nextRainTime?promoCode=pak-red-envelope-rain")
+    .then((res) => {
+      if (res.code === 0) {
+        nextRainTime.nowIsRain = res.data.nowIsRain;
+        nextRainTime.rainStartNext = res.data.rainDuration.startTime.slice(-5);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+const prizeAmount = ref();
+const loadingClaim = ref(false);
+const onClaimBonus = () => {
+  loadingClaim.value = true;
+  eventapi
+    .get(`/redPacketVip/claim?promoCode=pak-red-envelope-rain`)
+    .then((res) => {
+      if (res.code === 0) {
+        loadingClaim.value = false;
+        showPrizePopup.value = true;
+        prizeAmount.value = res.data.vipAmount;
+        store.getBalance();
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      loadingClaim.value = false;
+    });
+};
+
 onMounted(() => {
   getListing();
   startAutoScroll();
+  getNextRainTime();
 
   const spans = document.querySelectorAll("#money-container span");
   spans.forEach((span) => {
