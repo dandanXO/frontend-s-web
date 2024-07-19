@@ -103,7 +103,7 @@ const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/AddWithdrawBankCard.vue')
 ))
 const FeedbackPage = markRaw(defineAsyncComponent(() =>
-  import('src/components/pageModalContent/FeedbackPage.vue')
+  import('src/components/pageModalContent/MaintenancePage.vue')
 ))
 const MessagesPage = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/message/MessagesPage.vue')
