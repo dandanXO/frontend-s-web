@@ -53,63 +53,77 @@
           <div><img src="../../../assets/promo/lh-olympic-match/section-title-img.png" /></div>
           冠军竞猜
         </div>
-        <div class="olympic24-match-game" v-for="(match, index) in matchList" :key="index">
-          <div class="olympic24-match-game-status">{{ match.matchTime }}</div>
+        <div class="olympic24-match-game" v-for="(data, index) in upcomingData" :key="index">
+          <div class="olympic24-match-game-status">{{ data.matchTime }}</div>
           <div class="olympic24-match-game-content">
             <div class="olympic24-match-game-content-left">
               <div class="olympic24-match-game-content-team">
-                <img :src="match.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
-                <div class="olympic24-match-game-content-team-name">{{ match.homeTeam }}</div>
-                <div
-                  v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
-                  class="olympic24-match-game-content-btn"
-                >
-                  已投票
-                </div>
-                <div
-                  v-else-if="match.teamChosen == null"
-                  class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.homeTeam })"
-                >
-                  投票
+                <img :src="imgURL + data.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
+                <div class="olympic24-match-game-content-team-name">{{ data.homeTeam }}</div>
+                <div v-if="(data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam" class="team-vote">
+                  <button
+                    class="olympic24-match-game-content-btn"
+                    @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
+                    :disabled="data.votedTeam && data.votedTeam === data.homeTeam"
+                  >
+                    {{ data.votedTeam && data.votedTeam === data.homeTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+                  </button>
                 </div>
                 <div v-else class="nba2-match-game-content-btn__pseudo" />
               </div>
             </div>
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
-              <div class="olympic24-match-game-content-center-title">{{ match.quizTitle }}</div>
+              <div class="olympic24-match-game-content-center-title">{{ data.quizTitle }}</div>
+              <!--              <div v-if="data.teamChosen != null && data.teamChosen == 'DRAW'" class="olympic24-match-game-content-btn">-->
+              <!--                已投平局-->
+              <!--              </div>-->
+              <!--              <div-->
+              <!--                v-else-if="data.teamChosen == null"-->
+              <!--                class="olympic24-match-game-content-btn"-->
+              <!--                @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: 'draw' })"-->
+              <!--              >-->
+              <!--                平局-->
+              <!--              </div>-->
               <div
-                v-if="match.teamChosen != null && match.teamChosen == 'DRAW'"
-                class="olympic24-match-game-content-btn"
+                v-if="data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)"
+                class="team-vote"
               >
-                已投平局
-              </div>
-              <div
-                v-else-if="match.teamChosen == null"
-                class="olympic24-match-game-content-btn"
-                @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: 'draw' })"
-              >
-                平局
+                <button
+                  class="olympic24-match-game-content-btn"
+                  @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: 'draw' })"
+                  :disabled="data.votedTeam && data.votedTeam === 'draw'"
+                >
+                  {{ data.votedTeam && data.votedTeam === "draw" ? "已投平局" : data.votedTeam ? "" : "平局" }}
+                </button>
               </div>
               <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
             <div class="olympic24-match-game-content-right">
               <div class="olympic24-match-game-content-team">
-                <img :src="match.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
-                <div class="olympic24-match-game-content-team-name">{{ match.awayTeam }}</div>
-                <div
-                  v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
-                  class="olympic24-match-game-content-btn"
-                >
-                  已投票
-                </div>
-                <div
-                  v-else-if="match.teamChosen == null"
-                  class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.awayTeam })"
-                >
-                  投票
+                <img :src="imgURL + data.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
+                <div class="olympic24-match-game-content-team-name">{{ data.awayTeam }}</div>
+                <!--                <div-->
+                <!--                  v-if="data.teamChosen != null && match.teamChosen == match.awayTeam"-->
+                <!--                  class="olympic24-match-game-content-btn"-->
+                <!--                >-->
+                <!--                  已投票-->
+                <!--                </div>-->
+                <!--                <div-->
+                <!--                  v-else-if="data.teamChosen == null"-->
+                <!--                  class="olympic24-match-game-content-btn"-->
+                <!--                  @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"-->
+                <!--                >-->
+                <!--                  投票-->
+                <!--                </div>-->
+                <div v-if="(data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam" class="team-vote">
+                  <button
+                    class="olympic24-match-game-content-btn"
+                    @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
+                    :disabled="data.votedTeam && data.votedTeam === data.awayTeam"
+                  >
+                    {{ data.votedTeam && data.votedTeam === data.awayTeam ? "已投票" : data.votedTeam ? "" : "投票" }}
+                  </button>
                 </div>
                 <div v-else class="nba2-match-game-content-btn__pseudo" />
               </div>
@@ -169,6 +183,12 @@
         <template #header>
           <div class="title"></div>
         </template>
+        <div class="promo-records-count">
+          <div>总竞猜次数: {{ recordsCount.attendTimes }}</div>
+
+          <div>总竞猜正确次数: {{ recordsCount.wonTimes }}</div>
+          <div>今日正确次数: {{ recordsCount.todayWonTimes }}</div>
+        </div>
         <div class="record-dialog-container">
           <table class="record-table">
             <thead>
@@ -176,15 +196,15 @@
                 <th>投票时间</th>
                 <th>参赛队伍</th>
                 <th>投票队伍</th>
-                <th>投票结果</th>
+                <!--                <th>投票结果</th>-->
               </tr>
             </thead>
             <tbody>
               <tr v-for="(record, index) in recordList" :key="index">
                 <td>{{ moment(record.createTime).format("YYYY-MM-DD HH:mm") }}</td>
-                <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
-                <td>{{ displayTeamVictory(record) }}</td>
-                <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
+                <td>{{ `${record.quizTitle}` }}</td>
+                <td>{{ record.answerOne === "draw" ? "平局" : record.answerOne }}</td>
+                <!--                <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>-->
               </tr>
               <!-- <tr>
                 <td>2024-05-11 16:00</td>
@@ -230,8 +250,17 @@ import { useLocalStorage } from "@vueuse/core";
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
-const matchList = ref([]);
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
+const isLoaded = ref(false);
+const matchList = ref([]);
+const upcomingData = ref([]);
+const answeredRecords = ref([]);
+const recordsCount = reactive({
+  wonTimes: 0,
+  attendTimes: 0,
+  todayWonTimes: 0
+});
 const recordList = ref([]);
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
@@ -242,28 +271,19 @@ const handleVoteClick = (selectedData) => {
 };
 
 const handleSubmitVote = () => {
-  console.log(submitParam);
   submitBBDacha(submitParam)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage.success({
-          type: "success",
-          message: "成功投票"
-        });
-        getNbaMatchData();
-      } else {
-        ElMessage.error(res.message);
+        getData();
+        ElMessage.success("投票成功！");
       }
     })
-    .catch(() => {
-      ElMessage.error(res.message);
-    })
-    .finally(() => {
+    .catch(() => {})
+    .then(() => {
       confirmVoteDialog.value = false;
     });
 };
 
-const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const displayTeamVictory = (record) => {
   if (record.teamChosen === "DRAW") return "平局";
   return record.teamChosen + "胜";
@@ -294,27 +314,54 @@ const displayGuessResult = (record) => {
   }
 };
 
-const getNbaMatchData = async () => {
-  const res = await getBBDachaUpcoming();
-  matchList.value = res.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).locale("zh-cn").format("YYYY年MMMDo HH:mm"),
-    awayTeamIcon: imgURL + res.awayTeamIcon,
-    homeTeamIcon: imgURL + res.homeTeamIcon
-  }));
+const getData = () => {
+  Promise.all([getBBDachaUpcoming(), getBBDachaAnsweredRecords(), getBBDachaRecordsCount()]).then((values) => {
+    const [bbDachaUpcoming, bbDachaAnsweredRecords, bbDachaRecordsCount] = values;
+    if (bbDachaAnsweredRecords.code === 0) {
+      if (
+        bbDachaAnsweredRecords.data &&
+        bbDachaAnsweredRecords.data.records &&
+        bbDachaAnsweredRecords.data.records.length
+      ) {
+        answeredRecords.value = bbDachaAnsweredRecords.data.records;
+      }
+    }
+
+    isLoaded.value = true;
+
+    if (bbDachaUpcoming.code === 0) {
+      if (bbDachaUpcoming.data && bbDachaUpcoming.data.length) {
+        upcomingData.value = bbDachaUpcoming.data;
+
+        let isFirstTime = {};
+        for (let i = 0, l = answeredRecords.value.length; i < l; i++) {
+          const currRecord = answeredRecords.value[i];
+
+          upcomingData.value.forEach((e) => {
+            const { matchTime, id } = e;
+
+            if (!isFirstTime[id]) {
+              const timeCN = moment(matchTime).locale("zh_cn");
+              e.matchTime = timeCN.format("MMM Do HH:mm");
+
+              isFirstTime[id] = true;
+            }
+
+            if (currRecord.quizId === id) e.votedTeam = currRecord.answerOne;
+          });
+        }
+      }
+    }
+
+    if (bbDachaRecordsCount.code === 0) {
+      recordsCount.wonTimes = bbDachaRecordsCount.data.wonTimes;
+      recordsCount.attendTimes = bbDachaRecordsCount.data.attendTimes;
+      recordsCount.todayWonTimes = bbDachaRecordsCount.data.todayWonTimes;
+    }
+  });
 };
-
-onMounted(getNbaMatchData);
-
-watch(tableRecordDialog, async () => {
-  if (tableRecordDialog.value) {
-    const res = await getBBDachaAnsweredRecords();
-
-    recordList.value = res.data.records.map((res) => ({
-      ...res,
-      updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
-    }));
-  }
+onMounted(() => {
+  getData();
 });
 </script>
 
@@ -349,6 +396,13 @@ watch(tableRecordDialog, async () => {
     gap: 8px;
     align-items: center;
   }
+}
+
+.promo-records-count {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
 }
 
 .olympic24-match-game {
