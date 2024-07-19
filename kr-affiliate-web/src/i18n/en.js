@@ -61,6 +61,7 @@ export default {
     CommissionHistoryList: 'Commission History List',
     StatisticsByMember: 'Statistics By Member',
     DepositWithdrawManagement: 'Deposit/Withdraw Management',
+    MemberPointRecord: 'Member Point Record',
     // Settlement Management End
 
     gameRecord: 'Game Record',

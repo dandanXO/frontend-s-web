@@ -1751,6 +1751,9 @@ export default {
     sportRolling: '하부총스포츠롤링',
     recycleMoney: '머니회수',
     shareRatio: '지분율',
+    createMemberPointRecord: '회원 포인트 기록 생성',
+    claimed: '청구됨',
+    notClaimed: '보류 중',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2436,7 +2439,8 @@ export default {
     'KRW Stats Report': '한국 사이트 데이터 보고서',
     'MQ Log': 'MQ 로그',
     'Promotion Coupon': '쿠폰',
-    'Member Invite Limit': '회원 초대 제한'
+    'Member Invite Limit': '회원 초대 제한',
+    'Member Point Record': '회원 포인트 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',

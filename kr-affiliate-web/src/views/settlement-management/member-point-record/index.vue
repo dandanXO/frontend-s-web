@@ -43,6 +43,7 @@
               <th scope="col">{{ t('fields.loginName') }}</th>
               <th scope="col">{{ t('fields.type') }}</th>
               <th scope="col">{{ t('fields.amount') }}</th>
+              <th scope="col">{{ t('fields.status') }}</th>
               <th scope="col">{{ t('fields.afterBalance') }}</th>
               <th scope="col">{{ t('fields.recordTime') }}</th>
             </tr>
@@ -65,6 +66,9 @@
               </td>
               <td :class="item.type === 'EARN' ? 'bgGreen textGreen' : 'bgRed textRed'">
                 {{ formatMoney(item.rebateAmount) }}
+              </td>
+              <td>
+                {{ item.status }}
               </td>
               <td>
                 {{
