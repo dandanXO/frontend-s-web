@@ -1,8 +1,8 @@
 {
-  "name": "vnm-static-h5",
+  "name": "kr-static-h5",
   "version": "1.0.8",
   "description": "TF88 - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
-  "productName": "TF88",
+  "productName": "City8",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {
@@ -39,7 +39,7 @@
     "cordova-plugin-screen-orientation": "^3.0.3",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
-    "csweb-client": "^1.4.2",
+    "csweb-client": "^1.4.6",
     "es6-promise-plugin": "^4.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

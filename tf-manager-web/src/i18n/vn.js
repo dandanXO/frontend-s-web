@@ -722,10 +722,12 @@ export default {
     dailyFirstDepositLimit: 'Giới hạn tiền gửi lần đầu hàng ngày',
     dailyMinFirstDepositLimit: 'Giới hạn tiền gửi lần đầu tối thiểu hàng ngày',
     dailyMaxFirstDepositLimit: 'Giới hạn tiền gửi lần đầu tối đa hàng ngày',
+    dailyFirstDepositProbability: 'Xác suất gửi tiền lần đầu hàng ngày',
     dailyMemberFailDeposit: 'Thành viên nạp tiền thất bại hàng ngày',
     dailyFailWithdraw: 'Rút tiền thất bại hàng ngày',
     dailyMax: 'Số quay tối đa hàng ngày',
     dailyMaxRegLimit: 'Giới hạn đăng ký tối đa hàng ngày',
+    dailyRegProbabilty: 'Xác suất đăng ký hàng ngày',
     dailyMemberFailWithdraw: 'Thành viên rút tiền thất bại hàng ngày',
     dailyRainDuration: 'Thời gian mưa',
     dailyRefreshDuration: 'Thời gian làm mới',
@@ -959,6 +961,7 @@ export default {
     jobType: 'Loại công việc',
     label: 'Nhãn',
     labelCancel: 'Hủy bỏ',
+    lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Chữ số cuối',
     lastDigitMinDayDeposit: 'Số tiền gửi tối thiểu hàng ngày cho gói cuối cùng',
     lastDigitRules: 'Quy tắc gói cuối cùng',
@@ -2208,6 +2211,8 @@ export default {
     validationMaxDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
     validationMinDayDepositAmountRequired: 'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
     validationMaxDayDepositAmountRequired: 'Số tiền gửi tối đa hàng ngày là bắt buộc',
+    validationDayRegProbabilityRequired: 'Xác suất đăng ký hàng ngày là bắt buộc',
+    validationDayDepositAmountProbabilityRequired: 'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
   },
   menu: {
     undefined: '',
@@ -2232,6 +2237,7 @@ export default {
     'Member Rollover Record': 'Lịch sử 롤오버 thành viên',
     'Member Distribute Privilege': 'Phân phối đặc quyền thành viên',
     'Member Profit Ranking': 'Thứ hạng lợi nhuận thành viên',
+    'Member Affiliate Change Log': 'Member Affiliate Change Log',
     Affiliate: 'Đối tác liên kết',
     'Affiliate Amount Adjust': 'Điều chỉnh số tiền Đối tác liên kết',
     'Affiliate Summary': 'Tóm tắt Đối tác liên kết',
@@ -2484,6 +2490,8 @@ export default {
     if_not_google_auth_then:
       'Nếu bạn chưa liên kết Google Xác thực, bạn có thể bỏ qua bước này.',
     google_auth_code: 'Vui lòng nhập mã xác thực Google 6 chữ số.',
+    register_count: "Số người đăng ký hôm nay",
+    register_limit: "Số lượng có thể đăng ký hôm nay"
   },
   posterType: {
     overall: 'Tổng quan',

@@ -2306,7 +2306,7 @@ export default defineComponent({
     }
 
     .headicon {
-      flex: 2;
+      flex: 1;
       width: 15%;
       //width: 120px;
     }
@@ -2394,7 +2394,7 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 135px;
+      max-width: 75px;
     }
   }
 

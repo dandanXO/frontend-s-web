@@ -27,7 +27,7 @@
               </div>
 
               <div v-if="languageVal === 'en'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
-              <div v-if="languageVal === 'vi'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.vimessage"></div>
+              <div v-if="languageVal === 'kr'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.vimessage"></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />

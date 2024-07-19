@@ -31,7 +31,7 @@ watch(languageVal, (newVal) => {
 const langOptions = [
   {
     label: "Korean",
-    value: "vi",
+    value: "kr",
     icon: "iconvn"
   },
   {

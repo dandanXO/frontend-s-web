@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr fFf" :class="{ sanfrancisco: languageVal === 'vi', poppins: languageVal === 'en' }">
+  <q-layout view="hHh Lpr fFf" :class="{ sanfrancisco: languageVal === 'kr', poppins: languageVal === 'en' }">
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">

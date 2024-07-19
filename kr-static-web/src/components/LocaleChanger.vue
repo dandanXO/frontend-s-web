@@ -36,7 +36,7 @@ export default {
     }
     const langs = [
       { code: "en", text: "English" },
-      { code: "vi", text: "Vietnam" },
+      { code: "kr", text: "Korean" },
     ]
     return {
       languageVal,
