@@ -102,8 +102,8 @@ const AnnouncementComponent = markRaw(defineAsyncComponent(() =>
 const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/AddWithdrawBankCard.vue')
 ))
-const FeedbackPage = markRaw(defineAsyncComponent(() =>
-  import('src/components/pageModalContent/FeedbackPage.vue')
+const InquiryPage = markRaw(defineAsyncComponent(() =>
+  import('src/components/pageModalContent/inquiry/InquiryPage.vue')
 ))
 const MessagesPage = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/message/MessagesPage.vue')
@@ -160,7 +160,7 @@ const pagesInfo = reactive([
     page: "personal/inquiry",
     info: 'lang.menu_inquiry',
     iconActiveUrl: require("../../assets/icon/pageModal/inquiry-icon.svg"),
-    component: FeedbackPage,
+    component: InquiryPage,
     headerInfo: {
       title: 'lang.menu_inquiry',
       description: "lang.page_modal_desc_text"

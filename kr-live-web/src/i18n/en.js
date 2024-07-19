@@ -151,6 +151,7 @@ export default {
     feedback_previous_page: "Previous page",
     feedback_waiting_admin_reply: "Waiting Admin Reply",
     feedback_admin_replied: "Admin Replied",
+    feedback_delete_selected: "Delete Selected",
     // feedback end
     // message start
     message_loading_content: "Loading content...",
