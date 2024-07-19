@@ -1,188 +1,157 @@
 <template>
-  <div class="form-wrapper" v-if="isCreateMode">
-    <form class="content-form form-template">
-      <div class="primary-button blue-square back-btn" @click="isCreateMode = false">
-        {{ $t('lang.feedback_previous_page') }}
-      </div>
-      <div class="form-item">
-        <label>{{ $t('lang.feedback_category') }}</label>
-        <q-select outlined dense name="title" v-model="composeForm.feedbackType" :options="feedbackTypes"
-          ref="feedbackTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" />
-      </div>
-      <div class="form-item">
-        <label>{{ $t('lang.feedback_title') }}</label>
-        <q-input dense outlined ref="titleRef" :placeholder="$t('lang.feedback_title_placeholder')"
-          v-model="composeForm.title" clearable lazy-rules :rules="[
-            (val) => (val && val.length > 0) || $t('lang.feedback_cannot_be_empty'),
-          ]" />
-      </div>
-      <div class="form-item">
-        <label>{{ $t('lang.feedback_content') }}</label>
-
-        <q-input dense outlined ref="contentRef" type="textarea" rows="4" v-model="composeForm.content" clearable
-          lazy-rules :rules="[
-            (val) => (val && val.length > 0) || $t('lang.feedback_cannot_be_empty'),
-          ]" />
-      </div>
-    </form>
-
-    <div class="action-buttons">
-      <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.feedback_compose_confirm') }}</div>
-    </div>
-  </div>
-  <div class="feedback-compose-form" v-else>
-    <div class="feedback-container">
-      <div class="feedback-list-wrapper">
-        <div class="header">
+  <div class="inquiry-page">
+    <WriteInquiry v-if="isCreateMode" :onClickBack="() => isCreateMode = false" />
+    <div class="feedback-compose-form" v-else>
+      <div class="feedback-container">
+        <div class="feedback-list-wrapper">
           <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
-            {{ $t('lang.feedback_compose') }}
+            {{ $t('lang.feedback_write_inquiry') }}
           </div>
-          <span class="total">{{ $t('lang.announcement_total') }} {{ feedbackReplies.length }}</span>
-        </div>
+          <div class="header">
+            <q-pagination :modelValue="inquiriesList.current" :max="inquiriesList.pages" :max-pages="inquiriesList.size"
+              @update:model-value="(currentPage) => {
+                initOutbox(currentPage)
+              }" boundary-links input color="white" input-class="text-white-10" dense />
 
-        <q-list bordered separator class="feedback-list">
+            <span class="total">{{ $t('lang.announcement_total') }} {{ inquiriesList.total }}</span>
+          </div>
+
+          <q-list bordered separator class="feedback-list">
+            <template v-if="isLoading">
+              <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
+                <q-skeleton type="QToolbar" style="width:100%;" />
+              </q-item>
+            </template>
+            <template v-else>
+              <q-item clickable v-ripple v-for="item in inquiriesList.records" :key="item.page"
+                @click="readFeedback(item.id)" :active="item === selected" active-class="active-announcement">
+                <q-item-section thumbnail style="margin:0;">
+                  <q-checkbox size="xs" v-model="item.selected" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
+                </q-item-section>
+
+                <q-item-section side top class="info-wrapper">
+                  <q-item-label caption><span class="date-time">{{ getLocaleDateTime(item.createTime)
+                      }}</span></q-item-label>
+                  <q-item-label caption lines="2"><span class="caption" v-if="item.hasOwnProperty('readTime')"
+                      style="font-size:10px;" :style="!item.readTime ? 'color:#808080' : 'color:#FFC000'">{{
+                        !item.replyId ? $t('lang.feedback_waiting_admin_reply') : $t('lang.feedback_admin_replied')
+                      }}</span></q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-list>
+        </div>
+        <q-scroll-area class="feedback-content-wrapper">
           <template v-if="isLoading">
-            <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
-              <q-skeleton type="QToolbar" style="width:100%;" />
+            <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
+              <q-skeleton type="text" style="width:100%;" />
             </q-item>
           </template>
           <template v-else>
-            <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
-              :active="item === selected" active-class="active-announcement">
-              <q-item-section>
-                <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
-              </q-item-section>
-
-              <q-item-section side top class="info-wrapper">
-                <q-item-label caption><span class="date-time">{{ getLocaleDateTime(item.createTime)
-                    }}</span></q-item-label>
-                <q-icon name="mark_email_read" v-if="item.readTime" :title="$t('lang.feedback_read')" />
-                <q-icon name="mark_email_unread" v-else :title="$t('lang.feedback_unread')" />
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-list>
-      </div>
-      <q-scroll-area class="feedback-content-wrapper">
-        <template v-if="isLoading">
-          <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
-            <q-skeleton type="text" style="width:100%;" />
-          </q-item>
-        </template>
-        <template v-else>
-          <div v-if="selected" class="feedback-content">
             <div>
-              <div class="title">{{ selected.title }}</div>
-            </div>
-            <span class="date-time" v-if="selected.createTime">{{ getLocaleDateTime(selected.createTime) }}</span>
-            <span class="date-time" v-if="selected.readTime">{{ $t('lang.feedback_read_at') }} {{
-              getLocaleDateTime(selected.readTime, true)
-            }}</span>
-            <div class="content-loading" v-if="isFetchingContent">
-              <template v-for="rectSkeleton in 5" :key="rectSkeleton">
-                <q-skeleton type="text" style="width:100%;" />
+              <div class="feedback-content-wrapper">
+                <div class="feedback-actions">
+                  <q-btn-group flat>
+                    <q-btn size="md" :label="$t('lang.message_process_all_read')" @click="readMAllMessage" />
+                    <q-btn v-if="selectedMessages?.length" size="md"
+                      :label="$t('lang.message_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
+                      @click="deleteSelectedMessage" />
+                    <q-btn size="md" :label="$t('lang.message_delete_read')" />
+                  </q-btn-group>
+                </div>
+              </div>
+              <template v-if="selected">
+                <div class="feedback-content" v-for="inquiry, index in [selected, ...repliesOfInquiries]">
+                  <div>
+                    <div class="title">{{ inquiry.title }}</div>
+                  </div>
+                  <span class="date-time" v-if="inquiry.createTime">{{ getLocaleDateTime(inquiry.createTime) }}</span>
+                  <span class="date-time" v-if="inquiry.readTime">{{ $t('lang.feedback_read_at') }} {{
+                    getLocaleDateTime(inquiry.readTime, true)
+                  }}</span>
+                  <div class="content-loading" v-if="isFetchingContent">
+                    <template v-for="rectSkeleton in 5" :key="rectSkeleton">
+                      <q-skeleton type="text" style="width:100%;" />
+                    </template>
+                  </div>
+                  <div v-else class="content" v-html="inquiry.content" style="white-space: pre-line">
+                  </div>
+                  <q-separator v-if="repliesOfInquiries.length && index !== repliesOfInquiries.length" />
+                </div>
               </template>
+              <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
             </div>
-            <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
-          </div>
-          <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
-        </template>
-      </q-scroll-area>
+          </template>
+        </q-scroll-area>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup id="FinanceDeposit">
-import { reactive, ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
-var qs = require("qs");
+import WriteInquiry from 'components/pageModalContent/inquiry/WriteInquiry.vue';
+
 
 const $q = useQuasar();
 const isCreateMode = ref(false);
-const titleRef = ref();
-const contentRef = ref();
 const selected = ref();
 const isLoading = ref(false);
 
-const composeForm = reactive({
-  title: "",
-  content: "",
-  feedbackType: ""
-});
-
 const isFetchingContent = ref(false);
 
-const feedbackTypes = ref([]);
-
-const feedbackReplies = ref([]);
+const inquiriesList = ref([]);
+const replyInquiries = ref([]);
 
 const selectFirstFeedback = () => {
-  if (!selected.value && feedbackReplies.value) {
+  if (inquiriesList.value.records) {
     // if don't have timeout, ellipsis for title won't show
     setTimeout(() => {
-      selected.value = feedbackReplies.value[0];
+      const message = inquiriesList.value.records[0];
+      selected.value = message;
+      if (!message.readTime) {
+        readFeedback(message.id, false)
+      }
     }, 100)
   }
 }
-watch(() => feedbackReplies.value, () => {
+watch(() => inquiriesList.value, () => {
   selectFirstFeedback();
 })
 
 onMounted(() => {
-  if (feedbackReplies.value) {
+  if (inquiriesList.value) {
     selectFirstFeedback();
   }
 })
 
-const sendMessage = () => {
-  titleRef.value.validate();
-  contentRef.value.validate();
-
-  if (titleRef.value.hasError || contentRef.value.hasError) {
-  } else {
-    api.post("/session/feedback", qs.stringify(composeForm)).then((res) => {
-      const resCode = res.data.code;
-      const resMessage = res.data.message
-      if (resCode === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "성공적으로 보냈습니다",
-          icon: "check_circle_outline"
-        });
-        composeForm.title = "";
-        composeForm.content = "";
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: resMessage,
-          icon: "report_problem"
-        });
-      }
-    });
-  }
-};
+const repliesOfInquiries = computed(() => replyInquiries.value.records.filter(({ id }) => id === selected.value.replyId));
 
 const initOutbox = () => {
   isLoading.value = true;
 
-  Promise.all([api.get('/session/feedback/replies'), api.get("/session/feedback/types")]).then(([repliesRes, typesRes]) => {
-    const { code: repliesResCode, data: repliesResData } = repliesRes.data
+  Promise.all([api.get("/session/feedback/sysReply"), api.get('/session/feedback/replies')]).then(([inquiriesRes, replyInquiriesRes]) => {
+    const { code: inquiriesResCode, data: inquiriesResData } = inquiriesRes.data
+    const { code: replyInquiriesResCode, data: replyInquiriesResData } = replyInquiriesRes.data
 
-    if (repliesResCode === 0) {
-      feedbackReplies.value = repliesResData.records;
+    if (inquiriesResCode === 0) {
+      const inquiriesResDataRecordsWithSelected = inquiriesResData.records.map((data) => ({
+        ...data,
+        selected: false
+      }));
+      inquiriesList.value = { ...inquiriesResData, records: inquiriesResDataRecordsWithSelected };
     }
 
-    const { code: typesResCode, data: typesResData } = typesRes.data
-
-    if (typesResCode === 0) {
-      feedbackTypes.value = typesResData;
+    if (replyInquiriesResCode === 0) {
+      replyInquiries.value = replyInquiriesResData;
     }
-
     isLoading.value = false;
   }).catch(() => {
     isLoading.value = false;
@@ -191,8 +160,8 @@ const initOutbox = () => {
   })
 }
 
-const readFeedback = (id) => {
-  const currentMail = feedbackReplies.value.find((data) => data.id === id);
+const readFeedback = (id, showReadNotify = true) => {
+  const currentMail = inquiriesList.value.records.find((data) => data.id === id);
   selected.value = currentMail;
 
   if (!currentMail?.content) {
@@ -201,7 +170,7 @@ const readFeedback = (id) => {
     api.get(`/session/feedback/${id}/read`).then((res) => {
       const { code, data } = res.data
 
-      if (code === 0 && !currentMail.readTime) {
+      if (code === 0 && !currentMail.readTime && showReadNotify) {
         $q.notify({
           message: "메시지 읽기",
           type: "positive",
@@ -231,18 +200,21 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.inquiry-page {
+  height: 100%;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .feedback-compose-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin: 0;
-}
-
-.back-btn {
-  width: 100px;
-  height: 30px;
-  font-size: 12px;
-  letter-spacing: -1px;
+  height: 100%;
 }
 
 .compose-btn {
@@ -256,6 +228,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
   min-height: 550px;
+  gap: 10px;
 
   .total {
     margin-left: auto;
@@ -265,7 +238,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    padding-right: 10px;
+    min-height: 100%;
 
     .header {
       display: flex;
@@ -289,8 +262,17 @@ onMounted(() => {
     }
   }
 
+  .feedback-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .feedback-content-wrapper {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 100%;
 
     .feedback-content {
       display: flex;

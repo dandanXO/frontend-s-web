@@ -103,7 +103,7 @@ const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/AddWithdrawBankCard.vue')
 ))
 const FeedbackPage = markRaw(defineAsyncComponent(() =>
-  import('src/components/pageModalContent/MaintenancePage.vue')
+  import('src/components/pageModalContent/FeedbackPage.vue')
 ))
 const MessagesPage = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/message/MessagesPage.vue')
@@ -148,7 +148,7 @@ const pagesInfo = reactive([
     tabIndex: "message",
     page: "announcement",
     info: 'lang.page_modal_announcement',
-    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/loudspeaker-icon.svg"),
     component: AnnouncementComponent,
     headerInfo: {
       title: 'lang.page_modal_announcement',

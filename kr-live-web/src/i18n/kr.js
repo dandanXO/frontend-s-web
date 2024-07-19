@@ -142,6 +142,7 @@ export default {
     feedback_read: "읽었다",
     feedback_read_at: "에서 읽다",
     feedback_compose: "글쓰기",
+    feedback_write_inquiry: "문의작성",
     feedback_category: "유형",
     feedback_category_select: "선택해주세요",
     feedback_title: "제목",
@@ -150,6 +151,8 @@ export default {
     feedback_content: "내용",
     feedback_compose_confirm: "확인",
     feedback_previous_page: "전 페이지로 이동",
+    feedback_waiting_admin_reply: "답변대기",
+    feedback_admin_replied: "답변완료",
     // feedback end
     // message start
     message_loading_content: "콘텐츠 로드 중...",

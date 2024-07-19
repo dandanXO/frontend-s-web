@@ -140,6 +140,7 @@ export default {
     feedback_read: "Read",
     feedback_read_at: "Read at",
     feedback_compose: "Compose",
+    feedback_write_inquiry: "Write Inquiry",
     feedback_category: "Category",
     feedback_category_select: "Please select",
     feedback_title: "Title",
@@ -148,6 +149,8 @@ export default {
     feedback_content: "Content",
     feedback_compose_confirm: "Confirm",
     feedback_previous_page: "Previous page",
+    feedback_waiting_admin_reply: "Waiting Admin Reply",
+    feedback_admin_replied: "Admin Replied",
     // feedback end
     // message start
     message_loading_content: "Loading content...",
