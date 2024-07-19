@@ -167,7 +167,7 @@ export default {
     search: "Search",
     downloadApp: "Download App",
     downloadNow: "Download Now",
-    recharge: "Recharge",
+    recharge: "Recharge"
   },
   notify: {
     noRecord: "No Record",
@@ -236,6 +236,7 @@ export default {
     cashBalance: "Cash Balance",
     withdrawable: "Withdrawable",
     withdrewAmount: "Withdrew Amount",
+    withdrawMaxTimes: "Remaining Withdrawal Attempts",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial"

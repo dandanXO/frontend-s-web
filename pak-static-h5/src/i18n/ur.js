@@ -236,6 +236,7 @@ export default {
     cashBalance: "کیش بیلنس",
     withdrawable: "واپسی کے قابل",
     withdrewAmount: "واپس لی گئی رقم",
+    withdrawMaxTimes: "باقی نکالنے کی کوششیں",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں",
     withdrawTutorial: "نکالنے کا ٹیوٹوریل"
