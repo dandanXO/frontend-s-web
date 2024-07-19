@@ -97,7 +97,7 @@ import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import WriteInquiry from 'components/pageModalContent/inquiry/WriteInquiry.vue';
 
-
+var qs = require("qs");
 const $q = useQuasar();
 const isCreateMode = ref(false);
 const selected = ref();
@@ -111,13 +111,14 @@ const replyInquiries = ref([]);
 const selectedMessages = computed(() => inquiriesList.value.records?.filter((item) => item.selected).map(({ id }) => id));
 
 const selectFirstFeedback = () => {
-  if (inquiriesList.value.records) {
+  if (inquiriesList.value.records?.length) {
     // if don't have timeout, ellipsis for title won't show
     setTimeout(() => {
-      const message = inquiriesList.value.records[0];
-      selected.value = message;
-      if (!message.readTime) {
-        readFeedback(message.id, false)
+      const inquiry = inquiriesList.value.records[0];
+
+      selected.value = inquiry;
+      if (!inquiry.readTime) {
+        readFeedback(inquiry.id, false)
       }
     }, 100)
   }
@@ -135,34 +136,31 @@ onMounted(() => {
 const deleteSelectedMessage = () => {
   const mailIdArr = selectedMessages.value;
   const formattedIds = mailIdArr.join(",");
-  // api
-  //   .post(
-  //     "/session/inbox/deleteMultiple",
-  //     qs.stringify({
-  //       ids: formattedIds
-  //     })
-  //   )
-  //   .then((res) => {
-  //     const { code, data } = res.data
+  api
+    .post(
+      "session/feedback/delete",
+      qs.stringify({
+        ids: formattedIds
+      })
+    )
+    .then((res) => {
+      const { code, data } = res.data
 
-  //     if (code === 0) {
-  //       $q.notify({
-  //         message: t('lang.message_delete_selected_message'),
-  //         type: "positive",
-  //         position: "top",
-  //         icon: "check_circle_outline"
-  //       });
+      if (code === 0) {
+        $q.notify({
+          message: t('lang.message_delete_selected_message'),
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
 
-  //       const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
-  //       inboxMessages.value.records = newRecords
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-
-  const newRecords = inquiriesList.value.records.filter((data) => !selectedMessages.value.includes(data.id));
-  inquiriesList.value.records = newRecords
+        const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
+        inboxMessages.value.records = newRecords
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
   $q.notify({
     message: "공사중",
