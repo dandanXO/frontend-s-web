@@ -159,10 +159,10 @@ const pagesInfo = reactive([
     tabIndex: "message",
     page: "personal/inquiry",
     info: 'lang.menu_inquiry',
-    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/inquiry-icon.svg"),
     component: FeedbackPage,
     headerInfo: {
-      title: 'lang.message_type_all',
+      title: 'lang.menu_inquiry',
       description: "lang.page_modal_desc_text"
     }
   },
@@ -170,7 +170,7 @@ const pagesInfo = reactive([
     tabIndex: "message",
     page: "personal/message",
     info: 'lang.menu_message',
-    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/mails-icon.svg"),
     component: MessagesPage,
     headerInfo: {
       title: 'lang.menu_message',

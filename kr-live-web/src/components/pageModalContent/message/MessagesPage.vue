@@ -367,7 +367,7 @@ onMounted(() => {
 
 .message-page {
     height: 100%;
-    padding: 20px;
+    padding: 0 20px 20px;
     position: relative;
     display: flex;
     flex-direction: column;
