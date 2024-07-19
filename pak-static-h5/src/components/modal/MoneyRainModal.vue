@@ -319,9 +319,6 @@ const getNextRainTime = () => {
         // Create a Date object
         const startTime = new Date(year, month - 1, day, hours, minutes);
 
-        // Subtract 3 hours
-        startTime.setHours(startTime.getHours() - 3);
-
         const formattedHours = String(startTime.getHours()).padStart(2, "0");
         const formattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
         nextRainTime.rainStartNext = `${formattedHours}:${formattedMinutes}`;
