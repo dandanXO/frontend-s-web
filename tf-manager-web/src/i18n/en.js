@@ -1887,6 +1887,9 @@ export default {
     slotRolling: 'Slot Rolling Amount',
     sportRolling: 'Sport Rolling Amount',
     recycleMoney: 'Recycle Money',
+    createMemberPointRecord: 'Create Member Point Record',
+    claimed: 'Claimed',
+    notClaimed: 'Pending',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2611,6 +2614,7 @@ export default {
     'MQ Log': 'MQ Log',
     'Promotion Coupon': 'Deposit Coupon',
     'Member Invite Limit': 'Member Invite Limit',
+    'Member Point Record': 'Member Point Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

@@ -16,9 +16,15 @@
           <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
           <div class="title">
             新手礼包
-            <span style="font-size: 16px; font-weight: 400">(进行中)</span>
+            <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
           </div>
         </div>
+        <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
+          (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
+        </span>
+        <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+          (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
+        </span>
         <div class="section">
           <div style="display: flex">
             <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -102,14 +108,14 @@
             />
             <div class="title">首次提款</div>
           </div>
-          <q-btn class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
+          <q-btn v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
             <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
               <img
                 v-if="firstWithdrawalState === 'CLAIMED'"
                 style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
                 src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
               />
-              <span>{{ getStatus2(firstWithdrawalState).text }}</span>
+              <span>{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
             </div>
           </q-btn>
         </div>
@@ -165,7 +171,9 @@
           </li>
           <li>
             <span class="step-number">4</span>
-            <div class="content">此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；</div>
+            <div class="content">
+              此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+            </div>
           </li>
           <li>
             <span class="step-number">5</span>
@@ -175,9 +183,7 @@
           </li>
           <li>
             <span class="step-number">6</span>
-            <div class="content">
-              此活动最终解释权归雷火所有；
-            </div>
+            <div class="content">此活动最终解释权归雷火所有；</div>
           </li>
         </ol>
       </div>
@@ -192,6 +198,7 @@ import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
 import { userStore } from "src/stores";
+import moment from "moment";
 
 const store = userStore();
 const router = useRouter();
@@ -201,6 +208,7 @@ const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
+const memberRegTime = ref(0);
 
 const $q = useQuasar();
 
@@ -208,6 +216,13 @@ const progress = ref(0);
 
 const progressPercentage = computed(() => progress.value * 100);
 const progressText = computed(() => `${progress.value}/1`);
+const isValidUser = computed(
+  () =>
+    bankCardBindState.value !== "NOT_ELIGIBLE" &&
+    firstWithdrawalState.value !== "NOT_ELIGIBLE" &&
+    telephoneBindState.value !== "NOT_ELIGIBLE" &&
+    usdtAddrBindState.value !== "NOT_ELIGIBLE"
+);
 
 function selectOption(option) {
   selected.value = option;
@@ -226,6 +241,10 @@ const getStatus = (status) => {
     CLAIMED: {
       text: "完成",
       class: "complete"
+    },
+    NOT_ELIGIBLE: {
+      text: "无法领取",
+      class: "not-eligible"
     }
   };
   return statusTextMap[status];
@@ -298,6 +317,7 @@ const getData = async () => {
     firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
     telephoneBindState.value = apiRes.data.telephoneBindState;
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
+    memberRegTime.value = apiRes.data.memberRegTime;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
@@ -509,6 +529,12 @@ h1 {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
   border: unset;
   color: #fff;
+}
+
+.not-eligible {
+  background: #d9d9d9;
+  border: none;
+  color: #000;
 }
 
 .progress-bar-container {

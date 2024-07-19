@@ -8,7 +8,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="form.startDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
+                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -21,7 +21,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="form.endDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
+                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -38,13 +38,13 @@
           @update:model-value="handleDateSelect"
         />
       </div>
-      <div class="search-field__select">
+      <!-- <div class="search-field__select">
         <InputField :label="$t('earnMoney.teamBetting.searchField.gameType.label')">
           <template #input>
             <q-select v-model="form.gameType" :options="gameTypeOptions" standout />
           </template>
         </InputField>
-      </div>
+      </div> -->
       <div>
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleSubmit">
           {{ $t("earnMoney.teamBetting.searchField.searchButton") }}
@@ -75,7 +75,7 @@
           <q-tr :props="props">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span
-                v-if="['betAmount', 'winning', 'validBet', 'balance'].includes(col.field)"
+                v-if="['betAmount', 'winning', 'validBet', 'balance', 'bet', 'payout'].includes(col.field)"
                 :class="col.field === 'balance' ? props.row.type : ''"
               >
                 {{ convertToCommaAmount(col.value, true) }}
@@ -100,23 +100,12 @@ import { DATE_FORMAT } from "../../constant/format";
 import { useI18n } from "vue-i18n";
 import { convertToCommaAmount, updateDate } from "src/boot/utils";
 import InputField from "../auth/InputField.vue";
+import { api } from "boot/axios";
 
 const { t } = useI18n();
 
 const selectedDateType = ref("today");
-const tableData = ref(
-  Array(10).fill({
-    vendor: "sabong",
-    gameType: "sport",
-    betAmount: 120,
-    winning: 137,
-    validBet: 120,
-    type: "win",
-    balance: 1235,
-    rounds: 5,
-    player: 1
-  })
-);
+const tableData = ref([]);
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
@@ -131,19 +120,11 @@ const downLineOptions = computed(() => [
 ]);
 
 const tableHeaders = computed(() => [
-  { label: t("earnMoney.teamBetting.table.vendor"), name: "vendor", field: "vendor", align: "center" },
-  { label: t("earnMoney.teamBetting.table.gameType"), name: "gameType", field: "gameType", align: "center" },
-  { label: t("earnMoney.teamBetting.table.betAmount"), name: "betAmount", field: "betAmount", align: "center" },
-  { label: t("earnMoney.teamBetting.table.winning"), name: "winning", field: "winning", align: "center" },
-  {
-    label: t("earnMoney.teamBetting.table.validBet"),
-    name: "validBet",
-    field: "validBet",
-    align: "center"
-  },
-  { label: t("earnMoney.teamBetting.table.balance"), name: "balance", field: "balance", align: "center" },
-  { label: t("earnMoney.teamBetting.table.rounds"), name: "rounds", field: "rounds", align: "center" },
-  { label: t("earnMoney.teamBetting.table.player"), name: "player", field: "player", align: "center" }
+  { label: t("earnMoney.teamBetting.table.platform"), name: "platform", field: "platform", align: "center" },
+  { label: t("earnMoney.teamBetting.table.players"), name: "players", field: "playerCount", align: "center" },
+  { label: t("earnMoney.teamBetting.table.bet"), name: "bet", field: "bet", align: "center" },
+  { label: t("earnMoney.teamBetting.table.validBet"), name: "validBet", field: "validBet", align: "center" },
+  { label: t("earnMoney.teamBetting.table.payout"), name: "payout", field: "payout", align: "center" },
 ]);
 
 const gameTypeOptions = computed(() => [
@@ -159,16 +140,33 @@ const handleDateSelect = (value) => {
     case "today":
       form.value.startDate = updateDate(0);
       form.value.endDate = updateDate(0);
+      getDownlinePlatformSummary();
       break;
     case "yesterday":
       form.value.startDate = updateDate(1);
       form.value.endDate = updateDate(1);
+      getDownlinePlatformSummary();
       break;
   }
 };
 
-const handleSubmit = () => {};
+const getDownlinePlatformSummary = () => {
+  api
+    .get(`/session/downline-platform-summary?regTime=${form.value.startDate}&regTime=${form.value.endDate}`)
+    .then((response) => {
+      if (response.code === 0) {
+        tableData.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
-onMounted(handleSubmit);
+const handleSubmit = () => { getDownlinePlatformSummary() };
+
+onMounted(() => {
+  getDownlinePlatformSummary();
+});
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>

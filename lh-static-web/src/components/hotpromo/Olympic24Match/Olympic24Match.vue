@@ -1,93 +1,23 @@
 <template>
   <div class="olympic24-match-box">
     <div class="olympic24-match-container">
-      <div class="olympic24-match-section">
-        <div class="olympic24-match-section-title">
-          <div><img src="../../../assets/promo/lh-olympic-match/section-title-img.png" /></div>
-          冠军竞猜
-        </div>
-        <div class="olympic24-match-game" v-for="(match, index) in matchList" :key="index">
-          <div class="olympic24-match-game-status">{{ match.matchTime }}</div>
-          <div class="olympic24-match-game-content">
-            <div class="olympic24-match-game-content-left">
-              <div class="olympic24-match-game-content-team">
-                <img :src="match.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
-                <div class="olympic24-match-game-content-team-name">{{ match.homeTeam }}</div>
-                <div
-                  v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
-                  class="olympic24-match-game-content-btn"
-                >
-                  已投票
-                </div>
-                <div
-                  v-else-if="match.teamChosen == null"
-                  class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
-                >
-                  投票
-                </div>
-                <div v-else class="nba2-match-game-content-btn__pseudo" />
-              </div>
-            </div>
-            <div class="olympic24-match-game-content-center">
-              <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
-              <div class="olympic24-match-game-content-center-title">{{ match.title }}</div>
-              <div
-                v-if="match.teamChosen != null && match.teamChosen == 'DRAW'"
-                class="olympic24-match-game-content-btn"
-              >
-                已投平局
-              </div>
-              <div
-                v-else-if="match.teamChosen == null"
-                class="olympic24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })"
-              >
-                平局
-              </div>
-              <div v-else class="nba2-match-game-content-btn__pseudo" />
-            </div>
-            <div class="olympic24-match-game-content-right">
-              <div class="olympic24-match-game-content-team">
-                <img :src="match.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
-                <div class="olympic24-match-game-content-team-name">{{ match.awayTeam }}</div>
-                <div
-                  v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
-                  class="olympic24-match-game-content-btn"
-                >
-                  已投票
-                </div>
-                <div
-                  v-else-if="match.teamChosen == null"
-                  class="olympic24-match-game-content-btn"
-                  @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
-                >
-                  投票
-                </div>
-                <div v-else class="nba2-match-game-content-btn__pseudo" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="olympic24-match-game-bottom">
-          <div class="olympic24-match-game-bottom-left-title">
-            注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
-          </div>
-          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
-        </div>
-      </div>
-
       <div class="olympic24-match-game-info">
         <div class="title"></div>
         <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">2024年7月26日—2024年8月12日</div>
+        </div>
+        <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金</div>
+          <div class="right">
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+          </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
             <th>竞猜正确场次</th>
             <th>投注反比</th>
-            <th>彩金上线</th>
+            <th>彩金上限</th>
           </tr>
           <tr>
             <td>≥3</td>
@@ -118,12 +48,87 @@
           </div>
         </div>
       </div>
+      <div class="olympic24-match-section">
+        <div class="olympic24-match-section-title">
+          <div><img src="../../../assets/promo/lh-olympic-match/section-title-img.png" /></div>
+          冠军竞猜
+        </div>
+        <div class="olympic24-match-game" v-for="(match, index) in matchList" :key="index">
+          <div class="olympic24-match-game-status">{{ match.matchTime }}</div>
+          <div class="olympic24-match-game-content">
+            <div class="olympic24-match-game-content-left">
+              <div class="olympic24-match-game-content-team">
+                <img :src="match.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
+                <div class="olympic24-match-game-content-team-name">{{ match.homeTeam }}</div>
+                <div
+                  v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
+                  class="olympic24-match-game-content-btn"
+                >
+                  已投票
+                </div>
+                <div
+                  v-else-if="match.teamChosen == null"
+                  class="olympic24-match-game-content-btn"
+                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.homeTeam })"
+                >
+                  投票
+                </div>
+                <div v-else class="nba2-match-game-content-btn__pseudo" />
+              </div>
+            </div>
+            <div class="olympic24-match-game-content-center">
+              <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
+              <div class="olympic24-match-game-content-center-title">{{ match.quizTitle }}</div>
+              <div
+                v-if="match.teamChosen != null && match.teamChosen == 'DRAW'"
+                class="olympic24-match-game-content-btn"
+              >
+                已投平局
+              </div>
+              <div
+                v-else-if="match.teamChosen == null"
+                class="olympic24-match-game-content-btn"
+                @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: 'draw' })"
+              >
+                平局
+              </div>
+              <div v-else class="nba2-match-game-content-btn__pseudo" />
+            </div>
+            <div class="olympic24-match-game-content-right">
+              <div class="olympic24-match-game-content-team">
+                <img :src="match.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
+                <div class="olympic24-match-game-content-team-name">{{ match.awayTeam }}</div>
+                <div
+                  v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
+                  class="olympic24-match-game-content-btn"
+                >
+                  已投票
+                </div>
+                <div
+                  v-else-if="match.teamChosen == null"
+                  class="olympic24-match-game-content-btn"
+                  @click="handleVoteClick({ quizId: match.id, quizTitle: match.quizTitle, answerOne: match.awayTeam })"
+                >
+                  投票
+                </div>
+                <div v-else class="nba2-match-game-content-btn__pseudo" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="olympic24-match-game-bottom">
+          <div class="olympic24-match-game-bottom-left-title">
+            注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
+          </div>
+          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
+        </div>
+      </div>
       <div class="olympic24-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -131,7 +136,7 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            活动期间会员竞猜正确场次≥3次且会员当日未进行世预赛投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            活动期间会员竞猜正确场次≥3次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -198,8 +203,8 @@
         </div>
       </el-dialog>
       <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
-        <div class="dialog-header" v-if="submitParam.team === 'DRAW'">您确定要投"平局"吗？</div>
-        <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+        <div class="dialog-header" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+        <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
         <div class="dialog-footer">
           <el-button color="grey" @click="confirmVoteDialog = false">取消</el-button>
           <el-button type="primary" @click="handleSubmitVote()">确定</el-button>
@@ -212,7 +217,13 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
-import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
+// import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
+import {
+  getBBDachaUpcoming,
+  getBBDachaAnsweredRecords,
+  submitBBDacha,
+  getBBDachaRecordsCount
+} from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -223,7 +234,7 @@ const matchList = ref([]);
 
 const recordList = ref([]);
 
-let submitParam = reactive({ matchId: 0, team: "" });
+let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
@@ -232,7 +243,7 @@ const handleVoteClick = (selectedData) => {
 
 const handleSubmitVote = () => {
   console.log(submitParam);
-  submitNbaMatch(submitParam)
+  submitBBDacha(submitParam)
     .then((res) => {
       if (res.code === 0) {
         ElMessage.success({
@@ -284,7 +295,7 @@ const displayGuessResult = (record) => {
 };
 
 const getNbaMatchData = async () => {
-  const res = await getNbaMatch();
+  const res = await getBBDachaUpcoming();
   matchList.value = res.data.map((res) => ({
     ...res,
     matchTime: moment(res.matchTime).locale("zh-cn").format("YYYY年MMMDo HH:mm"),
@@ -297,9 +308,9 @@ onMounted(getNbaMatchData);
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {
-    const res = await getNbaRecord();
+    const res = await getBBDachaAnsweredRecords();
 
-    recordList.value = res.data.map((res) => ({
+    recordList.value = res.data.records.map((res) => ({
       ...res,
       updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
     }));
@@ -327,6 +338,7 @@ watch(tableRecordDialog, async () => {
   padding: 30px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
+  margin-top: 40px;
 
   .olympic24-match-section-title {
     color: #000000;
@@ -510,8 +522,9 @@ watch(tableRecordDialog, async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    margin-right: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     .left {
       background-image: url("../../../assets/promo/lh-olympic-match/info-little-title-bg.png");
       background-repeat: no-repeat;

@@ -1,100 +1,159 @@
 <template>
-    <div class="message-page">
-        <div class="message-compose-form">
-            <MessageCompose v-if="isCompose" :onClickBack="() => isCompose = false" />
-            <div v-else class="message-container">
-                <div class="message-list-wrapper">
-                    <div class="header">
-                        <q-icon :name="'edit'" style="cursor:pointer;" @click="isCompose = true" />
-                        <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
-                            :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
-                                initOutbox(currentPage)
-                            }" boundary-links input color="white" input-class="text-white-10" dense />
-                        <span>{{ $t('lang.announcement_total')
-                            }} {{ inboxMessages.total }}</span>
-                    </div>
 
-                    <q-list bordered separator class="message-list">
+
+    <MessageCompose v-if="isCompose" :onClickBack="() => isCompose = false" />
+    <template v-else>
+        <div class="message-page">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;" v-if="!isCompose">
+                <!-- <div style="margin:0;" @click="isCompose = true">
+                    <div style="display:flex;align-items:center;gap:3px;cursor:pointer;">
+                        <q-icon :name="'edit'" />
+                        {{ $t('lang.message_compose') }}
+                    </div>
+                </div> -->
+
+                <!-- <q-tabs v-model="inboxCategory" dense inline-label class="inbox-type-tabs">
+                    <q-tab name="ALL">
+                        <div style="display:flex; align-items: center;gap:5px;"> <img
+                                :src="require('../../../assets/icon/pageModal/all-message-icon.svg')"
+                                :style="inboxCategory === 'ALL' ? '' : 'filter:contrast(0)'" />
+                            <div class="inbox-type" :style="inboxCategory === 'ALL' ? 'color: #00FFFF' : ''">{{
+                                $t('lang.message_type_all')
+                                }}</div>
+                        </div>
+                    </q-tab>
+                    <q-tab name="Outbox">
+                        <div style="display:flex; align-items: center;gap:5px;"> <img
+                                :src="require('../../../assets/icon/pageModal/outbox-icon.svg')"
+                                :style="inboxCategory === 'Outbox' ? '' : 'filter:contrast(0)'" />
+                            <div class="inbox-type" :style="inboxCategory === 'Outbox' ? 'color: #00FFFF' : ''">{{
+                                $t('lang.message_type_outbox')
+                                }}</div>
+                        </div>
+                    </q-tab>
+                    <q-tab name="NOTIFICATION">
+                        <div style="display:flex; align-items: center;gap:5px;"> <img
+                                :src="require('../../../assets/icon/pageModal/inbox-icon.svg')"
+                                :style="inboxCategory === 'NOTIFICATION' ? '' : 'filter:contrast(0)'" />
+                            <div class="inbox-type" :style="inboxCategory === 'NOTIFICATION' ? 'color: #00FFFF' : ''">{{
+                                $t('lang.message_type_inbox')
+                                }}</div>
+                        </div>
+                    </q-tab>
+                </q-tabs> -->
+            </div>
+
+
+            <div class="message-compose-form">
+                <div class="message-container">
+                    <div class="message-list-wrapper">
+                        <div class="header">
+                            <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
+                                :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
+                                    initOutbox(currentPage)
+                                }" boundary-links input color="white" input-class="text-white-10" dense />
+                            <!-- <span v-if="selectedMessages?.length">{{ `${$t('lang.message_selected')}
+                                (${selectedMessages?.length})`
+                                }}</span> -->
+                            <span>{{ $t('lang.announcement_total')
+                                }} {{ inboxMessages.total }}</span>
+                        </div>
+
+                        <q-list bordered separator class="message-list">
+                            <template v-if="isLoading">
+                                <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
+                                    <q-skeleton type="QToolbar" style="width:100%;" />
+                                </q-item>
+                            </template>
+                            <template v-else>
+
+                                <q-item clickable v-ripple v-for="item in inboxMessages.records" :key="item.page"
+                                    @click="readMessage(item.id)" :active="item === selected"
+                                    active-class="active-message"
+                                    :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime }"
+                                    class="message">
+                                    <q-item-section thumbnail style="margin:0;">
+                                        <q-checkbox size="xs" v-model="item.selected" />
+                                    </q-item-section>
+                                    <q-item-section>
+                                        <q-item-label lines="2"><span class="title">{{ item.title
+                                                }}</span></q-item-label>
+                                        <q-item-label caption lines="2"><span class="caption">{{ item.content
+                                                }}</span></q-item-label>
+                                    </q-item-section>
+
+                                    <q-item-section side top class="info-wrapper">
+                                        <q-item-label caption>
+                                            <span class="date-time">{{ getLocaleDateTime(item.sendTime ||
+                                                item.createTime)
+                                                }}</span>
+                                        </q-item-label>
+                                        <q-item-label caption lines="2"><span class="caption"
+                                                v-if="item.hasOwnProperty('readTime')" style="font-size:10px;"
+                                                :style="!item.readTime ? 'color:#FF0000' : 'color:#FFC000'">{{
+                                                    !item.readTime ? $t('lang.message_unread') : $t('lang.message_read')
+                                                }}</span></q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </template>
+                        </q-list>
+                    </div>
+                    <q-scroll-area class="message-content-wrapper">
                         <template v-if="isLoading">
-                            <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
-                                <q-skeleton type="QToolbar" style="width:100%;" />
+                            <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
+                                <q-skeleton type="text" style="width:100%;" />
                             </q-item>
                         </template>
                         <template v-else>
-                            <q-item clickable v-ripple v-for="item in inboxMessages.records" :key="item.page"
-                                @click="readMessage(item.id)" :active="item === selected" active-class="active-message"
-                                :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime }" class="message">
-                                <q-badge v-if="item.hasOwnProperty('readTime') && !item.readTime" rounded
-                                    style="background:#DF3D31;margin:auto;margin-right:5px;min-height:9px;padding:2px 4.5px;"
-                                    :title="$t('lang.message_unread')" />
-                                <q-item-section>
-                                    <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
-                                    <q-item-label caption lines="2"><span class="caption">{{ item.content
-                                            }}</span></q-item-label>
-                                </q-item-section>
-
-                                <q-item-section side top class="info-wrapper">
-                                    <q-item-label caption>
-                                        <span class="date-time">{{ getLocaleDateTime(item.sendTime || item.createTime)
-                                            }}</span>
-                                    </q-item-label>
-                                    <q-item-label caption><q-badge v-if="item.hasOwnProperty('readTime')"
-                                            style="font-size:10px;"
-                                            :label="!item.readTime ? $t('lang.message_unread') : $t('lang.message_read')" /></q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </template>
-                    </q-list>
-                </div>
-                <q-scroll-area class="message-content-wrapper">
-                    <template v-if="isLoading">
-                        <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
-                            <q-skeleton type="text" style="width:100%;" />
-                        </q-item>
-                    </template>
-                    <template v-else>
-                        <div v-if="selected" class="message-content">
-                            <div>
+                            <div class="message-content-wrapper">
                                 <div class="message-actions">
-                                    <q-icon v-if="inboxCategory !== 'Outbox'" :name="'delete'" class="message-action"
-                                        @click="deleteMessage(selected.id)" />
+                                    <q-btn-group flat>
+                                        <q-btn size="md" :label="$t('lang.message_process_all_read')"
+                                            @click="readMAllMessage" />
+                                        <q-btn v-if="selectedMessages?.length" size="md"
+                                            :label="$t('lang.message_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
+                                            @click="deleteSelectedMessage" />
+                                        <q-btn size="md" :label="$t('lang.message_delete_read')" />
+                                    </q-btn-group>
                                 </div>
-                                <div class="title">{{ selected.title }}</div>
+                                <div v-if="selected" class="message-content">
+                                    <div>
+                                        <div class="title">{{ selected.title }}</div>
+                                    </div>
+                                    <div class="date-time-wrapper">
+                                        <span class="date-time text-caption"
+                                            v-if="selected.sendTime || selected.createTime">
+                                            {{ getLocaleDateTime(selected.sendTime || selected.createTime, true) }}
+                                        </span>
+                                    </div>
+                                    <div class="content-loading" v-if="isFetchingContent">
+                                        <template v-for="rectSkeleton in 5" :key="rectSkeleton">
+                                            <q-skeleton type="text" style="width:100%;" />
+                                        </template>
+                                    </div>
+                                    <div v-else class="content" v-html="selected.content" style="white-space: pre-line">
+                                    </div>
+                                </div>
+                                <div class="message-no-data" v-else>{{ $t('lang.message_no_selected') }}</div>
                             </div>
-                            <div class="date-time-wrapper">
-                                <span class="date-time text-caption" v-if="selected.sendTime || selected.createTime">
-                                    {{ getLocaleDateTime(selected.sendTime || selected.createTime, true) }}
-                                </span>
-                                <!-- <span class="date-time text-caption text-grey" v-if="selected.readTime">
-                                {{ $t('lang.message_read_at') }}
-                                {{
-                                    getLocaleDateTime(selected.readTime, true)
-                                }}
-                            </span> -->
-                            </div>
-                            <div class="content-loading" v-if="isFetchingContent">
-                                <template v-for="rectSkeleton in 5" :key="rectSkeleton">
-                                    <q-skeleton type="text" style="width:100%;" />
-                                </template>
-                            </div>
-                            <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
-                        </div>
-                        <div class="message-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
-                    </template>
-                </q-scroll-area>
+                        </template>
+                    </q-scroll-area>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import { userStore } from "src/stores";
 import MessageCompose from "./MessageCompose.vue";
+import { useI18n } from "vue-i18n";
+
 var qs = require("qs");
 
 const $q = useQuasar();
@@ -104,20 +163,13 @@ const inboxCategory = ref('ALL');
 const store = userStore();
 const props = defineProps(['inboxType']);
 const isCompose = ref(false);
+const { t } = useI18n();
+
+const selectedMessages = computed(() => inboxMessages.value.records?.filter((item) => item.selected).map(({ id }) => id));
 
 const inboxCategories = [
     { type: 'Outbox', label: 'lang.message_type_outbox' },
     { type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_inbox' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }];
-
-const getMessageTypeLabel = (messageType) => {
-    const selectedMessageType = inboxCategories.find(({ type }) => type === messageType);
-
-    if (selectedMessageType) {
-        return selectedMessageType.label;
-    }
-
-    return '';
-}
 
 const isFetchingContent = ref(false);
 const inboxMessages = ref([]);
@@ -169,7 +221,11 @@ const initOutbox = (page = 1) => {
         const { code: repliesResCode, data: repliesResData } = repliesRes.data
 
         if (repliesResCode === 0) {
-            inboxMessages.value = repliesResData;
+            const repliesResDataRecordsWithSelected = repliesResData.records.map((data) => ({
+                ...data,
+                selected: false
+            }))
+            inboxMessages.value = { ...repliesResData, records: repliesResDataRecordsWithSelected };
         }
 
         isLoading.value = false;
@@ -244,16 +300,78 @@ const readMessage = (id, showReadNotify = true) => {
     }
 }
 
+const readMAllMessage = () => {
+    api
+        .post("/session/inbox/readAll")
+        .then((res) => {
+            const { code, data } = res.data
+
+            if (code === 0) {
+                $q.notify({
+                    message: t('lang.message_read_all_message'),
+                    type: "positive",
+                    position: "top",
+                    icon: "check_circle_outline"
+                });
+
+                initOutbox();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+const deleteSelectedMessage = () => {
+    const mailIdArr = selectedMessages.value;
+    const formattedIds = mailIdArr.join(",");
+    api
+        .post(
+            "/session/inbox/deleteMultiple",
+            qs.stringify({
+                ids: formattedIds
+            })
+        )
+        .then((res) => {
+            const { code, data } = res.data
+
+            if (code === 0) {
+                $q.notify({
+                    message: t('lang.message_delete_selected_message'),
+                    type: "positive",
+                    position: "top",
+                    icon: "check_circle_outline"
+                });
+
+                const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
+                inboxMessages.value.records = newRecords
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+};
+
 onMounted(() => {
     initOutbox();
 })
 </script>
 
 <style lang="scss" scoped>
+.inbox-type-tabs {
+    .inbox-type {
+        text-transform: capitalize;
+    }
+}
+
 .message-page {
     height: 100%;
-    padding: 0px 20px 20px;
+    padding: 0 20px 20px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .message-category-dropdown {
@@ -296,6 +414,7 @@ onMounted(() => {
     display: grid;
     grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
     height: 100%;
+    gap: 10px;
 
     .total {
         margin-left: auto;
@@ -305,7 +424,6 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         gap: 5px;
-        padding-right: 10px;
         min-height: 100%;
 
         .header {
@@ -340,9 +458,17 @@ onMounted(() => {
         }
     }
 
+    .message-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     .message-content-wrapper {
         height: 100%;
-        padding-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-height: 100%;
 
         .date-time-wrapper {
             display: flex;
@@ -356,15 +482,6 @@ onMounted(() => {
             max-height: 100%;
             overflow-y: auto;
             padding-right: 10px;
-
-            .message-actions {
-                display: flex;
-                justify-content: flex-end;
-
-                .message-action {
-                    cursor: pointer;
-                }
-            }
 
             .title {
                 font-size: 2.4rem;

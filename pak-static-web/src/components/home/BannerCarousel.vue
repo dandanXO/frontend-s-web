@@ -57,12 +57,12 @@ const gotoPromo = (banner) => {
   if (urlSplit.length >= 2) {
     const type = urlSplit[0];
     if (type === "open") {
-      if (gameSplit[1][0] === 'LuckySport') {
+      if (gameSplit[1][0] === "LuckySport") {
         emit(
           "playGame",
           gameSplit[1][0],
           gameSplit[1][1],
-          '#/special/uefaeuro',
+          "#/special/uefaeuro",
           gameSplit[1][3],
           gameSplit[1][4],
           gameSplit[1][5]

@@ -61,6 +61,7 @@ export default {
     CommissionHistoryList: '커미션내역 목록',
     StatisticsByMember: '회원별 통계',
     DepositWithdrawManagement: '입출금 관리',
+    MemberPointRecord: 'Member Point Record',
     // Settlement Management End
 
     gameRecord: '게임 기록',
@@ -669,6 +670,18 @@ export default {
     nickName: '별명',
     afterBalance: '잔액 후',
     redeemPoint: '포인트 교환',
+    affiliateBalance: '총판잔액',
+    memberBalance: '하부총잔액',
+    affiliatePoint: '내포인트',
+    memberCount: '회원수',
+    affiliateWithdrawAmount: '총판입금금액',
+    withdrawTransferDiff: '충환전손익',
+    liveRolling: '하부총카지노롤링',
+    slotRolling: '하부총슬롯롤링',
+    sportRolling: '하부총스포츠롤링',
+    memberPoint: '회원 포인트',
+    affiliateTransferAmount: '송금 금액',
+    redeem: '상환하다',
   },
   google: {
     google_auth_menu: '구글 인증',

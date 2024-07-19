@@ -1887,6 +1887,9 @@ export default {
     slotRolling: '下线总老虎机流水',
     sportRolling: '下线总体育流水',
     recycleMoney: '回收余额',
+    createMemberPointRecord: '创建会员积分记录',
+    claimed: '已领取',
+    notClaimed: '未领取',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2567,6 +2570,7 @@ export default {
     'MQ Log': 'MQ日志',
     'Promotion Coupon': '存款券',
     'Member Invite Limit': '会员邀请限制',
+    'Member Point Record': '会员积分记录',
   },
   google: {
     google_auth_menu: '谷歌验证',

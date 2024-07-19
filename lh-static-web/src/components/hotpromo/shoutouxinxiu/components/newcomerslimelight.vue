@@ -1,10 +1,13 @@
 <template>
   <div class="newcomers-intro">
-    活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足<span>≥500</span>即可获得体验彩金。
+    活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足
+    <span>≥500</span>
+    即可获得体验彩金。
   </div>
   <div class="newcomers-grid">
     <div class="item" v-for="item in items" :key="item.bonusType" @click="getBonus(item.bonusType)">
-      <img :src=" require(`../images/newcomers-${item.bonusType.toLowerCase()}.png`)">
+      <img :src="require(`../images/newcomers-${item.bonusType.toLowerCase()}.png`)" />
+      <div class="button">点击领取</div>
     </div>
   </div>
 
@@ -27,23 +30,22 @@
     </tr>
   </table>
 
-  <div class="emergency-hint" style="margin-top: 12px;">
+  <div class="emergency-hint" style="margin-top: 12px">
     注：符合条件的会员仅限参与本活动一次，仅限领取一次优惠奖励。
   </div>
-
 
   <el-dialog align-center centered class="winDialog" v-model="bonusOpened">
     <div class="dialog-congrats">恭喜您，获得奖金</div>
     <div class="hongbao-angbao">{{ winAmount }} 元</div>
-    <img src="../images/hongbaobonus.png">
-    <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png"></div>
+    <img src="../images/hongbaobonus.png" />
+    <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png" /></div>
   </el-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import { firstBet } from '@/api/promotion/eurocup';
+import { firstBet } from "@/api/promotion/eurocup";
 import { ElMessage } from "element-plus";
-import { userStore } from '@/store';
+import { userStore } from "@/store";
 const store = userStore();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -60,19 +62,13 @@ const getBonus = (type) => {
 
       bonusOpened.value = false;
     }
-  })
-}
-const items = ref([
-  { bonusType: 'ESPORT' },
-  { bonusType: 'LIVE' },
-  { bonusType: 'POKER' },
-  { bonusType: 'SLOT' },
-
-])
+  });
+};
+const items = ref([{ bonusType: "ESPORT" }, { bonusType: "LIVE" }, { bonusType: "POKER" }, { bonusType: "SLOT" }]);
 const refreshBal = () => {
   store.getBalance();
   bonusOpened.value = false;
-}
+};
 </script>
 <style lang="scss" scoped>
 .newcomers-intro {
@@ -88,15 +84,14 @@ const refreshBal = () => {
     line-height: 31.92px;
     letter-spacing: 0.12em;
     text-align: center;
-    color: #FF881A;
-
+    color: #ff881a;
   }
 }
 .newcomers-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   .item {
-    position:relative;
+    position: relative;
     cursor: pointer;
     img {
       width: 100%;
@@ -116,6 +111,14 @@ const refreshBal = () => {
       margin: auto;
       color: #ffffff;
     }
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+    &:active {
+      filter: brightness(0.9);
+      transform: translate(0px, 1px);
+    }
   }
 }
 .emergency-hint {
@@ -125,14 +128,14 @@ const refreshBal = () => {
 }
 .el-dialog.winDialog {
   background: unset;
-  background: #0D317399;
+  background: #0d317399;
   max-width: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px 0;
   .dialog-congrats {
-    color: #FFFFFFCC;
+    color: #ffffffcc;
     font-family: Microsoft YaHei UI;
     font-size: 24px;
     font-weight: 400;
@@ -143,10 +146,10 @@ const refreshBal = () => {
   .el-dialog__header {
     .el-dialog__headerbtn {
       .el-dialog__close {
-        background: #FFFFFF66;
+        background: #ffffff66;
         border-radius: 50%;
         padding: 3px;
-        color: #0D3173;
+        color: #0d3173;
         font-weight: bold;
       }
     }
@@ -154,7 +157,7 @@ const refreshBal = () => {
       display: none;
     }
   }
-  .el-dialog__body{
+  .el-dialog__body {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -164,12 +167,11 @@ const refreshBal = () => {
       width: 200px;
     }
     .hongbao-angbao {
-      color: #FAFF00;
+      color: #faff00;
       font-family: Microsoft YaHei UI;
       font-size: 24px;
       font-weight: 700;
       line-height: 31.92px;
-
     }
     .confirm {
       cursor: pointer;
@@ -180,42 +182,42 @@ const refreshBal = () => {
   }
 }
 table {
-    width: 100%;
-    tr {
-      th,
+  width: 100%;
+  tr {
+    th,
+    td {
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+    th {
+      background: #3998dc;
+      color: #ffffff;
+    }
+    &:nth-child(2) {
       td {
-        padding: 20px;
-        text-align: center;
-        font-size: 24px;
+        border-top: 0;
       }
-      th {
-        background: #3998DC;
-        color: #ffffff;
+    }
+    &:last-child {
+      td {
+        border-bottom: 0;
       }
-      &:nth-child(2) {
-        td {
-          border-top: 0;
-        }
+    }
+    td {
+      background: #2d517c6b;
+      color: #ffffff;
+      border: 2px solid #ffffff33;
+      &:first-child {
+        border-left: 0;
+        border-top: 0;
+        border-bottom: 0;
       }
       &:last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-      td {
-        background: #2D517C6B;
-        color: #ffffff;
-        border: 2px solid #ffffff33;
-        &:first-child {
-          border-left: 0;
-          border-top: 0;
-          border-bottom: 0;
-        }
-        &:last-child {
-          border-right: 0;
-          border-bottom: 0;
-        }
+        border-right: 0;
+        border-bottom: 0;
       }
     }
   }
+}
 </style>

@@ -130,7 +130,7 @@
               selectedPromo.promoCode === 'lh1-aijiasu' ||
               selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
-            'shoutouxinxiu': selectedPromo.promoCode === 'lh1-shoutouxinxiu',
+            shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
@@ -148,7 +148,7 @@
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game',
               olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
             }"
-            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual'"
+            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>

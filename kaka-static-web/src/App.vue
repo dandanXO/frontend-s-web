@@ -65,7 +65,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("KAKA Web")
+      console.log("KAKA Web 22");
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
@@ -73,8 +73,8 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      clearTimeout(onlineStatTimeout);
-      clearInterval(onlineStatInterval);
+      // clearTimeout(onlineStatTimeout);
+      // clearInterval(onlineStatInterval);
     });
     return {
       languageVal,

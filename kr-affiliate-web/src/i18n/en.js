@@ -61,6 +61,7 @@ export default {
     CommissionHistoryList: 'Commission History List',
     StatisticsByMember: 'Statistics By Member',
     DepositWithdrawManagement: 'Deposit/Withdraw Management',
+    MemberPointRecord: 'Member Point Record',
     // Settlement Management End
 
     gameRecord: 'Game Record',
@@ -671,6 +672,18 @@ export default {
     memberShareRatio: 'Member Share Ratio',
     editShareRatio: 'Edit Share Ratio',
     redeemPoint: 'Redeem Point',
+    affiliateBalance: 'Affiliate Balance',
+    memberBalance: 'Member Balance',
+    affiliatePoint: 'Affiliate Point',
+    memberCount: 'Member Count',
+    affiliateWithdrawAmount: 'Affiliate Withdraw Amount',
+    withdrawTransferDiff: 'Withdraw Transfer Difference',
+    liveRolling: 'Live Rolling Amount',
+    slotRolling: 'Slot Rolling Amount',
+    sportRolling: 'Sport Rolling Amount',
+    memberPoint: 'Member Point',
+    affiliateTransferAmount: 'Affiliate Transfer Amount',
+    redeem: 'Redeem',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
