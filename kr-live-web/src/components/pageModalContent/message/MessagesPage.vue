@@ -12,7 +12,7 @@
                     </div>
                 </div>
 
-                <q-tabs v-model="inboxCategory" dense inline-label class="inbox-type-tabs">
+                <!-- <q-tabs v-model="inboxCategory" dense inline-label class="inbox-type-tabs">
                     <q-tab name="ALL">
                         <div style="display:flex; align-items: center;gap:5px;"> <img
                                 :src="require('../../../assets/icon/pageModal/all-message-icon.svg')"
@@ -40,7 +40,7 @@
                                 }}</div>
                         </div>
                     </q-tab>
-                </q-tabs>
+                </q-tabs> -->
             </div>
 
 
@@ -110,7 +110,7 @@
                                     <q-btn-group flat>
                                         <q-btn size="md" :label="$t('lang.message_process_all_read')"
                                             @click="readMAllMessage" />
-                                        <q-btn :disable="!selectedMessages?.length" size="md"
+                                        <q-btn v-if="selectedMessages?.length" size="md"
                                             :label="$t('lang.message_delete_selected') + (selectedMessages?.length ? `(${selectedMessages.length})` : '')"
                                             @click="deleteSelectedMessage" />
                                         <q-btn size="md" :label="$t('lang.message_delete_read')" />
