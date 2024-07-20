@@ -8,8 +8,11 @@
       <div class="tips">
         <div class="tips-inner">
           参与BLAST Premier
-          秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙，系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
+          秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
         </div>
+      </div>
+      <div class="title">
+        <img class="bottom" src="../../../assets/images/promo//hotpromo/blastpremier/section-bottom.png" />
       </div>
       <div class="content">
         <div class="top-row">
@@ -52,6 +55,11 @@
           </div> -->
         </div>
       </div>
+      <div class="tips">
+        <div class="tips-inner">
+          系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
+        </div>
+      </div>
     </div>
     <div class="section second">
       <div class="title">
@@ -61,6 +69,9 @@
         <div class="tips-inner">
           活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
         </div>
+      </div>
+      <div class="title">
+        <img class="bottom" src="../../../assets/images/promo//hotpromo/blastpremier/section-bottom.png" />
       </div>
       <div class="content">
         <div class="top-row">
@@ -534,6 +545,9 @@ onMounted(() => {
         }
       }
     }
+    .middle-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
   .first .content .top-row {
     background: url(../../../assets/images/promo/hotpromo/blastpremier/container.png) no-repeat center center;
@@ -560,6 +574,7 @@ onMounted(() => {
         }
         img {
           width: 46px;
+          margin: 0;
         }
       }
       .buttons {
@@ -596,6 +611,8 @@ onMounted(() => {
 
           img {
             margin-bottom: 0;
+            width: 80%;
+            margin: 20px auto 0;
           }
 
           .img-placeholder {
@@ -639,9 +656,11 @@ onMounted(() => {
       }
       .sign-container {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         justify-content: space-around;
-        row-gap: 20px;
+        gap: 20px;
+        width: 85%;
+        margin: 0 auto;
         // margin: 25px auto;
 
         @media (max-width: 375px) {
