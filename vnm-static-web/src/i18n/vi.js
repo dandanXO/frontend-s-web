@@ -223,6 +223,8 @@ export default {
     captchareq: "Vui lòng nhập mã captcha",
     captcha: "Mã captcha phải có 4 ký tự",
     verificationCode: "Vui lòng nhập mã xác nhận",
+    pleaseEnter: "Vui lòng nhập",
+    pleaseEnterCardNumber: "Vui lòng nhập số thẻ",
     min4: "Mã xác minh phải có 4 ký tự",
     emailFormat: "Vui lòng nhập một địa chỉ email hợp lệ",
     between612: "Độ dài phải từ 6 đến 11 ký tự",

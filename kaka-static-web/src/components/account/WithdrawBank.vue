@@ -251,7 +251,7 @@ import {
   loadBankCards,
   loadUnbindRecord,
   addBankCard,
-  deleteBankCard,
+  deleteBankCardByNumber,
   loadMemberInfo,
   loadMemberTelephone
 } from "@/api/personal/personal";
@@ -818,12 +818,18 @@ export default defineComponent({
           cancelButtonText:  t('common.cancel'),
           cancelButtonClass: "cancel-btn",
           type: "warning",
-          inputErrorMessage: t('withdraw.confirmCorrectNumber') // Error message to display if input is invalid
+          // inputErrorMessage: t('withdraw.confirmCorrectNumber') // Error message to display if input is invalid
         }
       )
         .then((inputValue) => {
-          if (inputValue.value === card.cardNumber) {
-            deleteBankCard(card.id).then((res) => {
+          if (!inputValue.value) {
+            ElMessage({
+              type: 'error',
+              message: t('placeholder.pleaseEnterCardNumber'),
+            });
+            return
+          }
+          deleteBankCardByNumber(inputValue.value).then((res) => {
               if (res.code === 0) {
                 ElMessage({
                   type: "success",
@@ -845,13 +851,7 @@ export default defineComponent({
             }).catch((e) => {
               console.log("error", e);
             });
-          } else {
-            ElMessage({
-              type: "error",
-              message: t('withdraw.incorrectAccNumber')
-            });
-          }
-        })
+          })
         .catch(() => {
           ElMessage({
             type: "info",

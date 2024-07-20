@@ -91,6 +91,10 @@ export function deleteBankCard(cardId) {
   return server.REST.post(`/session/bankCard/${cardId}?_method=delete`);
 }
 
+export function deleteBankCardByNumber(cardNo) {
+  return server.REST.post(`/session/bankCardByCardNo/${cardNo}?_method=delete`);
+}
+
 export function sendEmail(emailInfo) {
   return server.REST.post("/otp/sendNewEmail", emailInfo);
 }

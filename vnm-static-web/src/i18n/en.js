@@ -224,6 +224,8 @@ export default {
     captchareq: "Please enter captcha code",
     captcha: "Captcha code should be 4 characters",
     verificationCode: "Please enter verification code",
+    pleaseEnter: "Please enter",
+    pleaseEnterCardNumber: "Please enter card number",
     min4: "Verification code should be 4 characters",
     emailFormat: "Please enter a valid email",
     between612: "Length should be between 6 - 11 characters",
