@@ -132,6 +132,12 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (window.location.href.indexOf("kakavn.app") > -1) {
       fbq("init", "463504196607854");
       fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakagame38.app") > -1) {
+      fbq("init", "342669618894591");
+      fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
+      fbq("init", "976575897104655");
+      fbq("track", "PageView");
     }
     // console.log(window.location.href);
     // if (window.location.href.indexOf("KAKAking.com") > -1) {
