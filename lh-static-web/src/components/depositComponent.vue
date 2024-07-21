@@ -113,6 +113,7 @@
           <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege && !isUSDT" label="优惠">
             <el-select
               v-model="selectedPrivilege"
+              class="privilege-select"
               placeholder="选择优惠"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
@@ -817,6 +818,16 @@ onMounted(() => {
   :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  }
+}
+
+.privilege-select {
+  :deep(.el-select__wrapper) {
+    &.is-hovering {
+      .el-select__caret {
+        color: var(--el-color-error);
+      }
+    }
   }
 }
 
