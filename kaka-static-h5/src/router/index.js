@@ -20,8 +20,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -137,6 +137,9 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
     } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
       fbq("init", "976575897104655");
+      fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakavn.vip/agent/C58A95") > -1) {
+      fbq("init", "795707932732808");
       fbq("track", "PageView");
     }
     // console.log(window.location.href);

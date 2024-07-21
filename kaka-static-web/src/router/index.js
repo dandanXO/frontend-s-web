@@ -233,6 +233,9 @@ router.beforeEach((to, from, next) => {
   } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
     fbq("init", "976575897104655");
     fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakavn.vip/agent/C58A95") > -1) {
+    fbq("init", "795707932732808");
+    fbq("track", "PageView");
   }
 
   // else if (window.location.href.indexOf("wintf99.com") > -1) {
