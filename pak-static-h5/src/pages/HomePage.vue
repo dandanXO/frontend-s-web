@@ -2382,8 +2382,14 @@ const loadHotGameList = () => {
         .then((res) => {
           gameLists = res;
 
+          // console.log("HERE");
+          // console.log(gameLists);
+          // console.log(hotlists);
+
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item2.platformCode === item1.platform
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2400,7 +2406,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
