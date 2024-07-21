@@ -3,10 +3,10 @@
     <div class="switch-wrapper">
       <div class="switch-container">
         <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
-          新手礼包
+          助力金
         </div>
         <div :class="['switch-option', { active: selected === 'option2' }]" @click="selectOption('option2')">
-          新人指路
+          突破奖
         </div>
       </div>
     </div>
