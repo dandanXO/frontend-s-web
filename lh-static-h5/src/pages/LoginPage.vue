@@ -2,10 +2,14 @@
   <div class="login-container">
     <div class="back-left">
       <router-link :to="'/'">
-        <img class="back-left-img" :src="$q.dark.isActive
-          ? require('../assets/images/common/left-back-icon-dark.svg')
-          : require('../assets/images/common/left-back-icon.svg')
-          " />
+        <img
+          class="back-left-img"
+          :src="
+            $q.dark.isActive
+              ? require('../assets/images/common/left-back-icon-dark.svg')
+              : require('../assets/images/common/left-back-icon.svg')
+          "
+        />
       </router-link>
     </div>
 
@@ -18,54 +22,102 @@
 
       <q-form ref="loginFormRef" @submit="onSubmit">
         <div v-if="!loginType">
-          <q-input standout clearable ref="loginNameRef" v-model="loginForm.loginName" placeholder="请输入用户名" :rules="[
-            (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
-          ]" autocomplete="username">
+          <q-input
+            standout
+            clearable
+            ref="loginNameRef"
+            v-model="loginForm.loginName"
+            placeholder="请输入用户名"
+            :rules="[
+              (val) => (val && val.length > 0) || '请输入用户名',
+              (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+            ]"
+            autocomplete="username"
+          >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/user-icon.svg" />
-                <label class="input-label"><em>*</em>用户名</label>
+                <label class="input-label">
+                  <em>*</em>
+                  用户名
+                </label>
               </div>
             </template>
           </q-input>
 
-          <q-input ref="passwordRef" standout clearable v-model="loginForm.password" placeholder="请输入密码"
-            :type="isPwd ? 'password' : 'text'" :rules="[(val) => (val && val.length > 0) || '请输入用户密码']" color="white"
-            label-color="brand" autocomplete="current-password">
+          <q-input
+            ref="passwordRef"
+            standout
+            clearable
+            v-model="loginForm.password"
+            placeholder="请输入密码"
+            :type="isPwd ? 'password' : 'text'"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
+            color="white"
+            label-color="brand"
+            autocomplete="current-password"
+          >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/password-icon.svg" />
-                <label class="input-label"><em>*</em>密码</label>
+                <label class="input-label">
+                  <em>*</em>
+                  密码
+                </label>
               </div>
             </template>
             <template v-slot:append>
-              <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                @click="isPwd = !isPwd" />
+              <q-icon
+                color="dark"
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
             </template>
           </q-input>
 
-          <q-input ref="verificationRef" standout clearable type="text" maxlength="4" v-model="loginForm.captchaCode"
-            placeholder="请输入验证码" :rules="[
+          <q-input
+            ref="verificationRef"
+            standout
+            clearable
+            type="text"
+            maxlength="4"
+            v-model="loginForm.captchaCode"
+            placeholder="请输入验证码"
+            :rules="[
               (val) => (val && val.length > 0) || '请输入验证码',
               (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-            ]" color="white" label-color="brand">
+            ]"
+            color="white"
+            label-color="brand"
+          >
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
-                <label class="input-label"><em>*</em>验证码</label>
+                <label class="input-label">
+                  <em>*</em>
+                  验证码
+                </label>
               </div>
             </template>
           </q-input>
         </div>
 
         <div v-if="loginType">
-          <q-input ref="telephoneRef" v-model="phoneLoginForm.phoneNumber" placeholder="请输入电话号码"
-            :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]" color="white"
-            :readonly="phoneLoginForm.smsCodeId ? true : false" clearable autocomplete="username" standout>
+          <q-input
+            ref="telephoneRef"
+            v-model="phoneLoginForm.phoneNumber"
+            placeholder="请输入电话号码"
+            :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]"
+            color="white"
+            :readonly="phoneLoginForm.smsCodeId ? true : false"
+            clearable
+            autocomplete="username"
+            standout
+          >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/phone-icon.svg" />
@@ -74,11 +126,25 @@
             </template>
           </q-input>
 
-          <q-input @pressEnter="alert('ah')" ref="phoneVerificationRef" type="text" v-model="phoneLoginForm.code"
-            placeholder="短信验证码" clearable :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']" color="white"
-            standout>
+          <q-input
+            @pressEnter="alert('ah')"
+            ref="phoneVerificationRef"
+            type="text"
+            v-model="phoneLoginForm.code"
+            placeholder="短信验证码"
+            clearable
+            :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
+            color="white"
+            standout
+          >
             <template v-slot:append>
-              <q-btn size="md" color="brightbtn" label="发送验证码" @click="toggleInnerCode" style="white-space: nowrap" />
+              <q-btn
+                size="md"
+                color="brightbtn"
+                label="发送验证码"
+                @click="toggleInnerCode"
+                style="white-space: nowrap"
+              />
             </template>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
@@ -102,8 +168,14 @@
         </div>
 
         <div class="q-py-md">
-          <q-btn @click.prevent="onSubmit" type="submit" class="common-large-btn bottom-btn" label="登录"
-            color="brightbtn" flat />
+          <q-btn
+            @click.prevent="onSubmit"
+            type="submit"
+            class="common-large-btn bottom-btn"
+            label="登录"
+            color="brightbtn"
+            flat
+          />
           <router-link to="/register">
             <q-btn class="common-large-white-btn bottom-btn" flat label="注册" />
           </router-link>
@@ -114,7 +186,8 @@
     <div class="text-center q-pt-lg customer-service-link">
       <div class="decor-lines" />
       <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
-        <img width="18" src="../assets/images/login/cs-icon.svg" />联系客服
+        <img width="18" src="../assets/images/login/cs-icon.svg" />
+        联系客服
       </router-link>
       <div class="decor-lines" />
     </div>
@@ -132,8 +205,12 @@
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
-              <img :src="phoneVerificationImg" title="点击刷新验证码" style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode" />
+              <img
+                :src="phoneVerificationImg"
+                title="点击刷新验证码"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getInnerCode"
+              />
             </template>
           </q-input>
         </q-card-section>
@@ -149,7 +226,7 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import qs from "qs";
 
 export default defineComponent({
@@ -179,7 +256,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
-    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     const getCode = () => {
       api
@@ -406,7 +483,7 @@ export default defineComponent({
       }
     };
 
-    const bannerImage = ref('')
+    const bannerImage = ref("");
 
     const getBannerImage = () => {
       api
@@ -424,11 +501,11 @@ export default defineComponent({
         tab.value = "register";
       }
       checkRememberPwd();
+      getBannerImage();
     });
     onActivated(() => {
       getCode();
       getSummonCode();
-      getBannerImage();
     });
 
     return {
@@ -470,19 +547,19 @@ export default defineComponent({
   .q-field--standout .q-field__control {
     border-radius: 8px;
     background: #f7f8fb;
-    box-shadow: 0px 0px 4px 0px #A9C9EA inset;
+    box-shadow: 0px 0px 4px 0px #a9c9ea inset;
     height: 44px;
   }
 
-  .q-field__marginal{
+  .q-field__marginal {
     height: 44px;
   }
 
-  .q-input{
+  .q-input {
     height: 68px;
   }
 
-  .q-field__bottom{
+  .q-field__bottom {
     padding: 0px 12px 8px;
   }
 }
@@ -539,7 +616,6 @@ export default defineComponent({
       border-radius: 10px;
     }
 
-
     .input-icon-label-wrapper {
       width: 100px;
       white-space: nowrap;
@@ -556,13 +632,13 @@ export default defineComponent({
 
       .input-label {
         font-weight: bold;
-        color: #424F72;
+        color: #424f72;
         font-size: 16px;
-        display:flex;
+        display: flex;
         align-items: center;
         gap: 5px;
 
-        em{
+        em {
           line-height: 22px;
           color: #f53434;
           display: inline-block;
@@ -616,7 +692,7 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       gap: 8px;
-      color: #7A80A1;
+      color: #7a80a1;
       font-weight: bold;
     }
   }
@@ -641,7 +717,7 @@ export default defineComponent({
 }
 
 .common-large-btn {
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   font-size: 1.2rem;
   font-weight: bold;
   color: $white;
@@ -661,7 +737,7 @@ export default defineComponent({
   background: linear-gradient(180deg, rgba(115, 178, 255, 0.1) 0%, rgba(57, 129, 255, 0.1) 100%);
   font-size: 1.2rem;
   font-weight: bold;
-  color: #424F72;
+  color: #424f72;
   border-radius: 10px;
   box-shadow: none;
 
