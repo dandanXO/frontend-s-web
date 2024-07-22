@@ -1,6 +1,6 @@
 <template>
   <div id="money-container">
-    <span v-for="n in 200" :key="n"></span>
+    <span v-for="n in 190" :key="n"></span>
   </div>
 
   <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
