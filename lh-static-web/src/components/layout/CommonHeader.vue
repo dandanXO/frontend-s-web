@@ -463,7 +463,7 @@ import { userStore } from "@/store/index";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { RiRefreshLine } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
@@ -507,6 +507,8 @@ export default defineComponent({
     RegisterAccount
   },
   setup() {
+    const notify = useNotify();
+
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
@@ -1025,7 +1027,7 @@ export default defineComponent({
 
             regForm.smsCodeId = response.data.codeId;
 
-            ElMessage({
+            notify({
               type: "success",
               message: "发送手机验证码成功"
             });
@@ -1055,7 +1057,7 @@ export default defineComponent({
         sendSms(smsDetail).then((response) => {
           if (response.code == 0) {
             loginForm.smsCodeId = response.data.codeId;
-            ElMessage({
+            notify({
               type: "success",
               message: "发送手机验证码成功"
             });
@@ -1110,7 +1112,7 @@ export default defineComponent({
             register(regForm).then((response) => {
               const regResult = response.code;
               if (regResult === 0) {
-                ElMessage({
+                notify({
                   type: "success",
                   message: "注册成功"
                 });
@@ -1239,7 +1241,7 @@ export default defineComponent({
       passRef.value.validate().then(() => {
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success("您的帐号已经发送到注册邮箱");
+            notify.success("您的帐号已经发送到注册邮箱");
           }
         });
       });
@@ -1325,7 +1327,7 @@ export default defineComponent({
     //     .then(() => {
     //     alert('!')
     //     // if (!valid) {
-    //     //   ElMessage({
+    //     //   notify({
     //     //     message: h('p', null, [
     //     //       h('span', null, 'Message can be ',
     //     //       h('i', { style: 'color: teal' }, 'VNode',

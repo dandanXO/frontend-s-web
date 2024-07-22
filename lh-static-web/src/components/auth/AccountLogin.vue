@@ -59,9 +59,11 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["pageType"]);
+
+const notify = useNotify();
 
 const loginRules = {
   loginName: [
@@ -164,7 +166,7 @@ const getCode = () => {
       verificationImg.value = "data:image/png;base64," + res.data.img;
       loginForm.codeId = res.data.id;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

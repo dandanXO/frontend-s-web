@@ -181,11 +181,12 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -193,6 +194,7 @@ export default defineComponent({
     RiArrowRightSLine
   },
   setup() {
+    const notify = useNotify()
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
@@ -239,7 +241,7 @@ export default defineComponent({
           confirmWithdraw(withdrawInfo).then((response) => {
             if (response.code === 0) {
               store.getBalance();
-              ElMessage({
+              notify({
                 message: "成功",
                 type: "success"
               });
@@ -247,7 +249,7 @@ export default defineComponent({
               loadCards();
               loadingBtn.value = false;
             } else {
-              ElMessage.error({
+              notify.error({
                 type: "error",
                 message: response.message
               });
@@ -382,7 +384,7 @@ export default defineComponent({
             }
           });
         } else {
-          ElMessage.error({
+          notify.error({
             type: "error",
             message: response.message
           });
@@ -429,7 +431,7 @@ export default defineComponent({
             selectMethod(withdrawalMethods.value[0], 0);
           }
         } else {
-          ElMessage.error({
+          notify.error({
             type: "error",
             message: response.message
           });

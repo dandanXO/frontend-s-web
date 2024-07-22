@@ -101,7 +101,9 @@
 import { defineProps, onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);
 const promoNotReady = ref(false);
@@ -129,11 +131,9 @@ const getPromotion = () => {
         bonusOpened.value = true;
         store.getBalance();
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
         bonusOpened.value = false;
       }

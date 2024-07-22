@@ -7,9 +7,11 @@
       </button>
 </template>
 <script setup>
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { onMounted, ref, reactive } from "vue";
 import { submitUefaForm } from "@/api/promotion/eSportSafety"
+
+const notify = useNotify();
 
 const isSubmitting = ref(false);
 const handleSubmit = async () => {
@@ -17,13 +19,13 @@ const handleSubmit = async () => {
   const res = await submitUefaForm();
 
   if (res.code === 0) {
-    ElMessage.success({
+    notify.success({
       type: "success",
       message: "提交申请成功"
     });
     isSubmitting.value = false;
   } else {
-    ElMessage.error({
+    notify.error({
       type: "error",
       message: res.message
     });

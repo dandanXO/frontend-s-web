@@ -150,8 +150,10 @@ import {
   getOlympicDailySportBet,
   getOlympicFirstDeposit
 } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { computed, onMounted, ref } from "vue";
+
+const notify = useNotify()
 
 const selected = ref("gift");
 const depositData = ref({
@@ -169,9 +171,9 @@ const handleClick = () => {
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
-      ElMessage.success("领取成功");
+      notify.success("领取成功");
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -183,7 +185,7 @@ onMounted(() => {
       depositData.value.todayFirstDepositAmount = todayFirstDepositAmount;
       depositData.value.helpBonus = claimableAmount;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
   getOlympicDailySportBet().then((res) => {
@@ -192,7 +194,7 @@ onMounted(() => {
       depositData.value.ytdSportBetAmount = ytdSportBetAmount;
       depositData.value.breakthroughBonus = claimableAmount;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 });

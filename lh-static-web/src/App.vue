@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <notification-wrapper/>
 </template>
 
 <script>
@@ -11,7 +12,12 @@ import { getVisitorId } from "@/utils/utils";
 import { uiStore } from "@/store/ui";
 import { loadAffiliateByDomain } from "@/api/index/promo";
 
+import NotificationWrapper from "@/components/notification/NotificationWrapper.vue";
+
 export default defineComponent({
+  components: {
+    NotificationWrapper
+  },
   setup() {
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();

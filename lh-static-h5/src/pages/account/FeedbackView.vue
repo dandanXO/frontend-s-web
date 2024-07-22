@@ -200,7 +200,9 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { getRndInteger } from "boot/utils";
 import VueQRCodeComponent from "vue-qrcode-component";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 var qs = require("qs");
 const $q = useQuasar();
 
@@ -386,11 +388,9 @@ function removeEmojis(str) {
 
 const btnClick = async (btnType) => {
   if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
-    return $q.notify({
-      color: "negative",
-      position: "top",
+    return notify({
+      type: "error",
       message: "请选择一个选项",
-      icon: "report_problem"
     });
   }
   optionModal.value = [];
@@ -475,18 +475,14 @@ const btnClick = async (btnType) => {
         // questionDiv.style.display = "none";
         // QRDiv.style.display = "block";
         isAnswered.value = true;
-        $q.notify({
-          type: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "提交成功",
-          icon: "report_problem"
         });
       } else {
-        $q.notify({
-          type: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: data.message,
-          icon: "report_problem"
         });
       }
     } catch (error) {

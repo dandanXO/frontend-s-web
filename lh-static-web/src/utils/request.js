@@ -1,10 +1,10 @@
 import axios from "axios";
 import { getRndInteger } from "@/utils/utils";
-import { ElMessage } from "element-plus";
 import { stringify } from "qs";
 import { userStore } from "@/store";
 // import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
+import { uiStore } from "@/store/ui";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -109,6 +109,7 @@ const onRequest = (config) => {
 };
 
 const onResponse = (response) => {
+  const ui = uiStore();
   let res = response.data;
   if (typeof response.data === "string") {
     res = JSON.parse(response.data);
@@ -155,7 +156,10 @@ const onResponse = (response) => {
         location.reload();
       }
       if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code=== ResponseCode.ERROR_PROMO_NOT_STARTED) {
-        ElMessage.error(res.message);
+        ui.notify({
+          type: 'error',
+          message: res.message
+        })
       }
       // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {
       //   // 龙卡
@@ -172,12 +176,13 @@ const onResponse = (response) => {
 };
 
 const onResponseError = (error) => {
+  const ui = uiStore();
   // message.error(error.message);
 
-  ElMessage({
-    message: error.message,
-    type: "warning"
-  });
+  ui.notify({
+    type: 'warning',
+    message: error.message
+  })
   return Promise.reject(error);
 };
 

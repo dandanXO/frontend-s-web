@@ -148,7 +148,7 @@ import { defineComponent, ref, reactive, computed, onMounted } from "vue";
 import { loadBalance } from "@/api/personal/personal";
 import { transfer, withdrawAll, getPlatforms, getLoggedInPlatformList, updateAutoTransferState, getAutoTransferState } from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { MAIN } from "@/utils/utils";
 import { userStore } from "@/store";
 import { Refresh, Right } from "@element-plus/icons-vue"
@@ -164,6 +164,7 @@ export default defineComponent({
     RiWirelessChargingLine
 },
   setup() {
+    const notify = useNotify();
     const store = userStore();
     const platforms = reactive([]);
     const autoTransfer = ref(false);
@@ -337,7 +338,7 @@ export default defineComponent({
       loadingTransfer.value = true
       if (transferTypeIndex.value === 1) {
         if (transferInfo.amount > transferInfo.currentAmt) {
-          ElMessage.error(transferInfo.platform + ' 平台余额不足');
+          notify.error(transferInfo.platform + ' 平台余额不足');
           loadingTransfer.value = false
           return
         }
@@ -347,7 +348,7 @@ export default defineComponent({
         .then(() => {
           transfer(transferTypeIndex.value, transferInfo).then(async(res) => {
             if (res.code === 0) {
-              ElMessage({
+              notify({
                 message: '成功',
                 type: 'success',
               })
@@ -355,7 +356,7 @@ export default defineComponent({
               refreshBalance(transferInfo.platform);
               cancelTransfer();
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });

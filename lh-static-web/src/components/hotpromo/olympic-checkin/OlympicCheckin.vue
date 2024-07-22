@@ -75,8 +75,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { initUefaCheckin, claimUefaCheckin } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const store = userStore();
 const numberToChinese = (num) => {
@@ -102,13 +104,13 @@ const checkInToday = (i) => {
       .then((res) => {
         if (res.code === 0) {
           store.getBalance();
-          ElMessage({
+          notify({
             message: `成功领取 ${res.data} 元`,
             type: "success"
           });
           init();
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: res.message
           });

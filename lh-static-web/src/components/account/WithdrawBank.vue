@@ -236,7 +236,7 @@
 import { defineComponent, reactive, ref, onMounted, watch } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 import {
@@ -255,6 +255,7 @@ import { sendSessionSms } from "@/api/personal/personal";
 import { InfoFilled } from "@element-plus/icons-vue";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -263,6 +264,7 @@ export default defineComponent({
     InfoFilled, RiLink, RiLinkUnlink
   },
   setup() {
+    const notify = useNotify();
     let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === "Bank") {
         if (v === "") {
@@ -424,7 +426,7 @@ export default defineComponent({
     const dataSource = ref();
     const searchRecord = () => {
       if(!searchForm.startDate || !searchForm.endDate){
-        ElMessage({
+        notify({
           message: "请选择日期",
           type: "error"
         });
@@ -441,7 +443,7 @@ export default defineComponent({
           pagination.value.totalPage = response.data.total;
           pagination.value.pageCount = response.data.pages;
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: res.message
           });
@@ -483,7 +485,7 @@ export default defineComponent({
             personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: response.message
           });
@@ -493,7 +495,7 @@ export default defineComponent({
         if (response.code === 0) {
           bankCardInfo.telephone = response.data;
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: response.message
           });
@@ -548,7 +550,7 @@ export default defineComponent({
         if (response.code === 0) {
           personalState.bankCardList.push(...response.data);
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: response.message
           });
@@ -577,10 +579,10 @@ export default defineComponent({
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error("真实姓名不可为空");
+          notify({type: 'error', message: "真实姓名不可为空"});
           return;
         } else if (!store.phone || store.phone == "") {
-          ElMessage.error("绑定银行卡前，请先验证手机号。");
+          notify({type: 'error', message: "绑定银行卡前，请先验证手机号。"});
           return;
         } else {
           bankCardInfo.bankId = undefined;
@@ -598,7 +600,7 @@ export default defineComponent({
                 bankCardModalState.banks.push(...res.data);
                 selectBankType();
               } else {
-                ElMessage.error({
+                notify({
                   type: "error",
                   message: res.message
                 });
@@ -658,13 +660,13 @@ export default defineComponent({
             captchaForm.smsCodeId = response.data.codeId;
             bankCardInfo.smsCodeId = response.data.codeId;
 
-            ElMessage({
+            notify({
               type: "success",
               message: `发送手机验证码成功`
             });
             captchaDialogVisible.value = false;
           } else {
-            ElMessage.error({
+            notify({
               type: "error",
               message: response.message
             });
@@ -694,7 +696,7 @@ export default defineComponent({
           verificationImg.value = "data:image/png;base64," + res.data.img;
           captchaForm.codeId = res.data.id;
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: res.message
           });
@@ -731,14 +733,14 @@ export default defineComponent({
         .then(() => {
           addBankCard(bankCardInfo).then((response) => {
             if (response.code === 0) {
-              ElMessage({
+              notify({
                 message: "成功",
                 type: "success"
               });
               bankCardModalState.visible = false;
               loadCards();
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: response.message
               });
@@ -818,7 +820,7 @@ export default defineComponent({
         .then((inputValue) => {
           deleteBankCardByNumber(inputValue.value).then((res) => {
               if (res.code === 0) {
-                ElMessage({
+                notify({
                   type: "success",
                   message: "解绑完成"
                 });
@@ -830,7 +832,7 @@ export default defineComponent({
                   }
                 }
               } else {
-                ElMessage.error({
+                notify({
                   type: "error",
                   message: res.message
                 });
@@ -838,9 +840,15 @@ export default defineComponent({
             }).catch((e) => {
               console.log("error", e);
             });
+          } else {
+            notify({
+              type: "error",
+              message: "卡号不匹配，请重新输入"
+            });
+          }
         })
         .catch(() => {
-          ElMessage({
+          notify({
             type: "info",
             message: "删除取消"
           });

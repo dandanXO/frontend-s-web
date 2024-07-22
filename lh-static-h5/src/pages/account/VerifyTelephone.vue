@@ -89,11 +89,13 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
     // const isCardActive = ref();
+    const notify = useNotify();
     const qs = require("qs");
     const $q = useQuasar();
     const router = useRouter();
@@ -142,11 +144,9 @@ export default defineComponent({
             }
           })
           .catch((e) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: e.message,
-              icon: "report_problem"
             });
           });
     };
@@ -185,22 +185,18 @@ export default defineComponent({
         })).then((res) => {
           if (res.code === 0) {
             store.setPhone(formDetails.phone);
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "验证成功",
-              icon: "check_circle_outline"
             });
             store.phoneVerified = true;
             store.phone = formDetails.phone;
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: e.message,
-            icon: "report_problem"
           });
         });
       }
@@ -265,11 +261,9 @@ export default defineComponent({
 
     const onCaptchaSubmit = () => {
       if (!formDetails.phone) {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "手机号码不能为空",
-          icon: "report_problem"
         });
         getCode();
         return;
@@ -282,7 +276,7 @@ export default defineComponent({
           .then(res => {
             getCode();
             let message = res.message || '发送手机验证码成功',
-                color = 'positive'
+                type = 'success'
 
             if (res.code === 0) {
               canEdit.value = true;
@@ -293,13 +287,13 @@ export default defineComponent({
               // console.log(res.data.codeId)
               countdownOtp();
             } else {
-              color = 'negative';
+              type = 'error';
               getCode();
             }
 
 
             if (message) {
-              $q.notify({message, color});
+              notify({message, type});
             }
 
             // console.log('onCaptchaSubmit', res)

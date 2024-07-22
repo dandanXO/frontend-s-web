@@ -140,13 +140,14 @@ import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site"
 import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const notify = useNotify();
     const router = useRouter();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const customerHovered = ref(false);
@@ -228,7 +229,7 @@ export default defineComponent({
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };

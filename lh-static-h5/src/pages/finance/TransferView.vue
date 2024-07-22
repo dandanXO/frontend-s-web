@@ -217,10 +217,12 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { translateRecord } from "src/directives/translate";
 import MarqueeText from "vue-marquee-text-component";
+import { useNotify } from "src/hooks/notify";
 
 components: {
   AcctBal;
 }
+const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
 const transferFrom = ref("main");
@@ -309,11 +311,9 @@ const submitTransfer = () => {
               .then((response) => {
                 if (response.code === 0) {
                   setTimeout(() => {
-                    $q.notify({
-                      color: "positive",
-                      position: "top",
+                    notify({
+                      type: "success",
                       message: "成功",
-                      icon: "check_circle_outline"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -342,11 +342,9 @@ const submitTransfer = () => {
               .then((response) => {
                 if (response.code === 0) {
                   setTimeout(() => {
-                    $q.notify({
-                      color: "positive",
-                      position: "top",
+                    notify({
+                      type: "success",
                       message: "转账成功",
-                      icon: "check_circle_outline"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -405,12 +403,10 @@ const getPlatBalances = (plat) => {
       }
     })
     .catch((e) => {
-      // $q.notify({
-      // color: "negative",
-      // position: "top",
-      // message: e.message,
-      // icon: "report_problem"
-      // })
+      // notify({
+      // type: "error",
+      //      // message: e.message,
+      //      // })
       platform.isLoading = false;
     });
 };

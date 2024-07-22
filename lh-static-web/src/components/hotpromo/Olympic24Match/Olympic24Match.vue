@@ -250,8 +250,10 @@ import {
   submitBBDacha,
   getBBDachaRecordsCount
 } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
@@ -281,7 +283,7 @@ const handleSubmitVote = () => {
     .then((res) => {
       if (res.code === 0) {
         getData();
-        ElMessage.success("投票成功！");
+        notify.success("投票成功！");
       }
     })
     .catch(() => {})

@@ -75,7 +75,8 @@
 <script>
 import { onMounted, ref, defineComponent, reactive } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeVote";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 
 export default defineComponent({
     name: "PrizePoolVotePromo",
@@ -120,7 +121,7 @@ export default defineComponent({
 
             await elForm.validate(async (valid) => {
                 if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
-                    ElMessage.error({
+                    notify.error({
                         type: "error",
                         message: "选票数量不足"
                     })
@@ -135,12 +136,12 @@ export default defineComponent({
                     const res = await poolPrizeCastVote(params);
 
                     if (res.code === 0) {
-                        ElMessage.success({
+                        notify.success({
                             type: "success",
                             message: "success"
                         })
                     } else {
-                        ElMessage.error(res.message)
+                        notify.error(res.message)
                     }
 
                     isSubmitting.value = false;
@@ -423,4 +424,3 @@ export default defineComponent({
     color: #232323;
 }
 </style>
-  
