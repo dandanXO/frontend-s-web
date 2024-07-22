@@ -141,6 +141,12 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (window.location.href.indexOf("kakavn.vip/agent/C58A95") > -1) {
       fbq("init", "795707932732808");
       fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakavn.shop/agent/2D48F7") > -1) {
+      fbq("init", "3742002766037130");
+      fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakagame6.app/agent/B0E62B") > -1) {
+      fbq("init", "1065055615337117");
+      fbq("track", "PageView");
     }
     // console.log(window.location.href);
     // if (window.location.href.indexOf("KAKAking.com") > -1) {
