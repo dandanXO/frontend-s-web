@@ -99,7 +99,7 @@
 
   <q-page class="bind-container">
     <div class="bind-wrapper">
-      <q-form class="bind-item q-my-sm">
+      <q-form class="bind-item q-my-xs">
         <q-label>
           {{ $t("lang.bd_account_bank") }}
           <em>*</em>
@@ -118,6 +118,7 @@
           option-label="name"
           emit-value
           map-options
+          dense
           :rules="[(val) => val || $t('lang.bd_please_select')]"
         >
           <template v-slot:selected-item="scope">
@@ -478,7 +479,7 @@ onActivated(() => {
       box-shadow: 0px -4px 6px 0px #c3d4e6 inset;
       border-radius: 10px;
       margin: 0 auto 14px;
-      padding: 1.25rem;
+      padding: 0 1.25rem 10px;
 
       q-label {
         color: $font-2;
@@ -492,6 +493,7 @@ onActivated(() => {
 
       .q-field__control {
         border-radius: 0.5rem;
+        height: 40px;
         background: #f7f8fb;
         box-shadow: 0px 0px 8px 0px #a9c9ea inset;
       }
@@ -500,9 +502,17 @@ onActivated(() => {
         position: relative;
         right: -0.75rem;
         width: 100%;
-        height: 100%;
-        aspect-ratio: unset;
+        font-size: 1rem;
       }
+      .q-field__marginal {
+        height: 38px;
+      }
+      // .q-field--auto-height .q-field__control, .q-field--auto-height .q-field__native {
+      //   min-height: unset;
+      // }
+      // .q-field__label.absolute {
+      //   top: 10px;
+      // }
     }
 
     .note {
