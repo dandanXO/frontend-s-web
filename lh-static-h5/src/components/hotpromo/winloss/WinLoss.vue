@@ -158,8 +158,10 @@ import {useLocalStorage} from "@vueuse/core"
 import { useQuasar } from "quasar";
 import { getFormattedDateComponents } from "boot/utils"
 import { eventapi } from "boot/axios";
+import { useNotify } from "src/hooks/notify";
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 var qs = require("qs");
@@ -215,11 +217,9 @@ const confirmMatchSelect = () => {
     })
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功",
-          icon: "report_problem"
         });
         confirmDialog.value = false;
         getMatches();

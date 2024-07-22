@@ -73,12 +73,10 @@ async function submitDeposit(deposit) {
       emits("successful");
       return res;
     } else {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: res.message,
-      //   icon: "report_problem"
-      // });
+      // notify({
+      //   type: "error",
+      //      //   message: res.message,
+      //      // });
     }
   });
 }

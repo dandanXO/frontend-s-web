@@ -113,7 +113,7 @@
 </template>
 
 <script setup>
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { ref, onMounted, reactive } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -122,6 +122,8 @@ import "swiper/css/navigation";
 import { loadNbaDetails, submitNBAInsuranceForm } from "@/api/promotion/nbaGame";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
+
+const notify = useNotify();
 const store = userStore();
 
 const nbaDetails = ref([]);
@@ -185,7 +187,7 @@ const getNbaDetails = () => {
       }
     })
     .catch((err) => {
-      ElMessage.error(err.message);
+      notify.error(err.message);
       console.log(err.message);
     });
 };
@@ -212,7 +214,7 @@ const applyNBAInsurance = () => {
 const toggleNBAInsuranceModal = (status) => {
   if (status === true) {
     if (!store.token) {
-      ElMessage.error("请登录后操作");
+      notify.error("请登录后操作");
       return;
     }
   }
@@ -238,7 +240,7 @@ const submitForm = async (elForm) => {
       const res = await submitNBAInsuranceForm(params);
 
       if (res.code === 0) {
-        ElMessage.success({
+        notify.success({
           type: "success",
           message: "提交成功"
         });
@@ -246,7 +248,7 @@ const submitForm = async (elForm) => {
         isNBAInsuranceModalVisible.value = false;
         isSubmitting.value = false;
       } else {
-        ElMessage.error({
+        notify.error({
           type: "error",
           message: res.message
         });

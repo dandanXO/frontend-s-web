@@ -230,6 +230,9 @@ import { getSlotLucky8, submitSlotLucky8 } from "../../../api/promotion/slotluck
 import { useQuasar } from "quasar";
 import {useLocalStorage} from "@vueuse/core"
 import { userStore } from "src/stores";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const props = defineProps(["promoCode"]);
@@ -245,20 +248,16 @@ const handleSubmitVote = (item) => {
   submitSlotLucky8(promoCode.value, item.id)
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "领取成功！",
-          icon: "check_circle_outline"
         });
         getSlotLucky8Data();
         store.getBalance();
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     })

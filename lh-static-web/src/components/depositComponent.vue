@@ -175,7 +175,7 @@
 <script setup>
 import { ref, reactive, onMounted, shallowRef , watch } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
 import TFLoading from "@/components/loading/TFLoading.vue";
@@ -183,11 +183,13 @@ import { userStore } from "@/store";
 import { useRouter, useRoute } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
+import { useNotify } from "@/hooks/notify";
 
 const router = useRouter();
 const route = useRoute();
 const loadingBtn = ref(false);
 const store = userStore();
+const notify = useNotify();
 const formRef = ref();
 const isDeposited = ref(false);
 const isLoading = ref(true);
@@ -332,7 +334,10 @@ function initPay() {
         bankCardList.value = payMethods[0].extra.banks;
       }
     } else {
-      ElMessage.error(d.message);
+      notify({
+        type: 'error',
+        message: d.message
+      })
     }
   });
 }
@@ -507,7 +512,10 @@ function confirmDeposit() {
           if (d.code === 11002) {
             form.localAmount = d.data.suggestion;
             // message.error(d.message, 4);
-            ElMessage.error(d.message);
+            notify({
+              type: 'error',
+              message: d.message
+            })
             loadingBtn.value = false;
           } else {
             const copy = { ...form };
@@ -581,7 +589,10 @@ function doDeposit(data) {
         });
         loadingBtn.value = false;
       } else {
-        ElMessage.error(d.message);
+        notify({
+          type: 'error',
+          message: d.message
+        })
       }
     })
     .catch((err) => {

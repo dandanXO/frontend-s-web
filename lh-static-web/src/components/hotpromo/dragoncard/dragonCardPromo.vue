@@ -134,12 +134,14 @@ import {
   giveCardToFriend,
   synthesisCard
 } from "@/api/promotion/tigerCard";
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode"]);
 // alert(props.promoCode);
+
+const notify = useNotify();
 
 const cardInfo = reactive({
   cardDetail: {
@@ -170,7 +172,7 @@ const pageInit = () => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -183,7 +185,7 @@ const loadRanking = () => {
     if (res.code === 0) {
       rankingPage.records = res.data;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -202,7 +204,7 @@ const getNewTigerCard = () => {
       cardWon.value = res.data.cardType;
       isPageLoading.value = false;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -217,13 +219,13 @@ const compoundCard = () => {
   synthesisCard({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       pageInit();
-      ElMessage.success({
+      notify({
         type: "success",
         message: "success"
       });
       isPageLoading.value = false;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -327,13 +329,13 @@ const submitRegisterForm = async (elForm) => {
       form.promoCode = props.promoCode;
       giveCardToFriend(form).then((res) => {
         if (res.code === 0) {
-          ElMessage.success({
+          notify({
             type: "success",
             message: "success"
           });
           isSubmitting.value = false;
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: res.message
           });

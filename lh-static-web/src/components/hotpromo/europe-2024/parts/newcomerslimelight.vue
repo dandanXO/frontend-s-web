@@ -1,6 +1,6 @@
 <template>
     <div class="newcomers-intro">
-        活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足<span>≥500</span>即可获得体验彩金。    
+        活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足<span>≥500</span>即可获得体验彩金。
     </div>
     <div class="newcomers-grid">
         <div class="item" v-for="item in items" :key="item.bonusType" @click="getBonus(item.bonusType)">
@@ -8,7 +8,7 @@
             <div class="button">点击领取</div>
         </div>
     </div>
-   
+
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
             <th>激活条件​</th>
@@ -27,7 +27,7 @@
             <td>38</td>
         </tr>
     </table>
-    
+
     <el-dialog align-center centered class="winDialog" v-model="bonusOpened">
       <div class="dialog-congrats">恭喜您，获得奖金</div>
       <div class="hongbao-angbao">{{ winAmount }} 元</div>
@@ -39,9 +39,11 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { firstBet } from '@/api/promotion/eurocup';
-import { ElMessage } from "element-plus";
 import { userStore } from '@/store';
+import { useNotify } from "@/hooks/notify";
+
 const store = userStore();
+const notify = useNotify();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
 const getBonus = (type) => {
@@ -50,14 +52,14 @@ const getBonus = (type) => {
                 winAmount.value = res.data;
                 bonusOpened.value = true;
             } else {
-                ElMessage.error({
+                notify({
                 type: "error",
                 message: res.message
                 });
 
                 bonusOpened.value = false;
             }
-        }) 
+        })
     }
 const items = ref([
     { bonusType: 'ESPORT' },

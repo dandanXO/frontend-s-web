@@ -348,7 +348,7 @@
 import {defineComponent, reactive, ref, onMounted} from "vue";
 import {getVerificationCode} from "@/api/index/login";
 // import { Modal, message } from "ant-design-vue";
-import {ElMessage, ElMessageBox} from "element-plus";
+import { ElMessageBox} from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
 import {RiLink, RiLinkUnlink} from "vue-remix-icons";
 import {
@@ -365,6 +365,7 @@ import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
 import {InfoFilled} from "@element-plus/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
 // import moment from "moment";
 
 export default defineComponent({
@@ -374,6 +375,7 @@ export default defineComponent({
     InfoFilled, RiLink, RiLinkUnlink
   },
   setup() {
+    const notify = useNotify()
     let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === 'Bank') {
         if (v === '') {
@@ -532,7 +534,7 @@ export default defineComponent({
           pagination.value.totalPage = response.data.total
           pagination.value.pageCount = response.data.pages
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
           // message.error(response.message, 4)
         }
       }).catch((e) => {
@@ -575,7 +577,7 @@ export default defineComponent({
             personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       }).catch((error) => {
         console.log("error", error);
@@ -584,7 +586,7 @@ export default defineComponent({
         if (response.code === 0) {
           bankCardInfo.telephone = response.data;
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       }).catch((error) => {
         console.log("error", error);
@@ -638,7 +640,7 @@ export default defineComponent({
         if (response.code === 0) {
           personalState.bankCardList.push(...response.data);
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       }).catch((error) => {
         console.log("error", error);
@@ -665,7 +667,7 @@ export default defineComponent({
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
-          ElMessage.error('真实姓名不可为空');
+          notify.error('真实姓名不可为空');
           router.push("/center/personal");
         } else {
           bankCardInfo.bankId = undefined;
@@ -681,7 +683,7 @@ export default defineComponent({
                 bankCardModalState.banks.push(...res.data)
                 selectBankType();
               } else {
-                ElMessage.error(response.message);
+                notify.error(response.message);
               }
             }).catch((e) => {
               console.log("error", e);
@@ -738,13 +740,13 @@ export default defineComponent({
               captchaForm.smsCodeId = response.data.codeId;
               bankCardInfo.smsCodeId = response.data.codeId;
 
-              ElMessage({
+              notify({
                 type: 'success',
                 message: `发送手机验证码成功`
               });
               captchaDialogVisible.value = false;
             } else {
-              ElMessage.error(response.message);
+              notify.error(response.message);
               getCode();
             }
           })
@@ -771,7 +773,7 @@ export default defineComponent({
           verificationImg.value = "data:image/png;base64," + res.data.img;
           captchaForm.codeId = res.data.id;
         } else {
-          ElMessage.error({
+          notify.error({
             type: "error",
             message: res.message
           });
@@ -794,7 +796,7 @@ export default defineComponent({
       captchaDialogVisible.value = true;
       getCode();
       // }).catch((err) => {
-      // ElMessage({
+      // notify({
       // message: '请输入有效的中国手机号码',
       // type: 'error',
       // })
@@ -808,14 +810,14 @@ export default defineComponent({
           .then(() => {
             addBankCard(bankCardInfo).then((response) => {
               if (response.code === 0) {
-                ElMessage({
+                notify({
                   message: '成功',
                   type: 'success',
                 })
                 bankCardModalState.visible = false;
                 loadCards();
               } else {
-                ElMessage.error({
+                notify.error({
                   type: "error",
                   message: response.message
                 });
@@ -896,7 +898,7 @@ export default defineComponent({
       )
           .then((inputValue) => {
             if (!inputValue.value) {
-              ElMessage({
+              notify({
                 type: 'error',
                 message: '请输入卡号',
               });
@@ -904,7 +906,7 @@ export default defineComponent({
             }
             deleteBankCardByNumber(inputValue.value).then((res) => {
                 if (res.code === 0) {
-                  ElMessage({
+                  notify({
                     type: 'success',
                     message: '解绑完成',
                   });
@@ -916,7 +918,7 @@ export default defineComponent({
                     }
                   }
                 } else {
-                  ElMessage.error({
+                  notify.error({
                     type: "error",
                     message: res.message
                   });
@@ -924,9 +926,15 @@ export default defineComponent({
               }).catch((e) => {
                 console.log('error', e);
               });
+            } else {
+              notify({
+                type: 'error',
+                message: '卡号不匹配，请重新输入',
+              });
+            }
           })
           .catch(() => {
-            ElMessage({
+            notify({
               type: 'info',
               message: '删除取消',
             });

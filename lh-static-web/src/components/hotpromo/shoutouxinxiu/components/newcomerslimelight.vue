@@ -44,8 +44,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { firstBet } from "@/api/promotion/eurocup";
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 const store = userStore();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -55,7 +57,7 @@ const getBonus = (type) => {
       winAmount.value = res.data;
       bonusOpened.value = true;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

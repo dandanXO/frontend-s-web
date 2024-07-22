@@ -289,6 +289,9 @@ import {
 // import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 import { useQuasar } from "quasar";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify()
 const $q = useQuasar();
 
 const tableRecordDialog = ref(false);
@@ -315,11 +318,9 @@ const handleSubmitVote = () => {
       if (res.code === 0) {
         getData();
 
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功！",
-          icon: "check_circle_outline"
         });
       }
     })

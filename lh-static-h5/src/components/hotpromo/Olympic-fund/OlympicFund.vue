@@ -144,7 +144,9 @@
 import { computed, onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify()
 const $q = useQuasar();
 
 const selected = ref("gift");
@@ -171,13 +173,13 @@ const handleClick = () => {
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
-      $q.notify({
-        color: "positive",
+      notify({
+        type: "success",
         message: "领取成功"
       });
     } else {
-      $q.notify({
-        color: "negative",
+      notify({
+        type: "error",
         message: res.message
       });
     }
@@ -191,8 +193,8 @@ onMounted(() => {
       depositData.value.todayFirstDepositAmount = todayFirstDepositAmount;
       depositData.value.helpBonus = claimableAmount;
     } else {
-      $q.notify({
-        color: "negative",
+      notify({
+        type: "error",
         message: res.message
       });
     }
@@ -203,8 +205,8 @@ onMounted(() => {
       depositData.value.ytdSportBetAmount = ytdSportBetAmount;
       depositData.value.breakthroughBonus = claimableAmount;
     } else {
-      $q.notify({
-        color: "negative",
+      notify({
+        type: "error",
         message: res.message
       });
     }

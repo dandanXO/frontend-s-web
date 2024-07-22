@@ -208,6 +208,8 @@ import { onMounted, reactive, ref } from "vue";
 import { welcomeTaskClaimBonus, welcomeTaskInit } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify()
 const router = useRouter();
 // const promoNotReady = ref(false);
 const bonusOpened = ref(false);
@@ -237,7 +239,7 @@ const pageInit = () => {
         checkInRewardState.stateDetails = JSON.parse(welcomeState.stateDetails.checkInRewardState);
       }
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -254,8 +256,8 @@ const claimBonus = (promoCode) => {
 
         bonusOpened.value = true;
       } else {
-        // ElMessage.error(res.message)
-        ElMessage.error(res.message);
+        // notify.error(res.message)
+        notify.error(res.message);
         bonusOpened.value = false;
       }
     })

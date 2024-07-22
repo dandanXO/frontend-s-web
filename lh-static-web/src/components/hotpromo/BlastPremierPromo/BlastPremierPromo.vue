@@ -54,7 +54,7 @@
               <div class="useKeys" @click="openBox(item.treasureLevel)">开启</div>
             </div>
           </div>
-          
+
           <!-- <div class="tips-p">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙</div> -->
         </div>
       </div>
@@ -200,10 +200,12 @@ import {
   getOpenRecord,
   claimCheckInTreasure
 } from "@/api/index/promo";
-import { ElMessage, ElLoading } from "element-plus";
+import { ElLoading } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode"]);
 const store = userStore();
+const notify = useNotify();
 
 const keyNumber = ref(0);
 const signNumber = ref(0);
@@ -246,7 +248,7 @@ const openBox = (item) => {
       openModal("amt", res.data);
       init();
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -358,7 +360,7 @@ const openModal = (modal, item, itemIndex) => {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     });
     setTimeout(() => {
@@ -427,7 +429,7 @@ onMounted(() => {
   }
 
   .tips {
-    
+
     color: #fffd66;
     margin: 0 auto;
     text-align: center;
@@ -489,7 +491,7 @@ onMounted(() => {
         }
       }
   .first .content .top-row {
-    
+
     background: url(../../../assets/images/promotion/hotpromo/blastpremier/container.png)no-repeat center center;
     background-size: contain;
   }
@@ -620,7 +622,7 @@ onMounted(() => {
       }
     }
     .middle-row {
-      
+
       .item-container {
         display: flex;
         justify-content: space-around;

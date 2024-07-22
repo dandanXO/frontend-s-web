@@ -374,7 +374,9 @@
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
 
 const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
 const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
@@ -436,7 +438,7 @@ const handleRecieve = async (reward) => {
     const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
 
     if (apiRes.code === 0) {
-      ElMessage.success({
+      notify({
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
@@ -451,7 +453,7 @@ const handleRecieve = async (reward) => {
         return item;
       });
     } else {
-      ElMessage.error(apiRes.message);
+      notify.error(apiRes.message);
     }
   } catch (error) {
     console.log(error);
@@ -467,7 +469,7 @@ const getData = async () => {
     const apiRes = await getNewUserAccumulateDepositInit();
     if (apiRes.data.state === "NOT_ELIGIBLE") {
       isEligibleState.value = false;
-      ElMessage.error("此账号无法参与此优惠。");
+      notify.error("此账号无法参与此优惠。");
       return;
     }
     depositAmount.value = apiRes.data.depositAmount || 0;

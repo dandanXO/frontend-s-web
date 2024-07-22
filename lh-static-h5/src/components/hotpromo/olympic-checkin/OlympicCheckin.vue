@@ -81,7 +81,9 @@ import { onMounted, ref } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { initUefaCheckin, claimUefaCheckin } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify()
 const $q = useQuasar();
 const store = userStore();
 
@@ -108,11 +110,9 @@ const checkInToday = (i) => {
       .then((res) => {
         if (res.code === 0) {
           store.getBalance();
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: `成功领取 ${res.data} 元`,
-            icon: "check_circle_outline"
           });
           init();
         }

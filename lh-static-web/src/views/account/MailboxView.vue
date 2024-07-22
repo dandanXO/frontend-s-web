@@ -117,9 +117,11 @@ import {
   readMail
 } from "@/api/personal/mailbox";
 import moment from "moment";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import Mail from "@/components/mailbox/Mail.vue";
+
+const notify = useNotify();
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -236,7 +238,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       })
       .catch((error) => {
@@ -257,7 +259,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
           mailboxState.mailboxList[mailboxState.active].total = response.data.total;
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       })
       .catch((error) => {
@@ -276,7 +278,7 @@ const readAllMsg = (m) => {
   readAllMail(m)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "已全读部消息",
           type: "success"
         });
@@ -284,7 +286,7 @@ const readAllMsg = (m) => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -307,7 +309,7 @@ const readMultipleMsg = () => {
   readMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "读取已选择的消息",
           type: "success"
         });
@@ -317,7 +319,7 @@ const readMultipleMsg = () => {
 
         isShowSelect.value = false;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -386,7 +388,7 @@ const deleteMultipleMsg = () => {
   deleteMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "删除已选择的消息",
           type: "success"
         });
@@ -408,7 +410,7 @@ const deleteMultipleMsg = () => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -436,7 +438,7 @@ const deleteAllMsg = (m) => {
   deleteAllMail(params)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "已删除全部消息",
           type: "success"
         });
@@ -444,7 +446,7 @@ const deleteAllMsg = (m) => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -503,7 +505,7 @@ const onSubmit = (e) => {
       wirteMail(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            ElMessage({
+            notify({
               message: "成功",
               type: "success"
             });
@@ -512,7 +514,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
-            ElMessage.error(response.message);
+            notify.error(response.message);
             // message.error(response.message);
           }
         })
