@@ -40,9 +40,10 @@
     </div>
 
     <div class="olympic-fund-block description-block">
-      <div class="olympic-fund-block-title">
-        <img src="./img/exclamation.svg" />
-        <span>活动说明</span>
+      <div class="olympic-fund-block-title-ol">
+        <!-- <img src="./img/exclamation.svg" />
+        <span>活动说明</span> -->
+        <img src="./img/info-title.png">        
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
@@ -104,9 +105,10 @@
     </div>
 
     <div class="olympic-fund-block rule-block">
-      <div class="olympic-fund-block-title">
-        <img src="./img/exclamation.svg" />
-        <span>活动规则</span>
+      <div class="olympic-fund-block-title-ol">
+        <!-- <img src="./img/exclamation.svg" />
+        <span>活动规则</span> -->
+        <img src="./img/rule-title.png">   
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
         <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
@@ -240,6 +242,14 @@ onMounted(() => {
       font-size: 1rem;
       font-weight: 600;
       line-height: 1.375rem;
+      &-ol {
+        display: flex;
+        align-items: center;
+        img {
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
 
       img {
         max-width: 20px;

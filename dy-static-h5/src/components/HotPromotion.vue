@@ -83,7 +83,6 @@
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund' && store.token" />
-
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
