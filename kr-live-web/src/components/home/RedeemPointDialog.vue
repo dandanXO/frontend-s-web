@@ -1,5 +1,5 @@
 <template>
-    <q-dialog v-model="props.redeemDialogVisible" no-route-dismiss persistent>
+    <q-dialog v-model="redeemDialogVisible" no-route-dismiss persistent>
         <div class="redeem-point-dialog-container" style="width:700px;max-width:700px;">
             <div class="header">
                 <div style="text-align: right;">
@@ -50,6 +50,11 @@ import { useI18n } from "vue-i18n";
 const isLoading = ref(false);
 const { t } = useI18n();
 const props = defineProps(['redeemDialogVisible', 'closeDialog']);
+const redeemDialogVisible = ref(props.redeemDialogVisible);
+
+watch(() => props.redeemDialogVisible, () => {
+    redeemDialogVisible.value = props.redeemDialogVisible;
+})
 
 const redeemPoint = (privilegeId) => {
     eventapi.post("/member-point/redeem-point/" + privilegeId + "?_method=PUT")

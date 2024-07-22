@@ -102,10 +102,10 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
-import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import { userStore } from "src/stores";
 import { useI18n } from "vue-i18n";
+import dayjs from "dayjs";
 
 var qs = require("qs");
 
@@ -209,7 +209,7 @@ const readMessage = (id, showReadNotify = true) => {
             }
 
             if (!currentMail.readTime) {
-                currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                currentMail.readTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
             }
 
             isFetchingContent.value = false;
