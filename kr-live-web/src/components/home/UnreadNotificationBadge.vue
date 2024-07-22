@@ -1,28 +1,13 @@
 <template>
     <q-badge :label="unreadCount" class="red-dot shake" v-if="unreadCount" rounded style=""
         :title="$t('lang.message_unread')" :key="unreadCount" />
-    <audio id="message_chime" ref="messageChimeRef">
-        <source src="../../assets/tones/chime.mp3" type="audio/mp3">
-    </audio>
 </template>
 <script setup>
-import { watch, ref } from 'vue';
 import { userStore } from "stores/index";
 import { storeToRefs } from "pinia";
 
 const store = userStore();
 const { unreadCount } = storeToRefs(store);
-const messageChimeRef = ref();
-
-const ringChime = () => {
-    if (unreadCount.value > 0) {
-        messageChimeRef.value.play();
-    }
-}
-
-watch(() => unreadCount.value, () => {
-    ringChime();
-})
 </script>
 <style lang="scss" scoped>
 .red-dot {
