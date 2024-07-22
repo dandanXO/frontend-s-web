@@ -378,6 +378,18 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="miniGameRolling"
+          :label="t('fields.miniGameRolling')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{data: scope.row.miniGameRolling, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="profit"
           :label="t('fields.profit')"
           align="center"
@@ -385,7 +397,7 @@
         >
           <template #default="scope">
             <span
-              v-formatter="{data: scope.row.sportRolling + scope.row.slotRolling + scope.row.sportRolling, type: 'money'}"
+              v-formatter="{data: scope.row.sportRolling + scope.row.slotRolling + scope.row.sportRolling + scope.row.miniGameRolling, type: 'money'}"
             />
           </template>
         </el-table-column>
