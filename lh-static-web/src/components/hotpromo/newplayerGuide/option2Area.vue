@@ -438,7 +438,7 @@ const handleRecieve = async (reward) => {
     const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
 
     if (apiRes.code === 0) {
-      ElMessage.success({
+      notify({
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });

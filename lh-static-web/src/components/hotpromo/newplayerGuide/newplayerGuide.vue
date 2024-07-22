@@ -195,8 +195,10 @@ import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
 import option2Area from "./option2Area.vue";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
 import moment from "moment";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const store = userStore();
 const router = useRouter();
@@ -291,7 +293,7 @@ const getBonus = async (promoCode) => {
         usdtAddrBindState.value = "CLAIMED";
       }
 
-      ElMessage.success({
+      notify({
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });

@@ -898,7 +898,7 @@ export default defineComponent({
       )
           .then((inputValue) => {
             if (!inputValue.value) {
-              ElMessage({
+              notify({
                 type: 'error',
                 message: '请输入卡号',
               });

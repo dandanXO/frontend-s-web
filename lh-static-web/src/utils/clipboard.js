@@ -1,4 +1,4 @@
-import { ElMessage } from "element-plus"
+import { uiStore } from "@/store/ui"
 
 const requestClipboardPermission = () => {
   return navigator.permissions.query({
@@ -7,6 +7,7 @@ const requestClipboardPermission = () => {
 }
 
 export const writeClipboard = async (content) => {
+  const ui = uiStore()
   try {
     if (window.isSecureContext && navigator.clipboard) {
       const permission = await requestClipboardPermission()
@@ -22,12 +23,12 @@ export const writeClipboard = async (content) => {
       document.execCommand('copy')
       textArea.remove()
     }
-    ElMessage({
+    ui.notify({
       type: 'success',
       message: '复制成功'
     })
   } catch (error) {
-    ElMessage({
+    ui.notify({
       type: 'error',
       message: '复制失败',
     })

@@ -199,7 +199,9 @@ import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../ap
 import option2Area from "./option2Area.vue";
 import { userStore } from "src/stores";
 import moment from "moment";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify()
 const store = userStore();
 const router = useRouter();
 
@@ -309,11 +311,9 @@ const getBonus = async (promoCode) => {
         usdtAddrBindState.value = "CLAIMED";
       }
 
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "领取成功！",
-        icon: "check_circle_outline"
       });
     }
   } catch (err) {
