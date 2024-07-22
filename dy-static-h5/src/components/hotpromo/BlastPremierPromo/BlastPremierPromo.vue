@@ -90,7 +90,7 @@
                     <span class="number">{{ signNumber }}</span>
                   </div>
                 </div>
-                <div class="btn not-complete">未完成签到</div>
+                <!-- <div class="btn not-complete">未完成签到</div> -->
               </div>
             </div>
           </div>
@@ -484,7 +484,7 @@ onMounted(() => {
     flex-direction: column;
     background: url(../../../assets/images/promo/hotpromo/blastpremier/middle-row.png) no-repeat center center;
     background-size: 100% 100%;
-    padding: 50px 0;
+    padding: 20px 0;
     justify-content: center;
     gap: 20px;
     align-items: center;
@@ -525,13 +525,17 @@ onMounted(() => {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 30px;
             .sec-col {
-              flex: 3;
+              flex: 2;
               display: flex;
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
+              gap: 10px;
+              img {
+                 max-width: 120px;
+              }
               .sign-day {
                 color: #fffd66;
                 font-weight: bold;
