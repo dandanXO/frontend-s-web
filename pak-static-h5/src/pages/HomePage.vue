@@ -1370,7 +1370,7 @@ const { t } = useI18n();
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
-const isMoneyRainModal = ref(true);
+const isMoneyRainModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
