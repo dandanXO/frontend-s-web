@@ -119,15 +119,15 @@
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_item') }}</span>
                 <span>：</span>
-                <span class="q-pa-xs">{{ `${formatNumberComma(selectedWithdrawalMethod.withdrawMin)} 원 -
-                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMax)} 원` }}</span>
+                <span class="q-pa-xs">{{ `${formatNumberComma(selectedWithdrawalMethod.withdrawMin)}원 -
+                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMax)}원` }}</span>
               </template>
               <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_day') }}</span>
                 <span>：</span>
                 <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMaxTimes}회 총
-                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMaxAmount)}억`
+                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMaxAmount)}원`
                   }}
                 </span>
               </template>
