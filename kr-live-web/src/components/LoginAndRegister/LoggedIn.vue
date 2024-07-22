@@ -67,10 +67,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, markRaw, defineAsyncComponent } from 'vue';
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import RedeemPointDialog from '../home/RedeemPointDialog.vue';
+
+const RedeemPointDialog = markRaw(defineAsyncComponent(() =>
+  import('../home/RedeemPointDialog.vue')
+));
 
 const props = defineProps(['isH5TopBar']);
 const store = userStore();
@@ -79,10 +82,6 @@ const redeemDialogVisible = ref(false);
 
 const goToPersonalInfo = () => {
   router.push("/?page=personal/info");
-};
-
-const goToTransactions = () => {
-  router.push("/?page=transaction/records");
 };
 
 const onLogoutSubmit = () => {

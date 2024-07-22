@@ -94,13 +94,16 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed, markRaw, defineAsyncComponent } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
-import WriteInquiry from 'components/pageModalContent/inquiry/WriteInquiry.vue';
 import { useI18n } from "vue-i18n";
+
+const WriteInquiry = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/inquiry/WriteInquiry.vue')
+));
 
 var qs = require("qs");
 const $q = useQuasar();
