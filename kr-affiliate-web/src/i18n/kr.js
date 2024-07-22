@@ -679,6 +679,7 @@ export default {
     liveRolling: '하부총카지노롤링',
     slotRolling: '하부총슬롯롤링',
     sportRolling: '하부총스포츠롤링',
+    miniGameRolling: '하부미니게임롤링',
     memberPoint: '회원 포인트',
     affiliateTransferAmount: '송금 금액',
     redeem: '상환하다',

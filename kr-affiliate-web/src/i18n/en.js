@@ -681,6 +681,7 @@ export default {
     liveRolling: 'Live Rolling Amount',
     slotRolling: 'Slot Rolling Amount',
     sportRolling: 'Sport Rolling Amount',
+    miniGameRolling: 'Mini Game Rolling Amount',
     memberPoint: 'Member Point',
     affiliateTransferAmount: 'Affiliate Transfer Amount',
     redeem: 'Redeem',
