@@ -22,7 +22,7 @@
           <div class="info-linear-amt">
             {{ rules[bonusSeq] ? rules[bonusSeq].deposit : 0 }}
             <br />
-            RS
+            NGN
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
           <div class="info-linear-amt">
             {{ rules[bonusSeq] ? rules[bonusSeq].bet : 0 }}
             <br />
-            RS
+            NGN
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
           <img v-else :src="require(`../assets/images/promotion/activities/day-0${i + 1}.png`)" />
         </div>
         <div>
-          <div class="box-title">Free {{ rule.bonus }}rs</div>
+          <div class="box-title">Free {{ rule.bonus }}NGN</div>
           <div class="box-subtitle" v-if="(i === bonusSeq && isReceivedToday) || i < bonusSeq">
             <img :src="require(`../assets/images/promotion/activities/tick.png`)" />
             Received
@@ -69,7 +69,7 @@
           <div class="box-subtitle" v-else>
             Wager x5
             <br />
-            Deposit {{ rule.deposit }}rs
+            Deposit {{ rule.deposit }}NGN
           </div>
         </div>
       </div>
@@ -80,10 +80,10 @@
     </div>
     <div class="activities-title q-mt-md"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-rules-container">
-      1. Example: On the first day, if you deposit 1000rs, you will be given 88rs after the turnover is full. No deposit
+      1. Example: On the first day, if you deposit 10,000NGN, you will be given 888NGN after the turnover is full. No deposit
       on the second day, but deposit on the third day, it will be recalculated as the first day.
       <br />
-      2. The bonus for the day can only be claimed once, for example: each account can only claim 88rs on the first day.
+      2. The bonus for the day can only be claimed once, for example: each account can only claim 888NGN on the first day.
       <br />
       3. After the deposit requirement is met, you must play slot machines to start calculating the turnover, and the
       bonus will be given after the turnover is completed.

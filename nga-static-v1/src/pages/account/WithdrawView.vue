@@ -138,7 +138,7 @@
       <div class="top-wrapper">
         <div class="title">
           Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-          {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+          {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} NGN)
         </div>
       </div>
 
@@ -170,19 +170,19 @@
           <div class="desc-wrapper">
             <div class="desc">Withdrew Amount</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
+          <div class="desc">NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
+          <div class="desc">NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">Remain Wagers</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
+          <div class="desc">NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
         </div>
       </div>
     </div>
@@ -211,7 +211,7 @@
     </template>
 
     <div class="bottom-tnc q-mt-md">
-      Note: 3%+6Rs of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
+      Note: 3%+6NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
       information, if withdrawal failed or you have any other questions, please contact CS 24/7
     </div>
   </div>

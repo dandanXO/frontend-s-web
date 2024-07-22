@@ -245,7 +245,7 @@ import {
   loadBankCards,
   loadUnbindRecord,
   addBankCard,
-  deleteBankCard,
+  deleteBankCardByNumber,
   loadMemberInfo,
   loadMemberTelephone
 } from "@/api/personal/personal";
@@ -814,13 +814,11 @@ export default defineComponent({
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           cancelButtonClass: "cancel-btn",
-          type: "warning",
-          inputErrorMessage: "请输入正确的卡号" // Error message to display if input is invalid
+          type: "warning" // Error message to display if input is invalid
         }
       )
         .then((inputValue) => {
-          if (inputValue.value === card.cardNumber) {
-            deleteBankCard(card.id).then((res) => {
+          deleteBankCardByNumber(inputValue.value).then((res) => {
               if (res.code === 0) {
                 notify({
                   type: "success",

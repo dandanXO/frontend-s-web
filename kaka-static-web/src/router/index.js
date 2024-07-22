@@ -171,7 +171,7 @@ router.beforeEach((to, from, next) => {
   const store = userStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-    next(`/register`);
+    next(`/`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -213,30 +213,39 @@ router.beforeEach((to, from, next) => {
   }
 
   // FB tracking
-  // console.log(window.location.href)
-  if (window.location.href.indexOf("kakaking.com") > -1) {
-    fbq("init", "888951505918547");
+  console.log("Href");
+  console.log(window.location.href);
+  if (window.location.href.indexOf("kakaag.app") > -1) {
+    fbq("init", "1163176251398453");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-    fbq("init", "3658633674357920");
+  } else if (window.location.href.indexOf("kakaag.vip") > -1) {
+    fbq("init", "836424235042431");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("kakabof.com") > -1) {
-    // console.log("5svn88.com 2")
-    otag("init", "adv10336256983680");
-  } else if (window.location.href.indexOf("tf68688.com") > -1) {
-    fbq("init", "1123673335564806");
+  } else if (window.location.href.indexOf("kakaag.shop") > -1) {
+    fbq("init", "1567716440818798");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }else if (window.location.href.indexOf("wintf99.com") > -1) {
-    fbq("init", "441415921872746");
+  } else if (window.location.href.indexOf("kakavn.app") > -1) {
+    fbq("init", "463504196607854");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
-    fbq("init", "1862869640792398");
+  } else if (window.location.href.indexOf("kakagame38.app") > -1) {
+    fbq("init", "342669618894591");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
+  } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
+    fbq("init", "976575897104655");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakavn.vip/agent/C58A95") > -1) {
+    fbq("init", "795707932732808");
+    fbq("track", "PageView");
   }
+
+  // else if (window.location.href.indexOf("wintf99.com") > -1) {
+  //   fbq("init", "441415921872746");
+  //   fbq("track", "PageView");
+  //   store.isAffiliateA= true;
+  // }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
+  //   fbq("init", "1862869640792398");
+  //   fbq("track", "PageView");
+  //   store.isAffiliateA= true;
+  // }
 });
 export default router;

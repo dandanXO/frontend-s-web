@@ -1,7 +1,7 @@
 <template>
   <div class="team-management-wrapper">
     <div class="search-field">
-      <div class="search-field__date-range">
+      <!-- <div class="search-field__date-range">
         <a-date-picker
           v-model:value="form.startDate"
           value-format="YYYY-MM-DD"
@@ -23,18 +23,30 @@
         >
           <img src="@/assets/images/reward/calendar-icon.svg" />
         </a-date-picker>
-      </div>
+      </div> -->
 
-      <a-checkbox-group v-model:value="selectedValue" name="downLine" @change="handleCheckedChange">
+      <!-- <a-checkbox-group v-model:value="selectedValue" name="downLine" @change="handleCheckedChange">
         <a-checkbox v-for="(option, index) in downLineOptions" :key="index" :value="option.value">
           {{ option.label }}
         </a-checkbox>
-      </a-checkbox-group>
+      </a-checkbox-group> -->
 
       <div class="search-field__spacer" />
+      <div class="referral-name-search" v-if="referralName">
+        Referral:
+        <span class="span-username">{{ referralName }}</span>
+        &nbsp;
+
+        <a-button class="referral-close-btn" shape="circle" size="xs" @click="closeReferral()">
+          <CloseOutlined size="xs" />
+        </a-button>
+      </div>
       <a-input
+        v-else
+        style="max-width: 400px; margin-right: 20px"
         v-model:value="form.username"
         :placeholder="$t('rewardView.teamManagement.searchField.username.placeholder')"
+        allowClear
       />
       <a-button @click="handleSubmit">{{ $t("rewardView.teamManagement.searchField.searchButton") }}</a-button>
     </div>
@@ -47,19 +59,37 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, rowIndex) in tableData" :key="`row-${rowIndex}`">
-            <td v-for="(header, colIndex) in tableHeaders" :key="`row-${rowIndex}-${colIndex}`">
-              <span v-if="header.key === 'balance'">
-                {{ addThousandsComma(row[header.key], true) }}
-              </span>
-              <span v-else-if="['registrationDate', 'lastLogin', 'lastDeposit'].includes(header.key)">
-                {{ moment(row[header.key]).format("YY-MM-DD HH:mm") }}
-              </span>
-              <span v-else>
-                {{ row[header.key] }}
-              </span>
-            </td>
-          </tr>
+          <template v-if="isLoading">
+            <tr>
+              <td colspan="9" height="60"><a-spin /></td>
+            </tr>
+          </template>
+          <template v-else>
+            <template v-if="tableData.length > 0">
+              <tr v-for="(row, rowIndex) in tableData" :key="`row-${rowIndex}`">
+                <td v-for="(header, colIndex) in tableHeaders" :key="`row-${rowIndex}-${colIndex}`">
+                  <span v-if="header.key === 'loginName'">
+                    <span class="span-username" @click="searchByReferral(row)">{{ row[header.key] }}</span>
+                  </span>
+
+                  <span v-else-if="header.key === 'balance'">
+                    {{ addThousandsComma(row[header.key], true) }}
+                  </span>
+                  <span v-else-if="['registrationDate', 'lastLogin', 'lastDeposit'].includes(header.key)">
+                    {{ moment(row[header.key]).format("YY-MM-DD HH:mm") }}
+                  </span>
+                  <span v-else>
+                    {{ row[header.key] }}
+                  </span>
+                </td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr>
+                <td colspan="9">No data</td>
+              </tr>
+            </template>
+          </template>
         </tbody>
       </table>
     </div>
@@ -72,27 +102,23 @@ import { DATE_FORMAT } from "@/constant/format";
 import { useI18n } from "vue-i18n";
 import { useSingleCheckbox } from "@/hooks/singleCheckbox";
 import { addThousandsComma } from "@/utils/utils";
+import { getDownlinesAPI } from "@/api/personal/reward";
+import { CloseOutlined } from "@ant-design/icons-vue";
 
 const { t } = useI18n();
 const { selectedValue, handleCheckedChange } = useSingleCheckbox("ALL");
 
-const tableData = ref(
-  Array(10).fill({
-    type: "23026",
-    username: "666666",
-    emark: "666666",
-    upLine: "-",
-    registrationDate: "2023-09-17 21:03",
-    balance: 1235,
-    lastLogin: "2023-09-17 21:03",
-    lastDeposit: "2023-09-17 21:03"
-  })
-);
+const tableData = ref([]);
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
-  username: ""
+  username: "",
+  referrerId: "",
+  siteId: ""
 });
+
+const isLoading = ref(false);
+const referralName = ref();
 
 const downLineOptions = computed(() => [
   { label: t("rewardView.teamManagement.searchField.downLine.all"), value: "ALL" },
@@ -100,18 +126,61 @@ const downLineOptions = computed(() => [
 ]);
 
 const tableHeaders = computed(() => [
-  { label: t("rewardView.teamManagement.table.type"), key: "type" },
-  { label: t("rewardView.teamManagement.table.username"), key: "username" },
-  { label: t("rewardView.teamManagement.table.emark"), key: "emark" },
-  { label: t("rewardView.teamManagement.table.upLine"), key: "upLine" },
-  { label: t("rewardView.teamManagement.table.registrationDate"), key: "registrationDate" },
-  { label: t("rewardView.teamManagement.table.balance"), key: "balance" },
-  { label: t("rewardView.teamManagement.table.lastLogin"), key: "lastLogin" },
-  { label: t("rewardView.teamManagement.table.lastDeposit"), key: "lastDeposit" }
+  { label: t("rewardView.teamManagement.table.username"), key: "loginName" },
+  { label: t("rewardView.teamManagement.table.registrationDate"), key: "regTime" },
+  { label: t("rewardView.teamManagement.table.downlineMember"), key: "totalDownlineCount" },
+  { label: t("rewardView.teamManagement.table.todayRegistercount"), key: "todayRegCount" },
+  { label: t("rewardView.teamManagement.table.yesterdayRegisterCount"), key: "yesterdayRegCount" }
 ]);
 
-const handleSubmit = () => {};
+const getDownlines = () => {
+  const { username, startDate, endDate, referrerId, siteId } = form.value;
+  isLoading.value = true;
 
-onMounted(handleSubmit);
+  let paramString = `siteId=${siteId}`;
+
+  if (username) {
+    paramString = `siteId=${siteId}&loginName=${username}`;
+  }
+  if (referrerId) {
+    paramString = `siteId=${siteId}&referrerId=${referrerId}`;
+  }
+
+  tableData.value = [];
+
+  getDownlinesAPI(paramString)
+    .then((response) => {
+      if (response.code === 0) {
+        tableData.value = response.data.records;
+        isLoading.value = false;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const searchByReferral = (props) => {
+  form.value.username = "";
+  form.value.referrerId = props.id;
+  referralName.value = props.loginName;
+  getDownlines();
+};
+
+const handleSubmit = () => {
+  form.value.referrerId = "";
+  referralName.value = "";
+  getDownlines();
+};
+
+const closeReferral = () => {
+  referralName.value = "";
+  form.value.referrerId = "";
+  getDownlines();
+};
+
+onMounted(() => {
+  getDownlines();
+});
 </script>
 <style scoped lang="scss" src="@/assets/css/pages/reward.scss" />

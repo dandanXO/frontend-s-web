@@ -99,6 +99,7 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column prop="regCount" :label="t('fields.registerCount')" width="120" />
         <el-table-column prop="downlineFtdCount" :label="t('fields.ftdDownlineCount')" width="120" />
         <el-table-column
           prop="downlineFtdAmount"
@@ -314,8 +315,8 @@ function getSummaries(val) {
       sums[index] = 'Total';
     } else if (sumKeys.includes(column.property)) {
       sums[index] = Math.floor(page.sums[column.property]);
-    } else if (index === 10) {
-      sums[index] = Math.floor(sums[9] - sums[8]);
+    } else if (index === 11) {
+      sums[index] = Math.floor(sums[10] - sums[9]);
     }
   });
   return sums;

@@ -152,8 +152,8 @@ const submitLogin = () => {
             const jumpUrl = route.query.redirect
               ? route.query.redirect.toString()
               : props.pageType === "view"
-              ? "/"
-              : route.path;
+                ? "/"
+                : route.path;
             if (store.token) {
               router.push(jumpUrl);
 
@@ -163,10 +163,8 @@ const submitLogin = () => {
               loginForm.captchaCode = null;
               closeLoginDialog();
 
-              // FB tracking :: login-success
-              if (store.isAffiliateA) {
-                fbq("track", "login-success");
-              }
+              // FB tracking :: login
+              fbq("track", "login");
             } else {
               getCode();
             }
@@ -230,7 +228,7 @@ onMounted(() => {
   font-size: 14px;
   background-color: #f7f8fb;
   border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #FFA09A inset;;
+  box-shadow: 0px 0px 8px 0px #ffa09a inset;
   // margin-bottom: 30px;
 }
 
@@ -270,8 +268,10 @@ onMounted(() => {
 }
 
 .blue-bg {
-  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
-  box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
+  background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+  box-shadow:
+    0px -2px 4.58px 0px #fd897e inset,
+    0px -1px 3.664px 0px #5894ff inset;
   color: #fff;
   font-size: 14px;
   border-radius: 8px;
@@ -294,10 +294,9 @@ onMounted(() => {
 
   padding: 10px 0;
   border-radius: 8px;
-  color: #7A80A1;
+  color: #7a80a1;
 
-  box-shadow: 0px -3.5px 3.5px 0px #FFA09A inset;
-
+  box-shadow: 0px -3.5px 3.5px 0px #ffa09a inset;
 }
 
 .flex-div {

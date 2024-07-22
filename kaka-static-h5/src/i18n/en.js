@@ -93,6 +93,7 @@ export default {
     mobile_number_length: 'Mobile number must be 10 digits long.',
     mobile_number_starts_with_0: 'Mobile number must start with 0.',
     please_enter_verification_code: "Please enter verification code",
+    please_enter: "Please enter",
     length_is_4: "Length should be 4",
     remember_me: "Remember me",
     forgot_password: "Forgot password?",

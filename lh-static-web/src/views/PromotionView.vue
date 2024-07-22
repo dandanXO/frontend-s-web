@@ -93,6 +93,7 @@
             "
           ></div>
         </div>
+        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
         <div
           class="inner"
           :style="{
@@ -100,9 +101,11 @@
               selectedPromo?.promoCode === 'lh1worldcup' ||
               selectedPromo?.promoCode === 'lh1worldcupdota2' ||
               selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
+              selectedPromo?.promoCode === 'lh-official-gift' ||
               selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
-              selectedPromo?.promoCode === 'lh1-slot-lucky8'
+              selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
+              selectedPromo?.promoCode === 'lh1-olympic-checkin'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
                   ? '#F5F6F8'
@@ -127,6 +130,7 @@
               selectedPromo.promoCode === 'lh1-aijiasu' ||
               selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
@@ -141,9 +145,10 @@
               eSport: selectedPromo.promoType?.toLowerCase() === 'esport',
               fish: selectedPromo.promoType?.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType?.toLowerCase() === 'slot game',
+              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
             }"
-            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual'"
+            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
@@ -179,10 +184,13 @@ import { useDark } from "@vueuse/core";
 
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
+import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const isDark = useDark();
@@ -888,6 +896,17 @@ export default defineComponent({
           // &.slot {
           //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
           // }
+          &.olympicCheckin {
+            border: 1px solid #acd4f6;
+            border-radius: 10px;
+            padding: 10px 10px 10px 30px;
+            background: #f2f8fe;
+            max-width: 1200px;
+            margin: 0 auto;
+            img:nth-child(1) {
+              padding: 0;
+            }
+          }
           .game-title {
             color: #ffd800;
             margin: 30px auto 50px;

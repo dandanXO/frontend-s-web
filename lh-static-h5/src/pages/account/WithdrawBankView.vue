@@ -12,7 +12,7 @@
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
       <q-form class="unbind-form">
-        <q-input
+        <!-- <q-input
           class="unbind-input"
           filled
           clearable
@@ -23,6 +23,15 @@
             (val) =>
               (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + '不正确'
           ]"
+        /> -->
+        <q-input
+          class="unbind-input"
+          filled
+          clearable
+          ref="unbindBankCardNoRef"
+          v-model="unbindBankCardNo"
+          :label="unbindCardLabel()"
+          :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel() ]"
         />
       </q-form>
       <div class="btnsreas">
@@ -245,7 +254,7 @@ const unbindBankCard = () => {
   unbindBankCardNoRef.value.validate();
   if (unbindBankCardNoRef.value.hasError) return;
 
-  api.post(`/session/bankCard/${selectedUnbindBankCard.value.id}?_method=delete`).then((response) => {
+  api.post(`/session/bankCardByCardNo/${unbindBankCardNo.value}?_method=delete`).then((response) => {
     if (response.code === 0) {
       notify({
         type: "success",

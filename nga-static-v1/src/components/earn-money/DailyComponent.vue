@@ -87,7 +87,7 @@
     <div class="top-container">
       <div class="left-container">
         <div class="title">Betting Amount</div>
-        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, false) }}</div>
+        <div class="value">₦ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, false) }}</div>
         <div class="data-wrapper">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/member.png" />
@@ -98,7 +98,7 @@
       </div>
       <div class="right-container text-right">
         <div class="title">Rebate Amount</div>
-        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
+        <div class="value">₦ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
         <div class="data-wrapper right">
           <div class="img-wrapper">
             <img src="../../assets/images/earn-money/cash.png" />
@@ -267,7 +267,7 @@
         <div class="amount-container">
           <div class="amount-text">Bet Amount</div>
           <div class="amount">
-            RS
+            NGN
             <span>{{ convertToCommaAmount(e.validBet, false) }}</span>
           </div>
         </div>
@@ -275,7 +275,7 @@
         <div class="amount-container">
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
-            RS
+            NGN
             <span>{{ convertToCommaAmount(e.rebateAmount, false) }}</span>
           </div>
         </div>

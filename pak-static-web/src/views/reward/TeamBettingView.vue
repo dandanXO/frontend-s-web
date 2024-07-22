@@ -2,25 +2,13 @@
   <div class="team-betting-wrapper">
     <div class="search-field">
       <div class="search-field__date-range">
-        <a-date-picker
-          v-model:value="form.startDate"
-          value-format="YYYY-MM-DD"
-          format="MM/DD"
-          :allow-clear="false"
-          :show-today="false"
-          #suffixIcon
-        >
+        <a-date-picker v-model:value="form.startDate" value-format="YYYY-MM-DD" format="MM/DD" :allow-clear="false"
+          :show-today="false" #suffixIcon>
           <img src="@/assets/images/reward/calendar-icon.svg" />
         </a-date-picker>
         <span>-</span>
-        <a-date-picker
-          v-model:value="form.endDate"
-          value-format="YYYY-MM-DD"
-          format="MM/DD"
-          :allow-clear="false"
-          :show-today="false"
-          #suffixIcon
-        >
+        <a-date-picker v-model:value="form.endDate" value-format="YYYY-MM-DD" format="MM/DD" :allow-clear="false"
+          :show-today="false" #suffixIcon>
           <img src="@/assets/images/reward/calendar-icon.svg" />
         </a-date-picker>
       </div>
@@ -33,8 +21,8 @@
 
       <div class="search-field__spacer" />
 
-      <span class="search-field__label">{{ $t("rewardView.teamBetting.searchField.gameType.label") }}</span>
-      <a-select v-model:value="form.gameType" :options="gameTypeOptions" />
+      <!-- <span class="search-field__label">{{ $t("rewardView.teamBetting.searchField.gameType.label") }}</span>
+      <a-select v-model:value="form.gameType" :options="gameTypeOptions" /> -->
 
       <a-button @click="handleSubmit">{{ $t("rewardView.teamBetting.searchField.searchButton") }}</a-button>
     </div>
@@ -46,19 +34,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, rowIndex) in tableData" :key="`row-${rowIndex}`">
-            <td v-for="(header, colIndex) in tableHeaders" :key="`row-${rowIndex}-${colIndex}`">
-              <span
-                v-if="['betAmount', 'winning', 'validBet', 'balance'].includes(header.key)"
-                :class="header.key === 'balance' ? row.type : ''"
-              >
-                {{ addThousandsComma(row[header.key], true) }}
-              </span>
-              <span v-else>
-                {{ row[header.key] }}
-              </span>
-            </td>
-          </tr>
+          <template v-if="tableData.length > 0">
+            <tr v-for="(row, rowIndex) in tableData" :key="`row-${rowIndex}`">
+              <td v-for="(header, colIndex) in tableHeaders" :key="`row-${rowIndex}-${colIndex}`">
+                <span v-if="['betAmount', 'winning', 'validBet', 'balance', 'bet', 'payout'].includes(header.key)"
+                  :class="header.key === 'balance' ? row.type : ''">
+                  {{ addThousandsComma(row[header.key], true) }}
+                </span>
+                <span v-else>
+                  {{ row[header.key] }}
+                </span>
+              </td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr>
+              <td colspan="7">No data</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -71,23 +64,12 @@ import { DATE_FORMAT } from "@/constant/format";
 import { useI18n } from "vue-i18n";
 import { useSingleCheckbox } from "@/hooks/singleCheckbox";
 import { addThousandsComma, updateDate } from "@/utils/utils";
+import { getDownlinePlatformSummaryAPI } from "@/api/personal/reward";
 
 const { t } = useI18n();
 const { selectedValue, handleCheckedChange } = useSingleCheckbox("today", (value) => handleDateSelect(value));
 
-const tableData = ref(
-  Array(10).fill({
-    vendor: "sabong",
-    gameType: "sport",
-    betAmount: 120,
-    winning: 137,
-    validBet: 120,
-    type: "win",
-    balance: 1235,
-    rounds: 5,
-    player: 1
-  })
-);
+const tableData = ref([]);
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
@@ -100,14 +82,11 @@ const dateOptions = computed(() => [
 ]);
 
 const tableHeaders = computed(() => [
-  { label: t("rewardView.teamBetting.table.vendor"), key: "vendor" },
-  { label: t("rewardView.teamBetting.table.gameType"), key: "gameType" },
-  { label: t("rewardView.teamBetting.table.betAmount"), key: "betAmount" },
-  { label: t("rewardView.teamBetting.table.winning"), key: "winning" },
+  { label: t("rewardView.teamBetting.table.platform"), key: "platform" },
+  { label: t("rewardView.teamBetting.table.players"), key: "playerCount" },
+  { label: t("rewardView.teamBetting.table.bet"), key: "bet" },
   { label: t("rewardView.teamBetting.table.validBet"), key: "validBet" },
-  { label: t("rewardView.teamBetting.table.balance"), key: "balance" },
-  { label: t("rewardView.teamBetting.table.rounds"), key: "rounds" },
-  { label: t("rewardView.teamBetting.table.player"), key: "player" }
+  { label: t("rewardView.teamBetting.table.payout"), key: "payout" },
 ]);
 
 const gameTypeOptions = computed(() => [
@@ -123,16 +102,44 @@ const handleDateSelect = (value) => {
     case "today":
       form.value.startDate = updateDate(0);
       form.value.endDate = updateDate(0);
+      getDownlinePlatformSummary();
       break;
     case "yesterday":
       form.value.startDate = updateDate(1);
       form.value.endDate = updateDate(1);
+      getDownlinePlatformSummary();
       break;
   }
 };
 
-const handleSubmit = () => {};
+const getDownlinePlatformSummary = () => {
+  const { startDate, endDate } = form.value;
 
-onMounted(handleSubmit);
+  const params = new URLSearchParams();
+
+  params.append("regTime", startDate);
+  params.append("regTime", endDate);
+
+  const queryString = params.toString();
+  const paramString = `${queryString}`;
+
+  getDownlinePlatformSummaryAPI(paramString)
+    .then((response) => {
+      if (response.code === 0) {
+        tableData.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const handleSubmit = () => {
+  getDownlinePlatformSummary();
+};
+
+onMounted(() => {
+  getDownlinePlatformSummary();
+});
 </script>
 <style scoped lang="scss" src="@/assets/css/pages/reward.scss" />

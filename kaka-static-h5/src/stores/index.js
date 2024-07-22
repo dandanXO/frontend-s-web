@@ -117,8 +117,6 @@ export const userStore = defineStore("userStore", {
           if (isAndroid() && OneSignal !== undefined) {
             OneSignal.logout();
           }
-
-
         } else {
           Notify.create({
             color: "negative",
@@ -210,7 +208,7 @@ export const userStore = defineStore("userStore", {
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
-            this.h5Url= exclusive.web;
+            this.h5Url = exclusive.web;
           }
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
@@ -256,7 +254,7 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
-      this.token= token;
+      this.token = token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {
@@ -267,6 +265,9 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+
+        // FB tracking :: logout
+        fbq("track", "logout");
 
         location.reload();
       });

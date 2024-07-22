@@ -255,7 +255,7 @@ export default {
     FTD: 'FTD',
     LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
-    LIMITED: 'LIMITED'
+    LIMITED: 'LIMITED',
   },
   scheduleType: {
     NORMAL: 'โดยปกติ',
@@ -668,6 +668,7 @@ export default {
     jobType: 'ประเภทงาน',
     label: 'ฉลาก',
     labelCancel: 'ยกเลิก',
+    lastDepositTime: 'Last Deposit Time',
     lastLogin: 'เข้าสู่ระบบครั้งล่าสุด',
     lastLoginAddress: 'ที่อยู่เข้าสู่ระบบล่าสุด',
     lastLoginIp: 'IP เข้าสู่ระบบล่าสุด',
@@ -754,6 +755,10 @@ export default {
     mobileWay: 'มือถือ',
     moneyChange: 'การแลกเงิน',
     month: 'เดือน',
+    mqLogProcessWithTitle: 'ชื่อ (SummaryDoris)',
+    mqLogProcessTopic: 'หัวข้อ',
+    mqLogProcessTimestamp: 'การประทับเวลาปัจจุบัน',
+    mqLogTimestampWithTimezone: 'การประทับเวลาของไซต์',
     name: 'ชื่อ',
     needRegister: 'ต้องการลงทะเบียน',
     netProfit: 'กำไรสุทธิ',
@@ -1211,6 +1216,7 @@ export default {
     cancelDepositSuccess: 'ยกเลิกการฝากเงินสำเร็จ',
     cancelRolloverRecordSuccess: 'ยกเลิกความสำเร็จในการบันทึกแบบโรลโอเวอร์',
     changeAffiliateSuccess: 'เปลี่ยนความสำเร็จของพันธมิตร',
+    confirmUnbindAffiliateAccesss: 'ยืนยันการยกเลิกตัวแทนระดับสูง',
     changeSuccess: 'เปลี่ยนความสำเร็จ',
     commissionPaySuccess: 'ความสำเร็จในการจ่ายค่าคอมมิชชั่น',
     confirmToAdjust:
@@ -1267,7 +1273,8 @@ export default {
     passwordLength: 'รหัสผ่านต้องไม่น้อยกว่า 6 หลักหรือมากกว่า 12 หลัก',
     paymentUpdate: 'คัดลอกไปยังวิธีหรือระดับอื่น? หากไม่ก็กดอัปเดต',
     paySuccess: 'การชำระเงินสำเร็จ',
-    pleaseEnterAffiliateNameOrAffiliateCode: 'กรุณากรอกชื่อพันธมิตรหรือรหัสพันธมิตร',
+    pleaseEnterAffiliateNameOrAffiliateCode:
+      'กรุณากรอกชื่อพันธมิตรหรือรหัสพันธมิตร',
     promoDistributionSuccess: 'การแจกจ่ายโปรโมชั่นสำเร็จ',
     reenterPassword: 'กรุณากรอกรหัสผ่านอีกครั้ง',
     rebateSuccess: 'การจ่ายเงินคืน สำเร็จ',
@@ -1546,6 +1553,7 @@ export default {
     'Member Privilege': 'สิทธิพิเศษของสมาชิก',
     'Member Rollover Record': 'บันทึกการโรลโอเวอร์ของสมาชิก',
     'Member Distribute Privilege': 'สมาชิกที่ได้รับสิทธิพิเศษ',
+    'Member Affiliate Change Log': 'Member Affiliate Change Log',
     Affiliate: 'พันธมิตร',
     'Affiliate Amount Adjust': 'ปรับจำนวนให่สมาชิก',
     'Affiliate Summary': 'สรุปพันธมิตร',
@@ -1698,6 +1706,8 @@ export default {
     GoogleAuth: 'Google อัตโนมัติ',
     'User Login Log': 'บันทึกการเข้าสู่ระบบของผู้ใช้',
     'User Action Log': 'บันทึกการดำเนินการของผู้ใช้',
+    'MQ Log': 'บันทึก MQ',
+    'Promotion Coupon': 'คูปอง',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
@@ -1744,6 +1754,8 @@ export default {
     if_not_google_auth_then:
       'หากคุณไม่ได้ผูก Google Authenticator ก็ไม่จำเป็นต้องกรอก',
     google_auth_code: 'กรอกรหัส Google Authenticator 6 หลัก',
+    register_count: "จำนวนผู้ลงทะเบียนวันนี้",
+    register_limit: "จำนวนที่สามารถลงทะเบียนวันนี้"
   },
   loginDevice: {
     WEB: 'WEB',

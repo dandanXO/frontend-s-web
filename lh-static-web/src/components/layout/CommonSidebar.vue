@@ -440,6 +440,7 @@ export default defineComponent({
   background: #fff;
   height: min-content;
   border-radius: 25px;
+  z-index: 1001;
 
   .additional-info-item {
     display: flex;
@@ -495,7 +496,7 @@ export default defineComponent({
   position: fixed;
   right: 0;
   bottom: 60px;
-  z-index: 300;
+  z-index: 1000;
   display: flex;
   flex-direction: row;
   background: transparent;

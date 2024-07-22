@@ -14,7 +14,7 @@
         <img class="logo-img" @click="backHome" src="../assets/images/login/logo-login.png" />
       </div>
 
-      <img class="login-banner-img" src="../assets/images/login/login-banner.jpg" />
+      <img class="login-banner-img" src="../assets/images/login/login-banner-paris.png" />
 
       <q-form ref="loginFormRef" @submit="onSubmit">
         <div v-if="!loginType">

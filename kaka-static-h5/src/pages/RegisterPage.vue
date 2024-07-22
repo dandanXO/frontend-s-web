@@ -473,6 +473,8 @@ export default defineComponent({
       ) {
         $q.loading.hide();
       } else {
+        fbq("track", "registerClick");
+
         var qs = require("qs");
         const sidParam = store.visitorId;
 
@@ -520,12 +522,8 @@ export default defineComponent({
                 trackRegisterSuccessEvent();
 
                 // FB tracking :: signup-success
-                if (store.isAffiliateA) {
-                  fbq("track", "signup-success");
-                }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
-                  otag("event", "registration");
-                }
+                fbq("track", "register");
+
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
