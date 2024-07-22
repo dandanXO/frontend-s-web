@@ -210,7 +210,6 @@ import { onMounted, ref, reactive } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { convertToCommaAmount } from "src/boot/utils";
 
 const router = useRouter();
 const store = userStore();
@@ -218,6 +217,11 @@ const moneyRainTab = ref("events");
 const showPrizePopup = ref(false);
 const listingData = ref([]);
 const draftListing = ref([]);
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 const oriListing = {
   roleId: "55****66",
@@ -276,13 +280,12 @@ const getListing = () => {
     .then((res) => {
       if (res.code === 0) {
         // listingData.value = res.data;
-        for (let i = 0; i < 100; i++) {
-          const item = { ...res.data[0] };
-          if (item.hasOwnProperty("amount")) {
-            item.amount = convertToCommaAmount(item.amount);
+        res.data.forEach(item => {
+          if (item.hasOwnProperty('amount')) {
+            item.amount = convertToTwoDecimalAmount(item.amount);
           }
-          listingData.value.push(item);
-        }
+        });
+        listingData.value = res.data;
       }
     })
     .catch((err) => {
