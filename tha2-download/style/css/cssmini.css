@@ -208,7 +208,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 }
 
 .Mhrnjf .nm4vBd, .Mhrnjf .Q3MhI {
-    /*border-radius: 20%*/
+    border-radius: 20%
 }
 
 .T75of {
@@ -217,8 +217,8 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 
 .nm4vBd, .Q3MhI {
     border-width: 0;
-    /*box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);*/
-    /*border-radius: 4px*/
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    border-radius: 4px
 }
 
 .nm4vBd .VfPpkd-BFbNVe-bF1uUb, .Q3MhI .VfPpkd-BFbNVe-bF1uUb {
@@ -249,7 +249,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     position: relative;
     margin-top: 15px;
 }
-
 
 .Il7kR, .qxNhq {
     align-items: flex-start;
@@ -1494,89 +1493,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     color: #e6f3ef
 }
 
-.header-icon {
-    cursor: pointer;
-    padding: 10px 0;
-    margin: 0 18px;
-    transition: color .15s linear;
-    font: inherit;
-    font-size: 16px;
-    color: #5f6368;
-    font-weight: 500;
-    letter-spacing: .0178571429em;
-    height: 38px;
-    line-height: 38px
-}
-
-.header-icon:active,
-.header-icon:hover {
-    color: #000;
-}
-
-.active-icon {
-    color: #01875f;
-    border-bottom: 3px solid #01875f
-}
-
-.similar-games-section {
-    width: 100%;
-}
-
-.similar-games-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding-left: 10px;
-    padding-bottom: 5px;
-}
-
-.similar-games-list-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    width: 300px;
-    height: 56px;
-    padding: 10px;
-    cursor: pointer
-}
-
-.similar-games-list-item:hover {
-    background-color: #f5f5f5;
-}
-
-.similar-game-icon {
-    width: 56px;
-    border-radius: .75rem
-}
-
-.similar-game-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px
-}
-
-.similar-game-title {
-    font-size: 14px
-}
-
-.similar-game-developer {
-    font-size: 13px
-}
-
-.similar-game-rating {
-    display: flex;
-    align-items: baseline;
-    gap: 2px;
-    font-size: 12px;
-}
-
-.nRgZne {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    overflow-x: hidden;
-}
-
 @media screen and (min-width: 600px) {
     .HcyOxe {
         margin-bottom: 16px
@@ -1829,10 +1745,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 }
 
 @media screen and (min-width: 1280px) {
-    .nRgZne {
-        flex-wrap: nowrap;
-    }
-
     .qZmL0 {
         width: calc(100% - 436px)
     }
@@ -1926,7 +1838,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         width: 100%;
     }
 
-    .hnnXjf{
+    .hnnXjf {
         margin-top: 20px;
     }
 }
@@ -1938,7 +1850,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
         line-height: 20px;
     }
 
-    .l8YSdd{
+    .l8YSdd {
         overflow: hidden;
     }
 
