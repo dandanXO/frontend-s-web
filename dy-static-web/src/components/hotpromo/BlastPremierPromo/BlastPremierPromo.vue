@@ -87,7 +87,8 @@
               <div class="item-inner">
                 <img src="@/assets/images/promotion/hotpromo/blastpremier/daily-bonus-spring.png">
                 <div class="sign-day">签到天数：<span class="number">{{ signNumber }}</span></div>
-                <div class="btn not-complete">未完成签到</div></div></div>
+                <!-- <div class="btn not-complete">未完成签到</div> -->
+              </div></div>
           </div>
         </div>
         <div class="middle-row">
