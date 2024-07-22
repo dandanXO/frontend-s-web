@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script setup id="FinanceDeposit">
+<script setup>
 import { onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { getLocaleDateTime } from "src/boot/utils";

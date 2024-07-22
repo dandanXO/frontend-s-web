@@ -4,16 +4,20 @@
     <div class="feedback-compose-form" v-else>
       <div class="feedback-container">
         <div class="feedback-list-wrapper">
-          <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
+          <q-skeleton v-if="isLoading" type="QBtn" />
+          <div v-else class="primary-button blue-square compose-btn" @click="isCreateMode = true">
             {{ $t('lang.feedback_write_inquiry') }}
           </div>
           <div class="header">
-            <q-pagination :modelValue="inquiriesList.current" :max="inquiriesList.pages" :max-pages="inquiriesList.size"
-              @update:model-value="(currentPage) => {
-                initOutbox(currentPage)
-              }" boundary-links input color="white" input-class="text-white-10" dense />
+            <q-skeleton v-if="isLoading" class="total" type="QChip" />
+            <template v-else>
+              <q-pagination :modelValue="inquiriesList.current" :max="inquiriesList.pages"
+                :max-pages="inquiriesList.size" @update:model-value="(currentPage) => {
+                  initOutbox(currentPage)
+                }" boundary-links input color="white" input-class="text-white-10" dense />
 
-            <span class="total">{{ $t('lang.announcement_total') }} {{ inquiriesList.total }}</span>
+              <span class="total">{{ $t('lang.announcement_total') }} {{ inquiriesList.total }}</span>
+            </template>
           </div>
 
           <q-list bordered separator class="feedback-list">
@@ -90,13 +94,16 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed, markRaw, defineAsyncComponent } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
-import WriteInquiry from 'components/pageModalContent/inquiry/WriteInquiry.vue';
 import { useI18n } from "vue-i18n";
+
+const WriteInquiry = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/inquiry/WriteInquiry.vue')
+));
 
 var qs = require("qs");
 const $q = useQuasar();
