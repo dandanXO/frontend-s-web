@@ -39,27 +39,11 @@
         />
       </div>
       <div class="search-field__input-with-btn" style="justify-content: space-between; align-items: center">
-        <!--        <q-input-->
-        <!--          v-model="form.username"-->
-        <!--          borderless-->
-        <!--          :placeholder="$t('earnMoney.profitAndLoss.searchField.username.placeholder')"-->
-        <!--        />-->
-        <div>
-          &nbsp;
-          <span v-if="referralName">
-            Referral:
-            <span class="span-username">{{ referralName }}</span>
-            &nbsp;
-            <q-btn
-              size="xs"
-              style="min-height: 24px; height: 24px"
-              round
-              color="red"
-              icon="close"
-              @click="closeReferral()"
-            />
-          </span>
-        </div>
+        <q-input
+          v-model="form.username"
+          borderless
+          :placeholder="$t('earnMoney.profitAndLoss.searchField.username.placeholder')"
+        />
 
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleSubmit">
           {{ $t("earnMoney.profitAndLoss.searchField.searchButton") }}
@@ -68,6 +52,20 @@
     </div>
 
     <div class="result-table">
+      <span v-if="referralName">
+        Referral:
+        <span class="span-username">{{ referralName }}</span>
+        &nbsp;
+        <q-btn
+          size="xs"
+          style="min-height: 24px; height: 24px"
+          round
+          color="red"
+          icon="close"
+          @click="closeReferral()"
+        />
+      </span>
+
       <q-table
         flat
         :hide-pagination="true"
@@ -77,7 +75,7 @@
         :loading="loading"
         :rows-per-page-options="[0]"
         style="overflow-x: scroll"
-        class="monthly-deposit-table"
+        class="monthly-deposit-table q-mt-md"
       >
         <template v-slot:header>
           <q-tr class="top-header">
