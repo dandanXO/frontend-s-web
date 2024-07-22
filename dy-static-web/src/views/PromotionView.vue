@@ -100,7 +100,7 @@
         <div
           class="inner"
           :class="{
-            isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' || selectedPromo.promoCode === 'dy2-olympic-match',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             fullwidth:
@@ -109,7 +109,8 @@
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual',
+              selectedPromo.promoCode === 'dy2-eurocup-manual'
+              ,
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
           }"

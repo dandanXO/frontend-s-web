@@ -702,7 +702,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 335px;
-    height: 20px;
+    height: 26px;
     margin-bottom: 16px;
   }
   .little-title {
@@ -801,7 +801,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 335px;
-    height: 20px;
+    height: 26px;
     margin-bottom: 16px;
   }
   .content {
