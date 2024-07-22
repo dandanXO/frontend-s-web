@@ -775,6 +775,7 @@ export default defineComponent({
             border-radius: 8px;
             font-size: 0.75rem;
             margin-top: 6px;
+            background: linear-gradient(270deg, #3080f4, #70b1ff);
           }
 
           .promo-item-side-img {
