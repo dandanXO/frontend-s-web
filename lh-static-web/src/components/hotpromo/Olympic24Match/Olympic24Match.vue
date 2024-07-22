@@ -717,7 +717,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 738px;
-    height: 44px;
+    height: 55px;
     margin-bottom: 20px;
   }
   .content {
