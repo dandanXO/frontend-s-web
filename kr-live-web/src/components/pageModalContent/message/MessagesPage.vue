@@ -5,58 +5,20 @@
     <template v-else>
         <div class="message-page">
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;" v-if="!isCompose">
-                <!-- <div style="margin:0;" @click="isCompose = true">
-                    <div style="display:flex;align-items:center;gap:3px;cursor:pointer;">
-                        <q-icon :name="'edit'" />
-                        {{ $t('lang.message_compose') }}
-                    </div>
-                </div> -->
-
-                <!-- <q-tabs v-model="inboxCategory" dense inline-label class="inbox-type-tabs">
-                    <q-tab name="ALL">
-                        <div style="display:flex; align-items: center;gap:5px;"> <img
-                                :src="require('../../../assets/icon/pageModal/all-message-icon.svg')"
-                                :style="inboxCategory === 'ALL' ? '' : 'filter:contrast(0)'" />
-                            <div class="inbox-type" :style="inboxCategory === 'ALL' ? 'color: #00FFFF' : ''">{{
-                                $t('lang.message_type_all')
-                                }}</div>
-                        </div>
-                    </q-tab>
-                    <q-tab name="Outbox">
-                        <div style="display:flex; align-items: center;gap:5px;"> <img
-                                :src="require('../../../assets/icon/pageModal/outbox-icon.svg')"
-                                :style="inboxCategory === 'Outbox' ? '' : 'filter:contrast(0)'" />
-                            <div class="inbox-type" :style="inboxCategory === 'Outbox' ? 'color: #00FFFF' : ''">{{
-                                $t('lang.message_type_outbox')
-                                }}</div>
-                        </div>
-                    </q-tab>
-                    <q-tab name="NOTIFICATION">
-                        <div style="display:flex; align-items: center;gap:5px;"> <img
-                                :src="require('../../../assets/icon/pageModal/inbox-icon.svg')"
-                                :style="inboxCategory === 'NOTIFICATION' ? '' : 'filter:contrast(0)'" />
-                            <div class="inbox-type" :style="inboxCategory === 'NOTIFICATION' ? 'color: #00FFFF' : ''">{{
-                                $t('lang.message_type_inbox')
-                                }}</div>
-                        </div>
-                    </q-tab>
-                </q-tabs> -->
             </div>
-
-
             <div class="message-compose-form">
                 <div class="message-container">
                     <div class="message-list-wrapper">
                         <div class="header">
-                            <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
-                                :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
-                                    initOutbox(currentPage)
-                                }" boundary-links input color="white" input-class="text-white-10" dense />
-                            <!-- <span v-if="selectedMessages?.length">{{ `${$t('lang.message_selected')}
-                                (${selectedMessages?.length})`
-                                }}</span> -->
-                            <span>{{ $t('lang.announcement_total')
-                                }} {{ inboxMessages.total }}</span>
+                            <q-skeleton v-if="isLoading" class="total" type="QChip" />
+                            <template v-else>
+                                <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
+                                    :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
+                                        initOutbox(currentPage)
+                                    }" boundary-links input color="white" input-class="text-white-10" dense />
+                                <span>{{ $t('lang.announcement_total')
+                                    }} {{ inboxMessages.total }}</span>
+                            </template>
                         </div>
 
                         <q-list bordered separator class="message-list">
