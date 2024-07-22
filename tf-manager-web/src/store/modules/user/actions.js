@@ -3,13 +3,7 @@ import { UserMutationTypes } from "./mutation-types";
 import { UserActionTypes } from "./action-types";
 import { removeToken } from "@/utils/cookies";
 import { resetRouter } from "@/router";
-import {
-  indLoginRequest,
-  pakLoginRequest,
-  loginRequest,
-  updatePasswordRequest,
-  userInfoRequest
-} from "../../../api/user";
+import { indLoginRequest, loginRequest, updatePasswordRequest, userInfoRequest } from "../../../api/user";
 import { ElMessage } from "element-plus";
 import i18n from "../../../i18n/index";
 
@@ -23,9 +17,6 @@ export const actions = {
     const currentHost = window.location.host
     if (currentHost === process.env.VUE_APP_IND_HOST || currentHost === process.env.VUE_APP_IW2_HOST) {
       const { data: token } = await indLoginRequest({ userName: userName, password, googleCode: googleCode });
-      commit(UserMutationTypes.SET_TOKEN, token);
-    } else if (currentHost === process.env.VUE_APP_PAK_HOST) {
-      const { data: token } = await pakLoginRequest({ userName: userName, password, googleCode: googleCode });
       commit(UserMutationTypes.SET_TOKEN, token);
     } else {
       const { data: token } = await loginRequest({ userName: userName, password, googleCode: googleCode });

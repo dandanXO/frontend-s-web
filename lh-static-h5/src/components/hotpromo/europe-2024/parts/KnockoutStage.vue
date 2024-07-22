@@ -16,11 +16,8 @@
     justify-content: center;
     align-items: center;
     width: 22px;
-    padding-bottom: 0px;">
-        <img src="../../../../assets/promo/daiding.jpg" />
-      </span>
+    padding-bottom: 2px;">?</span>
       <span v-if="team.teamIcon" class="bracket-team__name">{{team.teamName}}</span>
-      <span v-else class="bracket-team__name">待定</span>
     </div>
     <div class="bracket-final">
       <span class="bracket-final__title">决赛</span>
@@ -154,7 +151,7 @@ const resizeDom = () => {
   position: relative;
   width: 100%;
   height: 770px;
-  background: url(components/hotpromo/europe-2024/images/knockoutstage-bg.png) no-repeat;
+  background: url(components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
   background-size: 100% auto;
   background-position: top center;
   color: #ffffff;
@@ -175,7 +172,6 @@ const resizeDom = () => {
     }
 
     img {
-      border-radius: 7px;
       max-width: 34px;
       width: unset !important;
       margin-bottom: 0 !important;

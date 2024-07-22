@@ -229,8 +229,13 @@ const autoPreFillForm = () => {
 };
 
 const handleSubmit = () => {
+  insurancePlatform.value.validate();
+  insuranceTransactionId.value.validate();
+
+  if (insuranceTransactionId.value.hasError || insurancePlatform.value.hasError) {
+  } else {
     eventapi
-      .post(`/game-match/submit/${props.platformType}`)
+      .post("/game-match/submit", qs.stringify(insuranceInfo))
       .then((response) => {
         if (response.code === 0) {
           notify({
@@ -251,14 +256,14 @@ const handleSubmit = () => {
       .catch((error) => {
         console.log("error", error);
       });
+  }
 };
 
 const handleOpenDialog = () => {
-  // autoPreFillForm();
-  // // getPlatformList();
-  // getPlatformDetails();
-  // insuranceFormModal.value = true;
-  handleSubmit();
+  autoPreFillForm();
+  // getPlatformList();
+  getPlatformDetails();
+  insuranceFormModal.value = true;
 };
 
 const platformsList = ref([]);

@@ -38,7 +38,7 @@
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
+    <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <InsuranceSubmitPromo
       v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
@@ -160,7 +160,9 @@ const BlastPremierPromo = defineAsyncComponent(
   () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromo = defineAsyncComponent(() => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
+const MeiZhouBeiPromoPage = defineAsyncComponent(
+  () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
+);
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
 export default defineComponent({
@@ -174,7 +176,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYu2024,

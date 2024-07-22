@@ -125,7 +125,7 @@
       </el-table-column>
       <el-table-column
         prop="failReason"
-        :label="t('fields.failReason') + ' / ' + t('fields.remark')"
+        :label="t('fields.failReason')"
       >
         <template #default="scope">
           <div v-if="scope.row.status===false">
@@ -133,10 +133,7 @@
               {{ t(`summonFailReason.${item}`) }}{{ index+1 === scope.row.failReasonList.length ? "" : "; " }}
             </span>
           </div>
-          <div v-if="scope.row.status===true && scope.row.failReason !== null">
-            {{ scope.row.failReason }}
-          </div>
-          <div v-if="scope.row.status===true && scope.row.failReason === null">
+          <div v-else>
             -
           </div>
         </template>
@@ -157,20 +154,6 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
-        type="title"
-        :label="t('fields.action')"
-      >
-        <template #default="scope">
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            v-if="scope.row.status!==true"
-            @click="showDialog(scope.row)"
-          />
-        </template>
-      </el-table-column>
     </el-table>
     <el-pagination
       :total="page.total"
@@ -184,50 +167,18 @@
       @size-change="loadRecord"
     />
   </div>
-  <el-dialog
-    :title="t('fields.approveSummonRecord')"
-    v-model="uiControl.dialogVisible"
-    append-to-body
-    width="580px"
-  >
-    <el-form
-      ref="approveForm"
-      :model="form"
-      :rules="formRules"
-      inline="true"
-      size="normal"
-      label-width="150px"
-    >
-      <el-form-item :label="t('fields.reason')" prop="reason">
-        <el-input
-          v-model="form.reason"
-          style="width: 350px;"
-        />
-      </el-form-item>
-      <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">
-          {{ $t('fields.cancel') }}
-        </el-button>
-        <el-button type="primary" @click="approveRecord()">
-          {{ $t('fields.confirm') }}
-        </el-button>
-      </div>
-    </el-form>
-  </el-dialog>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
 import moment from 'moment'
-import { listMemberSummon, approve } from '../../../../api/member-summon'
+import { listMemberSummon } from '../../../../api/member-summon'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
-import { required } from '../../../../utils/validate'
-import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
@@ -239,7 +190,6 @@ const defaultEndDate = convertDate(new Date())
 const site = ref(null)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
-const approveForm = ref(null)
 
 const sites = reactive({
   list: [],
@@ -261,38 +211,6 @@ const request = reactive({
   summonName: null,
   status: null,
 })
-
-const uiControl = reactive({
-  dialogVisible: false,
-})
-
-const form = reactive({
-  id: null,
-  reason: null,
-})
-
-const formRules = reactive({
-  reason: [required(t('message.validateReasonRequired'))],
-})
-
-function showDialog(record) {
-  if (approveForm.value) {
-    approveForm.value.resetFields()
-  }
-  form.id = record.id
-  uiControl.dialogVisible = true
-}
-
-function approveRecord() {
-  approveForm.value.validate(async valid => {
-    if (valid) {
-      await approve(form)
-      uiControl.dialogVisible = false
-      ElMessage({ message: t('message.summonSuccess'), type: 'success' })
-      loadRecord()
-    }
-  })
-}
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
@@ -349,6 +267,7 @@ async function loadRecord() {
       }
     }
   }
+  console.log(page.records)
   page.total = ret.total
   page.loading = false
 }

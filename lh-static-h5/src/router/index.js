@@ -1,4 +1,4 @@
-import { route } from "quasar/wrappers";
+import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";

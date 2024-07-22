@@ -485,7 +485,7 @@
             <el-input
               v-model="promoForm.rollover"
               style="width: 350px;"
-              :disabled="uiControl.promoAmountInput"
+              disabled
             />
           </el-form-item>
           <div class="dialog-footer">

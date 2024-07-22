@@ -8,7 +8,3 @@ export const listMemberSummonRewardRecord = (form) => {
 export const listMemberSummon = (form) => {
   return https().request("/member-summon", Method.GET, form, ContentType.form);
 };
-
-export const approve = (form) => {
-  return https().request(`/member-summon?_method=PUT`, Method.POST, form, ContentType.form);
-};

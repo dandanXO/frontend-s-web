@@ -51,6 +51,7 @@ export const userStore = defineStore("userStore", {
   actions: {
     hasToken() {
       if (isAndroid()) {
+        // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {
@@ -276,7 +277,6 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
-      this.token= token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {

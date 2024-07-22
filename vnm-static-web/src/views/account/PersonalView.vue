@@ -551,7 +551,7 @@
 </template>
 
 <script setup lang="js">
-import { reactive, ref, onMounted, toRaw, computed, watch } from "vue";
+import { reactive, ref, onMounted, toRaw, computed } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
@@ -571,9 +571,6 @@ import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
 import { useI18n } from "vue-i18n";
-import { useRoute, useRouter } from "vue-router";
-const route = useRoute();
-const router = useRouter();
 const { t } = useI18n();
 const selectedTab = ref('personal')
 // Send Verification Code
@@ -620,6 +617,15 @@ const verificationPhoneDetails = reactive({
 const personalState = reactive({
   memberInfo: {},
   bankCardList: []
+});
+
+onMounted(() => {
+
+  if(sendOtpDisabledTimeoutLeft)
+    countdownTimer();
+
+  loadInfo();
+  getCode();
 });
 const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   var left = (screen.width - popupWinWidth) * 2;
@@ -1086,6 +1092,7 @@ const clearWithdrawPwd = () =>{
 }
 
 const submitUpdateWithdrawPwd = () => {
+  // debugger;
   loadingWdPwBtn.value = true
   updateWithdrawPwdFormRef.value
     .validate()
@@ -1355,37 +1362,6 @@ const evipWeb = computed(() => {
       }
       return ''; // Return empty string if evipString is undefined
     });
-    
-
-onMounted(() => {
-  if(sendOtpDisabledTimeoutLeft)
-    countdownTimer();
-
-  loadInfo();
-  getCode();
-});
-watch(
-  () => route.query,
-  (newQuery) => {
-    if (newQuery.name === 'Bank') {
-      if (store.registeredWithdrawPassword === false) {
-        ElMessage.error(t('withdraw.settleWithdrawPwd'));
-        selectedTab.value = 'chgWithdrawPwd'
-      }
-    } else if (newQuery.name === 'chgWithdrawPwd') {
-      selectedTab.value = 'chgWithdrawPwd'
-    }
-  },
-  { immediate: true, deep: true }
-);
-watch (
-  () => selectedTab.value, 
-  (newTab) => {
-    if (newTab) {
-      router.push({query: {name: selectedTab.value}})
-    }
-  }
-)
 </script>
 
 <style scoped lang="scss">
