@@ -113,6 +113,7 @@
                   style="display: block; width: 100%"
                 />
               </div>
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
               <div
                 class="inner"
                 :class="{

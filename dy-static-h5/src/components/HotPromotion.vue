@@ -160,7 +160,9 @@ const BlastPremierPromo = defineAsyncComponent(
   () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromo = defineAsyncComponent(() => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
+const MeiZhouBeiPromoPage = defineAsyncComponent(
+  () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
+);
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
 export default defineComponent({
