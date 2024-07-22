@@ -242,6 +242,9 @@ router.beforeEach((to, from, next) => {
   } else if (window.location.href.indexOf("kakagame6.app/agent/B0E62B") > -1) {
     fbq("init", "1065055615337117");
     fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame6.vip/agent/81D2DE") > -1) {
+    fbq("init", "3596435077285259");
+    fbq("track", "PageView");
   }
 
   // else if (window.location.href.indexOf("wintf99.com") > -1) {
