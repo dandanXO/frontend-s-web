@@ -35,7 +35,9 @@
       <tbody v-if="page.records.length > 0">
         <tr v-for="item in page.records" :key="item.id">
           <td :data-label="t('fields.loginName')">{{ item.memberName }}</td>
-          <td :data-label="t('fields.transferAmount')">$ {{ item.transferAmount }}</td>
+          <td :data-label="t('fields.transferAmount')">
+            <span v-formatter="{data: item.transferAmount, type: 'money'}" />
+          </td>
           <td :data-label="t('fields.transferDate')">
             <span v-if="item.transferDate === null">-</span>
             <span v-if="item.transferDate !== null">{{ item.transferDate }}</span>
@@ -52,7 +54,7 @@
       <emptyComp />
     </div>
     <div class="table-footer">
-      <span style="margin-right:20px;">{{ t('fields.totalTransfer') }}: $ <span v-formatter="{data: page.totalTransfer,type: 'money'}" /></span>
+      <span style="margin-right:20px;">{{ t('fields.totalTransfer') }}: <span v-formatter="{data: page.totalTransfer,type: 'money'}" /></span>
     </div>
     <el-pagination
       class="pagination"

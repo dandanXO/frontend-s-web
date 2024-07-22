@@ -6,48 +6,27 @@
           <el-row :gutter="20">
             <el-col :xl="8" :lg="8" :md="6" :sm="6">
               <el-form-item :label="t('fields.loginName') + ' :'">
-                <el-input
-                  v-model="request.loginName"
-                  style="width: 350px;"
-                  maxlength="11"
-                />
+                <el-input v-model="request.loginName" style="width: 350px;" maxlength="11" />
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="8" :md="10" :sm="8">
               <el-form-item :label="t('fields.recordTime') + ' :'">
-                <el-date-picker
-                  v-model="request.recordTime"
-                  format="DD/MM/YYYY"
-                  value-format="YYYY-MM-DD"
-                  size="normal"
-                  type="daterange"
-                  range-separator=":"
-                  :start-placeholder="t('fields.startDate')"
-                  :end-placeholder="t('fields.endDate')"
-                  :shortcuts="shortcuts"
-                  :disabled-date="disabledDate"
-                  :editable="false"
-                  :clearable="false"
-                  :default-time="defaultTime"
-                  style="width: 100%;"
-                />
+                <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
+                  type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
               </el-form-item>
             </el-col>
             <el-col :span="4">
-              <el-button
-                style="margin-left: 20px"
-                icon="el-icon-search"
-                size="normal"
-                type="success"
-                @click="loadRecords()"
-              >
+              <el-button style="margin-left: 20px" icon="el-icon-search" size="normal" type="success"
+                @click="loadRecords()">
                 {{ t('fields.search') }}
               </el-button>
             </el-col>
           </el-row>
         </el-form>
       </div>
-      <div style="overflow:scroll">
+      <div class="custom-table-wrapper">
         <table cellpadding="0" cellspacing="0" border class="custom-table">
           <thead>
             <tr>
@@ -58,7 +37,7 @@
               <th scope="col">{{ t('fields.totalBet') }}</th>
               <th scope="col">{{ t('fields.totalPayout') }}</th>
               <th scope="col">{{ t('fields.totalRolling') }}</th>
-              <th scope="col">{{ t('fields.totalProfitLoss') }}</th>
+              <th scope="col">{{ t('statsHeader.totalProfitLoss') }}</th>
               <th scope="col">{{ t('statsHeader.casinoBetAmount') }}</th>
               <th scope="col">{{ t('statsHeader.casinoProfit') }}</th>
               <th scope="col">{{ t('statsHeader.casinoRollingAmount') }}</th>
@@ -79,7 +58,7 @@
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
             <tr>
-              <td colspan="11">
+              <td colspan="24">
                 <Loading v-if="page.loading" />
                 <emptyComp v-else-if="page.records.length === 0" />
               </td>
@@ -90,78 +69,103 @@
               <td :data-label="t('fields.recordTime')">
                 {{ item.recordTime }}
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.todayDepositAmount) }}
+              <td :class="item.todayDepositAmount - item.withdrawApplication > 0 ? 'bgGreen' : 'bgRed'"
+                v-formatter="{ data: item.todayDepositAmount, type: 'p&l' }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.withdrawApplication) }}
+              <td :class="item.todayDepositAmount - item.withdrawApplication > 0 ? 'bgGreen' : 'bgRed'"
+                v-formatter="{ data: item.withdrawApplication, type: 'p&l' }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.todayDepositAmount - item.withdrawApplication) }}
+              <td :class="item.todayDepositAmount - item.withdrawApplication > 0 ? 'bgGreen' : 'bgRed'"
+                v-formatter="{ data: item.todayDepositAmount - item.withdrawApplication, type: 'p&l' }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount) }}
+              <td class="bgYellow"
+                v-formatter="{ data: item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount, type: 'p&l' }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount - item.casinoProfit - item.slotProfit - item.sportProfit - item.miniGameProfit) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount
+                  - item.casinoProfit - item.slotProfit - item.sportProfit - item.miniGameProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoRollingAmount + item.slotRollingAmount + item.sportRollingAmount + item.miniGameRollingAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.casinoRollingAmount + item.slotRollingAmount + item.sportRollingAmount +
+                  item.miniGameRollingAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoProfit + item.slotProfit + item.sportProfit + item.miniGameProfit) }}
+              <td
+                :class="item.casinoProfit + item.slotProfit + item.sportProfit + item.miniGameProfit > 0 ? 'bgGreen' : 'bgRed'"
+                v-formatter="{
+                  data: item.casinoProfit + item.slotProfit + item.sportProfit + item.miniGameProfit, type: 'p&l'
+                }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoBetAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.casinoBetAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoBetAmount - item.casinoProfit) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.casinoBetAmount - item.casinoProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoRollingAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.casinoRollingAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.casinoProfit) }}
+              <td :class="item.casinoProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
+                data: item.casinoProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.slotBetAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.slotBetAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.slotBetAmount - item.slotProfit) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.slotBetAmount - item.slotProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.slotRollingAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.slotRollingAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.slotProfit) }}
+              <td :class="item.slotProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
+                data: item.slotProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.sportBetAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.sportBetAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.sportBetAmount - item.sportProfit) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.sportBetAmount - item.sportProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.sportRollingAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.sportRollingAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.sportProfit) }}
+              <td :class="item.sportProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
+                data: item.sportProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.miniGameBetAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.miniGameBetAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.miniGameBetAmount - item.miniGameProfit) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.miniGameBetAmount - item.miniGameProfit, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.miniGameRollingAmount) }}
+              <td class="bgYellow" v-formatter="{
+                data: item.miniGameRollingAmount, type: 'p&l'
+              }">
               </td>
-              <td class="bgGreen textGreen">
-                {{ formatMoney(item.miniGameProfit) }}
+              <td :class="item.miniGameProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
+                data: item.miniGameProfit, type: 'p&l'
+              }">
               </td>
             </tr>
           </tbody>
         </table>
+        <el-pagination class="pagination" @current-change="changePage" layout="prev, pager, next"
+          :page-size="request.size" :page-count="page.pages" :current-page="request.current" />
       </div>
     </div>
   </div>
@@ -174,8 +178,16 @@ import Loading from '@/components/loading/Loading.vue'
 import { formatMoney } from '@/utils/format-money'
 import moment from 'moment'
 import { getMonthlySettlement } from '@/api/affiliate-report'
+import emptyComp from '@/components/empty';
 
 const { t } = useI18n()
+
+function changePage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadRecords()
+  }
+}
 
 function convertStartDate(date) {
   return moment(date)
@@ -328,33 +340,35 @@ async function loadRecords() {
 <style lang="scss" scoped>
 .custom-table {
 
-    tr {
+  tr {
 
-        th:nth-child(1),
-        td:nth-child(1),
-        th:nth-child(4),
-        td:nth-child(4) {
-            border-right: 2px solid #cfd8dc;
-        }
-
-        td:nth-child(2) {
-            background-color: #f4fff8;
-        }
-
-        td:nth-child(3) {
-            background-color: #fff5f5;
-        }
-
-        td:nth-child(4) {
-            background-color: #fffef7;
-        }
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(4),
+    td:nth-child(4),
+    th:nth-child(8),
+    td:nth-child(8) {
+      border-right: 2px solid #ccc;
     }
 
-    tbody tr {
-        &:last-child {
-            border-top-style: double;
-            border-color: #cfd8dc;
-        }
+    // td:nth-child(2) {
+    //   background-color: #f4fff8;
+    // }
+
+    // td:nth-child(3) {
+    //   background-color: #fff5f5;
+    // }
+
+    // td:nth-child(4) {
+    //   background-color: #fffef7;
+    // }
+  }
+
+  tbody tr {
+    &:last-child {
+      border-top-style: double;
+      border-color: #cfd8dc;
     }
+  }
 }
 </style>

@@ -6,13 +6,8 @@
           <el-row :gutter="20">
             <el-col :span="4">
               <el-form-item :label="t('fields.type') + ' :'">
-                <el-select
-                  clearable
-                  v-model="request.type"
-                  size="small"
-                  :placeholder="t('fields.type')"
-                  class="filter-item"
-                >
+                <el-select clearable v-model="request.type" size="small" :placeholder="t('fields.type')"
+                  class="filter-item">
                   <el-option :label="t('fields.all')" value="" />
                   <el-option :label="t('fields.deposit')" value="DEPOSIT" />
                   <el-option :label="t('fields.withdraw')" value="WITHDRAW" />
@@ -26,32 +21,15 @@
             </el-col>
             <el-col :span="10">
               <el-form-item :label="t('fields.recordTime') + ' :'">
-                <el-date-picker
-                  v-model="request.recordTime"
-                  format="DD/MM/YYYY"
-                  value-format="YYYY-MM-DD"
-                  size="normal"
-                  type="daterange"
-                  range-separator=":"
-                  :start-placeholder="t('fields.startDate')"
-                  :end-placeholder="t('fields.endDate')"
-                  :shortcuts="shortcuts"
-                  :disabled-date="disabledDate"
-                  :editable="false"
-                  :clearable="false"
-                  :default-time="defaultTime"
-                  style="width: 100%;"
-                />
+                <el-date-picker v-model="request.recordTime" format="DD/MM/YYYY" value-format="YYYY-MM-DD" size="normal"
+                  type="daterange" range-separator=":" :start-placeholder="t('fields.startDate')"
+                  :end-placeholder="t('fields.endDate')" :shortcuts="shortcuts" :disabled-date="disabledDate"
+                  :editable="false" :clearable="false" :default-time="defaultTime" style="width: 100%;" />
               </el-form-item>
             </el-col>
             <el-col :span="4">
-              <el-button
-                style="margin-left: 20px"
-                icon="el-icon-search"
-                size="normal"
-                type="success"
-                @click="loadRecords()"
-              >
+              <el-button style="margin-left: 20px" icon="el-icon-search" size="normal" type="success"
+                @click="loadRecords()">
                 {{ t('fields.search') }}
               </el-button>
             </el-col>
@@ -73,7 +51,7 @@
           </thead>
           <tbody v-if="page.loading || page.records.length === 0">
             <tr>
-              <td colspan="11">
+              <td colspan="7">
                 <Loading v-if="page.loading" />
                 <emptyComp v-else-if="page.records.length === 0" />
               </td>
@@ -123,6 +101,7 @@ import Loading from '@/components/loading/Loading.vue'
 import { formatMoney } from '@/utils/format-money'
 import { getDepositWithdrawRecord } from '@/api/affiliate-report'
 import moment from "moment";
+import emptyComp from '@/components/empty';
 
 const { t } = useI18n()
 

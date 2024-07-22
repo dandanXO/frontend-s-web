@@ -193,7 +193,7 @@ const page = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 10,
   current: 1,
   loginName: null,
   siteId: null,

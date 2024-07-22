@@ -9,7 +9,7 @@
         </span>
         <span v-else>
           <span v-if="showBalance" class="card-panel-num">
-            $ <span v-formatter="{data: balance,type: 'money'}" />
+            <span v-formatter="{data: balance,type: 'money'}" />
           </span>
           <span v-else>****</span>
           <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>

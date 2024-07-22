@@ -14,6 +14,8 @@ import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default defineComponent({
   name: "App",
@@ -252,7 +254,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: theSid,
-            siteCode: "nga"
+            siteCode: "ind"
           }
         });
       }
@@ -266,6 +268,7 @@ export default defineComponent({
       // getCSA();
       getAppInfo();
       initOrientation();
+      AOS.init();
 
       if (isAndroid()) {
         document.addEventListener(

@@ -1,13 +1,6 @@
 <template>
-  <Swiper
-    v-if="!isMobileView"
-    :key="swiperKey"
-    :slides-per-view="1"
-    :direction="'vertical'"
-    :pagination="{clickable: true}"
-    :mousewheel="true"
-    :autoHeight="true"
-  >
+  <Swiper v-if="!isMobileView" :key="swiperKey" :slides-per-view="1" :direction="'vertical'"
+    :pagination="{ clickable: true }" :mousewheel="true" :autoHeight="true" style="height:100%">
     <SwiperSlide>
       <LoginRegisterPage siteId="10" />
     </SwiperSlide>
@@ -54,7 +47,7 @@ export default defineComponent({
     const onSwiper = swiper => {
       console.log(swiper)
     }
-    const onSlideChange = () => {}
+    const onSlideChange = () => { }
     onMounted(() => {
       window.addEventListener('resize', handleResize)
       // Check if the window width is greater than 768 initially
@@ -93,9 +86,11 @@ export default defineComponent({
 body {
   overflow: hidden;
 }
+
 .dialog400 {
   max-width: 400px;
 }
+
 .shake {
   animation: shake 0.5s;
 }
@@ -104,33 +99,43 @@ body {
   0% {
     transform: translate(1px, 1px);
   }
+
   10% {
     transform: translate(-1px, -2px);
   }
+
   20% {
     transform: translate(-3px, 0px);
   }
+
   30% {
     transform: translate(3px, 2px);
   }
+
   40% {
     transform: translate(1px, -1px);
   }
+
   50% {
     transform: translate(-1px, 2px);
   }
+
   60% {
     transform: translate(-3px, 1px);
   }
+
   70% {
     transform: translate(3px, 1px);
   }
+
   80% {
     transform: translate(-1px, -1px);
   }
+
   90% {
     transform: translate(1px, 2px);
   }
+
   100% {
     transform: translate(1px, -2px);
   }
@@ -168,8 +173,7 @@ body {
   border-color: #509cfc;
 }
 
-.swiper-pagination
-  .swiper-pagination-bullet.swiper-pagination-bullet-active:before {
+.swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active:before {
   background-color: #509cfc;
 }
 
@@ -191,6 +195,7 @@ body {
 .swiper-pagination:after {
   transform: translate(-50%, 84px);
 }
+
 @media (max-width: 768px) {
   body {
     overflow-y: auto;

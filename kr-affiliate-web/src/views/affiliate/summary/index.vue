@@ -223,61 +223,51 @@
         </el-table-column>
         <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.depositAmount, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="withdrawAmount" :label="t('fields.withdrawAmount')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="rebate" :label="t('fields.rebateAmount')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.rebate, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="bet" :label="t('fields.totalBet')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="adjustment" :label="t('fields.adjustment')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="payout" :label="t('fields.totalPayout')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="platformFee" :label="t('fields.platformFee')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.platformFee, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="paymentFee" :label="t('fields.paymentFee')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.paymentFee, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.ngr, type: 'money' }" />
           </template>
         </el-table-column>
@@ -358,43 +348,36 @@
         </el-table-column>
         <el-table-column prop="depositAmount" :label="t('fields.depositAmount')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.depositAmount, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="withdrawAmount" :label="t('fields.withdrawAmount')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="bet" :label="t('fields.totalBet')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.bet, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="adjustment" :label="t('fields.adjustment')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="payout" :label="t('fields.totalPayout')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.payout, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column prop="profit" :label="t('fields.totalProfit')" align="center" width="120">
           <template #default="scope">
-            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{ data: scope.row.profit, type: 'money' }" />
           </template>
         </el-table-column>

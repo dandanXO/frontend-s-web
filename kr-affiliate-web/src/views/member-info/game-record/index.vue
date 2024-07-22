@@ -20,12 +20,12 @@
               <el-option v-for="item in list.platform" :key="item.id" :label="item.name" :value="item.code" />
             </el-select>
           </el-col>
-          <el-col :xl="3" :lg="6" :md="12">
+          <!-- <el-col :xl="3" :lg="6" :md="12">
             <el-select v-model="request.gameType" size="normal" :placeholder="t('fields.gameType')" class="filter-item"
               style="width: 100%">
               <el-option v-for="item in list.gameType" :key="item.key" :label="item.displayName" :value="item.value" />
             </el-select>
-          </el-col>
+          </el-col> -->
           <el-col :xl="6" :lg="10" :md="12">
             <el-select multiple v-model="request.status" size="normal" :placeholder="t('fields.status')"
               class="filter-item" style="width: 100%;">
@@ -131,11 +131,11 @@
         </tbody>
       </table>
       <div class="table-footer">
-        <span class="table-footer-item">{{ t('fields.totalBet') }}: $ <span
+        <span class="table-footer-item">{{ t('fields.totalBet') }}: <span
             v-formatter="{ data: page.totalBet, type: 'money' }" /></span>
-        <span class="table-footer-item">{{ t('fields.totalPayout') }}: $ <span
+        <span class="table-footer-item">{{ t('fields.totalPayout') }}: <span
             v-formatter="{ data: page.totalPayout, type: 'money' }" /></span>
-        <span class="table-footer-item">{{ t('fields.totalCompanyProfit') }}: $ <span
+        <span class="table-footer-item">{{ t('fields.totalCompanyProfit') }}: <span
             v-formatter="{ data: page.totalBet - page.totalPayout, type: 'money' }" /></span>
       </div>
       <el-pagination class="pagination" @current-change="changePage" layout="total, prev, pager, next"
@@ -186,19 +186,19 @@
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.bet')" prop="bet">
-              $ <span v-formatter="{ data: details.bet, type: 'money' }" />
+              <span v-formatter="{ data: details.bet, type: 'money' }" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="t('fields.payout')" prop="payout">
-              $ <span v-formatter="{ data: details.payout, type: 'money' }" />
+              <span v-formatter="{ data: details.payout, type: 'money' }" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item :label="t('fields.companyProfit')" prop="companyProfit">
-              $ <span v-formatter="{ data: details.companyProfit, type: 'money' }" />
+              <span v-formatter="{ data: details.companyProfit, type: 'money' }" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
