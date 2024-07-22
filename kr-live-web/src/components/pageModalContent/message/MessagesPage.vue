@@ -278,8 +278,8 @@ const readMessage = (id, showReadNotify = true) => {
         ).then((res) => {
             const { code, data } = res.data
 
-            if (code === 0 && !currentMail.readTime && showReadNotify) {
-                $q.notify({
+            if (code === 0 && !currentMail.readTime) {
+                showReadNotify && $q.notify({
                     message: "메시지 읽기",
                     type: "positive",
                     position: "top",
