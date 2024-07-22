@@ -12,8 +12,8 @@ const { unreadCount } = storeToRefs(store);
 <style lang="scss" scoped>
 .red-dot {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -10px;
+    right: -10px;
     animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
     transform: translate3d(0, 0, 0);
     background: #DF3D31;
