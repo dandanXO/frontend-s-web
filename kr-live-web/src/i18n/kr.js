@@ -46,7 +46,8 @@ export default {
     menu_announcement: "공지사항",
     menu_deposit: "충전",
     menu_withdraw: "환전",
-    menu_message: "문의",
+    menu_inquiry: "문의",
+    menu_message: "쪽지",
     menu_customer_service: "고객센터",
     menu_transaction_record: "내역",
     menu_rebates: "리베이트",
@@ -66,6 +67,7 @@ export default {
     page_modal_bank_card_list: "은행 카드 목록",
     page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
+    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
     // page modal end
     // game category start
     game_category_live: `라이브
@@ -140,6 +142,7 @@ export default {
     feedback_read: "읽었다",
     feedback_read_at: "에서 읽다",
     feedback_compose: "글쓰기",
+    feedback_write_inquiry: "문의작성",
     feedback_category: "유형",
     feedback_category_select: "선택해주세요",
     feedback_title: "제목",
@@ -148,11 +151,15 @@ export default {
     feedback_content: "내용",
     feedback_compose_confirm: "확인",
     feedback_previous_page: "전 페이지로 이동",
+    feedback_waiting_admin_reply: "답변대기",
+    feedback_admin_replied: "답변완료",
+    feedback_delete_selected: "선택내역삭제",
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     // feedback end
     // message start
     message_loading_content: "콘텐츠 로드 중...",
-    message_unread: "읽히지 않는",
-    message_read: "읽었다",
+    message_unread: "읽지않음",
+    message_read: "읽음",
     message_read_at: "에서 읽다",
     message_compose: "글쓰기",
     message_title: "제목",
@@ -168,6 +175,14 @@ export default {
     message_type_all: "모두",
     message_type_outbox: "보낸 문의함",
     message_type_inbox: "답변 완료",
+    message_process_all_read: "모두읽음처리",
+    message_delete_selected: "선택내역삭제",
+    message_delete_read: "전체내역삭제",
+    message_no_selected: "선택한 메시지가 없습니다.",
+    message_selected: "선택된",
+    message_read_all_message: "모든 메시지 읽기",
+    message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
+    message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
     // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
@@ -237,9 +252,15 @@ export default {
     password_password_mismatch: "비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다",
     password_change_password: "변경완료",
     // password end
-    // page modal start
-    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
-    // page modal end
+    // redeem point start
+    redeem_point_pending_list: "포인트 보유현황",
+    redeem_point_redeem: "전환",
+    redeem_point_points: "포인트",
+    redeem_point_date: "날짜",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    // redeem point end
     file_too_large_or_invalid_file: "파일이 너무 크거나 잘못된 파일입니다. 새 파일을 업로드하세요.",
     langVal: "en",
     register: "Register",
@@ -561,7 +582,8 @@ export default {
     please_enter_bank_account: "Please enter bank account",
     branch_not_required: "Branch (not required)",
     cancel: "취소",
-    confirm: "Confirm",
+    confirm: "확인하다",
+    redeem: "상환하다",
     security_check: "Security Check",
     fish2_list: "Aviator",
     lottery_list: "Lottery",
@@ -841,6 +863,7 @@ export default {
     34002: "생일에 수령하십시오",
     35000: "35000 회원은 이 혜택을 받을 수 없음",
     35001: "회원이 이미 이 혜택을 받았음",
-    35002: "자격이 있는"
+    35002: "자격이 있는",
+    40006: "회원포인트가 부족합니다.",
   }
 };

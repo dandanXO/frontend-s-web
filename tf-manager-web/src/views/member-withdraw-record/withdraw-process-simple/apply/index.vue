@@ -188,6 +188,16 @@
           min-width="120"
         />
         <el-table-column
+          prop="riskLevel"
+          :label="t('fields.riskLevel')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.riskLevelColor}">{{ scope.row.riskLevel }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="300"
@@ -439,7 +449,6 @@ import {
   fromApplyToAutopay,
   getMemberWithdrawRecordApplySimple,
   getTotalWithdrawAmountByStatus,
-  getWithdrawPlatformList,
 } from '../../../../api/member-withdraw-record'
 import { getSiteListSimple } from "@/api/site"
 import { ElMessage } from 'element-plus'
@@ -464,9 +473,6 @@ const financialList = reactive({
   list: [],
 })
 const bankList = reactive({
-  list: [],
-})
-const withdrawPlatformList = reactive({
   list: [],
 })
 
@@ -660,22 +666,17 @@ async function loadRecord() {
   page.loading = false
 }
 
-async function loadWithdrawPlatforms(id, wd) {
-  const { data: wp } = await getWithdrawPlatformList(id, wd, request.siteId)
-  withdrawPlatformList.list = wp
-}
-
 async function toCheck(memberWithdrawRecord) {
+  page.loading = true
   if (memberWithdrawRecord) {
-    await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
-    await fromApplyToAutopay(memberWithdrawRecord.id, withdrawPlatformList.list[0].id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+    await fromApplyToAutopay(memberWithdrawRecord.id, 0, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   } else {
-    await loadWithdrawPlatforms(chooseRecord[0].id, chooseRecord[0].withdrawDate);
     await Promise.all(chooseRecord.map(async (a) => {
-      await fromApplyToAutopay(a.id, withdrawPlatformList.list[0].id, a.withdrawDate, a.siteId);
+      await fromApplyToAutopay(a.id, 0, a.withdrawDate, a.siteId);
     }));
   }
   await loadRecord()
+  page.loading = false
   ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
   checkBtnRef.value.blur();
   checkBtnsRef.value.blur();

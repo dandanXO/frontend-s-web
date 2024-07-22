@@ -1,0 +1,56 @@
+.menu-title-container {
+  // display: flex;
+  // gap: 50px;
+  // border-bottom: 1px solid #dddfe6;
+  // line-height: 58px;
+  // text-align: left;
+  // color: #000000;
+  margin-bottom: 10px;
+  .menu-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+    color: #424f72;
+  }
+  .additional-title {
+    color: #15c201;
+  }
+}
+
+.account-tip-text {
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 0;
+  font-size: 14px;
+  &.red {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+    font-size: 14px;
+    color: #7d2c38;
+    background-color: #fcdde2;
+    border: 1px solid #fbcfd6;
+    width: 265px;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  &.green {
+    color: #206979;
+    margin-top: 20px;
+    background-color: #ddf7fc;
+    padding: 10px;
+    border: 1px solid #cff3fb;
+  }
+  .el-icon {
+    font-size: 20px;
+  }
+  a {
+    // display: inline-block;
+    color: #de0727;
+    cursor: pointer;
+  }
+}

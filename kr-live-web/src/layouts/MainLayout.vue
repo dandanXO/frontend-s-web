@@ -125,14 +125,15 @@ export default defineComponent({
       checkBalanceInterval.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();
+          store.getPendingRebateAmt();
         }
       }, 20000);
 
-      checkUnreadMessagesInterval.value = setInterval(function () {
-        if (store.hasToken()) {
-          store.getUnreadTotal();
-        }
-      }, 30000);
+      // checkUnreadMessagesInterval.value = setInterval(function () {
+      //   if (store.hasToken()) {
+      //     store.getUnreadTotal();
+      //   }
+      // }, 30000);
     }
 
     const clearAllIntervals = () => {
@@ -147,6 +148,7 @@ export default defineComponent({
     onMounted(() => {
       if (store.hasToken()) {
         store.getBalance();
+        store.getPendingRebateAmt();
         store.getUnreadTotal();
 
         startAllIntervals();

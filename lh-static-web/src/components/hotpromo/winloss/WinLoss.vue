@@ -6,7 +6,7 @@
         {{ formattedDate }}
       </div>
       <div class="match-details">
-        免费参与竞猜，{{matchText}}（共3轮）
+        免费参与竞猜，{{ matchText }}
       </div>
       <div class="winloss-matches">
         <div class="match" v-for="(match, i) in ongoingMatches" :key="i">
@@ -160,7 +160,8 @@ import {
   euroMatchSubmit,
 } from "@/api/promotion/eurocup";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 const store = userStore();
 const ongoingMatches = ref([]);
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -206,11 +207,11 @@ const matchSubmit = (match, id, name) => {
 const confirmMatchSelect = () => {
   euroMatchSubmit(selectedMatch.value.id, selectedItem.value.id).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("投票成功");
+      notify.success("投票成功");
       confirmDialog.value = false;
       getMatches();
     } else {
-      ElMessage.error(res.message)
+      notify.error(res.message)
     }
   });
 };

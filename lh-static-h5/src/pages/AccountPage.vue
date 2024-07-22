@@ -480,13 +480,14 @@ import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 import moment from 'moment';
+import { useNotify } from "src/hooks/notify";
 export default defineComponent({
   name: "AccountPage",
   components: {
     Cropper
   },
   setup() {
-
+    const notify = useNotify();
     const timestamp = moment().unix();
     const cropperRef = ref(null);
     const croppedImg = ref(null);
@@ -579,11 +580,9 @@ export default defineComponent({
       document.execCommand("copy");
       document.body.removeChild(textarea);
 
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已复制专属网址",
-        icon: "check_circle_outline"
       });
     };
     onActivated(() => {
@@ -735,12 +734,10 @@ export default defineComponent({
     async function attachImage(event) {
       console.log(event.target.files[0].size)
       // if (event.target.files[0].size > 1000000) {
-      //   return $q.notify({
-      //     type: "negative",
-      //     position: "top",
-      //     message: "图片必须小于1MB,请重新上传",
-      //     icon: "report_problem"
-      //   });
+      //   return notify({
+      //     type: "error",
+      //      //     message: "图片必须小于1MB,请重新上传",
+      //      //   });
       // } else {
         const file = event.target.files[0];
         uploadedImage.url = URL.createObjectURL(file);
@@ -784,22 +781,18 @@ export default defineComponent({
       const dir = 'temp';
 
       if (!file || !allowFileTypes.includes(file.type)) {
-        $q.notify({
-          type: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "照片格式错误",
-          icon: "report_problem"
         });
 
         isLoadingUpload.value = false;
         return null; // Exit the function if file is not valid
       }
       if(file && file.size > 1000000){
-        $q.notify({
-          type: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "上传的图片已大于1mb，请刷新页面重新上传",
-          icon: "report_problem"
         });
         isLoadingUpload.value = false;
         return null; // Exit the function if file is not valid
@@ -834,22 +827,18 @@ export default defineComponent({
     const submitPhoto = async() => {
       submitPhotoLoading.value = true
       if (!selectedImage.value) {
-        return $q.notify({
-          type: "negative",
-          position: "top",
+        return notify({
+          type: "error",
           message: "请选择图片",
-          icon: "report_problem"
         });
       }
       await api.post('/session/profile-photo/save', qs.stringify({ 'imageUuid': selectedImage.value }))
         .then(data => {
           // Handle response here
           store.profilePhoto = data.data
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "修改成功",
-            icon: "check_circle_outline"
           });
           submitPhotoLoading.value = false
           profileDialogVisible.value = false

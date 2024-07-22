@@ -1,6 +1,5 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999999"
-    v-if="memberType === 'TEST' || isDevENV">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:6001" v-if="memberType === 'TEST' || isDevENV">
     <q-btn class="floating" fab color="primary" @click="toggleLang" v-touch-pan.prevent.mouse="moveFab"
       :disable="draggingFab">{{ lang
       }}</q-btn>
@@ -18,7 +17,7 @@ const isDevENV = ref(process.env.NODE_ENV === "development");
 const { memberType } = storeToRefs(store);
 const { setLanguage, languageVal } = i18nStore();
 
-const fabPos = ref([40, 230])
+const fabPos = ref([20, 180])
 const draggingFab = ref(false)
 
 const lang = ref(languageVal);

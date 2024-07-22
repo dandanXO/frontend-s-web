@@ -66,10 +66,12 @@
     <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token" :promo-code="list.promoCode" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && store.token" />
     <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && store.token" />
+    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu' && store.token" />
     <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && store.token" />
+    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match' && store.token" />
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && store.token" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
@@ -79,11 +81,15 @@
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && store.token" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
+    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
     <Aijiasu v-if="list.redirectUrl === 'lh1-aijiasu'" />
     <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
-    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token"/>
+    <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
+    <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param" />
+    <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund' && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -100,6 +106,8 @@
 
 <script>
 import { defineComponent } from "vue";
+import { mapActions } from "pinia";
+import { uiStore } from "@/store/ui";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
@@ -139,6 +147,7 @@ import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import Europe2024 from "../components/hotpromo/europe-2024/Europe2024.vue";
 import Europe2024FirstShoot from "../components/hotpromo/europe-2024-first-shoot/Europe2024FirstShoot.vue";
+import Shoutouxinxiu from "../components/hotpromo/shoutouxinxiu/Shoutouxinxiu.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
@@ -150,22 +159,27 @@ import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
+import DepositRebate2 from "../components/hotpromo/depositRebate2/depositRebate2.vue";
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
 import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
-import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide.vue"
+import newplayerGuide from "../components/hotpromo/newplayerGuide/newplayerGuide.vue";
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+import OlympicCheckin from "../components/hotpromo/olympic-checkin/OlympicCheckin.vue";
 import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/ChallengeComeback.vue";
+import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
+import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
+import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Olympic24Match,
     newplayerGuide,
     slotLucky8,
     intelEsl2024,
@@ -205,6 +219,7 @@ export default defineComponent({
     LOLMsi2024Promo,
     Europe2024,
     Europe2024FirstShoot,
+    Shoutouxinxiu,
     BlastPremierPromo,
     EurocupManual,
     SportZhongChao,
@@ -213,13 +228,17 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
+    DepositRebate2,
     HongBaoPreEurocup,
     WinLossPromo,
     MeiZhouBeiPromo,
     Aijiasu,
     EuroRegen,
     OuZuLianPromo,
-    ChallengeComeBackPromo
+    OlympicCheckin,
+    ChallengeComeBackPromo,
+    OfficialGiftPromo,
+    OlympicFund
   },
   props: {
     list: {
@@ -356,6 +375,7 @@ export default defineComponent({
     }
   },
   methods: {
+    ...mapActions(uiStore, ['notify']),
     handleSlot() {
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
@@ -368,7 +388,10 @@ export default defineComponent({
             this.loadingClaim = false;
             this.store.getBalance();
           } else {
-            ElMessage.error(res.message);
+            this.notify({
+              type: "error",
+              message: res.message
+            });
             this.loadingClaim = false;
           }
         })
@@ -383,14 +406,17 @@ export default defineComponent({
       submitLuckyNumber(this.luckyNumber)
         .then((res) => {
           if (res.code === 0) {
-            ElMessage.success({
+            this.notify({
               type: "success",
               message: "成功发送号码。"
             });
             this.luckyNumber = null;
             this.btnLoading = false;
           } else {
-            ElMessage.error(res.message);
+            this.notify({
+              type: "error",
+              message: res.message
+            });
             this.btnLoading = false;
           }
         })
@@ -450,7 +476,10 @@ export default defineComponent({
               this.emptyText = "今天没有获奖者。";
             }
           } else {
-            ElMessage.error(res.message);
+            this.notify({
+              type: "error",
+              message: res.message
+            });
           }
         })
         .catch((err) => {

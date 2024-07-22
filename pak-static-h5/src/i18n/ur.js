@@ -165,7 +165,9 @@ export default {
     moreGames: "مزید کھیل",
     addCash: "کیش شامل کریں",
     search: "تلاش",
-    downloadApp: "ایپ ڈاؤن لوڈ کریں"
+    downloadApp: "ایپ ڈاؤن لوڈ کریں",
+    downloadNow: "ابھی ڈاؤنلوڈ کریں",
+    recharge: "ری چارج کریں"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -227,12 +229,14 @@ export default {
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
-    depositTutorial: "جمع کرنے کا ٹیوٹوریل"
+    depositTutorial: "جمع کرنے کا ٹیوٹوریل",
+    select_privilege: "خصوصی اختیار منتخب کریں"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
     withdrawable: "واپسی کے قابل",
     withdrewAmount: "واپس لی گئی رقم",
+    withdrawMaxTimes: "باقی نکالنے کی کوششیں",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں",
     withdrawTutorial: "نکالنے کا ٹیوٹوریل"
@@ -252,7 +256,6 @@ export default {
     accumulateDeposit: "جمع شدہ جمع",
     reward: "انعام",
     levelUpgrade: "سطح اپ گریڈ",
-    monthly: "ماہانہ",
     dailyWithdrawal: "یومیہ واپسی",
     limit: "حد",
     vipStatus_txt: "وی آئی پی اسٹیٹس کو ماہانہ جمع شدہ رقم سے اپ گریڈ کیا جا سکتا ہے",
@@ -305,6 +308,13 @@ export default {
         searchButton: "تلاش"
       },
       table: {
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
+        todayRegCount: "آج کی رجسٹر تعداد",
+        ytdRegCount: "کل کی رجسٹر تعداد",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -341,7 +351,11 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی"
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     },
     profitAndLoss: {
@@ -366,7 +380,23 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس"
+        ftdamount: "FTD رقم",
+        ftdcount: "FTD تعداد",
+        depositcount: "جمع کرنے کی تعداد",
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        betamount: "شرط کی رقم",
+        depositcount: "جمع کی تعداد",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا",
+        firstdepositcount: "پہلی جمع"
       }
     }
   },
@@ -408,9 +438,9 @@ export default {
     cancel: "منسوخ کریں",
     updateNow: "ابھی اپ ڈیٹ کریں"
   },
-  bankCard:{
-    bankAccountNum : "بینک اکاؤنٹ نمبر",
-    pleaseEnterCardAccount : "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
+  bankCard: {
+    bankAccountNum: "بینک اکاؤنٹ نمبر",
+    pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
     bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"
@@ -489,6 +519,7 @@ export default {
     1308: "قابلیت نہیں",
     1309: "کارڈ کا کھاتہ ممبر کے نام سے میل نہیں کھاتا",
     1318: "یہ عمل تعاون یافتہ نہیں ہے، براہ کرم مدد کے لیے آن لائن کسٹمر سروس سے رابطہ کریں۔",
+    1319: "کارڈ نمبر کو دو بار سے زیادہ باندھ دیا گیا ہے",
     1401: "OTP بھیجنے کی وقت کی حد سے زیادہ",
     1402: "OTP بھیجنے کا شیڈول غلطی، براہ کرم OTP دوبارہ بھیجیں",
     1403: "OTP توثیق کی غلطی",
@@ -504,6 +535,7 @@ export default {
     11005: "موجودہ صارف کی کارروائیاں بہت زیادہ ہیں۔ براہ کرم دوبارہ کوشش کریں۔",
     12100: "نکال پاس ورڈ میل نہیں کھاتا",
     12101: "نیا نکال پاس ورڈ پرانا نکال پاس ورڈ کی طرح نہیں ہوسکتا",
+    12104: "یہ بینک کارڈ نمبر بلاک کر دیا گیا ہے",
     13000: "ڈومین نام نہیں ملا",
     13001: "3 مہینے سے پرانی معلومات پوچھنا ممکن نہیں",
     13002: "7 دن کے اندر ہونا چاہئے",
@@ -512,6 +544,7 @@ export default {
     14001: "یہ فون نمبر پہلے ہی رجسٹر ہو چکا ہے",
     14002: "یہ ای میل پہلے ہی رجسٹر ہو چکا ہے",
     14003: "ایفلییٹ کوڈ نہیں ملا",
+    15011: "2024-07-10 سے پہلے کی تاریخ منتخب نہیں کی جا سکتی",
     15201: "پرانا کوڈ غلط",
     15202: "نیا پاس ورڈ پرانا پاس ورڈ کی طرح نہیں ہوسکتا",
     21000: "یہ گیم آپ کی مقبول گیمز کی فہرست میں پہلے ہی ہے۔",

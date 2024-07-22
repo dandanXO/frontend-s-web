@@ -46,6 +46,7 @@ export default {
     menu_announcement: "Announcement",
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",
+    menu_inquiry: "Inquiry",
     menu_message: "Message",
     menu_customer_service: "Customer Service",
     menu_transaction_record: "Transaction Record",
@@ -66,6 +67,7 @@ export default {
     page_modal_bank_card_list: "Bank Card List",
     page_modal_transaction_record: "Transaction Record",
     page_modal_change_password: "Change Password",
+    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
     // page modal end
     // game category start
     game_category_live: `Live Casino`,
@@ -138,6 +140,7 @@ export default {
     feedback_read: "Read",
     feedback_read_at: "Read at",
     feedback_compose: "Compose",
+    feedback_write_inquiry: "Write Inquiry",
     feedback_category: "Category",
     feedback_category_select: "Please select",
     feedback_title: "Title",
@@ -146,6 +149,10 @@ export default {
     feedback_content: "Content",
     feedback_compose_confirm: "Confirm",
     feedback_previous_page: "Previous page",
+    feedback_waiting_admin_reply: "Waiting Admin Reply",
+    feedback_admin_replied: "Admin Replied",
+    feedback_delete_selected: "Delete Selected",
+    feedback_delete_selected_message: "Deleted selected messages",
     // feedback end
     // message start
     message_loading_content: "Loading content...",
@@ -166,6 +173,14 @@ export default {
     message_type_all: "All",
     message_type_outbox: "Outbox",
     message_type_inbox: "Inbox",
+    message_process_all_read: "Process All Read",
+    message_delete_selected: "Delete Selected",
+    message_delete_read: "Delete Read",
+    message_no_selected: "No message selected",
+    message_selected: "Selected",
+    message_read_all_message: "Read all messages",
+    message_delete_selected_message: "Deleted selected messages",
+    message_delete_all_message: "Deleted all read messages",
     // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",
@@ -220,9 +235,15 @@ export default {
     password_password_mismatch: "Confirm Password must be the same as New Password",
     password_change_password: "Change password",
     // password end
-    // page modal start
-    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
-    // page modal end
+    // redeem point start
+    redeem_point_pending_list: "Pending List",
+    redeem_point_redeem: "Redeem",
+    redeem_point_points: "Points",
+    redeem_point_date: "Date",
+    redeem_point_source: "Source",
+    redeem_point_condition: "Condition",
+    redeem_point_actions: "Actions",
+    // redeem point end
     file_too_large_or_invalid_file: "File is too large/ invalid file, please upload a new file",
     langVal: "en",
     register: "Register",
@@ -545,6 +566,7 @@ export default {
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
     confirm: "Confirm",
+    redeem: "Redeem",
     security_check: "Security Check",
     fish2_list: "Aviator",
     lottery_list: "Lottery",
@@ -830,6 +852,7 @@ export default {
     35008: "You do not have this privilege",
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
-    35011: "35011 Member cannot receive this privilege."
+    35011: "35011 Member cannot receive this privilege.",
+    40006: "Insufficient points",
   }
 };

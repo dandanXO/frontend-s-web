@@ -2,7 +2,7 @@ import { ContentType, Method } from "axios-mapper";
 import https from "../utils/https";
 
 export const getAffiliateDownline = (id, query) => {
-  return https().request(`/affiliate/${id}/downline`, Method.GET, query, ContentType.form);
+  return https().request(`/affiliate/${id}/kr-downline`, Method.GET, query, ContentType.form);
 };
 
 export const regsterAffiliate = (affiliate) => {
@@ -123,4 +123,16 @@ export const getDownlineShareRatio = (affId) => {
 
 export const getAffiliateTree = (affId) => {
   return https().request(`/affiliate/${affId}/getTree`, Method.GET);
+};
+
+export const recycleMemberBalance = (recycleForm) => {
+  return https().request(`/downline/${recycleForm.memberId}/recycleBalance?_method=PUT`, Method.POST, { amount: recycleForm.amount }, ContentType.form);
+};
+
+export const getAffiliatePoint = () => {
+  return https().request('/affiliate/point', Method.GET);
+};
+
+export const redeemPoint = () => {
+  return https().request('/affiliate/redeem-point?_method=PUT', Method.POST);
 };

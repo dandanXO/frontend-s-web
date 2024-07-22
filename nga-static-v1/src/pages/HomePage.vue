@@ -160,7 +160,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.55ace.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                  return `url(${store.h5Url}static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -186,7 +186,7 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -222,7 +222,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.55ace.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${store.h5Url}static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -246,7 +246,7 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -302,7 +302,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -345,7 +345,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -414,7 +414,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${store.h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -469,7 +469,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://www.55ace.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${store.h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -523,7 +523,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.55ace.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -553,7 +553,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.55ace.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -694,7 +694,7 @@
                         try {
                           return `url(${imgURLGame}${item.icon})`;
                         } catch (e) {
-                          return `url(https://m.55ace.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                         }
                       }
                     })()
@@ -721,7 +721,7 @@
                         try {
                           return `url(${imgURLGame}${item.icon})`;
                         } catch (e) {
-                          return `url(https://m.55ace.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                         }
                       }
                     })()
@@ -763,7 +763,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://www.55ace.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(${store.h5Url}static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1123,9 +1123,9 @@ const searchText = ref("");
 const withdrawalModalRef = ref();
 const onWithdrawalClick = () => {
   // withdrawalDialog.value = true;
-  if (!store.realName & !store.guest) {
+  if (!store.realName && !store.guest) {
     userKYCDialog.value = true;
-  } else if (!store.realName & store.guest) {
+  } else if (!store.realName && store.guest) {
     guestKYCDialog.value = true;
   } else {
     withdrawalModalRef.value.open();
@@ -1136,9 +1136,9 @@ const userKYCDialog = ref(false);
 const guestKYCDialog = ref(false);
 const depositDialog = ref(false);
 const openDepositDialog = () => {
-  if (!store.realName & !store.guest) {
+  if (!store.realName && !store.guest) {
     userKYCDialog.value = true;
-  } else if (!store.realName & store.guest) {
+  } else if (!store.realName && store.guest) {
     guestKYCDialog.value = true;
   } else {
     depositDialog.value = true;
@@ -1629,8 +1629,8 @@ const checkPlatform = () => {
   } else {
     isH5.value = true;
     setTimeout(() => {
-      getVersionNo();
-    });
+      getAppData();
+    }, 0);
   }
 };
 
@@ -2520,6 +2520,16 @@ const getVersionNo = async () => {
         }
       }
     }
+  }
+};
+
+const getAppData = async () => {
+  const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
+  const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
+  // console.log(res);
+  if (res.code === 0) {
+    download_url.value = res.data.downloadUrl;
+    store.h5Url = res.data.h5Url;
   }
 };
 

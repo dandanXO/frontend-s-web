@@ -302,11 +302,12 @@ import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } 
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { CaretBottom } from "@element-plus/icons-vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import FileUpload from "@/components/feedback/FileUpload.vue";
 
+const notify = useNotify();
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
 const uiIsShowStatus = reactive({
@@ -336,7 +337,7 @@ const uploadFileRef = ref();
 const getImageLink = (linkId) => {
   mailboxState.mailboxList.write.photo = linkId;
 
-  ElMessage.success({
+  notify.success({
     type: "success",
     message: "上传成功"
   });
@@ -439,7 +440,7 @@ const getQuesTitleOptions = () => {
       recordsPagination.pages = res.data.length;
       uiIsShowStatus.showQuestions = quesTitleOptions.value.length !== 0;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -503,7 +504,7 @@ const toggleSelected = (item, ans, isChecked, needSpecify) => {
 };
 const btnClick = (btnType) => {
   if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
-    return ElMessage.error("请选择一个选项");
+    return notify.error("请选择一个选项");
   }
   optionModal.value = [];
   answerInputModal.value = null;
@@ -576,7 +577,7 @@ const btnClick = (btnType) => {
         // QRDiv.style.display = "block";
         isAnswered.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     });
   }
@@ -632,7 +633,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       })
       .catch((error) => {
@@ -653,7 +654,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList["sent"].list.push(...response.data.records);
           mailboxState.mailboxList["sent"].total = response.data.total;
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       })
       .catch((error) => {
@@ -734,7 +735,7 @@ const onSubmit = (e) => {
       submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            ElMessage({
+            notify({
               message: "提交成功",
               type: "success"
             });
@@ -745,7 +746,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.content = "";
             uploadFileRef.value.clear();
           } else {
-            ElMessage.error(response.message);
+            notify.error(response.message);
           }
         })
         .catch((error) => {
@@ -770,7 +771,7 @@ const testAns = () => {
         isAnswered.value = true;
       }
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };

@@ -1,38 +1,28 @@
 <template>
-  <div class="firstPage" :class="[
-    (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
-    props.siteId !== '7' ? '' : 'lh',
-    props.siteId !== '8' ? '' : 'vi',
-    props.siteId !== '10' ? '' : 'kr',
-    props.siteId !== '11' ? '' : 'pak',
-  ]">
+  <div class="firstPage kr">
     <div class="inner">
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img :src="currentSite.logo">
+            <img :src="krLogo">
           </div>
-          <div class="first-liner" v-html="currentSite.firstLiner" />
-          <div class="second-liner" v-html="currentSite.secondLiner" />
+          <div class="first-liner">
+            Start From CITY8
+          </div>
+          <div class="second-liner">
+            Become a legend<br>Or become the eulogist of legend?
+          </div>
         </div>
         <div class="right">
-          <div class="bg swiper-no-swiping">
+          <div class="bg">
             <div class="top">
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
-              <!--              <div class="topright" v-if="props.siteId !== '5'">-->
-              <!--                <span class="noaccabs">-->
-              <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
-              <!--                </span>-->
-              <!--                <a @click="isReg = !isReg" class="signlog">-->
-              <!--                  {{ isReg ? '请登录' : '立即注册' }}-->
-              <!--                </a>-->
-              <!--              </div>-->
             </div>
             <div class="mid">
-              <el-form v-if="!isReg" ref="loginFormRef" :model="loginForm"
-                :rules="props.siteId === '8' ? loginRulesVi : loginRules" class="login-form" autocomplete="no-fill">
+              <el-form v-if="!isReg" ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form"
+                autocomplete="no-fill">
                 <el-form-item prop="userName">
                   <el-input ref="userNameRef" v-model="loginForm.userName" :placeholder="$t('common.username')"
                     name="username" type="text" tabindex="1" autocomplete="no-fill" />
@@ -42,19 +32,10 @@
                   <el-form-item prop="password">
                     <el-input :key="passwordType" ref="passwordRef" v-model="loginForm.password" :type="passwordType"
                       :placeholder="$t('common.password')" name="password" tabindex="2" autocomplete="no-fill"
-                      @keyup="checkCapslock" @blur="capsTooltip = false"
-                      @keyup.enter="props.siteId !== '8' ? handleLogin() : null" />
+                      @keyup="checkCapslock" @blur="capsTooltip = false" @keyup.enter="handleLogin()" />
                   </el-form-item>
                 </el-tooltip>
-                <el-form-item prop="captchaCode" v-if="props.siteId === '8'">
-                  <el-input v-model="loginForm.captchaCode" :placeholder="$t('common.verificationcode')"
-                    name="captchaCode" type="text" tabindex="7" autocomplete="on" @keyup.enter="handleLogin" clearable>
-                    <template #append class="verification">
-                      <img :src="captchaImg" @click="getCaptcha()">
-                    </template>
-                  </el-input>
-                </el-form-item>
-                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
+                <div style="margin:20px 0px">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{ $t('common.forgetpass') }}
                   </el-link>
@@ -68,7 +49,7 @@
                   </el-button>
                 </div>
 
-                <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
+                <div class="flex-c-center-div">
                   <div class="contact-div" @click="swipeToContactUs">
                     {{ $t('common.contact_us') }}
                   </div>
@@ -138,47 +119,6 @@
                     <el-input ref="emailRef" v-model="regForm.email" :placeholder="$t('fields.email')" name="Email"
                       type="text" tabindex="5" autocomplete="on" />
                   </el-form-item>
-                  <!-- <el-form-item prop="birthday">
-                        <el-date-picker
-                            v-model="regForm.birthday"
-                            type="date"
-                            :placeholder="'生日'"
-                            format="YYYY-MM-DD"
-                            value-format="YYYY-MM-DD"
-                            popper-class="custom-date-picker"
-                            :disabled-date="disabledDate"
-                        />
-                  </el-form-item-->
-                  <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
-                  <el-input v-if="hasAffiliate"
-                              ref="codeAffiliateRef"
-                              v-model="regForm.codeAffiliate"
-                              :placeholder="'代理码'"
-                              name="codeAffiliate"
-                              type="text"
-                              tabindex="8"
-                              autocomplete="on"
-                              :disabled="true"
-                  />
-                  <el-input
-                      ref="codeAffiliateRef"
-                      v-model="regForm.codeAffiliate"
-                      :placeholder="'代理码'"
-                      name="codeAffiliate"
-                      type="text"
-                      tabindex="8"
-                      autocomplete="on"
-                  />
-                  </el-form-item> -->
-                  <!-- <el-button
-                    class="common-btn"
-                    :loading="loading"
-                    type="danger"
-                    style="width:100%;"
-                    @click.prevent="handleRegister"
-                  >
-                    申请
-                  </el-button> -->
                   <div class="flex-c-center-div">
                     <el-button class="common-btn default-btn" style="width:50%;" @click="step = 1">
                       {{ $t('google.prev_step') }}
@@ -328,15 +268,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification, ElMessage } from 'element-plus'
-import dyLogo from '@/assets/images/dy/logowhitee.png'
-import xfLogo from '@/assets/images/xf/logowhitee.png'
-import indLogo from '@/assets/images/ind/ind-logo.png'
-import ind2Logo from '@/assets/images/ind2/789logo.png'
-import lhLogo from '@/assets/images/lh/logo.png'
-import viLogo from '@/assets/images/vi/vilogo.svg'
-import kakaLogo from "@/assets/images/kaka/logo-kaka-game.png"
 import krLogo from '@/assets/images/kr/kr-logo.png'
-import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -432,7 +364,7 @@ export default defineComponent({
       loginForm: {
         userName: '',
         password: '',
-        site: 'DY2',
+        site: 'KRW',
         key: '',
         coordinates: '',
         captchaCode: '',
@@ -457,41 +389,6 @@ export default defineComponent({
             required: true,
             message: t('message.requiredPassword'),
             trigger: 'blur',
-          },
-        ],
-      },
-      loginRulesVi: {
-        userName: [
-          {
-            required: true,
-            message: t('message.requiredLoginName'),
-            trigger: 'blur',
-          },
-          {
-            required: true,
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: t('common.affiliateaccountcanonlycontainnumchar'),
-            trigger: 'blur',
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: t('message.requiredPassword'),
-            trigger: 'blur',
-          },
-        ],
-        captchaCode: [
-          {
-            required: true,
-            message: t('message.required_captcha'),
-            trigger: 'blur',
-          },
-          {
-            min: 4,
-            max: 4,
-            message: t('message.required_4_digits'),
-            trigger: 'change',
           },
         ],
       },
@@ -755,12 +652,6 @@ export default defineComponent({
               state.loading = false
               return
             }
-            // router.push({
-            //   path: state.redirect || "/dy/login",
-            //   query: state.otherQuery
-            // }).catch(err => {
-            //   console.warn(err);
-            // });
             isReg.value = false
           }
         })
@@ -998,13 +889,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      if (props.siteId !== '10') {
-        var myElement = document.getElementById('login-swiper')
-        console.log(myElement)
-        myElement.swiper.slideTo(1)
-      } else {
-        window.open('https://t.me/city88888', '_blank').focus();
-      }
+      window.open('https://t.me/city88888', '_blank').focus();
     }
 
     const getCaptcha = () => {
@@ -1023,84 +908,10 @@ export default defineComponent({
       })
     }
 
-    const currentSite = ref({})
     const i18nStoreLanguage = i18nStore()
     const { setLanguage, languageVal } = i18nStoreLanguage
-    const populateCurrentSiteData = () => {
-      if (props.siteId === '6') {
-        currentSite.value.firstLiner = '从东赢开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = dyLogo
-        state.loginForm.site = 'DY2'
-        setLanguage('zh')
-      }
-      if (props.siteId === '1') {
-        currentSite.value.firstLiner = '从兴发开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = xfLogo
-        state.loginForm.site = 'XF1'
-        setLanguage('zh')
-      }
-      if (props.siteId === '5') {
-        currentSite.value.firstLiner = 'Starts from 55ACE'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = indLogo
-        state.loginForm.site = 'IND'
-        currentSite.value.lang = 'EN'
-        setLanguage('en')
-      }
-      if (props.siteId === '9') {
-        currentSite.value.firstLiner = 'Starts from 789F'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = ind2Logo
-        state.loginForm.site = 'IW2'
-        currentSite.value.lang = 'EN'
-        setLanguage('en')
-      }
-      if (props.siteId === '7') {
-        currentSite.value.firstLiner = '从雷火开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = lhLogo
-        state.loginForm.site = 'LH1'
-        setLanguage('zh')
-      }
-      if (props.siteId === '8') {
-        currentSite.value.firstLiner = 'Start From TFGaming'
-        currentSite.value.secondLiner =
-          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
-        currentSite.value.logo = viLogo
-        state.loginForm.site = 'VNM'
-        setLanguage('vi')
-      }
-      if (props.siteId === '15') {
-        currentSite.value.firstLiner = 'Start From KAKA Live'
-        currentSite.value.secondLiner =
-          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
-        currentSite.value.logo = kakaLogo
-        state.loginForm.site = 'KA1'
-        setLanguage('vi')
-      }
-      if (props.siteId === '10') {
-        currentSite.value.firstLiner = 'Start From CITY8'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = krLogo
-        state.loginForm.site = 'KRW'
-        setLanguage('kr')
-      }
-      if (props.siteId === '11') {
-        currentSite.value.firstLiner = 'Start From B9'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = pakLogo
-        state.loginForm.site = 'PAK'
-        setLanguage('zh')
-      }
-    }
+
     onMounted(() => {
-      // const swiper = new Swiper('.swiper-container', swiperOptions);
       if (route.query.agent) {
         hasAffiliate.value = true
         state.regForm.codeAffiliate = route.query.agent
@@ -1110,9 +921,8 @@ export default defineComponent({
       if (route.query.isreg) {
         isReg.value = true;
       }
-      // if (props.siteId !== '8') {
       getCode()
-      // }
+
       if (state.loginForm.userName === '') {
         userNameRef.value.focus()
       } else if (state.loginForm.password === '') {
@@ -1121,10 +931,7 @@ export default defineComponent({
       var dialog = document.querySelector('.el-overlay-dialog')
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
-      populateCurrentSiteData()
-      if (props.siteId === '8') {
-        getCaptcha()
-      }
+      setLanguage('kr');
     })
     return {
       userNameRef,
@@ -1137,9 +944,6 @@ export default defineComponent({
       birthdayRef,
       verificationRef,
       regFormRef,
-      dyLogo,
-      xfLogo,
-      lhLogo,
       verificationImg,
       disabledDate,
       ...toRefs(state),
@@ -1148,7 +952,6 @@ export default defineComponent({
       hasAffiliate,
       step,
       isReg,
-      currentSite,
       props,
       t,
       swipeToContactUs,
@@ -1158,6 +961,7 @@ export default defineComponent({
       resetFormRef,
       getCaptcha,
       captchaImg,
+      krLogo
     }
   },
 })
@@ -1343,24 +1147,6 @@ a {
   background: url('../../assets/images/login/bg_login.jpg') no-repeat center center;
   background-size: cover;
 
-  &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center center;
-  }
-
-  &.vi {
-    font-family: 'Roboto';
-
-    .loginPage .right .top .log {
-      font-family: 'Roboto';
-    }
-
-    .loginPage .left {
-      .second-liner {
-        font-family: 'Roboto';
-      }
-    }
-  }
-
   .inner {
     max-width: 1200px;
     width: 100%;
@@ -1480,37 +1266,6 @@ a {
       }
     }
   }
-
-  &.ind-firstPage {
-    background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
-    height: 100vh;
-
-    .logo {
-      position: absolute;
-      left: 70px;
-      top: 40px;
-      width: 207px;
-    }
-
-    .loginPage .left .first-liner {
-      max-width: 750px;
-      width: 750px;
-    }
-
-    .loginPage .left .second-liner {
-      max-width: 600px;
-      width: 600px;
-    }
-
-    .inner {
-      max-width: 1300px;
-    }
-
-    .common-btn {
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      color: #fff;
-    }
-  }
 }
 
 .flex-c-center-div {
@@ -1616,37 +1371,6 @@ a {
       top: 20px;
       width: 120px;
     }
-
-    &.ind-firstPage {
-      .logo {
-        position: absolute;
-        left: 20px;
-        top: 20px;
-        width: 150px;
-      }
-
-      .loginPage {
-        padding-top: 30px;
-      }
-
-      .loginPage .left {
-        width: calc(100% - 20px);
-      }
-
-      .loginPage .left .first-liner {
-        max-width: none;
-        width: 100%;
-      }
-
-      .loginPage .left .second-liner {
-        max-width: none;
-        width: 100%;
-      }
-
-      .common-btn {
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      }
-    }
   }
 
   .wrapper {
@@ -1734,6 +1458,56 @@ a {
 
   .verification-title {
     font-size: 0.8rem;
+  }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+
+  10% {
+    transform: translate(-1px, -2px);
+  }
+
+  20% {
+    transform: translate(-3px, 0px);
+  }
+
+  30% {
+    transform: translate(3px, 2px);
+  }
+
+  40% {
+    transform: translate(1px, -1px);
+  }
+
+  50% {
+    transform: translate(-1px, 2px);
+  }
+
+  60% {
+    transform: translate(-3px, 1px);
+  }
+
+  70% {
+    transform: translate(3px, 1px);
+  }
+
+  80% {
+    transform: translate(-1px, -1px);
+  }
+
+  90% {
+    transform: translate(1px, 2px);
+  }
+
+  100% {
+    transform: translate(1px, -2px);
   }
 }
 </style>

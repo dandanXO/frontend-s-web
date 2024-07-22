@@ -96,6 +96,7 @@
           ></div>
         </div>
 
+        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
         <div
           class="inner"
           :class="{
@@ -108,8 +109,7 @@
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
-              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+              selectedPromo.promoCode === 'dy2-eurocup-manual',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
           }"
@@ -135,6 +135,16 @@
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
+            <div
+              v-if="['dy2-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
+              class="corner-decor"
+              style="position: absolute; left: 0px; bottom: 0px"
+            >
+              <img
+                v-if="selectedPromo.redirectUrl === 'dy2-cs2-blast-2024'"
+                src="@/assets/images/promotion/hotpromo/blastpremier/bg.png"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -149,13 +159,15 @@ import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
+import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 
 import HotPromotion from "@/components/HotPromotion";
 
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const store = userStore();
@@ -671,13 +683,13 @@ export default defineComponent({
         margin: 0 auto;
 
         &.isCSBanner {
-          min-height: 660px;
-          max-width: none;
+          // min-height: 660px;
+          // max-width: none;
 
-          .promo-bg {
-            min-height: 660px !important;
-            background-size: 100% 100%;
-          }
+          // .promo-bg {
+          //   min-height: 660px !important;
+          //   background-size: 100% 100%;
+          // }
         }
 
         &.isDuanwuBanner {

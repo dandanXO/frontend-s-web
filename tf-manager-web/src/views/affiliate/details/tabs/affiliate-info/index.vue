@@ -1838,7 +1838,7 @@ const remarkFormRules = reactive({
 })
 
 const affFormRules = reactive({
-  affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
+  // affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
 const riskFormRules = reactive({
@@ -1860,18 +1860,16 @@ const loadRiskLevels = async () => {
 
 const loadShareRatio = async () => {
   const { data: shareRatio } = await getAffiliateShareRatio(memberDetail.id)
+  shareRatioList.list = shareRatio
   if (shareRatio.length > 0) {
-    shareRatioList.list = shareRatio
-    if (shareRatio.length !== 5) {
-      const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
-      const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
-      missingRatio.forEach(ratio => {
-        shareRatioList.list.push({
-          code: ratio.code,
-          value: 0
-        })
+    const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
+    const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+    missingRatio.forEach(ratio => {
+      shareRatioList.list.push({
+        code: ratio.code,
+        value: 0
       })
-    }
+    })
   } else {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
     shareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
@@ -2230,7 +2228,6 @@ function updateAffiliateLevel() {
 }
 
 function updateMemberBelongType() {
-  console.log('updateMemberBelongType')
   updateBelongTypeModel.value.validate(async valid => {
     if (valid) {
       await updateBelongType(props.affId, belongTypeForm.belongType)
@@ -2367,19 +2364,45 @@ async function unmaskDetail(type) {
 }
 
 async function changeAffiliate() {
-  await changeNewAffilaite(
-    props.affId,
-    affForm.affiliateCode,
-    memberDetail.memberType
-  )
-  ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
-  uiControl.dialogVisible = false
-  loading.superiorAffiliateInfo = true
-  const { data: aff } = await getAffiliateInfo(props.affId, site.id)
-  Object.keys({ ...aff }).forEach(detailField => {
-    superiorAffiliateDetail[detailField] = aff[detailField]
-  })
-  loading.superiorAffiliateInfo = false
+  if (!affForm.affiliateCode) {
+    ElMessageBox.confirm(t('message.confirmUnbindAffiliateAccesss'), {
+      title: t('message.confirmUnbindAffiliateAccesss'),
+      confirmButtonText: t('fields.confirm'), // Replace with your translation key for "OK"
+      cancelButtonText: t('fields.cancel') // Optional: Replace with your translation key for "Cancel"
+    })
+      .then(async () => {
+        await changeNewAffilaite(
+          props.affId,
+          affForm.affiliateCode,
+          memberDetail.memberType
+        )
+        ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
+        uiControl.dialogVisible = false
+        loading.superiorAffiliateInfo = true
+        const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+        Object.keys({ ...aff }).forEach(detailField => {
+          superiorAffiliateDetail[detailField] = aff[detailField]
+        })
+        loading.superiorAffiliateInfo = false
+      })
+      .catch(() => {
+        // catch error
+      })
+  } else {
+    await changeNewAffilaite(
+      props.affId,
+      affForm.affiliateCode,
+      memberDetail.memberType
+    )
+    ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
+    uiControl.dialogVisible = false
+    loading.superiorAffiliateInfo = true
+    const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+    Object.keys({ ...aff }).forEach(detailField => {
+      superiorAffiliateDetail[detailField] = aff[detailField]
+    })
+    loading.superiorAffiliateInfo = false
+  }
 }
 
 async function resetSecurityQuestion() {

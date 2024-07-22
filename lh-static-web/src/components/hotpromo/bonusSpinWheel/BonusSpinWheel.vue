@@ -74,12 +74,13 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getRecords, getSpinWheelPrize, initSpinWheelData } from "@/api/promotion/bonusSpinWheel";
 import moment from 'moment';
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify();
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
@@ -182,7 +183,7 @@ const spinWheel = () => {
   }
 
   if (remainingDraws.value <= 0) {
-    ElMessage.error("剩余抽奖次数：0");
+    notify.error("剩余抽奖次数：0");
     return;
   }
 

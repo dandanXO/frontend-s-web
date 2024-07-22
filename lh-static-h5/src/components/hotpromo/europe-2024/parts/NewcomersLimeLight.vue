@@ -1,6 +1,6 @@
 <template>
     <div class="newcomers-intro">
-        活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足<span>≥500</span>即可获得体验彩金。    
+        活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足<span>≥500</span>即可获得体验彩金。
     </div>
     <div class="newcomers-grid">
         <div class="item" v-for="item in items" :key="item.bonusType" @click="getBonus(item.bonusType)">
@@ -31,28 +31,30 @@
 import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "boot/axios"
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 var qs = require("qs")
 const $q = useQuasar();
 const getBonus = (type) => {
         eventapi.post("/first-bet/claim", qs.stringify({gameType: type})).then((res) => {
             if (res.code === 0) {
-                $q.notify({
-                    type: "positive",
-                    position: "top",
-                    message: `成功领取${res.data}元`,
-                    icon: "check_circle_outline"
+                notify({
+                    type: "red-packet",
+                    message: `成功领取`,
+                    params: {
+                      redPacket: res.data
+                    }
                 });
                 } else {
-                    $q.notify({
-                    color: "negative",
-                    position: "top",
+                    notify({
+                    type: "error",
                     message: res.message,
-                    icon: "report_problem"
                     });
                 }
-        }) 
+        })
     }
-    
+
 const items = ref([
     { bonusType: 'ESPORT' },
     { bonusType: 'LIVE' },
@@ -85,7 +87,7 @@ const items = ref([
     .newcomers-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        
+
         .item {
             position:relative;
             cursor: pointer;

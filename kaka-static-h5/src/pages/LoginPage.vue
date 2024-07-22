@@ -442,10 +442,8 @@ export default defineComponent({
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
-                // FB tracking :: login-success
-                if (store.isAffiliateA) {
-                  fbq("track", "login-success");
-                }
+                // FB tracking :: login
+                fbq("track", "login");
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -499,6 +497,9 @@ export default defineComponent({
               })
               .then(() => {
                 $q.loading.hide();
+                // FB tracking :: login
+                fbq("track", "login");
+
                 sessionStorage.removeItem("REFERRAL_CODE");
                 loginFormRef.value.reset();
                 if (store.hasToken()) {

@@ -70,6 +70,7 @@
       :pageContent="list.pageContent"
     ></Dy2StepGamePromo>
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
+    <SlotLacky8 v-if="list.redirectUrl === 'dy-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
@@ -159,11 +160,9 @@ const BlastPremierPromo = defineAsyncComponent(
   () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromoPage = defineAsyncComponent(
-  () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
-);
+const MeiZhouBeiPromo = defineAsyncComponent(() => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
-
+const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -199,6 +198,7 @@ export default defineComponent({
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
     LPLSummer24,
+    SlotLacky8,
     DragonBoat,
     EurocupManual,
     OuZuLianPromo

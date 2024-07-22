@@ -3,7 +3,6 @@
     <div class="form-wrapper">
       <div class="modal-body-wrap">
         <q-card-section class="modal-body-content">
-
           <ReminderText :reminderText="$t('lang.withdraw_reminder_text')" />
 
           <div class="withdrawalmethod">
@@ -120,15 +119,15 @@
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_item') }}</span>
                 <span>：</span>
-                <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMin} 만 -
-                  ${selectedWithdrawalMethod.withdrawMax} 만` }}</span>
+                <span class="q-pa-xs">{{ `${formatNumberComma(selectedWithdrawalMethod.withdrawMin)}원 -
+                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMax)}원` }}</span>
               </template>
               <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_day') }}</span>
                 <span>：</span>
                 <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMaxTimes}회 총
-                  ${selectedWithdrawalMethod.withdrawMaxAmount}억`
+                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMaxAmount)}원`
                   }}
                 </span>
               </template>
@@ -186,11 +185,12 @@ import { useI18n } from "vue-i18n";
 import ReminderText from 'components/finance/ReminderText';
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { formatNumberComma } from "src/boot/utils";
 
 const $q = useQuasar();
 const { t } = useI18n();
 const store = userStore();
-const { realName } = storeToRefs(store);
+const { realName, id } = storeToRefs(store);
 const router = useRouter();
 
 const imgURL = process.env.IMAGE_CDN;
@@ -246,7 +246,7 @@ function isDivisibleBy10000(val) {
 }
 
 const checkIsRealNameBinded = () => {
-  if (!realName.value) {
+  if (id.value && !realName.value) {
     $q.notify({
       color: "negative",
       position: "top",
@@ -258,7 +258,7 @@ const checkIsRealNameBinded = () => {
   }
 }
 
-watch(() => realName.value, () => {
+watch(() => [realName.value, id.value], () => {
   checkIsRealNameBinded();
 })
 
@@ -267,13 +267,13 @@ watch(() => withdrawAmountFormatted.value, () => {
   if (isNaN(withdrawAmount)) {
     withdrawInfo.amount = '';
   } else {
-    withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    withdrawAmountFormatted.value = formatNumberComma(withdrawAmount);
     withdrawInfo.amount = Number(withdrawAmount);
   }
 })
 
 watch(() => withdrawInfo.amount, () => {
-  withdrawAmountFormatted.value = `${withdrawInfo.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  withdrawAmountFormatted.value = formatNumberComma(withdrawInfo.amount);
 })
 
 const loadCards = () => {
@@ -289,8 +289,7 @@ const loadCards = () => {
 const updateWithdrawItem = (amt) => {
   const multiple = 10000;
   // 1원 = 10000;
-
-  withdrawAmountFormatted.value = `${Number(withdrawInfo.amount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  withdrawAmountFormatted.value = formatNumberComma(Number(withdrawInfo.amount) + (amt * multiple));
 }
 
 

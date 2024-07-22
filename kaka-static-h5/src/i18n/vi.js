@@ -97,6 +97,7 @@ export default {
     mobile_number_length: 'Số điện thoại phải dài 10 chữ số.',
     mobile_number_starts_with_0: 'Số điện thoại phải bắt đầu bằng số 0.',
     please_enter_verification_code: "Vui lòng nhập mã xác minh",
+    please_enter: "Vui lòng nhập",
     verification_code: "Mã xác minh",
     length_is_4: "Chiều dài phải là 4",
     login_btn: "Đăng nhập",

@@ -97,12 +97,14 @@ import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
 import {useRouter} from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
 
 export default defineComponent({
   name: "ChangePwdView",
   setup() {
     // const isCardActive = ref();
+    const notify = useNotify();
     const isPwd = ref(true);
     const $q = useQuasar();
     const router = useRouter();
@@ -146,19 +148,15 @@ export default defineComponent({
           password: updatePwdInfo.password
         })).then((response) => {
           if (response.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "密码修改成功",
-              icon: "check_circle_outline"
             });
             router.go(-1);
           } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: response.message,
-              icon: "report_problem"
             });
           }
         }).catch((error) => {

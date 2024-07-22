@@ -603,6 +603,10 @@
             <span v-if="scope.row.riskLevel === null">-</span>
             <span v-if="scope.row.riskLevel !== null">
               {{ scope.row.riskLevel }}
+              <span
+                class="level-color"
+                :style="{backgroundColor: scope.row.riskLevelColor}"
+              />
             </span>
           </template>
         </el-table-column>
@@ -1200,5 +1204,13 @@ onMounted(async () => {
 
 .el-result {
   padding: 0;
+}
+
+.level-color {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
 }
 </style>

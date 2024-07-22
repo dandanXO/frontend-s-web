@@ -228,6 +228,17 @@
           />
         </template>
       </el-table-column>
+      <el-table-column prop="rebateAmount" :label="t('fields.rebate')" width="200">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.rebateAmount,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="profit" :label="t('fields.profit2')" width="200">
         <template #default="scope1">
           $
@@ -285,6 +296,11 @@
       <el-table-column
         prop="firstDepositTime"
         :label="t('fields.ftdTime')"
+        width="200"
+      />
+      <el-table-column
+        prop="lastDepositTime"
+        :label="t('fields.lastDepositTime')"
         width="200"
       />
     </el-table>
@@ -619,6 +635,9 @@ function getSummaries(param) {
             index !== 15 &&
             index !== 16 &&
             index !== 17 &&
+            index !== 18 &&
+            index !== 19 &&
+            index !== 20 &&
             index !== 2
           ) {
             var prop = column.property

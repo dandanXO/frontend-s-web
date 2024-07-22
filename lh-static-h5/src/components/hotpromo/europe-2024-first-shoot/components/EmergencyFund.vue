@@ -59,24 +59,22 @@
 <script setup>
 
 import { eventapi } from "boot/axios";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const claimPromo= () => {
   eventapi
     .post("/first-bet/refund" , {})
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "领取成功！",
-          icon: "check_circle_outline"
         });
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     })

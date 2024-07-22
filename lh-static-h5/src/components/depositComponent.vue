@@ -268,6 +268,9 @@ var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify()
 
 const store = userStore();
 const route = useRoute();
@@ -588,11 +591,9 @@ async function confirmDeposit() {
               form.localAmount = d.data.suggestion;
               btnLoading.value = false;
             }
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: d.message,
-              icon: "report_problem"
             });
           } else {
             if (freePrivilege.value) {
@@ -680,11 +681,9 @@ async function pDepo(deposit) {
             } else {
               const newWin = window.open(`/`);
               if (!newWin) {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
+                notify({
+                  type: "error",
                   message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
-                  icon: "report_problem"
                 });
                 btnLoading.value = false;
                 return;
@@ -747,21 +746,17 @@ async function pDepo(deposit) {
           }
         }
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
         btnLoading.value = false;
       }
     })
     .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: error.message,
-        icon: "report_problem"
       });
       btnLoading.value = false;
       // postMessage(

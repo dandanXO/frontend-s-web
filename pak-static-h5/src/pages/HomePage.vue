@@ -1,5 +1,6 @@
 <template>
   <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
+
   <q-carousel
     v-model="slide"
     id="home"
@@ -62,13 +63,13 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
-          <a class="cs-icon tiktok" href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr" target="_blank">
+          <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
           <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
           <!--          </a>-->
-          <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l" target="_blank">
+          <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
@@ -96,7 +97,7 @@
             <img src="../assets/images/index/icon-volume.png" />
           </div>
           <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 300">
+            <marquee-text :repeat="5" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
@@ -1278,6 +1279,48 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="isLuckyDrawModal">
+    <div class="luckyspin-wrapper">
+      <div class="luckyspin-header">
+        <img src="../assets/images/index/modal/luckyspin-title.png" />
+      </div>
+      <div class="luckyspin-container">
+        <div class="luckyspin-title">
+          <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+        </div>
+
+        <LuckySpinWheel />
+      </div>
+      <div class="q-mt-md">
+        <q-icon name="highlight_off" size="md" v-close-popup />
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog v-model="isCongratsModal">
+    <CongratsModal />
+  </q-dialog>
+
+  <q-dialog v-model="isShowPrizeModal">
+    <div class="congrats-container">
+      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
+      <div class="congrats-highlight">Rs58</div>
+
+      <div class="congrats-button">
+        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
+          {{ $t("btn.recharge") }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal">
+    <MoneyRainModal />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1291,7 +1334,6 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
-import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -1299,10 +1341,14 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import CongratsModal from "../components/modal/CongratsModal.vue";
+import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
+import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { useI18n } from "vue-i18n";
+import { eventapi } from "src/boot/axios";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1320,6 +1366,11 @@ const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+
+const isLuckyDrawModal = ref(false);
+const isCongratsModal = ref(false);
+const isShowPrizeModal = ref(false);
+const isMoneyRainModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -2331,8 +2382,14 @@ const loadHotGameList = () => {
         .then((res) => {
           gameLists = res;
 
+          // console.log("HERE");
+          // console.log(gameLists);
+          // console.log(hotlists);
+
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item2.platformCode === item1.platform
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2349,7 +2406,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
@@ -3023,7 +3080,11 @@ const gotoPromo = (banner) => {
     if (banner.redirectUrl.includes("https://")) {
       window.open(banner.redirectUrl, "_blank");
     } else {
-      router.push(`/promo?name=${banner.redirectUrl}`);
+      if (banner.redirectUrl === "redpacketrain") {
+        isMoneyRainModal.value = true;
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
   }
 };
@@ -3157,27 +3218,6 @@ const populatePushNotificationData = (data) => {
   pushNotificationData.value = data;
 };
 
-const initOneSignal = () => {
-  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
-
-  let myClickListener = async function (event) {
-    console.log("CLICK PUSH");
-    let notificationData = event;
-    console.log(notificationData);
-    console.log(notificationData.notification.title);
-    console.log(notificationData.notification.body);
-    console.log(notificationData.notification.additionalData);
-    populatePushNotificationData(notificationData.notification);
-  };
-  OneSignal.Notifications.addEventListener("click", myClickListener);
-
-  // Prompts the user for notification permissions.
-  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
-  OneSignal.Notifications.requestPermission(true).then((accepted) => {
-    console.log("User accepted notifications: " + accepted);
-  });
-};
-
 const loadCustomerAddress = () => {
   cached
     .get("customerAddress", () =>
@@ -3233,7 +3273,7 @@ const getWithExpiry = (key) => {
   }
   const item = JSON.parse(itemStr);
   const now = new Date();
-  if(now.getTime() > item.expiry) {
+  if (now.getTime() > item.expiry) {
     localStorage.removeItem(key);
     return null;
   }
@@ -3309,6 +3349,8 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
   checkShowImgTop();
+
+  checkSpinWheel();
 });
 
 onMounted(() => {
@@ -3320,14 +3362,10 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  ui.shouldFetchDownloadAppUrl = true
+  ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-
-  // if (Platform.is.android && Platform.is.capacitor) {
-  //   initOneSignal();
-  // }
 });
 
 watch(
@@ -3338,6 +3376,54 @@ watch(
     }
   }
 );
+
+// watch(
+//   () => route.query.register,
+//   (newValue) => {
+//     if (newValue === "true") {
+//       if (!isAndroid()) {
+//         isCongratsModal.value = true;
+//       }
+//     }
+//   }
+// );
+
+const checkSpinWheel = () => {
+  if (store.hasToken() && isAndroid()) {
+    setTimeout(() => {
+      showSpinWheel();
+    }, 750);
+  } else if (store.hasToken() && !isAndroid()) {
+    showCongratsModal();
+  }
+};
+
+const showSpinWheel = () => {
+  eventapi
+    .get("/new-user-roulette/init")
+    .then((res) => {
+      if (res.code == 0) {
+        if (res.data.hasUnusedCoupon === "YES") {
+          isShowPrizeModal.value = true;
+        } else if (res.data.showRoulette === "YES") {
+          isLuckyDrawModal.value = true;
+        }
+      }
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+};
+
+const showCongratsModal = () => {
+  eventapi.get("/new-user-roulette/init").then((res) => {
+    if (res.code == 0) {
+      if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
+        isCongratsModal.value = true;
+      }
+    }
+  });
+};
 </script>
 
 <style scoped lang="scss">
@@ -3549,11 +3635,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 2.05%,
-        rgba(255, 255, 255, 0.05) 44.93%,
-        rgba(255, 255, 255, 0.05) 53.13%,
-        rgba(255, 255, 255, 0) 98.21%
+      90deg,
+      rgba(255, 255, 255, 0) 2.05%,
+      rgba(255, 255, 255, 0.05) 44.93%,
+      rgba(255, 255, 255, 0.05) 53.13%,
+      rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -4647,10 +4733,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-        180deg,
-        rgba(115, 115, 115, 0) 0%,
-        rgba(153, 153, 153, 0.4) 48.5%,
-        rgba(115, 115, 115, 0) 100%
+      180deg,
+      rgba(115, 115, 115, 0) 0%,
+      rgba(153, 153, 153, 0.4) 48.5%,
+      rgba(115, 115, 115, 0) 100%
     );
   }
 
@@ -4800,5 +4886,139 @@ watch(
   .q-card {
     background: transparent;
   }
+}
+
+// congrats container
+// .congrats-button {
+//   position: absolute;
+//   bottom: -60px;
+//   left: 50%;
+//   transform: translateX(-50%);
+// }
+
+.congrats-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.congrats-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.congrats-container {
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+
+  &:before {
+    content: "";
+    background-image: url(../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background-image: url(../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 2px 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
+  }
+}
+
+.luckyspin-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.luckyspin-header {
+  margin: 0 auto -5%;
+  width: 90%;
+  z-index: 2;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.luckyspin-container {
+  background-image: url(../assets/images/index/modal/luckyspin-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  // overflow: visible !important;
+  border-radius: 12px;
+  padding: 16px;
+
+  .luckyspin-title {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+}
+
+.money-rain-close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

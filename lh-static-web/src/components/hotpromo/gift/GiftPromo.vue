@@ -181,22 +181,23 @@
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
 import { getGiftList, getGiftBet, redeemGift, getGiftRecord } from "@/api/index/promo";
 import Vue3Autocounter from "vue3-autocounter";
 import { TweenMax } from "gsap";
 import * as _ from "lodash";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const notify = useNotify();
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const isGiftRecordLoading = ref(false);
 const isGiftRecordModalOpen = ref(false);
 const giftRecordData = ref([]);
 function loadMemberRecords() {
   if (!store.token) {
-    ElMessage.error("请登录后操作");
+    notify.error("请登录后操作");
   } else {
     isGiftRecordLoading.value = true;
     isGiftRecordModalOpen.value = true;
@@ -219,9 +220,9 @@ function exchangeGift(giftData) {
 
   const giftBeginTime = new Date(2020, 1, 1, 0, 0, 0).getTime();
   if (new Date().getTime() < giftBeginTime) {
-    ElMessage.error("活动2020年2月1日开始，敬请期待!");
+    notify.error("活动2020年2月1日开始，敬请期待!");
   } else if (memberBet.value < redeemPoints) {
-    ElMessage.error("兑换此礼品您还需要" + (redeemPoints - memberBet.value).toFixed(2) + "元有效投注额，请继续加油！");
+    notify.error("兑换此礼品您还需要" + (redeemPoints - memberBet.value).toFixed(2) + "元有效投注额，请继续加油！");
   } else {
     selectedGift = giftData;
 
@@ -244,7 +245,7 @@ function submitGift() {
         const { code, message } = res;
 
         if (code == 0) {
-          ElMessage.success({
+          notify({
             type: "success",
             message: "操作成功",
             onClose: () => {
@@ -253,7 +254,7 @@ function submitGift() {
             }
           });
         } else {
-          ElMessage.error(message);
+          notify.error(message);
         }
       })
       .catch(() => {})
@@ -275,7 +276,7 @@ function loadGifts(callback) {
     const { code, data, message } = res;
 
     if (code == 0) giftListData.value = data;
-    else ElMessage.error(message);
+    else notify.error(message);
 
     callback && callback();
   });
@@ -316,7 +317,7 @@ function loadMemberBet() {
         });
       }
     } else {
-      ElMessage.error(message);
+      notify.error(message);
     }
   });
 }
