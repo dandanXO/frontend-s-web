@@ -260,3 +260,11 @@ export const getExportWithdrawRecord = (query) => {
 export const getExportAffiliateWithdrawRecord = (query) => {
   return https().request("/memberWithdrawRecord/exportAffiliateWithdraw", Method.GET, query, ContentType.form);
 };
+
+export const getUnsuccessfulIn10time = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/queryUnsuccessfulIn10time", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getqueryUnsuccessIn30min = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/queryUnsuccessIn30min", Method.GET, memberWithdrawRecord, ContentType.form);
+};
