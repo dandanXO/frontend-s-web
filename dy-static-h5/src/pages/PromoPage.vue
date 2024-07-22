@@ -32,7 +32,7 @@
                           />
                         </div>
 
-                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div class="promo-item-title" v-html="promo.title"></div>
                         <div
                           class="promo-item-deal"
                           v-if="parsedParam(promo.param).sub"
@@ -62,7 +62,7 @@
                             v-html="parsedParam(promo.param).date"
                           />
                         </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div class="promo-item-title" v-html="promo.title"></div>
                         <div
                           class="promo-item-deal"
                           v-if="parsedParam(promo.param).sub"
