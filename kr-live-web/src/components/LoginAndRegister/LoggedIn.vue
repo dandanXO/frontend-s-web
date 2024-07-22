@@ -22,12 +22,12 @@
     <div class="btn-group">
       <div class="left-group">
         <div class="primary-button blue" style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo">
-          마이페이지
+          {{ $t('lang.menu_my_page') }}
         </div>
       </div>
       <div class="right-group">
         <div class="primary-button yellow" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
-          로그 아웃
+          {{ $t('lang.logout') }}
         </div>
       </div>
     </div>
@@ -43,21 +43,21 @@
       <div class="actions-topbar-controls">
         <div class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;"
           @click="goToPersonalInfo">
-          마이페이지
+          {{ $t('lang.menu_my_page') }}
         </div>
         <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;"
           @click="onLogoutSubmit">
-          로그 아웃
+          {{ $t('lang.logout') }}
         </div>
       </div>
       <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
         <router-link class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;"
           to="/?page=finance/deposit">
-          송금신청
+          {{ $t('lang.menu_deposit') }}
         </router-link>
         <router-link class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;"
           to="/?page=finance/withdraw">
-          출금신청
+          {{ $t('lang.menu_withdraw') }}
         </router-link>
       </div>
     </div>
@@ -95,8 +95,9 @@ const onLogoutSubmit = () => {
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  gap: 20px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -108,7 +109,7 @@ const onLogoutSubmit = () => {
   white-space: nowrap;
   row-gap: 8px;
   column-gap: 24px;
-  width: 60%;
+  // width: 60%;
   font-size: 16px;
   justify-content: center;
   align-items: center;
@@ -125,7 +126,7 @@ const onLogoutSubmit = () => {
 .item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 
   span {
     color: #03fff2;
@@ -138,41 +139,6 @@ const onLogoutSubmit = () => {
 
   @media (max-width: 768px) {
     display: none;
-  }
-}
-
-.my-page {
-  width: 80px;
-  height: 36px;
-  background-image: url("../../assets/home/btn-blue.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    filter: brightness(1.1);
-  }
-
-  &:active {
-    transform: translateY(2px);
-  }
-
-  @media (min-width: 1200px) {
-    width: 100px;
-  }
-
-  .register-text {
-    font-size: 12px;
-    line-height: 16.8px;
-    color: #fff;
-
-    @media (min-width: 1200px) {
-      font-size: 14px;
-      line-height: 1;
-    }
   }
 }
 
