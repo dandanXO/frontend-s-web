@@ -150,6 +150,15 @@ export default route(function (/* { store, ssrContext } */) {
     } else if (window.location.href.indexOf("kakagame6.vip/agent/81D2DE") > -1) {
       fbq("init", "3596435077285259");
       fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakagame38.com/agent/B5E1EE") > -1) {
+      fbq("init", "1229331245097015");
+      fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakagame38.vip/agent/CF4444") > -1) {
+      fbq("init", "1163064048304297");
+      fbq("track", "PageView");
+    } else if (window.location.href.indexOf("kakagame88.app/agent/E63D89") > -1) {
+      fbq("init", "1227157148415264");
+      fbq("track", "PageView");
     }
     // console.log(window.location.href);
     // if (window.location.href.indexOf("KAKAking.com") > -1) {
