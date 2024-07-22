@@ -30,7 +30,7 @@
                                 <q-button style="min-width:60px;width:60px;height:30px;"
                                     class="primary-button blue-square"
                                     @click="redeemPoint(props?.props?.row.privilegeId)">
-                                    {{ $t('lang.redeem') }}
+                                    {{ $t('lang.redeem_point_redeem') }}
                                 </q-button>
                             </div>
                         </q-td>
