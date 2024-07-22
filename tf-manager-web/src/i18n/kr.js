@@ -1817,8 +1817,10 @@ export default {
     copySuccess: '복사 성공',
     deleteSuccess: '삭제 성공',
     runAtOnceSuccess: '작업 실행 성공',
-    dailyMinRegLimitCannotExceedMax: '일일 최소 등록 제한은 최대 등록 제한을 초과할 수 없습니다',
-    dailyMinFirstDepositCannotExceedMax: '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
+    dailyMinRegLimitCannotExceedMax:
+      '일일 최소 등록 제한은 최대 등록 제한을 초과할 수 없습니다',
+    dailyMinFirstDepositCannotExceedMax:
+      '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
     depositSuccess: '입금 성공',
     editAmountSuccess: '금액 편집 성공',
     editRemarkSuccess: '비고 편집 성공',
@@ -2218,7 +2220,8 @@ export default {
     validateMinDayDepositAmountRequired: '일일 최소 입금액이 필요합니다',
     validateMaxDayDepositAmountRequired: '일일 최대 입금액이 필요합니다',
     validateDayRegProbabilityRequired: '일일 등록 확률이 필요합니다',
-    validateDayDepositAmountProbabilityRequired: '일일 첫 입금 확률이 필요합니다',
+    validateDayDepositAmountProbabilityRequired:
+      '일일 첫 입금 확률이 필요합니다',
   },
   menu: {
     undefined: '',
@@ -2447,6 +2450,7 @@ export default {
     'Promotion Coupon': '쿠폰',
     'Member Invite Limit': '회원 초대 제한',
     'Member Point Record': '회원 포인트 기록',
+    'Affiliate Change Log': '제휴 부모 변경 로그',
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2493,8 +2497,8 @@ export default {
     if_not_google_auth_then:
       'Google 인증자를 바인딩하지 않았다면 작성할 필요가 없습니다.',
     google_auth_code: '6자리 Google 인증자 코드를 입력하세요.',
-    register_count: "오늘 등록된 수",
-    register_limit: "오늘 등록 가능한 수"
+    register_count: '오늘 등록된 수',
+    register_limit: '오늘 등록 가능한 수',
   },
   posterType: {
     overall: '전체 추천',
