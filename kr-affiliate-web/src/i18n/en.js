@@ -61,6 +61,7 @@ export default {
     CommissionHistoryList: 'Commission History List',
     StatisticsByMember: 'Statistics By Member',
     DepositWithdrawManagement: 'Deposit/Withdraw Management',
+    MemberPointRecord: 'Member Point Record',
     // Settlement Management End
 
     gameRecord: 'Game Record',
@@ -682,6 +683,7 @@ export default {
     sportRolling: 'Sport Rolling Amount',
     memberPoint: 'Member Point',
     affiliateTransferAmount: 'Affiliate Transfer Amount',
+    redeem: 'Redeem',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

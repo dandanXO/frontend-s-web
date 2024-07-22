@@ -327,6 +327,9 @@ import { ref, onMounted, computed } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 
 const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
 const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
@@ -402,7 +405,11 @@ const handleRecieve = async (reward) => {
 };
 
 const handleRedirect = () => {
-  router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
+  if (window.location.pathname === "/promotion") {
+    document.location.href = `app://deposit`;
+  } else {
+    router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
+  }
 };
 
 const $q = useQuasar();
@@ -413,11 +420,9 @@ const getData = async () => {
     const apiRes = await getNewUserAccumulateDepositInit();
     if (apiRes.data.state === "NOT_ELIGIBLE") {
       isEligibleState.value = false;
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "此账号要求不达标，无法参与此优惠。",
-        icon: "report_problem"
       });
       return;
     }
@@ -480,9 +485,7 @@ onMounted(async () => {
   align-items: center;
   gap: 15px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   border: 1px solid #7a80a1;
 
   @media (max-width: 450px) {

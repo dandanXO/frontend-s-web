@@ -63,7 +63,7 @@
                 {{ item.type }}
               </td>
               <td class="bgGreen textGreen">
-                {{ formatMoney(item.memberName) }}
+                {{ item.memberName }}
               </td>
               <td class="bgRed textRed">
                 {{ formatMoney(item.memberMoney) }}

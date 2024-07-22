@@ -83,6 +83,7 @@
                   />
                 </div>
               </div>
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
               <div
                 class="inner"
                 :class="{
@@ -168,10 +169,12 @@ import LocalStorage from "boot/local-storage";
 
 import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
+import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const store = userStore();
@@ -826,18 +829,23 @@ export default defineComponent({
           width: 100%;
         }
         &.cs2 {
-          margin: 0px;
-          width: 100%;
-          gap: 0px;
+          margin: 0;
           padding: 10px;
-          background: url(../assets/images/promotion/hotpromo/cs2/bg.png) no-repeat center center;
-          p {
-            padding: 12px;
-            color: #00dede;
-            font-family: Microsoft Yahei UI;
-            max-width: 100%;
-          }
+          width: 100%;
         }
+        // &.cs2 {
+        //   margin: 0px;
+        //   width: 100%;
+        //   gap: 0px;
+        //   padding: 10px;
+        //   background: url(../assets/images/promotion/hotpromo/cs2/bg.png) no-repeat center center;
+        //   p {
+        //     padding: 12px;
+        //     color: #00dede;
+        //     font-family: Microsoft Yahei UI;
+        //     max-width: 100%;
+        //   }
+        // }
 
         &.msi {
           margin: 0px;

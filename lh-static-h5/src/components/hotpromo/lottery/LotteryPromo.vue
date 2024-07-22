@@ -128,7 +128,9 @@ import { userStore } from "stores/index";
 import { useQuasar, date } from "quasar";
 import { submitLuckyNumber, luckyNumberList, winnerList } from "../../../api/index/promo";
 import moment from "moment";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 
@@ -148,19 +150,15 @@ function chooseLuckyNumber() {
   submitLuckyNumber(luckyNumber.value)
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          type: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "成功发送号码。",
-          icon: "check_circle_outline"
         });
         luckyNumber.value = null;
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     })
@@ -242,11 +240,9 @@ function retrieveList() {
         console.log(err.message);
       });
   } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: "请选择查询时间",
-      icon: "report_problem"
     });
   }
 }
@@ -300,11 +296,9 @@ function retrieveWinnerList() {
         console.log(err.message);
       });
   } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: "请选择查询时间",
-      icon: "report_problem"
     });
   }
 }

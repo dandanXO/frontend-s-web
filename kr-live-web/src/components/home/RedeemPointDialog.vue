@@ -1,6 +1,6 @@
 <template>
     <q-dialog v-model="props.redeemDialogVisible" no-route-dismiss persistent>
-        <div class="redeem-point-dialog-container">
+        <div class="redeem-point-dialog-container" style="width:700px;max-width:700px;">
             <div class="header">
                 <div style="text-align: right;">
                     <img class="header-close-btn" @click="props.closeDialog"
@@ -14,6 +14,11 @@
                         pagination.current = currentPage;
                         recordPage(pagination)
                     }">
+                    <template #body-cell-recordTime="props">
+                        <q-td class="text-center">
+                            x{{ props?.props?.row.recordTime }}
+                        </q-td>
+                    </template>
                     <template #body-cell-rollover="props">
                         <q-td class="text-center">
                             x{{ props?.props?.row.rollover }}

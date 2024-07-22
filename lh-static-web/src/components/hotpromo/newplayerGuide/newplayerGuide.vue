@@ -3,10 +3,10 @@
     <div class="switch-wrapper">
       <div class="switch-container">
         <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
-          新手礼包
+          助力金
         </div>
         <div :class="['switch-option', { active: selected === 'option2' }]" @click="selectOption('option2')">
-          新人指路
+          突破奖
         </div>
       </div>
     </div>
@@ -17,9 +17,15 @@
             <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
             <div class="title">
               新手礼包
-              <span style="font-size: 16px; font-weight: 400">(进行中)</span>
+              <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
             </div>
           </div>
+          <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
+            (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
+          </span>
+          <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+            (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
+          </span>
           <div class="section">
             <div style="display: flex">
               <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -102,14 +108,14 @@
               <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
               <div class="title">首次提款</div>
             </div>
-            <button class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
+            <button v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
               <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
                 <img
                   v-if="firstWithdrawalState === 'CLAIMED'"
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
                   src="@/assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                 />
-                <span>{{ getStatus2(firstWithdrawalState).text }}</span>
+                <span>{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
               </div>
             </button>
           </div>
@@ -122,7 +128,7 @@
               <div class="progress-info">
                 <span>完成一次提款</span>
                 <!-- <span>{{ progressText }}</span> -->
-              <span>USDT/钱包提款 ≥100 元</span>
+                <span>USDT/钱包提款 ≥100 元</span>
               </div>
             </div>
           </div>
@@ -189,7 +195,10 @@ import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "@/api/index/promo";
 import option2Area from "./option2Area.vue";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import moment from "moment";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const store = userStore();
 const router = useRouter();
@@ -199,11 +208,19 @@ const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
+const memberRegTime = ref(0);
 
 const progress = ref(0);
 
 const progressPercentage = computed(() => progress.value * 100);
 const progressText = computed(() => `${progress.value}/1`);
+const isValidUser = computed(
+  () =>
+    bankCardBindState.value !== "NOT_ELIGIBLE" &&
+    firstWithdrawalState.value !== "NOT_ELIGIBLE" &&
+    telephoneBindState.value !== "NOT_ELIGIBLE" &&
+    usdtAddrBindState.value !== "NOT_ELIGIBLE"
+);
 
 function selectOption(option) {
   selected.value = option;
@@ -222,6 +239,10 @@ const getStatus = (status) => {
     CLAIMED: {
       text: "完成",
       class: "complete"
+    },
+    NOT_ELIGIBLE: {
+      text: "无法领取",
+      class: "not-eligible"
     }
   };
   return statusTextMap[status];
@@ -272,7 +293,7 @@ const getBonus = async (promoCode) => {
         usdtAddrBindState.value = "CLAIMED";
       }
 
-      ElMessage.success({
+      notify({
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
@@ -288,8 +309,9 @@ const getData = async () => {
 
     bankCardBindState.value = apiRes.data.bankCardBindState;
     firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
-    telephoneBindState.value = apiRes.data.telephoneBindState; 
+    telephoneBindState.value = apiRes.data.telephoneBindState;
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
+    memberRegTime.value = apiRes.data.memberRegTime;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
@@ -502,6 +524,12 @@ h1 {
   color: #fff;
 }
 
+.not-eligible {
+  background: #d9d9d9;
+  border: none;
+  color: #000;
+}
+
 .progress-bar-container {
   width: 100%;
   border-radius: 10px;
@@ -537,7 +565,8 @@ h1 {
   padding: 0;
 
   .step-number {
-    width: 20px;
+    width: 100%;
+    max-width: 20px;
     height: 20px;
     font-size: 14px;
   }

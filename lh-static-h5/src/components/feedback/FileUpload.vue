@@ -12,22 +12,24 @@
       </template>
     </q-file>
   </template>
-  
+
   <script>
   import {ref, defineComponent, watch} from "vue";
   import {userStore} from "src/stores";
   import {useQuasar} from "quasar";
   import {getRndInteger} from "boot/utils";
-  
+import { useNotify } from "src/hooks/notify";
+
   export default defineComponent({
     emits: ["photoResponse"],
     name: "UploadExample",
     setup: (props, {emit}) => {
+      const notify = useNotify();
       const store = userStore();
-  
+
       var rstArray = Object.values(process.env.RST_API);
       var rstApi = rstArray[getRndInteger(0, rstArray.length)];
-  
+
       const action = rstApi + '/session/image/uploadOrder?token=' + store.token;
       const $q = useQuasar();
       const file = ref();
@@ -53,18 +55,14 @@
             const data = await response.json();
             if (data.code === 0) {
               emit("photoResponse", data.data);
-              $q.notify({
-                type: "positive",
-                position: "top",
+              notify({
+                type: "success",
                 message: `${file.value.name} 上传成功。`,
-                icon: "check_circle_outline"
               });
             } else {
-              $q.notify({
-                type: "negative",
-                position: "top",
+              notify({
+                type: "error",
                 message: `${file.value.name} 上传失败。请稍后再试。`,
-                icon: "report_problem"
               });
               file.value = null;
             }
@@ -73,7 +71,7 @@
           }
         }
       };
-  
+
       return {
         file,
         action,
@@ -84,10 +82,9 @@
     },
   });
   </script>
-  
+
   <style scoped>
   .q-uploader .q-uploader-upload-btn {
     color: #ffffff !important;
   }
   </style>
-  

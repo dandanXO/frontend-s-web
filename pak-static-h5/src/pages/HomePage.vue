@@ -1316,6 +1316,11 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal">
+    <MoneyRainModal />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1338,6 +1343,7 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
+import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -1364,6 +1370,7 @@ const { t } = useI18n();
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
+const isMoneyRainModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -2375,8 +2382,14 @@ const loadHotGameList = () => {
         .then((res) => {
           gameLists = res;
 
+          // console.log("HERE");
+          // console.log(gameLists);
+          // console.log(hotlists);
+
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item2.platformCode === item1.platform
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2393,7 +2406,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
@@ -3067,7 +3080,11 @@ const gotoPromo = (banner) => {
     if (banner.redirectUrl.includes("https://")) {
       window.open(banner.redirectUrl, "_blank");
     } else {
-      router.push(`/promo?name=${banner.redirectUrl}`);
+      if (banner.redirectUrl === "redpacketrain") {
+        isMoneyRainModal.value = true;
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
   }
 };
@@ -4996,5 +5013,12 @@ const showCongratsModal = () => {
     justify-content: center;
     margin-top: 16px;
   }
+}
+
+.money-rain-close {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

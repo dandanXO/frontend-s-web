@@ -251,7 +251,7 @@ import {
   loadAllBankCards,
   loadUnbindRecord,
   addBankCard,
-  deleteBankCard,
+  deleteBankCardByNumber,
   loadMemberInfo,
   loadMemberTelephone
 } from "@/api/personal/personal";
@@ -794,12 +794,18 @@ export default defineComponent({
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning',
-            inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
+            // inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
           }
       )
           .then((inputValue) => {
-            if (inputValue.value === card.cardNumber) {
-              deleteBankCard(card.id).then((res) => {
+            if (!inputValue.value) {
+              ElMessage({
+                type: 'error',
+                message: '请输入卡号',
+              });
+              return
+            }
+            deleteBankCardByNumber(inputValue.value).then((res) => {
                 if (res.code === 0) {
                   ElMessage({
                     type: 'success',
@@ -816,12 +822,6 @@ export default defineComponent({
               }).catch((e) => {
                 console.log('error', e);
               });
-            } else {
-              ElMessage({
-                type: 'error',
-                message: '卡号不匹配，请重新输入',
-              });
-            }
           })
           .catch(() => {
             ElMessage({

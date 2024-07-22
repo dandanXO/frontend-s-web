@@ -1,12 +1,19 @@
 <template>
   <div class="cs2">
     <div class="section first">
-      <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" /></div>
-      <!-- <div class="tips">
-        <div class="tips-inner">
-          参与BLAST Premier 春季总决赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。 
+      <div class="title">
+        <img class="logo" src="@/assets/images/promotion/hotpromo/blastpremier/spring-logo.png" />
+        <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" />
+      </div>
+        <div class="tips">
+          <div class="tips-inner">
+            参与BLAST Premier
+            秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。
+          </div>
         </div>
-      </div> -->
+        <div class="title">
+          <img class="bottom" src="@/assets/images/promotion/hotpromo/blastpremier/section-bottom.png" />
+        </div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -47,18 +54,28 @@
               <div class="useKeys" @click="openBox(item.treasureLevel)">开启</div>
             </div>
           </div>
-          
+
           <!-- <div class="tips-p">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙</div> -->
+        </div>
+      </div>
+      <div class="tips">
+        <div class="tips-inner">
+          系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
         </div>
       </div>
     </div>
     <div class="section second">
-      <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-2-spring.png" /></div>
-      <!-- <div class="tips">
+      <div class="title">
+        <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" />
+      </div>
+      <div class="tips">
         <div class="tips-inner">
-          活动期间，连续投注BLAST Premier 春季总决赛≥1000元则视为签到成功，根据对应累计的签到天数开启宝箱  
+          活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
         </div>
-      </div> -->
+      </div>
+      <div class="title">
+        <img class="bottom" src="@/assets/images/promotion/hotpromo/blastpremier/section-bottom.png" />
+      </div>
       <div class="content">
         <div class="top-row">
           <div class="lft">
@@ -183,10 +200,12 @@ import {
   getOpenRecord,
   claimCheckInTreasure
 } from "@/api/index/promo";
-import { ElMessage, ElLoading } from "element-plus";
+import { ElLoading } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode"]);
 const store = userStore();
+const notify = useNotify();
 
 const keyNumber = ref(0);
 const signNumber = ref(0);
@@ -229,7 +248,7 @@ const openBox = (item) => {
       openModal("amt", res.data);
       init();
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -341,7 +360,7 @@ const openModal = (modal, item, itemIndex) => {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     });
     setTimeout(() => {
@@ -392,44 +411,61 @@ onMounted(() => {
 
   .title {
     margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    img {
+      margin: 0 auto;
+      &.logo {
+        max-width: 350px;
+      }
+      &.top {
+        max-width: 600px;
+      }
+      &.bottom {
+        margin: 10px auto;
+      }
+    }
   }
 
   .tips {
+
+    color: #fffd66;
     margin: 0 auto;
     text-align: center;
-    color: #00d6d6;
-    font-weight: 700;
-    font-family: PingFang SC;
-    font-size: 20px;
-    line-height: 28px;
-    position: relative;
-    margin-bottom: 36px;
+    font-size: 16px;
+    // font-weight: 700;
+    // font-family: PingFang SC;
+    // font-size: 20px;
+    // line-height: 28px;
+    // position: relative;
+    // margin-bottom: 36px;
 
-    &::before,
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      right: 0;
-      background: linear-gradient(90deg, rgba(#01f8f9, 0) 0%, rgba(#01f8f9, 50%) 50%, rgba(#01f8f9, 0) 100%) no-repeat
-        center center;
-      height: 2px;
-    }
+    // &::before,
+    // &::after {
+    //   content: "";
+    //   display: block;
+    //   position: absolute;
+    //   left: 0;
+    //   right: 0;
+    //   background: linear-gradient(90deg, rgba(#01f8f9, 0) 0%, rgba(#01f8f9, 50%) 50%, rgba(#01f8f9, 0) 100%) no-repeat
+    //     center center;
+    //   height: 2px;
+    // }
 
-    &::before {
-      top: 0;
-    }
+    // &::before {
+    //   top: 0;
+    // }
 
-    & ::after {
-      bottom: 0;
-    }
+    // & ::after {
+    //   bottom: 0;
+    // }
 
-    .tips-inner {
-      background: linear-gradient(90deg, rgba(#01f8f9, 0) 0%, rgba(#01f8f9, 20%) 50%, rgba(#01f8f9, 0) 100%) no-repeat
-        center center;
-      padding: 22px 0;
-    }
+    // .tips-inner {
+    //   background: linear-gradient(90deg, rgba(#01f8f9, 0) 0%, rgba(#01f8f9, 20%) 50%, rgba(#01f8f9, 0) 100%) no-repeat
+    //     center center;
+    //   padding: 22px 0;
+    // }
   }
   .second .content {
     display: flex;
@@ -455,7 +491,7 @@ onMounted(() => {
         }
       }
   .first .content .top-row {
-    
+
     background: url(../../../assets/images/promotion/hotpromo/blastpremier/container.png)no-repeat center center;
     background-size: contain;
   }
@@ -586,11 +622,11 @@ onMounted(() => {
       }
     }
     .middle-row {
-      
+
       .item-container {
         display: flex;
         justify-content: space-around;
-        margin-bottom: 50px;
+        // margin-bottom: 50px;
 
         .item {
           width: 360px;

@@ -61,6 +61,7 @@ export default {
     CommissionHistoryList: '커미션내역 목록',
     StatisticsByMember: '회원별 통계',
     DepositWithdrawManagement: '입출금 관리',
+    MemberPointRecord: 'Member Point Record',
     // Settlement Management End
 
     gameRecord: '게임 기록',
@@ -680,6 +681,7 @@ export default {
     sportRolling: '하부총스포츠롤링',
     memberPoint: '회원 포인트',
     affiliateTransferAmount: '송금 금액',
+    redeem: '상환하다',
   },
   google: {
     google_auth_menu: '구글 인증',

@@ -32,7 +32,7 @@
     ></q-table>
 
     <ul>
-      <li class="dot-style">Active users: daily bet amount 2000</li>
+      <li class="dot-style">Active users: daily bet amount 20,000</li>
       <li class="dot-style">
         Your reward will be calculated based on the total bet amount of your members. The reward gained can either be
         withdrawn or used for further betting.
@@ -227,25 +227,25 @@
           <tr>
             <td>You</td>
             <td>8(1.0%)</td>
-            <td>972,000</td>
+            <td>9,720,000</td>
             <td>49</td>
           </tr>
           <tr>
             <td>A</td>
             <td>8(1.0%)</td>
-            <td>760,000</td>
+            <td>7,600,000</td>
             <td>35</td>
           </tr>
           <tr>
             <td>B</td>
             <td>6(0.8%)</td>
-            <td>210,000</td>
+            <td>2,100,000</td>
             <td>13</td>
           </tr>
           <tr>
             <td>C</td>
             <td>1(0.3%)</td>
-            <td>2,000</td>
+            <td>20,000</td>
             <td>1</td>
           </tr>
         </tbody>

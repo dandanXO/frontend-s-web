@@ -553,6 +553,11 @@ export default {
         searchButton: "تلاش"
       },
       table: {
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -560,7 +565,9 @@ export default {
         registrationDate: "رجسٹریشن تاریخ",
         balance: "بیلنس",
         lastLogin: "آخری لاگ ان وقت",
-        lastDeposit: "آخری جمع وقت"
+        lastDeposit: "آخری جمع وقت",
+        todayRegistercount: "آج کی رجسٹریشن کی تعداد",
+        yesterdayRegisterCount: "کل کی رجسٹریشن کی تعداد"
       }
     },
     teamBetting: {
@@ -589,7 +596,11 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی"
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     },
     profitAndLoss: {
@@ -614,7 +625,22 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس"
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی",
+        depositCount: "جمع کرنے کی تعداد",
+        ftdAmount: "FTD رقم",
+        ftdCount: "FTD تعداد"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا",
+        betAmount: "بیٹ کی رقم",
+        depositCount: "جمع کرنے کی تعداد"
       }
     }
   },
@@ -860,6 +886,7 @@ export default {
     14002: "یہ ای میل پہلے ہی رجسٹر ہو چکا ہے",
     14003: "ایفیلیٹ کا کوڈ نہیں ملا",
     14010: "آپ کا آلہ اس وقت ایک اکاؤنٹ کو رجسٹر کر چکا ہے، براہ کرم اپنے اکاؤنٹ کا استعمال کر کے لاگ ان کریں۔",
+    15011: "2024-07-10 سے پہلے کی تاریخ منتخب نہیں کی جا سکتی",
     15201: "پرانا پاس ورڈ غلط ہے",
     15202: "نیا پاس ورڈ پرانے پاس ورڈ جیسا  نہیں ہونا چاہیے",
     21000: "یہ کھیل پہلے ہی آپ کی مقبول کھیلوں کی فہرست میں شامل ہے۔",

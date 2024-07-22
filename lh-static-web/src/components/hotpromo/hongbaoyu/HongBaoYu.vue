@@ -24,7 +24,10 @@
 <script setup>
 import { ref } from "vue";
 import { claimBonusItem } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
+
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -40,7 +43,7 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
       } else {
-        ElMessage.error({
+        notify({
           type: "error",
           message: res.message
         });

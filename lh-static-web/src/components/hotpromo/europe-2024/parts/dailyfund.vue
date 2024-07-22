@@ -218,15 +218,18 @@ import {
   getTeams,
   submitTeam
 } from "@/api/promotion/eurocup";
-import { ElMessage } from "element-plus";
 import moment from "moment";
 import {  useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const props = defineProps({
   tabtitle: String
 });
+
+const notify = useNotify();
+
 const rankPoints = [
   {
     amt: "",
@@ -286,16 +289,16 @@ const getMatchPoints = () => {
         remainingTime.value = calculateRemainingTime(res.data.endDate);
       }
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
 const claimPoint = (points) => {
   euroClaimMatchPoints(points).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("领取成功");
+      notify.success("领取成功");
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -317,11 +320,11 @@ const matchSubmit = (match, id, name) => {
 const confirmMatchSelect = () => {
   euroMatchSubmit(selectedMatch.value.id, selectedItem.value.id).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("投票成功");
+      notify.success("投票成功");
       confirmDialog.value = false;
       getMatches();
     } else {
-      ElMessage.error(res.message)
+      notify.error(res.message)
     }
   });
 };
@@ -372,7 +375,7 @@ function confirmSelection(team, choiceName) {
         team.isSelectionConfirmed = true;
         getTeamsData();
       } else {
-        ElMessage.error(res.message)
+        notify.error(res.message)
       }
     });
   }

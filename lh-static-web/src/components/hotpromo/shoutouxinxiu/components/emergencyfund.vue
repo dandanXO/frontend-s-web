@@ -1,12 +1,14 @@
 <template>
-   <div class="emergency-intro">
-     活动期间，会员当日场馆有效投注额满足且产生对应负盈利金额，即可获得最高<span>388元</span>返还。
-   </div>
+  <div class="emergency-intro">
+    活动期间，会员当日场馆有效投注额满足且产生对应负盈利金额，即可获得最高
+    <span>388元</span>
+    返还。
+  </div>
 
-  <!-- <div class="redpacket">
-       <div class="hongbao"><img src="../images/hongbao.png"></div>
+  <div class="redpacket">
+    <div class="hongbao"><img src="../images/hongbao.png" /></div>
     <div class="claim-button" @click="claimPromo">立即领取</div>
-  </div> -->
+  </div>
 
   <!-- <div class="emergency-intro">
     如果会员领取相应场馆的新秀享头彩，那么领取彩金当日如果有负盈利即可在次日24小时内点击领取。
@@ -41,9 +43,9 @@
   </table>
   <div class="emergency-rules">
     <div class="emergency-rules__rule-title">
-      <img :src="require(`../images/title-left.png`)" alt="">
+      <img :src="require(`../images/title-left.png`)" alt="" />
       活动规则
-      <img :src="require(`../images/title-right.png`)" alt="">
+      <img :src="require(`../images/title-right.png`)" alt="" />
     </div>
     <ol class="emergency-rules__rule-content">
       <li>会员需每日通过点击【立即申请】按钮方可报名参与，未点击申请按钮视为自动放弃参与该活动；</li>
@@ -65,17 +67,19 @@
 </template>
 <script setup>
 import { claimSaveBonus } from "@/api/promotion/eurocup";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const claimPromo = () => {
   claimSaveBonus().then((res) => {
     if (res.code === 0) {
-      ElMessage.error({
+      notify({
         type: "success",
         message: "领取成功！"
       });
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -135,7 +139,7 @@ const claimPromo = () => {
   color: #ffffff;
   margin: 10px auto 20px;
   span {
-    color: #FF881A;
+    color: #ff881a;
   }
 }
 .emergency-rules {
@@ -152,7 +156,7 @@ const claimPromo = () => {
   &__rule-title {
     margin: 10px 0;
     text-align: center;
-    background: linear-gradient(180deg, #FFFFFF 0%, #6CB8FF 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #6cb8ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

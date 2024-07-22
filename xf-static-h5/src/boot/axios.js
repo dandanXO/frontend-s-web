@@ -15,9 +15,9 @@ const globalLinks= ["xf13140"];
 const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
 
 if(isGlobalLH){
-  var rstApi = "https://apbldfsqgl.ornpoicvw5y.com";
-  var evtApi = "https://prr4bi80gl.7jko99gysa.com";
-  var crtApi = "https://ca8tpj9cal.vay0qv35d4y.com";
+  var rstApi = "https://apn0zz6gox.330z3w3.com";
+  var evtApi = "https://prx6g60gox.7tk6kax.com";
+  var crtApi = "https://cavqhi7gox.ax76c8n.com";
 
   localStorage.setItem("XF_H5_RST_URL", rstApi);
   localStorage.setItem("XF_H5_EVT_URL",evtApi);

@@ -3,11 +3,16 @@
     <div class="section first">
       <div class="title">
         <img class="logo" src="../../../assets/images/promo/hotpromo/blastpremier/spring-logo.png" />
-        <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" /></div>
+        <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" />
+      </div>
       <div class="tips">
         <div class="tips-inner">
-          参与BLAST Premier 秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙，系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
+          参与BLAST Premier
+          秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
         </div>
+      </div>
+      <div class="title">
+        <img class="bottom" src="../../../assets/images/promo//hotpromo/blastpremier/section-bottom.png" />
       </div>
       <div class="content">
         <div class="top-row">
@@ -30,38 +35,43 @@
               :class="{ active: activeItem === item.no }"
               @click="setActiveItem(item.no)"
             > -->
-            <div
-              v-for="(item, i) in items"
-              :key="i"
-              class="item"
-            >
+            <div v-for="(item, i) in items" :key="i" class="item">
               <img
                 v-if="item.treasureLevel"
                 :src="
                   require(`../../../assets/images/promo/hotpromo/blastpremier/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
                 "
               />
-              <div v-else class="img-placeholder"/>
+              <div v-else class="img-placeholder" />
               <div class="required-key">
                 <img src="../../../assets/images/promo/hotpromo/blastpremier/key.png" />
                 <span>x{{ item.quantity }}</span>
               </div>
               <div class="use-Keys" @click="openBox(item.treasureLevel)">开启</div>
-          
             </div>
           </div>
-         <!-- <div class="tips-p" style="margin-top: 10px">
+          <!-- <div class="tips-p" style="margin-top: 10px">
             系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙
           </div> -->
         </div>
       </div>
+      <div class="tips">
+        <div class="tips-inner">
+          系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
+        </div>
+      </div>
     </div>
     <div class="section second">
-      <div class="title"><img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" /></div>
+      <div class="title">
+        <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" />
+      </div>
       <div class="tips">
         <div class="tips-inner">
           活动期间,连续投注BLAST Premier 秋季小组赛≥1000元则视为签到成功,根据对应累计的签到天数开启宝箱。
         </div>
+      </div>
+      <div class="title">
+        <img class="bottom" src="../../../assets/images/promo//hotpromo/blastpremier/section-bottom.png" />
       </div>
       <div class="content">
         <div class="top-row">
@@ -74,9 +84,11 @@
                 <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-spring.png`)" />
                 <div class="sec-col">
                   <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-premier.png`)" />
-                
-                  <div class="sign-day">签到天数：<span class="number">{{ signNumber }}</span></div>
-                
+
+                  <div class="sign-day">
+                    签到天数：
+                    <span class="number">{{ signNumber }}</span>
+                  </div>
                 </div>
                 <div class="btn not-complete">未完成签到</div>
               </div>
@@ -99,13 +111,25 @@
     <div class="section third">
       <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-3-spring.png" /></div>
       <div class="content">
-        <p>1. 活动期间,每日投注BLAST Premier 秋季小组赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；</p>
-        <p>2. 活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿；</p>
+        <p>
+          1. 活动期间,每日投注BLAST Premier
+          秋季小组赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
+        </p>
+        <p>
+          2.
+          活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿；
+        </p>
         <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金3倍流水即可出款；</p>
-        <p>4. 活动期间,参与BLAST Premier 秋季小组赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个签到宝箱每位用户仅可开启一次；</p>
+        <p>
+          4. 活动期间,参与BLAST Premier
+          秋季小组赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个签到宝箱每位用户仅可开启一次；
+        </p>
         <p>5. 活动期间,若用户连续签到中断,则重新开始计算,已开启过的签到宝箱无法二次开启；</p>
         <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；</p>
-        <p>7. 任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；</p>
+        <p>
+          7.
+          任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；
+        </p>
         <p>8. 为避免文字理解差异,本站保留本活动最终解释权；</p>
       </div>
     </div>
@@ -169,19 +193,19 @@
             ></q-btn>
           </div>
 
-          <table>
+          <table style="min-width: 300px; width: 85%">
             <tr>
-              <th width="50%">日期</th>
-              <th width="25%">消耗</th>
-              <th width="25%">获取金额</th>
+              <th width="34%">日期</th>
+              <th width="33%">消耗</th>
+              <th width="33%">获取金额</th>
             </tr>
           </table>
           <div class="rec">
             <table style="text-align: center" v-if="openRecords && openRecords.length > 0" class="table-rows">
               <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="50%">{{ open.createTime }}</td>
-                <td width="25%">{{ open.quantity }}</td>
-                <td width="25%">{{ open.amount }}</td>
+                <td width="34%">{{ open.createTime }}</td>
+                <td width="33%">{{ open.quantity }}</td>
+                <td width="33%">{{ open.amount }}</td>
               </tr>
             </table>
             <div v-else style="display: flex; justify-content: center; align-items: center; height: 130px">
@@ -458,73 +482,75 @@ onMounted(() => {
   .second .content {
     display: flex;
     flex-direction: column;
-        background: url(../../../assets/images/promo/hotpromo/blastpremier/middle-row.png)no-repeat center center;
-        background-size: contain;
-        padding: 50px 0;
-        justify-content: center;
-        gap: 20px;
-        align-items: center;
-        .top-row {
+    background: url(../../../assets/images/promo/hotpromo/blastpremier/middle-row.png) no-repeat center center;
+    background-size: 100% 100%;
+    padding: 50px 0;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    .top-row {
+      margin: 0 auto;
+      width: 90%;
+      .lft {
+        width: 100%;
+        .btn {
+          background: url(../../../assets/images/promo/hotpromo/blastpremier/btn.png) no-repeat center center;
+          padding: 10px;
+          font-size: 14px;
+          font-weight: 500;
+          font-family: "Microsoft Yahei UI";
+          color: $white;
+          background-size: contain;
+          width: 85%;
           margin: 0 auto;
-          width: 90%;
-          .lft {
-            width: 100%;
-            .btn {
-              background: url(../../../assets/images/promo/hotpromo/blastpremier/btn.png) no-repeat center center;
-              padding: 10px;
-              font-size: 14px;
-              font-weight: 500;
-              font-family: "Microsoft Yahei UI";
-              color: $white;
-              background-size: contain;
-              width: 85%;
-              margin: 0 auto;
+          flex: 3;
+
+          &.claimed,
+          &.not-complete {
+            cursor: default;
+          }
+
+          &.to-claim {
+            cursor: pointer;
+            background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
+            background-size: contain;
+          }
+        }
+        .item {
+          width: 100%;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #fffd66;
+
+          .item-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            .sec-col {
               flex: 3;
-
-              &.claimed,
-              &.not-complete {
-                cursor: default;
-              }
-
-              &.to-claim {
-                cursor: pointer;
-                background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
-                background-size: contain;
-              }
-            }
-            .item {
-              width: 100%;
-              padding-bottom: 20px;
-              border-bottom: 1px solid #FFFD66;
-
-              .item-inner {
               display: flex;
-              justify-content: center;
-              align-items: center;
-              gap: 10px;
-              .sec-col {
-                flex: 3;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                .sign-day {
-                  color: #FFFD66;
-                  font-weight: bold;
-                }
-              }
-              img {
-                width: 100%;
-                flex: 1;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-start;
+              .sign-day {
+                color: #fffd66;
+                font-weight: bold;
               }
             }
+            img {
+              width: 100%;
+              flex: 1;
             }
           }
         }
       }
+    }
+    .middle-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
   .first .content .top-row {
-    
-    background: url(../../../assets/images/promo/hotpromo/blastpremier/container.png)no-repeat center center;
+    background: url(../../../assets/images/promo/hotpromo/blastpremier/container.png) no-repeat center center;
     background-size: contain;
   }
   .content {
@@ -542,12 +568,13 @@ onMounted(() => {
         font-size: 14px;
         color: $white;
         .number {
-          color: #FFFD66;
+          color: #fffd66;
           font-weight: 700;
           font-size: 17px;
         }
         img {
           width: 46px;
+          margin: 0;
         }
       }
       .buttons {
@@ -557,7 +584,7 @@ onMounted(() => {
           cursor: pointer;
           // background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
           padding: 5px 20px;
-          color: #FFFD66;
+          color: #fffd66;
           background-size: cover;
         }
       }
@@ -584,6 +611,8 @@ onMounted(() => {
 
           img {
             margin-bottom: 0;
+            width: 80%;
+            margin: 20px auto 0;
           }
 
           .img-placeholder {
@@ -594,10 +623,10 @@ onMounted(() => {
           &.active {
             background: url(../../../assets/images/promo/hotpromo/blastpremier/treasure-bg-active.png) no-repeat center
               center;
-            color: #FFFD66;
+            color: #fffd66;
             background-size: 100% 100%;
 
-            @media (max-width: 400px){
+            @media (max-width: 400px) {
               order: -1;
             }
           }
@@ -627,13 +656,15 @@ onMounted(() => {
       }
       .sign-container {
         display: grid;
-        grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(2, 1fr);
         justify-content: space-around;
-        row-gap: 56px;
+        gap: 20px;
+        width: 85%;
+        margin: 0 auto;
         // margin: 25px auto;
 
-        @media (max-width: 375px){
-          grid-template-columns: repeat(2,1fr);
+        @media (max-width: 375px) {
+          grid-template-columns: repeat(2, 1fr);
         }
 
         .item {
@@ -649,7 +680,7 @@ onMounted(() => {
           }
 
           .sign-day {
-            color: #FFFD66;
+            color: #fffd66;
             padding: 8px 12px;
             // background: url(../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-title.png) no-repeat center
             //   center;
@@ -710,11 +741,12 @@ onMounted(() => {
       background-size: 100% 100%;
       padding: 20px;
 
-      color: #B5A73B;
+      color: #b5a73b;
       text-align: left;
       img {
         max-width: 120px;
-      margin: 0px auto;}
+        margin: 0px auto;
+      }
     }
   }
 }

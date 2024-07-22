@@ -228,11 +228,13 @@ import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import qs from "qs";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "LoginPage",
   components: {},
   setup() {
+    const notify = useNotify();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -268,11 +270,9 @@ export default defineComponent({
           }
         })
         .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: e.message,
-            icon: "report_problem"
           });
         });
     };
@@ -316,11 +316,9 @@ export default defineComponent({
 
     const sendOtpSms = () => {
       if (!phoneLoginForm.phoneNumber) {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "手机号码不能为空",
-          icon: "report_problem"
         });
         return;
       }
@@ -336,7 +334,7 @@ export default defineComponent({
         .then((res) => {
           getCode();
           let message = res.message || "发送手机验证码成功",
-            color = "positive";
+            type = "success";
 
           if (res.code === 0) {
             showCaptchaDialog.value = false;
@@ -344,12 +342,12 @@ export default defineComponent({
             phoneLoginForm.code = "";
             // console.log(res.data.codeId);
           } else {
-            color = "negative";
+            type = "error";
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            notify({ message, type });
           }
 
           // console.log("onCaptchaSubmit", res);
@@ -424,11 +422,9 @@ export default defineComponent({
             $q.loading.hide();
           } else {
             if (!phoneLoginForm.smsCodeId) {
-              $q.notify({
-                color: "negative",
-                position: "top",
+              notify({
+                type: "error",
                 message: "请验证手机码",
-                icon: "report_problem"
               });
               return;
             }

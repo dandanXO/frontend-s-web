@@ -437,7 +437,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, toRaw } from "vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 import {
@@ -460,7 +460,7 @@ export default defineComponent({
     WithdrawBank
   },
   setup() {
-
+    const notify = useNotify();
     // Send Verification Code
     const emailKey = `emailKey`
     const phoneKey = `phoneKey`
@@ -533,7 +533,7 @@ export default defineComponent({
           updateSecurityVerified.codeId = res.data.id;
           updatePhoneVerified.codeId = res.data.id;
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       }).catch(() => {
           // console.log(e.message);
@@ -590,7 +590,7 @@ export default defineComponent({
           verificationModalVisible.value = true;
 
         }).catch((err) => {
-            ElMessage({
+            notify({
               message: '请输入有效的邮件',
               type: 'error',
             })
@@ -627,14 +627,14 @@ export default defineComponent({
           verificationDetails.memberInfo.codeId = res.data.codeId
           verificationModalVisible.value = false;
 
-          ElMessage({
+          notify({
             message: '成功',
             type: 'success',
           })
 
           isEmailSending.value = false
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
           getCode()
           isEmailSending.value = false
         }
@@ -654,7 +654,7 @@ export default defineComponent({
           verifyEmail(verificationDetails.memberInfo).then((res) => {
             if (res.code === 0) {
 
-              ElMessage({
+              notify({
                 message: '成功',
                 type: 'success',
               })
@@ -664,7 +664,7 @@ export default defineComponent({
               loadInfo()
 
             } else {
-              ElMessage.error(res.message)
+              notify.error(res.message)
             }
           }).catch((e) => {
             console.log(e.message);
@@ -689,7 +689,7 @@ export default defineComponent({
           verificationPhoneModalVisible.value = true;
 
         }).catch((err) => {
-            ElMessage({
+            notify({
               message: '请输入有效的电话号码',
               type: 'error',
             })
@@ -735,14 +735,14 @@ export default defineComponent({
           verificationPhoneDetails.memberInfo.codeId = res.data.codeId
           verificationPhoneModalVisible.value = false;
 
-          ElMessage({
+          notify({
             message: '成功',
             type: 'success',
           })
 
           isPhoneSending.value = false
         } else {
-            ElMessage.error(res.message)
+            notify.error(res.message)
             getCode()
             isPhoneSending.value = false
           }
@@ -761,7 +761,7 @@ export default defineComponent({
           verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode
           verifySms(verificationPhoneDetails.memberInfo).then((res) => {
             if (res.code === 0) {
-              ElMessage({
+              notify({
                 message: '成功',
                 type: 'success',
               })
@@ -769,7 +769,7 @@ export default defineComponent({
               store.getMemberInfo()
               loadInfo()
             } else {
-              ElMessage.error(res.message)
+              notify.error(res.message)
             }
           }).catch((e) => {
             console.log(e.message);
@@ -881,13 +881,13 @@ export default defineComponent({
           changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password).then((response) => {
             if (response.code === 0) {
               // message.success("success");
-              ElMessage({
+              notify({
                 message: '成功',
                 type: 'success',
               })
               clearPwd();
             } else {
-              ElMessage.error(response.message)
+              notify.error(response.message)
             }
           }).catch((error) => {
             console.log(error.message);
@@ -968,14 +968,14 @@ export default defineComponent({
         .then(() => {
           updateAccount(toRaw(updateFormDetails)).then((ret) => {
             if (ret.code === 0) {
-              ElMessage({
+              notify({
                 message: '提交成功',
                 type: 'success',
               })
               loadInfo();
               isEdit.value = false;
             } else {
-              ElMessage.error(ret.message)
+              notify.error(ret.message)
             }
           }).catch((err) => {
             console.log(err.message);

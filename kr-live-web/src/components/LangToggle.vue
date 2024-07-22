@@ -1,5 +1,5 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:5999" v-if="memberType === 'TEST' || isDevENV">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:6001" v-if="memberType === 'TEST' || isDevENV">
     <q-btn class="floating" fab color="primary" @click="toggleLang" v-touch-pan.prevent.mouse="moveFab"
       :disable="draggingFab">{{ lang
       }}</q-btn>

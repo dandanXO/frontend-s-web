@@ -124,6 +124,9 @@ const closeDialog = () => {
   // AppFullscreen.exit()
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
+  const newWindowOpenGames = ['EVOPLAY'];
+  const isNewWindow = newWindowOpenGames.includes(platformCode);
+
   // debugger;
   // AppFullscreen.request()
   ajaxBarRef.value.start();
@@ -138,7 +141,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if (!isNewWindow) {
+        visible.value = true;
+      }
       var way = null;
       if (Platform.is.android) {
         way = "ANDROID";
@@ -176,6 +181,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               .replace(/\n/g, "");
 
             src.value = srcDoc;
+          }
+
+          if (isNewWindow) {
+            window.open(srcDoc, "_blank");
           }
         }).finally(() => {
           ajaxBarRef.value.stop();

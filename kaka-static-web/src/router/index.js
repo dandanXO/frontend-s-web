@@ -222,12 +222,22 @@ router.beforeEach((to, from, next) => {
     fbq("init", "836424235042431");
     fbq("track", "PageView");
   } else if (window.location.href.indexOf("kakaag.shop") > -1) {
-    fbq("init", "7664966013612459");
+    fbq("init", "1567716440818798");
     fbq("track", "PageView");
   } else if (window.location.href.indexOf("kakavn.app") > -1) {
     fbq("init", "463504196607854");
     fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame38.app") > -1) {
+    fbq("init", "342669618894591");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
+    fbq("init", "976575897104655");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakavn.vip/agent/C58A95") > -1) {
+    fbq("init", "795707932732808");
+    fbq("track", "PageView");
   }
+
   // else if (window.location.href.indexOf("wintf99.com") > -1) {
   //   fbq("init", "441415921872746");
   //   fbq("track", "PageView");

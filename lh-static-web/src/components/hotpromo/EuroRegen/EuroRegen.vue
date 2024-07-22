@@ -75,20 +75,25 @@
 <script setup>
 import { userStore } from "@/store";
 import { claimBonusItem } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
 const store = userStore();
+const notify = useNotify();
 
 const claimAmount = () => {
   claimBonusItem("lh1-sport-loss-refund")
     .then((res) => {
       if (res.code === 0) {
         store.getBalance();
-        ElMessage({
-          message: `成功领取 ${res.data} 元`,
-          type: "success"
+        notify({
+          message: `成功领取`,
+          type: "red-packet",
+          params: {
+            redPacket: res.data
+          }
         });
       } else {
-        ElMessage.error({
+        notify({
           type: "error",
           message: res.message
         });
