@@ -1417,6 +1417,7 @@ const handleInputConfirm = () => {
 }
 
 onMounted(() => {
+  console.log('new page ')
   loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId

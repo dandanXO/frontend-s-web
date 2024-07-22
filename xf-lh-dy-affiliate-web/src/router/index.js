@@ -1,18 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/Index.vue'
-import Forbidden from '@/views/Forbidden.vue'
 export const constantRoutes = [
   {
     path: '/login',
     name: 'Login',
     meta: { hidden: true },
     component: () => import('../views/dy/login/index.vue'),
-  },
-  {
-    path: '/403',
-    name: 'Forbidden',
-    meta: { hidden: true },
-    component: Forbidden
   },
   {
     path: '/xf/login',

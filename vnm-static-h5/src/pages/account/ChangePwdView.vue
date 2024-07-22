@@ -337,9 +337,8 @@ import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 import { useI18n } from "vue-i18n";
-import { watch } from "vue";
 
 export default defineComponent({
   name: "ChangePwdView",
@@ -347,7 +346,6 @@ export default defineComponent({
     // const isCardActive = ref();
     const isPwd = ref(true);
     const $q = useQuasar();
-    const route = useRoute();
     const router = useRouter();
     const store = userStore();
     const { t } = useI18n();
@@ -487,15 +485,6 @@ export default defineComponent({
       getCode();
     });
 
-    watch(
-      () => route.query,
-      (newQuery) => {
-        if (newQuery.name === 'withdraw') {
-          goToTab('tabWithdrawPassword');
-        }
-      },
-      { immediate: true, deep: true }
-    );
     //update pwd
     const updatePwdModalVisible = ref(false);
     const oldPasswordRef = ref();

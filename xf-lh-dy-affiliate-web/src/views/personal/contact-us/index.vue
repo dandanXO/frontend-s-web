@@ -56,8 +56,6 @@ const telegramLink = () => {
     return '@LH18668'
   } else if (siteId === '8' || siteId === 8) {
     return '@dailitf88'
-  } else if (siteId === '10' || siteId === 10) {
-    return '@city88888'
   } else {
     return 'leihuo123'
   }
@@ -203,23 +201,6 @@ const initContactList = () => {
           action: 'https://www.skype.com/get-skype/'
         }]
       },
-      {
-        icon: 'ctelegram',
-        type: 'Telegram',
-        link: telegramLink(),
-        btns: [{
-          text: t('common.copy'),
-          action: ''
-        },
-        {
-          text: t('common.download'),
-          action: 'https://telegram.org/'
-        }]
-      },
-    ]
-  }
-  if (siteId === '10' || siteId === 10) {
-    contactlist.value = [
       {
         icon: 'ctelegram',
         type: 'Telegram',

@@ -137,7 +137,7 @@
             style="width: 350px;"
             default-first-option
             @focus="loadTeamWithSite(form.siteId)"
-            :disabled="uiControl.dialogType === 'EDIT' && form.status !== 'PENDING'"
+            :disabled="uiControl.dialogType === 'EDIT'"
           >
             <el-option
               v-for="item in teams.list"
@@ -161,7 +161,7 @@
             style="width: 350px;"
             default-first-option
             @focus="loadTeamWithSite(form.siteId)"
-            :disabled="uiControl.dialogType === 'EDIT' && form.status !== 'PENDING'"
+            :disabled="uiControl.dialogType === 'EDIT'"
           >
             <el-option
               v-for="item in teams.list"
@@ -654,7 +654,6 @@ const form = reactive({
   id: null,
   siteId: null,
   title: null,
-  status: null,
   platformMatchId: null,
   teamGroup: null,
   teamOneId: null,

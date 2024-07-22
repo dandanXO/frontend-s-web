@@ -231,6 +231,8 @@ export default defineComponent({
           router.push("/vip");
         } else if (promo.redirectUrl.includes("Dongying-refer")) {
           router.push("/privilege/invite");
+        } else if (promo.redirectUrl.includes("hongbaoyu")) {
+          router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
           if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
