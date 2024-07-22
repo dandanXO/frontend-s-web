@@ -45,6 +45,9 @@
       <!-- <img class="bank-card-img" src="../../assets/images/account/bank_icon.png"> -->
       <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
     </el-card>
+    <el-card v-else>
+      {{ $t('account.no_card_avail') }} <router-link to="/center/personal?name=Bank">{{ $t('account.add_a_bank_card') }}</router-link>.
+    </el-card>
     <div class="withdraw-form">
       <el-form
         ref="formRef"

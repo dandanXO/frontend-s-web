@@ -24,6 +24,7 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       vip: "",
       evip: "",
+      registeredWithdrawPassword: false,
       currency: { value: "VNDP", label: "VNDP" },
       loginPageVisible: false,
       regPageVisible: false,
@@ -93,6 +94,7 @@ export const userStore = defineStore("userStore", {
             this.evip = ret.data.evip;
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
+            this.registeredWithdrawPassword = ret.data.registeredWithdrawPassword;
           } else {
             ElMessage.error(ret.message);
           }

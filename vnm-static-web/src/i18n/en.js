@@ -27,6 +27,8 @@ export default {
     logout: "Logout"
   },
   account: {
+    no_card_avail: "No cards available, proceed to ",
+    add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
     mainWallet: "Balance",
     reminder: "Require",
@@ -291,7 +293,7 @@ export default {
     // vi-mualixi-redpacket
     congrats: "Congratulations",
     claim: "Claim",
-    
+
     record_win_status: "Win status",
     record_win_prize: "Winner Prize",
   },
@@ -350,7 +352,8 @@ export default {
     enterDigits: "Please enter digits",
     lengthShouldBe: "The length should be",
     smsCodeRequired: "Please enter the SMS verification code",
-    bankBranchAddress: "Bank branch address"
+    bankBranchAddress: "Bank branch address",
+    settleWithdrawPwd: "Please settle withdraw password"
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",

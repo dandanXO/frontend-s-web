@@ -138,7 +138,7 @@ export default {
     change_password_btn: "Change password",
     please_enter_email: "Please enter email",
     email: "Email",
-    email_sent_txt: "OTP has been sent to your email, please enter OTP and new password.",
+    email_sent_txt: "OTP has been sent to your phone, please enter OTP and new password.",
     otp_code: "OTP code",
     please_enter_otp: "Please enter OTP code",
     please_enter_new_password: "Please enter new password",
@@ -146,7 +146,7 @@ export default {
     password_security_level_must_be_at_least_good: "Password security level must be at least as good",
     password_reset_complete: "Password reset complete",
     account_sent_to_email: "Username has sent to your email",
-
+    settle_withdraw_pwd: "Please settle withdraw password",
     // change password
     chgpwd_password: "Password",
     chgpwd_withdraw_password: "Withdraw Password",
@@ -1293,6 +1293,7 @@ export default {
     upload_fail_please_try: "Upload failed. Please try again later.",
     upload_image: "Upload Image",
     esport: "Esport",
+    hashgame: "Hash game",
     livecasino: "Live",
     sport: "Sport",
     slot: "Slot",
