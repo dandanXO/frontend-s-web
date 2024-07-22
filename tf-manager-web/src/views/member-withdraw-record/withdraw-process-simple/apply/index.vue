@@ -220,7 +220,7 @@
       </el-table>
       <el-pagination
         :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
+        :page-sizes="[50, 100, 150]"
         layout="total,sizes,prev, pager, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
@@ -501,7 +501,7 @@ const siteList = reactive({
 });
 
 const request = reactive({
-  size: 20,
+  size: 50,
   current: 1,
   withdrawDate: [defaultStartDate, defaultEndDate],
   serialNumber: null,
@@ -551,9 +551,9 @@ function resetQuery() {
 
 function handleSelectionChange(val) {
   chooseRecord = val
-  if (chooseRecord.length > 10) {
+  if (chooseRecord.length > 50) {
     uiControl.toApproveBtn = true
-    ElMessage.warning("最多只能选择十条记录");
+    ElMessage.warning("最多只能选择五十条记录");
   } else {
     uiControl.toApproveBtn = false
   }
