@@ -562,6 +562,8 @@ export default defineComponent({
           background-color: #f2f6ff;
           box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
           border-radius: 16px;
+          width: 285px;
+          height: 360px;
 
           a {
             display: flex;
@@ -613,6 +615,7 @@ export default defineComponent({
             left: 0;
             bottom: 0;
             width: 100%;
+            gap: 10px;
             display: flex;
             flex-direction: column;
             align-items: start;
@@ -631,8 +634,9 @@ export default defineComponent({
               font-size: 28px;
               overflow: hidden;
               text-align: left;
-              width: 100%;
-              font-family: PingFang SC;
+              width: 220px;
+              white-space: pre-wrap;
+              word-wrap: break-word;
               font-weight: 600;
             }
 
@@ -653,7 +657,7 @@ export default defineComponent({
             font-weight: 400;
             color: #ffffff;
             position: absolute;
-            top: 0px;
+            top: -2px;
             right: 0px;
             background: url("../assets/images/promotion/hotpromo/common/promo-label-ribbon.png") no-repeat 100%/100%;
             display: flex;
