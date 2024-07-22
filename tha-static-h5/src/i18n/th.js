@@ -28,7 +28,8 @@ export default {
     next_page: "หน้าต่อไป",
     username_between_6_12: "ชื่อที่ใช้ลงทะเบียน ควรมีพยัญชนะ 6-12 ตัว",
     first_digit_must_be_0: "ตัวเลขแรกต้องเป็น 0",
-
+    i_agree_to: "ฉันยอมรับการใช้",
+    use_privacy: "ข้อตกลงความเป็นส่วนตัว",
     // vip
     level: "ระดับ",
     upgrade: "อัปเกรด",
