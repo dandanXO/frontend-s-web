@@ -291,7 +291,7 @@ $node-color: #45fefa;
         display: block;
         // float: left;
         vertical-align: bottom;
-        margin-top: 25px;
+        margin-top: 5px;
         // min-width: 100px;
         text-align: left;
       }
@@ -321,7 +321,7 @@ $node-color: #45fefa;
   }
   .node-content {
     gap: 0 20px;
-    padding: 30px 0 0;
+    padding: 0px 0 0;
     .payment-method-item {
       text-align: center;
       padding: 10px 8px;
