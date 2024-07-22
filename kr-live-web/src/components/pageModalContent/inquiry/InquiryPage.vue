@@ -66,7 +66,7 @@
                 </div>
               </div>
               <template v-if="selected">
-                <div class="feedback-content" v-for="inquiry, index in [selected, ...repliesOfInquiries]">
+                <div class="feedback-content" v-for="inquiry, index in [selected, ...repliesOfInquiries]" :key="index">
                   <div>
                     <div class="title">{{ inquiry.title }}</div>
                   </div>
@@ -97,9 +97,9 @@
 import { ref, onMounted, watch, computed, markRaw, defineAsyncComponent } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
-import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
 import { useI18n } from "vue-i18n";
+import dayjs from "dayjs";
 
 const WriteInquiry = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/inquiry/WriteInquiry.vue')
@@ -227,7 +227,7 @@ const readFeedback = (id, showReadNotify = true) => {
       }
 
       if (!currentMail.readTime) {
-        currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
+        currentMail.readTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
       }
 
       currentMail.content = data.content;

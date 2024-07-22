@@ -387,11 +387,11 @@ import { SessionStorage, useQuasar } from "quasar"
 import each from "lodash/each"
 import { userStore } from "stores/index"
 import FileUpload from "components/FileUpload.vue"
-import moment from "moment"
 import { useI18n } from "vue-i18n";
 import DateFilter from 'components/transaction/DateFilter';
 import DataTable from 'components/transaction/DataTable';
 import { useRoute } from "vue-router";
+import dayjs from "dayjs";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -721,7 +721,7 @@ export default defineComponent({
         {
           label: "게임 시간",
           field: "betTime",
-          format: (val, row) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
+          format: (val, row) => dayjs(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
           label: t('lang.game_name'),
@@ -1068,7 +1068,7 @@ export default defineComponent({
       const obj = {
         gameName: row.gameName,
         platform: row.platform,
-        betTime: moment(row.betTime).format('yyyy-MM-DD'),
+        betTime: dayjs(row.betTime).format('yyyy-MM-DD'),
         memberId: searchForm.betRecord.memberId,
         current: searchForm.betRecord.current,
       }
@@ -1113,7 +1113,7 @@ export default defineComponent({
       noDataLabel: t('lang.no_data_label'),
       rowPerPageLabel: t('lang.row_per_page_label'),
       humanDatetime(ts) {
-        return moment(ts).format("DD-MM-YYYY HH:mm:ss");
+        return dayjs(ts).format("DD-MM-YYYY HH:mm:ss");
       },
       checkType(tp) {
         if (tp === 1) {
