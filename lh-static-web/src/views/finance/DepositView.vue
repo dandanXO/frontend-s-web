@@ -2,10 +2,10 @@
   <div class="deposit-container">
     <div class="menu-title-container">
       <span class="menu-title">充值中心</span>
-      <span class="additional-title">支持虚拟币USDT小额存提，24小时安全，便捷，秒存秒提!</span>
+      <span class="additional-title">支持虚拟币 USDT 小额存提，24 小时安全，便捷，秒存秒提！</span>
     </div>
     <div class="account-content deposit">
-      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
+      <!-- <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span> -->
       <DepositComponent />
     </div>
   </div>

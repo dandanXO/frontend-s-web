@@ -128,6 +128,8 @@ const homePopupType = ref("");
 const homePopupId = ref(0);
 
 const clickHomePopupImg = (urlString)=>{
+  isImportantAnnoucementModal.value= false;
+
   const openPattern = /^\/open\/(.*)/;
   if (urlString.match(openPattern)) {
     const extractedUrl = urlString.match(openPattern)[1];

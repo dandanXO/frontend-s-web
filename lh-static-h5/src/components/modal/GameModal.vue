@@ -382,15 +382,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             let srcData = response.data;
 
-            if (platformCode === "PT" ||
-              (platformCode === 'TFGaming' && gameCode === 0)
-            ) {
-              if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+            if (platformCode === "PT" || (platformCode === "TFGaming" && gameCode === 0)) {
+              if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
                 const newWin = window.open(`/`, "_self");
-                if(newWin){
+                if (newWin) {
                   newWin.location.href = response.data;
                 }
-              }else{
+              } else {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
@@ -404,6 +402,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }  else {
               window.location.href = srcData;
             }
+
+            //NO NEED LIAO
+          // else if (platformCode === "PM") {
+          //     let url = new URL(srcData);
+          //     srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
+          //     src.value = srcData;
+          //     visible.value = true;
+          //   }
 
             // newWin.location.href = response.data;
             // window.location.href = response.data;
