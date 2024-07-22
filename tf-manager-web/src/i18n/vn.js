@@ -1811,8 +1811,10 @@ export default {
     copySuccess: 'Sao chép thành công',
     deleteSuccess: 'Xóa thành công',
     runAtOnceSuccess: 'Chạy hành động thành công',
-    dailyMinRegLimitCannotExceedMax: 'Giới hạn đăng ký tối thiểu hàng ngày không thể vượt quá giới hạn đăng ký tối đa',
-    dailyMinFirstDepositCannotExceedMax: 'Số tiền gửi tối thiểu hàng ngày không thể vượt quá số tiền gửi tối đa',
+    dailyMinRegLimitCannotExceedMax:
+      'Giới hạn đăng ký tối thiểu hàng ngày không thể vượt quá giới hạn đăng ký tối đa',
+    dailyMinFirstDepositCannotExceedMax:
+      'Số tiền gửi tối thiểu hàng ngày không thể vượt quá số tiền gửi tối đa',
     depositSuccess: 'Nạp tiền thành công',
     editAmountSuccess: 'Chỉnh sửa số tiền thành công',
     editRemarkSuccess: 'Chỉnh sửa ghi chú thành công',
@@ -2207,12 +2209,18 @@ export default {
     wrongPopupTime: 'Thời gian popup đã chọn không hợp lệ',
     selectPopupTime: 'Vui lòng chọn thời gian popup',
     updateAffiliateLevelSuccess: 'Cập nhật cấp đại lý thành công',
-    validationMinDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
-    validationMaxDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
-    validationMinDayDepositAmountRequired: 'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
-    validationMaxDayDepositAmountRequired: 'Số tiền gửi tối đa hàng ngày là bắt buộc',
-    validationDayRegProbabilityRequired: 'Xác suất đăng ký hàng ngày là bắt buộc',
-    validationDayDepositAmountProbabilityRequired: 'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
+    validationMinDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
+    validationMaxDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
+    validationMinDayDepositAmountRequired:
+      'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
+    validationMaxDayDepositAmountRequired:
+      'Số tiền gửi tối đa hàng ngày là bắt buộc',
+    validationDayRegProbabilityRequired:
+      'Xác suất đăng ký hàng ngày là bắt buộc',
+    validationDayDepositAmountProbabilityRequired:
+      'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
   },
   menu: {
     undefined: '',
@@ -2444,6 +2452,7 @@ export default {
     'MQ Log': 'Nhật ký MQ',
     'Promotion Coupon': 'phiếu mua hàng',
     'Member Invite Limit': 'Giới hạn mời thành viên',
+    'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
@@ -2490,8 +2499,8 @@ export default {
     if_not_google_auth_then:
       'Nếu bạn chưa liên kết Google Xác thực, bạn có thể bỏ qua bước này.',
     google_auth_code: 'Vui lòng nhập mã xác thực Google 6 chữ số.',
-    register_count: "Số người đăng ký hôm nay",
-    register_limit: "Số lượng có thể đăng ký hôm nay"
+    register_count: 'Số người đăng ký hôm nay',
+    register_limit: 'Số lượng có thể đăng ký hôm nay',
   },
   posterType: {
     overall: 'Tổng quan',

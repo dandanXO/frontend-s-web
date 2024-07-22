@@ -1955,8 +1955,10 @@ export default {
     copySuccess: 'Copy Success',
     deleteSuccess: 'Delete Success',
     runAtOnceSuccess: 'Run job Success',
-    dailyMinRegLimitCannotExceedMax: 'Daily Minimum Register Limit Cannot Exceed Max Register Limit',
-    dailyMinFirstDepositCannotExceedMax: '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
+    dailyMinRegLimitCannotExceedMax:
+      'Daily Minimum Register Limit Cannot Exceed Max Register Limit',
+    dailyMinFirstDepositCannotExceedMax:
+      '일일 최소 입금액은 최대 입금액을 초과할 수 없습니다',
     depositSuccess: 'Deposit Success',
     editAmountSuccess: 'Edit Amount Success',
     editRemarkSuccess: 'Edit Remark Success',
@@ -2362,10 +2364,13 @@ export default {
     updateAffiliateLevelSuccess: 'Update Affiliate Level Success',
     validateMinDayRegLimitRequired: 'Daily Minimum Register Limit is required',
     validateMaxDayRegLimitRequired: 'Daily Maximum Register Limit is required',
-    validateMinDayDepositAmountRequired: 'Daily Minimum Deposit Amount is required',
-    validateMaxDayDepositAmountRequired: 'Daily Maximum Deposit Amount is required',
+    validateMinDayDepositAmountRequired:
+      'Daily Minimum Deposit Amount is required',
+    validateMaxDayDepositAmountRequired:
+      'Daily Maximum Deposit Amount is required',
     validateDayRegProbabilityRequired: 'Daily Register Probability is required',
-    validateDayDepositAmountProbabilityRequired: 'Daily First Deposit Probability is required',
+    validateDayDepositAmountProbabilityRequired:
+      'Daily First Deposit Probability is required',
   },
   menu: {
     undefined: '',
@@ -2615,6 +2620,7 @@ export default {
     'Promotion Coupon': 'Deposit Coupon',
     'Member Invite Limit': 'Member Invite Limit',
     'Member Point Record': 'Member Point Record',
+    'Affiliate Change Log': 'Affiliate Parent Change Log',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2662,8 +2668,8 @@ export default {
     if_not_google_auth_then:
       "If you haven't bound Google Authenticator, there's no need to fill it out.",
     google_auth_code: 'Enter 6 digits Google Authenticator Code',
-    register_count: "Today Register Count:",
-    register_limit: "Today Register Limit:"
+    register_count: 'Today Register Count:',
+    register_limit: 'Today Register Limit:',
   },
   posterType: {
     overall: 'Overall Referral',
