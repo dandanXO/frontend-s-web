@@ -187,7 +187,7 @@
           <span v-else>
             -
           </span>
-        </template>  
+        </template>
       </el-table-column>
       <el-table-column prop="amount" :label="t('fields.bonusAmount')">
         <template #default="scope">
