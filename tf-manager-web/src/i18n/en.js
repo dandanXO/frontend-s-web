@@ -1890,6 +1890,7 @@ export default {
     createMemberPointRecord: 'Create Member Point Record',
     claimed: 'Claimed',
     notClaimed: 'Pending',
+    displayAmount: 'Display Amount',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
