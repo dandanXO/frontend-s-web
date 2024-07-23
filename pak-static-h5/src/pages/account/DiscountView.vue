@@ -12,7 +12,7 @@
         <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
           {{ $t("records.amount") }}:
-          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
+          <span class="txt-yellow">{{ convertToTwoDecimalAmount(e.amount) }}</span>
         </div>
       </div>
     </div>
@@ -83,6 +83,11 @@ const searchDiscountRecord = () => {
     .then(() => {
       isLoading.value = false;
     });
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 onActivated(() => {

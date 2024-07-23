@@ -286,6 +286,10 @@ const getListing = () => {
           }
         });
         listingData.value = res.data;
+        listingData.value.push(...listingData.value);
+        listingData.value.push(...listingData.value);
+        listingData.value.push(...listingData.value);
+        listingData.value.push(...listingData.value);
       }
     })
     .catch((err) => {
