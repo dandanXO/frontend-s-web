@@ -579,6 +579,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today",
     50000: "The maximum number of transfers for today has been reached",
