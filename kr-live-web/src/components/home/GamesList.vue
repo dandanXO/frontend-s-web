@@ -13,6 +13,16 @@
           </div>
         </div>
       </q-carousel-slide>
+
+      <q-carousel-slide name="poker" class="column no-wrap flex-center">
+        <div class="game-list-wrapper">
+          <div class=" game-list">
+            <GameItems :games="pokerGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame"
+              :isLoading="isLoading" />
+          </div>
+        </div>
+      </q-carousel-slide>
+
       <q-carousel-slide name="slots" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <!-- slot start -->
@@ -251,6 +261,7 @@ export default defineComponent({
     };
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
+    const pokerGames = ref([]);
     const esportsGame = ref([]);
     const sportsGame = ref([]);
     const platformMinigame = ref([]);
@@ -491,6 +502,7 @@ export default defineComponent({
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
           esportPlatform.value = data.filter((element) => element.gameType.includes("ESPORT"));
           liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
+          pokerGames.value = data.filter((element) => element.gameType.includes("POKER"));
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
           platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL") || (element.gameType.includes("FISH") && element.code === "CQ9"));
         })
@@ -602,6 +614,7 @@ export default defineComponent({
       store,
       platforms,
       fishPlatforms,
+      pokerGames,
       comingSoonImg,
       liveCasinoGames,
       xfjGames,

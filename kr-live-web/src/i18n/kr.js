@@ -75,6 +75,7 @@ export default {
     game_category_slot: "슬롯게임",
     game_category_sport: "스포츠",
     game_category_minigame: "미니게임",
+    game_category_poker: "포커",
     // game category end
     // game item start
     game_item_entry: "게임입장",
