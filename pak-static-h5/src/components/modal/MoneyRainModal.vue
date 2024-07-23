@@ -1,15 +1,17 @@
 <template>
   <div id="money-container">
-    <span v-for="n in 100" :key="n"></span>
+    <span v-for="n in 190" :key="n"></span>
   </div>
 
+  <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
+    <img src="../../assets/images/index/money-rain/money-content-events.png" />
+  </div>
+  <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
+    <img src="../../assets/images/index/money-rain/money-content-records.png" />
+  </div>
+  <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
+
   <div class="rain-money-tabs-wrapper">
-    <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
-      <img src="../../assets/images/index/money-rain/money-content-events.png" />
-    </div>
-    <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
-      <img src="../../assets/images/index/money-rain/money-content-records.png" />
-    </div>
     <div class="rain-money-tabs-container">
       <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
       <div class="rain-money-header">
@@ -69,9 +71,13 @@
           </div> -->
           <div class="footer-title q-mt-sm">Terms and Conditions:</div>
           <div class="footer-content">
-            Total distribution amount is 666,666 PKR; first come, first served. Maximum winnings per participant: 66,666
-            PKR. The received amount can be directly withdrawn. Members with a deposit history of over 1000 PKR can
-            claim the Red Packet for free daily.
+            Total distribution amount is 666,666 PKR; first come, first served.
+            <br />
+            Maximum winnings per participant: 66,666 PKR.
+            <br />
+            The received amount can be directly withdrawn.
+            <br />
+            Members with a deposit history of over 1000 PKR can claim the Red Packet for free daily.
           </div>
         </div>
       </div>
@@ -212,15 +218,16 @@ const showPrizePopup = ref(false);
 const listingData = ref([]);
 const draftListing = ref([]);
 
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const oriListing = {
   roleId: "55****66",
   amount: "1.3",
   time: "11:00"
 };
-
-// for (let i = 0; i < 100; i++) {
-//   draftListing.value.push({ ...oriListing });
-// }
 
 const selectMoneyRainTab = (tab) => {
   moneyRainTab.value = tab;
@@ -228,10 +235,6 @@ const selectMoneyRainTab = (tab) => {
     startAutoScroll();
   }
 };
-
-// const goToShowPrize = () => {
-//   showPrizePopup.value = true;
-// };
 
 const tableContainer = ref(null);
 
@@ -277,9 +280,16 @@ const getListing = () => {
     .then((res) => {
       if (res.code === 0) {
         // listingData.value = res.data;
-        for (let i = 0; i < 100; i++) {
-          listingData.value.push({ ...res.data[0] });
-        }
+        res.data.forEach(item => {
+          if (item.hasOwnProperty('amount')) {
+            item.amount = convertToTwoDecimalAmount(item.amount);
+          }
+        });
+        listingData.value = res.data;
+        listingData.value.push(...listingData.value);
+        listingData.value.push(...listingData.value);
+        listingData.value.push(...listingData.value);
+        listingData.value.push(...listingData.value);
       }
     })
     .catch((err) => {
@@ -408,8 +418,8 @@ onMounted(() => {
 
 .rain-money-tab-content {
   background: #00d461;
-  min-height: 44vh;
-  height: calc(100vh - 400px);
+  min-height: 30dvh;
+  height: calc(100dvh - 450px);
   overflow-y: auto;
   padding: 16px;
   border-bottom-left-radius: 12px;
@@ -425,6 +435,7 @@ onMounted(() => {
       }
     }
     .footer-content {
+      font-size: 12px;
     }
   }
 
@@ -531,6 +542,26 @@ onMounted(() => {
   }
 }
 
+.rain-money-bg {
+  display: block;
+  margin-bottom: -180px;
+  img {
+    display: block;
+    width: 302px;
+  }
+}
+
+.rain-money-title {
+  width: 100%;
+  margin-bottom: -170px;
+  max-width: 420px;
+  z-index: 2;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
 .rain-money-tabs-wrapper {
   background: linear-gradient(149.95deg, #94febe 1.35%, #96f8ec 41.73%, #90fc9b 84.62%);
   padding: 6px;
@@ -538,23 +569,11 @@ onMounted(() => {
   margin: 16px;
   max-width: 400px;
 
-  .rain-money-bg {
-    display: block;
-    position: absolute;
-    margin-top: -129px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    img {
-      display: block;
-      width: 302px;
-    }
-  }
-
   .rain-money-tabs-container {
     background: linear-gradient(151.97deg, #fefefc 2.12%, #bbfdca 83.61%);
-    padding: 4px 10px;
+    padding: 16px 10px 4px;
     border-radius: 12px;
+    // position: relative;
 
     .logo-img {
       width: 100%;

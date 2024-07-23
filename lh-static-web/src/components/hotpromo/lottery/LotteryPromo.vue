@@ -99,9 +99,10 @@
 import { ref, reactive } from "vue";
 import { userStore } from "@/store";
 import { submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify()
 
 const activeKey = ref("0");
 
@@ -114,13 +115,10 @@ function chooseLuckyNumber() {
   submitLuckyNumber(luckyNumber.value)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage.success("成功发送号码。");
+        notify.success("成功发送号码。");
         luckyNumber.value = null;
       } else {
-        ElMessage.error({
-          type: "error",
-          message: res.message
-        });
+        notify.error(res.message);
       }
     })
     .catch(() => {})

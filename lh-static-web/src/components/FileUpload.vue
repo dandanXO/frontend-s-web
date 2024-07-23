@@ -11,7 +11,7 @@
       上传图片
     </el-button>
   </el-upload>
-  
+
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default defineComponent({
     const uploadFile = async (uploadedItem) => {
       console.log(uploadedItem[0])
       if (uploadedItem[0]) {
-        
+
         const formData = new FormData();
         formData.append("fileList", uploadedItem[0].raw);
         try {
@@ -118,7 +118,7 @@ export default defineComponent({
                 accept="image/*"
                 @change="attachPhoto($event, 'payment')"
               />
-    <el-button size="small" class="common-btn" 
+    <el-button size="small" class="common-btn"
                 @click="$refs.input.click()">
       上传图片
     </el-button></el-space>
@@ -129,11 +129,13 @@ export default defineComponent({
 import {defineComponent, reactive} from "vue";
 
 import { uploadImage } from '@/api/image';
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
 export default defineComponent({
   emits: ["photoResponse"],
-  
+
   setup: (props, { emit }) => {
+    const notify = useNotify();
     const ruleForm = reactive({
       icon: null
     })
@@ -148,7 +150,7 @@ export default defineComponent({
       const dirPaymentLabel = 'payment/label'
 
       if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-        ElMessage({
+        notify({
           message: '上传限制',
           type: 'error',
         })
@@ -172,14 +174,14 @@ export default defineComponent({
             ruleForm.promoIcon = data.data
           }
         } else {
-          ElMessage({
+          notify({
             message: '上传失败. 上传限制，请稍后再试',
             type: 'error',
           })
         }
       }
     }
-    
+
     return {
         attachPhoto,
         ruleForm,
@@ -187,5 +189,5 @@ export default defineComponent({
       }
     }
   });
-  
+
 </script>

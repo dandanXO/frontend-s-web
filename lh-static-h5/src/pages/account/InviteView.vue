@@ -124,6 +124,7 @@ import {userStore} from "src/stores";
 import {useQuasar, Platform, scroll} from "quasar";
 import {api, eventapi} from "boot/axios"
 import { useRoute } from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "ShareView",
@@ -131,6 +132,7 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
+    const notify = useNotify();
     const { getScrollTarget, setVerticalScrollPosition } = scroll;
     const route = useRoute();
     const $q = useQuasar();
@@ -170,11 +172,9 @@ export default defineComponent({
     const copyText = (text) => {
       copyToClipboard(text);
       setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "复制成功！",
-          icon: "check_circle_outline"
         });
       }, 100)
 

@@ -67,17 +67,19 @@
 </template>
 <script setup>
 import { claimSaveBonus } from "@/api/promotion/eurocup";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const claimPromo = () => {
   claimSaveBonus().then((res) => {
     if (res.code === 0) {
-      ElMessage.error({
+      notify({
         type: "success",
         message: "领取成功！"
       });
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

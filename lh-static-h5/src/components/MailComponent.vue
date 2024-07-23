@@ -124,6 +124,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   props: {
@@ -154,6 +155,7 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
+    const notify = useNotify();
     const mailboxMessageTypeData = ref([
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
@@ -218,11 +220,9 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "读取已选择的消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
 
               // Update the readTime property of selected messages
@@ -249,11 +249,9 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "全部消息已读",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
 
               // Update the readTime property of all messages
@@ -278,11 +276,9 @@ export default defineComponent({
           .post("/session/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "全部消息已读",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
 
               // Update the readTime property of all messages
@@ -325,11 +321,9 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               !readTime &&
-                $q.notify({
+                notify({
                   message: "已读消息",
-                  type: "positive",
-                  position: "top",
-                  icon: "check_circle_outline"
+                  type: "success",
                 });
               mail.content = res.data.content;
               onLoad();
@@ -349,11 +343,9 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已读消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
             }
@@ -391,11 +383,9 @@ export default defineComponent({
               // Remove items from truncatedListByType if their IDs match with selectedMailIds and are marked as true
               truncatedList.value = truncatedList.value.filter((mail) => !selectedMailIds.value[mail.id]);
 
-              $q.notify({
+              notify({
                 message: "删除已选择的消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
 
@@ -419,11 +409,9 @@ export default defineComponent({
 
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已删除全部消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
               // truncatedList.value = [];
@@ -442,11 +430,9 @@ export default defineComponent({
 
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已删除全部消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
               truncatedList.value = [];

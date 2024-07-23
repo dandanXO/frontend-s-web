@@ -68,8 +68,12 @@
 import { ref, defineProps, onMounted } from "vue";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
 
 const props = defineProps(["promoCode", "params"]);
+
+const notify = useNotify();
+
 const params = JSON.parse(props.params || "{}");
 const promoCode = ref(props.promoCode);
 const loadingClaim = ref(false);
@@ -85,11 +89,9 @@ const getAppDownloadUrl = () => {
       if (res.code === 0) {
         downloadUrl.value = res.data.downloadPageUrl;
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     })
@@ -115,19 +117,18 @@ const getPromotion = () => {
         // const claimedAmt = res.data;
 
         if(claimedAmt===0){
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: `谢谢惠顾`,
-            icon: "check_circle_outline"
           });
 
         }else{
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: `恭喜中奖！获得：${claimedAmt}`,
-            icon: "check_circle_outline"
+          notify({
+            type: "red-packet",
+            message: `恭喜中奖！`,
+            params: {
+              redPacket: claimedAmt
+            }
           });
         }
 
@@ -135,11 +136,9 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
         loadingClaim.value = false;
       }

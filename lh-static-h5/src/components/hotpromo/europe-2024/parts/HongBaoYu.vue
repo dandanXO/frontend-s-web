@@ -59,6 +59,9 @@ import { defineProps, ref } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { eventapi } from "boot/axios";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 const bonusOpened = ref(false);
@@ -76,11 +79,9 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
 
         bonusOpened.value = false;

@@ -40,9 +40,10 @@
     </div>
 
     <div class="olympic-fund-block description-block">
-      <div class="olympic-fund-block-title">
-        <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
-        <span>活动说明</span>
+      <div class="olympic-fund-block-title-ol">
+        <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
+        <span>活动说明</span> -->
+        <img src="@/components/hotpromo/olympic-fund/img/info-title.png">
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
@@ -108,9 +109,10 @@
     </div>
 
     <div class="olympic-fund-block rule-block">
-      <div class="olympic-fund-block-title">
-        <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
-        <span>活动规则</span>
+      <div class="olympic-fund-block-title-ol">
+        <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
+        <span>活动规则</span> -->
+        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png">
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
         <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
@@ -150,8 +152,10 @@ import {
   getOlympicDailySportBet,
   getOlympicFirstDeposit
 } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { computed, onMounted, ref } from "vue";
+
+const notify = useNotify()
 
 const selected = ref("gift");
 const depositData = ref({
@@ -169,9 +173,9 @@ const handleClick = () => {
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
-      ElMessage.success("领取成功");
+      notify.success("领取成功");
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -183,7 +187,7 @@ onMounted(() => {
       depositData.value.todayFirstDepositAmount = todayFirstDepositAmount;
       depositData.value.helpBonus = claimableAmount;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
   getOlympicDailySportBet().then((res) => {
@@ -192,7 +196,7 @@ onMounted(() => {
       depositData.value.ytdSportBetAmount = ytdSportBetAmount;
       depositData.value.breakthroughBonus = claimableAmount;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 });
@@ -221,7 +225,14 @@ onMounted(() => {
       font-size: 24px;
       font-weight: 600;
       line-height: 33.6px;
-
+      &-ol {
+      display: flex;
+      align-items: center;
+        img {
+          width: 80%;
+          margin: 0 auto;
+        }
+      }
       img {
         width: 32px;
       }

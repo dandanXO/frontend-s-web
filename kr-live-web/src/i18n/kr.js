@@ -253,9 +253,9 @@ export default {
     password_change_password: "변경완료",
     // password end
     // redeem point start
-    redeem_point_pending_list: "포인트 보유현황",
-    redeem_point_redeem: "전환",
-    redeem_point_points: "포인트",
+    redeem_point_pending_list: "보류 목록",
+    redeem_point_redeem: "상환하다",
+    redeem_point_points: "포인트들",
     redeem_point_date: "날짜",
     redeem_point_source: "기록",
     redeem_point_condition: "롤링",

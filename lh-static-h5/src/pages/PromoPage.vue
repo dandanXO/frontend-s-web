@@ -266,6 +266,7 @@ import { useLocalStorage } from "@vueuse/core";
 
 import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
+import { useNotify } from "src/hooks/notify";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 
 export default defineComponent({
@@ -275,6 +276,7 @@ export default defineComponent({
     BlastPremierMarquee
   },
   setup() {
+    const notify = useNotify();
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -333,12 +335,10 @@ export default defineComponent({
           banner.value = response.data[0];
           // console.log(banner.value)
         } else {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: ret.message,
-          //   icon: "report_problem"
-          // });
+          // notify({
+          //   type: "error",
+          //          //   message: ret.message,
+          //          // });
         }
       });
     };

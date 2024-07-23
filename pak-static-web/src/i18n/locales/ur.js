@@ -553,11 +553,6 @@ export default {
         searchButton: "تلاش"
       },
       table: {
-        id: "شناخت",
-        downlineMember: "ڈاؤن لائن ممبر",
-        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
-        vip: "وی آئی پی",
-        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -565,9 +560,7 @@ export default {
         registrationDate: "رجسٹریشن تاریخ",
         balance: "بیلنس",
         lastLogin: "آخری لاگ ان وقت",
-        lastDeposit: "آخری جمع وقت",
-        todayRegistercount: "آج کی رجسٹریشن کی تعداد",
-        yesterdayRegisterCount: "کل کی رجسٹریشن کی تعداد"
+        lastDeposit: "آخری جمع وقت"
       }
     },
     teamBetting: {
@@ -596,11 +589,7 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی",
-        platform: "پلیٹ فارم",
-        players: "کھلاڑی",
-        bet: "بیٹ",
-        payout: "ادائیگی"
+        player: "کھلاڑی"
       }
     },
     profitAndLoss: {
@@ -625,22 +614,7 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس",
-        bet: "بیٹ",
-        payout: "ادائیگی",
-        depositCount: "جمع کرنے کی تعداد",
-        ftdAmount: "FTD رقم",
-        ftdCount: "FTD تعداد"
-      },
-      sums: {
-        bet: "بیٹ",
-        validBet: "معتبر بیٹ",
-        bonus: "بونس",
-        payout: "ادائیگی",
-        deposit: "ڈپازٹ",
-        withdraw: "نکالنا",
-        betAmount: "بیٹ کی رقم",
-        depositCount: "جمع کرنے کی تعداد"
+        depositFee: "جمع کرانے کی فیس"
       }
     }
   },

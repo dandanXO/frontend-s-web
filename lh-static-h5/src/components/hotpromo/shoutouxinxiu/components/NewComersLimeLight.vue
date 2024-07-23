@@ -48,7 +48,9 @@ import { onMounted, ref } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { eventapi } from "boot/axios";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify()
 var qs = require("qs");
 const store = userStore();
 const $q = useQuasar();
@@ -60,11 +62,9 @@ const getBonus = (type) => {
       winAmount.value = res.data;
       bonusOpened.value = true;
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
 
       bonusOpened.value = false;

@@ -78,7 +78,9 @@
 import { ref, onMounted } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
 
 const typeActive = ref("");
 const announcementActive = ref("");
@@ -96,7 +98,7 @@ const loadAnnouncement = () => {
       // announcementList.value = d.announcements
       // announcementList.value = res.data.announcements
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

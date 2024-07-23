@@ -97,7 +97,7 @@
             <img src="../assets/images/index/icon-volume.png" />
           </div>
           <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 300">
+            <marquee-text :repeat="5" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
@@ -2382,8 +2382,14 @@ const loadHotGameList = () => {
         .then((res) => {
           gameLists = res;
 
+          // console.log("HERE");
+          // console.log(gameLists);
+          // console.log(hotlists);
+
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item2.platformCode === item1.platform
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2400,7 +2406,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
@@ -5011,7 +5017,7 @@ const showCongratsModal = () => {
 
 .money-rain-close {
   position: absolute;
-  bottom: 50px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
 }

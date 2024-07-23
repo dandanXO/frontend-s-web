@@ -276,6 +276,9 @@ import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 import { useQuasar } from "quasar";
 import {useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const tableRecordDialog = ref(false);
@@ -297,19 +300,15 @@ const handleSubmitVote = () => {
   submitNbaMatch(submitParam)
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功！",
-          icon: "check_circle_outline"
         });
         getNbaMatchData();
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     })

@@ -227,7 +227,38 @@ router.beforeEach((to, from, next) => {
   } else if (window.location.href.indexOf("kakavn.app") > -1) {
     fbq("init", "463504196607854");
     fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame38.app") > -1) {
+    fbq("init", "342669618894591");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
+    fbq("init", "976575897104655");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakavn.vip/agent/C58A95") > -1) {
+    fbq("init", "795707932732808");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakavn.shop/agent/2D48F7") > -1) {
+    fbq("init", "3742002766037130");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame6.app/agent/B0E62B") > -1) {
+    fbq("init", "1065055615337117");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame6.vip/agent/81D2DE") > -1) {
+    fbq("init", "3596435077285259");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame38.com/agent/B5E1EE") > -1) {
+    fbq("init", "1229331245097015");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame38.vip/agent/CF4444") > -1) {
+    fbq("init", "1163064048304297");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakagame88.app/agent/E63D89") > -1) {
+    fbq("init", "1227157148415264");
+    fbq("track", "PageView");
+  } else if (window.location.href.indexOf("kakaad.vip/agent/CF1753") > -1) {
+    fbq("init", "1150936866165559");
+    fbq("track", "PageView");
   }
+
   // else if (window.location.href.indexOf("wintf99.com") > -1) {
   //   fbq("init", "441415921872746");
   //   fbq("track", "PageView");

@@ -2572,6 +2572,7 @@ export default {
     'Promotion Coupon': '存款券',
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
+    'Affiliate Change Log': '更换代理日志',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2618,8 +2619,8 @@ export default {
     added_success: '谷歌验证码成功添加。',
     if_not_google_auth_then: '若未绑定Google Authenticator 则无需填写',
     google_auth_code: '请输入6位数谷歌验证码',
-    register_count: "今日已注册数",
-    register_limit: "今日可注册数"
+    register_count: '今日已注册数',
+    register_limit: '今日可注册数',
   },
   posterType: {
     overall: '综合推广图',

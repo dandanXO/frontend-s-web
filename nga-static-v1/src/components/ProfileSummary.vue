@@ -226,7 +226,7 @@ const onLogout = () => {
 const topDownload = ref(false);
 const topDownloadcloseBtn = ref(true);
 
-const topDownloadCount = ref(6);
+const topDownloadCount = ref(11);
 
 const closeTopdownload = () => {
   topDownload.value = false;
@@ -254,7 +254,7 @@ const checkTopDownloadAppear = () => {
       countdown();
       setTimeout(() => {
         topDownload.value = false;
-      }, 6000);
+      }, 11000);
     }
   }
 };

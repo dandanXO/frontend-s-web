@@ -618,6 +618,13 @@ deploy-xf-cesu:
 
 #===============================================================================================
 
+deploy-nga-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: nga-download
+
+#===============================================================================================
+
 build-kr-live-web:
   extends: .build-projects
   variables:

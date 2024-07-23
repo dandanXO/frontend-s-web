@@ -44,7 +44,7 @@
         <div class="olympic24-match-game-bottom">
           <div class="olympic24-match-game-bottom-left-title">
             <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
-            用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
           </div>
         </div>
       </div>
@@ -289,6 +289,9 @@ import {
 // import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 import { useQuasar } from "quasar";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify()
 const $q = useQuasar();
 
 const tableRecordDialog = ref(false);
@@ -315,11 +318,9 @@ const handleSubmitVote = () => {
       if (res.code === 0) {
         getData();
 
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功！",
-          icon: "check_circle_outline"
         });
       }
     })
@@ -662,7 +663,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 335px;
-    height: 20px;
+    height: 26px;
     margin-bottom: 16px;
   }
   .little-title {
@@ -761,7 +762,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 335px;
-    height: 20px;
+    height: 26px;
     margin-bottom: 16px;
   }
   .content {

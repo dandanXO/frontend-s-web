@@ -29,7 +29,8 @@
 import { ref, onMounted, defineProps } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
 
 const props = defineProps({
   promoCode: {
@@ -45,6 +46,8 @@ const props = defineProps({
     required: true
   }
 });
+
+const notify = useNotify();
 
 const promoCode = ref(props.promoCode);
 const promoContent = ref(props.pageContent);
@@ -81,7 +84,7 @@ const getPromotion = () => {
         // bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
-        ElMessage.error(res.message)
+        notify.error(res.message)
       }
     })
     .catch((err) => {

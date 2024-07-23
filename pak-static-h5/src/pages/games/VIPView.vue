@@ -455,74 +455,74 @@ const rows = [
   },
   {
     name: "VIP 1",
-    ugprade: "5,000",
-    reward: "20",
+    ugprade: "1,000",
+    reward: "30",
     flow: "38"
   },
   {
     name: "VIP 2",
-    ugprade: "10,000",
-    reward: "25",
+    ugprade: "3,000",
+    reward: "50",
     flow: "88"
   },
   {
     name: "VIP 3",
-    ugprade: "20,000",
-    reward: "50",
+    ugprade: "5,000",
+    reward: "100",
     flow: "188"
   },
   {
     name: "VIP 4",
-    ugprade: "50,000",
-    reward: "100",
+    ugprade: "10,000",
+    reward: "200",
     flow: "388"
   },
   {
     name: "VIP 5",
-    ugprade: "100,000",
-    reward: "200",
+    ugprade: "30,000",
+    reward: "500",
     flow: "588"
   },
   {
     name: "VIP 6",
-    ugprade: "200,000",
-    reward: "300",
+    ugprade: "50,000",
+    reward: "1,000",
     flow: "888"
   },
   {
     name: "VIP 7",
-    ugprade: "500,000",
-    reward: "1,000",
+    ugprade: "100,000",
+    reward: "2,000",
     flow: "1,888"
   },
   {
     name: "VIP 8",
-    ugprade: "1,000,000",
-    reward: "2,000",
+    ugprade: "300,000",
+    reward: "3,000",
     flow: "3,888"
   },
   {
     name: "VIP 9",
-    ugprade: "2,000,000",
-    reward: "3,000",
+    ugprade: "500,000",
+    reward: "4,000",
     flow: "8,888"
   },
   {
     name: "VIP 10",
-    ugprade: "5,000,000",
-    reward: "10,000",
+    ugprade: "1,000,000",
+    reward: "5,000",
     flow: "28,888"
   },
   {
     name: "VIP 11",
-    ugprade: "10,000,000",
-    reward: "20,000",
+    ugprade: "3,000,000",
+    reward: "10,000",
     flow: "58,888"
   },
   {
     name: "VIP 12",
-    ugprade: "20,000,000",
-    reward: "30,000",
+    ugprade: "5,000,000",
+    reward: "20,000",
     flow: "88,888"
   }
 ];

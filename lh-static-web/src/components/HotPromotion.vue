@@ -106,6 +106,8 @@
 
 <script>
 import { defineComponent } from "vue";
+import { mapActions } from "pinia";
+import { uiStore } from "@/store/ui";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
@@ -167,7 +169,6 @@ import OlympicCheckin from "../components/hotpromo/olympic-checkin/OlympicChecki
 import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/ChallengeComeback.vue";
 import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
@@ -374,6 +375,7 @@ export default defineComponent({
     }
   },
   methods: {
+    ...mapActions(uiStore, ['notify']),
     handleSlot() {
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
@@ -386,7 +388,10 @@ export default defineComponent({
             this.loadingClaim = false;
             this.store.getBalance();
           } else {
-            ElMessage.error(res.message);
+            this.notify({
+              type: "error",
+              message: res.message
+            });
             this.loadingClaim = false;
           }
         })
@@ -401,14 +406,17 @@ export default defineComponent({
       submitLuckyNumber(this.luckyNumber)
         .then((res) => {
           if (res.code === 0) {
-            ElMessage.success({
+            this.notify({
               type: "success",
               message: "成功发送号码。"
             });
             this.luckyNumber = null;
             this.btnLoading = false;
           } else {
-            ElMessage.error(res.message);
+            this.notify({
+              type: "error",
+              message: res.message
+            });
             this.btnLoading = false;
           }
         })
@@ -468,7 +476,10 @@ export default defineComponent({
               this.emptyText = "今天没有获奖者。";
             }
           } else {
-            ElMessage.error(res.message);
+            this.notify({
+              type: "error",
+              message: res.message
+            });
           }
         })
         .catch((err) => {

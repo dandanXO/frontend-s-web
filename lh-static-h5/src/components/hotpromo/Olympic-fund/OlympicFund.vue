@@ -40,9 +40,10 @@
     </div>
 
     <div class="olympic-fund-block description-block">
-      <div class="olympic-fund-block-title">
-        <img src="./img/exclamation.svg" />
-        <span>活动说明</span>
+      <div class="olympic-fund-block-title-ol">
+        <!-- <img src="./img/exclamation.svg" />
+        <span>活动说明</span> -->
+        <img src="./img/info-title.png">        
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
@@ -104,9 +105,10 @@
     </div>
 
     <div class="olympic-fund-block rule-block">
-      <div class="olympic-fund-block-title">
-        <img src="./img/exclamation.svg" />
-        <span>活动规则</span>
+      <div class="olympic-fund-block-title-ol">
+        <!-- <img src="./img/exclamation.svg" />
+        <span>活动规则</span> -->
+        <img src="./img/rule-title.png">   
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
         <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
@@ -144,7 +146,9 @@
 import { computed, onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify()
 const $q = useQuasar();
 
 const selected = ref("gift");
@@ -171,13 +175,13 @@ const handleClick = () => {
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
-      $q.notify({
-        color: "positive",
+      notify({
+        type: "success",
         message: "领取成功"
       });
     } else {
-      $q.notify({
-        color: "negative",
+      notify({
+        type: "error",
         message: res.message
       });
     }
@@ -191,8 +195,8 @@ onMounted(() => {
       depositData.value.todayFirstDepositAmount = todayFirstDepositAmount;
       depositData.value.helpBonus = claimableAmount;
     } else {
-      $q.notify({
-        color: "negative",
+      notify({
+        type: "error",
         message: res.message
       });
     }
@@ -203,8 +207,8 @@ onMounted(() => {
       depositData.value.ytdSportBetAmount = ytdSportBetAmount;
       depositData.value.breakthroughBonus = claimableAmount;
     } else {
-      $q.notify({
-        color: "negative",
+      notify({
+        type: "error",
         message: res.message
       });
     }
@@ -238,6 +242,14 @@ onMounted(() => {
       font-size: 1rem;
       font-weight: 600;
       line-height: 1.375rem;
+      &-ol {
+        display: flex;
+        align-items: center;
+        img {
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
 
       img {
         max-width: 20px;

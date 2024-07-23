@@ -789,3 +789,15 @@ svg {
     background: $linear-bg-dark;
   }
 }
+
+
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  transition: opacity .5s ease, top .5s ease;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
+}

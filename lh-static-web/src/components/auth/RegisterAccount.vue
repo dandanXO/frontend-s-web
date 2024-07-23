@@ -125,10 +125,11 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify();
 const registerTelephoneKey = `registerTelephoneKey`;
 let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
@@ -376,7 +377,7 @@ const getCode = () => {
       verificationImg.value = "data:image/png;base64," + res.data.img;
       regForm.codeId = res.data.id;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -414,7 +415,7 @@ const submitRegisterForm = async (elForm) => {
             .then((response) => {
               const regResult = response.code;
               if (regResult === 0) {
-                ElMessage({
+                notify({
                   type: "success",
                   message: "注册成功"
                 });
@@ -429,7 +430,10 @@ const submitRegisterForm = async (elForm) => {
                   router.push("/");
                 }
               } else {
-                ElMessage.error(response.message);
+                notify({
+                  type: "error",
+                  message: response.message
+                });
                 getCode();
               }
             })

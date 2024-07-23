@@ -25,10 +25,10 @@
   <!-- Splash screen theme -->
   <style name="Theme.App.Splash" parent="Theme.SplashScreen">
     <!-- Set the splash screen background -->
-    <item name="windowSplashScreenBackground">@color/newSplashBackgroundColor</item>
+    <item name="windowSplashScreenBackground">@color/colorPrimary</item>
     <!-- Set the splash screen icon -->
     <item name="windowSplashScreenAnimatedIcon">@drawable/icon_splash</item>
     <!-- Set the splash screen icon background color -->
-    <item name="windowSplashScreenIconBackgroundColor">@color/newSplashBackgroundColor</item>
+    <item name="windowSplashScreenIconBackgroundColor">@color/colorPrimary</item>
   </style>
 </resources>

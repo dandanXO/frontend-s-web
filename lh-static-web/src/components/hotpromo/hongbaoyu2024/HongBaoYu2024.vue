@@ -89,7 +89,7 @@
 import { ref, defineProps, onMounted, reactive } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
@@ -100,6 +100,7 @@ const startTime = reactive({
 });
 
 const store = userStore();
+const notify = useNotify();
 const privilegeClaimedModalVisible = ref(false);
 // const promoNotReady = ref(false);
 const bonusOpened = ref(false);
@@ -122,7 +123,7 @@ const getPromotion = () => {
 
         bonusOpened.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
         bonusOpened.value = false;
       }
     })

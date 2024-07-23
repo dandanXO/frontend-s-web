@@ -29,7 +29,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { checkInInfo, signIn } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
 
 const dateDetails = ref([]);
 const init = () => {
@@ -43,7 +45,7 @@ const loadDailyCheckIn = () => {
       checkInDetails.value = res.data;
       generateMonthMaxDaysArray(checkInDetails.value);
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -84,13 +86,13 @@ const checkIn = (mth) => {
   signIn().then((res) => {
     if (res.code === 0) {
       mth.isCheckedIn = true;
-      ElMessage({
+      notify({
         type: "success",
         message: "领取成功"
       });
       getCheckInDays(res.data)
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

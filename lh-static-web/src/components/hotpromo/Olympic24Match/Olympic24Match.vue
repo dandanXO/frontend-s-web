@@ -44,7 +44,7 @@
         <div class="olympic24-match-game-bottom">
           <div class="olympic24-match-game-bottom-left-title">
             <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
-            用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@
                 <!--                  投票-->
                 <!--                </div>-->
                 <div v-else-if="((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
-                  <button 
+                  <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
                     :disabled="data.votedTeam && data.votedTeam === data.awayTeam"
@@ -250,8 +250,10 @@ import {
   submitBBDacha,
   getBBDachaRecordsCount
 } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
@@ -281,7 +283,7 @@ const handleSubmitVote = () => {
     .then((res) => {
       if (res.code === 0) {
         getData();
-        ElMessage.success("投票成功！");
+        notify.success("投票成功！");
       }
     })
     .catch(() => {})
@@ -615,7 +617,8 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 738px;
-    height: 44px;
+    // height: 44px;
+    height: 55px;
     // margin-bottom: 40px;
     margin: 0 auto 40px;
   }
@@ -714,7 +717,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 738px;
-    height: 44px;
+    height: 55px;
     margin-bottom: 20px;
   }
   .content {

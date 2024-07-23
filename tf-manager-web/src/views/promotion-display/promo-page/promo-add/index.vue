@@ -971,6 +971,18 @@ function loadPromoTypes() {
       { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
       { typeName: 'VIP', value: 15, displayName: 'VIP' },
     ]
+  } else if (LOGIN_SITE_ID === 6) {
+    // Dongying 东赢
+    promoTypes.value = [
+      { typeName: 'WELCOME', value: 1, displayName: "新人优惠" },
+      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+      { typeName: 'LIVE CASINO', value: 5, displayName: "真人棋牌" },
+      { typeName: 'SLOT GAME', value: 6, displayName: "电游活动" },
+      { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
+      { typeName: 'LIMITED', value: 16, displayName: "限时热门" },
+      { typeName: 'FTD', value: 9, displayName: "充提优惠" },
+    ];
   } else {
     promoTypes.value = [
       { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
@@ -989,7 +1001,7 @@ function loadPromoTypes() {
       { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
       { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
       { typeName: 'VIP', value: 15, displayName: 'VIP' },
-      { typeName: 'LIMITED', value: 15, displayName: t('promoType.LIMITED') },
+      { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
     ]
   }
 }

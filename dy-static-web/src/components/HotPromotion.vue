@@ -12,7 +12,7 @@
     <ESportSafetyPromo v-if="list.redirectUrl === 'dy2-esport-safety'" />
     <SportSafetyPromo v-if="list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="list.redirectUrl === 'nba-game'" />
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" />
+    <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
 
@@ -24,6 +24,7 @@
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A' && store.token"></AsianCup2024>
     <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && store.token"></BasketballHot>
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
+    <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match' && store.token" />
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && store.token"></LPLSummer>
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && store.token"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && store.token"></BbDacha2024Promo>
@@ -64,6 +65,7 @@
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
+    <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund' && store.token" />
     <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
       <img
@@ -98,7 +100,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import ESportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
 import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
-import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
+import MeiZhouBeiPromoPage from "./hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -129,6 +131,8 @@ import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vu
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
+import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
+import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 
@@ -143,10 +147,12 @@ export default defineComponent({
     SportZhongChao,
     BlastPremierPromo,
     fishHongbao,
+    Olympic24Match,
+    OlympicFund,
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     ESportSafetyPromo,
     SportSafetyPromo,

@@ -38,7 +38,7 @@
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <MeiZhouBeiPromo v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
+    <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <InsuranceSubmitPromo
       v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
@@ -74,6 +74,7 @@
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
+    <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match' && store.token" />
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && store.token" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && store.token" />
@@ -81,7 +82,7 @@
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
-
+    <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund' && store.token" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
@@ -160,7 +161,11 @@ const BlastPremierPromo = defineAsyncComponent(
   () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
 );
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
-const MeiZhouBeiPromo = defineAsyncComponent(() => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"));
+const MeiZhouBeiPromoPage = defineAsyncComponent(
+  () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
+);
+const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"))
+const Olympic24Match = defineAsyncComponent(() => import("../components/hotpromo/Olympic24Match/Olympic24Match.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
 export default defineComponent({
@@ -171,10 +176,12 @@ export default defineComponent({
     SportZhongChao,
     BlastPremierPromo,
     fishHongbao,
+    OlympicFund,
+    Olympic24Match,
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYu2024,

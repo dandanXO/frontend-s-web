@@ -129,11 +129,11 @@ export default defineComponent({
         }
       }, 20000);
 
-      // checkUnreadMessagesInterval.value = setInterval(function () {
-      //   if (store.hasToken()) {
-      //     store.getUnreadTotal();
-      //   }
-      // }, 30000);
+      checkUnreadMessagesInterval.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getUnreadTotal();
+        }
+      }, 30000);
     }
 
     const clearAllIntervals = () => {
