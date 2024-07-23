@@ -73,6 +73,7 @@ const redeemPoint = (privilegeId) => {
             });
 
             store.getPendingRebateAmt();
+            store.getBalance();
         }
     })
 }
