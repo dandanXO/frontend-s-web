@@ -74,6 +74,7 @@ export default {
     game_category_slot: 'Slot Game',
     game_category_sport: 'Sports',
     game_category_minigame: 'Mini Game',
+    game_category_poker: "Poker",
     // game category end
     // game item start
     game_item_entry: "Game Entry",
