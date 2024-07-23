@@ -31,7 +31,7 @@
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'events'">
         <div class="content-sec">
-          <div><img src="../../assets/images/index/money-rain/treassure-img.png" /></div>
+          <div class="treasure-img"><img src="../../assets/images/index/money-rain/baoxiang.gif" /></div>
           <div class="rewind-title">
             Rewind time
             <span>
@@ -40,8 +40,17 @@
               <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
             </span>
           </div>
+
           <div class="go-btn" v-if="nextRainTime.nowIsRain">
-            <img src="../../assets/images/index/money-rain/go-btn.png" @click="onClaimBonus" />
+            <q-btn
+              round
+              @click="onClaimBonus"
+              :disable="claimBonusClicked"
+              :loading="loadingClaim"
+              class="claim-bonus-btn"
+            >
+              <img src="../../assets/images/index/money-rain/go-btn.png" />
+            </q-btn>
           </div>
         </div>
         <div class="content-timing">
@@ -71,20 +80,24 @@
           </div> -->
           <div class="footer-title q-mt-sm">Terms and Conditions:</div>
           <div class="footer-content">
-            Total distribution amount is 666,666 PKR; first come, first served.
+            Each round of cash rain freely distributes 666,666 PKR.
             <br />
-            Maximum winnings per participant: 66,666 PKR.
+            Maximum cashback amount per round: 66,666 PKR.
             <br />
-            The received amount can be directly withdrawn.
+            Each round freely distributes cashback.
             <br />
-            Members with a deposit history of over 1000 PKR can claim the Red Packet for free daily.
+            Historical deposits of 1000 PKR can be claimed for free over the long term.
+            <br />
+            The received money can be directly used for playing games or withdrawing.
+            <br />
+            The higher the VIP membership level, the greater the amount received.
           </div>
         </div>
       </div>
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'records'">
         <div class="content-sec">
-          <div><img src="../../assets/images/index/money-rain/treassure-img.png" /></div>
+          <div class="treasure-img"><img src="../../assets/images/index/money-rain/baoxiang.gif" /></div>
           <div class="rewind-title">
             Rewind time
             <span>
@@ -280,8 +293,8 @@ const getListing = () => {
     .then((res) => {
       if (res.code === 0) {
         // listingData.value = res.data;
-        res.data.forEach(item => {
-          if (item.hasOwnProperty('amount')) {
+        res.data.forEach((item) => {
+          if (item.hasOwnProperty("amount")) {
             item.amount = convertToTwoDecimalAmount(item.amount);
           }
         });
@@ -296,6 +309,8 @@ const getListing = () => {
       console.log(err.message);
     });
 };
+
+const claimBonusClicked = ref(false);
 
 const nextRainTime = reactive({
   nowIsRain: false,
@@ -332,6 +347,8 @@ const getNextRainTime = () => {
         const formattedHours = String(startTime.getHours()).padStart(2, "0");
         const formattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
         nextRainTime.rainStartNext = `${formattedHours}:${formattedMinutes}`;
+
+        claimBonusClicked.value = true;
       }
     })
     .catch((err) => {
@@ -520,6 +537,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
 
+    .treasure-img {
+      padding-left: 8px;
+      img {
+        display: block;
+        width: 70px;
+      }
+    }
+
     .rewind-title {
       font-weight: bold;
       text-align: center;
@@ -641,6 +666,12 @@ onMounted(() => {
   --random-x: calc(var(--random-x));
   left: -100px;
   // pointer-events: none;
+}
+
+.claim-bonus-btn {
+  &.disabled {
+    filter: grayscale(100%);
+  }
 }
 
 @keyframes fall {
