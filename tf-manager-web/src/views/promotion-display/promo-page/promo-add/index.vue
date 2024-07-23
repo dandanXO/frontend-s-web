@@ -45,6 +45,15 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button
+            v-if="form.desktopImgUrl"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="form.desktopImgUrl = ''"
+          >
+            {{ t('fields.remove') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -54,10 +63,7 @@
         prop="desktopImgBackgroundUrl"
       >
         <el-row :gutter="5">
-          <el-col
-            v-if="form.desktopImgBackgroundUrl"
-            style="width: 250px"
-          >
+          <el-col v-if="form.desktopImgBackgroundUrl" style="width: 250px">
             <el-image
               v-if="form.desktopImgBackgroundUrl"
               :src="promoDir + form.desktopImgBackgroundUrl"
@@ -84,6 +90,15 @@
             @click="browseImage('DESKTOP_BACKGROUND_IMAGE')"
           >
             {{ t('fields.browse') }}
+          </el-button>
+          <el-button
+            v-if="form.desktopImgBackgroundUrl"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="form.desktopImgBackgroundUrl = ''"
+          >
+            {{ t('fields.remove') }}
           </el-button>
         </el-row>
       </el-form-item>
@@ -119,6 +134,15 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button
+            v-if="form.mobileImgUrl"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="form.mobileImgUrl = ''"
+          >
+            {{ t('fields.remove') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -128,10 +152,7 @@
         prop="mobileImgBackgroundUrl"
       >
         <el-row :gutter="5">
-          <el-col
-            v-if="form.mobileImgBackgroundUrl"
-            style="width: 250px"
-          >
+          <el-col v-if="form.mobileImgBackgroundUrl" style="width: 250px">
             <el-image
               v-if="form.mobileImgBackgroundUrl"
               :src="promoDir + form.mobileImgBackgroundUrl"
@@ -158,6 +179,15 @@
             @click="browseImage('MOBILE_BACKGROUND_IMAGE')"
           >
             {{ t('fields.browse') }}
+          </el-button>
+          <el-button
+            v-if="form.mobileImgBackgroundUrl"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="form.mobileImgBackgroundUrl = ''"
+          >
+            {{ t('fields.remove') }}
           </el-button>
         </el-row>
       </el-form-item>
@@ -193,6 +223,15 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button
+            v-if="form.desktopBannerUrl"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="form.desktopBannerUrl = ''"
+          >
+            {{ t('fields.remove') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -227,6 +266,15 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button
+            v-if="form.mobileBannerUrl"
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="form.mobileBannerUrl = ''"
+          >
+            {{ t('fields.remove') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -245,6 +293,7 @@
           style="width: 260px"
           default-first-option
           @focus="loadSites"
+          @change="onChangeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -315,7 +364,59 @@
         </el-form-item>
       </el-col>
     </el-row>
-
+    <el-row v-if="form.siteId === 8">
+      <el-form-item label="VIP" prop="vips">
+        <el-checkbox
+          v-model="checkboxes.vip.checkAll"
+          :indeterminate="checkboxes.vip.isIndeterminate"
+          @change="handleVIPCheckAllChange"
+        >
+          {{ t('fields.checkall') }}
+        </el-checkbox>
+        <el-checkbox-group
+          v-model="selectedVIPs.vipChecked"
+          @change="handleCheckedChange"
+          style="width: 300px"
+        >
+          <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
+            {{ v.name }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+    </el-row>
+    <el-row v-if="form.siteId === 8">
+      <el-form-item :label="t('fields.affiliateCode')" prop="affiliates">
+        <el-checkbox @change="onCheckAllAffiliate" v-model="checkAllAff">
+          {{ t('fields.all') }}
+        </el-checkbox>
+        <div class="flex gap-2 mt-4">
+          <el-tag
+            v-for="aff in uiControl.affList"
+            :key="aff"
+            closable
+            :disable-transitions="false"
+            @close="removeAff(aff)"
+            style="margin-right: 5px;"
+          >
+            {{ aff }}
+          </el-tag>
+        </div>
+        <el-input
+          v-if="uiControl.inputVisible"
+          ref="InputRef"
+          v-model="inputValue"
+          class="w-20"
+          size="small"
+          @keyup.enter="handleInputConfirm"
+          @blur="handleInputConfirm"
+        />
+        <div v-else>
+          <el-button class="button-new-tag" size="small" @click="showInput">
+            + {{ t('fields.affiliateCode') }}
+          </el-button>
+        </div>
+      </el-form-item>
+    </el-row>
     <el-row>
       <el-form-item :label="t('fields.sequence')" prop="sequence">
         <el-col :span="7">
@@ -551,56 +652,97 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item
-        :label="t('fields.promoType')"
-        prop="promoType"
-      >
+      <el-form-item :label="t('fields.promoType')" prop="promoType">
         <!--insert image size-->
         <div v-if="imageForm.promoType === 'DESKTOP_IMAGE'">
           <el-row>
-            <span style="width: 350px" disabled>{{ t('fields.desktopImage') }}</span>
+            <span style="width: 350px" disabled>
+              {{ t('fields.desktopImage') }}
+            </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 355*180</span>
-          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 800*188</span>
-          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 355*180</span>
-          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1920*600</span>
+          <span v-if="imageForm.siteId === 1">
+            {{ t('fields.imageSize') }}: 355*180
+          </span>
+          <span v-if="imageForm.siteId === 3">
+            {{ t('fields.imageSize') }}: 800*188
+          </span>
+          <span v-if="imageForm.siteId === 6">
+            {{ t('fields.imageSize') }}: 355*180
+          </span>
+          <span v-if="imageForm.siteId === 7">
+            {{ t('fields.imageSize') }}: 1920*600
+          </span>
         </div>
         <div v-if="imageForm.promoType === 'DESKTOP_BACKGROUND_IMAGE'">
           <el-row>
-            <span style="width: 350px" disabled>{{ t('fields.desktopBackgroundImage') }}</span>
+            <span style="width: 350px" disabled>
+              {{ t('fields.desktopBackgroundImage') }}
+            </span>
           </el-row>
         </div>
         <div v-if="imageForm.promoType === 'MOBILE_IMAGE'">
           <el-row>
-            <span style="width: 350px" disabled>{{ t('fields.mobileImage') }}</span>
+            <span style="width: 350px" disabled>
+              {{ t('fields.mobileImage') }}
+            </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1004*252</span>
-          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 1000*454</span>
-          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1004*252</span>
-          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1080*512</span>
+          <span v-if="imageForm.siteId === 1">
+            {{ t('fields.imageSize') }}: 1004*252
+          </span>
+          <span v-if="imageForm.siteId === 3">
+            {{ t('fields.imageSize') }}: 1000*454
+          </span>
+          <span v-if="imageForm.siteId === 6">
+            {{ t('fields.imageSize') }}: 1004*252
+          </span>
+          <span v-if="imageForm.siteId === 7">
+            {{ t('fields.imageSize') }}: 1080*512
+          </span>
         </div>
         <div v-if="imageForm.promoType === 'MOBILE_BACKGROUND_IMAGE'">
           <el-row>
-            <span style="width: 350px" disabled>{{ t('fields.mobileBackgroundImage') }}</span>
+            <span style="width: 350px" disabled>
+              {{ t('fields.mobileBackgroundImage') }}
+            </span>
           </el-row>
         </div>
         <div v-if="imageForm.promoType === 'DESKTOP_BANNER'">
           <el-row>
-            <span style="width: 350px" disabled>{{ t('fields.desktopBanner') }}</span>
+            <span style="width: 350px" disabled>
+              {{ t('fields.desktopBanner') }}
+            </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1920*500</span>
-          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 2000*500</span>
-          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1920*500</span>
-          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1920*568</span>
+          <span v-if="imageForm.siteId === 1">
+            {{ t('fields.imageSize') }}: 1920*500
+          </span>
+          <span v-if="imageForm.siteId === 3">
+            {{ t('fields.imageSize') }}: 2000*500
+          </span>
+          <span v-if="imageForm.siteId === 6">
+            {{ t('fields.imageSize') }}: 1920*500
+          </span>
+          <span v-if="imageForm.siteId === 7">
+            {{ t('fields.imageSize') }}: 1920*568
+          </span>
         </div>
         <div v-if="imageForm.promoType === 'MOBILE_BANNER'">
           <el-row>
-            <span style="width: 350px" disabled>{{ t('fields.mobileBanner') }}</span>
+            <span style="width: 350px" disabled>
+              {{ t('fields.mobileBanner') }}
+            </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1080*534</span>
-          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 1080*675</span>
-          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1080*534</span>
-          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1000*400</span>
+          <span v-if="imageForm.siteId === 1">
+            {{ t('fields.imageSize') }}: 1080*534
+          </span>
+          <span v-if="imageForm.siteId === 3">
+            {{ t('fields.imageSize') }}: 1080*675
+          </span>
+          <span v-if="imageForm.siteId === 6">
+            {{ t('fields.imageSize') }}: 1080*534
+          </span>
+          <span v-if="imageForm.siteId === 7">
+            {{ t('fields.imageSize') }}: 1000*400
+          </span>
         </div>
       </el-form-item>
       <el-form-item :label="t('fields.remark')" prop="remark">
@@ -640,18 +782,26 @@ import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import { getVipList } from '../../../../api/vip'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
+const LOGIN_SITE_ID = store.state.user.siteId
 const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const promoForm = ref(null)
 const param = ref([])
+const inputValue = ref('')
+const InputRef = ref(null)
+const checkAllAff = ref(false)
 
+const vipList = reactive({
+  list: [],
+})
 const uploadedImage = reactive({
   url: null,
 })
@@ -679,6 +829,8 @@ const form = reactive({
   createBy: null,
   hasPromo: false,
   param: null,
+  vips: null,
+  affiliates: null,
 })
 
 const imageForm = reactive({
@@ -704,6 +856,15 @@ const uiControl = reactive({
   imageSelectionTitle: '',
   imageSelectionType: '',
   imageSelectionVisible: false,
+  inputVisible: false,
+  affList: [],
+})
+
+const checkboxes = reactive({
+  vip: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
 })
 
 const imageRequest = reactive({
@@ -730,6 +891,8 @@ const formRules = reactive({
   promoCode: [required(t('message.validatePromoCodeRequired'))],
   pageContent: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
+  vips: [required(t('message.validateVIPRequired'))],
+  affiliates: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
 const imageFormRules = reactive({
@@ -767,19 +930,69 @@ const labelType = reactive({
     { key: 8, displayName: t('promoLabel.featured'), value: 7 },
   ],
 })
-const promoTypes = [
-  { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-  { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-  { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-  { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-  { typeName: 'LIVE CASINO', value: 5, displayName: t('promoType.LIVECASINO') },
-  { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
-  { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-  { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-  { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-  { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-  { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
-]
+
+const promoTypes = ref([])
+const selectedVIPs = reactive({ vipChecked: [] })
+
+function loadPromoTypes() {
+  if (LOGIN_SITE_ID === 11 || form.siteId === 11) {
+    promoTypes.value = [
+      { typeName: 'EARN', value: 12, displayName: 'EARN' },
+      { typeName: 'HOT', value: 13, displayName: 'HOT' },
+      { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
+      { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
+      { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
+      { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
+      { typeName: 'VIP', value: 15, displayName: 'VIP' },
+    ]
+  } else if (LOGIN_SITE_ID === 0) {
+    promoTypes.value = [
+      { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+      { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+      {
+        typeName: 'LIVE CASINO',
+        value: 5,
+        displayName: t('promoType.LIVECASINO'),
+      },
+      { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
+      { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+      { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+      { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+      { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+      { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+
+      { typeName: 'EARN', value: 12, displayName: 'EARN' },
+      { typeName: 'HOT', value: 13, displayName: 'HOT' },
+      { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
+      { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
+      { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
+      { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
+      { typeName: 'VIP', value: 15, displayName: 'VIP' },
+    ]
+  } else {
+    promoTypes.value = [
+      { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+      { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+      {
+        typeName: 'LIVE CASINO',
+        value: 5,
+        displayName: t('promoType.LIVECASINO'),
+      },
+      { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
+      { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+      { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+      { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+      { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+      { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+      { typeName: 'VIP', value: 15, displayName: 'VIP' },
+      { typeName: 'LIMITED', value: 15, displayName: t('promoType.LIMITED') },
+    ]
+  }
+}
 
 function handleCheckedChangePromoType() {
   form.promoType = selected.promoTypeChecked.join(',')
@@ -882,12 +1095,20 @@ function constructParam() {
       json[item.key] = item.value
     }
   })
+  if (checkboxes.vip.checkAll) {
+    form.vips = null
+  }
+  if (checkAllAff.value) {
+    form.affiliates = null
+  } else {
+    form.affiliates = uiControl.affList.join(',')
+  }
   return JSON.stringify(json)
 }
 
 function submit() {
   if (!form.labelType && form.labelType !== 0) {
-    form.labelType = -1;
+    form.labelType = -1
   }
   if (route.name.includes('Add')) {
     create()
@@ -917,12 +1138,30 @@ async function loadForm(id, siteId) {
     }
 
     form.siteId = ret.siteId
+    loadPromoTypes()
+    if (form.siteId === 8) {
+      loadVips()
+    }
     // checked promoType checkboxes
     // const promoArr = form.promoType.split(",").map(Number)
     const promoArr = form.promoType.split(',')
     promoArr.forEach(element => {
       selected.promoTypeChecked.push(element)
     })
+    const vipArr = form.vips ? form.vips.split(',') : []
+    vipArr.forEach(element => {
+      selectedVIPs.vipChecked.push(parseInt(element))
+    })
+    if (vipArr.length === 0) {
+      checkboxes.vip.checkAll = true
+    }
+    const affArr = form.affiliates ? form.affiliates.split(',') : []
+    affArr.forEach(element => {
+      uiControl.affList.push(element)
+    })
+    if (affArr.length === 0) {
+      onCheckAllAffiliate(true)
+    }
     param.value = []
     if (form.param) {
       Object.entries(JSON.parse(form.param)).forEach(([key, value]) => {
@@ -1108,8 +1347,76 @@ function submitImageUpload() {
   })
 }
 
+function onChangeSite() {
+  if (parseInt(form.siteId) === 8) {
+    loadVips()
+  }
+}
+
+async function loadVips() {
+  const { data: vip } = await getVipList()
+  vipList.list = vip.filter(vip => vip.siteId === form.siteId)
+}
+
+const handleVIPCheckAllChange = val => {
+  selectedVIPs.vipChecked = []
+  if (val) {
+    vipList.list.forEach(vip => {
+      selectedVIPs.vipChecked.push(vip.id)
+    })
+  }
+  handleCheckedChange()
+}
+
+function handleCheckedChange() {
+  form.vips = selectedVIPs.vipChecked.join(',')
+  const vipIds = [...new Set(vipList.list.map(el => el.id))]
+  handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
+}
+
+function handleCategoryChange(selectedList, checkboxData, dataList) {
+  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
+  const listCount = dataList.length
+  checkboxData.checkAll = selectedCount === listCount
+  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
+}
+
+const showInput = () => {
+  uiControl.inputVisible = true
+}
+
+function onCheckAllAffiliate(value) {
+  checkAllAff.value = value
+  if (value) {
+    form.affiliates = "test"
+  } else {
+    form.affiliates = uiControl.affList.join(",")
+  }
+}
+
+const removeAff = aff => {
+  uiControl.affList.splice(uiControl.affList.indexOf(aff), 1)
+}
+
+const handleInputConfirm = () => {
+  if (inputValue.value) {
+    if (!inputValue.value.includes(',') && !inputValue.value.includes('\n')) {
+      uiControl.affList.push(inputValue.value)
+    } else {
+      const arr = inputValue.value.split(/,|\n/)
+      arr.forEach(item => {
+        if (item) {
+          uiControl.affList.push(item)
+        }
+      })
+    }
+    form.affiliates = uiControl.affList.join(",")
+  }
+  uiControl.inputVisible = false
+  inputValue.value = ''
+}
+
 onMounted(() => {
-  console.log('new page ')
   loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
@@ -1119,6 +1426,7 @@ onMounted(() => {
     loadForm(route.params.id, route.params.siteId)
   } else {
     addParam()
+    loadPromoTypes()
   }
 })
 </script>

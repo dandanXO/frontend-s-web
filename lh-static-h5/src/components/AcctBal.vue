@@ -3,7 +3,8 @@
     <div class="top-balance">
       <div class="mainbal">
         <div class="icon">
-          <img src="../assets/images/account/account-wallet-icon.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" />
+          <img v-else src="../assets/images/account/account-wallet-icon.png" />
           <div class="label">中心钱包</div>
         </div>
         <div class="wallet">
@@ -95,6 +96,9 @@ import { ref, reactive, onMounted, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify()
 
 const isLoadingBalance = ref(false);
 const isRefreshingBalance = ref(true);
@@ -199,12 +203,10 @@ const refreshBalance = (plat) => {
             }
           })
           .catch((e) => {
-            // $q.notify({
-            // color: "negative",
-            // position: "top",
-            // message: e.message,
-            // icon: "report_problem"
-            // })
+            // notify({
+            // type: "error",
+            //            // message: e.message,
+            //            // })
             platform.isLoading = false;
           });
       }
@@ -222,11 +224,9 @@ const refreshBalance = (plat) => {
         }
       })
       .catch((e) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: e.message,
-          icon: "report_problem"
+        notify({
+          type: "error",
+          message: e.message
         });
         platform.isLoading = false;
       });

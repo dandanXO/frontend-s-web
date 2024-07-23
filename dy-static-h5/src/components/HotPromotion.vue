@@ -1,7 +1,7 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
+      v-if="listParam.type === 'claimpromo' && store.hasToken()"
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :loading-claim="btnLoading"
@@ -9,97 +9,81 @@
     />
     <PrivilegeInvite
       v-if="
-        !isCommonPromo &&
         store.token &&
         (list.redirectUrl === 'Dongying-refer' ||
           list.redirectUrl === 'dy2-vip-upgrade-bonus' ||
           list.redirectUrl === 'dy2-refer-bonus')
       "
     />
-    <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-tiger-card'" />
-    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
-    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
-    <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
+    <TigerCardPromo v-if="list.redirectUrl === 'dy2-tiger-card'" />
+    <PrizePoolVotePromo v-if="list.redirectUrl === 'Dongying-team-vote'" />
+    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
+    <HongBaoYu2024 v-if="list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao'"
+      v-if="list.redirectUrl === 'dy2-eurocup-hongbao'"
     />
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu'"
+      v-if="listParam.type === 'hongbaoyu'"
     />
 
-    <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
+    <UpcomingMatchPromo v-if="list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
-      v-if="
-        (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
-        (!isCommonPromo && list.redirectUrl === 'sport-safety')
-      "
+      v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <MeiZhouBeiPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
-
+    <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" platformType="COPA" />
+    <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <InsuranceSubmitPromo
-      v-if="
-        (!isCommonPromo && list.redirectUrl === 'dy2-esport-safety') ||
-        (!isCommonPromo && list.redirectUrl === 'sport-safety')
-      "
+      v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
       :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
-    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz' && !isCommonPromo"></EsportQuiz>
-    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && !isCommonPromo && store.token"></LotteryPromo>
-    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && !isCommonPromo && store.token"></GiftPromo>
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
+    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
+    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && store.token"></LotteryPromo>
+    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && store.token"></GiftPromo>
 
     <AsiaCup2024Promo
-      v-if="
-        (list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') &&
-        !isCommonPromo &&
-        store.token
-      "
+      v-if="(list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') && store.token"
     ></AsiaCup2024Promo>
-    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo"></BasketballHot>
+    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball'"></BasketballHot>
     <LplSummerPromo
-      v-if="
-        (list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B') &&
-        !isCommonPromo &&
-        store.token
-      "
+      v-if="(list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B') && store.token"
     ></LplSummerPromo>
 
-    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
-    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
-    <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'dy2-cny-step-game' && !isCommonPromo && store.token"
-    ></CnyStepGame2024Promo>
+    <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei' && store.token">
+      <div class="cs-btn" @click="goToCsChat()">联系客服</div>
+    </div>
+
+    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && store.token"></Cny2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && store.token"></BbDacha2024Promo>
+    <CnyStepGame2024Promo v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"></CnyStepGame2024Promo>
     <Dy2StepGamePromo
-      v-if="list.redirectUrl === 'dy2-game-steps' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'dy2-game-steps' && store.token"
       :pageContent="list.pageContent"
     ></Dy2StepGamePromo>
-    <CS2Sign
-      v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && !isCommonPromo && store.token"
-      :promo-code="list.promoCode"
-    />
-    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
-    <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && !isCommonPromo && store.token" />
-    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
-    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
-    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
-    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
+    <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
+    <SlotLacky8 v-if="list.redirectUrl === 'dy-lucky-slot' && store.token" :promo-code="list.promoCode" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
+    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
+    <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match' && store.token" />
+    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && store.token" />
+    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && store.token" />
+    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && store.token" />
 
-    <BlastPremierPromo
-      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && !isCommonPromo && store.token"
-      :promo-code="list.promoCode"
-    />
-    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
-    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
-    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && !isCommonPromo && store.token">
+    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
+    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
+    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
+    <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund' && store.token" />
+    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
   </div>
@@ -121,45 +105,69 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineAsyncComponent, defineComponent, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
-import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
-import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
-import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
-import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
-import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
-import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
-import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
-import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
-import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
-import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
-import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vue";
-import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
-import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
-import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
-import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
-import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue";
-import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
-import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
-import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
-import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
-import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
-import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
-import EurocupManual from "./hotpromo/EurocupManual/EurocupManual.vue";
-import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
-import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
-import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
-import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
+import { useRouter } from "vue-router";
 
+const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
+const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
+const PrizePoolVotePromo = defineAsyncComponent(
+  () => import("../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue")
+);
+const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
+const HongBaoPreEurocupPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue")
+);
+const HongBaoYu2024 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue"));
+const HongBaoYuEurocupPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue")
+);
+const UpcomingMatchPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue")
+);
+const InsuranceSubmitPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue")
+);
+const InviteFriendPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/invitefriend/inviteFriendPromo.vue")
+);
+const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
+const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
+const GiftPromo = defineAsyncComponent(() => import("../components/hotpromo/gift/GiftPromo.vue"));
+const PrivilegeInvite = defineAsyncComponent(
+  () => import("../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue")
+);
+const AsiaCup2024Promo = defineAsyncComponent(() => import("../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
+const BasketballHot = defineAsyncComponent(() => import("../components/hotpromo/basketballHot/BasketballHot.vue"));
+const LplSummerPromo = defineAsyncComponent(() => import("../components/hotpromo/lplsummer/LplSummerPromo.vue"));
+const Cny2024Promo = defineAsyncComponent(() => import("../components/hotpromo/cny2024/Cny2024Promo.vue"));
+const BbDacha2024Promo = defineAsyncComponent(() => import("../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue"));
+const CnyStepGame2024Promo = defineAsyncComponent(
+  () => import("../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue")
+);
+const Dy2StepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
+const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
+const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const LOLMsi2024Promo = defineAsyncComponent(() => import("../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
+const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
+const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
+const DragonBoat = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
+const EurocupManual = defineAsyncComponent(() => import("./hotpromo/EurocupManual/EurocupManual.vue"));
+const SportZhongChao = defineAsyncComponent(() => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue"));
+const BlastPremierPromo = defineAsyncComponent(
+  () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue")
+);
+const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
+const MeiZhouBeiPromoPage = defineAsyncComponent(
+  () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromoPage.vue")
+);
+const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"))
+const Olympic24Match = defineAsyncComponent(() => import("../components/hotpromo/Olympic24Match/Olympic24Match.vue"));
+const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
+const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -168,10 +176,12 @@ export default defineComponent({
     SportZhongChao,
     BlastPremierPromo,
     fishHongbao,
+    OlympicFund,
+    Olympic24Match,
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
-    MeiZhouBeiPromo,
+    MeiZhouBeiPromoPage,
     PrizePoolVotePromo,
     GoldenEggPromo,
     HongBaoYu2024,
@@ -195,8 +205,10 @@ export default defineComponent({
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
     LPLSummer24,
+    SlotLacky8,
     DragonBoat,
-    EurocupManual
+    EurocupManual,
+    OuZuLianPromo
   },
   props: {
     list: {
@@ -208,7 +220,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isCommonPromo: null,
       activeKey: "1",
       hotPromoList: [],
       selectedHotPromo: {
@@ -217,6 +228,16 @@ export default defineComponent({
         contents: ""
       }
     };
+  },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
+    }
   },
   methods: {
     handleSlot() {
@@ -246,50 +267,6 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (
-      this.list.redirectUrl === "dy2-tiger-card" ||
-      this.list.redirectUrl === "Dongying-team-vote" ||
-      this.list.redirectUrl === "goldenegg" ||
-      this.list.redirectUrl === "hongbaoyu" ||
-      this.list.redirectUrl === "invitefriend" ||
-      this.list.redirectUrl === "welcomenewuser" ||
-      this.list.redirectUrl === "dy2-lottery" ||
-      this.list.redirectUrl === "Dongying-quiz" ||
-      this.list.redirectUrl === "nba-game" ||
-      this.list.redirectUrl === "dy2-esport-safety" ||
-      this.list.redirectUrl === "sport-safety" ||
-      this.list.redirectUrl === "dy2-gift" ||
-      this.list.redirectUrl === "Dongying-refer" ||
-      this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
-      this.list.redirectUrl === "dy2-refer-bonus" ||
-      this.list.redirectUrl === "asian-cup-2024" ||
-      this.list.redirectUrl === "/dy-promo-basketball" ||
-      this.list.redirectUrl === "lpl-summer" ||
-      this.list.redirectUrl === "fankuijianyi" ||
-      this.list.redirectUrl === "dy-promo-application-A" ||
-      this.list.redirectUrl === "dy-promo-application-B" ||
-      this.list.redirectUrl === "dy2-cny2024-promo" ||
-      this.list.redirectUrl === "dy2-asian-zone" ||
-      this.list.redirectUrl === "dy2-cny-step-game" ||
-      this.list.redirectUrl === "dy2-game-steps" ||
-      this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
-      this.list.redirectUrl === "dy2-spin-wheel" ||
-      this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy2-eurocup-hongbao" ||
-      this.list.redirectUrl === "dy2-lpl-summer24" ||
-      this.list.redirectUrl === "dy-duanwujie24" ||
-      this.list.redirectUrl === "dy2-nba24-match" ||
-      this.list.redirectUrl === "dy2-eurocup-manual" ||
-      this.list.redirectUrl === "dy2-cs2-blast-2024" ||
-      this.list.redirectUrl === "dy-sport-zhongchao" ||
-      this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
-      this.list.redirectUrl === "dy2meizhoubei"
-    ) {
-      this.isCommonPromo = false;
-    } else {
-      this.isCommonPromo = true;
-    }
     const store = userStore();
 
     if (this.list.id == 30) {
@@ -315,6 +292,11 @@ export default defineComponent({
       resultTime: ""
     });
 
+    const router = useRouter();
+    const goToCsChat = () => {
+      router.push("/liveChat");
+    };
+
     const winnerDataSource = ref([]);
     const filterWinnerLists = () => {
       var resultTime = formState.value.resultTime;
@@ -332,7 +314,7 @@ export default defineComponent({
         var data = res.data.data;
 
         for (let i in data) {
-          _.each(data[i].winners, function (winner, index) {
+          data[i].winners.forEach((winner) => {
             winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
 
             winnerDataSource.value.push(winner);
@@ -389,7 +371,8 @@ export default defineComponent({
       loading,
       btnLoading,
       isClaimModal,
-      claimMsg
+      claimMsg,
+      goToCsChat
     };
   }
 });
@@ -531,6 +514,30 @@ export default defineComponent({
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;
+  }
+}
+
+.cs-btn {
+  cursor: pointer;
+  display: block;
+  width: 198px;
+  height: 52px;
+  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
+  background-blend-mode: normal, normal;
+  border-radius: 26px;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 52px;
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 

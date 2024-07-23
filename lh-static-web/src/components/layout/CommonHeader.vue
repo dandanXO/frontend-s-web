@@ -9,12 +9,21 @@
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon && !nav.isTest">
-              <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
-                <img v-if="nav.code === 'sports'"
-                     class="hot-label"
-                     :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
+              <div
+                class="header-menu-item"
+                :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
+              >
+                <img
+                  v-if="nav.code === 'sports'"
+                  class="hot-label"
+                  :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
                 />
-                <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
+                <a
+                  v-if="nav.code === 'minigame'"
+                  @click="openMiniGame"
+                  @mouseup="selectedMenu = ''"
+                  @mouseover="showSubMenu(nav)"
+                >
                   <h2 class="nav-title cn">{{ nav.name }}</h2>
                   <h2 class="nav-title">{{ nav.enName }}</h2>
                 </a>
@@ -39,15 +48,9 @@
               </div>
             </template>
           </template>
-          <div
-            class="header-menu-item"
-            @mouseover="selectedMenu = ''"
-            @click="getPlatformListAndGoImSport">
-            <img
-              class="eroup-menu-icon"
-              :src="require(`../../assets/images/home/header-eroup.png`)"
-            />
-          </div>
+          <!-- <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
+            <img class="eroup-menu-icon" :src="require(`../../assets/images/home/header-eroup.png`)" />
+          </div> -->
         </div>
 
         <div class="navigations second-nav">
@@ -133,8 +136,16 @@
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
                 <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
+                <img
+                  v-if="store.profilePhoto && store.profilePhoto.includes('default')"
+                  class="profile-img"
+                  :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)"
+                />
+                <img
+                  v-if="store.profilePhoto && !store.profilePhoto.includes('default')"
+                  class="profile-img"
+                  :src="imageDir + store.profilePhoto + '?v=' + timestamp"
+                />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
@@ -142,31 +153,31 @@
             <template #dropdown>
               <el-dropdown-menu class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
+                  <div class="profile-info-dropdown-content-item">
+                    <img :src="loadIcon('personal')" />
                     <span>个人信息</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
+                  <div class="profile-info-dropdown-content-item">
+                    <img :src="loadIcon('deposit')" />
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
+                  <div class="profile-info-dropdown-content-item">
+                    <img :src="loadIcon('transfer')" />
                     <span>快速转账</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
+                  <div class="profile-info-dropdown-content-item">
+                    <img :src="loadIcon('promo')" />
                     <span>优惠领取</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #468cff">退出登录</button>
+                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">退出登录</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -185,11 +196,11 @@
                 <span class="assets-text">总资产：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">加载中...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
                 </span>
               </div>
-              <el-icon>
-                <RiRefreshLine color="#468CFF" />
+              <el-icon class="reload-btn">
+                <RiRefreshLine />
               </el-icon>
             </a>
           </div>
@@ -324,7 +335,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -353,7 +364,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -402,7 +413,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -445,7 +456,6 @@
 </template>
 
 <script lang="js">
-
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -453,11 +463,8 @@ import { userStore } from "@/store/index";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
-import { ElMessage } from "element-plus";
-import {
-  RiRefreshLine,
-  RiChatUploadLine
-} from "vue-remix-icons";
+import { useNotify } from "@/hooks/notify";
+import { RiRefreshLine } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
@@ -477,8 +484,10 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
-import { uploadImage, saveImage } from '@/api/personal/common'
+import { uploadImage, saveImage } from "@/api/personal/common";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
+import floor from "lodash/floor";
+import { loadPromoBanner } from "@/api/index/promo";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -496,13 +505,14 @@ export default defineComponent({
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
-    RegisterAccount,
-    RiChatUploadLine
+    RegisterAccount
   },
   setup() {
+    const notify = useNotify();
+
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
-    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
+    const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
@@ -523,20 +533,19 @@ export default defineComponent({
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
 
-
     const loadingBtn = ref(false);
     const store = userStore();
 
     const checkToken = () => {
       if (store.token) {
-        if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
-          return false
+        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+          return false;
         }
-        return true
+        return true;
       } else {
-        return true
+        return true;
       }
-    }
+    };
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
@@ -547,11 +556,19 @@ export default defineComponent({
       { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
-      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true, isTest: false },
+      {
+        code: "Promotion",
+        name: "优惠",
+        enName: "Promotion",
+        path: "/promotion",
+        submenu: false,
+        hasicon: true,
+        isTest: false
+      },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
       { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false }
-    ])
+    ]);
     const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
@@ -561,12 +578,11 @@ export default defineComponent({
     const noticeDialogVisible = ref(false);
     const logoutDialogVisible = ref(false);
     const captchaDialogVisible = ref(false);
-    const profileDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const { height } = useElementSize(el);
-    const isDark = useDark()
+    const isDark = useDark();
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -613,7 +629,7 @@ export default defineComponent({
     };
 
     let validatePassStrength = (r, v) => {
-      var strength = "";
+      // var strength = "";
       var pwd = v;
       var result = 0;
       for (var i = 0, len = pwd.length; i < len; ++i) {
@@ -707,12 +723,6 @@ export default defineComponent({
     const hasAffiliate = ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
     const loginCountdown = ref(0);
-    const uploadedImage = reactive({
-      url: null,
-    })
-    const imageForm = reactive({
-      path: null,
-    })
     const loginRules = {
       loginName: [
         {
@@ -808,7 +818,6 @@ export default defineComponent({
     });
 
     const regRules = {
-
       realName: [
         {
           required: false,
@@ -933,7 +942,6 @@ export default defineComponent({
 
     const passRef = ref([]);
     const forgetPassRules = {
-
       email: [
         {
           required: true,
@@ -951,7 +959,6 @@ export default defineComponent({
           trigger: "blur"
         }
       ]
-
     };
     const passRules = {
       loginName: [
@@ -1009,63 +1016,60 @@ export default defineComponent({
     };
 
     const sendOtp = async () => {
-
       if (captchaForm.type === "REGISTER") {
         const smsDetail = {
           telephone: regForm.telephone,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
         };
-        sendSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              disableSendVerificationButton.value = true;
+        sendSms(smsDetail).then((response) => {
+          if (response.code == 0) {
+            disableSendVerificationButton.value = true;
 
-              regForm.smsCodeId = response.data.codeId;
+            regForm.smsCodeId = response.data.codeId;
 
-              ElMessage({
-                type: "success",
-                message: "发送手机验证码成功"
-              });
+            notify({
+              type: "success",
+              message: "发送手机验证码成功"
+            });
 
-              captchaDialogVisible.value = false;
+            captchaDialogVisible.value = false;
 
-              regCountdown.value = registerSendOtpDisabledTimeout;
+            regCountdown.value = registerSendOtpDisabledTimeout;
 
-              const now = new Date();
+            const now = new Date();
 
-              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
+            now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-              lsStore(registerSendOtpDisabledKey, now.getTime());
-              lsStore(registerTelephoneKey, regForm.telephone);
+            lsStore(registerSendOtpDisabledKey, now.getTime());
+            lsStore(registerTelephoneKey, regForm.telephone);
 
-              countdownTimer("REGISTER");
-            } else {
-              getCode();
-            }
-          });
+            countdownTimer("REGISTER");
+          } else {
+            getCode();
+          }
+        });
       } else if (captchaForm.type === "LOGIN") {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
         };
-        sendSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              loginForm.smsCodeId = response.data.codeId;
-              ElMessage({
-                type: "success",
-                message: "发送手机验证码成功"
-              });
-              captchaDialogVisible.value = false;
-              getCode();
-              loginCountdown.value = 30;
-              countdownTimer("LOGIN");
-            } else {
-              getCode();
-            }
-          });
+        sendSms(smsDetail).then((response) => {
+          if (response.code == 0) {
+            loginForm.smsCodeId = response.data.codeId;
+            notify({
+              type: "success",
+              message: "发送手机验证码成功"
+            });
+            captchaDialogVisible.value = false;
+            getCode();
+            loginCountdown.value = 30;
+            countdownTimer("LOGIN");
+          } else {
+            getCode();
+          }
+        });
       }
     };
 
@@ -1106,26 +1110,25 @@ export default defineComponent({
           const sidParam = store.visitorId;
           (async () => {
             regForm.sid = sidParam;
-            register(regForm)
-              .then((response) => {
-                const regResult = response.code;
-                if (regResult === 0) {
-                  ElMessage({
-                    type: "success",
-                    message: "注册成功"
-                  });
-                  store.autoLogin(response.data);
-                  registerDialogVisible.value = false;
-                  store.regPageVisible = false;
-                  // loginDialogVisible.value = true;
+            register(regForm).then((response) => {
+              const regResult = response.code;
+              if (regResult === 0) {
+                notify({
+                  type: "success",
+                  message: "注册成功"
+                });
+                store.autoLogin(response.data);
+                registerDialogVisible.value = false;
+                store.regPageVisible = false;
+                // loginDialogVisible.value = true;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  // getCode();
-                } else {
-                  getCode();
-                  // message.error(response.message);
-                }
-              });
+                sessionStorage.removeItem("REFERRAL_CODE");
+                // getCode();
+              } else {
+                getCode();
+                // message.error(response.message);
+              }
+            });
           })();
         } else {
           getCode();
@@ -1139,23 +1142,33 @@ export default defineComponent({
     };
 
     const getPlatformListAndGoImSport = () => {
-      selectedMenu.value = ''
+      selectedMenu.value = "";
 
       const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
 
       fetchFunction().then((res) => {
-        const imSport = res.filter(item=> item.code==='IM')
-        openGame(imSport[0].name,imSport[0].code,imSport[0].gameType)
-
+        const imSport = res.filter((item) => item.code === "IM");
+        openGame(imSport[0].name, imSport[0].code, imSport[0].gameType);
       });
     };
 
+    const accDialogImg = ref('')
+
+    const loadBanners = () => {
+      loadPromoBanner("LOGIN").then((res) => {
+        if (res.code === 0) {
+          const promoImageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+          accDialogImg.value = promoImageDir + res.data[0].desktopImageUrl
+        }
+      })
+    }
+
     onMounted(() => {
-      if (regCountdown.value > 0)
-        countdownTimer("REGISTER");
+      if (regCountdown.value > 0) countdownTimer("REGISTER");
       getAffiliateCode();
       getCode();
       getReferalCode();
+      loadBanners();
 
       if (store.token) {
         store.getBalance();
@@ -1177,32 +1190,36 @@ export default defineComponent({
 
       // console.log(route);
       // alert(route.name)
-
-
     });
 
-    watch(() => store.loginPageVisible, () => {
-      if (store.loginPageVisible) {
-        loginDialogVisible.value = true;
-        // router.push('/login');
-        return;
-      } else {
-        loginDialogVisible.value = false;
+    watch(
+      () => store.loginPageVisible,
+      () => {
+        if (store.loginPageVisible) {
+          loginDialogVisible.value = true;
+          // router.push('/login');
+          return;
+        } else {
+          loginDialogVisible.value = false;
+        }
+        // Optionally you can set immediate: true config for the watcher to run on init
+        // }, { immediate: true });
       }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
-    watch(() => store.regPageVisible, () => {
-      if (store.regPageVisible) {
-        // registerDialogVisible.value = true
-        router.push("/register");
-        return;
-      } else {
-        registerDialogVisible.value = false;
+    );
+    watch(
+      () => store.regPageVisible,
+      () => {
+        if (store.regPageVisible) {
+          // registerDialogVisible.value = true
+          router.push("/register");
+          return;
+        } else {
+          registerDialogVisible.value = false;
+        }
+        // Optionally you can set immediate: true config for the watcher to run on init
+        // }, { immediate: true });
       }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
+    );
 
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
@@ -1213,7 +1230,6 @@ export default defineComponent({
         regForm.referrer = referCode;
       }
     };
-
 
     const isLoadingBalance = ref(false);
     const refreshBalance = () => {
@@ -1238,7 +1254,7 @@ export default defineComponent({
       passRef.value.validate().then(() => {
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success("您的帐号已经发送到注册邮箱");
+            notify.success("您的帐号已经发送到注册邮箱");
           }
         });
       });
@@ -1274,11 +1290,12 @@ export default defineComponent({
                 // loginForm.captchaCode = null
                 getCode();
               }
-            }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-            getCode();
-          });
+            })
+            .catch((error) => {
+              // message.error(error.message);
+              console.log(error.message);
+              getCode();
+            });
         });
         loadingBtn.value = false;
       })();
@@ -1288,7 +1305,6 @@ export default defineComponent({
       loadingBtn.value = true;
       const sidParam = store.visitorId;
       (async () => {
-
         mobileLoginRef.value.validate().then(() => {
           store
             .telephoneLogin({
@@ -1309,10 +1325,11 @@ export default defineComponent({
                 loginForm.phoneNumber = null;
                 loginForm.code = null;
               }
-            }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-          });
+            })
+            .catch((error) => {
+              // message.error(error.message);
+              console.log(error.message);
+            });
         });
       })();
       loadingBtn.value = false;
@@ -1323,7 +1340,7 @@ export default defineComponent({
     //     .then(() => {
     //     alert('!')
     //     // if (!valid) {
-    //     //   ElMessage({
+    //     //   notify({
     //     //     message: h('p', null, [
     //     //       h('span', null, 'Message can be ',
     //     //       h('i', { style: 'color: teal' }, 'VNode',
@@ -1334,7 +1351,7 @@ export default defineComponent({
     // }
     const pwdStrength = ref();
     const openMiniGame = () => {
-      openGame("TFGaming", "TFGaming", 0)
+      openGame("TFGaming", "TFGaming", 0);
     };
     function charType(num) {
       if (num >= 48 && num <= 57) {
@@ -1391,17 +1408,23 @@ export default defineComponent({
       // },
     );
     const todayDate = () => {
-      return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
+      return (
+        "GTM+8 " +
+        moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") +
+        moment(new Date()).locale("zh-cn").format("dddd")
+      );
     };
 
     const getUnreadMail = () => {
-      getUnreadTotal().then((response) => {
-        if (response.code === 0) {
-          store.unreadTotal = response.data;
-        }
-      }).catch((error) => {
-        // console.log("error===", error)
-      });
+      getUnreadTotal()
+        .then((response) => {
+          if (response.code === 0) {
+            store.unreadTotal = response.data;
+          }
+        })
+        .catch((error) => {
+          // console.log("error===", error)
+        });
     };
 
     const openLoginDialog = () => {
@@ -1434,7 +1457,20 @@ export default defineComponent({
       router.push(path);
     };
 
+    const loadIcon = (name) => {
+      if (isDark.value) {
+        try {
+          return require(`@/assets/images/home/header-dropdown-${name}-icon-dark.png`);
+        } catch (error) {
+          return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
+        }
+      } else {
+        return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
+      }
+    };
+
     return {
+      floor,
       token,
       el,
       height,
@@ -1506,7 +1542,9 @@ export default defineComponent({
       timestamp,
       openMiniGame,
       navigations,
-      checkToken
+      checkToken,
+      loadIcon,
+      accDialogImg
     };
   }
 });
@@ -1641,6 +1679,28 @@ body {
         margin-right: 0.5rem;
         white-space: nowrap;
       }
+
+      .reload-btn {
+        fill: #468cff;
+      }
+    }
+  }
+}
+
+.profile-info-dropdown-content {
+  .profile-info-dropdown-content-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #a8b5c3;
+    margin: auto;
+
+    img {
+      max-width: 33px;
+    }
+
+    &.standard-button {
+      color: #468cff;
     }
   }
 }
@@ -1842,18 +1902,18 @@ body {
           margin-left: auto;
           margin-right: auto;
           gap: 9px;
-          padding-left:5px;
+          padding-left: 5px;
           padding-right: 5px;
         }
-        .eroup-menu-icon{
+        .eroup-menu-icon {
           cursor: pointer;
           width: 58px;
           height: 58px;
 
-          &:hover{
+          &:hover {
             filter: brightness(0.9);
           }
-          &:active{
+          &:active {
             transform: translate(0px, 1px);
           }
         }
@@ -1872,7 +1932,7 @@ body {
           &:hover {
             //filter: brightness(0.85);
 
-            .nav-title{
+            .nav-title {
               color: #333;
               font-weight: bold;
             }
@@ -1910,7 +1970,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -2460,24 +2520,25 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        background-image: url(../../assets/home/acc-dialog-bg-eurocup.png);
+        background-image: url(../../assets/home/acc-dialog-bg-paris.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         background-color: #ffffff;
-        padding: 8px;
+        border-radius: 20px;
+        overflow: hidden;
 
         .acc-dialog-img {
-          margin-top: -70px;
-          margin-left: -80px;
-          margin-right: 0px;
-          margin-bottom: -7px;
+          max-width: 963px;
+          max-height: 896px;
+          border-radius: 20px;
 
           img {
             display: block;
             width: 100%;
+            object-fit: contain;
           }
         }
       }
@@ -2574,7 +2635,7 @@ body {
   &.active {
     &:after {
       content: "";
-      background: #468CFF;
+      background: #468cff;
       width: 80%;
       height: 5px;
       bottom: -24px;
@@ -2591,7 +2652,7 @@ body {
   }
   .hot-label {
     width: 12px;
-    height:12px;
+    height: 12px;
     position: absolute;
     right: -10px;
     top: -7px;
@@ -2615,14 +2676,15 @@ body {
     }
 
     &.active {
-
-      color: #468CFF;
+      color: #468cff;
     }
   }
 }
 
 .dark {
   .acc-dialog.el-dialog {
+    --el-dialog-bg-color: linear-gradient(180deg, #191b27 0%, #0a0c16 100%);
+
     .el-dialog__header {
       .el-dialog__close {
         color: $color-white !important;
@@ -2644,35 +2706,97 @@ body {
       box-shadow: $shadow-header-dark;
       .top-nav-inner {
         .navigations {
-          a {
-            color: $font-1-dark;
+          .header-menu-item {
+            color: $font-4-dark;
+            &.active {
+              .nav-title {
+                color: $active-color-dark;
+              }
+              &::after {
+                background: $active-color-dark;
+              }
+            }
+            > a {
+              .nav-title {
+                color: #7a91a1;
+              }
+              &:hover {
+                .nav-title {
+                  color: $active-color-dark;
+                }
+                // .hover-icon {
+
+                // }
+                // :last-child {
+                //   color: $active-color-dark;
+                // }
+              }
+            }
           }
 
           .sub-menu {
             background: $background-content-block-dark;
             box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
           }
-        }
-      }
-    }
-  }
 
-  .header-menu-item {
-    .nav-title {
-      color: $font-4-dark;
-      &.active {
-        color: $color-white;
+          &.second-nav {
+            .header-menu-item {
+              > a {
+                color: $font-3-dark;
+                .hover-icon {
+                  filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg)
+                    brightness(92%) contrast(82%);
+                }
+
+                &:hover {
+                  .hover-icon {
+                    filter: $active-color-dark-filter;
+                  }
+                  span {
+                    color: $active-color-dark;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .right-contents {
+          .header-btn {
+            &.btn-color-blue {
+              background: #394a65;
+              box-shadow: none;
+            }
+            &.btn-color-white {
+              background: $active-color-dark-linear;
+              position: relative;
+              box-shadow: 0px 0px 16.4px 0px #00d1ffcc;
+              color: $color-white;
+
+              &::before {
+                @include gradient-border(linear-gradient(180deg, #2ec0ff 0%, #f6ffff 50%, #2ec0ff 100%));
+                border-radius: 2rem;
+              }
+            }
+          }
+        }
       }
     }
   }
 
   .profile-actions {
     .action-btn {
-      color: $color-white;
+      color: $font-3-dark;
 
       .icon-rounded {
         box-shadow: none;
         background-color: $background-content-block-lighter-dark;
+        img {
+          filter: $active-color-dark-filter;
+        }
+      }
+      &:hover {
+        color: $active-color-dark;
       }
     }
   }
@@ -2680,6 +2804,20 @@ body {
   .profile-info {
     .profile-details {
       .details-name {
+        color: $color-white;
+      }
+      .details-balance {
+        .reload-btn {
+          fill: $active-color-dark;
+        }
+      }
+    }
+  }
+  .profile-info-dropdown-content {
+    .profile-info-dropdown-content-item {
+      color: $font-3-dark;
+
+      &.standard-button {
         color: $color-white;
       }
     }
@@ -2712,15 +2850,15 @@ body {
 }
 
 .grid-item.selected {
-  position:relative;
+  position: relative;
   color: #ffffff;
   img {
-    border: 3px solid #33BC03;
+    border: 3px solid #33bc03;
   }
   &:after {
     content: "✓";
     position: absolute;
-    background: #33BC03;
+    background: #33bc03;
     font-size: 15px;
     width: 25px;
     height: 25px;
@@ -2734,8 +2872,7 @@ body {
   }
 }
 
-
-.profile-dialog{
+.profile-dialog {
   max-width: 660px;
 }
 
@@ -2751,8 +2888,7 @@ body {
   border-radius: 40px;
 }
 .profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
-
-  background: #7A8EB966;
+  background: #7a8eb966;
   border-radius: 25px;
   top: 8px;
 }

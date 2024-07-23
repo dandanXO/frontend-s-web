@@ -45,10 +45,10 @@
         <img class="rules-header-img" src="../../../assets/images/promotion/hotpromo/apphongbao/rules-header.png" />
         <p>1.活动需下载雷火APP即可参与抢夺红包雨，每场红包雨每日仅限抽1次，奖金由系统实时派发至用户账户内；</p>
         <p>
-          2.活动期间，用户需使用APP登入记录并且需当日有效投注达888元或以上即可符合参与抢夺红包雨活动条件，红包雨彩金不限场馆3倍流水即可提款；
+          2.活动期间，用户需使用APP登入记录并且当日任意存款一笔即可符合参与抢夺红包雨活动条件，红包雨彩金不限场馆3倍流水即可提款；
         </p>
         <p>3.活动期间，每场已开启的红包雨限量8888个红包，若限量红包已全数抽完，则提示【谢谢惠顾】；</p>
-        <p>4. 流水仅计算当天下注且结算的注单，若提前兑现、注单未结算、取消或走盘皆不及不计算为有效投注；</p>
+        <p>4.流水仅计算当天下注且结算的注单，若提前兑现、注单未结算、取消或走盘皆不及不计算为有效投注；</p>
         <p>
           5.
           任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
@@ -66,10 +66,13 @@
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode", "params"]);
+
+const notify = useNotify();
+
 const params = JSON.parse(props.params || "{}");
 const promoCode = ref(props.promoCode);
 const loadingClaim = ref(false);
@@ -82,7 +85,7 @@ const getAppDownloadUrl = () => {
       if (res.downloadPageUrl) {
         downloadUrl.value = res.downloadPageUrl;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((err) => {
@@ -103,13 +106,19 @@ const getPromotion = () => {
 
       if (res.code === 0) {
         const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
-        ElMessage.success(`恭喜中奖！获得：${claimedAmt}`);
+        notify({
+          type: 'red-packet',
+          message: "恭喜中奖！",
+          params: {
+            redPacket: claimedAmt
+          }
+        })
 
         store.getBalance();
 
         bonusOpened.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
         loadingClaim.value = false;
       }
     })

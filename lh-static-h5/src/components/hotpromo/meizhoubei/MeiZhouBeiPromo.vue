@@ -51,12 +51,15 @@ import { ref, onMounted, defineProps, computed } from "vue";
 import {useLocalStorage} from "@vueuse/core"
 import "swiper/css";
 import "swiper/css/navigation";
-
+import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
+import { useNotify } from "src/hooks/notify";
 
 const props = defineProps({
   platformType: String
 });
+
+const notify = useNotify();
 
 const upcomingMatchDetails = ref([]);
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
@@ -70,24 +73,16 @@ const getMatchDateOnly = (matchTime) => {
   return dateString || "";
 };
 
+const $q = useQuasar();
 
 const handleSubmit = () => {
   eventapi
     .post("/game-match/submit/COPA")
     .then((response) => {
       if (response.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "已成功申请",
-          icon: "check_circle_outline"
-        });
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: response.message,
-          icon: "report_problem"
         });
       }
     })
@@ -256,6 +251,23 @@ onMounted(() => {
         font-size: 12px;
         line-height: 1;
         font-weight: bolder;
+      }
+    }
+  }
+}
+
+.body--dark {
+  .bet-info-box {
+    background: $background-dark-light;
+    box-shadow: none;
+
+     .bet-info-title {
+      color: $white;
+     }
+
+    .bet-info-details {
+      .info-team-name {
+        color: $white;
       }
     }
   }

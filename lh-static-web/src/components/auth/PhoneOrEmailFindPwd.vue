@@ -88,10 +88,12 @@ import {
   verifyForgetPasswordEmail
 } from "@/api/index/forgotPwd";
 import CaptchaVerify from "./CaptchaVerify.vue";
-import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
 
 const emits = defineEmits(["open-login-dialog, close-dialog"]);
+
+const notify = useNotify();
 
 const openLoginDialog = () => {
   emits("open-login-dialog");
@@ -258,13 +260,16 @@ const submitForm = () => {
         sendForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到手机");
+              notify({
+                type: 'success',
+                message: '验证码已经发送到手机'
+              })
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
               // emits("close-dialog");
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -285,13 +290,16 @@ const submitForm = () => {
         sendForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("验证码已经发送到邮箱");
+              notify({
+                type: 'success',
+                message: '验证码已经发送到邮箱'
+              })
               forgotPwdPostVerifyForm.codeId = res.data.codeId;
               captchaVerifyRef.value.closeDialog();
               captchaVerifyRef.value.initCountdownTimer();
               // emits("close-dialog");
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -329,10 +337,13 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordPhone(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              notify({
+                type: 'success',
+                message: '成功'
+              })
               openLoginDialog();
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -352,10 +363,13 @@ const submitPostVerifyForm = () => {
         verifyForgetPasswordEmail(params)
           .then((res) => {
             if (res.code === 0) {
-              ElMessage.success("成功");
+              notify({
+                type: 'success',
+                message: '成功'
+              })
               openLoginDialog();
             } else {
-              ElMessage.error({
+              notify({
                 type: "error",
                 message: res.message
               });
@@ -375,50 +389,7 @@ const submitPostVerifyForm = () => {
 };
 </script>
 
-<style scoped lang="scss">
-.light-bg {
-  font-size: 14px;
-  background-color: #f7f8fb;
-  border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-  //margin-bottom: 30px;
-}
-
-.form-field {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  padding: 8px 15px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  width: 100%;
-
-  .form-field-icon {
-    margin: auto;
-  }
-}
-
-.blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 30px;
-}
-
-.primary-btn {
-  margin-top: 20px;
-  width: 100%;
-}
-
-.dark {
-  .light-bg {
-    background-color: $background-content-block-lighter-dark;
-    box-shadow: none;
-  }
-}
-</style>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
 
 <style lang="scss">
 .form-field {

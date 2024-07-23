@@ -97,6 +97,10 @@ $max-width: $container-width;
       background-color: #2b2b4b;
     }
 
+    .ant-form-item-label > label,
+    .ant-tabs {
+    }
+
     .ant-form-item-label > label {
       width: 100%;
       min-width: 180px;

@@ -96,8 +96,9 @@ import { getVerificationCode } from "@/api/index/login";
 import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from "@/components/auth/AccountLogin.vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useRoute, useRouter } from "vue-router";
+const notify = useNotify();
 
 const captchaRules = {
   captchaCode: [
@@ -197,7 +198,7 @@ const sendOtp = async () => {
     sendSms(smsDetail).then((response) => {
       if (response.code == 0) {
         loginForm.smsCodeId = response.data.codeId;
-        ElMessage({
+        notify({
           type: "success",
           message: "发送手机验证码成功"
         });
@@ -206,7 +207,7 @@ const sendOtp = async () => {
         loginCountdown.value = 60;
         countdownTimer("LOGIN");
       } else {
-        ElMessage.error(response.message);
+        notify.error(response.message);
         getCode();
       }
     });
@@ -231,7 +232,7 @@ const phoneLogin = () => {
   (async () => {
     mobileLoginRef.value.validate().then(() => {
       if (!loginForm.smsCodeId) {
-        ElMessage.error("请先获取验证码");
+        notify.error("请先获取验证码");
         return;
       }
       store
@@ -269,7 +270,7 @@ const getCode = () => {
       captchaForm.codeId = res.data.id;
       passForm.codeId = res.data.id;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -295,6 +296,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import "@/scss/pages/accountDialog.scss";
+
 .login-page-container {
   width: 100%;
   min-height: 100vh;
@@ -326,42 +329,6 @@ onMounted(() => {
   border-radius: 10px;
 }
 
-.light-bg {
-  font-size: 14px;
-  background-color: #f7f8fb;
-  border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-  margin-bottom: 30px;
-}
-
-.form-field {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  padding: 8px 15px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  width: 100%;
-
-  .form-field-icon {
-    margin: auto;
-  }
-}
-
-.blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 8px;
-}
-
-.primary-btn {
-  margin-top: 20px;
-  width: 100%;
-}
-
 .agreement-and-forget-pass {
   margin-top: 55px;
   display: flex;
@@ -369,28 +336,6 @@ onMounted(() => {
 
   .highlight {
     color: #5e8aee;
-  }
-}
-.flex-div {
-  margin-top: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dark {
-  .light-bg {
-    background-color: $background-content-block-lighter-dark;
-    box-shadow: none;
-  }
-
-  .font-gray {
-    color: $font-3-dark;
-  }
-
-  .blue-bg {
-    box-shadow: none;
-    background-color: #3998ff;
   }
 }
 </style>

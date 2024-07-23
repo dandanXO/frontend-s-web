@@ -1,19 +1,20 @@
 <template>
   <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
+
   <q-carousel
-    class="home"
-    id="home"
-    autoplay
-    navigation
     v-model="slide"
-    swipeable
+    id="home"
+    class="home"
+    data-aos-duration="1200"
+    data-aos-once="true"
+    data-aos="fade-in"
     transition-next="slide-left"
     transition-prev="slide-right"
     animated
+    autoplay
     infinite
-    data-aos="fade-in"
-    data-aos-duration="1200"
-    data-aos-once="true"
+    navigation
+    swipeable
   >
     <q-carousel-slide
       v-for="(banner, i) in banners"
@@ -62,16 +63,25 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
-          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">
-            <img src="../assets/images/index/cs-tiktok.png" />
+          <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
+            <img src="../assets/images/index/insta-icon.png" />
           </a>
-          <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l" target="_blank">
+          <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
+          <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
+          <!--          </a>-->
+          <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
             <img src="../assets/images/index/cs-cs.png" />
           </a>
         </div>
+      </div>
+    </q-page-sticky>
+
+    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn" v-if="isLiveUrlShow">
+      <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
+        <div class="live-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
@@ -87,7 +97,7 @@
             <img src="../assets/images/index/icon-volume.png" />
           </div>
           <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 120">
+            <marquee-text :repeat="5" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
@@ -97,7 +107,7 @@
           </div>
         </div>
       </div>
-      <a class="notice-download" :href="topDownloadUrl" v-if="downloadHeart">
+      <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart && !ui.hideDownload">
         <img src="../assets/images/auth/app-icon.png" />
       </a>
     </div>
@@ -450,7 +460,16 @@
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="openGame(item.name, item.code, '', item.status, item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT', item.id)"
+                  @click="
+                    openGame(
+                      item.name,
+                      item.code,
+                      '',
+                      item.status,
+                      item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT',
+                      item.id
+                    )
+                  "
                 >
                   <div
                     data-aos="zoom-in"
@@ -498,7 +517,16 @@
               <template v-for="(item, index) in slot" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  @click="openGame(item.name, item.code, '', item.status, item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT', item.id)"
+                  @click="
+                    openGame(
+                      item.name,
+                      item.code,
+                      '',
+                      item.status,
+                      item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT',
+                      item.id
+                    )
+                  "
                 >
                   <div class="platform-game-img">
                     <div
@@ -972,22 +1000,24 @@
     :showConfirmButton="false"
     :persistent="isOutdatedApp"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">Update Announcement</div>
+          <div class="titles backgroundColor">{{ $t("appUpdate.updateHeader") }}</div>
         </div>
         <div class="contents">
           <template v-if="isOutdatedApp">
-            Your App Version Is Outdated,
+            {{ $t("appUpdate.isOutdatedAppContent_01") }}
             <br />
-            Please Update The App Now
+            {{ $t("appUpdate.isOutdatedAppContent_02") }}
           </template>
-          <template v-else>New Version Detected, Do You Want To Update?</template>
+          <template v-else>{{ $t("appUpdate.newAppVersionContent_01") }}</template>
         </div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">Cancel</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">
+            {{ $t("appUpdate.cancel") }}
+          </div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">{{ $t("appUpdate.updateNow") }}</div>
         </div>
       </div>
     </q-card>
@@ -1010,14 +1040,14 @@
                 <div v-for="(ann, idx) in announcementList" :key="idx">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
-                      style="max-height: 65vh; overflow: auto"
+                      style="max-height: 75vh; overflow: auto"
                       group="somegroup"
                       icon="volume_up"
                       :label="ann.title"
                     >
                       <q-card>
                         <q-card-section>
-                          {{ ann.content }}
+                          <div v-html="processedContent(ann.content)" />
                         </q-card-section>
                       </q-card>
                     </q-expansion-item>
@@ -1249,6 +1279,48 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="isLuckyDrawModal">
+    <div class="luckyspin-wrapper">
+      <div class="luckyspin-header">
+        <img src="../assets/images/index/modal/luckyspin-title.png" />
+      </div>
+      <div class="luckyspin-container">
+        <div class="luckyspin-title">
+          <img src="../assets/images/index/modal/luckyspin-welcome.png" />
+        </div>
+
+        <LuckySpinWheel />
+      </div>
+      <div class="q-mt-md">
+        <q-icon name="highlight_off" size="md" v-close-popup />
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog v-model="isCongratsModal">
+    <CongratsModal />
+  </q-dialog>
+
+  <q-dialog v-model="isShowPrizeModal">
+    <div class="congrats-container">
+      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
+      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
+      <div class="congrats-highlight">Rs58</div>
+
+      <div class="congrats-button">
+        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
+          {{ $t("btn.recharge") }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal">
+    <MoneyRainModal />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1262,7 +1334,6 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
-import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -1270,10 +1341,14 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
+import CongratsModal from "../components/modal/CongratsModal.vue";
+import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
+import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { useI18n } from "vue-i18n";
+import { eventapi } from "src/boot/axios";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1292,6 +1367,11 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
+const isLuckyDrawModal = ref(false);
+const isCongratsModal = ref(false);
+const isShowPrizeModal = ref(false);
+const isMoneyRainModal = ref(false);
+
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
@@ -1304,6 +1384,9 @@ const categoriesList = ref([
 
 const isCsTabVisible = ref(false);
 const csTabRef = ref();
+
+const isLiveTabVisible = ref(false);
+const liveTabRef = ref();
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -1354,6 +1437,10 @@ const checkHash = () => {
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
+
+const liveDragPos = ref([16, 0]);
+const isDraggingLiveIcon = ref(false);
+const isLiveUrlShow = ref(false);
 
 const slide = ref(0);
 
@@ -1536,7 +1623,260 @@ const livecasino = ref([
 ]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([{"id":8,"name":"JiliGames","code":"JILI","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JiliGames","sequence":1},{"id":124,"name":"Turbo","code":"Turbo","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":2},{"id":21,"name":"PG","code":"PG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Relax Gaming","sequence":3},{"id":51,"name":"JOKER","code":"JOKER","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JOKER","sequence":4},{"id":31,"name":"JDB","code":"JDB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":5},{"id":107,"name":"Big time Gaming","code":"WCBTG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Big Time","sequence":6},{"id":111,"name":"Relax","code":"WCRelax","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Relax Gaming","sequence":7},{"id":16,"name":"TFGaming","code":"TFGaming","status":"OPEN","walletType":"SEAMLESS","gameType":"CASUAL","followType":"NEW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":999},{"id":106,"name":"No limit city","code":"WCNLC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"No Limit City","sequence":999},{"id":108,"name":"Wazdan","code":"WCWazdan","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Wazdan","sequence":999},{"id":104,"name":"Netent","code":"WCNetent","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Netent","sequence":999},{"id":105,"name":"Red tiger","code":"WCRT","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Red Tiger","sequence":999},{"id":109,"name":"One touch","code":"WCOTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"One Touch Slot","sequence":999},{"id":120,"name":"World Match","code":"WCWM","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"World Match","sequence":999},{"id":113,"name":"PNG","code":"WCPNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PNG","sequence":999},{"id":116,"name":"Habanero","code":"WCHB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Habanero","sequence":999},{"id":121,"name":"Spinix","code":"WCSpinix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Spinix","sequence":999},{"id":142,"name":"FiveG","code":"FiveG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"5G","sequence":999}]);
+const slot = ref([
+  {
+    id: 8,
+    name: "JiliGames",
+    code: "JILI",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JiliGames",
+    sequence: 1
+  },
+  {
+    id: 124,
+    name: "Turbo",
+    code: "Turbo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 2
+  },
+  {
+    id: 21,
+    name: "PG",
+    code: "PG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Relax Gaming",
+    sequence: 3
+  },
+  {
+    id: 51,
+    name: "JOKER",
+    code: "JOKER",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JOKER",
+    sequence: 4
+  },
+  {
+    id: 31,
+    name: "JDB",
+    code: "JDB",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 5
+  },
+  {
+    id: 107,
+    name: "Big time Gaming",
+    code: "WCBTG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Big Time",
+    sequence: 6
+  },
+  {
+    id: 111,
+    name: "Relax",
+    code: "WCRelax",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Relax Gaming",
+    sequence: 7
+  },
+  {
+    id: 16,
+    name: "TFGaming",
+    code: "TFGaming",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "CASUAL",
+    followType: "NEW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  },
+  {
+    id: 106,
+    name: "No limit city",
+    code: "WCNLC",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "No Limit City",
+    sequence: 999
+  },
+  {
+    id: 108,
+    name: "Wazdan",
+    code: "WCWazdan",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Wazdan",
+    sequence: 999
+  },
+  {
+    id: 104,
+    name: "Netent",
+    code: "WCNetent",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Netent",
+    sequence: 999
+  },
+  {
+    id: 105,
+    name: "Red tiger",
+    code: "WCRT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Red Tiger",
+    sequence: 999
+  },
+  {
+    id: 109,
+    name: "One touch",
+    code: "WCOTS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "One Touch Slot",
+    sequence: 999
+  },
+  {
+    id: 120,
+    name: "World Match",
+    code: "WCWM",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "World Match",
+    sequence: 999
+  },
+  {
+    id: 113,
+    name: "PNG",
+    code: "WCPNG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "PNG",
+    sequence: 999
+  },
+  {
+    id: 116,
+    name: "Habanero",
+    code: "WCHB",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Habanero",
+    sequence: 999
+  },
+  {
+    id: 121,
+    name: "Spinix",
+    code: "WCSpinix",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Spinix",
+    sequence: 999
+  },
+  {
+    id: 142,
+    name: "FiveG",
+    code: "FiveG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "5G",
+    sequence: 999
+  }
+]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -2018,7 +2358,7 @@ const loadHotGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
-      hotGameList.value= [];
+      hotGameList.value = [];
       hotlists = res;
 
       // cached
@@ -2042,8 +2382,14 @@ const loadHotGameList = () => {
         .then((res) => {
           gameLists = res;
 
+          // console.log("HERE");
+          // console.log(gameLists);
+          // console.log(hotlists);
+
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item2.platformCode === item1.platform
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2060,7 +2406,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
@@ -2640,7 +2986,7 @@ const getPlatList = () => {
           var liveObj = Object.assign({}, element);
           livecasino.value.push(liveObj);
         }
-        if (platTypes.indexOf("SLOT") > -1 || (platTypes.indexOf("CASUAL") > -1 && element.code !=='Spribe')) {
+        if (platTypes.indexOf("SLOT") > -1 || (platTypes.indexOf("CASUAL") > -1 && element.code !== "Spribe")) {
           var slotObj = Object.assign({}, element);
           let slotItem = {
             id: slotObj.id,
@@ -2713,7 +3059,18 @@ const gotoPromo = (banner) => {
   if (urlSplit.length >= 2) {
     const type = urlSplit[0];
     if (type === "open") {
-      playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      if (gameSplit[1][1] === "LuckySport") {
+        playGame(
+          gameSplit[1][0],
+          gameSplit[1][1],
+          "#/special/uefaeuro",
+          gameSplit[1][3],
+          gameSplit[1][4],
+          gameSplit[1][5]
+        );
+      } else {
+        playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      }
     } else if (type === "page") {
       router.push(`/${urlSplit[1]}`);
     } else {
@@ -2723,7 +3080,11 @@ const gotoPromo = (banner) => {
     if (banner.redirectUrl.includes("https://")) {
       window.open(banner.redirectUrl, "_blank");
     } else {
-      router.push(`/promo?name=${banner.redirectUrl}`);
+      if (banner.redirectUrl === "redpacketrain") {
+        isMoneyRainModal.value = true;
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
   }
 };
@@ -2840,31 +3201,21 @@ const moveCsIcon = (ev) => {
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
+const moveLiveIcon = (ev) => {
+  isDraggingLiveIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
+};
+
+const openLiveInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
+
 const pushNotificationData = ref();
 
 const populatePushNotificationData = (data) => {
   pushNotificationData.value = data;
-};
-
-const initOneSignal = () => {
-  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
-
-  let myClickListener = async function (event) {
-    console.log("CLICK PUSH");
-    let notificationData = event;
-    console.log(notificationData);
-    console.log(notificationData.notification.title);
-    console.log(notificationData.notification.body);
-    console.log(notificationData.notification.additionalData);
-    populatePushNotificationData(notificationData.notification);
-  };
-  OneSignal.Notifications.addEventListener("click", myClickListener);
-
-  // Prompts the user for notification permissions.
-  //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
-  OneSignal.Notifications.requestPermission(true).then((accepted) => {
-    console.log("User accepted notifications: " + accepted);
-  });
 };
 
 const loadCustomerAddress = () => {
@@ -2878,6 +3229,14 @@ const loadCustomerAddress = () => {
       console.log(data);
       var url = data.liveUrl1;
       ui.CSAUrl = url;
+
+      if (data.studioUrl) {
+        var lvUrl = data.studioUrl;
+        ui.LiveUrl = lvUrl;
+        isLiveUrlShow.value = true;
+
+        csDragPos.value = [10, 70];
+      }
     });
 };
 
@@ -2914,84 +3273,59 @@ const getWithExpiry = (key) => {
   }
   const item = JSON.parse(itemStr);
   const now = new Date();
-  api
-    .get("/member/ads-popout")
-    .then((res) => {
-      // debugger;
-      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-        localStorage.removeItem(key);
-        // isImportantAnnoucementModal.value = true;
-        return null;
-      }
-    })
-    .catch(() => {});
+  if (now.getTime() > item.expiry) {
+    localStorage.removeItem(key);
+    return null;
+  }
   return item.value;
 };
 
 const isImpt = getWithExpiry("isImpt");
 
 const checkShowImgTop = () => {
-  const lastTime = sessionStorage.getItem("indexImgTop");
-  if (lastTime) {
-    const diff = new Date().getTime() - Number(lastTime);
-    if (diff > 1000 * 60 * 60 * 12) {
-      isFirstView.value = true;
-    }
-  } else {
-    api
-      .get("/member/ads-popout")
-      .then((res) => {
-        if (res.code === 0) {
-          if (isImpt === null) {
-            switch (res.data["frequency"]) {
-              case "EVERYTIME":
-                homePopupFrequencyNum.value = 0;
-                break;
-              case "EVERYDAY":
-                homePopupFrequencyNum.value = 86400000; // 24hrs
-                break;
-              case "SESSION":
-                homePopupFrequencyNum.value = 7866432000; // 3months
-                break;
-              default:
-                homePopupFrequencyNum.value = 10000;
-                break;
-            }
-            isImportantAnnoucementModal.value = true;
-            homePopupImg.value = imgURLPromo + res.data["mobileImgUrl"];
-            homePopupContent.value = res.data["content"];
-            homePopupType.value = res.data["type"];
-            homePopupId.value = res.data["id"];
-            homePopupFrequency.value = res.data["frequency"];
-
-            if (res.data["path"].includes("http")) {
-              homePopupLink.value = res.data["path"];
-              homePopupLinkOut.value = true;
-            } else {
-              homePopupLink.value = `/promo?name=${res.data["path"]}`;
-            }
-
-            if (homePopupFrequencyNum.value !== 0) {
-              setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-            }
-
-            isFirstView.value = true;
+  const isImpt = getWithExpiry("isImpt");
+  api
+    .get("/member/ads-popout")
+    .then((res) => {
+      if (res.code === 0) {
+        if (isImpt === null) {
+          switch (res.data["frequency"]) {
+            case "EVERYTIME":
+              homePopupFrequencyNum.value = 0;
+              break;
+            case "EVERYDAY":
+              homePopupFrequencyNum.value = 86400000; // 24hrs
+              break;
+            case "SESSION":
+              homePopupFrequencyNum.value = 7866432000; // 3months
+              break;
+            default:
+              homePopupFrequencyNum.value = 10000;
+              break;
           }
+          isImportantAnnoucementModal.value = true;
+          homePopupImg.value = imgURLPromo + res.data["mobileImgUrl"];
+          homePopupContent.value = res.data["content"];
+          homePopupType.value = res.data["type"];
+          homePopupId.value = res.data["id"];
+          homePopupFrequency.value = res.data["frequency"];
+
+          if (res.data["path"].includes("http")) {
+            homePopupLink.value = res.data["path"];
+            homePopupLinkOut.value = true;
+          } else {
+            homePopupLink.value = `/promo?name=${res.data["path"]}`;
+          }
+
+          if (homePopupFrequencyNum.value !== 0) {
+            setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+          }
+
+          isFirstView.value = true;
         }
-      })
-      .catch(() => {});
-  }
-};
-
-const topDownloadUrl = ref("");
-
-const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-      ui.downloadAppUrl = res.data.url;
-    }
-  });
+      }
+    })
+    .catch(() => {});
 };
 
 const downloadHeart = ref(false);
@@ -3007,10 +3341,16 @@ const downloadHeart = ref(false);
 //   }
 // };
 
+const processedContent = (content) => {
+  return content.replace(/\n/g, "<br>");
+};
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
   checkShowImgTop();
+
+  checkSpinWheel();
 });
 
 onMounted(() => {
@@ -3022,14 +3362,10 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  getTopDownloadUrl();
+  ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-
-  // if (Platform.is.android && Platform.is.capacitor) {
-  //   initOneSignal();
-  // }
 });
 
 watch(
@@ -3040,6 +3376,54 @@ watch(
     }
   }
 );
+
+// watch(
+//   () => route.query.register,
+//   (newValue) => {
+//     if (newValue === "true") {
+//       if (!isAndroid()) {
+//         isCongratsModal.value = true;
+//       }
+//     }
+//   }
+// );
+
+const checkSpinWheel = () => {
+  if (store.hasToken() && isAndroid()) {
+    setTimeout(() => {
+      showSpinWheel();
+    }, 750);
+  } else if (store.hasToken() && !isAndroid()) {
+    showCongratsModal();
+  }
+};
+
+const showSpinWheel = () => {
+  eventapi
+    .get("/new-user-roulette/init")
+    .then((res) => {
+      if (res.code == 0) {
+        if (res.data.hasUnusedCoupon === "YES") {
+          isShowPrizeModal.value = true;
+        } else if (res.data.showRoulette === "YES") {
+          isLuckyDrawModal.value = true;
+        }
+      }
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+};
+
+const showCongratsModal = () => {
+  eventapi.get("/new-user-roulette/init").then((res) => {
+    if (res.code == 0) {
+      if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
+        isCongratsModal.value = true;
+      }
+    }
+  });
+};
 </script>
 
 <style scoped lang="scss">
@@ -3251,11 +3635,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 2.05%,
-        rgba(255, 255, 255, 0.05) 44.93%,
-        rgba(255, 255, 255, 0.05) 53.13%,
-        rgba(255, 255, 255, 0) 98.21%
+      90deg,
+      rgba(255, 255, 255, 0) 2.05%,
+      rgba(255, 255, 255, 0.05) 44.93%,
+      rgba(255, 255, 255, 0.05) 53.13%,
+      rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -3273,6 +3657,9 @@ watch(
 
     .marquee-container {
       width: calc(100% - 28px);
+      :deep(.marquee-text-content) {
+        width: max-content;
+      }
     }
 
     span {
@@ -3792,6 +4179,14 @@ watch(
 .home-wrapper {
   width: calc(100% - 16px);
   margin: auto;
+}
+
+.live-icon-wrapper {
+  width: 63px;
+  height: 70px;
+  background: url("../assets/images/index/icon-live.png") no-repeat center center;
+  background-size: contain;
+  position: relative;
 }
 
 .cs-icon-wrapper {
@@ -4338,10 +4733,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-        180deg,
-        rgba(115, 115, 115, 0) 0%,
-        rgba(153, 153, 153, 0.4) 48.5%,
-        rgba(115, 115, 115, 0) 100%
+      180deg,
+      rgba(115, 115, 115, 0) 0%,
+      rgba(153, 153, 153, 0.4) 48.5%,
+      rgba(115, 115, 115, 0) 100%
     );
   }
 
@@ -4491,5 +4886,139 @@ watch(
   .q-card {
     background: transparent;
   }
+}
+
+// congrats container
+// .congrats-button {
+//   position: absolute;
+//   bottom: -60px;
+//   left: 50%;
+//   transform: translateX(-50%);
+// }
+
+.congrats-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.congrats-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.congrats-container {
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+
+  &:before {
+    content: "";
+    background-image: url(../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background-image: url(../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 2px 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
+  }
+}
+
+.luckyspin-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.luckyspin-header {
+  margin: 0 auto -5%;
+  width: 90%;
+  z-index: 2;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.luckyspin-container {
+  background-image: url(../assets/images/index/modal/luckyspin-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-color: #113413;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  // overflow: visible !important;
+  border-radius: 12px;
+  padding: 16px;
+
+  .luckyspin-title {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+}
+
+.money-rain-close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

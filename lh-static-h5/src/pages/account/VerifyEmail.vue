@@ -88,10 +88,12 @@ import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
+    const notify = useNotify();
     // const isCardActive = ref();
     const qs = require("qs");
     const router = useRouter();
@@ -145,11 +147,9 @@ export default defineComponent({
             }
           })
           .catch((e) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: e.message,
-              icon: "report_problem"
             });
           });
     };
@@ -182,23 +182,19 @@ export default defineComponent({
       };
       api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "OTP验证码已发送至您的邮箱",
-            icon: "check_circle_outline"
           });
           canEdit.value = true;
           verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;
           isEmailSending.value = false;
         } else {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: ret.message,
-          //   icon: "report_problem"
-          // });
+          // notify({
+          //   type: "error",
+          //          //   message: ret.message,
+          //          // });
           isEmailSending.value = false;
           getCode();
         }
@@ -220,22 +216,18 @@ export default defineComponent({
           codeId: emailCodeId.value
         })).then((res) => {
           if (res.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "验证成功",
-              icon: "check_circle_outline"
             });
             store.emailVerified = true;
             store.email= formDetail.email;
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: e.message,
-            icon: "report_problem"
           });
         });
       }
@@ -297,11 +289,9 @@ export default defineComponent({
 
     const onCaptchaSubmit = () => {
       if (!formDetail.email) {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "邮箱不能为空",
-          icon: "report_problem"
         });
         getCode();
         return;
@@ -315,7 +305,7 @@ export default defineComponent({
           .then(res => {
             getCode();
             let message = res.message || '发送邮箱验证码成功',
-                color = 'positive'
+                type = 'success'
 
             if (res.code === 0) {
               canEdit.value = true;
@@ -325,11 +315,11 @@ export default defineComponent({
               countdownOtp();
               emailCodeId.value = res.data.codeId;
             } else
-              color = 'negative';
+              type = 'error';
             getCode();
 
             if (message)
-              $q.notify({message, color});
+              notify({message, type});
             getCode();
 
             // console.log('onCaptchaSubmit', res)

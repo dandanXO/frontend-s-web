@@ -30,7 +30,7 @@
           <img src="../assets/logo.png" @click="onClickLogo" />
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.hasToken()">
+      <div class="profile-wrapper" v-if="store.token">
         <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">
@@ -62,7 +62,7 @@
         </div>
 
         <div>
-          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
+          <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
         </div>
         <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
@@ -205,7 +205,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://55ace.com/", "_blank");
+    window.open("https://55ace.com/", "_blank");
     return;
   }
 
@@ -267,6 +267,13 @@ const getTopDownloadUrl = () => {
       topDownloadUrl.value = res.data.url;
     }
   });
+};
+
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/deposit?from=" + route.path);
 };
 
 onMounted(() => {

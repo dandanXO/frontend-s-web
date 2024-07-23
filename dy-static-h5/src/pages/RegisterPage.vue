@@ -5,34 +5,10 @@
       rounded
       standout
       bg-color="grey-2"
-      ref="realNameRef"
-      hide-bottom-space
-      v-model="regForm.realName"
-      placeholder="请输入姓名"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入姓名',
-        (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间',
-        isValidName
-      ]"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/login/user-icon.png" width="18" />
-      </template>
-      <template v-slot:append>
-        <img @click="clearRealName" src="../assets/login/input-close-icon.png" style="margin-right: 3px" width="20" />
-      </template>
-    </q-input>
-
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
       hide-bottom-space
       ref="loginNameRef"
       v-model="regForm.loginName"
-      placeholder="请输入用户名"
+      placeholder="6-12个字符，包含大小写字母"
       lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入用户名',
@@ -40,7 +16,8 @@
       ]"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/user-icon.png" width="18" />
+        <img src="../assets/login/user-icon.svg" width="14" />
+        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">用户名</span>
       </template>
       <template v-slot:append>
         <img @click="clearLoginName" src="../assets/login/input-close-icon.png" style="margin-right: 3px" width="20" />
@@ -65,7 +42,8 @@
       ]"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/pass-icon.png" width="18" />
+        <img src="../assets/login/pass-icon.svg" width="14" />
+        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">密码</span>
       </template>
       <template v-slot:append>
         <img
@@ -122,7 +100,7 @@
       hide-bottom-space
       :type="isCfmPwd ? 'password' : 'text'"
       v-model="regForm.confirmPwd"
-      placeholder="请输入确认密码"
+      placeholder="请再次输入密码"
       lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入确认密码',
@@ -131,7 +109,8 @@
       ]"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/pass-icon.png" width="18" />
+        <img src="../assets/login/pass-icon.svg" width="14" />
+        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">确认密码</span>
       </template>
       <template v-slot:append>
         <img
@@ -151,39 +130,30 @@
       </template>
     </q-input>
 
-    <!-- <q-input
+    <q-input
+      height="32px"
+      rounded
       standout
-      bg-color="white"
-      ref="telRef"
+      bg-color="grey-2"
+      ref="realNameRef"
       hide-bottom-space
-      v-model="regForm.telephone"
-      label="电话号码"
-      lazy-rules
-      :rules="[(val) => (val && val.length > 7) || '请输入有效的电话号码']"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/images/login/telephone.png" width="20" />
-      </template>
-    </q-input> -->
-
-    <!-- <q-input
-      standout
-      bg-color="white"
-      ref="emailRef"
-      type="email"
-      hide-bottom-space
-      v-model="regForm.email"
-      label="电子邮件"
+      v-model="regForm.realName"
+      placeholder="姓名必须与提款银行卡账号一致"
       lazy-rules
       :rules="[
-        (val) => (val && val.length > 0) || '请输入电子邮件',
-        isValidEmail
+        (val) => (val && val.length > 0) || '请输入姓名',
+        (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间',
+        isValidName
       ]"
     >
       <template v-slot:prepend>
-        <img src="../assets/images/login/email.png" width="20" />
+        <img src="../assets/login/user-icon.svg" width="14" />
+        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">姓名</span>
       </template>
-    </q-input> -->
+      <template v-slot:append>
+        <img @click="clearRealName" src="../assets/login/input-close-icon.png" style="margin-right: 3px" width="20" />
+      </template>
+    </q-input>
 
     <q-input
       height="32px"
@@ -203,7 +173,8 @@
         <img :src="verificationImg" @click="getCode()" />
       </template>
       <template v-slot:prepend>
-        <img src="../assets/login/veri-icon.png" width="18" />
+        <img src="../assets/login/veri-icon.svg" width="14" />
+        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">验证码</span>
       </template>
     </q-input>
 
@@ -216,51 +187,39 @@
       ref="affiliateCodeRef"
       hide-bottom-space
       v-model="regForm.codeAffiliate"
-      placeholder="推荐码"
-      hint="若不是合营下会员无需填写"
+      placeholder="若不是合营下会员无需填写"
       :readonly="hasAffiliate === true ? true : false"
     >
       <template v-slot:prepend>
-        <img src="../assets/login/veri-icon.png" width="18" />
+        <img src="../assets/login/veri-icon.svg" width="14" />
+        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">推荐码</span>
       </template>
     </q-input>
-
-    <!--    <div class="row justify-center items-center gap-5">-->
-    <!--      <q-checkbox-->
-    <!--          rounded-->
-    <!--          v-model="isConfirmTerm"-->
-    <!--          label="我已阅读并同意"-->
-    <!--          size="sm"-->
-    <!--          checked-icon="task_alt"-->
-    <!--          unchecked-icon="highlight_off"-->
-    <!--          color="light-blue-9"-->
-    <!--      />-->
-    <!--      <router-link class="txt-link" to="/">-->
-    <!--        [条款与规则]-->
-    <!--      </router-link>-->
-    <!--      和-->
-    <!--      <router-link class="txt-link" to="/">-->
-    <!--        [隐私政策]-->
-    <!--      </router-link>-->
-    <!--    </div>-->
 
     <div class="row justify-between items-center">
       <q-btn
         @click.prevent="onSubmit"
         type="submit"
-        class="q-mt-lg"
+        class="q-mt-md"
         label="注册"
         width="100%"
         color="primary"
         style="width: 100%; letter-spacing: 2px"
         size="16px"
-        rounded
+      />
+
+      <q-btn
+        @click.prevent="changeTab"
+        type="button"
+        class="q-mt-md"
+        label="登录"
+        width="100%"
+        color="white"
+        text-color="#4A4A4A"
+        style="width: 100%; letter-spacing: 2px; box-shadow: 0px -2px 4px 0px #5A9DFF80 inset;"
+        size="16px"
       />
     </div>
-
-    <!--    <div class="q-pa-md text-center">-->
-    <!--      <router-link class="txt-tip" to="/">先去逛逛</router-link>-->
-    <!--    </div>-->
   </q-form>
 </template>
 
@@ -441,6 +400,10 @@ export default defineComponent({
       }
     };
 
+    const changeTab = () => {
+      context.emit('changeTab')
+    }
+
     watch(
       () => regForm.password,
       () => {
@@ -500,7 +463,8 @@ export default defineComponent({
       clearRealName,
       regFormRef,
       hasAffiliate,
-      getAffiliateCode
+      getAffiliateCode,
+      changeTab
     };
   }
 });
@@ -525,7 +489,6 @@ function charType(num) {
   -webkit-text-fill-color: transparent;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
   padding: 10px;
   display: flex;
   gap: 20px;

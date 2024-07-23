@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -279,7 +278,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="580px"
+      width="600px"
     >
       <el-form
         v-if="
@@ -289,7 +288,7 @@
         :model="payForm"
         :inline="true"
         size="small"
-        label-width="150px"
+        label-width="170px"
       >
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input
@@ -320,6 +319,19 @@
           <el-button
             style="margin-left: 10px"
             @click="copy(payForm.withdrawAmount, 'Withdraw Amount')"
+          >
+            {{ t('fields.copy') }}
+          </el-button>
+        </el-form-item>
+        <el-form-item :label="t('fields.localCurrencyAmount')" prop="localCurrencyAmount">
+          <el-input
+            v-model="payForm.localCurrencyAmount"
+            style="width: 300px;"
+            disabled
+          />
+          <el-button
+            style="margin-left: 10px"
+            @click="copy(payForm.localCurrencyAmount, 'Local Currency Amount')"
           >
             {{ t('fields.copy') }}
           </el-button>
@@ -514,7 +526,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 250px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
             :default-time="defaultTime"
@@ -619,7 +630,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import moment from 'moment'
+/* import moment from 'moment' */
 import { ElMessage } from 'element-plus'
 import { getVipList } from '../../../../api/vip'
 import { getFinancialLevels } from '../../../../api/financial-level'
@@ -737,14 +748,14 @@ const request = reactive({
   siteId: null,
 })
 
-function disabledDate(time) {
+/* function disabledDate(time) {
   return (
     time.getTime() <=
       moment(new Date())
         .subtract(1, 'weeks')
         .format('x') || time.getTime() > new Date().getTime()
   )
-}
+} */
 
 function resetQuery() {
   request.withdrawDate = [defaultStartDate, defaultEndDate]
@@ -841,7 +852,7 @@ async function loadRecord() {
       query.withdrawDate = request.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.withdrawCode = "BANK";
   const { data: ret } = await getMemberWithdrawRecordPay(query)
   page.pages = ret.pages
@@ -932,6 +943,7 @@ function addToPayForm(memberWithdrawRecord) {
   payForm.loginName = memberWithdrawRecord.loginName
   payForm.cardAccount = memberWithdrawRecord.cardAccount
   payForm.withdrawAmount = memberWithdrawRecord.withdrawAmount
+  payForm.localCurrencyAmount = memberWithdrawRecord.localCurrencyAmount
   payForm.bankName = memberWithdrawRecord.bankName
   payForm.cardNumber = memberWithdrawRecord.cardNumber
   payForm.cardAddress = memberWithdrawRecord.cardAddress

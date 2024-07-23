@@ -177,10 +177,12 @@ import {
   getOpenRecord,
   claimCheckInTreasure
 } from "@/api/index/promo";
-import { ElMessage, ElLoading } from "element-plus";
+import { ElLoading } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode"]);
 const store = userStore();
+const notify = useNotify();
 
 const keyNumber = ref(0);
 const signNumber = ref(0);
@@ -223,7 +225,7 @@ const openBox = (item) => {
       openModal("amt", res.data);
       init();
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -335,7 +337,7 @@ const openModal = (modal, item, itemIndex) => {
         openRecords.value = res.data.records;
         isChestRecordModal.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     });
     setTimeout(() => {

@@ -29,7 +29,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px;margin-left: 5px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -46,7 +45,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px;margin-left: 5px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -264,6 +262,12 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="realName"
+          :label="t('fields.realName')"
+          align="center"
+          min-width="110"
+        />
         <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"
@@ -488,7 +492,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 560px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
             :default-time="defaultTime"
@@ -506,7 +509,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 560px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
             :default-time="defaultTime"
@@ -794,15 +796,15 @@ const searchFormRule = reactive({
   depositAmount: [{ validator: validateDepositAmount, trigger: 'blur' }],
 })
 
-function disabledDate(time) {
-  return (
-    time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
-}
+// function disabledDate(time) {
+//   return (
+//     time.getTime() <
+//       moment(new Date())
+//         .subtract(2, 'months')
+//         .startOf('month')
+//         .format('x') || time.getTime() > new Date().getTime()
+//   )
+// }
 
 function resetQuery() {
   if (searchForm.value) {

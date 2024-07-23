@@ -1,7 +1,7 @@
 <template>
   <div class="app-download" v-if="isShowDownload && store.getAppDownloadUrl()">
     <div class="left">
-      <img class="headicon" width="60" src="../assets/images/index/kr-logo.png" />
+      <img class="headicon" width="60" src="../assets/logo.png" />
       <div class="name-and-rating">
         <span class="name">City8</span>
         <q-rating class="rating" v-model="ratingScore" size="1em" color="irange" readonly />

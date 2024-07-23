@@ -1,14 +1,13 @@
 <template>
   <router-view />
+  <notification-wrapper/>
 </template>
 
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
-// import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import axios from "axios";
 import { cached } from "boot/cache";
@@ -16,8 +15,13 @@ import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
 import { useLocalStorage } from "@vueuse/core";
 
+import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
+
 export default defineComponent({
   name: "App",
+  components: {
+    NotificationWrapper
+  },
   setup() {
     var qs = require("qs");
     const store = userStore();
@@ -38,51 +42,55 @@ export default defineComponent({
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
         store.visitorId = visitorId;
 
-        console.log("SID");
-        console.log(visitorId);
+        if (store.isNotAppPromo()) {
+          console.log("SID");
+          console.log(visitorId);
 
-        const obj = {
-          identifier: store.visitorId,
-          affiliateCode: affiliateItem
-        };
+          const obj = {
+            identifier: store.visitorId,
+            affiliateCode: affiliateItem
+          };
 
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
+          api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+            if (res.code === 0) {
+            }
+          });
+        }
       })();
     };
     let csclient;
     let CSAUrl;
 
     const getCSA = () => {
-      cached
-        .get("customerAddress", () =>
-          api.get("/config/customerAddress/v2").then((res) => {
-            return res;
+      if (store.isNotAppPromo()) {
+        cached
+          .get("customerAddress", () =>
+            api.get("/config/customerAddress/v2").then((res) => {
+              return res;
+            })
+          )
+          .then((data) => {
+            var url;
+            const randNum = Math.floor(Math.random() * 2) + 1;
+            if (randNum === 1) {
+              url = data.liveUrl1;
+            } else {
+              url = data.liveUrl2;
+            }
+            const urlData = new URL(url);
+
+            // debugger;
+            CSAUrl = urlData.hostname;
+            ui.CSAUrl = urlData.hostname;
+
+            initCsWeb();
+            console.log(CSAUrl);
           })
-        )
-        .then((data) => {
-          var url;
-          const randNum = Math.floor(Math.random() * 2) + 1;
-          if (randNum === 1) {
-            url = data.liveUrl1;
-          } else {
-            url = data.liveUrl2;
-          }
-          const urlData = new URL(url);
-
-          // debugger;
-          CSAUrl = urlData.hostname;
-          ui.CSAUrl = urlData.hostname;
-
-          initCsWeb();
-          console.log(CSAUrl);
-        })
-        .catch((err) => {
-          console.log(err);
-          CSAUrl = "csweb01.c8nhwrqx4.com";
-        });
+          .catch((err) => {
+            console.log(err);
+            CSAUrl = "csweb01.c8nhwrqx4.com";
+          });
+      }
     };
 
     const initCsWeb = () => {
@@ -117,11 +125,11 @@ export default defineComponent({
       //CsClient Event Listener.
       window.addEventListener("message", function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
-          // if (event.data == 'sess_timeout') {
-          //   router.push({ path: "/" });
-          // }
-        }
+        // if (typeof event.data === "string") {
+        // if (event.data == 'sess_timeout') {
+        //   router.push({ path: "/" });
+        // }
+        // }
       });
     };
 
@@ -130,7 +138,7 @@ export default defineComponent({
       store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
-      if (sidParam) {
+      if (sidParam && store.isNotAppPromo()) {
         const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
           params: {
             way: way,
@@ -144,18 +152,20 @@ export default defineComponent({
     const getAffiliateByDomain = () => {
       var host = window.location.host;
       // host = "www.lh56917.com";
-      api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
-        console.log(res);
-        if (res.code === 0 && res.data !== "") {
-          // alert(res.data)
-          var agentCode = res.data;
-          sessionStorage.setItem("AFFILIATE_CODE", agentCode)
-        }
-      });
-
-    }
+      if (store.isNotAppPromo()) {
+        api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
+          console.log(res);
+          if (res.code === 0 && res.data !== "") {
+            // alert(res.data)
+            var agentCode = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+          }
+        });
+      }
+    };
 
     onMounted(() => {
+      console.log("TEST 3");
       checkSID();
       // initCsWeb();
       getCSA();

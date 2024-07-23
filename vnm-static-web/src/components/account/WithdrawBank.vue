@@ -251,7 +251,7 @@ import {
   loadBankCards,
   loadUnbindRecord,
   addBankCard,
-  deleteBankCard,
+  deleteBankCardByNumber,
   loadMemberInfo,
   loadMemberTelephone
 } from "@/api/personal/personal";
@@ -821,13 +821,19 @@ export default defineComponent({
           inputErrorMessage: t('withdraw.confirmCorrectNumber') // Error message to display if input is invalid
         }
       )
-        .then((inputValue) => {
-          if (inputValue.value === card.cardNumber) {
-            deleteBankCard(card.id).then((res) => {
+      .then((inputValue) => {
+          if (!inputValue.value) {
+            ElMessage({
+              type: 'error',
+              message: t('placeholder.pleaseEnterCardNumber'),
+            });
+            return
+          }
+          deleteBankCardByNumber(inputValue.value).then((res) => {
               if (res.code === 0) {
                 ElMessage({
                   type: "success",
-                  message: t('common.unbindSuccessful')
+                  message: t('withdraw.unbindSuccessful')
                 });
                 // loadCards();
                 searchRecord();
@@ -845,13 +851,7 @@ export default defineComponent({
             }).catch((e) => {
               console.log("error", e);
             });
-          } else {
-            ElMessage({
-              type: "error",
-              message: t('withdraw.incorrectAccNumber')
-            });
-          }
-        })
+          })
         .catch(() => {
           ElMessage({
             type: "info",

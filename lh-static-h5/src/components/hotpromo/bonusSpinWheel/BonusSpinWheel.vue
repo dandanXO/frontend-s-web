@@ -75,7 +75,9 @@ import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar} from "quasar";
 import moment from 'moment';
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const $q = useQuasar();
 
 // spin wheel constants
@@ -195,11 +197,9 @@ const spinWheel = () => {
   }
 
   if (remainingDraws.value <= 0) {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: "剩余抽奖次数：0",
-      icon: "report_problem"
     });
     return;
   }

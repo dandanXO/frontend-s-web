@@ -6,7 +6,7 @@
         <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" />
       </div>
       <div class="promo-main-container">
-        <div class="promo-type-wrapper" style="display: none">
+        <div class="promo-type-wrapper">
           <div class="type-list">
             <div
               v-for="p in promoTypes"
@@ -15,10 +15,11 @@
               :class="{ active: p.value === promoTabActive }"
               @click="switchPromoType(p)"
             >
-              <RiFunctionLine v-if="p && p.value === 'ALL'" />
+              <!-- <RiFunctionLine v-if="p && p.value === 'ALL'" />
               <template v-else>
                 {{ p.label }}
-              </template>
+                </template> -->
+              {{ $t(p.label) }}
             </div>
           </div>
         </div>
@@ -58,9 +59,17 @@
             :style="'background-image: url(' + imgURL + selectedPromo.mobileImgUrl + ')'"
           />
         </div>
+        <div class="promo-content-inner">
+          <div class="content-title">{{ selectedPromo.title }}</div>
+          <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
+          <div class="content-date" v-if="parsedParamDate">
+            <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
+            {{ parsedParamDate }}
+          </div>
+        </div>
+
         <div class="inner" :class="{ hasMaxWidth: !isSpecialPromo }">
           <div v-if="selectedPromo.hasPromo" :class="{ 'hot-promo': !isSpecialPromo }">
-            <!-- {{ selectedPromo.id = 40 }} -->
             <HotPromotion :list="selectedPromo" />
           </div>
           <div
@@ -85,12 +94,13 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { RiFunctionLine } from 'vue-remix-icons'
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store"
+import { useI18n } from "vue-i18n";
 
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
@@ -100,19 +110,49 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
+    const { t } = useI18n();
     const store = userStore()
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
-      active: { value:'ALL', label:'ALL'},
+      active: { value:'ALL', label: t('promo.all')},
       promoList: [],
     });
     const isSpecialPromo = ref(false);
     const isSpecialPromoBanner = ref(false);
     const promoTypes = ref([
-      { value: "ALL", label:"ALL"},
-      { value: "WELCOME", label:"WELCOME"},
-      { value: "VIP", label:"VIP"},
+      {
+        value: "ALL",
+        label: 'promo.all',
+      },
+      {
+        value: "EARN",
+        label: 'promo.earn'
+      },
+      {
+        value: "HOT",
+        label: 'promo.hot'
+      },
+      {
+        value: "NEW USER",
+        label: 'promo.new_user'
+      },
+      {
+        value: "SPORTS",
+        label: 'promo.sports'
+      },
+      {
+        value: "LIVE",
+        label: 'promo.live'
+      },
+      {
+        value: "SLOT",
+        label: 'promo.slot'
+      },
+      {
+        value: "VIP",
+        label: 'promo.vip'
+      }
       // { value: "SPORT", label:"SPORT"},
       // { value: "LIVE CASINO", label:"LIVE CASINO"},
       // { value: "SLOT", label:"SLOT"},
@@ -125,7 +165,7 @@ export default defineComponent({
     const router = useRouter();
     watch(() => route.query, () => {
       if (route.query === null) {
-       isPromoDetail.value = false
+        isPromoDetail.value = false
       } else {
         isPromoDetail.value = route.query.code
         loadAll()
@@ -136,7 +176,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         }
       })
     }
@@ -170,21 +210,21 @@ export default defineComponent({
       loadPromo().then((res) => {
         if(res.code === 0) {
 
-        // if (store.memberType !== 'TEST' ) {
-        //   res.data = res.data.filter((privilege) => {
-        //     return privilege.privilegeStatus === 'OPEN';
-        //   });
-        //   res.data.forEach((privilege) => {
-        //     console.log(privilege.privilegeStatus)
-        //   })
-        // }
+          // if (store.memberType !== 'TEST' ) {
+          //   res.data = res.data.filter((privilege) => {
+          //     return privilege.privilegeStatus === 'OPEN';
+          //   });
+          //   res.data.forEach((privilege) => {
+          //     console.log(privilege.privilegeStatus)
+          //   })
+          // }
 
-        promoState.promoList.push(...res.data);
-        promoState.promoList.forEach(element => {
-          if (element.redirectUrl.toString() === route.query.code) {
-            showPromoDetails(element)
-          }
-        });
+          promoState.promoList.push(...res.data);
+          promoState.promoList.forEach(element => {
+            if (element.redirectUrl.toString() === route.query.code) {
+              showPromoDetails(element)
+            }
+          });
         }
       }).catch((e) => { console.log("error", e); });
       switchPromoType(promoState.active)
@@ -193,6 +233,22 @@ export default defineComponent({
       loadBanner();
       loadAll();
     });
+
+    // promo param split.
+    const parsedParam = computed(() => {
+      try {
+        if (selectedPromo.value && selectedPromo.value.param) {
+          return JSON.parse(selectedPromo.value.param);
+        }
+        return {};
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return {};
+      }
+    });
+
+    const parsedParamSub = computed(() => parsedParam.value.sub || '');
+    const parsedParamDate = computed(() => parsedParam.value.date || '');
 
     // onMounted(() => {
     //   loadAll()
@@ -213,7 +269,9 @@ export default defineComponent({
       imgURL,
       store,
       isSpecialPromo,
-      isSpecialPromoBanner
+      isSpecialPromoBanner,
+      parsedParamSub,
+      parsedParamDate
     }
   },
 });
@@ -274,22 +332,20 @@ export default defineComponent({
       margin-right: auto;
       .promo-type-wrapper {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
+        border-bottom: 3px solid #ffffff0d;
         .type-list {
           display: flex;
           justify-content: center;
           align-items: center;
-          border-radius: 20px;
           overflow: hidden;
           gap: 20px;
-          padding: 1rem 0.2em;
+          padding: 1rem 0.2em 0;
           overflow: auto;
           .type-item {
             padding: 5px 10px;
             cursor: pointer;
-            border-radius: 20px;
-            box-shadow: 0 0 10px -3px #000000;
             white-space: nowrap;
 
             svg {
@@ -303,8 +359,21 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+              // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
               color: #fff;
+              display: flex;
+              flex-direction: column;
+              position: relative;
+              &:after {
+                content: "";
+                background: #70bc62;
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                border-radius: 4px;
+                left: 0;
+              }
 
               img {
                 filter: grayscale(0);
@@ -407,7 +476,7 @@ export default defineComponent({
         margin: 0px auto;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 4px;
         .hot-promo {
           padding: 20px;
           border-radius: 10px;
@@ -415,7 +484,7 @@ export default defineComponent({
         .promo-view-container {
           background-repeat: no-repeat;
           background-position: 95% 90%;
-          padding: 20px;
+          padding: 10px 20px;
           border-radius: 10px;
           overflow: auto;
           &.welcome {
@@ -524,6 +593,34 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+}
+
+// promo content-inner
+.promo-content-inner {
+  padding: 12px 0px;
+  margin: 0 12px;
+  border-bottom: 1px solid #ffffff1a;
+  .content-title {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .content-para {
+    font-size: 16px;
+    padding-top: 4px;
+    color: #9f9f9f;
+  }
+  .content-date {
+    padding-top: 6px;
+    color: #9f9f9f;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      display: block;
+      width: 30px;
     }
   }
 }

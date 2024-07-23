@@ -224,7 +224,7 @@
 
                   <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" color="red" @click="openWithdrawCancel(scope.row)">取消</el-button>
+                      <el-button size="small" color="red" class="common-btn cancel" @click="openWithdrawCancel(scope.row)">取消</el-button>
                     </div>
                   </template>
 
@@ -461,19 +461,17 @@
                 :label="tbl.title"
               >
                 <template v-if="tbl.dataIndex === 'betId'" #default="scope">
-                  <div style="display: flex; align-items: center;">
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="scope.row.betId"
-                      placement="top-start"
-                    >
-                      <a @click="copy(scope.row.betId)">复制 <span style="color: black">{{scope.row.betId.slice(0, 1)}}...</span></a>
+                  <div style="display: flex; align-items: center">
+                    <el-tooltip class="box-item" effect="dark" :content="scope.row.betId" placement="top-start">
+                      <a @click="copy(scope.row.betId)">
+                        复制
+                        <span style="color: black">{{ scope.row.betId.slice(0, 1) }}...</span>
+                      </a>
                     </el-tooltip>
                   </div>
                 </template>
                 <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
-                  <div style="display: flex; align-items: center;">
+                  <div style="display: flex; align-items: center">
                     <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
                   </div>
                 </template>
@@ -672,10 +670,9 @@
 
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 import {
   loadRecords,
-  gameBetRecordTotal,
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
@@ -688,15 +685,19 @@ import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
 import EmptyData from "@/components/emptyData.vue";
 import { useRoute } from "vue-router";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
+
 const copy = (text) => {
-  const el = document.createElement('textarea');
+  const el = document.createElement("textarea");
   el.value = text;
   document.body.appendChild(el);
   el.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
   document.body.removeChild(el);
-  ElMessage.success('已复制');
-}
+  notify.success("已复制");
+};
 const loadingBtn = ref(false);
 const store = userStore();
 const uploadFileRef = ref();
@@ -724,7 +725,7 @@ const searchForm = reactive({
     startDate: "",
     endDate: "",
     current: 1,
-    size: 10
+    size:10
   },
   withdraw: {
     startDate: "",
@@ -1021,15 +1022,14 @@ export default defineComponent({
   setup() {
     const searchRecord = (tab) => {
       // console.log(tab)
-      console.log(searchForm[recordActive.value])
-      if(!searchForm[recordActive.value]["startDate"] || !searchForm[recordActive.value]["endDate"]){
-        ElMessage({
+      console.log(searchForm[recordActive.value]);
+      if (!searchForm[recordActive.value]["startDate"] || !searchForm[recordActive.value]["endDate"]) {
+        notify({
           message: "请输入开始与结束日期。",
           type: "error"
         });
         return;
       }
-
 
       if (tab && tab.props && tab.props.name) {
         recordActive.value = tab.props.name;
@@ -1047,7 +1047,7 @@ export default defineComponent({
             dataSource.splice(0);
             dataSource.push(...response.data.records);
           } else {
-            ElMessage.error(response.message)
+            notify.error(response.message);
           }
         });
         return;
@@ -1060,36 +1060,39 @@ export default defineComponent({
           searchForm[recordActive.value].pagingState = pagination.pagingState;
         }
       }
-      if(recordActive.value === "gameBetRecord" && searchForm[recordActive.value].platform==='BBINDY'){
-        searchForm[recordActive.value].platform = "BBIN"
+      if (recordActive.value === "gameBetRecord" && searchForm[recordActive.value].platform === "BBINDY") {
+        searchForm[recordActive.value].platform = "BBIN";
       }
-      loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
-        if (response.code === 0) {
-          pagination.total = response.data.total;
-          if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
-            pagination.pagingState = response.data.pagingState;
-          }
+      loadRecords(recordActive.value, searchForm[recordActive.value])
+        .then((response) => {
+          if (response.code === 0) {
+            pagination.total = response.data.total;
+            if (recordActive.value === "turnover" || recordActive.value === "gameBetRecord") {
+              pagination.pagingState = response.data.pagingState;
+            }
 
-          if(recordActive.value === 'gameBetRecord') {
-            totalBetRecord.totalBet = response.data.sums.totalBet;
-            totalBetRecord.totalPayout = response.data.sums.totalPayout;
-          }
+            if (recordActive.value === "gameBetRecord") {
+              totalBetRecord.totalBet = response.data.sums.totalBet;
+              totalBetRecord.totalPayout = response.data.sums.totalPayout;
+            }
 
-          const dataSource = dataState[recordActive.value];
-          //clear array and then push new record
-          dataSource.splice(0);
-          dataSource.push(...response.data.records);
+            const dataSource = dataState[recordActive.value];
+            //clear array and then push new record
+            dataSource.splice(0);
+            dataSource.push(...response.data.records);
+            loading.value = false;
+          } else {
+            notify.error(response.message);
+            loading.value = false;
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+          // message.error( error.message, 4 );
+        })
+        .then(() => {
           loading.value = false;
-        } else {
-          ElMessage.error(response.message);
-          loading.value = false;
-        }
-      }).catch((error) => {
-        console.log("error", error);
-        // message.error( error.message, 4 );
-      }).then(() => {
-        loading.value = false;
-      });
+        });
     };
 
     const recordPage = (pagination) => {
@@ -1111,26 +1114,30 @@ export default defineComponent({
       var oldDate = new Date(gapDate);
       var newDate = {
         Y: oldDate.getFullYear() + "-",
-        M: (oldDate.getMonth() + 1) < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : (oldDate.getMonth() + 1 + "-"),
-        D: (oldDate.getDate()) < 10 ? "0" + (oldDate.getDate() + "") : (oldDate.getDate() + "")
+        M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+        D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
       };
       var useDate = newDate.Y + newDate.M + newDate.D;
       return useDate;
     };
 
     const getTime = () => {
-      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function(v) {
-        if (v in searchForm) {
-          searchForm[v].startDate = chgDate(7);
-          searchForm[v].endDate = chgDate(0);
-          if (v === "gameBetRecord") {
-            // 结束时间如果不跟开始时间一个月，则从当月1号开始
-            if (moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
-              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(
+        function (v) {
+          if (v in searchForm) {
+            searchForm[v].startDate = chgDate(7);
+            searchForm[v].endDate = chgDate(0);
+            if (v === "gameBetRecord") {
+              // 结束时间如果不跟开始时间一个月，则从当月1号开始
+              if (
+                moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")
+              ) {
+                searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+              }
             }
           }
         }
-      });
+      );
       searchRecord();
     };
 
@@ -1143,7 +1150,7 @@ export default defineComponent({
       const startMonth = new Date(searchForm[v].startDate).getMonth();
       const endMonth = new Date(searchForm[v].endDate).getMonth();
       if (startMonth !== endMonth) {
-        ElMessage.error("开始与结束月份必须一致");
+        notify.error("开始与结束月份必须一致");
       }
 
       getPlatformList().then((ret) => {
@@ -1161,10 +1168,9 @@ export default defineComponent({
       //     totalBetRecord.totalBet = ret.data.totalBet;
       //     totalBetRecord.totalPayout = ret.data.totalPayout;
       //   } else {
-      //     ElMessage.error(ret.message);
+      //     notify.error(ret.message);
       //   }
       // });
-
     };
 
     const selectedBetRecord = ref({});
@@ -1190,10 +1196,10 @@ export default defineComponent({
               reminderForm.recordTime = moment(record.withdrawDate).format("YYYY-MM-DD HH:mm:ss");
             }
           } else {
-            ElMessage.error("无法提交新催单，目前尚有未处理的催单。");
+            notify.error("无法提交新催单，目前尚有未处理的催单。");
           }
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1217,7 +1223,7 @@ export default defineComponent({
             getTime();
           });
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1241,7 +1247,7 @@ export default defineComponent({
             getTime();
           });
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1249,19 +1255,17 @@ export default defineComponent({
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
-        ElMessage.warning(
-          `请上传图片提交`
-        );
+        notify.warning(`请上传图片提交`);
       } else {
         console.log(reminderForm);
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success(`催单上传成功。`);
+            notify.success(`催单上传成功。`);
             reminderDialog.value = false;
             formRef.value.resetFields();
             uploadFileRef.value.clear();
           } else {
-            ElMessage.error(res.message);
+            notify.error(res.message);
           }
         });
       }
@@ -1286,7 +1290,7 @@ export default defineComponent({
           // dataState.betRecord = response.data.records
           dataState.betRecord.push(...response.data.records);
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       });
     };
@@ -1321,13 +1325,13 @@ export default defineComponent({
         return "";
       }
       if (transferType === "APPLY") {
-        return "申请中"; //Applying
+        return "处理中"; //Applying
       } else if (transferType === "FAIL") {
         return "失败"; // Failed
       } else if (transferType === "SUCCESS") {
         return "成功"; // Success
       } else if (transferType === "STEP_1" || transferType === "PENDING") {
-        return "审核中"; //Under review
+        return "处理中"; //Under review
       } else if (transferType === "STEP_2") {
         return "待支付"; // To be paid
       } else if (transferType === "STEP_3") {
@@ -1371,7 +1375,7 @@ export default defineComponent({
         return "转出"; // Withdraw
       } else if (transferChangeType === "WITHDRAW_FAIL") {
         return "失败"; // Withdraw
-      }else if (transferChangeType === "DEPOSIT") {
+      } else if (transferChangeType === "DEPOSIT") {
         return "转入"; // DEPOSIT
       } else {
         return transferChangeType;
@@ -1380,7 +1384,7 @@ export default defineComponent({
 
     const getFormatBetTime = (betTime) => {
       return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
-    }
+    };
 
     const getPlatform = (platformName) => {
       if (!platformName) {
@@ -1434,7 +1438,7 @@ export default defineComponent({
         return "熊猫体育"; // PGDY
       } else if (platformName === "FB") {
         return "FB体育"; // PGDY
-      }else if (platformName === "PMFISH") {
+      } else if (platformName === "PMFISH") {
         return "DB捕鱼";
       } else if (platformName === "RG") {
         return "RG电竞";
@@ -1459,8 +1463,8 @@ export default defineComponent({
       if (!type) {
         return "";
       }
-      if(type === 'WITHDRAW_FAIL'){
-       return "转账失败";
+      if (type === "WITHDRAW_FAIL") {
+        return "转账失败";
       }
       if (subType === "DEPOSIT") {
         return "转进"; // 转进
@@ -1470,20 +1474,20 @@ export default defineComponent({
         return "转出"; // 转出
       } else if (type === "DEPOSIT") {
         return "转进"; // 转出
-      }else {
+      } else {
         return subType;
       }
     };
 
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === "APPLY") {
-        return "申请中"; //Applying
+        return "处理中"; //Applying
       } else if (withdrawStatus === "FAIL") {
         return "失败"; // Failed
       } else if (withdrawStatus === "SUCCESS") {
         return "成功"; // Success
       } else if (withdrawStatus === "STEP_1" || withdrawStatus === "PENDING") {
-        return "审核中"; //Under review
+        return "处理中"; //Under review
       } else if (withdrawStatus === "STEP_2") {
         return "待支付"; // To be paid
       } else if (withdrawStatus === "STEP_3") {
@@ -1544,8 +1548,8 @@ export default defineComponent({
         return "QQ支付"; // QQ支付
       } else if (depositType === "KDPAY") {
         return "K豆"; // K豆
-      } else if (depositType === 'BLBPAY') {
-        return '808钱包' // 808钱包
+      } else if (depositType === "BLBPAY") {
+        return "808钱包"; // 808钱包
       } else if (depositType === "DDPAY") {
         return "钉钉"; // 钉钉
       } else if (depositType === "HBPAY") {
@@ -1597,7 +1601,7 @@ export default defineComponent({
         return "结算"; // Settle
       } else if (betStatus === "SETTLED") {
         return "已结算"; // Bet & Settled
-      }else if (betStatus === "BET_N_SETTLE") {
+      } else if (betStatus === "BET_N_SETTLE") {
         return "投注并结算"; // Bet & Settled
       } else if (betStatus === "CANCEL") {
         return "取消"; // Cancel
@@ -1699,6 +1703,9 @@ export default defineComponent({
         margin-top: 0;
         padding: 3px 5px;
         font-size: 14px;
+      }
+      &.cancel {
+        background: var(--el-button-bg-color);
       }
     }
 

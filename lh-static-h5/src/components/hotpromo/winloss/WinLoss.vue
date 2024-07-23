@@ -5,7 +5,7 @@
                 {{ formattedDate }}
             </div>
             <div class="match-details">
-                免费参与竞猜，小组赛第二轮（共3轮）
+                免费参与竞猜，{{ matchText }}
             </div>
             <div class="winloss-matches">
                 <div class="match" v-for="(match, i) in ongoingMatches" :key="i">
@@ -31,10 +31,10 @@
                         {{ match.matchTime }}
                         </div>
 
-                        <div class="match-btn" @click="matchSubmit(match, 0, '平局')"
-                        v-if="match.selectedTeamId === null">平</div>
-                        <button v-else-if="match.selectedTeamId === 0" class="match-btn active">已选</button>
-          <div v-else class="match-btn pseudo" />
+                        <!-- <div class="match-btn" @click="matchSubmit(match, 0, '平局')"
+                        v-if="match.selectedTeamId === null">平</div> -->
+                        <button v-if="match.selectedTeamId === 0" class="match-btn active">已选</button>
+                        <!-- <div v-else class="match-btn pseudo" /> -->
                     </div>
                     <div class="team teamB">
                         <div class="toprow team-details">
@@ -125,7 +125,7 @@
                 <img src="./images/rules.png">
             </div>
             <ol>
-                <li>活动期间，当日任意存款即可参与免费竞猜，参与当日指定免费竞猜且“欧洲杯”滚球盘有效投注≥500即可获得竞猜彩金，彩金需完成3倍流水即可提款；</li>
+                <li>活动期间，当日任意存款即可参与免费竞猜，参与当日指定免费竞猜且“欧洲杯”滚球盘有效投注≥500即可获得竞猜彩金，彩金于次日24小时内派发，彩金需完成3倍流水即可提款；</li>
                 <li>活动胜率计算方式为：100 ÷ 每日竞猜赛事数量 × 获胜场次；</li>
                 <li>本活动仅计算滚球盘的有效投注，流水赔率要求：亚洲盘赔率 &lt; 0.70、欧洲盘 &lt; 1.70、美洲盘 ≤ -133、马来盘 ≤ 0.70 且 &gt; 0、走盘、注单取消、对冲、未结算、串关、平半盘、实时兑现等不计算为有效流水；</li>
                 <li>本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，单日单场赛事有在多体育场馆投注则累积计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；</li>
@@ -158,8 +158,10 @@ import {useLocalStorage} from "@vueuse/core"
 import { useQuasar } from "quasar";
 import { getFormattedDateComponents } from "boot/utils"
 import { eventapi } from "boot/axios";
+import { useNotify } from "src/hooks/notify";
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 var qs = require("qs");
@@ -171,6 +173,7 @@ const selectedItem = ref({
   name: null
 });
 
+const matchText= ref("");
 const formattedDate = ref(null);
 const getMatches = () => {
   eventapi.get("/uefa/match/ongoing").then((res) => {
@@ -179,6 +182,17 @@ const getMatches = () => {
 
       if (ongoingMatches.value.length > 0) {
         formattedDate.value = getFormattedDateComponents(ongoingMatches.value[0].matchTime);
+
+
+        if(ongoingMatches.value[0].teamGroup === "16"){
+          matchText.value= "16强"
+        }else if(ongoingMatches.value[0].teamGroup === "8"){
+          matchText.value= "8强"
+        }else if(ongoingMatches.value[0].teamGroup === "4"){
+          matchText.value= "半决赛"
+        }else{
+          matchText.value= "总决赛"
+        }
       }
     }
   });
@@ -203,11 +217,9 @@ const confirmMatchSelect = () => {
     })
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功",
-          icon: "report_problem"
         });
         confirmDialog.value = false;
         getMatches();
@@ -361,6 +373,7 @@ onMounted(() => {
     }
   }
   ol {
+    padding-left: 40px !important;
     li {
       color: #ffffff;
       font-size: 1.3rem;

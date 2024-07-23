@@ -582,9 +582,19 @@
             </div>
           </template>
           <span v-if="affiliateDetails.affiliateLevel !== null">
-            {{ affiliateDetails.affiliateLevel }}
+            {{ t(`affiliate.level.${affiliateDetails.affiliateLevel}`) }}
           </span>
           <span v-if="affiliateDetails.affiliateLevel === null">-</span>
+          <el-button
+            v-if="parseInt(memberDetail.siteId) === 10 && memberDetail.affiliateStatus === 'NORMAL'"
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:affiliate-level']"
+            @click="showDialog('UPDATE_AFFILIATE_LEVEL')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -1210,8 +1220,9 @@
             <el-input
               :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
               v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
+              style=" width:100px; margin-left: auto;"
             />
+            <span style="color:red"> &emsp; ({{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }}) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -1430,6 +1441,40 @@
           <el-button type="primary" @click="updateField('RISK')">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'UPDATE_AFFILIATE_LEVEL'"
+        ref="updateLevelModel"
+        :model="levelForm"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.affiliateLevel')" prop="level">
+          <el-select
+            v-model="levelForm.level"
+            size="small"
+            :placeholder="t('fields.timeType')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.affiliateLevel"
+              :key="item.key"
+              :label="t(`affiliate.level.${item.value}`)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="updateAffiliateLevel">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -1470,7 +1515,9 @@ import {
   updateTimeType,
   updateBelongType,
   updateViewLoginName,
-  getAffiliateShareRatio
+  getAffiliateShareRatio,
+  updateLevel,
+  getDownlineShareRatio,
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1500,6 +1547,9 @@ const riskList = reactive({
   list: []
 });
 const shareRatioList = reactive({
+  list: [],
+})
+const downlineShareRatioList = reactive({
   list: [],
 })
 const selectedRiskColor = reactive({
@@ -1543,6 +1593,13 @@ const uiControl = reactive({
     },
   ],
   commissionMax: 2,
+  affiliateLevel: [
+    { key: 1, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
+    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
+    { key: 3, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 4, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
+    { key: 5, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
+  ],
 })
 
 const loading = reactive({
@@ -1566,6 +1623,7 @@ const commissionForm = ref(null)
 const updateTimeTypeModel = ref(null)
 const updateBelongTypeModel = ref(null)
 const changeAffForm = ref(null)
+const updateLevelModel = ref(null)
 const riskForm = reactive({
   risk: null
 });
@@ -1636,6 +1694,7 @@ const superiorAffiliateDetail = reactive({
   loginName: null,
   affiliateCode: null,
   affiliateLevel: null,
+  affiliateShareRatio: [],
 })
 
 const page = reactive({
@@ -1697,6 +1756,10 @@ const belongTypeForm = reactive({
 
 const affForm = reactive({
   affiliateCode: null,
+})
+
+const levelForm = reactive({
+  level: null,
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -1775,7 +1838,7 @@ const remarkFormRules = reactive({
 })
 
 const affFormRules = reactive({
-  affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
+  // affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
 const riskFormRules = reactive({
@@ -1797,12 +1860,22 @@ const loadRiskLevels = async () => {
 
 const loadShareRatio = async () => {
   const { data: shareRatio } = await getAffiliateShareRatio(memberDetail.id)
+  shareRatioList.list = shareRatio
   if (shareRatio.length > 0) {
-    shareRatioList.list = shareRatio
+    const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
+    const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+    missingRatio.forEach(ratio => {
+      shareRatioList.list.push({
+        code: ratio.code,
+        value: 0
+      })
+    })
   } else {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
-    shareRatioList.list = shareRatio
+    shareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
   }
+  const { data: downlineShareRatio } = await getDownlineShareRatio(memberDetail.id)
+  downlineShareRatioList.list = downlineShareRatio
 }
 
 const populateRiskColor = () => {
@@ -1949,6 +2022,9 @@ function showDialog(type) {
       selectedRiskColor.levelColor = riskList.list[0].levelColor;
     }
     uiControl.dialogTitle = t('fields.updateRiskLevel');
+  } else if (type === 'UPDATE_AFFILIATE_LEVEL') {
+    levelForm.level = affiliateDetails.affiliateLevel
+    uiControl.dialogTitle = t('fields.updateAffiliateLevel')
   }
   uiControl.dialogVisible = true
 }
@@ -2124,8 +2200,34 @@ function updateMemberTimeType() {
   })
 }
 
+function updateAffiliateLevel() {
+  updateLevelModel.value.validate(async valid => {
+    if (valid) {
+      await updateLevel(props.affId, levelForm.level)
+      const data = await getAffiliateRecord(props.affId)
+      Object.keys({ ...data.data }).forEach(detailField => {
+        memberDetail[detailField] = data.data[detailField]
+      })
+      const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+      superiorAffiliateDetail.id = 0
+      superiorAffiliateDetail.loginName = null
+      superiorAffiliateDetail.affiliateCode = null
+      superiorAffiliateDetail.affiliateLevel = null
+      superiorAffiliateDetail.affiliateShareRatio = []
+      Object.keys({ ...aff }).forEach(detailField => {
+        superiorAffiliateDetail[detailField] = aff[detailField]
+      })
+      uiControl.dialogVisible = false
+      affiliateDetails.affiliateLevel = levelForm.level
+      ElMessage({
+        message: t('message.updateAffiliateLevelSuccess'),
+        type: 'success',
+      })
+    }
+  })
+}
+
 function updateMemberBelongType() {
-  console.log('updateMemberBelongType')
   updateBelongTypeModel.value.validate(async valid => {
     if (valid) {
       await updateBelongType(props.affId, belongTypeForm.belongType)
@@ -2262,19 +2364,45 @@ async function unmaskDetail(type) {
 }
 
 async function changeAffiliate() {
-  await changeNewAffilaite(
-    props.affId,
-    affForm.affiliateCode,
-    memberDetail.memberType
-  )
-  ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
-  uiControl.dialogVisible = false
-  loading.superiorAffiliateInfo = true
-  const { data: aff } = await getAffiliateInfo(props.affId, site.id)
-  Object.keys({ ...aff }).forEach(detailField => {
-    superiorAffiliateDetail[detailField] = aff[detailField]
-  })
-  loading.superiorAffiliateInfo = false
+  if (!affForm.affiliateCode) {
+    ElMessageBox.confirm(t('message.confirmUnbindAffiliateAccesss'), {
+      title: t('message.confirmUnbindAffiliateAccesss'),
+      confirmButtonText: t('fields.confirm'), // Replace with your translation key for "OK"
+      cancelButtonText: t('fields.cancel') // Optional: Replace with your translation key for "Cancel"
+    })
+      .then(async () => {
+        await changeNewAffilaite(
+          props.affId,
+          affForm.affiliateCode,
+          memberDetail.memberType
+        )
+        ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
+        uiControl.dialogVisible = false
+        loading.superiorAffiliateInfo = true
+        const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+        Object.keys({ ...aff }).forEach(detailField => {
+          superiorAffiliateDetail[detailField] = aff[detailField]
+        })
+        loading.superiorAffiliateInfo = false
+      })
+      .catch(() => {
+        // catch error
+      })
+  } else {
+    await changeNewAffilaite(
+      props.affId,
+      affForm.affiliateCode,
+      memberDetail.memberType
+    )
+    ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
+    uiControl.dialogVisible = false
+    loading.superiorAffiliateInfo = true
+    const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+    Object.keys({ ...aff }).forEach(detailField => {
+      superiorAffiliateDetail[detailField] = aff[detailField]
+    })
+    loading.superiorAffiliateInfo = false
+  }
 }
 
 async function resetSecurityQuestion() {
@@ -2302,6 +2430,16 @@ async function changeViewLoginName() {
     await loadAffiliateRecord()
     ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   })
+}
+
+function getAffiliateRatio(code) {
+  const shareRatio = superiorAffiliateDetail.affiliateShareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? (superiorAffiliateDetail.loginName === null ? 1 : 0) : shareRatio[0].value;
+}
+
+function getDownlineRatio(code) {
+  const shareRatio = downlineShareRatioList.list.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
 }
 
 onMounted(async () => {

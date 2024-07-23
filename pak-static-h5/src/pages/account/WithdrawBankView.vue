@@ -62,9 +62,7 @@
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
-        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
-          <span>+ Add bank card</span>
-        </div> -->
+
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <span>+添加虚拟币账户</span>
         </div> -->
@@ -72,14 +70,22 @@
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addVirtualWallet") }}</span>
         </div>
+
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
+          <span>+ {{ $t("btn.addBankCard") }}</span>
+        </div>
+
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
         </div> -->
       </div>
 
+      <!-- <pre>bankCardList[BANK_CARD]--{{ bankCardList[BANK_CARD] }}</pre> -->
+      <!-- <pre>bankCardList[EWALLET]--{{ bankCardList[EWALLET] }}</pre> -->
+
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
-        <div class="bank-detail-type">银行卡</div>
+        <div class="bank-detail-type">{{ t("form.bankCard") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[BANK_CARD] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[BANK_CARD]">
@@ -94,7 +100,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>ss卡号：</div>
+              <div>Bank Account:&nbsp;</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -103,7 +109,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
         </div>
       </template>
 
@@ -263,7 +269,7 @@ const getTitleText = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value;
 
   if (isAlipay(bankCode)) return "请输入解绑支付宝号";
-  else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
+  else if (bankType === BANK_CARD) return t("form.bankCard_untie");
   else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
   else if (bankType === EWALLET) return t("form.virtualWallet_untie");
 };
@@ -294,7 +300,7 @@ const isAlipay = (bankID) => {
 const unbindCardLabel = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value;
   if (isAlipay(bankCode)) return "支付宝号";
-  else if (bankType === BANK_CARD) return "银行卡号";
+  else if (bankType === BANK_CARD) return t("form.bankCard");
   else if (bankType === CRYPTO) return "钱包地址";
   else if (bankType === EWALLET) return t("form.virtualWallet");
 };
@@ -347,7 +353,7 @@ onActivated(() => {
   .bank-detail-wrapper {
     width: calc(100% - 2rem);
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 0rem 0 1rem;
 
     .bank-bind-item {
       // background: $white;
@@ -358,8 +364,8 @@ onActivated(() => {
       justify-content: space-around;
       flex-wrap: wrap;
       margin: 0 auto 14px;
-      padding: 1.25rem;
-      gap: 15px;
+      padding: 1rem;
+      gap: 8px;
 
       .bank-bind-btn {
         display: flex;
@@ -367,11 +373,13 @@ onActivated(() => {
         justify-content: center;
         // width: 47.5%;
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        padding: 12px 12px;
+        padding: 12px 5px;
         border-radius: 8px;
         color: #000a01;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
+        white-space: nowrap;
         font-weight: 500;
+        flex: 1;
         //   font-weight: 500;
 
         .bank-bind-img {
@@ -458,6 +466,7 @@ onActivated(() => {
         color: #3dff47;
         font-size: 1rem;
         font-weight: 400;
+        display:none;
       }
     }
   }

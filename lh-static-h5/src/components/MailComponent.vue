@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <template v-if="props.type !== 'outbox'">
-      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
           <div class="tab-flex">
             <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
@@ -53,25 +53,25 @@
                     color="#0089ED"
                   />
 
-                  <div class="read-label" v-if="det.readTime && det.sendTime" >
+                  <div class="read-label" v-if="det.readTime && det.sendTime">
                     <img src="../assets/images/inbox/read-mail.png" />
                   </div>
                   <div class="read-label" v-else>
                     <img src="../assets/images/inbox/unread-mail.png" />
                   </div>
 
-
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
-                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
+                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
+                    <i>{{ formatSendTime(det.sendTime) }}</i>
+                  </div>
                   <div class="right-title">
-                    <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                    <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                    <img src="../assets/images/inbox/arrow-down-icon.svg" :class="isSelectedMail === det.id && 'arrow-rotate'"  />
                   </div>
                 </div>
               </div>
               <div
                 class="mailcontents"
-                v-if="isSelectedMail === det.id"
+                v-if="isSelectedMail === det.id && det.content"
                 v-html="det.content.replace(/\n/g, '<br/>')"
               ></div>
               <div v-if="mailType === 'outbox'" class="buttons">
@@ -121,16 +121,12 @@
 <script>
 import { defineComponent, onActivated, onMounted, ref, computed } from "vue";
 import moment from "moment";
-import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
-  components: {
-    RiArrowDownSLine,
-    RiArrowUpSLine
-  },
   props: {
     list: {
       type: Array,
@@ -159,6 +155,7 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
+    const notify = useNotify();
     const mailboxMessageTypeData = ref([
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
@@ -223,11 +220,9 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "读取已选择的消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
 
               // Update the readTime property of selected messages
@@ -254,11 +249,9 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "全部消息已读",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
 
               // Update the readTime property of all messages
@@ -283,11 +276,9 @@ export default defineComponent({
           .post("/session/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "全部消息已读",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
 
               // Update the readTime property of all messages
@@ -330,11 +321,9 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               !readTime &&
-                $q.notify({
+                notify({
                   message: "已读消息",
-                  type: "positive",
-                  position: "top",
-                  icon: "check_circle_outline"
+                  type: "success",
                 });
               mail.content = res.data.content;
               onLoad();
@@ -354,11 +343,9 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已读消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
             }
@@ -396,11 +383,9 @@ export default defineComponent({
               // Remove items from truncatedListByType if their IDs match with selectedMailIds and are marked as true
               truncatedList.value = truncatedList.value.filter((mail) => !selectedMailIds.value[mail.id]);
 
-              $q.notify({
+              notify({
                 message: "删除已选择的消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
 
@@ -424,11 +409,9 @@ export default defineComponent({
 
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已删除全部消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
               // truncatedList.value = [];
@@ -447,11 +430,9 @@ export default defineComponent({
 
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已删除全部消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success",
               });
               onLoad();
               truncatedList.value = [];
@@ -536,8 +517,8 @@ export default defineComponent({
     color: $font-1;
     word-break: break-all;
 
-    .read-label{
-      display:flex;
+    .read-label {
+      display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 8px;
@@ -570,6 +551,16 @@ export default defineComponent({
 
   .right-title {
     display: flex;
+    width: 20px;
+    img {
+      display: block;
+      width: 16px;
+      transition: 0.3s all;
+
+      &.arrow-rotate{
+        transform:  scaleY(-1);
+      }
+    }
   }
 
   .mailcontents {
@@ -616,6 +607,12 @@ export default defineComponent({
   margin-right: 5px;
 }
 
+.q-tab {
+  &--active {
+    color: #000;
+  }
+}
+
 .body--dark {
   .q-card {
     box-shadow: none;
@@ -624,11 +621,18 @@ export default defineComponent({
     }
     .mailcontents {
       background: $background-dark-header;
+      color: $white;
     }
   }
 
   .q-tab-panels {
     background: $background-dark;
+  }
+
+  .q-tab {
+    &--active {
+      color: $primary-dark;
+    }
   }
 }
 </style>

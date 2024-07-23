@@ -47,6 +47,13 @@
             {{ copybtntxt3 }}
           </q-btn>
         </div>
+        <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+          <span>备注：</span>
+          <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
+            {{ copybtntxt5 }}
+          </q-btn>
+        </div>
       </div>
     </div>
     <div class="deposit-container" v-else>
@@ -251,18 +258,19 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { api, cashier } from "boot/axios";
+import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import { doIt } from "boot/action";
-import liff from "@line/liff";
 
 var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify()
 
 const store = userStore();
 const route = useRoute();
@@ -316,11 +324,13 @@ const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
 const subMsg4 = ref();
+const subMsg5 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const copybtntxt4 = ref("复制");
+const copybtntxt5 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -335,14 +345,14 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
 };
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });
@@ -433,8 +443,7 @@ const initPay = () => {
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -507,9 +516,6 @@ async function onSelect(value) {
 
   clearInfo();
   // if (!Platform.is.android || !Platform.is.capacitor) {
-  // }
-  // if (liff.isInClient()) {
-  //   clearInfo();
   // }
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
@@ -585,11 +591,9 @@ async function confirmDeposit() {
               form.localAmount = d.data.suggestion;
               btnLoading.value = false;
             }
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: d.message,
-              icon: "report_problem"
             });
           } else {
             if (freePrivilege.value) {
@@ -657,8 +661,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -678,11 +681,9 @@ async function pDepo(deposit) {
             } else {
               const newWin = window.open(`/`);
               if (!newWin) {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
+                notify({
+                  type: "error",
                   message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
-                  icon: "report_problem"
                 });
                 btnLoading.value = false;
                 return;
@@ -708,8 +709,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;
@@ -746,21 +746,17 @@ async function pDepo(deposit) {
           }
         }
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
         btnLoading.value = false;
       }
     })
     .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: error.message,
-        icon: "report_problem"
       });
       btnLoading.value = false;
       // postMessage(

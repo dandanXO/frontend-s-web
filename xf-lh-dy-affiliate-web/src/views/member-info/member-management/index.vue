@@ -290,6 +290,9 @@
                       <el-dropdown-item @click="showEditRemark(item)">
                         {{ t('fields.remark') }}
                       </el-dropdown-item>
+                      <el-dropdown-item v-if="parseInt(store.state.user.siteId) === 10" @click="showEditShareRatio(item)">
+                        {{ t('fields.editShareRatio') }}
+                      </el-dropdown-item>
                       <el-dropdown-item @click="showDepositRecord(item)">
                         {{ t('fields.depositRecord') }}
                       </el-dropdown-item>
@@ -537,6 +540,34 @@
   </el-dialog>
 
   <el-dialog
+    :title="t('fields.editShareRatio')"
+    v-model="uiControl.shareRatioDialogVisible"
+    width="500px"
+    append-to-body
+  >
+    <el-form @submit.prevent>
+      <el-form-item prop="memberShareRatio">
+        <div v-for="item in selectedMember.shareRatio" :key="item.code" style="display: flex; margin-bottom:5px;">
+          <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+          <el-input
+            v-model="item.value"
+            style=" width:100px; margin-left: auto;"
+          />
+          <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
+        </div>
+      </el-form-item>
+    </el-form>
+    <div class="dialog-footer">
+      <el-button @click="uiControl.remarkDialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button type="primary" @click="submitShareRatio()">
+        {{ $t('fields.confirm') }}
+      </el-button>
+    </div>
+  </el-dialog>
+
+  <el-dialog
     :title="t('fields.depositRecord')"
     v-model="uiControl.depositDialogVisible"
     width="1100px"
@@ -722,6 +753,16 @@
       <el-form-item :label="t('fields.email')" prop="email">
         <el-input v-model="createMemberForm.email" style="width: 350px;" />
       </el-form-item>
+      <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.memberShareRatio')" prop="memberShareRatio">
+        <div v-for="item in memberShareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+          <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+          <el-input
+            v-model="item.value"
+            style=" width:100px; margin-left: auto;"
+          />
+          <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
+        </div>
+      </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.createMemberDialogVisible = false">
           {{ $t('fields.cancel') }}
@@ -744,6 +785,8 @@ import {
   assignTag,
   assignRemark,
   registerMember,
+  editMemberRatio,
+  getAffiliateInfo
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
@@ -753,6 +796,8 @@ import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
 import { getMemberPrivilegeRecords } from '../../../api/affiliate-privilege-record'
 import emptyComp from '@/components/empty'
 import { required, size } from '../../../utils/validate'
+import { getConfigListByGroup } from "../../../api/system-config";
+
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -774,6 +819,9 @@ let assignTaglist = []
 const selected = reactive({
   tags: [],
 })
+const memberShareRatioList = reactive({
+  list: [],
+})
 
 const uiControl = reactive({
   infoDialogVisible: false,
@@ -782,6 +830,7 @@ const uiControl = reactive({
   depositDialogVisible: false,
   privilegeDialogVisible: false,
   createMemberDialogVisible: false,
+  shareRatioDialogVisible: false,
   editBtn: true,
   editType: 'One',
   orderBy: [
@@ -1013,6 +1062,7 @@ const selectedMember = reactive({
   id: null,
   loginName: null,
   remark: null,
+  shareRatio: null,
 })
 
 const selectedMemberList = reactive({
@@ -1035,6 +1085,17 @@ const createMemberForm = reactive({
   telephone: null,
   email: null,
   siteId: null,
+  memberShareRatio: null,
+})
+
+const affInfo = reactive({
+  affiliateCode: null,
+  affiliateLevel: null,
+  downlineAffiliate: 0,
+  downlineMember: 0,
+  commission: 0,
+  revenueShare: 0,
+  shareRatio: [],
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -1048,6 +1109,15 @@ const validateReEnterPassword = (rule, value, callback) => {
   if (value !== createMemberForm.password) {
     callback(new Error(t('message.twoPasswordNotMatch')))
   }
+  callback()
+}
+
+const validateMemberShareRatio = (rule, value, callback) => {
+  memberShareRatioList.list.forEach((item) => {
+    if (item.value === '' || item.value < 0 || item.value > 1) {
+      callback(new Error(t('message.validateShareRatioFormat')))
+    }
+  })
   callback()
 }
 
@@ -1066,6 +1136,7 @@ const createFormRules = reactive({
     { validator: validateReEnterPassword, trigger: 'blur' },
   ],
   telephone: [required(t('message.requiredTelephone'))],
+  memberShareRatio: [{ validator: validateMemberShareRatio, trigger: 'blur' }],
 })
 
 function convertDate(date) {
@@ -1343,6 +1414,20 @@ function showEditRemark(member) {
   selectedMember.remark = member.remark
 }
 
+function showEditShareRatio(member) {
+  selectedMember.id = member.id
+  selectedMember.shareRatio = member.shareRatio
+  if (selectedMember.shareRatio === null || selectedMember.shareRatio === undefined) {
+    selectedMember.shareRatio = []
+  }
+  for (var item = 0; item < memberShareRatioList.list.length; item++) {
+    if (!selectedMember.shareRatio.some(child => child.code === memberShareRatioList.list[item].code)) {
+      selectedMember.shareRatio.push({ code: memberShareRatioList.list[item].code, value: 0 })
+    }
+  }
+  uiControl.shareRatioDialogVisible = true
+}
+
 async function submitRemark() {
   await assignRemark(
     store.state.user.id,
@@ -1353,6 +1438,18 @@ async function submitRemark() {
   await loadAffiliateMembers()
   uiControl.remarkDialogVisible = false
 }
+
+async function submitShareRatio() {
+  const editedRatio = selectedMember.shareRatio.map(item => item.code + ":" + item.value).join(',');
+  await editMemberRatio(
+    selectedMember.id,
+    editedRatio
+  )
+  ElMessage({ message: t('message.editSuccess'), type: 'success' })
+  await loadAffiliateMembers()
+  uiControl.shareRatioDialogVisible = false
+}
+
 function formatDate(date) {
   return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-'
 }
@@ -1368,6 +1465,9 @@ function showCreateMember() {
 async function createMember() {
   createForm.value.validate(async valid => {
     if (valid) {
+      if (parseInt(createMemberForm.siteId) === 10) {
+        createMemberForm.memberShareRatio = memberShareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+      }
       await registerMember(createMemberForm)
       uiControl.createMemberDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
@@ -1376,9 +1476,26 @@ async function createMember() {
   })
 }
 
+function getAffiliateRatio(code) {
+  const shareRatio = affInfo.shareRatio.filter(item => item.code === code);
+  return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
+}
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
+  getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
+    res.data.forEach(ratio => {
+      memberShareRatioList.list.push({
+        code: ratio.code,
+        value: 0
+      })
+    })
+  });
 })
 </script>
 

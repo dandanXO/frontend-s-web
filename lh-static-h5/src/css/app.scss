@@ -653,6 +653,12 @@ svg {
   display: none;
 }
 
+.q-carousel {
+  .q-carousel__arrow {
+    color: #000;
+  }
+}
+
 .body--dark {
   --q-primary: #{$primary-dark};
 
@@ -674,7 +680,14 @@ svg {
     box-shadow: none;
     .q-tab {
       background: $background-dark-light;
+      &--active {
+        color: $primary-dark;
+      }
     }
+  }
+
+  .q-toggle {
+    --q-positive: #{$primary-dark};
   }
 
   .page-title {
@@ -704,13 +717,23 @@ svg {
     }
   }
 
-  .login-container {
-      .q-field--standout {
-        .q-field__control {
-          background: $background-dark;
-          border: none;
+  .login-container,
+  .forgot-pass-container {
+    .q-field--standout {
+      .q-field__control {
+        background: $background-dark;
+        border: none;
+        box-shadow: none;
+        .input-icon-label-wrapper {
+          .input-icon {
+            filter: brightness(0) saturate(100%) invert(88%) sepia(100%) saturate(0%) hue-rotate(81deg) brightness(102%) contrast(104%);
+          }
+          .input-label {
+            color: $white;
+          }
         }
       }
+    }
   }
 
   .q-field--standout.q-field--highlighted .q-field__control {
@@ -722,4 +745,59 @@ svg {
   .q-field--standout.q-field--highlighted .q-field__input {
     color: $font-3-dark;
   }
+
+  .q-drawer {
+    background: $background-dark;
+  }
+
+  .q-carousel {
+    .q-carousel__arrow {
+      color: $white;
+    }
+  }
+
+  .common-sm-btn {
+    background-image: url("../assets/images/common/common-sm-btn-dark.png");
+    color: $white;
+  }
+
+  .common-sm-white-btn {
+    background-image: url("../assets/images/common/common-sm-white-btn-dark.png");
+    color: $white;
+  }
+
+  .common-large-btn {
+    background-image: url("../assets/images/common/common-large-btn-dark.png");
+    color: $white;
+  }
+
+  .common-md-white-btn {
+    background-image: url("../assets/images/common/common-md-white-btn-dark.png");
+    color: $white;
+  }
+
+  .common-md-btn {
+    background-image: url("../assets/images/common/common-md-btn-dark.png");
+    color: $white;
+  }
+
+  .text-bright {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .bg-brightbtn {
+    background: $linear-bg-dark;
+  }
+}
+
+
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  transition: opacity .5s ease, top .5s ease;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
 }

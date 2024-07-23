@@ -125,10 +125,11 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify();
 const registerTelephoneKey = `registerTelephoneKey`;
 let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
@@ -376,7 +377,7 @@ const getCode = () => {
       verificationImg.value = "data:image/png;base64," + res.data.img;
       regForm.codeId = res.data.id;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -414,22 +415,25 @@ const submitRegisterForm = async (elForm) => {
             .then((response) => {
               const regResult = response.code;
               if (regResult === 0) {
-                ElMessage({
+                notify({
                   type: "success",
                   message: "注册成功"
                 });
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                router.push("/welcome");
+                router.push("/");
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  router.push("/welcome");
+                  router.push("/");
                 }
               } else {
-                ElMessage.error(response.message);
+                notify({
+                  type: "error",
+                  message: response.message
+                });
                 getCode();
               }
             })
@@ -486,66 +490,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
-.light-bg {
-  font-size: 14px;
-  background-color: #f7f8fb;
-  border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-  margin-bottom: 30px;
-}
-
-.form-field {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  padding: 8px 15px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  width: 100%;
-
-  .form-field-icon {
-    margin: auto;
-  }
-}
-
-.blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 8px;
-}
-
-.primary-btn {
-  margin-top: 20px;
-  width: 100%;
-}
-
-.flex-div {
-  margin-top: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dark {
-  .light-bg {
-    background-color: $background-content-block-lighter-dark;
-    box-shadow: none;
-  }
-
-  .font-gray {
-    color: $font-3-dark;
-  }
-
-  .blue-bg {
-    box-shadow: none;
-    background-color: #3998ff;
-  }
-}
-</style>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
 
 <style lang="scss">
 .form-field {

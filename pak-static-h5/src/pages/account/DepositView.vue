@@ -28,7 +28,10 @@
       </div>
     </div> -->
 
+    <!-- <pre>activeMethod--{{ activeMethod }}</pre> -->
     <!-- <pre>payMethods-{{ payMethods }}</pre> -->
+    <!-- <pre>depositItems--{{ depositItems }}</pre> -->
+    <!-- <pre>selectedPayType-{{ selectedPayType }}</pre> -->
 
     <div class="node-wrapper">
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
@@ -87,8 +90,13 @@
 
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
-        <div class="deposit-enter-amt" v-if="amountList.length === 0">
-          <div class="lil-title flex-div">{{ $t("form.depositAmount") }}   <div class="tutorial-link" @click="openDepositPage" style="margin-left:25px;">{{ $t("deposit.depositTutorial") }}</div></div>
+        <div class="deposit-enter-amt">
+          <div class="lil-title flex-div">
+            {{ $t("form.depositAmount") }}
+            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+              {{ $t("deposit.depositTutorial") }}
+            </div>
+          </div>
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -109,7 +117,7 @@
           </q-input>
         </div>
 
-        <q-select
+        <!-- <q-select
           v-else
           ref="depositAmtRef"
           label="Select Amount"
@@ -126,7 +134,7 @@
               {{ store.currency.value }}
             </span>
           </template>
-        </q-select>
+        </q-select> -->
 
         <!-- <div class="q-mt-md q-mb-md text-grey-7">
           Minimum Amount:
@@ -158,6 +166,40 @@
         ></BankComponent>
 
         <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
+
+        <!--        <q-select-->
+        <!--          style="width:100%;"-->
+        <!--          ref="offerRef"-->
+        <!--          class="deposit-selection q-mt-xs"-->
+        <!--          :label="$t('deposit.select_privilege')"-->
+        <!--          filled-->
+        <!--          :options="unselectedPrivileges"-->
+        <!--          v-model="selectedPrivilege"-->
+        <!--          emit-value-->
+        <!--          v-if="hasPrivilege && !isUSDT"-->
+        <!--          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"-->
+        <!--          clearable-->
+        <!--          @update:model-value="checkMinDepositAmt"-->
+        <!--        >-->
+        <!--          <template v-slot:option="scope">-->
+        <!--            <q-item v-bind="scope.itemProps">-->
+        <!--              <q-item-section>-->
+        <!--                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">-->
+        <!--                  {{ scope.opt.name }}-->
+        <!--                </q-item-label>-->
+        <!--              </q-item-section>-->
+        <!--            </q-item>-->
+        <!--          </template>-->
+        <!--        </q-select>-->
+
+        <!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          </p>-->
+        <!--          <p v-else>-->
+        <!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
+        <!--          </p>-->
+        <!--        </div>-->
       </q-form>
     </div>
 
@@ -175,10 +217,18 @@
     </div>
 
     <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">Picture</span> / <span class="tutorial-link" @click="openDepositVideo">Video</span></p>
+      <p>
+        1. Recharge tutorial:
+        <span class="tutorial-link" @click="openDepositPage">Picture</span>
+        /
+        <span class="tutorial-link" @click="openDepositVideo">Video</span>
+      </p>
       <p>2. Fill in the correct wallet account number</p>
       <p>3. Fill in the correct CNIC number</p>
-      <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
+      <p>
+        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+        credited.
+      </p>
     </div>
 
     <div class="bottom-content" style="height: 110px"></div>
@@ -223,7 +273,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
@@ -235,7 +285,7 @@
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script setup>
@@ -248,8 +298,8 @@ import liff from "@line/liff";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
-import KYCGuestForm from "../../components/KYCGuestForm.vue";
-import KYCUserForm from "../../components/KYCUserForm.vue";
+// import KYCGuestForm from "../../components/KYCGuestForm.vue";
+// import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
@@ -261,18 +311,18 @@ const store = userStore();
 const router = useRouter();
 const emits = defineEmits(["closeModal"]);
 
-const checkNewUser = () => {
-  if (store.realName == "" || store.realName == null) {
-    emits("closeModal");
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "Please fill in your personal details",
-      icon: "report_problem"
-    });
-    // router.push(`/account/profile`);
-  }
-};
+// const checkNewUser = () => {
+//   if (store.realName == "" || store.realName == null) {
+//     emits("closeModal");
+//     $q.notify({
+//       color: "negative",
+//       position: "top",
+//       message: "Please fill in your personal details",
+//       icon: "report_problem"
+//     });
+//     // router.push(`/account/profile`);
+//   }
+// };
 
 const isFormFilled = ref(false);
 const isDeposited = ref(false);
@@ -350,22 +400,24 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 const calculatedMaxDeposit = ref("");
 
-const depositItems = reactive([
-  { amount: 300, hotLabel: 15, isActive: false },
-  { amount: 500, hotLabel: 25, isActive: false },
-  { amount: 800, hotLabel: 40, isActive: false },
-  { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 3000, hotLabel: 150, isActive: false },
-  { amount: 5000, hotLabel: 250, isActive: false },
-  { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 30000, hotLabel: 2000, isActive: false },
-  { amount: 50000, hotLabel: 4000, isActive: false }
-  // { amount: 30000, hotLabel: 1500, isActive: false },
-  // { amount: 50000, hotLabel: 2500, isActive: false }
-]);
+// const depositItems = reactive([
+//   { amount: 300, hotLabel: 15, isActive: false },
+//   { amount: 500, hotLabel: 25, isActive: false },
+//   { amount: 800, hotLabel: 40, isActive: false },
+//   { amount: 1000, hotLabel: 50, isActive: false },
+//   { amount: 3000, hotLabel: 150, isActive: false },
+//   { amount: 5000, hotLabel: 250, isActive: false },
+//   { amount: 10000, hotLabel: 500, isActive: false },
+//   { amount: 30000, hotLabel: 2000, isActive: false },
+//   { amount: 50000, hotLabel: 4000, isActive: false }
+//   // { amount: 30000, hotLabel: 1500, isActive: false },
+//   // { amount: 50000, hotLabel: 2500, isActive: false }
+// ]);
+
+const depositItems = ref([]);
 
 const handleDepositItemClick = (index) => {
-  depositItems.forEach((item, i) => {
+  depositItems.value.forEach((item, i) => {
     item.isActive = i === index;
     if (i === index) {
       form.localAmount = item.amount;
@@ -446,8 +498,7 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 const onSelect = (value) => {
-  // debugger;
-  depositItems.forEach((item) => (item.isActive = false));
+  depositItems.value.forEach((item) => (item.isActive = false));
 
   isDisplay.value = false;
 
@@ -461,11 +512,19 @@ const onSelect = (value) => {
       value.children.forEach((element) => {
         if (element.hasActive) {
           activeMethod.value = element;
+          depositItems.value = element.extra.amountArr.map((item) => ({
+            amount: parseInt(item),
+            isActive: false
+          }));
           checkPrivilege(element);
         }
       });
     } else {
       activeMethod.value = value;
+      depositItems.value = value.extra.amountArr.map((item) => ({
+        amount: parseInt(item),
+        isActive: false
+      }));
       checkPrivilege(value);
     }
     checkMinDepositAmt();
@@ -480,6 +539,35 @@ function checkMinDepositAmt() {
 
 function checkPrivilege(v) {
   selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = null;
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType == "FREE") {
+            freePrivilege.value = p;
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
 }
 
 function selectedBank(value) {
@@ -682,55 +770,17 @@ async function pDepo(deposit) {
       }
     })
     .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: error.message,
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
     })
     .then(() => {
       btnLoading.value = false;
     });
 }
-
-// KYC Dialog
-const personalState = reactive({
-  memberInfo: {}
-});
-const userKYCDialog = ref(false);
-const openUserKYCDialog = () => {
-  userKYCDialog.value = true;
-};
-const closeUserKYCDialog = () => {
-  store.getMemberInfo().then(() => {
-    loadInfo();
-    userKYCDialog.value = false;
-  });
-};
-
-const guestKYCDialog = ref(false);
-const openGuestKYCDialog = () => {
-  guestKYCDialog.value = true;
-};
-const closeGuestKYCDialog = () => {
-  store.getMemberInfo().then(() => {
-    loadInfo();
-    guestKYCDialog.value = false;
-  });
-};
-
-const loadInfo = () => {
-  personalState.memberInfo = userStore();
-
-  if (store.guest && personalState.memberInfo.realName === null) {
-    openGuestKYCDialog();
-  }
-
-  if (!store.guest && personalState.memberInfo.realName === null) {
-    openUserKYCDialog();
-  }
-};
 
 const nodeKey = ref(0);
 const refreshNode = () => {
@@ -740,39 +790,44 @@ const refreshNode = () => {
 
 const isDepositTutorial = ref(false);
 
+const langSelect= localStorage.getItem("languageLocale") ?? "";
+
 const openDepositPage = () => {
   // alert(selectedPayType.value);
-  if(selectedPayType.value === "EASYPAISA"){
-    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
-  }else if(selectedPayType.value === "JAZZCASH"){
+  if (selectedPayType.value === "EASYPAISA") {
+    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank");
+  } else if (selectedPayType.value === "JAZZCASH") {
     // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
-  }else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
+    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
   }
-}
+};
 
-const openDepositVideo =() => {
-  if(selectedPayType.value === "EASYPAISA"){
-    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank")
-  }else if(selectedPayType.value === "JAZZCASH"){
-    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank")
-  }else {
-    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank")
+const openDepositVideo = () => {
+  if(langSelect==='ur'){
+    window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  }else{
+    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
   }
-}
+  // if (selectedPayType.value === "EASYPAISA") {
+  //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
+  // } else if (selectedPayType.value === "JAZZCASH") {
+  //   window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
+  // }
+};
 
 onActivated(() => {
-  checkNewUser();
-  loadInfo();
+  // checkNewUser();
   // refreshNode();
   // console.log("onActivated deposit");
 });
 
 onMounted(() => {
   initPay();
-  checkNewUser();
-  loadInfo();
+  // checkNewUser();
   refreshNode();
   // console.log("onMounted deposit");
 });
@@ -926,6 +981,17 @@ onMounted(() => {
         }
       }
 
+      .deposit-selection {
+        background-color: #0b0e0d;
+        border-radius: 5px;
+        width: 100%;
+        height: 46px;
+
+        :deep(.q-field__control) {
+          height: 46px;
+        }
+      }
+
       .currency {
         color: #5f6061;
         font-weight: 400;
@@ -1034,8 +1100,8 @@ onMounted(() => {
   }
 }
 
-.flex-div{
-  display:flex;
+.flex-div {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
 }
@@ -1066,10 +1132,10 @@ onMounted(() => {
   text-decoration: underline;
 }
 
-.step-desc-div{
+.step-desc-div {
   color: #bacef1;
 
-  p{
+  p {
     margin: 5px 0px;
   }
 }

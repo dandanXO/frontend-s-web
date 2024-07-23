@@ -51,7 +51,7 @@
         </q-card-section>
         <q-form>
           <div>
-            <q-input
+            <!-- <q-input
               filled
               clearable
               ref="unbindCardNoRef"
@@ -62,6 +62,16 @@
               :rules="[
                 (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
               ]"
+            /> -->
+            <q-input
+              filled
+              clearable
+              ref="unbindCardNoRef"
+              class="q-mb-md"
+              v-model="unbindCardNo"
+              :label="unbindCardLabel()"
+              color="dyblue"
+              :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel() ]"
             />
           </div>
 
@@ -341,7 +351,6 @@
 import {defineComponent, reactive, ref, onMounted, computed, watch} from "vue";
 // import { Modal, message } from "ant-design-vue";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
-import {RiSpamLine, RiLink} from "vue-remix-icons";
 // import { loadMemberInfo, loadBanks, loadBankCards, addBankCard, deleteBankCard } from "@/api/personal/personal";
 import moment from "moment";
 import {api} from "boot/axios"
@@ -354,8 +363,6 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    // eslint-disable-next-line vue/no-unused-components
-    RiSpamLine, RiLink
   },
   setup() {
     const store = userStore();
@@ -697,7 +704,7 @@ export default defineComponent({
         },
         persistent: true,
       }).onOk(() => {
-        api.post(`/session/bankCard/${card.id}?_method=delete`).then((response) => {
+        api.post(`/session/bankCardByCardNo/${unbindCardNo.value}?_method=delete`).then((response) => {
           if (response.code === 0) {
             $q.notify({
               color: "positive",

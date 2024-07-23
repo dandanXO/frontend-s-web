@@ -177,7 +177,7 @@
             @click="clearInput"
           >
             <template v-slot:prepend>
-              <span style="font-size: 1.5rem; color: #000">
+              <span class="transfer-amt-input-prepend" >
                 {{ store.currency.value }}
               </span>
             </template>
@@ -217,10 +217,12 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { translateRecord } from "src/directives/translate";
 import MarqueeText from "vue-marquee-text-component";
+import { useNotify } from "src/hooks/notify";
 
 components: {
   AcctBal;
 }
+const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
 const transferFrom = ref("main");
@@ -309,11 +311,9 @@ const submitTransfer = () => {
               .then((response) => {
                 if (response.code === 0) {
                   setTimeout(() => {
-                    $q.notify({
-                      color: "positive",
-                      position: "top",
+                    notify({
+                      type: "success",
                       message: "成功",
-                      icon: "check_circle_outline"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -342,11 +342,9 @@ const submitTransfer = () => {
               .then((response) => {
                 if (response.code === 0) {
                   setTimeout(() => {
-                    $q.notify({
-                      color: "positive",
-                      position: "top",
+                    notify({
+                      type: "success",
                       message: "转账成功",
-                      icon: "check_circle_outline"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -405,12 +403,10 @@ const getPlatBalances = (plat) => {
       }
     })
     .catch((e) => {
-      // $q.notify({
-      // color: "negative",
-      // position: "top",
-      // message: e.message,
-      // icon: "report_problem"
-      // })
+      // notify({
+      // type: "error",
+      //      // message: e.message,
+      //      // })
       platform.isLoading = false;
     });
 };
@@ -512,6 +508,11 @@ onMounted(() => {
   padding-left: 8px;
   padding-right: 8px;
   flex: 2;
+
+  .transfer-amt-input-prepend {
+    font-size: 1.5rem;
+    color: #000;
+  }
 }
 
 .account-tabs-div {
@@ -576,6 +577,27 @@ onMounted(() => {
   box-shadow: $shadow-bg;
   border-radius: 10px;
 }
+
+.body--dark {
+  .transferamounts {
+    .val:not(.common-sm-btn) {
+      background: $background-dark;
+      color: $font-1;
+    }
+  }
+  .transfer-amt-input {
+    background: $background-dark;
+    :deep(.q-field__control) {
+      &::before{
+        border: none;
+      }
+    }
+
+    .transfer-amt-input-prepend {
+      color: $white;
+    }
+  }
+}
 </style>
 <style lang="scss">
 .transferfromto {
@@ -622,9 +644,28 @@ onMounted(() => {
     @include content-block-dark;
   }
 
+  .account-tabs-div {
+    .account-item {
+      background-image: url("../../assets/images/download/inactive-tab-bg-dark.png");
+      &.is-active {
+        background-image: url("../../assets/images/download/active-tab-bg-dark.png");
+      }
+
+      span {
+        color: $white;
+      }
+    }
+  }
+
   .station-notice-wrapper {
     span {
       color: $font-1;
+    }
+  }
+
+  .transferfromto {
+    .q-select {
+      background-image: url("../../assets/images/common/common-md-btn-dark.png");
     }
   }
 }

@@ -40,6 +40,11 @@
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button>
           </div>
+          <div class="linebox" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+            <span>备注：</span>
+            <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
+            <button @blur="blurCode" @click="copyMessage('5')" class="common-btn">{{ copybtntxt5 }}</button>
+          </div>
         </div>
       </div>
       <div class="deposit-container" v-else>
@@ -60,8 +65,7 @@
             </el-form-item>
             <div class="account-tip">
               单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : store.currency.label }} -
-              {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
+              {{ isUSDT ? "USDT" : store.currency.label }}  -   {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
           </el-space>
@@ -110,11 +114,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="">
-            <div class="txt-center">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
-            </div>
-          </el-form-item>
+
           <!-- <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
@@ -138,6 +138,9 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
+          <div class="txt-center">
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+          </div>
         </el-form>
       </div>
       <el-dialog width="500px" v-model="isDeposited" :maskClosable="false" :closable="false" title="已存款">
@@ -195,11 +198,13 @@ const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
 const subMsg4 = ref();
+const subMsg5 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const copybtntxt4 = ref("复制");
+const copybtntxt5 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -214,7 +219,7 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
@@ -222,7 +227,7 @@ const copyMessage = (position) => {
 };
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });
@@ -558,7 +563,8 @@ onMounted(() => {
     font-weight: normal;
   }
 }
-
+</style>
+<style lang="scss">
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -694,6 +700,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .txt-center {
+  margin: 50px auto 20px;
   text-align: center;
 }
 :deep(.ant-form-item-label > label) {
@@ -709,10 +716,6 @@ onMounted(() => {
   height: 42px;
   width: 280px;
   margin-right: 24px;
-}
-
-.deposit-container :deep(.el-form-item) {
-  margin-bottom: 10px;
 }
 
 :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector) {

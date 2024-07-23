@@ -185,6 +185,14 @@ export const autoWithdrawToFail = (id, cancelType, remark, withdrawDate, siteId)
   return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { id, cancelType, remark, withdrawDate, siteId }, ContentType.form);
 };
 
+export const autoWithdrawToFailBatch = (ids) => {
+  return https().httpClient.post(`/memberWithdrawRecord/autoWithdrawToFail?_method=PUT`, JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
+
+export const fromApplyToAutopayBatch = (ids) => {
+  return https().httpClient.post(`/memberWithdrawRecord/applyToAutopay?_method=PUT`, JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
+};
+
 export const autoWithdrawToSuccess = (id, wd, siteId) => {
   return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToSuccess?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
@@ -251,4 +259,12 @@ export const getExportWithdrawRecord = (query) => {
 
 export const getExportAffiliateWithdrawRecord = (query) => {
   return https().request("/memberWithdrawRecord/exportAffiliateWithdraw", Method.GET, query, ContentType.form);
+};
+
+export const getUnsuccessfulIn10time = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/queryUnsuccessfulIn10time", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getqueryUnsuccessIn30min = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/queryUnsuccessIn30min", Method.GET, memberWithdrawRecord, ContentType.form);
 };

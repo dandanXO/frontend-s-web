@@ -29,6 +29,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "pinia": "^2.0.30",
+    "qrcode.vue": "^3.4.1",
     "sweetalert2": "^11.7.12",
     "swiper": "^11.0.7",
     "vue": "^3.4.19",
@@ -37,7 +38,7 @@
     "vue-qrious": "^3.1.0",
     "vue-remix-icons": "^1.1.1",
     "vue-router": "4.3.0",
-    "vue3-autocounter": "^1.0.6",
+    "vue3-autocounter": "1.0.6",
     "vue3-carousel": "^0.1.40",
     "vue3-marquee": "^3.1.2",
     "vue3-number-counter": "^0.0.2"

@@ -256,3 +256,37 @@ export const getAffiliateShareRatio = (id) => {
     Method.GET
   )
 }
+
+export const updateLevel = (id, level) => {
+  return https().request(
+    `/affiliate/${id}/updateLevel?_method=PUT`,
+    Method.POST,
+    { affiliateLevel: level },
+    ContentType.form
+  )
+}
+
+export const getDownlineShareRatio = (id) => {
+  return https().request(
+    `/affiliate/${id}/getLowestShareRatio`,
+    Method.GET
+  )
+}
+
+export const updateRecycleMoneyState = (id, state) => {
+  return https().request(
+    `/affiliate/${id}/updateRecycleMoney?_method=PUT`,
+    Method.POST,
+    { state: state },
+    ContentType.form
+  )
+}
+
+export const updateDisplayAmountState = (id, state) => {
+  return https().request(
+    `/affiliate/${id}/updateDisplayAmount?_method=PUT`,
+    Method.POST,
+    { state: state },
+    ContentType.form
+  )
+}

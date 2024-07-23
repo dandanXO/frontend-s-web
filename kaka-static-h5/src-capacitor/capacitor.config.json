@@ -1,0 +1,7 @@
+{
+  "appId": "com.kaka.client",
+  "appName": "KAKA",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                     </a>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
@@ -139,68 +139,86 @@
             v-else
             class="selected-promo"
             :class="{
-              euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
+              // euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
               'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
             }"
           >
             <div class="loader" v-if="isFetchingPromo" />
-            <div class="selected-promo-wrapper" :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;':'',]">
+            <div class="selected-promo-wrapper" :class="selectedPromoWrapperClass">
               <div
                 class="banner-container"
                 v-if="
                   selectedPromo &&
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
-                  selectedPromo.promoCode !== 'lh1-ftd-promo'
+                  selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+                  selectedPromo.promoCode !== 'lh1-aijiasu' &&
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
                 "
               >
                 <img
+                  loading="lazy"
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
               </div>
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
+                  lhstepgame:
+                    selectedPromo.promoCode === 'lh1-game-steps' ||
+                    selectedPromo.promoCode === 'lh-sport-zhongchao' ||
+                    selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
+                  lhworldcup:
+                    selectedPromo.promoCode === 'lh1worldcup' || selectedPromo.promoCode === 'lh1worldcupdota2',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
-                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'  || selectedPromo.promoCode === 'lh1-deposit-rebates' ,
-                  lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual' ,
-                  meizhoubei:  selectedPromo.promoCode === 'lh1meizhoubei'
+                  lhduanwu:
+                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
+                  lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
+                  meizhoubei:
+                    selectedPromo.promoCode === 'lh1meizhoubei' || selectedPromo.promoCode === 'lh1-olympic-fund',
+                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
+                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
                 }"
                 :style="[
-                  selectedPromo.promoCode === 'lh-eurocup-manual' ||
-                 selectedPromo.promoCode === 'lh1-deposit-rebates'
+                  selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
                       ')'
-                    : (selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'')
-                  ]"
+                    : selectedPromo?.promoCode === 'lh1-intel-esl'
+                    ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
+                    : ''
+                ]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps' && selectedPromo.promoCode !== 'lh-eurocup-manual'"
+                  v-if="
+                    selectedPromo.promoType &&
+                    selectedPromo.promoCode !== 'lh1-game-steps' &&
+                    selectedPromo.promoCode !== 'lh-eurocup-manual' &&
+                    selectedPromo.promoCode !== 'lh1-aijiasu'
+                  "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
-                <div
-                  v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)"
-                  class="corner-decor"
-                >
+                <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
                   <img
+                    loading="lazy"
                     v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
@@ -244,18 +262,23 @@ import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 
 import HotPromotion from "components/HotPromotion";
+import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
+import { useNotify } from "src/hooks/notify";
+import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
+    const notify = useNotify();
     const store = userStore();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
@@ -272,11 +295,15 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
+    const selectedPromoWrapperClass = computed(() => ({
+      "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
+      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin'
+    }))
+
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
     const tabItems = [
-
       { name: "all", label: "全部优惠" },
       // { name: "ftd", label: "首存" },
       { name: "ftd", label: "新人" },
@@ -287,42 +314,40 @@ export default defineComponent({
       { name: "live casino", label: "真人" },
       { name: "poker", label: "棋牌" },
       { name: "daily", label: "日常" },
-      { name: "other", label: "其它" },
-
+      { name: "other", label: "其它" }
     ];
 
-    watch(() => route.query, () => {
-      if (route.query === null) {
-        isPromoDetail.value = false;
-      } else {
-        isPromoDetail.value = route.query.name;
-        ui.setScrollPosition("vertical", 0, 200);
+    watch(
+      () => route.query,
+      () => {
+        if (route.query === null) {
+          isPromoDetail.value = false;
+        } else {
+          isPromoDetail.value = route.query.name;
+          ui.setScrollPosition("vertical", 0, 200);
+        }
       }
-    });
+    );
 
     const loadBanner = () => {
-      api
-        .get("/promo/banner?category=PROMO")
-        .then((response) => {
-          if (response.code === 0) {
-            banner.value = response.data[0];
-            // console.log(banner.value)
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
-          }
-        });
+      api.get("/promo/banner?category=PROMO").then((response) => {
+        if (response.code === 0) {
+          banner.value = response.data[0];
+          // console.log(banner.value)
+        } else {
+          // notify({
+          //   type: "error",
+          //          //   message: ret.message,
+          //          // });
+        }
+      });
     };
-    const isSpecialPromo= ref(false);
+    const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
-      if(promo.promoCode === 'lh1-game-steps'){
-        isSpecialPromo.value= true;
-      }else{
-        isSpecialPromo.value= false;
+      if (promo.promoCode === "lh1-game-steps") {
+        isSpecialPromo.value = true;
+      } else {
+        isSpecialPromo.value = false;
       }
 
       // extension
@@ -334,7 +359,6 @@ export default defineComponent({
         }
         isPromoDetail.value = true;
 
-
         selectedPromo.value = promo;
         if (isAndroid()) {
           LocalStorage.set("TOKEN", extensionToken.value, 86400);
@@ -342,13 +366,11 @@ export default defineComponent({
           SessionStorage.set("TOKEN", extensionToken.value);
         }
         store.token = extensionToken.value;
-
       } else {
         // non extension
         if (!store.token) {
           isDisplayLogin.value = true;
         } else {
-
           if (promo.redirectUrl.includes("page-vip")) {
             router.push("/account/vip?from=promo");
           } else {
@@ -365,7 +387,7 @@ export default defineComponent({
     };
     const switchPromoType = (type) => {
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
+        filteredArray.value = promoState.promoList.filter(function (promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
@@ -374,47 +396,54 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl =
+        store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
+          ? "/session/loggedInPromoPages"
+          : "/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
-      api.get(platformApiUrl).then((res) => {
-        if (res.code === 0) {
-          promoState.promoList = [];
-          var promoItems = res.data;
-          // promoState.promoList.push(...res.data);
+      api
+        .get(platformApiUrl)
+        .then((res) => {
+          if (res.code === 0) {
+            promoState.promoList = [];
+            var promoItems = res.data;
+            // promoState.promoList.push(...res.data);
 
-          promoItems.forEach(element => {
-            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-            // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            // } else {
-            promoState.promoList.push(element);
+            promoItems.forEach((element) => {
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // } else {
+              promoState.promoList.push(element);
 
-            if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
-              showPromoDetails(element);
-            }
+              if (
+                (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") &&
+                String(element.redirectUrl) === "lh1-invite"
+              ) {
+                showPromoDetails(element);
+              }
 
-            if (route.query.name && String(element.redirectUrl) === route.query.name) {
-              showPromoDetails(element);
-            }
+              if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                showPromoDetails(element);
+              }
 
-            if ((route.query.name === "/vip")) {
-              router.push("/account/vip");
-            }
-            // }
-          });
+              if (route.query.name === "/vip") {
+                router.push("/account/vip");
+              }
+              // }
+            });
 
+            // console.log("route.query.name", route.query.name);
 
-          // console.log("route.query.name", route.query.name);
-
-          switchPromoType(promoState.active);
+            switchPromoType(promoState.active);
+            isFetchingPromo.value = false;
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
           isFetchingPromo.value = false;
-        }
-      }).catch((e) => {
-        console.log("error", e);
-        isFetchingPromo.value = false;
-      });
-
+        });
     };
 
     // extension
@@ -422,14 +451,12 @@ export default defineComponent({
     const extensionState = ref(false);
     const extensionToken = ref("");
 
-
     const checkExtension = () => {
       if (currentPath.value === "/promotion") {
         // const eToken = ref(route.query.name);
         extensionToken.value = route.query.token;
         extensionState.value = true;
       }
-
     };
 
     const parsedParam = (paramData) => {
@@ -457,8 +484,8 @@ export default defineComponent({
     };
 
     onActivated(() => {
-      isPromoDetail.value= false;
-      selectedPromo.value= {};
+      isPromoDetail.value = false;
+      selectedPromo.value = {};
       // if promo name is present, do not show promo list on first load
       if (route.query.name) {
         isPromoDetail.value = true;
@@ -489,7 +516,8 @@ export default defineComponent({
       extensionState,
       extensionToken,
       isFetchingPromo,
-      isSpecialPromo
+      isSpecialPromo,
+      selectedPromoWrapperClass
       // routeQuery
     };
   }
@@ -827,15 +855,62 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+        .olympicCheckin {
+          border: 1px solid #acd4f6;
+          border-radius: 10px;
+          padding: 10px;
+          background: #f2f8fe;
+        }
+        &.aijiasu {
+          width: 100%;
+          gap: 0px;
+          margin: 0px;
+        }
+        &.lhworldcup {
+          background: #e7f1fd;
+          margin: 0px;
+          width: 100%;
+          padding: 0px 16px 20px;
 
-        &.meizhoubei{
-          margin:5px auto;
+          img {
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+
+          table {
+            p {
+              margin: 0px;
+            }
+
+            tr:first-child {
+              td {
+                background-image: linear-gradient(0deg, #0094ff, #19c6ff), linear-gradient(#2e3039, #2e3039);
+                color: #fff;
+              }
+            }
+
+            th {
+              background-color: inherit;
+            }
+
+            td {
+              background-color: inherit;
+            }
+          }
+        }
+        &.euroRegen {
+          width: 100%;
+          gap: 0px;
+          margin: 0px;
+        }
+        &.meizhoubei {
+          margin: 5px auto;
         }
 
-        &.lheuromanual{
-          margin:0px;
+        &.lheuromanual {
+          margin: 0px;
           width: 100%;
-          gap:0px;
+          gap: 0px;
 
           .hot-promo {
             border-radius: 0px;
@@ -853,15 +928,15 @@ export default defineComponent({
           }
         }
 
-        &.lhduanwu{
-          margin:0px;
-          background-image:url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
+        &.lhduanwu {
+          margin: 0px;
+          background-image: url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
           width: 100%;
           background-position: top center;
           background-size: 100% auto;
           background-repeat: no-repeat;
 
-          .hot-promo{
+          .hot-promo {
             padding: 15px;
           }
         }
@@ -876,9 +951,8 @@ export default defineComponent({
           }
         }
 
-        &.lhcs2{
+        &.lhcs2 {
           margin-top: 0px;
-
         }
 
         &:has(.corner-decor) {
@@ -937,6 +1011,30 @@ export default defineComponent({
         //   background: #272c3d;
         //   border-radius: 10px;
         // }
+        .promo-card {
+          background-color: #ffffff;
+          color: #7a8eb9;
+        }
+
+        // for lh1ouzhoubeibaopei
+        .sport {
+          em {
+            color: #c24f4a;
+            font-style: normal;
+          }
+        }
+
+        @media (max-width: 400px) {
+          width: calc(100% - 20px);
+        }
+        @media (max-width: 350px) {
+          width: calc(100% - 12px);
+        }
+      }
+
+      &.slot-lucky8,
+      &.challenge-comeback {
+        background: #e7f1fd;
       }
     }
   }
@@ -992,7 +1090,6 @@ export default defineComponent({
       opacity: 1;
 
       .q-tab__label {
-        color: $primary;
         font-weight: bold;
       }
     }
@@ -1057,7 +1154,7 @@ export default defineComponent({
 
 .promo-cat-tab {
   position: sticky;
-  top:51px;
+  top: 51px;
   z-index: 3;
 
   &.extension-tab {
@@ -1074,7 +1171,7 @@ export default defineComponent({
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
             .promo-ribbon {
-              background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+              background: linear-gradient(90deg, #36cbd5 0%, #1d809a 100%);
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1100,12 +1197,29 @@ export default defineComponent({
           table {
             th {
               background: $background-dark-header;
-              color: $font-3-dark;
+              color: $white;
             }
             td {
               background: $background-dark-light;
               border-color: $border-dark;
-              color: #999999;
+              color: $white;
+            }
+            tbody > tr:first-child td {
+              background: $background-dark-header;
+              color: $white;
+            }
+          }
+
+          .promo-card {
+            @include content-block-dark;
+            color: $font-1;
+          }
+
+          // for lh1ouzhoubeibaopei
+          .sport {
+            em {
+              color: #f04918;
+              font-style: normal;
             }
           }
         }
@@ -1113,9 +1227,12 @@ export default defineComponent({
     }
   }
 
-  .promo {
+  .promo:not(.unfixed) {
     .q-tabs {
       background: $background-dark-light;
+      .q-tab--active {
+        color: $primary-dark;
+      }
     }
     .q-tab-panels {
       background: $background-dark;

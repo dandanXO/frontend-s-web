@@ -101,6 +101,14 @@
         >
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:team-votes:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-table
@@ -115,6 +123,7 @@
       <el-table-column prop="teamNameLocal" :label="t('fields.teamName')" />
       <el-table-column prop="type" :label="t('fields.type')" />
       <el-table-column prop="status" :label="t('fields.status')" />
+      <el-table-column prop="votes" :label="t('fields.votes')" />
       <el-table-column prop="voteTime" :label="t('fields.voteTime')">
         <template #default="scope">
           <span v-if="scope.row.voteTime === null">-</span>
@@ -162,6 +171,22 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog
+    :title="t('fields.exportToExcel')"
+    v-model="uiControl.messageVisible"
+    append-to-body
+    width="500px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -169,6 +194,7 @@ import {
   getTeamVotesRecord,
   cancelTeamVotesRecord,
   getTeamListSimple,
+  getTeamVotesRecordForExport
 } from '../../../../api/team-votes'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
@@ -251,6 +277,7 @@ const uiControl = reactive({
     { key: 1, displayName: 'REAL', value: 'REAL' },
     { key: 2, displayName: 'VIRTUAL', value: 'VIRTUAL' },
   ],
+  messageVisible: false
 })
 function changePage(page) {
   request.current = page
@@ -287,6 +314,19 @@ async function loadTeams() {
 }
 async function loadTeamVotesRecord() {
   page.loading = true
+  const query = checkQuery()
+  const { data: ret } = await getTeamVotesRecord(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+}
+
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
+function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -299,15 +339,18 @@ async function loadTeamVotesRecord() {
       query.voteTime = request.voteTime.join(',')
     }
   }
-  const { data: ret } = await getTeamVotesRecord(query)
-  page.pages = ret.pages
-  page.records = ret.records
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  return query;
 }
 
-async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  query.type = 'REAL'
+  const { data: ret } = await getTeamVotesRecordForExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(async () => {

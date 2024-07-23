@@ -3,6 +3,7 @@
     <HomeBanner></HomeBanner>
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
+      <!-- <EurocupHomePageBanner /> -->
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
       <HomeService></HomeService>
@@ -20,6 +21,7 @@ import HomeDownload from "@/components/home/HomeDownload.vue";
 // import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
 import HomeService from "@/components/home/HomeService.vue";
+// import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 
 const gameMenu = ref(null);
 const openGame = (gameName, platType, gameCode, scrollingState) => {
@@ -48,7 +50,7 @@ onMounted(() => {
 .dark {
   .home {
     background-image: none;
-    background-color: $background-dark;
+    background: $background-dark;
   }
 }
 </style>

@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
-import liff from "@line/liff";
 import { useUI } from "stores/ui";
-import moment from 'moment';
+import dayjs from "dayjs";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -12,6 +11,7 @@ export const userStore = defineStore("userStore", {
   state: () => {
     return {
       id: 0,
+      memberId: "",
       profilePicture: "",
       displayName: "",
       nickName: "",
@@ -34,6 +34,7 @@ export const userStore = defineStore("userStore", {
       announcementList: undefined,
       financeRecords: undefined,
       isOffline: false,
+      pendingRebateAmt: 0
     };
   },
   actions: {
@@ -42,14 +43,6 @@ export const userStore = defineStore("userStore", {
     },
     getAppDownloadUrl() {
       return this.appDownloadUrl;
-    },
-    getUnreadTotal() {
-      api.get("/session/inbox/getUnreadTotal").then((ret) => {
-        const res = ret.data;
-        if (res.code === 0) {
-          this.unreadCount = res.data;
-        }
-      });
     },
     hasToken() {
       return !!SessionStorage.getItem("TOKEN") || !!this.token;
@@ -74,6 +67,8 @@ export const userStore = defineStore("userStore", {
           this.token = ret.data.data;
           this.getMemberInfo();
           this.getBalance();
+          this.getPendingRebateAmt();
+          this.getUnreadTotal();
         } else {
           Notify.create({
             color: "negative",
@@ -91,9 +86,9 @@ export const userStore = defineStore("userStore", {
         } else {
           api.get("/announcement").then((res) => {
             const { data: { code, data: { announcements } } } = res;
-            
-            const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-            
+
+            const formatDate = (timestamp) => dayjs(timestamp).format("YYYY/MM/DD");
+
             if (code === 0) {
               const announcementsFormattedData = announcements.map((item) => ({
                 ...item,
@@ -123,9 +118,9 @@ export const userStore = defineStore("userStore", {
 
           api.get("/member/withdraw-deposit-record").then((res) => {
             const { data: { code, data } } = res;
-            
+
             if (code === 0) {
-              const displayTypes = ['WITHDRAW']; 
+              const displayTypes = ['WITHDRAW'];
               this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
               resolve(this.financeRecords);
             }
@@ -158,6 +153,7 @@ export const userStore = defineStore("userStore", {
         const ret = res.data;
         if (ret.code === 0) {
           this.id = ret.data.id;
+          this.memberId= ret.data.memberId;
           this.nickName = ret.data.loginName;
           this.name2 = ret.data.name2;
           this.realName = ret.data.realName;
@@ -187,6 +183,16 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
+    getUnreadTotal() {
+      if (this.token && !this.isOffline) {
+        api.get("/session/inbox/getUnreadTotal").then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.unreadCount = res.data;
+          }
+        });
+      }
+    },
     getBalance() {
       if (this.token && !this.isOffline) {
         api.get("/session/balance?v=123", {
@@ -199,6 +205,22 @@ export const userStore = defineStore("userStore", {
             this.balance = Math.floor(res.data);
           } else {
             this.balance = 0;
+          }
+        });
+      }
+    },
+    getPendingRebateAmt() {
+      if (this.token && !this.isOffline) {
+        eventapi.get("/member-point", {
+          params: {
+            platform: "MAIN"
+          }
+        }).then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.pendingRebateAmt = Math.floor(res.data);
+          } else {
+            this.pendingRebateAmt = 0;
           }
         });
       }

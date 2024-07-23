@@ -143,8 +143,6 @@
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
 import { ref, defineExpose, reactive, shallowRef } from "vue";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
@@ -152,8 +150,9 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
-import liff from "@line/liff";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const store = userStore();
@@ -234,11 +233,9 @@ const submitTransfer = (amount) => {
     .post("/session/balance/transfer/deposit", transferInfo.value)
     .then((response) => {
       if (response.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "转账成功",
-          icon: "check_circle_outline"
         });
         isClicked.value = amount;
         if (token) {
@@ -250,12 +247,10 @@ const submitTransfer = (amount) => {
       }
     })
     .catch((error) => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: error.message,
-      //   icon: "report_problem"
-      // });
+      // notify({
+      //   type: "error",
+      //      //   message: error.message,
+      //      // });
     });
 };
 const closeDialog = () => {
@@ -319,21 +314,15 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             .then((response) => {
               $q.loading.hide();
 
-              if (way == "ANDROID") {
-                var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
-              } else {
-                window.location.href = response.data;
-              }
+              window.location.href = response.data;
               // src.value = response.data;
               // visible.value = true;
             })
             .catch((err) => {
               $q.loading.hide();
-              $q.notify({
-                color: "negative",
-                position: "top",
+              notify({
+                type: "error",
                 message: err.message,
-                icon: "report_problem"
               });
             });
           return;
@@ -350,22 +339,16 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           .then((response) => {
             $q.loading.hide();
 
-            if (way === "ANDROID") {
-              var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
-            } else {
-              window.location.href = response.data;
-            }
+            window.location.href = response.data;
 
             // src.value = response.data;
             // visible.value = true;
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: err.message,
-              icon: "report_problem"
             });
           });
       } else {
@@ -399,15 +382,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             let srcData = response.data;
 
-            if (platformCode === "PT" ||
-              (platformCode === 'TFGaming' && gameCode === 0)
-            ) {
-              if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+            if (platformCode === "PT" || (platformCode === "TFGaming" && gameCode === 0)) {
+              if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
                 const newWin = window.open(`/`, "_self");
-                if(newWin){
+                if (newWin) {
                   newWin.location.href = response.data;
                 }
-              }else{
+              } else {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
@@ -418,22 +399,26 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               // newWin.location.href = response.data;
               var currentUrl = window.location.hostname;
               window.location.href = response.data + `&homeUrl=${currentUrl}`;
-            } else if (way == "ANDROID") {
-              var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
-            } else {
+            }  else {
               window.location.href = srcData;
             }
+
+            //NO NEED LIAO
+          // else if (platformCode === "PM") {
+          //     let url = new URL(srcData);
+          //     srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
+          //     src.value = srcData;
+          //     visible.value = true;
+          //   }
 
             // newWin.location.href = response.data;
             // window.location.href = response.data;
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: err.message,
-              icon: "report_problem"
             });
           });
       }

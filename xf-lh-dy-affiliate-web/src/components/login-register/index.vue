@@ -7,13 +7,15 @@
       props.siteId !== '8' ? '' : 'vi',
       props.siteId !== '10' ? '' : 'kr',
       props.siteId !== '11' ? '' : 'pak',
+      props.siteId !== '15' ? '' : 'kaka'
     ]"
   >
+    <img class="float-logo" v-if="props.siteId === '15'" :src="currentSite.logo">
     <div class="inner">
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img :src="currentSite.logo">
+            <img v-if="props.siteId !== '15'" :src="currentSite.logo">
           </div>
           <div class="first-liner" v-html="currentSite.firstLiner" />
           <div class="second-liner" v-html="currentSite.secondLiner" />
@@ -241,7 +243,7 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="step === 2 && props.siteId === '8'">
+                <div v-if="step === 2 && (props.siteId === '8' || props.siteId === '15')">
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
@@ -574,6 +576,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
+import kakaLogo from "@/assets/images/kaka/logo-kaka-game.png"
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
@@ -620,7 +623,7 @@ export default defineComponent({
     const validateRealName = async (r, v) => {
       if (v === '') {
         return Promise.reject(new Error(t('message.requiredRealName')))
-      } else if (!checkRealName(v) && props.siteId !== '8') {
+      } else if (!checkRealName(v) && props.siteId !== '8' && props.siteId !== '15') {
         return Promise.reject(new Error('请输入中文字符'))
       } else {
         return Promise.resolve()
@@ -963,7 +966,7 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '8' || props.siteId === 8) {
+            if (props.siteId === '15' || props.siteId === 15 || props.siteId === '8' || props.siteId === 8) {
               if (step.value === 1) {
                 step.value = 2
                 return
@@ -1011,13 +1014,13 @@ export default defineComponent({
           elDialog.classList.remove('shake')
         }, 500)
         methods.onGetImage()
-        if (state.loginForm.site === 'VNM') {
+        if (state.loginForm.site === 'KA2') {
           getCaptcha()
         }
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KRW') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' || state.loginForm.site === 'KRW') {
           router
             .push({
               path: state.redirect || '/',
@@ -1104,7 +1107,7 @@ export default defineComponent({
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
-          } else if (state.loginForm.site === 'VNM') {
+          } else if (state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2') {
             methods.onFail()
           } else {
             state.showDialog = false
@@ -1117,7 +1120,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' ? 1 : 0
+        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' ? 1 : 0
         const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
@@ -1237,9 +1240,13 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      var myElement = document.getElementById('login-swiper')
-      console.log(myElement)
-      myElement.swiper.slideTo(1)
+      if (props.siteId !== '10') {
+        var myElement = document.getElementById('login-swiper')
+        console.log(myElement)
+        myElement.swiper.slideTo(1)
+      } else {
+        window.open('https://t.me/city88888', '_blank').focus();
+      }
     }
 
     const getCaptcha = () => {
@@ -1307,6 +1314,14 @@ export default defineComponent({
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
+        setLanguage('vi')
+      }
+      if (props.siteId === '15') {
+        currentSite.value.firstLiner = 'Bắt đầu với KAKA'
+        currentSite.value.secondLiner =
+          'trở thành một huyền thoại<br/>Hoặc trở thành nhà điếu văn của huyền thoại?'
+        currentSite.value.logo = kakaLogo
+        state.loginForm.site = 'KA2'
         setLanguage('vi')
       }
       if (props.siteId === '10') {
@@ -1547,14 +1562,15 @@ a {
   align-items: center;
   height: 100vh;
   padding: 20px;
+  position: relative;
   background: url('../../assets/images/login/firstbg.svg') no-repeat center
-    center;
+  center;
   background-size: cover;
   &.lh {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
-      center;
+    center;
   }
-  &.vi {
+  &.vi,  &.kaka {
     font-family: 'Roboto';
     .loginPage .right .top .log {
       font-family: 'Roboto';
@@ -1562,6 +1578,76 @@ a {
     .loginPage .left {
       .second-liner {
         font-family: 'Roboto';
+      }
+    }
+  }
+  &.kaka {
+    --kaka-primary: #FF4545;
+    background-image: url('../../assets/images/kaka/first-bg-kaka.png') ;
+
+    .el-link.el-link--primary {
+      --el-link-font-color: var(--kaka-primary);
+      &:hover {
+        color: var(--kaka-primary);
+      }
+    }
+
+    :deep(.el-input__inner) {
+      background-color: #FDF4F4;
+      border: 1px solid #F0D8D8;
+      color: #000;
+      border-radius: 14px;
+      &::placeholder {
+        color: #DCD5D5;
+      }
+    }
+
+    .float-logo {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+    }
+
+    .loginPage {
+      .right{
+        .top {
+          background-image: url('../../assets/images/kaka/top-kaka.png') ;
+        }
+        .bot {
+          background-image: url('../../assets/images/kaka/dow-kaka.png') ;
+        }
+      }
+    }
+
+    .inner{
+      max-width: 1300px;
+
+    }
+
+    .common-btn {
+      &:not(.default-btn) {
+        background-color: var(--kaka-primary);
+      }
+      &.default-btn {
+        border-color: var(--kaka-primary);
+        color: var(--kaka-primary);
+      }
+    }
+
+    .loginPage {
+      max-width: 1300px;
+      .left {
+        flex:2;
+        .first-liner {
+          font-family: "Roboto",sans-serif;
+          margin-bottom: 15px;
+          width: 750px;
+          max-width: 750px;
+        }
+        .second-liner{
+          width: 750px;
+          max-width: 750px;
+        }
       }
     }
   }
@@ -1599,10 +1685,10 @@ a {
       .first-liner {
         margin-bottom: 3rem;
         background: linear-gradient(
-          180deg,
-          #f6d99e 13.1%,
-          #ffe3bd 50.03%,
-          #fbbd68 79.37%
+            180deg,
+            #f6d99e 13.1%,
+            #ffe3bd 50.03%,
+            #fbbd68 79.37%
         );
         text-shadow: 0px 4px 4px 0px #1c1614;
         font-size: 5rem;
@@ -1624,7 +1710,7 @@ a {
       }
       .top {
         background: url(../../assets/images/login/top.png) no-repeat center
-          center;
+        center;
         background-size: cover;
         padding: 20px;
         position: relative;
@@ -1632,8 +1718,8 @@ a {
           font-weight: bold;
           //font-family: fzh;
           font-family: Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI,
-            Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
-            Microsoft YaHei, Arial, sans-serif;
+          Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+          Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }
@@ -1654,7 +1740,7 @@ a {
       }
       .mid {
         background: url(../../assets/images/login/mid.png) no-repeat center
-          center;
+        center;
         background-size: cover;
         margin: 0 10px;
         padding: 25px 20px;
@@ -1665,7 +1751,7 @@ a {
       }
       .bot {
         background: url(../../assets/images/login/dow.png) no-repeat center
-          bottom;
+        bottom;
         background-size: cover;
         padding: 10px;
       }

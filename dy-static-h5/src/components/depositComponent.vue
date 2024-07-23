@@ -3,7 +3,7 @@
   <!--  <pre>extensionToken: {{ extensionToken }}</pre>-->
   <!--  <pre>store:{{ store }}</pre>-->
 
-  <div class="q-pa-sm deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
+  <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
     <label class="label">请选择</label>
     <div class="node-wrapper q-mt-xs">
       <Node :level="1" :list="payMethods" ref="paymentNode" @clicked="onSelect" />
@@ -46,9 +46,17 @@
             {{ copybtntxt3 }}
           </button>
         </div>
+        <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+          <span>备注：</span>
+          <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
+          <button @blur="blurCode" @click="copyMessage('5')" class="common-btn">
+            {{ copybtntxt5 }}
+          </button>
+        </div>
       </div>
     </div>
     <div class="deposit-container" v-else>
+      <label class="label">存款金额</label>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <div class="flex-c-center" v-if="amountList.length === 0">
           <q-input
@@ -95,7 +103,7 @@
           <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
         </div>
 
-        <div class="text-grey text-bold">
+        <div class="q-mt-sm text-grey text-bold">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -103,16 +111,16 @@
           {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="flex-center-div">
-          <label class="label" style="padding-bottom: 0px">实时汇率</label>
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
+          <label class="label">实时汇率</label>
           <span class="text-positive" style="font-size: 16px; font-weight: 600">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
           </span>
         </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="flex-center-div">
-          <label class="label" style="padding-bottom: 0px">预计到账</label>
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
+          <label class="label">预计到账</label>
           <span class="text-positive" style="font-size: 16px; font-weight: 600">
             {{
               calculatedMinDeposit && form.localAmount < calculatedMinDeposit
@@ -133,7 +141,7 @@
         ></BankComponent>
         <q-select
           ref="offerRef"
-          class="q-mt-sm"
+          class="q-mt-md"
           label="选择优惠"
           filled
           :options="unselectedPrivileges"
@@ -154,7 +162,7 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-xs" v-html="activeMethod.msg"></div>
+        <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
           <q-btn color="dygreen" :loading="btnLoading" class="fit" @click="confirmDeposit" label="确定存款" />
@@ -217,7 +225,6 @@ import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { doIt } from "boot/action";
-import liff from "@line/liff";
 
 var qs = require("qs");
 
@@ -268,11 +275,13 @@ const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
 const subMsg4 = ref();
+const subMsg5 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const copybtntxt4 = ref("复制");
+const copybtntxt5 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -287,14 +296,14 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
 };
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });
@@ -346,14 +355,7 @@ function initPay() {
     }
 
     // if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit')) {
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -417,9 +419,7 @@ async function onSelect(value) {
   clearInfo();
   // if (!Platform.is.android || !Platform.is.capacitor) {
   // }
-  // if (liff.isInClient()) {
-  //   clearInfo();
-  // }
+
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
   }
@@ -570,8 +570,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -621,8 +620,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;
@@ -788,9 +786,9 @@ onActivated(() => {
 
 .deposit-section {
   .label {
-    //font-weight: 600;
-    font-size: 15px;
-    padding-bottom: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    padding-bottom: 6px;
     display: block;
   }
 
@@ -804,12 +802,5 @@ onActivated(() => {
     letter-spacing: 1px;
     border-radius: 12px;
   }
-}
-
-.flex-center-div {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
 }
 </style>

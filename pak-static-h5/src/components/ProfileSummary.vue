@@ -1,8 +1,8 @@
 <template>
-  <div style="height: 56px" v-if="topDownload"></div>
+  <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
   <div style="height: 70px"></div>
 
-  <div class="top-download" v-if="topDownload">
+  <div class="top-download" v-if="topDownload && !ui.hideDownload">
     <div class="download-container">
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
@@ -14,14 +14,14 @@
         </a>
       </div> -->
       <div class="download-btn-yel">
-        <a :href="topDownloadUrl">{{ $t("header.download") }}</a>
+        <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
 
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
-    <div style="height: 56px" v-if="topDownload"></div>
+    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
     <div class="side-menu" @click.stop>
       <div class="side-menu-item side-menu-item__invite" @click="handleMenuRouteClick('/earn-money')">
         <div>
@@ -86,20 +86,28 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
+      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
+      <!--        <div class="item-icon">-->
+      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
+      <!--        </div>-->
+      <!--        Tik Tok-->
+      <!--      </a>-->
+
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/auth/menu-telegram.png" />
+          <img src="../assets/images/index/insta-web-icon.png" />
         </div>
-        {{ $t("sideNav.telegram") }}
+        Instagram
       </a>
 
-      <a
-        class="side-menu-item side-menu-item__transparent"
-        href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
-        target="_blank"
-      >
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
-        {{ $t("sideNav.whatsapp") }}
+        Whatsapp
+      </a>
+
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
+        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
+        TikTok
       </a>
 
       <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
@@ -109,7 +117,11 @@
         {{ $t("sideNav.language") }}
       </div>
 
-      <a class="side-menu-item side-menu-item__download" :href="topDownloadUrl" v-if="isSideDownload">
+      <a
+        class="side-menu-item side-menu-item__download"
+        :href="ui.downloadAppUrl"
+        v-if="isSideDownload && !ui.hideDownload"
+      >
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
         </div>
@@ -122,7 +134,10 @@
     </div>
   </div>
 
-  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
+  <div
+    class="infoboard-container"
+    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+  >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-menu">
@@ -133,7 +148,7 @@
           <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.hasToken()">
+      <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
         <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">
@@ -290,6 +305,7 @@ const loadCustomerAddress = () => {
     });
 };
 
+
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
@@ -409,16 +425,6 @@ const checkTopDownloadAppear = () => {
   }
 };
 
-const topDownloadUrl = ref("");
-
-const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-    }
-  });
-};
-
 const menuOpen = ref(false);
 
 const toggleMenuOpen = () => {
@@ -454,9 +460,9 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  getTopDownloadUrl();
   checkTopDownloadAppear();
   loadCustomerAddress();
+  ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
   if (isAndroid()) {

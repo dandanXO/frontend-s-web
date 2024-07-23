@@ -24,7 +24,7 @@
           <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.hasToken()">
+      <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
         <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">
@@ -54,7 +54,7 @@
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
 
-                <div class="balance-add" @click="router.push('/deposit?from=' + route.path)">
+                <div class="balance-add" @click="handleBackBtn">
                   <img src="../assets/images/index/money-plus.png" width="20" />
                 </div>
               </div>
@@ -225,7 +225,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("https://m.indwin7.com/", "_blank");
+    window.open("https://m.ind3.com/", "_blank");
     return;
   }
 
@@ -283,12 +283,19 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=IW2&affiliateCode=3B1BFB").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=INR&affiliateCode=3B1BFB").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
   });
 };
+
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push('/deposit?from=' + route.path)
+}
 
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {

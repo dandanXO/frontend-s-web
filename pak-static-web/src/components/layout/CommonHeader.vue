@@ -149,12 +149,17 @@
                 {{ $t("layout.header.menu.liveSupport") }}
               </a>
               <a class="header-nav feedback" @click="openFeedback">{{ $t("layout.header.menu.feedback") }}</a>
-              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">
-                {{ $t("layout.header.menu.telegram") }}
+<!--              <a class="header-nav tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
+<!--                {{ $t("layout.header.menu.tikTok") }}-->
+<!--              </a>-->
+
+              <a class="header-nav instagram" href="https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr" target="_blank">
+                Instagram
               </a>
+
               <a
                 class="header-nav whatsapp"
-                href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+                href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
                 target="_blank"
               >
                 {{ $t("layout.header.menu.whatsapp") }}
@@ -1118,6 +1123,20 @@ $link-color: #ffffff;
         &.telegram {
           &:before {
             background: url(../../assets/images/common/submenu/menu-icons/telegram-icon.svg) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.tiktok {
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/tiktok-icon.svg) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.instagram{
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/insta-web-icon.png) no-repeat center center;
             background-size: contain;
           }
         }

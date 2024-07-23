@@ -64,7 +64,9 @@ export default boot(({ app, router }) => {
     return Promise.reject(error);
   };
 
+  var attemptTimes= 0;
   async function refreshTokenAndRetry(errorresp) {
+    attemptTimes++;
     Notify.create({
       spinner: true,
       type: "warning",
@@ -76,16 +78,15 @@ export default boot(({ app, router }) => {
     const originalRequest = errorresp.config;
     const res = await api.post("/member/token/refresh");
     // console.log(res);
-    SessionStorage.set("TOKEN", res.data);
-    LocalStorage.set("TOKEN", res.data);
+    SessionStorage.set("TOKEN", res.data );
+    LocalStorage.set("TOKEN", res.data );
     store.token = res.data;
     originalRequest.headers.token = store.token;
 
     return new Promise((resolve, reject) => {
-      // 在这里可以修改原始请求的配置，例如添加新的令牌
-      // 重新发起请求
       axios(originalRequest)
         .then((response) => {
+          attemptTimes= 0;
           resolve(response.data);
         })
         .catch((err) => {
@@ -106,20 +107,17 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
-      const messageTranslated = errorMessages[res.code] || "Error";
 
-      if (res.code === ResponseCode.ERROR_SYSTEM) {
+      if (res.code === ResponseCode.ERROR_SYSTEM ||
+        res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT ||
+        res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG ||
+        res.code === ResponseCode.ERROR_GUEST_LOGGED
+      ) {
+        // debugger;
+        res.message= i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
         return res;
       }
-      if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
-        return res;
-      }
-      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG) {
-        return res;
-      }
-      if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
-        return res;
-      }
+
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {
@@ -128,7 +126,12 @@ export default boot(({ app, router }) => {
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
-          // debugger;
+          if(attemptTimes > 10){
+            SessionStorage.remove("TOKEN");
+            LocalStorage.remove("TOKEN");
+            router.push("/login");
+            return;
+          }
           return refreshTokenAndRetry(response);
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {

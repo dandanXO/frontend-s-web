@@ -61,9 +61,7 @@
               v-model="unbindCardNo"
               :label="unbindCardLabel()"
               color="white"
-              :rules="[
-                (val) => (val && val.length > 10 && val == unbindcarddetail.cardNumber) || unbindCardLabel() + '不正确'
-              ]"
+              :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel() ]"
             />
           </div>
 
@@ -667,7 +665,7 @@ export default defineComponent({
         },
         persistent: true,
       }).onOk(() => {
-        api.post(`/session/bankCard/${card.id}?_method=delete`).then((response) => {
+        api.post(`/session/bankCardByCardNo/${unbindCardNo.value}?_method=delete`).then((response) => {
           if (response.code === 0) {
             $q.notify({
               color: "positive",

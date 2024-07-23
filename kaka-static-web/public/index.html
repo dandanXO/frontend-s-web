@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    </script>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=888951505918547&ev=PageView&noscript=1"
+      />
+    </noscript>
+    
+<!--    <script>-->
+<!--      !(function (p, l, o, w, i, n, g) {-->
+<!--          if (!p[i]) {-->
+<!--              p.GlobalSnowplowNamespace = p.GlobalSnowplowNamespace || [];-->
+<!--              p.GlobalSnowplowNamespace.push(i);-->
+<!--              p[i] = function () {-->
+<!--                  (p[i].q = p[i].q || []).push(arguments)-->
+<!--              };-->
+<!--              p[i].q = p[i].q || [];-->
+<!--              n = l.createElement(o);-->
+<!--              g = l.getElementsByTagName(o)[0];-->
+<!--              n.async = 1;-->
+<!--              n.src = w;-->
+<!--              g.parentNode.insertBefore(n, g)-->
+<!--          }-->
+<!--      })(window, document, "script", "//res-odx.op-mobile.opera.com/sp.js", "otag");-->
+<!--  </script>-->
+  <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <noscript>
+      <strong>
+        We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please
+        enable it to continue.
+      </strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

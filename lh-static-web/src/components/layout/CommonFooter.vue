@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="bottom-footer">
-      <div class="sitemap" style="display:none;">
+      <div class="sitemap" style="display: none">
         <ul class="index_bottom_des">
           <li>关于雷火</li>
           <li><router-link to="/promotion">优惠活动</router-link></li>
@@ -70,7 +70,8 @@
           </li>
           <li>
             <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
+              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
+            >
               IE9浏览器
             </a>
           </li>
@@ -83,7 +84,7 @@
         <ul>
           <li>
             <router-link to="/about?id=aboutus">
-              <div style="display:flex;align-items:center;gap:5px;">
+              <div style="display: flex; align-items: center; gap: 5px">
                 <img src="@/assets/footer/footer-lh-logo.png" />
                 <div>关于雷火</div>
               </div>
@@ -94,7 +95,9 @@
           <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
           <li><router-link to="/about?id=rule">竞猜规则</router-link></li>
           <li><router-link to="/about?id=pay">补偿</router-link></li>
-          <li><a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加盟代理</a></li>
+          <li>
+            <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加盟代理</a>
+          </li>
           <li><router-link to="/about?id=blame">博彩责任</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
@@ -107,7 +110,6 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
-import { ElMessage, ElMessageBox } from "element-plus";
 
 export default defineComponent({
   components: {},
@@ -396,6 +398,38 @@ export default defineComponent({
       text-align: center;
       color: $color-white;
       font-size: 0.8rem;
+    }
+  }
+}
+
+.dark {
+  .footer {
+    .top-footer {
+      .top-footer-inner {
+        background-color: #0a0c16;
+        border: none;
+
+        .top-ft-rgt {
+          .s1 {
+            color: $font-3-dark;
+          }
+        }
+      }
+    }
+    .bottom-footer {
+      background: #010105;
+      .bottom-footer-inner {
+        ul {
+          li {
+            a {
+              color: $font-3-dark;
+              &:hover {
+                color: $color-white;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -70,7 +70,7 @@
             </div>
 
             <div class="mail-input-item">
-              <div class="input-title">内容</div>
+              <div class="input-title">内容<span class="red-note">注:若您的建议和反馈被本平台使用采纳，我们将奉送38~888元奖金</span></div>
               <div class="input-fill">
                 <el-input
                   v-model="mailboxState.mailboxList.write.content"
@@ -272,7 +272,7 @@
                 <div class="header-title-div" style="margin-top: 25px">
                   <span class="span3">
                     根据您填写的内容随机为您派发
-                    <span class="span1" style="color: #468cff">0-188元</span>
+                    <span class="span1">0-188元</span>
                   </span>
                 </div>
                 <div class="qr-code-div">
@@ -302,11 +302,12 @@ import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } 
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { CaretBottom } from "@element-plus/icons-vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import FileUpload from "@/components/feedback/FileUpload.vue";
 
+const notify = useNotify();
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
 const uiIsShowStatus = reactive({
@@ -336,7 +337,7 @@ const uploadFileRef = ref();
 const getImageLink = (linkId) => {
   mailboxState.mailboxList.write.photo = linkId;
 
-  ElMessage.success({
+  notify.success({
     type: "success",
     message: "上传成功"
   });
@@ -439,7 +440,7 @@ const getQuesTitleOptions = () => {
       recordsPagination.pages = res.data.length;
       uiIsShowStatus.showQuestions = quesTitleOptions.value.length !== 0;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -503,7 +504,7 @@ const toggleSelected = (item, ans, isChecked, needSpecify) => {
 };
 const btnClick = (btnType) => {
   if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
-    return ElMessage.error("请选择一个选项");
+    return notify.error("请选择一个选项");
   }
   optionModal.value = [];
   answerInputModal.value = null;
@@ -576,7 +577,7 @@ const btnClick = (btnType) => {
         // QRDiv.style.display = "block";
         isAnswered.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     });
   }
@@ -632,7 +633,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       })
       .catch((error) => {
@@ -653,7 +654,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList["sent"].list.push(...response.data.records);
           mailboxState.mailboxList["sent"].total = response.data.total;
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       })
       .catch((error) => {
@@ -734,7 +735,7 @@ const onSubmit = (e) => {
       submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            ElMessage({
+            notify({
               message: "提交成功",
               type: "success"
             });
@@ -745,7 +746,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.content = "";
             uploadFileRef.value.clear();
           } else {
-            ElMessage.error(response.message);
+            notify.error(response.message);
           }
         })
         .catch((error) => {
@@ -770,7 +771,7 @@ const testAns = () => {
         isAnswered.value = true;
       }
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -1070,6 +1071,7 @@ onUnmounted(() => {
     line-height: 30px;
     letter-spacing: 0em;
     text-align: center;
+    color: #468cff;
   }
   .span2 {
     font-family: PingFang SC;
@@ -1115,13 +1117,10 @@ onUnmounted(() => {
   }
 
   .url-input-fill {
+    --el-input-text-color: #3f8cff;
     width: 389px;
     :deep(.el-form-item__label) {
       width: 80px;
-    }
-
-    :deep(.el-input__inner) {
-      color: #3f8cff;
     }
 
     :deep(.el-input__wrapper) {
@@ -1232,6 +1231,10 @@ onUnmounted(() => {
     .input-title {
       font-size: 1rem;
       color: #424f72;
+      .red-note {
+        color: #ff0000;
+        margin-left: 10px;
+      }
     }
     .input-fill {
       :deep(.el-form-item__label) {
@@ -1366,6 +1369,12 @@ onUnmounted(() => {
   }
 
   .quiz-container {
+    .quiz-header {
+      padding-bottom: 60px;
+      margin-bottom: -44px;
+      background: $active-color-dark-linear;
+    }
+
     .quiz-content {
       @include content-block-dark;
       border-color: $background-content-block-lighter-dark;
@@ -1378,9 +1387,19 @@ onUnmounted(() => {
   }
 
   .questions-container {
+    .questions-header {
+      padding-bottom: 60px;
+      margin-bottom: -44px;
+      background: $active-color-dark-linear;
+    }
+
     .questions-content {
       @include content-block-dark;
       border-color: $background-content-block-lighter-dark;
+
+      .questions-title {
+        color: $active-color-dark;
+      }
 
       .answer-input-fill {
         :deep(.el-textarea__inner) {
@@ -1390,15 +1409,37 @@ onUnmounted(() => {
       }
 
       .url-input-fill {
+        --el-input-text-color: #{$active-color-dark};
+
         :deep(.el-input__wrapper) {
           box-shadow: none;
           background-color: $background-content-block-lighter-dark;
         }
       }
+
+      .span1 {
+        color: $active-color-dark;
+      }
+
+      .url-div {
+        color: $active-color-dark;
+      }
     }
 
     .header-title-div {
       color: $color-white;
+    }
+  }
+
+  .quiz-announcement-wrapper {
+    .quiz-announcement-inner {
+      color: $font-3-dark;
+
+      > div {
+        .amount {
+          color: $active-color-dark;
+        }
+      }
     }
   }
 }

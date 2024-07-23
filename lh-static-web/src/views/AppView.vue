@@ -50,7 +50,7 @@
               <div :class="`platform-qr-code visible`">
                 <!-- <div class="close-btn" @click="closePlatformQRCode">&#x2716;</div> -->
                 <div class="qr-code-wrapper">
-                  <VueQRCodeComponent :size="90" :text="det.link" v-if="det.code != 'APP'"/>
+                  <VueQRCodeComponent :size="90" :text="det.link" v-if="det.code != 'APP'" />
                   <img v-else src="../assets/app/book.png" />
                 </div>
               </div>
@@ -85,7 +85,7 @@
   <GameModal ref="appGame"></GameModal>
 </template>
 <script>
-import { defineComponent, onMounted, ref, nextTick } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import GameModal from "@/components/modal/GameModal";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
@@ -110,12 +110,9 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
-    const onSwiper = (swiper) => {};
+    const onSwiper = () => {};
     const router = useRouter();
 
-    const onSlideChange = () => {
-      // console.log("slide change");
-    };
     const appGame = ref(null);
     const platforms = ref([
       {
@@ -123,19 +120,19 @@ export default defineComponent({
         name: "手机 H5 网页",
         link: window.location.host,
         mobile: window.location.host,
-        content:'扫码进入访问'
+        content: "扫码进入访问"
       },
       {
         code: "QZ",
         name: "全站 APP 下载",
         link: "",
-        content:'扫码进入下载页面'
+        content: "扫码进入下载页面"
       },
       {
         code: "APP",
         name: "APP 下载教程",
         link: "/app-tutorial",
-        content:'点击下载教程'
+        content: "点击下载教程"
       }
     ]);
     const selectedPlat = ref();
@@ -355,23 +352,23 @@ export default defineComponent({
       }
     }
     .supported-mobile-os {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      span {
+        word-break: keep-all;
+        text-align: center;
+        font-size: 16px;
+        color: #fff;
         width: 100%;
-        span {
-          word-break: keep-all;
-          text-align: center;
-          font-size: 16px;
-          color:#fff;
-          width: 100%;
-          line-height: 29px;
-          padding: 0px 3px;
-        }
+        line-height: 29px;
+        padding: 0px 3px;
       }
+    }
     .platform-qr-code {
       // position: absolute;
-      background-image: url('./../assets/app/blue-bg.png');
+      background-image: url("./../assets/app/blue-bg.png");
       background-repeat: no-repeat;
       background-size: contain;
       bottom: 0px;
@@ -387,7 +384,6 @@ export default defineComponent({
       padding: 20px;
       display: none;
 
-
       .close-btn {
         position: absolute;
         top: 10px;
@@ -400,7 +396,7 @@ export default defineComponent({
         background-size: 100% 100%;
         margin-top: 7px;
         margin-right: 7px;
-        img{
+        img {
           width: 90px;
           height: 90px;
         }
@@ -1176,8 +1172,16 @@ export default defineComponent({
   .intro-container {
     .buttons {
       .platform-qr-code {
-        background-color: $background-content-block-dark;
+        background: url(@/assets/home/download/qr-frame-dark.png) no-repeat;
         color: $font-3-dark;
+      }
+      .platform-button {
+        background: $active-color-dark-linear;
+        box-shadow: $active-color-dark-shadow;
+
+        &:hover {
+          filter: brightness(1.2);
+        }
       }
     }
   }

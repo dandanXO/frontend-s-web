@@ -9,3 +9,12 @@ export const getUserActionLog = systemLog => {
     ContentType.json
   )
 }
+
+export const getAffiliateActionLog = systemLog => {
+  return https().request(
+    '/user-action-log/affiliate',
+    Method.GET,
+    systemLog,
+    ContentType.json
+  )
+}

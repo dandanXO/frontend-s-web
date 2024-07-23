@@ -2,7 +2,10 @@
   <div class="container">
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
-        <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        <div class="icon-wrapper">
+          <UnreadNotificationBadge />
+          <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        </div>
         <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
       </div>
       <div class="right-content-sidebar">
@@ -16,25 +19,25 @@
         <div class="left-content-items">
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
-              <span v-if="store.token">{{ store.nickName }}<br />님 환영합니다 </span>
-              <span v-else>{{ $t('lang.login') }}</span>
+              <span v-if="store.token" class="member-name">{{ store.nickName }}<br />님 환영합니다 </span>
+              <span v-else class="login-text">{{ $t('lang.login') }}</span>
               <div class="balance-info">
                 <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
                 <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
               </div>
             </div>
             <div class="sidebar-section top">
-              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=personal/info`)">
+              <div class="sidebar-section-item" @click="goPageOrLogin('personal/info')">
                 <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
                 <div class="info-text">마이페이지</div>
               </div>
             </div>
             <div class="sidebar-section middle">
-              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/deposit`)">
+              <div class="sidebar-section-item" @click="goPageOrLogin('finance/deposit')">
                 <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
                 <div class="info-text">{{ $t('lang.menu_deposit') }}</div>
               </div>
-              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/withdraw`)">
+              <div class="sidebar-section-item" @click="goPageOrLogin('finance/withdraw')">
                 <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
                 <div class="info-text">{{ $t('lang.menu_withdraw') }}</div>
               </div>
@@ -42,10 +45,12 @@
             <div class="separator" />
             <div class="icon-section-label">메뉴</div>
           </div>
-          <div v-for="(item, index) in iconInfo" :key="index"
-            @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
+          <div v-for="(item, index) in iconInfo" :key="index" @click="goPageOrLogin(item?.page)"
             class="credit-info cursor-pointer">
-            <img :src="item.iconUrl" alt="" />
+            <div class="icon-wrapper">
+              <UnreadNotificationBadge v-if="item.type === 'message'" />
+              <img :src="item.iconUrl" alt="" />
+            </div>
             <div class="info-text">{{ $t(item.info) }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
@@ -67,10 +72,11 @@
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
 import { reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import UnreadNotificationBadge from 'components/home/UnreadNotificationBadge';
 
 const store = userStore();
 const $q = useQuasar();
@@ -83,7 +89,7 @@ const toggleNav = () => {
   navActive.value = !navActive.value;
 };
 
-const showNotify = () => {
+const showNotify = (page) => {
   $q.notify({
     color: "negative",
     position: "top",
@@ -91,16 +97,22 @@ const showNotify = () => {
     icon: "report_problem"
   });
 
-  router.push('/?page=login')
+  router.push({
+    path: '/',
+    query: {
+      page: 'login',
+      redirect: page
+    }
+  })
 };
 
 const goPageOrLogin = (page) => {
   if (store.token) {
-    router.push(page);
+    router.push(`/?page=${page}`);
     return;
   }
 
-  showNotify();
+  showNotify(page);
 }
 
 const logout = () => {
@@ -108,70 +120,42 @@ const logout = () => {
 }
 
 const iconInfo = reactive([
-  // {
-  //   info: "송금신청",
-  //   iconUrl: require("../../assets/icon/deposit.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=finance/deposit`);
-  //   }
-  // },
   {
     info: 'lang.menu_announcement',
-    iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=announcement`);
-    }
+    iconUrl: require("../../assets/icon/pageModal/loudspeaker-icon.svg"),
+    page: 'announcement',
   },
-  // {
-  //   info: "이벤트",
-  //   iconUrl: require("../../assets/icon/icon-promo.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=promo/all`);
-  //   }
-  // },
   {
     info: "lang.menu_deposit",
     iconUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/deposit`);
-    }
+    page: 'finance/deposit',
   },
   {
     info: "lang.menu_withdraw",
     iconUrl: require("../../assets/icon/pageModal/card-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/withdraw`);
-    }
+    page: 'finance/withdraw',
+  },
+  // {
+  //   info: "lang.menu_transaction_record",
+  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
+  //   page: 'transaction/records',
+  // },
+  // {
+  //   info: "lang.menu_rebates",
+  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
+  //   page: 'transaction/records&tab=rebates',
+  // },
+  {
+    type: 'inquiry',
+    info: "lang.menu_inquiry",
+    iconUrl: require("../../assets/icon/pageModal/inquiry-icon.svg"),
+    page: 'personal/inquiry',
   },
   {
-    info: "lang.menu_transaction_record",
-    iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records`);
-    }
-  },
-  {
-    info: "lang.menu_rebates",
-    iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records&tab=rebates`);
-    }
-  },
-  {
+    type: 'message',
     info: "lang.menu_message",
-    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=personal/messages`);
-    }
-  },
-  {
-    info: "lang.menu_customer_service",
-    iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    goPage: () => {
-      window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-    },
-    requireLogin: false
+    iconUrl: require("../../assets/icon/pageModal/mails-icon.svg"),
+    page: 'personal/message',
   },
 ]);
 </script>
@@ -202,6 +186,7 @@ const iconInfo = reactive([
       width: 35px;
       height: 35px;
       margin-left: 10px;
+      display: none;
     }
   }
 
@@ -229,6 +214,7 @@ const iconInfo = reactive([
     // background: linear-gradient(#292b31, #191b1e);
     background: rgba(18, 17, 33, 0.6);
     backdrop-filter: blur(6px);
+    width: 100%;
   }
 }
 
@@ -239,7 +225,6 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 100%;
     flex-direction: row;
     height: 60px;
     display: flex;
@@ -252,10 +237,10 @@ const iconInfo = reactive([
   .left-content-items {
     width: 70%;
     height: 100%;
-    padding: 20px 30px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     background: #00000080;
     backdrop-filter: blur(10px);
     border-right: 1px solid #454F63;
@@ -288,11 +273,11 @@ const iconInfo = reactive([
   .sidebar-section-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 
     .sidebar-section-title {
-      font-size: 28px;
+      font-size: 20px;
       font-weight: 500;
       line-height: 28px;
       display: flex;
@@ -323,7 +308,7 @@ const iconInfo = reactive([
       &.top {
         border-radius: 6px;
         background-color: #1D243D;
-        padding: 20px;
+        padding: 10px 20px;
 
         .sidebar-section-item img {
           background-color: #00FFFF1A;
@@ -396,6 +381,8 @@ const iconInfo = reactive([
       background: none;
       backdrop-filter: none;
       border: none;
+      padding: 20px 30px;
+      gap: 20px;
 
       .sidebar-section-wrapper,
       .sidebar-logout-button {
@@ -406,6 +393,9 @@ const iconInfo = reactive([
 }
 
 .right-content {
+  padding: 0 30px;
+
+
   .actions-topbar-controls {
     display: none;
   }
@@ -454,6 +444,17 @@ const iconInfo = reactive([
     img {
       width: 22px;
     }
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  position: relative;
+
+  .red-dot {
+    position: absolute;
+    top: -10px;
+    right: -10px;
   }
 }
 </style>

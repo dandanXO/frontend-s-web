@@ -12,6 +12,7 @@ export default {
     deposit: "Deposit",
     bank: "Bank",
     addVirtualWallet: "Add Virtual Wallet",
+    addBankCard: "Add Bank Card",
     message: "Message",
     feedback: "Feedback",
     feedbackDetail: "Feedback Detail",
@@ -128,6 +129,8 @@ export default {
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_untie: "Please enter untie virtual wallet",
+    bankCard: "Bank Card",
+    bankCard_untie: "Please enter untie bank card",
     notMatch: " not match",
     feedbackType: "Feedback type",
     feedbackType_select: "Please select the opinion type",
@@ -149,6 +152,7 @@ export default {
     updated: "Updated",
     updating: "Updating...",
     addVirtualWallet: "Add virtual wallet",
+    addBankCard: "Add bank card",
     untie: "Untie",
     more: "More",
     postComments: "Post Comments",
@@ -161,7 +165,9 @@ export default {
     moreGames: "More Games",
     addCash: "Add Cash",
     search: "Search",
-    downloadApp: "Download App"
+    downloadApp: "Download App",
+    downloadNow: "Download Now",
+    recharge: "Recharge"
   },
   notify: {
     noRecord: "No Record",
@@ -223,12 +229,14 @@ export default {
   },
   deposit: {
     selectAmount: "Select Amount",
-    depositTutorial: "Deposit Tutorial"
+    depositTutorial: "Deposit Tutorial",
+    select_privilege: "Select Privilege"
   },
   withdraw: {
     cashBalance: "Cash Balance",
     withdrawable: "Withdrawable",
     withdrewAmount: "Withdrew Amount",
+    withdrawMaxTimes: "Remaining Withdrawal Attempts",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial"
@@ -301,6 +309,13 @@ export default {
         searchButton: "SEARCH"
       },
       table: {
+        id: "ID",
+        downlineMember: "Downline Member",
+        todayRegCount: "Today Register Count",
+        ytdRegCount: "Yesterday Register Count",
+        downlineDepositMember: "Downline Deposit Member",
+        vip: "VIP",
+        uplineLoginName: "Upline Username",
         type: "Types",
         username: "Username",
         emark: "Emarks",
@@ -338,7 +353,11 @@ export default {
         validBet: "Valid Bet",
         balance: "Win/Loss",
         rounds: "Rounds",
-        player: "Player"
+        player: "Player",
+        platform: "Platform",
+        players: "Players",
+        bet: "Bet",
+        payout: "Payout"
       }
     },
     profitAndLoss: {
@@ -363,7 +382,23 @@ export default {
         rebate: "Player Rebate",
         referral: "Referral",
         profitAndLoss: "Profit And Loss",
-        depositFee: "Deposit Fee"
+        ftdamount: "FTD Amount",
+        ftdcount: "FTD Count",
+        depositcount: "Deposit Count",
+        depositFee: "Deposit Fee",
+        bet: "Bet",
+        payout: "Payout"
+      },
+      sums: {
+        bet: "Bet",
+        betamount: "Bet Amount",
+        depositcount: "Deposit Count",
+        validBet: "Valid Bet",
+        bonus: "Bonus",
+        payout: "Payout",
+        deposit: "Deposit",
+        withdraw: "Withdraw",
+        firstdepositcount: "First Deposit Count"
       }
     }
   },
@@ -380,10 +415,10 @@ export default {
     jackpot: "Jackpot",
     bonus: "Bonus",
     amount: "Amount",
-    applying: "Applying",
+    applying: "Processing",
     failed: "Failed",
     Success: "Success",
-    underReview: "Under review",
+    underReview: "Processing",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
     automaticPayment: "Automatic Payment",
@@ -396,6 +431,45 @@ export default {
     bank: "BANK",
     noRecord: "No record",
     noMoreRecord: "No more record"
+  },
+  appUpdate: {
+    updateHeader: "Update Announcement",
+    isOutdatedAppContent_01: "Your App Version Is Outdated,",
+    isOutdatedAppContent_02: "Please Update The App Now",
+    newAppVersionContent_01: "New Version Detected, Do You Want To Update?",
+    cancel: "Cancel",
+    updateNow: "Update now"
+  },
+  bankCard: {
+    bankAccountNum: "Bank Account Number",
+    pleaseEnterCardAccount: "Please enter bank account number",
+    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    nameofCardAcc: "Card Account Name",
+    insertCardAccName: "Please insert card account name"
+  },
+  promo: {
+    all: "ALL",
+    earn: "EARN",
+    hot: "HOT",
+    new_user: "NEW USER",
+    sports: "SPORTS",
+    live: "LIVE",
+    slot: "SLOT",
+    vip: "VIP"
+  },
+  hotPromo: {
+    aviatorWheel: {
+      remainingDrawTimes: "Remaining draw times",
+      congratulations: "Congratulations"
+    },
+    signIn7Days: {
+      continuousSignIn: "Continuous sign-in:",
+      expired: "Expired",
+      day: "day",
+      days: "days",
+      signIn: "Sign in",
+      signedIn: "Signed in"
+    }
   },
   error: {
     101: "Platform not found",
@@ -431,6 +505,12 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "The account is temporarily locked due to entering the wrong password many times",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
+    1016: "The registration function is being upgraded. Please register after 9:00 a.m. local time. Thank you!",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
@@ -440,6 +520,8 @@ export default {
     1307: "Exceeded daily withdrawal limit",
     1308: "Insufficient balance",
     1309: "Card account does not match member name",
+    1318: "This operation is not supported, please contact online customer service for assistance.",
+    1319: "The card number has been bound more than twice",
     1401: "OTP sending time exceeded",
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",
@@ -452,9 +534,10 @@ export default {
     10007: "Error entering game room",
     10008: "Error",
     11003: "Deposit failed",
-    11005: "Please try again",
+    11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
+    12104: "This feature is disabled, please contact customer service",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",
@@ -463,6 +546,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
     21000: "This game is already in your favorite games list.",
@@ -496,6 +580,11 @@ export default {
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
     45000: "Not reaching the minimum withdrawal amount",
-    45001: "Received random bonus today"
+    45001: "Received random bonus today",
+    50000: "The maximum number of transfers for today has been reached",
+    50001: "The number of available transfers has been reached, please continue betting before transferring again",
+    51000: "Today's sign-in reward has already been claimed",
+    51001: "Requirements not met",
+    51002: "The reward has already been claimed by another account"
   }
 };

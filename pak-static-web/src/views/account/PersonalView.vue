@@ -26,7 +26,12 @@
               <div class="fake-input">
                 {{ personalState.memberInfo.email }}
               </div>
-              <a-button class="common-btn" v-if="!personalState.memberInfo.emailVerified" @click="updateSecurityModal">
+              <a-button
+                class="common-btn"
+                v-if="!personalState.memberInfo.emailVerified"
+                type="button"
+                @click="updateSecurityModal"
+              >
                 {{ $t("personalView.personal.form.email.verifyButton") }}
               </a-button>
               <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
@@ -193,7 +198,8 @@ import {
   loadVerifyStatus,
   updateAccount,
   sendEmail,
-  verifyEmail
+  verifyEmail,
+  checkExistingEmail 
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
@@ -333,9 +339,21 @@ const updateSecurityModal = () => {
   updateSecurityModalVisible.value = true;
 };
 const openVerificationModal = () => {
-  getCode();
-  updateSecurityVerified.captchaCode = "";
-  verificationModalVisible.value = true;
+  checkExistingEmail(personalState.memberInfo.email)
+    .then((res) => {
+      if (res.code === 0) {
+        if (res.data) {
+          message.error("Email already used. Please try another email.");
+        } else {
+          getCode();
+          updateSecurityVerified.captchaCode = "";
+          verificationModalVisible.value = true;
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e.message);
+    });
 };
 const verifyVerificationCode = () => {
   isEmailSending.value = true;

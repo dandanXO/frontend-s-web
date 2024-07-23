@@ -104,22 +104,16 @@
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { getReferralLink, getInviteFriendListCount, getSummonListCount } from "@/api/personal/share"
-import {
-  RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
-} from "vue-remix-icons"
-import { UserFilled, Money } from "@element-plus/icons-vue";
 import moment from 'moment'
 import VueQRCodeComponent from 'vue-qrcode-component'
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 
 export default defineComponent({
   name: "ShareView",
-  components: {
-    RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine, VueQRCodeComponent, UserFilled, Money
-  },
   setup() {
+    const notify = useNotify();
     const store= userStore();
     const router = useRouter()
     const searchForm = reactive({
@@ -159,7 +153,7 @@ export default defineComponent({
           referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
           summonerLink.value = 'https://' + location.hostname + `/summon/${res.data}`;
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -172,7 +166,7 @@ export default defineComponent({
           referredMember.value = res.data.referredMember;
           depositMember.value = res.data.depositMember;
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -183,7 +177,7 @@ export default defineComponent({
         if (res.code === 0) {
           summonMember.value = res.data
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
         }
       })
     }
@@ -224,7 +218,7 @@ export default defineComponent({
   .share-content {
     width: 100%;
     .desc {
-      height:90px;
+      height: 90px;
       padding: 0 10px;
       p {
         width: 60%;
@@ -409,6 +403,9 @@ export default defineComponent({
 
       p {
         color: $font-3-dark;
+        .number {
+          color: $active-color-dark;
+        }
       }
 
       .share-input {
@@ -424,6 +421,7 @@ export default defineComponent({
           box-shadow: none;
           background-color: $background-content-block-lighter-dark;
           border: none;
+          color: $active-color-dark;
         }
       }
     }

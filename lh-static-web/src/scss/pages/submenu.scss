@@ -140,23 +140,31 @@
   .platform-menu-container {
     .platform-menu-item {
       .platform-menu-title {
-        background: linear-gradient(180deg, #c9e1ff 0%, #ffffff 100%);
-        color: transparent;
-        background-clip: text;
+        color: $active-color-dark;
         text-shadow: none;
+      }
+
+      .platform-menu-caption {
+        color: $font-3-dark;
       }
 
       .platform-menu-btn {
         a {
-          background: linear-gradient(180deg, #2a507f 0%, #254a8b 100%);
-          box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.66px 0px #a2bff4 inset;
+          background: $active-color-dark-linear;
+          position: relative;
           color: $color-white;
-        }
+
+          &::before{
+            @include gradient-border(linear-gradient(180deg, #2EC0FF 0%, #F6FFFF 50%, #2EC0FF 100%));
+            border-radius: 2rem;
+          }
+
+          }
       }
 
       &:hover {
         a {
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          filter: brightness(1.2);
           box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.66px 0px #275ec1 inset;
         }
       }

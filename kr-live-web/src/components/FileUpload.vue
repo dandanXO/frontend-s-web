@@ -71,6 +71,12 @@ export default defineComponent({
             file.value = null;
           }
         } catch (error) {
+          $q.notify({
+            type: "negative",
+            position: "top",
+            message: t("lang.file_too_large_or_invalid_file"),
+            icon: "report_problem"
+          });
           console.error(error);
         }
       }

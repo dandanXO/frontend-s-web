@@ -486,6 +486,11 @@ $glow-clr: #ff5a00;
 }
 .ant-select-clear {
   right: 30px;
+  background: transparent;
+  color: #ffffff4d;
+  &:hover {
+    color: #fff;
+  }
 }
 .dark-theme {
   .ant-select-clear {
@@ -1575,6 +1580,7 @@ a {
     background: #131313;
     border-radius: 12px;
     color: #fff;
+    width: 100%;
 
     td {
       border: 1px solid #ffffff1a;
@@ -1689,6 +1695,9 @@ a {
     border: none;
     border-radius: 0;
   }
+  .ant-input-prefix {
+    color: #ffffff4d;
+  }
 }
 
 .ant-input-prefix {
@@ -1779,21 +1788,4 @@ a {
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
     color: #fff;
   }
-}
-
-.slide-right-enter-active,
-.slide-right-leave-active,
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition: 0.5s ease-in-out;
-}
-
-.slide-left-enter-from,
-.slide-right-leave-to {
-  transform: translateX(-100%);
-}
-
-.slide-right-enter-from,
-.slide-left-leave-to {
-  transform: translateX(100%);
 }

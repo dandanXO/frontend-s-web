@@ -1,161 +1,172 @@
 <template>
-  <div class="form-wrapper">
-    <div v-if="!isDisplay">
+  <div class="page-container">
 
-      <ReminderText :reminderText="$t('lang.deposit_reminder_text')" />
 
-      <div class="deposit-options">
-        <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
-        <div class="deposit-option-container">
-          <div class="node-wrapper">
-            <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect"
-              :isFetchingApi="isFetchingApi" />
+    <div class="form-wrapper">
+      <div v-if="!isDisplay">
+
+        <ReminderText :reminderText="$t('lang.deposit_reminder_text')" />
+
+        <div class="deposit-options">
+          <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
+          <div class="deposit-option-container">
+            <div class="node-wrapper">
+              <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect"
+                :isFetchingApi="isFetchingApi" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
-      <div style="text-align: center">입금하기</div>
-      <div class="submit-message">
-        <div class="line">
-          <span>은행 이름:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg0" :value="submitMessage[0]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-              {{ copybtntxt0 }}
-            </q-btn>
+      <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
+        <div style="text-align: center">입금하기</div>
+        <div class="submit-message">
+          <div class="line">
+            <span>은행 이름:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg0" :value="submitMessage[0]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+                {{ copybtntxt0 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>이름:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg1" :value="submitMessage[1]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-              {{ copybtntxt1 }}
-            </q-btn>
+          <div class="line">
+            <span>이름:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg1" :value="submitMessage[1]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+                {{ copybtntxt1 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>은행 계좌:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg2" :value="submitMessage[2]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-              {{ copybtntxt2 }}
-            </q-btn>
+          <div class="line">
+            <span>은행 계좌:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg2" :value="submitMessage[2]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+                {{ copybtntxt2 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>은행지점:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg4" :value="submitMessage[4]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('4')">
-              {{ copybtntxt4 }}
-            </q-btn>
+          <div class="line">
+            <span>은행지점:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg4" :value="submitMessage[4]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('4')">
+                {{ copybtntxt4 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>입금 금액:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg3" :value="submitMessage[3]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-              {{ copybtntxt3 }}
-            </q-btn>
+          <div class="line">
+            <span>입금 금액:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg3" :value="submitMessage[3]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+                {{ copybtntxt3 }}
+              </q-btn>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="deposit-container" v-else>
-      <q-form ref="depositForm" class="content-form form-template">
-        <div class="form-item">
-          <label>입금금액</label>
-          <q-skeleton v-if="isFetchingApi" type="QInput" />
-          <template v-else>
-            <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
-              :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
-              v-model="form.localAmount" placeholder="입금 금액을 입력하세요" :rules="verifyDepositAmount" clearable>
-              <template v-slot:prepend>
-                <span style="z-index:1;font-size:16px;" class="text-bright">
-                  <template v-if="isUSDT">USDT</template>
-                  <template v-else>{{ store.currency.value }}</template>
-                </span>
-              </template>
-            </q-input>
-            <q-select v-else ref="depositAmtRef" label="금액 선택" name="localAmount" class="deposit-selection" outlined
-              color="accent" :options="amountList" v-model="form.localAmount" :rules="verifyDepositAmount"
-              padding="none">
-              <template v-slot:prepend>
-                <span style="font-size: 26px" class="text-bright">
-                  {{ store.currency.value }}
-                </span>
-              </template>
-            </q-select>
-          </template>
-
-          <q-skeleton type="text" v-if="isFetchingApi" />
-          <div v-else class="text-grey text-bold text-caption">
-            입금단위：{{
-              calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" :
-                store.currency.value) : 0
-            }}
-            -
-            {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value === "₩"
-              ? "만" :
-              store.currency.value) : " " }}
-          </div>
-
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
-            <span class="text-positive">
-              1.00 USDT ≈ {{ activeMethod.currencyRate }}
-              {{ store.currency.value }}
-            </span>
-          </div>
-
-          <div class="select-amt-btn-wrapper">
-            <template v-for="(item, index) in countOptions" :key="index">
-              <q-skeleton v-if="isFetchingApi" type="QBtn" />
-              <q-btn v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
-                @click="selectAmt(item)"></q-btn>
+      <div class="deposit-container" v-else>
+        <q-form ref="depositForm" class="content-form form-template">
+          <div class="form-item">
+            <label>{{ $t('lang.deposit_deposit_amount') }}</label>
+            <q-skeleton v-if="isFetchingApi" type="QInput" />
+            <template v-else>
+              <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
+                :placeholder="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
+                v-model="depositAmountFormatted" :rules="verifyDepositAmount" clearable>
+                <template v-slot:prepend>
+                  <span style="z-index:1;font-size:16px;" class="text-bright">
+                    <template v-if="isUSDT">USDT</template>
+                    <template v-else>{{ store.currency.value }}</template>
+                  </span>
+                </template>
+              </q-input>
+              <q-select v-else ref="depositAmtRef" label="금액 선택" name="localAmount" class="deposit-selection" outlined
+                color="accent" :options="amountList" v-model="form.localAmount" :rules="verifyDepositAmount"
+                padding="none">
+                <template v-slot:prepend>
+                  <span style="font-size: 26px" class="text-bright">
+                    {{ store.currency.value }}
+                  </span>
+                </template>
+              </q-select>
             </template>
-            <q-skeleton v-if="isFetchingApi" type="QBtn" />
-            <q-btn v-else class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
+
+            <q-skeleton type="text" v-if="isFetchingApi" />
+            <div v-else class="text-grey text-bold text-caption">
+              {{ $t('lang.deposit_deposit_unit') }}：{{
+                calculatedMinDeposit ? formatNumberComma(calculatedMinDeposit) + " " + (isUSDT ? "USDT" :
+                  store.currency.value === "₩"
+                    ? "원"
+                    :
+                    store.currency.value) : 0
+              }}
+              -
+              {{ activeMethod.depositMax ? formatNumberComma(activeMethod.depositMax) + " " + (isUSDT ? "USDT" :
+                store.currency.value ===
+                  "₩"
+                  ? "원" :
+                  store.currency.value) : " " }}
+            </div>
+
+            <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
+              <span class="text-positive">
+                1.00 USDT ≈ {{ activeMethod.currencyRate }}
+                {{ store.currency.value }}
+              </span>
+            </div>
+
+            <div class="select-amt-btn-wrapper">
+              <template v-for="(item, index) in countOptions" :key="index">
+                <q-skeleton v-if="isFetchingApi" type="QBtn" />
+                <q-btn dense v-else class="select-amt-btn" :key="index"
+                  :label="isUSDT ? `${item} USDT` : item + $t('lang.deposit_ten_thousand_won')"
+                  @click="selectAmt(item)"></q-btn>
+              </template>
+              <q-skeleton v-if="isFetchingApi" type="QBtn" />
+              <q-btn dense v-else class="select-amt-btn active" :label="$t('lang.deposit_clear_amount')"
+                @click="clearInfo"></q-btn>
+            </div>
           </div>
-        </div>
 
-        <div class="form-item" v-if="selectedPayType && bankCardList.length">
-          <label>입금계좌</label>
-          <BankComponent ref="payTypeClass" :is="selectedPayType" class="deposit-select-bank" v-model="form.bankId"
-            :bank-list="bankCardList" @selected="selectedBank" @successful="isDeposited = true"></BankComponent>
-        </div>
+          <div class="form-item" v-if="selectedPayType && bankCardList.length">
+            <label>입금계좌</label>
+            <BankComponent ref="payTypeClass" :is="selectedPayType" class="deposit-select-bank" v-model="form.bankId"
+              :bank-list="bankCardList" @selected="selectedBank" @successful="isDeposited = true"></BankComponent>
+          </div>
 
-        <q-select ref="offerRef" class="deposit-selection q-mt-xs" label="할인 선택" outlined
-          :options="unselectedPrivileges" v-model="selectedPrivilege" emit-value v-if="hasPrivilege && !isUSDT"
-          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`" clearable
-          @update:model-value="checkMinDepositAmt">
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
-                  {{ scope.opt.name }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
+          <q-select ref="offerRef" class="deposit-selection q-mt-xs" label="할인 선택" outlined
+            :options="unselectedPrivileges" v-model="selectedPrivilege" emit-value v-if="hasPrivilege && !isUSDT"
+            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`" clearable
+            @update:model-value="checkMinDepositAmt">
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section>
+                  <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                    {{ scope.opt.name }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
 
-        <div class="form-item">
-          <label>입금자명</label>
-          <q-skeleton v-if="isFetchingApi" type="QInput" />
-          <q-input v-else dense v-model="depositAccName" class="account-name-field" outlined readonly />
-        </div>
+          <div class="form-item">
+            <label>{{ $t('lang.deposit_depositor_name') }}</label>
+            <q-skeleton v-if="isFetchingApi" type="QInput" />
+            <q-input v-else dense v-model="depositAccName" class="account-name-field" outlined readonly />
+          </div>
 
-        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
-      </q-form>
+          <div class="q-mt-sm" v-html="activeMethod.msg"></div>
+        </q-form>
+      </div>
     </div>
 
     <div class="action-buttons">
@@ -166,22 +177,24 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted, reactive, shallowRef } from "vue";
+import { ref, onMounted, reactive, shallowRef, watch } from "vue";
 import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "../../components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
+import { useI18n } from "vue-i18n";
+import { formatNumberComma } from "src/boot/utils";
 
 var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const calculatedMinDeposit = ref("");
 const isDeposited = ref(false);
@@ -203,7 +216,6 @@ const subMsg4 = ref();
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
-const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
 const depositForm = ref(null);
 const privilegeList = ref([]);
@@ -217,12 +229,10 @@ const copybtntxt3 = ref("복사");
 const copybtntxt4 = ref("복사");
 
 const depositAmtRef = ref("");
-const { realName } = storeToRefs(store);
+const { realName, id } = storeToRefs(store);
 const depositAccName = realName;
 
-const currentPath = ref(route.path);
 const extensionState = ref(false);
-const extensionToken = ref("");
 const isFetchingApi = ref(false);
 
 const form = reactive({
@@ -230,11 +240,6 @@ const form = reactive({
   privilegeId: null,
   localAmount: null,
   bankId: null
-});
-
-const checkAmount = reactive({
-  flag: true,
-  errorMessage: ""
 });
 
 const copyMessage = (position) => {
@@ -263,16 +268,87 @@ const blurCode = () => {
   });
 };
 
+const depositAmountFormatted = ref('');
+
+const parseDigitsWithComma = (value) => {
+  const depositAmount = value?.replace(/\$\s?|(,*)/g, '');
+  return depositAmount;
+}
+
+watch(() => depositAmountFormatted.value, () => {
+  const depositAmount = depositAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
+  if (isNaN(depositAmount)) {
+    form.localAmount = ''
+  } else {
+    depositAmountFormatted.value = formatNumberComma(depositAmount);;
+    form.localAmount = Number(depositAmount);
+  }
+})
+
+watch(() => form.localAmount, () => {
+  depositAmountFormatted.value = formatNumberComma(form.localAmount);
+})
+
 const verifyDepositAmount = ref([
-  (val) => !!val || "금액을 입력하세요",
-  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "입금 금액에는 소수가 포함될 수 없습니다",
+  (val) => !!parseDigitsWithComma(val) || t('lang.deposit_please_enter_amount'),
+  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || (val && isUSDT.value) || "입금 금액에는 소수가 포함될 수 없습니다",
   (val) =>
-    val > calculatedMinDeposit.value - 1 ||
+    parseDigitsWithComma(val) > calculatedMinDeposit.value - 1 ||
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
-    val < activeMethod.value.depositMax + 1 ||
-    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다."  //存款金额必须以 10000 为单位
 ]);
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g, "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const checkIsGotBankCard = () => {
+  if (realName.value) {
+    api.get("/session/allBankCard").then((res) => {
+      const response = res.data;
+      if (response.data.length === 0) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: '먼저 은행 카드를 연결하세요',
+          icon: "report_problem"
+        });
+
+        router.push('/?page=bankcardlist');
+      }
+    });
+  }
+}
+
+const checkIsRealNameBinded = () => {
+  if (id.value && !realName.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '실명이 필요합니다',
+      icon: "report_problem"
+    });
+
+    router.push('/?page=personal/info');
+  }
+}
+
+watch(() => [realName.value, id.value], () => {
+  checkIsRealNameBinded();
+})
 
 async function confirmDeposit() {
   if (btnLoading.value) {
@@ -366,8 +442,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -418,8 +493,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;
@@ -504,8 +578,7 @@ const initPay = () => {
         !(
           (Platform.is.desktop || Platform.is.webkit) &&
           !Platform.is.capacitor &&
-          Platform.is.name !== "webkit" &&
-          !liff.isInClient()
+          Platform.is.name !== "webkit"
         )
       ) {
         let isBacked = localStorage.getItem("isBacked");
@@ -603,7 +676,7 @@ function selectPayType(value) {
 const selectAmt = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
-  form.localAmount = Number(form.localAmount) + (amt * multiple);
+  depositAmountFormatted.value = formatNumberComma(Number(form.localAmount) + (amt * multiple));
 };
 
 function clearInfo() {
@@ -637,12 +710,18 @@ function checkPrivilege(v) {
 }
 
 onMounted(() => {
+  checkIsGotBankCard();
+  checkIsRealNameBinded();
   initPay();
   // checkNewUser();
 });
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper {
+  padding: 20px;
+}
+
 .submit-message {
   // width: calc(100% - 40px);
   border-radius: 10px;
@@ -748,6 +827,5 @@ onMounted(() => {
 .select-amt-btn {
   background: linear-gradient(to right, #38F3FF 0%, #00B7ED 100%);
   color: #1a1a1a;
-  white-space: nowrap;
 }
 </style>

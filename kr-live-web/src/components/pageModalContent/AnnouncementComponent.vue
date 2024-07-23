@@ -1,5 +1,5 @@
 <template>
-  <div class="announcement-container">
+  <div class="announcement-container page-container">
     <div class="announcement-list-wrapper">
       <q-skeleton class="total" v-if="isLoading" type="QChip" />
       <span class="total" v-else>{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
@@ -12,7 +12,7 @@
         </template>
         <template v-else>
           <q-item clickable v-ripple v-for="item in announcementList" :key="item.page" @click="selected = item"
-            :active="item === selected" active-class="active-announcement">
+            :active="item === selected" active-class="active-announcement" class="announcement">
             <q-item-section>
               <q-item-label lines="1"><span class="title">{{ item.title }}</span></q-item-label>
               <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label>
@@ -39,11 +39,7 @@
           </div>
           <span class="date-time">{{ formatDate(selected.createTime) }}</span>
           <div class="attachment" v-if="selected.attachment">
-            <q-img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)">
-              <template v-slot:loading>
-                <q-spinner-orbit size="0.5em" />
-              </template>
-            </q-img>
+            <img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)" />
           </div>
           <div class="content" v-html="selected.content" style="white-space: pre-line"></div>
         </div>
@@ -53,10 +49,9 @@
   </div>
 </template>
 
-<script setup id="FinanceDeposit">
+<script setup>
 import { onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
-import moment from "moment";
 import { getLocaleDateTime } from "src/boot/utils";
 
 const store = userStore();
@@ -98,7 +93,7 @@ onMounted(() => {
 .announcement-container {
   display: grid;
   grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
-  min-height: 550px;
+  padding: 20px;
 
   .total {
     margin-left: auto;
@@ -109,10 +104,11 @@ onMounted(() => {
     flex-direction: column;
     gap: 5px;
     padding-right: 10px;
+    min-height: 100%;
 
     .announcement-list {
       overflow-y: auto;
-      max-height: 550px;
+      max-height: 100%;
       height: 100%;
 
       .active-announcement {
@@ -133,7 +129,7 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 550px;
+      max-height: 100%;
       overflow-y: auto;
       padding-right: 10px;
 
@@ -166,13 +162,25 @@ onMounted(() => {
 
   @media (max-width: 768px) {
     display: grid;
-    grid-template-columns: minmax(150px, 30%) 70%;
+    grid-template-columns: minmax(150px, 30%) auto;
+
+    .announcement-list-wrapper {
+      .header {
+        flex-direction: column;
+      }
+
+      .announcement-list {
+        .announcement {
+          padding: 0;
+        }
+      }
+    }
 
     .q-item {
       display: flex;
       flex-direction: column;
       padding: 0;
-      font-size: 0.7rem;
+      font-size: 12px;
 
       .title {
         font-size: 15px;
@@ -180,7 +188,7 @@ onMounted(() => {
       }
 
       .text-caption {
-        font-size: 12px;
+        font-size: 10px;
         line-height: 20px;
       }
 
@@ -207,7 +215,7 @@ onMounted(() => {
         font-size: 12px;
 
         .title {
-          font-size: 24px;
+          font-size: 20px;
           line-height: 28px;
         }
 

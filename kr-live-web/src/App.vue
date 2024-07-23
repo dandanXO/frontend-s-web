@@ -1,34 +1,41 @@
 <template>
   <router-view />
-  <PageModal ref="pageModalRef"></PageModal>
+  <component :is="PageModal"></component>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { defineAsyncComponent, defineComponent, markRaw, onUnmounted, onMounted, ref } from "vue";
+import { useQuasar, Platform } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
-//test-update
 import { userStore } from "stores/index";
-import isString from "lodash/isString";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
-import PageModal from "components/modal/PageModal";
+import axios from "axios";
+import dayjs from 'dayjs';
+
+require('dayjs/locale/ko');
+var localizedFormat = require("dayjs/plugin/localizedFormat");
+dayjs.extend(localizedFormat);
 
 export default defineComponent({
   name: "App",
-  components: { PageModal },
   setup() {
     var qs = require("qs");
     const ui = useUI();
     const router = useRouter();
     const $q = useQuasar();
+
+    const onlineStatTimeout = ref();
+    const onlineStatInterval = ref();
+
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
-    const pageModalRef = ref(null);
+
+    const PageModal = markRaw(defineAsyncComponent(() =>
+      import('components/modal/PageModal')
+    ))
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -52,85 +59,8 @@ export default defineComponent({
 
     const store = userStore();
 
-    const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
-
-    let csclient;
-    const initCsWeb = () => {
-      csclient = new CsClient("12", regDevice, "kr", "3", "prod");
-
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("notification-type", {
-        type: "breathing",
-        color: "#FB4BFF"
-      });
-
-      csclient.set("design", {
-        bottom: "40px",
-        right: "20px",
-        icon: require("assets/images/index/cs-icon.png")
-      });
-
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
-
-      //客服初始化。
-      csclient.init();
-
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
-
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (isString(event.data)) {
-          if (event.data == "closenotice") {
-            router.go(-1);
-          }
-        }
-      });
-    };
-
-    // const getCSA = () => {
-    //   cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
-    //     return res
-    //   })).then((data) => {
-    //     // console.log("here");
-    //     // console.log(data);
-    //     const url = new URL(data);
-    //     CSAUrl = url.hostname;
-    //     initCsWeb();
-    //     console.log(CSAUrl)
-    //   }).catch((err) => {
-    //     console.log(err);
-    //     CSAUrl = "csweb01.c8nhwrqx4.com";
-    //   });
-    // };
-
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
-    };
-
-    const initListenApp = () => {
-      App.addListener("appUrlOpen", function (event) {
-        // Example url: https://beerswift.app/tabs/tabs2
-        // slug = /tabs/tabs2
-        const slug = event.url.split(".com").pop();
-
-        // alert(slug);
-        console.log(slug);
-        // We only push to the route if there is a slug present
-        if (slug) {
-          // alert("GO");
-          // alert(slug);
-          router.push({
-            path: slug
-          });
-        }
-      });
     };
 
     const checkAgentFrom = () => {
@@ -178,13 +108,28 @@ export default defineComponent({
       );
     };
 
+    const getOnlineStatApi = async () => {
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+
+      if (sidParam) {
+        const sidPass = store.token ? "mid-" + store.memberId : sidParam
+        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: sidPass,
+            siteCode: "krw"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       initStorage();
       checkAgentFrom();
-      // initListenApp();
-      // getCSA();
 
       document.addEventListener(
         "deviceready",
@@ -193,7 +138,19 @@ export default defineComponent({
         },
         false
       );
+
+      onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
+      onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
     });
+
+    onUnmounted(() => {
+      clearTimeout(onlineStatTimeout.value);
+      clearInterval(onlineStatInterval.value);
+    });
+
+    return {
+      PageModal
+    }
   }
 });
 </script>

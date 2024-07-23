@@ -194,7 +194,7 @@ import FileUpload from "components/FileUpload.vue";
 import { api } from "boot/axios";
 import { SessionStorage, useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
-import * as _ from "lodash";
+import { useNotify } from "src/hooks/notify.js";
 
 export default defineComponent({
   props: {
@@ -234,6 +234,7 @@ export default defineComponent({
   },
   emits: ["loadnewdata"],
   setup(props, context) {
+    const notify = useNotify();
     const truncatedList = ref([]);
     const comList = ref({});
     const $q = useQuasar();
@@ -285,11 +286,9 @@ export default defineComponent({
           // Handle the response
           if (response.code === 0) {
             isConfirmWithdraw.value = false;
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "已经确认到账",
-              icon: "check_circle_outline"
             });
             removeSessionKeys("/session/member/withdraw");
           }
@@ -324,11 +323,9 @@ export default defineComponent({
           // Handle the response
           if (response.code === 0) {
             isCancelWithdraw.value = false;
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "已经取消提款",
-              icon: "check_circle_outline"
             });
             removeSessionKeys("/session/member/withdraw");
           }
@@ -360,11 +357,9 @@ export default defineComponent({
         document.execCommand("copy");
         console.log("Copied");
 
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: `${msgTitle}复制成功！`,
-          icon: "check_circle_outline"
         });
       }, 100);
     };
@@ -393,11 +388,9 @@ export default defineComponent({
               reminderForm.recordTime = trans.withdrawDate;
             }
           } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: "已有3个正在催收催单。",
-              icon: "report_problem"
             });
           }
         }
@@ -413,11 +406,9 @@ export default defineComponent({
       // Check if image upload is empty
       if (!reminderForm.photos) {
         // Display an error message here
-        $q.notify({
-          color: "negative",
-          position: "bottom",
+        notify({
+          type: "error",
           message: "请上传图片",
-          icon: "report_problem"
         });
         return;
       }
@@ -426,11 +417,9 @@ export default defineComponent({
         // console.log(reminderForm)
         const ret = res.data;
         if (res.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "催单提交成功！",
-            icon: "check_circle_outline"
           });
           reminderDialog.value = false;
           reminderForm.value = {};
@@ -442,12 +431,11 @@ export default defineComponent({
 
     const removeSessionKeys = (prefix) => {
       var keys = SessionStorage.getAllKeys();
-      _.each(keys, function (key, item) {
-        // console.log(key);
-        if (key.indexOf(prefix) > -1) {
+      keys.forEach(key => {
+        if(key.indexOf(prefix) > -1) {
           SessionStorage.remove(key);
         }
-      });
+      })
     };
     return {
       humanDatetime(ts) {

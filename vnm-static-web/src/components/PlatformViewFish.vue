@@ -202,7 +202,7 @@
               v-for="game in platformsListDisplay2"
               :key="game.id"
             >
-              <a @click="openGame(game, selectedPlat, game.code)">
+              <a @click="openGame(game, game.code, game.gameCode)" >
                 <div class="cockfight-img">
                   <div class="platform-menu-img">
                     <img
@@ -227,12 +227,11 @@
                   <div class="slot-fav">
                   </div>
                 </div>
+                <div class="play-btn">
+                  {{ $t('common.playnow') }}
+                </div>
 
               </a>
-
-              <div @click="openGame(game, game.code, game.gameCode)" class="play-btn">
-                {{ $t('common.playnow') }}
-              </div>
             </div>
           </div>
         </div>
@@ -293,7 +292,7 @@ const selectTab = (type) => {
 const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
-    console.log(res,'dan')
+    // console.log(res,'dan')
     platformsList.value = res;
 
     // console.log(platformsList.value);
@@ -315,8 +314,8 @@ const getPlatList = () => {
       return { ...matchingItem, ...item1 };
     });
 
-    console.log("polat2")
-    console.log(platformsListDisplay2.value)
+    // console.log("polat2")
+    // console.log(platformsListDisplay2.value)
 
     setFilteredPlatforms();
   });
@@ -486,7 +485,7 @@ watch(
   () => route.query.plat,
   () => {
     if (route.path === route.path) {
-      selectedTab.value= 'fishing'
+      selectedTab.value= route.query.type ?? 'fishing'
       platformsListDisplay.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);

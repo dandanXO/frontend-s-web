@@ -1,14 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
-
 const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/HomePage.vue") }]
-  },
-  {
-    path: "/welcome",
-    children: [{ path: "", component: () => import("pages/WelcomePage.vue") }]
   },
   {
     path: "/login",
@@ -47,28 +41,6 @@ const routes = [
     ]
   },
   {
-    path: "/aviator",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "aviator",
-        component: () => import("pages/games/AviatorView.vue")
-      }
-    ]
-  },
-  {
-    path: "/poker",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "poker",
-        component: () => import("pages/games/PokerView.vue")
-      }
-    ]
-  },
-  {
     path: "/slot",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -88,87 +60,6 @@ const routes = [
         path: "",
         name: "fishing",
         component: () => import("pages/games/AviatorView.vue")
-      }
-    ]
-  },
-  {
-    path: "/live-casino",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "live-casino",
-        component: () => import("pages/games/LiveCasinoView.vue")
-      }
-    ]
-  },
-  {
-    path: "/sport",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "sport",
-        component: () => import("pages/games/sportFrameView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  // {
-  //   path: "/sports",
-  //   // component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       name: "sport",
-  //       component: () => import("components/sportsOuter.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
-  {
-    path: "/e-sport",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "e-sport",
-        component: () => import("pages/games/E-SportView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/share",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "share",
-        component: () => import("pages/ShareView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/vip",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "vip",
-        component: () => import("pages/games/VIPView.vue")
-      }
-    ]
-  },
-  {
-    path: "/viptest",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "viptest",
-        component: () => import("pages/games/VIPView.vue")
       }
     ]
   },
@@ -218,28 +109,17 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/assets",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/AssetsView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/promotion",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/PromotionView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/promotion",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/account/PromotionView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/account/changePwd",
     component: () => import("layouts/MainLayout.vue"),
@@ -251,17 +131,17 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/download",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/DownloadView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/download",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/account/DownloadView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/account/invite",
     component: () => import("layouts/MainLayout.vue"),
@@ -284,17 +164,17 @@ const routes = [
     ],
     meta: { requiresAuth: true, isApp: true }
   },
-  {
-    path: "/account/announcement",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/AnnouncementView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/announcement",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/account/AnnouncementView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/account/records/deposit",
     component: () => import("layouts/MainLayout.vue"),
@@ -368,39 +248,6 @@ const routes = [
       {
         path: "",
         component: () => import("pages/records/BetHistoryRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/recommend",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/RecommendRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/help",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/HelpRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/transit",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/TransitRecordView.vue")
       }
     ],
     meta: { requiresAuth: true }
@@ -611,13 +458,6 @@ const routes = [
       }
     ],
     meta: { requiresAuth: true }
-  },
-
-  {
-    path: "/promotion",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
-    meta: { requiresAuth: true, isApp: true }
   },
   {
     path: "/deposit",

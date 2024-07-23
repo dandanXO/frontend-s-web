@@ -1,9 +1,0 @@
-{
-  "appId": "com.ind.appindwin7",
-  "appName": "IndWin7",
-  "webDir": "www",
-  "server": {
-    "androidScheme": "https",
-    "hostname": "7rzyd3kui.indwin7.com"
-  }
-}

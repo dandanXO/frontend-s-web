@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -98,6 +97,7 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column prop="realName" :label="t('fields.realName')" align="center" min-width="110" />
         <el-table-column prop="financial" :label="t('fields.financialLevel')" align="center" min-width="110">
           <template #default="scope">
             <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
@@ -233,7 +233,7 @@
 <script setup>
 import { ElMessage } from 'element-plus';
 import { computed, onMounted, reactive, ref } from 'vue';
-import moment from 'moment';
+// import moment from 'moment';
 import { cancelDeposit, getDepositRecord, supplementDeposit, editDeposit } from '../../../api/member-deposit-record';
 import { required } from '../../../utils/validate';
 import { hasPermission } from '../../../utils/util';
@@ -330,9 +330,9 @@ const editFormRule = reactive({
   amount: [required(t('message.valiedateAmountRequired'))]
 });
 
-function disabledDate(time) {
-  return time.getTime() <= moment(new Date()).subtract(1, 'weeks').format('x') || time.getTime() > new Date().getTime();
-}
+// function disabledDate(time) {
+//   return time.getTime() <= moment(new Date()).subtract(1, 'weeks').format('x') || time.getTime() > new Date().getTime();
+// }
 
 function resetQuery() {
   request.depositDate = [defaultStartDate, defaultEndDate];

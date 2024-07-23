@@ -186,6 +186,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "LoginPage",
@@ -195,6 +196,9 @@ export default defineComponent({
 
       isEmailSent.value = false;
     });
+
+    const notify = useNotify();
+
     const verificationImg = ref("");
     const passwordFormPhone = reactive({
       codeId: "",
@@ -231,12 +235,10 @@ export default defineComponent({
           }
         })
         .catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
+          // notify({
+          //   type: "error",
+          //          //   message: e.message,
+          //          // });
         });
     };
     const loginNameRef = ref();
@@ -271,11 +273,9 @@ export default defineComponent({
             }
             $q.loading.hide();
 
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "请输入新密码",
-              icon: "check_circle_outline"
             });
           })
           .catch((error) => {
@@ -295,11 +295,9 @@ export default defineComponent({
             }
             $q.loading.hide();
 
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "请输入新密码",
-              icon: "check_circle_outline"
             });
           })
           .catch((error) => {
@@ -326,11 +324,9 @@ export default defineComponent({
             .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
             .then((response) => {
               if (response.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
+                notify({
+                  type: "success",
                   message: "密码修改成功",
-                  icon: "check_circle_outline"
                 });
 
                 router.push("/login");
@@ -352,11 +348,9 @@ export default defineComponent({
             .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
             .then((response) => {
               if (response.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
+                notify({
+                  type: "success",
                   message: "密码修改成功",
-                  icon: "check_circle_outline"
                 });
 
                 router.push("/login");
@@ -667,6 +661,27 @@ function charType(num) {
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
+  }
+}
+
+.body--dark {
+  .forgot-pass-container {
+    background-image: url(../assets/images/login/login-bg-dark.jpg);
+  }
+  .fgtpwd-tabs-div {
+    .fgtpwd-item {
+      background-image: url("../assets/images/download/inactive-tab-bg-dark.png");
+      span {
+        color: $white;
+      }
+      &.is-active {
+        background-image: url("../assets/images/download/active-tab-bg-dark.png");
+      }
+    }
+  }
+
+  .common-large-btn {
+    background: $linear-bg-180-dark;
   }
 }
 </style>

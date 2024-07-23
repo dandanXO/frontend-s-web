@@ -289,7 +289,7 @@ import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 export default defineComponent({
   name: "VIPView",
@@ -299,6 +299,7 @@ export default defineComponent({
     Navigation
   },
   setup() {
+    const notify = useNotify();
     const store = userStore();
     const amount = ref("$0");
     const privilegeClaimedModalVisible = ref(false);
@@ -361,7 +362,7 @@ export default defineComponent({
             loadingBClaim.value = false;
             store.getBalance();
           } else {
-            ElMessage.error(res.message);
+            notify.error(res.message);
             loadingClaim.value = false;
             loadingMClaim.value = false;
             loadingBClaim.value = false;
@@ -579,7 +580,7 @@ export default defineComponent({
             // Now, vipItems array has the updated properties based on the provided elements
             // console.log(vipItems);
           } else {
-            ElMessage.error(res.message);
+            notify.error(res.message);
           }
         });
       }
@@ -587,11 +588,11 @@ export default defineComponent({
     const claimVIPLevelItem = (vip) => {
       claim(vip.vipLevel).then((res) => {
         if (res.code === 0) {
-          ElMessage.success("领取成功！");
+          notify.success("领取成功！");
           store.getBalance();
           initVIPTable();
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1005,7 +1006,7 @@ $border-settings: 1px solid #e5e7eb;
       table {
         border: none;
         th {
-          background-color: #001a33;
+          background-color: #0E464D;
           color: $color-white;
           border: none;
         }
@@ -1013,6 +1014,13 @@ $border-settings: 1px solid #e5e7eb;
           background-color: #28313e;
           color: $color-white;
           border-color: #3b4c6f;
+        }
+        tbody {
+          tr {
+            > :nth-last-child(2) {
+              background-color: #057886;
+            }
+          }
         }
       }
     }

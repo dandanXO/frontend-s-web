@@ -183,11 +183,13 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
 import {useRouter} from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
     // const isCardActive = ref();
+    const notify = useNotify();
     const qs = require("qs");
     const $q = useQuasar();
     const searchForm = reactive({
@@ -261,11 +263,9 @@ export default defineComponent({
           }
         })
         .catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: e.message,
-            icon: "report_problem"
           });
         });
     };
@@ -298,22 +298,18 @@ export default defineComponent({
       };
       api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "OTP验证码已发送至您的邮箱",
-            icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;
           isEmailSending.value = false;
         } else {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: ret.message,
-          //   icon: "report_problem"
-          // });
+          // notify({
+          //   type: "error",
+          //          //   message: ret.message,
+          //          // });
           isEmailSending.value = false;
           getCode();
         }
@@ -333,22 +329,18 @@ export default defineComponent({
         verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
         api.post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo)).then((res) => {
           if (res.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "验证成功",
-              icon: "check_circle_outline"
             });
             updateSecurityModalVisible.value = false;
             loadInfo();
           }
         }).catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: e.message,
-          //   icon: "report_problem"
-          // });
+          // notify({
+          //   type: "error",
+          //          //   message: e.message,
+          //          // });
         });
       }
     };
@@ -393,22 +385,18 @@ export default defineComponent({
         if (r.code === 0) {
           profileFormRef.value.reset();
 
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "更新成功",
-            icon: "check_circle_outline"
           });
 
           store.getMemberInfo().then(() => {
             loadInfo();
           });
         } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: r.message,
-            icon: "report_problem"
           });
         }
       });
@@ -448,16 +436,16 @@ export default defineComponent({
       }))
         .then(res => {
           let message = res.message || '发送手机验证码成功',
-            color = 'positive'
+            type = 'success'
 
           if (res.code === 0) {
             showCaptchaDialog.value = false
             showVerificationTokenInput.value = true
           } else
-            color = 'negative';
+            type = 'error';
 
           if (message)
-            $q.notify({message, color});
+            notify({message, type});
 
           // console.log('onCaptchaSubmit', res)
         })
@@ -551,6 +539,9 @@ export default defineComponent({
     .q-field__control {
       box-shadow: none;
       border: 1px solid $border-dark;
+    }
+    .web {
+      color: $primary-dark;
     }
   }
 }

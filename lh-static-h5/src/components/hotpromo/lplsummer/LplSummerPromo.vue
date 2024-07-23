@@ -9,7 +9,9 @@ import { ref, reactive } from "vue";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 var qs = require("qs");
@@ -19,18 +21,14 @@ const activeKey = ref("betting-bonus");
 const handleClaim = (applyPromoCode) => {
   eventapi.post("/promo-application/apply", qs.stringify({ promoCode: applyPromoCode })).then((res) => {
     if (res.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "申请成功！",
-        icon: "report_problem"
       });
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "申请失败",
-        icon: "report_problem"
       });
     }
   });

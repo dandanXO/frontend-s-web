@@ -173,7 +173,7 @@
             <div class="header-title-div" style="margin-top: 25px">
               <span class="span3">
                 根据您填写的内容随机为您派发
-                <span class="span1" style="color: #468cff">0-188元</span>
+                <span class="span1 highlight">0-188元</span>
               </span>
             </div>
             <div class="qr-code-div">
@@ -200,7 +200,9 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { getRndInteger } from "boot/utils";
 import VueQRCodeComponent from "vue-qrcode-component";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 var qs = require("qs");
 const $q = useQuasar();
 
@@ -386,11 +388,9 @@ function removeEmojis(str) {
 
 const btnClick = async (btnType) => {
   if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
-    return $q.notify({
-      color: "negative",
-      position: "top",
+    return notify({
+      type: "error",
       message: "请选择一个选项",
-      icon: "report_problem"
     });
   }
   optionModal.value = [];
@@ -475,18 +475,14 @@ const btnClick = async (btnType) => {
         // questionDiv.style.display = "none";
         // QRDiv.style.display = "block";
         isAnswered.value = true;
-        $q.notify({
-          type: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "提交成功",
-          icon: "report_problem"
         });
       } else {
-        $q.notify({
-          type: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: data.message,
-          icon: "report_problem"
         });
       }
     } catch (error) {
@@ -697,7 +693,6 @@ onMounted(() => {
     }
 
     .questions-title {
-      font-family: PingFang SC;
       font-size: 16px;
       font-weight: 600;
       line-height: 22px;
@@ -811,16 +806,17 @@ onMounted(() => {
   }
 
   .span1 {
-    font-family: PingFang SC;
     font-size: 30px;
     font-weight: 600;
     line-height: 30px;
     letter-spacing: 0em;
     text-align: center;
+    &.highlight {
+      color: $primary;
+    }
   }
 
   .span2 {
-    font-family: PingFang SC;
     font-size: 16px;
     font-weight: 400;
     line-height: 30px;
@@ -829,7 +825,6 @@ onMounted(() => {
   }
 
   .span3 {
-    font-family: PingFang SC;
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;
@@ -892,7 +887,6 @@ onMounted(() => {
   align-items: center;
   height: 30px;
 
-  font-family: PingFang SC;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -1026,7 +1020,6 @@ onMounted(() => {
   .quiz-announcement-inner {
     position: relative;
     align-self: start;
-    font-family: PingFang SC;
     font-size: 16px;
     font-weight: 500;
     line-height: 44px;
@@ -1056,6 +1049,40 @@ onMounted(() => {
       .content-title,
       .content-desc {
         color: $font-3-dark;
+      }
+    }
+  }
+  .questions-container {
+    .questions-content {
+      background: $background-dark-light;
+      box-shadow: none;
+      border-color: $border-dark;
+      .questions-title {
+        color: $primary-dark;
+      }
+      .span1,
+      .span2,
+      .span3 {
+        color: $white;
+      }
+      .span1.highlight {
+        color: $primary-dark;
+      }
+    }
+  }
+  .quiz-announcement-wrapper {
+    .quiz-announcement-inner {
+      > div {
+        .amount {
+          color: $primary-dark;
+        }
+      }
+    }
+  }
+  .url-input-fill {
+    &.q-field--readonly {
+      :deep(.q-field__native) {
+        color: $primary-dark;
       }
     }
   }

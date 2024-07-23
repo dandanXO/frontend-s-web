@@ -606,6 +606,42 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="recycleMoney"
+          :label="t('fields.recycleMoney')"
+          width="150"
+          v-if="request.siteId === 10"
+        >
+          <template #default="scope">
+            <el-switch
+              :disabled="scope.row.siteId !== 10"
+              v-model="scope.row.recycleMoney"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="
+                changeRecycleMoneyState(scope.row.id, scope.row.recycleMoney)
+              "
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="displayAmount"
+          :label="t('fields.displayAmount')"
+          width="150"
+          v-if="request.siteId === 10"
+        >
+          <template #default="scope">
+            <el-switch
+              :disabled="scope.row.siteId !== 10"
+              v-model="scope.row.displayAmount"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="
+                changeDisplayAmountState(scope.row.id, scope.row.displayAmount)
+              "
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           fixed="right"
@@ -667,6 +703,8 @@ import {
   registerAffiliate,
   listApproveAffiliate,
   listDisableAffiliate,
+  updateRecycleMoneyState,
+  updateDisplayAmountState,
 } from '../../../api/member-affiliate'
 import { updateRisk } from '../../../api/member'
 import { getSiteListSimple } from '../../../api/site'
@@ -1117,12 +1155,20 @@ function displayShareRatio() {
     uiControl.shareRatioSettingVisible = true
     uiControl.shareRatioSettingLoading = true
     getConfigListByGroup('AGENT_SHARE_RATIO', form.siteId).then(res => {
-      shareRatioList.list = res.data
+      shareRatioList.list = JSON.parse(JSON.stringify(res.data))
     })
     uiControl.shareRatioSettingLoading = false
   } else {
     uiControl.shareRatioSettingVisible = false
   }
+}
+
+async function changeRecycleMoneyState(id, state) {
+  await updateRecycleMoneyState(id, state)
+}
+
+async function changeDisplayAmountState(id, state) {
+  await updateDisplayAmountState(id, state)
 }
 
 onMounted(async () => {

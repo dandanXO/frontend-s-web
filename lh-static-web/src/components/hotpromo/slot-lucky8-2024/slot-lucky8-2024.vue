@@ -6,10 +6,6 @@
         <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
           还没完成，不要测试先。
         </div> -->
-        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
-        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
-        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
-        <div class="little2-content">会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。</div>
         <table class="luck8-game-info-table">
           <tr>
             <th>电游平台</th>
@@ -19,19 +15,24 @@
             <th>活动彩金</th>
             <th>操作</th>
           </tr>
-          
+
           <tr v-for="(item, index) in tableData" :key="index">
             <td>
               {{ item.platform }}
               <!-- <span class="inner-time">{{ item.time }}</span> -->
             </td>
             <td>{{ item.betTime }}</td>
-            <td>{{ '******'+(String(item.betId).slice(-3)) }}</td>
+            <td>{{ item.betId }}</td>
             <td>{{ item.bet }}</td>
             <td>{{ item.prizeAmount }}</td>
             <td>
-              <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="!item.claimTime ? 'option-btn-active' : 'option-btn-disable'">
-                {{ item.claimTime ? '已领取' : '领取彩金' }}
+              <button
+                @click="!item.claimTime ? handleSubmitVote(item) : null"
+                :class="
+                  item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'
+                "
+              >
+                {{ item.claimTime ? "已领取" : hasClaimed ? "已失效" : "领取" }}
               </button>
             </td>
           </tr>
@@ -39,19 +40,29 @@
             <td colspan="6">暂无数据</td>
           </tr>
         </table>
+        <div class="little-title" style="margin-top: 20px">
+          <div class="left">申请方式</div>
+          <div class="right">
+            会员获得符合活动金额注单号，注单产生当日
+            23:59:59内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+          </div>
+        </div>
+        <div class="little-title" style="margin-bottom: 0px">
+          <div class="" style="width: 116px; margin-right: 16px"></div>
+          <div class="right red-font">注意：获奖的注单可能会有延迟，请每 5~10 分钟刷新一次活动页面</div>
+        </div>
       </div>
       <div class="luck8-game-info">
         <div class="title"></div>
         <div class="little-title">
-          <div class="left">活动时间</div>
-          <div class="right">
-            永久有效
-          </div>
+          <div class="left">活动场馆</div>
+          <div class="right">PG电子、PT电子、XIN电子</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            只要您在电子游戏中产生以下幸运注单号即可获得相对应的倍数彩金，最高赠送金额 2,888 元！只看投注不管输赢，您的走运钱送的给力！
+            只要您在电子游戏中产生以下幸运注单号即可获得相对应的倍数彩金，最高赠送金额 2,888
+            元！只看投注不管输赢，您的走运钱送的给力！
           </div>
         </div>
         <table class="luck8-game-info-table-2">
@@ -62,46 +73,54 @@
             <th>流水要求</th>
           </tr>
           <tr>
-            <td>≥********888</td>
+            <td>********888</td>
             <td>3</td>
             <td>388 元</td>
             <td rowspan="4">8 倍</td>
           </tr>
           <tr>
-            <td>≥*******8888</td>
+            <td>*******8888</td>
             <td>5</td>
             <td>888 元</td>
           </tr>
           <tr>
-            <td>≥******88888</td>
+            <td>******88888</td>
             <td>8</td>
             <td>1,888 元</td>
           </tr>
           <tr>
-            <td>≥*****888888</td>
+            <td>*****888888</td>
             <td>10</td>
             <td>2,888 元</td>
           </tr>
         </table>
+        <div class="little2-title">
+          <div
+            style="margin-right: 4px; display: inline-block; width: 4px; height: 16px; background-color: #4ba5ff"
+          ></div>
+          范例
+        </div>
+        <div class="little2-content">
+          会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元
+          幸运注单守护金。
+        </div>
       </div>
       <div class="luck8-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.所中奖的注单请在北京时间当天 23:59 分前通过优惠活动详情页点击领取彩金 (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
-          </div>
-          <div class="item">2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额 小於 10 的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；</div>
-          <div class="item">
-            3.彩金不可购买免费旋转机会，不可投注以下游戏：古怪猴子、舞龙、高速公路之王、凤凰多旋转类游戏、能量累积类游戏、桌面游戏、街机游戏、捕鱼游戏；
+            1.所中奖的注单请在北京时间当天 23:59 分前通过优惠活动详情页点击领取彩金
+            (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
           </div>
           <div class="item">
-            4.同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
-
+            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于5元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
           </div>
+          <div class="item">3.彩金不可购买免费旋转机会，不可投注捕鱼游戏；</div>
           <div class="item">
-            5.为避免文字理解差异，如有疑问可联系在线客服，雷火电竞保留活动最终解释权；
+            4.同一手机号、姓名、邮箱地址、银行卡号、IP
+            地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
           </div>
-          
+          <div class="item">5.为避免文字理解差异，如有疑问可联系在线客服，雷火电竞保留活动最终解释权；</div>
         </div>
       </div>
 
@@ -127,7 +146,7 @@
             </thead>
             <tbody>
               <tr v-for="(record, index) in recordList" :key="index">
-                <td>{{ moment(record.createTime).format('YYYY-MM-DD HH:mm') }}</td>
+                <td>{{ moment(record.createTime).format("YYYY-MM-DD HH:mm") }}</td>
                 <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
                 <td>{{ displayTeamVictory(record) }}</td>
                 <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
@@ -161,13 +180,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { getSlotLucky8, submitSlotLucky8 } from "@/api/promotion/slotlucky";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 const props = defineProps(["promoCode"]);
+
+const notify = useNotify();
 const promoCode = ref(props.promoCode);
 
 const tableRecordDialog = ref(false);
@@ -175,31 +196,33 @@ const confirmVoteDialog = ref(false);
 
 const tableData = ref([]);
 
-const store= userStore();
+const store = userStore();
 
 const recordList = ref([]);
+
+const hasClaimed = computed(() => tableData.value?.some((item) => item.claimTime));
 
 const handleSubmitVote = (item) => {
   submitSlotLucky8(promoCode.value, item.id)
     .then((res) => {
-      if(res.code === 0) {
-        ElMessage.success({
+      if (res.code === 0) {
+        notify.success({
           type: "success",
           message: "领取成功"
         });
         getSlotLucky8Data();
         store.getBalance();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch(() => {
-      ElMessage.error(res.message);
-    })
+      notify.error(res.message);
+    });
 };
 const displayTeamVictory = (record) => {
-  if(record.teamChosen === 'DRAW') return '平局'
-  return record.teamChosen + '胜'
+  if (record.teamChosen === "DRAW") return "平局";
+  return record.teamChosen + "胜";
 };
 const displayGuessResult = (record) => {
   if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
@@ -229,9 +252,8 @@ const displayGuessResult = (record) => {
 
 const getSlotLucky8Data = async () => {
   const res = await getSlotLucky8(promoCode.value);
-  tableData.value = res.data
-}
-
+  tableData.value = res.data;
+};
 
 onMounted(getSlotLucky8Data);
 </script>
@@ -393,26 +415,7 @@ onMounted(getSlotLucky8Data);
     height: 44px;
     margin-bottom: 40px;
   }
-  .little2-title{
-    width: 100%;
-    font-family: PingFang TC;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-    text-align: left;
-    color: #4BA5FF;
-    margin-top: 20px;
-  }
-  .little2-content{
-    width: 100%;
-    font-family: PingFang TC;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-    text-align: left;
-  }
+
   .little-title {
     display: flex;
     align-items: center;
@@ -439,6 +442,10 @@ onMounted(getSlotLucky8Data);
       line-height: 28px;
       color: #000000;
       width: 100%;
+
+      &.red-font {
+        color: #f53434;
+      }
     }
   }
 }
@@ -454,6 +461,27 @@ onMounted(getSlotLucky8Data);
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .little2-title {
+    width: 100%;
+    font-family: PingFang TC;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    text-align: left;
+    color: #4ba5ff;
+    margin-top: 20px;
+  }
+  .little2-content {
+    width: 100%;
+    font-family: PingFang TC;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    text-align: left;
+  }
 
   .title {
     background-image: url("../../../assets/promo/lh-luck8/info-title.png");
@@ -500,7 +528,7 @@ onMounted(getSlotLucky8Data);
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
-  margin-top: 12px;
+  margin: 12px 0;
   th {
     height: 56px;
     font-size: 20px;
@@ -587,24 +615,30 @@ onMounted(getSlotLucky8Data);
     color: #000000;
   }
 }
-.option-btn-active{
+.option-btn-active {
   width: 120px;
   height: 36px;
   border-radius: 100px;
   color: rgba(255, 255, 255, 1);
-  background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
-  
-
+  background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
 }
-.option-btn-disable{
+.option-btn-redeemed {
+  width: 120px;
+  height: 36px;
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 1);
+  background: linear-gradient(180deg, #48d179 0%, #00a63a 100%);
+  pointer-events: none;
+}
+.option-btn-disable {
   width: 120px;
   height: 36px;
   border-radius: 100px;
   background: rgba(217, 217, 217, 1);
   color: rgba(0, 0, 0, 0.5);
   pointer-events: none;
-
 }
+
 .luck8-game-bottom-rule {
   width: 100%;
   height: 100%;

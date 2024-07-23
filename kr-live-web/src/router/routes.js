@@ -1,50 +1,17 @@
-import {createRouter, createWebHistory} from "vue-router";
-
 const routes = [
     {
         path: "/",
         component: () => import("layouts/MainLayout.vue"),
-        children: [{path: "", component: () => import("pages/HomePage.vue")}]
-    },
-    {
-        path: "/welcome",
-        children: [{path: "", component: () => import("pages/WelcomePage.vue")}]
-    },
-    {
-        path: "/login",
-        component: () => import("layouts/MainLayout.vue"),
-        children: [{path: "", component: () => import("pages/LoginPage.vue")}]
-    },
-    {
-        path: "/promo",
-        component: () => import("layouts/MainLayout.vue"),
-        children: [{path: "", component: () => import("pages/PromoPage.vue")}]
-    },
-    {
-        path: "/liveChat",
-        component: () => import("layouts/MainLayout.vue"),
-        children: [{path: "", component: () => import("pages/LiveChatPage.vue")}]
-    },
-    {
-        path: "/share",
-        component: () => import("layouts/MainLayout.vue"),
-        children: [
-            {
-                path: "",
-                name: "share",
-                component: () => import("pages/ShareView.vue")
-            }
-        ],
-        meta: {requiresAuth: true}
+        children: [{ path: "", component: () => import(/* webpackChunkName: "home" */ "pages/HomePage.vue") }]
     },
     {
         path: "/affiliate",
-        component: () => import("layouts/MainLayout.vue"),
+        component: () => import(/* webpackChunkName: "main" */"layouts/MainLayout.vue"),
         children: [
             {
                 path: "",
                 name: "affiliate",
-                component: () => import("pages/AffiliateView.vue")
+                component: () => import(/* webpackChunkName: "affiliate" */"pages/AffiliateView.vue")
             }
         ]
     },
@@ -59,30 +26,18 @@ const routes = [
         name: "referCode",
         component: () => {
         }
-        // component: () => {},
     },
     {
       path: "/logintoken/:loginToken",
       name: "loginToken",
       component: () => {},
-      // component: () => {},
-    },
-    {
-        path: "/depositLoading",
-        children: [
-            {
-                path: "",
-                component: () => import("components/depositLoading.vue")
-            }
-        ],
-        meta: {requiresAuth: true}
     },
     // Always leave this as last one,
     // but you can also remove it
     {
         path: "/:catchAll(.*)*",
         redirect: '/',
-        component: () => import("pages/ErrorNotFound.vue")
+        component: () => import(/* webpackChunkName: "error" */"pages/ErrorNotFound.vue")
     }
 ];
 export default routes;

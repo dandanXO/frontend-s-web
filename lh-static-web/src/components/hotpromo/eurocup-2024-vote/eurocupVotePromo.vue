@@ -132,13 +132,15 @@
       <div class="promo-rules-div">
         <p>1.在活动日期内每日达到参与条件，即可在队伍下方点击投票，每位会员每日最高享受有10票名额；</p>
 
-        <p>2.所有雷火电竞会员均可参加此活动，活动奖金只需3倍水即可提款；</p>
+        <p>2.活动期间，当日获得的投票数如未使用，则次日清零当日的投票次数，请会员及时参与投票；</p>
 
-        <p>3.奖金派发时间以欧洲杯得出冠军队伍后，奖金将在24小时内派发到游戏主账户，并且站内信通知奖金公告；</p>
+        <p>3.所有雷火电竞会员均可参加此活动，活动奖金只需3倍水即可提款；</p>
 
-        <p>4.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</p>
+        <p>4.奖金派发时间以欧洲杯得出冠军队伍后，奖金将在24小时内派发到游戏主账户，并且站内信通知奖金公告；</p>
 
-        <p>5.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
+        <p>5.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</p>
+
+        <p>6.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
       </div>
     </div>
 
@@ -167,7 +169,7 @@
           <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
             <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
             <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
-            
+
 
           </div>
         </div>
@@ -189,11 +191,11 @@
 <script>
 import { onMounted, ref, defineComponent, reactive, computed } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeVote";
-import { ElMessage } from "element-plus";
 import { convertToCommaAmount } from "@/utils/utils"
 import { userStore } from "@/store/index"
 import { useLocalStorage } from "@vueuse/core";
 import moment from 'moment'
+import { useNotify } from "@/hooks/notify";
 
 
 export default defineComponent({
@@ -204,6 +206,7 @@ export default defineComponent({
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
     const store = userStore();
+    const notify = useNotify();
     const castVoteFormValidationRules = {
       votes: [
         {
@@ -249,7 +252,7 @@ export default defineComponent({
 
       await elForm.validate(async (valid) => {
         if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
-          ElMessage.error({
+          notify({
             type: "error",
             message: "投票次数不足"
           })
@@ -264,7 +267,7 @@ export default defineComponent({
           const res = await poolPrizeCastVote(params);
 
           if (res.code === 0) {
-            ElMessage.success({
+            notify({
               type: "success",
               message: "投票成功"
             })
@@ -278,7 +281,7 @@ export default defineComponent({
             },2000)
 
           } else {
-            ElMessage.error(res.message)
+            notify.error(res.message)
           }
 
           isSubmitting.value = false;
@@ -834,4 +837,3 @@ export default defineComponent({
   color: #ffffff;
 }
 </style>
-  

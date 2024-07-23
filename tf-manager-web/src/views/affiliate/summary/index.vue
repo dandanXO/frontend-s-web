@@ -89,6 +89,7 @@
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
+        node-key="affiliateId"
       >
         <el-table-column
           prop="loginName"
@@ -264,6 +265,153 @@
               {{ scope.row.totalRegisterMemberCount }}
             </el-link>
             <span v-else>{{ scope.row.totalRegisterMemberCount }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="affiliateBalance"
+          :label="t('fields.affiliateBalance')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateBalance, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="memberBalance"
+          :label="t('fields.memberBalance')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.memberBalance, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="affiliatePoint"
+          :label="t('fields.affiliatePoint')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliatePoint, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="memberPoint"
+          :label="t('fields.memberPoint')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.memberPoint, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="memberCount"
+          :label="t('fields.memberCount')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        />
+        <el-table-column
+          prop="affiliateTransferAmount"
+          :label="t('fields.affiliateTransferAmount')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateTransferAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="affiliateWithdrawAmount"
+          :label="t('fields.affiliateWithdrawAmount')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawTransferDiff"
+          :label="t('fields.withdrawTransferDiff')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.affiliateTransferAmount - scope.row.affiliateWithdrawAmount, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="liveRolling"
+          :label="t('fields.liveRolling')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.liveRolling, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="slotRolling"
+          :label="t('fields.slotRolling')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.slotRolling, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="sportRolling"
+          :label="t('fields.sportRolling')"
+          align="center"
+          width="120"
+          v-if="parseInt(request.siteId) === 10"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.sportRolling, type: 'money'}"
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -460,7 +608,9 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+            <span
+              v-formatter="{data: scope.row.platformFee, type: 'money'}"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -582,6 +732,8 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
+/* import { ElMessage } from 'element-plus'
+import { useStore } from "@/store"; */
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -721,6 +873,22 @@ function checkQuery() {
 }
 
 async function loadRecord() {
+  /* if (
+    !hasRole(["ADMIN", "LH-ADMIN", "DY_admin", "XFADMIN"]) &&
+    (request.siteId === 1 || request.siteId === 6 || request.siteId === 7)
+  ) {
+    if (
+      (request.loginName === null || request.loginName.trim().length === 0) &&
+      (request.affiliateCode === null ||
+        request.affiliateCode.trim().length === 0)
+    ) {
+      ElMessage({
+        message: t('message.pleaseEnterAffiliateNameOrAffiliateCode'),
+        type: 'error',
+      })
+      return
+    }
+  } */
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
@@ -732,6 +900,9 @@ async function loadRecord() {
 }
 
 async function loadChildren(tree, treeNode, resolve) {
+  if (request.siteId === 10) {
+    resolve(tree.children)
+  }
   const query = {}
 
   query.parentAffiliateId = tree.affiliateId
@@ -753,12 +924,15 @@ function showDialog(type, affiliateId) {
     memberPage.affiliateId = affiliateId
     memberRequest.current = 1
     loadNewMember(affiliateId)
+    popUpRequest.regTime = request.recordTime
   } else if (type === 'ALLMEMBER') {
     currentPageType.value = 'allMembers'
     uiControl.dialogTitle = t('fields.allmembers')
     allMemberPage.affiliateId = affiliateId
     allMemberRequest.current = 1
     loadAllMember(affiliateId)
+    // popUpRequest.recordTime = request.recordTime
+    popUpRequest.regTime = null
   }
   currentAffiliateId.value = affiliateId
   uiControl.dialogType = type
@@ -776,8 +950,6 @@ async function loadNewMember(affiliateId) {
       query[key] = value
     }
   })
-
-  popUpRequest.regTime = request.recordTime
 
   if (popUpRequest.regTime !== null) {
     if (popUpRequest.regTime.length === 2) {
@@ -827,22 +999,24 @@ async function loadAllMember(affiliateId) {
   query.loginName = popUpRequest.loginName
   query.memberType = popUpRequest.memberType
 
-  popUpRequest.recordTime = request.recordTime
+  if (popUpRequest.regTime !== null) {
+    if (popUpRequest.regTime.length === 2) {
+      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
 
-  // if (popUpRequest.regTime !== null) {
-  //   if (popUpRequest.regTime.length === 2) {
-  //     query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
+      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
 
-  //     query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
-  //     query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
+      query.regTime = query.regTime.join(',')
+    } else {
+      query.regTime = moment(popUpRequest.regTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
 
-  //     query.regTime = query.regTime.join(',')
-  //   } else {
-  //     query.regTime = moment(popUpRequest.regTime[0]).format(
-  //       'YYYY-MM-DD 00:00:00'
-  //     )
-  //   }
-  // }
+  if (popUpRequest.recordTime === null) {
+    popUpRequest.recordTime = request.recordTime
+  }
 
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {

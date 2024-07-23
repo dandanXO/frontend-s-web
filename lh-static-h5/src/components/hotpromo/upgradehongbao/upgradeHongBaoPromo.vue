@@ -77,7 +77,9 @@
 import { defineProps, onMounted, ref ,reactive} from "vue";
 import { eventapi } from "boot/axios";
 import { userStore } from "src/stores";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const store = userStore();
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
@@ -107,11 +109,9 @@ const getPromotion = () => {
         store.getBalance();
 
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
         bonusOpened.value = false;
       }
@@ -211,7 +211,6 @@ onMounted(() => {
         color: #3f8cff;
         font-size: 20px;
         font-weight: 700;
-        font-family: "PingFang SC";
         margin-bottom: auto;
       }
       .activity-content-container {
@@ -336,7 +335,6 @@ onMounted(() => {
     color: #fffbfb;
 
     text-align: center;
-    font-family: PingFang SC;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;

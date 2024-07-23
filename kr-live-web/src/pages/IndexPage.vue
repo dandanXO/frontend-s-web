@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="KoreaLive" src="~assets/images/index/kr-logo.png" style="width: 200px" />
+    <img alt="KoreaLive" src="~assets/logo.png" style="width: 200px" />
   </q-page>
 </template>
 

@@ -21,13 +21,14 @@ dayjs.Ls.en.weekStart = 1;
 const app = createApp(App);
 app.use(ElementPlus)
 
-const currentHost = window.location.host
+var currentHost = window.location.host
 let baseApi;
 let baseWss;
 
 let siteId;
 
 console.log(currentHost);
+// currentHost = "ka1-manager.wermop342ox.com";
 switch (currentHost) {
   case process.env.VUE_APP_IW2_HOST:
     baseApi = process.env.VUE_APP_IW2_API;
@@ -59,6 +60,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_VNM_SOCKET;
     siteId = 'vnm';
     break;
+  case process.env.VUE_APP_KAKA_HOST:
+    baseApi = process.env.VUE_APP_KAKA_API;
+    baseWss = process.env.VUE_APP_KAKA_SOCKET;
+    siteId = 'ka1';
+    break;
   case process.env.VUE_APP_KRW_HOST:
     baseApi = process.env.VUE_APP_KRW_API;
     baseWss = process.env.VUE_APP_KRW_SOCKET;
@@ -68,6 +74,11 @@ switch (currentHost) {
     baseApi = process.env.VUE_APP_PAK_API;
     baseWss = process.env.VUE_APP_PAK_SOCKET;
     siteId = 'pak';
+    break;
+  case process.env.VUE_APP_NGA_HOST:
+    baseApi = process.env.VUE_APP_NGA_API;
+    baseWss = process.env.VUE_APP_NGA_SOCKET;
+    siteId = 'nga';
     break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
@@ -128,6 +139,9 @@ if (siteId === 'dy') {
 } else if (siteId === 'vnm') {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
+} else if (siteId === 'ka1') {
+  link.href = '/kaka-favicon.ico';
+  title.innerText = 'KAKA GAME';
 } else if (siteId === 'krw') {
   link.href = '/kr-favicon.ico';
   title.innerText = 'City8';

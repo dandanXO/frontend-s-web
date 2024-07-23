@@ -193,7 +193,7 @@
                   <td>8888元</td>
                 </tr>
                 <tr>
-                  <td>VIP10</td>
+                  <td>VIP10-VIP12</td>
                   <td>≥1,000,000元</td>
                   <td>88888元</td>
                 </tr>
@@ -414,16 +414,17 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import moment from "moment";
-import Swal from "sweetalert2";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";
 import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
 import { isAndroid } from "boot/utils";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   setup() {
+    const notify = useNotify();
     const $q = useQuasar();
     const store = userStore();
     const activeKey = ref(1);
@@ -506,11 +507,9 @@ export default defineComponent({
       getRecommendPrivilegeRecord(params).then((data) => {
         tableRecords.value = data.data;
         if(!tableRecords.value || tableRecords.value.length ===0) {
-          $q.notify({
-                  color: "negative",
-                  position: "top",
+          notify({
+                  type: "error",
                   message: '推广纪录为空。',
-                  icon: "report_problem"
                 });
         }
       });
@@ -560,11 +559,9 @@ export default defineComponent({
       copyText.select();
       document.execCommand("copy");
 
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已复制链接",
-        icon: "check_circle_outline"
       });
     };
 
@@ -576,11 +573,9 @@ export default defineComponent({
       link.click();
       document.body.removeChild(link);
 
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已下载二维码",
-        icon: "check_circle_outline"
       });
     };
 
@@ -589,11 +584,9 @@ export default defineComponent({
         .put("/bonus/claim/" + "lh1-vip-upgrade-bonus")
         .then((res) => {
           if (res.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "领取成功",
-              icon: "check_circle_outline"
             });
           }
         })

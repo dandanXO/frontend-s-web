@@ -272,8 +272,10 @@ import {
   getBBDachaRecordsCount
 } from "@/api/index/promo";
 import moment from "moment";
-import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
 
 // tabs
 const activeKey = ref("tabOne");
@@ -297,7 +299,7 @@ const handleSubmitVote = () => {
     .then((res) => {
       if (res.code === 0) {
         getData();
-        ElMessage.success("投票成功！");
+        notify.success("投票成功！");
       }
     })
     .catch(() => {})

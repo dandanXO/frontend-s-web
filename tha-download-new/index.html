@@ -776,7 +776,7 @@
 
 <script type="text/javascript">
     //NEED TO CHANGE THIS VERSION NO.
-    var versionNo = "1.0.42";
+    var versionNo = "1.0.43";
 
     const searchParams = new URLSearchParams(window.location.search);
     let affidValue = searchParams.get('id');
@@ -809,56 +809,74 @@
         var button;
         var apkUrl = '';
 
-        if (!affidValue) {
-            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                });
-                const data = await response.json();
-                if (data) {
-                    console.log("data", data);
-                    apkUrl = data.data;
-                    button = document.getElementById("installButton");
-                    // //Android or Browser.
-                    // //Change URL ./download/jb_app.apk when go Live.
-                    button.classList.remove("disabled-btn");
-                    button.onclick = function () {
-                        downloadApk(apkUrl, affidValue)
-                        return false;
-                    }
+        apiUrl = "https://file.rd7etvkrgt.com/apps/3/tha-app-1.0.43.apk";
+        button = document.getElementById("installButton");
+        // //Android or Browser.
+        // //Change URL ./download/jb_app.apk when go Live.
+        button.classList.remove("disabled-btn");
+        button.onclick = function () {
+            downloadApk(apiUrl, affidValue)
+            return false;
+        }
 
-                    const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
-                    for (let i = 0; i < similarGamesListElements.length; i++) {
-                        similarGamesListElements[i].onclick = function () {
-                            downloadApk(apkUrl, affidValue)
-                            return false;
-                        }
-                    }
-                }
-            } catch (error) {
-                console.log(error)
-            }
-
-        } else {
-            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/th1/${affidValue}`;
-            button = document.getElementById("installButton");
-            // //Android or Browser.
-            // //Change URL ./download/jb_app.apk when go Live.
-            button.classList.remove("disabled-btn");
-            button.onclick = function () {
-                downloadApk(apiUrl, affidValue)
+        const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+        for (let i = 0; i < similarGamesListElements.length; i++) {
+            similarGamesListElements[i].onclick = function () {
+                downloadApk(apkUrl, affidValue)
                 return false;
             }
-
-            const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
-            for (let i = 0; i < similarGamesListElements.length; i++) {
-                similarGamesListElements[i].onclick = function () {
-                    downloadApk(apkUrl, affidValue)
-                    return false;
-                }
-            }
         }
+
+        // if (!affidValue) {
+        //     apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
+        //     try {
+        //         const response = await fetch(apiUrl, {
+        //             method: 'GET',
+        //         });
+        //         const data = await response.json();
+        //         if (data) {
+        //             console.log("data", data);
+        //             apkUrl = data.data;
+        //             button = document.getElementById("installButton");
+        //             // //Android or Browser.
+        //             // //Change URL ./download/jb_app.apk when go Live.
+        //             button.classList.remove("disabled-btn");
+        //             button.onclick = function () {
+        //                 downloadApk(apkUrl, affidValue)
+        //                 return false;
+        //             }
+        //
+        //             const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+        //             for (let i = 0; i < similarGamesListElements.length; i++) {
+        //                 similarGamesListElements[i].onclick = function () {
+        //                     downloadApk(apkUrl, affidValue)
+        //                     return false;
+        //                 }
+        //             }
+        //         }
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        //
+        // } else {
+        //     apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/th1/${affidValue}`;
+        //     button = document.getElementById("installButton");
+        //     // //Android or Browser.
+        //     // //Change URL ./download/jb_app.apk when go Live.
+        //     button.classList.remove("disabled-btn");
+        //     button.onclick = function () {
+        //         downloadApk(apiUrl, affidValue)
+        //         return false;
+        //     }
+        //
+        //     const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+        //     for (let i = 0; i < similarGamesListElements.length; i++) {
+        //         similarGamesListElements[i].onclick = function () {
+        //             downloadApk(apkUrl, affidValue)
+        //             return false;
+        //         }
+        //     }
+        // }
 
 
     }
@@ -889,7 +907,7 @@
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = apkUrl;
-        link.download = 'jb_app_1.0.42.apk'
+        link.download = 'jb_app_1.0.43.apk'
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
