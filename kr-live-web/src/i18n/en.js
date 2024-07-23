@@ -243,6 +243,7 @@ export default {
     redeem_point_source: "Source",
     redeem_point_condition: "Condition",
     redeem_point_actions: "Actions",
+    redeem_point_redeemed: "Redeemed points",
     // redeem point end
     file_too_large_or_invalid_file: "File is too large/ invalid file, please upload a new file",
     langVal: "en",

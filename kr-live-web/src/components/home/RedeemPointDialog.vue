@@ -46,18 +46,35 @@ import { watch, ref } from 'vue';
 import DataTable from 'components/transaction/DataTable';
 import { eventapi } from 'src/boot/axios';
 import { useI18n } from "vue-i18n";
+import { userStore } from 'src/stores';
+import { useQuasar } from 'quasar';
 
 const isLoading = ref(false);
 const { t } = useI18n();
 const props = defineProps(['redeemDialogVisible', 'closeDialog']);
 const redeemDialogVisible = ref(props.redeemDialogVisible);
+const store = userStore();
+const $q = useQuasar();
 
 watch(() => props.redeemDialogVisible, () => {
     redeemDialogVisible.value = props.redeemDialogVisible;
 })
 
 const redeemPoint = (privilegeId) => {
-    eventapi.post("/member-point/redeem-point/" + privilegeId + "?_method=PUT")
+    eventapi.post("/member-point/redeem-point/" + privilegeId + "?_method=PUT").then((res) => {
+        const { code, data } = res.data;
+
+        if (code === 0) {
+            $q.notify({
+                message: t('lang.redeem_point_redeemed'),
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+            });
+
+            store.getPendingRebateAmt();
+        }
+    })
 }
 
 const tableColumns = [
