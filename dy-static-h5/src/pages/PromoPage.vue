@@ -350,6 +350,8 @@ export default defineComponent({
           return "最新";
         case 1:
           return "热门";
+        case 2:
+          return "正常";
         case 3:
           return "推荐";
         case 4:
@@ -358,6 +360,8 @@ export default defineComponent({
           return "新人";
         case 6:
           return "限时";
+        case 7:
+          return "精选";
         default:
           return "";
       }
