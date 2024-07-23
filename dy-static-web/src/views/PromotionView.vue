@@ -100,7 +100,9 @@
         <div
           class="inner"
           :class="{
-            isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' || selectedPromo.promoCode === 'dy2-olympic-match',
+            isCS:
+              selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+              selectedPromo.promoCode === 'dy2-olympic-match',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             fullwidth:
@@ -109,8 +111,7 @@
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual'
-              ,
+              selectedPromo.promoCode === 'dy2-eurocup-manual',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
           }"
@@ -263,6 +264,8 @@ export default defineComponent({
           return "最新";
         case 1:
           return "热门";
+        case 2:
+          return "正常";
         case 3:
           return "推荐";
         case 4:
@@ -271,6 +274,8 @@ export default defineComponent({
           return "新人";
         case 6:
           return "限时";
+        case 7:
+          return "精选";
         default:
           return "";
       }
