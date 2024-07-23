@@ -319,7 +319,7 @@
       <div class="acc-dialog-container login-container" :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : '' ">
         <div class="acc-dialog-left" >
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
+          <img class="paris" v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-paris.png" />
           <img v-else  src="../../assets/home/tf88club-img.png">
         </div>
         <div class="acc-dialog-right">
@@ -345,7 +345,7 @@
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
-          <img src="../../assets/home/acc-dialog-img-signup-eurocup.png" />
+          <img class="paris" src="../../assets/home/acc-dialog-img-signup-paris.png" />
         </div>
         <div class="acc-dialog-right">
           <RegisterAccount
@@ -409,7 +409,7 @@
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
+          <img class="paris" src="../../assets/home/acc-dialog-img-login-paris.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -2534,8 +2534,9 @@ body {
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         // background-color: #ffffff;
-        padding: 8px;
+        // padding: 8px;
 
+        padding: 0;
         img {
           display: block;
           width: 100%;
@@ -2559,7 +2560,7 @@ body {
         .acc-dialog-left {
           display: flex;
           align-items: flex-end;
-          background-image: url(../../assets/home/acc-dialog-bg-login-eurocup.png);
+          // background-image: url(../../assets/home/acc-dialog-bg-login-eurocup.png);
           background-size: 100% 100%;
           background-position: center center;
           min-height: 500px;
@@ -2570,6 +2571,9 @@ body {
             // width: 100%;
             width: calc(100% + 90px);
             margin: -50px 0px -45px -90px;
+            &.paris {
+              margin: 0;
+            }
           }
 
 
@@ -2601,7 +2605,7 @@ body {
         .acc-dialog-left {
           display: flex;
           align-items: flex-end;
-          background-image: url(../../assets/home/acc-dialog-bg-signup-eurocup.png);
+          // background-image: url(../../assets/home/acc-dialog-bg-signup-eurocup.png);
           background-size: 100% 100%;
           background-position: center center;
           // min-height: 750px;
@@ -2614,6 +2618,10 @@ body {
             // margin: -50px 0px -10px -60px;
             width: calc(80% + 70px);
             margin: -190px 0px -10px -20px;
+            &.paris {
+              width: 100%;
+              margin: 0;
+            }
           }
         }
       }
