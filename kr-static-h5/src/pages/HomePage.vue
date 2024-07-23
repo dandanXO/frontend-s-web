@@ -97,7 +97,7 @@
         <div class="volume">
           <img src="../assets/images/home/announce-icon.png" />
         </div>
-        <marquee-text :repeat="5" :duration="announcementList.length * 120">
+        <marquee-text :repeat="5" :duration="announcementList.length * 280">
           <div v-if="announcementList">
             <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
@@ -108,118 +108,118 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper">
-    <div class="euro-countdown">
-      <div class="euro-countdown-fly-01">
-        <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
-      </div>
-      <div class="euro-countdown-fly-02">
-        <img src="../assets/images/home/eurocup-countdown-fly-02.png" />
-      </div>
-      <div class="euro-countdown-fly-03">
-        <img src="../assets/images/home/eurocup-countdown-fly-03.png" />
-      </div>
-      <div class="euro-countdown-fly-04">
-        <img src="../assets/images/home/eurocup-countdown-fly-04.png" />
-      </div>
-      <div class="euro-countdown-fly-05">
-        <img src="../assets/images/home/eurocup-countdown-fly-05.png" />
-      </div>
-      <div class="euro-countdown-fly-06">
-        <img src="../assets/images/home/eurocup-countdown-fly-06.png" />
-      </div>
-      <!--      <div class="euro-countdown-content">-->
-      <!--        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />-->
-
-      <!--        <div class="euro-countdown-txt">-->
-      <!--          <div class="txt-logo">-->
-      <!--            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />-->
-      <!--          </div>-->
-      <!--          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>-->
-
-      <!--          <div class="euro-countdown-num-wrap">-->
-      <!--            {{ $t("lang.euroCountdown01a") }}-->
-      <!--            <div class="euro-countdown-num">-->
-      <!--              &lt;!&ndash; <img src="../assets/images/home/eurocup-countdown-numbers.png" /> &ndash;&gt;-->
-      <!--              <div class="num">-->
-      <!--                <span>{{ countDay01 }}</span>-->
-      <!--              </div>-->
-      <!--              <div class="num">-->
-      <!--                <span>{{ countDay02 }}</span>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--            {{ $t("lang.euroCountdown02") }}-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-    </div>
-
-    <!-- <div class="euro-countdown">
-      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
-    </div> -->
-
-<!--    <div class="hot-matches-title-wrapper">-->
-<!--      <div class="hot-matches-title">-->
-<!--        <div>-->
-<!--          <img src="../assets/images/home/icon-hot-matches.png" />-->
-<!--        </div>-->
-<!--        {{ $t("lang.hotMatches") }}-->
+<!--  <div class="hot-matches-wrapper">-->
+<!--    <div class="euro-countdown">-->
+<!--      <div class="euro-countdown-fly-01">-->
+<!--        <img src="../assets/images/home/eurocup-countdown-fly-01.png" />-->
 <!--      </div>-->
+<!--      <div class="euro-countdown-fly-02">-->
+<!--        <img src="../assets/images/home/eurocup-countdown-fly-02.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-03">-->
+<!--        <img src="../assets/images/home/eurocup-countdown-fly-03.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-04">-->
+<!--        <img src="../assets/images/home/eurocup-countdown-fly-04.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-05">-->
+<!--        <img src="../assets/images/home/eurocup-countdown-fly-05.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-06">-->
+<!--        <img src="../assets/images/home/eurocup-countdown-fly-06.png" />-->
+<!--      </div>-->
+<!--      &lt;!&ndash;      <div class="euro-countdown-content">&ndash;&gt;-->
+<!--      &lt;!&ndash;        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />&ndash;&gt;-->
 
-      <!--      <div>-->
-      <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
-      <!--          {{ $t("lang.bet_now") }}-->
-      <!--        </q-btn>-->
-      <!--      </div>-->
+<!--      &lt;!&ndash;        <div class="euro-countdown-txt">&ndash;&gt;-->
+<!--      &lt;!&ndash;          <div class="txt-logo">&ndash;&gt;-->
+<!--      &lt;!&ndash;            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />&ndash;&gt;-->
+<!--      &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>&ndash;&gt;-->
+
+<!--      &lt;!&ndash;          <div class="euro-countdown-num-wrap">&ndash;&gt;-->
+<!--      &lt;!&ndash;            {{ $t("lang.euroCountdown01a") }}&ndash;&gt;-->
+<!--      &lt;!&ndash;            <div class="euro-countdown-num">&ndash;&gt;-->
+<!--      &lt;!&ndash;              &lt;!&ndash; <img src="../assets/images/home/eurocup-countdown-numbers.png" /> &ndash;&gt;&ndash;&gt;-->
+<!--      &lt;!&ndash;              <div class="num">&ndash;&gt;-->
+<!--      &lt;!&ndash;                <span>{{ countDay01 }}</span>&ndash;&gt;-->
+<!--      &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;              <div class="num">&ndash;&gt;-->
+<!--      &lt;!&ndash;                <span>{{ countDay02 }}</span>&ndash;&gt;-->
+<!--      &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;            {{ $t("lang.euroCountdown02") }}&ndash;&gt;-->
+<!--      &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;      </div>&ndash;&gt;-->
 <!--    </div>-->
 
-    <div class="hot-matches-container">
-      <swiper
-        :slides-per-view="1"
-        :modules="modules"
-        :loop="false"
-        @swiper="onSwiper"
-        effect="fade"
-        :auto-height="false"
-        :allow-slide-next="true"
-        :pagination="{ clickable: true, type: 'bullets' }"
-        :space-between="10"
-        class="hot-matches-carousel"
-      >
-        <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
-          <div class="hot-matches-item">
-            <div class="top-match-title">
-              <div class="title-frame">{{ item.competitionName }}</div>
-            </div>
-            <div class="team-details team-details__home">
-              <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamOneLogo" />
-              </div>
-              <div class="team-name">{{ item.teamOneName }}</div>
-            </div>
-            <div class="match-details">
-              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
-              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
-              <div class="match-btn">
-                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt match-btn-button" @click="openHotMatch(item)">
-                  {{ $t("lang.play_now") }}
-                </q-btn>
-              </div>
-            </div>
-            <div class="team-details team-details__away">
-              <div class="team-icon">
-                <img
-                  :src="hotMatchesImgURL + item.teamTwoLogo"
-                  :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"
-                />
-              </div>
-              <div class="team-name">{{ item.teamTwoName }}</div>
-            </div>
-          </div>
-        </swiper-slide>
-      </swiper>
-    </div>
-  </div>
+<!--    &lt;!&ndash; <div class="euro-countdown">-->
+<!--      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>-->
+<!--    </div> &ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="hot-matches-title-wrapper">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="hot-matches-title">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <img src="../assets/images/home/icon-hot-matches.png" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        {{ $t("lang.hotMatches") }}&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--      &lt;!&ndash;      <div>&ndash;&gt;-->
+<!--      &lt;!&ndash;        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">&ndash;&gt;-->
+<!--      &lt;!&ndash;          {{ $t("lang.bet_now") }}&ndash;&gt;-->
+<!--      &lt;!&ndash;        </q-btn>&ndash;&gt;-->
+<!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    <div class="hot-matches-container">-->
+<!--      <swiper-->
+<!--        :slides-per-view="1"-->
+<!--        :modules="modules"-->
+<!--        :loop="false"-->
+<!--        @swiper="onSwiper"-->
+<!--        effect="fade"-->
+<!--        :auto-height="false"-->
+<!--        :allow-slide-next="true"-->
+<!--        :pagination="{ clickable: true, type: 'bullets' }"-->
+<!--        :space-between="10"-->
+<!--        class="hot-matches-carousel"-->
+<!--      >-->
+<!--        <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">-->
+<!--          <div class="hot-matches-item">-->
+<!--            <div class="top-match-title">-->
+<!--              <div class="title-frame">{{ item.competitionName }}</div>-->
+<!--            </div>-->
+<!--            <div class="team-details team-details__home">-->
+<!--              <div class="team-icon">-->
+<!--                <img :src="hotMatchesImgURL + item.teamOneLogo" />-->
+<!--              </div>-->
+<!--              <div class="team-name">{{ item.teamOneName }}</div>-->
+<!--            </div>-->
+<!--            <div class="match-details">-->
+<!--              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>-->
+<!--              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>-->
+<!--              <div class="match-btn">-->
+<!--                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt match-btn-button" @click="openHotMatch(item)">-->
+<!--                  {{ $t("lang.play_now") }}-->
+<!--                </q-btn>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="team-details team-details__away">-->
+<!--              <div class="team-icon">-->
+<!--                <img-->
+<!--                  :src="hotMatchesImgURL + item.teamTwoLogo"-->
+<!--                  :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"-->
+<!--                />-->
+<!--              </div>-->
+<!--              <div class="team-name">{{ item.teamTwoName }}</div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </swiper-slide>-->
+<!--      </swiper>-->
+<!--    </div>-->
+<!--  </div>-->
   <!--  <div class="details-bar">-->
   <!--    <div class="message" @click="refreshBalance">-->
   <!--      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">-->
@@ -389,7 +389,7 @@
               }"
             >
               <div class="platform-content">
-                <div class="platform-title">
+               <div class="platform-title">
                   {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
                 </div>
               </div>
@@ -981,7 +981,7 @@ import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
-import { Swiper, SwiperSlide } from "swiper/vue";
+// import { Swiper, SwiperSlide } from "swiper/vue";
 import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
 import { isAndroid } from "src/boot/utils";
@@ -993,8 +993,8 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     LangOptions,
-    Swiper,
-    SwiperSlide,
+    // Swiper,
+    // SwiperSlide,
     PushNotification,
     VueQRCodeComponent
   },
