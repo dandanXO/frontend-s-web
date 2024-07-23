@@ -126,7 +126,7 @@
                 ref="telephoneRef"
                 v-model="phoneLoginForm.phoneNumber"
                 :readonly="phoneLoginForm.smsCodeId ? true : false"
-                placeholder="电话号码"
+                placeholder="请输入手机号码"
                 :rules="[(val) => (val && val.length > 0) || '请输入电话号码']"
                 color="white"
                 autocomplete="username"
@@ -145,20 +145,20 @@
                 hide-bottom-space
                 type="text"
                 v-model="phoneLoginForm.code"
-                placeholder="短信验证码"
+                placeholder="请输入短信验证码"
                 :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
               >
                 <template v-slot:append>
                   <q-btn
-                    size="20px"
+                    size="15px"
                     color="brightbtn"
                     label="发送验证码"
                     @click="toggleInnerCode"
-                    style="white-space: nowrap"
+                    style="white-space: nowrap; height: 35px; min-height: 35px"
                   />
                 </template>
                 <template v-slot:prepend>
-                  <img src="../assets/login/veri-icon.png" width="18" />
+                  <img src="../assets/login/veri-icon.png" width="21" style="margin-left: 2px" />
                 </template>
               </q-input>
             </div>
@@ -269,7 +269,7 @@
               </template>
             </q-input>
           </q-card-section>
-          <q-btn style="height: 40px" @click="sendOtpSms" label="发送验证码" color="brightbtn" />
+          <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" />
         </div>
       </q-card>
     </q-dialog>
