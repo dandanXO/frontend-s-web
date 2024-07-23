@@ -164,7 +164,13 @@
             </div>
 
             <div class="forgetpass-div">
-              <router-link class="txt-tip align-right" to="/forgot-account">
+              <div class="align-right">
+                <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
+                  {{ loginType ? "用户名登录" : "手机号登录" }}
+                </span>
+              </div>
+
+              <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
                 <span>忘记密码？</span>
               </router-link>
 
@@ -263,7 +269,7 @@
               </template>
             </q-input>
           </q-card-section>
-          <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" />
+          <q-btn style="height: 40px" @click="sendOtpSms" label="发送验证码" color="brightbtn" />
         </div>
       </q-card>
     </q-dialog>
@@ -695,7 +701,7 @@ export default defineComponent({
     align-items: center;
     justify-content: space-between;
     width: calc(100% - 8px);
-    margin: 10px auto 0px;
+    margin: 15px auto 0px;
     gap: 10px;
 
     .mui-row {
