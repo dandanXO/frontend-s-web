@@ -140,6 +140,8 @@ export default {
     comingSoon: "곧 출시..."
   },
   home: {
+    hotGames: "Hot Games",
+    enterGame: "Start",
     appDownload: "앱 다운로드",
     downloadTheApp: "앱 다운로드",
     soccerBetting: "축구 베팅",
@@ -165,6 +167,11 @@ export default {
     euroCountdown01: "유로 2024로 가는 길",
     euroCountdown01a: "EURO 2024까지 남은 ",
     euroCountdown02: " 일"
+  },
+  hotGame: {
+    enterGame: "게임에 들어가기",
+    enterPlat: "플랫폼에 들어가기",
+    maintainenceTime: "유지 보수 시간"
   },
   personal: {
     url: "접속",

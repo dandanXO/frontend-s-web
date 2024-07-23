@@ -139,6 +139,8 @@ export default {
     comingSoon: "Coming Soon..."
   },
   home: {
+    hotGames: "Hot Games",
+    enterGame: "Start",
     appDownload: "APP Download",
     downloadTheApp: "Download the App",
     soccerBetting: "Soccer Betting",
@@ -165,6 +167,11 @@ export default {
     euroCountdown01: "ROAD TO ",
     euroCountdown01a: "EURO 2024 - ",
     euroCountdown02: " DAYS LEFT"
+  },
+  hotGame: {
+    enterGame: "Enter Game",
+    enterPlat: "Enter Platform",
+    maintainenceTime: "Maintenance time"
   },
   personal: {
     url: "URL",
