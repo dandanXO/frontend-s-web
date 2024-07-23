@@ -1757,6 +1757,7 @@ export default {
     createMemberPointRecord: '회원 포인트 기록 생성',
     claimed: '청구됨',
     notClaimed: '보류 중',
+    displayAmount: '표시금액',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',

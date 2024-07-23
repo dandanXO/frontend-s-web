@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <el-row>
+    <el-row v-if="affInfo.displayAmount">
       <el-col v-loading="uiControl.profitLoading">
         <div class="clearfix">
           <span class="role-span htitle">
@@ -147,7 +147,7 @@
       </el-col>
     </el-row>
 
-    <el-row style="margin-top: 20px;" v-loading="uiControl.commissionLoading">
+    <el-row style="margin-top: 20px;" v-loading="uiControl.commissionLoading" v-if="affInfo.displayAmount">
       <el-col>
         <div class="clearfix">
           <span class="role-span htitle">
@@ -309,6 +309,7 @@ import {
 import { useI18n } from 'vue-i18n'
 import AnnouncementComponent from '../../views/personal/announcement/index.vue'
 import { useRouter } from "vue-router";
+import { getAffiliateInfo } from '../../api/affiliate'
 
 const store = useStore()
 const router = useRouter()
@@ -512,11 +513,13 @@ function checkQuery(dateType) {
     )
     query.recordTime = [convertDate(start), convertDate(end)].join(',')
   } else if (dateType === 'thisMonth') {
-    start.setTime(
-      moment(start)
-        .startOf('month')
-        .format('x')
-    )
+    if (moment().date() < 16) {
+      start.setTime(moment().startOf('month').format('x'))
+      end.setTime(moment().set('date', 15))
+    } else {
+      start.setTime(moment().set('date', 16))
+      end.setTime(moment())
+    }
     query.recordTime = [convertDate(start), convertDate(end)].join(',')
   } else if (dateType === 'lastMonth') {
     start.setTime(
@@ -536,7 +539,11 @@ function checkQuery(dateType) {
   return query
 }
 
-onMounted(() => {
+const affInfo = reactive({
+  displayAmount: false
+})
+
+onMounted(async () => {
   if (store.state.user.siteCode === 'IND') {
     router.push("/report/daily-detail")
   }
@@ -544,6 +551,10 @@ onMounted(() => {
   loadMemberSummary()
   loadCommissionSummary()
   loadOpsSummary()
+  const { data: aff } = await getAffiliateInfo(store.state.user.id)
+  Object.keys({ ...aff }).forEach(field => {
+    affInfo[field] = aff[field]
+  })
 })
 </script>
 

@@ -1890,6 +1890,7 @@ export default {
     createMemberPointRecord: '创建会员积分记录',
     claimed: '已领取',
     notClaimed: '未领取',
+    displayAmount: '显示金额',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
