@@ -348,7 +348,7 @@ const getNextRainTime = () => {
         const formattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
         nextRainTime.rainStartNext = `${formattedHours}:${formattedMinutes}`;
 
-        claimBonusClicked.value = true;
+
       }
     })
     .catch((err) => {
@@ -368,6 +368,8 @@ const onClaimBonus = () => {
         showPrizePopup.value = true;
         prizeAmount.value = res.data.vipAmount;
         store.getBalance();
+
+        claimBonusClicked.value = true;
       }
     })
     .catch((err) => {
