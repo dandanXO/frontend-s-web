@@ -28,8 +28,12 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(amount, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
-          <!-- <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge> -->
-          <div :class="['deposit-amt', form.localAmount === amount && 'active']">{{ convertToCommaAmount(amount) }}</div>
+          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>
+            +{{ convertToCommaAmount(amount * 0.05) }}
+          </q-badge>
+          <div :class="['deposit-amt', form.localAmount === amount && 'active']">
+            {{ convertToCommaAmount(amount) }}
+          </div>
           <div :class="['deposit-svg', form.localAmount === amount && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
@@ -301,9 +305,9 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
 const depositItems = computed(() => {
-  if (!activeMethod.value.amountArr) return []
-  return activeMethod.value.amountArr.map(amount => Number(amount))
-})
+  if (!activeMethod.value.amountArr) return [];
+  return activeMethod.value.amountArr.map((amount) => Number(amount));
+});
 
 const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
@@ -312,7 +316,7 @@ const handleDepositItemClick = (amount) => {
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
   form.localAmount = null;
-  nextTick(() => depositAmtRef.value.resetValidation())
+  nextTick(() => depositAmtRef.value.resetValidation());
 };
 
 const isLoadingInitPay = ref(true);
