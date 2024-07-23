@@ -67,6 +67,7 @@
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund' && store.token" />
     <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot' && store.token" :promo-code="list.promoCode" />
+    <NewplayerGuide v-if="list.redirectUrl === 'dy2-newplayer-guide' && store.token" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -127,6 +128,7 @@ import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreE
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
+import NewplayerGuide from "../components/hotpromo/newplayerguide/NewPlayerGuide.vue";
 
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
@@ -181,7 +183,8 @@ export default defineComponent({
     LPLSummer24,
     DragonBoat,
     EurocupManual,
-    OuZuLianPromo
+    OuZuLianPromo,
+    NewplayerGuide
   },
   props: {
     list: {
