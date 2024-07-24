@@ -158,7 +158,7 @@ export default {
     productServicePt1: "Best in the world",
     productServicePt2: "The most abundant products",
     productServicePt3: "Diverse selection",
-    futureGaming: "The future of gaming is here.Great games on all devices.TF88 App",
+    futureGaming: "The future of gaming is here.Great games on all devices.CITY8 App",
     scanToDownload: "Scan to download the APP",
     moreDetails: "Read more",
     announcementList: "Announcement List",
@@ -205,7 +205,7 @@ export default {
     bankCardReminder1:
       "Linking NH account needs to be identical in account name and NH registered name. Any incorrect information entered will lead to the failure of the withdrawal of the delay in processing the bank. Please contact our customer service to promptly handle it. Sincerely thanks!",
     bankCardReminder2:
-      "Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from TF88!"
+      "Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from CITY8!"
   },
   placeholder: {
     realName: "Please enter Real Name",
@@ -362,7 +362,7 @@ export default {
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
-    referralBonus: "Simply refer customers to join at TF88 and you will receive a bonus of 300 원 each.",
+    referralBonus: "Simply refer customers to join at CITY8 and you will receive a bonus of 300 원 each.",
     eligibilityConditions:
       "To be eligible to receive the bonus, you will need to meet some of the following conditions:",
     referrerConditions: "Referrer (you): ",
@@ -370,7 +370,7 @@ export default {
     referrerConditions2: "Reach vip level 1 or higher",
     presenteeConditions: "Referred (your friend):",
     presenteeConditions1: "Sign up for an account during the promotion period via specified refer a friend link.",
-    presenteeConditions2: "Never registered at TF88 and do not have any other account at TF88.",
+    presenteeConditions2: "Never registered at CITY8 and do not have any other account at CITY8.",
     presenteeConditions3:
       "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000원.",
     specifiedLink:
@@ -381,8 +381,8 @@ export default {
       "The bet amount that must be reached before withdrawal is equal to 5 times the value of the bonus received. ",
     notApplied:
       "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion. ",
-    rightsReserved: "TF88 reserves the right to modify, refuse or cancel this Promotion without prior notice.",
-    concurrentPromotions: "The program can be applied at the same time with all promotions at TF88. ",
+    rightsReserved: "CITY8 reserves the right to modify, refuse or cancel this Promotion without prior notice.",
+    concurrentPromotions: "The program can be applied at the same time with all promotions at CITY8. ",
     generalTerms: "General Promotion Terms & Conditions apply."
   },
   deposit: {
@@ -481,7 +481,7 @@ export default {
     afftnc3:
       "Commission will be audited by the 5th of every month, released on the 10th of every month using VND currency. From the 10th onwards, affiliates may proceed to withdraw their commission.",
     afftnc4:
-      "TF88 monitors all affiliate’s users and has its own criterion (risk level, deposit amount, betting index…) when evaluating such users. If they fail to meet the criteria, TF88 reserves the right to refuse to release commission to the affiliate.",
+      "CITY8 monitors all affiliate’s users and has its own criterion (risk level, deposit amount, betting index…) when evaluating such users. If they fail to meet the criteria, CITY8 reserves the right to refuse to release commission to the affiliate.",
     afftnc5: "One unique affiliate must register only one Email, Phone number, and Name.",
     afftnc6:
       "The old agent who settles the commission must have no less than 3 new active members in the current month, and the total number of active members must not be less than five.",
@@ -550,32 +550,32 @@ export default {
     affiliate: "Affiliates",
     aboutus: "About TFgaming",
     welcome:
-      "Welcome to TF88 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
+      "Welcome to CITY8 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
     product: "PRODUCT",
     productDescription:
-      "TF88 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",
+      "CITY8 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",
     liquidity: "LIQUIDITY",
     liquidityDescription:
-      "Owning a flexible and diverse payment system through local banks, e-wallets, mobile cards, Usdt... TF88 is committed to processing customer transactions as quickly as possible, on the basis of ensuring maximum information transaction.",
+      "Owning a flexible and diverse payment system through local banks, e-wallets, mobile cards, Usdt... CITY8 is committed to processing customer transactions as quickly as possible, on the basis of ensuring maximum information transaction.",
     security: "SECURITY",
     securityDescription:
-      "TF88 uses advanced security technologies to ensure that customer information is protected in the best way. We take the necessary security precautions to protect our members' personal information and privacy. So, rest assured that the information you provide is always safe in our secure data system.",
+      "CITY8 uses advanced security technologies to ensure that customer information is protected in the best way. We take the necessary security precautions to protect our members' personal information and privacy. So, rest assured that the information you provide is always safe in our secure data system.",
     promotion: "PROMOTION",
     promotionDescription:
-      "We understand that the odds may not always be what you want, that's why TF88 has created many promotions to make sure you always get the best deal on every bet. We are always looking for ways to create the best gaming environment for our customers.",
+      "We understand that the odds may not always be what you want, that's why CITY8 has created many promotions to make sure you always get the best deal on every bet. We are always looking for ways to create the best gaming environment for our customers.",
     license: "LICENSE",
     licenseDescription:
-      "TF88 is licensed by North Cagayan (NCGAC) under the Philippine government. The company is headquartered in Manila, Philippines.",
+      "CITY8 is licensed by North Cagayan (NCGAC) under the Philippine government. The company is headquartered in Manila, Philippines.",
     // Collect Info
     collectInformation: "Collect information",
     policyMessage:
-      "During your visit, the system and your browser may transmit information to our servers, this information is intended to collect and help TF88 always improve the quality for you to have a better experience.",
+      "During your visit, the system and your browser may transmit information to our servers, this information is intended to collect and help CITY8 always improve the quality for you to have a better experience.",
     personalInformation:
-      "Your personal information when registering includes: Full name, email, phone number, date of birth and other information in order for TF88 to complete your information for account management.",
+      "Your personal information when registering includes: Full name, email, phone number, date of birth and other information in order for CITY8 to complete your information for account management.",
     processingPurposes: "Your information will be processed for a variety of purposes, including:",
-    manageProcessInfo: "On TF88's website to manage and process your information.",
+    manageProcessInfo: "On CITY8's website to manage and process your information.",
     offerGames: "Offers games and approves bets for you.",
-    determineLegalAge: "To determine your legal age when participating in the game at TF88.",
+    determineLegalAge: "To determine your legal age when participating in the game at CITY8.",
     meetProductPreferences: "Based on preferences to meet the right products.",
     webMaintenance: "For web maintenance and problem diagnosis.",
     improveServiceQuality: "To improve service quality.",
@@ -584,36 +584,36 @@ export default {
     statisticalAnalysis:
       "In the course of serving you, we conduct statistical analysis based on different regions. We may provide 3rd parties to display ads.",
     cooperateSuppliers:
-      "TF88 cooperates with many suppliers, so your information can be provided to the supplier to look up the results for the purpose of ensuring the fairness of the results and ensuring your interests.",
+      "CITY8 cooperates with many suppliers, so your information can be provided to the supplier to look up the results for the purpose of ensuring the fairness of the results and ensuring your interests.",
     promotionInformation: "Promotion information",
     marketingPromotions:
-      "In order for Marketing to conduct promotions, and announce the prize of a winning promotion, TF88 may publish your account nick information or your initials and the prize number you received.",
+      "In order for Marketing to conduct promotions, and announce the prize of a winning promotion, CITY8 may publish your account nick information or your initials and the prize number you received.",
     privacy: "Privacy",
     privacyAssurance:
-      "TF88 will ensure the security of your personal information. Because TF88 uses the strongest firewall system to prevent the intrusion of illegal acts.",
+      "CITY8 will ensure the security of your personal information. Because CITY8 uses the strongest firewall system to prevent the intrusion of illegal acts.",
     dataSecurity: "Data Security",
     dataSecurityAssurance:
       "For any data and information related to the company, confidentiality is required when handling.",
     // Legal Basis
     legalBasis: "Legal Basis",
     generalTermsMessage:
-      "Below are general terms and conditions for using TF88. By registering for an account, you agree to abide by our general terms. All activity in a visitor's account on the website is subject to and monitored by the following terms:",
+      "Below are general terms and conditions for using CITY8. By registering for an account, you agree to abide by our general terms. All activity in a visitor's account on the website is subject to and monitored by the following terms:",
     ageRequirement:
       "Members must be at least 18 years old and have the intellectual capacity to take responsibility for their own actions.",
     singleAccount:
-      "Each customer can only open one account on TF88's website. We may close any additional accounts opened and any remaining funds in the account will be handled at TF88's sole discretion.",
+      "Each customer can only open one account on CITY8's website. We may close any additional accounts opened and any remaining funds in the account will be handled at CITY8's sole discretion.",
     personalInformation2:
-      "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, TF88 disclaims related liability. We ensure that customer information is safe and secure.",
+      "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, CITY8 disclaims related liability. We ensure that customer information is safe and secure.",
     checkAccountBalance:
       "The customer must regularly check the account balance, when there is any deviation, the customer is responsible for immediately reporting to Online Support to check and verify the account.",
     accountSecurity:
-      "Customers must ensure the security of their account information, when customers disclose information to others, any disputes or conflicts later TF88 is not responsible.",
+      "Customers must ensure the security of their account information, when customers disclose information to others, any disputes or conflicts later CITY8 is not responsible.",
     depositInstructions:
-      "Customers who need to deposit money need to comply with the information and instructions on the Web site, TF88 is not responsible for all transactions that are not made according to instructions.",
+      "Customers who need to deposit money need to comply with the information and instructions on the Web site, CITY8 is not responsible for all transactions that are not made according to instructions.",
     accessFromRestrictedArea:
-      "TF88 does not encourage or prohibit attempts to access the Website from an area not designated for our service.",
+      "CITY8 does not encourage or prohibit attempts to access the Website from an area not designated for our service.",
     entertainmentPurpose:
-      "TF88 provides products for entertainment purposes, customers who agree to participate in TF88 will have certain risks. When using the service at TF88, we disclaim the website's responsibility for any customer's losses.",
+      "CITY8 provides products for entertainment purposes, customers who agree to participate in CITY8 will have certain risks. When using the service at CITY8, we disclaim the website's responsibility for any customer's losses.",
     withdrawalRequest:
       "TF88 reserves the right to refuse a withdrawal request if the registration information is incorrect, TF88 has the right to request relevant documents to confirm the registration information.",
     honestyPolicy:
