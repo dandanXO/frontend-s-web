@@ -5,18 +5,18 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年7月26日—2024年8月12日</div>
+          <div class="right">2024年7月26日—2024年8月10日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
             <th>竞猜正确场次</th>
-            <th>投注反比</th>
+            <th>投注返比</th>
             <th>彩金上限</th>
           </tr>
           <tr>
@@ -31,11 +31,6 @@
           </tr>
           <tr>
             <td>≥6</td>
-            <td>1.5%</td>
-            <td>388</td>
-          </tr>
-          <tr>
-            <td>≥8</td>
             <td>3.0%</td>
             <td>888</td>
           </tr>
