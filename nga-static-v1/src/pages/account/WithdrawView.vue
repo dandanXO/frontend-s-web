@@ -211,7 +211,7 @@
     </template>
 
     <div class="bottom-tnc q-mt-md">
-      Note: 1％ + 50NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
+      Note: 2% + 50NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
       information, if withdrawal failed or you have any other questions, please contact CS 24/7
     </div>
   </div>
@@ -322,7 +322,7 @@ const loadCards = () => {
             message: "Please add a bank card first.",
             icon: "report_problem"
           });
-          router.push('/account/bank')
+          router.push("/account/bank");
         }
       }
     })
