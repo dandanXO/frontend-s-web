@@ -61,7 +61,7 @@ export default {
     menu_lottery: "복권",
     menu_slots: "슬롯",
     menu_fishing: "낚시",
-    menu_hashgame: "해시 게임",
+    menu_hashgame: "미니 게임",
     menu_others: "기타",
     menu_cockfighting: "닭싸움",
     menu_minigame: "미니게임",
