@@ -535,7 +535,7 @@ export default {
     affiliateDomainList: 'Danh sách miền liên kết',
     affiliateFinancialManagement: 'Quản lý tài chính đối tác liên kết',
     affiliateFBRequestList: 'Affiliate Facebook Pixel List',
-    affiliateFBRequestUrl: 'Affiliate Facebook Pixel URL',
+    affiliateFBRequestUrl: 'Affiliate URL',
     affiliateDepositChannel: 'Kênh gửi tiền đối tác liên kết',
     affiliateH5Link: 'Liên kết H5 đối tác liên kết',
     affiliateInfo: 'Thông tin đối tác liên kết',
