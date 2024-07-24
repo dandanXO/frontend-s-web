@@ -85,6 +85,12 @@
       </div>
     </q-page-sticky>
 
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+      <div v-touch-pan.prevent.mouse="moveHbIcon" @click="isMoneyRainModal = true">
+        <div class="hb-icon-wrapper"></div>
+      </div>
+    </q-page-sticky>
+
     <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
@@ -1441,6 +1447,10 @@ const isDraggingCsIcon = ref(false);
 const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
+
+const hbDragPos = ref([10, 150]);
+const isDraggingHbIcon = ref(false);
+const isHbShow = ref(false);
 
 const slide = ref(0);
 
@@ -3212,6 +3222,12 @@ const moveLiveIcon = (ev) => {
   liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
 };
 
+const moveHbIcon = (ev) => {
+  isDraggingHbIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  hbDragPos.value = [hbDragPos.value[0] - ev.delta.x, hbDragPos.value[1] - ev.delta.y];
+};
+
 const openLiveInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
@@ -3242,6 +3258,17 @@ const loadCustomerAddress = () => {
 
         csDragPos.value = [10, 70];
       }
+    });
+};
+
+const checkHongBaoYu = () => {
+  api
+    .get("/redirect")
+    .then((res) => {
+      return res;
+    })
+    .then((data) => {
+      isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
     });
 };
 
@@ -3356,6 +3383,10 @@ onActivated(() => {
   checkShowImgTop();
 
   checkSpinWheel();
+
+  if (store.hasToken()) {
+    checkHongBaoYu();
+  }
 });
 
 onMounted(() => {
@@ -4184,6 +4215,15 @@ const showCongratsModal = () => {
 .home-wrapper {
   width: calc(100% - 16px);
   margin: auto;
+}
+
+.hb-icon-wrapper {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  background: url("../assets/images/index/hongbao-icon.gif") no-repeat center center;
+  background-size: contain;
+  position: relative;
 }
 
 .live-icon-wrapper {
