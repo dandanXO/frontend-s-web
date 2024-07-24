@@ -386,7 +386,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -411,7 +411,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -436,7 +436,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -461,7 +461,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -486,7 +486,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -511,7 +511,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -536,7 +536,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -561,7 +561,7 @@
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
@@ -604,7 +604,7 @@
               >
                 <div class="platform-content">
                   <div class="platform-title">
-                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                   </div>
                 </div>
               </div>
@@ -1378,7 +1378,7 @@ export default defineComponent({
             // console.log(platTypes);
             if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
-              espObj.title_vn = espObj.name + " ESPORTS";
+              espObj.title_kr = espObj.name + " e스포츠";
               espObj.title_en = espObj.name + " ESPORTS";
               espObj.icon = "esport";
               esport.value.push(espObj);
@@ -1390,7 +1390,7 @@ export default defineComponent({
                 spObj.name = "SBO";
               }
 
-              spObj.title_vn = "Thể Thao " + spObj.name;
+              spObj.title_kr = "스포츠 " + spObj.name;
               spObj.title_en = "Sport " + spObj.name;
               spObj.icon = "sport";
               sport.value.push(spObj);
@@ -1400,14 +1400,14 @@ export default defineComponent({
               if (liveObj.name === "AE") {
                 liveObj.name = "Sexy";
               }
-              liveObj.title_vn = liveObj.name + " Live Casino";
+              liveObj.title_kr = liveObj.name + " 라이브 카지노";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
               livecasino.value.push(liveObj);
             }
             if (platTypes.indexOf("COCKFIGHT") > -1) {
               var cockObj = Object.assign({}, element);
-              cockObj.title_vn = "ĐÁ GÀ";
+              cockObj.title_kr = "ĐÁ GÀ";
               cockObj.title_en = "Cockfighting";
               cockObj.icon = "cockfight";
               cockfight.value.push(cockObj);
@@ -1420,7 +1420,7 @@ export default defineComponent({
               if (slotObj.name === "AG") {
                 slotObj.name = "XIN";
               }
-              slotObj.title_vn = slotObj.name + " Slots";
+              slotObj.title_kr = slotObj.name + " 슬롯";
               slotObj.title_en = slotObj.name + " Slot";
               slotObj.icon = "slot";
 
@@ -1440,7 +1440,7 @@ export default defineComponent({
               if (fishObj.name === "JiliGames") {
                 fishObj.name = "Jili";
               }
-              fishObj.title_vn = fishObj.name + " Bắn Cá";
+              fishObj.title_kr = fishObj.name + " Bắn Cá";
               fishObj.title_en = fishObj.name + " Fishing";
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
@@ -1448,10 +1448,10 @@ export default defineComponent({
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
               if (pokerObj.name === "Spribe") {
-                pokerObj.title_vn = pokerObj.name;
+                pokerObj.title_kr = pokerObj.name;
                 pokerObj.title_en = pokerObj.name;
               } else {
-                pokerObj.title_vn = pokerObj.name + " Poker";
+                pokerObj.title_kr = pokerObj.name + " 포커";
                 pokerObj.title_en = pokerObj.name + " Poker";
               }
               pokerObj.icon = "poker";
@@ -1463,7 +1463,7 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_vn = casualObj.name + " Mini Game";
+              casualObj.title_kr = casualObj.name + " 해시 게임";
               casualObj.title_en = casualObj.name + " Mini Game";
 
               casualObj.icon = "casual";
@@ -1471,7 +1471,7 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title_vn = "Xổ Số " + lottObj.name;
+              lottObj.title_kr = "Xổ Số " + lottObj.name;
               lottObj.title_en = "Lottery " + lottObj.name;
               lottObj.icon = "lottery";
               if (lottObj.code === "GPI") {
