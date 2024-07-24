@@ -252,6 +252,18 @@ export function getBonusSlotsCashback() {
   return server.EVENT.get('/vnm-refund/slots');
 }
 
+// tf88 baoheimvon
+export function gettT88Detail(promoCode) {
+  return server.EVENT.get('/lose-refund/get-ytd-loss', { 
+    params: {
+      promoCode
+    }
+  });
+}
+export function claimT88Reward(promoCode) {
+  return server.EVENT.post('/lose-refund/claim', { promoCode });
+}
+
 // poker cashback
 export function bonusClaimPokerRefund() {
   return server.EVENT.put('/bonus/claim/vnm-poker-refund');
