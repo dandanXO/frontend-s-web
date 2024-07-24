@@ -2,8 +2,8 @@
   <div class="olympic-fund-wrapper">
     <div class="switch-wrapper">
       <div class="switch-container">
-        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">新手礼包</div>
-        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">新人指路</div>
+        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">助力金</div>
+        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">突破奖</div>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
         <span>活动说明</span> -->
-        <img src="@/components/hotpromo/olympic-fund/img/info-title.png">
+        <img src="@/components/hotpromo/olympic-fund/img/info-title.png" />
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
@@ -112,7 +112,7 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
         <span>活动规则</span> -->
-        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png">
+        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png" />
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
         <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
@@ -233,8 +233,8 @@ onMounted(() => {
       font-weight: 600;
       line-height: 33.6px;
       &-ol {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
         img {
           width: 80%;
           margin: 0 auto;
