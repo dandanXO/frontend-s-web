@@ -2597,6 +2597,7 @@ export default {
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
+    'Media Display Settings': '媒体显示设置'
   },
   google: {
     google_auth_menu: '谷歌验证',

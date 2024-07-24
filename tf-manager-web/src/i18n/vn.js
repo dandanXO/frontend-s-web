@@ -2472,6 +2472,7 @@ export default {
     'Promotion Coupon': 'phiếu mua hàng',
     'Member Invite Limit': 'Giới hạn mời thành viên',
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
+    'Media Display Settings': 'Cài đặt hiển thị phương tiện'
   },
   google: {
     google_auth_menu: 'Google Xác thực',

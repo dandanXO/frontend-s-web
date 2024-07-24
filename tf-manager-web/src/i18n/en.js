@@ -2645,6 +2645,7 @@ export default {
     'Member Invite Limit': 'Member Invite Limit',
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
+    'Media Display Settings': 'Media Display Settings'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
