@@ -4219,8 +4219,8 @@ const showCongratsModal = () => {
 
 .hb-icon-wrapper {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 110px;
+  height: 110px;
   background: url("../assets/images/index/hongbao-icon.gif") no-repeat center center;
   background-size: contain;
   position: relative;
