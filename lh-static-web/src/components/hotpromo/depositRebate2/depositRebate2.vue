@@ -33,13 +33,13 @@
       <tbody>
         <tr>
           <td>USDT</td>
-          <td>1.5%</td>
+          <td>1.0%</td>
           <td>≥200</td>
           <td>588</td>
         </tr>
         <tr>
           <td>808钱包</td>
-          <td>1.0%</td>
+          <td>1.5%</td>
           <td>任意金额</td>
           <td>200</td>
         </tr>
@@ -70,15 +70,15 @@
         <tr>
           <td>数字人民币</td>
           <td>1.0%</td>
-          <td>≥1,000</td>
+          <td>≥300</td>
           <td>100</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>支付宝转卡</td>
           <td>1.0%</td>
           <td>≥1,000</td>
           <td>100</td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
     <div class="similar-title">
@@ -106,30 +106,20 @@ const depositCards = ref([
   {
     code: "usdt",
     title: "USDT",
-    content:
-      "充值即送<em>1.5%</em>彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限588元",
-    lesson: "https://fi3j96ygol.gwo5mlgx98.com/media/deposit_guide.mp4"
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200USDT，即可享受存款金额的1.0%加码彩金，单日优惠最高上限 588元。`,
+    lesson: "https://fil2e5sal.vmip991b92n.com/media/deposit_guide.mp4"
   },
   {
     code: "blbpay",
     title: "808钱包",
-    content:
-      "充值即送<em>1.5%</em>彩金，808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限200元",
+    content: `充值即送<em class="light-bg">1.5%</em>彩金 808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的1.0%加码彩金，单日优惠最高上限200元。`,
     lesson: "http://808.com/tutorial.html"
-  },
-  {
-    code: "okpay",
-    title: "OKpay",
-    content:
-      '充值即送<em>1.0%</em>彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值"方式成功存款，即可获得OKpay存款金额的<em>1.0%</em>的彩金返还，单日优惠最高上限200元。',
-    lesson: "https://me-qr.com/l/okpayjiaocheng"
   },
   {
     code: "ebpay",
     title: "EBPAY",
-    content:
-      "充值即送<em>1.0%</em>彩金，活动期间，每位玩家每笔使用EBpay单笔充值成功存款即可享受存款金额的<em>1.0%</em>加码彩金，单日优惠最高上限200元",
-    lesson: "https://fi3j96ygol.gwo5mlgx98.com/media/intro.mp4"
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 仅只支持银行卡。活动期间，每位玩家每笔使用EBpay单笔充值成功存款即可享受存款金额的1.0%加码彩金，单日优惠最高上限200元`,
+    lesson: "https://fil2e5sal.vmip991b92n.com/media/intro.mp4"
   },
   {
     code: "kdou",
@@ -138,6 +128,13 @@ const depositCards = ref([
       "充值即送<em>1.0%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的<em>1.0%</em>加码彩金，单日优惠最高上限200元",
     lesson: "https://kdxz1848.com/"
   },
+  {
+    code: "okpay",
+    title: "OKpay",
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。`,
+    lesson: "https://me-qr.com/l/okpayjiaocheng"
+  },
+
   // {
   //     "code": "jdpay",
   //     "title": "JDpay",
@@ -147,15 +144,14 @@ const depositCards = ref([
   {
     code: "szrmb",
     title: "数字人民币",
-    content:
-      "充值即送<em>1.0%</em>彩金数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥300元，即可享受存款金额的<em>1.0%</em>加码彩金，单日优惠最高上限100元"
-  },
-  {
-    code: "zfb",
-    title: "支付宝转卡",
-    content:
-      "充值即送<em>0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em>0.5%</em>的彩金返还，单日优惠最高上限50元。"
-  },
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥300元，即可享受存款金额的1.0%加码彩金，单日优惠最高上限100元。`
+  }
+  // {
+  //   code: "zfb",
+  //   title: "支付宝转卡",
+  //   content:
+  //     "充值即送<em>0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em>0.5%</em>的彩金返还，单日优惠最高上限50元。"
+  // }
 ]);
 </script>
 <style lang="scss">
@@ -248,11 +244,11 @@ const depositCards = ref([
   .happy-table {
     width: 100%;
     thead {
-      background: #E7F3F9;
+      background: #e7f3f9;
       border: 1px solid #dc91ff;
       td,
       th {
-        background: #E7F3F9;
+        background: #e7f3f9;
         border: 1px solid #c0bcb74d;
         padding: 10px;
         text-align: center;
@@ -263,7 +259,7 @@ const depositCards = ref([
         line-height: 31.92px;
 
         p {
-          background: linear-gradient(180deg, #7B2CEC 0%, #1DCEF3 100%);
+          background: linear-gradient(180deg, #7b2cec 0%, #1dcef3 100%);
           -webkit-background-clip: text;
           color: transparent;
           margin: 0;
@@ -273,10 +269,10 @@ const depositCards = ref([
     tbody {
       td {
         &:nth-child(odd) {
-          color: #DFF9FF;
+          color: #dff9ff;
         }
         &:nth-child(even) {
-          color: #FAFF0C;
+          color: #faff0c;
         }
       }
       td,
@@ -294,20 +290,19 @@ const depositCards = ref([
     }
     tr {
       &:nth-child(odd) {
-        border: 1px solid #C0BCB74D;
-        background: #9357C166;
+        border: 1px solid #c0bcb74d;
+        background: #9357c166;
       }
       &:nth-child(even) {
-        border: 1px solid #C0BCB74D;
-        background: #D1ADFF33;
-
+        border: 1px solid #c0bcb74d;
+        background: #d1adff33;
       }
     }
   }
   ol.happy-rules {
     li {
       font-family: Microsoft YaHei UI;
-      color: #DFF9FF;
+      color: #dff9ff;
       font-size: 20px;
       font-weight: 400;
       line-height: 26.6px;

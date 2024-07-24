@@ -2,8 +2,8 @@
   <div class="olympic-fund-wrapper">
     <div class="switch-wrapper">
       <div class="switch-container">
-        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">新手礼包</div>
-        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">新人指路</div>
+        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">助力金</div>
+        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">突破奖</div>
       </div>
     </div>
 
