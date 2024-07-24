@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <img src="../../../assets/images/promotion/hotpromo/slot-netloss/slot-netloss-coins.png" />
+        <img src="../../../assets/promo/cash_back.png" />
         <div class="col">
             <div class="row">
                 <div>{{ t('promo.net_work_bonus') }}</div>
