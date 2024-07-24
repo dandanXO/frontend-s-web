@@ -2363,21 +2363,26 @@ const loadHotGameList = () => {
 
       // cached
       cached
-        .get(key, () =>
-          api
-            .get("/platformGamesByLabel", {
-              params: {
-                gameLabel: "HOT",
-                device: regDevice
-              }
-            })
-            .then((ret) => {
-              const res = ret;
-              if (res.code === 0) {
-                return res;
-              }
-            })
-            .catch((err) => {})
+        .get(
+          key,
+          () =>
+            api
+              .get("/platformGamesByLabelV1", {
+                params: {
+                  gameLabel: "HOT",
+                  device: regDevice
+                }
+              })
+              .then((ret) => {
+                const res = ret;
+                if (res.code === 0) {
+                  return res;
+                }
+              })
+              .catch((err) => {
+                // Handle the error appropriately
+              }),
+          { expired_value: 300 }
         )
         .then((res) => {
           gameLists = res;
