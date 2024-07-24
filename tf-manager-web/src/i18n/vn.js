@@ -426,6 +426,21 @@ export default {
       'Thông tin đăng ký của thành viên và người triệu hồi là giống nhau',
     MEMBER_ALREADY_SUMMONED: 'Thành viên đã được triệu hồi',
   },
+  displayLocation: {
+    HOMEPAGE: 'TRANG CHỦ',
+    PROMO_PAGE: 'TRANG KHUYẾN MÃI',
+    DEPOSIT_PAGE: 'TRANG GỬI TIỀN',
+    WITHDRAW_PAGE: 'TRANG RÚT',
+    PERSONAL_CENTRE: 'TRUNG TÂM CÁ NHÂN',
+  },
+  mode: {
+    DYNAMIC: 'Trang nổi',
+    STATIC: 'Hiển thị trực tiếp'
+  },
+  autoplayStatus: {
+    ON: 'bật',
+    OFF: 'tắt'
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -565,6 +580,7 @@ export default {
     auditTime: 'Thời gian kiểm toán',
     automaticPayment: 'Thanh toán tự động',
     autopay: 'Thanh toán tự động',
+    autoplay: 'Tự động phát',
     automaticPay: 'Thanh toán tự động',
     autoWithdrawSetting: 'Cài đặt rút tiền tự động',
     awards: 'Giải thưởng',
@@ -793,6 +809,7 @@ export default {
     disableAffiliate: 'Vô hiệu hóa đối tác',
     disableAll: 'Vô hiệu hóa tất cả',
     disableType: 'Loại vô hiệu hóa',
+    displayUrl: 'Url hiển thị',
     distributed: 'Đã phân phối',
     distributeBy: 'Người phân phối',
     distributePrivilege: 'Phân phối đặc quyền',
@@ -1019,6 +1036,8 @@ export default {
     maxMemberClaimCountPerDay: 'Số lần yêu cầu tối đa mỗi ngày',
     maxTicket: 'Vé tối đa',
     maxWithdrawAmount: 'Số tiền rút tối đa',
+    mediaDesc: 'Tên phương tiện',
+    mediaUrl: 'địa chỉ phương tiện',
     member: 'Thành viên',
     memberBankCard: 'Thẻ ngân hàng thành viên',
     memberBankCardRecord: 'Lịch sử thẻ ngân hàng thành viên',
@@ -1068,6 +1087,7 @@ export default {
     mobileBanner: 'Biểu ngữ di động',
     mobileMessage: 'Tin nhắn di động',
     mobileWay: 'Di động',
+    mode: 'chế độ',
     moneyChange: 'Di chuyển tiền',
     month: 'Tháng',
     mqLogProcessWithTitle: 'tiêu đề (SummaryDoris)',
@@ -2209,18 +2229,17 @@ export default {
     wrongPopupTime: 'Thời gian popup đã chọn không hợp lệ',
     selectPopupTime: 'Vui lòng chọn thời gian popup',
     updateAffiliateLevelSuccess: 'Cập nhật cấp đại lý thành công',
-    validationMinDayRegLimitRequired:
-      'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
-    validationMaxDayRegLimitRequired:
-      'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
-    validationMinDayDepositAmountRequired:
-      'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
-    validationMaxDayDepositAmountRequired:
-      'Số tiền gửi tối đa hàng ngày là bắt buộc',
-    validationDayRegProbabilityRequired:
-      'Xác suất đăng ký hàng ngày là bắt buộc',
-    validationDayDepositAmountProbabilityRequired:
-      'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
+    validateMinDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
+    validateMaxDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
+    validateMinDayDepositAmountRequired: 'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
+    validateMaxDayDepositAmountRequired: 'Số tiền gửi tối đa hàng ngày là bắt buộc',
+    validateDayRegProbabilityRequired: 'Xác suất đăng ký hàng ngày là bắt buộc',
+    validateDayDepositAmountProbabilityRequired: 'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
+    validateMediaDescRequired: 'Yêu cầu mô tả phương tiện',
+    validateMediaUrlRequired: 'Yêu cầu liên kết video',
+    validateDisplayUrlRequired: 'Yêu cầu liên kết hiển thị video',
+    validateModeRequired: 'Chế độ cần thiết',
+    validateAutoplayRequired: 'Yêu cầu tự động phát',
   },
   menu: {
     undefined: '',
