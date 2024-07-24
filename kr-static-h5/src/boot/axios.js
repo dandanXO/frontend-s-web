@@ -12,38 +12,11 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-// const globalLinks= ["tf88won"];
-// const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
-//
-// const q7yxLinks= ["q7yxpdxwxk"];
-// const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
 console.log(window.location.hostname);
 
-// if (isGlobalVN) {
-//   var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
-//   var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
-//   var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
-//
-//   var rstApi = getInitApi(rstGlobalArray, "VNM_H5_RST_URL");
-//   var evtApi = getInitApi(evtGlobalArray, "VNM_H5_EVT_URL");
-//   var crtApi = getInitApi(crGlobalArray, "VNM_H5_CRT_URL");
-//
-//   localStorage.setItem("IMAGE_CDN", process.env.GLOBAL_IMAGE_CDN);
-//
-// }else if(isq7yxVN){
-//   var rstArray2 = Object.values(process.env.Q7YX_RST_API);
-//   var evtArray2 = Object.values(process.env.Q7YX_EVT_API);
-//   var crArray2 = Object.values(process.env.Q7YX_CR_API);
-//
-//   var rstApi = getInitApi(rstArray2, "VNM_WEB_RST_URL");
-//   var evtApi = getInitApi(evtArray2, "VNM_WEB_EVT_URL");
-//   var crtApi = getInitApi(crArray2, "VNM_WEB_CRT_URL");
-//
-// }else {
-  var rstApi = getInitApi(rstArray, "KRW_H5_RST_URL");
-  var crtApi = getInitApi(crtArray, "KRW_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "KRW_H5_EVT_URL");
-// }
+var rstApi = getInitApi(rstArray, "KRW_H5_RST_URL");
+var crtApi = getInitApi(crtArray, "KRW_H5_CRT_URL");
+var evtApi = getInitApi(evtArray, "KRW_H5_EVT_URL");
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });

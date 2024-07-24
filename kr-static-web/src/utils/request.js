@@ -10,52 +10,27 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-// const globalLinks= ["tf88won"];
 console.log(window.location.hostname);
-// const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
 
-// const q7yxLinks= ["q7yxpdxwxk"];
-// const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
-
-// if(isGlobalVN){
-//   var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
-//   var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
-//   var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
-//
-//   var rstApi = getInitApi(rstGlobalArray, "VNM_WEB_RST_URL");
-//   var evtApi = getInitApi(evtGlobalArray, "VNM_WEB_EVT_URL");
-//   var crtApi = getInitApi(crGlobalArray, "VNM_WEB_CRT_URL");
-//
-//   localStorage.setItem("IMAGE_CDN", process.env.VUE_APP_GLOBAL_IMAGE_CDN);
-//
-// }else if(isq7yxVN){
-//   var rstArray2 = process.env.VUE_APP_Q7YX_RST_API.split(",");
-//   var evtArray2 = process.env.VUE_APP_Q7YX_EVT_API.split(",");
-//   var crArray2 = process.env.VUE_APP_Q7YX_CR_API.split(",");
-//
-//   var rstApi = getInitApi(rstArray2, "VNM_WEB_RST_URL");
-//   var evtApi = getInitApi(evtArray2, "VNM_WEB_EVT_URL");
-//   var crtApi = getInitApi(crArray2, "VNM_WEB_CRT_URL");
-//
-// }else{
-  var rstApi = getInitApi(rstArray, "KRW_WEB_RST_URL");
-  var crtApi = getInitApi(crArray, "KRW_WEB_CRT_URL");
-  var evtApi = getInitApi(evtArray, "KRW_WEB_EVT_URL");
-// }
-
+var rstApi = getInitApi(rstArray, "KRW_WEB_RST_URL");
+var crtApi = getInitApi(crArray, "KRW_WEB_CRT_URL");
+var evtApi = getInitApi(evtArray, "KRW_WEB_EVT_URL");
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
-    axios.get(successRstUrl + "/ping").then((res) => {
-      // console.log(res);
-      if (res.status !== 200) {
+    axios
+      .get(successRstUrl + "/ping")
+      .then((res) => {
+        // console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem(urlLsName);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         localStorage.removeItem(urlLsName);
-      }
-    }).catch((err) => {
-      console.log(err);
-      localStorage.removeItem(urlLsName);
-    });
+      });
 
     return successRstUrl;
   } else {
@@ -78,7 +53,6 @@ function getInitApi(apiLinks, urlLsName) {
     return initApi;
   }
 }
-
 
 const onRequest = (config) => {
   const store = userStore();
@@ -119,7 +93,7 @@ const onResponse = (response) => {
       return response.data;
     }
     if (res.code === ResponseCode.ERROR_AMOUNT_PRIVILEGE_DEPOSIT) {
-      res.message = i18n.global.t('response.' + res.code) || res.message
+      res.message = i18n.global.t("response." + res.code) || res.message;
       return res;
     }
 
@@ -127,13 +101,14 @@ const onResponse = (response) => {
       store.token = null;
       location.reload();
     } else {
-      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+      if (
+        res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
         res.code === ResponseCode.ERROR_TOKEN_MISSED ||
         res.code === ResponseCode.ERROR_NAME_EXIST
       ) {
         store.token = null;
-        if (window.location.pathname === '/promotion') {
-          res.message = i18n.global.t('response.' + res.code) || res.message
+        if (window.location.pathname === "/promotion") {
+          res.message = i18n.global.t("response." + res.code) || res.message;
           return res;
         } else {
           location.reload();
@@ -149,11 +124,10 @@ const onResponse = (response) => {
       // }
       // message.error(res.message, 4);
       // ElMessage.error(res.message);
-
     }
     // throw new Error(res.message || "Error");
-    res.message = i18n.global.t('response.' + res.code) || res.message
-    return res
+    res.message = i18n.global.t("response." + res.code) || res.message;
+    return res;
   } else {
     return response.data;
   }
@@ -162,7 +136,7 @@ const onResponse = (response) => {
 const onResponseError = (error) => {
   // message.error(error.message);
   ElMessage({
-    message: i18n.global.t('response.' + error.code) || error.message,
+    message: i18n.global.t("response." + error.code) || error.message,
     type: "warning"
   });
   return Promise.reject(error);
