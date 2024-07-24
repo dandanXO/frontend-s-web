@@ -14,6 +14,11 @@
         <span v-else>突破奖</span>
       </div>
 
+      <div class="description-block-event-content">
+        <div class="description-block-event-content-title">活动日期</div>
+        <span>2024年7月25日—2024年8月11日</span>
+      </div>
+
       <div class="bonus-block-content">
         <img v-if="isGiftSelected" src="@/components/hotpromo/olympic-fund/img/deposit.svg" />
         <img v-else src="@/components/hotpromo/olympic-fund/img/switch.svg" />
@@ -43,7 +48,7 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
         <span>活动说明</span> -->
-        <img src="@/components/hotpromo/olympic-fund/img/info-title.png">
+        <img src="@/components/hotpromo/olympic-fund/img/info-title.png" />
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
@@ -112,7 +117,7 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
         <span>活动规则</span> -->
-        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png">
+        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png" />
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
         <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
@@ -155,7 +160,7 @@ import {
 import { useNotify } from "@/hooks/notify";
 import { computed, onMounted, ref } from "vue";
 
-const notify = useNotify()
+const notify = useNotify();
 
 const selected = ref("gift");
 const depositData = ref({
@@ -226,8 +231,8 @@ onMounted(() => {
       font-weight: 600;
       line-height: 33.6px;
       &-ol {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
         img {
           width: 80%;
           margin: 0 auto;
@@ -293,28 +298,25 @@ onMounted(() => {
     }
   }
 }
+.description-block-event-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-.description-block {
-  .description-block-event-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  .description-block-event-content-title {
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding: 3px 28px;
+    clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 23.33px;
+    color: #fff;
+  }
 
-    .description-block-event-content-title {
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-      padding: 3px 28px;
-      clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 23.33px;
-      color: #fff;
-    }
-
-    span {
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-    }
+  span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
   }
 }
 
@@ -370,7 +372,9 @@ onMounted(() => {
     border-radius: 30px;
     overflow: hidden;
     width: 400px;
-    box-shadow: 0px 2px 4.58px 0px rgba(154, 206, 255, 1) inset, 0px -1px 3.66px 0px rgba(106, 184, 255, 1) inset;
+    box-shadow:
+      0px 2px 4.58px 0px rgba(154, 206, 255, 1) inset,
+      0px -1px 3.66px 0px rgba(106, 184, 255, 1) inset;
     .switch-option {
       flex: 1;
       padding: 10px;
