@@ -377,7 +377,7 @@ const handleVoteClick = (selectedData) => {
         message: "请登录后再操作",
         ok: {
           push: true,
-          color: 'primary',
+          color: 'dyblue',
           label: "去登录",
           tabindex: 1
         },
