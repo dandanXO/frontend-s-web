@@ -6,84 +6,76 @@
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
-        <div class="navigations" style="margin-right: auto;">
+        <div class="navigations" style="margin-right: auto">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
-              <div class="header-menu-item">
+              <div
+                class="header-menu-item"
+                :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
+              >
                 <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
-                  <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
-                    <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    />
-                    <h2 class="nav-title active">{{ nav.name }}</h2>
-                  </template>
-                  <template v-else>
-                    <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
-                    <h2 class="nav-title">{{ nav.name }}</h2>
-                  </template>
+                  <h2 class="nav-title">{{ nav.name }}</h2>
                 </a>
               </div>
             </template>
           </template>
         </div>
 
-<!--        <div class="navigations second-nav">-->
-<!--          <template v-for="nav in navigations" :key="nav.name">-->
-<!--            <template v-if="nav.hasicon">-->
-<!--              <div class="header-menu-item">-->
-<!--                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">-->
-<!--                  <span>-->
-<!--                    <img-->
-<!--                      class="hover-icon"-->
-<!--                      src="../../assets/images/home/header-promo-icon.svg"-->
-<!--                      v-if="nav.code === 'Promotion'"-->
-<!--                    />-->
-<!--                    <img-->
-<!--                      class="hover-icon"-->
-<!--                      src="../../assets/images/home/header-affiliate-icon.svg"-->
-<!--                      v-if="nav.code === 'Agent'"-->
-<!--                    />-->
-<!--                    <img-->
-<!--                      class="hover-icon"-->
-<!--                      src="../../assets/images/home/header-download-icon.svg"-->
-<!--                      v-if="nav.code === 'App'"-->
-<!--                    />-->
-<!--                    <img-->
-<!--                      class="hover-icon"-->
-<!--                      src="../../assets/images/home/header-vip-icon.svg"-->
-<!--                      v-if="nav.code === 'VIP'"-->
-<!--                    />-->
-<!--                  </span>-->
-<!--                  <span>{{ nav.name }}</span>-->
-<!--                </router-link>-->
-<!--              </div>-->
-<!--            </template>-->
-<!--          </template>-->
+        <!--        <div class="navigations second-nav">-->
+        <!--          <template v-for="nav in navigations" :key="nav.name">-->
+        <!--            <template v-if="nav.hasicon">-->
+        <!--              <div class="header-menu-item">-->
+        <!--                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">-->
+        <!--                  <span>-->
+        <!--                    <img-->
+        <!--                      class="hover-icon"-->
+        <!--                      src="../../assets/images/home/header-promo-icon.svg"-->
+        <!--                      v-if="nav.code === 'Promotion'"-->
+        <!--                    />-->
+        <!--                    <img-->
+        <!--                      class="hover-icon"-->
+        <!--                      src="../../assets/images/home/header-affiliate-icon.svg"-->
+        <!--                      v-if="nav.code === 'Agent'"-->
+        <!--                    />-->
+        <!--                    <img-->
+        <!--                      class="hover-icon"-->
+        <!--                      src="../../assets/images/home/header-download-icon.svg"-->
+        <!--                      v-if="nav.code === 'App'"-->
+        <!--                    />-->
+        <!--                    <img-->
+        <!--                      class="hover-icon"-->
+        <!--                      src="../../assets/images/home/header-vip-icon.svg"-->
+        <!--                      v-if="nav.code === 'VIP'"-->
+        <!--                    />-->
+        <!--                  </span>-->
+        <!--                  <span>{{ nav.name }}</span>-->
+        <!--                </router-link>-->
+        <!--              </div>-->
+        <!--            </template>-->
+        <!--          </template>-->
 
-<!--          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">-->
-<!--            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />-->
-<!--            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />-->
-<!--            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />-->
-<!--            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />-->
-<!--            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />-->
-<!--            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
-<!--            <FishingMenu ref="el" v-if="selectedMenu === 'others'" @load-modal="openGame" />-->
-<!--            <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />-->
-<!--            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />-->
-<!--            <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />-->
-<!--            <AppMenu ref="el" v-if="selectedMenu === 'App'" />-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">-->
+        <!--            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />-->
+        <!--            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />-->
+        <!--            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />-->
+        <!--            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />-->
+        <!--            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />-->
+        <!--            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
+        <!--            <FishingMenu ref="el" v-if="selectedMenu === 'others'" @load-modal="openGame" />-->
+        <!--            <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />-->
+        <!--            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />-->
+        <!--            <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />-->
+        <!--            <AppMenu ref="el" v-if="selectedMenu === 'App'" />-->
+        <!--          </div>-->
+        <!--        </div>-->
 
         <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
-
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
           <a class="header-btn btn-color-white" @click="registerDialogVisible = true">
             {{ $t("common.register") }}
-            <img src="../../assets/home/regbtn_side.png" />
+            <!-- <img src="../../assets/home/regbtn_side.png" /> -->
           </a>
         </div>
 
@@ -173,7 +165,7 @@
                 <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
+                  <span v-if="!isLoadingBalance">{{ displayBalance(store.balance) }} {{ store.currency.value }}</span>
                 </span>
               </div>
               <el-icon>
@@ -311,11 +303,14 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container login-container" :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : '' ">
-        <div class="acc-dialog-left" >
+      <div
+        class="acc-dialog-container login-container"
+        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
+      >
+        <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
           <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
-          <img v-else  src="../../assets/home/tf88club-img.png">
+          <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -529,15 +524,15 @@ export default defineComponent({
       if (store && store.token && store.memberType === 'TEST') {
         return [
           { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
           { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
           { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
-          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          // { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          // { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
-          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           {
             code: "Promotion",
             name: t('menu.promotion'),
@@ -557,13 +552,13 @@ export default defineComponent({
           { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
           { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
-          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          // { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          // { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           // { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
           { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
-          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           {
             code: "Promotion",
             name: t('menu.promotion'),
@@ -1968,7 +1963,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -2550,7 +2545,6 @@ body {
       }
 
       .login-container {
-
         .acc-dialog-left {
           display: flex;
           align-items: flex-end;
@@ -2559,33 +2553,28 @@ body {
           background-position: center center;
           min-height: 500px;
 
-
           img {
             display: block;
             // width: 100%;
             width: calc(100% + 90px);
             margin: -50px 0px -45px -90px;
           }
-
-
-
         }
 
-        &.acc-dialog-landing{
-          .acc-dialog-left{
+        &.acc-dialog-landing {
+          .acc-dialog-left {
             background-image: url(../../assets/home/tf88club.png);
-            max-height:95vh;
+            max-height: 95vh;
 
-            img{
+            img {
               width: calc(100% + 20px);
               margin: -50px -10px 0px -10px;
             }
           }
 
-          .acc-dialog-right{
+          .acc-dialog-right {
             padding-left: 20px;
           }
-
         }
       }
 
@@ -2727,16 +2716,34 @@ body {
 .header-menu-item {
   position: relative;
   // display: flex;
+
+  &.active {
+    .nav-title {
+      color: #468cff;
+    }
+    &::after {
+      display: block;
+      content: "";
+      position: absolute;
+      border-radius: 4px;
+      width: 80%;
+      height: 3px;
+      background-color: #468cff;
+      transform: translateX(-50%);
+      bottom: -20px;
+      left: 50%;
+    }
+  }
   a {
     position: relative;
   }
 
   .nav-title {
-    position: absolute;
+    // position: absolute;
     margin: 0px;
-    bottom: 17px;
-    font-size: 11px;
-    line-height: 10px;
+    // bottom: 17px;
+    font-size: 16px;
+    line-height: 22px;
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
@@ -2744,11 +2751,6 @@ body {
     letter-spacing: 1px;
     text-align: center;
     font-weight: bold;
-
-    &.active {
-      //font-weight: 500;
-      color: #fff;
-    }
   }
 }
 </style>

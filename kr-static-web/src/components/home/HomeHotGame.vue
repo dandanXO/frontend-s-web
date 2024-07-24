@@ -120,7 +120,7 @@
                 class="common-btn game-start-btn"
                 @click="onEnterGameClick(hotgame, hotgame.type)"
               >
-                {{ hotgame.type !== "slot" ? $t('hotGame.enterGame') : $t('hotGame.enterPlat') }}
+                {{ hotgame.type !== "slot" ? $t("hotGame.enterGame") : $t("hotGame.enterPlat") }}
               </el-button>
             </template>
 
@@ -133,7 +133,7 @@
                 "
                 class="maintenance-p"
               >
-                {{ $t('hotgame.maintenanceTime') }}:
+                {{ $t("hotgame.maintenanceTime") }}:
                 <em>
                   {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
                   {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
@@ -174,8 +174,8 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
-import { i18nStore } from '@/store/language';
-import { storeToRefs } from 'pinia';
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
 import * as _ from "lodash";
 import {
   eSportsPlatforms,
@@ -189,14 +189,14 @@ import {
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 
-const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage)
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
 const { t } = useI18n();
 const store = userStore();
 const router = useRouter();
 const platformGame = ref();
 
-const isDark = useDark();
+// const isDark = useDark();
 
 const hotgameData = ref([
   {
@@ -811,7 +811,7 @@ $transition_timer: 0.5s;
           padding: 1rem 4px;
           border-radius: 2.875rem;
           background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-          box-shadow: 0px 2px 4.58px 0px #FFA09A inset;
+          box-shadow: 0px 2px 4.58px 0px #ffa09a inset;
           overflow: hidden;
           position: relative;
           z-index: 1;
@@ -822,8 +822,8 @@ $transition_timer: 0.5s;
             color: white;
             // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
             // box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.664px 0px #275ec1 inset;
-            background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
-            box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
+            background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+            box-shadow: 0px -2.3px 5.26px 0px #ffa09a inset, 0px -1.15px 4.21px 0px #ff736a inset;
           }
 
           .hotgame-icon {
@@ -863,7 +863,7 @@ $transition_timer: 0.5s;
               // word-break: break-all;
               text-align: center;
               font-family: PingFang SC;
-              font-size: .756rem;
+              font-size: 0.756rem;
               font-weight: 600;
               line-height: 1.2rem;
             }
@@ -942,24 +942,24 @@ $transition_timer: 0.5s;
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
               word-break: keep-all;
-              background: linear-gradient(180deg, #BC4C4C 0%, #FD574C 100%);
+              background: linear-gradient(180deg, #bc4c4c 0%, #fd574c 100%);
 
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
               text-fill-color: transparent;
-              filter: drop-shadow(2px 1px #FFA09A);
+              filter: drop-shadow(2px 1px #ffa09a);
             }
 
             .subtitle {
               font-size: 2.70775rem;
-              background: linear-gradient(180deg, #BC4C4C 0%, #FD574C 100%);
+              background: linear-gradient(180deg, #bc4c4c 0%, #fd574c 100%);
 
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
               text-fill-color: transparent;
-              filter: drop-shadow(2px 1px #FFA09A);
+              filter: drop-shadow(2px 1px #ffa09a);
             }
           }
 
@@ -967,13 +967,13 @@ $transition_timer: 0.5s;
             display: flex;
             flex-direction: column;
             align-items: center;
-          max-height: 120px;
-          justify-content: flex-start;
-          overflow: hidden;
+            max-height: 120px;
+            justify-content: flex-start;
+            overflow: hidden;
           }
 
           .desc {
-            color: #0E0100;
+            color: #0e0100;
             font-family: Microsoft YaHei;
             font-size: 0.83838rem;
             font-weight: 400;
@@ -1034,13 +1034,13 @@ $transition_timer: 0.5s;
                 height: 2rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
-                border: 1px solid #FD574C;
+                border: 1px solid #fd574c;
                 background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
                 object-fit: contain;
 
                 &.active {
                   border: 0px;
-                  background: linear-gradient(180deg, #FCFCFC -11.46%, #FD574C 100%);
+                  background: linear-gradient(180deg, #fcfcfc -11.46%, #fd574c 100%);
                   box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
@@ -1055,19 +1055,19 @@ $transition_timer: 0.5s;
                 white-space: nowrap;
 
                 &.active {
-                  color: #0E0100;
+                  color: #0e0100;
                   font-weight: 700;
                 }
               }
 
               &:hover {
                 .game-provider-text {
-                  color: #0E0100;
+                  color: #0e0100;
                   font-weight: 700;
                 }
                 .game-provider-img {
                   border: 0px;
-                  background: linear-gradient(180deg, #FCFCFC -11.46%, #FD574C 100%);
+                  background: linear-gradient(180deg, #fcfcfc -11.46%, #fd574c 100%);
                   box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
@@ -1089,8 +1089,8 @@ $transition_timer: 0.5s;
             width: 10rem;
             height: 2.5rem;
             border-radius: 1.875rem;
-            background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
-            box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
+            background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+            box-shadow: 0px -2.3px 5.26px 0px #ffa09a inset, 0px -1.15px 4.21px 0px #ff736a inset;
             font-family: Microsoft YaHei;
             font-size: 1.15281rem;
             font-weight: 400;
@@ -1432,13 +1432,13 @@ $transition_timer: 0.5s;
       .hotgame-wrapper {
         .hotgame-banner-wrapper {
           .hotgame-banner {
-            background: linear-gradient(180deg, #00273D 0%, #02132C 100%);
-            box-shadow: 0px -1px 3.66px 0px #11131E inset;
+            background: linear-gradient(180deg, #00273d 0%, #02132c 100%);
+            box-shadow: 0px -1px 3.66px 0px #11131e inset;
             // color: $font-5-dark;
 
             &.highlight {
               // background: $active-color-dark-linear;
-              box-shadow: 0px -2px 4.58px 0px #FFDCBB inset;
+              box-shadow: 0px -2px 4.58px 0px #ffdcbb inset;
               color: $color-white;
             }
 
@@ -1450,31 +1450,31 @@ $transition_timer: 0.5s;
 
         .hotgame-content-wrapper {
           // @include content-block-dark;
-          background: linear-gradient(180deg, #1B202D 0%, #00010B 100%);
+          background: linear-gradient(180deg, #1b202d 0%, #00010b 100%);
 
           .left-container {
             .title-wrapper {
               .title,
               .subtitle {
-                background: linear-gradient(180deg, #C2FBFB 0%, #299AAD 100%);
+                background: linear-gradient(180deg, #c2fbfb 0%, #299aad 100%);
                 background-clip: text;
               }
             }
 
             .description {
-                .desc {
-                  color: $font-3;
-                }
+              .desc {
+                color: $font-3;
               }
+            }
 
             .game-provider-wrapper {
               .game-provider {
                 .game-provider-img {
                   background: linear-gradient(180deg, #113765 0%, #212428 100%);
-                  border-color: #36677C;
+                  border-color: #36677c;
                   &.active {
-                    background: linear-gradient(180deg, #38D2DA 0%, #1B7893 100%);
-                    border-color: #52E4ED;
+                    background: linear-gradient(180deg, #38d2da 0%, #1b7893 100%);
+                    border-color: #52e4ed;
                     box-shadow: 0px 3.35px 3.35px 0px #00000040;
                   }
                 }
@@ -1485,7 +1485,7 @@ $transition_timer: 0.5s;
             }
 
             .game-start-btn {
-              background: linear-gradient(180deg, #3BDCE2 0%, #18708E 100%);
+              background: linear-gradient(180deg, #3bdce2 0%, #18708e 100%);
               box-shadow: none;
             }
           }

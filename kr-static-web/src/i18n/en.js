@@ -237,8 +237,8 @@ export default {
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
-    invalidPhoneLength: 'Mobile number must be 10 digits long.',
-    invalidPhoneStartsWith0: 'Mobile number must start with 0.',
+    invalidPhoneLength: "Mobile number must be 10 digits long.",
+    invalidPhoneStartsWith0: "Mobile number must start with 0.",
     phoneVerification: "Please enter phone verification",
     min6: "Length should be 6 characters",
     lessthan50: "Length should be 50 characters",
@@ -300,7 +300,7 @@ export default {
     claim: "Claim",
 
     record_win_status: "Win status",
-    record_win_prize: "Winner Prize",
+    record_win_prize: "Winner Prize"
   },
   mail: {
     inbox: "Inbox",
@@ -362,17 +362,17 @@ export default {
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
-    referralBonus: "Simply refer customers to join at TF88 and you will receive a bonus of 300 VNDP each.",
+    referralBonus: "Simply refer customers to join at TF88 and you will receive a bonus of 300 원 each.",
     eligibilityConditions:
       "To be eligible to receive the bonus, you will need to meet some of the following conditions:",
     referrerConditions: "Referrer (you): ",
-    referrerConditions1: "Minimum total valid bet amount at least 10,000 VNDP",
+    referrerConditions1: "Minimum total valid bet amount at least 10,000 원",
     referrerConditions2: "Reach vip level 1 or higher",
     presenteeConditions: "Referred (your friend):",
     presenteeConditions1: "Sign up for an account during the promotion period via specified refer a friend link.",
     presenteeConditions2: "Never registered at TF88 and do not have any other account at TF88.",
     presenteeConditions3:
-      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000VNDP.",
+      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000원.",
     specifiedLink:
       'Members can get specified refer a friend link in "Personal information - Refer a friend". You will then send the referral link to your friend for them to click and register an account with via the link. ',
     promotionReview:
@@ -403,7 +403,7 @@ export default {
     inputUSDT: "Input USDT",
     chooseAmt: "Choose Amount",
     note: "Please note:",
-    notept1: "The transaction unit in the game is TF VNDP, 1 VNDP = 1,000VND",
+    notept1: "The transaction unit in the game is TF 원, 1 원 = 1,000VND",
     redirected: "You will be redirected to your bank page to complete the deposit",
     successful: "If successful, you will receive a notification on this page",
     deposited: "Deposited",
@@ -698,13 +698,13 @@ export default {
   },
   vip: {
     vipTerms: "Terms & Conditions",
-    tnc1: "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
+    tnc1: "The program applies to all members who have a valid 원 account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
     tnc2: "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     tnc3: "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
     tnc4: "The Upgrade Bonus cannot be claimed at the same time as the Monthly Bonus. If member is promoted to VIP this month, member will receive Upgrade Bonus. The system will review the Monthly Bonus for accounts that have not been promoted to VIP this month and have met the requirements to maintain the VIP level.",
-    tnc5: "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 VNDP total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
+    tnc5: "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 원 total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
     tnc6: "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
-    tnc7: "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
+    tnc7: "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 원 per day and is not limited to other products.",
     tnc8: "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms & conditions of the promotion apply.",
     tnc9: "TF88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
     vipMaintainRequired: "VIP MAINTAIN REQUIRED",
@@ -785,9 +785,9 @@ export default {
     esportapp: "Esports App",
     firstSlide: "DOWN LOAD APPS",
     firstSlideContent: "Super smooth experience on TF88's high class apps",
-    firstSlideSub: "DOWNLOAD +60 VNDP",
+    firstSlideSub: "DOWNLOAD +60 원",
     secondSlide: "GET WELCOME BONUS",
-    secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 VNDP",
+    secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 원",
     thirdSlide: "ESPORTS BETTING DEVELOPER",
     thirdSlideContent:
       "TF88 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
