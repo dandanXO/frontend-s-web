@@ -1463,8 +1463,8 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_vn = casualObj.name + " Hash Game";
-              casualObj.title_en = casualObj.name + " Hash Game";
+              casualObj.title_vn = casualObj.name + " Mini Game";
+              casualObj.title_en = casualObj.name + " Mini Game";
 
               casualObj.icon = "casual";
               casuals.value.push(casualObj);
