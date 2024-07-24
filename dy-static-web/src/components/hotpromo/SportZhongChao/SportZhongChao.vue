@@ -341,12 +341,17 @@ import { getSportMatch } from "@/api/index/promo";
 import MatchGame from "./components/MatchGame.vue";
 import { useLocalStorage } from "@vueuse/core";
 
+import { userStore } from "@/store";
+const store = userStore()
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const tab = ref("first");
 const matchList = ref([]);
 
 onMounted(async () => {
+  if(!store.token) {
+    return
+  }
   const apiRes = await getSportMatch();
   if (apiRes.data) {
     matchList.value = apiRes.data.map((match) => ({

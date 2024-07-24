@@ -360,7 +360,12 @@ const getNbaMatchData = async () => {
   }));
 };
 
-onMounted(getNbaMatchData);
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+  getNbaMatchData
+});
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {

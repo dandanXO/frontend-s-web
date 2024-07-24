@@ -132,6 +132,9 @@ const onSlideChange = () => {};
 // };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getupcomingMatchDetails();
 });
 </script>

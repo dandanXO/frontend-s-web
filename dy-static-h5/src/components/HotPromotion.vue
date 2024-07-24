@@ -1,7 +1,7 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-      v-if="listParam.type === 'claimpromo' && store.hasToken()"
+      v-if="listParam.type === 'claimpromo'"
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :loading-claim="btnLoading"
@@ -238,26 +238,6 @@ export default defineComponent({
     }
   },
   methods: {
-    handleSlot() {
-      const bonusItem = this.list.promoCode;
-      const eventUrl = "/bonus/claim/" + bonusItem;
-      this.btnLoading = true;
-      eventapi
-        .put(eventUrl)
-        .then((res) => {
-          this.btnLoading = false;
-          if (res.code === 0) {
-            var rebatePoint = res.data;
-            this.claimMsg = "￥" + rebatePoint;
-            this.isClaimModal = true;
-          } else {
-            this.btnLoading = false;
-          }
-        })
-        .catch((error) => {
-          this.btnLoading = false;
-        });
-    }
   },
   mounted() {
     this.hotPromoList.forEach((element) => {
@@ -280,6 +260,49 @@ export default defineComponent({
     const store = userStore();
     var qs = require("qs");
 
+    const handleSlot = () => {
+      if (!store.token) {
+        $q.dialog({
+            class: "q-px-md q-pt-md",
+            title: "系统提示",
+            message: "请登录后再操作",
+            ok: {
+              push: true,
+              color: 'primary',
+              label: "去登录",
+              tabindex: 1
+            },
+            cancel: {
+              push: true,
+              color: 'warning',
+              label: "取消",
+              tabindex: 0
+            },
+            persistent: true,
+          }).onOk(() => {
+            router.push('/login');
+          })
+          return
+      }
+      const bonusItem = this.list.promoCode;
+      const eventUrl = "/bonus/claim/" + bonusItem;
+      this.btnLoading = true;
+      eventapi
+        .put(eventUrl)
+        .then((res) => {
+          this.btnLoading = false;
+          if (res.code === 0) {
+            var rebatePoint = res.data;
+            this.claimMsg = "￥" + rebatePoint;
+            this.isClaimModal = true;
+          } else {
+            this.btnLoading = false;
+          }
+        })
+        .catch((error) => {
+          this.btnLoading = false;
+        });
+    }
     const loading = ref(false);
     const btnLoading = ref(false);
     const isClaimModal = ref(false);
@@ -370,7 +393,8 @@ export default defineComponent({
       btnLoading,
       isClaimModal,
       claimMsg,
-      goToCsChat
+      goToCsChat,
+      handleSlot
     };
   }
 });

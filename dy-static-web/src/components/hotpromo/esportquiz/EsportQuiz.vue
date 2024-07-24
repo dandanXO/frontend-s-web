@@ -176,7 +176,7 @@
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   getSportMatchQuizInfo,
   getMemberSportMatchRecord,
@@ -189,7 +189,6 @@ const store = userStore();
 
 onMounted(() => {
   if (!store.token) {
-    ElMessage.error("请登录后操作");
     return;
   }
 
@@ -202,6 +201,19 @@ const uiIsShowStatus = reactive({
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
 }

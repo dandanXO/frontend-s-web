@@ -273,7 +273,9 @@ import {
 } from "@/api/index/promo";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
+import { userStore } from "@/store";
 import { useNotify } from "@/hooks/notify";
+const store = userStore()
 
 const notify = useNotify();
 
@@ -363,6 +365,13 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    notify({
+      message: "请登录后操作",
+      type: "error"
+    });
+    return;
+  }
   getData();
 });
 </script>

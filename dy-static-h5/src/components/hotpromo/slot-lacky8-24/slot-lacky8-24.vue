@@ -300,8 +300,13 @@ const getSlotLucky8Data = async () => {
   const res = await getSlotLucky8(promoCode.value);
   tableData.value = res.data
 };
-
-onMounted(getSlotLucky8Data);
+onMounted(() => {
+  
+  if(!store.token) {
+    return
+  }
+  getSlotLucky8Data
+});
 
 </script>
 

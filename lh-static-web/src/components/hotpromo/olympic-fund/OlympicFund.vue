@@ -153,8 +153,10 @@ import {
   getOlympicFirstDeposit
 } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 import { computed, onMounted, ref } from "vue";
-
+import { ElMessage, ElMessageBox } from "element-plus";
+const store = userStore()
 const notify = useNotify()
 
 const selected = ref("gift");
@@ -170,6 +172,19 @@ const isGiftSelected = computed(() => selected.value === "gift");
 const selectOption = (value) => (selected.value = value);
 
 const handleClick = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
@@ -181,6 +196,13 @@ const handleClick = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getOlympicFirstDeposit().then((res) => {
     if (res.code === 0) {
       const { todayFirstDepositAmount, claimableAmount } = res.data;

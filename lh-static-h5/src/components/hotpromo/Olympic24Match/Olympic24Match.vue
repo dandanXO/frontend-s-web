@@ -124,7 +124,7 @@
           <div class="olympic24-match-game-bottom-left-title">
             注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
           </div>
-          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
+          <div class="olympic24-match-game-bottom-left-btn" @click="showTableRecordDialog">[投票记录]</div>
         </div>
       </div>
       <div class="olympic24-match-game-bottom-rule">
@@ -206,7 +206,7 @@
           </table>
         </div>
       </el-dialog> -->
-      <q-dialog v-model="tableRecordDialog" full-width position="bottom" class="olympic24-match-table-record-dialog">
+      <q-dialog v-if="recordsCount" v-model="tableRecordDialog" full-width position="bottom" class="olympic24-match-table-record-dialog">
         <div class="record-dialog-container">
           <div class="record-header-container">
             <div class="title"></div>
@@ -290,7 +290,11 @@ import {
 import { useQuasar } from "quasar";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
+import { userStore } from "../../../stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+const store = userStore();
 const notify = useNotify()
 const $q = useQuasar();
 
@@ -303,6 +307,32 @@ const recordList = ref([]);
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
+const showTableRecordDialog = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
+  tableRecordDialog.value = true
+}
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -409,6 +439,9 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getData();
 });
 </script>

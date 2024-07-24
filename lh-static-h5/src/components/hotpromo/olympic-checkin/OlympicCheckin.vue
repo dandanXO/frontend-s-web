@@ -78,7 +78,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { userStore } from "src/stores";
+import { userStore } from "../../../stores/index";
 import { useQuasar } from "quasar";
 import { initUefaCheckin, claimUefaCheckin } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
@@ -124,6 +124,9 @@ const checkInToday = (i) => {
   }
 };
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   init();
 });
 </script>

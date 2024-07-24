@@ -83,7 +83,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { getRecords, getSpinWheelPrize, initSpinWheelData } from "@/api/promotion/cnySpinWheel";
 import moment from "moment";
@@ -186,6 +186,19 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   if (spinButtonDisable.value === true) {
     return;
   }
@@ -239,6 +252,13 @@ const initSpinWheel = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // ElMessage({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
     var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;

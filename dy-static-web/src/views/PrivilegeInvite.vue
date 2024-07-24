@@ -454,8 +454,12 @@ export default defineComponent({
           center: true,
           confirmButtonText: "确认",
           showClose: false,
-          buttonSize: "large"
+          buttonSize: "large",
+          closeOnClickModal: true
+        }).then(() => {
+          store.loginPageVisible = true;
         });
+        return;
       }
 
       isCheckRecordModalVisible.value = toggleStatus;
@@ -482,6 +486,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (!store.token) {
+          return
+      }
       getRebateInfo().then((data) => {
         rebateInfo.value = data;
       });

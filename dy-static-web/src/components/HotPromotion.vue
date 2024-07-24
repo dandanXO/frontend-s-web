@@ -134,7 +134,7 @@ import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -286,6 +286,20 @@ export default defineComponent({
   },
   methods: {
     handleSlot() {
+      const store = userStore();
+      if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
 

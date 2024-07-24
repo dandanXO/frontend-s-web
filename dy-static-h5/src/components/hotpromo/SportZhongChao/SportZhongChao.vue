@@ -388,6 +388,9 @@ import { ref, onMounted } from "vue";
 import { getSportMatch } from "src/api/index/promo";
 import MatchGame from "./components/MatchGame.vue";
 import { useLocalStorage } from "@vueuse/core";
+import { userStore } from "../../../stores/index";
+
+const store = userStore();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
 const slide = ref(0);
@@ -396,6 +399,9 @@ const tab = ref("first");
 const matchList = ref([]);
 
 onMounted(async () => {
+  if(!store.token) {
+    return
+  }
   const apiRes = await getSportMatch();
   matchList.value = apiRes.data.map((res) => ({
     ...res,

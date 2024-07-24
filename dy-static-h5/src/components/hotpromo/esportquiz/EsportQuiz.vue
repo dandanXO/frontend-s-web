@@ -209,18 +209,14 @@ import {
   getMemberSportQuizTotal
 } from "../../../api/index/promo";
 import moment from "moment";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const $q = useQuasar();
 const store = userStore();
 
 onMounted(() => {
   if (!store.token) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "请登录后操作",
-      icon: "report_problem"
-    });
     return;
   }
 
@@ -234,6 +230,29 @@ const uiIsShowStatus = reactive({
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
 }

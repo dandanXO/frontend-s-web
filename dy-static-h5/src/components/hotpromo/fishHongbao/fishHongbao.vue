@@ -149,7 +149,13 @@ const getHongbao = async () => {
   }
 };
 
-onMounted(getHongbao);
+onMounted(() => {
+  
+  if (!store.token) {
+    return;
+  }
+  getHongbao
+});
 
 const claimHongBao = async () => {
   const res = await getHongbaoMoney();

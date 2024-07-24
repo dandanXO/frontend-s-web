@@ -366,6 +366,9 @@ const getData = () => {
   });
 };
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   getData();
 });
 </script>

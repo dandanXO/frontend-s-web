@@ -241,12 +241,16 @@ const cardWon = ref("");
 const store = userStore();
 const router = useRouter();
 onMounted(() => {
-  if (store.token) {
-    pageInit();
-    loadRanking();
-  } else {
-    router.push("/login");
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
   }
+  
+  pageInit();
+    loadRanking();
 });
 const formLabelWidth = "140px";
 
