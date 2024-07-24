@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? "VNDP " + mainWallet : $t("lang.loading") }}
+              {{ !isLoadingBalance ? mainWallet + " 원" : $t("lang.loading") }}
             </div>
           </div>
         </q-card-section>
@@ -100,11 +100,11 @@
             <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
             <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
-            <div class="eshare-div">
+          <div class="eshare-div">
             <span v-if="store.evip">
               {{ $t("lang.personal_exclusiveurl") }}:
-              <a class="share-link" :href="'https://' +store.evip" target="_blank">
-                {{ 'https://' + store.evip }}
+              <a class="share-link" :href="'https://' + store.evip" target="_blank">
+                {{ "https://" + store.evip }}
               </a>
               <!-- <img
                 class="copy-btn btn-pointer"
@@ -392,7 +392,7 @@ import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import LangOptions from "components/LangOptions";
@@ -498,7 +498,7 @@ export default defineComponent({
       getVipProgress();
     });
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
@@ -879,32 +879,31 @@ export default defineComponent({
         }
       }
     }
-
   }
 
   .eshare-div {
-      margin-right: auto;
-      width: 100%;
-      color: #A4AABB;
-      font-size: 1rem;
-      // font-weight: bold;
+    margin-right: auto;
+    width: 100%;
+    color: #a4aabb;
+    font-size: 1rem;
+    // font-weight: bold;
 
-      > span {
-        display: flex;
-        justify-content: flex-start;
-        gap: 10px;
-          }
-
-      .copy-btn {
-        width: 20px;
-      }
-
-      .share-link {
-        color: $white;
-        font-weight: bold;
-        text-decoration: none;
-      }
+    > span {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
     }
+
+    .copy-btn {
+      width: 20px;
+    }
+
+    .share-link {
+      color: $white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
   //.bluecard {
   //  width: 98%;
   //  margin: 0 0px !important;

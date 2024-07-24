@@ -74,7 +74,7 @@
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
         </q-route-tab>
-        <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="cs" class="cs-web-id sm-screen-txt">
+        <q-route-tab to="/liveChat" id="cs-web-id" name="cs" class="cs-web-id sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
           <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
           {{ $t("lang.customer_service") }}

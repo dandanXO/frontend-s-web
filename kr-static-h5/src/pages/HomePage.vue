@@ -226,7 +226,7 @@
         {{
           store.token
             ? !isLoadingBalance
-              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })
+              ? mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원"
               : $t("lang.loading")
             : $t("lang.not_logged_in")
         }}
@@ -667,17 +667,17 @@
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <!-- <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a> -->
       <!-- <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a> -->
-      <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
+      <a href="https://t.me/cityy88" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
       <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a> -->
-      <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
+      <!-- <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
-      </a>
+      </a> -->
     </div>
   </div>
 

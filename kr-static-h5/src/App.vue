@@ -28,7 +28,6 @@ export default defineComponent({
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
 
-
     let csclient;
     let CSAUrl;
 
@@ -128,7 +127,7 @@ export default defineComponent({
       //   affiliateCode = "3B1BFB";
       // }
 
-      if(affiliateCode) {
+      if (affiliateCode) {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
         api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
           if (res.code === 0) {
@@ -193,7 +192,7 @@ export default defineComponent({
 
       // 'XFCS' / 2
       // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient("TF88", regDevice, "vn", "2", "prod", `https://${CSAUrl}`);
+      csclient = new CsClient("KRWCS", regDevice, "kr", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("bottom", "77");
       csclient.set("pageurl", "/liveChat");
@@ -230,7 +229,7 @@ export default defineComponent({
     const checkSID = async () => {
       const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
       store.visitorId = visitorId;
-    }
+    };
 
     const getOnlineStatApi = async () => {
       const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
