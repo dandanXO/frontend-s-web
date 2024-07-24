@@ -572,7 +572,7 @@ export default {
     affiliateDomainList: '代理域名列表',
     affiliateFinancialManagement: '代理支付管理',
     affiliateFBRequestList: '代理 Facebook 像素列表',
-    affiliateFBRequestUrl: '代理 Facebook 像素域名',
+    affiliateFBRequestUrl: '代理域名',
     affiliateDepositChannel: '代理支付渠道',
     affiliateH5Link: 'H5版代理链接',
     affiliateInfo: '代理信息',

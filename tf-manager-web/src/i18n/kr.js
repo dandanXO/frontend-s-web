@@ -518,7 +518,7 @@ export default {
     affiliateDomainList: '제휴 도메인 목록',
     affiliateFinancialManagement: '제휴 금융 관리',
     affiliateFBRequestList: 'Affiliate Facebook Pixel List',
-    affiliateFBRequestUrl: 'Affiliate Facebook Pixel URL',
+    affiliateFBRequestUrl: 'Affiliate URL',
     affiliateDepositChannel: '제휴 입금 채널',
     affiliateH5Link: '제휴 H5 링크',
     affiliateInfo: '제휴 정보',

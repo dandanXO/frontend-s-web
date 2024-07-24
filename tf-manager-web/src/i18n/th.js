@@ -336,7 +336,7 @@ export default {
     channelName: 'ชื่อช่อง',
     affiliateDomainList: 'รายการโดเมนพันธมิตร',
     affiliateFBRequestList: 'Affiliate Facebook Pixel List',
-    affiliateFBRequestUrl: 'Affiliate Facebook Pixel URL',
+    affiliateFBRequestUrl: 'Affiliate URL',
     affiliateInfo: 'ข้อมูลพันธมิตร',
     affiliateLevel: 'ระดับพันธมิตร',
     affiliateLink: 'ลิงค์พันธมิตร',

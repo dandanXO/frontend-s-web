@@ -569,7 +569,7 @@ export default {
     affiliateDomainList: 'Affiliate Domain List',
     affiliateFinancialManagement: 'Affiliate Financial Management',
     affiliateFBRequestList: 'Affiliate Facebook Pixel List',
-    affiliateFBRequestUrl: 'Affiliate Facebook Pixel URL',
+    affiliateFBRequestUrl: 'Affiliate URL',
     affiliateDepositChannel: 'Affiliate Deposit Channel',
     affiliateH5Link: 'Affiliate H5 Link',
     affiliateInfo: 'Affiliate Information',
