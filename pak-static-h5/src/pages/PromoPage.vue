@@ -81,6 +81,7 @@
                   </div>
                 </div>
               </div>
+              <MediaSettingsComponent />
             </div>
           </div>
           <div v-else class="selected-promo">
@@ -166,6 +167,8 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
+
+
   </div>
 
   <GameModal
@@ -209,6 +212,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -216,7 +220,8 @@ export default defineComponent({
     GameModal,
     HotPromotion,
     ProfileSummary,
-    MoneyRainModal
+    MoneyRainModal,
+    MediaSettingsComponent
   },
   setup() {
     const store = userStore();
@@ -594,7 +599,8 @@ export default defineComponent({
       parsedParamSub,
       parsedParamDate,
       MoneyRainModal,
-      isMoneyRainModal
+      isMoneyRainModal,
+      MediaSettingsComponent
     }
   },
 });
