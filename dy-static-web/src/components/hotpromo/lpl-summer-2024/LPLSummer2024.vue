@@ -259,12 +259,14 @@ const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 onMounted(async () => {
   const apiRes = await getLplSummer24Match();
   console.log(apiRes);
-  matchList.value = apiRes.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
-    teamOneIcon: imgURL + res.teamOneIcon,
-    teamTwoIcon: imgURL + res.teamTwoIcon
-  }));
+  if (apiRes.data) {
+    matchList.value = apiRes.data.map((res) => ({
+      ...res,
+      matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
+      teamOneIcon: imgURL + res.teamOneIcon,
+      teamTwoIcon: imgURL + res.teamTwoIcon
+    }));
+  }
 });
 </script>
 

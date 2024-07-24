@@ -348,11 +348,13 @@ const matchList = ref([]);
 
 onMounted(async () => {
   const apiRes = await getSportMatch();
-  matchList.value = apiRes.data.map((match) => ({
-    ...match,
-    awayTeamIcon: imgURL + match.awayTeamIcon,
-    homeTeamIcon: imgURL + match.homeTeamIcon
-  }));
+  if (apiRes.data) {
+    matchList.value = apiRes.data.map((match) => ({
+      ...match,
+      awayTeamIcon: imgURL + match.awayTeamIcon,
+      homeTeamIcon: imgURL + match.homeTeamIcon
+    }));
+  }
 });
 </script>
 <style lang="scss" scoped>

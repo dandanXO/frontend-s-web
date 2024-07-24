@@ -482,7 +482,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      getRebateInfo().then(({ data }) => (rebateInfo.value = data));
+      getRebateInfo().then((data) => {
+        rebateInfo.value = data;
+      });
 
       const type = route.query.type ?? "";
       if (type) {

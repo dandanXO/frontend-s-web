@@ -216,19 +216,19 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false)
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
-          // if you want to disable its autofocus
-          // autofocus: false,
-          center: true,
-          confirmButtonText: "确认",
-          showClose: false,
-          buttonSize: "large"
-        }).then(() => {
-          store.loginPageVisible = true;
-        });
-        return;
-      } else {
+      // if (!store.token) {
+      //   ElMessageBox.alert("请登录后再操作", "系统提示", {
+      //     // if you want to disable its autofocus
+      //     // autofocus: false,
+      //     center: true,
+      //     confirmButtonText: "确认",
+      //     showClose: false,
+      //     buttonSize: "large"
+      //   }).then(() => {
+      //     store.loginPageVisible = true;
+      //   });
+      //   return;
+      // } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("Dongying-refer")) {
@@ -246,8 +246,9 @@ export default defineComponent({
           isPromoDetail.value = true;
           selectedPromo.value = promo;
         }
-      }
+      // }
     };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type;
       if (type !== "ALL") {
