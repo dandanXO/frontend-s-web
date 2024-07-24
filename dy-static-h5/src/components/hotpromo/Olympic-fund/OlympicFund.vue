@@ -14,6 +14,11 @@
         <span v-else>突破奖</span>
       </div>
 
+      <div class="description-block-event-content">
+        <div class="description-block-event-content-title">活动日期</div>
+        <span>2024年7月25日—2024年8月11日</span>
+      </div>
+
       <div class="bonus-block-content">
         <img v-if="isGiftSelected" src="./img/deposit.svg" />
         <img v-else src="./img/switch.svg" />
@@ -317,27 +322,25 @@ onMounted(() => {
   }
 }
 
-.description-block {
-  .description-block-event-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.description-block-event-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-    .description-block-event-content-title {
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-      padding: 3px 28px;
-      clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
-      font-weight: 600;
-      font-size: 0.75rem;
-      line-height: 1.125rem;
-      color: #fff;
-    }
+  .description-block-event-content-title {
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding: 3px 28px;
+    clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    color: #fff;
+  }
 
-    span {
-      font-weight: 400;
-      font-size: 0.75rem;
-      line-height: 1rem;
-    }
+  span {
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
 

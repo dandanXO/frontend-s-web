@@ -5,7 +5,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年7月25日—2024年8月11日</div>
+          <div class="right">2024年7月24日—2024年8月10日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
