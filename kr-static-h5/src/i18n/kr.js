@@ -61,7 +61,7 @@ export default {
     menu_lottery: "복권",
     menu_slots: "슬롯",
     menu_fishing: "낚시",
-    menu_hashgame: "해시 게임",
+    menu_hashgame: "미니 게임",
     menu_others: "기타",
     menu_cockfighting: "닭싸움",
     menu_minigame: "미니게임",
@@ -101,7 +101,7 @@ export default {
     length_is_4: "길이는 4여야 합니다",
     login_btn: "로그인",
     register_btn: "회원 가입",
-    contact_customer_service: "24/7 고객 서비스에 문의하기",
+    contact_customer_service: "컨설팅 인력",
     password_weak: "약함",
     password_good: "좋음",
     password_strong: "강함",
@@ -238,7 +238,7 @@ export default {
 
     // share
     share_promoshare: "홍보 및 공유",
-    share_promodesc: "초대 링크를 통해 가입하고 입금하는 사용자에게는 최대 2,000 VNDP의 누적 보상을 받을 수 있습니다.",
+    share_promodesc: "초대 링크를 통해 가입하고 입금하는 사용자에게는 최대 2,000 원의 누적 보상을 받을 수 있습니다.",
     share_sponsoredlinks: "후원 링크",
     share_copy: "복사",
     share_copy_success: "성공적으로 복사되었습니다",
@@ -255,16 +255,16 @@ export default {
     share_tnc: "약관 및 조건",
     share_para_title: "친구 소개",
     share_tnc_para_01: "프로모션은 2022년 6월 1일 00:00:00 (GMT +8)부터 시작됩니다.",
-    share_tnc_para_02: "TF88에 친구를 소개하면 성공적으로 소개한 사람마다 300 VNDP를 받을 수 있습니다.",
+    share_tnc_para_02: "TF88에 친구를 소개하면 성공적으로 소개한 사람마다 300 원를 받을 수 있습니다.",
     share_tnc_para_03: "보상을 받으려면 회원은 다음 조건을 충족해야 합니다:",
     share_tnc_para_03_a: "소개하는 회원 (고객)",
-    share_tnc_para_03_a_i: "유효한 총 베팅 금액이 최소 10,000 VNDP 이상이어야 합니다.",
+    share_tnc_para_03_a_i: "유효한 총 베팅 금액이 최소 10,000 원 이상이어야 합니다.",
     share_tnc_para_03_a_ii: "VIP 1 이상의 수준을 달성해야 합니다.",
     share_tnc_para_03_b: "소개받는 회원 (당신의 친구):",
     share_tnc_para_03_b_i: "정해진 친구 초대 링크를 통해 프로모션 기간 내에 계정을 등록해야 합니다.",
     share_tnc_para_03_b_ii: "TF88에 가입한 적이 없으며, TF88에 다른 계정이 없어야 합니다.",
     share_tnc_para_03_b_iii:
-      "첫 입금 거래가 성공적으로 이루어져야 하며, 누적된 유효한 베팅 금액이 최소 4,000 VNDP 이상이어야 합니다.",
+      "첫 입금 거래가 성공적으로 이루어져야 하며, 누적된 유효한 베팅 금액이 최소 4,000 원 이상이어야 합니다.",
     share_tnc_para_04:
       '회원은 "개인정보 - 친구 초대" 메뉴를 통해 친구를 초대할 수 있습니다. 이후 회원은 이 링크를 친구에게 보내 계정을 등록할 수 있습니다.',
     share_tnc_para_05:
@@ -487,7 +487,7 @@ export default {
     vip_monthly_reload: "월간 재충전 보너스",
     vip_exclusive_promotions: "독점 프로모션 및 혜택",
     vip_upgraderequire: "업그레이드 요구 사항",
-    vip_notes: "노트: 모든 프로모션, 입금 및 출금은 VNDP 단위로 계산됩니다.",
+    vip_notes: "노트: 모든 프로모션, 입금 및 출금은 원 단위로 계산됩니다.",
     vip_iron: "철",
     vip_bronze: "동",
     vip_silver: "은",
@@ -507,7 +507,7 @@ export default {
     vip_invitation_to_ee: "독점 이벤트 초대장",
     vip_terms_title: "규칙 및 조건",
     vip_terms_para_01:
-      "이 프로그램은 TF88에서 유효한 VNDP 계정을 가진 모든 회원에게 적용됩니다. 이 프로그램은 매월 유효한 총 베팅 금액을 기준으로 하며, 매월 첫날 00:00:00부터 마지막 날 23:59:59까지 (GMT +8) 집계됩니다.",
+      "이 프로그램은 TF88에서 유효한 원 계정을 가진 모든 회원에게 적용됩니다. 이 프로그램은 매월 유효한 총 베팅 금액을 기준으로 하며, 매월 첫날 00:00:00부터 마지막 날 23:59:59까지 (GMT +8) 집계됩니다.",
     vip_terms_para_02:
       "시스템은 매월 첫날 12:00:00 (GMT +8)에 모든 회원의 VIP 레벨을 자동으로 업그레이드합니다. 단, 회원의 유효한 총 베팅 금액이 해당 VIP 레벨로 승급할 자격이 되어야 합니다. 프로모션은 각 VIP 레벨에 따라 적용되지 않습니다.",
     vip_terms_para_03:
@@ -515,11 +515,11 @@ export default {
     vip_terms_para_04:
       "업그레이드 보너스는 월간 보너스와 동시에 받을 수 없습니다. 회원이 이번 달에 VIP로 승급된 경우, 업그레이드 보너스를 받게 됩니다. 시스템은 이번 달에 VIP로 승급되지 않은 계정의 월간 보너스를 검토합니다.",
     vip_terms_para_05:
-      "월간 보너스: 회원은 보너스를 받기 전에 현재 VIP 레벨 유지 요건을 충족해야 합니다. (예: VIP3에 있는 회원은 이달에 최소 600,000 VNDP의 총 베팅을 해야 합니다). 요건을 충족한 후, 회원은 매월 첫날 VIP 페이지에서 수령 버튼을 클릭할 수 있습니다. 보너스 금액은 해당 VIP 레벨에 따라 다르며, 출금을 위해 3회의 베팅을 완료해야 합니다.",
+      "월간 보너스: 회원은 보너스를 받기 전에 현재 VIP 레벨 유지 요건을 충족해야 합니다. (예: VIP3에 있는 회원은 이달에 최소 600,000 원의 총 베팅을 해야 합니다). 요건을 충족한 후, 회원은 매월 첫날 VIP 페이지에서 수령 버튼을 클릭할 수 있습니다. 보너스 금액은 해당 VIP 레벨에 따라 다르며, 출금을 위해 3회의 베팅을 완료해야 합니다.",
     vip_terms_para_06:
       "생일 보너스: 생일 달에 회원은 고객 서비스에 연락하여 본인 확인을 받고, 현재 VIP 레벨에 해당하는 보너스를 받을 수 있습니다. 모든 확인 정보는 고객 서비스와 함께 진행해야 합니다.",
     vip_terms_para_07:
-      "환급 보너스: 회원은 현재 VIP 레벨에 따라 환급 보너스를 받을 수 있습니다. 온라인 카지노, 슬롯 게임의 환급 보너스는 하루에 50,000 VNDP를 초과할 수 없으며, 다른 제품에 대해서는 제한이 없습니다.",
+      "환급 보너스: 회원은 현재 VIP 레벨에 따라 환급 보너스를 받을 수 있습니다. 온라인 카지노, 슬롯 게임의 환급 보너스는 하루에 50,000 원를 초과할 수 없으며, 다른 제품에 대해서는 제한이 없습니다.",
     vip_terms_para_08:
       "모든 무효 베팅, 취소된 베팅, 양방향 베팅, 유럽 배당률 1.75 미만, 아시아 배당률 0.75 미만, 숫자 게임, 가상 스포츠, RNG 진행형 잭팟, RNG 슬롯 머신은 이 프로그램의 베팅 수익으로 계산되지 않습니다. 프로그램의 일반 조건이 적용됩니다.",
     vip_terms_para_09: "TF88은 사전 통보 없이 이 VIP 회원 프로그램을 수정, 거부 또는 취소할 권리가 있습니다.",
@@ -1430,7 +1430,7 @@ export default {
     firstSlideContent: "TF88의 수준 높은 앱에서 매끄러운 경험을 누리세요",
     firstSlideSub: "다운로드 +60VNPD",
     secondSlide: "매력적인 입금 보너스",
-    secondSlideContent: "입금 보너스 100% 최대 2,000 VNDP",
+    secondSlideContent: "입금 보너스 100% 최대 2,000 원",
     thirdSlide: "E스포츠 개발자",
     thirdSlideContent: "TF88은 아시아 E스포츠 베팅의 선두주자입니다. 매일 500개 이상의 이벤트에 베팅하세요!"
   },

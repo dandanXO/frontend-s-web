@@ -707,6 +707,7 @@ export default defineComponent({
           padding: 32px 24px 16px;
           position: relative;
           border-radius: 12px;
+          min-height: 150px;
 
           .promo-label {
             height: 24px;
@@ -790,6 +791,8 @@ export default defineComponent({
             position: absolute;
             right: 0px;
             top: 50%;
+            width: 50%;
+            height: 100%;
             transform: translateY(-50%);
             // height: 70%;
 
@@ -798,7 +801,9 @@ export default defineComponent({
               // height: 100%;
               // width: auto;
               width: 100%;
-              max-width: calc(100% - 180px);
+              object-fit: contain;
+              object-position: center;
+              height: 96%;
               margin-left: auto;
             }
           }

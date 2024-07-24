@@ -230,8 +230,8 @@
         credited.
       </p>
     </div>
-
-    <div class="bottom-content" style="height: 110px"></div>
+    <MediaSettingsComponent />
+    <div class="bottom-content" style="height: 40px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -303,6 +303,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
+import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -790,7 +791,7 @@ const refreshNode = () => {
 
 const isDepositTutorial = ref(false);
 
-const langSelect= localStorage.getItem("languageLocale") ?? "";
+const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
@@ -805,9 +806,9 @@ const openDepositPage = () => {
 };
 
 const openDepositVideo = () => {
-  if(langSelect==='ur'){
+  if (langSelect === "ur") {
     window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
-  }else{
+  } else {
     window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
   }
   // if (selectedPayType.value === "EASYPAISA") {

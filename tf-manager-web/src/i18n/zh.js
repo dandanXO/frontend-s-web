@@ -477,6 +477,21 @@ export default {
     DEPOSIT: '存款',
     ONE_TIME: '一次',
   },
+  displayLocation: {
+    HOMEPAGE: '首页',
+    PROMO_PAGE: '优惠页面',
+    DEPOSIT_PAGE: '存款页面',
+    WITHDRAW_PAGE: '提款页面',
+    PERSONAL_CENTRE: '个人中心',
+  },
+  mode: {
+    DYNAMIC: '页面浮动',
+    STATIC: '直接显示'
+  },
+  autoplayStatus: {
+    ON: '开',
+    OFF: '关'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -617,6 +632,7 @@ export default {
     auditTime: '审计时间',
     automaticPayment: '自动支付',
     autopay: '自动支付',
+    autoplay: '自动播放',
     automaticPay: '自动支付',
     autoWithdrawSetting: '自动提款设置',
     awards: '奖池',
@@ -845,7 +861,7 @@ export default {
     disable: '禁用',
     disableAffiliate: '禁用代理',
     disableAll: '禁用所有',
-    disableType: '禁用类型',
+    displayUrl: '展示地址',
     distributed: '已发放',
     distributeBy: '派发者',
     distributePrivilege: '发放奖金',
@@ -1085,6 +1101,8 @@ export default {
     maxMemberClaimCountPerRain: '每场红包雨玩家最多领取次数',
     maxMemberClaimCountPerDay: '每日玩家最多领取次数',
     maxWithdrawAmount: '最高提款金额',
+    mediaDesc: '媒体名称',
+    mediaUrl: '媒体地址',
     member: '会员',
     memberBankCard: '会员银行卡',
     memberBankCardRecord: '会员银行卡记录',
@@ -1136,6 +1154,7 @@ export default {
     mobileBanner: '手机广告图',
     mobileMessage: '手机提示信息',
     mobileWay: '移动端',
+    mode: '模式',
     moneyChange: '账变',
     month: '月份',
     mqLogProcessWithTitle: '标题 (SummaryDoris)',
@@ -2323,6 +2342,11 @@ export default {
     validateMaxDayDepositAmountRequired: '每日最大存款金额必填',
     validateDayRegProbabilityRequired: '每日注册概率必填',
     validateDayDepositAmountProbabilityRequired: '需要每日首次存款概率必填',
+    validateMediaDescRequired: '视频名称必填',
+    validateMediaUrlRequired: '视频链接必填',
+    validateDisplayUrlRequired: '视频展示链接必填',
+    validateModeRequired: '模式必填',
+    validateAutoplayRequired: '自动播放必填',
   },
   menu: {
     undefined: '',

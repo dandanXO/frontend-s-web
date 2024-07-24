@@ -31,7 +31,7 @@
       :promo-param="list.param"
       v-if="listParam.type === 'hongbaoyu'"
     />
-
+    <NewplayerGuide v-if="list.redirectUrl === 'dy2-newplayer-guide' && store.token" />
     <UpcomingMatchPromo v-if="list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
@@ -140,6 +140,7 @@ const GiftPromo = defineAsyncComponent(() => import("../components/hotpromo/gift
 const PrivilegeInvite = defineAsyncComponent(
   () => import("../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue")
 );
+const NewplayerGuide = defineAsyncComponent(() => import("../components/hotpromo/newplayerguide/NewPlayerGuide.vue"));
 const AsiaCup2024Promo = defineAsyncComponent(() => import("../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
 const BasketballHot = defineAsyncComponent(() => import("../components/hotpromo/basketballHot/BasketballHot.vue"));
 const LplSummerPromo = defineAsyncComponent(() => import("../components/hotpromo/lplsummer/LplSummerPromo.vue"));
@@ -208,7 +209,8 @@ export default defineComponent({
     SlotLacky8,
     DragonBoat,
     EurocupManual,
-    OuZuLianPromo
+    OuZuLianPromo,
+    NewplayerGuide
   },
   props: {
     list: {

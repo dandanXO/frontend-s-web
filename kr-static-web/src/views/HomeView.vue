@@ -3,10 +3,11 @@
     <HomeBanner></HomeBanner>
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
-      <HomeHotMatches></HomeHotMatches>
-      <NewsSection></NewsSection>
-      <HomeDownload></HomeDownload>
-      <HomeService></HomeService>
+<!--      <HomeHotMatches></HomeHotMatches>-->
+<!--      <NewsSection></NewsSection>-->
+      <HomeHotGame></HomeHotGame>
+<!--      <HomeDownload></HomeDownload>-->
+<!--      <HomeService></HomeService>-->
     </div>
   </div>
   <GameModal ref="gameMenu" />
@@ -16,11 +17,9 @@
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
-import NewsSection from "@/components/home/NewsSection.vue";
+// import NewsSection from "@/components/home/NewsSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
-import HomeDownload from "@/components/home/HomeDownload.vue";
-import HomeHotMatches from "@/components/home/HomeHotMatches.vue";
-import HomeService from "@/components/home/HomeService.vue";
+import HomeHotGame from "@/components/home/HomeHotGame.vue";
 
 const gameMenu = ref(null);
 const openGame = (gameName, platType, gameCode, scrollingState) => {

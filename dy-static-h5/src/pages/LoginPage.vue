@@ -30,7 +30,7 @@
                 hide-bottom-space
                 ref="loginNameRef"
                 v-model="loginForm.loginName"
-                placeholder="合营登录"
+                placeholder="请输入用户名"
                 :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
                 label-color=""
                 autocomplete="username"
@@ -57,7 +57,7 @@
                 ref="passwordRef"
                 hide-bottom-space
                 v-model="loginForm.password"
-                placeholder="登录"
+                placeholder="请输入密码"
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
                 label-color=""

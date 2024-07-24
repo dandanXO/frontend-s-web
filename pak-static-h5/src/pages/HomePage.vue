@@ -983,6 +983,8 @@
         </div>
       </template>
     </template>
+
+    <MediaSettingsComponent />
   </div>
 
   <GameModal
@@ -1344,6 +1346,7 @@ import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
+import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";

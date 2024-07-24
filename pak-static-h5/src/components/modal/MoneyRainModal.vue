@@ -323,6 +323,7 @@ const getNextRainTime = () => {
     .then((res) => {
       if (res.code === 0) {
         nextRainTime.nowIsRain = res.data.nowIsRain;
+        claimBonusClicked.value = res.data.gotAlready;
 
         // Parse the start time
         const dateTimeString = res.data.rainDuration.startTime;
@@ -347,8 +348,6 @@ const getNextRainTime = () => {
         const formattedHours = String(startTime.getHours()).padStart(2, "0");
         const formattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
         nextRainTime.rainStartNext = `${formattedHours}:${formattedMinutes}`;
-
-        claimBonusClicked.value = true;
       }
     })
     .catch((err) => {
@@ -368,6 +367,8 @@ const onClaimBonus = () => {
         showPrizePopup.value = true;
         prizeAmount.value = res.data.vipAmount;
         store.getBalance();
+
+        claimBonusClicked.value = true;
       }
     })
     .catch((err) => {
