@@ -1,7 +1,7 @@
 <template>
   <div class="negativeprofit">
     <div class="coin">
-      <img src="../../../assets/images/promo/hotpromo/vislotnetloss/slotnetloss-img.png" />
+      <img src="../../../assets/promo/cash_back.png" />
     </div>
     <div class="input">
       <label>{{ $t("lang.vipoker_netlossbonus") }}</label>
