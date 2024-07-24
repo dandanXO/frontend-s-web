@@ -3,11 +3,11 @@
     <HomeBanner></HomeBanner>
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
-<!--      <HomeHotMatches></HomeHotMatches>-->
-<!--      <NewsSection></NewsSection>-->
+      <!--      <HomeHotMatches></HomeHotMatches>-->
       <HomeHotGame></HomeHotGame>
-<!--      <HomeDownload></HomeDownload>-->
-<!--      <HomeService></HomeService>-->
+      <HomeInfoListSection />
+      <!--      <HomeDownload></HomeDownload>-->
+      <!--      <HomeService></HomeService>-->
     </div>
   </div>
   <GameModal ref="gameMenu" />
@@ -17,7 +17,7 @@
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
-// import NewsSection from "@/components/home/NewsSection.vue";
+import HomeInfoListSection from "@/components/home/HomeInfoListSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
 

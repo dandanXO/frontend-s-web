@@ -5,10 +5,10 @@
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
         <span>CSKH 24/7</span>
       </div>
-      <div class="additional-info-item">
+      <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
         <span style="margin-left: 5px">vnsupport@tf88.com</span>
-      </div>
+      </div> -->
       <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
         <span style="margin-left: 5px"
@@ -21,7 +21,7 @@
       </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <span style="margin-left: 5px">@TF88_CS</span>
+        <span style="margin-left: 5px">@cityy88</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
