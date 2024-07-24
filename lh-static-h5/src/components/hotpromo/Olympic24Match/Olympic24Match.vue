@@ -5,7 +5,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年7月26日—2024年8月10日</div>
+          <div class="right">2024年7月25日—2024年8月11日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
@@ -50,19 +50,36 @@
           冠军竞猜
         </div>
         <div class="olympic24-match-game" v-for="(data, index) in upcomingData" :key="index">
-          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status==='ENDED'">
+          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status === 'ENDED'">
             已结束
           </div>
-            <div v-else class="olympic24-match-game-status">
-              {{ convertDateTime(data.matchTime) }}
+          <div v-else class="olympic24-match-game-status">
+            {{ convertDateTime(data.matchTime) }}
           </div>
           <div class="olympic24-match-game-content">
             <div class="olympic24-match-game-content-left">
-              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.homeTeam ? 'olympic24-match-game-content-team--voted': ''}`">
+              <div
+                class="olympic24-match-game-content-team"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.homeTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
+              >
                 <img :src="imgURL + data.homeTeamIcon" alt="" class="olympic24-match-game-content-team-img" />
                 <div class="olympic24-match-game-content-team-name">{{ data.homeTeam }}</div>
-                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam">获胜</div>
-                <div v-else-if="((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
+                <div
+                  class="olympic24-match-game-content-center-btn"
+                  v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam"
+                >
+                  获胜
+                </div>
+                <div
+                  v-else-if="
+                    ((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'
+                  "
+                  class="team-vote"
+                >
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
@@ -77,11 +94,16 @@
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
               <div class="olympic24-match-game-content-center-title">{{ data.quizTitle }}</div>
-              <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'">
+              <div
+                class="olympic24-match-game-content-center-btn"
+                v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'"
+              >
                 平局
               </div>
               <div
-                v-else-if="data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)"
+                v-else-if="
+                  data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)
+                "
                 class="team-vote"
               >
                 <button
@@ -96,11 +118,28 @@
               <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
             <div class="olympic24-match-game-content-right">
-              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.awayTeam ? 'olympic24-match-game-content-team--voted': ''}`">
+              <div
+                class="olympic24-match-game-content-team"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.awayTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
+              >
                 <img :src="imgURL + data.awayTeamIcon" alt="" class="olympic24-match-game-content-team-img" />
                 <div class="olympic24-match-game-content-team-name">{{ data.awayTeam }}</div>
-                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam">获胜</div>
-                <div v-else-if="((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
+                <div
+                  class="olympic24-match-game-content-center-btn"
+                  v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam"
+                >
+                  获胜
+                </div>
+                <div
+                  v-else-if="
+                    ((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'
+                  "
+                  class="team-vote"
+                >
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
@@ -286,7 +325,7 @@ import { useQuasar } from "quasar";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 
-const notify = useNotify()
+const notify = useNotify();
 const $q = useQuasar();
 
 const tableRecordDialog = ref(false);
@@ -315,7 +354,7 @@ const handleSubmitVote = () => {
 
         notify({
           type: "success",
-          message: "投票成功！",
+          message: "投票成功！"
         });
       }
     })
@@ -574,7 +613,7 @@ onMounted(() => {
   line-height: 16.8px;
   // color: #000000;
   // background-color: #f2f2f2;
-  color:  #ff0000;
+  color: #ff0000;
   transition: 0.3 all;
   // background-image: url("../../../assets/promo/lh-olympic-match/btn.png");
   background-repeat: no-repeat;
