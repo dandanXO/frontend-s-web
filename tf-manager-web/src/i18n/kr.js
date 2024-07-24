@@ -424,6 +424,21 @@ export default {
       '회원과 소환자의 등록 정보가 동일합니다',
     MEMBER_ALREADY_SUMMONED: '회원이 이미 소환되었습니다',
   },
+  displayLocation: {
+    HOMEPAGE: '홈페이지',
+    PROMO_PAGE: '프로모 페이지',
+    DEPOSIT_PAGE: '입금 페이지',
+    WITHDRAW_PAGE: 'WITHDRAW 페이지',
+    PERSONAL_CENTRE: '개인 센터',
+  },
+  mode: {
+    DYNAMIC: '페이지 부동',
+    STATIC: '직접 표시'
+  },
+  autoplayStatus: {
+    ON: '켜짐',
+    OFF: '끄기'
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -563,6 +578,7 @@ export default {
     auditTime: '감사 시간',
     automaticPayment: '자동 결제',
     autopay: '자동 결제',
+    autoplay: '자동재생',
     automaticPay: '자동 결제',
     autoWithdrawSetting: '자동 출금 설정',
     awards: '상',
@@ -791,6 +807,7 @@ export default {
     disableAffiliate: '제휴사 비활성화',
     disableAll: '모두 비활성화',
     disableType: '비활성화 유형',
+    displayUrl: '표시 URL',
     distributed: '분배됨',
     distributeBy: '분배자',
     distributePrivilege: '권한 분배',
@@ -1018,6 +1035,8 @@ export default {
     maxMemberClaimCountPerDay: '하루에 최대 회원 청구 횟수',
     maxTicket: '최대 티켓',
     maxWithdrawAmount: '최대 인출 금액',
+    mediaDesc: '미디어 이름',
+    mediaUrl: '미디어 주소',
     member: '회원',
     memberBankCard: '회원 은행 카드',
     memberBankCardRecord: '회원 은행 카드 기록',
@@ -1067,6 +1086,7 @@ export default {
     mobileBanner: '모바일 배너',
     mobileMessage: '모바일 메시지',
     mobileWay: '모바일',
+    mode: '모드',
     moneyChange: '자금 이동',
     month: '월',
     mqLogProcessWithTitle: '제목 (SummaryDoris)',
@@ -2221,8 +2241,12 @@ export default {
     validateMinDayDepositAmountRequired: '일일 최소 입금액이 필요합니다',
     validateMaxDayDepositAmountRequired: '일일 최대 입금액이 필요합니다',
     validateDayRegProbabilityRequired: '일일 등록 확률이 필요합니다',
-    validateDayDepositAmountProbabilityRequired:
-      '일일 첫 입금 확률이 필요합니다',
+    validateDayDepositAmountProbabilityRequired: '일일 첫 입금 확률이 필요합니다',
+    validateMediaDescRequired: '미디어 설명 필요',
+    validateMediaUrlRequired: '동영상 링크가 필요합니다',
+    validateDisplayUrlRequired: '비디오 디스플레이 링크가 필요합니다',
+    validateModeRequired: '모드 필요',
+    validateAutoplayRequired: '자동재생 필요',
   },
   menu: {
     undefined: '',

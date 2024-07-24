@@ -474,6 +474,21 @@ export default {
     DEPOSIT: 'DEPOSIT',
     ONE_TIME: 'ONE TIME',
   },
+  displayLocation: {
+    HOMEPAGE: 'HOMEPAGE',
+    PROMO_PAGE: 'PROMO PAGE',
+    DEPOSIT_PAGE: 'DEPOSIT PAGE',
+    WITHDRAW_PAGE: 'WITHDRAW PAGE',
+    PERSONAL_CENTRE: 'PERSONAL CENTRE',
+  },
+  mode: {
+    DYNAMIC: 'DYNAMIC',
+    STATIC: 'STATIC'
+  },
+  autoplayStatus: {
+    ON: 'ON',
+    OFF: 'OFF'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -614,6 +629,7 @@ export default {
     auditTime: 'Audit Time',
     automaticPayment: 'Automatic Payment',
     autopay: 'Auto Pay',
+    autoplay: 'AutoPlay',
     automaticPay: 'AUTOMATIC_PAYMENT',
     autoWithdrawSetting: 'Automatic Withdraw Setting',
     awards: 'Awards',
@@ -844,6 +860,7 @@ export default {
     disableAffiliate: 'Disable Affiliate',
     disableAll: 'Disable All',
     disableType: 'Disable Type',
+    displayUrl: 'Display Url',
     distributed: 'Distributed',
     distributeBy: 'Distribute By',
     distributePrivilege: 'Distribute Privilege',
@@ -1084,6 +1101,8 @@ export default {
     maxMemberClaimCountPerDay: 'Max Member Claim Count Per Day',
     maxTicket: 'Maximum ticket',
     maxWithdrawAmount: 'Maximum Withdraw Amount',
+    mediaDesc: 'Media Name',
+    mediaUrl: 'Media Url',
     member: 'Member',
     memberBankCard: 'Member Bank Card',
     memberBankCardRecord: 'Member Bank Card Record',
@@ -1135,6 +1154,7 @@ export default {
     mobileBanner: 'Mobile Banner',
     mobileMessage: 'Mobile Message',
     mobileWay: 'Mobile',
+    mode: 'Mode',
     moneyChange: 'Money Change',
     month: 'Month',
     mqLogProcessWithTitle: 'MQ Title (SummaryDoris)',
@@ -2365,13 +2385,16 @@ export default {
     updateAffiliateLevelSuccess: 'Update Affiliate Level Success',
     validateMinDayRegLimitRequired: 'Daily Minimum Register Limit is required',
     validateMaxDayRegLimitRequired: 'Daily Maximum Register Limit is required',
-    validateMinDayDepositAmountRequired:
-      'Daily Minimum Deposit Amount is required',
-    validateMaxDayDepositAmountRequired:
-      'Daily Maximum Deposit Amount is required',
+    validateMinDayDepositAmountRequired: 'Daily Minimum Deposit Amount is required',
+    validateMaxDayDepositAmountRequired: 'Daily Maximum Deposit Amount is required',
     validateDayRegProbabilityRequired: 'Daily Register Probability is required',
-    validateDayDepositAmountProbabilityRequired:
-      'Daily First Deposit Probability is required',
+    validateDayDepositAmountProbabilityRequired: 'Daily First Deposit Probability is required',
+    validateMediaDescRequired: 'Media Description Required',
+    validateMediaUrlRequired: 'Video link required',
+    validateDisplayUrlRequired: 'Video display link required',
+    validateModeRequired: 'Mode required',
+    validateAutoplayRequired: 'Autoplay required',
+
   },
   menu: {
     undefined: '',
