@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { getAnnouncement, getFinanceRecords } from "@/api/personal/common"
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
+import moment from 'moment';
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -33,7 +35,9 @@ export const userStore = defineStore("userStore", {
       siteId: 8,
       unreadTotal: 0,
       visitorId: "",
-      isAffiliateA: false
+      isAffiliateA: false,
+      announcementList: undefined,
+      financeRecords: undefined,
     };
   },
   actions: {
@@ -147,7 +151,57 @@ export const userStore = defineStore("userStore", {
         .catch((err) => {
           console.log(err);
         });
-    }
+    },
+    getAnnouncementList() {
+      return new Promise((resolve, reject) => {
+        if(Array.isArray(this.announcementList)) {
+          return resolve(this.announcementList);
+        } else {
+          getAnnouncement().then(({ code, data: { announcements }}) => {
+
+            const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
+
+            if (code === 0) {
+              const announcementsFormattedData = announcements.map((item) => ({
+                ...item,
+                createTime: formatDate(item.createTime)
+              }));
+              this.announcementList = announcementsFormattedData;
+              resolve(this.announcementList);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
+    getFinanceRecordsList() {
+      return new Promise((resolve, reject) => {
+        if(this.financeRecords === null) {
+          return;
+        } else if(Array.isArray(this.financeRecords)) {
+          return resolve(this.financeRecords);
+        } else {
+          if(this.financeRecords == undefined) {
+            this.financeRecords = null;
+          }
+
+          getFinanceRecords().then(({ code, data } ) => {
+            if (code === 0) {
+              const displayTypes = ['WITHDRAW'];
+              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
+              resolve(this.financeRecords);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
   }
 });
 
