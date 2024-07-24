@@ -245,7 +245,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: "krw"
           }
         });
       }

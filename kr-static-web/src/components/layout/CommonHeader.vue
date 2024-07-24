@@ -6,7 +6,7 @@
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
-        <div class="navigations">
+        <div class="navigations" style="margin-right: auto;">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div class="header-menu-item">
@@ -28,63 +28,58 @@
           </template>
         </div>
 
-        <div class="navigations second-nav">
-          <template v-for="nav in navigations" :key="nav.name">
-            <template v-if="nav.hasicon">
-              <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-                  <span>
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon.svg"
-                      v-if="nav.code === 'Promotion'"
-                    />
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-affiliate-icon.svg"
-                      v-if="nav.code === 'Agent'"
-                    />
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-download-icon.svg"
-                      v-if="nav.code === 'App'"
-                    />
-                    <img
-                      class="hover-icon"
-                      src="../../assets/images/home/header-vip-icon.svg"
-                      v-if="nav.code === 'VIP'"
-                    />
-                  </span>
-                  <span>{{ nav.name }}</span>
-                </router-link>
-              </div>
-            </template>
-          </template>
+<!--        <div class="navigations second-nav">-->
+<!--          <template v-for="nav in navigations" :key="nav.name">-->
+<!--            <template v-if="nav.hasicon">-->
+<!--              <div class="header-menu-item">-->
+<!--                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">-->
+<!--                  <span>-->
+<!--                    <img-->
+<!--                      class="hover-icon"-->
+<!--                      src="../../assets/images/home/header-promo-icon.svg"-->
+<!--                      v-if="nav.code === 'Promotion'"-->
+<!--                    />-->
+<!--                    <img-->
+<!--                      class="hover-icon"-->
+<!--                      src="../../assets/images/home/header-affiliate-icon.svg"-->
+<!--                      v-if="nav.code === 'Agent'"-->
+<!--                    />-->
+<!--                    <img-->
+<!--                      class="hover-icon"-->
+<!--                      src="../../assets/images/home/header-download-icon.svg"-->
+<!--                      v-if="nav.code === 'App'"-->
+<!--                    />-->
+<!--                    <img-->
+<!--                      class="hover-icon"-->
+<!--                      src="../../assets/images/home/header-vip-icon.svg"-->
+<!--                      v-if="nav.code === 'VIP'"-->
+<!--                    />-->
+<!--                  </span>-->
+<!--                  <span>{{ nav.name }}</span>-->
+<!--                </router-link>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </template>-->
 
-          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
-            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
-            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
-            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
-            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
-            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
-            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'others'" @load-modal="openGame" />
-            <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />
-            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />
-            <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
-            <AppMenu ref="el" v-if="selectedMenu === 'App'" />
-          </div>
-        </div>
+<!--          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">-->
+<!--            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />-->
+<!--            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />-->
+<!--            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />-->
+<!--            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />-->
+<!--            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />-->
+<!--            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
+<!--            <FishingMenu ref="el" v-if="selectedMenu === 'others'" @load-modal="openGame" />-->
+<!--            <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />-->
+<!--            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />-->
+<!--            <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />-->
+<!--            <AppMenu ref="el" v-if="selectedMenu === 'App'" />-->
+<!--          </div>-->
+<!--        </div>-->
 
         <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
-          <!-- <router-link to="/login" class="action-btn">
-            <a class="header-btn btn-color-blue">登录</a>
-          </router-link>
-          <router-link to="/register" class="action-btn">
-            <a class="header-btn btn-color-white">注册</a>
-          </router-link> -->
+
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
           <a class="header-btn btn-color-white" @click="registerDialogVisible = true">
             {{ $t("common.register") }}

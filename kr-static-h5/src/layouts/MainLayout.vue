@@ -64,20 +64,20 @@
           <img class="hover" src="../assets/images/footer/home-icon-active.svg" />
           {{ $t("lang.home") }}
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
-          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
-          {{ $t("lang.promo") }}
-        </q-route-tab>
         <q-route-tab to="/finance/deposit" name="deposit" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.deposit_btm") }}
         </q-route-tab>
-        <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="vip" class="cs-web-id sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/vip-icon.svg" />
-          <img class="hover" src="../assets/images/footer/vip-icon-active.svg" />
-          {{ $t("lang.vip") }}
+        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
+          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
+          {{ $t("lang.promo") }}
+        </q-route-tab>
+        <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="cs" class="cs-web-id sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
+          <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
+          {{ $t("lang.customer_service") }}
         </q-route-tab>
         <q-route-tab to="/account" name="account" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/account-icon.svg" />
@@ -127,14 +127,14 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage);
 
     const goToPrevPage = (prePage) => {
-      if(prePage === "/"){
-        router.push("/")
-      }else if(window.location.pathname === "/promoapp"){
-        window.location.href = "vnmapp:/promo"
-      }else{
-        router.push('/' + prePage)
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promoapp") {
+        window.location.href = "vnmapp:/promo";
+      } else {
+        router.push("/" + prePage);
       }
-    }
+    };
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -185,13 +185,13 @@ export default defineComponent({
             var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName} ${t("lang.page_lobby")}`;
           }
-        }else if (route.path === "/minigame") {
+        } else if (route.path === "/minigame") {
           prevPage.value = "";
           hasPage.value = true;
           hasDrawer.value = true;
           pageName.value = t("lang.page_game");
           if (route.query.platform) {
-            var platformName = translateRecord(route.query.platform + 'minigame');
+            var platformName = translateRecord(route.query.platform + "minigame");
             pageName.value = `${platformName}`;
           }
         } else if (route.path === "/account/vip") {
@@ -236,7 +236,7 @@ export default defineComponent({
           } else {
             prevPage.value = "/";
           }
-        }else if (route.path === "/promoapp") {
+        } else if (route.path === "/promoapp") {
           hasPage.value = true;
           pageName.value = t("lang.page_promotions");
           prevPage.value = "";
