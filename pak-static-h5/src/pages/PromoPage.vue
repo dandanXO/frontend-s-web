@@ -212,7 +212,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
-import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
+// import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -221,7 +221,7 @@ export default defineComponent({
     HotPromotion,
     ProfileSummary,
     MoneyRainModal,
-    MediaSettingsComponent
+    // MediaSettingsComponent
   },
   setup() {
     const store = userStore();
@@ -600,7 +600,7 @@ export default defineComponent({
       parsedParamDate,
       MoneyRainModal,
       isMoneyRainModal,
-      MediaSettingsComponent
+      // MediaSettingsComponent
     }
   },
 });

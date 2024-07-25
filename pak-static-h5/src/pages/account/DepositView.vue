@@ -230,7 +230,7 @@
         credited.
       </p>
     </div>
-    <MediaSettingsComponent />
+    <!-- <MediaSettingsComponent /> -->
     <div class="bottom-content" style="height: 40px"></div>
 
     <div class="bottom-btn">
@@ -303,7 +303,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
-import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
+// import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
