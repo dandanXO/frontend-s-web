@@ -1,5 +1,22 @@
 <template>
   <div class="official-gift-container">
+    <div class="official-gift-block download-block">
+      <div class="download-block-left-side">
+        <span class="download-block-title">添加雷火电竞指定管理账号，尽享全方位服务优待</span>
+        <a :href="paramsObj.voxis_url" target="_blank">
+          <button class="download-block-btn">点击进入</button>
+        </a>
+        <span class="download-block-description">
+          请
+          <a :href="paramsObj.voxis_url" target="_blank">下载</a>
+          “Voxis”立即添加
+        </span>
+      </div>
+      <!-- <div class="download-block-qr-code-wrapper">
+        <img src="./img/download-qr-code.png" />
+        <span>管理员：初夏</span>
+      </div> -->
+    </div>
     <div class="official-gift-block detail-block">
       <div class="detail-block-title">
         <img src="./img/gift.svg" />
@@ -25,24 +42,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="official-gift-block download-block">
-      <div class="download-block-left-side">
-        <span class="download-block-title">添加雷火电竞指定管理账号，尽享全方位服务优待</span>
-        <a :href="paramsObj.voxis_url" target="_blank">
-          <button class="download-block-btn">点击进入</button>
-        </a>
-        <span class="download-block-description">
-          请
-          <a :href="paramsObj.voxis_url" target="_blank">下载</a>
-          “Voxis”立即添加
-        </span>
-      </div>
-      <!-- <div class="download-block-qr-code-wrapper">
-        <img src="./img/download-qr-code.png" />
-        <span>管理员：初夏</span>
-      </div> -->
     </div>
   </div>
 </template>
