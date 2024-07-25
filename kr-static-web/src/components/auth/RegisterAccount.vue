@@ -141,7 +141,7 @@
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item :label="$t('register.reg_withdraw_password')" prop="cardNumber">
+      <el-form-item :label="$t('register.reg_withdraw_password')" prop="withdrawPassword">
         <el-input
           class="wTip"
           v-model="regForm.withdrawPassword"
@@ -335,6 +335,26 @@ const regRules = {
     {
       required: true,
       validator: validateBankLength,
+      trigger: "change"
+    }
+  ],
+  cardAccount: [
+    {
+      required: true,
+      message: t("register.reg_card_account_cannot_empty"),
+      trigger: "change"
+    }
+  ],
+  withdrawPassword: [
+    {
+      min: 4,
+      max: 4,
+      message: t("register.reg_withdraw_password_4_digits"),
+      trigger: "blur"
+    },
+    {
+      required: true,
+      message: t("register.reg_withdraw_password_4_digits"),
       trigger: "change"
     }
   ],

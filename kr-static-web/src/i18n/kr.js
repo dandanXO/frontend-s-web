@@ -751,7 +751,8 @@ export default {
     reg_enter_captcha: "입력하다 Captcha",
     reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
     reg_please_select_a_bank_account: "은행계좌를 선택해주세요",
-    reg_please_enter_card_num: "카드번호를 입력해주세요.",
+    reg_please_enter_card_num: "카드번호를 입력해주세요",
+    reg_card_account_cannot_empty: "카드 계좌는 비워둘 수 없습니다",
     // register end
   },
   app: {
