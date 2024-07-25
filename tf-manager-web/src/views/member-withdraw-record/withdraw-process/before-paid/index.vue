@@ -586,12 +586,16 @@ async function loadRecord() {
 }
 
 async function toPay(memberWithdrawRecord) {
+  uiControl.toPayBtn = false
+  page.loading = true
   if (memberWithdrawRecord) {
     await fromBeforePaidToPay([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
     await fromBeforePaidToPay(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
+  uiControl.toPayBtn = true
+  page.loading = false
   ElMessage({ message: t('message.updateToPaySuccess'), type: 'success' })
 }
 
