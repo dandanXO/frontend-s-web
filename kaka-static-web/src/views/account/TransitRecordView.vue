@@ -1138,10 +1138,10 @@ export default defineComponent({
       };
       cancellationOfWithdrawalReceived(obj).then((res) => {
         if (res.code === 0) {
-          ElMessageBox.alert(t('bankError.withdrawCancelled'), {
-            title: t('common.systemError'),
+          ElMessageBox.alert(t("bankError.withdrawCancelled"), {
+            title: t("common.systemError"),
             center: true,
-            confirmButtonText: t('common.confirm'),
+            confirmButtonText: t("common.confirm"),
             showClose: false,
             buttonSize: "large"
           }).then(() => {
@@ -1399,7 +1399,7 @@ export default defineComponent({
     };
 
     const humanDatetime = (ts) => {
-      return moment(ts).add(-1, "hours").format("YYYY-MM-DD HH:mm:ss");
+      return moment(ts).format("YYYY-MM-DD HH:mm:ss");
     };
 
     const getDepositStatus = (depositStatus) => {
