@@ -93,6 +93,7 @@
     <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund' && store.token" />
+    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin' && store.token" :promo-info="list" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -192,12 +193,14 @@ const OfficialGiftPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
 );
 const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"))
+const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"))
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    DailyCheckin,
     Olympic24Match,
     SlotLacky8,
     IntelEls24,
