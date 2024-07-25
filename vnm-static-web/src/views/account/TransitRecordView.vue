@@ -1214,7 +1214,7 @@ export default defineComponent({
           ElMessageBox.alert(t('bankError.depositConfirmed'), {
             // if you want to disable its autofocus
             // autofocus: false,
-            title: t('common.systemError'),
+            title: t('common.areyousure'),
             center: true,
             confirmButtonText: t('common.confirm'),
             showClose: false,
