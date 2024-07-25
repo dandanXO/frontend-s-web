@@ -787,7 +787,8 @@ export default {
     loginbeforeAction: "Vui lòng đăng nhập trước khi thực hiện bất kỳ hành động nào",
     safetyBeforePhone: "Vì sự an toàn, vui lòng xác minh số điện thoại của bạn trước khi nạp tiền",
     bindRealName: "Bạn chưa cập nhật tên thật, vui lòng cập nhật",
-    depositConfirmed: "Nạp tiền đã được xác nhận"
+    depositConfirmed: "Nạp tiền đã được xác nhận",
+    withdrawCancelled: "Rút tiền bị hủy"
   },
   sports: {
     saba: "Saba Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !",

@@ -225,6 +225,19 @@
                     </div>
                   </template>
 
+                  <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                        size="small"
+                        color="red"
+                        class="common-btn cancel"
+                        @click="openWithdrawCancel(scope.row)"
+                      >
+                        {{ $t("common.cancel") }}
+                      </el-button>
+                    </div>
+                  </template>
+
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
@@ -579,7 +592,8 @@ import {
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
-  confirmationOfWithdrawalReceived
+  confirmationOfWithdrawalReceived,
+  cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
 import { getPlatformList } from "@/api/platform/platform";
@@ -1114,6 +1128,25 @@ export default defineComponent({
           });
         } else {
           ElMessage.error(res.message);
+        }
+      });
+    };
+    const openWithdrawCancel = (record) => {
+      const obj = {
+        id: record.id,
+        withdrawDate: record.withdrawDate
+      };
+      cancellationOfWithdrawalReceived(obj).then((res) => {
+        if (res.code === 0) {
+          ElMessageBox.alert(t('bankError.withdrawCancelled'), {
+            title: t('common.systemError'),
+            center: true,
+            confirmButtonText: t('common.confirm'),
+            showClose: false,
+            buttonSize: "large"
+          }).then(() => {
+            getTime();
+          });
         }
       });
     };
@@ -1736,6 +1769,7 @@ export default defineComponent({
       getGameType,
       getBetStatus,
       openWithdrawConfirm,
+      openWithdrawCancel,
       loadingBtn,
       clearItems,
       formRef,
