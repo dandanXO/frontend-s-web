@@ -7,8 +7,7 @@
       </div>
       <div class="tips">
         <div class="tips-inner">
-          参与BLAST Premier
-          秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
+          参与BLAST Premier 秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
         </div>
       </div>
       <div class="title">
@@ -56,9 +55,7 @@
         </div>
       </div>
       <div class="tips">
-        <div class="tips-inner">
-          系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
-        </div>
+        <div class="tips-inner">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。</div>
       </div>
     </div>
     <div class="section second">
@@ -534,7 +531,7 @@ onMounted(() => {
               align-items: flex-start;
               gap: 10px;
               img {
-                 max-width: 130px;
+                max-width: 130px;
               }
               .sign-day {
                 color: #fffd66;
@@ -758,11 +755,14 @@ onMounted(() => {
 .q-dialog__inner--minimized > div .dialog-close {
   background: url(../../../assets/images/promo/hotpromo/cs2/close.png) no-repeat center center;
   top: 10px;
-  right: 15px;
+  right: 7px;
   background-size: contain;
   position: absolute;
   .q-btn {
     content-visibility: hidden;
+    width: 24px;
+    height: 24px;
+    padding: 0px;
   }
 }
 .modal-title {
