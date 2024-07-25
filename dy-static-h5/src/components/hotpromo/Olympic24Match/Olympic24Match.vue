@@ -341,7 +341,7 @@ const handleVoteClick = (selectedData) => {
 };
 
 const convertDateTime = (datetime) => {
-  return datetime;
+  return moment(datetime, "YYYY-MM-DD HH:mm:ss").format("MM/DD hh:mm A");
 };
 
 const handleSubmitVote = () => {
