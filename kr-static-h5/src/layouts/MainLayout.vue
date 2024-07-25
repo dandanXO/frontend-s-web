@@ -59,30 +59,30 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
+        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
+          <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
+          {{ $t("lang.message") }}
+        </q-route-tab>
+        <q-route-tab to="/account" name="account" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
+          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
+          {{ $t("lang.question") }}
+        </q-route-tab>
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/home-icon.svg" />
           <img class="hover" src="../assets/images/footer/home-icon-active.svg" />
           {{ $t("lang.home") }}
         </q-route-tab>
-        <q-route-tab to="/finance/deposit" name="deposit" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
-          <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
-          {{ $t("lang.deposit_btm") }}
+        <q-route-tab to="/account/announcement" id="cs-web-id" name="cs" class="cs-web-id sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
+          <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
+          {{ $t("lang.announcement") }}
         </q-route-tab>
         <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
-        </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" name="cs" class="cs-web-id sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
-          <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
-          {{ $t("lang.customer_service") }}
-        </q-route-tab>
-        <q-route-tab to="/account" name="account" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
-          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
-          {{ $t("lang.mine") }}
         </q-route-tab>
       </q-tabs>
     </q-footer>

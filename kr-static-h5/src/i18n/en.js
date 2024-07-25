@@ -15,6 +15,7 @@ export default {
     account: "Account",
     promo: "Promo",
     customer_service: "CS",
+    nickname: "Nickname",
     mine: "Mine",
     personal_information: "Personal Information",
     input_username_cannot_empty: "Username cannot be empty.",
@@ -49,6 +50,17 @@ export default {
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
+
+    // redeem point start
+    redeem_point_pending_list: "Pending List",
+    redeem_point_redeem: "Redeem",
+    redeem_point_points: "Points",
+    redeem_point_date: "Date",
+    redeem_point_source: "Source",
+    redeem_point_condition: "Condition",
+    redeem_point_actions: "Actions",
+    redeem_point_redeemed: "Redeemed points",
+    // redeem point end
 
     // side menu
     menu_sports: "Sports",
@@ -126,6 +138,14 @@ export default {
     user_registration_protocol: "User Registration protocol",
     register_success: "Registered Successfully.",
     register_in_progress: "Registering...",
+    reg_bank: "Bank",
+    reg_bank_placeholder: "Select bank",
+    reg_bank_acc_num: "Bank Account",
+    reg_bank_acc_num_placeholder: "Enter only numbers without '-'",
+    reg_bank_acc_holder: "Bank Account Holder",
+    reg_bank_acc_holder_placeholder:
+      "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -201,7 +221,8 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "URL",
-    personal_username: "Username",
+    personal_username: "ID",
+    personal_nickname: "Nickname",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
     personal_realname_valid: "Please enter a valid real name",
@@ -209,7 +230,7 @@ export default {
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",
     personal_close: "Close",
-    personal_mobilenumber: "Mobile Number",
+    personal_mobilenumber: "phone",
     personal_mobilenumber_val: "Please enter your mobile number",
     personal_mobilenumber_verify: "Please verify your mobile number",
     personal_mobilenumber_allownumsonly: "Phone numbers only allow digits",
@@ -932,6 +953,7 @@ export default {
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
     confirm: "Confirm",
+    redeem: "Redeem",
     incorrect: "Incorrect",
     security_check: "Security Check",
     fish2_list: "Aviator",
@@ -940,6 +962,8 @@ export default {
       "Jolly88 (TNC) Terms of Service: The services we provide are subject to the terms of use and privacy policy. Please refer to our service agreement for more information.",
     footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
     announcement: "Announcement",
+    question: "Question",
+    message: "Message",
     name: "Name",
     surname: "Surname",
     dob: "DOB",

@@ -33,10 +33,12 @@
             <div class="amt">
               {{ !isLoadingBalance ? mainWallet + " 원" : $t("lang.loading") }}
             </div>
+            <!-- TODO: -->
+            <RedeemPoint class="redeem" />
           </div>
         </q-card-section>
         <q-card-section class="acct-btm-section">
-          <div class="vip-level-detail">
+          <!-- <div class="vip-level-detail">
             <div class="vip-link">{{ store.vip }}</div>
 
             <div class="vip-progress">
@@ -44,7 +46,7 @@
             </div>
 
             <div class="vip-link">{{ updatedVip() }}</div>
-          </div>
+          </div> -->
           <!-- <div class="vip-info-div">
             <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
               <div>晋级存款（元）</div>
@@ -97,7 +99,7 @@
             <q-btn :label="$t('lang.deposit_btn')" no-caps class="btn-main btn-pointer" @click="openDeposit" />
 
             <q-btn :label="$t('lang.withdraw_btn')" no-caps class="btn-main btn-pointer" @click="openWithdraw" />
-            <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
+            <!-- <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" /> -->
             <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
           <div class="eshare-div">
@@ -183,14 +185,14 @@
           </div>
         </router-link>
 
-        <router-link to="/account/withdraw">
+        <!-- <router-link to="/account/withdraw">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-bank-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_bank") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <router-link to="/account/records">
           <div class="acct-nav-item">
@@ -201,23 +203,23 @@
           </div>
         </router-link>
 
-        <router-link to="/account/letters">
+        <!-- <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_mailbox") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <router-link to="/account/invite">
+        <!-- <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-share-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_refer_friend") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <!-- <router-link to="/account/letters">
           <div class="acct-nav-item">
@@ -227,7 +229,7 @@
             </div>
           </div>
         </router-link> -->
-
+        <!--
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-changepwd-icon.png" />
@@ -235,16 +237,16 @@
               {{ $t("lang.mine_change_password") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <router-link to="/affiliate">
+        <!-- <router-link to="/affiliate">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-affiliate-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_apply_for_partnership") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <!-- <router-link to="/promo?redirect=account"> -->
         <!-- <div class="acct-nav-item"> -->
@@ -396,10 +398,11 @@ import { useLocalStorage } from "@vueuse/core";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import LangOptions from "components/LangOptions";
+import RedeemPoint from "src/components/shared/RedeemPoint.vue";
 
 export default defineComponent({
   name: "AccountPage",
-  components: { LangOptions },
+  components: { LangOptions, RedeemPoint },
   setup() {
     const router = useRouter();
     const store = userStore();
@@ -806,8 +809,9 @@ export default defineComponent({
     color: $white;
     font-size: 1rem;
     font-weight: bold;
-    width: calc(100% - 135px);
+    // width: calc(100% - 135px);
     // margin-left: 25px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -815,6 +819,10 @@ export default defineComponent({
     img {
       height: 1.2rem;
     }
+  }
+
+  .redeem {
+    color: #fff;
   }
 
   .acct-btm-section {
@@ -1008,7 +1016,7 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    // grid-template-rows: repeat(2, 1fr);
     grid-gap: 10px;
     gap: 10px;
     row-gap: 10px;
