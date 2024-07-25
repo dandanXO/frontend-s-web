@@ -343,7 +343,7 @@ const handleVoteClick = (selectedData) => {
 };
 
 const convertDateTime = (datetime) => {
-  return datetime;
+  return moment(datetime, "YYYY-MM-DD HH:mm:ss").format("MM/DD hh:mm A");
 };
 
 const handleSubmitVote = () => {
@@ -425,8 +425,8 @@ const getData = () => {
             const { matchTime, id } = e;
 
             if (!isFirstTime[id]) {
-              const timeCN = moment(matchTime).locale("zh_cn");
-              e.matchTime = timeCN.format("MMMDo HH:mm");
+              // const timeCN = moment(matchTime).locale("zh_cn");
+              // e.matchTime = timeCN.format("MMMDo HH:mm");
 
               isFirstTime[id] = true;
             }

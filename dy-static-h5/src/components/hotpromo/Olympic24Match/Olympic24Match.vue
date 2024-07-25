@@ -425,8 +425,8 @@ const getData = () => {
             const { matchTime, id } = e;
 
             if (!isFirstTime[id]) {
-              const timeCN = moment(matchTime).locale("zh_cn");
-              e.matchTime = timeCN.format("MMMDo HH:mm");
+              // const timeCN = moment(matchTime).locale("zh_cn");
+              // e.matchTime = timeCN.format("MMMDo HH:mm");
 
               isFirstTime[id] = true;
             }
