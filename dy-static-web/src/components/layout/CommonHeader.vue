@@ -81,7 +81,7 @@
             <span>余额：</span>
             <span class="amount">
               <span v-if="isLoadingBalance">Loading...</span>
-              <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
+              <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance.toFixed(2) }}</span>
             </span>
             <el-icon>
               <Refresh />
