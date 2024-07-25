@@ -135,6 +135,7 @@ import {
   synthesisCard
 } from "@/api/promotion/tigerCard";
 import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { useNotify } from "@/hooks/notify";
 
@@ -195,6 +196,19 @@ const loadRanking = () => {
 const isPageLoading = ref(false);
 const pageLoadingText = ref("");
 const getNewTigerCard = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正领取龙卡";
   getMemberCard({ promoCode: props.promoCode }).then((res) => {
@@ -214,6 +228,19 @@ const getNewTigerCard = () => {
 };
 
 const compoundCard = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
   synthesisCard({ promoCode: props.promoCode }).then((res) => {
@@ -277,12 +304,15 @@ const cardWon = ref("");
 const store = userStore();
 const router = useRouter();
 onMounted(() => {
-  if (store.token) {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
     pageInit();
     loadRanking();
-  } else {
-    router.push("/login");
-  }
 });
 const formLabelWidth = "140px";
 
@@ -322,6 +352,20 @@ const resetRegForm = (formEl) => {
   formEl.resetFields();
 };
 const submitRegisterForm = async (elForm) => {
+  if (!store.hasToken()) {
+    isGiftModal.value = false
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   if (!elForm) return;
   await elForm.validate((valid) => {
     if (valid) {

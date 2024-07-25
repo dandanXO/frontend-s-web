@@ -347,6 +347,9 @@ export default defineComponent({
 
 
     onMounted(() => {
+      if (!store.token) {
+        return;
+      }
       loadVoteTeam();
     })
 

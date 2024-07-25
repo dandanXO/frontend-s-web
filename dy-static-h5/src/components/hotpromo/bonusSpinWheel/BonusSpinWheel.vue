@@ -246,6 +246,9 @@ const initSpinWheel = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
     var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;

@@ -169,6 +169,11 @@ import { eventapi } from "boot/axios";
 // import { tigerCardInit, getLeaderboard, getMemberCard, giveCardToFriend, synthesisCard } from "@/api/promotion/tigerCard";
 // import { ElMessage } from "element-plus";
 import { useQuasar } from "quasar";
+import { userStore } from "../../../stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const store = userStore();
 
 const $q = useQuasar();
 
@@ -229,6 +234,29 @@ const loadRanking = () => {
 const isPageLoading = ref(false);
 const pageLoadingText = ref("");
 const getNewTigerCard = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正领取虎卡";
   eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
@@ -257,6 +285,29 @@ const getNewTigerCard = () => {
 };
 
 const compoundCard = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
   eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "dy2-tiger-card" })).then((res) => {
@@ -313,6 +364,9 @@ const isGiftModal = ref(false);
 const isCardModal = ref(false);
 const cardWon = ref("");
 onMounted(() => {
+  if (!store.token) {
+    return
+  }
   pageInit();
   loadRanking();
 });
@@ -363,6 +417,29 @@ const resetRegForm = (formEl) => {
   realNameRef.value.resetValidation();
 };
 const submitRegisterForm = async () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   typeRef.value.validate();
   friendLoginNameRef.value.validate();
   realNameRef.value.validate();

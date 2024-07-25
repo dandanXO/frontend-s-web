@@ -252,19 +252,26 @@
 import { ref, onMounted } from "vue";
 import { getLplSummer24Match } from "@/api/index/promo.js";
 import moment from "moment";
+import { userStore } from "@/store";
+const store = userStore()
 
 const activeTab = ref("first");
 const matchList = ref([]);
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 onMounted(async () => {
+  if (!store.hasToken()) {
+    return
+  }
   const apiRes = await getLplSummer24Match();
   console.log(apiRes);
-  matchList.value = apiRes.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
-    teamOneIcon: imgURL + res.teamOneIcon,
-    teamTwoIcon: imgURL + res.teamTwoIcon
-  }));
+  if (apiRes.data) {
+    matchList.value = apiRes.data.map((res) => ({
+      ...res,
+      matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
+      teamOneIcon: imgURL + res.teamOneIcon,
+      teamTwoIcon: imgURL + res.teamTwoIcon
+    }));
+  }
 });
 </script>
 

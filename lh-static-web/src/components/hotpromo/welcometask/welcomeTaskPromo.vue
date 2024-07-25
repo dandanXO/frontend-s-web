@@ -224,11 +224,15 @@ const checkInRewardState = reactive({
   stateDetails: {}
 });
 onMounted(() => {
-  if (store.token) {
-    pageInit();
-  } else {
-    router.push("/login");
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
   }
+    
+  pageInit();
 });
 
 const pageInit = () => {

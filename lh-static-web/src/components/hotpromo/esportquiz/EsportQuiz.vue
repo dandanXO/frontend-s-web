@@ -243,6 +243,7 @@ import moment from "moment";
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import { ElMessageBox } from "element-plus";
 
 const store = userStore();
 const notify = useNotify();
@@ -251,7 +252,10 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
 
 onMounted(() => {
   if (!store.token) {
-    notify("请登录后操作");
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
     return;
   }
 
@@ -265,6 +269,19 @@ const uiIsShowStatus = reactive({
 });
 
 function onBtnStartAnswerClick() {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
 }

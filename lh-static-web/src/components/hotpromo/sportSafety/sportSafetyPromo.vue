@@ -381,6 +381,13 @@ const recordPageControl = (direction) => {
   }
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   init();
   getPlatList();
 });

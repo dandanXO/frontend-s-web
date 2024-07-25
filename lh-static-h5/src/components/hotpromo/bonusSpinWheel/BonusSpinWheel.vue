@@ -77,7 +77,9 @@ import { useQuasar} from "quasar";
 import moment from 'moment';
 import { useNotify } from "src/hooks/notify";
 
+import { userStore } from "../../../stores/index";
 const notify = useNotify();
+const store = userStore();
 const $q = useQuasar();
 
 // spin wheel constants
@@ -237,6 +239,9 @@ const initSpinWheel = () => {
 };
 
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
     var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;

@@ -254,10 +254,6 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
 
 onMounted(() => {
   if (!store.token) {
-    notify({
-      type: "error",
-      message: "请登录后操作",
-    });
     return;
   }
 
