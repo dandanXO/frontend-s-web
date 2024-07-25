@@ -76,7 +76,7 @@
 
   <div class="prize-quiz-container">
     <div><img src="../../../assets/images/promo/hotpromo/esportquiz/pattern-top.png" /></div>
-    <div class="prize-quiz-content-container" v-if="matchInfo.homeTeam && matchInfo.awayTeam">
+    <div class="prize-quiz-content-container" v-if="matchInfo.homeTeam && matchInfo.awayTeam || !store.token">
       <div :class="`questions-main-title ${uiIsShowStatus.questionBox ? '' : 'hide'}`">{{ matchInfo.quizTitle }}</div>
 
       <div class="prize-quiz-jc-container" :class="`${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
@@ -89,7 +89,7 @@
           <!-- {{ getMatchDateOnly(matchInfo.matchTime) }} -->
         </div>
         <div class="start-answer-box">
-          <div class="team-content">
+          <div v-if="store.token" class="team-content">
             <div class="team-logo">
               <img :src="imgURL + `promo/` + matchInfo.homeTeamIcon" />
             </div>
@@ -105,7 +105,7 @@
             </div>
           </div>
 
-          <div class="team-content">
+          <div v-if="store.token"  class="team-content">
             <div class="team-logo">
               <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
             </div>
@@ -254,6 +254,10 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
 
 onMounted(() => {
   if (!store.token) {
+    // notify({
+    //   type: "error",
+    //   message: "请登录后操作",
+    // });
     return;
   }
 
@@ -267,6 +271,29 @@ const uiIsShowStatus = reactive({
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
 }

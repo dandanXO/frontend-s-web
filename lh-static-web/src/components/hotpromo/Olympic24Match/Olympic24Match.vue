@@ -155,7 +155,7 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            本活动仅计算FB体育、IM体育、熊猫体育场馆世预赛总有效投注。沙巴体育与AP体育不在统计范围内；
+            本活动仅计算FB体育、IM体育、熊猫体育场【巴黎奥运会男/女足】总有效投注。沙巴体育与AP体育不在统计范围内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
