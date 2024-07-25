@@ -143,11 +143,7 @@ export const sportsPlatforms = [
     message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
     caption: "",
     gameCode: ""
-  }
-];
-
-// esports
-export const eSportsPlatforms = [
+  },
   {
     code: "TFGaming",
     name: "TFGaming",
@@ -158,60 +154,18 @@ export const eSportsPlatforms = [
   },
 ];
 
+// esports
+export const eSportsPlatforms = [
+];
+
 
 // poker
 export const pokerPlatforms = [
   {
-    code: "KP",
-    name: "King Poker",
-    image: "kp",
-    message: "Texas Hold'em, Dragon Tiger Fight and many other Poker genres as you choose",
-    vimessage: "Nơi thỏa mãn đam mê của dân chơi Texas Hold'em, Bài Cào với giao diện thân thiện, dễ thao tác với người chơi",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "KM",
-    name: "King Maker",
-    image: "km",
-    message: "The leading provider of 3D games, play Bau Cua, Xoc Dia at Kingmaker now!",
-    vimessage: "Đơn vị đứng đầu trong giới sản xuất những tựa game được cập nhật theo xu hướng mới của thị trường và thời đại. ",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "V8",
-    name: "V8 Poker",
-    image: "v8",
-    message: "The V8 PLeading technology in Asia",
-    vimessage: "Cổng game Poker quốc tế với giao diện chuyên nghiệp, trò chơi phong phú, mới mẻ được vận hành với quy mô lớn và được ưa chuộng bởi sự tận tâm với khách hàng.",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "RICH88",
-    name: "Rich88",
-    image: "rich88",
-    message: "Rich88 offers 3D games with attractive odds, Blackjack, Xoc Dia, Sicbo...",
-    vimessage: "Rich88 – Sảnh Poker hàng đầu Châu Á với giao diện Game Bài đặc sắc, thân thiện, quen thuộc với những dân chơi Poker kì cựu. ",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "GPI",
-    name: "GPI",
-    image: "gpi",
-    message: "LEG Corporation is expanding its investment in developing LEG Poker",
-    vimessage: "Tập đoàn LEG khuếch trương đầu tư phát triển Poker LEG",
-    caption: "",
-    gameCode: ""
-  },
-  {
-    code: "KP",
-    name: "King Poker",
-    image: "kp",
-    message: "Spribe Corporation is expanding its investment in developing Spribe Poker",
-    vimessage: "Tập đoàn Spribe khuếch trương đầu tư phát triển Poker Spribe",
+    code: "REVOLUTION",
+    name: "REVOLUTION",
+    image: "revolution",
+    message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
     caption: "",
     gameCode: ""
   },

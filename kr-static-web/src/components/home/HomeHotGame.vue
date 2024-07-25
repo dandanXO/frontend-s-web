@@ -77,8 +77,6 @@
               <div v-for="(provider, providerIndex) in hotgame.content.providerList"
                 :key="`${provider}-${providerIndex}`" class="game-provider"
                 @click="setCurrentProvider(hotgame, provider)">
-                {{ console.log('here', `../../assets/${hotgame.section}/${hotgame.section
-                  }-logo-${provider.code.toLowerCase()}.png`) }}
                 <img :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`" :src="require(`../../assets/${hotgame.section}/${hotgame.section
                   }-logo-${provider.code.toLowerCase()}.png`)
                   " />
@@ -126,7 +124,6 @@
             </div>
           </div>
           <div class="right-container">
-            {{ console.log('here', hotgame) }}
             <Transition :key="transitionKey" appear>
               <img v-if="
                 hotgame.content &&
@@ -232,31 +229,6 @@ const hotgameData = ref([
     }
   },
   {
-    number: "04",
-    icon: require("../../assets/home/hotgame/banner/esports/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/esports/icon-active.png"),
-    title: "eSport",
-    subtitle: "ESPORTS",
-    charImgPath: require("../../assets/home/hotgame/banner/esports/character.png"),
-    isShow: false,
-    path: "/eSports",
-    currentProvider: "lh",
-    section: "esports",
-    type: "esport",
-    content: {
-      isShowSportsIcon: [
-        require("../../assets/home/hotgame/content/esports/icon_cs.png"),
-        require("../../assets/home/hotgame/content/esports/icon_dota2.png"),
-        require("../../assets/home/hotgame/content/esports/icon_lol.png"),
-        require("../../assets/home/hotgame/content/esports/icon_pubg.png"),
-        require("../../assets/home/hotgame/content/esports/icon_valorant.png"),
-        require("../../assets/home/hotgame/content/esports/icon_sc2.png")
-      ],
-      providerList: [
-      ]
-    }
-  },
-  {
     number: "05",
     icon: require("../../assets/home/hotgame/banner/board/icon.png"),
     iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
@@ -269,7 +241,6 @@ const hotgameData = ref([
     section: "poker",
     type: "poker",
     content: {
-      isShowSportsIcon: [require("../../assets/poker/poker-pattern.png")],
       providerList: [
       ]
     }
@@ -341,12 +312,23 @@ const platformsListDisplay = ref([]);
 const setHotGame = () => {
   if (store.token) {
     getLoggedInPlatformList().then((res) => {
-      platformsListDisplay.value = res;
+      // esport games show at sport section
+      const formattedPlatforms = res.map((resItem) => ({
+        ...resItem,
+        gameType: resItem.gameType?.replace('ESPORT', 'SPORT')
+      }));
+      platformsListDisplay.value = formattedPlatforms;
       checkPlatforms();
     });
   } else {
     getPlatformList().then((res) => {
-      platformsListDisplay.value = res;
+      // esport games show at sport section
+      const formattedPlatforms = res.map((resItem) => ({
+        ...resItem,
+        gameType: resItem.gameType?.replace('ESPORT', 'SPORT')
+      }));
+
+      platformsListDisplay.value = formattedPlatforms;
       checkPlatforms();
     });
   }
@@ -393,7 +375,6 @@ const checkPlatforms = () => {
     hot.currentPlat = hot.content.providerList[0];
     hot.currentProvider = hot.currentPlat.code.toLowerCase();
   });
-  console.log(hotgameData.value);
 };
 const updatePlatforms = (platforms, item, keyModifier) => {
   // console.log(item.subtitle)
