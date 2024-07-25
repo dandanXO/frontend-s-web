@@ -40,3 +40,7 @@ export function getVerificationCode() {
 export function memberAccessLog(log) {
   return server.REST.post("/memberAccessLog", log);
 }
+
+export function bankCardList() {
+  return server.REST.get("/member/withdraw/banks?siteId=10");
+}
