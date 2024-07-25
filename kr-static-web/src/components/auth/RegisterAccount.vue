@@ -191,7 +191,7 @@ let validateBankLength = async (r, v) => {
   
   if(!v) {
     return Promise.reject(t("register.reg_please_enter_card_num"));
-  } else if (paymentType.bankType === "BANK" && (v.length <= 17)) {
+  } else if (paymentType.bankType === "BANK" && (v.length > 17)) {
     return Promise.reject(t("register.reg_bank_acc_num_less_than_17_char"));
   } else if (paymentType.code.includes("USDT") && v.length >= 34 && v.length <= 36) {
     return Promise.reject(t("길이는 34에서 36자 여야 합니다"));
@@ -400,7 +400,7 @@ const submitRegisterForm = async (elForm) => {
 
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                emits("open-welcome-dialog")
+                // emits("open-welcome-dialog")
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
@@ -411,16 +411,16 @@ const submitRegisterForm = async (elForm) => {
                 }
               } else {
                 ElMessage.error(response.message);
-                getCode();
+                // getCode();
               }
             })
             .catch((err) => {
               console.log(err.message);
-              getCode();
+              // getCode();
             });
         })();
       } else {
-        getCode();
+        // getCode();
       }
     })
     .catch((errr) => {
@@ -434,14 +434,11 @@ const regForm = reactive({
   password: "",
   confirmPwd: "",
   telephone: cachedTelephone ?? "",
-  email: "",
-  captchaCode: "",
-  regHost: location.hostname,
-  codeId: "",
+  cardNumber: "",
+  cardAccount: "",
   codeAffiliate: "",
-  smsCode: "",
-  smsCodeId: "",
-  bankId: ""
+  withdrawPassword: "",
+  regHost: location.hostname
 });
 
 const registerRef = ref([]);
@@ -462,7 +459,7 @@ const emits = defineEmits(["close-dialog, open-login-dialog"]);
 const imgURL = process.env.VUE_APP_IMAGE_CDN;
 
 onMounted(() => {
-  getCode();
+  // getCode();
   getAffiliateCode();
   getReferalCode();
   getBankCards();
