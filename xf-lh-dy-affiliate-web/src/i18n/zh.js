@@ -5,6 +5,7 @@ export default {
     changePassword: '更改密码',
     login: '登录',
     verification_title: '安全验证, 请依次点击：',
+    verification_drag_title: '安全验证, 请拖动验证',
     signup: '注册',
     username: '用户名',
     loginnow: '立即登录',
