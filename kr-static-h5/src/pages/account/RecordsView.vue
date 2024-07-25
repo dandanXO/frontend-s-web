@@ -16,7 +16,7 @@ import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
-const {t} = useI18n();
+const { t } = useI18n();
 const transitList = ref([]);
 
 const getLists = () => {
@@ -24,22 +24,22 @@ const getLists = () => {
     {
       code: "deposit",
       icon: "deposit",
-      name: t('lang.menu_deposit')
+      name: t("lang.menu_deposit")
     },
-    {
-      code: "moneyChange",
-      icon: "transfer",
-      name: t('lang.menu_moneychange')
-    },
+    // {
+    //   code: "moneyChange",
+    //   icon: "transfer",
+    //   name: t("lang.menu_moneychange")
+    // },
     {
       code: "withdraw",
       icon: "withdraw",
-      name: t('lang.menu_withdraw')
+      name: t("lang.menu_withdraw")
     },
     {
       code: "promo",
       icon: "deposit",
-      name: t('lang.menu_promo')
+      name: t("lang.menu_promo")
     },
     // {
     //   code: "rebate",
@@ -49,19 +49,19 @@ const getLists = () => {
     {
       code: "bet",
       icon: "change",
-      name: t('lang.menu_transaction')
-    },
-    {
-      code: "financeFeedback",
-      icon: "help",
-      name: t('lang.menu_reminder')
+      name: t("lang.menu_transaction")
     }
-  ]
-}
+    // {
+    //   code: "financeFeedback",
+    //   icon: "help",
+    //   name: t("lang.menu_reminder")
+    // }
+  ];
+};
 
 onMounted(() => {
   getLists();
-})
+});
 
 // const { languageVal } = storeToRefs(i18nStore());
 // watch(languageVal, (newVal) => {

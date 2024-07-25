@@ -12,6 +12,9 @@
         </div>
       </div>
     </div>
+    <div class="q-px-md q-mx-sm">
+      <ReminderText :reminder-text="$t('lang.withdraw_reminder_text')" />
+    </div>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -309,10 +312,11 @@ import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
 import {useLocalStorage} from "@vueuse/core";
+import ReminderText from "src/assets/images/finance/ReminderText.vue";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal},
+  components: {AcctBal,ReminderText},
   setup() {
     const store = userStore();
     const isNewUser = ref(false);

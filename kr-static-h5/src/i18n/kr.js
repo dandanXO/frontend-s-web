@@ -421,7 +421,7 @@ export default {
     deposit_btn: "입금",
     withdraw_btn: "출금",
     transfer_btn: "이체",
-    account_title: "혜택 받기",
+    account_title: "개인정보",
     account_bonus_redeem: "보상 교환",
     mine_personal_info: "개인 정보",
     mine_bank: "은행",
@@ -927,6 +927,19 @@ export default {
     suspend: "중단",
     pending: "대기 중",
     supplement_success: "추가 성공",
+    deposit_reminder: "알림",
+    deposit_reminder_caption: "출금 전 꼭 읽어주세요",
+    deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+    본인명의 이외 타명의 입금은 처리가 불가합니다
+    계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
+
+    ※주의사항
+    충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+    금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
+
+    ※가상계좌 점검시간 안내
+    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
 
     // WithdrawBankView
     choose_a_card: "계좌 선택",
@@ -934,6 +947,9 @@ export default {
     add_a_card: "계좌 추가",
     bank_card_unbind_record: "은행 카드 비연결 기록",
     add_a_virtual_currency: "가상 화폐 추가",
+    withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+    출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
     select_account_add_different_banks: "계좌 선택 (다른 은행 추가)",
     please_select_a_bank_account: "은행 계좌를 선택해 주세요.",
     account_name_with_desc: "계좌 이름 (입금 계좌 이름과 일치해야 함)",

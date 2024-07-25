@@ -422,7 +422,7 @@ export default {
     deposit_btn: "Deposit",
     withdraw_btn: "Withdraw",
     transfer_btn: "Transfer",
-    account_title: "Enjoy discounts",
+    account_title: "Personal Info",
     account_bonus_redeem: "Redeem bonus",
     mine_personal_info: "Personal",
     mine_bank: "Bank",
@@ -939,6 +939,19 @@ export default {
     suspend: "Suspend",
     pending: "Pending",
     supplement_success: "Supplement success",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
+    deposit_reminder_text: `After requesting the deposit account and making the deposit, click "Complete Application" below to process the charge.
+Deposits made in names other than your own cannot be processed.
+The account number is subject to real-time changes, so please verify it each time you deposit.
+The minimum deposit amount is KRW 30,000 and must be in units of KRW 10,000.
+
+※Important Notes
+Once you request a deposit account after entering the amount to be charged, the amount cannot be modified.
+If you entered the wrong amount, please submit a charge application first and we will assist with the cancellation process.
+
+※Virtual Account Maintenance Time
+Please note the maintenance time from 23:30 to 00:30.`,
 
     // WithdrawBankView
     choose_a_card: "Choose a card",
@@ -946,6 +959,11 @@ export default {
     add_a_card: "Add card",
     bank_card_unbind_record: "Bank card binding record",
     add_a_virtual_currency: "Add virtual currency",
+    withdraw_reminder: "Reminder",
+    withdraw_reminder_caption: "Please read this before making a withdrawal.",
+    withdraw_reminder_text: `Withdrawals cannot be processed to accounts in names other than your own.
+The minimum withdrawal amount is KRW 50,000 and must be in units of KRW 10,000.
+We sincerely congratulate you on your exchange and wish you only the best days ahead.`,
     select_account_add_different_banks: "Select account (add different banks)",
     please_select_a_bank_account: "Please select a bank account",
     account_name_with_desc: "Account name (name matches the account used for deposit)",
