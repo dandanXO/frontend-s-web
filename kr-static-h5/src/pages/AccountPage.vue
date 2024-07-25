@@ -170,10 +170,10 @@
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">{{ $t("lang.account_title") }}</div>
-        <router-link class="acct-title-link" to="/promo?redirect=account">
+        <!-- <router-link class="acct-title-link" to="/promo?redirect=account">
           {{ $t("lang.account_bonus_redeem") }}
           <q-icon name="chevron_right" size="20px" />
-        </router-link>
+        </router-link> -->
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
