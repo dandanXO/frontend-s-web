@@ -327,17 +327,13 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1080px"
+      width="350px"
       align-center
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container signup-container">
-        <div class="acc-dialog-left">
-          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
-          <img src="../../assets/home/acc-dialog-img-signup-eurocup.png" />
-        </div>
-        <div class="acc-dialog-right">
+        <div class="acc-dialog-right" style="width:100%;padding:24px;">
           <RegisterAccount
             @close-dialog="registerDialogVisible = false"
             @open-login-dialog="openLoginDialog"
