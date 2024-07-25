@@ -534,7 +534,7 @@ onMounted(() => {
               align-items: flex-start;
               gap: 10px;
               img {
-                 max-width: 120px;
+                 max-width: 130px;
               }
               .sign-day {
                 color: #fffd66;
@@ -542,6 +542,7 @@ onMounted(() => {
               }
             }
             img {
+              max-width: 120px;
               width: 100%;
               flex: 1;
             }

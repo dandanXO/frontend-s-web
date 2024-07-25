@@ -407,6 +407,9 @@ onMounted(() => {
     }
   }
 }
+.promo-container .selected-promo .selected-promo-wrapper .inner .table-wrapper table th {
+  white-space: pre-wrap;
+}
 
 .table-wrapper {
   border: 1px solid #acd4f6;

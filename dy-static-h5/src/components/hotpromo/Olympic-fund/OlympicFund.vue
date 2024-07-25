@@ -99,10 +99,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>≥38,888</td>
-              <td>88</td>
-              <td>日有效流水达成后每超过1万打码将获得28元进阶奖金</td>
-              <td>3倍/不限场馆</td>
+              <td width="15">≥38,888</td>
+              <td width="15">88</td>
+              <td width="60">日有效流水达成后每超过1万打码将获得28元进阶奖金</td>
+              <td width="15">3倍/不限场馆</td>
             </tr>
           </tbody>
         </table>
@@ -310,7 +310,10 @@ onMounted(() => {
     .bonus-block-btn {
       position: absolute;
       bottom: 10px;
-      left: 90px;
+      // left: 90px;
+      left: 20px;
+      right: 0;
+      margin: auto;
       background: url(./img/button.png) no-repeat;
       border: none;
       width: 109px;
@@ -412,7 +415,9 @@ onMounted(() => {
     }
   }
 }
-
+.promo-container .selected-promo .selected-promo-wrapper .inner .table-wrapper table th {
+  white-space: pre-wrap;
+}
 .table-wrapper {
   border: 1px solid #acd4f6;
   border-radius: 10px;
