@@ -117,75 +117,49 @@ export default route(function (/* { store, ssrContext } */) {
       }
     }
 
-    // FB tracking
-    console.log("Href");
-    console.log(window.location.href);
-    if (window.location.href.indexOf("kakaag.app") > -1) {
-      fbq("init", "1163176251398453");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakaag.vip") > -1) {
-      fbq("init", "836424235042431");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakaag.shop") > -1) {
-      fbq("init", "1567716440818798");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakavn.app") > -1) {
-      fbq("init", "463504196607854");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame38.app") > -1) {
-      fbq("init", "342669618894591");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
-      fbq("init", "976575897104655");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakavn.vip") > -1) {
-      fbq("init", "795707932732808");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakavn.shop") > -1) {
-      fbq("init", "3742002766037130");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame6.app") > -1) {
-      fbq("init", "1065055615337117");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame6.vip") > -1) {
-      fbq("init", "3596435077285259");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame38.com") > -1) {
-      fbq("init", "1229331245097015");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame38.vip") > -1) {
-      fbq("init", "1163064048304297");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakagame88.app") > -1) {
-      fbq("init", "1227157148415264");
-      fbq("track", "PageView");
-    } else if (window.location.href.indexOf("kakaad.vip") > -1) {
-      fbq("init", "1150936866165559");
-      fbq("track", "PageView");
-    }
-    // console.log(window.location.href);
-    // if (window.location.href.indexOf("KAKAking.com") > -1) {
-    //   fbq("init", "888951505918547");
+    // FB tracking (NO NEED LE.)
+    // if (window.location.href.indexOf("kakaag.app") > -1) {
+    //   fbq("init", "1163176251398453");
     //   fbq("track", "PageView");
-    //   user.isAffiliateA= true;
-    // } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-    //   fbq("init", "3658633674357920");
+    // } else if (window.location.href.indexOf("kakaag.vip") > -1) {
+    //   fbq("init", "836424235042431");
     //   fbq("track", "PageView");
-    //   user.isAffiliateA= true;
-    // } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("KAKAbof.com") > -1) {
-    //   otag("init", "adv10336256983680");
-    // } else if (window.location.href.indexOf("tf68688.com") > -1) {
-    //   fbq("init", "1123673335564806");
+    // } else if (window.location.href.indexOf("kakaag.shop") > -1) {
+    //   fbq("init", "1567716440818798");
     //   fbq("track", "PageView");
-    //   user.isAffiliateA= true;
-    // }else if (window.location.href.indexOf("wintf99.com") > -1) {
-    //   fbq("init", "441415921872746");
+    // } else if (window.location.href.indexOf("kakavn.app") > -1) {
+    //   fbq("init", "463504196607854");
     //   fbq("track", "PageView");
-    //   user.isAffiliateA= true;
-    // }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
-    //   fbq("init", "1862869640792398");
+    // } else if (window.location.href.indexOf("kakagame38.app") > -1) {
+    //   fbq("init", "342669618894591");
     //   fbq("track", "PageView");
-    //   user.isAffiliateA= true;
+    // } else if (window.location.href.indexOf("kakagame88.vip") > -1) {
+    //   fbq("init", "976575897104655");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakavn.vip") > -1) {
+    //   fbq("init", "795707932732808");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakavn.shop") > -1) {
+    //   fbq("init", "3742002766037130");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakagame6.app") > -1) {
+    //   fbq("init", "1065055615337117");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakagame6.vip") > -1) {
+    //   fbq("init", "3596435077285259");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakagame38.com") > -1) {
+    //   fbq("init", "1229331245097015");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakagame38.vip") > -1) {
+    //   fbq("init", "1163064048304297");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakagame88.app") > -1) {
+    //   fbq("init", "1227157148415264");
+    //   fbq("track", "PageView");
+    // } else if (window.location.href.indexOf("kakaad.vip") > -1) {
+    //   fbq("init", "1150936866165559");
+    //   fbq("track", "PageView");
     // }
   });
 
