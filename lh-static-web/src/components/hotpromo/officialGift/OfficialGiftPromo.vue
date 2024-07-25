@@ -27,7 +27,7 @@
         <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis管理号：{{ paramsObj?.voxis_id }}</span>
+          <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj?.voxis_id }}</span>
           <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
         </div>
         <img class="detail-block-content-suffix" src="@/components/hotpromo/officialGift/img/detail-block-suffix.png" />
