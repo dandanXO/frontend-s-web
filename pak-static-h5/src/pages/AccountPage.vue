@@ -144,7 +144,7 @@
         </div> -->
       </q-form>
 
-      <MediaSettingsComponent />
+      <!-- <MediaSettingsComponent /> -->
     </div>
   </q-page>
   <!-- <q-dialog width="100%" v-model="showCaptchaDialog">
@@ -647,7 +647,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import { t } from "src/boot/lang";
-import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
+// import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([

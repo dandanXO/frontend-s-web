@@ -85,9 +85,34 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
-      <div v-touch-pan.prevent.mouse="moveHbIcon" @click="isMoneyRainModal = true">
-        <div class="hb-icon-wrapper"></div>
+    <q-page-sticky position="bottom-left" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+      <div>
+        <div class="hb-close">
+          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
+        </div>
+        <div>
+          <q-carousel
+            class="hb-float"
+            :navigation="hbPromo.length > 1 ? true : false"
+            v-model="hbSlide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+            :autoplay="3000"
+          >
+            <q-carousel-slide
+              v-for="(promo, i) in hbPromo"
+              :key="i"
+              :name="i"
+              @click="gotoFloatPromo(promo)"
+              :img-src="`${imgURL}/promo/${promo.icon}`"
+            >
+              <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
+            </q-carousel-slide>
+          </q-carousel>
+        </div>
       </div>
     </q-page-sticky>
 
@@ -989,8 +1014,6 @@
         </div>
       </template>
     </template>
-
-    <MediaSettingsComponent />
   </div>
 
   <GameModal
@@ -1329,6 +1352,11 @@
     <MoneyRainModal />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
+
+  <q-dialog v-model="isMediaSettingsModal">
+    <MediaSettingsComponent :media="mediaCode" />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1380,6 +1408,7 @@ const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
 const isMoneyRainModal = ref(false);
+const isMediaSettingsModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -1451,9 +1480,10 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 150]);
+const hbDragPos = ref([10, 0]);
 const isDraggingHbIcon = ref(false);
-const isHbShow = ref(false);
+const isHbShow = ref(true);
+const hbSlide = ref(0);
 
 const slide = ref(0);
 
@@ -3264,14 +3294,17 @@ const loadCustomerAddress = () => {
     });
 };
 
-const checkHongBaoYu = () => {
+const hbPromo = ref([]);
+
+const checkHbPromo = () => {
   api
     .get("/redirect")
     .then((res) => {
       return res;
     })
     .then((data) => {
-      isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
+      // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
+      hbPromo.value = data.data;
     });
 };
 
@@ -3380,6 +3413,19 @@ const processedContent = (content) => {
   return content.replace(/\n/g, "<br>");
 };
 
+const mediaCode = ref("");
+
+const gotoFloatPromo = (val) => {
+  if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
+    isMoneyRainModal.value = true;
+  }
+
+  if (val.type === "DOMAIN") {
+    isMediaSettingsModal.value = true;
+    mediaCode.value = val.code;
+  }
+};
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
@@ -3387,9 +3433,9 @@ onActivated(() => {
 
   checkSpinWheel();
 
-  if (store.hasToken()) {
-    checkHongBaoYu();
-  }
+  // if (store.hasToken()) {
+  checkHbPromo();
+  // }
 });
 
 onMounted(() => {
@@ -5068,5 +5114,17 @@ const showCongratsModal = () => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.hb-float {
+  posiiton: relative;
+  height: 100px;
+  width: 100px;
+  background: transparent;
+  overflow: hidden;
+
+  .q-carousel__control {
+    display: none;
+  }
 }
 </style>

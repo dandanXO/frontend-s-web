@@ -333,7 +333,7 @@
       </div>
     </template>
 
-    <MediaSettingsComponent />
+    <!-- <MediaSettingsComponent /> -->
 
     <q-dialog v-model="hasWithdrawCard" persistent>
       <q-card style="width: 100%; padding: 10px">
@@ -411,7 +411,7 @@ import { useRoute, useRouter } from "vue-router";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { useCheckKYC } from "src/hooks/checkKYC";
-import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
+// import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const router = useRouter();
 const store = userStore();
