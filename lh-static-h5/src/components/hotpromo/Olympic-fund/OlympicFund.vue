@@ -40,7 +40,7 @@
         <span v-else class="detail-block-content__suffix">{{ depositData.breakthroughBonus }}元</span>
       </div>
       <div class="bonus-block-btn-wrapper" :class="selected">
-        <button class="bonus-block-btn" @click="handleClick"></button>
+        <div class="bonus-block-btn" @click="handleClick"></div>
       </div>
     </div>
 
@@ -297,6 +297,7 @@ onMounted(() => {
     background-size: contain;
     aspect-ratio: 284 / 184;
     margin-bottom: 8px;
+    min-height: 200px;
 
     &.guide {
       background-image: url(./img/guide-button-bg.png);
