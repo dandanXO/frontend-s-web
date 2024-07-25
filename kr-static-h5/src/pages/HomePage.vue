@@ -37,7 +37,13 @@
       </q-btn>
     </div>
     <div class="header-middle" v-else>
-      <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div>
+      <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div>
+      <div class="header-middle-wallet-wrapper">
+        <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
+        <span>{{ $t("lang.central_wallet") }}</span>
+        <RedeemPoint class="redeem" />
+      </div>
+      <!-- <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div> -->
     </div>
     <div class="header-lang">
       <LangOptions />
@@ -345,7 +351,7 @@
     <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
     <!--      </div>-->
 
-    <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
+    <div class="game-right-platform" id="id-right-platform">
       <!-- <div class="game-lists fade-in-image" id="esport-lists">
         <template v-for="(item, index) in esport" :key="index">
           <div
@@ -369,32 +375,7 @@
         </template>
       </div> -->
 
-      <!-- <div class="game-lists fade-in-image" id="sport-lists">
-        <template v-for="(item, index) in sport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div> -->
-
-      <div class="game-lists fade-in-image" id="live-lists">
+      <div v-if="!tab || tab === 'live'" class="game-lists fade-in-image" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
           <div
             class="platform-block"
@@ -419,7 +400,7 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="slot-lists">
+      <div v-if="!tab || tab === 'slot'" class="game-lists fade-in-image" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
@@ -444,7 +425,7 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="casual-lists">
+      <div v-if="!tab || tab === 'casual'" class="game-lists fade-in-image" id="casual-lists">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
@@ -469,8 +450,8 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="esport-lists">
-        <template v-for="(item, index) in esport" :key="index">
+      <div v-if="!tab || tab === 'sport'" class="game-lists fade-in-image" id="sport-lists">
+        <template v-for="(item, index) in sport" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
@@ -494,7 +475,32 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="poker-lists">
+      <!-- <div class="game-lists fade-in-image" id="esport-lists">
+        <template v-for="(item, index) in esport" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div> -->
+
+      <div v-if="!tab || tab === 'poker'" class="game-lists fade-in-image" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
           <div
             class="platform-block"
@@ -974,6 +980,7 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
 import { isAndroid } from "src/boot/utils";
+import RedeemPoint from "src/components/shared/RedeemPoint.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -985,7 +992,8 @@ export default defineComponent({
     // Swiper,
     // SwiperSlide,
     PushNotification,
-    VueQRCodeComponent
+    VueQRCodeComponent,
+    RedeemPoint
   },
   setup() {
     const isWelcomeFlag = ref(true);
@@ -1488,7 +1496,7 @@ export default defineComponent({
         .catch((err) => {});
     };
 
-    const tab = ref("live");
+    const tab = ref("");
     const isSelecting = ref(false);
     const timerTimeout = ref(null);
     const selectTab = (item) => {
@@ -1497,7 +1505,7 @@ export default defineComponent({
       }
       isSelecting.value = true;
       tab.value = item;
-      setSelectedSwiper(item);
+      // setSelectedSwiper(item);
 
       timerTimeout.value = setTimeout(() => {
         isSelecting.value = false;
@@ -2367,6 +2375,10 @@ export default defineComponent({
   padding: 4px 1rem;
   margin: 0 auto;
   box-shadow: 0px -2px 6px 0px #c3d4e6 inset;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
 
   .header-left {
     // height: 50px;
@@ -2388,6 +2400,7 @@ export default defineComponent({
     margin-right: 12px;
     margin-top: 3px;
     display: flex;
+    align-items: center;
     gap: 12px;
 
     :deep(.q-btn) {
@@ -2396,6 +2409,17 @@ export default defineComponent({
       font-weight: bold;
       @media (max-width: 400px) {
         font-size: 80%;
+      }
+    }
+    .header-middle-wallet-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .redeem {
+        :deep(img) {
+          filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(5550%) hue-rotate(200deg)
+            brightness(101%) contrast(101%);
+        }
       }
     }
   }

@@ -15,6 +15,7 @@ export default {
     account: "입금",
     promo: "프로모션",
     customer_service: "고객 서비스",
+    nickname: "닉네임",
     mine: "내 계좌",
     personal_information: "개인 정보",
     input_username_cannot_empty: "사용자 이름 입력",
@@ -52,6 +53,17 @@ export default {
     euroCountdown01a: "남은 일수 ",
     euroCountdown02: " 일",
     helloUsername: "안녕하세요,",
+
+    // redeem point start
+    redeem_point_pending_list: "보류 목록",
+    redeem_point_redeem: "상환하다",
+    redeem_point_points: "포인트들",
+    redeem_point_date: "날짜",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    redeem_point_redeemed: "상환된 포인트",
+    // redeem point end
 
     // side menu
     menu_sports: "스포츠",
@@ -129,6 +141,13 @@ export default {
     user_registration_protocol: "계정 등록 동의서",
     register_success: "가입 성공",
     register_in_progress: "가입 중...",
+    reg_bank: "은행명",
+    reg_bank_placeholder: "은행선택",
+    reg_bank_acc_num: "계좌번호",
+    reg_bank_acc_num_placeholder: "'-'없이숫자만입력",
+    reg_bank_acc_holder: "예금주",
+    reg_bank_acc_holder_placeholder: "2자이상한글,영문만가능(예금주는수정불가/고객센터문의)",
+    reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
 
     // forgot password
     sms_retrieval: "SMS로 찾기",
@@ -206,7 +225,8 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "접속하기",
-    personal_username: "계정 이름",
+    personal_username: "아이디",
+    personal_nickname: "닉네임",
     personal_realname: "이름",
     personal_realname_val: "이름을 입력해 주세요",
     personal_realname_valid: "유효한 이름을 입력해 주세요",
@@ -921,6 +941,7 @@ export default {
     branch_not_required: "지점 (선택 사항)",
     cancel: "취소",
     confirm: "확인",
+    redeem: "상환하다",
     incorrect: "잘못됨",
     security_check: "보안 점검",
     fish2_list: "낚시",
@@ -929,6 +950,8 @@ export default {
       "Jolly88 서비스 약관(TNC): 제공하는 서비스는 약관 및 개인정보 보호정책에 따라 관리됩니다. 자세한 내용은 서비스 약관을 참조해 주세요.",
     footer_all_rights: "Jolly88 2023{'@'}모든 권리 보유.",
     announcement: "공지사항",
+    question: "문의",
+    message: "문의",
     name: "이름",
     surname: "성",
     dob: "생년월일",
