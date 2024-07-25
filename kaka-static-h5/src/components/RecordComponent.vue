@@ -489,7 +489,7 @@ export default defineComponent({
 
     return {
       humanDatetime(ts) {
-        return moment(ts).add(-1, "hours").format("YYYY-MM-DD HH:mm:ss");
+        return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
       checkRecord(status) {
         return translateRecord(status, props.recordType);
