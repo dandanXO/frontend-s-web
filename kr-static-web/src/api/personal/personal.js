@@ -8,6 +8,13 @@ export function loadBalance(platform) {
     },
   });
 }
+export function loadPoint(platform) {
+  return server.EVENT.get("/member-point", {
+    params: {
+      platform,
+    },
+  });
+}
 export function getAnnouncement() {
   return server.REST.get(`/announcement`);
 }

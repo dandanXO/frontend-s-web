@@ -31,6 +31,7 @@ export default {
     add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
     mainWallet: "Balance",
+    point: "Point",
     reminder: "Require",
     confirm_deposit: "Confirm Withdrawal",
     str_copy: "Copy",

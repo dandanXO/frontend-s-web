@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
-import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { loadBalance, loadMemberInfo, loadPoint } from "@/api/personal/personal";
 import { getAnnouncement, getFinanceRecords } from "@/api/personal/common"
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
@@ -38,6 +38,7 @@ export const userStore = defineStore("userStore", {
       isAffiliateA: false,
       announcementList: undefined,
       financeRecords: undefined,
+      pendingRebateAmt: 0,
     };
   },
   actions: {
@@ -50,6 +51,7 @@ export const userStore = defineStore("userStore", {
           if (ret.code === 0) {
             this.token = ret.data;
             this.getBalance();
+            this.getPendingRebateAmt();
             this.getMemberInfo();
           } else {
             ElMessage.error(ret.message);
@@ -106,11 +108,29 @@ export const userStore = defineStore("userStore", {
       }
     },
     getBalance() {
-      if (this.token) {
-        return loadBalance(MAIN).then((ret) => {
-          this.balance = ret.data;
-        });
-      }
+      return new Promise((resolve, reject) => {
+        if (this.token) {
+          return loadBalance(MAIN).then((ret) => {
+            this.balance = ret.data;
+            resolve();
+          });
+        }
+      })
+    },
+    getPendingRebateAmt() {
+      return new Promise((resolve, reject) => {
+        if (this.token && !this.isOffline) {
+          loadPoint(MAIN).then((ret) => {
+            const res = ret.data;
+            if (res.code === 0) {
+              this.pendingRebateAmt = Math.floor(res.data);
+            } else {
+              this.pendingRebateAmt = 0;
+            }
+            resolve();
+          });
+        }
+      })
     },
     getCurrentDeposit() {
       return this.currentDeposit;

@@ -125,24 +125,24 @@
                     <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="deposit">
+                <!-- <el-dropdown-item command="deposit">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{ $t("menu.deposit") }}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <!-- <el-dropdown-item command="transfer">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item> -->
-                <el-dropdown-item command="promotion">
+                <!-- <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="logout">
                   <button class="standard-button btn-color-white" style="color: #468cff">
                     {{ $t("menu.logout") }}
@@ -154,18 +154,30 @@
           <div class="profile-details">
             <div class="name-and-vip-wrapper">
               <div class="details-name">
-                {{ store.nickName }}
+                {{ store.name2 || store.realName || store.nickName }}
               </div>
-              <div class="account-vip-label">
+              <!-- <div class="account-vip-label">
                 {{ vip }}
-              </div>
+              </div> -->
             </div>
             <a @click="refreshBalance" class="details-balance">
-              <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
+              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; gap:5px; align-items: center; flex-wrap: nowrap">
                 <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
                   <span v-if="!isLoadingBalance">{{ displayBalance(store.balance) }} {{ store.currency.value }}</span>
+                </span>
+              </div>
+              <el-icon>
+                <RiRefreshLine color="#468CFF" />
+              </el-icon>
+            </a>
+            <a @click="refreshBalance" class="details-balance">
+              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
+                <span class="assets-text">{{ $t("account.point") }}:</span>
+                <span class="amount">
+                  <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
+                  <span v-if="!isLoadingBalance">{{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}</span>
                 </span>
               </div>
               <el-icon>
@@ -1276,6 +1288,9 @@ export default defineComponent({
     const isLoadingBalance = ref(false);
     const refreshBalance = () => {
       isLoadingBalance.value = true;
+      store.getPendingRebateAmt().then(() => {
+        isLoadingBalance.value = false;
+      })
       store.getBalance().then(() => {
         isLoadingBalance.value = false;
       });
@@ -1686,6 +1701,7 @@ body {
 
       .assets-text {
         white-space: nowrap;
+        text-align: right;
       }
 
       .amount {
