@@ -127,7 +127,6 @@
             <el-input
               v-model="form.token"
               style="width: 400px;"
-              maxlength="100"
             />
           </el-form-item>
           <div class="dialog-footer">
@@ -191,7 +190,6 @@
             <el-input
               v-model="form.token"
               style="width: 400px;"
-              maxlength="100"
             />
           </el-form-item>
           <div class="dialog-footer">
