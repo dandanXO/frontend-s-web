@@ -231,6 +231,18 @@
       <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
     </div>
   </q-page>
+  <q-dialog v-model="gotoNewplayerPromoDialog" persistent>
+      <q-card class="q-px-lg q-pt-sm">
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">綁定完成，是否跳轉優惠頁面</span>
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn flat label="否" color="primary" v-close-popup />
+          <q-btn flat label="是"  @click="gotoNewplayerPromo()" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 </template>
 
 <script setup>
@@ -275,6 +287,7 @@ const validateBankLength = (val) => {
 //   const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
 //   return phonePattern.test(bankCardInfo.telephone) || "请输入有效的电话号码";
 // };
+const gotoNewplayerPromoDialog = ref(false)
 
 const phoneVerificationImg = ref("");
 const innerCodeId = ref("");
@@ -410,7 +423,12 @@ const submitBankCard = () => {
             type: "success",
             message: "已添加银行卡",
           });
-          router.push("/account/withdraw");
+          if(useLocalStorage('need-go-back-newplayer').value === 'true'){
+            openGotoNewplayerPromo()
+          }else{
+            router.push("/account/withdraw");
+          }
+          
         }
       })
       .catch((error) => {
@@ -418,7 +436,14 @@ const submitBankCard = () => {
       });
   }
 };
-
+const openGotoNewplayerPromo = ()=>{
+  if(useLocalStorage('need-go-back-newplayer').value === 'true'){
+      gotoNewplayerPromoDialog.value = true
+    }
+  }
+const gotoNewplayerPromo = ()=>{
+  router.push('/promo?name=lh1-newplayer-guide')
+}
 const handleEnterKey = () => {
   if (!document.activeElement || document.activeElement.tagName.toLowerCase() !== "input") {
     openPhoneVeriDialog();
@@ -436,6 +461,7 @@ watch(
 );
 
 onActivated(() => {
+          
   loadBankCards();
 });
 </script>

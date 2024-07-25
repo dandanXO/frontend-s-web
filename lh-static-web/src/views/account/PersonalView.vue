@@ -202,7 +202,7 @@
 
           <div class="update-pwd-container">
             <div class="tbl-row">
-              <div class="basic-info-cell main-title mb-20">修改密码</div>
+              <div class="mb-20 basic-info-cell main-title">修改密码</div>
             </div>
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
@@ -453,6 +453,9 @@ import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
+import { useRouter } from "vue-router";
+import { ElMessageBox } from "element-plus";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "PersonalView",
@@ -465,7 +468,7 @@ export default defineComponent({
     const emailKey = `emailKey`
     const phoneKey = `phoneKey`
     const sendOtpDisabledKey = `sendOtpDisabled`
-
+    const router = useRouter();
     const sendOtpDisabledTimeout = 60
     const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
 
@@ -507,7 +510,6 @@ export default defineComponent({
     });
 
     onMounted(() => {
-
       if(sendOtpDisabledTimeoutLeft)
         countdownTimer();
 
@@ -768,6 +770,9 @@ export default defineComponent({
               updatePhoneModalVisible.value = false
               store.getMemberInfo()
               loadInfo()
+              gotoNewplayerPromo()
+              
+
             } else {
               notify.error(res.message)
             }
@@ -782,7 +787,23 @@ export default defineComponent({
 
       loadingPhoneBtn.value = false
     };
-
+    const gotoNewplayerPromo = ()=>{
+      if(useLocalStorage('need-go-back-newplayer').value === 'true'){
+                ElMessageBox.confirm("綁定完成，是否跳轉優惠頁面", "系统提示", {
+                showClose: "false",
+                cancelButtonClass: "cancel-btn",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                type: "warning",
+                draggable: true,
+                buttonSize: "default"
+              })
+                .then(() => {
+                  router.push("/promotion?name=lh1-newplayer-guide");
+                })
+                .catch(() => {});
+              }
+    }
     const countdownTimer = () => {
       if (countDown.value > 0) {
         setTimeout(() => {

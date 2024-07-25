@@ -6,7 +6,7 @@
     <div class="account-content">
       <div class="account-tip-text wbot"></div>
 
-      <div class="flex-box flex-wrap bank-card-list">
+      <div class="flex-wrap flex-box bank-card-list">
         <div
           class="bank-card-item active"
           :class="{
@@ -729,7 +729,23 @@ export default defineComponent({
       // })
       // })
     };
-
+    const gotoNewplayerPromo = ()=>{
+      if(useLocalStorage('need-go-back-newplayer').value === 'true'){
+        ElMessageBox.confirm("綁定完成，是否跳轉優惠頁面", "系统提示", {
+        showClose: "false",
+        cancelButtonClass: "cancel-btn",
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+        draggable: true,
+        buttonSize: "default"
+      })
+        .then(() => {
+          router.push("/promotion?name=lh1-newplayer-guide");
+        })
+        .catch(() => {});
+      }
+    }
     const submitBankCard = () => {
       console.log(bankCardInfo);
       bankCardFormRef.value
@@ -744,6 +760,7 @@ export default defineComponent({
                 });
                 bankCardModalState.visible = false;
                 loadCards();
+                gotoNewplayerPromo()
               } else {
                 notify({
                   type: "error",
