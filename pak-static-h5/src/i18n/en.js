@@ -292,7 +292,9 @@ export default {
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300.",
+      eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
+      betting_tips: "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
+      deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       shareTitle: "B9GAME Share and Earn",
       shareText:
         "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
