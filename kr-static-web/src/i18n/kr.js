@@ -31,6 +31,7 @@ export default {
     add_a_bank_card: "은행 카드 추가",
     welcome: "환영합니다",
     mainWallet: "잔액",
+    point: "포인트들",
     reminder: "지원",
     require: "지원",
     str_copy: "복사",
@@ -751,7 +752,8 @@ export default {
     reg_enter_captcha: "입력하다 Captcha",
     reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
     reg_please_select_a_bank_account: "은행계좌를 선택해주세요",
-    reg_please_enter_card_num: "카드번호를 입력해주세요.",
+    reg_please_enter_card_num: "카드번호를 입력해주세요",
+    reg_card_account_cannot_empty: "카드 계좌는 비워둘 수 없습니다",
     // register end
   },
   app: {
@@ -910,7 +912,7 @@ export default {
     909: "전화번호를 찾을 수 없습니다.",
     910: "사용자 이름이 전화번호와 일치하지 않습니다.",
     1000: "사용자 이름 또는 비밀번호에 오류가 있습니다.",
-    1001: "계정이 폐쇄되었습니다.",
+    1001: "승인 대기 중입니다.",
     1002: "파트너 계정입니다.",
     1004: "비밀번호를 여러 번 잘못 입력하여 계정이 잠깁니다.",
     1011: "현재 계정은 전화번호와 연결되어 있습니다.",

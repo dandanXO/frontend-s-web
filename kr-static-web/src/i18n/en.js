@@ -31,6 +31,7 @@ export default {
     add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
     mainWallet: "Balance",
+    point: "Point",
     reminder: "Require",
     confirm_deposit: "Confirm Withdrawal",
     str_copy: "Copy",
@@ -779,6 +780,7 @@ export default {
     reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
     reg_please_select_a_bank_account: "Please select a bank account",
     reg_please_enter_card_num: "Please enter card number",
+    reg_card_account_cannot_empty: "Card Account cannot be empty",
     // register end
   },
   app: {
