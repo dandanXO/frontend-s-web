@@ -131,7 +131,13 @@
         </template>
       </table>
 
-      <div class="table-hint q-pa-md">{{ $t("earnMoney.reward.eligibility_tips") }}</div>
+      <div class="table-hint q-pa-md">
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
+
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
+      </div>
     </div>
 
     <div class="earn-money-sent-ytd">
@@ -441,7 +447,7 @@ onMounted(() => {
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
-    tgDomain = store.evip ? 'https://' + store.evip + '/' : store.h5Url;
+    tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
   }
 
   api.get("/session/member/referralCode").then((res) => {
@@ -720,7 +726,7 @@ watch(activeSetting, checkIsShowDetail);
 
   .table-hint {
     color: #8c968f;
-    text-align: center;
+    text-align: left;
   }
 
   .earn-money-sent-ytd {

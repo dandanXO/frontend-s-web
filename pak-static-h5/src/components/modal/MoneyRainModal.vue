@@ -288,26 +288,28 @@ const stopAutoScroll = () => {
 };
 
 const getListing = () => {
-  eventapi
-    .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
-    .then((res) => {
-      if (res.code === 0) {
-        // listingData.value = res.data;
-        res.data.forEach((item) => {
-          if (item.hasOwnProperty("amount")) {
-            item.amount = convertToTwoDecimalAmount(item.amount);
-          }
-        });
-        listingData.value = res.data;
-        listingData.value.push(...listingData.value);
-        listingData.value.push(...listingData.value);
-        listingData.value.push(...listingData.value);
-        listingData.value.push(...listingData.value);
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+  if (store.hasToken()) {
+    eventapi
+      .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
+      .then((res) => {
+        if (res.code === 0) {
+          // listingData.value = res.data;
+          res.data.forEach((item) => {
+            if (item.hasOwnProperty("amount")) {
+              item.amount = convertToTwoDecimalAmount(item.amount);
+            }
+          });
+          listingData.value = res.data;
+          listingData.value.push(...listingData.value);
+          listingData.value.push(...listingData.value);
+          listingData.value.push(...listingData.value);
+          listingData.value.push(...listingData.value);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
 };
 
 const claimBonusClicked = ref(false);

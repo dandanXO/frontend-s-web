@@ -3436,6 +3436,10 @@ onActivated(() => {
   // if (store.hasToken()) {
   checkHbPromo();
   // }
+
+  if (route.query.login === "true") {
+    isMoneyRainModal.value = true;
+  }
 });
 
 onMounted(() => {
