@@ -264,6 +264,7 @@ export default defineComponent({
           ui.instagramUrl = data.instagram;
           ui.tiktokUrl = data.tiktok;
           ui.whatsappUrl = data.whatsapp;
+          ui.youtubeUrl = data.youtube;
         });
     };
 
