@@ -238,7 +238,12 @@
                 />
               </el-form-item>
               <div class="txt-center btn-container">
-                <button :loading="loadingPwBtn" class="standard-button btn-color-white standout" type="button" @click="clearPwd">
+                <button
+                  :loading="loadingPwBtn"
+                  class="standard-button btn-color-white standout"
+                  type="button"
+                  @click="clearPwd"
+                >
                   重新填写
                 </button>
 
@@ -451,7 +456,7 @@ import {
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
-import { lsGet, lsStore, lsRemove, getTimeout } from '@/utils/utils'
+import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import WithdrawBank from "@/components/account/WithdrawBank.vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
@@ -465,26 +470,26 @@ export default defineComponent({
   setup() {
     const notify = useNotify();
     // Send Verification Code
-    const emailKey = `emailKey`
-    const phoneKey = `phoneKey`
-    const sendOtpDisabledKey = `sendOtpDisabled`
+    const emailKey = `emailKey`;
+    const phoneKey = `phoneKey`;
+    const sendOtpDisabledKey = `sendOtpDisabled`;
     const router = useRouter();
-    const sendOtpDisabledTimeout = 60
-    const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey)
+    const sendOtpDisabledTimeout = 60;
+    const sendOtpDisabledTimeoutLeft = getTimeout(sendOtpDisabledKey);
 
     let cachedEmail = lsGet(emailKey);
     let cachedTelephone = lsGet(phoneKey);
-    let initialSendOtpDisabledTimeout = false
+    let initialSendOtpDisabledTimeout = false;
 
     if (sendOtpDisabledTimeoutLeft) {
-      initialSendOtpDisabledTimeout = true
+      initialSendOtpDisabledTimeout = true;
     } else {
-      lsRemove(sendOtpDisabledKey)
-      lsRemove(emailKey)
-      lsRemove(phoneKey)
+      lsRemove(sendOtpDisabledKey);
+      lsRemove(emailKey);
+      lsRemove(phoneKey);
 
-      cachedEmail = '';
-      cachedTelephone = '';
+      cachedEmail = "";
+      cachedTelephone = "";
     }
 
     const disableSendVerificationButton = ref(initialSendOtpDisabledTimeout);
@@ -492,12 +497,12 @@ export default defineComponent({
     const countDown = ref(sendOtpDisabledTimeoutLeft);
     const countDownPhone = ref(sendOtpDisabledTimeoutLeft);
 
-    const loadingBtn = ref(false)
-    const loadingPwBtn = ref(false)
-    const loadingSecurityBtn = ref(false)
-    const loadingPhoneBtn = ref(false)
-    const isEmailSending = ref(false)
-    const isPhoneSending = ref(false)
+    const loadingBtn = ref(false);
+    const loadingPwBtn = ref(false);
+    const loadingSecurityBtn = ref(false);
+    const loadingPhoneBtn = ref(false);
+    const isEmailSending = ref(false);
+    const isPhoneSending = ref(false);
     const verificationDetails = reactive({
       memberInfo: {}
     });
@@ -510,37 +515,39 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      if(sendOtpDisabledTimeoutLeft)
-        countdownTimer();
+      if (sendOtpDisabledTimeoutLeft) countdownTimer();
 
       loadInfo();
       getCode();
     });
-      const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
+    const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
       var top = (screen.height - popupWinHeight) / 4;
-      window.open(pageURL, pageTitle,
-                    'resizable=yes, width=' + popupWinWidth
-                    + ', height=' + popupWinHeight + ', top='
-                    + top + ', left=' + left);
-    }
+      window.open(
+        pageURL,
+        pageTitle,
+        "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
+      );
+    };
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
     const store = userStore();
     const getCode = () => {
-      updateSecurityVerified.captchaCode = ''
-      updatePhoneVerified.captchaCode = ''
-      getVerificationCode().then((res) => {
-        if (res.code === 0) {
-          verificationImg.value = "data:image/png;base64," + res.data.img;
-          updateSecurityVerified.codeId = res.data.id;
-          updatePhoneVerified.codeId = res.data.id;
-        } else {
-          notify.error(res.message);
-        }
-      }).catch(() => {
+      updateSecurityVerified.captchaCode = "";
+      updatePhoneVerified.captchaCode = "";
+      getVerificationCode()
+        .then((res) => {
+          if (res.code === 0) {
+            verificationImg.value = "data:image/png;base64," + res.data.img;
+            updateSecurityVerified.codeId = res.data.id;
+            updatePhoneVerified.codeId = res.data.id;
+          } else {
+            notify.error(res.message);
+          }
+        })
+        .catch(() => {
           // console.log(e.message);
-        // message.error(e.message);
-      });
+          // message.error(e.message);
+        });
     };
     const updateSecurityModalVisible = ref(false);
     const updateSecurityFormRef = ref();
@@ -559,146 +566,151 @@ export default defineComponent({
 
     const updateSecurityVerified = reactive({
       verificationCode: "",
-      emailAddress: "",
+      emailAddress: ""
     });
     const updatePhoneVerified = reactive({
       verificationCode: "",
-      phone: "",
+      phone: ""
     });
     const verificationImg = ref("");
     const loadInfo = () => {
-      loadMemberInfo().then((response) => {
-        if (response.code === 0) {
-          personalState.memberInfo = response.data;
-          if (personalState.memberInfo.birthday) {
-            personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+      loadMemberInfo()
+        .then((response) => {
+          if (response.code === 0) {
+            personalState.memberInfo = response.data;
+            if (personalState.memberInfo.birthday) {
+              personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+            }
           }
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      });
-    }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    };
 
-    const verificationModalVisible = ref(false)
+    const verificationModalVisible = ref(false);
     const updateSecurityModal = () => {
       updateSecurityVerified.emailAddress = cachedEmail;
       updateSecurityVerified.verificationCode = "";
       updateSecurityModalVisible.value = true;
     };
     const openVerificationModal = () => {
-      updateSecurityFormRef.value.validateField('emailAddress').then((resp) => {
+      updateSecurityFormRef.value
+        .validateField("emailAddress")
+        .then((resp) => {
           // captchaForm.captchaCode = "";
           getCode();
           verificationModalVisible.value = true;
-
-        }).catch((err) => {
-            notify({
-              message: '请输入有效的邮件',
-              type: 'error',
-            })
         })
-    }
-    const verifyVerificationCode = () => {
-      captchaUpdateRef.value
-        .validate()
-        .then(() => {
-      isEmailSending.value = true
-      verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress
-
-      const emailDetails =  {
-        email: updateSecurityVerified.emailAddress,
-        captchaCode: updateSecurityVerified.captchaCode,
-        codeId: updateSecurityVerified.codeId
-      }
-
-      sendEmail(emailDetails).then((res) => {
-        if (res.code === 0) {
-
-          disableSendVerificationButton.value = true
-
-          const now = new Date();
-
-          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout)
-
-          lsStore(sendOtpDisabledKey, now.getTime());
-          lsStore(emailKey, verificationDetails.memberInfo.email)
-
-          countDown.value = sendOtpDisabledTimeout
-          countdownTimer()
-
-          verificationDetails.memberInfo.codeId = res.data.codeId
-          verificationModalVisible.value = false;
-
+        .catch((err) => {
           notify({
-            message: '成功',
-            type: 'success',
-          })
+            message: "请输入有效的邮件",
+            type: "error"
+          });
+        });
+    };
+    const verifyVerificationCode = () => {
+      captchaUpdateRef.value.validate().then(() => {
+        isEmailSending.value = true;
+        verificationDetails.memberInfo.email = updateSecurityVerified.emailAddress;
 
-          isEmailSending.value = false
-        } else {
-          notify.error(res.message)
-          getCode()
-          isEmailSending.value = false
-        }
-     }).catch((e) => {
-          console.log(e.message);
-        // message.error(e.message);
-      });
+        const emailDetails = {
+          email: updateSecurityVerified.emailAddress,
+          captchaCode: updateSecurityVerified.captchaCode,
+          codeId: updateSecurityVerified.codeId
+        };
 
-    })
-    }
-    const submitUpdateSecurity = () => {
-      loadingSecurityBtn.value = true
-      updateSecurityFormRef.value
-        .validate()
-        .then(() => {
-          verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode
-          verifyEmail(verificationDetails.memberInfo).then((res) => {
+        sendEmail(emailDetails)
+          .then((res) => {
             if (res.code === 0) {
+              disableSendVerificationButton.value = true;
+
+              const now = new Date();
+
+              now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout);
+
+              lsStore(sendOtpDisabledKey, now.getTime());
+              lsStore(emailKey, verificationDetails.memberInfo.email);
+
+              countDown.value = sendOtpDisabledTimeout;
+              countdownTimer();
+
+              verificationDetails.memberInfo.codeId = res.data.codeId;
+              verificationModalVisible.value = false;
 
               notify({
-                message: '成功',
-                type: 'success',
-              })
+                message: "成功",
+                type: "success"
+              });
 
-              updateSecurityModalVisible.value = false
-
-              loadInfo()
-
+              isEmailSending.value = false;
             } else {
-              notify.error(res.message)
+              notify.error(res.message);
+              getCode();
+              isEmailSending.value = false;
             }
-          }).catch((e) => {
+          })
+          .catch((e) => {
             console.log(e.message);
             // message.error(e.message);
           });
-        }).catch((error) => {
-        console.log("error", error);
       });
-      loadingSecurityBtn.value = false
+    };
+    const submitUpdateSecurity = () => {
+      loadingSecurityBtn.value = true;
+      updateSecurityFormRef.value
+        .validate()
+        .then(() => {
+          verificationDetails.memberInfo.code = updateSecurityVerified.verificationCode;
+          verifyEmail(verificationDetails.memberInfo)
+            .then((res) => {
+              if (res.code === 0) {
+                notify({
+                  message: "成功",
+                  type: "success"
+                });
+
+                updateSecurityModalVisible.value = false;
+
+                loadInfo();
+              } else {
+                notify.error(res.message);
+              }
+            })
+            .catch((e) => {
+              console.log(e.message);
+              // message.error(e.message);
+            });
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+      loadingSecurityBtn.value = false;
     };
     // Phone
 
-    const verificationPhoneModalVisible = ref(false)
+    const verificationPhoneModalVisible = ref(false);
     // const openPhoneVerificationModal = () => {
     //   getCode();
     //   verificationPhoneModalVisible.value = true;
     // }
     const openPhoneVerificationModal = () => {
-      updatePhoneFormRef.value.validateField('phone').then((resp) => {
+      updatePhoneFormRef.value
+        .validateField("phone")
+        .then((resp) => {
           // captchaForm.captchaCode = "";
           getCode();
           verificationPhoneModalVisible.value = true;
-
-        }).catch((err) => {
-            notify({
-              message: '请输入有效的电话号码',
-              type: 'error',
-            })
         })
-    }
+        .catch((err) => {
+          notify({
+            message: "请输入有效的电话号码",
+            type: "error"
+          });
+        });
+    };
 
-    const updatePhoneModalVisible = ref(false)
+    const updatePhoneModalVisible = ref(false);
     const updatePhoneFormRef = ref();
     const updatePhoneModal = () => {
       updatePhoneVerified.phone = cachedTelephone;
@@ -706,144 +718,141 @@ export default defineComponent({
       updatePhoneModalVisible.value = true;
     };
     const verifyPhoneVerificationCode = () => {
-      captchaUpdateRef.value
-        .validate()
-        .then(() => {
+      captchaUpdateRef.value.validate().then(() => {
+        isPhoneSending.value = true;
+        verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone;
 
-      isPhoneSending.value = true
-      verificationPhoneDetails.memberInfo.phone = updatePhoneVerified.phone
+        const phoneDetails = {
+          telephone: updatePhoneVerified.phone,
+          captchaCode: updatePhoneVerified.captchaCode,
+          codeId: updatePhoneVerified.codeId
+        };
 
-      const phoneDetails =  {
-        telephone: updatePhoneVerified.phone,
-        captchaCode: updatePhoneVerified.captchaCode,
-        codeId: updatePhoneVerified.codeId
-      }
-
-      sendSms(phoneDetails).then((res) => {
-        if (res.code === 0) {
-
-          disableSendPhoneButton.value = true
-
-          const now = new Date();
-
-          now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout)
-
-          lsStore(sendOtpDisabledKey, now.getTime());
-          lsStore(phoneKey, verificationPhoneDetails.memberInfo.phone)
-
-          countDown.value = sendOtpDisabledTimeout
-          countdownTimer()
-
-          verificationPhoneDetails.memberInfo.codeId = res.data.codeId
-          verificationPhoneModalVisible.value = false;
-
-          notify({
-            message: '成功',
-            type: 'success',
-          })
-
-          isPhoneSending.value = false
-        } else {
-            notify.error(res.message)
-            getCode()
-            isPhoneSending.value = false
-          }
-     }).catch((e) => {
-          console.log(e.message);
-        // message.error(e.message);
-      });
-
-    })
-    }
-    const submitUpdatePhone = () => {
-      loadingPhoneBtn.value = true
-      updatePhoneFormRef.value
-        .validate()
-        .then(() => {
-          verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode
-          verifySms(verificationPhoneDetails.memberInfo).then((res) => {
+        sendSms(phoneDetails)
+          .then((res) => {
             if (res.code === 0) {
-              notify({
-                message: '成功',
-                type: 'success',
-              })
-              updatePhoneModalVisible.value = false
-              store.getMemberInfo()
-              loadInfo()
-              gotoNewplayerPromo()
-              
+              disableSendPhoneButton.value = true;
 
+              const now = new Date();
+
+              now.setSeconds(now.getSeconds() + sendOtpDisabledTimeout);
+
+              lsStore(sendOtpDisabledKey, now.getTime());
+              lsStore(phoneKey, verificationPhoneDetails.memberInfo.phone);
+
+              countDown.value = sendOtpDisabledTimeout;
+              countdownTimer();
+
+              verificationPhoneDetails.memberInfo.codeId = res.data.codeId;
+              verificationPhoneModalVisible.value = false;
+
+              notify({
+                message: "成功",
+                type: "success"
+              });
+
+              isPhoneSending.value = false;
             } else {
-              notify.error(res.message)
+              notify.error(res.message);
+              getCode();
+              isPhoneSending.value = false;
             }
-          }).catch((e) => {
+          })
+          .catch((e) => {
             console.log(e.message);
             // message.error(e.message);
           });
-        }).catch((error) => {
-        console.log("error", error);
       });
-
-
-      loadingPhoneBtn.value = false
     };
-    const gotoNewplayerPromo = ()=>{
-      if(useLocalStorage('need-go-back-newplayer').value === 'true'){
-                ElMessageBox.confirm("綁定完成，是否跳轉優惠頁面", "系统提示", {
-                showClose: "false",
-                cancelButtonClass: "cancel-btn",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                type: "warning",
-                draggable: true,
-                buttonSize: "default"
-              })
-                .then(() => {
-                  router.push("/promotion?name=lh1-newplayer-guide");
-                })
-                .catch(() => {});
+    const submitUpdatePhone = () => {
+      loadingPhoneBtn.value = true;
+      updatePhoneFormRef.value
+        .validate()
+        .then(() => {
+          verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode;
+          verifySms(verificationPhoneDetails.memberInfo)
+            .then((res) => {
+              if (res.code === 0) {
+                notify({
+                  message: "成功",
+                  type: "success"
+                });
+                updatePhoneModalVisible.value = false;
+                store.getMemberInfo();
+                loadInfo();
+                gotoNewplayerPromo();
+              } else {
+                notify.error(res.message);
               }
-    }
+            })
+            .catch((e) => {
+              console.log(e.message);
+              // message.error(e.message);
+            });
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+
+      loadingPhoneBtn.value = false;
+    };
+    const gotoNewplayerPromo = () => {
+      if (useLocalStorage("need-go-back-newplayer").value === "true") {
+        ElMessageBox.confirm("綁定完成，是否跳转优惠页面？", "系统提示", {
+          showClose: "false",
+          cancelButtonClass: "cancel-btn",
+          confirmButtonText: "确认",
+          cancelButtonText: "取消",
+          type: "warning",
+          draggable: true,
+          buttonSize: "default"
+        })
+          .then(() => {
+            router.push("/promotion?name=lh1-newplayer-guide");
+          })
+          .catch(() => {});
+      }
+    };
     const countdownTimer = () => {
       if (countDown.value > 0) {
         setTimeout(() => {
-          countDown.value -= 1
-          countdownTimer()
-        }, 1000)
+          countDown.value -= 1;
+          countdownTimer();
+        }, 1000);
       } else {
         lsRemove(sendOtpDisabledKey);
         lsRemove(phoneKey);
 
-        disableSendVerificationButton.value = false
-        disableSendPhoneButton.value = false
+        disableSendVerificationButton.value = false;
+        disableSendPhoneButton.value = false;
       }
-    }
+    };
 
     const updateSecurityVerifiedRules = {
       emailAddress: [
         {
           required: true,
           message: "请输入邮箱地址",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           type: "email",
           message: "邮箱地址不符合",
-          trigger: "blur",
-        },
+          trigger: "blur"
+        }
       ],
       verificationCode: [
         {
           required: true,
           message: "请输入验证码",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           min: 4,
           message: "长度应为 4",
-          trigger: "blur",
-        },
-      ],
+          trigger: "blur"
+        }
+      ]
     };
 
     const updatePhoneVerifiedRules = {
@@ -851,7 +860,7 @@ export default defineComponent({
         {
           required: true,
           message: "请输入电话号码",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           validator: isValidPhone,
@@ -862,14 +871,14 @@ export default defineComponent({
         {
           required: true,
           message: "请输入验证码",
-          trigger: "blur",
+          trigger: "blur"
         },
         {
           min: 4,
           message: "长度应为 4",
-          trigger: "blur",
-        },
-      ],
+          trigger: "blur"
+        }
+      ]
     };
     //update pwd
     const updatePwdModalVisible = ref(false);
@@ -885,48 +894,51 @@ export default defineComponent({
       updatePwdModalVisible.value = true;
     };
 
-    const refOldPassword= ref();
-    const refPassword= ref();
-    const clearPwd = () =>{
+    const refOldPassword = ref();
+    const refPassword = ref();
+    const clearPwd = () => {
       updatePwdInfo.oldPassword = "";
-      updatePwdInfo.password= "";
-      updatePwdInfo.confirmPassword= "";
-    }
+      updatePwdInfo.password = "";
+      updatePwdInfo.confirmPassword = "";
+    };
 
     const submitUpdatePwd = () => {
       // debugger;
-      loadingPwBtn.value = true
+      loadingPwBtn.value = true;
       updatePwdFormRef.value
         .validate()
         .then(() => {
-          changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password).then((response) => {
-            if (response.code === 0) {
-              // message.success("success");
-              notify({
-                message: '成功',
-                type: 'success',
-              })
-              clearPwd();
-            } else {
-              notify.error(response.message)
-            }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4)
-          });
-        }).catch((error) => {
+          changePwd(updatePwdInfo.oldPassword, updatePwdInfo.password)
+            .then((response) => {
+              if (response.code === 0) {
+                // message.success("success");
+                notify({
+                  message: "成功",
+                  type: "success"
+                });
+                clearPwd();
+              } else {
+                notify.error(response.message);
+              }
+            })
+            .catch((error) => {
+              console.log(error.message);
+              // message.error(error.message, 4)
+            });
+        })
+        .catch((error) => {
           console.log("error", error);
-      });
-      loadingPwBtn.value = false
+        });
+      loadingPwBtn.value = false;
     };
 
-    const validatePwd = async (r,v) => {
-      if(updatePwdInfo.confirmPassword !== updatePwdInfo.password){
+    const validatePwd = async (r, v) => {
+      if (updatePwdInfo.confirmPassword !== updatePwdInfo.password) {
         return Promise.reject("确认密码与新密码不符合");
       } else {
         return Promise.resolve();
       }
-    }
+    };
 
     const updatePwdRules = {
       oldPassword: [
@@ -975,36 +987,32 @@ export default defineComponent({
       ]
     };
 
-
-    const isEdit = ref(false)
-    const updateFormDetails = reactive(
-      {
-      }
-    )
-    const updateFormRef = ref()
+    const isEdit = ref(false);
+    const updateFormDetails = reactive({});
+    const updateFormRef = ref();
     const updateState = () => {
-      loadingBtn.value = true
-      updateFormRef.value
-        .validate()
-        .then(() => {
-          updateAccount(toRaw(updateFormDetails)).then((ret) => {
+      loadingBtn.value = true;
+      updateFormRef.value.validate().then(() => {
+        updateAccount(toRaw(updateFormDetails))
+          .then((ret) => {
             if (ret.code === 0) {
               notify({
-                message: '提交成功',
-                type: 'success',
-              })
+                message: "提交成功",
+                type: "success"
+              });
               loadInfo();
               isEdit.value = false;
             } else {
-              notify.error(ret.message)
+              notify.error(ret.message);
             }
-          }).catch((err) => {
-            console.log(err.message);
           })
-        })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      });
 
-      loadingBtn.value = false
-    }
+      loadingBtn.value = false;
+    };
 
     return {
       personalState,
@@ -1192,7 +1200,7 @@ export default defineComponent({
   }
 
   .standard-button.standout {
-    background: #394A65;
+    background: #394a65;
     box-shadow: none;
     color: $active-color-dark;
   }

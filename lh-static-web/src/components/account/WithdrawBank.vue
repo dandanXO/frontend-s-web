@@ -729,23 +729,23 @@ export default defineComponent({
       // })
       // })
     };
-    const gotoNewplayerPromo = ()=>{
-      if(useLocalStorage('need-go-back-newplayer').value === 'true'){
-        ElMessageBox.confirm("綁定完成，是否跳轉優惠頁面", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
-        draggable: true,
-        buttonSize: "default"
-      })
-        .then(() => {
-          router.push("/promotion?name=lh1-newplayer-guide");
+    const gotoNewplayerPromo = () => {
+      if (useLocalStorage("need-go-back-newplayer").value === "true") {
+        ElMessageBox.confirm("綁定完成，是否跳转优惠页面？", "系统提示", {
+          showClose: "false",
+          cancelButtonClass: "cancel-btn",
+          confirmButtonText: "确认",
+          cancelButtonText: "取消",
+          type: "warning",
+          draggable: true,
+          buttonSize: "default"
         })
-        .catch(() => {});
+          .then(() => {
+            router.push("/promotion?name=lh1-newplayer-guide");
+          })
+          .catch(() => {});
       }
-    }
+    };
     const submitBankCard = () => {
       console.log(bankCardInfo);
       bankCardFormRef.value
@@ -760,7 +760,7 @@ export default defineComponent({
                 });
                 bankCardModalState.visible = false;
                 loadCards();
-                gotoNewplayerPromo()
+                gotoNewplayerPromo();
               } else {
                 notify({
                   type: "error",

@@ -73,17 +73,17 @@
     </q-card>
   </q-dialog>
   <q-dialog v-model="gotoNewplayerPromoDialog" persistent>
-      <q-card class="q-px-lg q-pt-sm">
-        <q-card-section class="row items-center">
-          <span class="q-ml-sm">綁定完成，是否跳轉優惠頁面</span>
-        </q-card-section>
+    <q-card class="q-px-lg q-pt-sm">
+      <q-card-section class="row items-center">
+        <span class="q-ml-sm">綁定完成，是否跳转优惠页面？</span>
+      </q-card-section>
 
-        <q-card-actions align="center">
-          <q-btn flat label="否" color="primary" v-close-popup />
-          <q-btn flat label="是"  @click="gotoNewplayerPromo()" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+      <q-card-actions align="center">
+        <q-btn flat label="否" color="primary" v-close-popup />
+        <q-btn flat label="是" @click="gotoNewplayerPromo()" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 
   <!-- <br />
   phone: {{ formDetails.phone }}
