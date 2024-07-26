@@ -443,9 +443,6 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 // FB tracking :: login-success
-                if (store.isAffiliateA) {
-                  fbq("track", "login-success");
-                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(

@@ -164,9 +164,6 @@ const submitLogin = () => {
               closeLoginDialog();
 
               // FB tracking :: login-success
-              if (store.isAffiliateA) {
-                fbq("track", "login-success");
-              }
             } else {
               getCode();
             }

@@ -161,7 +161,10 @@
               </div> -->
             </div>
             <a @click="refreshBalance" class="details-balance">
-              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; gap:5px; align-items: center; flex-wrap: nowrap">
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 60px 1fr; gap: 5px; align-items: center; flex-wrap: nowrap"
+              >
                 <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
@@ -173,11 +176,16 @@
               </el-icon>
             </a>
             <a @click="refreshBalance" class="details-balance">
-              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
+              >
                 <span class="assets-text">{{ $t("account.point") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
-                  <span v-if="!isLoadingBalance">{{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}</span>
+                  <span v-if="!isLoadingBalance">
+                    {{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}
+                  </span>
                 </span>
               </div>
               <el-icon>
@@ -315,14 +323,10 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div
-        class="acc-dialog-container login-container"
-        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
-      >
+      <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
-          <img v-else src="../../assets/home/tf88club-img.png" />
+          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -345,7 +349,7 @@
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container signup-container">
-        <div class="acc-dialog-right" style="width:100%;padding:24px;">
+        <div class="acc-dialog-right" style="width: 100%; padding: 24px">
           <RegisterAccount
             @close-dialog="registerDialogVisible = false"
             @open-login-dialog="openLoginDialog"

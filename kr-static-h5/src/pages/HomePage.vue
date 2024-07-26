@@ -1408,6 +1408,10 @@ export default defineComponent({
               if (liveObj.name === "AE") {
                 liveObj.name = "Sexy";
               }
+
+              if (liveObj.code === "PP") {
+                liveObj.gameCode = 101;
+              }
               liveObj.title_kr = liveObj.name + " 라이브 카지노";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
@@ -1688,7 +1692,8 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       checkShowImgTop();
-      getAppDownloadUrl();
+      //TODO:: ADD IT BACK.
+      // getAppDownloadUrl();
       getUnreadTotal();
       getNewsDetails();
       runMenuFloat();

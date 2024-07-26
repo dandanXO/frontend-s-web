@@ -39,7 +39,7 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_03") }}
-            <a href="https://t.me/TF88_CS" target="_blank">@CITY8_CS</a>
+            <a href="https://t.me/cityy88" target="_blank">@CITY8_CS</a>
           </div>
         </div>
       </div>
