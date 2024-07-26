@@ -38,11 +38,11 @@ const routes = [
         name: "welcome",
         component: () => import(/* webpackChunkName: "Welcome" */ "../views/WelcomeView.vue")
       },
-      {
-        path: "/slot",
-        name: "slot",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
-      },
+      // {
+      //   path: "/slot",
+      //   name: "slot",
+      //   component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
+      // },
       {
         path: "/about",
         name: "about",
@@ -73,11 +73,11 @@ const routes = [
         name: "poker",
         component: () => import(/* webpackChunkName: "Game" */ "../views/PokerView.vue")
       },
-      {
-        path: "/fishing",
-        name: "fishing",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
-      },
+      // {
+      //   path: "/fishing",
+      //   name: "fishing",
+      //   component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
+      // },
       {
         path: "/others",
         name: "others",
