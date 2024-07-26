@@ -82,19 +82,19 @@
         <div v-if="store.token" class="profile-actions">
           <div class="action-btn" @click="store.toggleAnnouncementDialog">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.svg" />
+              <img src="../../assets/images/home/profile-announce.svg" />
             </div>
             {{ $t("menu_item.menu_announcement") }}
           </div>
           <router-link to="/center/message" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.svg" />
+              <img src="../../assets/images/home/profile-message.svg" />
             </div>
             {{ $t("menu_item.menu_message") }}
           </router-link>
           <router-link to="/center/inquiry" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.svg" />
+              <img src="../../assets/images/home/profile-freedback.svg" />
             </div>
             {{ $t("menu_item.menu_inquiry") }}
           </router-link>
@@ -110,12 +110,12 @@
             </div>
             {{ $t("menu.withdraw") }}
           </router-link>
-          <div class="action-btn" @click="showRebateValue">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-rebate.svg" />
-            </div>
-            {{ $t("menu.rebate") }}
-          </div>
+          <!--          <div class="action-btn" @click="showRebateValue">-->
+          <!--            <div class="icon-rounded">-->
+          <!--              <img src="../../assets/images/home/profile-action-rebate.svg" />-->
+          <!--            </div>-->
+          <!--            {{ $t("menu.rebate") }}-->
+          <!--          </div>-->
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
@@ -195,7 +195,10 @@
               </el-icon> -->
             </a>
             <a @click="store.toggleRedeemPointDialog" class="details-balance">
-              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
+              >
                 <span class="assets-text">{{ $t("account.point") }}:</span>
                 <span class="amount blue">
                   <!-- <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
@@ -1757,6 +1760,7 @@ body {
   gap: 2rem;
 
   .action-btn {
+    flex: 1;
     // height: 30px;
     gap: 2px;
     width: 45px;

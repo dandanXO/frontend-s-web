@@ -793,8 +793,7 @@ export default {
     redeem_point_source: "Source",
     redeem_point_condition: "Condition",
     redeem_point_actions: "Actions",
-    redeem_point_redeemed: "Redeemed points",
-    redeem_point_redeem: "Redeem",
+    redeem_point_redeemed: "Redeemed points"
     // redeem point end
   },
   menu_item: {
@@ -839,8 +838,7 @@ export default {
     message_read_all_message: "Read all messages",
     message_delete_selected_message: "Deleted selected messages",
     message_delete_all_message: "Deleted all read messages",
-    message_total: "Total",
-    message_no_selected: "No selected",
+    message_total: "Total"
     // message end
   },
   feedback: {
@@ -863,7 +861,7 @@ export default {
     feedback_admin_replied: "Admin Replied",
     feedback_delete_selected: "Delete Selected",
     feedback_delete_selected_message: "Deleted selected messages",
-    feedback_no_selected: "No selected",
+    feedback_no_selected: "No selected"
     // feedback end
   },
   app: {
