@@ -99,7 +99,7 @@
       <div class="all-game-menus">
         <div class="all-game-tabs">
           <div class="all-game-tab" @click="selectTab('fishing')" :class="(selectedTab==='fishing') ? 'active' : ''">{{$t('menu.fishing')}}</div>
-          <div class="all-game-tab" @click="selectTab('cockfight')" :class="(selectedTab==='cockfight') ? 'active' : ''">{{$t('menu.cockfight')}}</div>
+          <!-- <div class="all-game-tab" @click="selectTab('cockfight')" :class="(selectedTab==='cockfight') ? 'active' : ''">{{$t('menu.cockfight')}}</div> -->
         </div>
       </div>
 

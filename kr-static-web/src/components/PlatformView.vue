@@ -404,8 +404,8 @@ const gameCat = ref("allGame");
 
 onMounted(() => {
   if (route.query.plat === 'Spribe') {
-  router.push({ query: { ...route.query, plat: 'TFGaming' } });
-}
+    router.push({ query: { ...route.query, plat: 'TFGaming' } });
+  }
   getPlatList();
   getPlatGameList();
 
