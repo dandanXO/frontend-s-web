@@ -1,13 +1,20 @@
 <template>
   <div class="tabs-lists">
     <div class="tab-button" :class="filterType === 'today' ? 'active' : ''" @click="selectByDayType('today')">
-      By Today
+      {{ $t("records.bytoday") }}
     </div>
     <div class="tab-button" :class="filterType === 'yesterday' ? 'active' : ''" @click="selectByDayType('yesterday')">
-      By Yesterday
+      {{ $t("records.byyesterday") }}
     </div>
-    <div class="tab-button" :class="filterType === 'all' ? 'active' : ''" @click="selectByDayType('all')">All</div>
+    <div class="tab-button" :class="filterType === 'all' ? 'active' : ''" @click="selectByDayType('all')">
+      {{ $t("records.all") }}
+    </div>
   </div>
+
+  <q-inner-loading class="loading-spinner-div" :showing="isLoading">
+    <q-spinner-gears size="50px" color="brightbtn" />
+    <div class="label" style="color: #fff">Loading...</div>
+  </q-inner-loading>
 
   <div class="reward-wrapper">
     <div class="earn-money-pots">
@@ -300,7 +307,8 @@ const getOneTimeBonusSetting = () => {
     });
 };
 
-const filterType = ref("all");
+const filterType = ref("today");
+const isLoading = ref(false);
 const selectByDayType = (type) => {
   if (type !== filterType.value) {
     filterType.value = type;
@@ -310,6 +318,7 @@ const selectByDayType = (type) => {
 
 const getMemberDetail = () => {
   var recordDate = "";
+
   if (filterType.value === "today") {
     recordDate = moment().format("YYYY-MM-DD 00:00:00") + "," + moment().format("YYYY-MM-DD 23:59:59");
   } else if (filterType.value === "yesterday") {
@@ -317,20 +326,27 @@ const getMemberDetail = () => {
       moment().add(-1, "day").format("YYYY-MM-DD 00:00:00") +
       "," +
       moment().add(-1, "day").format("YYYY-MM-DD 23:59:59");
+  } else {
+    recordDate = "2024-01-01 00:00:00" + "," + moment().format("YYYY-MM-DD 23:59:59");
   }
-
+  isLoading.value = true;
   memberDetail.value = [];
   api
     .get(`/session/refer-rebate/member-detail?recordDate=${recordDate}`)
     .then((response) => {
+      isLoading.value = false;
       if (response.code === 0) {
         memberDetail.value = response.data;
         activeSetting.value = response.data.activeSetting;
       }
     })
     .catch((e) => {
+      isLoading.value = false;
       console.log(e);
     });
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 5000);
 };
 
 const getLatestInvitees = () => {
@@ -854,5 +870,12 @@ watch(activeSetting, checkIsShowDetail);
       filter: brightness(0.86);
     }
   }
+}
+
+.loading-spinner-div {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 9999;
 }
 </style>

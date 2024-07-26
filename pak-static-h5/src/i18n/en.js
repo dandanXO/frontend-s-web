@@ -293,7 +293,8 @@ export default {
       player: "Player",
       money: "Money",
       eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
-      betting_tips: "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
+      betting_tips:
+        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       shareTitle: "B9GAME Share and Earn",
       shareText:
@@ -432,7 +433,10 @@ export default {
     orderNo: "Order NO.",
     bank: "BANK",
     noRecord: "No record",
-    noMoreRecord: "No more record"
+    noMoreRecord: "No more record",
+    bytoday: "By Today",
+    byyesterday: "By Yesterday",
+    all: "All"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
