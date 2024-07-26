@@ -134,7 +134,8 @@ watch(languageVal, (newValue, oldValue) => {
     { route: "/center/share", label: t("menu.referFriend"), icon: "share" },
     { route: "/center/transit-record", label: t("menu.transactionRecord"), icon: "transitrecord" },
     { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
-    { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" }
+    { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
+    { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" }
   ];
 });
 
@@ -147,7 +148,8 @@ const menuItems = ref([
   // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
   { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
-  { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" }
+  { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
+  { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" }
   // { route: "/vip", label: "VIP特权", icon: "vip" },
   // // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   // { route: "/center/feedback", label: "会员建议", icon: "feedback" },
