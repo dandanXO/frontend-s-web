@@ -327,7 +327,7 @@ const getMemberDetail = () => {
       "," +
       moment().add(-1, "day").format("YYYY-MM-DD 23:59:59");
   } else {
-    recordDate = "2024-01-01 00:00:00" + "," + moment().format("YYYY-MM-DD 23:59:59");
+    recordDate = "2024-06-05 00:00:00" + "," + moment().format("YYYY-MM-DD 23:59:59");
   }
   isLoading.value = true;
   memberDetail.value = [];
