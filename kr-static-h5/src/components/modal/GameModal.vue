@@ -389,13 +389,15 @@ const open = (gameName, platformCode, gameCode = "", gameType) => {
             });
           return;
         }
+        // debugger;
         // ,headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
         api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
             params: {
               platform: platformCode,
               gameCode: gameCode,
-              isMobile: Platform.is.mobile ? true : false
+              isMobile: Platform.is.mobile ? true : false,
+              way: way
             }
           })
           .then((response) => {
