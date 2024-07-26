@@ -125,7 +125,8 @@
         </div>
 
         <div class="profile-info" v-if="store.token">
-          <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
+          <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+          <!-- <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
@@ -143,7 +144,7 @@
                     <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
-                <!-- <el-dropdown-item command="deposit">
+                <!- <el-dropdown-item command="deposit">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{ $t("menu.deposit") }}</span>
@@ -160,7 +161,7 @@
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
                   </div>
-                </el-dropdown-item> -->
+                </el-dropdown-item> ->
                 <el-dropdown-item command="logout">
                   <button class="standard-button btn-color-white" style="color: #468cff">
                     {{ $t("menu.logout") }}
@@ -168,12 +169,12 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
-          </el-dropdown>
+          </el-dropdown> -->
           <div class="profile-details">
             <div class="name-and-vip-wrapper">
-              <div class="details-name">
+              <!-- <div class="details-name">
                 {{ store.name2 || store.realName || store.nickName }}
-              </div>
+              </div> -->
               <!-- <div class="account-vip-label">
                 {{ vip }}
               </div> -->
@@ -189,27 +190,34 @@
                   <span v-if="!isLoadingBalance">{{ displayBalance(store.balance) }} {{ store.currency.value }}</span>
                 </span>
               </div>
-              <el-icon>
+              <!-- <el-icon>
                 <RiRefreshLine color="#468CFF" />
-              </el-icon>
+              </el-icon> -->
             </a>
             <a @click="store.toggleRedeemPointDialog" class="details-balance">
               <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
                 <span class="assets-text">{{ $t("account.point") }}:</span>
-                <span class="amount">
-                  <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
+                <span class="amount blue">
+                  <!-- <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
                   <span v-if="!isLoadingBalance">
                     {{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}
-                  </span>
+                  </span> -->
+                  {{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}
                 </span>
               </div>
-              <el-icon>
+              <!-- <el-icon>
                 <RiRefreshLine color="#468CFF" />
-              </el-icon>
+              </el-icon> -->
             </a>
           </div>
         </div>
-
+        <div v-if="store.token" class="right-contents">
+          <router-link to="/center/personal" class="header-btn btn-color-blue">{{ $t("menu.personalInfo") }}</router-link>
+          <a class="header-btn btn-color-white" @click="logoutDialogVisible = true">
+            {{ $t("menu.logout") }}
+            <!-- <img src="../../assets/home/regbtn_side.png" /> -->
+          </a>
+        </div>
         <RedeemPointDialog :closeDialog="() => store.toggleRedeemPointDialog" />
 
         <!-- <div v-if="store.token" class="profile-actions">
@@ -1692,7 +1700,7 @@ body {
   .profile-details {
     display: flex;
     flex-direction: column;
-    width: 160px;
+    // width: 160px;
     font-size: 14px;
 
     .name-and-vip-wrapper {
@@ -1724,12 +1732,18 @@ body {
       display: flex;
       align-items: center;
 
+      color: #7A80A1;
       .assets-text {
         white-space: nowrap;
         text-align: right;
       }
 
       .amount {
+        color: #313441;
+        &.blue {
+          
+        color: #3981FF;
+        }
         font-family: "Roboto";
         margin-right: 0.5rem;
         white-space: nowrap;
@@ -1827,7 +1841,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
     span {
       min-width: 40px;
       text-align: right;
@@ -1835,7 +1848,6 @@ body {
     }
 
     .amount {
-      color: #faea81;
       font-weight: bold;
     }
 
