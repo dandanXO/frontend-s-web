@@ -1,4 +1,14 @@
 <template>
+  <div class="tabs-lists">
+    <div class="tab-button" :class="filterType === 'today' ? 'active' : ''" @click="selectByDayType('today')">
+      By Today
+    </div>
+    <div class="tab-button" :class="filterType === 'yesterday' ? 'active' : ''" @click="selectByDayType('yesterday')">
+      By Yesterday
+    </div>
+    <div class="tab-button" :class="filterType === 'all' ? 'active' : ''" @click="selectByDayType('all')">All</div>
+  </div>
+
   <div class="reward-wrapper">
     <div class="earn-money-pots">
       <div class="pot-item">
@@ -242,6 +252,7 @@ import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { useI18n } from "vue-i18n";
+import moment from "moment";
 
 const $q = useQuasar();
 const store = userStore();
@@ -289,9 +300,28 @@ const getOneTimeBonusSetting = () => {
     });
 };
 
+const filterType = ref("all");
+const selectByDayType = (type) => {
+  if (type !== filterType.value) {
+    filterType.value = type;
+    getMemberDetail();
+  }
+};
+
 const getMemberDetail = () => {
+  var recordDate = "";
+  if (filterType.value === "today") {
+    recordDate = moment().format("YYYY-MM-DD 00:00:00") + "," + moment().format("YYYY-MM-DD 23:59:59");
+  } else if (filterType.value === "yesterday") {
+    recordDate =
+      moment().add(-1, "day").format("YYYY-MM-DD 00:00:00") +
+      "," +
+      moment().add(-1, "day").format("YYYY-MM-DD 23:59:59");
+  }
+
+  memberDetail.value = [];
   api
-    .get("/session/refer-rebate/member-detail")
+    .get(`/session/refer-rebate/member-detail?recordDate=${recordDate}`)
     .then((response) => {
       if (response.code === 0) {
         memberDetail.value = response.data;
@@ -792,6 +822,37 @@ watch(activeSetting, checkIsShowDetail);
   }
   100% {
     opacity: 0;
+  }
+}
+
+.tabs-lists {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 4px auto 16px;
+
+  .tab-button {
+    width: 30vw;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #466a45;
+    padding: 5px 4px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+      font-weight: bold;
+      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    }
+
+    &:active {
+      transform: translate(0px, 1px);
+      filter: brightness(0.86);
+    }
   }
 }
 </style>
