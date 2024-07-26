@@ -31,7 +31,7 @@ export default {
     add_a_bank_card: "은행 카드 추가",
     welcome: "환영합니다",
     mainWallet: "잔액",
-    point: "포인트들",
+    point: "할인",
     reminder: "지원",
     require: "지원",
     str_copy: "복사",
