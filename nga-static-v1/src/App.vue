@@ -254,7 +254,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: theSid,
-            siteCode: "ind"
+            siteCode: "NGA"
           }
         });
       }

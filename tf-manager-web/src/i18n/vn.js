@@ -426,6 +426,21 @@ export default {
       'Thông tin đăng ký của thành viên và người triệu hồi là giống nhau',
     MEMBER_ALREADY_SUMMONED: 'Thành viên đã được triệu hồi',
   },
+  displayLocation: {
+    HOMEPAGE: 'TRANG CHỦ',
+    PROMO_PAGE: 'TRANG KHUYẾN MÃI',
+    DEPOSIT_PAGE: 'TRANG GỬI TIỀN',
+    WITHDRAW_PAGE: 'TRANG RÚT',
+    PERSONAL_CENTRE: 'TRUNG TÂM CÁ NHÂN',
+  },
+  mode: {
+    DYNAMIC: 'Trang nổi',
+    STATIC: 'Hiển thị trực tiếp',
+  },
+  autoplayStatus: {
+    ON: 'bật',
+    OFF: 'tắt',
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -493,6 +508,7 @@ export default {
     addSitePlatform: 'Thêm nền tảng site',
     addStage: 'Thêm giai đoạn',
     addSystemMessage: 'Thêm tin nhắn hệ thống',
+    addSyncDefault: 'Đồng bộ hóa cuộc thi trong vòng 3 ngày',
     addTelephone: 'Thêm số điện thoại',
     addTicket: 'Thêm vé',
     addUser: 'Thêm người dùng',
@@ -519,6 +535,8 @@ export default {
     channelName: 'Tên kênh',
     affiliateDomainList: 'Danh sách miền liên kết',
     affiliateFinancialManagement: 'Quản lý tài chính đối tác liên kết',
+    affiliateFBRequestList: 'Affiliate Facebook Pixel List',
+    affiliateFBRequestUrl: 'Affiliate URL',
     affiliateDepositChannel: 'Kênh gửi tiền đối tác liên kết',
     affiliateH5Link: 'Liên kết H5 đối tác liên kết',
     affiliateInfo: 'Thông tin đối tác liên kết',
@@ -565,6 +583,7 @@ export default {
     auditTime: 'Thời gian kiểm toán',
     automaticPayment: 'Thanh toán tự động',
     autopay: 'Thanh toán tự động',
+    autoplay: 'Tự động phát',
     automaticPay: 'Thanh toán tự động',
     autoWithdrawSetting: 'Cài đặt rút tiền tự động',
     awards: 'Giải thưởng',
@@ -793,6 +812,7 @@ export default {
     disableAffiliate: 'Vô hiệu hóa đối tác',
     disableAll: 'Vô hiệu hóa tất cả',
     disableType: 'Loại vô hiệu hóa',
+    displayUrl: 'Url hiển thị',
     distributed: 'Đã phân phối',
     distributeBy: 'Người phân phối',
     distributePrivilege: 'Phân phối đặc quyền',
@@ -881,6 +901,8 @@ export default {
     extraParam: 'Tham số bổ sung',
     fail: 'Thất bại',
     failReason: 'Lý do thất bại',
+    fbid: 'Facebook Pixel ID',
+    fbToken: 'Facebook Pixel Token',
     fdConvertRate: 'Tỷ giá chuyển đổi FTD',
     features: 'Tính năng',
     fee: 'Phí',
@@ -1019,6 +1041,8 @@ export default {
     maxMemberClaimCountPerDay: 'Số lần yêu cầu tối đa mỗi ngày',
     maxTicket: 'Vé tối đa',
     maxWithdrawAmount: 'Số tiền rút tối đa',
+    mediaDesc: 'Tên phương tiện',
+    mediaUrl: 'địa chỉ phương tiện',
     member: 'Thành viên',
     memberBankCard: 'Thẻ ngân hàng thành viên',
     memberBankCardRecord: 'Lịch sử thẻ ngân hàng thành viên',
@@ -1068,6 +1092,7 @@ export default {
     mobileBanner: 'Biểu ngữ di động',
     mobileMessage: 'Tin nhắn di động',
     mobileWay: 'Di động',
+    mode: 'chế độ',
     moneyChange: 'Di chuyển tiền',
     month: 'Tháng',
     mqLogProcessWithTitle: 'tiêu đề (SummaryDoris)',
@@ -1920,6 +1945,9 @@ export default {
     validateAdjustAmountRequired: 'Số tiền điều chỉnh là bắt buộc',
     validateAdjustReasonRequired: 'Lý do điều chỉnh là bắt buộc',
     validateAdjustTypeRequired: 'Loại điều chỉnh là bắt buộc',
+    validateAffiliateFbIdRequired: 'Facebook pixel ID is required',
+    validateAffiliateFbTokenRequired: 'Facebook pixel token is required',
+    validateAffiliateFbUrlRequired: 'Facebook pixel url is required',
     validateAffiliateCodeRequired: 'Mã đối tác là bắt buộc',
     validateAffiliateLevelRequired: 'Cấp độ đối tác là bắt buộc',
     validateAffiliateNameRequired: 'Tên đối tác là bắt buộc',
@@ -2217,10 +2245,22 @@ export default {
       'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
     validationMaxDayDepositAmountRequired:
       'Số tiền gửi tối đa hàng ngày là bắt buộc',
-    validationDayRegProbabilityRequired:
-      'Xác suất đăng ký hàng ngày là bắt buộc',
-    validationDayDepositAmountProbabilityRequired:
+    validateMinDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
+    validateMaxDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
+    validateMinDayDepositAmountRequired:
+      'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
+    validateMaxDayDepositAmountRequired:
+      'Số tiền gửi tối đa hàng ngày là bắt buộc',
+    validateDayRegProbabilityRequired: 'Xác suất đăng ký hàng ngày là bắt buộc',
+    validateDayDepositAmountProbabilityRequired:
       'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
+    validateMediaDescRequired: 'Yêu cầu mô tả phương tiện',
+    validateMediaUrlRequired: 'Yêu cầu liên kết video',
+    validateDisplayUrlRequired: 'Yêu cầu liên kết hiển thị video',
+    validateModeRequired: 'Chế độ cần thiết',
+    validateAutoplayRequired: 'Yêu cầu tự động phát',
   },
   menu: {
     undefined: '',
@@ -2258,6 +2298,8 @@ export default {
     'Affiliate List': 'Danh sách Đối tác liên kết',
     'Affiliate Details': 'Chi tiết Đối tác liên kết',
     'Affiliate Financial Management': 'Quản lý tài chính Đối tác liên kết',
+    'Affiliate Facebook Pixel Management':
+      'Affiliate Facebook Pixel Management',
     'Affiliate Deposit Display': 'Hiển thị Đối tác liên kết nạp tiền',
     'Site Affiliate Commission': 'Hoa hồng Đối tác trang web',
     'Aff Announcement Management': 'Quản lý thông báo Đối tác',
@@ -2453,6 +2495,7 @@ export default {
     'Promotion Coupon': 'phiếu mua hàng',
     'Member Invite Limit': 'Giới hạn mời thành viên',
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
+    'Media Display Settings': 'Cài đặt hiển thị phương tiện',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
@@ -2745,6 +2788,8 @@ export default {
     17011: 'Bản ghi bỏ phiếu đã được hủy',
     18000: 'Tên miền đã tồn tại',
     18001: 'Miền liên kết không tồn tại',
+    18002: 'Facebook Pixel does not exist',
+    18003: 'This affiliate already set facebook pixel',
     19000: 'Thẻ ngân hàng đã được đưa vào danh sách đen',
     19002: 'Bóng bắt chéo màu đỏ',
     19003: 'Khoảng thời gian làm mới bị chồng chéo',

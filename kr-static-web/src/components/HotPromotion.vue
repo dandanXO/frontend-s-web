@@ -1,15 +1,5 @@
 <template>
   <div class="hot-promo">
-    <!-- <PrizePoolVotePromo v-if="list.redirectUrl === 'lh1-s13-vote'" /> -->
-    <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin'" />
-    <PennyBank v-if="list.redirectUrl === 'vi-penny-bank'" />
-    <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss'" />
-    <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' " :promo-code="list.promoCode" />
-    <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' " :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' " :promo-code="list.promoCode" />
-
     <HongBaoYu2024
       v-if="listParam.type === 'redpacket' && store.token"
       :promo-code="list.promoCode"
@@ -21,7 +11,7 @@
         <span class="img-item">
           <div class="inner-contents">
             <div class="amount">{{ amount }}</div>
-            <div class="bonus">{{ $t('promo.bonus')}}</div>
+            <div class="bonus">{{ $t("promo.bonus") }}</div>
           </div>
         </span>
         <img src="../assets/images/index/bonus.svg" />
@@ -33,15 +23,7 @@
 <script>
 import { defineComponent } from "vue";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
-import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
-import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
-import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
-import SlotNetloss from "../components/hotpromo/slot-netloss/SlotNetloss.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
-import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
-import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
-import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
-import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -49,17 +31,8 @@ import moment from "moment";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
-  // setup: (props, { emit }) => {},
   components: {
-    DailyLoginPromo,
-    LotteryPromo,
-    PennyBank,
-    SlotNetloss,
-    PokerCashback,
-    HongBaoYu2024,
-    Eurocup2024,
-    Eurocup2024bet,
-    EurocupLuckyDraw
+    HongBaoYu2024
     // DailyBonus
   },
   props: {
@@ -297,10 +270,10 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },

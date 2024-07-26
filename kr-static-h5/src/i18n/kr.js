@@ -15,6 +15,7 @@ export default {
     account: "입금",
     promo: "프로모션",
     customer_service: "고객 서비스",
+    nickname: "닉네임",
     mine: "내 계좌",
     personal_information: "개인 정보",
     input_username_cannot_empty: "사용자 이름 입력",
@@ -43,7 +44,7 @@ export default {
     rebate_claim_now: "지금 요청하기",
     not_logged_in: "로그인하지 않았습니다",
     login_register_to_view: "잔액 확인을 위해 로그인하세요",
-    tf88_news: "TF88 뉴스",
+    tf88_news: "CITY8 뉴스",
     see_all: "더 보기",
     play_now: "지금 플레이",
     bet_now: "지금 베팅",
@@ -53,6 +54,17 @@ export default {
     euroCountdown02: " 일",
     helloUsername: "안녕하세요,",
 
+    // redeem point start
+    redeem_point_pending_list: "보류 목록",
+    redeem_point_redeem: "상환하다",
+    redeem_point_points: "포인트들",
+    redeem_point_date: "날짜",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    redeem_point_redeemed: "상환된 포인트",
+    // redeem point end
+
     // side menu
     menu_sports: "스포츠",
     menu_esports: "e스포츠",
@@ -61,7 +73,7 @@ export default {
     menu_lottery: "복권",
     menu_slots: "슬롯",
     menu_fishing: "낚시",
-    menu_hashgame: "해시 게임",
+    menu_hashgame: "미니 게임",
     menu_others: "기타",
     menu_cockfighting: "닭싸움",
     menu_minigame: "미니게임",
@@ -82,7 +94,7 @@ export default {
 
     // login page
     login_title: "준비되셨나요?",
-    login_desc: "TF88과 함께 승리를 위해",
+    login_desc: "CITY8과 함께 승리를 위해",
     please_enter_username: "계정 이름을 입력해 주세요",
     username: "계정 이름",
     length_between_6_12: "길이는 6-12 사이여야 합니다",
@@ -101,7 +113,7 @@ export default {
     length_is_4: "길이는 4여야 합니다",
     login_btn: "로그인",
     register_btn: "회원 가입",
-    contact_customer_service: "24/7 고객 서비스에 문의하기",
+    contact_customer_service: "컨설팅 인력",
     password_weak: "약함",
     password_good: "좋음",
     password_strong: "강함",
@@ -129,6 +141,13 @@ export default {
     user_registration_protocol: "계정 등록 동의서",
     register_success: "가입 성공",
     register_in_progress: "가입 중...",
+    reg_bank: "은행명",
+    reg_bank_placeholder: "은행선택",
+    reg_bank_acc_num: "계좌번호",
+    reg_bank_acc_num_placeholder: "'-'없이숫자만입력",
+    reg_bank_acc_holder: "예금주",
+    reg_bank_acc_holder_placeholder: "2자이상한글,영문만가능(예금주는수정불가/고객센터문의)",
+    reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
 
     // forgot password
     sms_retrieval: "SMS로 찾기",
@@ -206,7 +225,8 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "접속하기",
-    personal_username: "계정 이름",
+    personal_username: "아이디",
+    personal_nickname: "닉네임",
     personal_realname: "이름",
     personal_realname_val: "이름을 입력해 주세요",
     personal_realname_valid: "유효한 이름을 입력해 주세요",
@@ -238,7 +258,7 @@ export default {
 
     // share
     share_promoshare: "홍보 및 공유",
-    share_promodesc: "초대 링크를 통해 가입하고 입금하는 사용자에게는 최대 2,000 VNDP의 누적 보상을 받을 수 있습니다.",
+    share_promodesc: "초대 링크를 통해 가입하고 입금하는 사용자에게는 최대 2,000 원의 누적 보상을 받을 수 있습니다.",
     share_sponsoredlinks: "후원 링크",
     share_copy: "복사",
     share_copy_success: "성공적으로 복사되었습니다",
@@ -255,16 +275,16 @@ export default {
     share_tnc: "약관 및 조건",
     share_para_title: "친구 소개",
     share_tnc_para_01: "프로모션은 2022년 6월 1일 00:00:00 (GMT +8)부터 시작됩니다.",
-    share_tnc_para_02: "TF88에 친구를 소개하면 성공적으로 소개한 사람마다 300 VNDP를 받을 수 있습니다.",
+    share_tnc_para_02: "CITY8에 친구를 소개하면 성공적으로 소개한 사람마다 300 원를 받을 수 있습니다.",
     share_tnc_para_03: "보상을 받으려면 회원은 다음 조건을 충족해야 합니다:",
     share_tnc_para_03_a: "소개하는 회원 (고객)",
-    share_tnc_para_03_a_i: "유효한 총 베팅 금액이 최소 10,000 VNDP 이상이어야 합니다.",
+    share_tnc_para_03_a_i: "유효한 총 베팅 금액이 최소 10,000 원 이상이어야 합니다.",
     share_tnc_para_03_a_ii: "VIP 1 이상의 수준을 달성해야 합니다.",
     share_tnc_para_03_b: "소개받는 회원 (당신의 친구):",
     share_tnc_para_03_b_i: "정해진 친구 초대 링크를 통해 프로모션 기간 내에 계정을 등록해야 합니다.",
-    share_tnc_para_03_b_ii: "TF88에 가입한 적이 없으며, TF88에 다른 계정이 없어야 합니다.",
+    share_tnc_para_03_b_ii: "CITY8에 가입한 적이 없으며, CITY8에 다른 계정이 없어야 합니다.",
     share_tnc_para_03_b_iii:
-      "첫 입금 거래가 성공적으로 이루어져야 하며, 누적된 유효한 베팅 금액이 최소 4,000 VNDP 이상이어야 합니다.",
+      "첫 입금 거래가 성공적으로 이루어져야 하며, 누적된 유효한 베팅 금액이 최소 4,000 원 이상이어야 합니다.",
     share_tnc_para_04:
       '회원은 "개인정보 - 친구 초대" 메뉴를 통해 친구를 초대할 수 있습니다. 이후 회원은 이 링크를 친구에게 보내 계정을 등록할 수 있습니다.',
     share_tnc_para_05:
@@ -272,8 +292,8 @@ export default {
     share_tnc_para_06: "프로모션 보상을 받는 회원은 출금을 하기 전에 5회 베팅을 완료해야 합니다.",
     share_tnc_para_07:
       "모든 무승부, 취소, 양측 베팅, 유럽 핸디캡 비율 1.75 이하, 아시안 핸디캡 0.75 이하, 가상 스포츠, 경마, 번호 게임 베팅은 본 프로그램에 적용되지 않습니다.",
-    share_tnc_para_08: "TF88은 사전 통지 없이 본 프로모션을 수정, 거부 또는 취소할 권리를 가집니다.",
-    share_tnc_para_09: "본 프로그램은 TF88의 모든 프로모션과 동시에 적용될 수 있습니다.",
+    share_tnc_para_08: "CITY8은 사전 통지 없이 본 프로모션을 수정, 거부 또는 취소할 권리를 가집니다.",
+    share_tnc_para_09: "본 프로그램은 CITY8의 모든 프로모션과 동시에 적용될 수 있습니다.",
     share_tnc_para_10: "일반 프로모션 약관이 적용됩니다.",
 
     // transfer
@@ -392,16 +412,17 @@ export default {
     bd_note_para_01:
       "은행 계좌 연결 시 계좌 이름과 은행 등록 이름이 일치해야 합니다. 정보가 잘못 입력되면 인출 실패나 은행 처리 지연이 발생할 수 있으니, 고객 서비스에 문의하여 신속하게 처리해 주세요. 감사합니다!",
     bd_note_para_02:
-      "은행 카드의 이름과 계좌 번호와 정확한 정보를 입력해 주세요. 잘못 입력하면 인출 시 손실이 발생할 수 있습니다! TF88에 진심으로 감사드립니다!",
+      "은행 카드의 이름과 계좌 번호와 정확한 정보를 입력해 주세요. 잘못 입력하면 인출 시 손실이 발생할 수 있습니다! CITY8에 진심으로 감사드립니다!",
 
     // mine
     version_no: "버전",
     central_wallet: "잔액",
+    central_rebate: "할인",
     loading: "로딩 중...",
     deposit_btn: "입금",
     withdraw_btn: "출금",
     transfer_btn: "이체",
-    account_title: "혜택 받기",
+    account_title: "개인정보",
     account_bonus_redeem: "보상 교환",
     mine_personal_info: "개인 정보",
     mine_bank: "은행",
@@ -487,7 +508,7 @@ export default {
     vip_monthly_reload: "월간 재충전 보너스",
     vip_exclusive_promotions: "독점 프로모션 및 혜택",
     vip_upgraderequire: "업그레이드 요구 사항",
-    vip_notes: "노트: 모든 프로모션, 입금 및 출금은 VNDP 단위로 계산됩니다.",
+    vip_notes: "노트: 모든 프로모션, 입금 및 출금은 원 단위로 계산됩니다.",
     vip_iron: "철",
     vip_bronze: "동",
     vip_silver: "은",
@@ -507,7 +528,7 @@ export default {
     vip_invitation_to_ee: "독점 이벤트 초대장",
     vip_terms_title: "규칙 및 조건",
     vip_terms_para_01:
-      "이 프로그램은 TF88에서 유효한 VNDP 계정을 가진 모든 회원에게 적용됩니다. 이 프로그램은 매월 유효한 총 베팅 금액을 기준으로 하며, 매월 첫날 00:00:00부터 마지막 날 23:59:59까지 (GMT +8) 집계됩니다.",
+      "이 프로그램은 CITY8에서 유효한 원 계정을 가진 모든 회원에게 적용됩니다. 이 프로그램은 매월 유효한 총 베팅 금액을 기준으로 하며, 매월 첫날 00:00:00부터 마지막 날 23:59:59까지 (GMT +8) 집계됩니다.",
     vip_terms_para_02:
       "시스템은 매월 첫날 12:00:00 (GMT +8)에 모든 회원의 VIP 레벨을 자동으로 업그레이드합니다. 단, 회원의 유효한 총 베팅 금액이 해당 VIP 레벨로 승급할 자격이 되어야 합니다. 프로모션은 각 VIP 레벨에 따라 적용되지 않습니다.",
     vip_terms_para_03:
@@ -515,14 +536,14 @@ export default {
     vip_terms_para_04:
       "업그레이드 보너스는 월간 보너스와 동시에 받을 수 없습니다. 회원이 이번 달에 VIP로 승급된 경우, 업그레이드 보너스를 받게 됩니다. 시스템은 이번 달에 VIP로 승급되지 않은 계정의 월간 보너스를 검토합니다.",
     vip_terms_para_05:
-      "월간 보너스: 회원은 보너스를 받기 전에 현재 VIP 레벨 유지 요건을 충족해야 합니다. (예: VIP3에 있는 회원은 이달에 최소 600,000 VNDP의 총 베팅을 해야 합니다). 요건을 충족한 후, 회원은 매월 첫날 VIP 페이지에서 수령 버튼을 클릭할 수 있습니다. 보너스 금액은 해당 VIP 레벨에 따라 다르며, 출금을 위해 3회의 베팅을 완료해야 합니다.",
+      "월간 보너스: 회원은 보너스를 받기 전에 현재 VIP 레벨 유지 요건을 충족해야 합니다. (예: VIP3에 있는 회원은 이달에 최소 600,000 원의 총 베팅을 해야 합니다). 요건을 충족한 후, 회원은 매월 첫날 VIP 페이지에서 수령 버튼을 클릭할 수 있습니다. 보너스 금액은 해당 VIP 레벨에 따라 다르며, 출금을 위해 3회의 베팅을 완료해야 합니다.",
     vip_terms_para_06:
       "생일 보너스: 생일 달에 회원은 고객 서비스에 연락하여 본인 확인을 받고, 현재 VIP 레벨에 해당하는 보너스를 받을 수 있습니다. 모든 확인 정보는 고객 서비스와 함께 진행해야 합니다.",
     vip_terms_para_07:
-      "환급 보너스: 회원은 현재 VIP 레벨에 따라 환급 보너스를 받을 수 있습니다. 온라인 카지노, 슬롯 게임의 환급 보너스는 하루에 50,000 VNDP를 초과할 수 없으며, 다른 제품에 대해서는 제한이 없습니다.",
+      "환급 보너스: 회원은 현재 VIP 레벨에 따라 환급 보너스를 받을 수 있습니다. 온라인 카지노, 슬롯 게임의 환급 보너스는 하루에 50,000 원를 초과할 수 없으며, 다른 제품에 대해서는 제한이 없습니다.",
     vip_terms_para_08:
       "모든 무효 베팅, 취소된 베팅, 양방향 베팅, 유럽 배당률 1.75 미만, 아시아 배당률 0.75 미만, 숫자 게임, 가상 스포츠, RNG 진행형 잭팟, RNG 슬롯 머신은 이 프로그램의 베팅 수익으로 계산되지 않습니다. 프로그램의 일반 조건이 적용됩니다.",
-    vip_terms_para_09: "TF88은 사전 통보 없이 이 VIP 회원 프로그램을 수정, 거부 또는 취소할 권리가 있습니다.",
+    vip_terms_para_09: "CITY8은 사전 통보 없이 이 VIP 회원 프로그램을 수정, 거부 또는 취소할 권리가 있습니다.",
     vip_sport_rebate: "스포츠",
     vip_esport_rebate: "E스포츠",
     vip_livecasino_rebate: "라이브 카지노",
@@ -603,7 +624,7 @@ export default {
     affiliate_01_para_03:
       "수수료는 매월 5일에 검토되며, 매월 10일에 VND 통화로 발행됩니다. 10일 이후부터 파트너는 자신의 수수료를 인출할 수 있습니다.",
     affiliate_01_para_04:
-      "TF88은 모든 파트너 사용자를 추적하며, 이러한 사용자를 평가하는 데 자체 기준(위험 수준, 입금 금액, 베팅 지표 등)을 가지고 있습니다. 기준을 충족하지 않는 경우, 수수료 지급을 거부할 권리가 있습니다.",
+      "CITY8은 모든 파트너 사용자를 추적하며, 이러한 사용자를 평가하는 데 자체 기준(위험 수준, 입금 금액, 베팅 지표 등)을 가지고 있습니다. 기준을 충족하지 않는 경우, 수수료 지급을 거부할 권리가 있습니다.",
     affiliate_01_para_05: "각 파트너는 단 하나의 이메일, 전화번호 및 이름만 등록해야 합니다.",
     affiliate_01_para_06:
       "이전 대리점은 현재 달에 3명 이상의 신규 활성 회원이 있어야 하며, 총 활성 회원 수는 5명 이상이어야 합니다.",
@@ -907,6 +928,19 @@ export default {
     suspend: "중단",
     pending: "대기 중",
     supplement_success: "추가 성공",
+    deposit_reminder: "알림",
+    deposit_reminder_caption: "출금 전 꼭 읽어주세요",
+    deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+    본인명의 이외 타명의 입금은 처리가 불가합니다
+    계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
+
+    ※주의사항
+    충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+    금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
+
+    ※가상계좌 점검시간 안내
+    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
 
     // WithdrawBankView
     choose_a_card: "계좌 선택",
@@ -914,6 +948,9 @@ export default {
     add_a_card: "계좌 추가",
     bank_card_unbind_record: "은행 카드 비연결 기록",
     add_a_virtual_currency: "가상 화폐 추가",
+    withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+    출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
     select_account_add_different_banks: "계좌 선택 (다른 은행 추가)",
     please_select_a_bank_account: "은행 계좌를 선택해 주세요.",
     account_name_with_desc: "계좌 이름 (입금 계좌 이름과 일치해야 함)",
@@ -921,6 +958,7 @@ export default {
     branch_not_required: "지점 (선택 사항)",
     cancel: "취소",
     confirm: "확인",
+    redeem: "상환하다",
     incorrect: "잘못됨",
     security_check: "보안 점검",
     fish2_list: "낚시",
@@ -929,6 +967,8 @@ export default {
       "Jolly88 서비스 약관(TNC): 제공하는 서비스는 약관 및 개인정보 보호정책에 따라 관리됩니다. 자세한 내용은 서비스 약관을 참조해 주세요.",
     footer_all_rights: "Jolly88 2023{'@'}모든 권리 보유.",
     announcement: "공지사항",
+    question: "문의",
+    message: "문의",
     name: "이름",
     surname: "성",
     dob: "생년월일",
@@ -1287,31 +1327,31 @@ export default {
       affiliate: "대리점",
       aboutus: "TFGaming에 대하여",
       welcome:
-        "TF88 Gaming에 오신 것을 환영합니다! 우리는 베트남의 주요 온라인 베팅 제공업체 중 하나로, 고객에게 훌륭한 오락과 많은 보상을 얻을 수 있는 기회를 제공하는 사명을 가지고 있습니다.",
+        "CITY8 Gaming에 오신 것을 환영합니다! 우리는 베트남의 주요 온라인 베팅 제공업체 중 하나로, 고객에게 훌륭한 오락과 많은 보상을 얻을 수 있는 기회를 제공하는 사명을 가지고 있습니다.",
       product: "제품",
       productDescription:
-        "TF88은 온라인 카지노, 스포츠 베팅, 슬롯 머신, e스포츠 및 복권 등을 포함한 다양한 온라인 베팅 제품을 제공합니다... 이러한 다양한 제품을 통해 고객은 자신의 취향과 오락 요구에 맞는 게임을 찾을 수 있는 많은 기회를 갖게 될 것입니다.",
+        "CITY8은 온라인 카지노, 스포츠 베팅, 슬롯 머신, e스포츠 및 복권 등을 포함한 다양한 온라인 베팅 제품을 제공합니다... 이러한 다양한 제품을 통해 고객은 자신의 취향과 오락 요구에 맞는 게임을 찾을 수 있는 많은 기회를 갖게 될 것입니다.",
       liquidity: "유동성",
       liquidityDescription:
-        "우리는 현지 은행, 전자 지갑, 모바일 카드, USDT 등을 통해 유연하고 다양한 결제 시스템을 보유하고 있습니다... TF88은 고객의 거래를 최대한 신속하게 처리할 것을 약속하며, 거래 정보의 안전을 보장합니다.",
+        "우리는 현지 은행, 전자 지갑, 모바일 카드, USDT 등을 통해 유연하고 다양한 결제 시스템을 보유하고 있습니다... CITY8은 고객의 거래를 최대한 신속하게 처리할 것을 약속하며, 거래 정보의 안전을 보장합니다.",
       security: "보안",
       securityDescription:
-        "TF88은 고객 정보를 최상의 방법으로 보호하기 위해 최첨단 보안 기술을 사용합니다. 우리는 개인 정보와 회원의 프라이버시를 보호하기 위해 필요한 보안 조치를 시행하고 있습니다. 따라서 제공한 정보는 항상 우리의 보안 데이터 시스템에서 안전합니다.",
+        "CITY8은 고객 정보를 최상의 방법으로 보호하기 위해 최첨단 보안 기술을 사용합니다. 우리는 개인 정보와 회원의 프라이버시를 보호하기 위해 필요한 보안 조치를 시행하고 있습니다. 따라서 제공한 정보는 항상 우리의 보안 데이터 시스템에서 안전합니다.",
       promotion: "프로모션",
       promotionDescription:
-        "우리는 베팅 배당률이 항상 고객이 원하는 대로 되지 않는다는 것을 이해하고 있습니다. 그렇기 때문에 TF88은 각 베팅에서 최상의 혜택을 보장하기 위해 다양한 프로모션 프로그램을 마련했습니다. 우리는 고객을 위한 최고의 게임 환경을 만들기 위해 항상 노력하고 있습니다.",
+        "우리는 베팅 배당률이 항상 고객이 원하는 대로 되지 않는다는 것을 이해하고 있습니다. 그렇기 때문에 CITY8은 각 베팅에서 최상의 혜택을 보장하기 위해 다양한 프로모션 프로그램을 마련했습니다. 우리는 고객을 위한 최고의 게임 환경을 만들기 위해 항상 노력하고 있습니다.",
       license: "면허",
       licenseDescription:
-        "TF88은 필리핀 정부의 감독 아래 North Cagayan (NCGAC)으로부터 면허를 받았습니다. 회사 본사는 필리핀 마닐라에 있습니다.",
+        "CITY8은 필리핀 정부의 감독 아래 North Cagayan (NCGAC)으로부터 면허를 받았습니다. 회사 본사는 필리핀 마닐라에 있습니다.",
       collectInformation: "정보 수집",
       policyMessage:
-        "탐색하는 과정에서, 귀하의 시스템과 브라우저는 우리 서버로 정보를 전송할 수 있으며, 이 정보는 TF88이 품질을 지속적으로 개선하여 더 나은 경험을 제공하기 위해 사용됩니다.",
+        "탐색하는 과정에서, 귀하의 시스템과 브라우저는 우리 서버로 정보를 전송할 수 있으며, 이 정보는 CITY8이 품질을 지속적으로 개선하여 더 나은 경험을 제공하기 위해 사용됩니다.",
       personalInformation:
-        "회원 가입 시 귀하의 개인 정보에는: 전체 이름, 이메일, 전화번호, 생년월일 및 TF88이 귀하의 계정 관리를 위해 필요한 기타 정보가 포함됩니다.",
+        "회원 가입 시 귀하의 개인 정보에는: 전체 이름, 이메일, 전화번호, 생년월일 및 CITY8이 귀하의 계정 관리를 위해 필요한 기타 정보가 포함됩니다.",
       processingPurposes: "귀하의 정보는 다음과 같은 여러 목적으로 처리됩니다:",
-      manageProcessInfo: "TF88 웹사이트에서 귀하의 정보를 관리하고 처리하기 위해.",
+      manageProcessInfo: "CITY8 웹사이트에서 귀하의 정보를 관리하고 처리하기 위해.",
       offerGames: "귀하에게 게임을 제공하고 베팅을 수락하기 위해.",
-      determineLegalAge: "TF88에서 게임에 참여할 때 귀하의 법적 연령을 확인하기 위해.",
+      determineLegalAge: "CITY8에서 게임에 참여할 때 귀하의 법적 연령을 확인하기 위해.",
       meetProductPreferences: "귀하의 취향에 따라 적합한 제품을 제공하기 위해.",
       webMaintenance: "웹사이트 유지 관리 및 문제 진단을 위해.",
       improveServiceQuality: "서비스 품질 개선을 위해.",
@@ -1320,34 +1360,34 @@ export default {
       statisticalAnalysis:
         "귀하에게 서비스를 제공하는 과정에서, 우리는 다양한 지역을 기반으로 통계 분석을 수행합니다. 우리는 제3자에게 광고를 게재하기 위해 정보를 제공할 수 있습니다.",
       cooperateSuppliers:
-        "TF88은 여러 공급업체와 협력하므로 귀하의 정보가 결과 검토를 위해 공급업체에 제공될 수 있습니다. 이는 결과의 공정성을 보장하고 귀하의 권리를 보호하기 위함입니다.",
+        "CITY8은 여러 공급업체와 협력하므로 귀하의 정보가 결과 검토를 위해 공급업체에 제공될 수 있습니다. 이는 결과의 공정성을 보장하고 귀하의 권리를 보호하기 위함입니다.",
       promotionInformation: "프로모션 정보",
       marketingPromotions:
-        "마케팅을 통해 프로모션 프로그램을 실행하고 승리한 프로모션의 상금에 대한 공지를 위해, TF88은 귀하의 계정 정보 또는 상금의 첫 몇 자와 숫자를 발표할 수 있습니다.",
+        "마케팅을 통해 프로모션 프로그램을 실행하고 승리한 프로모션의 상금에 대한 공지를 위해, CITY8은 귀하의 계정 정보 또는 상금의 첫 몇 자와 숫자를 발표할 수 있습니다.",
       privacy: "개인정보 보호",
       privacyAssurance:
-        "TF88은 귀하의 개인 정보 보안을 보장합니다. TF88은 불법 행위의 침입을 방지하기 위해 가장 강력한 방화벽 시스템을 사용합니다.",
+        "CITY8은 귀하의 개인 정보 보안을 보장합니다. CITY8은 불법 행위의 침입을 방지하기 위해 가장 강력한 방화벽 시스템을 사용합니다.",
       dataSecurity: "데이터 보안",
       dataSecurityAssurance: "회사의 모든 데이터와 정보는 처리 시 보안 요구 사항이 있습니다.",
       // Legal Basis
       legalBasis: "법적 근거",
       generalTermsMessage:
-        "다음은 TF88 사용을 위한 일반 약관입니다. 계정을 등록함으로써, 귀하는 우리의 일반 약관을 준수하는 데 동의합니다. 웹사이트 방문자의 계정 내 모든 활동은 다음 약관을 준수하며 감시받아야 합니다:",
+        "다음은 CITY8 사용을 위한 일반 약관입니다. 계정을 등록함으로써, 귀하는 우리의 일반 약관을 준수하는 데 동의합니다. 웹사이트 방문자의 계정 내 모든 활동은 다음 약관을 준수하며 감시받아야 합니다:",
       ageRequirement: "회원은 최소 18세 이상이어야 하며, 자신의 행동에 대한 책임을 질 수 있는 지능을 가져야 합니다.",
       singleAccount:
-        "각 고객은 TF88 웹사이트에서 하나의 계정만 개설할 수 있습니다. 우리는 추가로 개설된 계정을 폐쇄할 수 있으며, 해당 계정에 남아 있는 모든 금액은 TF88의 단독 결정에 따라 처리됩니다.",
+        "각 고객은 CITY8 웹사이트에서 하나의 계정만 개설할 수 있습니다. 우리는 추가로 개설된 계정을 폐쇄할 수 있으며, 해당 계정에 남아 있는 모든 금액은 CITY8의 단독 결정에 따라 처리됩니다.",
       personalInformation2:
-        "고객은 계정을 등록할 때 개인 정보를 제공해야 하며, 제공한 정보가 웹사이트에서 적절하게 업데이트되도록 해야 합니다. 등록 정보에 오류가 있을 경우, TF88은 관련 책임을 지지 않습니다. 우리는 고객의 정보가 안전하게 보호되도록 보장합니다.",
+        "고객은 계정을 등록할 때 개인 정보를 제공해야 하며, 제공한 정보가 웹사이트에서 적절하게 업데이트되도록 해야 합니다. 등록 정보에 오류가 있을 경우, CITY8은 관련 책임을 지지 않습니다. 우리는 고객의 정보가 안전하게 보호되도록 보장합니다.",
       checkAccountBalance:
         "고객은 계정 잔액을 정기적으로 확인해야 하며, 어떤 불일치가 발생할 경우 즉시 온라인 지원에 보고하여 계정을 확인하고 검증해야 합니다.",
       accountSecurity:
-        "고객은 자신의 계정 정보의 보안을 보장해야 하며, 고객이 타인에게 정보를 공개할 경우, 이후의 분쟁이나 갈등에 대해 TF88은 책임을 지지 않습니다.",
+        "고객은 자신의 계정 정보의 보안을 보장해야 하며, 고객이 타인에게 정보를 공개할 경우, 이후의 분쟁이나 갈등에 대해 CITY8은 책임을 지지 않습니다.",
       depositInstructions:
-        "고객은 입금을 위해 웹사이트의 정보와 지침을 준수해야 하며, TF88은 지침에 따라 이루어지지 않은 모든 거래에 대해 책임을 지지 않습니다.",
+        "고객은 입금을 위해 웹사이트의 정보와 지침을 준수해야 하며, CITY8은 지침에 따라 이루어지지 않은 모든 거래에 대해 책임을 지지 않습니다.",
       accessFromRestrictedArea:
-        "TF88은 우리 서비스에 지정되지 않은 지역에서 웹사이트에 접근하려는 시도를 권장하거나 금지하지 않습니다.",
+        "CITY8은 우리 서비스에 지정되지 않은 지역에서 웹사이트에 접근하려는 시도를 권장하거나 금지하지 않습니다.",
       entertainmentPurpose:
-        "TF88은 오락 목적을 위한 제품을 제공하며, 고객은 TF88에 참여함으로써 일정한 위험을 감수하는 데 동의합니다. TF88에서 서비스를 이용할 때, 우리는 고객의 손실에 대해 웹사이트의 책임을 부인합니다.",
+        "CITY8은 오락 목적을 위한 제품을 제공하며, 고객은 TF88에 참여함으로써 일정한 위험을 감수하는 데 동의합니다. TF88에서 서비스를 이용할 때, 우리는 고객의 손실에 대해 웹사이트의 책임을 부인합니다.",
       withdrawalRequest:
         "TF88은 등록 정보가 정확하지 않은 경우 출금 요청을 거부할 권리가 있으며, 등록 정보를 확인하기 위해 관련 문서를 요청할 권리가 있습니다.",
       honestyPolicy: "고객은 TF88에 영향을 미치기 위해 부정확한 정보를 제공하거나 허위 진술을 해서는 안 됩니다.",
@@ -1430,7 +1470,7 @@ export default {
     firstSlideContent: "TF88의 수준 높은 앱에서 매끄러운 경험을 누리세요",
     firstSlideSub: "다운로드 +60VNPD",
     secondSlide: "매력적인 입금 보너스",
-    secondSlideContent: "입금 보너스 100% 최대 2,000 VNDP",
+    secondSlideContent: "입금 보너스 100% 최대 2,000 원",
     thirdSlide: "E스포츠 개발자",
     thirdSlideContent: "TF88은 아시아 E스포츠 베팅의 선두주자입니다. 매일 500개 이상의 이벤트에 베팅하세요!"
   },

@@ -276,9 +276,9 @@ export default {
     reward: {
       myTotalIncome: "میری کل آمدنی",
       myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
-      invite: "دعوت دیں",
-      topUp: "اپ ڈاؤن",
-      bet: "شرط لگائیں",
+      invite: "دعوتی بونس",
+      topUp: "جمع بونس",
+      bet: "شرط بونس",
       eligibleRefer: "اہل ریفر",
       inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
       howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
@@ -291,7 +291,10 @@ export default {
       totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
       player: "پلیئر",
       money: "پیسہ",
-      eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔",
+      eligibility_tips: "اہلیت: <br /> مدعو کا جمع کردہ رقم ≥ 300 ہونا چاہیے۔",
+      betting_tips:
+        "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
+      deposit_tips: "ڈپازٹ کمیشن: <br /> ہر نئے ممبر کی پہلی جمع کردہ رقم پر 5% ریبیٹ حاصل کریں جو آپ مدعو کریں۔",
       shareTitle: "B9GAME شیئر کریں اور کمائیں",
       shareText:
         "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
@@ -428,7 +431,10 @@ export default {
     orderNo: "آرڈر نمبر",
     bank: "بینک",
     noRecord: "کوئی ریکارڈ نہیں",
-    noMoreRecord: "مزید ریکارڈ نہیں"
+    noMoreRecord: "مزید ریکارڈ نہیں",
+    bytoday: " آج تک",
+    byyesterday: "کل تک",
+    all: "سب"
   },
   appUpdate: {
     updateHeader: "اعلانِ اپ ڈیٹ",

@@ -1,48 +1,4 @@
 <template>
-  <el-dialog
-  align-center
-    v-model="isStationNotice"
-    :maskClosable="false"
-    :footer="null"
-    style="border-radius: 8px; width: 800px;"
-    class="notice-modal"
-  >
-    <div class="notice-header">
-      {{ $t('home.announcementList') }}
-      <div @click="isStationNotice = false">
-        <img src="../../assets//home/announcement/close-btn.png" />
-      </div>
-    </div>
-
-    <div>
-      <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
-                     :name="tab.name">
-
-          <el-collapse accordion v-model="typeActive">
-            <template v-for="(ann, idx) in announcementList" :key="idx">
-              <template v-if="ann.typeId === tab.id">
-                <el-collapse-item :name="idx" :title="ann.title" class="announcement-content">
-                  <p class="announcement-p">{{ ann.content }}</p>
-                </el-collapse-item>
-              </template>
-            </template>
-          </el-collapse>
-
-<!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
-<!--            <template v-if="ann.typeId === tab.id">-->
-<!--              <div class="announcement-content">-->
-<!--                {{ ann.content }}-->
-<!--              </div>-->
-<!--            </template>-->
-<!--          </template>-->
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-
-
-  </el-dialog>
-
   <div class="top-bar-wrapper">
     <div class="top-bar-inner">
       <div class="station-notice-container">
@@ -75,11 +31,15 @@ import { ref, onMounted } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 import { ElMessage } from "element-plus";
+import { storeToRefs } from "pinia";
+import { userStore } from "@/store";
 
 const typeActive = ref("");
 const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
+const store = userStore();
+const { isShowAnnouncementDialog } = storeToRefs(store);
 const loadAnnouncement = () => {
   getAnnouncement().then((res) => {
     if (res.code === 0) {
@@ -108,13 +68,12 @@ const announcementTabChange = () => {
   // });
 };
 
-const isStationNotice = ref(false);
 const noticeTitle = ref("");
 const openPopup = (noticeType) => {
   if (noticeType) {
     // announcementActive.value = "3";
     noticeTitle.value = noticeType.title;
-    isStationNotice.value = true;
+    store.toggleAnnouncementDialog();
   }
 };
 

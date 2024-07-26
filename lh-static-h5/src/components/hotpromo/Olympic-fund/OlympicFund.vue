@@ -2,8 +2,8 @@
   <div class="olympic-fund-wrapper">
     <div class="switch-wrapper">
       <div class="switch-container">
-        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">新手礼包</div>
-        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">新人指路</div>
+        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">助力金</div>
+        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">突破奖</div>
       </div>
     </div>
 
@@ -12,6 +12,11 @@
         <img src="./img/gift.svg" />
         <span v-if="isGiftSelected">助力金</span>
         <span v-else>突破奖</span>
+      </div>
+
+      <div class="description-block-event-content">
+        <div class="description-block-event-content-title">活动时间</div>
+        <span>2024年7月25日—2024年8月11日</span>
       </div>
 
       <div class="bonus-block-content">
@@ -35,7 +40,7 @@
         <span v-else class="detail-block-content__suffix">{{ depositData.breakthroughBonus }}元</span>
       </div>
       <div class="bonus-block-btn-wrapper" :class="selected">
-        <button class="bonus-block-btn" @click="handleClick"></button>
+        <div class="bonus-block-btn" @click="handleClick"></div>
       </div>
     </div>
 
@@ -43,7 +48,7 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="./img/exclamation.svg" />
         <span>活动说明</span> -->
-        <img src="./img/info-title.png">        
+        <img src="./img/info-title.png" />
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
@@ -108,7 +113,7 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="./img/exclamation.svg" />
         <span>活动规则</span> -->
-        <img src="./img/rule-title.png">   
+        <img src="./img/rule-title.png" />
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
         <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
@@ -322,6 +327,7 @@ onMounted(() => {
     background-size: contain;
     aspect-ratio: 284 / 184;
     margin-bottom: 8px;
+    min-height: 200px;
 
     &.guide {
       background-image: url(./img/guide-button-bg.png);
@@ -342,27 +348,25 @@ onMounted(() => {
   }
 }
 
-.description-block {
-  .description-block-event-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.description-block-event-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-    .description-block-event-content-title {
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-      padding: 3px 28px;
-      clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
-      font-weight: 600;
-      font-size: 0.75rem;
-      line-height: 1.125rem;
-      color: #fff;
-    }
+  .description-block-event-content-title {
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding: 3px 28px;
+    clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    color: #fff;
+  }
 
-    span {
-      font-weight: 400;
-      font-size: 0.75rem;
-      line-height: 1rem;
-    }
+  span {
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
 
@@ -432,6 +436,9 @@ onMounted(() => {
       }
     }
   }
+}
+.promo-container .selected-promo .selected-promo-wrapper .inner .table-wrapper table th {
+  white-space: pre-wrap;
 }
 
 .table-wrapper {

@@ -204,6 +204,7 @@
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-container">
       <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div>
@@ -288,26 +289,28 @@ const stopAutoScroll = () => {
 };
 
 const getListing = () => {
-  eventapi
-    .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
-    .then((res) => {
-      if (res.code === 0) {
-        // listingData.value = res.data;
-        res.data.forEach((item) => {
-          if (item.hasOwnProperty("amount")) {
-            item.amount = convertToTwoDecimalAmount(item.amount);
-          }
-        });
-        listingData.value = res.data;
-        listingData.value.push(...listingData.value);
-        listingData.value.push(...listingData.value);
-        listingData.value.push(...listingData.value);
-        listingData.value.push(...listingData.value);
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+  if (store.hasToken()) {
+    eventapi
+      .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
+      .then((res) => {
+        if (res.code === 0) {
+          // listingData.value = res.data;
+          res.data.forEach((item) => {
+            if (item.hasOwnProperty("amount")) {
+              item.amount = convertToTwoDecimalAmount(item.amount);
+            }
+          });
+          listingData.value = res.data;
+          listingData.value.push(...listingData.value);
+          listingData.value.push(...listingData.value);
+          listingData.value.push(...listingData.value);
+          listingData.value.push(...listingData.value);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
 };
 
 const claimBonusClicked = ref(false);

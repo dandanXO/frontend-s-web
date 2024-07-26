@@ -2,10 +2,10 @@
   <div class="switch-wrapper">
     <div class="switch-container">
       <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
-        助力金
+        新手礼包
       </div>
       <div :class="['switch-option', { active: selected === 'option2' }]" @click="selectOption('option2')">
-        突破奖
+        新人指路
       </div>
     </div>
   </div>
@@ -19,10 +19,10 @@
             <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
           </div>
         </div>
-        <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
+        <span v-if="isValidUser" style="font-size: 13px; font-weight: bold; color: #15c201">
           (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
         </span>
-        <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+        <span v-else style="font-size: 13px; font-weight: bold; color: #ff0000">
           (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
         </span>
         <div class="section">
@@ -50,7 +50,7 @@
                 @click="handleClickStatusButton(telephoneBindState, 'new-user-setup-bonus-telephone')"
               >
                 <img
-                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 0px"
                   src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="telephoneBindState === 'CLAIMED'"
                 />
@@ -65,10 +65,10 @@
               <span
                 class="status"
                 :class="getStatus(bankCardBindState).class"
-                @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')"
+                @click="handleClickStatusButton('NO', 'new-user-setup-bonus-bankcard')"
               >
                 <img
-                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 0px"
                   src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="bankCardBindState === 'CLAIMED'"
                 />
@@ -86,7 +86,7 @@
                 @click="handleClickStatusButton(usdtAddrBindState, 'new-user-setup-bonus-usdt-addr')"
               >
                 <img
-                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                  style="width: 16px; height: 16px; vertical-align: sub; margin-right: 0px"
                   src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="usdtAddrBindState === 'CLAIMED'"
                 />
@@ -112,7 +112,7 @@
             <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
               <img
                 v-if="firstWithdrawalState === 'CLAIMED'"
-                style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
+                style="width: 16px; height: 16px; vertical-align: sub; margin: 0px auto 4px"
                 src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
               />
               <span>{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
@@ -120,7 +120,7 @@
           </q-btn>
         </div>
         <div class="section">
-          <span>完成以下任务领取礼金 8 元</span>
+          <span>完成以下任务领取礼金 {{ minFirstWithdrawalBonus }} - {{ maxFirstWithdrawalBonus }} 元</span>
           <div class="progress-bar-container">
             <div class="progress-bar">
               <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
@@ -154,35 +154,39 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+              自注册日起算30天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
             </div>
           </li>
           <li>
             <span class="step-number">2</span>
             <div class="content">
-              每位新用户会员可选择各场馆参与1次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+              新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包；
             </div>
           </li>
           <li>
             <span class="step-number">3</span>
             <div class="content">
-              新人指路任务完成后点击领取即可获得，首存活动（本+彩）15倍流水，成长攻略以及钱包冲刺彩金均为5倍流水。
+              每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金5倍水即可提款，首次提款彩金为2倍流水；
             </div>
           </li>
           <li>
             <span class="step-number">4</span>
+            <div class="content">完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅；</div>
+          </li>
+          <li>
+            <span class="step-number">5</span>
             <div class="content">
               此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
             </div>
           </li>
           <li>
-            <span class="step-number">5</span>
+            <span class="step-number">6</span>
             <div class="content">
               每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
             </div>
           </li>
           <li>
-            <span class="step-number">6</span>
+            <span class="step-number">7</span>
             <div class="content">此活动最终解释权归雷火所有；</div>
           </li>
         </ol>
@@ -200,8 +204,9 @@ import option2Area from "./option2Area.vue";
 import { userStore } from "src/stores";
 import moment from "moment";
 import { useNotify } from "src/hooks/notify";
+import { useLocalStorage } from "@vueuse/core";
 
-const notify = useNotify()
+const notify = useNotify();
 const store = userStore();
 const router = useRouter();
 
@@ -271,6 +276,7 @@ const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
+    useLocalStorage("need-go-back-newplayer", true);
     if (promoCode === "new-user-setup-bonus-telephone") {
       if (window.location.pathname === "/promotion") {
         document.location.href = `app://account-info`;
@@ -313,7 +319,7 @@ const getBonus = async (promoCode) => {
 
       notify({
         type: "success",
-        message: "领取成功！",
+        message: "领取成功！"
       });
     }
   } catch (err) {
@@ -321,6 +327,8 @@ const getBonus = async (promoCode) => {
   }
 };
 
+const minFirstWithdrawalBonus = ref();
+const maxFirstWithdrawalBonus = ref();
 const getData = async () => {
   try {
     const apiRes = await getNewUserSetupBonusInit();
@@ -330,6 +338,8 @@ const getData = async () => {
     telephoneBindState.value = apiRes.data.telephoneBindState;
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
     memberRegTime.value = apiRes.data.memberRegTime;
+    minFirstWithdrawalBonus.value = apiRes.data.minFirstWithdrawalBonus;
+    maxFirstWithdrawalBonus.value = apiRes.data.maxFirstWithdrawalBonus;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
@@ -530,6 +540,10 @@ h1 {
   padding: 5px 10px;
   border-radius: 6px;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   border: 1px solid rgba(0, 133, 232, 1);
 

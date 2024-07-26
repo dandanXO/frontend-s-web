@@ -37,6 +37,10 @@ export function getVerificationCode() {
   return server.REST.get("/member/verificationEasyCode");
 }
 
+export function getFbPixelCode(url) {
+  return server.REST.get(`/member/fb-request?url=${url}`);
+}
+
 export function memberAccessLog(log) {
   return server.REST.post("/memberAccessLog", log);
 }

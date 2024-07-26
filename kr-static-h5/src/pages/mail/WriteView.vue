@@ -5,16 +5,16 @@
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">
             <div class="title">{{ $t("lang.compose_title") }}</div>
-            <!-- <q-btn-dropdown color="brightbtn" label="快捷输入" menu-anchor="bottom end">
-              <q-list>
-                <q-item v-for="(item, i) in options" :key="i" clickable v-close-popup @click="onItemClick(item)">
-                  <q-item-section>
-                    <q-item-label>{{ item }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown> -->
           </div>
+          <q-select
+            filled
+            name="title"
+            v-model="mailDetailList.feedbackType"
+            :options="feedbackTypes"
+            :label="`${mailDetailList.feedbackType || '유형을 선택하세요'}`"
+            ref="feedbackTypeRef"
+            :rules="[(val) => !!val || '유형을 선택하세요']"
+          />
           <q-input
             :rules="[
               (val) => (val && val.length > 0) || $t('lang.compose_pleaseinserttitle'),
@@ -31,6 +31,12 @@
             :placeholder="$t('lang.compose_pleaseinserttitle')"
           />
         </div>
+
+        <!--        <div class="write-board-div q-pa-md">-->
+        <!--          <div class="top q-pb-md">Upload Image</div>-->
+        <!--          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />-->
+        <!--        </div>-->
+
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">{{ $t("lang.compose_content") }}</div>
           <q-input
@@ -80,31 +86,61 @@ import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import FileUpload from "components/FileUpload.vue";
+
 var qs = require("qs");
 const $q = useQuasar();
 const router = useRouter();
-const options = ["存款问题", "转账问题", "提款问题", "其他"];
+const options = ["Deposit", "Transfer", "Withdraw", "Others"];
 const mailDetailList = ref({
+  feedbackType: "",
   title: "",
   content: ""
 });
+
+const feedbackTypes = ref([]);
+
 const onItemClick = (item) => {
   mailDetailList.value.title = item;
 };
 const titleRef = ref();
 const contentRef = ref();
 const modalSendSuccess = ref(false);
+
+const getImageLink = (linkId) => {
+  mailDetailList.value.photo = linkId;
+};
+
+const feedbackTypeRef = ref();
+
+const loadFeedbackType = () => {
+  api
+    .get("/session/feedback/types", {})
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) feedbackTypes.value = data;
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
 const onSubmit = () => {
+  feedbackTypeRef.value.validate();
   titleRef.value.validate();
   contentRef.value.validate();
-  if (titleRef.value.hasError || contentRef.value.hasError) {
+  if (titleRef.value.hasError || contentRef.value.hasError || feedbackTypeRef.value.hasError) {
     $q.loading.hide();
   } else {
     api
-      .post("/session/writeOutbox", qs.stringify(mailDetailList.value))
+      .post("/session/feedback", qs.stringify(mailDetailList.value))
       .then((response) => {
         if (response.code === 0) {
           modalSendSuccess.value = true;
+
+          mailDetailList.value.feedbackType = "";
+          mailDetailList.value.title = "";
+          mailDetailList.value.content = "";
         }
       })
       .catch((error) => {
@@ -114,10 +150,13 @@ const onSubmit = () => {
 };
 
 const closePage = () => {
-  router.push("/account/inbox");
+  router.push("/feedback");
   mailDetailList.value.title = "";
   mailDetailList.value.content = "";
 };
+onMounted(() => {
+  loadFeedbackType();
+});
 onMounted(() => {});
 </script>
 <style scoped lang="scss">

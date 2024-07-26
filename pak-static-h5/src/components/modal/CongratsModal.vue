@@ -1,6 +1,7 @@
 <template>
   <!-- <div class="congrats-wrapper"> -->
   <div class="congrats-container">
+    <q-btn icon="close" round dense v-close-popup class="congrats-close" />
     <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
     <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-coupons.png" /></div>
     <div class="congrats-title">Get a free lucky draw ticket</div>
@@ -97,5 +98,12 @@ const ui = useUI();
     background-position: center;
     margin-top: 16px;
   }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>

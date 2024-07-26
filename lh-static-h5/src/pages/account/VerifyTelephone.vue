@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ store.evip }}</div>
+    <div class="web">专属网址：{{ store.evip }}</div>
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -72,6 +72,18 @@
       </div>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="gotoNewplayerPromoDialog" persistent>
+    <q-card class="q-px-lg q-pt-sm">
+      <q-card-section class="row items-center">
+        <span class="q-ml-sm">綁定完成，是否跳转优惠页面？</span>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn flat label="否" color="primary" v-close-popup />
+        <q-btn flat label="是" @click="gotoNewplayerPromo()" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 
   <!-- <br />
   phone: {{ formDetails.phone }}
@@ -90,6 +102,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
 import { useNotify } from "src/hooks/notify";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "PersonalView",
@@ -169,6 +182,14 @@ export default defineComponent({
       getCode();
       verificationModalVisible.value = true;
     };
+    const openGotoNewplayerPromo = ()=>{
+      if(useLocalStorage('need-go-back-newplayer').value === 'true'){
+          gotoNewplayerPromoDialog.value = true
+        }
+    }
+    const gotoNewplayerPromo = ()=>{
+      router.push('/promo?name=lh1-newplayer-guide')
+    }
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
     const phoneNumberRef= ref();
@@ -191,6 +212,7 @@ export default defineComponent({
             });
             store.phoneVerified = true;
             store.phone = formDetails.phone;
+            openGotoNewplayerPromo()
             router.go(-1);
           }
         }).catch((e) => {
@@ -217,6 +239,7 @@ export default defineComponent({
     const captchaRef = ref();
     const innerCaptchaRef = ref();
     const showCaptchaDialog = ref(false);
+    const gotoNewplayerPromoDialog = ref(false)
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
@@ -306,6 +329,8 @@ export default defineComponent({
     });
 
     return {
+      gotoNewplayerPromo,
+      gotoNewplayerPromoDialog,
       router,
       store,
       searchForm,

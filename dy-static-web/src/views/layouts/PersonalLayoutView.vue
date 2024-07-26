@@ -10,7 +10,7 @@
             <span>账户余额：</span>
             <div class="balance-txt">
               <span v-if="isLoadingBalance">Loading...</span>
-              <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+              <span v-if="!isLoadingBalance">￥{{ store.balance.toFixed(2) }}</span>
             </div>
             <el-icon><Refresh /></el-icon>
             <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>

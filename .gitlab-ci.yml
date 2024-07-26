@@ -639,6 +639,34 @@ build-image-kr-live-web:
 
 #===============================================================================================
 
+build-kr-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-static-web
+
+build-image-kr-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-static-web
+  needs:
+    - build-kr-static-web
+
+#===============================================================================================
+
+build-kr-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-static-h5
+
+build-image-kr-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-static-h5
+  needs:
+    - build-kr-static-h5
+
+#===============================================================================================
+
 build-telegram-web:
   extends: .build-projects
   variables:

@@ -5,18 +5,18 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年7月26日—2024年8月12日</div>
+          <div class="right">2024年7月24日—2024年8月10日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
             <th>竞猜正确场次</th>
-            <th>投注反比</th>
+            <th>投注返比</th>
             <th>彩金上限</th>
           </tr>
           <tr>
@@ -31,11 +31,6 @@
           </tr>
           <tr>
             <td>≥6</td>
-            <td>1.5%</td>
-            <td>388</td>
-          </tr>
-          <tr>
-            <td>≥8</td>
             <td>3.0%</td>
             <td>888</td>
           </tr>
@@ -55,19 +50,36 @@
           冠军竞猜
         </div>
         <div class="olympic24-match-game" v-for="(data, index) in upcomingData" :key="index">
-          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status==='ENDED'">
+          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status === 'ENDED'">
             已结束
           </div>
-            <div v-else class="olympic24-match-game-status">
-              {{ convertDateTime(data.matchTime) }}
+          <div v-else class="olympic24-match-game-status">
+            {{ convertDateTime(data.matchTime) }}
           </div>
           <div class="olympic24-match-game-content">
             <div class="olympic24-match-game-content-left">
-              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.homeTeam ? 'olympic24-match-game-content-team--voted': ''}`">
+              <div
+                class="olympic24-match-game-content-team"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.homeTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
+              >
                 <img :src="imgURL + data.homeTeamIcon" alt="" class="olympic24-match-game-content-team-img" />
                 <div class="olympic24-match-game-content-team-name">{{ data.homeTeam }}</div>
-                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam">获胜</div>
-                <div v-else-if="((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
+                <div
+                  class="olympic24-match-game-content-center-btn"
+                  v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam"
+                >
+                  获胜
+                </div>
+                <div
+                  v-else-if="
+                    ((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'
+                  "
+                  class="team-vote"
+                >
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
@@ -82,11 +94,16 @@
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
               <div class="olympic24-match-game-content-center-title">{{ data.quizTitle }}</div>
-              <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'">
+              <div
+                class="olympic24-match-game-content-center-btn"
+                v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'"
+              >
                 平局
               </div>
               <div
-                v-else-if="data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)"
+                v-else-if="
+                  data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)
+                "
                 class="team-vote"
               >
                 <button
@@ -101,11 +118,28 @@
               <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
             <div class="olympic24-match-game-content-right">
-              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.awayTeam ? 'olympic24-match-game-content-team--voted': ''}`">
+              <div
+                class="olympic24-match-game-content-team"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.awayTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
+              >
                 <img :src="imgURL + data.awayTeamIcon" alt="" class="olympic24-match-game-content-team-img" />
                 <div class="olympic24-match-game-content-team-name">{{ data.awayTeam }}</div>
-                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam">获胜</div>
-                <div v-else-if="((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
+                <div
+                  class="olympic24-match-game-content-center-btn"
+                  v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam"
+                >
+                  获胜
+                </div>
+                <div
+                  v-else-if="
+                    ((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'
+                  "
+                  class="team-vote"
+                >
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
@@ -132,7 +166,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -339,7 +373,7 @@ const handleVoteClick = (selectedData) => {
 };
 
 const convertDateTime = (datetime) => {
-  return datetime;
+  return moment(datetime, "YYYY-MM-DD HH:mm:ss").format("MM/DD hh:mm A");
 };
 
 const handleSubmitVote = () => {
@@ -350,7 +384,7 @@ const handleSubmitVote = () => {
 
         notify({
           type: "success",
-          message: "投票成功！",
+          message: "投票成功！"
         });
       }
     })
@@ -421,8 +455,8 @@ const getData = () => {
             const { matchTime, id } = e;
 
             if (!isFirstTime[id]) {
-              const timeCN = moment(matchTime).locale("zh_cn");
-              e.matchTime = timeCN.format("MMMDo HH:mm");
+              // const timeCN = moment(matchTime).locale("zh_cn");
+              // e.matchTime = timeCN.format("MMMDo HH:mm");
 
               isFirstTime[id] = true;
             }
@@ -612,7 +646,7 @@ onMounted(() => {
   line-height: 16.8px;
   // color: #000000;
   // background-color: #f2f2f2;
-  color:  #ff0000;
+  color: #ff0000;
   transition: 0.3 all;
   // background-image: url("../../../assets/promo/lh-olympic-match/btn.png");
   background-repeat: no-repeat;

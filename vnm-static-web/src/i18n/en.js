@@ -232,8 +232,8 @@ export default {
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
-    invalidPhoneLength: 'Mobile number must be 10 digits long.',
-    invalidPhoneStartsWith0: 'Mobile number must start with 0.',
+    invalidPhoneLength: "Mobile number must be 10 digits long.",
+    invalidPhoneStartsWith0: "Mobile number must start with 0.",
     phoneVerification: "Please enter phone verification",
     min6: "Length should be 6 characters",
     lessthan50: "Length should be 50 characters",
@@ -295,7 +295,7 @@ export default {
     claim: "Claim",
 
     record_win_status: "Win status",
-    record_win_prize: "Winner Prize",
+    record_win_prize: "Winner Prize"
   },
   mail: {
     inbox: "Inbox",
@@ -794,7 +794,8 @@ export default {
     loginbeforeAction: "Kindly login before making any actions",
     safetyBeforePhone: "For safety, please verify your phone number before depositing",
     bindRealName: "You have not updated your real name, kindly update it",
-    depositConfirmed: "Deposit confirmed"
+    depositConfirmed: "Deposit confirmed",
+    withdrawCancelled: "Withdrawal has been cancelled"
   },
   sports: {
     saba: "Saba Sports is a leading sports betting platform in Asia, offering over 20,000 events per month throughout the season. With a professional team of approximately 700 traders conducting odds trading, providing attractive and real-time odds!",

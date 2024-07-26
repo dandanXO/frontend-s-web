@@ -73,7 +73,8 @@ export default defineComponent({
 <style lang="scss">
 .announcement-section {
   .q-tabs {
-    background: rgba(113, 125, 146, 0.2);
+    display: none;
+    //background: linear-gradient(312deg, #0286ff, #00ff85);
     width: 100%;
     margin: 0 auto;
   }
@@ -109,7 +110,12 @@ export default defineComponent({
 
   .q-item {
     // background: #fff;
-    background: #063c50;
+    // background: #063c50;
+  }
+
+  .q-expansion-item {
+    background: #dcdcdc;
+    //color: #fff;
   }
 
   .q-tab--active .q-tab__indicator {
@@ -132,12 +138,13 @@ export default defineComponent({
 
   .q-expansion-item--expanded {
     .q-item {
-      background: #063c50;
+      background: linear-gradient(312deg, #0286ff, #00ff85);
     }
   }
 
   .q-expansion-item__content {
-    background: var(--q-dark);
+    background: #fff;
+    //background: var(--q-dark);
 
     padding: 10px 10px 15px;
   }

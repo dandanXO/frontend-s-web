@@ -17,6 +17,13 @@ import en from "element-plus/dist/locale/en.mjs";
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
+
+import dayjs from 'dayjs';
+
+require('dayjs/locale/ko');
+var localizedFormat = require("dayjs/plugin/localizedFormat");
+dayjs.extend(localizedFormat);
+
 export default defineComponent({
   components: {
     ElConfigProvider
@@ -58,7 +65,7 @@ export default defineComponent({
           params: {
             way: "web",
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: "krw"
           }
         });
       }

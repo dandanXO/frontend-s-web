@@ -209,7 +209,7 @@ svg {
   color: $font-1;
   font-size: 1rem;
   flex: 1;
-  box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
+  // box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
 
   img {
     width: 2rem;
@@ -612,6 +612,6 @@ svg {
   }
 }
 
-.marquee-text-content{
-  width: max-content;
+.marquee-text-content {
+  width: max-content !important;
 }

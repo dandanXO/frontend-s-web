@@ -9,16 +9,16 @@
       <div class="intro-container">
         <img
           :src="require(`../assets/app/toplabel-${languageVal}.png`)"
-          alt="TF88GamingApp"
+          alt="CITY8GamingApp"
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
         />
-        <img src="../assets/app/light.png" alt="TF88GamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
+        <img src="../assets/app/light.png" alt="CITY8GamingApp" width="570px" class="img-slogan" data-v-93674b8c="" />
         <div class="text-content">
-          {{ $t('app.sports') }}
+          {{ $t("app.sports") }}
           <br />
-          {{ $t('app.live') }}
+          {{ $t("app.live") }}
           <!-- <br /> -->
           <!-- {{ $t('app.hot') }} -->
         </div>
@@ -48,11 +48,11 @@
                 <div class="supported-mobile-os">
                   <img src="../assets/app/ios-icon.png" />
                   <img src="../assets/app/android-icon.png" />
-                  <span v-if="det.mobile">{{ $t('app.mobileAccess') }}</span>
+                  <span v-if="det.mobile">{{ $t("app.mobileAccess") }}</span>
                 </div>
                 <div>
                   <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                  <span v-else>{{ $t('app.scanDownload') }}</span>
+                  <span v-else>{{ $t("app.scanDownload") }}</span>
                 </div>
               </div>
             </div>
@@ -95,7 +95,7 @@ import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
-import { i18nStore } from '@/store/language'
+import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 SwiperCore.use([EffectFade, Autoplay]);
@@ -109,9 +109,9 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
-    const { t } = useI18n()
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onSwiper = (swiper) => {};
 
     const onSlideChange = () => {
@@ -121,13 +121,13 @@ export default defineComponent({
     const platforms = ref([
       {
         code: "H5",
-        name: t('app.h5'),
+        name: t("app.h5"),
         link: window.location.host,
         mobile: window.location.host
       },
       {
         code: "QZ",
-        name: t('app.app'),
+        name: t("app.app"),
         link: ""
       }
       // {
@@ -273,7 +273,7 @@ export default defineComponent({
 .intro-container {
   display: flex;
   flex-direction: column;
-  width: 65%; 
+  width: 65%;
   .text-content {
     font-size: 22px;
     color: #ffffff;
@@ -324,84 +324,84 @@ export default defineComponent({
       }
     }
     .platform-button-w-qr-code {
-          display: flex;
-          justify-content: center;
-          position: relative;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .platform-button {
+      width: 242px;
+      height: 68px;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      line-height: 30px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+      cursor: pointer;
+      z-index: 1;
+      text-align: center;
+
+      &.outline {
+        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+        box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
+        box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
+        color: #468cff;
+      }
+    }
+
+    .platform-qr-code {
+      position: absolute;
+      bottom: -10px;
+      margin: auto;
+      width: 280px;
+      height: 287px;
+      box-shadow: 0px 4px 34px 0px #00000033;
+      background-color: #ffffff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 10px 0;
+      display: none;
+
+      .supported-mobile-os {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          line-height: 29px;
+          padding: 0px 3px;
         }
+      }
 
-        .platform-button {
-          width: 242px;
-          height: 68px;
-          font-size: 22px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #fff;
-          line-height: 30px;
-          padding: 10px 20px;
-          border-radius: 100px;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
-          cursor: pointer;
-          z-index: 1;
-          text-align: center;
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        cursor: pointer;
+        color: #0000004d;
+      }
 
-          &.outline {
-            background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-            box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
-            box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
-            color: #468cff;
-          }
-        }
+      .qr-code-wrapper {
+        background-image: url("./../assets/app/square-crosshair.png");
+        background-size: 100% 100%;
+        padding: 8px;
+      }
 
-        .platform-qr-code {
-          position: absolute;
-          bottom: -10px;
-          margin: auto;
-          width: 280px;
-          height: 287px;
-          box-shadow: 0px 4px 34px 0px #00000033;
-          background-color: #ffffff;
-          border-radius: 8px;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: center;
-          padding: 15px 10px 0;
-          display: none;
-
-          .supported-mobile-os {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            span {
-              line-height: 29px;
-              padding: 0px 3px;
-            }
-          }
-
-          .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            cursor: pointer;
-            color: #0000004d;
-          }
-
-          .qr-code-wrapper {
-            background-image: url("./../assets/app/square-crosshair.png");
-            background-size: 100% 100%;
-            padding: 8px;
-          }
-
-          &.visible {
-            display: flex;
-            animation-duration: 0.5s;
-            animation-fill-mode: both;
-            animation-name: fadeInUp;
-          }
-        }
+      &.visible {
+        display: flex;
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+        animation-name: fadeInUp;
+      }
+    }
   }
 }
 .animated {

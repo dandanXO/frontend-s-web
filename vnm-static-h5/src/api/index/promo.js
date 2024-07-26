@@ -19,6 +19,18 @@ export function getMemberSportQuizTotal() {
   return eventapi.get(`/quiz/recordsCount`, {});
 }
 
+// tf88 baoheimvon
+export function gettT88Detail(promoCode) {
+  return eventapi.get('/lose-refund/get-ytd-loss', { 
+    params: {
+      promoCode
+    }
+  });
+}
+export function claimT88Reward(promoCode) {
+  return eventapi.post('/lose-refund/claim', { promoCode });
+}
+
 export function submitMemberSportMatchQuiz(param) {
   const { quizId, quizTitle, answerOne, answerTwo, answerThree } = param;
   return eventapi.post(

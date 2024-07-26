@@ -14,7 +14,7 @@
               <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
               <q-select
                 standout
-                class="q-pb-xs dialog-input"
+                class="q-pb-xs  dialog-input"
                 hide-bottom-space
                 filled
                 v-model="bankCardField.bankId"

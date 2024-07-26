@@ -1,4 +1,4 @@
-# # VNM H5 Vue3 (vnm-static-h5)
+# # KRW v2 H5 Vue3 (vnm-static-h5)
 
 - Node Version >= 16.17.0
 - H5 + Embed pages for APP

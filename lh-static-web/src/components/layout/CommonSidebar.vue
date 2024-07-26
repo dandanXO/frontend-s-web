@@ -186,13 +186,15 @@ export default defineComponent({
       rocketPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
     };
     const openLink = (link) => {
-      if (link) {
-        if (link.indexOf(",") > -1) {
-          const splitLink = link.split(",");
-          const randomIndex = Math.floor(Math.random() * splitLink.length);
-          window.open(splitLink[randomIndex], "_blank");
-        } else {
-          window.open(link, "_blank");
+      if (!isDragging.value && clickAllowed.value) {
+        if (link) {
+          if (link.indexOf(",") > -1) {
+            const splitLink = link.split(",");
+            const randomIndex = Math.floor(Math.random() * splitLink.length);
+            window.open(splitLink[randomIndex], "_blank");
+          } else {
+            window.open(link, "_blank");
+          }
         }
       }
     };
@@ -201,6 +203,8 @@ export default defineComponent({
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
       promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+      domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
+      
     };
     const floatPromo = [];
     const gamePromo = [];
@@ -237,11 +241,14 @@ export default defineComponent({
       if (gamePromo.length === 0) {
         promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
       }
+      if (showRocket.value === false) {
+        domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
+      }
     };
 
     const hideDomain = () => {
       showDomain.value = false;
-      domainPosition.value = { top: window.innerHeight - 430, left: window.innerWidth - 260 };
+      domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
     };
 
     const domainPosition = ref({ top: window.innerHeight - 430, left: window.innerWidth - 240 });
