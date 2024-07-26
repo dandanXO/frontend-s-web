@@ -132,6 +132,8 @@
             <!--              </div>-->
             <!--            </template>-->
 
+            <!-- <pre>hotGameList{{hotGameList}}</pre> -->
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -264,110 +266,6 @@
       </template>
 
       <template
-        v-if="(category.title === 'Casino' && category.active) || (category.title === 'Lobby' && category.active)"
-      >
-        <div class="games-selection-wrapper" id="live">
-          <div class="title-game">
-            <span class="txt-style">Live Casino</span>
-          </div>
-
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <!--            <template v-if="isPlatLoading">-->
-            <!--              <div class="skeleton-lists">-->
-            <!--                <q-skeleton class="casino-skeleton" />-->
-            <!--                <q-skeleton class="casino-skeleton" />-->
-            <!--              </div>-->
-            <!--            </template>-->
-
-            <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="0"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container live-casino"
-            >
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                >
-                  <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper>
-          </div>
-
-          <div class="platform-game-wrapper" v-else>
-            <template v-if="isPlatLoading">
-              <div class="skeleton-downs">
-                <q-skeleton class="casino-skeleton" />
-                <q-skeleton class="casino-skeleton" />
-              </div>
-            </template>
-
-            <div class="platform-game-container">
-              <template v-for="(item, index) in livecasino" :key="index">
-                <div
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                >
-                  <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template
         v-if="(category.title === 'Slot' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="slotsgames">
@@ -481,6 +379,110 @@
                   </div>
 
                   <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template
+        v-if="(category.title === 'Casino' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="live">
+          <div class="title-game">
+            <span class="txt-style">Live Casino</span>
+          </div>
+
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <!--            <template v-if="isPlatLoading">-->
+            <!--              <div class="skeleton-lists">-->
+            <!--                <q-skeleton class="casino-skeleton" />-->
+            <!--                <q-skeleton class="casino-skeleton" />-->
+            <!--              </div>-->
+            <!--            </template>-->
+
+            <swiper
+              :slidesPerView="1.5"
+              :spaceBetween="0"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container live-casino"
+            >
+              <template v-for="(item, index) in livecasino" :key="index">
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                >
+                  <div>
+                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <div
+                      class="platform-live-item--img"
+                      :style="{
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                      }"
+                    >
+                      <div
+                        v-if="
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                        "
+                        class="burning-hot"
+                      >
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
+                  </div>
+                </swiper-slide>
+              </template>
+            </swiper>
+          </div>
+
+          <div class="platform-game-wrapper" v-else>
+            <template v-if="isPlatLoading">
+              <div class="skeleton-downs">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
+            <div class="platform-game-container">
+              <template v-for="(item, index) in livecasino" :key="index">
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                >
+                  <div>
+                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <div
+                      class="platform-live-item--img"
+                      :style="{
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                      }"
+                    >
+                      <div
+                        v-if="
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                        "
+                        class="burning-hot"
+                      >
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </template>
             </div>
@@ -1982,7 +1984,7 @@ const loadHotGameList = () => {
       cached
         .get(key, () =>
           api
-            .get("/platformGamesByLabel", {
+            .get("/platformGamesByLabelV1", {
               params: {
                 gameLabel: "HOT",
                 device: regDevice
