@@ -766,6 +766,7 @@ export default {
     redeem_point_condition: "롤링",
     redeem_point_actions: "포인트전환",
     redeem_point_redeemed: "상환된 포인트",
+    redeem_point_redeem: "상환하다",
     // redeem point end
   },
   menu_item: {
@@ -811,6 +812,7 @@ export default {
     message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
     message_total: "총",
+    message_no_selected: "선택하지 않음",
     // message end
   },
   feedback: {
@@ -833,6 +835,7 @@ export default {
     feedback_admin_replied: "답변완료",
     feedback_delete_selected: "선택내역삭제",
     feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
+    feedback_no_selected: "선택하지 않음",
     // feedback end
   },
   app: {

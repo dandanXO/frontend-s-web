@@ -84,7 +84,7 @@
                     <hr style="width:90%" v-if="repliesOfInquiries.length && index !== repliesOfInquiries.length" />
                   </div>
                 </template>
-                <div class="feedback-no-data" v-else>{{ $t('feedback.announcement_no_selected') }}</div>
+                <div class="feedback-no-data" v-else>{{ $t('feedback.feedback_no_selected') }}</div>
             </template>
             </div>
         </div>
@@ -279,6 +279,8 @@
       flex-direction: column;
       gap: 5px;
       min-height: 100%;
+      background-color: white;
+      padding: 20px;
   
       .header {
         display: flex;

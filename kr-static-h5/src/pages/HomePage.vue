@@ -37,7 +37,7 @@
       </q-btn>
     </div>
     <div class="header-middle" v-else>
-      <div class="icon" @click="router.push('/account')"><img src="../assets/images/home/personal-icon.png"></div>
+      <div class="icon" @click="router.push('/account')"><img src="../assets/images/home/personal-icon.png" /></div>
       <!-- <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div> -->
       <!-- <div class="header-middle-wallet-wrapper">
         <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
@@ -229,8 +229,10 @@
   <!--  </div>-->
   <div class="details-bar">
     <div class="message-flex">
-      <div :class="store.token ? 'message-islogged': ''" class="message" @click="refreshBalance">
-        <span class="message-t">{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }} :</span>
+      <div :class="store.token ? 'message-islogged' : ''" class="message" @click="refreshBalance">
+        <span class="message-t">
+          {{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }} :
+        </span>
         <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
           {{
             store.token
@@ -1195,7 +1197,8 @@ export default defineComponent({
     const ui = useUI();
     const scrollPageRef = ref(null);
     const isH5 = ref(false);
-    const topBoxVisible = ref(true);
+    //TODO:: HIDe 1st.
+    const topBoxVisible = ref(false);
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
@@ -2301,7 +2304,7 @@ export default defineComponent({
 }
 
 .download-top-container {
-  padding: 8px 10px;
+  padding: 4px 10px;
   background: $white;
   box-shadow: 0px 5px 10px 0px #0000001f;
 
@@ -2409,7 +2412,8 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 75px;
+      max-width: 56px;
+      height: auto;
     }
   }
 
@@ -2422,7 +2426,6 @@ export default defineComponent({
     gap: 12px;
     .icon {
       img {
-
         width: 40px;
       }
     }
@@ -2545,10 +2548,10 @@ export default defineComponent({
     justify-content: center;
     &-islogged {
       flex-direction: row;
-        display: flex;
-        gap: 10px;
+      display: flex;
+      gap: 10px;
       .message-t {
-        color: #7A80A1;
+        color: #7a80a1;
       }
     }
   }

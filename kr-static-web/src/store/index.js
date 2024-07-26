@@ -37,6 +37,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       isAffiliateA: false,
       isShowAnnouncementDialog: false,
+      isRedeemDialogVisible: false,
       announcementList: undefined,
       financeRecords: undefined,
       pendingRebateAmt: 0,
@@ -175,6 +176,9 @@ export const userStore = defineStore("userStore", {
     },
     toggleAnnouncementDialog() {
       this.isShowAnnouncementDialog = !this.isShowAnnouncementDialog;
+    },
+    toggleRedeemPointDialog() {
+      this.isRedeemDialogVisible = !this.isRedeemDialogVisible;
     },
     getAnnouncementList() {
       return new Promise((resolve, reject) => {

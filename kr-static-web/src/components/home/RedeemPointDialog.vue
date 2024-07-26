@@ -1,100 +1,95 @@
 <template>
-    <el-dialog v-model="redeemDialogVisible">
-        <div class="redeem-point-dialog-container" style="width:700px;max-width:700px;">
-            <div class="title">{{ $t('lang.redeem_point_pending_list') }}</div>
-            <!-- <DataTable :loading="isLoading" :pagination="pagination" :tableColumns="tableColumns"
-                :dataState="tableData" @onChangePage="(currentPage) => {
+    <el-dialog v-model="isRedeemDialogVisible">
+        <div class="redeem-point-dialog-container">
+            <div class="title">{{ $t('redeem_point.redeem_point_pending_list') }}</div>
+            <el-table :loading="isLoading" :pagination="pagination" :tableColumns="tableColumns"
+                :data="tableData" @onChangePage="(currentPage) => {
                     pagination.current = currentPage;
                     recordPage(pagination)
                 }">
-                <template #body-cell-recordTime="props">
-                    <q-td class="text-center">
-                        x{{ props?.props?.row.recordTime }}
-                    </q-td>
-                </template>
-                <template #body-cell-rollover="props">
-                    <q-td class="text-center">
-                        x{{ props?.props?.row.rollover }}
-                    </q-td>
-                </template>
-                <template #body-cell-operation="props">
-                    <q-td>
+                <el-table-column fixed prop="amount" :label="t('redeem_point.redeem_point_points')" width="150">
+                </el-table-column>
+                <el-table-column fixed prop="recordTime" :label="t('redeem_point.redeem_point_date')" width="150">
+                    <template #default="scope">
+                        {{ dayjs(scope.row.recordTime).locale('ko').format('LLL') }}
+                    </template>
+                </el-table-column>
+                <el-table-column fixed prop="privilege" :label="t('redeem_point.redeem_point_source')" width="150">
+                </el-table-column>
+                <el-table-column fixed prop="rollover" :label="t('redeem_point.redeem_point_condition')" width="150">
+                    <template #default="scope">
+                        {{ `x${scope.row.rollover}` }}
+                    </template>
+                </el-table-column>
+                <el-table-column fixed prop="operation" :label="t('redeem_point.redeem_point_actions')" width="150">
+                    <template #default="scope">
                         <div style="display:flex;justify-content: flex-end;">
-                            <q-button style="min-width:60px;width:60px;height:30px;"
-                                class="primary-button blue-square"
-                                @click="redeemPoint(props?.props?.row.privilegeId)">
-                                {{ $t('lang.redeem') }}
-                            </q-button>
+                            <el-button type="primary" 
+                                @click="redeemPoint(scope.row.privilegeId)">
+                                {{ $t('redeem_point.redeem_point_redeem') }}
+                            </el-button>
                         </div>
-                    </q-td>
-                </template>
-            </DataTable> -->
+                    </template>
+                </el-table-column>
+            </el-table>
         </div>
     </el-dialog>
 </template>
 
 <script setup>
 import { watch, ref } from 'vue';
-// import DataTable from 'components/transaction/DataTable';
-// import { eventapi } from 'src/boot/axios';
 import { useI18n } from "vue-i18n";
 import { userStore } from '@/store';
+import { server } from '@/utils/request';
+import { ElMessage } from 'element-plus';
+import dayjs from 'dayjs';
+import { storeToRefs } from "pinia";
 
 const isLoading = ref(false);
 const { t } = useI18n();
-const props = defineProps(['redeemDialogVisible', 'closeDialog']);
-const redeemDialogVisible = ref(props.redeemDialogVisible);
 const store = userStore();
-
-watch(() => props.redeemDialogVisible, () => {
-    redeemDialogVisible.value = props.redeemDialogVisible;
-})
+const { isRedeemDialogVisible } = storeToRefs(store);
 
 const redeemPoint = (privilegeId) => {
-    // eventapi.post("/member-point/redeem-point/" + privilegeId + "?_method=PUT").then((res) => {
-    //     const { code, data } = res.data;
+    server.EVENT.post("/member-point/redeem-point/" + privilegeId + "?_method=PUT").then((res) => {
+        const { code, data } = res;
 
-    //     if (code === 0) {
-    //         // $q.notify({
-    //         //     message: t('lang.redeem_point_redeemed'),
-    //         //     type: "positive",
-    //         //     position: "top",
-    //         //     icon: "check_circle_outline"
-    //         // });
+        if (code === 0) {
+            ElMessage.success(t('redeem_point.redeem_point_redeemed'));
 
-    //         store.getPendingRebateAmt();
-    //         store.getBalance();
-    //     }
-    // })
+            store.getPendingRebateAmt();
+            store.getBalance();
+        }
+    })
 }
 
 const tableColumns = [
     {
-        label: t('lang.redeem_point_points'),
+        label: t('redeem_point.redeem_point_points'),
         field: "amount",
         name: "amount",
         align: 'center'
     },
     {
-        label: t('lang.redeem_point_date'),
+        label: t('redeem_point.redeem_point_date'),
         field: "recordTime",
         name: "recordTime",
         align: 'center'
     },
     {
-        label: t('lang.redeem_point_source'),
+        label: t('redeem_point.redeem_point_source'),
         field: "privilege",
         name: "privilege",
         align: 'center'
     },
     {
-        label: t('lang.redeem_point_condition'),
+        label: t('redeem_point.redeem_point_condition'),
         field: "rollover",
         name: "rollover",
         align: 'center'
     },
     {
-        label: t('lang.redeem_point_actions'),
+        label: t('redeem_point.redeem_point_actions'),
         field: "operation",
         name: "operation",
         align: 'center'
@@ -104,23 +99,22 @@ const tableData = ref([]);
 
 const getTableData = () => {
     isLoading.value = true;
-    // eventapi.get("/member-point/pending-list").then((ret) => {
-    //     isLoading.value = false;
+    server.EVENT.get("/member-point/pending-list").then((res) => {
+        isLoading.value = false;
 
-    //     const res = ret.data;
-    //     if (res.code === 0) {
-    //         tableData.value = res.data;
-    //     }
+        if (res.code === 0) {
+            tableData.value = res.data;
+        }
 
-    // }).catch(() => {
-    //     isLoading.value = false;
-    // });
+    }).catch(() => {
+        isLoading.value = false;
+    });
 }
 
-watch(() => props.redeemDialogVisible, () => {
-    // if (props.redeemDialogVisible) {
-    //     getTableData();
-    // }
+watch(() => isRedeemDialogVisible.value, () => {
+    if (isRedeemDialogVisible.value) {
+        getTableData();
+    }
 });
 
 </script>
