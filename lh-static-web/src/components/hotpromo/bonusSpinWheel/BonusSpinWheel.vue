@@ -36,10 +36,8 @@
           <span id="remaning-draw-amt">{{ remainingDraws }}</span>
         </p>
 
-        <p style="text-align:center;">系统每30~40分钟刷新一次数据，注单结算后40分钟内派发您的转盘次数 </p>
-
+        <p style="text-align: center">系统每30~40分钟刷新一次数据，注单结算后40分钟内派发您的转盘次数</p>
       </div>
-
 
       <div class="promo-info-container">
         <div class="promo-info-banner">
@@ -47,7 +45,7 @@
           <div class="promo-info-content">
             <div v-if="winnersList.length > 0" class="winners-list">
               <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-                <div class="winner-date">{{ moment(item.recordTime).format('YYYY-MM-DD') }}</div>
+                <div class="winner-date">{{ moment(item.recordTime).format("YYYY-MM-DD") }}</div>
                 <div class="winner-loginName">恭喜 {{ item.loginName }}</div>
                 <div class="winner-prize">{{ item.bonus }}</div>
               </div>
@@ -76,7 +74,7 @@
 import { ref, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getRecords, getSpinWheelPrize, initSpinWheelData } from "@/api/promotion/bonusSpinWheel";
-import moment from 'moment';
+import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
@@ -87,7 +85,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [1888,-1, 8, 18, 88, 188, 588, 888];
+const SPIN_WHEEL_PRIZES = [1888, -1, 8, 18, 88, 188, 588, 888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -178,6 +176,13 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+  if (!store.token) {
+    notify({
+      message: "请登录后操作",
+      type: "error"
+    });
+    return;
+  }
   if (spinButtonDisable.value === true) {
     return;
   }
@@ -198,9 +203,8 @@ const spinWheel = () => {
   getSpinWheelPrize()
     .then((res) => {
       if (res.code == 0) {
-
         var bonusIndex = res.data.bonus;
-        if(res.data.type === 'CONSOLATION'){
+        if (res.data.type === "CONSOLATION") {
           bonusIndex = -1;
         }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
@@ -241,10 +245,6 @@ const initSpinWheel = () => {
 
 onMounted(() => {
   if (!store.token) {
-    notify({
-      message: "请登录后操作",
-      type: "error"
-    });
     return;
   }
   // calc no of spin wheel items and potential stops
@@ -273,7 +273,6 @@ onMounted(() => {
   color: #fff;
   font-weight: bold;
   font-size: 20px;
-
 }
 
 .cny-spin-wheel-wrapper {
