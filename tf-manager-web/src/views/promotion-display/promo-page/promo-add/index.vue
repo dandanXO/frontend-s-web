@@ -1115,6 +1115,12 @@ function constructParam() {
   } else {
     form.affiliates = uiControl.affList.join(',')
   }
+  if (form.vips === "") {
+    form.vips = null
+  }
+  if (form.affiliates === "") {
+    form.affiliates = null
+  }
   return JSON.stringify(json)
 }
 
@@ -1165,6 +1171,7 @@ async function loadForm(id, siteId) {
       selectedVIPs.vipChecked.push(parseInt(element))
     })
     if (vipArr.length === 0) {
+      form.vips = "test"
       checkboxes.vip.checkAll = true
     }
     const affArr = form.affiliates ? form.affiliates.split(',') : []
