@@ -160,7 +160,7 @@
           dense
           standout
           rounded
-          :placeholder="$t('lang.reg_bank_placeholder')"
+          :label="$t('lang.reg_bank_placeholder')"
           ref="bankCardRef"
           v-model="regForm.bankId"
           :options="banks"

@@ -58,6 +58,7 @@
                     color="#0089ED"
                   />
                   <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
+                  <q-chip size="sm" color="red" text-color="white" label="읽지않음" v-else />
                   {{ det.title }}
                 </div>
 

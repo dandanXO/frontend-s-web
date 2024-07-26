@@ -11,9 +11,9 @@
             name="title"
             v-model="mailDetailList.feedbackType"
             :options="feedbackTypes"
-            :label="`${mailDetailList.feedbackType || ''}`"
+            :label="`${mailDetailList.feedbackType || '유형을 선택하세요'}`"
             ref="feedbackTypeRef"
-            :rules="[(val) => !!val || 'Please Select']"
+            :rules="[(val) => !!val || '유형을 선택하세요']"
           />
           <q-input
             :rules="[
@@ -32,10 +32,10 @@
           />
         </div>
 
-        <div class="write-board-div q-pa-md">
-          <div class="top q-pb-md">Upload Image</div>
-          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
-        </div>
+        <!--        <div class="write-board-div q-pa-md">-->
+        <!--          <div class="top q-pb-md">Upload Image</div>-->
+        <!--          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />-->
+        <!--        </div>-->
 
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">{{ $t("lang.compose_content") }}</div>

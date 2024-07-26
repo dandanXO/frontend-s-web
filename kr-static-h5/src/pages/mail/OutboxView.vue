@@ -24,7 +24,8 @@
                 style="font-size: 14px"
                 color="#0089ED"
               />
-              <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
+              <q-chip size="sm" color="yellow" label="답변완료" v-if="det.replyId" />
+              <q-chip size="sm" color="red" text-color="white" label="답변대기" v-else />
               {{ det.title }}
             </div>
 
@@ -34,11 +35,22 @@
             </div>
           </div>
           <div class="mailcontents" v-if="isSelectedMail === det.id">
+            <div style="text-align: right; width: 100%">
+              <span class="date-time">{{ det.sendTime }}</span>
+            </div>
             {{ det.content }}
-          </div>
-          <div v-if="mailType === 'outbox'" class="buttons">
-            <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
-            <q-btn outline label="复制" size="sm" color="bright" />
+
+            <div v-if="theReplyId && repliesOfInquiries.length > 0">
+              <hr />
+              <h4>{{ repliesOfInquiries[0].title }}</h4>
+
+              <div>
+                {{ repliesOfInquiries[0].content }}
+              </div>
+              <div style="text-align: right; width: 100%">
+                <span class="date-time">{{ repliesOfInquiries[0].sendTime }}</span>
+              </div>
+            </div>
           </div>
         </q-card>
 
@@ -67,6 +79,8 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { api } from "boot/axios";
+import moment from "moment/moment";
+import qs from "qs";
 
 const visible = ref(true);
 const mailData = ref([]);
@@ -93,47 +107,43 @@ const isSelectedMail = ref(-1);
 const toggleMail = (mail) => {
   if (isSelectedMail.value !== mail.id) {
     isSelectedMail.value = mail.id;
+
+    // debugger;
+    theReplyId.value = mail.replyId;
+
     openMsg(mail);
   } else {
     isSelectedMail.value = -1;
   }
 };
 
+const theReplyId = ref();
+const selectedMailIds = ref({});
 const isFetchingContent = ref(false);
+const allowSelectMultiple = ref(false);
 
 const inquiriesList = ref([]);
 const replyInquiries = ref([]);
-const repliesOfInquiries = computed(() =>
-  replyInquiries.value.records.filter(({ id }) => id === selected.value.replyId)
-);
+const repliesOfInquiries = computed(() => replies.value.filter(({ id }) => id === theReplyId.value));
 
+const replies = ref([]);
 const loadOutbox = () => {
   isLoading.value = true;
 
-  // api
-  //   .get("/session/feedback/replies", {
-  //     params: {
-  //       type: mailboxData.value.type,
-  //       orderBy: mailboxData.value.orderBy
-  //     }
-  //   })
-  //   .then((response) => {
-  //     if (response.code === 0) {
-  //       mailData.value = response.data.records;
-  //       visible.value = false;
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log("error", error);
-  //   });
-
   api
-    .get("/session/feedback/sysReply", {
-      params: {
-        type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy
+    .get("/session/feedback/replies")
+    .then((response) => {
+      if (response.code === 0) {
+        replies.value = response.data.records;
+        visible.value = false;
       }
     })
+    .catch((error) => {
+      console.log("error", error);
+    });
+
+  api
+    .get("/session/feedback/sysReply")
     .then((response) => {
       if (response.code === 0) {
         mailData.value = response.data.records;
@@ -165,6 +175,48 @@ const loadOutbox = () => {
   //   }
   // );
 };
+
+const isDeleteMailModal = ref(false);
+const showMailId = ref();
+const openMsg = (mail) => {
+  const { id, readTime } = mail;
+  showMailId.value = id;
+  mail.readTime = moment().format("YYYY-MM-DD");
+
+  // console.log(mail);
+  // mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
+  //   if (mail.id === id) {
+  //     mail.readTime = moment().format("YYYY-MM-DD");
+  //   }
+  // });
+  // console.log(mailboxNotifyState[mailboxMessageTab.value]);
+
+  if (!readTime) {
+    api
+      .post(
+        "/session/inbox/read",
+        qs.stringify({
+          id: id
+        })
+      )
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            message: t("lang.msg_readmsg"),
+            type: "positive",
+            position: "top",
+            icon: "check_circle_outline"
+          });
+          onLoad();
+        }
+      })
+      .catch((error) => {
+        isDeleteMailModal.value = false;
+        console.log(error);
+      });
+  }
+};
+
 onMounted(() => {
   loadOutbox();
 });
@@ -225,6 +277,10 @@ onMounted(() => {
     height: auto;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    h4 {
+      margin: 10px auto;
+    }
   }
 }
 
