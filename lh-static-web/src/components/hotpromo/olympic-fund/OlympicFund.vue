@@ -39,8 +39,8 @@
         <span v-if="isGiftSelected" class="detail-block-content__suffix">{{ depositData.helpBonus }}元</span>
         <span v-else class="detail-block-content__suffix">{{ depositData.breakthroughBonus }}元</span>
       </div>
-      <div class="bonus-block-btn-wrapper" :class="selected">
-        <button class="bonus-block-btn" @click="handleClick"></button>
+      <div class="bonus-block-btn-wrapper" @click="handleClick" :class="selected">
+        <button class="bonus-block-btn"></button>
       </div>
     </div>
 
@@ -161,8 +161,8 @@ import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { computed, onMounted, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-const store = userStore()
-const notify = useNotify()
+const store = userStore();
+const notify = useNotify();
 
 const selected = ref("gift");
 const depositData = ref({
@@ -394,9 +394,7 @@ onMounted(() => {
     border-radius: 30px;
     overflow: hidden;
     width: 400px;
-    box-shadow:
-      0px 2px 4.58px 0px rgba(154, 206, 255, 1) inset,
-      0px -1px 3.66px 0px rgba(106, 184, 255, 1) inset;
+    box-shadow: 0px 2px 4.58px 0px rgba(154, 206, 255, 1) inset, 0px -1px 3.66px 0px rgba(106, 184, 255, 1) inset;
     .switch-option {
       flex: 1;
       padding: 10px;
