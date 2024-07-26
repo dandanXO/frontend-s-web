@@ -48,7 +48,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { writeClipboard } from "boot/utils";
-
+import { Platform } from "quasar";
 import BeautySvg from "./img/beauty.svg";
 import Clock24Svg from "./img/clock-24.svg";
 import QuestionSvg from "./img/question.svg";
@@ -81,7 +81,38 @@ const paramsObj = computed(() => {
   }
 });
 
-const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id);
+const handleCopyClick = async () => {
+  if (window.location.pathname === "/promotion") {
+    const textToCopy = paramsObj.value?.voxis_id;
+
+    if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+      await navigator.clipboard.writeText(textToCopy);
+    } else {
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+
+      document.body.prepend(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(textArea);
+        // textArea.remove();
+      }
+    }
+  } else {
+    writeClipboard(paramsObj.value?.voxis_id);
+  }
+};
 </script>
 <style lang="scss" scoped>
 .official-gift-container {
