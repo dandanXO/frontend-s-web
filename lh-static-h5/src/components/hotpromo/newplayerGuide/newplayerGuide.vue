@@ -2,10 +2,10 @@
   <div class="switch-wrapper">
     <div class="switch-container">
       <div :class="['switch-option', { active: selected === 'option1' }]" @click="selectOption('option1')">
-        助力金
+        新手礼包
       </div>
       <div :class="['switch-option', { active: selected === 'option2' }]" @click="selectOption('option2')">
-        突破奖
+        新人指路
       </div>
     </div>
   </div>
@@ -154,13 +154,15 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算 30 天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺 3 个优惠，让新手会员进行游戏体验。
+              自注册日起算 30 天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺 3
+              个优惠，让新手会员进行游戏体验。
             </div>
           </li>
           <li>
             <span class="step-number">2</span>
             <div class="content">
-              每位新用户会员可选择各场馆参与 1 次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+              每位新用户会员可选择各场馆参与 1
+              次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
             </div>
           </li>
           <li>
@@ -178,7 +180,8 @@
           <li>
             <span class="step-number">5</span>
             <div class="content">
-              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP 地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
+              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
             </div>
           </li>
           <li>
@@ -202,7 +205,7 @@ import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 
-const notify = useNotify()
+const notify = useNotify();
 const store = userStore();
 const router = useRouter();
 
@@ -272,7 +275,7 @@ const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
-    useLocalStorage('need-go-back-newplayer', true)
+    useLocalStorage("need-go-back-newplayer", true);
     if (promoCode === "new-user-setup-bonus-telephone") {
       if (window.location.pathname === "/promotion") {
         document.location.href = `app://account-info`;
@@ -315,7 +318,7 @@ const getBonus = async (promoCode) => {
 
       notify({
         type: "success",
-        message: "领取成功！",
+        message: "领取成功！"
       });
     }
   } catch (err) {
