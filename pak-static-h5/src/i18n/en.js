@@ -277,9 +277,9 @@ export default {
     reward: {
       myTotalIncome: "My Total Income",
       myTotalNumberOfInvites: "My Total Number Of Invites",
-      invite: "Invite",
-      topUp: "Top Up",
-      bet: "Bet",
+      invite: "Invitation Bonus",
+      topUp: "Deposit Bonus",
+      bet: "Bet Bonus",
       eligibleRefer: "Eligible Refer",
       inviteFriendsViaLink: "Invite friends via link",
       howToGetInvitationBonus: "How to get invitation bonus",

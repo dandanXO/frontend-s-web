@@ -276,9 +276,9 @@ export default {
     reward: {
       myTotalIncome: "میری کل آمدنی",
       myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
-      invite: "دعوت دیں",
-      topUp: "اپ ڈاؤن",
-      bet: "شرط لگائیں",
+      invite: "دعوتی بونس",
+      topUp: "جمع بونس",
+      bet: "شرط بونس",
       eligibleRefer: "اہل ریفر",
       inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
       howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
