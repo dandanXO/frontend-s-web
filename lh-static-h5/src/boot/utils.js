@@ -1,8 +1,7 @@
 import { Platform } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { Notify } from 'quasar'
-
+import { useNotify } from "src/hooks/notify.js";
 
 export const MAIN = "MAIN";
 
@@ -10,9 +9,7 @@ export const getRndInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 export const isMobile = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 export const getMobileOS = () => {
   const ua = navigator.userAgent;
@@ -42,7 +39,7 @@ export function isHuaweiPhone() {
   }
 
   const huaweiDevicesRegex =
-      /ALP-|AMN-|ANA-|ANE-|ANG-|AQM-|ARS-|ART-|ATU-|BAC-|BLA-|BRQ-|CAG-|CAM-|CAN-|CAZ-|CDL-|CDY-|CLT-|CRO-|CUN-|DIG-|DRA-|DUA-|DUB-|DVC-|ELE-|ELS-|EML-|EVA-|EVR-|FIG-|FLA-|FRL-|GLK-|HMA-|HW-|HWI-|INE-|JAT-|JEF-|JER-|JKM-|JNY-|JSC-|LDN-|LIO-|LON-|LUA-|LYA-|LYO-|MAR-|MED-|MHA-|MLA-|MRD-|MYA-|NCE-|NEO-|NOH-|NOP-|OCE-|PAR-|PIC-|POT-|PPA-|PRA-|RNE-|SEA-|SLA-|SNE-|SPN-|STK-|TAH-|TAS-|TET-|TRT-|VCE-|VIE-|VKY-|VNS-|VOG-|VTR-|WAS-|WKG-|WLZ-|JAD-|WKG-|MLD-|RTE-|NAM-|NEN-|BAL-|JAD-|JLN-|YAL/i;
+    /ALP-|AMN-|ANA-|ANE-|ANG-|AQM-|ARS-|ART-|ATU-|BAC-|BLA-|BRQ-|CAG-|CAM-|CAN-|CAZ-|CDL-|CDY-|CLT-|CRO-|CUN-|DIG-|DRA-|DUA-|DUB-|DVC-|ELE-|ELS-|EML-|EVA-|EVR-|FIG-|FLA-|FRL-|GLK-|HMA-|HW-|HWI-|INE-|JAT-|JEF-|JER-|JKM-|JNY-|JSC-|LDN-|LIO-|LON-|LUA-|LYA-|LYO-|MAR-|MED-|MHA-|MLA-|MRD-|MYA-|NCE-|NEO-|NOH-|NOP-|OCE-|PAR-|PIC-|POT-|PPA-|PRA-|RNE-|SEA-|SLA-|SNE-|SPN-|STK-|TAH-|TAS-|TET-|TRT-|VCE-|VIE-|VKY-|VNS-|VOG-|VTR-|WAS-|WKG-|WLZ-|JAD-|WKG-|MLD-|RTE-|NAM-|NEN-|BAL-|JAD-|JLN-|YAL/i;
 
   const isHuaweiDevice = huaweiDevicesRegex.test(navigator.userAgent);
   if (isHuaweiDevice && Platform.is.capacitor) {
@@ -50,7 +47,6 @@ export function isHuaweiPhone() {
   }
   return false;
 }
-
 
 export function isAndroid() {
   if (Platform.is.android && Platform.is.capacitor) {
@@ -61,29 +57,29 @@ export function isAndroid() {
 }
 
 export const lsGet = (key, jsonParse = false) => {
-  const value = localStorage.getItem(key) ?? '';
+  const value = localStorage.getItem(key) ?? "";
 
   return value && jsonParse ? JSON.parse(value) : value;
-}
+};
 
 export const lsStore = (key, value, jsonStringfy = false) => {
   const n_value = jsonStringfy ? JSON.stringify(value) : value;
 
   localStorage.setItem(key, n_value);
-}
+};
 
-export const lsRemove = key => localStorage.removeItem(key)
+export const lsRemove = (key) => localStorage.removeItem(key);
 
-export const getTimeout = key => {
-  const cached_timeout = lsGet(key) ?? 0
-  const now = new Date()
+export const getTimeout = (key) => {
+  const cached_timeout = lsGet(key) ?? 0;
+  const now = new Date();
 
   return cached_timeout > now.getTime()
     ? Math.ceil((cached_timeout - now.getTime()) / 1000) // Seconds left
-    : 0  // No timeout found
-}
+    : 0; // No timeout found
+};
 
-export const getImageUrl = srcPath => require(`/src/assets/${srcPath}`)
+export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
 
 export const getVisitorId = async () => {
   const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
@@ -122,14 +118,8 @@ function isNonNumericString(value) {
 }
 export function getFormattedDateComponents(dateStr) {
   const date = new Date(dateStr);
-  const months = [
-    "1月", "2月", "3月", "4月", "5月", "6月",
-    "7月", "8月", "9月", "10月", "11月", "12月"
-  ];
-  const weekdays = [
-    "星期日", "星期一", "星期二", "星期三",
-    "星期四", "星期五", "星期六"
-  ];
+  const months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+  const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 
   const month = months[date.getMonth()];
   const day = `${date.getDate()}日`;
@@ -140,37 +130,35 @@ export function getFormattedDateComponents(dateStr) {
 
 const requestClipboardPermission = () => {
   return navigator.permissions.query({
-    name: 'clipboard-write',
-  })
-}
+    name: "clipboard-write"
+  });
+};
 
 export const writeClipboard = async (content) => {
+  const notify = useNotify();
   try {
     if (window.isSecureContext && navigator.clipboard) {
-      const permission = await requestClipboardPermission()
-      if (permission.state !== 'granted') throw new Error()
-      await navigator.clipboard.writeText(content)
+      const permission = await requestClipboardPermission();
+      if (permission.state !== "granted") throw new Error();
+      await navigator.clipboard.writeText(content);
     } else {
-      const textArea = document.createElement('textarea')
-      textArea.value = content
-      textArea.style.position = 'absolute'
-      textArea.style.opacity = '0'
-      document.body.prepend(textArea)
-      textArea.select()
-      document.execCommand('copy')
-      textArea.remove()
+      const textArea = document.createElement("textarea");
+      textArea.value = content;
+      textArea.style.position = "absolute";
+      textArea.style.opacity = "0";
+      document.body.prepend(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
     }
-    Notify.create({
-      type: "positive",
-      position: "top",
-      message: '复制成功'
-    })
+    notify({
+      type: "success",
+      message: "复制成功"
+    });
   } catch (error) {
-    Notify.create({
-      type: "negative",
-      timeout: 2500,
-      position: "top",
-      message: '复制失败',
-    })
+    notify({
+      type: "error",
+      message: "复制失败"
+    });
   }
-}
+};
