@@ -43,6 +43,7 @@
             id="game-iframe"
             scrolling="auto"
             frameborder="0"
+            allow="autoplay; clipboard-write"
             class="game-iframe"
             :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
