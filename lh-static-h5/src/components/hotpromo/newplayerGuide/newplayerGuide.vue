@@ -120,7 +120,7 @@
           </q-btn>
         </div>
         <div class="section">
-          <span>完成以下任务领取礼金 {{ firstWithdrawalBonus }} 元</span>
+          <span>完成以下任务领取礼金 {{ minFirstWithdrawalBonus }} - {{ maxFirstWithdrawalBonus }} 元</span>
           <div class="progress-bar-container">
             <div class="progress-bar">
               <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
@@ -326,7 +326,8 @@ const getBonus = async (promoCode) => {
   }
 };
 
-const firstWithdrawalBonus = ref(1);
+const minFirstWithdrawalBonus = ref();
+const maxFirstWithdrawalBonus = ref();
 const getData = async () => {
   try {
     const apiRes = await getNewUserSetupBonusInit();
@@ -336,7 +337,8 @@ const getData = async () => {
     telephoneBindState.value = apiRes.data.telephoneBindState;
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
     memberRegTime.value = apiRes.data.memberRegTime;
-    firstWithdrawalBonus.value = apiRes.data.firstWithdrawalBonus;
+    minFirstWithdrawalBonus.value = apiRes.data.minFirstWithdrawalBonus;
+    maxFirstWithdrawalBonus.value = apiRes.data.maxFirstWithdrawalBonus;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
