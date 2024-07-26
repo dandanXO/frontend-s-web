@@ -85,6 +85,9 @@ const checkInOfTheDay = (mth) => {
 };
 
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   loadDailyCheckIn();
 });
 </script>

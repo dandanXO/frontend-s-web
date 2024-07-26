@@ -90,6 +90,13 @@ const downloadQRCode = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getReferral();
 });
 </script>

@@ -8,13 +8,30 @@
 </template>
 <script setup>
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 import { onMounted, ref, reactive } from "vue";
 import { submitUefaForm } from "@/api/promotion/eSportSafety"
 
+const store = userStore();
 const notify = useNotify();
 
 const isSubmitting = ref(false);
 const handleSubmit = async () => {
+  
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   isSubmitting.value = true;
   const res = await submitUefaForm();
 

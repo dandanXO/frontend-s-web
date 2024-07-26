@@ -1,18 +1,30 @@
 <template>
-  <button
-        class="common-btn apply-btn"
-        @click="handleSubmit()"
-      >
-        点击申请
-      </button>
+  <button class="common-btn apply-btn" @click="handleSubmit()">点击申请</button>
 </template>
 <script setup>
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { onMounted, ref, reactive } from "vue";
-import { submitUefaForm } from "@/api/promotion/eSportSafety"
+import { submitUefaForm } from "@/api/promotion/eSportSafety";
+import { userStore } from "@/store";
+
+const store = userStore();
 
 const isSubmitting = ref(false);
 const handleSubmit = async () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
   isSubmitting.value = true;
   const res = await submitUefaForm();
 
@@ -31,12 +43,9 @@ const handleSubmit = async () => {
   }
   // toggleESportInsuranceModal(true);
 };
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 <style>
-
-
 .apply-btn {
   width: fit-content;
   display: flex;

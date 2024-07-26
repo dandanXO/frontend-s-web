@@ -166,8 +166,10 @@ import { useRoute, useRouter } from "vue-router";
 import VueQrious from "vue-qrious";
 import { getReferralLink, getReferredBonus } from "@/api/personal/share";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 import { claimBonusItem } from "@/api/index/promo";
 const notify = useNotify();
+const store = userStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -326,6 +328,13 @@ onMounted(() => {
       activeTab.value = p.id;
     }
   });
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getReferral();
   getInviteCount();
 });

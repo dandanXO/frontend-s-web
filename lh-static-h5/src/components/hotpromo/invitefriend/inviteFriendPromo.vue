@@ -179,9 +179,10 @@ export default defineComponent({
         });
     };
     onMounted(() => {
-      if (store.token) {
-        recordPage();
+      if (!store.token) {
+        return;
       }
+      recordPage();
     });
     return {
       tableColumns,

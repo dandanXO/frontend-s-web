@@ -168,7 +168,7 @@
           <div class="olympic24-match-game-bottom-left-title">
             注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
           </div>
-          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
+          <div class="olympic24-match-game-bottom-left-btn" @click="showTableRecordDialog">[投票记录]</div>
         </div>
       </div>
       <div class="olympic24-match-game-bottom-rule">
@@ -270,6 +270,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
+import { userStore } from "@/store";
 import moment from "moment";
 // import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
 import {
@@ -279,10 +280,12 @@ import {
   getBBDachaRecordsCount
 } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
+import { ElMessageBox } from "element-plus";
 import { useNotify } from "@/hooks/notify";
 
 const notify = useNotify();
 
+const store = userStore();
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
@@ -301,6 +304,23 @@ const recordList = ref([]);
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
+const showTableRecordDialog = () => {
+  
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+  tableRecordDialog.value = true
+}
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -397,6 +417,13 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getData();
 });
 </script>

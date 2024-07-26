@@ -491,6 +491,19 @@ export default defineComponent({
       //   });
       // }
 
+      if (!store.hasToken()) {
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large",
+          closeOnClickModal: true
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
+      }
       isCheckRecordModalVisible.value = toggleStatus;
     };
 
@@ -617,6 +630,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (!store.token) {
+        return;
+      }
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
       getReferral();
       checkActiveKey();

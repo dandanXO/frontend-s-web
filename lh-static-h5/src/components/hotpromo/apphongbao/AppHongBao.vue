@@ -66,12 +66,16 @@
 
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
+import { userStore } from "../../../stores/index";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const props = defineProps(["promoCode", "params"]);
 
+const store = userStore();
 const notify = useNotify();
 
 const params = JSON.parse(props.params || "{}");
