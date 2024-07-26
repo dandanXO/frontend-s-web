@@ -57,6 +57,7 @@ import ClockSvg from "./img/clock.svg";
 import DateSvg from "./img/date.svg";
 import GiftLineSvg from "./img/gift-line.svg";
 import ThumbSvg from "./img/thumb.svg";
+import { useNotify } from "src/hooks/notify";
 
 const props = defineProps({
   params: String
@@ -85,6 +86,7 @@ const handleCopyClick = async () => {
   if (window.location.pathname === "/promotion") {
     const textToCopy = paramsObj.value?.voxis_id;
 
+    const notify = useNotify();
     if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
       await navigator.clipboard.writeText(textToCopy);
     } else {
@@ -102,6 +104,11 @@ const handleCopyClick = async () => {
 
       try {
         document.execCommand("copy");
+
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
       } catch (error) {
         console.error(error);
       } finally {
