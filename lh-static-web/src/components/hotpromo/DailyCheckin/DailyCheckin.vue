@@ -162,7 +162,7 @@
               </div>
             </div>
             <div class="task-right">
-              <div style="margin-top: -20px">剩余补签卡：1/2</div>
+              <div style="margin-top: -20px">剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}</div>
               <button class="button-finish">已完成</button>
             </div>
           </div>
@@ -285,6 +285,10 @@ const showSuccessDialog = ref(false);
 const showErrorDialog = ref(false);
 const vipLevel = ref(store.vip.split("VIP")[1]);
 const currentActivePoints = ref(0);
+const currentRecheckInChances = ref(0);
+const totalRecheckInChances = ref(0);
+const recheckTaskState = ref("CLOSE");
+
 const countiuneSign = computed(() => {
   let times = 0;
   sectionOneItems.value.forEach((item) => {
@@ -357,6 +361,9 @@ const fetchData = async () => {
     todayCheckInState.value = res.data.checkInState.todayCheckInState;
     sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
     currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
+    currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
+    totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+    recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
   } catch (error) {
     notify.error(res.message);
   }
