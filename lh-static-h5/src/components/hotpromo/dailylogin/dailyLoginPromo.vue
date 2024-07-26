@@ -28,6 +28,9 @@ import { ref, onMounted, reactive } from "vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
+
+const store = userStore();
 
 const notify = useNotify();
 const $q = useQuasar();
@@ -74,7 +77,7 @@ const checkInOfTheDay = (mth) => {
     if (res.code === 0) {
       notify({
         type: "success",
-        message: `签到成功`,
+        message: `签到成功`
       });
       loadDailyCheckIn();
       setTimeout(() => {
@@ -85,9 +88,9 @@ const checkInOfTheDay = (mth) => {
 };
 
 onMounted(() => {
-      if (!store.token) {
-        return;
-      }
+  if (!store.token) {
+    return;
+  }
   loadDailyCheckIn();
 });
 </script>
