@@ -1,7 +1,7 @@
 <template>
   <div class="redeem-point-wrapper" @click="handleClick">
-    <img src="../../assets/images/redeem/money.svg" />
-    {{ balance }}
+    <!-- <img src="../../assets/images/redeem/money.svg" /> -->
+    {{ balance }} 원
     <RedeemPointDialog v-model="isDialogVisible" />
   </div>
 </template>
@@ -44,6 +44,8 @@ onMounted(() => {
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
+  color: #3981FF;
+
 
   img {
     max-width: 16px;

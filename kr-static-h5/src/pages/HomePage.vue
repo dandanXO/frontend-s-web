@@ -37,12 +37,13 @@
       </q-btn>
     </div>
     <div class="header-middle" v-else>
-      <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div>
-      <div class="header-middle-wallet-wrapper">
+      <div class="icon" @click="router.push('/account')"><img src="../assets/images/home/personal-icon.png"></div>
+      <!-- <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div> -->
+      <!-- <div class="header-middle-wallet-wrapper">
         <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
         <span>{{ $t("lang.central_wallet") }}</span>
         <RedeemPoint class="redeem" />
-      </div>
+      </div> -->
       <!-- <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div> -->
     </div>
     <div class="header-lang" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
@@ -227,19 +228,31 @@
   <!--    </div>-->
   <!--  </div>-->
   <div class="details-bar">
-    <div class="message" @click="refreshBalance">
-      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{
-          store.token
-            ? !isLoadingBalance
-              ? mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원"
-              : $t("lang.loading")
-            : $t("lang.not_logged_in")
-        }}
-      </span>
-      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
+    <div class="message-flex">
+      <div :class="store.token ? 'message-islogged': ''" class="message" @click="refreshBalance">
+        <span class="message-t">{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }} :</span>
+        <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+          {{
+            store.token
+              ? !isLoadingBalance
+                ? mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원"
+                : $t("lang.loading")
+              : $t("lang.not_logged_in")
+          }}
+        </span>
+      </div>
+      <div v-if="store.token" class="message message-islogged">
+        <span class="message-t">{{ $t("lang.central_rebate") }} :</span>
+        <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+          <RedeemPoint class="redeem" />
+        </span>
+      </div>
     </div>
     <div class="menulist">
+      <router-link to="/account/inbox" class="men btn-pointer">
+        <img src="../assets/images/home/mail-mid.png" />
+        <div class="">{{ $t("lang.message") }}</div>
+      </router-link>
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
         <div class="">{{ $t("lang.deposit") }}</div>
@@ -248,10 +261,10 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
+      <!-- <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
-      </router-link>
+      </router-link> -->
     </div>
   </div>
 
@@ -2407,6 +2420,12 @@ export default defineComponent({
     display: flex;
     align-items: center;
     gap: 12px;
+    .icon {
+      img {
+
+        width: 40px;
+      }
+    }
 
     :deep(.q-btn) {
       min-width: 80px;
@@ -2505,6 +2524,14 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  .message-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    width: 45%;
+  }
 
   .message {
     flex: 3;
@@ -2516,11 +2543,20 @@ export default defineComponent({
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    &-islogged {
+      flex-direction: row;
+        display: flex;
+        gap: 10px;
+      .message-t {
+        color: #7A80A1;
+      }
+    }
   }
 
   .main-balance {
-    font-size: 1.6rem;
-    color: $font-4;
+    // font-size: 1.6rem;
+    // color: $font-4;
+    color: #313441;
 
     &.main-nologin {
       font-size: 1rem;
@@ -2551,7 +2587,7 @@ export default defineComponent({
 
       img {
         display: block;
-        height: 2rem;
+        height: 3rem;
       }
     }
   }
