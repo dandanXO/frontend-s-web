@@ -279,7 +279,7 @@ const readAllMsg = (m) => {
     .then((res) => {
       if (res.code === 0) {
         notify({
-          message: "已全读部消息",
+          message: "已全部已读",
           type: "success"
         });
 
@@ -693,7 +693,7 @@ onMounted(() => {
   line-height: 18px;
   margin-right: 10px;
 
-  img{
+  img {
     width: 100%;
   }
 }
