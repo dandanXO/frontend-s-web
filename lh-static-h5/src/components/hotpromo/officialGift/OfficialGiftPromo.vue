@@ -104,16 +104,14 @@ const handleCopyClick = async () => {
 
       try {
         document.execCommand("copy");
-
-        notify({
-          type: "success",
-          message: "复制成功"
-        });
       } catch (error) {
         console.error(error);
       } finally {
         document.body.removeChild(textArea);
-        // textArea.remove();
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
       }
     }
   } else {
