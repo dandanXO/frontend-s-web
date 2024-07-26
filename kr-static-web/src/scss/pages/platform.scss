@@ -53,6 +53,9 @@
     overflow: hidden;
     margin-bottom: -20px;
   }
+  &.casual-container {
+    min-height: unset;
+  }
 
   .platform-desc {
     color: #3063ab;

@@ -184,7 +184,8 @@ import {
   liveCasinoPlatforms,
   lotteryPlatforms,
   pokerPlatforms,
-  sportsPlatforms
+  sportsPlatforms,
+  minigamePlatforms
 } from "@/shared/platformArray";
 import moment from "moment";
 
@@ -313,12 +314,17 @@ const onEnterGameClick = (plat, platType) => {
     router.push({ path: plat.path, query: { plat: plat.currentPlat.code } });
   } else {
     const currentPlat = plat.currentPlat;
+    if (currentPlat.code === 'TFGaming' && platType === 'fish') {
+      router.push('/minigame?plat=TFGaming');
+    }
     if (currentPlat.code === "BBINDY") {
       currentPlat.gameCode = "bblive_lobby_pc";
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
     } else if (currentPlat.code === "PP") {
       currentPlat.gameCode = 101;
+    } else if (currentPlat.code === "Spribe") {
+      currentPlat.gameCode = 'aviator';
     }
 
     const platItem = plat.content[currentPlat.code.toLowerCase()];
@@ -360,12 +366,19 @@ const checkPlatforms = () => {
     hotgameData.value.forEach((item) => {
       const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
 
+      if (gameTypeArray.includes('CASUAL')) {
+        if (item.type === 'fish') {
+          const additem = _.clone(plat);
+          item.content.providerList.push(additem);
+        }
+      }
       if (containingItem) {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
           additem.alias = "XIN";
         }
+      
         item.content.providerList.push(additem);
       }
 
@@ -389,6 +402,10 @@ const checkPlatforms = () => {
       }
       if (gameTypeArray.some((type) => type.toLowerCase() === "fish") && item.type === "fish") {
         updatePlatforms(fishingPlatforms, item, "");
+      }
+      if (gameTypeArray.includes('CASUAL') && item.type === "fish") {
+        console.log(item)
+        updatePlatforms(minigamePlatforms, item, "");
       }
     });
   });
