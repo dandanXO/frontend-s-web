@@ -1,5 +1,5 @@
 <template>
-  <div class="locale-changer">
+  <div class="locale-changer" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
     <!-- <el-select style="width: 100px;" v-model="languageVal" @change="handleLanguage" value-key="code">
       <el-option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang.code" :label="lang.text" />
     </el-select> -->
@@ -22,12 +22,14 @@
 <script>
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
+import { userStore } from "@/store";
 export default {
   name: "locale-changer",
   setup() {
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const { setLanguage } = i18nStoreLanguage;
+    const store = userStore();
 
     const handleLanguage = (newLanguage) => {
       setLanguage(newLanguage);
@@ -39,7 +41,8 @@ export default {
     return {
       languageVal,
       handleLanguage,
-      langs
+      langs,
+      store
     };
   }
 };
@@ -47,7 +50,7 @@ export default {
 <style lang="scss">
 .locale-changer {
   padding: 20px;
-  
+
   img {
     width: 40px;
   }
