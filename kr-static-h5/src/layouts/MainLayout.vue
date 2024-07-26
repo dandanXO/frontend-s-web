@@ -29,7 +29,10 @@
           icon="menu"
         />
 
-        <div class="header-lang">
+        <div
+          class="header-lang"
+          v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')"
+        >
           <LangOptions />
         </div>
       </q-card-section>
@@ -60,13 +63,13 @@
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
         <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/message.svg" />
-          <img class="hover" src="../assets/images/footer/message-active.svg" />
+          <img class="inactive" src="../assets/images/footer/announce.svg" />
+          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
           {{ $t("lang.message") }}
         </q-route-tab>
         <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/announce.svg" />
-          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
+          <img class="inactive" src="../assets/images/footer/message.svg" />
+          <img class="hover" src="../assets/images/footer/message-active.svg" />
           {{ $t("lang.question") }}
         </q-route-tab>
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
