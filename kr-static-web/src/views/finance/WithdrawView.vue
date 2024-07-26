@@ -46,7 +46,9 @@
       <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
     </el-card>
     <el-card v-else>
-      {{ $t('account.no_card_avail') }} <router-link to="/center/personal?name=Bank">{{ $t('account.add_a_bank_card') }}</router-link>.
+      {{ $t("account.no_card_avail") }}
+      <router-link to="/center/personal?name=Bank">{{ $t("account.add_a_bank_card") }}</router-link>
+      .
     </el-card>
     <div class="withdraw-form">
       <el-form
@@ -83,9 +85,9 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${
-                    selectedWithdrawalMethod.withdrawMax.toLocaleString()
-                  } ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${
+                    store.currency.label
+                  } - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
                 }}
                 <br />
                 {{
@@ -188,7 +190,9 @@
         >
           <span style="color: #17cd27">
             {{
-              selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+              selectedWithdrawalMethod &&
+              (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
                 ? "0.00"
                 : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
@@ -305,9 +309,6 @@ export default defineComponent({
               });
 
               // FB tracking :: apply-withdrawal
-              if (store.isAffiliateA) {
-                  fbq("track", "apply-withdrawal");
-                }
 
               getWithdrawalMethods();
               loadCards();

@@ -412,9 +412,6 @@ export default defineComponent({
             getWithdrawalMethods();
 
             // FB tracking :: apply-withdrawal
-            if (store.isAffiliateA) {
-              fbq("track", "apply-withdrawal");
-            }
 
 
             withdrawInfo.amount = "";

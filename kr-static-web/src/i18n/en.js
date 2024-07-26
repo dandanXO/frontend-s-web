@@ -617,20 +617,20 @@ export default {
     entertainmentPurpose:
       "CITY8 provides products for entertainment purposes, customers who agree to participate in CITY8 will have certain risks. When using the service at CITY8, we disclaim the website's responsibility for any customer's losses.",
     withdrawalRequest:
-      "TF88 reserves the right to refuse a withdrawal request if the registration information is incorrect, TF88 has the right to request relevant documents to confirm the registration information.",
+      "CITY8 reserves the right to refuse a withdrawal request if the registration information is incorrect, CITY8 has the right to request relevant documents to confirm the registration information.",
     honestyPolicy:
-      "Customers must ensure not to deceive, misrepresent or release inaccurate information to smear TF88.",
+      "Customers must ensure not to deceive, misrepresent or release inaccurate information to smear CITY8.",
     suspensionPolicyMessage:
-      "If TF88 suspects that a customer does not comply with the above provisions, we have the right to suspend the account to handle according to regulations.",
+      "If CITY8 suspects that a customer does not comply with the above provisions, we have the right to suspend the account to handle according to regulations.",
 
     // Betting Rules
     bettingRules: "Betting Rules",
     familyRestriction:
-      "People in the same family, same home address, same phone number, bank account number or IP address on the internet will not be able to participate in TF88 promotions.",
+      "People in the same family, same home address, same phone number, bank account number or IP address on the internet will not be able to participate in CITY8 promotions.",
     entertainmentPurpose2:
-      "All promotions at TF88 are for entertainment purposes only, TF88 reserves the right to limit customers' right to participate in any promotions.",
+      "All promotions at CITY8 are for entertainment purposes only, CITY8 reserves the right to limit customers' right to participate in any promotions.",
     modifyPromotion:
-      "TF88 reserves the right to change, modify or terminate the Promotion, or part thereof, at any time and without prior notice.",
+      "CITY8 reserves the right to change, modify or terminate the Promotion, or part thereof, at any time and without prior notice.",
     singleDeposit: "Each deposit can only participate in one Promotion.",
     refundBasedOnBetTurnover:
       "The refund will be based on the total amount of valid bets (bet turnover) of the member in each product according to each market, each match and each membership level as follows:",
@@ -643,7 +643,7 @@ export default {
     requiredRounds:
       "The required number of rounds should be reached within 30 days to avoid the bonus and winnings being voided.",
     abuseDiscretion:
-      "The determination of what constitutes bonus abuse will be at the discretion of TF88, clear evidence of bonus abuse will include, but are not limited to, the following examples:",
+      "The determination of what constitutes bonus abuse will be at the discretion of CITY8, clear evidence of bonus abuse will include, but are not limited to, the following examples:",
     abuseExamples: {
       excludedGames: "Bonus bets on excluded games",
       multipleAccounts: "Using multiple accounts",
@@ -657,18 +657,18 @@ export default {
     excludedBets:
       "All bets DRAW, CANCEL bets, Jackpot progressive, slot progressive, card and table games, virtual sports, odds under 1.75 Dec or 0.75 Cn will not count towards the promotion turnover.",
     transactionRecordsCheck:
-      "TF88 reserves the right to check transaction records and login time at any time for any reason. If, after our investigation, we discover that a player has benefited from the promotion by placing bets in the ways outlined above, or we consider that there have been unfair participation practices, TF88 reserves the right to withdraw the bonus amount and any associated winnings.",
+      "CITY8 reserves the right to check transaction records and login time at any time for any reason. If, after our investigation, we discover that a player has benefited from the promotion by placing bets in the ways outlined above, or we consider that there have been unfair participation practices, CITY8 reserves the right to withdraw the bonus amount and any associated winnings.",
     falsifiedContentDisqualification:
       "Any person who falsifies the promotional content may be disqualified, meaning the bonus and any associated winnings will be forfeited.",
     amendTermsAndConditions:
-      "TF88 reserves the right to terminate or amend the Terms and Conditions of the promotion at any time for any reason without prior notice.",
+      "CITY8 reserves the right to terminate or amend the Terms and Conditions of the promotion at any time for any reason without prior notice.",
     withdrawalVerification:
       "Withdrawals may be audited and/or identity verified before being processed. Members may be required to provide proof of identity, address, age and/or deposit receipts, proof of games played or phone number. Failure to provide this required information to us within 72 hours may result in the bonus and any associated winnings being forfeited.",
 
     // Blame
     blame: "Gambling Responsibly",
     intro:
-      "TF88 always strives to provide a safe platform for players to relax and be entertained. We understand that gambling can carry risks associated with addiction. TF88 is solely responsible for our players' understanding of all potential harms involved. Make sure you are playing responsibly through the self-assessment questions below:",
+      "CITY8 always strives to provide a safe platform for players to relax and be entertained. We understand that gambling can carry risks associated with addiction. CITY8 is solely responsible for our players' understanding of all potential harms involved. Make sure you are playing responsibly through the self-assessment questions below:",
     questions: {
       question1: "Have you ever neglected work to play betting?",
       question2: "Do you bet to kill time or to get rid of boredom?",
@@ -690,17 +690,17 @@ export default {
     advice4:
       "When you are experiencing negative emotions, drunkenness, insecurity,... Look for another hobby instead of gambling.",
     advice5: "Don't be afraid to seek help from those around you when you feel things are getting worse.",
-    tf88SupportTitle: "Help from TF88 responsible bets",
+    tf88SupportTitle: "Help from CITY8 responsible bets",
     tf88SupportContent:
-      "As one of the leading game platforms in Vietnam, and Asia. We ensure negative principles of prevention and containment when betting on all parties including providers and platform regulators. In addition, TF88's team is always equipped with enough knowledge and skills about responsible betting ready to support you at any time.",
+      "As one of the leading game platforms in Vietnam, and Asia. We ensure negative principles of prevention and containment when betting on all parties including providers and platform regulators. In addition, CITY8's team is always equipped with enough knowledge and skills about responsible betting ready to support you at any time.",
     ageRestriction:
-      "TF88 PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM",
+      "CITY8 PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM",
     partner: "Partner",
     paymentMethod: "Payment Method"
   },
   vip: {
     vipTerms: "Terms & Conditions",
-    tnc1: "The program applies to all members who have a valid 원 account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
+    tnc1: "The program applies to all members who have a valid 원 account at CITY8. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
     tnc2: "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     tnc3: "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
     tnc4: "The Upgrade Bonus cannot be claimed at the same time as the Monthly Bonus. If member is promoted to VIP this month, member will receive Upgrade Bonus. The system will review the Monthly Bonus for accounts that have not been promoted to VIP this month and have met the requirements to maintain the VIP level.",
@@ -708,7 +708,7 @@ export default {
     tnc6: "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
     tnc7: "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 원 per day and is not limited to other products.",
     tnc8: "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms & conditions of the promotion apply.",
-    tnc9: "TF88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
+    tnc9: "CITY8 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
     vipMaintainRequired: "VIP MAINTAIN REQUIRED",
     vipUpgradeRequired: "VIP UPGRADE REQUIRED",
     totalBetMonth: "TOTAL BET OF MONTH",
@@ -771,7 +771,8 @@ export default {
     reg_bank_acc_num: "Bank Account",
     reg_bank_acc_num_placeholder: "Enter only numbers without '-'",
     reg_bank_acc_holder: "Bank Account Holder",
-    reg_bank_acc_holder_placeholder: "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
+    reg_bank_acc_holder_placeholder:
+      "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
     reg_submit: "Register",
     reg_captcha_confirm: "Confirm",
     reg_captcha_verifying: "Verifying",
@@ -780,7 +781,7 @@ export default {
     reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
     reg_please_select_a_bank_account: "Please select a bank account",
     reg_please_enter_card_num: "Please enter card number",
-    reg_card_account_cannot_empty: "Card Account cannot be empty",
+    reg_card_account_cannot_empty: "Card Account cannot be empty"
     // register end
   },
   app: {
@@ -788,7 +789,7 @@ export default {
     live: "Enjoy real entertainment, participate in lottery betting, and engage in electronic gaming, among other activities. The latest and most comprehensive entertainment options are available at your fingertips.",
     hot: "Stay tuned with real-time live streaming, ensuring you never miss out on popular activities.",
     h5: "H5 Web",
-    app: "TF88 App",
+    app: "CITY8 App",
     mobileAccess: "Mobile Access",
     scanDownload: "Scan QR to download"
   },
@@ -822,13 +823,13 @@ export default {
     webapp: "Web App",
     esportapp: "Esports App",
     firstSlide: "DOWN LOAD APPS",
-    firstSlideContent: "Super smooth experience on TF88's high class apps",
+    firstSlideContent: "Super smooth experience on CITY8's high class apps",
     firstSlideSub: "DOWNLOAD +60 원",
     secondSlide: "GET WELCOME BONUS",
     secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 원",
     thirdSlide: "ESPORTS BETTING DEVELOPER",
     thirdSlideContent:
-      "TF88 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
+      "CITY8 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
   },
   bankError: {
     bankCardFirst: "Please bind your bank card first",
@@ -845,9 +846,9 @@ export default {
     cmd: "Our motto is customer delight. By offering most game options and corresponding markets, CMD368 aims to provide top-notch gaming service and experience and provide the best odds."
   },
   lottery: {
-    loto: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    gpi: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    tcg: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw."
+    loto: "Lottery at CITY8 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    gpi: "Lottery at CITY8 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    tcg: "Lottery at CITY8 offers attractive odds and diverse betting options, with fast payouts after the draw."
   },
   livecasino: {
     ag: "Live Casino AG introduces the world's first 6-card poker pre-deal, VIP tables, squeeze baccarat, smart control baccarat, and other interactive baccarat games. Compatible with multiple terminals allowing you to enjoy uninterrupted gaming.",
