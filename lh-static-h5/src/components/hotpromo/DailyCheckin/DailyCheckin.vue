@@ -352,7 +352,6 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .seciont1 {
-  margin-top: -27px;
   display: flex;
   justify-content: center;
   align-items: center;
