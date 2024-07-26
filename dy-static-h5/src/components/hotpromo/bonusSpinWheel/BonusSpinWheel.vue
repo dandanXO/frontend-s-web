@@ -85,8 +85,14 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import { userStore } from "../../../stores/index";
 import moment from "moment";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
+const $q = useQuasar();
+const store = userStore();
+const router = useRouter();
 // spin wheel constants
 const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
@@ -199,6 +205,29 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   if (spinButtonDisable.value === true) {
     return;
   }
@@ -236,6 +265,29 @@ const spinWheel = () => {
 };
 
 const initSpinWheel = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   eventapi.get("/betWheel/init").then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.availableSpin;

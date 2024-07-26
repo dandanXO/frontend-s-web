@@ -128,11 +128,15 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { userStore } from "../../../stores/index";
 
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 import { getHongbaoInfo, getHongbaoMoney } from "../../../api/promotion/fishHongbao";
 
 import { useLocalStorage } from "@vueuse/core";
-
+const router = useRouter();
+const $q = useQuasar();
 const availableDraw = ref(0);
 const validBet = ref(0);
 const tableRecordDialog = ref(false);
@@ -140,6 +144,7 @@ const rewardMoney = ref(0);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
+const store = userStore();
 const getHongbao = async () => {
   const res = await getHongbaoInfo();
   console.log(res);
@@ -158,6 +163,29 @@ onMounted(() => {
 });
 
 const claimHongBao = async () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   const res = await getHongbaoMoney();
   console.log(res);
   if (res.code === 0) {
