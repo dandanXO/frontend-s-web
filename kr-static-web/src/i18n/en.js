@@ -793,7 +793,7 @@ export default {
     redeem_point_source: "Source",
     redeem_point_condition: "Condition",
     redeem_point_actions: "Actions",
-    redeem_point_redeemed: "Redeemed points",
+    redeem_point_redeemed: "Redeemed points"
     // redeem point end
   },
   menu_item: {
@@ -807,7 +807,7 @@ export default {
     menu_transaction_record: "Transaction Record",
     menu_rebates: "Rebates",
     menu_my_page: "My Page",
-    menu_won: "Won",
+    menu_won: "Won"
     // menu end
   },
   message: {
@@ -838,7 +838,7 @@ export default {
     message_read_all_message: "Read all messages",
     message_delete_selected_message: "Deleted selected messages",
     message_delete_all_message: "Deleted all read messages",
-    message_total: "Total",
+    message_total: "Total"
     // message end
   },
   feedback: {
@@ -860,11 +860,11 @@ export default {
     feedback_waiting_admin_reply: "Waiting Admin Reply",
     feedback_admin_replied: "Admin Replied",
     feedback_delete_selected: "Delete Selected",
-    feedback_delete_selected_message: "Deleted selected messages",
+    feedback_delete_selected_message: "Deleted selected messages"
     // feedback end
   },
   app: {
-    sports: "Access to massive sports events and top-tier esports competitions.",
+    sports: "Access to massive sports events and top-tier poker competitions.",
     live: "Enjoy real entertainment, participate in lottery betting, and engage in electronic gaming, among other activities. The latest and most comprehensive entertainment options are available at your fingertips.",
     hot: "Stay tuned with real-time live streaming, ensuring you never miss out on popular activities.",
     h5: "H5 Web",

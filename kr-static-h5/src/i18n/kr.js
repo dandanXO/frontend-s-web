@@ -417,6 +417,7 @@ export default {
     // mine
     version_no: "버전",
     central_wallet: "잔액",
+    central_rebate: "할인",
     loading: "로딩 중...",
     deposit_btn: "입금",
     withdraw_btn: "출금",

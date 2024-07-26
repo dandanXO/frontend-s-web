@@ -418,6 +418,7 @@ export default {
     // mine
     version_no: "Version",
     central_wallet: "Central wallet",
+    central_rebate: "Rebate",
     loading: "Loading...",
     deposit_btn: "Deposit",
     withdraw_btn: "Withdraw",
