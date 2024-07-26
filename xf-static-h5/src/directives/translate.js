@@ -28,7 +28,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "STEP_4") {
     return "自动支付"; // Automatic Payment
   } else if (rec === "STEP_5") {
-    return "失败（有疑问请联系在线客服）"; // Suspend
+    return "请联系客服查询原因"; // Suspend
   } else if (rec === "AUTOPAY") {
     return "自动支付"; // Automatic Payment
   } else if (rec === "BANK") {
