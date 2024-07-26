@@ -5,8 +5,10 @@
     <div class="hotgame-container">
       <div class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
         <div class="hotgame-banner-wrapper">
-          <div :class="`hotgame-banner ${hotgameIndex === currentBannerIndex ? 'highlight' : ''}`"
-            @click="onBannerClick(hotgameIndex)">
+          <div
+            :class="`hotgame-banner ${hotgameIndex === currentBannerIndex ? 'highlight' : ''}`"
+            @click="onBannerClick(hotgameIndex)"
+          >
             <img class="hotgame-icon" :src="hotgameIndex === currentBannerIndex ? hotgame.iconActive : hotgame.icon" />
             <div :class="`hotgame-number ${hotgameIndex === currentBannerIndex ? 'highlight' : ''}`">
               {{ hotgame.number }}
@@ -70,16 +72,27 @@
               <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
             </div>
             <div v-if="hotgame.content.isShowSportsIcon" :class="`game-icon-wrapper ${hotgame.subtitle.toLowerCase()}`">
-              <img v-for="(icon, iconIndex) in hotgame.content.isShowSportsIcon" :key="`${icon}-${iconIndex}`"
-                :src="icon" />
+              <img
+                v-for="(icon, iconIndex) in hotgame.content.isShowSportsIcon"
+                :key="`${icon}-${iconIndex}`"
+                :src="icon"
+              />
             </div>
             <div class="game-provider-wrapper">
-              <div v-for="(provider, providerIndex) in hotgame.content.providerList"
-                :key="`${provider}-${providerIndex}`" class="game-provider"
-                @click="setCurrentProvider(hotgame, provider)">
-                <img :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`" :src="require(`../../assets/${hotgame.section}/${hotgame.section
-                  }-logo-${provider.code.toLowerCase()}.png`)
-                  " />
+              <div
+                v-for="(provider, providerIndex) in hotgame.content.providerList"
+                :key="`${provider}-${providerIndex}`"
+                class="game-provider"
+                @click="setCurrentProvider(hotgame, provider)"
+              >
+                <img
+                  :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
+                  :src="
+                    require(`../../assets/${hotgame.section}/${
+                      hotgame.section
+                    }-logo-${provider.code.toLowerCase()}.png`)
+                  "
+                />
                 <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
                   {{ provider.alias ?? provider.name }}
                 </div>
@@ -102,19 +115,25 @@
               </el-button>
             </template>
             <template v-else>
-              <el-button size="small" class="common-btn game-start-btn"
-                @click="onEnterGameClick(hotgame, hotgame.type)">
-                {{ hotgame.type !== "slot" ? $t('hotGame.enterGame') : $t('hotGame.enterPlat') }}
+              <el-button
+                size="small"
+                class="common-btn game-start-btn"
+                @click="onEnterGameClick(hotgame, hotgame.type)"
+              >
+                {{ hotgame.type !== "slot" ? $t("hotGame.enterGame") : $t("hotGame.enterPlat") }}
               </el-button>
             </template>
 
             <div style="height: 50px">
-              <p v-if="
-                hotgame.currentPlat?.underMaintenance === true &&
-                hotgame.currentPlat?.maintenanceStartTime &&
-                hotgame.currentPlat?.maintenanceEndTime
-              " class="maintenance-p">
-                {{ $t('hotgame.maintenanceTime') }}:
+              <p
+                v-if="
+                  hotgame.currentPlat?.underMaintenance === true &&
+                  hotgame.currentPlat?.maintenanceStartTime &&
+                  hotgame.currentPlat?.maintenanceEndTime
+                "
+                class="maintenance-p"
+              >
+                {{ $t("hotgame.maintenanceTime") }}:
                 <em>
                   {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
                   {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
@@ -125,13 +144,19 @@
           </div>
           <div class="right-container">
             <Transition :key="transitionKey" appear>
-              <img v-if="
-                hotgame.content &&
-                hotgame.content[hotgame.currentProvider] &&
-                hotgame.content[hotgame.currentProvider].charImgPath
-              " :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`" :src="require(`../../assets/home/hotgame/content/${hotgame.section}/${hotgame.content[hotgame.currentProvider].charImgPath
-                }/character.png`)
-                " />
+              <img
+                v-if="
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider] &&
+                  hotgame.content[hotgame.currentProvider].charImgPath
+                "
+                :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
+                :src="
+                  require(`../../assets/home/hotgame/content/${hotgame.section}/${
+                    hotgame.content[hotgame.currentProvider].charImgPath
+                  }/character.png`)
+                "
+              />
             </Transition>
           </div>
         </div>
@@ -189,8 +214,7 @@ const hotgameData = ref([
     type: "live",
     content: {
       // isShowSportsIcon: [require("../../assets/live/live-pattern.png")],
-      providerList: [
-      ]
+      providerList: []
     }
   },
   {
@@ -207,8 +231,7 @@ const hotgameData = ref([
     type: "slot",
     content: {
       // isShowSportsIcon: [require("../../assets/slot/slot-pattern.png")],
-      providerList: [
-      ]
+      providerList: []
     }
   },
   {
@@ -224,8 +247,7 @@ const hotgameData = ref([
     section: "sports",
     type: "sport",
     content: {
-      providerList: [
-      ]
+      providerList: []
     }
   },
   {
@@ -241,8 +263,7 @@ const hotgameData = ref([
     section: "poker",
     type: "poker",
     content: {
-      providerList: [
-      ]
+      providerList: []
     }
   },
   {
@@ -258,8 +279,7 @@ const hotgameData = ref([
     section: "fishing",
     type: "fish",
     content: {
-      providerList: [
-      ]
+      providerList: []
     }
   }
 ]);
@@ -298,6 +318,8 @@ const onEnterGameClick = (plat, platType) => {
       currentPlat.gameCode = "bblive_lobby_pc";
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
+    } else if (currentPlat.code === "PP") {
+      currentPlat.gameCode = 101;
     }
 
     const platItem = plat.content[currentPlat.code.toLowerCase()];
@@ -315,7 +337,7 @@ const setHotGame = () => {
       // esport games show at sport section
       const formattedPlatforms = res.map((resItem) => ({
         ...resItem,
-        gameType: resItem.gameType?.replace('ESPORT', 'SPORT')
+        gameType: resItem.gameType?.replace("ESPORT", "SPORT")
       }));
       platformsListDisplay.value = formattedPlatforms;
       checkPlatforms();
@@ -325,7 +347,7 @@ const setHotGame = () => {
       // esport games show at sport section
       const formattedPlatforms = res.map((resItem) => ({
         ...resItem,
-        gameType: resItem.gameType?.replace('ESPORT', 'SPORT')
+        gameType: resItem.gameType?.replace("ESPORT", "SPORT")
       }));
 
       platformsListDisplay.value = formattedPlatforms;
@@ -430,8 +452,8 @@ $transition_timer: 0.5s;
           border-radius: 2.875rem;
           background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
           // box-shadow: 0px 2px 4.58px 0px #FFA09A inset;
-          box-shadow: 0px 1.81px 3.63px 0px #FFFFFF40 inset;
-          box-shadow: 0px 2.72px 5.44px 0px #0047FF40;
+          box-shadow: 0px 1.81px 3.63px 0px #ffffff40 inset;
+          box-shadow: 0px 2.72px 5.44px 0px #0047ff40;
 
           overflow: hidden;
           position: relative;
@@ -446,11 +468,8 @@ $transition_timer: 0.5s;
             // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
             // box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
 
-            background:
-              linear-gradient(0deg, #386FFF -1.68%, #2BE1D6 100%);
-            box-shadow: 0px 2px 4.58px 0px #BBDCFF inset;
-
-
+            background: linear-gradient(0deg, #386fff -1.68%, #2be1d6 100%);
+            box-shadow: 0px 2px 4.58px 0px #bbdcff inset;
           }
 
           .hotgame-icon {
@@ -472,7 +491,7 @@ $transition_timer: 0.5s;
             &.highlight {
               border-bottom: 0.1rem solid white;
 
-              &~.hotgame-text {
+              & ~ .hotgame-text {
                 color: #fff;
               }
             }
@@ -508,7 +527,6 @@ $transition_timer: 0.5s;
           }
 
           .character-wrapper {
-
             .character-casino,
             .character-board,
             .character-fishing {
@@ -583,7 +601,7 @@ $transition_timer: 0.5s;
               font-size: 2.70775rem;
               font-weight: bold;
               // background: linear-gradient(180deg, #BC4C4C 0%, #FD574C 100%);
-              background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
 
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
@@ -603,7 +621,7 @@ $transition_timer: 0.5s;
           }
 
           .desc {
-            color: #A0BCD6;
+            color: #a0bcd6;
             font-family: Microsoft YaHei;
             font-size: 0.83838rem;
             font-weight: 400;
@@ -667,8 +685,7 @@ $transition_timer: 0.5s;
                 border-radius: 0.3145rem;
                 // border: 1px solid #FD574C;
                 // background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
-                background: linear-gradient(180deg, #C3E8FA 0%, #A1C4FC 100%);
-
+                background: linear-gradient(180deg, #c3e8fa 0%, #a1c4fc 100%);
 
                 object-fit: contain;
 
@@ -676,7 +693,7 @@ $transition_timer: 0.5s;
                   border: 0px;
                   // background: linear-gradient(180deg, #FCFCFC -11.46%, #FD574C 100%);
                   // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
-                  background: linear-gradient(180deg, #2EADEE 0%, #A1C4FC 100%);
+                  background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
                 }
               }
 
@@ -706,9 +723,7 @@ $transition_timer: 0.5s;
                   // background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
                   // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
 
-                  background: linear-gradient(180deg, #2EADEE 0%, #A1C4FC 100%);
-
-
+                  background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
                 }
               }
             }
@@ -732,11 +747,9 @@ $transition_timer: 0.5s;
             // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
             // box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
 
-            background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-            box-shadow: 0px -2px 4.58px 0px #B1D7FF inset;
-            box-shadow: 0px -1px 3.66px 0px #5894FF inset;
-
-
+            background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+            box-shadow: 0px -2px 4.58px 0px #b1d7ff inset;
+            box-shadow: 0px -1px 3.66px 0px #5894ff inset;
 
             font-family: Microsoft YaHei;
             font-size: 1.15281rem;
@@ -1101,7 +1114,6 @@ $transition_timer: 0.5s;
 
           .left-container {
             .title-wrapper {
-
               .title,
               .subtitle {
                 background: linear-gradient(180deg, #c2fbfb 0%, #299aad 100%);
@@ -1119,7 +1131,7 @@ $transition_timer: 0.5s;
               .game-provider {
                 .game-provider-img {
                   background: linear-gradient(180deg, #113765 0%, #212428 100%);
-                  border-color: #36677C;
+                  border-color: #36677c;
 
                   &.active {
                     background: linear-gradient(180deg, #38d2da 0%, #1b7893 100%);
