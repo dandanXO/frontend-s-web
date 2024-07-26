@@ -6,7 +6,7 @@
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
-        <div class="navigations" style="margin-right: auto">
+        <div class="navigations" style="margin-right: auto;visibility:hidden;">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div
@@ -86,6 +86,18 @@
             </div>
             {{ $t("menu_item.menu_announcement") }}
           </div>
+          <router-link to="/center/message" class="action-btn">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
+            </div>
+            {{ $t("menu_item.menu_message") }}
+          </router-link>
+          <router-link to="/center/inquiry" class="action-btn">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
+            </div>
+            {{ $t("menu_item.menu_inquiry") }}
+          </router-link>
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.svg" />

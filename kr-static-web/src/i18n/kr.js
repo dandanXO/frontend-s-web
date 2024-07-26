@@ -813,6 +813,28 @@ export default {
     message_total: "총",
     // message end
   },
+  feedback: {
+    // feedback start
+    feedback_loading_content: "콘텐츠 로드 중...",
+    feedback_unread: "읽히지 않는",
+    feedback_read: "읽었다",
+    feedback_read_at: "에서 읽다",
+    feedback_compose: "글쓰기",
+    feedback_write_inquiry: "문의작성",
+    feedback_category: "유형",
+    feedback_category_select: "선택해주세요",
+    feedback_title: "제목",
+    feedback_title_placeholder: "제목 입력해주세요",
+    feedback_cannot_be_empty: "비워둘 수 없습니다",
+    feedback_content: "내용",
+    feedback_compose_confirm: "확인",
+    feedback_previous_page: "전 페이지로 이동",
+    feedback_waiting_admin_reply: "답변대기",
+    feedback_admin_replied: "답변완료",
+    feedback_delete_selected: "선택내역삭제",
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
+    // feedback end
+  },
   app: {
     sports: "대규모의 주요 스포츠 및 E-스포츠 이벤트.",
     live: "라이브 카지노, 복권, 슬롯 등 모든 게임이 여러분의 손 안에 있습니다.",

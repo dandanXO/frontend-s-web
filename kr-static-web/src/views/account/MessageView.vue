@@ -26,8 +26,8 @@
                         </template>
                         <template v-else>
                             <div v-for="item in inboxMessages.records" :key="item.page"
-                                @click="readMessage(item.id)" :active="item === selected" active-class="active-message"
-                                :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime }" class="message">
+                                @click="readMessage(item.id)" 
+                                :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime, ['active-message']: item === selected }" class="message">
                                 <div>
                                     <el-checkbox v-model="item.selected" />
                                 </div>
@@ -108,8 +108,7 @@ import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import { i18nStore } from "@/store/language";
 import { server } from "@/utils/request";
-
-var qs = require("qs");
+import { ElMessage } from "element-plus";
 
 const selected = ref();
 const isLoading = ref(false);
@@ -205,20 +204,14 @@ const readMessage = (id, showReadNotify = true) => {
     if (!currentMail?.readTime && inboxCategory.value !== 'Outbox') {
         isFetchingContent.value = true;
 
-        server.REST.post("/session/inbox/read",
-            qs.stringify({
+        server.REST.post("/session/inbox/read",{
                 id: id
-            })
+            }
         ).then((res) => {
             const { code, data } = res
 
             if (code === 0 && !currentMail.readTime && showReadNotify) {
-                // $q.notify({
-                //     message: "메시지 읽기",
-                //     type: "positive",
-                //     position: "top",
-                //     icon: "check_circle_outline"
-                // });
+                ElMessage.success("메시지 읽기");
                 store.unreadCount--;
             }
 
@@ -241,13 +234,7 @@ const readMAllMessage = () => {
             const { code, data } = res
 
             if (code === 0) {
-                // $q.notify({
-                //     message: t('message.message_read_all_message'),
-                //     type: "positive",
-                //     position: "top",
-                //     icon: "check_circle_outline"
-                // });
-
+                ElMessage.success(t('message.message_read_all_message'));
                 initOutbox();
             }
         })
@@ -262,13 +249,7 @@ const deleteAllMessage = () => {
             const { code, data } = res
 
             if (code === 0) {
-                // $q.notify({
-                //     message: t('message.message_delete_all_message'),
-                //     type: "positive",
-                //     position: "top",
-                //     icon: "check_circle_outline"
-                // });
-
+                ElMessage.success(t('message.message_delete_all_message'));
                 initOutbox();
 
                 selected.value = null;
@@ -284,20 +265,15 @@ const deleteSelectedMessage = () => {
     const formattedIds = mailIdArr.join(",");
     server.REST.post(
             "/session/inbox/deleteMultiple",
-            qs.stringify({
+            {
                 ids: formattedIds
-            })
+            }
         )
         .then((res) => {
             const { code, data } = res
 
             if (code === 0) {
-                // $q.notify({
-                //     message: t('message.message_delete_selected_message'),
-                //     type: "positive",
-                //     position: "top",
-                //     icon: "check_circle_outline"
-                // });
+                ElMessage.success(t('message.message_delete_selected_message'));
 
                 const newRecords = inboxMessages.value.records.filter((data) => !selectedMessages.value.includes(data.id));
                 inboxMessages.value.records = newRecords
@@ -410,7 +386,7 @@ onMounted(() => {
             }
 
             .active-message {
-                background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
+                background: #aed0f7;
             }
 
             .active-message,

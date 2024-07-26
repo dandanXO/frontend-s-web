@@ -841,6 +841,28 @@ export default {
     message_total: "Total",
     // message end
   },
+  feedback: {
+    // feedback start
+    feedback_loading_content: "Loading content...",
+    feedback_unread: "Unread",
+    feedback_read: "Read",
+    feedback_read_at: "Read at",
+    feedback_compose: "Compose",
+    feedback_write_inquiry: "Write Inquiry",
+    feedback_category: "Category",
+    feedback_category_select: "Please select",
+    feedback_title: "Title",
+    feedback_title_placeholder: "Please enter title",
+    feedback_cannot_be_empty: "Cannot be empty",
+    feedback_content: "Content",
+    feedback_compose_confirm: "Confirm",
+    feedback_previous_page: "Previous page",
+    feedback_waiting_admin_reply: "Waiting Admin Reply",
+    feedback_admin_replied: "Admin Replied",
+    feedback_delete_selected: "Delete Selected",
+    feedback_delete_selected_message: "Deleted selected messages",
+    // feedback end
+  },
   app: {
     sports: "Access to massive sports events and top-tier esports competitions.",
     live: "Enjoy real entertainment, participate in lottery betting, and engage in electronic gaming, among other activities. The latest and most comprehensive entertainment options are available at your fingertips.",

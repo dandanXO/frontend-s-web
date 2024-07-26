@@ -50,7 +50,7 @@
             <img class="account-avatar" :src="require(`../../assets/images/account/menu-icon-${item.icon}.png`)" />
             {{ item.label }}
 
-            <div v-if="item.icon === 'inbox' && store.unreadTotal > 0" class="unread-total">
+            <div v-if="item.icon === 'inbox' && item.route === '/center/mailbox' && store.unreadTotal > 0" class="unread-total">
               <span>{{ store.unreadTotal }}</span>
             </div>
           </router-link>
@@ -135,7 +135,8 @@ watch(languageVal, (newValue, oldValue) => {
     { route: "/center/transit-record", label: t("menu.transactionRecord"), icon: "transitrecord" },
     { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
     { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
-    { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" }
+    { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
+    { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
   ];
 });
 
@@ -149,7 +150,8 @@ const menuItems = ref([
   { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
   { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
-  { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" }
+  { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
+  { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
   // { route: "/vip", label: "VIP特权", icon: "vip" },
   // // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   // { route: "/center/feedback", label: "会员建议", icon: "feedback" },
