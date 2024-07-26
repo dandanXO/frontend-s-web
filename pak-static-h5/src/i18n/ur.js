@@ -48,7 +48,8 @@ export default {
     transferRecord: "منتقلی کا ریکارڈ",
     promotionRecord: "پروموشن کا ریکارڈ",
     betRecord: "شرط لگانے کا ریکارڈ",
-    referralRecord: "ریفرل کا ریکارڈ"
+    referralRecord: "ریفرل کا ریکارڈ",
+    interestProfit: "سود کا منافع"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -225,7 +226,8 @@ export default {
     feedback: "فیڈبیک",
     vip: "VIP",
     logout: "لاگ آوٹ",
-    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
+    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
+    interestProfit: "سود کا منافع"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
@@ -292,7 +294,8 @@ export default {
       player: "پلیئر",
       money: "پیسہ",
       eligibility_tips: "اہلیت: <br /> مدعو کا جمع کردہ رقم ≥ 300 ہونا چاہیے۔",
-      betting_tips: "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
+      betting_tips:
+        "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
       deposit_tips: "ڈپازٹ کمیشن: <br /> ہر نئے ممبر کی پہلی جمع کردہ رقم پر 5% ریبیٹ حاصل کریں جو آپ مدعو کریں۔",
       shareTitle: "B9GAME شیئر کریں اور کمائیں",
       shareText:

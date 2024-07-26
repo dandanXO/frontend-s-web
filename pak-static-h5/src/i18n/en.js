@@ -48,7 +48,8 @@ export default {
     transferRecord: "Transfer Record",
     promotionRecord: "Promotion Record",
     betRecord: "Bet Record",
-    referralRecord: "Referral Record"
+    referralRecord: "Referral Record",
+    interestProfit: "Interest Profit"
   },
   bottomNav: {
     home: "Home",
@@ -225,7 +226,8 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "LOG OUT",
-    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts"
+    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
+    interestProfit: "Interest Profit",
   },
   deposit: {
     selectAmount: "Select Amount",

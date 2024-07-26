@@ -449,6 +449,10 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.withdraw");
+        } else if (route.path === "/interest-profit") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = t("header.interestProfit");
         }
       }
     };
