@@ -109,7 +109,7 @@ export default defineComponent({
 
   .q-item {
     // background: #fff;
-    background: #063c50;
+    // background: #063c50;
   }
 
   .q-tab--active .q-tab__indicator {

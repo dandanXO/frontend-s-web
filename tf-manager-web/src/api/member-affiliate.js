@@ -281,3 +281,12 @@ export const updateRecycleMoneyState = (id, state) => {
     ContentType.form
   )
 }
+
+export const updateDisplayAmountState = (id, state) => {
+  return https().request(
+    `/affiliate/${id}/updateDisplayAmount?_method=PUT`,
+    Method.POST,
+    { state: state },
+    ContentType.form
+  )
+}

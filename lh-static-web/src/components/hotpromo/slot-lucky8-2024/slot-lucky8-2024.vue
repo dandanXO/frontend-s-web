@@ -183,10 +183,12 @@
 import { ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { getSlotLucky8, submitSlotLucky8 } from "@/api/promotion/slotlucky";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 const props = defineProps(["promoCode"]);
+
+const notify = useNotify();
 const promoCode = ref(props.promoCode);
 
 const tableRecordDialog = ref(false);
@@ -204,18 +206,18 @@ const handleSubmitVote = (item) => {
   submitSlotLucky8(promoCode.value, item.id)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage.success({
+        notify.success({
           type: "success",
           message: "领取成功"
         });
         getSlotLucky8Data();
         store.getBalance();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch(() => {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     });
 };
 const displayTeamVictory = (record) => {

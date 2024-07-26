@@ -171,7 +171,9 @@ import { eventapi } from "boot/axios";
 // import { tigerCardInit, getLeaderboard, getMemberCard, giveCardToFriend, synthesisCard } from "@/api/promo/tigerCard";
 // import { ElMessage } from "element-plus";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const $q = useQuasar();
 
 const cardInfo = reactive({
@@ -239,19 +241,15 @@ const getNewTigerCard = () => {
       isCardModal.value = true;
       cardWon.value = res.data.cardType;
       isPageLoading.value = false;
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已领取龙卡",
-        icon: "check_circle_outline"
       });
       pageInit();
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "check_circle_outline"
       });
     }
     isPageLoading.value = false;
@@ -376,19 +374,15 @@ const submitRegisterForm = async () => {
     form.promoCode = "lh1-dragon-card";
     eventapi.post("/tigerCard/giveCardToFriend", qs.stringify(form)).then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "成功",
-          icon: "check_circle_outline"
         });
         isSubmitting.value = false;
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     });

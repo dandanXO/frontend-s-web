@@ -63,6 +63,9 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
+          <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
+            <img src="../assets/images/index/youtube-icon.png" />
+          </a>
           <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
@@ -85,6 +88,37 @@
       </div>
     </q-page-sticky>
 
+    <q-page-sticky position="bottom-left" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+      <div>
+        <div class="hb-close">
+          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
+        </div>
+        <div>
+          <q-carousel
+            class="hb-float"
+            :navigation="hbPromo.length > 1 ? true : false"
+            v-model="hbSlide"
+            swipeable
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            animated
+            infinite
+            :autoplay="3000"
+          >
+            <q-carousel-slide
+              v-for="(promo, i) in hbPromo"
+              :key="i"
+              :name="i"
+              @click="gotoFloatPromo(promo)"
+              :img-src="`${imgURL}/promo/${promo.icon}`"
+            >
+              <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
+            </q-carousel-slide>
+          </q-carousel>
+        </div>
+      </div>
+    </q-page-sticky>
+
     <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
@@ -97,7 +131,7 @@
             <img src="../assets/images/index/icon-volume.png" />
           </div>
           <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 300">
+            <marquee-text :repeat="5" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
@@ -1304,6 +1338,7 @@
 
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
@@ -1315,6 +1350,16 @@
         </q-btn>
       </div>
     </div>
+  </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal">
+    <MoneyRainModal />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog>
+
+  <q-dialog v-model="isMediaSettingsModal">
+    <MediaSettingsComponent :media="mediaCode" />
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
 </template>
 
@@ -1338,6 +1383,8 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
+import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
+import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -1364,6 +1411,8 @@ const { t } = useI18n();
 const isLuckyDrawModal = ref(false);
 const isCongratsModal = ref(false);
 const isShowPrizeModal = ref(false);
+const isMoneyRainModal = ref(false);
+const isMediaSettingsModal = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -1434,6 +1483,11 @@ const isDraggingCsIcon = ref(false);
 const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
+
+const hbDragPos = ref([10, 0]);
+const isDraggingHbIcon = ref(false);
+const isHbShow = ref(true);
+const hbSlide = ref(0);
 
 const slide = ref(0);
 
@@ -2356,27 +2410,38 @@ const loadHotGameList = () => {
 
       // cached
       cached
-        .get(key, () =>
-          api
-            .get("/platformGamesByLabel", {
-              params: {
-                gameLabel: "HOT",
-                device: regDevice
-              }
-            })
-            .then((ret) => {
-              const res = ret;
-              if (res.code === 0) {
-                return res;
-              }
-            })
-            .catch((err) => {})
+        .get(
+          key,
+          () =>
+            api
+              .get("/platformGamesByLabelV1", {
+                params: {
+                  gameLabel: "HOT",
+                  device: regDevice
+                }
+              })
+              .then((ret) => {
+                const res = ret;
+                if (res.code === 0) {
+                  return res;
+                }
+              })
+              .catch((err) => {
+                // Handle the error appropriately
+              }),
+          { expired_value: 300 }
         )
         .then((res) => {
           gameLists = res;
 
+          // console.log("HERE");
+          // console.log(gameLists);
+          // console.log(hotlists);
+
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item2.platformCode === item1.platform
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2393,7 +2458,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
@@ -3067,7 +3132,11 @@ const gotoPromo = (banner) => {
     if (banner.redirectUrl.includes("https://")) {
       window.open(banner.redirectUrl, "_blank");
     } else {
-      router.push(`/promo?name=${banner.redirectUrl}`);
+      if (banner.redirectUrl === "redpacketrain") {
+        isMoneyRainModal.value = true;
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
   }
 };
@@ -3190,6 +3259,12 @@ const moveLiveIcon = (ev) => {
   liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
 };
 
+const moveHbIcon = (ev) => {
+  isDraggingHbIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  hbDragPos.value = [hbDragPos.value[0] - ev.delta.x, hbDragPos.value[1] - ev.delta.y];
+};
+
 const openLiveInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
@@ -3220,6 +3295,20 @@ const loadCustomerAddress = () => {
 
         csDragPos.value = [10, 70];
       }
+    });
+};
+
+const hbPromo = ref([]);
+
+const checkHbPromo = () => {
+  api
+    .get("/redirect")
+    .then((res) => {
+      return res;
+    })
+    .then((data) => {
+      // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
+      hbPromo.value = data.data;
     });
 };
 
@@ -3328,12 +3417,33 @@ const processedContent = (content) => {
   return content.replace(/\n/g, "<br>");
 };
 
+const mediaCode = ref("");
+
+const gotoFloatPromo = (val) => {
+  if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
+    isMoneyRainModal.value = true;
+  }
+
+  if (val.type === "DOMAIN") {
+    isMediaSettingsModal.value = true;
+    mediaCode.value = val.code;
+  }
+};
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
   checkShowImgTop();
 
   checkSpinWheel();
+
+  // if (store.hasToken()) {
+  checkHbPromo();
+  // }
+
+  if (route.query.login === "true") {
+    isMoneyRainModal.value = true;
+  }
 });
 
 onMounted(() => {
@@ -4164,6 +4274,15 @@ const showCongratsModal = () => {
   margin: auto;
 }
 
+.hb-icon-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  background: url("../assets/images/index/hongbao-icon.gif") no-repeat center center;
+  background-size: contain;
+  position: relative;
+}
+
 .live-icon-wrapper {
   width: 63px;
   height: 70px;
@@ -4192,22 +4311,28 @@ const showCongratsModal = () => {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 
+    &.youtube {
+      left: -60px;
+      top: 65px;
+    }
+
     &.tiktok {
-      left: -72px;
-      top: 50%;
+      left: -70px;
+      top: 13px;
+      transition-delay: 0.2s;
     }
 
     &.whatsapp {
-      left: -48px;
-      top: -22px;
-      transition-delay: 0.25s;
+      left: -39px;
+      top: -30px;
+      transition-delay: 0.4s;
     }
 
     &.cs {
       top: -72px;
       left: 50%;
       transform: translateX(-50%);
-      transition-delay: 0.5s;
+      transition-delay: 0.6s;
     }
   }
 
@@ -4996,5 +5121,31 @@ const showCongratsModal = () => {
     justify-content: center;
     margin-top: 16px;
   }
+}
+
+.money-rain-close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hb-float {
+  posiiton: relative;
+  height: 100px;
+  width: 100px;
+  background: transparent;
+  overflow: hidden;
+
+  .q-carousel__control {
+    display: none;
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>

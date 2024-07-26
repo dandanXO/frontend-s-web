@@ -143,6 +143,7 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
+import dayjs from "dayjs";
 
 var qs = require("qs");
 export default defineComponent({
@@ -198,7 +199,7 @@ export default defineComponent({
           personalState.memberInfo = response.data;
 
           if (personalState.memberInfo.birthday > 0) {
-            personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+            personalState.memberInfo.birthday = dayjs(personalState.memberInfo.birthday).format("DD-MM-YYYY");
           }
         }
       }).catch((error) => {

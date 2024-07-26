@@ -4,7 +4,7 @@ import { getDevice } from "@/utils/utils";
 export function register(regForm) {
   const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
   regForm.regDevice = regDevice;
-  return server.REST.post("/member/fbRegister", regForm);
+  return server.REST.post("/member/register-with-bank-card", regForm);
 }
 
 export function login(loginInfo) {
@@ -39,4 +39,8 @@ export function getVerificationCode() {
 
 export function memberAccessLog(log) {
   return server.REST.post("/memberAccessLog", log);
+}
+
+export function bankCardList() {
+  return server.REST.get("/member/withdraw/banks?siteId=10");
 }

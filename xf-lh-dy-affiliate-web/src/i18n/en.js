@@ -11,6 +11,7 @@ export default {
     apply: 'Apply',
     verificationcode: 'Verification Code',
     verification_title: 'Security Check, Please click steps by steps：',
+    verification_drag_title: 'Security Check, Please drag to verify',
     verify_success: 'Verify Success',
     refresh: 'Refresh',
     submit: 'Submit',

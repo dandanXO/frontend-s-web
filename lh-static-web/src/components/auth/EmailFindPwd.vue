@@ -32,9 +32,11 @@
 import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const emits = defineEmits(["open-login-dialog, close-dialog"]);
+
+const notify = useNotify();
 
 const openLoginDialog = () => {
   emits("open-login-dialog");
@@ -89,10 +91,13 @@ const submitForm = () => {
     .then(() => {
       findAccount(forgotPwdForm).then((res) => {
         if (res.code === 0) {
-          ElMessage.success("您的帐号已经发送到注册邮箱");
+          notify({
+            type: 'success',
+            message: "您的帐号已经发送到注册邮箱"
+          })
           emits("close-dialog");
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: res.message
           });
@@ -116,7 +121,7 @@ const getCode = () => {
       verificationImg.value = "data:image/png;base64," + res.data.img;
       forgotPwdForm.codeId = res.data.id;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

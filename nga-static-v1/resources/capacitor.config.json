@@ -1,9 +1,5 @@
 {
   "appId": "com.ind.appnga",
-  "appName": "nga",
-  "webDir": "www",
-  "server": {
-    "androidScheme": "https",
-    "hostname": "www.indwin7.com"
-  }
+  "appName": "55Ace",
+  "webDir": "www"
 }

@@ -264,8 +264,15 @@
           />
         </el-form-item>
         <el-form-item :label="t('fields.param')" prop="param">
+          <JsonEditor
+            class="editor"
+            v-model="editorValue"
+            currentMode="code"
+            :modeList="[]"
+            @update:modelValue="updataModel"
+          />
           <el-input
-            type="textarea"
+            type="hidden"
             v-model="form.param"
             :rows="20"
             style="width: 350px; white-space: pre-line"
@@ -400,6 +407,7 @@ import moment from 'moment'
 import { useStore } from '../../../store'
 import { useI18n } from 'vue-i18n'
 import { getSiteListSimple } from '../../../api/site'
+import JsonEditor from 'json-editor-vue3'
 
 const store = useStore()
 const { t } = useI18n()
@@ -578,11 +586,16 @@ function showDialog(type) {
     form.nextActivationTime = date
     // dateTimeVal.value = [new Date(), new Date()]
     uiControl.dialogTitle = t('fields.addPlatformAccount')
+    editorValue = ''
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editPlatformAccount')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+
+  nextTick(() => {
+    removeJsonEditorElement()
+  })
 }
 
 function showEdit(platformAccount) {
@@ -593,7 +606,12 @@ function showEdit(platformAccount) {
         if (key === 'nextGetBetStartTime' || key === 'nextGetBetEndTime') {
           form[key] = String(platformAccount[key]).slice(0, 10)
         }
+
         form[key] = platformAccount[key]
+        if (key === 'param') {
+          editorValue = JSON.parse(form[key])
+        }
+        console.log('form[key] 2 : ', form[key])
       }
     }
     // dateTimeVal.value = [form.nextGetBetStartTime, form.nextGetBetEndTime]
@@ -640,6 +658,32 @@ function json() {
   }
 }
 
+let editorValue = ref({})
+
+const updataModel = val => {
+  form.param = JSON.stringify(val, null, 2)
+  editorValue = val
+}
+
+function removeJsonEditorElement() {
+  const classesToRemove = [
+    'jsoneditor-poweredBy',
+    'jsoneditor-sort',
+    'jsoneditor-transform',
+    'jsoneditor-undo',
+    'jsoneditor-redo',
+    'jsoneditor-repair',
+  ]
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className)
+    Array.from(elements).forEach(element => {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  })
+}
+
 onMounted(() => {
   loadPlatfromAccount()
   loadPlatforms()
@@ -647,7 +691,7 @@ onMounted(() => {
 })
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
 .header-container {
   margin-bottom: 10px;
 }
@@ -668,5 +712,9 @@ onMounted(() => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.full-screen {
+  right: 20px !important;
 }
 </style>

@@ -2,7 +2,6 @@
   <div class="vip-container">
     <div class="header-section">
       <img src="../assets/vip/vip-header.png" class="vip-header" />
-
     </div>
     <!--    <div class="banner-container" />-->
 
@@ -11,19 +10,31 @@
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3" @click="store.openLiveChat()" class="claimBtn vipBirthday">
+              <a
+                v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3"
+                @click="store.openLiveChat()"
+                class="claimBtn vipBirthday"
+              >
                 <RiCake2Line />
-                {{ $t('vip.birthday') }}
+                {{ $t("vip.birthday") }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel !== Number(vip.vipLevel) || !canClaimMonthly}"
-                 @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
+              <a
+                v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2"
+                :class="{ unavailable: vipLevel !== Number(vip.vipLevel) || !canClaimMonthly }"
+                @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly') : null"
+                class="claimBtn vipMonthly"
+              >
                 <RiCalendar2Line />
-                {{ $t('vip.monthly') }}
+                {{ $t("vip.monthly") }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
-                 @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
+              <a
+                v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2"
+                :class="{ unavailable: vip.unavailable, claimed: vip.claimed }"
+                @click="!vip.unavailable && !vip.claimed ? claimBonus('welcome', vipIndex + 1) : null"
+                class="claimBtn vipWelcome"
+              >
                 <RiMoneyDollarCircleLine />
-                {{ $t('vip.upgrade') }}
+                {{ $t("vip.upgrade") }}
               </a>
             </div>
             <div class="vipcontents">
@@ -32,22 +43,17 @@
                 <span class="type">{{ vip.vipTitle }}</span>
               </div>
               <div class="description">
-
-                <span v-if="vipIndex !==0">
-                  {{ $t('vip.vipUpgradeRequired') }}:
-                  <span style="color: #424f72">
-                  {{$t('vip.totalBetMonth')}} {{vip.upgrade}}
-                  </span>
+                <span v-if="vipIndex !== 0">
+                  {{ $t("vip.vipUpgradeRequired") }}:
+                  <span style="color: #424f72">{{ $t("vip.totalBetMonth") }} {{ vip.upgrade }}</span>
                 </span>
-                <br/>
+                <br />
 
-                {{ $t('vip.vipMaintainRequired') }}:
-                <span style="color: #424f72"><span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span>
-                <span v-else>{{$t('vip.totalBetMonth')}} {{ vip.maintain }}
+                {{ $t("vip.vipMaintainRequired") }}:
+                <span style="color: #424f72">
+                  <span v-if="vipIndex === 0">{{ $t("vip.3timedeposit") }}</span>
+                  <span v-else>{{ $t("vip.totalBetMonth") }} {{ vip.maintain }}</span>
                 </span>
-                </span>
-
-
               </div>
               <!-- vip progress bar start -->
               <div class="progressBarContainer" v-if="vipLevel">
@@ -76,7 +82,9 @@
             <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
             >
-              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t('vip.achieved') : $t('vip.unachieved') }}</span>
+              <span>
+                {{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t("vip.achieved") : $t("vip.unachieved") }}
+              </span>
             </div>
           </div>
           <!-- <router-link
@@ -103,230 +111,233 @@
 
     <div class="vip-program">
       <div class="buttons">
-        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">{{ $t('vip.vipProgram') }}</div>
-        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">{{ $t('vip.exclusivePromotions') }}</div>
-      </div>
-      <div v-if="showRebate"><div class="vip-table" id="left">
-        <table>
-          <tbody>
-          <tr>
-
-            <td></td>
-            <td>IRON</td>
-            <td>BRONZE</td>
-            <td>SILVER</td>
-            <td>GOLD</td>
-            <td>PLATINUM</td>
-            <td>RUBY</td>
-            <td>DIAMOND</td>
-          </tr>
-          </tbody>
-        </table>
-        <div>
-          <div class="tbl-title free">{{ $t('vip.freeBonus')}}</div>
-
-          <table class="free">
-            <tbody>
-            <tr>
-              <td>{{ $t('vip.welcomeBonus')}}</td>
-              <td></td>
-              <td></td>
-              <td>888</td>
-              <td>1,888</td>
-              <td>3,888</td>
-              <td>5,888</td>
-              <td>10,888</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.monthlyBonus')}}</td>
-              <td></td>
-              <td></td>
-              <td>588</td>
-              <td>888</td>
-              <td>1,888</td>
-              <td>3,888</td>
-              <td>5,888</td>
-            </tr>
-
-            <tr>
-              <td>{{ $t('vip.birthdayBonus')}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>888</td>
-              <td>2,888</td>
-              <td>5,888</td>
-              <td>8,888</td>
-            </tr>
-            </tbody>
-          </table>
+        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">
+          {{ $t("vip.vipProgram") }}
         </div>
-        <div>
-
-          <div class="tbl-title rebate">{{ $t('vip.rebateBonus')}}</div>
-
-          <table class="rebate">
-            <tbody>
-            <tr>
-              <td>{{ $t('vip.sportRebate')}}</td>
-              <td>0.30%</td>
-              <td>0.38%</td>
-              <td>0.48%</td>
-              <td>0.58%</td>
-              <td>0.68%</td>
-              <td>0.78%</td>
-              <td>0.88%</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.esportRebate')}}</td>
-              <td>0.40%</td>
-              <td>0.48%</td>
-              <td>0.58%</td>
-              <td>0.68%</td>
-              <td>0.78%</td>
-              <td>0.88%</td>
-              <td>1.00%</td>
-            </tr>
-
-            <tr>
-              <td>{{ $t('vip.liveCasinoRebate')}}</td>
-              <td>0.40%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.70%</td>
-              <td>0.80%</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.pokerRebate')}}</td>
-              <td>0.40%</td>
-              <td>0.48%</td>
-              <td>0.58%</td>
-              <td>0.68%</td>
-              <td>0.78%</td>
-              <td>0.88%</td>
-              <td>1.00%</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.slotRebate')}}</td>
-              <td>0.60%</td>
-              <td>0.70%</td>
-              <td>0.80%</td>
-              <td>1.00%</td>
-              <td>1.20%</td>
-              <td>1.60%</td>
-              <td>2.00%</td>
-            </tr>
-
-            <tr>
-              <td>{{ $t('vip.lotteryRebate')}}</td>
-              <td>0.30%</td>
-              <td>0.30%</td>
-              <td>0.40%</td>
-              <td>0.40%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.60%</td>
-            </tr></tbody>
-          </table>
-        </div>
-
-        <div>
-          <div class="tbl-title monthly">{{ $t('vip.monthlyReload')}}</div>
-
-          <table class="monthly">
-            <tbody>
-            <tr>
-              <td>{{ $t('vip.monthlyReloadPercent')}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>30%</td>
-              <td>30%</td>
-              <td>30%</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.minDeposit')}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>3,500</td>
-              <td>3,500</td>
-              <td>3,500</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.maxBonus')}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>5,888</td>
-              <td>8,888</td>
-              <td>12,888</td>
-            </tr>
-            <tr>
-              <td>{{ $t('vip.returnOver')}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>15</td>
-              <td>15</td>
-              <td>15</td>
-            </tr>
-            </tbody>
-          </table>
+        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">
+          {{ $t("vip.exclusivePromotions") }}
         </div>
       </div>
+      <div v-if="showRebate">
+        <div class="vip-table" id="left">
+          <table>
+            <tbody>
+              <tr>
+                <td></td>
+                <td>IRON</td>
+                <td>BRONZE</td>
+                <td>SILVER</td>
+                <td>GOLD</td>
+                <td>PLATINUM</td>
+                <td>RUBY</td>
+                <td>DIAMOND</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="tbl-title free">{{ $t("vip.freeBonus") }}</div>
+
+            <table class="free">
+              <tbody>
+                <tr>
+                  <td>{{ $t("vip.welcomeBonus") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td>888</td>
+                  <td>1,888</td>
+                  <td>3,888</td>
+                  <td>5,888</td>
+                  <td>10,888</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.monthlyBonus") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td>588</td>
+                  <td>888</td>
+                  <td>1,888</td>
+                  <td>3,888</td>
+                  <td>5,888</td>
+                </tr>
+
+                <tr>
+                  <td>{{ $t("vip.birthdayBonus") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>888</td>
+                  <td>2,888</td>
+                  <td>5,888</td>
+                  <td>8,888</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="tbl-title rebate">{{ $t("vip.rebateBonus") }}</div>
+
+            <table class="rebate">
+              <tbody>
+                <tr>
+                  <td>{{ $t("vip.sportRebate") }}</td>
+                  <td>0.30%</td>
+                  <td>0.38%</td>
+                  <td>0.48%</td>
+                  <td>0.58%</td>
+                  <td>0.68%</td>
+                  <td>0.78%</td>
+                  <td>0.88%</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.esportRebate") }}</td>
+                  <td>0.40%</td>
+                  <td>0.48%</td>
+                  <td>0.58%</td>
+                  <td>0.68%</td>
+                  <td>0.78%</td>
+                  <td>0.88%</td>
+                  <td>1.00%</td>
+                </tr>
+
+                <tr>
+                  <td>{{ $t("vip.liveCasinoRebate") }}</td>
+                  <td>0.40%</td>
+                  <td>0.45%</td>
+                  <td>0.50%</td>
+                  <td>0.55%</td>
+                  <td>0.60%</td>
+                  <td>0.70%</td>
+                  <td>0.80%</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.pokerRebate") }}</td>
+                  <td>0.40%</td>
+                  <td>0.48%</td>
+                  <td>0.58%</td>
+                  <td>0.68%</td>
+                  <td>0.78%</td>
+                  <td>0.88%</td>
+                  <td>1.00%</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.slotRebate") }}</td>
+                  <td>0.60%</td>
+                  <td>0.70%</td>
+                  <td>0.80%</td>
+                  <td>1.00%</td>
+                  <td>1.20%</td>
+                  <td>1.60%</td>
+                  <td>2.00%</td>
+                </tr>
+
+                <tr>
+                  <td>{{ $t("vip.lotteryRebate") }}</td>
+                  <td>0.30%</td>
+                  <td>0.30%</td>
+                  <td>0.40%</td>
+                  <td>0.40%</td>
+                  <td>0.50%</td>
+                  <td>0.50%</td>
+                  <td>0.60%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <div class="tbl-title monthly">{{ $t("vip.monthlyReload") }}</div>
+
+            <table class="monthly">
+              <tbody>
+                <tr>
+                  <td>{{ $t("vip.monthlyReloadPercent") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>30%</td>
+                  <td>30%</td>
+                  <td>30%</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.minDeposit") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>3,500</td>
+                  <td>3,500</td>
+                  <td>3,500</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.maxBonus") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>5,888</td>
+                  <td>8,888</td>
+                  <td>12,888</td>
+                </tr>
+                <tr>
+                  <td>{{ $t("vip.returnOver") }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>15</td>
+                  <td>15</td>
+                  <td>15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
       <div v-else>
         <table class="promo">
           <tbody>
+            <tr>
+              <td>{{ $t("vip.betLimit") }}</td>
+              <td>{{ $t("vip.standard") }}</td>
+              <td>{{ $t("vip.standard") }}</td>
+              <td>{{ $t("vip.standard") }}</td>
+              <td>{{ $t("vip.standard") }}</td>
+              <td>{{ $t("vip.highLimit") }}</td>
+              <td>{{ $t("vip.highLimit") }}</td>
+              <td>{{ $t("vip.highLimit") }}</td>
+            </tr>
 
-          <tr>
-            <td>{{ $t('vip.betLimit')}}</td>
-            <td> {{ $t('vip.standard')}}</td>
-            <td> {{ $t('vip.standard')}}</td>
-            <td> {{ $t('vip.standard')}}</td>
-            <td> {{ $t('vip.standard')}}</td>
-            <td> {{ $t('vip.highLimit')}}</td>
-            <td>{{ $t('vip.highLimit')}} </td>
-            <td>{{ $t('vip.highLimit')}}</td>
-          </tr>
-
-          <tr>
-            <td> {{ $t('vip.priorityPaymentMethod')}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>✓</td>
-            <td>✓</td>
-            <td>✓</td>
-          </tr>
-          <tr>
-            <td> {{ $t('vip.customerCare')}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>✓</td>
-            <td>✓</td>
-          </tr>
-          <tr>
-            <td> {{ $t('vip.invitationExclusive')}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>✓</td>
-          </tr>
+            <tr>
+              <td>{{ $t("vip.priorityPaymentMethod") }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>✓</td>
+              <td>✓</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td>{{ $t("vip.customerCare") }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>✓</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td>{{ $t("vip.invitationExclusive") }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>✓</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -335,7 +346,7 @@
     </div>
 
     <div class="terms-conditions">
-      <div class="section-title">{{ $t('vip.vipTerms') }}</div>
+      <div class="section-title">{{ $t("vip.vipTerms") }}</div>
       <img
         class="terms-conditions-title-separator"
         :src="require('../assets/vip/terms-condition-title-separator.png')"
@@ -345,7 +356,7 @@
           {{ term.text }}
         </li> -->
         <li class="term" v-for="term in 9">
-          {{ $t(`vip.tnc${term}`)}}
+          {{ $t(`vip.tnc${term}`) }}
         </li>
       </ol>
     </div>
@@ -353,9 +364,12 @@
 
   <el-dialog class="" v-model="privilegeClaimedModalVisible" width="600px" align-center>
     <div class="noticedialog">
-      <div class="title" style="flex-direction: column;display:flex;">{{modalTitle}} <span style="font-size: 30px; color: #5196ff;">{{ amount ? amount : 0 }}</span></div>
+      <div class="title" style="flex-direction: column; display: flex">
+        {{ modalTitle }}
+        <span style="font-size: 30px; color: #5196ff">{{ amount ? amount : 0 }}</span>
+      </div>
       <div class="standard-button-container">
-        <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('common.confirm')}}</button>
+        <button class="standard-button btn-color-blue" @click="claimNow()">{{ $t("common.confirm") }}</button>
       </div>
     </div>
   </el-dialog>
@@ -402,18 +416,18 @@ export default defineComponent({
       }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0
+        levelUpDeposit = 0;
       }
       if (vipLevel === 0) {
-        return 0
+        return 0;
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100
+        return 100;
       } else {
-        return 0
+        return 0;
       }
 
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
@@ -425,37 +439,35 @@ export default defineComponent({
     const storeToken = computed(() => {
       return store.token;
     });
-    const modalTitle = ref('')
+    const modalTitle = ref("");
     const claimBonus = (vipType, vipLevel) => {
       if (vipType === "monthly") {
         claimMonthly().then((res) => {
-          if(res.code === 0) {
-            amount.value = store.currency.label + res.data;
+          if (res.code === 0) {
+            amount.value = res.data + store.currency.label;
             privilegeClaimedModalVisible.value = true;
-            modalTitle.value = t('vip.monthlyBonus');
+            modalTitle.value = t("vip.monthlyBonus");
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
-        })
+        });
       } else if (vipType === "welcome") {
         claimWelcome(vipLevel).then((res) => {
-          if(res.code === 0) {
-            amount.value = store.currency.label + res.data;
+          if (res.code === 0) {
+            amount.value = res.data + store.currency.label;
             privilegeClaimedModalVisible.value = true;
-            modalTitle.value = t('vip.welcomeBonus');
-
+            modalTitle.value = t("vip.welcomeBonus");
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
-        })
+        });
       }
-    }
+    };
     const claimNow = () => {
       privilegeClaimedModalVisible.value = false;
       store.getBalance();
       initVIPTable();
-
-    }
+    };
     // const loadingClaim = ref(false);
     // const loadingMClaim = ref(false);
     // const loadingBClaim = ref(false);
@@ -613,16 +625,16 @@ export default defineComponent({
         promoAvailable: false,
         unavailable: false,
         claimed: false
-      },
+      }
     ]);
     const canClaimMonthly = ref(false);
     const initVIPTable = () => {
       if (store.token) {
-        canRedeemMonthly('vnm-vip-monthly').then((res) => {
+        canRedeemMonthly("vnm-vip-monthly").then((res) => {
           if (res.code === 0) {
-            canClaimMonthly.value = res.data
+            canClaimMonthly.value = res.data;
           }
-        })
+        });
         canRedeemWelcome().then((res) => {
           if (res.code === 0) {
             // Your arrays of elements
@@ -651,7 +663,7 @@ export default defineComponent({
             // Now, vipItems array has the updated properties based on the provided elements
             // console.log(vipItems);
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
         });
       }
@@ -736,7 +748,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
-  position:relative;
+  position: relative;
   background-image: url("../assets/vip/vip-bg.jpg");
   background-color: #f3f7fd;
   background-repeat: no-repeat;
@@ -746,12 +758,12 @@ $border-settings: 1px solid #e5e7eb;
   color: #8d8d8d;
   min-height: 100vh;
 
-  .header-section{
-    margin:0 auto;
+  .header-section {
+    margin: 0 auto;
     width: 100%;
     text-align: center;
   }
-  .vip-header{
+  .vip-header {
     width: 400px;
     margin: 10px auto;
   }
@@ -797,13 +809,13 @@ $border-settings: 1px solid #e5e7eb;
         line-height: 9px;
         // color: #cdae77;
         // box-shadow: 0px 2px 5px 0px #cdae77 inset;
-        background: linear-gradient(360deg, #E29100 0%, #F8D79D 70%, #F2E4B6 80%, #ffb42a 100%);
+        background: linear-gradient(360deg, #e29100 0%, #f8d79d 70%, #f2e4b6 80%, #ffb42a 100%);
         color: #000000;
         &.unavailable {
           cursor: unset;
           pointer-events: none;
           color: #b1b1b1;
-          background: linear-gradient(360deg, #D3D3D3 0%, #E6E6E6 70%, #F2F2F2 80%, #ffffff 100%);
+          background: linear-gradient(360deg, #d3d3d3 0%, #e6e6e6 70%, #f2f2f2 80%, #ffffff 100%);
           svg {
             fill: #b1b1b1;
           }
@@ -811,14 +823,14 @@ $border-settings: 1px solid #e5e7eb;
         &.claimed {
           // box-shadow: 0px 2px 5px 0px #78634a inset;
           pointer-events: none;
-          background: linear-gradient(360deg, #D4AF37 0%, #FFD700 70%, #E6C200 80%, #ffc532 100%);
+          background: linear-gradient(360deg, #d4af37 0%, #ffd700 70%, #e6c200 80%, #ffc532 100%);
           color: #8f8f8f;
           cursor: unset;
           svg {
             fill: #8f8f8f;
           }
         }
-        svg{
+        svg {
           width: 18px;
           fill: #000000;
         }
@@ -859,7 +871,6 @@ $border-settings: 1px solid #e5e7eb;
       background: url("../assets/vip/badge/banner-8.png") no-repeat top center;
       background-size: contain;
     }
-
 
     &9 {
       background: url("../assets/vip/badge/banner-9.png") no-repeat top center;

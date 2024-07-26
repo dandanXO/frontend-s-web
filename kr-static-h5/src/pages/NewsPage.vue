@@ -50,30 +50,30 @@ const truncateText = (text, limit) => {
 const newsItems = ref([
   {
     id: 1,
-    title: "Rồng hổ TF88 là gì? Kinh nghiệm Kinh nghiệm Kinh nghiệm",
+    title: "Rồng hổ CITY8 là gì? Kinh nghiệm Kinh nghiệm Kinh nghiệm",
     description:
-      "Rồng hổ TF88 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ",
+      "Rồng hổ CITY8 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ",
     imageUrl: "news-img-small"
   },
   {
     id: 2,
-    title: "Rồng hổ TF88 là gì? Kinh nghiệm...",
+    title: "Rồng hổ CITY8 là gì? Kinh nghiệm...",
     description:
-      "Rồng hổ TF88 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ thắng cao, cùng với đó là hàng ngàn chương trình khuyến mãi hấp dẫn tạo điều kiện thuận lợi cho người chơi  ",
+      "Rồng hổ CITY8 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ thắng cao, cùng với đó là hàng ngàn chương trình khuyến mãi hấp dẫn tạo điều kiện thuận lợi cho người chơi  ",
     imageUrl: "news-img-small"
   },
   {
     id: 1,
-    title: "Rồng hổ TF88 là gì? Kinh nghiệm...",
+    title: "Rồng hổ CITY8 là gì? Kinh nghiệm...",
     description:
-      "Rồng hổ TF88 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ",
+      "Rồng hổ CITY8 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ",
     imageUrl: "news-img-small"
   },
   {
     id: 1,
-    title: "Rồng hổ TF88 là gì? Kinh nghiệm...",
+    title: "Rồng hổ CITY8 là gì? Kinh nghiệm...",
     description:
-      "Rồng hổ TF88 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ",
+      "Rồng hổ CITY8 là một trò chơi casino trực tuyến được rất nhiều anh em Việt Nam yêu thích. Sở hữu luật chơi đơn giản, cửa đặt cược tỷ lệ",
     imageUrl: "news-img-small"
   }
 ]);
@@ -146,7 +146,7 @@ const newsItems = ref([
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 135px;
+      max-width: 75px;
     }
   }
 

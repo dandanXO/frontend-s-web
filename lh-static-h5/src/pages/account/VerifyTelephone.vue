@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ store.evip }}</div>
+    <div class="web">专属网址：{{ store.evip }}</div>
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -72,6 +72,18 @@
       </div>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="gotoNewplayerPromoDialog" persistent>
+    <q-card class="q-px-lg q-pt-sm">
+      <q-card-section class="row items-center">
+        <span class="q-ml-sm">綁定完成，是否跳转优惠页面？</span>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn flat label="否" color="primary" v-close-popup />
+        <q-btn flat label="是" @click="gotoNewplayerPromo()" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 
   <!-- <br />
   phone: {{ formDetails.phone }}
@@ -89,11 +101,14 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useNotify } from "src/hooks/notify";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
     // const isCardActive = ref();
+    const notify = useNotify();
     const qs = require("qs");
     const $q = useQuasar();
     const router = useRouter();
@@ -142,11 +157,9 @@ export default defineComponent({
             }
           })
           .catch((e) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: e.message,
-              icon: "report_problem"
             });
           });
     };
@@ -169,6 +182,14 @@ export default defineComponent({
       getCode();
       verificationModalVisible.value = true;
     };
+    const openGotoNewplayerPromo = ()=>{
+      if(useLocalStorage('need-go-back-newplayer').value === 'true'){
+          gotoNewplayerPromoDialog.value = true
+        }
+    }
+    const gotoNewplayerPromo = ()=>{
+      router.push('/promo?name=lh1-newplayer-guide')
+    }
     const emailAddressRef = ref();
     const verificationCodeRef = ref();
     const phoneNumberRef= ref();
@@ -185,22 +206,19 @@ export default defineComponent({
         })).then((res) => {
           if (res.code === 0) {
             store.setPhone(formDetails.phone);
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "验证成功",
-              icon: "check_circle_outline"
             });
             store.phoneVerified = true;
             store.phone = formDetails.phone;
+            openGotoNewplayerPromo()
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: e.message,
-            icon: "report_problem"
           });
         });
       }
@@ -221,6 +239,7 @@ export default defineComponent({
     const captchaRef = ref();
     const innerCaptchaRef = ref();
     const showCaptchaDialog = ref(false);
+    const gotoNewplayerPromoDialog = ref(false)
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
@@ -265,11 +284,9 @@ export default defineComponent({
 
     const onCaptchaSubmit = () => {
       if (!formDetails.phone) {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "手机号码不能为空",
-          icon: "report_problem"
         });
         getCode();
         return;
@@ -282,7 +299,7 @@ export default defineComponent({
           .then(res => {
             getCode();
             let message = res.message || '发送手机验证码成功',
-                color = 'positive'
+                type = 'success'
 
             if (res.code === 0) {
               canEdit.value = true;
@@ -293,13 +310,13 @@ export default defineComponent({
               // console.log(res.data.codeId)
               countdownOtp();
             } else {
-              color = 'negative';
+              type = 'error';
               getCode();
             }
 
 
             if (message) {
-              $q.notify({message, color});
+              notify({message, type});
             }
 
             // console.log('onCaptchaSubmit', res)
@@ -312,6 +329,8 @@ export default defineComponent({
     });
 
     return {
+      gotoNewplayerPromo,
+      gotoNewplayerPromoDialog,
       router,
       store,
       searchForm,

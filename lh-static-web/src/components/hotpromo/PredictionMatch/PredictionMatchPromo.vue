@@ -43,7 +43,8 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { getTeamVotes, postVote } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 
 const validateVotes = (rule, value, callback) => {
   if (!value) {
@@ -111,7 +112,7 @@ const submitVotes = () => {
         if (res.code === 0) {
           isPredictModal.value = false;
         } else {
-          ElMessage.error({
+          notify.error({
             type: "error",
             message: res.message
           });

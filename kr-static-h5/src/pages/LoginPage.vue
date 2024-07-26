@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-web.svg" />
+        <img alt="logo" src="../assets/logo.png" />
       </div>
 
       <div class="header-lang">
@@ -93,7 +93,7 @@
             {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label> -->
-          <q-input
+          <!-- <q-input
             ref="verificationRef"
             rounded
             standout
@@ -116,7 +116,7 @@
             <template v-slot:prepend>
               <img src="../assets/images/login/veri-icon.png" width="24" />
             </template>
-          </q-input>
+          </q-input> -->
         </div>
 
         <div v-if="loginType">
@@ -174,7 +174,7 @@
           </q-input>
         </div>
 
-        <div class="row items-center justify-between q-mt-xs">
+        <!-- <div class="row items-center justify-between q-mt-xs">
           <div :class="isCheckRmb ? 'checked' : ''">
             <q-checkbox
               rounded
@@ -187,16 +187,16 @@
             />
           </div>
 
-          <!-- <div class="login-via-phone-div">
+          <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
               {{ loginType ? $t("lang.username_login") : $t("lang.phone_login") }}
             </span>
-          </div> -->
+          </div>
 
           <div class="text-center">
             <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}</router-link>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="bottom-btn-list">
         <q-btn
@@ -208,7 +208,7 @@
           no-caps
           rounded
         />
-        <div>
+        <!-- <div>
           <q-btn
             @click="goToRegister"
             class="common-large-white-btn bottom-btn"
@@ -216,14 +216,18 @@
             no-caps
             rounded
           />
-        </div>
-      </div>
-      <div class="text-center q-pb-lg">
-        <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
-          {{ $t("lang.contact_customer_service") }}
-        </router-link>
+        </div> -->
+        <a class="register-btn" @click="goToRegister">
+          {{ $t("lang.register_btn") }}
+        </a>
       </div>
     </q-form>
+    <div class="text-center q-pb-lg">
+      <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
+        <img src="../assets/images/footer/chat-icon.svg" />
+        {{ $t("lang.contact_customer_service") }}
+      </router-link>
+    </div>
 
     <!-- <div class="login-bottom-div">
       <img src="../assets/images/login/login-banner.png" />
@@ -413,17 +417,16 @@ export default defineComponent({
       const sidParam = store.visitorId;
 
       (async () => {
-
         const appVer = appVersionNo.value;
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
+          // verificationRef.value.validate();
           $q.loading.show({
             message: t("lang.logging_in")
           });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
             $q.loading.hide();
           } else {
             store
@@ -431,7 +434,7 @@ export default defineComponent({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
                 sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
-                captchaCode: loginForm.captchaCode,
+                // captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
                 ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
               })
@@ -440,9 +443,6 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 // FB tracking :: login-success
-                if (store.isAffiliateA) {
-                  fbq("track", "login-success");
-                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -602,11 +602,13 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .login-container {
+  display: flex;
+  flex-direction: column;
   position: relative;
   background: url(../assets/images/login/login-bg.png) no-repeat center 20%;
   background-size: cover;
   // height: 100%;
-  // min-height: 100vh;
+  min-height: 100vh;
 
   .back-left {
     // position: absolute;
@@ -659,13 +661,16 @@ export default defineComponent({
     // display: flex;
     // justify-content: center;
     // position: relative;
-    height: 20vh;
-    min-height: 140px;
+    // height: 20vh;
+    // min-height: 140px;
+    margin-bottom: 30px;
     img {
-      // display: block;
+      display: block;
+      max-width: calc(100% - 2rem);
+      margin: 0 auto;
       // width: 110%;
       // margin-right: -15%;
-      display: none;
+      // display: none;
     }
 
     .login-text {
@@ -693,6 +698,10 @@ export default defineComponent({
     border-radius: 30px;
     width: 80%;
     margin: 0 auto;
+  }
+
+  .q-form {
+    flex-grow: 1;
   }
 
   .q-tab {
@@ -733,11 +742,10 @@ export default defineComponent({
   .login-form-container {
     width: $box-width;
     margin: 0 auto;
-    background: $white;
+    background: transparent;
     border-radius: 10px;
-    box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
-    padding: 15px 12px 15px;
-
+    box-shadow: none;
+    // padding: 15px 12px 15px;
     q-label {
       padding-top: 3px;
       padding-left: 8px;
@@ -767,6 +775,9 @@ export default defineComponent({
   }
 
   .bottom-btn-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 10px auto;
     width: $box-width;
     // padding: 0 16px;
@@ -776,11 +787,34 @@ export default defineComponent({
   .bottom-btn {
     width: 100%;
     margin: 10px auto 10px;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  }
+
+  .register-btn {
+    color: #458bff;
   }
 
   .cs-web-id {
-    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     font-size: 1rem;
+    color: #7a80a1;
+    img {
+      max-width: 30px;
+      filter: brightness(0) saturate(100%) invert(54%) sepia(49%) saturate(230%) hue-rotate(193deg) brightness(85%)
+        contrast(80%);
+    }
+    &::before,
+    &::after {
+      display: block;
+      content: "";
+      width: 100%;
+      max-width: 15%;
+      height: 2px;
+      background-color: #7a80a199;
+    }
   }
 
   .login-bottom-div {
@@ -799,7 +833,7 @@ export default defineComponent({
 
 .home-header {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   width: $box-width;
   margin: 0 auto 16px;
@@ -818,8 +852,8 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 135px;
-      opacity: 0;
+      max-width: 100px;
+      // opacity: 0;
     }
   }
 

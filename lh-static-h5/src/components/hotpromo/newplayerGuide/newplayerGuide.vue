@@ -16,9 +16,15 @@
           <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
           <div class="title">
             新手礼包
-            <span style="font-size: 16px; font-weight: 400">(进行中)</span>
+            <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
           </div>
         </div>
+        <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
+          (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
+        </span>
+        <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+          (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
+        </span>
         <div class="section">
           <div style="display: flex">
             <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -59,7 +65,7 @@
               <span
                 class="status"
                 :class="getStatus(bankCardBindState).class"
-                @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')"
+                @click="handleClickStatusButton('NO', 'new-user-setup-bonus-bankcard')"
               >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
@@ -102,14 +108,14 @@
             />
             <div class="title">首次提款</div>
           </div>
-          <q-btn class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
+          <q-btn v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
             <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
               <img
                 v-if="firstWithdrawalState === 'CLAIMED'"
                 style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
                 src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
               />
-              <span>{{ getStatus2(firstWithdrawalState).text }}</span>
+              <span>{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
             </div>
           </q-btn>
         </div>
@@ -148,36 +154,39 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+              自注册日起算 30 天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺 3
+              个优惠，让新手会员进行游戏体验。
             </div>
           </li>
           <li>
             <span class="step-number">2</span>
             <div class="content">
-              每位新用户会员可选择各场馆参与1次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+              每位新用户会员可选择各场馆参与 1
+              次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
             </div>
           </li>
           <li>
             <span class="step-number">3</span>
             <div class="content">
-              新人指路任务完成后点击领取即可获得，首存活动（本+彩）15倍流水，成长攻略以及钱包冲刺彩金均为5倍流水。
+              新人指路任务完成后点击领取即可获得，首存活动（本 + 彩）15 倍流水，成长攻略以及钱包冲刺彩金均为 5 倍流水。
             </div>
           </li>
           <li>
             <span class="step-number">4</span>
-            <div class="content">此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；</div>
+            <div class="content">
+              此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+            </div>
           </li>
           <li>
             <span class="step-number">5</span>
             <div class="content">
-              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
+              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
             </div>
           </li>
           <li>
             <span class="step-number">6</span>
-            <div class="content">
-              此活动最终解释权归雷火所有；
-            </div>
+            <div class="content">此活动最终解释权归雷火所有；</div>
           </li>
         </ol>
       </div>
@@ -192,7 +201,11 @@ import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
 import { userStore } from "src/stores";
+import moment from "moment";
+import { useNotify } from "src/hooks/notify";
+import { useLocalStorage } from "@vueuse/core";
 
+const notify = useNotify();
 const store = userStore();
 const router = useRouter();
 
@@ -201,6 +214,7 @@ const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
 const telephoneBindState = ref("NO");
 const usdtAddrBindState = ref("NO");
+const memberRegTime = ref(0);
 
 const $q = useQuasar();
 
@@ -208,6 +222,13 @@ const progress = ref(0);
 
 const progressPercentage = computed(() => progress.value * 100);
 const progressText = computed(() => `${progress.value}/1`);
+const isValidUser = computed(
+  () =>
+    bankCardBindState.value !== "NOT_ELIGIBLE" &&
+    firstWithdrawalState.value !== "NOT_ELIGIBLE" &&
+    telephoneBindState.value !== "NOT_ELIGIBLE" &&
+    usdtAddrBindState.value !== "NOT_ELIGIBLE"
+);
 
 function selectOption(option) {
   selected.value = option;
@@ -226,6 +247,10 @@ const getStatus = (status) => {
     CLAIMED: {
       text: "完成",
       class: "complete"
+    },
+    NOT_ELIGIBLE: {
+      text: "无法领取",
+      class: "not-eligible"
     }
   };
   return statusTextMap[status];
@@ -250,12 +275,25 @@ const handleClickStatusButton = (status, promoCode) => {
   if (status === "CLAIMED") return;
 
   if (status === "NO") {
+    useLocalStorage("need-go-back-newplayer", true);
     if (promoCode === "new-user-setup-bonus-telephone") {
-      router.push("/account/personal?redirect=promo?name=lh1-newplayer-guide");
+      if (window.location.pathname === "/promotion") {
+        document.location.href = `app://account-info`;
+      } else {
+        router.push("/account/personal?redirect=promo?name=lh1-newplayer-guide");
+      }
     } else if (promoCode === "new-user-setup-bonus-first-withdrawal") {
-      router.push("/finance/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      if (window.location.pathname === "/promotion") {
+        document.location.href = `app://withdraw`;
+      } else {
+        router.push("/finance/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      }
     } else {
-      router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      if (window.location.pathname === "/promotion") {
+        document.location.href = `app://deposit`;
+      } else {
+        router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
+      }
     }
   } else if (status === "YES") {
     getBonus(promoCode);
@@ -278,11 +316,9 @@ const getBonus = async (promoCode) => {
         usdtAddrBindState.value = "CLAIMED";
       }
 
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "领取成功！",
-        icon: "check_circle_outline"
+      notify({
+        type: "success",
+        message: "领取成功！"
       });
     }
   } catch (err) {
@@ -298,6 +334,7 @@ const getData = async () => {
     firstWithdrawalState.value = apiRes.data.firstWithdrawalState;
     telephoneBindState.value = apiRes.data.telephoneBindState;
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
+    memberRegTime.value = apiRes.data.memberRegTime;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
@@ -509,6 +546,12 @@ h1 {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
   border: unset;
   color: #fff;
+}
+
+.not-eligible {
+  background: #d9d9d9;
+  border: none;
+  color: #000;
 }
 
 .progress-bar-container {

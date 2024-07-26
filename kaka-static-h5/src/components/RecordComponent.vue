@@ -95,6 +95,18 @@
                 color="bright"
               />
             </template>
+
+            <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
+              <q-btn
+                @click="openWithdrawCancelDialog(det)"
+                outline
+                :label="$t('lang.msg_cancel')"
+                size="sm"
+                color="bright"
+                class="q-mr-sm"
+              />
+            </template>
+
             <q-btn
               outline
               :label="$t('lang.str_copy')"
@@ -191,6 +203,24 @@
       <q-btn @click="isConfirmWithdraw = false" :label="$t('lang.str_cancel')" color="warning" />
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isCancelWithdraw">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+      <q-card-section class="q-mb-md">
+        {{ $t("lang.strsystem_message") }}
+        <br />
+        <br />
+        {{ $t("lang.str_cancelwithdraw") }}
+      </q-card-section>
+      <q-btn
+        @click="openWithdrawCancel()"
+        :label="$t('lang.str_confirm')"
+        color="brightbtn"
+        style="margin-right: 8px"
+      />
+      <q-btn @click="isCancelWithdraw = false" :label="$t('lang.str_cancel')" color="warning" />
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 import { defineComponent, onMounted, reactive, ref } from "vue";
@@ -246,6 +276,7 @@ export default defineComponent({
     const $q = useQuasar();
     const qs = require("qs");
     const isConfirmWithdraw = ref(false);
+    const isCancelWithdraw = ref(false);
     const passDet = ref(null);
     const { t } = useI18n();
 
@@ -304,6 +335,43 @@ export default defineComponent({
           setTimeout(() => {
             window.location.reload();
           }, 1000);
+
+          // console.log(response);
+        })
+
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
+    };
+
+    const openWithdrawCancelDialog = (det) => {
+      isCancelWithdraw.value = true;
+      passDet.value = det;
+    };
+
+    const openWithdrawCancel = () => {
+      const obj = {
+        id: passDet.value.id,
+        withdrawDate: passDet.value.withdrawDate
+      };
+
+      api
+        .post("/session/withdraw/cancel", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.code === 0) {
+            isCancelWithdraw.value = false;
+            $q.notify({
+              type: "success",
+              message: t("lang.withdraw_cancelled")
+            });
+            removeSessionKeys("/session/member/withdraw");
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
 
           // console.log(response);
         })
@@ -421,7 +489,7 @@ export default defineComponent({
 
     return {
       humanDatetime(ts) {
-        return moment(ts).add(-1, "hours").format("YYYY-MM-DD HH:mm:ss");
+        return moment(ts).format("YYYY-MM-DD HH:mm:ss");
       },
       checkRecord(status) {
         return translateRecord(status, props.recordType);
@@ -433,6 +501,9 @@ export default defineComponent({
       openWithdrawConfirmDialog,
       openWithdrawConfirm,
       isConfirmWithdraw,
+      openWithdrawCancelDialog,
+      openWithdrawCancel,
+      isCancelWithdraw,
       passDet,
       copyText,
       text_copied,
@@ -454,6 +525,9 @@ export default defineComponent({
   justify-content: flex-start;
   gap: 30px;
   margin: 0 0 10px;
+
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
 
   .label {
     flex: 1;

@@ -230,7 +230,7 @@
         <div class="bottom-tnc">
           <div class="note-title">Note:</div>
           <div class="note">
-            <span>3%+6NGN</span>
+            <span>2% + 50NGN</span>
             of the withdrawal amount will be deducted as
             <span>bank commission</span>
           </div>

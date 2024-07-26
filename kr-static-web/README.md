@@ -1,6 +1,6 @@
-# VNM Web Vue3 (vnm-web-new)
+# KRW v2 Web Vue3 (vnm-web-new)
 
-- VNM Web Vue 3.0 Page.
+- KRW v2 Web Vue 3.0 Page.
 - Node Version >= 16.17.0
 
 ## Project setup

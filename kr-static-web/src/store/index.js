@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
-import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { loadBalance, loadMemberInfo, loadPoint } from "@/api/personal/personal";
+import { getAnnouncement, getFinanceRecords } from "@/api/personal/common"
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
+import moment from 'moment';
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -25,7 +27,7 @@ export const userStore = defineStore("userStore", {
       vip: "",
       evip: "",
       registeredWithdrawPassword: false,
-      currency: { value: "VNDP", label: "VNDP" },
+      currency: { value: "원", label: "원" },
       loginPageVisible: false,
       regPageVisible: false,
       currentDeposit: "0.0000",
@@ -33,7 +35,10 @@ export const userStore = defineStore("userStore", {
       siteId: 8,
       unreadTotal: 0,
       visitorId: "",
-      isAffiliateA: false
+      isAffiliateA: false,
+      announcementList: undefined,
+      financeRecords: undefined,
+      pendingRebateAmt: 0,
     };
   },
   actions: {
@@ -46,6 +51,7 @@ export const userStore = defineStore("userStore", {
           if (ret.code === 0) {
             this.token = ret.data;
             this.getBalance();
+            this.getPendingRebateAmt();
             this.getMemberInfo();
           } else {
             ElMessage.error(ret.message);
@@ -102,11 +108,29 @@ export const userStore = defineStore("userStore", {
       }
     },
     getBalance() {
-      if (this.token) {
-        return loadBalance(MAIN).then((ret) => {
-          this.balance = ret.data;
-        });
-      }
+      return new Promise((resolve, reject) => {
+        if (this.token) {
+          return loadBalance(MAIN).then((ret) => {
+            this.balance = ret.data;
+            resolve();
+          });
+        }
+      })
+    },
+    getPendingRebateAmt() {
+      return new Promise((resolve, reject) => {
+        if (this.token && !this.isOffline) {
+          loadPoint(MAIN).then((ret) => {
+            const res = ret.data;
+            if (res.code === 0) {
+              this.pendingRebateAmt = Math.floor(res.data);
+            } else {
+              this.pendingRebateAmt = 0;
+            }
+            resolve();
+          });
+        }
+      })
     },
     getCurrentDeposit() {
       return this.currentDeposit;
@@ -138,7 +162,7 @@ export const userStore = defineStore("userStore", {
           }
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${vueI18n.global.locale.value === 'vi'? 'vn' : vueI18n.global.locale.value}&token=${this.token}`,
+            `https://csweb01.amv4xjcbd.com/?partnerId=12&way=WEB&lang=${vueI18n.global.locale.value}&token=${this.token}`,
             `${lineUrl}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
@@ -147,14 +171,64 @@ export const userStore = defineStore("userStore", {
         .catch((err) => {
           console.log(err);
         });
-    }
+    },
+    getAnnouncementList() {
+      return new Promise((resolve, reject) => {
+        if(Array.isArray(this.announcementList)) {
+          return resolve(this.announcementList);
+        } else {
+          getAnnouncement().then(({ code, data: { announcements }}) => {
+
+            const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
+
+            if (code === 0) {
+              const announcementsFormattedData = announcements.map((item) => ({
+                ...item,
+                createTime: formatDate(item.createTime)
+              }));
+              this.announcementList = announcementsFormattedData;
+              resolve(this.announcementList);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
+    getFinanceRecordsList() {
+      return new Promise((resolve, reject) => {
+        if(this.financeRecords === null) {
+          return;
+        } else if(Array.isArray(this.financeRecords)) {
+          return resolve(this.financeRecords);
+        } else {
+          if(this.financeRecords == undefined) {
+            this.financeRecords = null;
+          }
+
+          getFinanceRecords().then(({ code, data } ) => {
+            if (code === 0) {
+              const displayTypes = ['WITHDRAW'];
+              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
+              resolve(this.financeRecords);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
   }
 });
 
 export const i18nStore = defineStore("i18nStore", () => {
-  const languageLocale = localStorage.getItem("languageLocale") || "vi";
+  const languageLocale = localStorage.getItem("languageLocale") || "kr";
   const languageVal = ref(languageLocale);
-  
+
   function setLanguage(l) {
     languageVal.value = l;
     // when vue-i18n is being used with legacy: false, note that i18n.global.locale is a ref, so we must set it via .value:

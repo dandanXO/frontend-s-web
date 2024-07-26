@@ -75,9 +75,11 @@
 <script setup>
 import { ref, defineExpose } from "vue";
 import { getVerificationCode } from "@/api/index/login";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["type", "form", "onClickConfirm"]);
+
+const notify = useNotify();
 
 const loginCountdown = ref(0);
 const captchaDialogVisible = ref(false);
@@ -95,7 +97,7 @@ const getCode = () => {
       verificationImg.value = "data:image/png;base64," + res.data.img;
       props.form.codeId = res.data.id;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });

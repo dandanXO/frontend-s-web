@@ -48,8 +48,8 @@
             <div class="amount q-mt-xs">
               <div class="vip-card-common-text">{{ $t("lang.vip_upgrade_require") }}</div>
               <div class="vip-card-common-text amount-text">
-                <span v-if="vipIndex === 0">{{ $t('lang.vip_3timedeposit') }}</span>
-                <span v-else>{{ $t('lang.totalBetMonth') }} {{ vip.amount }}</span>
+                <span v-if="vipIndex === 0">{{ $t("lang.vip_3timedeposit") }}</span>
+                <span v-else>{{ $t("lang.totalBetMonth") }} {{ vip.amount }}</span>
               </div>
             </div>
             <div class="progress">
@@ -63,7 +63,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num" v-if="vipLevel === vipIndex ">VNDP {{ currentDeposit }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex">{{ currentDeposit }} 원</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>

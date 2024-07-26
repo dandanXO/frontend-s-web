@@ -7,6 +7,45 @@
           <em>*</em>
         </q-label> -->
         <q-input
+          v-if="!hasAffiliate"
+          ref="affiliateCodeRef"
+          rounded
+          standout
+          dense
+          clearable
+          v-model="regForm.referrer"
+          :hint="$t('lang.referral_hints')"
+          :placeholder="$t('lang.referral_code')"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/images/login/recommend-icon.png" width="24" />
+          </template>
+        </q-input>
+
+        <!-- <q-label>
+          {{ $t("lang.real_name") }}
+          <em>*</em>
+        </q-label> -->
+        <q-input
+          ref="name2Ref"
+          rounded
+          standout
+          dense
+          clearable
+          v-model="regForm.name2"
+          :placeholder="$t('lang.nickname')"
+          color="white"
+          hint=""
+        >
+          <template v-slot:prepend>
+            <img src="../assets/images/login/nickname-icon.png" width="24" />
+          </template>
+          <template v-slot:hint>
+            <div class="q-mb-xs" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
+          </template>
+        </q-input>
+
+        <q-input
           ref="loginNameRef"
           rounded
           standout
@@ -56,34 +95,12 @@
             />
           </template>
         </q-input>
-        <div v-if="regForm.password" class="password-str-div">
-          <span
-            :class="{
-              'weak-pwd': pwdStrength == 'weak',
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
-            {{ $t("lang.password_weak") }}
-          </span>
-          <span
-            :class="{
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
-            {{ $t("lang.password_good") }}
-          </span>
-          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">
-            {{ $t("lang.password_strong") }}
-          </span>
-        </div>
 
         <!-- <q-label>
           {{ $t("lang.confirm_password") }}
           <em>*</em>
         </q-label> -->
-        <!-- <q-input
+        <q-input
           ref="confirmPwdRef"
           rounded
           standout
@@ -108,36 +125,9 @@
               @click="isCfmPwd = !isCfmPwd"
             />
           </template>
-        </q-input> -->
-
-        <!-- <q-label>
-          {{ $t("lang.real_name") }}
-          <em>*</em>
-        </q-label> -->
-        <q-input
-          ref="realNameRef"
-          rounded
-          standout
-          dense
-          clearable
-          v-model="regForm.realName"
-          :placeholder="$t('lang.real_name')"
-          :rules="[
-            (val) => (val && val.length > 0) || $t('lang.please_enter_your_real_name'),
-            (val) => (val && val.length >= 2) || $t('lang.real_name_validation'),
-            (val) => isValidRealName(val)
-          ]"
-          color="white"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/images/login/user-icon.png" width="24" />
-          </template>
-        <template v-slot:hint>
-        <div class="q-mb-xs" style="font-size: 11px; color: #cccccc; ">{{ $t("lang.real_name_hints") }}</div>
-        </template>
         </q-input>
 
-<!--
+        <!--
         <q-label>
           {{ $t("lang.mobile_number") }}
           <em>*</em>
@@ -145,7 +135,7 @@
         <q-input
           ref="telRef"
           standout
-dense
+          dense
           rounded
           v-model="regForm.telephone"
           :placeholder="$t('lang.mobile_number')"
@@ -153,16 +143,120 @@ dense
           clearable
           type="number"
           :rules="[
-            val => !!val || $t('lang.mobile_number_required'),
-            val => val.length === 10 || $t('lang.mobile_number_length'),
-            val => /^0\d{9}$/.test(val) || $t('lang.mobile_number_starts_with_0'),
-            val => (val && val.length > 7) || $t('lang.mobile_number_valid')
+            (val) => !!val || $t('lang.mobile_number_required'),
+            (val) => (val && val.length >= 10) || $t('lang.mobile_number_valid'),
+            (val) => (val && val.length <= 11) || $t('lang.mobile_number_valid')
           ]"
           color="white"
         >
           <template v-slot:prepend>
             <div style="width: 24px; display: flex; align-items: center">
-              <img src="../assets/images/login/phone-icon.png" width="18" />
+              <img src="../assets/images/login/phone-icon.png" width="24" />
+            </div>
+          </template>
+        </q-input>
+
+        <q-select
+          dense
+          standout
+          rounded
+          :placeholder="$t('lang.reg_bank_placeholder')"
+          ref="bankCardRef"
+          v-model="regForm.bankId"
+          :options="banks"
+          option-value="id"
+          option-label="name"
+          emit-value
+          map-options
+          lazy-rules
+          :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
+          transition-show="jump-up"
+          transition-hide="jump-up"
+          clearable
+          @update:model-value="onUpdateBankCard"
+        >
+          <template v-slot:prepend>
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/bank-icon.png" width="24" />
+            </div>
+          </template>
+          <template v-slot:no-option></template>
+          <template v-slot:option="scope">
+            <div v-bind="scope.itemProps" dense class="bank-list-item" style="padding: 0 5px">
+              <div avatar v-if="scope.opt.bankIcon">
+                <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+              </div>
+              <div>
+                {{ scope.opt.name }}
+              </div>
+            </div>
+          </template>
+          <template v-slot:selected-item="scope">
+            <div v-bind="scope.itemProps" dense class="bank-list-item">
+              <div avatar v-if="scope.opt.bankIcon">
+                <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+              </div>
+              <div>
+                {{ scope.opt.name }}
+              </div>
+            </div>
+          </template>
+        </q-select>
+
+        <q-input
+          dense
+          type="number"
+          :placeholder="$t('lang.reg_bank_acc_num_placeholder')"
+          ref="cardNumRef"
+          standout
+          rounded
+          v-model="regForm.cardNumber"
+          lazy-rules
+          clearable
+          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num'), validateBankLength]"
+        >
+          <template v-slot:prepend>
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/bank-number-icon.png" width="24" />
+            </div>
+          </template>
+        </q-input>
+
+        <q-input
+          dense
+          :placeholder="$t('lang.reg_bank_acc_holder_placeholder')"
+          ref="cardAccRef"
+          standout
+          rounded
+          v-model="regForm.cardAccount"
+          lazy-rules
+          clearable
+          :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"
+        >
+          <template v-slot:prepend>
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/bank-holder-icon.png" width="24" />
+            </div>
+          </template>
+        </q-input>
+
+        <q-input
+          dense
+          :placeholder="$t('lang.reg_withdraw_password_placeholder')"
+          ref="withdrawPasswordRef"
+          standout
+          rounded
+          v-model="regForm.withdrawPassword"
+          clearable
+          lazy-rules
+          :rules="[(val) => val.length === 4 || $t('lang.reg_withdraw_password_4_digits')]"
+          mask="#  #  #  #"
+          fill-mask
+          unmasked-value
+        >
+          <template v-slot:prepend>
+            <div style="width: 24px; display: flex; align-items: center">
+              <img src="../assets/images/login/withdraw-pwd-icon.png" width="24" />
             </div>
           </template>
         </q-input>
@@ -191,7 +285,7 @@ dense
           {{ $t("lang.verification_code") }}
           <em>*</em>
         </q-label> -->
-        <q-input
+        <!-- <q-input
           ref="verificationRef"
           rounded
           standout
@@ -212,24 +306,9 @@ dense
           <template v-slot:prepend>
             <img src="../assets/images/login/veri-icon.png" width="24" />
           </template>
-        </q-input>
+        </q-input> -->
 
         <!-- <q-label>{{ $t("lang.referral_code") }}</q-label> -->
-        <q-input
-          v-if="!hasAffiliate"
-          ref="affiliateCodeRef"
-          rounded
-          standout
-          dense
-          clearable
-          v-model="regForm.referrer"
-          :hint="$t('lang.referral_hints')"
-          :placeholder="$t('lang.referral_code')"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/images/login/veri-icon.png" width="24" />
-          </template>
-        </q-input>
 
         <div class="row justify-between items-center">
           <q-btn
@@ -310,9 +389,13 @@ import { isAndroid } from "boot/utils";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
+    const siteId = process.env.SITEID;
+    const imgURL = process.env.IMAGE_CDN;
+
     onMounted(() => {
       getReferralCode();
       getAffiliateCode();
+      getBankList();
     });
     onActivated(() => {
       getCode();
@@ -331,20 +414,25 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
+    const banks = ref([]);
 
     const regForm = reactive({
       loginName: "",
       password: "",
       confirmPwd: "",
       telephone: "",
-      email: "",
-      captchaCode: "",
+      name2: "",
+      // email: "",
       regHost: location.hostname,
-      codeId: "",
+      // codeId: "",
       codeAffiliate: "",
       referrer: "",
-      smsCodeId: "",
-      smsCode: ""
+      // smsCodeId: "",
+      // smsCode: "",
+      cardNumber: "",
+      cardAccount: "",
+      withdrawPassword: "",
+      bankId: undefined
     });
     const getCode = () => {
       api
@@ -352,9 +440,9 @@ export default defineComponent({
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
-            regForm.codeId = response.data.id;
-            regForm.captchaCode = "";
-            verificationRef.value.resetValidation();
+            // regForm.codeId = response.data.id;
+            // regForm.captchaCode = "";
+            // verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -403,19 +491,24 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    const realNameRef = ref();
+    const name2Ref = ref();
     const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
     const affiliateCodeRef = ref();
     const phoneVerificationRef = ref();
+    const cardNumberRef = ref();
+    const bankCardRef = ref();
+    const withdrawPasswordRef = ref();
+    const cardNumRef = ref();
+    const cardAccRef = ref();
     const $q = useQuasar();
     const route = useRoute();
 
     const pwdStrength = ref("");
     const isValidEmail = () => {
       if (!regForm.email) {
-        return
+        return;
       }
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
@@ -428,7 +521,7 @@ export default defineComponent({
     };
 
     const isValidRealName = (val) => {
-      const phonePattern = /^[a-zA-Z\s]+$/;
+      const phonePattern = /^[a-zA-Z\uac00-\ud7ff\s]+$/;
       return phonePattern.test(regForm.realName) || t("lang.personal_realname_valid");
     };
 
@@ -440,36 +533,50 @@ export default defineComponent({
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
       }
-    }
+    };
 
     const trackRegisterFailedEvent = () => {
-      if(ui.adjust_register_fail_event && isAndroid()) {
+      if (ui.adjust_register_fail_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
         Adjust.trackEvent(adjustEvent);
       }
-    }
+    };
+
+    const onUpdateBankCard = () => {
+      if (regForm.cardNumber) {
+        cardNumberRef.value.resetValidation();
+      }
+    };
 
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      // confirmPwdRef.value.validate();
+      confirmPwdRef.value.validate();
       telRef.value.validate();
-      realNameRef.value.validate();
+      // name2Ref.value.validate();
+      cardNumRef.value.validate();
+      cardAccRef.value.validate();
+      bankCardRef.value.validate();
+      withdrawPasswordRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      verificationRef.value.validate();
+      // verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.register_in_progress")
       });
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        // confirmPwdRef.value.hasError ||
+        confirmPwdRef.value.hasError ||
         telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        realNameRef.value.hasError ||
-        verificationRef.value.hasError
+        // name2Ref.value.hasError ||
+        cardNumRef.value.hasError ||
+        cardAccRef.value.hasError ||
+        bankCardRef.value.hasError ||
+        withdrawPasswordRef.value.hasError
+        // verificationRef.value.hasError
       ) {
         $q.loading.hide();
       } else {
@@ -483,7 +590,7 @@ export default defineComponent({
             regForm.sid = store.aaid;
           } else {
             regForm.sid = "fp-" + sidParam;
-            regForm.isfinger= "1";
+            regForm.isfinger = "1";
           }
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -502,13 +609,12 @@ export default defineComponent({
           }
 
           api
-            .post("/member/fbRegister", qs.stringify(regForm))
+            .post("/member/register-with-bank-card", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-
                 // $q.notify({
                 //   color: "positive",
                 //   position: "top",
@@ -520,18 +626,20 @@ export default defineComponent({
                 trackRegisterSuccessEvent();
 
                 // FB tracking :: signup-success
-                if (store.isAffiliateA) {
-                  fbq("track", "signup-success");
-                }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
-                  otag("event", "registration");
-                }
 
-                store.autoLogin(res.data);
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: t("lang.register_successful"),
+                  icon: "check_circle_outline"
+                });
+
+                // store.autoLogin(res.data);
+                setTimeout(() => router.push("/"), 1000);
                 sessionStorage.removeItem("REFERRAL_CODE");
-                if (store.hasToken()) {
-                  router.push({path:"/", query:{ name:"welcome"}});
-                }
+                // if (store.hasToken()) {
+                //   router.push({ path: "/", query: { name: "welcome" } });
+                // }
               } else {
                 $q.notify({
                   color: "negative",
@@ -549,6 +657,17 @@ export default defineComponent({
           getCode();
         })();
       }
+    };
+
+    const getBankList = () => {
+      api
+        .get(`/member/withdraw/banks?siteId=${siteId}`)
+        .then((res) => {
+          if (res.code === 0) {
+            banks.value = res.data;
+          }
+        })
+        .catch((e) => console.log(e));
     };
 
     watch(
@@ -650,7 +769,7 @@ export default defineComponent({
       confirmPwdRef,
       telRef,
       emailRef,
-      realNameRef,
+      name2Ref,
       verificationRef,
       affiliateCodeRef,
       onSubmit,
@@ -672,7 +791,15 @@ export default defineComponent({
       hasAffiliate,
       trackRegisterSuccessEvent,
       trackRegisterFailedEvent,
-      ui
+      ui,
+      imgURL,
+      banks,
+      onUpdateBankCard,
+      cardNumberRef,
+      bankCardRef,
+      withdrawPasswordRef,
+      cardNumRef,
+      cardAccRef
     };
   }
 });
@@ -797,5 +924,12 @@ function charType(num) {
   img {
     width: 100%;
   }
+}
+
+.bank-list-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
 }
 </style>

@@ -335,7 +335,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-paris.png" />
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -364,7 +364,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-paris.png" />
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -413,7 +413,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img-paris.png" />
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -463,7 +463,7 @@ import { userStore } from "@/store/index";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { RiRefreshLine } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
@@ -487,6 +487,7 @@ import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { uploadImage, saveImage } from "@/api/personal/common";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import floor from "lodash/floor";
+import { loadPromoBanner } from "@/api/index/promo";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -507,6 +508,8 @@ export default defineComponent({
     RegisterAccount
   },
   setup() {
+    const notify = useNotify();
+
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
     const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
@@ -1025,7 +1028,7 @@ export default defineComponent({
 
             regForm.smsCodeId = response.data.codeId;
 
-            ElMessage({
+            notify({
               type: "success",
               message: "发送手机验证码成功"
             });
@@ -1055,7 +1058,7 @@ export default defineComponent({
         sendSms(smsDetail).then((response) => {
           if (response.code == 0) {
             loginForm.smsCodeId = response.data.codeId;
-            ElMessage({
+            notify({
               type: "success",
               message: "发送手机验证码成功"
             });
@@ -1110,7 +1113,7 @@ export default defineComponent({
             register(regForm).then((response) => {
               const regResult = response.code;
               if (regResult === 0) {
-                ElMessage({
+                notify({
                   type: "success",
                   message: "注册成功"
                 });
@@ -1149,11 +1152,23 @@ export default defineComponent({
       });
     };
 
+    const accDialogImg = ref('')
+
+    const loadBanners = () => {
+      loadPromoBanner("LOGIN").then((res) => {
+        if (res.code === 0) {
+          const promoImageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+          accDialogImg.value = promoImageDir + res.data[0].desktopImageUrl
+        }
+      })
+    }
+
     onMounted(() => {
       if (regCountdown.value > 0) countdownTimer("REGISTER");
       getAffiliateCode();
       getCode();
       getReferalCode();
+      loadBanners();
 
       if (store.token) {
         store.getBalance();
@@ -1239,7 +1254,7 @@ export default defineComponent({
       passRef.value.validate().then(() => {
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success("您的帐号已经发送到注册邮箱");
+            notify.success("您的帐号已经发送到注册邮箱");
           }
         });
       });
@@ -1325,7 +1340,7 @@ export default defineComponent({
     //     .then(() => {
     //     alert('!')
     //     // if (!valid) {
-    //     //   ElMessage({
+    //     //   notify({
     //     //     message: h('p', null, [
     //     //       h('span', null, 'Message can be ',
     //     //       h('i', { style: 'color: teal' }, 'VNode',
@@ -1528,7 +1543,8 @@ export default defineComponent({
       openMiniGame,
       navigations,
       checkToken,
-      loadIcon
+      loadIcon,
+      accDialogImg
     };
   }
 });
@@ -1962,9 +1978,7 @@ body {
         .sub-menu {
           transition: $page-trans;
           background: rgba(239, 242, 245, 0.95);
-          box-shadow:
-            0px -8px 8px 0px #c3d4e6 inset,
-            0px 4px 0px 0px #a7c2dd;
+          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
           backdrop-filter: blur(24.5px);
           overflow: hidden;
           height: 0px;
@@ -2513,18 +2527,18 @@ body {
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         background-color: #ffffff;
-        padding: 8px;
+        border-radius: 20px;
+        overflow: hidden;
 
         .acc-dialog-img {
-          // margin-top: -70px;
-          // margin-left: -80px; */
-          margin-left: -20px;
-          margin-right: 0px;
-          margin-bottom: -7px;
+          max-width: 963px;
+          max-height: 896px;
+          border-radius: 20px;
 
           img {
             display: block;
             width: 100%;
+            object-fit: contain;
           }
         }
       }
@@ -2588,9 +2602,7 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow:
-    0px 2px 4.58px 0px #bbdcff inset,
-    0px -1px 3.664px 0px #a2bff4 inset;
+  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
   cursor: pointer;
   transition: 0.3s all;
 
@@ -2600,17 +2612,13 @@ body {
 
   &.btn-color-blue {
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow:
-      0px -2px 4.58px 0px #b1d7ff inset,
-      0px -1px 3.664px 0px #5894ff inset;
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     color: $color-white;
   }
 
   &.btn-color-white {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow:
-      0px 2px 4.58px 0px #bbdcff inset,
-      0px -1px 3.664px 0px #a2bff4 inset;
+    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
     color: $font-1;
   }
 }
@@ -2728,9 +2736,7 @@ body {
 
           .sub-menu {
             background: $background-content-block-dark;
-            box-shadow:
-              0px -8px 8px 0px #1f2836 inset,
-              0px 4px 0px 0px #142b41;
+            box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
           }
 
           &.second-nav {

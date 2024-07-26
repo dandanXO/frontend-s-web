@@ -4,3 +4,6 @@
 dy-static-h5/resources/.gradle/*
 **/dist/
 **/.DS_Store
+**/.quasar/
+**/capacitor-cordova-android-plugins
+**/src-capacitor/www

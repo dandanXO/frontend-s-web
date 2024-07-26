@@ -104,7 +104,7 @@
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
-              <div class="card-label">{{ $t('btn.addNewAccount') }}</div>
+              <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
             </div>
           </div>
         </q-card>
@@ -186,7 +186,7 @@
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
-                <div class="desc">Withdrew Amount</div>
+                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
               <div class="desc">
                 RS:{{
@@ -572,8 +572,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+      ? "Bank IFSC Code Must Be More Than 3 Characters"
+      : true;
   return result;
 };
 </script>

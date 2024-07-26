@@ -48,7 +48,7 @@
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  <span style="font-family: 'Times New Roman', Times, serif">
+                  <span style="font-family: Times New Roman, Times, serif">
                     {{ store.currency.value }}
                   </span>
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
@@ -205,7 +205,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://55ace.com/", "_blank");
+    window.open(store.h5Url, "_blank");
     return;
   }
 
@@ -226,7 +226,7 @@ const onLogout = () => {
 const topDownload = ref(false);
 const topDownloadcloseBtn = ref(true);
 
-const topDownloadCount = ref(6);
+const topDownloadCount = ref(11);
 
 const closeTopdownload = () => {
   topDownload.value = false;
@@ -254,7 +254,7 @@ const checkTopDownloadAppear = () => {
       countdown();
       setTimeout(() => {
         topDownload.value = false;
-      }, 6000);
+      }, 11000);
     }
   }
 };

@@ -265,3 +265,35 @@ export function getSportMatch() {
 export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }
+
+export function getOlympicFirstDeposit() {
+  return server.EVENT.get('/lhOlympicDailyFirstDeposit/init')
+}
+
+export function claimOlympicFirstDeposit() {
+  return server.EVENT.put('/lhOlympicDailyFirstDeposit/claim')
+}
+
+export function getOlympicDailySportBet() {
+  return server.EVENT.get('/lhOlympicDailySportBet/init')
+}
+
+export function claimOlympicDailySportBet() {
+  return server.EVENT.put('/lhOlympicDailySportBet/claim')
+}
+
+export function getNewUserSetupBonusInit() {
+  return server.EVENT.get("/new-user-setup-bonus/init");
+}
+
+export function putNewUserSetupBonusClaim(promoCode) {
+  return server.EVENT.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
+}
+
+export function getNewUserAccumulateDepositInit() {
+  return server.EVENT.get("/new-user-accumulate-deposit/init");
+}
+
+export function putNewUserAccumulateDepositClaim(ruleAmount) {
+  return server.EVENT.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
+}

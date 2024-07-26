@@ -229,8 +229,10 @@ import { ref, reactive, onMounted } from 'vue'
 import { eventapi } from "src/boot/axios";
 import { useQuasar} from "quasar";
 import { useRouter } from "vue-router";
+import { useNotify } from 'src/hooks/notify';
 
-const router= useRouter()
+const notify = useNotify();
+const router= useRouter();
 const $q = useQuasar();
 var qs = require("qs");
 const tabPosition = ref('first')
@@ -290,18 +292,17 @@ const claimReward = () => {
     }))
     .then((res) => {
       if (res.code == 0) {
-        $q.notify({
-          message: "成功领取 " + res.data + " 元。",
-          type: "positive",
-          position: "top",
-          icon: "check_circle_outline"
+        notify({
+          message: "成功领取",
+          type: "red-packet",
+          params: {
+            redPacket: res.data
+          }
         });
       }else{
-        $q.notify({
-          color: "negative",
-          position: "bottom",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     })

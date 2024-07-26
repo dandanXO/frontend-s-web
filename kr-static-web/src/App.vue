@@ -1,6 +1,6 @@
 <template>
-  <el-config-provider :locale="languageVal === 'en' ? en : vi">
-    <router-view :class="{ sfpro: languageVal === 'vi', poppins: languageVal === 'en' }" />
+  <el-config-provider :locale="languageVal === 'en' ? en : kr">
+    <router-view :class="{ sfpro: languageVal === 'kr', poppins: languageVal === 'en' }" />
   </el-config-provider>
 </template>
 
@@ -12,7 +12,7 @@ import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { ElConfigProvider } from "element-plus";
 
-import vi from "element-plus/dist/locale/vi.mjs";
+import kr from "element-plus/dist/locale/ko.mjs";
 import en from "element-plus/dist/locale/en.mjs";
 
 import { i18nStore } from "@/store/language";
@@ -58,7 +58,7 @@ export default defineComponent({
           params: {
             way: "web",
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: "krw"
           }
         });
       }
@@ -77,7 +77,7 @@ export default defineComponent({
     });
     return {
       languageVal,
-      vi,
+      kr,
       en
     };
   }

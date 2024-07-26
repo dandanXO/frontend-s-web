@@ -282,6 +282,9 @@ import {
 } from "../../../api/index/promo";
 import moment from "moment";
 import {useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 
 // tabs
@@ -303,11 +306,9 @@ const handleSubmitVote = () => {
       if (res.code === 0) {
         getData();
 
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功！",
-          icon: "check_circle_outline"
         });
       }
     })

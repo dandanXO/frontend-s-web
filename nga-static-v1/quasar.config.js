@@ -172,8 +172,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `nga`,
-        short_name: `nga`,
+        name: `55Ace`,
+        short_name: `55Ace`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -218,7 +218,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "nga", // string
+      appName: "55Ace", // string
       backButtonExit: "*"
     },
 

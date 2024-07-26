@@ -32,7 +32,7 @@
           <td>100,000</td>
         </tr>
       </table>
-      
+
       <div class="table-note">注：相同时间段比赛则以两场比赛总进球粒数派发红包雨</div>
     <div class="rule-title">
         活动规则
@@ -58,9 +58,11 @@
   <script setup>
   import { defineProps, ref } from 'vue';
   import { claimBonusItem, claimDailyRainItem } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { userStore } from '@/store';
+import { useNotify } from '@/hooks/notify';
+
 const store = userStore();
+const notify = useNotify();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
   const getPromotion = () => {
@@ -75,7 +77,7 @@ const winAmount = ref(0);
 
         bonusOpened.value = true;
       } else {
-        ElMessage.error({
+        notify({
           type: "error",
           message: res.message
         });

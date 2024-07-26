@@ -12,7 +12,7 @@
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
       <q-form class="unbind-form">
-        <q-input
+        <!-- <q-input
           class="unbind-input"
           filled
           clearable
@@ -23,6 +23,15 @@
             (val) =>
               (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + '不正确'
           ]"
+        /> -->
+        <q-input
+          class="unbind-input"
+          filled
+          clearable
+          ref="unbindBankCardNoRef"
+          v-model="unbindBankCardNo"
+          :label="unbindCardLabel()"
+          :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel() ]"
         />
       </q-form>
       <div class="btnsreas">
@@ -181,6 +190,7 @@ import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
 import {useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -188,6 +198,7 @@ const CRYPTO = "CRYPTO";
 const EWALLET = "EWALLET";
 const ALIPAY = "ALIPAY";
 
+const notify = useNotify();
 const $q = useQuasar();
 const router = useRouter();
 
@@ -205,19 +216,15 @@ const onShowCardClick = (key) => {
 const copy = (val) => {
   copyToClipboard(val)
     .then(() => {
-      $q.notify({
+      notify({
         color: "position",
-        position: "top",
         message: `${val} 已复制`,
-        icon: "check_circle_outline"
       });
     })
     .catch(() => {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "复制失败",
-        icon: "report_problem"
       });
     });
 };
@@ -247,13 +254,11 @@ const unbindBankCard = () => {
   unbindBankCardNoRef.value.validate();
   if (unbindBankCardNoRef.value.hasError) return;
 
-  api.post(`/session/bankCard/${selectedUnbindBankCard.value.id}?_method=delete`).then((response) => {
+  api.post(`/session/bankCardByCardNo/${unbindBankCardNo.value}?_method=delete`).then((response) => {
     if (response.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "操作成功",
-        icon: "check_circle_outline"
       });
 
       isUnbindModalOpen.value = false;

@@ -2,9 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LayoutView from "@/views/layout/LayoutView.vue";
 import HomeView from "@/views/HomeView.vue";
 import PersonalLayoutView from "@/views/layout/PersonalLayoutView.vue";
-import RewardLayoutView from "@/views/layout/RewardLayoutView.vue";
 import PersonalRouter from "./personal";
-import RewardRouter from "./reward";
 import { userStore } from "@/store/index";
 // import { launchSessionGame } from "@/api/platform/platform";
 // import { isMobile } from "@/utils/utils";
@@ -169,11 +167,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "agentRegGuide" */ "../views/AppTutorial.vue")
       },
       {
-        path: "reward",
-        name: "reward",
-        redirect: "/reward/reward",
-        component: RewardLayoutView,
-        children: RewardRouter,
+        path: "share",
+        name: "share",
+        component: () => import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue"),
         meta: { requiresAuth: true }
       }
     ]

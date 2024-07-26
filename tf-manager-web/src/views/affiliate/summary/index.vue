@@ -89,7 +89,6 @@
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
-        :default-expand-all="parseInt(request.siteId) === 10 ? true : false"
         node-key="affiliateId"
       >
         <el-table-column

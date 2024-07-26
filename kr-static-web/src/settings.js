@@ -1,6 +1,6 @@
 module.exports = {
-    title: "TF88",
-    namePrefix: "VNM",
+    title: "CITY8",
+    namePrefix: "KRW",
   };
 
   

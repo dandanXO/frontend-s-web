@@ -140,13 +140,14 @@ import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site"
 import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const notify = useNotify();
     const router = useRouter();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const customerHovered = ref(false);
@@ -185,13 +186,15 @@ export default defineComponent({
       rocketPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
     };
     const openLink = (link) => {
-      if (link) {
-        if (link.indexOf(",") > -1) {
-          const splitLink = link.split(",");
-          const randomIndex = Math.floor(Math.random() * splitLink.length);
-          window.open(splitLink[randomIndex], "_blank");
-        } else {
-          window.open(link, "_blank");
+      if (!isDragging.value && clickAllowed.value) {
+        if (link) {
+          if (link.indexOf(",") > -1) {
+            const splitLink = link.split(",");
+            const randomIndex = Math.floor(Math.random() * splitLink.length);
+            window.open(splitLink[randomIndex], "_blank");
+          } else {
+            window.open(link, "_blank");
+          }
         }
       }
     };
@@ -200,6 +203,8 @@ export default defineComponent({
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
       promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+      domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
+      
     };
     const floatPromo = [];
     const gamePromo = [];
@@ -228,7 +233,7 @@ export default defineComponent({
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -236,11 +241,14 @@ export default defineComponent({
       if (gamePromo.length === 0) {
         promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
       }
+      if (showRocket.value === false) {
+        domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
+      }
     };
 
     const hideDomain = () => {
       showDomain.value = false;
-      domainPosition.value = { top: window.innerHeight - 430, left: window.innerWidth - 260 };
+      domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
     };
 
     const domainPosition = ref({ top: window.innerHeight - 430, left: window.innerWidth - 240 });

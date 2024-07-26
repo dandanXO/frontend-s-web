@@ -188,11 +188,13 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
 import { ArrowDown } from "@element-plus/icons-vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
 
 defineProps(["pageContent"]);
 
 const store = userStore();
+const notify = useNotify();
 const router = useRouter();
 const gameRulesDialog = ref(false);
 const gameRecordsDialog = ref(false);
@@ -257,7 +259,7 @@ const handleSpin = () => {
         }
       } else {
         isBtnLoading.value = false;
-        ElMessage.error(res.message);
+        notify(res.message)
       }
     })
     .catch((error) => {

@@ -2,15 +2,19 @@
   <div
     class="firstPage"
     :class="[
-      (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
+      props.siteId !== '5' && props.siteId !== '9' ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
       props.siteId !== '10' ? '' : 'kr',
       props.siteId !== '11' ? '' : 'pak',
-      props.siteId !== '15' ? '' : 'kaka'
+      props.siteId !== '15' ? '' : 'kaka',
     ]"
   >
-    <img class="float-logo" v-if="props.siteId === '15'" :src="currentSite.logo">
+    <img
+      class="float-logo"
+      v-if="props.siteId === '15'"
+      :src="currentSite.logo"
+    >
     <div class="inner">
       <div class="loginPage">
         <div class="left">
@@ -189,7 +193,10 @@
                       />
                     </el-form-item>
                   </el-tooltip>
-                  <el-form-item prop="codeAffiliate" v-if="props.siteId === '10'">
+                  <el-form-item
+                    prop="codeAffiliate"
+                    v-if="props.siteId === '10'"
+                  >
                     <el-input
                       ref="codeAffiliateRef"
                       v-model="regForm.codeAffiliate"
@@ -224,7 +231,11 @@
                       style="width:50%;"
                       @click.prevent="handleRegister"
                     >
-                      {{ props.siteId === '8' || props.siteId === 8 ? $t('google.next_step') :$t('common.apply') }}
+                      {{
+                        props.siteId === '8' || props.siteId === 8
+                          ? $t('google.next_step')
+                          : $t('common.apply')
+                      }}
                     </el-button>
                     <el-button
                       class="common-btn default-btn"
@@ -243,7 +254,12 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="step === 2 && (props.siteId === '8' || props.siteId === '15')">
+                <div
+                  v-if="
+                    step === 2 &&
+                      (props.siteId === '8' || props.siteId === '15')
+                  "
+                >
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
@@ -349,14 +365,16 @@
     v-model="showDialog"
     custom-class="dialog400"
     @close="onCloseDialog"
-    :title="$t('common.verification_title') + words.join(' , ')"
   >
     <template #title>
-      <span class="verification-title">
+      <span class="verification-title" v-if="isClick">
         {{ $t('common.verification_title') }}
       </span>
-      <span style="font-weight: bold;">
+      <span style="font-weight: bold;" v-if="isClick">
         {{ words.join(' , ') }}
+      </span>
+      <span class="verification-title" v-if="!isClick">
+        {{ $t('common.verification_drag_title') }}
       </span>
     </template>
     <div id="loadDiv" v-loading="dialogLoading">
@@ -366,7 +384,12 @@
         fit="contain"
         :src="img"
         @click="onClickImage"
+        v-if="isClick"
       />
+      <div class="overlapParent" v-if="!isClick">
+        <el-image id="imageRef" fit="contain" :src="img" />
+        <el-image id="puzzleRef" fit="contain" :src="puzzle" />
+      </div>
       <div
         :style="{
           width: imageOffSetWidth + 'px',
@@ -401,6 +424,7 @@
         icon="el-icon-refresh"
         style="margin-top: 20px;"
         @click="onGetImage()"
+        v-if="isClick"
       >
         {{ $t('common.refresh') }}
       </el-button>
@@ -410,9 +434,21 @@
         style="margin-top: 20px;"
         @click="userLogin()"
         :disabled="coordinates.length === 0"
+        v-if="isClick"
       >
         {{ $t('common.submit') }}
       </el-button>
+      <el-input
+        id="dragInput"
+        type="range"
+        min="0"
+        max="100"
+        v-model="dragCoordinate"
+        style="margin-top: 10px"
+        @input="onDrag()"
+        @change="onDragRelease()"
+        v-if="!isClick"
+      />
     </div>
   </el-dialog>
   <div v-for="(point, index) in coordinates" :key="index">
@@ -576,7 +612,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
-import kakaLogo from "@/assets/images/kaka/logo-kaka-game.png"
+import kakaLogo from '@/assets/images/kaka/logo-kaka-game.png'
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
@@ -623,7 +659,11 @@ export default defineComponent({
     const validateRealName = async (r, v) => {
       if (v === '') {
         return Promise.reject(new Error(t('message.requiredRealName')))
-      } else if (!checkRealName(v) && props.siteId !== '8' && props.siteId !== '15') {
+      } else if (
+        !checkRealName(v) &&
+        props.siteId !== '8' &&
+        props.siteId !== '15'
+      ) {
         return Promise.reject(new Error('请输入中文字符'))
       } else {
         return Promise.resolve()
@@ -670,6 +710,8 @@ export default defineComponent({
     const quesAuthFormRef = ref(null)
     const resetFormRef = ref(null)
     const captchaImg = ref('')
+    const isClick = ref(1)
+    const dragCoordinate = ref(0)
     const state = reactive({
       loginForm: {
         userName: '',
@@ -921,6 +963,8 @@ export default defineComponent({
         currentIndex: 0,
       },
       twoFaCode: '',
+      puzzle: '',
+      puzzleXvalue: '',
     })
     function disabledDate(time) {
       return time.getTime() > new Date().getTime()
@@ -953,7 +997,12 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KRW') {
+            if (
+              state.loginForm.site === 'IND' ||
+              state.loginForm.site === 'IW2' ||
+              state.loginForm.site === 'VNM' ||
+              state.loginForm.site === 'KRW'
+            ) {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -966,7 +1015,12 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '15' || props.siteId === 15 || props.siteId === '8' || props.siteId === 8) {
+            if (
+              props.siteId === '15' ||
+              props.siteId === 15 ||
+              props.siteId === '8' ||
+              props.siteId === 8
+            ) {
               if (step.value === 1) {
                 step.value = 2
                 return
@@ -1020,7 +1074,13 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' || state.loginForm.site === 'KRW') {
+        if (
+          state.loginForm.site === 'IND' ||
+          state.loginForm.site === 'IW2' ||
+          state.loginForm.site === 'VNM' ||
+          state.loginForm.site === 'KA2' ||
+          state.loginForm.site === 'KRW'
+        ) {
           router
             .push({
               path: state.redirect || '/',
@@ -1093,21 +1153,27 @@ export default defineComponent({
       userLogin: async () => {
         state.dialogLoading = true
         state.loginForm.key = state.codeId
-        const coordinatesString = []
-        for (let i = 0; i < state.coordinates.length; i++) {
-          const obj = []
-          obj.push(state.coordinates[i].x)
-          obj.push(state.coordinates[i].y)
-          coordinatesString.push(obj.join(','))
+        if (isClick.value === 1) {
+          const coordinatesString = []
+          for (let i = 0; i < state.coordinates.length; i++) {
+            const obj = []
+            obj.push(state.coordinates[i].x)
+            obj.push(state.coordinates[i].y)
+            coordinatesString.push(obj.join(','))
+            state.loginForm.coordinates = coordinatesString.join('-')
+          }
+          state.coordinates.splice(0)
         }
-        state.loginForm.coordinates = coordinatesString.join('-')
-        state.coordinates.splice(0)
+
         try {
           await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
-          } else if (state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2') {
+          } else if (
+            state.loginForm.site === 'VNM' ||
+            state.loginForm.site === 'KA2'
+          ) {
             methods.onFail()
           } else {
             state.showDialog = false
@@ -1120,8 +1186,19 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' ? 1 : 0
-        const { data } = await getVerificationImage(imgType)
+        const imgType =
+          languageVal === 'vi' ||
+          languageVal === 'en' ||
+          languageVal === 'kr' ||
+          state.loginForm.site === 'VNM' ||
+          state.loginForm.site === 'KA2'
+            ? 1
+            : 0
+        dragCoordinate.value = 0
+        if (state.loginForm.site === 'XF1' || state.loginForm.site === 'DY2' || state.loginForm.site === 'LH1') {
+          isClick.value = 0
+        }
+        const { data } = await getVerificationImage(imgType, isClick.value)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
         })
@@ -1201,6 +1278,15 @@ export default defineComponent({
           }
         })
       },
+      onDrag: () => {
+        var image = document.getElementById('imageRef')
+        var puzzle = document.getElementById('puzzleRef')
+        puzzle.style.marginLeft = dragCoordinate.value / 100 * image.offsetWidth + 'px'
+      },
+      onDragRelease: () => {
+        state.loginForm.coordinates = (dragCoordinate.value / 100) * 200
+        methods.userLogin()
+      },
     })
 
     function getOtherQuery(query) {
@@ -1245,7 +1331,7 @@ export default defineComponent({
         console.log(myElement)
         myElement.swiper.slideTo(1)
       } else {
-        window.open('https://t.me/city88888', '_blank').focus();
+        window.open('https://t.me/city88888', '_blank').focus()
       }
     }
 
@@ -1350,7 +1436,7 @@ export default defineComponent({
         hasAffiliate.value = false
       }
       if (route.query.isreg) {
-        isReg.value = true;
+        isReg.value = true
       }
       // if (props.siteId !== '8') {
       getCode()
@@ -1400,6 +1486,8 @@ export default defineComponent({
       resetFormRef,
       getCaptcha,
       captchaImg,
+      dragCoordinate,
+      isClick
     }
   },
 })
@@ -1564,13 +1652,14 @@ a {
   padding: 20px;
   position: relative;
   background: url('../../assets/images/login/firstbg.svg') no-repeat center
-  center;
+    center;
   background-size: cover;
   &.lh {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
-    center;
+      center;
   }
-  &.vi,  &.kaka {
+  &.vi,
+  &.kaka {
     font-family: 'Roboto';
     .loginPage .right .top .log {
       font-family: 'Roboto';
@@ -1582,8 +1671,8 @@ a {
     }
   }
   &.kaka {
-    --kaka-primary: #FF4545;
-    background-image: url('../../assets/images/kaka/first-bg-kaka.png') ;
+    --kaka-primary: #ff4545;
+    background-image: url('../../assets/images/kaka/first-bg-kaka.png');
 
     .el-link.el-link--primary {
       --el-link-font-color: var(--kaka-primary);
@@ -1593,12 +1682,12 @@ a {
     }
 
     :deep(.el-input__inner) {
-      background-color: #FDF4F4;
-      border: 1px solid #F0D8D8;
+      background-color: #fdf4f4;
+      border: 1px solid #f0d8d8;
       color: #000;
       border-radius: 14px;
       &::placeholder {
-        color: #DCD5D5;
+        color: #dcd5d5;
       }
     }
 
@@ -1609,19 +1698,18 @@ a {
     }
 
     .loginPage {
-      .right{
+      .right {
         .top {
-          background-image: url('../../assets/images/kaka/top-kaka.png') ;
+          background-image: url('../../assets/images/kaka/top-kaka.png');
         }
         .bot {
-          background-image: url('../../assets/images/kaka/dow-kaka.png') ;
+          background-image: url('../../assets/images/kaka/dow-kaka.png');
         }
       }
     }
 
-    .inner{
+    .inner {
       max-width: 1300px;
-
     }
 
     .common-btn {
@@ -1637,14 +1725,14 @@ a {
     .loginPage {
       max-width: 1300px;
       .left {
-        flex:2;
+        flex: 2;
         .first-liner {
-          font-family: "Roboto",sans-serif;
+          font-family: 'Roboto', sans-serif;
           margin-bottom: 15px;
           width: 750px;
           max-width: 750px;
         }
-        .second-liner{
+        .second-liner {
           width: 750px;
           max-width: 750px;
         }
@@ -1685,10 +1773,10 @@ a {
       .first-liner {
         margin-bottom: 3rem;
         background: linear-gradient(
-            180deg,
-            #f6d99e 13.1%,
-            #ffe3bd 50.03%,
-            #fbbd68 79.37%
+          180deg,
+          #f6d99e 13.1%,
+          #ffe3bd 50.03%,
+          #fbbd68 79.37%
         );
         text-shadow: 0px 4px 4px 0px #1c1614;
         font-size: 5rem;
@@ -1710,7 +1798,7 @@ a {
       }
       .top {
         background: url(../../assets/images/login/top.png) no-repeat center
-        center;
+          center;
         background-size: cover;
         padding: 20px;
         position: relative;
@@ -1718,8 +1806,8 @@ a {
           font-weight: bold;
           //font-family: fzh;
           font-family: Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI,
-          Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
-          Microsoft YaHei, Arial, sans-serif;
+            Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+            Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }
@@ -1740,7 +1828,7 @@ a {
       }
       .mid {
         background: url(../../assets/images/login/mid.png) no-repeat center
-        center;
+          center;
         background-size: cover;
         margin: 0 10px;
         padding: 25px 20px;
@@ -1751,7 +1839,7 @@ a {
       }
       .bot {
         background: url(../../assets/images/login/dow.png) no-repeat center
-        bottom;
+          bottom;
         background-size: cover;
         padding: 10px;
       }
@@ -1968,6 +2056,47 @@ a {
     flex-direction: column;
     margin-top: -30px;
   }
+}
+
+.overlapParent {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.el-image {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+#dragInput {
+  height: 25px;
+  padding: 0px 10px;
+  pointer-events: none;
+}
+
+#dragInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #458bff;
+  cursor: pointer;
+}
+
+#dragInput::-moz-range-thumb {
+  pointer-events: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+#dragInput::-ms-thumb {
+  pointer-events: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 @media (max-width: 768px) {

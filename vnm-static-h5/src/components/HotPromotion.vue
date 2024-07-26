@@ -8,6 +8,8 @@
 
     <ViSlotNetLossPromo v-if="list.redirectUrl === 'vi-slot-netloss'" />
 
+    <tf88Baohiemvon v-if="list.redirectUrl === 'tf88-baohiemvon'" :promo-code="list.promoCode"/>
+
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank'" />
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" />
@@ -46,6 +48,7 @@ import moment from "moment";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue";
+import tf88Baohiemvon from "../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue"
 import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue";
 import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
 import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
@@ -58,6 +61,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    tf88Baohiemvon,
     LotteryPromo,
     DailyLoginPromo,
     ViPokerCashbackPromo,

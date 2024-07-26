@@ -28,6 +28,15 @@ export const updateMemberInviteLimit = async inviteLimit => {
   )
 }
 
+export const checkMemberInviteLimit = loginName => {
+  return https().request(
+    `/site-member-invite-limit/getMemberSubLimit`,
+    Method.GET,
+    loginName,
+    ContentType.form
+  )
+}
+
 export const deleteMemberInviteLimit = async ids => {
   await https().request(
     `/site-member-invite-limit?_method=DELETE`,

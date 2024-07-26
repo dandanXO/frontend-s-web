@@ -167,7 +167,7 @@ export default {
     search: "Search",
     downloadApp: "Download App",
     downloadNow: "Download Now",
-    recharge: "Recharge",
+    recharge: "Recharge"
   },
   notify: {
     noRecord: "No Record",
@@ -236,6 +236,7 @@ export default {
     cashBalance: "Cash Balance",
     withdrawable: "Withdrawable",
     withdrewAmount: "Withdrew Amount",
+    withdrawMaxTimes: "Remaining Withdrawal Attempts",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial"
@@ -291,7 +292,9 @@ export default {
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300.",
+      eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
+      betting_tips: "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
+      deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       shareTitle: "B9GAME Share and Earn",
       shareText:
         "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
@@ -308,6 +311,13 @@ export default {
         searchButton: "SEARCH"
       },
       table: {
+        id: "ID",
+        downlineMember: "Downline Member",
+        todayRegCount: "Today Register Count",
+        ytdRegCount: "Yesterday Register Count",
+        downlineDepositMember: "Downline Deposit Member",
+        vip: "VIP",
+        uplineLoginName: "Upline Username",
         type: "Types",
         username: "Username",
         emark: "Emarks",
@@ -345,7 +355,11 @@ export default {
         validBet: "Valid Bet",
         balance: "Win/Loss",
         rounds: "Rounds",
-        player: "Player"
+        player: "Player",
+        platform: "Platform",
+        players: "Players",
+        bet: "Bet",
+        payout: "Payout"
       }
     },
     profitAndLoss: {
@@ -370,7 +384,23 @@ export default {
         rebate: "Player Rebate",
         referral: "Referral",
         profitAndLoss: "Profit And Loss",
-        depositFee: "Deposit Fee"
+        ftdamount: "FTD Amount",
+        ftdcount: "FTD Count",
+        depositcount: "Deposit Count",
+        depositFee: "Deposit Fee",
+        bet: "Bet",
+        payout: "Payout"
+      },
+      sums: {
+        bet: "Bet",
+        betamount: "Bet Amount",
+        depositcount: "Deposit Count",
+        validBet: "Valid Bet",
+        bonus: "Bonus",
+        payout: "Payout",
+        deposit: "Deposit",
+        withdraw: "Withdraw",
+        firstdepositcount: "First Deposit Count"
       }
     }
   },
@@ -518,6 +548,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
     21000: "This game is already in your favorite games list.",
@@ -550,6 +581,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    37001: "The redeem time is not within the activity period.",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today",
     50000: "The maximum number of transfers for today has been reached",
