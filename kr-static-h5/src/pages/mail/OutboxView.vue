@@ -1,10 +1,10 @@
 <template>
   <div class="table-record">
-    <MailComponent :loading="visible" :list="mailData" type="outbox" />
+    <MailComponent :loading="visible" :list="inquiriesList.records" type="outbox" />
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { api } from "boot/axios";
 import MailComponent from "../../components/MailComponent.vue";
 components: {
@@ -16,23 +16,40 @@ const mailboxData = ref({
   type: null,
   orderBy: "createTime"
 });
+const selected = ref();
+const isLoading = ref(false);
+
+const isFetchingContent = ref(false);
+
+const inquiriesList = ref([]);
+const replyInquiries = ref([]);
+const repliesOfInquiries = computed(() =>
+  replyInquiries.value.records.filter(({ id }) => id === selected.value.replyId)
+);
+
 const loadOutbox = () => {
-  api
-    .get("/session/outbox", {
-      params: {
-        type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy
+  isLoading.value = true;
+
+  Promise.all([api.get("/session/feedback/sysReply"), api.get("/session/feedback/replies")]).then(
+    ([inquiriesRes, replyInquiriesRes]) => {
+      const { code: inquiriesResCode, data: inquiriesResData } = inquiriesRes.data;
+      const { code: replyInquiriesResCode, data: replyInquiriesResData } = replyInquiriesRes.data;
+
+      if (inquiriesResCode === 0) {
+        const inquiriesResDataRecordsWithSelected = inquiriesResData.records.map((data) => ({
+          ...data,
+          selected: false
+        }));
+        inquiriesList.value = { ...inquiriesResData, records: inquiriesResDataRecordsWithSelected };
       }
-    })
-    .then((response) => {
-      if (response.code === 0) {
-        mailData.value = response.data.records;
-        visible.value = false;
+
+      if (replyInquiriesResCode === 0) {
+        replyInquiries.value = replyInquiriesResData;
       }
-    })
-    .catch((error) => {
-      console.log("error", error);
-    });
+
+      visible.value = false;
+    }
+  );
 };
 onMounted(() => {
   loadOutbox();

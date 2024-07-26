@@ -2836,6 +2836,7 @@ export default defineComponent({
         transform: translate(-50%, -50%);
         color: #7a80a1;
         line-height: 1;
+        white-space: nowrap;
         font-weight: bold;
 
         @media (max-width: 400px) {
