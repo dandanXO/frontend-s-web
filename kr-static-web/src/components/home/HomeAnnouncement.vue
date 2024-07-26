@@ -1,48 +1,4 @@
 <template>
-  <el-dialog
-  align-center
-    v-model="isShowAnnouncementDialog"
-    :maskClosable="false"
-    :footer="null"
-    style="border-radius: 8px; width: 800px;"
-    class="notice-modal"
-  >
-    <div class="notice-header">
-      {{ $t('home.announcementList') }}
-      <div @click="toggleAnnouncementDialog">
-        <img src="../../assets//home/announcement/close-btn.png" />
-      </div>
-    </div>
-
-    <div>
-      <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
-                     :name="tab.name">
-
-          <el-collapse accordion v-model="typeActive">
-            <template v-for="(ann, idx) in announcementList" :key="idx">
-              <template v-if="ann.typeId === tab.id">
-                <el-collapse-item :name="idx" :title="ann.title" class="announcement-content">
-                  <p class="announcement-p">{{ ann.content }}</p>
-                </el-collapse-item>
-              </template>
-            </template>
-          </el-collapse>
-
-<!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
-<!--            <template v-if="ann.typeId === tab.id">-->
-<!--              <div class="announcement-content">-->
-<!--                {{ ann.content }}-->
-<!--              </div>-->
-<!--            </template>-->
-<!--          </template>-->
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-
-
-  </el-dialog>
-
   <div class="top-bar-wrapper">
     <div class="top-bar-inner">
       <div class="station-notice-container">
