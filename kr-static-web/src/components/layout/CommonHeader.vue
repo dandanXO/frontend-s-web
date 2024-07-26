@@ -6,7 +6,7 @@
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
-        <div class="navigations" style="margin-right: auto;visibility:hidden;">
+        <div class="navigations" style="margin-right: auto; visibility: hidden">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div
@@ -57,7 +57,7 @@
         <!--          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">-->
         <!--            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />-->
         <!--            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />-->
-        <!--            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />-->
+        <!--            <EsportsMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
         <!--            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />-->
         <!--            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />-->
         <!--            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
@@ -194,7 +194,10 @@
               </el-icon>
             </a>
             <a @click="redeemDialogVisible = true" class="details-balance">
-              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
+              >
                 <span class="assets-text">{{ $t("account.point") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
@@ -210,7 +213,10 @@
           </div>
         </div>
 
-        <RedeemPointDialog :redeemDialogVisible="redeemDialogVisible" :closeDialog="() => redeemDialogVisible = false" />
+        <RedeemPointDialog
+          :redeemDialogVisible="redeemDialogVisible"
+          :closeDialog="() => (redeemDialogVisible = false)"
+        />
 
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
@@ -559,7 +565,7 @@ export default defineComponent({
           { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
           { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          // { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          // { code: "poker", name: t('menu.poker'), enName: "Esports", path: "/poker", submenu: true },
           // { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
@@ -583,7 +589,7 @@ export default defineComponent({
           { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
           { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          // { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          // { code: "poker", name: t('menu.poker'), enName: "Esports", path: "/poker", submenu: true },
           // { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
@@ -1753,6 +1759,7 @@ body {
     flex-direction: column;
     font-size: 0.75rem;
     color: $font-1;
+    white-space: nowrap;
     cursor: pointer;
     text-align: center;
 
