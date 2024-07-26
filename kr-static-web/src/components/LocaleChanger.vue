@@ -46,6 +46,8 @@ export default {
 </script>
 <style lang="scss">
 .locale-changer {
+  padding: 20px;
+  
   img {
     width: 40px;
   }
