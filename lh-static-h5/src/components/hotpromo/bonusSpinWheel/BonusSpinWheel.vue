@@ -78,8 +78,10 @@ import moment from 'moment';
 import { useNotify } from "src/hooks/notify";
 
 import { userStore } from "../../../stores/index";
-const notify = useNotify();
+import { useRouter } from "vue-router";
 const store = userStore();
+const router = useRouter();
+const notify = useNotify();
 const $q = useQuasar();
 
 // spin wheel constants
@@ -194,6 +196,29 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   if (spinButtonDisable.value === true) {
     return;
   }
