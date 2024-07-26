@@ -36,6 +36,7 @@ export const userStore = defineStore("userStore", {
       unreadTotal: 0,
       visitorId: "",
       isAffiliateA: false,
+      isShowAnnouncementDialog: false,
       announcementList: undefined,
       financeRecords: undefined,
       pendingRebateAmt: 0,
@@ -171,6 +172,9 @@ export const userStore = defineStore("userStore", {
         .catch((err) => {
           console.log(err);
         });
+    },
+    toggleAnnouncementDialog() {
+      this.isShowAnnouncementDialog = !this.isShowAnnouncementDialog;
     },
     getAnnouncementList() {
       return new Promise((resolve, reject) => {

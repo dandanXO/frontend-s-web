@@ -756,6 +756,32 @@ export default {
     reg_card_account_cannot_empty: "카드 계좌는 비워둘 수 없습니다"
     // register end
   },
+  redeem_point: {
+    // redeem point start
+    redeem_point_pending_list: "보류 목록",
+    redeem_point_redeem: "상환하다",
+    redeem_point_points: "포인트들",
+    redeem_point_date: "날짜",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    redeem_point_redeemed: "상환된 포인트",
+    // redeem point end
+  },
+  menu_item: {
+    // menu start
+    menu_announcement: "공지사항",
+    menu_deposit: "충전",
+    menu_withdraw: "환전",
+    menu_inquiry: "문의",
+    menu_message: "쪽지",
+    menu_customer_service: "고객센터",
+    menu_transaction_record: "내역",
+    menu_rebates: "리베이트",
+    menu_my_page: "마이페이지",
+    menu_won: "원",
+    // menu end
+  },
   app: {
     sports: "대규모의 주요 스포츠 및 E-스포츠 이벤트.",
     live: "라이브 카지노, 복권, 슬롯 등 모든 게임이 여러분의 손 안에 있습니다.",

@@ -1,7 +1,7 @@
 <template>
   <el-dialog
   align-center
-    v-model="isStationNotice"
+    v-model="isShowAnnouncementDialog"
     :maskClosable="false"
     :footer="null"
     style="border-radius: 8px; width: 800px;"
@@ -9,7 +9,7 @@
   >
     <div class="notice-header">
       {{ $t('home.announcementList') }}
-      <div @click="isStationNotice = false">
+      <div @click="toggleAnnouncementDialog">
         <img src="../../assets//home/announcement/close-btn.png" />
       </div>
     </div>
@@ -75,11 +75,15 @@ import { ref, onMounted } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 import { ElMessage } from "element-plus";
+import { storeToRefs } from "pinia";
+import { userStore } from "@/store";
 
 const typeActive = ref("");
 const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
+const store = userStore();
+const { isShowAnnouncementDialog } = storeToRefs(store);
 const loadAnnouncement = () => {
   getAnnouncement().then((res) => {
     if (res.code === 0) {
@@ -108,13 +112,12 @@ const announcementTabChange = () => {
   // });
 };
 
-const isStationNotice = ref(false);
 const noticeTitle = ref("");
 const openPopup = (noticeType) => {
   if (noticeType) {
     // announcementActive.value = "3";
     noticeTitle.value = noticeType.title;
-    isStationNotice.value = true;
+    store.toggleAnnouncementDialog();
   }
 };
 

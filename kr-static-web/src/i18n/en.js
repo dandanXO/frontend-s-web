@@ -784,6 +784,32 @@ export default {
     reg_card_account_cannot_empty: "Card Account cannot be empty"
     // register end
   },
+  redeem_point: {
+    // redeem point start
+    redeem_point_pending_list: "Pending List",
+    redeem_point_redeem: "Redeem",
+    redeem_point_points: "Points",
+    redeem_point_date: "Date",
+    redeem_point_source: "Source",
+    redeem_point_condition: "Condition",
+    redeem_point_actions: "Actions",
+    redeem_point_redeemed: "Redeemed points",
+    // redeem point end
+  },
+  menu_item: {
+    // menu start
+    menu_announcement: "Announcement",
+    menu_deposit: "Deposit",
+    menu_withdraw: "Withdraw",
+    menu_inquiry: "Inquiry",
+    menu_message: "Message",
+    menu_customer_service: "Customer Service",
+    menu_transaction_record: "Transaction Record",
+    menu_rebates: "Rebates",
+    menu_my_page: "My Page",
+    menu_won: "Won",
+    // menu end
+  },
   app: {
     sports: "Access to massive sports events and top-tier esports competitions.",
     live: "Enjoy real entertainment, participate in lottery betting, and engage in electronic gaming, among other activities. The latest and most comprehensive entertainment options are available at your fingertips.",
