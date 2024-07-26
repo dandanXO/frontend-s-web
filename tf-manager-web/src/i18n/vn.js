@@ -435,11 +435,11 @@ export default {
   },
   mode: {
     DYNAMIC: 'Trang nổi',
-    STATIC: 'Hiển thị trực tiếp'
+    STATIC: 'Hiển thị trực tiếp',
   },
   autoplayStatus: {
     ON: 'bật',
-    OFF: 'tắt'
+    OFF: 'tắt',
   },
   fields: {
     account: 'Tài khoản',
@@ -508,6 +508,7 @@ export default {
     addSitePlatform: 'Thêm nền tảng site',
     addStage: 'Thêm giai đoạn',
     addSystemMessage: 'Thêm tin nhắn hệ thống',
+    addSyncDefault: 'Đồng bộ hóa cuộc thi trong vòng 3 ngày',
     addTelephone: 'Thêm số điện thoại',
     addTicket: 'Thêm vé',
     addUser: 'Thêm người dùng',
@@ -2236,12 +2237,25 @@ export default {
     wrongPopupTime: 'Thời gian popup đã chọn không hợp lệ',
     selectPopupTime: 'Vui lòng chọn thời gian popup',
     updateAffiliateLevelSuccess: 'Cập nhật cấp đại lý thành công',
-    validateMinDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
-    validateMaxDayRegLimitRequired: 'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
-    validateMinDayDepositAmountRequired: 'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
-    validateMaxDayDepositAmountRequired: 'Số tiền gửi tối đa hàng ngày là bắt buộc',
+    validationMinDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
+    validationMaxDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
+    validationMinDayDepositAmountRequired:
+      'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
+    validationMaxDayDepositAmountRequired:
+      'Số tiền gửi tối đa hàng ngày là bắt buộc',
+    validateMinDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối thiểu là bắt buộc',
+    validateMaxDayRegLimitRequired:
+      'Giới hạn đăng ký hàng ngày tối đa là bắt buộc',
+    validateMinDayDepositAmountRequired:
+      'Số tiền gửi tối thiểu hàng ngày là bắt buộc',
+    validateMaxDayDepositAmountRequired:
+      'Số tiền gửi tối đa hàng ngày là bắt buộc',
     validateDayRegProbabilityRequired: 'Xác suất đăng ký hàng ngày là bắt buộc',
-    validateDayDepositAmountProbabilityRequired: 'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
+    validateDayDepositAmountProbabilityRequired:
+      'Xác suất gửi tiền lần đầu hàng ngày là bắt buộc',
     validateMediaDescRequired: 'Yêu cầu mô tả phương tiện',
     validateMediaUrlRequired: 'Yêu cầu liên kết video',
     validateDisplayUrlRequired: 'Yêu cầu liên kết hiển thị video',
@@ -2284,7 +2298,8 @@ export default {
     'Affiliate List': 'Danh sách Đối tác liên kết',
     'Affiliate Details': 'Chi tiết Đối tác liên kết',
     'Affiliate Financial Management': 'Quản lý tài chính Đối tác liên kết',
-    'Affiliate Facebook Pixel Management': 'Affiliate Facebook Pixel Management',
+    'Affiliate Facebook Pixel Management':
+      'Affiliate Facebook Pixel Management',
     'Affiliate Deposit Display': 'Hiển thị Đối tác liên kết nạp tiền',
     'Site Affiliate Commission': 'Hoa hồng Đối tác trang web',
     'Aff Announcement Management': 'Quản lý thông báo Đối tác',
@@ -2480,7 +2495,7 @@ export default {
     'Promotion Coupon': 'phiếu mua hàng',
     'Member Invite Limit': 'Giới hạn mời thành viên',
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
-    'Media Display Settings': 'Cài đặt hiển thị phương tiện'
+    'Media Display Settings': 'Cài đặt hiển thị phương tiện',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
