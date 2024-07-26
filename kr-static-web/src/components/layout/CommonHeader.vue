@@ -193,11 +193,8 @@
                 <RiRefreshLine color="#468CFF" />
               </el-icon>
             </a>
-            <a @click="redeemDialogVisible = true" class="details-balance">
-              <div
-                class="flex-wrap"
-                style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
-              >
+            <a @click="store.toggleRedeemPointDialog" class="details-balance">
+              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
                 <span class="assets-text">{{ $t("account.point") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
@@ -213,10 +210,7 @@
           </div>
         </div>
 
-        <RedeemPointDialog
-          :redeemDialogVisible="redeemDialogVisible"
-          :closeDialog="() => (redeemDialogVisible = false)"
-        />
+        <RedeemPointDialog :closeDialog="() => store.toggleRedeemPointDialog" />
 
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
@@ -1613,8 +1607,7 @@ export default defineComponent({
       rebateAmt,
       claimNow,
       welcomeDialogVisible,
-      isLandingClub,
-      redeemDialogVisible
+      isLandingClub
     };
   }
 });
