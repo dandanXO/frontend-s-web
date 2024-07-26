@@ -765,8 +765,7 @@ export default {
     redeem_point_source: "기록",
     redeem_point_condition: "롤링",
     redeem_point_actions: "포인트전환",
-    redeem_point_redeemed: "상환된 포인트",
-    redeem_point_redeem: "상환하다",
+    redeem_point_redeemed: "상환된 포인트"
     // redeem point end
   },
   menu_item: {
@@ -780,7 +779,7 @@ export default {
     menu_transaction_record: "내역",
     menu_rebates: "리베이트",
     menu_my_page: "마이페이지",
-    menu_won: "원",
+    menu_won: "원"
     // menu end
   },
   message: {
@@ -811,8 +810,7 @@ export default {
     message_read_all_message: "모든 메시지 읽기",
     message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
-    message_total: "총",
-    message_no_selected: "선택하지 않음",
+    message_total: "총"
     // message end
   },
   feedback: {
@@ -835,7 +833,7 @@ export default {
     feedback_admin_replied: "답변완료",
     feedback_delete_selected: "선택내역삭제",
     feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
-    feedback_no_selected: "선택하지 않음",
+    feedback_no_selected: "선택하지 않음"
     // feedback end
   },
   app: {
