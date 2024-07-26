@@ -316,6 +316,10 @@ const onEnterGameClick = (plat, platType) => {
     const currentPlat = plat.currentPlat;
     if (currentPlat.code === 'TFGaming' && platType === 'fish') {
       router.push('/minigame?plat=TFGaming');
+      return
+    } else if (currentPlat.code === 'CQ9' && platType === 'fish') {
+      router.push('/fishing?plat=CQ9');
+      return
     }
     if (currentPlat.code === "BBINDY") {
       currentPlat.gameCode = "bblive_lobby_pc";
