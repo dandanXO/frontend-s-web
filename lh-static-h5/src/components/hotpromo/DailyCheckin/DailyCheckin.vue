@@ -146,7 +146,9 @@
               </div>
             </div>
             <div class="task-right">
-              <div style="margin-top: -20px">剩余补签卡：1/2</div>
+              <div style="margin-top: -20px">
+                剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
+              </div>
               <button class="button-finish">已完成</button>
             </div>
           </div>
@@ -259,6 +261,9 @@ const currentActivePoints = ref(0);
 // 是 "YES", 就是“已完成” + 打勾，
 // 是 "NO" 则是 "去充值“和 打 X
 const todayCheckInState = ref("YES");
+const currentRecheckInChances = ref(0);
+const totalRecheckInChances = ref(0);
+const recheckTaskState = ref("CLOSE");
 
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
@@ -329,6 +334,9 @@ const fetchData = async () => {
       todayCheckInState.value = res.data.checkInState.todayCheckInState;
       sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
       currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
+      currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
+      totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+      recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
     });
   } catch (error) {
     notify.error(res.message);
@@ -543,7 +551,7 @@ onMounted(async () => {
         background-image: url("./images/bg-3.png");
         background-repeat: no-repeat;
         background-position: center;
-        background-size: cover;
+        background-size: 100% 100%;
         width: 100%;
         height: 74px;
         padding: 0 16px;
