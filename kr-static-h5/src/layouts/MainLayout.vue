@@ -29,7 +29,10 @@
           icon="menu"
         />
 
-        <div class="header-lang">
+        <div
+          class="header-lang"
+          v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')"
+        >
           <LangOptions />
         </div>
       </q-card-section>
@@ -60,13 +63,13 @@
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
         <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
-          <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/announce.svg" />
+          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
           {{ $t("lang.message") }}
         </q-route-tab>
-        <q-route-tab to="/account" name="account" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
-          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
+        <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/message.svg" />
+          <img class="hover" src="../assets/images/footer/message-active.svg" />
           {{ $t("lang.question") }}
         </q-route-tab>
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
@@ -75,8 +78,8 @@
           {{ $t("lang.home") }}
         </q-route-tab>
         <q-route-tab to="/account/announcement" id="cs-web-id" name="cs" class="cs-web-id sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
-          <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/notifi.svg" />
+          <img class="hover" src="../assets/images/footer/notifi-active.svg" />
           {{ $t("lang.announcement") }}
         </q-route-tab>
         <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
@@ -84,6 +87,11 @@
           <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
           {{ $t("lang.promo") }}
         </q-route-tab>
+        <!--        <q-route-tab to="/account" name="account" class="sm-screen-txt">-->
+        <!--          <img class="inactive" src="../assets/images/footer/account-icon.svg" />-->
+        <!--          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />-->
+        <!--          {{ $t("lang.account") }}-->
+        <!--        </q-route-tab>-->
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -295,7 +303,7 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("lang.page_systemannouncement");
-        } else if (route.path === "/account/letters") {
+        } else if (route.path === "/feedback") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");

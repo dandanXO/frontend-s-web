@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div class="q-mt-sm">
+      <div class="q-mt-sm" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
         <LangOptions />
       </div>
     </div>

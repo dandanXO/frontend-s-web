@@ -45,7 +45,7 @@
       </div>
       <!-- <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div> -->
     </div>
-    <div class="header-lang">
+    <div class="header-lang" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
       <LangOptions />
     </div>
 
@@ -2836,6 +2836,7 @@ export default defineComponent({
         transform: translate(-50%, -50%);
         color: #7a80a1;
         line-height: 1;
+        white-space: nowrap;
         font-weight: bold;
 
         @media (max-width: 400px) {

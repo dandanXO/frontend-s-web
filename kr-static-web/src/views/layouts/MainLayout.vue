@@ -12,6 +12,8 @@
       <common-footer v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>
     <common-sidebar v-if="!shouldHideHeaderAndFooter" />
+
+    <AnnouncementDialog />
   </div>
 </template>
 
@@ -20,6 +22,7 @@ import {defineComponent,computed} from "vue";
 import CommonHeader from "@/components/layout/CommonHeader.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
 import CommonSidebar from "@/components/layout/CommonSidebar.vue";
+import AnnouncementDialog from "@/components/home/announcement/AnnouncementDialog.vue";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
@@ -27,7 +30,8 @@ export default defineComponent({
   components: {
     CommonHeader,
     CommonFooter,
-    CommonSidebar
+    CommonSidebar,
+    AnnouncementDialog
   },
   mounted() {
     //TODO:: Change LH One.

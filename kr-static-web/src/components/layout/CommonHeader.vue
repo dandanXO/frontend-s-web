@@ -6,7 +6,7 @@
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
-        <div class="navigations" style="margin-right: auto">
+        <div class="navigations" style="margin-right: auto;visibility:hidden;">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div
@@ -80,6 +80,24 @@
         </div>
 
         <div v-if="store.token" class="profile-actions">
+          <div class="action-btn" @click="store.toggleAnnouncementDialog">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
+            </div>
+            {{ $t("menu_item.menu_announcement") }}
+          </div>
+          <router-link to="/center/message" class="action-btn">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
+            </div>
+            {{ $t("menu_item.menu_message") }}
+          </router-link>
+          <router-link to="/center/inquiry" class="action-btn">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-action-deposit.svg" />
+            </div>
+            {{ $t("menu_item.menu_inquiry") }}
+          </router-link>
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.svg" />
@@ -175,11 +193,8 @@
                 <RiRefreshLine color="#468CFF" />
               </el-icon>
             </a>
-            <a @click="refreshBalance" class="details-balance">
-              <div
-                class="flex-wrap"
-                style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
-              >
+            <a @click="redeemDialogVisible = true" class="details-balance">
+              <div class="flex-wrap" style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap:5px; flex-wrap: nowrap">
                 <span class="assets-text">{{ $t("account.point") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
@@ -194,6 +209,8 @@
             </a>
           </div>
         </div>
+
+        <RedeemPointDialog :redeemDialogVisible="redeemDialogVisible" :closeDialog="() => redeemDialogVisible = false" />
 
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
@@ -504,6 +521,7 @@ import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import HomeWelcome from "@/components/home/HomeWelcome.vue";
+import RedeemPointDialog from "@/components/home/RedeemPointDialog.vue";
 
 import { i18nStore } from '@/store/language'
 export default defineComponent({
@@ -526,7 +544,8 @@ export default defineComponent({
     ForgotPwdDialog,
     RegisterAccount,
     LocaleChanger,
-    HomeWelcome
+    HomeWelcome,
+    RedeemPointDialog
   },
   setup() {
     const { t } = useI18n();
@@ -585,6 +604,8 @@ export default defineComponent({
         ]
       }
     });
+
+    const redeemDialogVisible = ref(false);
 
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
@@ -1586,7 +1607,8 @@ export default defineComponent({
       rebateAmt,
       claimNow,
       welcomeDialogVisible,
-      isLandingClub
+      isLandingClub,
+      redeemDialogVisible
     };
   }
 });
@@ -1719,7 +1741,7 @@ body {
 
 .profile-actions {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 
   .action-btn {
     // height: 30px;
