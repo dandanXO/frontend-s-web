@@ -328,9 +328,11 @@
 import { ref, onMounted, computed } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { userStore } from "../../../stores/index";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 
+const store = userStore();
 const notify = useNotify();
 
 const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
