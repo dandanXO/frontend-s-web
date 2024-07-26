@@ -123,7 +123,8 @@
               </div>
             </div>
             <div class="task-right">
-              <button class="button" @click="handleDeposit">去充值</button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值 </button>
             </div>
           </div>
           <div class="task-content">
@@ -149,7 +150,8 @@
               <div style="margin-top: -20px">
                 剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
               </div>
-              <button class="button-finish">已完成</button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值 </button>
             </div>
           </div>
         </div>
