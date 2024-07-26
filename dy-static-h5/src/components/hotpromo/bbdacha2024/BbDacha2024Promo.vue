@@ -271,6 +271,7 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { useQuasar } from "quasar";
+import { userStore } from "../../../stores/index";
 import {
   getBBDachaUpcoming,
   getBBDachaAnsweredRecords,
@@ -279,6 +280,7 @@ import {
 } from "../../../api/index/promo";
 import moment from "moment";
 
+const store = userStore();
 const $q = useQuasar();
 
 // tabs

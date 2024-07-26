@@ -295,8 +295,8 @@
       <q-dialog v-model="confirmVoteDialog" persistent>
         <q-card class="confirm-vote-card">
           <q-card-section class="q-mb-md row justify-center">
-            <div class="text-h6" v-if="submitParam.team === 'draw'">您确定要投"平局"吗？</div>
-            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+            <div class="text-h6" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
           </q-card-section>
 
           <q-card-actions align="center">
