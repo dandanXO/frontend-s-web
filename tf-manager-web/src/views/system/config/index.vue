@@ -344,9 +344,16 @@
           v-for="(item, index) in csAddress"
           :key="index"
         >
+          <JsonEditor
+            class="editor"
+            v-model="editorValue"
+            currentMode="code"
+            :modeList="[]"
+            @update:modelValue="updataModel"
+          />
           <el-input
             v-model="item.value"
-            type="textarea"
+            type="hidden"
             :rows="10"
             style="width: 350px; white-space: pre-line"
             placeholder="{'abc':'xyz'}"
@@ -355,7 +362,12 @@
       </div>
     </el-form-item>
     <el-collapse v-model="uiControl.activeGroups">
-      <el-collapse-item v-for="groupConfig in configs.customGroup" :title="groupConfig.group" :name="groupConfig.group" :key="groupConfig.group">
+      <el-collapse-item
+        v-for="groupConfig in configs.customGroup"
+        :title="groupConfig.group"
+        :name="groupConfig.group"
+        :key="groupConfig.group"
+      >
         <el-form-item
           v-for="item in groupConfig.items"
           border-color="#dcdcdc"
@@ -473,12 +485,13 @@ import {
   updateConfig,
   updateBatch,
   createConfig,
-  updateOrderBatch
+  updateOrderBatch,
 } from '../../../api/config'
 import { hasRole } from '../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { required } from '../../../utils/validate'
+import JsonEditor from 'json-editor-vue3'
 
 const { t } = useI18n()
 const siteId = ref()
@@ -703,6 +716,13 @@ async function loadRiskLevels() {
 async function loadConfigs() {
   const { data: ret } = await getConfigs({ siteId: siteId.value })
   configs.value = ret
+
+  const csAddressConfig = configs.value.find(item => item.code === 'cs_address')
+
+  if (csAddressConfig) {
+    editorValue = JSON.parse(csAddressConfig.value)
+  }
+
   configs.customList = configs.value.filter(
     config =>
       config.code !== 'adjust_type' &&
@@ -768,6 +788,8 @@ async function loadConfigs() {
       configs.customGroup[index].items[i].orderIndex = i
     }
   }
+
+  removeJsonEditorElement()
 }
 
 function showEdit(customConfig) {
@@ -894,6 +916,34 @@ function moveDown(item, groupConfig) {
   }
 }
 
+let editorValue = ref({})
+
+const updataModel = val => {
+  const config = configs.value.find(item => item.code === 'cs_address')
+  if (config) {
+    config.value = JSON.stringify(val)
+  }
+}
+
+function removeJsonEditorElement() {
+  const classesToRemove = [
+    'jsoneditor-poweredBy',
+    'jsoneditor-sort',
+    'jsoneditor-transform',
+    'jsoneditor-undo',
+    'jsoneditor-redo',
+    'jsoneditor-repair',
+  ]
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className)
+    Array.from(elements).forEach(element => {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  })
+}
+
 onMounted(() => {
   loadSites()
   loadFinancialLevelInfos()
@@ -943,5 +993,10 @@ onMounted(() => {
 
 .disable-input {
   pointer-events: none;
+}
+</style>
+<style rel="stylesheet/scss" lang="scss">
+.full-screen {
+  right: 20px !important;
 }
 </style>
