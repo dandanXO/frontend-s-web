@@ -204,6 +204,7 @@
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
+    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-container">
       <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div>
