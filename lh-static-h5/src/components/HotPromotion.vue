@@ -5,7 +5,7 @@
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
+      @daily-slot="handleSlot(list.promoCode)"
     />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
@@ -376,7 +376,7 @@ export default defineComponent({
     // }
 
     const router = useRouter();
-    const handleSlot = () => {
+    const handleSlot = (promoCode) => {
       if (!store.token) {
         $q.dialog({
             class: "q-px-md q-pt-md",
@@ -400,25 +400,25 @@ export default defineComponent({
           })
           return
       }
-      const bonusItem = this.list.promoCode;
+      const bonusItem = promoCode;
       const eventUrl = "/bonus/claim/" + bonusItem;
-      this.btnLoading = true;
+      btnLoading.value = true;
       eventapi
         .put(eventUrl)
         .then((res) => {
-          this.btnLoading = false;
+          btnLoading.value = false;
           if (res.code === 0) {
             var rebatePoint = res.data;
-            this.claimMsg = "￥" + rebatePoint;
-            this.isClaimModal = true;
+            claimMsg.value = "￥" + rebatePoint;
+            isClaimModal.value = true;
           } else {
-            this.btnLoading = false;
+            btnLoading.value = false;
           }
         })
         .catch((error) => {
-          this.btnLoading = false;
+          btnLoading.value = false;
         });
-    }
+    };
     const goToCsChat = () => {
   if (!store.token) {
     $q.dialog({

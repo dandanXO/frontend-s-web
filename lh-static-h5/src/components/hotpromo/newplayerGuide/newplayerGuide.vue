@@ -201,7 +201,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getNewUserSetupBonusInit, putNewUserSetupBonusClaim } from "../../../api/index/promo";
 import option2Area from "./option2Area.vue";
-import { userStore } from "src/stores";
+import { userStore } from "../../../stores/index";
 import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
