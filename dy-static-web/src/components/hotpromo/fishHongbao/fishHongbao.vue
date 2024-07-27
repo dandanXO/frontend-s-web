@@ -153,9 +153,9 @@ const getNbaMatchData = async () => {
 
 onMounted(() => {
   if (!store.token) {
-    return
+    return;
   }
-  getNbaMatchData
+  getNbaMatchData();
 });
 const claimHongBao = async () => {
   if (!store.hasToken()) {
