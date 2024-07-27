@@ -263,7 +263,7 @@ onMounted(() => {
     // });
     return;
   }
-  getSlotLucky8Data
+  getSlotLucky8Data();
 });
 </script>
 
