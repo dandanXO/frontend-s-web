@@ -6,6 +6,7 @@
         <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" />
       </div>
       <div class="tips">
+        <div class="tips-inner">活动时间：2024年07月29日—2024年08月06日</div>
         <div class="tips-inner">
           参与BLAST Premier 秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
         </div>

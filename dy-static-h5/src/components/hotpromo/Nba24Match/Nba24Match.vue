@@ -364,7 +364,7 @@ onMounted(() => {
   if (!store.token) {
     return;
   }
-  getNbaMatchData
+  getNbaMatchData();
 });
 
 watch(tableRecordDialog, async () => {
