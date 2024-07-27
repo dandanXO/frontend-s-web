@@ -253,7 +253,12 @@ const getSlotLucky8Data = async () => {
   tableData.value = res.data;
 };
 
-onMounted(getSlotLucky8Data);
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+  getSlotLucky8Data();
+});
 </script>
 
 <style scoped lang="scss">
