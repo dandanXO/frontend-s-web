@@ -30,7 +30,9 @@ export default {
     no_card_avail: "사용 가능한 카드가 없습니다. 진행하려면 ",
     add_a_bank_card: "은행 카드 추가",
     welcome: "환영합니다",
+    nickname: "닉네임",
     mainWallet: "잔액",
+    point: "포인트",
     reminder: "지원",
     require: "지원",
     str_copy: "복사",
@@ -112,6 +114,7 @@ export default {
     playnow: "지금 플레이",
     betnow: "지금 베팅",
     systemError: "시스템 오류",
+    withdrawCancelled: "출금 취소",
     loginTitle: "알림",
     bankName: "은행",
     bankAcc: "계좌 이름",
@@ -179,7 +182,9 @@ export default {
     bank: "은행",
     chgPwd: "비밀번호 변경",
     chgWithdrawPwd: "출금 비밀번호 변경",
-    realName: "이름",
+    realName: "실명",
+    nickname: "닉네임",
+    loginName: "아이디",
     birthday: "생일",
     zalo: "Zalo",
     mobileNo: "전화번호",
@@ -207,8 +212,10 @@ export default {
       "카드의 이름과 계좌 번호를 정확하게 입력해 주세요. 잘못된 정보로 인해 출금 시 손실이 발생할 수 있습니다! CITY8이 감사드립니다!"
   },
   placeholder: {
-    realName: "실명을 입력해 주세요",
+    realName: "실명 입력해 주세요",
+    nickname: "닉네임 입력해 주세요",
     birthday: "생년월일을 입력해 주세요",
+    loginName: "아이디 입력해 주세요",
     zalo: "Zalo를 입력해 주세요",
     email: "이메일 주소를 입력해 주세요",
     mobileNo: "전화번호를 입력해 주세요",
@@ -319,9 +326,9 @@ export default {
     bindTime: "연결 시간",
     unbindTime: "해제 시간",
     amount: "금액",
-    singleLimit: "한도",
-    withdrawalToday: "오늘 출금",
-    remaining: "남은",
+    singleLimit: "거래 한도",
+    withdrawalToday: "일일 한도",
+    remaining: "남은 인출 횟수",
     times: "회",
     withdrawPwd: "출금 비밀번호",
     realNameNotEmpty: "실명이 비어 있을 수 없습니다.",
@@ -350,7 +357,10 @@ export default {
     lengthShouldBe: "길이는 다음과 같아야 합니다",
     smsCodeRequired: "SMS 확인 코드를 입력하세요",
     bankBranchAddress: "은행 지점 주소",
-    settleWithdrawPwd: "출금 비밀번호를 추가하세요"
+    settleWithdrawPwd: "출금 비밀번호를 추가하세요",
+    note: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+      출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+      회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`
   },
   referTerms: {
     promotionStart: "프로모션은 2022년 6월 1일 00:00:00 (GMT +8)부터 시작됩니다.",
@@ -385,14 +395,24 @@ export default {
     bank: "은행",
     selectBank: "은행 선택",
     napas: "다른 은행으로의 이체를 24/7 지원합니다.",
-    depositMoney: "돈을 입금하다",
+    depositMoney: "빠른 입금",
     copyWebsite: "링크 복사",
     copied: "복사 완료",
     quickDeposit: "빠른 입금",
     realTimeExchangeRate: "실시간 환율",
     inputUSDT: "USDT 입력",
     chooseAmt: "금액 선택",
-    note: "주의 사항:",
+    note: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+      본인명의 이외 타명의 입금은 처리가 불가합니다
+      계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+      입금 최소 금액 확인하시고, 만원 단위로만 가능합니다.
+
+      ※주의사항
+      충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+      금액을 잘못 기재하셨다면 문의 주시면 취소 처리 도와드리겠습니다.
+
+      ※가상계좌 점검시간 안내
+      23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     notept1: "게임 내 거래 단위는 원이며, 1 원 = 1,000 VND입니다.",
     redirected: "입금 완료를 위해 귀하의 은행 페이지로 리디렉션됩니다.",
     successful: "성공하면 이 페이지에서 알림을 받게 됩니다.",
@@ -663,16 +683,16 @@ export default {
     advice3: "게임 자금을 관리하고 게임을 시작하기 전에 최대 승리 및 손실 금액을 정하세요.",
     advice4: "부정적인 감정이나 술에 취했을 때는 도박 대신 다른 취미를 찾으세요.",
     advice5: "상황이 나빠지고 있다고 느낄 때는 주위 사람들에게 도움을 요청하는 것을 주저하지 마세요.",
-    tf88SupportTitle: "TF88의 책임 있는 도박 지원",
+    tf88SupportTitle: "CITY8 책임 있는 도박 지원",
     tf88SupportContent:
-      "우리는 베트남과 아시아의 주요 게임 플랫폼 중 하나입니다. 우리는 모든 측면에서 도박 예방 및 관리 원칙을 보장합니다. TF88 팀은 언제든지 당신을 지원할 준비가 되어 있습니다.",
-    ageRestriction: "TF88은 18세 미만의 모든 플레이어가 우리 플랫폼에 접근하거나 도박에 참여하는 것을 금지합니다.",
+      "우리는 베트남과 아시아의 주요 게임 플랫폼 중 하나입니다. 우리는 모든 측면에서 도박 예방 및 관리 원칙을 보장합니다. CITY8 팀은 언제든지 당신을 지원할 준비가 되어 있습니다.",
+    ageRestriction: "CITY8은 18세 미만의 모든 플레이어가 우리 플랫폼에 접근하거나 도박에 참여하는 것을 금지합니다.",
     partner: "파트너",
     paymentMethod: "지불 방법"
   },
   vip: {
     vipTerms: "VIP 조건 및 조항",
-    tnc1: "이 프로그램은 TF88에서 유효한 원 계정을 가진 모든 회원에게 적용됩니다. 프로그램은 월별 유효 베팅 총액을 기준으로 하며, 월 첫날 00:00:00부터 월 마지막 날 23:59:59까지 (GMT +8) 계산됩니다.",
+    tnc1: "이 프로그램은 CITY8에서 유효한 원 계정을 가진 모든 회원에게 적용됩니다. 프로그램은 월별 유효 베팅 총액을 기준으로 하며, 월 첫날 00:00:00부터 월 마지막 날 23:59:59까지 (GMT +8) 계산됩니다.",
     tnc2: "시스템은 매월 첫날 12:00:00 (GMT +8) 이후 모든 회원의 VIP 레벨을 자동으로 업그레이드합니다. 이 조건은 회원의 총 유효 베팅 금액이 해당 VIP 레벨에 맞는 업그레이드 조건을 충족해야 합니다. 레벨 업그레이드는 각 VIP 단계에 따라 진행되지 않습니다.",
     tnc3: "업그레이드 보너스: 회원이 새 VIP 레벨로 업그레이드된 후, VIP 페이지에서 수령 버튼을 클릭할 수 있습니다. 보너스 금액은 해당 VIP 레벨에 따라 결정되며, 출금하기 전에 1회의 베팅을 거쳐야 합니다.",
     tnc4: "업그레이드 보너스는 월별 보너스와 동시에 수령할 수 없습니다. 이번 달 VIP로 승급된 회원은 업그레이드 보너스를 받을 수 있습니다. 시스템은 이번 달 VIP로 승급되지 않은 계정에 대해 월별 보너스를 검토하며, VIP 레벨 유지 조건을 충족해야 합니다.",
@@ -680,7 +700,7 @@ export default {
     tnc6: "업그레이드 보너스: 회원은 월 첫날에 새로운 레벨로 업그레이드된 후 VIP 페이지에서 수령 버튼을 클릭해야 합니다. 각 회원은 각 레벨에 대해 한 번만 업그레이드 보너스를 받을 수 있습니다. (업그레이드 보너스는 출금하기 전에 1회의 베팅을 거쳐야 합니다.)",
     tnc7: "환급 보너스: 회원은 현재 VIP 레벨에 따라 환급 보너스를 업그레이드받습니다. 온라인 카지노, 슬롯 게임의 환급 보너스는 하루에 최대 50,000 원를 초과할 수 없으며, 다른 제품에는 제한이 없습니다.",
     tnc8: "모든 무승부 베팅, 취소 베팅, 양측 베팅, 유럽식 핸디캡 1.75 미만, 아시아 핸디캡 0.75 미만, 넘버 게임, 가상 스포츠, 특수 RNG 프로그레시브 잭팟, RNG 슬롯은 이 프로그램의 베팅 수익에 포함되지 않습니다. 프로모션의 일반 조건 및 조항이 적용됩니다.",
-    tnc9: "TF88은 사전 통보 없이 언제든지 이 VIP 회원 프로그램을 수정, 거부 또는 취소할 권리를 보유합니다.",
+    tnc9: "CITY8은 사전 통보 없이 언제든지 이 VIP 회원 프로그램을 수정, 거부 또는 취소할 권리를 보유합니다.",
     vipMaintainRequired: "VIP 레벨 유지 요구 사항",
     vipUpgradeRequired: "VIP 레벨 요구 사항",
     totalBetMonth: "이번 달 총 베팅",
@@ -751,15 +771,96 @@ export default {
     reg_enter_captcha: "입력하다 Captcha",
     reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
     reg_please_select_a_bank_account: "은행계좌를 선택해주세요",
-    reg_please_enter_card_num: "카드번호를 입력해주세요.",
+    reg_please_enter_card_num: "카드번호를 입력해주세요",
+    reg_card_account_cannot_empty: "카드 계좌는 비워둘 수 없습니다"
     // register end
+  },
+  redeem_point: {
+    // redeem point start
+    redeem_point_pending_list: "포인트 보유현황",
+    redeem_point_redeem: "전환",
+    redeem_point_points: "포인트",
+    redeem_point_date: "날짜",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    redeem_point_redeemed: "상환된 포인트"
+    // redeem point end
+  },
+  menu_item: {
+    // menu start
+    menu_announcement: "공지사항",
+    menu_deposit: "충전",
+    menu_withdraw: "환전",
+    menu_inquiry: "문의",
+    menu_message: "쪽지",
+    menu_customer_service: "고객센터",
+    menu_transaction_record: "내역",
+    menu_rebates: "리베이트",
+    menu_my_page: "마이페이지",
+    menu_won: "원"
+    // menu end
+  },
+  message: {
+    // message start
+    message_loading_content: "콘텐츠 로드 중...",
+    message_unread: "읽지않음",
+    message_read: "읽음",
+    message_read_at: "에서 읽다",
+    message_compose: "글쓰기",
+    message_title: "제목",
+    message_title_placeholder: "제목 입력해주세요",
+    message_cannot_be_empty: "비워둘 수 없습니다",
+    message_content: "내용",
+    message_compose_confirm: "확인",
+    message_previous_page: "전 페이지로 이동",
+    message_type_announcement: "공지",
+    message_type_notification: "알림",
+    message_type_activity: "활동",
+    message_type_payment: "입출금",
+    message_type_all: "모두",
+    message_type_outbox: "보낸 문의함",
+    message_type_inbox: "답변 완료",
+    message_process_all_read: "모두읽음처리",
+    message_delete_selected: "선택내역삭제",
+    message_delete_read: "전체내역삭제",
+    message_no_selected: "선택한 메시지가 없습니다.",
+    message_selected: "선택된",
+    message_read_all_message: "모든 메시지 읽기",
+    message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
+    message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
+    message_total: "총"
+    // message end
+  },
+  feedback: {
+    // feedback start
+    feedback_loading_content: "콘텐츠 로드 중...",
+    feedback_unread: "읽히지 않는",
+    feedback_read: "읽었다",
+    feedback_read_at: "에서 읽다",
+    feedback_compose: "글쓰기",
+    feedback_write_inquiry: "문의작성",
+    feedback_category: "유형",
+    feedback_category_select: "선택해주세요",
+    feedback_title: "제목",
+    feedback_title_placeholder: "제목 입력해주세요",
+    feedback_cannot_be_empty: "비워둘 수 없습니다",
+    feedback_content: "내용",
+    feedback_compose_confirm: "확인",
+    feedback_previous_page: "전 페이지로 이동",
+    feedback_waiting_admin_reply: "답변대기",
+    feedback_admin_replied: "답변완료",
+    feedback_delete_selected: "선택내역삭제",
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
+    feedback_no_selected: "선택하지 않음"
+    // feedback end
   },
   app: {
     sports: "대규모의 주요 스포츠 및 E-스포츠 이벤트.",
     live: "라이브 카지노, 복권, 슬롯 등 모든 게임이 여러분의 손 안에 있습니다.",
     hot: "대소규모 대회의 실시간 방송과 매력적인 프로모션, 끊임없는 보너스를 제공합니다.",
     h5: "모바일 장치에서 H5 웹사이트.",
-    app: "TF88 앱 다운로드.",
+    app: "CITY8 앱 다운로드.",
     mobileAccess: "모바일 접근",
     scanDownload: "QR 코드를 스캔하여 다운로드"
   },
@@ -792,12 +893,12 @@ export default {
     webapp: "웹 앱",
     esportapp: "E-스포츠 앱",
     firstSlide: "앱 다운로드",
-    firstSlideContent: "TF88의 최상급 앱에서 초부드러운 경험을 즐기세요.",
+    firstSlideContent: "CITY8의 최상급 앱에서 초부드러운 경험을 즐기세요.",
     firstSlideSub: "+60 VNPD 다운로드",
     secondSlide: "매력적인 입금 보너스",
     secondSlideContent: "입금 첫 100% 보너스 최대 2,000 원",
     thirdSlide: "E-Sports 개발자",
-    thirdSlideContent: "TF88은 아시아 E-Sports 베팅의 선구자입니다. 매일 500개 이상의 E-Sports 이벤트에 베팅하세요!"
+    thirdSlideContent: "CITY8은 아시아 E-Sports 베팅의 선구자입니다. 매일 500개 이상의 E-Sports 이벤트에 베팅하세요!"
   },
   bankError: {
     bankCardFirst: "먼저 은행 카드를 등록하세요.",
@@ -805,7 +906,7 @@ export default {
     bindEWallet: "먼저 전자 지갑을 등록하세요.",
     loginbeforeAction: "행동을 취하기 전에 먼저 로그인하세요.",
     safetyBeforePhone: "안전을 위해, 입금하기 전에 전화번호를 확인하세요.",
-    bindRealName: "실명을 업데이트하지 않았습니다. 업데이트해주세요.",
+    bindRealName: "실명 업데이트하지 않았습니다. 업데이트해주세요.",
     depositConfirmed: "입금이 확인되었습니다."
   },
   sports: {
@@ -814,9 +915,9 @@ export default {
     cmd: "우리의 서비스 목표는 고객의 즐거움입니다. CMD368은 거의 모든 게임 옵션과 관련 시장을 제공하여 최고의 서비스와 게임 경험을 제공하고 최상의 배당률을 제시하는 것을 목표로 합니다."
   },
   lottery: {
-    loto: "TF88의 복권은 다양한 베팅 형태로 매력적인 배당률을 제공하며, 추첨 후 빠른 보상을 제공합니다.",
-    gpi: "TF88의 복권은 다양한 베팅 형태로 매력적인 배당률을 제공하며, 추첨 후 빠른 보상을 제공합니다.",
-    tcg: "TF88의 복권은 다양한 베팅 형태로 매력적인 배당률을 제공하며, 추첨 후 빠른 보상을 제공합니다."
+    loto: "CITY8의 복권은 다양한 베팅 형태로 매력적인 배당률을 제공하며, 추첨 후 빠른 보상을 제공합니다.",
+    gpi: "CITY8의 복권은 다양한 베팅 형태로 매력적인 배당률을 제공하며, 추첨 후 빠른 보상을 제공합니다.",
+    tcg: "CITY8의 복권은 다양한 베팅 형태로 매력적인 배당률을 제공하며, 추첨 후 빠른 보상을 제공합니다."
   },
   livecasino: {
     ag: "Live Casino AG는 세계 최초로 6장 포커를 먼저 나누는 테이블, VIP 테이블, 스퀴즈 바카라, 스마트 컨트롤 바카라 및 기타 인터랙티브 바카라 게임을 제공합니다. 다양한 단말기와 호환되어 끊임없는 즐거움을 누릴 수 있습니다.",
@@ -843,7 +944,7 @@ export default {
     backToTop: "맨 위로"
   },
   status: {
-    pending: "대기 중",
+    pending: "입금 대기",
     claimed: "확인됨",
     withdrawFailed: "출금 실패",
     withdraw: "출금",
@@ -854,6 +955,7 @@ export default {
     applying: "처리 중",
     failed: "실패",
     success: "성공",
+    depositSuccess: "입금 완료",
     underReview: "검토 중",
     toBePaid: "지급 대기 중",
     normalPayment: "지급 중인 주문",
@@ -879,6 +981,9 @@ export default {
     otp_success_send_email: "OTP 코드가 이메일로 전송되었습니다.",
     otp_success_send_phone: "OTP 코드가 휴대전화로 전송되었습니다.",
     login_to_continue: "계속하려면 로그인 해주세요."
+  },
+  notification: {
+    hasUnreadMessage: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다"
   },
   response: {
     101: "플랫폼을 찾을 수 없습니다.",
@@ -910,7 +1015,7 @@ export default {
     909: "전화번호를 찾을 수 없습니다.",
     910: "사용자 이름이 전화번호와 일치하지 않습니다.",
     1000: "사용자 이름 또는 비밀번호에 오류가 있습니다.",
-    1001: "계정이 폐쇄되었습니다.",
+    1001: "승인 대기 중입니다.",
     1002: "파트너 계정입니다.",
     1004: "비밀번호를 여러 번 잘못 입력하여 계정이 잠깁니다.",
     1011: "현재 계정은 전화번호와 연결되어 있습니다.",

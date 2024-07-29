@@ -67,7 +67,9 @@
 import { ref, defineProps, onMounted } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import { userStore } from "@/store";
 import { useNotify } from "@/hooks/notify";
+const store = userStore()
 
 const props = defineProps(["promoCode", "params"]);
 

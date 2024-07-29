@@ -1195,6 +1195,9 @@ export default defineComponent({
       if (downloadPopup) {
         topBoxVisible.value = false;
       }
+      if (window.location.href.indexOf('tf88bof.com') > -1) {
+        topBoxVisible.value = false;
+      }
     };
 
     const $q = useQuasar();
@@ -1772,7 +1775,7 @@ export default defineComponent({
 
     const loadHotMatches = () => {
       api
-        .get("/platform-competition?type=Football")
+        .get("/platform-competition")
         .then((res) => {
           if (res.code === 0) {
             hotMatches.value = res.data;
@@ -2446,9 +2449,7 @@ export default defineComponent({
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow:
-    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
-    0px 4px 10px 0px;
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
   font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
@@ -3516,6 +3517,7 @@ export default defineComponent({
       .team-name {
         text-align: center;
         color: #444444;
+        min-height: 42px;
       }
     }
   }

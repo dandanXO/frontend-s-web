@@ -8,15 +8,12 @@
 
     <ViSlotNetLossPromo v-if="list.redirectUrl === 'vi-slot-netloss'" />
 
-    <tf88Baohiemvon v-if="list.redirectUrl === 'tf88-baohiemvon'" :promo-code="list.promoCode"/>
-
+    <tf88Baohiemvon v-if="list.redirectUrl === 'tf88-baohiemvon'" :promo-code="list.promoCode" />
+    <olympicClaim v-if="list.redirectUrl === 'CHINHPHUC-OLYMPIC'" :promo-code="list.promoCode" />
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank'" />
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" />
-    <upgradeHongBaoPromo
-      v-if="listParam.type === 'redpacket'"
-      :promo-code="list.promoCode"
-    />
+    <upgradeHongBaoPromo v-if="listParam.type === 'redpacket'" :promo-code="list.promoCode" />
 
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" />
     <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" />
@@ -48,13 +45,14 @@ import moment from "moment";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue";
-import tf88Baohiemvon from "../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue"
+import tf88Baohiemvon from "../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue";
 import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue";
 import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
 import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
 import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
 import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
-import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
+import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
+import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -70,7 +68,8 @@ export default defineComponent({
     upgradeHongBaoPromo,
     EuroCup2024,
     EuroCup2024BetReward,
-    EurocupLuckyDraw
+    EurocupLuckyDraw,
+    olympicClaim
     // CnyStepGame2024Promo
   },
   props: {
@@ -95,10 +94,10 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },
@@ -239,7 +238,6 @@ export default defineComponent({
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-
 
   .promo-bg {
     background-size: cover;

@@ -26,7 +26,7 @@
         <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="./img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis管理号：{{ paramsObj?.voxis_id }}</span>
+          <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj?.voxis_id }}</span>
           <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
         </div>
       </div>
@@ -48,7 +48,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { writeClipboard } from "boot/utils";
-
+import { Platform } from "quasar";
 import BeautySvg from "./img/beauty.svg";
 import Clock24Svg from "./img/clock-24.svg";
 import QuestionSvg from "./img/question.svg";
@@ -57,6 +57,7 @@ import ClockSvg from "./img/clock.svg";
 import DateSvg from "./img/date.svg";
 import GiftLineSvg from "./img/gift-line.svg";
 import ThumbSvg from "./img/thumb.svg";
+import { useNotify } from "src/hooks/notify";
 
 const props = defineProps({
   params: String
@@ -81,7 +82,42 @@ const paramsObj = computed(() => {
   }
 });
 
-const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id);
+const handleCopyClick = async () => {
+  if (window.location.pathname === "/promotion") {
+    const textToCopy = paramsObj.value?.voxis_id;
+
+    const notify = useNotify();
+    if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+      await navigator.clipboard.writeText(textToCopy);
+    } else {
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+
+      document.body.prepend(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(textArea);
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }
+    }
+  } else {
+    writeClipboard(paramsObj.value?.voxis_id);
+  }
+};
 </script>
 <style lang="scss" scoped>
 .official-gift-container {

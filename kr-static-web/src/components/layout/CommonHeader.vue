@@ -6,7 +6,7 @@
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
         </router-link>
-        <div class="navigations" style="margin-right: auto">
+        <div class="navigations" style="margin-right: auto; visibility: hidden">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div
@@ -57,7 +57,7 @@
         <!--          <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">-->
         <!--            <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />-->
         <!--            <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />-->
-        <!--            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />-->
+        <!--            <EsportsMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
         <!--            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />-->
         <!--            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />-->
         <!--            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />-->
@@ -80,6 +80,26 @@
         </div>
 
         <div v-if="store.token" class="profile-actions">
+          <div class="action-btn" @click="store.toggleAnnouncementDialog">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-announce.svg" />
+            </div>
+            {{ $t("menu_item.menu_announcement") }}
+          </div>
+          <router-link to="/center/message" class="action-btn">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-message.svg" />
+              <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
+            </div>
+            {{ $t("menu_item.menu_message") }}
+          </router-link>
+          <router-link to="/center/inquiry" class="action-btn">
+            <div class="icon-rounded">
+              <img src="../../assets/images/home/profile-freedback.svg" />
+              <el-badge class="unread-count" v-if="store.unrepliedTotal" :value="store.unrepliedTotal" color="red" />
+            </div>
+            {{ $t("menu_item.menu_inquiry") }}
+          </router-link>
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.svg" />
@@ -92,12 +112,12 @@
             </div>
             {{ $t("menu.withdraw") }}
           </router-link>
-          <div class="action-btn" @click="showRebateValue">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-rebate.svg" />
-            </div>
-            {{ $t("menu.rebate") }}
-          </div>
+          <!--          <div class="action-btn" @click="showRebateValue">-->
+          <!--            <div class="icon-rounded">-->
+          <!--              <img src="../../assets/images/home/profile-action-rebate.svg" />-->
+          <!--            </div>-->
+          <!--            {{ $t("menu.rebate") }}-->
+          <!--          </div>-->
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
@@ -107,7 +127,8 @@
         </div>
 
         <div class="profile-info" v-if="store.token">
-          <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
+          <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+          <!-- <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
@@ -125,24 +146,24 @@
                     <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="deposit">
+                <!- <el-dropdown-item command="deposit">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{ $t("menu.deposit") }}</span>
                   </div>
-                </el-dropdown-item>
-                <!-- <el-dropdown-item command="transfer">
+                </el-dropdown-item> -->
+          <!-- <el-dropdown-item command="transfer">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item> -->
-                <el-dropdown-item command="promotion">
+          <!-- <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> ->
                 <el-dropdown-item command="logout">
                   <button class="standard-button btn-color-white" style="color: #468cff">
                     {{ $t("menu.logout") }}
@@ -150,30 +171,68 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
-          </el-dropdown>
+          </el-dropdown> -->
           <div class="profile-details">
-            <div class="name-and-vip-wrapper">
-              <div class="details-name">
-                {{ store.nickName }}
-              </div>
-              <div class="account-vip-label">
+            <div class="name-and-vip-wrapper details-balance">
+              <!-- <div class="details-name">
+                {{ store.name2 || store.realName || store.nickName }}
+              </div> -->
+              <!-- <div class="account-vip-label">
                 {{ vip }}
+              </div> -->
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 70px 1fr; gap: 5px; align-items: center; flex-wrap: nowrap"
+              >
+                <span class="assets-text">{{ $t("account.nickname") }}:</span>
+                <span class="amount">{{ store.name2 }}</span>
               </div>
             </div>
             <a @click="refreshBalance" class="details-balance">
-              <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 70px 1fr; gap: 5px; align-items: center; flex-wrap: nowrap"
+              >
                 <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
                   <span v-if="!isLoadingBalance">{{ displayBalance(store.balance) }} {{ store.currency.value }}</span>
                 </span>
               </div>
-              <el-icon>
+              <!-- <el-icon>
                 <RiRefreshLine color="#468CFF" />
-              </el-icon>
+              </el-icon> -->
+            </a>
+            <a @click="store.toggleRedeemPointDialog" class="details-balance">
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
+              >
+                <span class="assets-text">{{ $t("account.point") }}:</span>
+                <span class="amount blue">
+                  <!-- <span v-if="isLoadingBalance">{{ $t("common.loading") }}...</span>
+                  <span v-if="!isLoadingBalance">
+                    {{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}
+                  </span> -->
+                  {{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}
+                </span>
+              </div>
+              <!-- <el-icon>
+                <RiRefreshLine color="#468CFF" />
+              </el-icon> -->
             </a>
           </div>
         </div>
+        <div v-if="store.token" class="right-contents">
+          <router-link to="/center/personal" class="header-btn btn-color-blue">
+            {{ $t("menu.personalInfo") }}
+          </router-link>
+          <a class="header-btn btn-color-white" @click="logoutDialogVisible = true">
+            {{ $t("menu.logout") }}
+            <!-- <img src="../../assets/home/regbtn_side.png" /> -->
+          </a>
+        </div>
+        <RedeemPointDialog :closeDialog="() => store.toggleRedeemPointDialog" />
 
         <!-- <div v-if="store.token" class="profile-actions">
           <router-link to="/center/mailbox" class="action-btn-full">
@@ -303,14 +362,10 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div
-        class="acc-dialog-container login-container"
-        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
-      >
+      <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
-          <img v-else src="../../assets/home/tf88club-img.png" />
+          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -327,17 +382,13 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1080px"
+      width="350px"
       align-center
       style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container signup-container">
-        <div class="acc-dialog-left">
-          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
-          <img src="../../assets/home/acc-dialog-img-signup-eurocup.png" />
-        </div>
-        <div class="acc-dialog-right">
+        <div class="acc-dialog-right" style="width: 100%; padding: 24px">
           <RegisterAccount
             @close-dialog="registerDialogVisible = false"
             @open-login-dialog="openLoginDialog"
@@ -492,8 +543,10 @@ import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import HomeWelcome from "@/components/home/HomeWelcome.vue";
+import RedeemPointDialog from "@/components/home/RedeemPointDialog.vue";
 
 import { i18nStore } from '@/store/language'
+import { getSysReply } from "@/api/personal/feedback";
 export default defineComponent({
   name: "CommonHeader",
   components: {
@@ -514,7 +567,8 @@ export default defineComponent({
     ForgotPwdDialog,
     RegisterAccount,
     LocaleChanger,
-    HomeWelcome
+    HomeWelcome,
+    RedeemPointDialog
   },
   setup() {
     const { t } = useI18n();
@@ -528,7 +582,7 @@ export default defineComponent({
           { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
           { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          // { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          // { code: "poker", name: t('menu.poker'), enName: "Esports", path: "/poker", submenu: true },
           // { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
@@ -552,7 +606,7 @@ export default defineComponent({
           { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
           { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          // { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          // { code: "poker", name: t('menu.poker'), enName: "Esports", path: "/poker", submenu: true },
           // { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
@@ -573,6 +627,8 @@ export default defineComponent({
         ]
       }
     });
+
+    const redeemDialogVisible = ref(false);
 
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
@@ -1221,6 +1277,7 @@ export default defineComponent({
         store.getMemberInfo();
 
         getUnreadMail();
+        getUnrepliedCount();
       }
 
       // if(store.loginPageVisible) {
@@ -1280,6 +1337,9 @@ export default defineComponent({
     const isLoadingBalance = ref(false);
     const refreshBalance = () => {
       isLoadingBalance.value = true;
+      store.getPendingRebateAmt().then(() => {
+        isLoadingBalance.value = false;
+      })
       store.getBalance().then(() => {
         isLoadingBalance.value = false;
       });
@@ -1463,6 +1523,18 @@ export default defineComponent({
         // console.log("error===", error)
       });
     };
+
+    const getUnrepliedCount = () => {
+      getSysReply().then(res => {
+        if(res.code === 0) {
+          const {records} = res.data
+          store.unrepliedTotal = records.reduce((total,record) => {
+            if(record.replyId === null) total++
+            return total
+          },0)
+        }
+      })
+    }
 
     const openLoginDialog = () => {
       registerDialogVisible.value = false;
@@ -1656,7 +1728,7 @@ body {
   .profile-details {
     display: flex;
     flex-direction: column;
-    width: 160px;
+    // width: 160px;
     font-size: 14px;
 
     .name-and-vip-wrapper {
@@ -1688,11 +1760,17 @@ body {
       display: flex;
       align-items: center;
 
+      color: #7a80a1;
       .assets-text {
         white-space: nowrap;
+        text-align: right;
       }
 
       .amount {
+        color: #313441;
+        &.blue {
+          color: #3981ff;
+        }
         font-family: "Roboto";
         margin-right: 0.5rem;
         white-space: nowrap;
@@ -1703,9 +1781,10 @@ body {
 
 .profile-actions {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 
   .action-btn {
+    flex: 1;
     // height: 30px;
     gap: 2px;
     width: 45px;
@@ -1715,6 +1794,7 @@ body {
     flex-direction: column;
     font-size: 0.75rem;
     color: $font-1;
+    white-space: nowrap;
     cursor: pointer;
     text-align: center;
 
@@ -1734,6 +1814,7 @@ body {
       justify-content: center;
       border-radius: 50%;
       box-shadow: 0px 2px 5px 0px #bbdcff inset;
+      position: relative;
     }
 
     img {
@@ -1789,7 +1870,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
     span {
       min-width: 40px;
       text-align: right;
@@ -1797,7 +1877,6 @@ body {
     }
 
     .amount {
-      color: #faea81;
       font-weight: bold;
     }
 
@@ -2752,5 +2831,14 @@ body {
     text-align: center;
     font-weight: bold;
   }
+}
+
+.unread-count {
+  position: absolute !important;
+  top: 0;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  opacity: 1;
 }
 </style>

@@ -30,9 +30,9 @@ export default defineComponent({
       //   name: "收件箱"
       // },
       {
-        code: "inbox",
-        icon: "inbox",
-        name: t("lang.mail_mailbox")
+        code: "write",
+        icon: "write",
+        name: t("lang.mail_compose")
       },
       {
         code: "outbox",
@@ -44,11 +44,11 @@ export default defineComponent({
       //   icon: "feedback",
       //   name: t("lang.mail_feedback")
       // },
-      {
-        code: "write",
-        icon: "write",
-        name: t("lang.mail_compose")
-      },
+      // {
+      //   code: "write",
+      //   icon: "write",
+      //   name: t("lang.mail_compose")
+      // },
 
     ]);
 

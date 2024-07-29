@@ -15,6 +15,7 @@ export default {
     account: "Account",
     promo: "Promo",
     customer_service: "CS",
+    nickname: "Nickname",
     mine: "Mine",
     personal_information: "Personal Information",
     input_username_cannot_empty: "Username cannot be empty.",
@@ -49,6 +50,18 @@ export default {
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
+    btn_redeem: "redeem",
+
+    // redeem point start
+    redeem_point_pending_list: "Pending List",
+    redeem_point_redeem: "Redeem",
+    redeem_point_points: "Points",
+    redeem_point_date: "Date",
+    redeem_point_source: "Source",
+    redeem_point_condition: "Condition",
+    redeem_point_actions: "Actions",
+    redeem_point_redeemed: "Redeemed points",
+    // redeem point end
 
     // side menu
     menu_sports: "Sports",
@@ -74,6 +87,7 @@ export default {
     msg_readmsg: "Read message",
     msg_deleteselected: "Delete selected messages",
     msg_deleteallmsg: "Delete all messages",
+    msg_hasUnreadMail: "You have unread messages. You cannot access the deposit/withdrawal/game pages.",
 
     // login page
     login_title: "Are you ready",
@@ -126,6 +140,14 @@ export default {
     user_registration_protocol: "User Registration protocol",
     register_success: "Registered Successfully.",
     register_in_progress: "Registering...",
+    reg_bank: "Bank",
+    reg_bank_placeholder: "Select bank",
+    reg_bank_acc_num: "Bank Account",
+    reg_bank_acc_num_placeholder: "Enter only numbers without '-'",
+    reg_bank_acc_holder: "Bank Account Holder",
+    reg_bank_acc_holder_placeholder:
+      "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -201,7 +223,8 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "URL",
-    personal_username: "Username",
+    personal_username: "ID",
+    personal_nickname: "Nickname",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
     personal_realname_valid: "Please enter a valid real name",
@@ -209,7 +232,7 @@ export default {
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",
     personal_close: "Close",
-    personal_mobilenumber: "Mobile Number",
+    personal_mobilenumber: "phone",
     personal_mobilenumber_val: "Please enter your mobile number",
     personal_mobilenumber_verify: "Please verify your mobile number",
     personal_mobilenumber_allownumsonly: "Phone numbers only allow digits",
@@ -397,11 +420,12 @@ export default {
     // mine
     version_no: "Version",
     central_wallet: "Central wallet",
+    central_rebate: "Rebate",
     loading: "Loading...",
     deposit_btn: "Deposit",
     withdraw_btn: "Withdraw",
     transfer_btn: "Transfer",
-    account_title: "Enjoy discounts",
+    account_title: "Personal Info",
     account_bonus_redeem: "Redeem bonus",
     mine_personal_info: "Personal",
     mine_bank: "Bank",
@@ -918,6 +942,19 @@ export default {
     suspend: "Suspend",
     pending: "Pending",
     supplement_success: "Supplement success",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
+    deposit_reminder_text: `After requesting the deposit account and making the deposit, click "Complete Application" below to process the charge.
+Deposits made in names other than your own cannot be processed.
+The account number is subject to real-time changes, so please verify it each time you deposit.
+The minimum deposit amount is KRW 30,000 and must be in units of KRW 10,000.
+
+※Important Notes
+Once you request a deposit account after entering the amount to be charged, the amount cannot be modified.
+If you entered the wrong amount, please submit a charge application first and we will assist with the cancellation process.
+
+※Virtual Account Maintenance Time
+Please note the maintenance time from 23:30 to 00:30.`,
 
     // WithdrawBankView
     choose_a_card: "Choose a card",
@@ -925,6 +962,11 @@ export default {
     add_a_card: "Add card",
     bank_card_unbind_record: "Bank card binding record",
     add_a_virtual_currency: "Add virtual currency",
+    withdraw_reminder: "Reminder",
+    withdraw_reminder_caption: "Please read this before making a withdrawal.",
+    withdraw_reminder_text: `Withdrawals cannot be processed to accounts in names other than your own.
+The minimum withdrawal amount is KRW 50,000 and must be in units of KRW 10,000.
+We sincerely congratulate you on your exchange and wish you only the best days ahead.`,
     select_account_add_different_banks: "Select account (add different banks)",
     please_select_a_bank_account: "Please select a bank account",
     account_name_with_desc: "Account name (name matches the account used for deposit)",
@@ -932,6 +974,7 @@ export default {
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
     confirm: "Confirm",
+    redeem: "Redeem",
     incorrect: "Incorrect",
     security_check: "Security Check",
     fish2_list: "Aviator",
@@ -940,6 +983,8 @@ export default {
       "Jolly88 (TNC) Terms of Service: The services we provide are subject to the terms of use and privacy policy. Please refer to our service agreement for more information.",
     footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
     announcement: "Announcement",
+    question: "Question",
+    message: "Message",
     name: "Name",
     surname: "Surname",
     dob: "DOB",
@@ -1119,6 +1164,8 @@ export default {
     mail_selectone: "Select one",
     mail_read: "Read",
     mail_delete: "Delete",
+
+    feedback_delete_selected_message: "Deleted selected messages",
 
     // compose
     compose_title: "Title",

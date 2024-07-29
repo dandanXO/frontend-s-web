@@ -1,6 +1,8 @@
 <template>
-  <div>
+  <div class="video-wrapper">
     <div class="video-container">
+      <!-- :src="getVideoUrl(media)" -->
+      <!-- <pre>{{ media }}</pre> -->
       <iframe
         :src="getVideoUrl(media)"
         frameborder="0"
@@ -19,14 +21,6 @@ import { api } from "boot/axios";
 const props = defineProps(["media"]);
 
 const mediaSettingsData = ref([]);
-
-// const loadMediaSettings = () => {
-//   api.get("/media-settings").then((res) => {
-//     if (res.code === 0) {
-//       mediaSettingsData.value = res.data;
-//     }
-//   });
-// };
 
 const displayUrlMap = {
   HOMEPAGE: "/home",
@@ -69,14 +63,19 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.video-container {
-  /* margin-top: 16px; */
+.video-wrapper {
   position: relative;
-  aspect-ratio: 16 / 9; /* 16:9 ratio */
+  width: 100%;
+}
+
+.video-container {
+  position: relative;
+  aspect-ratio: 16 / 9;
   max-width: 100%;
   background: #000;
-  margin-bottom: 20px; /* Add some space between videos */
+  margin-bottom: 20px;
   height: 300px;
+  width: 100%;
 }
 
 .video-container iframe {

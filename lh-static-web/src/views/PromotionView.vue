@@ -216,7 +216,7 @@ export default defineComponent({
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if (route.query && route.query?.name && store.token) {
+      if (route.query && route.query?.name) {
         return true;
       }
       return false;
@@ -249,21 +249,22 @@ export default defineComponent({
     //   })
     // }
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
-          // if you want to disable its autofocus
-          // autofocus: false,sd
-          center: true,
-          confirmButtonText: "确认",
-          showClose: false,
-          buttonSize: "large"
-        }).then(() => {
-          // router.push('/login');
-          store.loginPageVisible = true;
-        });
-        return;
-      } else {
-        if (promo.redirectUrl.includes("page-vip")) {
+      // if (!store.token) {
+      //   ElMessageBox.alert("请登录后再操作", "系统提示", {
+      //     // if you want to disable its autofocus
+      //     // autofocus: false,sd
+      //     center: true,
+      //     confirmButtonText: "确认",
+      //     showClose: false,
+      //     buttonSize: "large"
+      //   }).then(() => {
+      //     // router.push('/login');
+      //     store.loginPageVisible = true;
+      //   });
+      //   return;
+      // } else {
+      // }
+      if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
           router.push("/privilege/invite");
@@ -279,7 +280,6 @@ export default defineComponent({
           console.log(promo, "promo");
           selectedPromo.value = promo;
         }
-      }
     };
 
     const scrollToTop = () => {

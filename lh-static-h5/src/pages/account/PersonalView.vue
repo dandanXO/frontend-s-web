@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>
+    <div class="web">专属网址：{{ personalState.memberInfo.evip }}</div>
     <q-form ref="profileFormRef">
       <q-input
         standout
@@ -223,6 +223,7 @@ export default defineComponent({
       formDetail.birthday = personalState.memberInfo.birthday;
       formDetail.email = personalState.memberInfo.email;
       formDetail.phone = personalState.memberInfo.phone;
+      // formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
       formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
@@ -300,7 +301,7 @@ export default defineComponent({
         if (ret.code === 0) {
           notify({
             type: "success",
-            message: "OTP验证码已发送至您的邮箱",
+            message: "OTP 验证码已发送至您的邮箱",
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;

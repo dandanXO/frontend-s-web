@@ -10,7 +10,10 @@ import { ref, onMounted, defineProps, computed } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
 import { useNotify } from "src/hooks/notify";
-
+import { userStore } from "../../../stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const store = userStore();
 const props = defineProps({
   platformType: String
 });
@@ -19,6 +22,29 @@ const notify = useNotify();
 const $q = useQuasar();
 
 const handleSubmit = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   eventapi
     .post("/game-match/submit/UEFA")
     .then((response) => {

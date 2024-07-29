@@ -261,6 +261,7 @@ export default {
     vipStatus_txt: "وی آئی پی اسٹیٹس کو ماہانہ جمع شدہ رقم سے اپ گریڈ کیا جا سکتا ہے",
     upgrade: "اپ گریڈ",
     experience: "تجربہ",
+    dailyWithdrawalTimes: "روزانہ واپسی کے اوقات",
     rewards: "انعامات",
     vipTable_txt:
       "ایک بار جمع شدہ رقم اپ گریڈ کی ضروریات پوری کرتی ہے، آپ کا VIP سطح فوراً بلند کیا جائے گا، اور متعلقہ اپ گریڈ انعامات جاری کیے جائیں گے۔"
@@ -276,9 +277,9 @@ export default {
     reward: {
       myTotalIncome: "میری کل آمدنی",
       myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
-      invite: "دعوت دیں",
-      topUp: "اپ ڈاؤن",
-      bet: "شرط لگائیں",
+      invite: "دعوتی بونس",
+      topUp: "جمع بونس",
+      bet: "شرط بونس",
       eligibleRefer: "اہل ریفر",
       inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
       howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
@@ -292,7 +293,8 @@ export default {
       player: "پلیئر",
       money: "پیسہ",
       eligibility_tips: "اہلیت: <br /> مدعو کا جمع کردہ رقم ≥ 300 ہونا چاہیے۔",
-      betting_tips: "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
+      betting_tips:
+        "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
       deposit_tips: "ڈپازٹ کمیشن: <br /> ہر نئے ممبر کی پہلی جمع کردہ رقم پر 5% ریبیٹ حاصل کریں جو آپ مدعو کریں۔",
       shareTitle: "B9GAME شیئر کریں اور کمائیں",
       shareText:
@@ -430,7 +432,10 @@ export default {
     orderNo: "آرڈر نمبر",
     bank: "بینک",
     noRecord: "کوئی ریکارڈ نہیں",
-    noMoreRecord: "مزید ریکارڈ نہیں"
+    noMoreRecord: "مزید ریکارڈ نہیں",
+    bytoday: " آج تک",
+    byyesterday: "کل تک",
+    all: "سب"
   },
   appUpdate: {
     updateHeader: "اعلانِ اپ ڈیٹ",

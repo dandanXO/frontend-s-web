@@ -306,7 +306,7 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元奖金</div>
+        <div>已领取：{{ getDoneRewardItem1 }}元</div>
         <div>
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
@@ -346,7 +346,7 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元奖金</div>
+        <div>已领取：{{ getDoneRewardItem2 }}元</div>
         <div>
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
@@ -402,6 +402,12 @@ const selectedTab = ref("sports");
 const depositAmount = ref(0);
 const updatedApiRes = ref([]);
 
+const getDoneRewardItem1 = computed(() => {
+  return rewards1.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
+const getDoneRewardItem2 = computed(() => {
+  return rewards2.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
 const rewards1 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount1.includes(item.ruleAmount));
 });
@@ -409,10 +415,10 @@ const rewards2 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount2.includes(item.ruleAmount));
 });
 const matchRewardItem1 = computed(() => {
-  return rewards1.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards1.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const matchRewardItem2 = computed(() => {
-  return rewards2.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards2.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const progressPercentage1 = computed(() => {
   if (matchRewardItem1.value) {
@@ -527,9 +533,7 @@ onMounted(async () => {
   justify-content: center;
   gap: 5px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   font-size: 20px;
   border: 1px solid #7a80a1;
 }

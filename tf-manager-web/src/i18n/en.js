@@ -483,11 +483,11 @@ export default {
   },
   mode: {
     DYNAMIC: 'DYNAMIC',
-    STATIC: 'STATIC'
+    STATIC: 'STATIC',
   },
   autoplayStatus: {
     ON: 'ON',
-    OFF: 'OFF'
+    OFF: 'OFF',
   },
   fields: {
     account: 'Account',
@@ -557,6 +557,7 @@ export default {
     addSitePlatform: 'Add Site Platform',
     addStage: 'Add Stage',
     addSystemMessage: 'Add System Message',
+    addSyncDefault: 'Sync Competition List Within 3 Days',
     addTelephone: 'Add Telephone Number',
     addTicket: 'Add Ticket',
     addUser: 'Add User',
@@ -1901,6 +1902,15 @@ export default {
     yesterdayRegCount: 'Yesterday Register Count',
     displayStartTime: 'Display Start Time',
     displayEndTime: 'Display End Time',
+    redirectType: 'Redirect Type',
+    redirectUrl: 'Redirect URL',
+    redirectButton: 'Redirect Button',
+    sendFrom: 'Sent From',
+    expiryTime: 'Expiry Time',
+    noExpiryTime: 'No Expiry Time',
+    hasPopUp: 'Has PopUp',
+    noPopUp: 'No PopUp',
+    selectedVIP: 'selected VIP',
     affiliateBalance: 'Affiliate Balance',
     memberBalance: 'Member Balance',
     affiliatePoint: 'Affiliate Point',
@@ -2392,16 +2402,18 @@ export default {
     updateAffiliateLevelSuccess: 'Update Affiliate Level Success',
     validateMinDayRegLimitRequired: 'Daily Minimum Register Limit is required',
     validateMaxDayRegLimitRequired: 'Daily Maximum Register Limit is required',
-    validateMinDayDepositAmountRequired: 'Daily Minimum Deposit Amount is required',
-    validateMaxDayDepositAmountRequired: 'Daily Maximum Deposit Amount is required',
+    validateMinDayDepositAmountRequired:
+      'Daily Minimum Deposit Amount is required',
+    validateMaxDayDepositAmountRequired:
+      'Daily Maximum Deposit Amount is required',
     validateDayRegProbabilityRequired: 'Daily Register Probability is required',
-    validateDayDepositAmountProbabilityRequired: 'Daily First Deposit Probability is required',
+    validateDayDepositAmountProbabilityRequired:
+      'Daily First Deposit Probability is required',
     validateMediaDescRequired: 'Media Description Required',
     validateMediaUrlRequired: 'Video link required',
     validateDisplayUrlRequired: 'Video display link required',
     validateModeRequired: 'Mode required',
     validateAutoplayRequired: 'Autoplay required',
-
   },
   menu: {
     undefined: '',
@@ -2441,7 +2453,8 @@ export default {
     'Affiliate List': 'Affiliate List',
     'Affiliate Details': 'Affiliate Details',
     'Affiliate Financial Management': 'Affiliate Financial Management',
-    'Affiliate Facebook Pixel Management': 'Affiliate Facebook Pixel Management',
+    'Affiliate Facebook Pixel Management':
+      'Affiliate Facebook Pixel Management',
     'Affiliate Deposit Display': 'Affiliate Deposit Display',
     'Site Affiliate Commission': 'Site Affiliate Commission',
     'Aff Announcement Management': 'Affiliate Announcement Management',
@@ -2648,12 +2661,13 @@ export default {
     'KRW Stats Report': 'KRW Statistics Report',
     'Member Refer Pak': 'Member Refer Pak',
     'Member Refer Summary Pak': 'Member Refer Summary Pak',
+    Pm: 'Private Message',
     'MQ Log': 'MQ Log',
     'Promotion Coupon': 'Deposit Coupon',
     'Member Invite Limit': 'Member Invite Limit',
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
-    'Media Display Settings': 'Media Display Settings'
+    'Media Display Settings': 'Media Display Settings',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2808,6 +2822,16 @@ export default {
     DOWNLOAD: 'Download',
     AFFILIATE: 'Affiliate',
     HOME: 'Home',
+  },
+  pmStatus: {
+    UNSENT: 'Unsent',
+    SENDING: 'Sending',
+    SENT: 'Sent',
+  },
+  pmRedirectType: {
+    NONE: 'No Redirect',
+    INNER: 'Inner Site Redirect',
+    OUTER: 'Outer Site Redirect',
   },
   error: {
     400: 'Bad Request',

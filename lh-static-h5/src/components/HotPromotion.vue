@@ -1,16 +1,16 @@
 <template>
   <div class="hot-promo">
     <ClaimPromo
-      v-if="listParam.type === 'claimpromo' && store.hasToken()"
+      v-if="listParam.type === 'claimpromo'"
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
+      @daily-slot="handleSlot(list.promoCode)"
     />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
-    <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu' && store.token" :promo-code="list.promoCode" />
+    <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
     <UpcomingMatchPromo
@@ -26,16 +26,16 @@
     />
 
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-award'" />
-    <div style="text-align: center" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token">
+    <div style="text-align: center" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei'">
       <div class="cs-btn" @click="goToCsChat()">联系客服</div>
     </div>
 
     <AppHongBao
-      v-if="list.redirectUrl === 'lh1-app-hongbao' && store.token"
+      v-if="list.redirectUrl === 'lh1-app-hongbao'"
       :promo-code="list.promoCode"
       :params="list.param"
     />
-    <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && store.token" />
+    <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo'" />
 
     <PrivilegeInvitePromo
       v-if="
@@ -43,7 +43,7 @@
       "
     />
 
-    <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery' && store.token" />
+    <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery'" />
 
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
 
@@ -59,11 +59,11 @@
       :params="list.param"
     />
 
-    <LplSummerPromo v-if="list.redirectUrl === 'lh1-lpl-game' && store.token"></LplSummerPromo>
+    <LplSummerPromo v-if="list.redirectUrl === 'lh1-lpl-game'"></LplSummerPromo>
 
-    <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone' && store.token"></BbDacha2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone'"></BbDacha2024Promo>
     <LhStepGamePromo
-      v-if="list.redirectUrl === 'lh1-game-steps' && store.token"
+      v-if="list.redirectUrl === 'lh1-game-steps'"
       :pageContent="list.pageContent"
     ></LhStepGamePromo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
@@ -282,26 +282,6 @@ export default defineComponent({
     }
   },
   methods: {
-    handleSlot() {
-      const bonusItem = this.list.promoCode;
-      const eventUrl = "/bonus/claim/" + bonusItem;
-      this.btnLoading = true;
-      eventapi
-        .put(eventUrl)
-        .then((res) => {
-          this.btnLoading = false;
-          if (res.code === 0) {
-            var rebatePoint = res.data;
-            this.claimMsg = "￥" + rebatePoint;
-            this.isClaimModal = true;
-          } else {
-            this.btnLoading = false;
-          }
-        })
-        .catch((error) => {
-          this.btnLoading = false;
-        });
-    }
   },
   mounted() {
     this.hotPromoList.forEach((element) => {
@@ -323,7 +303,6 @@ export default defineComponent({
     const $q = useQuasar();
     const store = userStore();
     var qs = require("qs");
-
     const loading = ref(false);
     const btnLoading = ref(false);
     const isClaimModal = ref(false);
@@ -400,7 +379,73 @@ export default defineComponent({
     // }
 
     const router = useRouter();
+    const handleSlot = (promoCode) => {
+      if (!store.token) {
+        $q.dialog({
+            class: "q-px-md q-pt-md",
+            title: "系统提示",
+            message: "请登录后再操作",
+            ok: {
+              push: true,
+              color: 'primary',
+              label: "去登录",
+              tabindex: 1
+            },
+            cancel: {
+              push: true,
+              color: 'warning',
+              label: "取消",
+              tabindex: 0
+            },
+            persistent: true,
+          }).onOk(() => {
+            router.push('/login');
+          })
+          return
+      }
+      const bonusItem = promoCode;
+      const eventUrl = "/bonus/claim/" + bonusItem;
+      btnLoading.value = true;
+      eventapi
+        .put(eventUrl)
+        .then((res) => {
+          btnLoading.value = false;
+          if (res.code === 0) {
+            var rebatePoint = res.data;
+            claimMsg.value = "￥" + rebatePoint;
+            isClaimModal.value = true;
+          } else {
+            btnLoading.value = false;
+          }
+        })
+        .catch((error) => {
+          btnLoading.value = false;
+        });
+    };
     const goToCsChat = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
       router.push("/liveChat");
     };
 
@@ -413,7 +458,8 @@ export default defineComponent({
       loading,
       btnLoading,
       isClaimModal,
-      claimMsg
+      claimMsg,
+      handleSlot
     };
   }
 });

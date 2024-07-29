@@ -4,7 +4,8 @@ import HomeView from "../views/HomeView.vue";
 import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
+import i18n from "@/i18n";
 
 const routes = [
   {
@@ -49,7 +50,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "About" */ "../views/AboutView.vue")
       },
       {
-        path: "/esports",
+        path: "/poker",
         name: "esports",
         component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsView.vue")
       },
@@ -184,6 +185,12 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.nickName === "") {
         store.getMemberInfo().then(() => next({ ...to, replace: true }));
+      } else if (store.unreadTotal > 0) {
+        if (["/center/withdraw", "/center/deposit"].includes(to.path)) {
+          ElMessage.error(i18n.global.t("notification.hasUnreadMessage"));
+        } else {
+          next();
+        }
       } else {
         next();
       }
@@ -214,29 +221,10 @@ router.beforeEach((to, from, next) => {
 
   // FB tracking
   // console.log(window.location.href)
-  if (window.location.href.indexOf("tf88king.com") > -1) {
-    fbq("init", "888951505918547");
-    fbq("track", "PageView");
-    store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-    fbq("init", "3658633674357920");
-    fbq("track", "PageView");
-    store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
-    // console.log("5svn88.com 2")
-    otag("init", "adv10336256983680");
-  } else if (window.location.href.indexOf("tf68688.com") > -1) {
-    fbq("init", "1123673335564806");
-    fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }else if (window.location.href.indexOf("wintf99.com") > -1) {
-    fbq("init", "441415921872746");
-    fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
-    fbq("init", "1862869640792398");
-    fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }
+  // if (window.location.href.indexOf("tf88king.com") > -1) {
+  //   fbq("init", "888951505918547");
+  //   fbq("track", "PageView");
+  //   store.isAffiliateA= true;
+  // }
 });
 export default router;

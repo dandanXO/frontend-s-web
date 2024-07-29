@@ -107,6 +107,7 @@
         <q-select
           ref="bankCardRef"
           standout
+          filled
           v-model="bankCardInfo.bankId"
           class="q-pb-xs"
           hide-bottom-space
@@ -123,11 +124,7 @@
         >
           <template v-slot:selected-item="scope">
             <q-item-section avatar>
-              <img
-                v-if="scope.opt.bankIcon"
-                style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                :src="imgURL + '/payment/' + scope.opt.bankIcon"
-              />
+              <img v-if="scope.opt.bankIcon" style="width: 20px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
             </q-item-section>
             <q-item-section>
               <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
@@ -138,11 +135,7 @@
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section avatar>
-                <img
-                  v-if="scope.opt.bankIcon"
-                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                />
+                <img v-if="scope.opt.bankIcon" style="width: 20px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ scope.opt.name }}</q-item-label>
@@ -200,52 +193,52 @@
         ></q-input>
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
-        <q-label>
-          {{ $t("lang.bd_phone_number") }}
-          <em>*</em>
-        </q-label>
-        <q-input
-          standout
-          v-model="bankCardInfo.telephone"
-          class="q-pb-xs"
-          hide-bottom-space
-          :placeholder="$t('lang.bd_please_enter_phone_number')"
-          lazy-rules
-          clearable
-          readonly
-        >
-          <template v-slot:append>
-            <q-btn
-              @click="openPhoneVeriDialog()"
-              type="submit"
-              class="common-sm-btn bottom-btn get-otp-btn"
-              :label="$t('lang.bd_get_otp')"
-              color="brightbtn"
-              rounded
-            />
-          </template>
-        </q-input>
+        <!--        <q-label>-->
+        <!--          {{ $t("lang.bd_phone_number") }}-->
+        <!--          <em>*</em>-->
+        <!--        </q-label>-->
+        <!--        <q-input-->
+        <!--          standout-->
+        <!--          v-model="bankCardInfo.telephone"-->
+        <!--          class="q-pb-xs"-->
+        <!--          hide-bottom-space-->
+        <!--          :placeholder="$t('lang.bd_please_enter_phone_number')"-->
+        <!--          lazy-rules-->
+        <!--          clearable-->
+        <!--          readonly-->
+        <!--        >-->
+        <!--          <template v-slot:append>-->
+        <!--            <q-btn-->
+        <!--              @click="openPhoneVeriDialog()"-->
+        <!--              type="submit"-->
+        <!--              class="common-sm-btn bottom-btn get-otp-btn"-->
+        <!--              :label="$t('lang.bd_get_otp')"-->
+        <!--              color="brightbtn"-->
+        <!--              rounded-->
+        <!--            />-->
+        <!--          </template>-->
+        <!--        </q-input>-->
 
-        <template v-if="isOtpSent">
-          <q-label>
-            {{ $t("lang.bd_otp_code") }}
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="phoneVerificationRef"
-            standout
-            v-model="bankCardInfo.smsCode"
-            class="q-pb-xs"
-            hide-bottom-space
-            :placeholder="$t('lang.bd_please_enter_otp')"
-            lazy-rules
-            clearable
-            maxlength="6"
-            :rules="[(val) => (val && val.length > 3) || $t('lang.bd_please_enter_otp')]"
-            @keydown.enter.prevent="handleEnterKey"
-            @keydown.enter="submitBankCard()"
-          ></q-input>
-        </template>
+        <!--        <template v-if="isOtpSent">-->
+        <!--          <q-label>-->
+        <!--            {{ $t("lang.bd_otp_code") }}-->
+        <!--            <em>*</em>-->
+        <!--          </q-label>-->
+        <!--          <q-input-->
+        <!--            ref="phoneVerificationRef"-->
+        <!--            standout-->
+        <!--            v-model="bankCardInfo.smsCode"-->
+        <!--            class="q-pb-xs"-->
+        <!--            hide-bottom-space-->
+        <!--            :placeholder="$t('lang.bd_please_enter_otp')"-->
+        <!--            lazy-rules-->
+        <!--            clearable-->
+        <!--            maxlength="6"-->
+        <!--            :rules="[(val) => (val && val.length > 3) || $t('lang.bd_please_enter_otp')]"-->
+        <!--            @keydown.enter.prevent="handleEnterKey"-->
+        <!--            @keydown.enter="submitBankCard()"-->
+        <!--          ></q-input>-->
+        <!--        </template>-->
       </q-form>
 
       <div class="note">{{ $t("lang.bd_reminder_name_issue") }}</div>
@@ -268,14 +261,14 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { t } from "src/boot/lang";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
@@ -414,23 +407,21 @@ const submitBankCard = () => {
   cardNumberRef.value.validate();
   cardAddressRef.value.validate();
 
-  if (!phoneVerificationRef.value) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("lang.bd_click_verification"),
-      icon: "report_problem"
-    });
-  } else {
-    phoneVerificationRef.value.validate();
-  }
+  // if (!phoneVerificationRef.value) {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: t("lang.bd_click_verification"),
+  //     icon: "report_problem"
+  //   });
+  // } else {
+  //   phoneVerificationRef.value.validate();
+  // }
 
   if (
     !(
-      bankCardRef.value.hasError ||
-      cardNumberRef.value.hasError ||
-      cardAddressRef.value.hasError ||
-      phoneVerificationRef.value.hasError
+      (bankCardRef.value.hasError || cardNumberRef.value.hasError || cardAddressRef.value.hasError)
+      // phoneVerificationRef.value.hasError
     )
   ) {
     api

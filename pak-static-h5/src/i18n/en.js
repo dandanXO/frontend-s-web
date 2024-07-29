@@ -262,6 +262,7 @@ export default {
     vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
     upgrade: "Upgrade",
     experience: "Experience",
+    dailyWithdrawalTimes: "Daily Withdrawal Times",
     rewards: "Rewards",
     vipTable_txt:
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
@@ -277,9 +278,9 @@ export default {
     reward: {
       myTotalIncome: "My Total Income",
       myTotalNumberOfInvites: "My Total Number Of Invites",
-      invite: "Invite",
-      topUp: "Top Up",
-      bet: "Bet",
+      invite: "Invitation Bonus",
+      topUp: "Deposit Bonus",
+      bet: "Bet Bonus",
       eligibleRefer: "Eligible Refer",
       inviteFriendsViaLink: "Invite friends via link",
       howToGetInvitationBonus: "How to get invitation bonus",
@@ -293,7 +294,8 @@ export default {
       player: "Player",
       money: "Money",
       eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
-      betting_tips: "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
+      betting_tips:
+        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       shareTitle: "B9GAME Share and Earn",
       shareText:
@@ -432,7 +434,10 @@ export default {
     orderNo: "Order NO.",
     bank: "BANK",
     noRecord: "No record",
-    noMoreRecord: "No more record"
+    noMoreRecord: "No more record",
+    bytoday: "By Today",
+    byyesterday: "By Yesterday",
+    all: "All"
   },
   appUpdate: {
     updateHeader: "Update Announcement",

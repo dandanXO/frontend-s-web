@@ -18,6 +18,24 @@ export default [
   //     ),
   // },
   {
+    path: "inquiry",
+    name: "inquiry",
+    meta: { requiresAuth: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "message" */ "../views/account/InquiryView.vue"
+      ),
+  },
+  {
+    path: "message",
+    name: "message",
+    meta: { requiresAuth: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "message" */ "../views/account/MessageView.vue"
+      ),
+  },
+  {
     path: "mailbox",
     name: "mailbox",
     meta: { requiresAuth: true },

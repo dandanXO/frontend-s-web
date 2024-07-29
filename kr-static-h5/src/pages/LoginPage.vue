@@ -12,7 +12,7 @@
       </div>
 
       <div class="header-lang">
-        <LangOptions />
+        <!--        <LangOptions />-->
       </div>
     </div>
 
@@ -267,7 +267,7 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import LangOptions from "components/LangOptions";
+// import LangOptions from "components/LangOptions";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { App } from "@capacitor/app";
@@ -279,7 +279,7 @@ import { useUI } from "stores/ui";
 export default defineComponent({
   name: "LoginPage",
   components: {
-    LangOptions
+    // LangOptions
   },
   setup() {
     const i18nStoreLanguage = i18nStore();
@@ -443,9 +443,6 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 // FB tracking :: login-success
-                if (store.isAffiliateA) {
-                  fbq("track", "login-success");
-                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -591,7 +588,7 @@ export default defineComponent({
       getInnerCode,
       isValidCnPhone,
       telephoneRef,
-      LangOptions,
+      // LangOptions,
       appVersionNo,
       getVersionNo,
       languageVal,
@@ -614,21 +611,19 @@ export default defineComponent({
   min-height: 100vh;
 
   .back-left {
-    // position: absolute;
-    // left: 6px;
-    // top: 20px;
+    padding-top: 12px;
     height: 30px;
-    width: 30px;
+    width: 18px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: brightness(100);
+
     img {
       width: 10px;
 
       @media (max-width: 400px) {
-        width: 8px;
+        width: 10px;
       }
     }
   }
@@ -843,13 +838,7 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    // height: 50px;
-    // margin-right: auto;
-    // margin-left: 12px;
-
-    // @media (max-width: 400px) {
-    // height: 40px;
-    // }
+    margin: auto;
 
     img {
       // height: 100%;
@@ -877,6 +866,9 @@ export default defineComponent({
   }
 
   .header-lang {
+    width: 18px;
+    height: 30px;
+
     // .lang-container {
     //   img {
     //     display: block;

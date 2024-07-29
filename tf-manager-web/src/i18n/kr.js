@@ -433,11 +433,11 @@ export default {
   },
   mode: {
     DYNAMIC: '페이지 부동',
-    STATIC: '직접 표시'
+    STATIC: '직접 표시',
   },
   autoplayStatus: {
     ON: '켜짐',
-    OFF: '끄기'
+    OFF: '끄기',
   },
   fields: {
     account: '계정',
@@ -506,6 +506,7 @@ export default {
     addSitePlatform: '사이트 플랫폼 추가',
     addStage: '단계 추가',
     addSystemMessage: '시스템 메시지 추가',
+    addSyncDefault: '3일 이내 동기화 경쟁',
     addTelephone: '전화번호 추가',
     addTicket: '티켓 추가',
     addUser: '사용자 추가',
@@ -2248,7 +2249,8 @@ export default {
     validateMinDayDepositAmountRequired: '일일 최소 입금액이 필요합니다',
     validateMaxDayDepositAmountRequired: '일일 최대 입금액이 필요합니다',
     validateDayRegProbabilityRequired: '일일 등록 확률이 필요합니다',
-    validateDayDepositAmountProbabilityRequired: '일일 첫 입금 확률이 필요합니다',
+    validateDayDepositAmountProbabilityRequired:
+      '일일 첫 입금 확률이 필요합니다',
     validateMediaDescRequired: '미디어 설명 필요',
     validateMediaUrlRequired: '동영상 링크가 필요합니다',
     validateDisplayUrlRequired: '비디오 디스플레이 링크가 필요합니다',
@@ -2290,7 +2292,8 @@ export default {
     'Affiliate List': '제휴사 목록',
     'Affiliate Details': '제휴사 세부 정보',
     'Affiliate Financial Management': '제휴사 재무 관리',
-    'Affiliate Facebook Pixel Management': 'Affiliate Facebook Pixel Management',
+    'Affiliate Facebook Pixel Management':
+      'Affiliate Facebook Pixel Management',
     'Affiliate Deposit Display': '제휴사 입금 표시',
     'Site Affiliate Commission': '사이트 제휴사 수수료',
     'Aff Announcement Management': '제휴사 공지 관리',
@@ -2484,7 +2487,7 @@ export default {
     'Member Invite Limit': '회원 초대 제한',
     'Member Point Record': '회원 포인트 기록',
     'Affiliate Change Log': '제휴 부모 변경 로그',
-    'Media Display Settings': '미디어 디스플레이 설정'
+    'Media Display Settings': '미디어 디스플레이 설정',
   },
   google: {
     google_auth_menu: 'Google 인증자',

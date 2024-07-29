@@ -63,6 +63,9 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
+          <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
+            <img src="../assets/images/index/youtube-icon.png" />
+          </a>
           <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
@@ -1335,6 +1338,7 @@
 
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
@@ -4307,22 +4311,28 @@ const showCongratsModal = () => {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 
+    &.youtube {
+      left: -60px;
+      top: 65px;
+    }
+
     &.tiktok {
-      left: -72px;
-      top: 50%;
+      left: -70px;
+      top: 13px;
+      transition-delay: 0.2s;
     }
 
     &.whatsapp {
-      left: -48px;
-      top: -22px;
-      transition-delay: 0.25s;
+      left: -39px;
+      top: -30px;
+      transition-delay: 0.4s;
     }
 
     &.cs {
       top: -72px;
       left: 50%;
       transform: translateX(-50%);
-      transition-delay: 0.5s;
+      transition-delay: 0.6s;
     }
   }
 
@@ -5130,5 +5140,12 @@ const showCongratsModal = () => {
   .q-carousel__control {
     display: none;
   }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>

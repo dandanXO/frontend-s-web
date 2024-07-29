@@ -99,10 +99,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>≥38,888</td>
-              <td>88</td>
-              <td>日有效流水达成后每超过1万打码将获得28元进阶奖金</td>
-              <td>3倍/不限场馆</td>
+              <td width="15">≥38,888</td>
+              <td width="15">88</td>
+              <td width="60">日有效流水达成后每超过1万打码将获得28元进阶奖金</td>
+              <td width="15">3倍/不限场馆</td>
             </tr>
           </tbody>
         </table>
@@ -151,6 +151,11 @@
 import { computed, onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
+import { userStore } from "../../../stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const store = userStore();
 
 const $q = useQuasar();
 
@@ -175,6 +180,29 @@ const claimOlympicDailySportBet = () => {
 };
 
 const handleClick = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
@@ -196,6 +224,9 @@ const handleClick = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   eventapi.get("/lhOlympicDailyFirstDeposit/init").then((res) => {
     if (res.code === 0) {
       const { todayFirstDepositAmount, claimableAmount } = res.data;
@@ -310,7 +341,10 @@ onMounted(() => {
     .bonus-block-btn {
       position: absolute;
       bottom: 10px;
-      left: 90px;
+      // left: 90px;
+      left: 20px;
+      right: 0;
+      margin: auto;
       background: url(./img/button.png) no-repeat;
       border: none;
       width: 109px;
@@ -412,7 +446,9 @@ onMounted(() => {
     }
   }
 }
-
+.promo-container .selected-promo .selected-promo-wrapper .inner .table-wrapper table th {
+  white-space: pre-wrap;
+}
 .table-wrapper {
   border: 1px solid #acd4f6;
   border-radius: 10px;

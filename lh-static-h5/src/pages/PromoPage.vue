@@ -232,7 +232,7 @@
     </div>
   </div>
 
-  <q-dialog class="modal-common-div" width="100%" v-model="isDisplayLogin">
+  <q-dialog class="modal-common-div" width="100%" v-model="store.isDisplayLogin">
     <q-card
       style="width: 100%; padding: 10px 12px 20px"
       class="text-black text-center"
@@ -419,10 +419,22 @@ export default defineComponent({
         store.token = extensionToken.value;
       } else {
         // non extension
-        if (!store.token) {
-          isDisplayLogin.value = true;
-        } else {
-          if (promo.redirectUrl.includes("page-vip")) {
+        // if (!store.token) {
+        //   isDisplayLogin.value = true;
+        // } else {
+        //   if (promo.redirectUrl.includes("page-vip")) {
+        //     router.push("/account/vip?from=promo");
+        //   } else {
+        //     if (route.query.fromAccount) {
+        //       router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+        //     } else {
+        //       router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+        //     }
+        //     isPromoDetail.value = true;
+        //     selectedPromo.value = promo;
+        //   }
+        // }
+        if (promo.redirectUrl.includes("page-vip")) {
             router.push("/account/vip?from=promo");
           } else {
             if (route.query.fromAccount) {
@@ -433,7 +445,6 @@ export default defineComponent({
             isPromoDetail.value = true;
             selectedPromo.value = promo;
           }
-        }
       }
     };
     const switchPromoType = (type) => {

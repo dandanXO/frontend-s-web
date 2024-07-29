@@ -443,6 +443,9 @@ const getTeamsData = () => {
 };
 
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   getMatches();
   getMatchPoints();
   getTeamsData();

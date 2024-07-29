@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
-import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
-import { getAnnouncement, getFinanceRecords } from "@/api/personal/common"
+import { loadBalance, loadMemberInfo, loadPoint } from "@/api/personal/personal";
+import { getAnnouncement, getFinanceRecords } from "@/api/personal/common";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
-import moment from 'moment';
+import moment from "moment";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -34,10 +34,15 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       siteId: 8,
       unreadTotal: 0,
+      unrepliedTotal: 0,
       visitorId: "",
       isAffiliateA: false,
+      isShowAnnouncementDialog: false,
+      isRedeemDialogVisible: false,
       announcementList: undefined,
       financeRecords: undefined,
+      pendingRebateAmt: 0,
+      name2: ""
     };
   },
   actions: {
@@ -50,6 +55,7 @@ export const userStore = defineStore("userStore", {
           if (ret.code === 0) {
             this.token = ret.data;
             this.getBalance();
+            this.getPendingRebateAmt();
             this.getMemberInfo();
           } else {
             ElMessage.error(ret.message);
@@ -90,6 +96,7 @@ export const userStore = defineStore("userStore", {
             this.id = ret.data.id;
             this.nickName = ret.data.loginName;
             this.realName = ret.data.realName;
+            this.name2 = ret.data.name2;
             this.birthday = ret.data.birthday;
             this.email = ret.data.email;
             this.phone = ret.data.telephone;
@@ -106,11 +113,29 @@ export const userStore = defineStore("userStore", {
       }
     },
     getBalance() {
-      if (this.token) {
-        return loadBalance(MAIN).then((ret) => {
-          this.balance = ret.data;
-        });
-      }
+      return new Promise((resolve, reject) => {
+        if (this.token) {
+          return loadBalance(MAIN).then((ret) => {
+            this.balance = ret.data;
+            resolve();
+          });
+        }
+      });
+    },
+    getPendingRebateAmt() {
+      return new Promise((resolve, reject) => {
+        if (this.token && !this.isOffline) {
+          loadPoint(MAIN).then((ret) => {
+            const res = ret.data;
+            if (res.code === 0) {
+              this.pendingRebateAmt = Math.floor(res.data);
+            } else {
+              this.pendingRebateAmt = 0;
+            }
+            resolve();
+          });
+        }
+      });
     },
     getCurrentDeposit() {
       return this.currentDeposit;
@@ -152,56 +177,63 @@ export const userStore = defineStore("userStore", {
           console.log(err);
         });
     },
+    toggleAnnouncementDialog() {
+      this.isShowAnnouncementDialog = !this.isShowAnnouncementDialog;
+    },
+    toggleRedeemPointDialog() {
+      this.isRedeemDialogVisible = !this.isRedeemDialogVisible;
+    },
     getAnnouncementList() {
       return new Promise((resolve, reject) => {
-        if(Array.isArray(this.announcementList)) {
+        if (Array.isArray(this.announcementList)) {
           return resolve(this.announcementList);
         } else {
-          getAnnouncement().then(({ code, data: { announcements }}) => {
+          getAnnouncement()
+            .then(({ code, data: { announcements } }) => {
+              const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
 
-            const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-
-            if (code === 0) {
-              const announcementsFormattedData = announcements.map((item) => ({
-                ...item,
-                createTime: formatDate(item.createTime)
-              }));
-              this.announcementList = announcementsFormattedData;
-              resolve(this.announcementList);
-            }
-          })
-          .catch((err) => {
+              if (code === 0) {
+                const announcementsFormattedData = announcements.map((item) => ({
+                  ...item,
+                  createTime: formatDate(item.createTime)
+                }));
+                this.announcementList = announcementsFormattedData;
+                resolve(this.announcementList);
+              }
+            })
+            .catch((err) => {
               console.log(err);
               reject();
-          });
+            });
         }
-      })
+      });
     },
     getFinanceRecordsList() {
       return new Promise((resolve, reject) => {
-        if(this.financeRecords === null) {
+        if (this.financeRecords === null) {
           return;
-        } else if(Array.isArray(this.financeRecords)) {
+        } else if (Array.isArray(this.financeRecords)) {
           return resolve(this.financeRecords);
         } else {
-          if(this.financeRecords == undefined) {
+          if (this.financeRecords == undefined) {
             this.financeRecords = null;
           }
 
-          getFinanceRecords().then(({ code, data } ) => {
-            if (code === 0) {
-              const displayTypes = ['WITHDRAW'];
-              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
-              resolve(this.financeRecords);
-            }
-          })
-          .catch((err) => {
+          getFinanceRecords()
+            .then(({ code, data }) => {
+              if (code === 0) {
+                const displayTypes = ["WITHDRAW"];
+                this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
+                resolve(this.financeRecords);
+              }
+            })
+            .catch((err) => {
               console.log(err);
               reject();
-          });
+            });
         }
-      })
-    },
+      });
+    }
   }
 });
 

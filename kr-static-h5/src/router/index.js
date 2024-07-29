@@ -2,10 +2,11 @@ import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
-import { SessionStorage } from "quasar";
+import { Notify, SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
+import i18n from "src/i18n";
 
 /*
  * If not building with SSR mode, you can
@@ -42,16 +43,15 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/privilege/invite" ||
-      to.path === "/maintenance" || to.path==="/promoapp"
+      to.path === "/maintenance" ||
+      to.path === "/promoapp"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
     }
 
-    if (
-      to.path === "/promoapp"
-    ) {
+    if (to.path === "/promoapp") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
@@ -60,7 +60,6 @@ export default route(function (/* { store, ssrContext } */) {
 
       user.token = to.query.token;
     }
-
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -82,7 +81,6 @@ export default route(function (/* { store, ssrContext } */) {
       user.token = to.query.token;
       // console.log("user", user.token);
     }
-
 
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
@@ -108,6 +106,16 @@ export default route(function (/* { store, ssrContext } */) {
       } else {
         if (user.nickName === "") {
           user.getMemberInfo().then(() => next({ ...to, replace: true }));
+        } else if (user.unreadInboxMail > 0) {
+          if (["/finance/deposit", "/finance/withdraw"].includes(to.path)) {
+            Notify.create({
+              message: i18n.global.t("lang.msg_hasUnreadMail"),
+              color: "negative"
+            });
+            next("/");
+          } else {
+            next();
+          }
         } else {
           next();
         }
@@ -120,33 +128,13 @@ export default route(function (/* { store, ssrContext } */) {
       }
     }
 
-
     // FB tracking
     console.log(window.location.href);
-    if (window.location.href.indexOf("tf88king.com") > -1) {
-      fbq("init", "888951505918547");
-      fbq("track", "PageView");
-      user.isAffiliateA= true;
-    } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-      fbq("init", "3658633674357920");
-      fbq("track", "PageView");
-      user.isAffiliateA= true;
-    } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
-      otag("init", "adv10336256983680");
-    } else if (window.location.href.indexOf("tf68688.com") > -1) {
-      fbq("init", "1123673335564806");
-      fbq("track", "PageView");
-      user.isAffiliateA= true;
-    }else if (window.location.href.indexOf("wintf99.com") > -1) {
-      fbq("init", "441415921872746");
-      fbq("track", "PageView");
-      user.isAffiliateA= true;
-    }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
-      fbq("init", "1862869640792398");
-      fbq("track", "PageView");
-      user.isAffiliateA= true;
-    }
-
+    // if (window.location.href.indexOf("tf88king.com") > -1) {
+    //   fbq("init", "888951505918547");
+    //   fbq("track", "PageView");
+    //   user.isAffiliateA= true;
+    // }
   });
 
   return Router;

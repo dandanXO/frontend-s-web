@@ -12,9 +12,10 @@ export default {
     transfer: "포인트 전환",
     vip: "VIP",
     home: "홈",
-    account: "입금",
+    account: "마이페이지",
     promo: "프로모션",
     customer_service: "고객 서비스",
+    nickname: "닉네임",
     mine: "내 계좌",
     personal_information: "개인 정보",
     input_username_cannot_empty: "사용자 이름 입력",
@@ -53,6 +54,17 @@ export default {
     euroCountdown02: " 일",
     helloUsername: "안녕하세요,",
 
+    // redeem point start
+    redeem_point_pending_list: "포인트 보유현황",
+    redeem_point_redeem: "상환하다",
+    redeem_point_points: "포인트",
+    redeem_point_date: "날짜",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    redeem_point_redeemed: "상환된 포인트",
+    // redeem point end
+
     // side menu
     menu_sports: "스포츠",
     menu_esports: "e스포츠",
@@ -79,6 +91,7 @@ export default {
     msg_readmsg: "메시지 읽기",
     msg_deleteselected: "선택한 메시지 삭제",
     msg_deleteallmsg: "모든 메시지 삭제",
+    msg_hasUnreadMail: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다",
 
     // login page
     login_title: "준비되셨나요?",
@@ -129,6 +142,13 @@ export default {
     user_registration_protocol: "계정 등록 동의서",
     register_success: "가입 성공",
     register_in_progress: "가입 중...",
+    reg_bank: "은행명",
+    reg_bank_placeholder: "은행선택",
+    reg_bank_acc_num: "계좌번호",
+    reg_bank_acc_num_placeholder: "'-'없이숫자만입력",
+    reg_bank_acc_holder: "예금주",
+    reg_bank_acc_holder_placeholder: "2자이상한글,영문만가능(예금주는수정불가/고객센터문의)",
+    reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
 
     // forgot password
     sms_retrieval: "SMS로 찾기",
@@ -206,8 +226,9 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "접속하기",
-    personal_username: "계정 이름",
-    personal_realname: "이름",
+    personal_username: "아이디",
+    personal_nickname: "닉네임",
+    personal_realname: "실명",
     personal_realname_val: "이름을 입력해 주세요",
     personal_realname_valid: "유효한 이름을 입력해 주세요",
     personal_birthday: "생년월일",
@@ -397,11 +418,12 @@ export default {
     // mine
     version_no: "버전",
     central_wallet: "잔액",
+    central_rebate: "포인트",
     loading: "로딩 중...",
     deposit_btn: "입금",
     withdraw_btn: "출금",
     transfer_btn: "이체",
-    account_title: "혜택 받기",
+    account_title: "개인정보",
     account_bonus_redeem: "보상 교환",
     mine_personal_info: "개인 정보",
     mine_bank: "은행",
@@ -409,7 +431,7 @@ export default {
     mine_mailbox: "메일박스",
     mine_refer_friend: "친구 추천",
     mine_feedback: "피드백",
-    mine_change_password: "비밀번호 변경",
+    mine_change_password: "비밀번호",
     mine_account_info: "계좌 정보",
     mine_apply_for_partnership: "파트너 신청",
     mine_logout: "로그아웃",
@@ -774,6 +796,7 @@ export default {
     invalid_phone_num: "숫자만 허용됩니다.",
     register_successful: "등록 성공",
     no_special_characters: "계정 이름에는 특수 문자가 포함될 수 없습니다.",
+    length_must_4: "길이는 4자여야 합니다",
     length_between_6_11: "길이는 6자에서 11자 사이여야 합니다.",
     length_between_34_37: "길이는 34자에서 37자 사이여야 합니다.",
     receive_by_email: "이메일로 받기",
@@ -907,6 +930,19 @@ export default {
     suspend: "중단",
     pending: "대기 중",
     supplement_success: "추가 성공",
+    deposit_reminder: "알림",
+    deposit_reminder_caption: "출금 전 꼭 읽어주세요",
+    deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+      본인명의 이외 타명의 입금은 처리가 불가합니다
+      계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+      최소 금액 꼭 확인하시고, 만원 단위로만 입금 가능합니다.
+
+      ※주의사항
+      충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+      금액을 잘못 기재하셨다면 문의 주시면 취소 처리 도와드리겠습니다.
+
+      ※가상계좌 점검시간 안내
+      23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
 
     // WithdrawBankView
     choose_a_card: "계좌 선택",
@@ -914,6 +950,9 @@ export default {
     add_a_card: "계좌 추가",
     bank_card_unbind_record: "은행 카드 비연결 기록",
     add_a_virtual_currency: "가상 화폐 추가",
+    withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+    출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
     select_account_add_different_banks: "계좌 선택 (다른 은행 추가)",
     please_select_a_bank_account: "은행 계좌를 선택해 주세요.",
     account_name_with_desc: "계좌 이름 (입금 계좌 이름과 일치해야 함)",
@@ -921,6 +960,8 @@ export default {
     branch_not_required: "지점 (선택 사항)",
     cancel: "취소",
     confirm: "확인",
+    redeem: "상환하다",
+    btn_redeem: "전환",
     incorrect: "잘못됨",
     security_check: "보안 점검",
     fish2_list: "낚시",
@@ -929,6 +970,8 @@ export default {
       "Jolly88 서비스 약관(TNC): 제공하는 서비스는 약관 및 개인정보 보호정책에 따라 관리됩니다. 자세한 내용은 서비스 약관을 참조해 주세요.",
     footer_all_rights: "Jolly88 2023{'@'}모든 권리 보유.",
     announcement: "공지사항",
+    question: "문의",
+    message: "쪽지",
     name: "이름",
     surname: "성",
     dob: "생년월일",
@@ -1084,9 +1127,9 @@ export default {
 
     // mailbox
     mail_mailbox: "메일함",
-    mail_outbox: "보낸 편지함",
+    mail_outbox: "메시지함",
     mail_feedback: "피드백",
-    mail_compose: "메일 작성",
+    mail_compose: "메시지 작성",
     mail_nodata: "알림 없음",
     mail_nodatayet: "새로운 데이터가 아직 없습니다",
     mail_loading: "로딩 중",
@@ -1100,6 +1143,8 @@ export default {
     mail_selectone: "하나 더 선택하세요",
     mail_read: "읽음",
     mail_delete: "삭제",
+
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
 
     // compose
     compose_title: "제목",
@@ -1163,8 +1208,8 @@ export default {
     menu_deposit: "입금",
     menu_withdraw: "출금",
     menu_moneychange: "거래 내역",
-    menu_promo: "프로모션",
-    menu_transaction: "베팅 금액",
+    menu_promo: "알림 기록",
+    menu_transaction: "베팅 기록",
     menu_reminder: "알림 기록",
     no_more_data_le: "정보를 찾을 수 없습니다",
     float_rebate: "공지사항",
@@ -1261,6 +1306,8 @@ export default {
     str_confirmwithdraw: "출금 확인",
     str_remark: "비고",
     strsystem_message: "시스템 메시지",
+    str_cancelwithdraw: "출금을 취소하시겠습니까?",
+    withdraw_cancelled: "출금 취소",
     str_confirm: "확인",
     confirm_withdrawal_sucess: "출금 확인 성공",
     success_copied: "복사되었습니다!",
@@ -1464,7 +1511,7 @@ export default {
     909: "전화번호를 찾을 수 없습니다.",
     910: "사용자 이름이 전화번호와 일치하지 않습니다.",
     1000: "사용자 이름 또는 비밀번호에 오류가 있습니다.",
-    1001: "계정이 폐쇄되었습니다.",
+    1001: "승인 대기 중입니다",
     1002: "파트너 계정입니다.",
     1004: "비밀번호를 여러 번 잘못 입력하여 계정이 잠깁니다.",
     1011: "현재 계정은 전화번호와 연결되어 있습니다.",

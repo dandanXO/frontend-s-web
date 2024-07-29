@@ -95,21 +95,16 @@
           size="large"
           class="wTip"
         >
-          <el-option
-            v-for="item in bankCards"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          >
-            <div style="height:34px;display:flex;gap:5px;">
-              <img style="height:100%;width:auto;" :src="imgURL + '/payment/' + item.bankIcon" />
+          <el-option v-for="item in bankCards" :key="item.id" :label="item.name" :value="item.id">
+            <div style="height: 34px; display: flex; gap: 5px">
+              <img style="height: 100%; width: auto" :src="imgURL + '/payment/' + item.bankIcon" />
               <div>{{ item.name }}</div>
             </div>
           </el-option>
         </el-select>
       </el-form-item>
     </div>
-    
+
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/bank-acc-icon.png" />
       <el-form-item :label="$t('register.reg_bank_acc_num')" prop="cardNumber">
@@ -141,7 +136,7 @@
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item :label="$t('register.reg_withdraw_password')" prop="cardNumber">
+      <el-form-item :label="$t('register.reg_withdraw_password')" prop="withdrawPassword">
         <el-input
           class="wTip"
           v-model="regForm.withdrawPassword"
@@ -188,10 +183,10 @@ let validateBankLength = async (r, v) => {
   if (!/^[A-Za-z0-9]+$/.test(v)) {
     return Promise.reject("숫자를 입력하세요");
   }
-  
-  if(!v) {
+
+  if (!v) {
     return Promise.reject(t("register.reg_please_enter_card_num"));
-  } else if (paymentType.bankType === "BANK" && (v.length > 17)) {
+  } else if (paymentType.bankType === "BANK" && v.length > 17) {
     return Promise.reject(t("register.reg_bank_acc_num_less_than_17_char"));
   } else if (paymentType.code.includes("USDT") && v.length >= 34 && v.length <= 36) {
     return Promise.reject(t("길이는 34에서 36자 여야 합니다"));
@@ -211,7 +206,6 @@ function charType(num) {
   return 8;
 }
 
-
 let validateName = async (r, v) => {
   if (v === "") {
     return Promise.reject(t("placeholder.username"));
@@ -228,10 +222,10 @@ let validatePhoneNumber = async (r, v) => {
     return Promise.reject(t("placeholder.onlyNumber"));
   } else if (v.length !== 11) {
     return Promise.reject(t("placeholder.invalidPhoneLength"));
-  } 
+  }
   // else if (v.charAt(0) !== '0') {
   //   return Promise.reject(t("placeholder.invalidPhoneStartsWith0"));
-  // } 
+  // }
   else {
     return Promise.resolve();
   }
@@ -328,8 +322,8 @@ const regRules = {
     {
       required: true,
       message: t("register.reg_please_select_a_bank_account"),
-      trigger: 'change',
-    },
+      trigger: "change"
+    }
   ],
   cardNumber: [
     {
@@ -338,6 +332,26 @@ const regRules = {
       trigger: "change"
     }
   ],
+  cardAccount: [
+    {
+      required: true,
+      message: t("register.reg_card_account_cannot_empty"),
+      trigger: "change"
+    }
+  ],
+  withdrawPassword: [
+    {
+      min: 4,
+      max: 4,
+      message: t("register.reg_withdraw_password_4_digits"),
+      trigger: "blur"
+    },
+    {
+      required: true,
+      message: t("register.reg_withdraw_password_4_digits"),
+      trigger: "change"
+    }
+  ]
 };
 
 const getCode = () => {
@@ -391,12 +405,6 @@ const submitRegisterForm = async (elForm) => {
                 });
 
                 // FB tracking :: signup-success
-                if (store.isAffiliateA) {
-                  fbq("track", "signup-success");
-                }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
-                  otag("event", "registration");
-                }
 
                 store.autoLogin(response.data);
                 emits("close-dialog");
@@ -448,11 +456,11 @@ const getBankCards = () => {
   bankCardList().then((res) => {
     const { code, data } = res;
 
-    if(code === 0) {
+    if (code === 0) {
       bankCards.value = data;
     }
-  })
-}
+  });
+};
 
 const emits = defineEmits(["close-dialog, open-login-dialog"]);
 
@@ -486,7 +494,7 @@ onMounted(() => {
   width: 100%;
 
   margin: 15px 0px;
-  margin-top: 50px !important;
+  margin-top: 35px !important;
   padding: 5px;
 
   position: relative;
