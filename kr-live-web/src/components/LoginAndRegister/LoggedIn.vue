@@ -12,6 +12,12 @@
           <span>원</span>
         </div>
       </div>
+      <div class="money" @click="redeemDialogVisible = true" style="cursor:pointer;">
+        <img src="../../assets/images/login/money.svg" alt="" />
+        <div>
+          {{ store.pendingRebateAmt }}
+        </div>
+      </div>
     </div>
     <div class="btn-group">
       <div class="left-group">
@@ -56,22 +62,26 @@
       </div>
     </div>
   </div>
+
+  <RedeemPointDialog :redeemDialogVisible="redeemDialogVisible" :closeDialog="() => redeemDialogVisible = false" />
 </template>
 
 <script setup>
+import { ref, markRaw, defineAsyncComponent } from 'vue';
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+
+const RedeemPointDialog = markRaw(defineAsyncComponent(() =>
+  import('../home/RedeemPointDialog.vue')
+));
 
 const props = defineProps(['isH5TopBar']);
 const store = userStore();
 const router = useRouter();
+const redeemDialogVisible = ref(false);
 
 const goToPersonalInfo = () => {
   router.push("/?page=personal/info");
-};
-
-const goToTransactions = () => {
-  router.push("/?page=transaction/records");
 };
 
 const onLogoutSubmit = () => {

@@ -13,11 +13,11 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-const globalLinks= ["KAKAwon"];
-const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
+const globalLinks = ["KAKAwon"];
+const isGlobalVN = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const q7yxLinks= ["q7yxpdxwxk"];
-const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
+const q7yxLinks = ["q7yxpdxwxk"];
+const isq7yxVN = q7yxLinks.some((link) => window.location.hostname.includes(link));
 console.log(window.location.hostname);
 
 if (isGlobalVN) {
@@ -30,8 +30,7 @@ if (isGlobalVN) {
   var crtApi = getInitApi(crGlobalArray, "KAKA_H5_CRT_URL");
 
   localStorage.setItem("IMAGE_CDN", process.env.GLOBAL_IMAGE_CDN);
-
-}else if(isq7yxVN){
+} else if (isq7yxVN) {
   var rstArray2 = Object.values(process.env.Q7YX_RST_API);
   var evtArray2 = Object.values(process.env.Q7YX_EVT_API);
   var crArray2 = Object.values(process.env.Q7YX_CR_API);
@@ -39,8 +38,7 @@ if (isGlobalVN) {
   var rstApi = getInitApi(rstArray2, "KAKA_H5_RST_URL");
   var evtApi = getInitApi(evtArray2, "KAKA_H5_EVT_URL");
   var crtApi = getInitApi(crArray2, "KAKA_H5_CRT_URL");
-
-}else {
+} else {
   var rstApi = getInitApi(rstArray, "KAKA_H5_RST_URL");
   var crtApi = getInitApi(crtArray, "KAKA_H5_CRT_URL");
   var evtApi = getInitApi(evtArray, "KAKA_H5_EVT_URL");
@@ -132,17 +130,17 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
         return res;
       }
-      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
+      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.ERROR_NO_PIXEL_CODE) {
         return res;
       }
-      if(res.code === ResponseCode.ERROR_PROMO_NOT_POUND && response.config.url.indexOf("nextRainTime") > -1){
+      if (res.code === ResponseCode.ERROR_PROMO_NOT_POUND && response.config.url.indexOf("nextRainTime") > -1) {
         return res;
       }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {
         if (
-          (window.location.pathname === "/promoapp") &&
+          window.location.pathname === "/promoapp" &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
             res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
@@ -153,8 +151,7 @@ export default boot(({ app, router }) => {
           document.location.href = "app://login";
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          if(window.location.pathname !== "/promo")
-          {
+          if (window.location.pathname !== "/promo") {
             return Dialog.create({
               class: "login-card",
               title: t("lang.system_hint"),
@@ -165,7 +162,7 @@ export default boot(({ app, router }) => {
             }).onOk(() => {
               router.push("/login");
             });
-          }else{
+          } else {
             return res;
           }
         }

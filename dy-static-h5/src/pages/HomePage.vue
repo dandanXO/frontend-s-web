@@ -26,91 +26,22 @@
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
-        <div class="header-right">
-          <div v-if="!store.hasToken()" class="row justify-center items-center gap-10">
-            <q-btn to="/login?register" rounded outline color="blue-6" class="q-px-lg" label="注册" />
-
-            <q-btn to="/login" rounded color="dyblue" label="登录" class="q-px-lg no-shadow" width="48px" />
+        <router-link class="header-right" to="/account/inbox?redirect=home">
+          <div class="notification-section">
+            <img src="../assets/index/home-notification-icon.svg" alt="" />
+            <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
           </div>
-
-          <div v-if="store.hasToken()" class="column justify-start items-end">
-            <div class="row items-center justify-between gap-10">
-              <div class="welcome-liner">
-                {{ store.nickName }}
-              </div>
-              <div class="badge-div">
-                <div class="icon-div">
-                  <img src="../assets/index/diamon-vip.png" />
-                </div>
-                <q-badge color="dyblue" class="vip-badge" text-color="white" :label="store.vip" />
-              </div>
-            </div>
-            <div class="row items-center justify-start gap-10" style="margin-right: 50px">
-              <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">加载中...</span>
-              <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
-              <q-btn
-                flat
-                style="margin-bottom: 3px"
-                class="refresh-btn"
-                size="xs"
-                @click="refreshBalance()"
-                :disable="isLoadingBalance ? true : false"
-              >
-                <img src="../assets/index/refresh-bal-icon.png" />
-              </q-btn>
-            </div>
-          </div>
-        </div>
+        </router-link>
       </div>
 
-      <div class="home-header-section" style="height: 68px">
-        <swiper
-          :modules="[Thumbs, Controller]"
-          slides-per-view="auto"
-          :freeMode="true"
-          :set-wrapper-size="true"
-          :scrollbar="{ draggable: true }"
-          :mousewheel="true"
-          :space-between="8"
-          :breakpoints="{
-            0: {
-              slidesPerView: 5,
-              spaceBetween: 8
-            },
-            380: {
-              slidesPerView: 5,
-              spaceBetween: 8
-            },
-            440: {
-              slidesPerView: 5,
-              spaceBetween: 8
-            }
-          }"
-          watch-slides-progress
+      <div v-if="isStickyGameType" class="home-header-section" style="height: 68px; width: 95%; margin: 0 auto">
+        <GameTypeSwiper
+          v-model="selectedTab"
+          scroll-to-center
+          :list="tabs"
           @swiper="setSecondSwiper"
-          :controller="{ control: firstSwiper }"
-          class="firstSwiper"
-          :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
-        >
-          <swiper-slide
-            :class="tab.name && { tbact: selectedTab === tab.name }"
-            @click="setSelectedSwiper(tab)"
-            v-for="(tab, i) in tabs"
-            :key="i"
-          >
-            <div
-              class="home-select-slide column items-center justify-center gap-3"
-              :class="selectedTab == tab.name ? 'selected' : ''"
-              :style="`gap:${tab.gap}px`"
-            >
-              <img :style="`margin-top:${tab.mb}px;`" :src="require('../assets/index/' + tab.icon)" />
-              <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
-            </div>
-          </swiper-slide>
-
-          <div class="swiper-button-prev"><span class="material-icons">arrow_back_ios</span></div>
-          <div class="swiper-button-next"><span class="material-icons">arrow_forward_ios</span></div>
-        </swiper>
+          @select-swiper="setSelectedSwiper"
+        />
       </div>
     </div>
 
@@ -160,11 +91,11 @@
       <div class="midd" v-if="announcementList.length > 0">
         <div class="station-notice-wrapper">
           <div class="notice">
-            <img src="../assets/index/home-announce-icon.png" width="18px" />
+            <img src="../assets/index/home-announce-icon.svg" width="18px" />
           </div>
           <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 4 : 70">
             <div v-if="announcementList">
-              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+              <span style="color: #235187" v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
               </span>
             </div>
@@ -172,7 +103,70 @@
         </div>
       </div>
 
-      <div class="swiper-container">
+      <div class="home-auth-section">
+        <div class="row justify-center items-center gap-10">
+          <router-link
+            v-if="!store.hasToken()"
+            class="text-center col home-auth-subsection"
+            to="/login"
+            style="text-decoration: none"
+          >
+            <div style="color: #333333">您还未登录</div>
+            <div style="color: #96a9bb">登录/注册后查看</div>
+          </router-link>
+          <div v-else class="column justify-start items-end">
+            <div class="row">
+              <div class="welcome-liner">
+                {{ store.nickName }}
+              </div>
+              <div class="badge-div">
+                <div class="icon-div">
+                  <img src="../assets/index/home-diamon-vip.svg" width="100%" height="100%" />
+                </div>
+                <q-badge
+                  color="dyorange"
+                  class="vip-badge"
+                  text-color="black"
+                  :label="store.vip"
+                  style="font-size: 10px; height: 14px"
+                />
+              </div>
+            </div>
+            <div class="row items-center justify-start gap-10" style="width: 100%">
+              <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">加载中...</span>
+              <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
+            </div>
+          </div>
+
+          <div class="row col gap-25 justify-end">
+            <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
+              <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
+              <p>存款</p>
+            </router-link>
+            <router-link class="text-center cash-button" :unelevated="true" to="/finance/withdraw?redirect=home">
+              <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
+              <p>提款</p>
+            </router-link>
+            <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
+              <img src="../assets/index/home-transfer-icon.svg" alt="" width="100%" />
+              <p>转帐</p>
+            </router-link>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-header-section" style="height: 68px; width: 95%; margin: 0 auto">
+        <GameTypeSwiper
+          v-if="!isStickyGameType"
+          scroll-to-center
+          :list="tabs"
+          v-model="selectedTab"
+          @swiper="setSecondSwiper"
+          @select-swiper="setSelectedSwiper"
+        />
+      </div>
+
+      <div ref="swiperContainerRef" class="swiper-container">
         <!-- Thumbs Swiper -> store swiper instance -->
 
         <div class="index-platform-container" style="overflow: hidden">
@@ -190,6 +184,7 @@
           <!--            class="secondSwiper"-->
           <!--            id="btm-second-swiper"-->
           <!--        >-->
+
           <div class="secondSwiper" id="btm-second-swiper">
             <div id="id-hot-slide" class="hot-slides home-swiper-slide">
               <div class="home-game-boards">
@@ -223,7 +218,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -260,7 +255,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -297,7 +292,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -324,7 +319,7 @@
                         <div class="maintenance-box" v-if="hot.underMaintenance">
                           <p>维护中</p>
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -361,7 +356,7 @@
                         <div class="maintenance-box" v-if="hot.underMaintenance">
                           <p>维护中</p>
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -400,7 +395,7 @@
                             <div class="maintenance-box" v-if="hot.underMaintenance">
                               <p>维护中</p>
                               <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                                <div class="small-size q-mt-md">维护时间:</div>
+                                <div class="small-size q-mt-md">维护时间：</div>
                                 <p class="small-size">
                                   {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                                 </p>
@@ -440,7 +435,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -477,7 +472,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -516,7 +511,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -553,7 +548,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -590,7 +585,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -628,7 +623,7 @@
                         <div class="maintenance-box" v-if="hot.underMaintenance">
                           <p>维护中</p>
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -675,7 +670,7 @@
                       <div class="maintenance-box" v-if="es.underMaintenance">
                         <p>维护中</p>
                         <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间:</div>
+                          <div class="small-size q-mt-md">维护时间：</div>
                           <p class="small-size">
                             {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
@@ -729,7 +724,7 @@
                       <div class="maintenance-box" v-if="sp.underMaintenance">
                         <p>维护中</p>
                         <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间:</div>
+                          <div class="small-size q-mt-md">维护时间：</div>
                           <p class="small-size">
                             {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
@@ -782,7 +777,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -819,7 +814,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -856,7 +851,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -893,7 +888,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -980,7 +975,7 @@
                           <div class="maintenance-box" v-if="slt.underMaintenance">
                             <p>维护中</p>
                             <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -1038,7 +1033,7 @@
                           <div class="maintenance-box" v-if="slt.underMaintenance">
                             <p>维护中</p>
                             <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -1094,7 +1089,7 @@
                         <div class="maintenance-box" v-if="poke.underMaintenance">
                           <p>维护中</p>
                           <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1131,7 +1126,7 @@
                         <div class="maintenance-box" v-if="poke.underMaintenance">
                           <p>维护中</p>
                           <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1178,7 +1173,7 @@
                         <div class="maintenance-box" v-if="lotter.underMaintenance">
                           <p>维护中</p>
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1215,7 +1210,7 @@
                         <div class="maintenance-box" v-if="lotter.underMaintenance">
                           <p>维护中</p>
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1252,7 +1247,7 @@
                         <div class="maintenance-box" v-if="lotter.underMaintenance">
                           <p>维护中</p>
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1299,7 +1294,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1336,7 +1331,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1374,7 +1369,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1411,7 +1406,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1555,6 +1550,7 @@ import { translateRecord } from "src/directives/translate";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
+import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1563,10 +1559,12 @@ export default defineComponent({
     SwiperSlide,
     GameModal,
     MarqueeText,
-    PlatformBlock
+    PlatformBlock,
+    GameTypeSwiper
   },
   setup() {
     const isFirstView = ref(false);
+    const isStickyGameType = ref(false);
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -1587,36 +1585,29 @@ export default defineComponent({
     };
 
     const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
       // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "live") {
         scrollToSlide("id-live-slide");
-        // firstSwiper.value?.slideTo(0, 500);
       }
       if (tab.name === "sport") {
         scrollToSlide("id-sport-slide");
-        // firstSwiper.value?.slideTo(1, 500);
       }
       if (tab.name === "esport") {
         scrollToSlide("id-esport-slide");
-        // firstSwiper.value?.slideTo(2, 500);
       }
       if (tab.name === "slot") {
         scrollToSlide("id-slot-slide");
-        // firstSwiper.value?.slideTo(3, 500);
       }
       if (tab.name === "fish") {
         scrollToSlide("id-fish-slide");
       }
       if (tab.name === "poker") {
         scrollToSlide("id-poker-slide");
-        // firstSwiper.value?.slideTo(5, 500);
       }
       if (tab.name === "lottery") {
         scrollToSlide("id-lottery-slide");
         // window.scrollTo(0, 0);
-        // firstSwiper.value?.slideTo(6, 500);
       }
     };
 
@@ -1647,24 +1638,24 @@ export default defineComponent({
       {
         name: "esport",
         icon: "slide-esport-svg.svg",
-        label: "电竞赛事",
-        labelact: "电竞赛事",
+        label: "电竞",
+        labelact: "电竞",
         mb: 0,
         gap: 3
       },
       {
         name: "sport",
         icon: "slide-sport-svg.svg",
-        label: "体育赛事",
-        labelact: "体育赛事",
+        label: "体育",
+        labelact: "体育",
         mb: 0,
         gap: 3
       },
       {
         name: "live",
         icon: "slide-live-svg.svg",
-        label: "真人娱乐",
-        labelact: "真人娱乐",
+        label: "真人",
+        labelact: "真人",
         mb: 0,
         gap: 3
       },
@@ -1679,16 +1670,16 @@ export default defineComponent({
       {
         name: "poker",
         icon: "slide-poker-svg.svg",
-        label: "棋牌游戏",
-        labelact: "棋牌游戏",
+        label: "棋牌",
+        labelact: "棋牌",
         mb: 0,
         gap: 3
       },
       {
         name: "lottery",
         icon: "slide-lottery-svg.svg",
-        label: "彩票游戏",
-        labelact: "彩票游戏",
+        label: "彩票",
+        labelact: "彩票",
         mb: 0,
         gap: 3
       },
@@ -1746,13 +1737,16 @@ export default defineComponent({
     };
 
     const isScrolling = ref(false);
+    const swiperContainerRef = ref(null);
     const scrollToSlide = (slide_id) => {
       isScrolling.value = true;
       var slideItem = document.getElementById(slide_id);
       if (slideItem) {
-        var positionY = slideItem.offsetTop;
-        // console.log(positionY);
-        var y_axis = positionY + 215;
+        const positionY = slideItem.offsetTop;
+        const topHeight = document.getElementById("id-sticky-header").offsetHeight;
+        const parentOffset = swiperContainerRef.value.offsetTop ?? 0;
+        let offset = isStickyGameType.value ? 0 : 60;
+        const y_axis = positionY + parentOffset - topHeight - offset;
 
         window.scroll({
           top: y_axis,
@@ -1793,56 +1787,56 @@ export default defineComponent({
         }
         // }
 
+        if (position > 350) {
+          isStickyGameType.value = true;
+        } else {
+          isStickyGameType.value = false;
+        }
+
         if (position > 400) {
           isShowBackTop.value = true;
         } else {
           isShowBackTop.value = false;
         }
 
-        if (!isScrolling.value) {
-          var topHeight = document.getElementById("id-sticky-header").offsetHeight + 15;
-          var checkItem1 = document.getElementById("id-esport-slide");
-          var checkItem2 = document.getElementById("id-sport-slide");
-          var checkItem3 = document.getElementById("id-live-slide");
-          var checkItem4 = document.getElementById("id-slot-slide");
-          var checkItem42 = document.getElementById("id-poker-slide");
-          var checkItem5 = document.getElementById("id-lottery-slide");
-          var checkItem6 = document.getElementById("id-fish-slide");
+        const minScrollTop = swiperContainerRef.value.offsetTop;
+        if (!isScrolling.value && position > minScrollTop) {
+          const stickyHeight = document.getElementById("id-sticky-header").offsetHeight;
 
-          var positionTop1 = checkItem1.getBoundingClientRect().top;
-          var positionTop2 = checkItem2.getBoundingClientRect().top;
-          var positionTop3 = checkItem3.getBoundingClientRect().top;
-          var positionTop4 = checkItem4.getBoundingClientRect().top;
-          var positionTop42 = checkItem42.getBoundingClientRect().top;
+          const esportSlide = document.getElementById("id-esport-slide");
+          const sportSlide = document.getElementById("id-sport-slide");
+          const liveSlide = document.getElementById("id-live-slide");
+          const slotSlide = document.getElementById("id-slot-slide");
+          const pokerSlide = document.getElementById("id-poker-slide");
+          const lotterySlide = document.getElementById("id-lottery-slide");
+          const fishSlide = document.getElementById("id-fish-slide");
 
-          var positionTop5 = checkItem5.getBoundingClientRect().top;
-          var positionTop6 = checkItem6.getBoundingClientRect().top;
+          const esportTop = esportSlide.getBoundingClientRect().top;
+          const sportTop = sportSlide.getBoundingClientRect().top;
+          const liveTop = liveSlide.getBoundingClientRect().top;
+          const slotTop = slotSlide.getBoundingClientRect().top;
+          const pokerTop = pokerSlide.getBoundingClientRect().top;
+          const lotteryTop = lotterySlide.getBoundingClientRect().top;
+          const fishTop = fishSlide.getBoundingClientRect().top;
 
           // console.log(topHeight);
           // console.log(positionTop6);
           // console.log(positionTop6 - 40 <= topHeight);
 
-          if (positionTop6 - 100 <= topHeight) {
+          if (fishTop - 100 <= stickyHeight) {
             selectedTab.value = "fish";
-            secondSwiper.value?.slideTo(6, 500);
-          } else if (positionTop5 <= topHeight) {
+          } else if (lotteryTop <= stickyHeight) {
             selectedTab.value = "lottery";
-            secondSwiper.value?.slideTo(5, 500);
-          } else if (positionTop42 <= topHeight) {
+          } else if (slotTop <= stickyHeight) {
             selectedTab.value = "slot";
-            secondSwiper.value?.slideTo(4, 500);
-          } else if (positionTop4 <= topHeight) {
+          } else if (pokerTop <= stickyHeight) {
             selectedTab.value = "poker";
-            secondSwiper.value?.slideTo(3, 500);
-          } else if (positionTop3 <= topHeight) {
+          } else if (liveTop <= stickyHeight) {
             selectedTab.value = "live";
-            secondSwiper.value?.slideTo(2, 500);
-          } else if (positionTop2 <= topHeight) {
+          } else if (sportTop <= stickyHeight) {
             selectedTab.value = "sport";
-            secondSwiper.value?.slideTo(1, 500);
-          } else if (positionTop1 <= topHeight) {
+          } else if (esportTop <= stickyHeight) {
             selectedTab.value = "esport";
-            secondSwiper.value?.slideTo(0, 500);
           }
         }
       }
@@ -1950,7 +1944,7 @@ export default defineComponent({
                 espObj.title = "小艾电竞";
               }
               if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
+                espObj.title = "IM 电竞";
                 esportOrder = 2;
               }
               if (!espObj.title) {
@@ -1969,7 +1963,7 @@ export default defineComponent({
               var spObj = Object.assign({}, element);
               var sportOrder = 3;
               if (spObj.code === "IM") {
-                spObj.title = "IM体育";
+                spObj.title = "IM 体育";
               }
               if (spObj.code === "PM") {
                 spObj.title = "熊猫体育";
@@ -1979,13 +1973,13 @@ export default defineComponent({
                 spObj.title = "小艾体育";
               }
               if (spObj.code === "CR") {
-                spObj.title = "CR体育";
+                spObj.title = "CR 体育";
               }
               if (spObj.code === "SABA") {
                 spObj.title = spObj.code + "体育";
               }
               if (spObj.code === "FB") {
-                spObj.title = "FB体育";
+                spObj.title = "FB 体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -2055,9 +2049,9 @@ export default defineComponent({
               fishObj.subtitle = "捕鱼游戏";
 
               if (fishObj.code === "AGF") {
-                fishObj.title = "AG捕鱼";
+                fishObj.title = "AG 捕鱼";
               } else if (fishObj.code === "PMFISH") {
-                fishObj.title = "DB捕鱼";
+                fishObj.title = "DB 捕鱼";
               }
 
               if (fishObj.code !== "AG") {
@@ -2403,6 +2397,7 @@ export default defineComponent({
     onMounted(() => {
       console.log("Home Page");
       getPlatList();
+      store.getUnreadTotal();
       loadData();
       loadAnnouncement();
       checkPlatform();
@@ -2509,7 +2504,9 @@ export default defineComponent({
       setWithExpiry,
       getWithExpiry,
       isImpt,
-      clickHomePopupImg
+      clickHomePopupImg,
+      isStickyGameType,
+      swiperContainerRef
     };
   }
 });
@@ -2607,47 +2604,18 @@ export default defineComponent({
     align-items: center;
     flex-wrap: nowrap;
 
-    .welcome-liner {
-      flex: 3;
-      color: #757575;
-      font-size: 18px;
-    }
+    .notification-section {
+      position: relative;
 
-    .badge-div {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      .icon-div {
-        color: #fff;
-        position: relative;
-        z-index: 22;
-        font-size: 18px;
-        text-align: center;
-        width: 24px;
-        height: 24px;
+      .notification-dot {
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        width: 6px;
+        height: 6px;
+        background: #ff0000;
         border-radius: 50%;
-        background: #f67600;
       }
-    }
-
-    .vip-badge {
-      padding-left: 20px;
-      margin-left: -15px;
-      border-radius: 18px;
-      height: 18px;
-      padding-right: 10px;
-    }
-
-    .refresh-btn {
-      padding: 0px;
-    }
-
-    .balance-text {
-      font-size: 22px;
-      line-height: 22px;
-      font-weight: 600;
-      min-width: 40px;
     }
   }
 
@@ -2664,7 +2632,7 @@ export default defineComponent({
     }
 
     span {
-      color: #0089ed;
+      color: #35648f;
       font-weight: 500;
       font-size: 12px;
     }
@@ -2699,7 +2667,7 @@ export default defineComponent({
   }
 
   &.padding-normal {
-    padding-top: 136px;
+    padding-top: 58px;
   }
 
   &.padding-second {
@@ -3026,6 +2994,7 @@ export default defineComponent({
     padding: 5px 10px;
     justify-content: center;
     align-items: center;
+    background-color: #e7f2ff;
 
     .marquee-text-wrap {
       color: #000;
@@ -3356,6 +3325,72 @@ export default defineComponent({
     &::after {
       display: none;
     }
+  }
+}
+
+.home-auth-section {
+  width: 95%;
+  margin: 0 auto;
+
+  .home-auth-subsection {
+    border-width: 0 1px 0 0;
+    border-style: dashed;
+    border-color: #a0a0a0;
+  }
+
+  .cash-button {
+    text-decoration: none;
+    width: 36px;
+    display: flex;
+    flex-direction: column;
+
+    > p {
+      font-size: 14px;
+      font-weight: 500;
+      color: #3b5778;
+      margin: 0;
+    }
+  }
+
+  .welcome-liner {
+    flex: 3;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+
+  .badge-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .icon-div {
+      color: #fff;
+      position: relative;
+      z-index: 22;
+      font-size: 18px;
+      text-align: center;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .vip-badge {
+    padding-left: 20px;
+    margin-left: -15px;
+    border-radius: 18px;
+    height: 18px;
+    padding-right: 10px;
+  }
+
+  .balance-text {
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 500;
+    min-width: 50px;
+    color: #333333;
   }
 }
 </style>

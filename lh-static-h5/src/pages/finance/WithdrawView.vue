@@ -246,11 +246,13 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import{useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {AcctBal},
   setup() {
+    const notify = useNotify();
     const store = userStore();
     const isNewUser = ref(false);
     const $q = useQuasar();
@@ -339,11 +341,9 @@ export default defineComponent({
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "提交成功",
-              icon: "check_circle_outline"
             });
             getWithdrawalMethods();
 
@@ -357,11 +357,9 @@ export default defineComponent({
             withdrawLoading.value = false;
 
           } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: response.message,
-              icon: "report_problem"
             });
 
             withdrawLoading.value = false;
@@ -369,12 +367,10 @@ export default defineComponent({
         }).catch((error) => {
           console.log("error", error);
           withdrawLoading.value = false;
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: response.message,
-          //   icon: "report_problem"
-          // });
+          // notify({
+          //   type: "error",
+          //          //   message: response.message,
+          //          // });
         });
         $q.loading.hide();
       }
@@ -448,11 +444,9 @@ export default defineComponent({
             selectMethod(withdrawalMethods.value[0], 0);
           }
         } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: response.message,
-            icon: "report_problem"
           });
         }
       });

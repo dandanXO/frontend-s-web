@@ -109,6 +109,14 @@
         >
           {{ t('fields.delete') }}
         </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="success"
+          @click="bulkAdd()"
+        >
+          {{ t('fields.addSyncDefault') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -161,7 +169,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.competitionType')" prop="competitionType">
+        <el-form-item
+          :label="t('fields.competitionType')"
+          prop="competitionType"
+        >
           <el-select
             v-model="form.competitionType"
             :placeholder="t('fields.pleaseChoose')"
@@ -176,16 +187,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          :label="t('fields.gameName')"
-          prop="gameName"
-        >
+        <el-form-item :label="t('fields.gameName')" prop="gameName">
           <el-input v-model="form.gameName" style="width: 350px" />
         </el-form-item>
-        <el-form-item
-          :label="t('fields.gameCode')"
-          prop="gameCode"
-        >
+        <el-form-item :label="t('fields.gameCode')" prop="gameCode">
           <el-input v-model="form.gameCode" style="width: 350px" />
         </el-form-item>
         <el-form-item
@@ -194,7 +199,10 @@
         >
           <el-input v-model="form.competitionName" style="width: 350px" />
         </el-form-item>
-        <el-form-item :label="t('fields.competitionTime')" prop="competitionTime">
+        <el-form-item
+          :label="t('fields.competitionTime')"
+          prop="competitionTime"
+        >
           <el-date-picker
             v-model="form.competitionTime"
             format="DD/MM/YYYY HH:mm:ss"
@@ -208,10 +216,7 @@
             :clearable="false"
           />
         </el-form-item>
-        <el-form-item
-          :label="t('fields.teamOne')"
-          prop="teamOneName"
-        >
+        <el-form-item :label="t('fields.teamOne')" prop="teamOneName">
           <el-input v-model="form.teamOneName" style="width: 350px" />
         </el-form-item>
         <el-form-item :label="t('fields.teamOneIcon')" prop="teamOneLogo">
@@ -246,10 +251,7 @@
             </el-button>
           </el-row>
         </el-form-item>
-        <el-form-item
-          :label="t('fields.teamTwo')"
-          prop="teamTwoName"
-        >
+        <el-form-item :label="t('fields.teamTwo')" prop="teamTwoName">
           <el-input v-model="form.teamTwoName" style="width: 350px" />
         </el-form-item>
         <el-form-item :label="t('fields.teamTwoIcon')" prop="teamTwoLogo">
@@ -300,12 +302,21 @@
             size="mini"
             style="width: 300px"
           >
-            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
-            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
-            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
+        <el-form-item
+          :label="t('fields.displayStartTime')"
+          prop="displayStartTime"
+        >
           <el-date-picker
             v-model="form.displayStartTime"
             format="DD/MM/YYYY HH:mm:ss"
@@ -452,6 +463,82 @@
         </div>
       </div>
     </el-dialog>
+
+    <el-dialog
+      :title="uiControl.bulkAddTitle"
+      v-model="uiControl.bulkAddVisible"
+      append-to-body
+      width="40%"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        ref="bulkCompetitionForm"
+        :model="bulkForm"
+        :rules="bulkFormRules"
+        :inline="true"
+        size="small"
+        label-width="100px"
+      >
+        <el-form-item :label="t('fields.site')" props="siteId">
+          <el-select
+            v-model="bulkForm.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            default-first-option
+            @focus="loadSites"
+            @change="selectFormSiteBulk"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.platform')" prop="platformId">
+          <el-select
+            v-model="bulkForm.platformId"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            filterable
+            @change="handleChangePlatformBulk"
+          >
+            <el-option
+              v-for="item in dialogPlatsBulk.list"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.competitionType')"
+          prop="competitionType"
+        >
+          <el-select
+            v-model="bulkForm.competitionType"
+            :placeholder="t('fields.pleaseChoose')"
+            style="width: 350px"
+            filterable
+          >
+            <el-option
+              v-for="item in uiControl.competitionType"
+              :key="item.name"
+              :label="item.display"
+              :value="item.name"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitBulk">
+            {{ t('fields.sync') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
     <el-table
       :data="page.records"
       v-loading="page.loading"
@@ -468,16 +555,31 @@
         v-if="!hasRole(['SUB_TENANT'])"
       />
       <el-table-column prop="platformName" :label="t('fields.platformName')" />
-      <el-table-column prop="competitionType" :label="t('fields.competitionType')" />
+      <el-table-column
+        prop="competitionType"
+        :label="t('fields.competitionType')"
+      />
       <el-table-column prop="gameName" :label="t('fields.gameName')" />
-      <el-table-column prop="competitionName" :label="t('fields.competitionName')" />
-      <el-table-column prop="competitionTime" :label="t('fields.competitionTime')" />
+      <el-table-column
+        prop="competitionName"
+        :label="t('fields.competitionName')"
+      />
+      <el-table-column
+        prop="competitionTime"
+        :label="t('fields.competitionTime')"
+      />
       <el-table-column prop="teamOneName" :label="t('fields.teamOne')" />
       <el-table-column prop="teamTwoName" :label="t('fields.teamTwo')" />
       <el-table-column prop="sequence" :label="t('fields.sequence')" />
       <el-table-column prop="status" :label="t('fields.status')" />
-      <el-table-column prop="displayStartTime" :label="t('fields.displayStartTime')" />
-      <el-table-column prop="displayEndTime" :label="t('fields.displayEndTime')" />
+      <el-table-column
+        prop="displayStartTime"
+        :label="t('fields.displayStartTime')"
+      />
+      <el-table-column
+        prop="displayEndTime"
+        :label="t('fields.displayEndTime')"
+      />
       <el-table-column
         :label="t('fields.operate')"
         v-if="
@@ -584,10 +686,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item
-        :label="t('fields.promoType')"
-        prop="promoType"
-      >
+      <el-form-item :label="t('fields.promoType')" prop="promoType">
         <span style="width: 350px">{{ t('fields.teamIcon') }}</span>
       </el-form-item>
       <el-form-item :label="t('fields.remark')" prop="remark">
@@ -626,9 +725,10 @@ import {
   createCompetition,
   updateCompetition,
   deleteCompetition,
-  getCompetitionGameList
+  getCompetitionGameList,
+  bulkSyncCompetition,
 } from '../../../../api/platform-competition'
-import { TENANT } from "../../../../store/modules/user/action-types";
+import { TENANT } from '../../../../store/modules/user/action-types'
 import { uploadImage } from '../../../../api/image'
 
 const { t } = useI18n()
@@ -637,8 +737,9 @@ const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 const competitionForm = ref(null)
+const bulkCompetitionForm = ref(null)
 const gameDir = process.env.VUE_APP_IMAGE + '/promo/'
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -657,7 +758,9 @@ const uiControl = reactive({
     { name: 'Football', display: t('fields.football') },
     { name: 'Basketball', display: t('fields.basketball') },
     { name: 'ESport', display: t('fields.esport') },
-  ]
+  ],
+  bulkAddTitle: '',
+  bulkAddVisible: false,
 })
 
 const page = reactive({
@@ -699,6 +802,13 @@ const form = reactive({
   teamTwoLogo: null,
   sequence: null,
   status: null,
+})
+
+const bulkForm = reactive({
+  siteId: null,
+  platformId: null,
+  platform: null,
+  competitionType: null,
 })
 
 const imageForm = reactive({
@@ -748,6 +858,12 @@ const formRules = reactive({
   displayEndTime: [required(t('message.validateDateRequired'))],
 })
 
+const bulkFormRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
+  platformId: [required(t('message.validatePlatformRequired'))],
+  competitionType: [required(t('message.validateCompetitionTypeRequired'))],
+})
+
 const imageFormRules = reactive({
   path: [required(t('message.validateImageRequired'))],
   name: [required(t('message.validateImageNameRequired'))],
@@ -764,9 +880,17 @@ const dialogPlats = reactive({
   list: [],
 })
 
+const dialogPlatsBulk = reactive({
+  list: [],
+})
+
 const sites = reactive({
   list: [],
 })
+
+// const sitesBulk = reactive({
+//   list: [],
+// })
 
 const gameName = reactive({
   list: [],
@@ -832,6 +956,11 @@ async function selectFormSite() {
   await loadPlatformsForForm(form.siteId)
 }
 
+async function selectFormSiteBulk() {
+  bulkForm.platformId = null
+  await loadPlatformsForFormBulk(bulkForm.siteId)
+}
+
 async function selectRequestPlatform() {
   loadGameList()
 }
@@ -844,12 +973,28 @@ async function selectFormPlatform() {
 
 async function loadSearchPlatforms(id) {
   const { data: ret } = await getPlatformsBySite(id)
-  platforms.list = ret.filter(s => s.gameType === 'SPORT' || s.gameType === 'ESPORT')
+  platforms.list = ret.filter(
+    s => s.gameType === 'SPORT' || s.gameType === 'ESPORT'
+  )
 }
 
 async function loadPlatformsForForm(id) {
   const { data: ret } = await getPlatformsBySite(id)
-  dialogPlats.list = ret.filter(s => s.gameType === 'SPORT' || s.gameType === 'ESPORT')
+  dialogPlats.list = ret.filter(
+    s => s.gameType === 'SPORT' || s.gameType === 'ESPORT'
+  )
+}
+
+async function loadPlatformsForFormBulk(id) {
+  const { data: ret } = await getPlatformsBySite(id)
+
+  console.log('ret : ', ret)
+  dialogPlatsBulk.list = ret.filter(
+    s => s.code === 'FB' && (s.gameType === 'SPORT' || s.gameType === 'ESPORT')
+  )
+
+  // dialogPlatsBulk.list = dialogPlatsBulk.list.filter(m => m.code !== 'FB')
+  console.log('dialogPlatsBulk : ', dialogPlatsBulk)
 }
 
 async function loadSites() {
@@ -989,11 +1134,28 @@ function submitImage() {
   uiControl.imageSelectionVisible = false
 }
 
+function submitBulk() {
+  bulkCompetitionForm.value.validate(async valid => {
+    if (valid) {
+      await bulkSyncCompetition(bulkForm)
+      uiControl.bulkAddVisible = false
+      await loadCompetition()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
+}
+
 function handleChangePlatform(value) {
   const selectedPlatform = dialogPlats.list.find(item => item.id === value)
   form.platformId = value
   platformCode.value = selectedPlatform.code
   selectFormPlatform()
+}
+
+function handleChangePlatformBulk(value) {
+  const selectedPlatform = dialogPlatsBulk.list.find(item => item.id === value)
+  bulkForm.platformId = value
+  bulkForm.platform = selectedPlatform.code
 }
 
 function selectImage(item) {
@@ -1016,6 +1178,11 @@ async function browseImage(type) {
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
+}
+
+async function bulkAdd() {
+  uiControl.bulkAddVisible = true
+  uiControl.bulkAddTitle = t('fields.addSyncDefault')
 }
 
 function showImageDialog() {
@@ -1082,8 +1249,8 @@ onMounted(async () => {
   await loadSites()
   request.siteId = sites.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
+    request.siteId = site.value.id
   }
   await loadSearchPlatforms(request.siteId)
   await loadGameList()

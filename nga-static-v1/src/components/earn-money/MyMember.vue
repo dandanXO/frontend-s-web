@@ -4,7 +4,7 @@
       <div class="frame">
         <div class="content-wrapper">
           <div class="title">Total Rebates</div>
-          <div class="amount">₹ {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
+          <div class="amount">₦ {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>₹ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
+              <span>₦ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>₹ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
+              <span>₦ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>

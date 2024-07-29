@@ -420,16 +420,18 @@ export default {
         title: "Deposit",
         recharge: "Recharge amount",
         form: {
-          label: {
-            title: "Amount"
-          },
           amount: {
+            label: "Amount",
             placeholder: "Enter an amount",
             error: {
               required: "Deposit amount is required",
               pattern: "Amount should be a positive number",
               range: "Deposit should be between {min} - {max}"
             }
+          },
+          privilege: {
+            label: "Select Privilege",
+            placeholder: "Select Privilege"
           }
         },
         modal: {
@@ -834,6 +836,7 @@ export default {
     1308: "Insufficient balance",
     1309: "Card account does not match member name",
     1318: "This operation is not supported, please contact online customer service for assistance.",
+    1319: "The card number has been bound more than twice",
     1401: "OTP sending time exceeded",
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",
@@ -848,6 +851,7 @@ export default {
     11003: "Deposit failed",
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
+    12104: "This bank card number has been blocked",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",
@@ -856,6 +860,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
     21000: "This game is already in your favorite games list.",

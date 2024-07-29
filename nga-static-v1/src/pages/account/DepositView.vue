@@ -28,8 +28,12 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(amount, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
-          <!-- <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge> -->
-          <div :class="['deposit-amt', form.localAmount === amount && 'active']">{{ convertToCommaAmount(amount) }}</div>
+          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>
+            +{{ convertToCommaAmount(amount * 0.05) }}
+          </q-badge>
+          <div :class="['deposit-amt', form.localAmount === amount && 'active']">
+            {{ convertToCommaAmount(amount) }}
+          </div>
           <div :class="['deposit-svg', form.localAmount === amount && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
@@ -160,7 +164,7 @@
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
       <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-      <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
+      <div class="q-mt-sm">Eg. Deposit ₦1,000, require ₦10,000 wager</div>
     </div>
 
     <!--    <div class="node-wrapper" style="display: none">-->
@@ -301,9 +305,9 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
 const depositItems = computed(() => {
-  if (!activeMethod.value.amountArr) return []
-  return activeMethod.value.amountArr.map(amount => Number(amount))
-})
+  if (!activeMethod.value.amountArr) return [];
+  return activeMethod.value.amountArr.map((amount) => Number(amount));
+});
 
 const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
@@ -312,7 +316,7 @@ const handleDepositItemClick = (amount) => {
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
   form.localAmount = null;
-  nextTick(() => depositAmtRef.value.resetValidation())
+  nextTick(() => depositAmtRef.value.resetValidation());
 };
 
 const isLoadingInitPay = ref(true);
@@ -535,6 +539,17 @@ async function pDepo(deposit) {
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
               }
@@ -547,6 +562,17 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;

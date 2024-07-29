@@ -2,7 +2,6 @@
   <div class="vip-container">
     <div class="header-section">
       <img src="../assets/vip/vip-header.png" class="vip-header" />
-
     </div>
     <!--    <div class="banner-container" />-->
 
@@ -11,19 +10,29 @@
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" @click="store.openLiveChat()" class="claimBtn vipBirthday">
+              <a
+                v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2"
+                @click="store.openLiveChat()"
+                class="claimBtn vipBirthday"
+              >
                 <RiCake2Line />
-                {{ $t('vip.birthday') }}
+                {{ $t("vip.birthday") }}
               </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" 
-                 @click="store.openLiveChat()" class="claimBtn vipMonthly">
+              <a
+                v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2"
+                @click="store.openLiveChat()"
+                class="claimBtn vipMonthly"
+              >
                 <RiCalendar2Line />
-                {{ $t('vip.monthly') }}
+                {{ $t("vip.monthly") }}
               </a>
-              <a :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
-                 @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
+              <a
+                :class="{ unavailable: vip.unavailable, claimed: vip.claimed }"
+                @click="!vip.unavailable && !vip.claimed ? claimBonus('welcome', vipIndex + 1) : null"
+                class="claimBtn vipWelcome"
+              >
                 <RiMoneyDollarCircleLine />
-                {{ $t('vip.upgrade') }}
+                {{ $t("vip.upgrade") }}
               </a>
             </div>
             <div class="vipcontents">
@@ -32,23 +41,17 @@
                 <!-- <span class="type">{{ vip.vipTitle }}</span> -->
               </div>
               <div class="description">
-
                 <span>
-                  {{ $t('vip.vipUpgradeRequired') }}:
-                  <span style="color: #700900">
-                  {{$t('vip.totalBetMonth')}} {{vip.upgrade}}
-                  </span>
+                  {{ $t("vip.vipUpgradeRequired") }}:
+                  <span style="color: #700900">{{ $t("vip.totalBetMonth") }} {{ vip.upgrade }}</span>
                 </span>
-                <br/>
+                <br />
 
-                {{ $t('vip.vipMaintainRequired') }}:
+                {{ $t("vip.vipMaintainRequired") }}:
                 <span style="color: #700900">
                   <!-- <span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span> -->
-                <span>{{$t('vip.totalBetMonth')}} {{ vip.maintain }}
+                  <span>{{ $t("vip.totalBetMonth") }} {{ vip.maintain }}</span>
                 </span>
-                </span>
-
-
               </div>
               <!-- vip progress bar start -->
               <div class="progressBarContainer" v-if="vipLevel">
@@ -77,7 +80,9 @@
             <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
             >
-              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t('vip.achieved') : $t('vip.unachieved') }}</span>
+              <span>
+                {{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t("vip.achieved") : $t("vip.unachieved") }}
+              </span>
             </div>
           </div>
           <!-- <router-link
@@ -108,366 +113,375 @@
         <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">{{ $t('vip.exclusivePromotions') }}</div>
       </div> -->
       <div class="vip-table" id="left">
-        <h1>{{$t('vip.header1')}}</h1>
+        <h1>{{ $t("vip.header1") }}</h1>
 
-<p><strong>{{$t('vip.target')}}</strong> {{$t('vip.targetdet')}}</p>
-<p><strong>{{$t('vip.duration')}}</strong>{{$t('vip.durationdet')}}</p>
-<p><strong>{{$t('vip.note')}}</strong>{{$t('vip.notedet')}}</p>
+        <p>
+          <strong>{{ $t("vip.target") }}</strong>
+          {{ $t("vip.targetdet") }}
+        </p>
+        <p>
+          <strong>{{ $t("vip.duration") }}</strong>
+          {{ $t("vip.durationdet") }}
+        </p>
+        <p>
+          <strong>{{ $t("vip.note") }}</strong>
+          {{ $t("vip.notedet") }}
+        </p>
 
-<table>
-    <thead>
-        <tr>
-            <th>{{ $t('vip.tableHeader1') }}</th>
-            <th>{{ $t('vip.tableHeader2') }}</th>
-            <th>{{ $t('vip.tableHeader3') }}</th>
-            <th>{{ $t('vip.tableHeader4') }}</th>
-            <th>{{ $t('vip.tableHeader5') }}</th>
-            <th>{{ $t('vip.tableHeader6') }}</th>
-            <th>{{ $t('vip.tableHeader7') }}</th>
-            <th>{{ $t('vip.tableHeader8') }}</th>
-            <th>{{ $t('vip.tableHeader9') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>VIP1</td>
-            <td>30,000</td>
-            <td>200</td>
-            <td>500</td>
-            <td>28</td>
-            <td>0</td>
-            <td>0</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP2</td>
-            <td>60,000</td>
-            <td>500</td>
-            <td>1,000</td>
-            <td>58</td>
-            <td>0</td>
-            <td>0</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP3</td>
-            <td>100,000</td>
-            <td>1,000</td>
-            <td>2,000</td>
-            <td>88</td>
-            <td>188</td>
-            <td>88</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP4</td>
-            <td>150,000</td>
-            <td>3,000</td>
-            <td>5,000</td>
-            <td>188</td>
-            <td>288</td>
-            <td>88</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP5</td>
-            <td>200,000</td>
-            <td>5,000</td>
-            <td>5,000</td>
-            <td>288</td>
-            <td>388</td>
-            <td>88</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP6</td>
-            <td>300,000</td>
-            <td>10,000</td>
-            <td>10,000</td>
-            <td>388</td>
-            <td>588</td>
-            <td>88</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP7</td>
-            <td>500,000</td>
-            <td>20,000</td>
-            <td>20,000</td>
-            <td>588</td>
-            <td>688</td>
-            <td>88</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP8</td>
-            <td>800,000</td>
-            <td>50,000</td>
-            <td>50,000</td>
-            <td>888</td>
-            <td>888</td>
-            <td>188</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP9</td>
-            <td>1,500,000</td>
-            <td>75,000</td>
-            <td>75,000</td>
-            <td>1,288</td>
-            <td>1,588</td>
-            <td>188</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP10</td>
-            <td>2,800,000</td>
-            <td>100,000</td>
-            <td>100,000</td>
-            <td>1,588</td>
-            <td>1,888</td>
-            <td>588</td>
-            <td>10</td>
-            <td>700,000</td>
-        </tr>
-        <tr>
-            <td>VIP11</td>
-            <td>5,000,000</td>
-            <td>150,000</td>
-            <td>150,000</td>
-            <td>2,888</td>
-            <td>2,588</td>
-            <td>588</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP12</td>
-            <td>8,800,000</td>
-            <td>200,000</td>
-            <td>200,000</td>
-            <td>5,888</td>
-            <td>2,888</td>
-            <td>588</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP13</td>
-            <td>12,800,000</td>
-            <td>250,000</td>
-            <td>250,000</td>
-            <td>8,888</td>
-            <td>3,588</td>
-            <td>888</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP14</td>
-            <td>18,800,000</td>
-            <td>300,000</td>
-            <td>300,000</td>
-            <td>12,888</td>
-            <td>3,888</td>
-            <td>888</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP15</td>
-            <td>25,000,000</td>
-            <td>350,000</td>
-            <td>350,000</td>
-            <td>18,888</td>
-            <td>5,888</td>
-            <td>2,888</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP16</td>
-            <td>32,000,000</td>
-            <td>500,000</td>
-            <td>500,000</td>
-            <td>25,888</td>
-            <td>8,888</td>
-            <td>2,888</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP17</td>
-            <td>42,000,000</td>
-            <td>750,000</td>
-            <td>750,000</td>
-            <td>38,888</td>
-            <td>15,888</td>
-            <td>5,888</td>
-            <td>20</td>
-            <td>1,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP18</td>
-            <td>60,800,000</td>
-            <td>1,000,000</td>
-            <td>1,000,000</td>
-            <td>58,888</td>
-            <td>18,888</td>
-            <td>5,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP19</td>
-            <td>77,300,000</td>
-            <td>1,200,000</td>
-            <td>1,200,000</td>
-            <td>78,888</td>
-            <td>25,888</td>
-            <td>8,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP20</td>
-            <td>98,800,000</td>
-            <td>1,400,000</td>
-            <td>1,400,000</td>
-            <td>88,888</td>
-            <td>28,888</td>
-            <td>8,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP21</td>
-            <td>128,800,000</td>
-            <td>1,600,000</td>
-            <td>1,600,000</td>
-            <td>128,888</td>
-            <td>30,888</td>
-            <td>8,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP22</td>
-            <td>178,800,000</td>
-            <td>1,800,000</td>
-            <td>1,800,000</td>
-            <td>158,888</td>
-            <td>35,888</td>
-            <td>15,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP23</td>
-            <td>268,800,000</td>
-            <td>2,000,000</td>
-            <td>2,000,000</td>
-            <td>188,888</td>
-            <td>38,888</td>
-            <td>15,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP24</td>
-            <td>328,800,000</td>
-            <td>2,200,000</td>
-            <td>2,200,000</td>
-            <td>198,888</td>
-            <td>52,888</td>
-            <td>18,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP25</td>
-            <td>398,800,000</td>
-            <td>2,400,000</td>
-            <td>2,400,000</td>
-            <td>208,888</td>
-            <td>55,888</td>
-            <td>18,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP26</td>
-            <td>478,800,000</td>
-            <td>2,600,000</td>
-            <td>2,600,000</td>
-            <td>258,888</td>
-            <td>58,888</td>
-            <td>28,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP27</td>
-            <td>568,800,000</td>
-            <td>2,800,000</td>
-            <td>2,800,000</td>
-            <td>288,888</td>
-            <td>68,888</td>
-            <td>28,888</td>
-            <td>30</td>
-            <td>1,500,000</td>
-        </tr>
-        <tr>
-            <td>VIP28</td>
-            <td>678,800,000</td>
-            <td>3,000,000</td>
-            <td>3,000,000</td>
-            <td>588,888</td>
-            <td>88,888</td>
-            <td>58,888</td>
-            <td>Không Giới Hạn</td>
-            <td>2,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP29</td>
-            <td>1,158,800,000</td>
-            <td>3,500,000</td>
-            <td>3,500,000</td>
-            <td>1,588,888</td>
-            <td>288,888</td>
-            <td>88,888</td>
-            <td>Không Giới Hạn</td>
-            <td>2,000,000</td>
-        </tr>
-        <tr>
-            <td>VIP30</td>
-            <td>1,628,800,000</td>
-            <td>4,000,000</td>
-            <td>4,000,000</td>
-            <td>2,888,888</td>
-            <td>888,888</td>
-            <td>88,888</td>
-            <td>Không Giới Hạn</td>
-            <td>2,000,000</td>
-        </tr>
-    </tbody>
-</table>
+        <table>
+          <thead>
+            <tr>
+              <th>{{ $t("vip.tableHeader1") }}</th>
+              <th>{{ $t("vip.tableHeader2") }}</th>
+              <th>{{ $t("vip.tableHeader3") }}</th>
+              <th>{{ $t("vip.tableHeader4") }}</th>
+              <th>{{ $t("vip.tableHeader5") }}</th>
+              <th>{{ $t("vip.tableHeader6") }}</th>
+              <th>{{ $t("vip.tableHeader7") }}</th>
+              <th>{{ $t("vip.tableHeader8") }}</th>
+              <th>{{ $t("vip.tableHeader9") }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>VIP1</td>
+              <td>30,000</td>
+              <td>200</td>
+              <td>500</td>
+              <td>28</td>
+              <td>0</td>
+              <td>0</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP2</td>
+              <td>60,000</td>
+              <td>500</td>
+              <td>1,000</td>
+              <td>58</td>
+              <td>0</td>
+              <td>0</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP3</td>
+              <td>100,000</td>
+              <td>1,000</td>
+              <td>2,000</td>
+              <td>88</td>
+              <td>188</td>
+              <td>88</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP4</td>
+              <td>150,000</td>
+              <td>3,000</td>
+              <td>5,000</td>
+              <td>188</td>
+              <td>288</td>
+              <td>88</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP5</td>
+              <td>200,000</td>
+              <td>5,000</td>
+              <td>5,000</td>
+              <td>288</td>
+              <td>388</td>
+              <td>88</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP6</td>
+              <td>300,000</td>
+              <td>10,000</td>
+              <td>10,000</td>
+              <td>388</td>
+              <td>588</td>
+              <td>88</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP7</td>
+              <td>500,000</td>
+              <td>20,000</td>
+              <td>20,000</td>
+              <td>588</td>
+              <td>688</td>
+              <td>88</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP8</td>
+              <td>800,000</td>
+              <td>50,000</td>
+              <td>50,000</td>
+              <td>888</td>
+              <td>888</td>
+              <td>188</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP9</td>
+              <td>1,500,000</td>
+              <td>75,000</td>
+              <td>75,000</td>
+              <td>1,288</td>
+              <td>1,588</td>
+              <td>188</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP10</td>
+              <td>2,800,000</td>
+              <td>100,000</td>
+              <td>100,000</td>
+              <td>1,588</td>
+              <td>1,888</td>
+              <td>588</td>
+              <td>10</td>
+              <td>700,000</td>
+            </tr>
+            <tr>
+              <td>VIP11</td>
+              <td>5,000,000</td>
+              <td>150,000</td>
+              <td>150,000</td>
+              <td>2,888</td>
+              <td>2,588</td>
+              <td>588</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP12</td>
+              <td>8,800,000</td>
+              <td>200,000</td>
+              <td>200,000</td>
+              <td>5,888</td>
+              <td>2,888</td>
+              <td>588</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP13</td>
+              <td>12,800,000</td>
+              <td>250,000</td>
+              <td>250,000</td>
+              <td>8,888</td>
+              <td>3,588</td>
+              <td>888</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP14</td>
+              <td>18,800,000</td>
+              <td>300,000</td>
+              <td>300,000</td>
+              <td>12,888</td>
+              <td>3,888</td>
+              <td>888</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP15</td>
+              <td>25,000,000</td>
+              <td>350,000</td>
+              <td>350,000</td>
+              <td>18,888</td>
+              <td>5,888</td>
+              <td>2,888</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP16</td>
+              <td>32,000,000</td>
+              <td>500,000</td>
+              <td>500,000</td>
+              <td>25,888</td>
+              <td>8,888</td>
+              <td>2,888</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP17</td>
+              <td>42,000,000</td>
+              <td>750,000</td>
+              <td>750,000</td>
+              <td>38,888</td>
+              <td>15,888</td>
+              <td>5,888</td>
+              <td>20</td>
+              <td>1,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP18</td>
+              <td>60,800,000</td>
+              <td>1,000,000</td>
+              <td>1,000,000</td>
+              <td>58,888</td>
+              <td>18,888</td>
+              <td>5,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP19</td>
+              <td>77,300,000</td>
+              <td>1,200,000</td>
+              <td>1,200,000</td>
+              <td>78,888</td>
+              <td>25,888</td>
+              <td>8,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP20</td>
+              <td>98,800,000</td>
+              <td>1,400,000</td>
+              <td>1,400,000</td>
+              <td>88,888</td>
+              <td>28,888</td>
+              <td>8,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP21</td>
+              <td>128,800,000</td>
+              <td>1,600,000</td>
+              <td>1,600,000</td>
+              <td>128,888</td>
+              <td>30,888</td>
+              <td>8,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP22</td>
+              <td>178,800,000</td>
+              <td>1,800,000</td>
+              <td>1,800,000</td>
+              <td>158,888</td>
+              <td>35,888</td>
+              <td>15,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP23</td>
+              <td>268,800,000</td>
+              <td>2,000,000</td>
+              <td>2,000,000</td>
+              <td>188,888</td>
+              <td>38,888</td>
+              <td>15,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP24</td>
+              <td>328,800,000</td>
+              <td>2,200,000</td>
+              <td>2,200,000</td>
+              <td>198,888</td>
+              <td>52,888</td>
+              <td>18,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP25</td>
+              <td>398,800,000</td>
+              <td>2,400,000</td>
+              <td>2,400,000</td>
+              <td>208,888</td>
+              <td>55,888</td>
+              <td>18,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP26</td>
+              <td>478,800,000</td>
+              <td>2,600,000</td>
+              <td>2,600,000</td>
+              <td>258,888</td>
+              <td>58,888</td>
+              <td>28,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP27</td>
+              <td>568,800,000</td>
+              <td>2,800,000</td>
+              <td>2,800,000</td>
+              <td>288,888</td>
+              <td>68,888</td>
+              <td>28,888</td>
+              <td>30</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>VIP28</td>
+              <td>678,800,000</td>
+              <td>3,000,000</td>
+              <td>3,000,000</td>
+              <td>588,888</td>
+              <td>88,888</td>
+              <td>58,888</td>
+              <td>Không Giới Hạn</td>
+              <td>2,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP29</td>
+              <td>1,158,800,000</td>
+              <td>3,500,000</td>
+              <td>3,500,000</td>
+              <td>1,588,888</td>
+              <td>288,888</td>
+              <td>88,888</td>
+              <td>Không Giới Hạn</td>
+              <td>2,000,000</td>
+            </tr>
+            <tr>
+              <td>VIP30</td>
+              <td>1,628,800,000</td>
+              <td>4,000,000</td>
+              <td>4,000,000</td>
+              <td>2,888,888</td>
+              <td>888,888</td>
+              <td>88,888</td>
+              <td>Không Giới Hạn</td>
+              <td>2,000,000</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="left" />
       <div class="right" />
     </div>
 
     <div class="terms-conditions">
-      <div class="section-title">{{ $t('vip.vipTerms') }}</div>
+      <div class="section-title">{{ $t("vip.vipTerms") }}</div>
       <img
         class="terms-conditions-title-separator"
         :src="require('../assets/vip/term-condition-title-separator.png')"
@@ -477,7 +491,7 @@
           {{ term.text }}
         </li> -->
         <li class="term" v-for="term in 9">
-          {{ $t(`vip.tnc${term}`)}}
+          {{ $t(`vip.tnc${term}`) }}
         </li>
       </ol>
     </div>
@@ -485,9 +499,12 @@
 
   <el-dialog class="" v-model="privilegeClaimedModalVisible" width="600px" align-center>
     <div class="noticedialog">
-      <div class="title" style="flex-direction: column;display:flex;">{{modalTitle}} <span style="font-size: 30px; color: #FD3126;">{{ amount ? amount : 0 }}</span></div>
+      <div class="title" style="flex-direction: column; display: flex">
+        {{ modalTitle }}
+        <span style="font-size: 30px; color: #fd3126">{{ amount ? amount : 0 }}</span>
+      </div>
       <div class="standard-button-container">
-        <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('common.confirm')}}</button>
+        <button class="standard-button btn-color-blue" @click="claimNow()">{{ $t("common.confirm") }}</button>
       </div>
     </div>
   </el-dialog>
@@ -534,18 +551,18 @@ export default defineComponent({
       }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0
+        levelUpDeposit = 0;
       }
       if (vipLevel === 0) {
-        return 0
+        return 0;
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100
+        return 100;
       } else {
-        return 0
+        return 0;
       }
 
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
@@ -557,37 +574,35 @@ export default defineComponent({
     const storeToken = computed(() => {
       return store.token;
     });
-    const modalTitle = ref('')
+    const modalTitle = ref("");
     const claimBonus = (vipType, vipLevel) => {
       if (vipType === "monthly") {
         claimMonthly().then((res) => {
-          if(res.code === 0) {
+          if (res.code === 0) {
             amount.value = store.currency.label + res.data;
             privilegeClaimedModalVisible.value = true;
-            modalTitle.value = t('vip.monthlyBonus');
+            modalTitle.value = t("vip.monthlyBonus");
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
-        })
+        });
       } else if (vipType === "welcome") {
         claim(vipLevel).then((res) => {
-          if(res.code === 0) {
+          if (res.code === 0) {
             amount.value = store.currency.label + res.data;
             privilegeClaimedModalVisible.value = true;
-            modalTitle.value = t('vip.levelUpBonus');
-
+            modalTitle.value = t("vip.levelUpBonus");
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
-        })
+        });
       }
-    }
+    };
     const claimNow = () => {
       privilegeClaimedModalVisible.value = false;
       store.getBalance();
       initVIPTable();
-
-    }
+    };
     // const loadingClaim = ref(false);
     // const loadingMClaim = ref(false);
     // const loadingBClaim = ref(false);
@@ -676,319 +691,319 @@ export default defineComponent({
     };
 
     const vipItems = reactive([
-  {
-    vipLevel: "1",
-    upgrade: "30,000",
-    maintain: "500",
-    vipTitle: "VIP1",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "2",
-    upgrade: "60,000",
-    maintain: "1,000",
-    vipTitle: "VIP2",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "3",
-    upgrade: "100,000",
-    maintain: "2,000",
-    vipTitle: "VIP3",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "4",
-    upgrade: "150,000",
-    maintain: "5,000",
-    vipTitle: "VIP4",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "5",
-    upgrade: "200,000",
-    maintain: "5,000",
-    vipTitle: "VIP5",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "6",
-    upgrade: "300,000",
-    maintain: "10,000",
-    vipTitle: "VIP6",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "7",
-    upgrade: "500,000",
-    maintain: "20,000",
-    vipTitle: "VIP7",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "8",
-    upgrade: "800,000",
-    maintain: "50,000",
-    vipTitle: "VIP8",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "9",
-    upgrade: "1,500,000",
-    maintain: "75,000",
-    vipTitle: "VIP9",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "10",
-    upgrade: "2,800,000",
-    maintain: "100,000",
-    vipTitle: "VIP10",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "11",
-    upgrade: "5,000,000",
-    maintain: "150,000",
-    vipTitle: "VIP11",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "12",
-    upgrade: "8,800,000",
-    maintain: "200,000",
-    vipTitle: "VIP12",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "13",
-    upgrade: "12,800,000",
-    maintain: "250,000",
-    vipTitle: "VIP13",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "14",
-    upgrade: "18,800,000",
-    maintain: "300,000",
-    vipTitle: "VIP14",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "15",
-    upgrade: "25,000,000",
-    maintain: "350,000",
-    vipTitle: "VIP15",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "16",
-    upgrade: "32,000,000",
-    maintain: "500,000",
-    vipTitle: "VIP16",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "17",
-    upgrade: "42,000,000",
-    maintain: "750,000",
-    vipTitle: "VIP17",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "18",
-    upgrade: "60,800,000",
-    maintain: "1,000,000",
-    vipTitle: "VIP18",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "19",
-    upgrade: "77,300,000",
-    maintain: "1,200,000",
-    vipTitle: "VIP19",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "20",
-    upgrade: "98,800,000",
-    maintain: "1,400,000",
-    vipTitle: "VIP20",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "21",
-    upgrade: "128,800,000",
-    maintain: "1,600,000",
-    vipTitle: "VIP21",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "22",
-    upgrade: "178,800,000",
-    maintain: "1,800,000",
-    vipTitle: "VIP22",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "23",
-    upgrade: "268,800,000",
-    maintain: "2,000,000",
-    vipTitle: "VIP23",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "24",
-    upgrade: "328,800,000",
-    maintain: "2,200,000",
-    vipTitle: "VIP24",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "25",
-    upgrade: "398,800,000",
-    maintain: "2,400,000",
-    vipTitle: "VIP25",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "26",
-    upgrade: "478,800,000",
-    maintain: "2,600,000",
-    vipTitle: "VIP26",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "27",
-    upgrade: "568,800,000",
-    maintain: "2,800,000",
-    vipTitle: "VIP27",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "28",
-    upgrade: "678,800,000",
-    maintain: "3,000,000",
-    vipTitle: "VIP28",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "29",
-    upgrade: "1,158,800,000",
-    maintain: "3,500,000",
-    vipTitle: "VIP29",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  },
-  {
-    vipLevel: "30",
-    upgrade: "1,628,800,000",
-    maintain: "4,000,000",
-    vipTitle: "VIP30",
-    depositPromoAvailable: false,
-    promoAvailable: false,
-    unavailable: false,
-    claimed: false
-  }
-]);
+      {
+        vipLevel: "1",
+        upgrade: "30,000",
+        maintain: "500",
+        vipTitle: "VIP1",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "2",
+        upgrade: "60,000",
+        maintain: "1,000",
+        vipTitle: "VIP2",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "3",
+        upgrade: "100,000",
+        maintain: "2,000",
+        vipTitle: "VIP3",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "4",
+        upgrade: "150,000",
+        maintain: "5,000",
+        vipTitle: "VIP4",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "5",
+        upgrade: "200,000",
+        maintain: "5,000",
+        vipTitle: "VIP5",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "6",
+        upgrade: "300,000",
+        maintain: "10,000",
+        vipTitle: "VIP6",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "7",
+        upgrade: "500,000",
+        maintain: "20,000",
+        vipTitle: "VIP7",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "8",
+        upgrade: "800,000",
+        maintain: "50,000",
+        vipTitle: "VIP8",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "9",
+        upgrade: "1,500,000",
+        maintain: "75,000",
+        vipTitle: "VIP9",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "10",
+        upgrade: "2,800,000",
+        maintain: "100,000",
+        vipTitle: "VIP10",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "11",
+        upgrade: "5,000,000",
+        maintain: "150,000",
+        vipTitle: "VIP11",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "12",
+        upgrade: "8,800,000",
+        maintain: "200,000",
+        vipTitle: "VIP12",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "13",
+        upgrade: "12,800,000",
+        maintain: "250,000",
+        vipTitle: "VIP13",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "14",
+        upgrade: "18,800,000",
+        maintain: "300,000",
+        vipTitle: "VIP14",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "15",
+        upgrade: "25,000,000",
+        maintain: "350,000",
+        vipTitle: "VIP15",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "16",
+        upgrade: "32,000,000",
+        maintain: "500,000",
+        vipTitle: "VIP16",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "17",
+        upgrade: "42,000,000",
+        maintain: "750,000",
+        vipTitle: "VIP17",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "18",
+        upgrade: "60,800,000",
+        maintain: "1,000,000",
+        vipTitle: "VIP18",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "19",
+        upgrade: "77,300,000",
+        maintain: "1,200,000",
+        vipTitle: "VIP19",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "20",
+        upgrade: "98,800,000",
+        maintain: "1,400,000",
+        vipTitle: "VIP20",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "21",
+        upgrade: "128,800,000",
+        maintain: "1,600,000",
+        vipTitle: "VIP21",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "22",
+        upgrade: "178,800,000",
+        maintain: "1,800,000",
+        vipTitle: "VIP22",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "23",
+        upgrade: "268,800,000",
+        maintain: "2,000,000",
+        vipTitle: "VIP23",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "24",
+        upgrade: "328,800,000",
+        maintain: "2,200,000",
+        vipTitle: "VIP24",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "25",
+        upgrade: "398,800,000",
+        maintain: "2,400,000",
+        vipTitle: "VIP25",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "26",
+        upgrade: "478,800,000",
+        maintain: "2,600,000",
+        vipTitle: "VIP26",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "27",
+        upgrade: "568,800,000",
+        maintain: "2,800,000",
+        vipTitle: "VIP27",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "28",
+        upgrade: "678,800,000",
+        maintain: "3,000,000",
+        vipTitle: "VIP28",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "29",
+        upgrade: "1,158,800,000",
+        maintain: "3,500,000",
+        vipTitle: "VIP29",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      },
+      {
+        vipLevel: "30",
+        upgrade: "1,628,800,000",
+        maintain: "4,000,000",
+        vipTitle: "VIP30",
+        depositPromoAvailable: false,
+        promoAvailable: false,
+        unavailable: false,
+        claimed: false
+      }
+    ]);
     const canClaimMonthly = ref(false);
     const initVIPTable = () => {
       if (store.token) {
-        canRedeemMonthly('vnm-vip-monthly').then((res) => {
+        canRedeemMonthly("vnm-vip-monthly").then((res) => {
           if (res.code === 0) {
-            canClaimMonthly.value = res.data
+            canClaimMonthly.value = res.data;
           }
-        })
+        });
         canRedeem().then((res) => {
           if (res.code === 0) {
             // Your arrays of elements
-            const promoAvailableElements = res.data.promoAvailable;
+            const promoAvailableElements = res.data.available;
             const unavailableElements = res.data.unavailable;
             const claimedElements = res.data.claimed;
 
@@ -1015,7 +1030,7 @@ export default defineComponent({
             // Now, vipItems array has the updated properties based on the provided elements
             // console.log(vipItems);
           } else {
-            ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
         });
       }
@@ -1100,9 +1115,9 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
-  position:relative;
+  position: relative;
   background-image: url("../assets/vip/vip-bg.png");
-  background-color: #1E212C;
+  background-color: #1e212c;
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -1110,12 +1125,12 @@ $border-settings: 1px solid #e5e7eb;
   color: #8d8d8d;
   min-height: 100vh;
 
-  .header-section{
-    margin:0 auto;
+  .header-section {
+    margin: 0 auto;
     width: 100%;
     text-align: center;
   }
-  .vip-header{
+  .vip-header {
     width: 400px;
     margin: 10px auto;
   }
@@ -1161,13 +1176,13 @@ $border-settings: 1px solid #e5e7eb;
         line-height: 9px;
         // color: #cdae77;
         // box-shadow: 0px 2px 5px 0px #cdae77 inset;
-        background: linear-gradient(360deg, #E29100 0%, #F8D79D 70%, #F2E4B6 80%, #ffb42a 100%);
+        background: linear-gradient(360deg, #e29100 0%, #f8d79d 70%, #f2e4b6 80%, #ffb42a 100%);
         color: #ffffff;
         &.unavailable {
           cursor: unset;
           pointer-events: none;
           color: #b1b1b1;
-          background: linear-gradient(360deg, #D3D3D3 0%, #E6E6E6 70%, #F2F2F2 80%, #ffffff 100%);
+          background: linear-gradient(360deg, #d3d3d3 0%, #e6e6e6 70%, #f2f2f2 80%, #ffffff 100%);
           svg {
             fill: #b1b1b1;
           }
@@ -1175,41 +1190,60 @@ $border-settings: 1px solid #e5e7eb;
         &.claimed {
           // box-shadow: 0px 2px 5px 0px #78634a inset;
           pointer-events: none;
-          background: linear-gradient(360deg, #D4AF37 0%, #FFD700 70%, #E6C200 80%, #ffc532 100%);
+          background: linear-gradient(360deg, #d4af37 0%, #ffd700 70%, #e6c200 80%, #ffc532 100%);
           color: #8f8f8f;
           cursor: unset;
           svg {
             fill: #8f8f8f;
           }
         }
-        svg{
+        svg {
           width: 18px;
           fill: #ffffff;
         }
       }
     }
 
-    &6, &7, &8, &9, &10 {
+    &6,
+    &7,
+    &8,
+    &9,
+    &10 {
       background: url("../assets/vip/badge/banner-3.png") no-repeat top center;
       background-size: contain;
     }
 
-    &11, &12, &13, &14, &15 {
+    &11,
+    &12,
+    &13,
+    &14,
+    &15 {
       background: url("../assets/vip/badge/banner-5.png") no-repeat top center;
       background-size: contain;
     }
 
-    &16, &17, &18, &19, &20 {
+    &16,
+    &17,
+    &18,
+    &19,
+    &20 {
       background: url("../assets/vip/badge/banner-7.png") no-repeat top center;
       background-size: contain;
     }
 
-    &21, &22, &23, &24, &25 {
+    &21,
+    &22,
+    &23,
+    &24,
+    &25 {
       background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
       background-size: contain;
     }
 
-    &26, &27, &28, &29 {
+    &26,
+    &27,
+    &28,
+    &29 {
       background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
       background-size: contain;
     }
@@ -1333,10 +1367,9 @@ $border-settings: 1px solid #e5e7eb;
     max-width: 1300px;
     width: 95%;
     .vip-table {
-      
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
     }
 
     .tbl-title {
@@ -1438,9 +1471,8 @@ $border-settings: 1px solid #e5e7eb;
       line-height: 45.96px;
       letter-spacing: 0.05em;
       text-align: center;
-      color:#B48F57;
+      color: #b48f57;
       margin-top: 10px;
-
     }
 
     .terms-conditions-title-separator {

@@ -1,0 +1,7 @@
+{
+  "appId": "com.vnm.client",
+  "appName": "CITY8",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

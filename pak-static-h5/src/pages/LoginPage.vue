@@ -151,14 +151,14 @@
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
-      <div class="list-item" @click="openInsta()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/insta-icon.png" />
-        <div>Instagram</div>
+      <div class="list-item" @click="openYoutube()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+        <div>Youtube</div>
       </div>
-<!--      <div class="list-item" @click="openTiktok()">-->
-<!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
-<!--        <div>Tiktok</div>-->
-<!--      </div>-->
+      <!--      <div class="list-item" @click="openTiktok()">-->
+      <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
+      <!--        <div>Tiktok</div>-->
+      <!--      </div>-->
     </div>
 
     <div class="bottom-img">
@@ -347,15 +347,19 @@ export default defineComponent({
     };
 
     const openWhatsApp = () => {
-      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+      window.open(ui.whatsappUrl, "_blank");
     };
 
     const openInsta = () => {
-      window.open("https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr", "_blank");
-    }
+      window.open(ui.instagramUrl, "_blank");
+    };
 
     const openTiktok = () => {
-      window.open("https://www.tiktok.com/@b9game", "_blank");
+      window.open(ui.tiktokUrl, "_blank");
+    };
+
+    const openYoutube = () => {
+      window.open(ui.youtubeUrl, "_blank");
     };
 
     const onSubmit = () => {
@@ -405,7 +409,9 @@ export default defineComponent({
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-                  router.go(jumpUrl);
+                  ui.showLoggedIn();
+                  // router.push(jumpUrl);
+                  router.push({ path: jumpUrl, query: { login: "true" } });
                 }
               })
               .catch((error) => {
@@ -498,10 +504,10 @@ export default defineComponent({
               //   // alert(affQuickRegEvent.value);
               //   Adjust.trackEvent(adjustEvent);
               // } else {
-                // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                // AdjustWeb.trackEvent({
-                //   eventToken: "vm6pjs"
-                // });
+              // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+              // AdjustWeb.trackEvent({
+              //   eventToken: "vm6pjs"
+              // });
               // }
 
               store.autoLogin(res.data);
@@ -576,7 +582,7 @@ export default defineComponent({
       if (ui.downloadAppUrl) {
         window.open(ui.downloadAppUrl, "_blank");
       } else {
-        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"))
+        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
       }
     };
     const moveCsIcon = (ev) => {
@@ -658,7 +664,8 @@ export default defineComponent({
       ui,
       openWhatsApp,
       openInsta,
-      openTiktok
+      openTiktok,
+      openYoutube
     };
   }
 });

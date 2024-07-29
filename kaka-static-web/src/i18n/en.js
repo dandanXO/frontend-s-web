@@ -229,6 +229,8 @@ export default {
     captchareq: "Please enter captcha code",
     captcha: "Captcha code should be 4 characters",
     verificationCode: "Please enter verification code",
+    pleaseEnter: "Please enter",
+    pleaseEnterCardNumber: "Please enter card number",
     min4: "Verification code should be 4 characters",
     emailFormat: "Please enter a valid email",
     between612: "Length should be between 6 - 11 characters",
@@ -814,7 +816,8 @@ export default {
     loginbeforeAction: "Kindly login before making any actions",
     safetyBeforePhone: "For safety, please verify your phone number before depositing",
     bindRealName: "You have not updated your real name, kindly update it",
-    depositConfirmed: "Deposit confirmed"
+    depositConfirmed: "Deposit confirmed",
+    withdrawCancelled: "Withdrawal has been cancelled"
   },
   sports: {
     saba: "Saba Sports is a leading sports betting platform in Asia, offering over 20,000 events per month throughout the season. With a professional team of approximately 700 traders conducting odds trading, providing attractive and real-time odds!",

@@ -1301,7 +1301,7 @@ export default defineComponent({
       } else if (transferType === 'STEP_4') {
         return '自动支付' // Automatic Payment
       } else if (transferType === 'STEP_5') {
-        return '暂不处理' // Suspend
+        return '请联系客服查询原因' // Suspend
       } else if (transferType === 'AUTOPAY') {
         return '自动支付' // Automatic Payment
       } else if (transferType === 'WAITING_CALLBACK') {
@@ -1402,7 +1402,7 @@ export default defineComponent({
       } else if (withdrawStatus === 'STEP_4') {
         return '自动支付' // Automatic Payment
       } else if (withdrawStatus === 'STEP_5') {
-        return '暂不处理' // Suspend
+        return '请联系客服查询原因' // Suspend
       } else if (withdrawStatus === 'AUTOPAY') {
         return '自动支付' // Automatic Payment
       } else if (withdrawStatus === 'WAITING_CALLBACK') {

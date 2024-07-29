@@ -330,6 +330,11 @@ img.svg {
   color: #bacef1;
 }
 
+.bg-dyorange {
+  background: linear-gradient(270deg, #DC9A45 0%, #EA9526 0.01%, #FFF6A6 100%);
+  color: black;
+}
+
 // .bg-white {
 //   background: #ffffff;
 //   color: #000;
@@ -358,6 +363,13 @@ img.svg {
 
 .gap-5 {
   gap: 5px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+.gap-25 {
+  gap: 25px;
 }
 
 a:hover {

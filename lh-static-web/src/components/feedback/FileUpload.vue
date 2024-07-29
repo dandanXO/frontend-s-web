@@ -13,11 +13,13 @@
 import { defineComponent, reactive } from "vue";
 
 import { uploadImage } from '@/api/image';
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 export default defineComponent({
     emits: ["photoResponse"],
 
     setup: (props, { emit }) => {
+        const notify = useNotify();
+
         const ruleForm = reactive({
             icon: null
         })
@@ -32,7 +34,7 @@ export default defineComponent({
             const dirPaymentLabel = 'feedback/label'
 
             if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-                ElMessage({
+                notify({
                     message: '上传限制',
                     type: 'error',
                 })
@@ -56,7 +58,7 @@ export default defineComponent({
                         ruleForm.promoIcon = data.data
                     }
                 } else {
-                    ElMessage({
+                    notify({
                         message: '上传失败. 上传限制，请稍后再试',
                         type: 'error',
                     })

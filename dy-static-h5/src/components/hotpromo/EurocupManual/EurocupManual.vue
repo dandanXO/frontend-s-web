@@ -382,7 +382,9 @@ const openPlat = (platformMatchId) => {
 };
 
 onMounted(() => {
-  console.log("123456789");
+  if (!store.token) {
+    return;
+  }
   init();
 });
 </script>

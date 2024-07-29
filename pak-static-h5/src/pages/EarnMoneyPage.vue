@@ -4,15 +4,20 @@
     <div class="earn-money-container">
       <div class="earn-money-title">{{ $t("earnMoney.title") }}</div>
     </div>
-    <!-- <q-tabs v-model="currentTab" no-caps class="children-tab" indicator-color="transparent" align="justify">
-      <q-tab v-for="(tab, index) in childrenTabs" :key="index" :name="tab.name" :label="tab.label" />
-    </q-tabs> -->
+    <q-tabs v-model="currentTab" no-caps class="children-tab" indicator-color="transparent" align="justify">
+      <q-tab
+        v-for="(tab, index) in childrenTabs"
+        :key="index"
+        :label="tab.label"
+        :name="tab.name"
+      />
+    </q-tabs>
     <q-tab-panels
       v-model="currentTab"
       class="children-tab-panel"
-      animated
-      transition-prev="fade"
       transition-next="fade"
+      transition-prev="fade"
+      animated
     >
       <q-tab-panel v-for="(tab, index) in childrenTabs" :key="index" :name="tab.name">
         <component :is="tab.component" />
@@ -38,7 +43,7 @@ const currentTab = ref("reward");
 const childrenTabs = computed(() => [
   { label: t("earnMoney.tabs.reward"), name: "reward", component: RewardTab },
   { label: t("earnMoney.tabs.teamManagement"), name: "team-management", component: TeamManagementTab },
-  { label: t("earnMoney.tabs.teamBetting"), name: "team-betting", component: TeamBettingTab },
+  // { label: t("earnMoney.tabs.teamBetting"), name: "team-betting", component: TeamBettingTab },
   { label: t("earnMoney.tabs.profitAndLoss"), name: "profit-and-loss", component: ProfitAndLossTab }
 ]);
 </script>
@@ -46,6 +51,7 @@ const childrenTabs = computed(() => [
 <style scoped lang="scss">
 .earn-money-wrapper {
   padding: 20px;
+  overflow-x: hidden;
   .earn-money-container {
     .earn-money-title {
       color: #ffffff;
@@ -59,15 +65,20 @@ const childrenTabs = computed(() => [
     background-size: 100% 100%;
 
     border-radius: 8px;
-    width: calc(100% - 20px);
+    width: 100%;
+    // width: calc(100% - 20px);
+    // min-width: 430px;
+    overflow-x: auto;
     //margin-bottom: 10px;
     margin: 10px auto;
 
     :deep(.q-tab__label) {
       font-weight: 700;
+      font-size: 12px;
     }
 
     :deep(.q-tab) {
+      min-width: 110px;
       white-space: normal;
     }
 

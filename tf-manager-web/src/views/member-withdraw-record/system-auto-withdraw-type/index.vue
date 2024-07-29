@@ -448,7 +448,7 @@ async function loadSiteWithdrawPlatform(siteId) {
 }
 
 async function loadWithdrawPlatform() {
-  const { data: ret } = await getWithdrawPlatforms();
+  const { data: ret } = await getWithdrawPlatforms(request);
   list.withdrawPlatform = ret.records
 }
 

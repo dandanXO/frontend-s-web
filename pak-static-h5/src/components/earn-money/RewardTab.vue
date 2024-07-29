@@ -1,4 +1,21 @@
 <template>
+  <div class="tabs-lists">
+    <div class="tab-button" :class="filterType === 'today' ? 'active' : ''" @click="selectByDayType('today')">
+      {{ $t("records.bytoday") }}
+    </div>
+    <div class="tab-button" :class="filterType === 'yesterday' ? 'active' : ''" @click="selectByDayType('yesterday')">
+      {{ $t("records.byyesterday") }}
+    </div>
+    <div class="tab-button" :class="filterType === 'all' ? 'active' : ''" @click="selectByDayType('all')">
+      {{ $t("records.all") }}
+    </div>
+  </div>
+
+  <q-inner-loading class="loading-spinner-div" :showing="isLoading">
+    <q-spinner-gears size="50px" color="brightbtn" />
+    <div class="label" style="color: #fff">Loading...</div>
+  </q-inner-loading>
+
   <div class="reward-wrapper">
     <div class="earn-money-pots">
       <div class="pot-item">
@@ -131,7 +148,13 @@
         </template>
       </table>
 
-      <div class="table-hint q-pa-md">{{ $t("earnMoney.reward.eligibility_tips") }}</div>
+      <div class="table-hint q-pa-md">
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
+
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
+      </div>
     </div>
 
     <div class="earn-money-sent-ytd">
@@ -236,6 +259,7 @@ import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { useI18n } from "vue-i18n";
+import moment from "moment";
 
 const $q = useQuasar();
 const store = userStore();
@@ -283,18 +307,46 @@ const getOneTimeBonusSetting = () => {
     });
 };
 
+const filterType = ref("today");
+const isLoading = ref(false);
+const selectByDayType = (type) => {
+  if (type !== filterType.value) {
+    filterType.value = type;
+    getMemberDetail();
+  }
+};
+
 const getMemberDetail = () => {
+  var recordDate = "";
+
+  if (filterType.value === "today") {
+    recordDate = moment().format("YYYY-MM-DD 00:00:00") + "," + moment().format("YYYY-MM-DD 23:59:59");
+  } else if (filterType.value === "yesterday") {
+    recordDate =
+      moment().add(-1, "day").format("YYYY-MM-DD 00:00:00") +
+      "," +
+      moment().add(-1, "day").format("YYYY-MM-DD 23:59:59");
+  } else {
+    recordDate = "2024-06-05 00:00:00" + "," + moment().format("YYYY-MM-DD 23:59:59");
+  }
+  isLoading.value = true;
+  memberDetail.value = [];
   api
-    .get("/session/refer-rebate/member-detail")
+    .get(`/session/refer-rebate/member-detail?recordDate=${recordDate}`)
     .then((response) => {
+      isLoading.value = false;
       if (response.code === 0) {
         memberDetail.value = response.data;
         activeSetting.value = response.data.activeSetting;
       }
     })
     .catch((e) => {
+      isLoading.value = false;
       console.log(e);
     });
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 5000);
 };
 
 const getLatestInvitees = () => {
@@ -441,7 +493,7 @@ onMounted(() => {
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
-    tgDomain = store.evip ? 'https://' + store.evip + '/' : store.h5Url;
+    tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
   }
 
   api.get("/session/member/referralCode").then((res) => {
@@ -720,7 +772,7 @@ watch(activeSetting, checkIsShowDetail);
 
   .table-hint {
     color: #8c968f;
-    text-align: center;
+    text-align: left;
   }
 
   .earn-money-sent-ytd {
@@ -787,5 +839,43 @@ watch(activeSetting, checkIsShowDetail);
   100% {
     opacity: 0;
   }
+}
+
+.tabs-lists {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 4px auto 16px;
+
+  .tab-button {
+    width: 30vw;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #466a45;
+    padding: 5px 4px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+      font-weight: bold;
+      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    }
+
+    &:active {
+      transform: translate(0px, 1px);
+      filter: brightness(0.86);
+    }
+  }
+}
+
+.loading-spinner-div {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 9999;
 }
 </style>

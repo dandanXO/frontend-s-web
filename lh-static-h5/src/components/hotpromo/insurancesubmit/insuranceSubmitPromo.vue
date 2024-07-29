@@ -93,7 +93,9 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -231,22 +233,18 @@ const handleSubmit = () => {
       .post(`/game-match/submit/${props.platformType}`)
       .then((response) => {
         if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
+          notify({
+            type: "success",
             message: "已添加保险投注",
-            icon: "check_circle_outline"
           });
           insuranceFormModal.value = false;
           insuranceInfo.accountId = "";
           insuranceInfo.platform = "";
           insuranceInfo.transactionId = "";
         } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
+          notify({
+            type: "error",
             message: response.message,
-            icon: "report_problem"
           });
         }
       })
@@ -284,6 +282,9 @@ const getPlatList = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getPlatList();
 });
 </script>

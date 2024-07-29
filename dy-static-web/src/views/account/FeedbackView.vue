@@ -171,6 +171,7 @@ const loadFeedbackReplies = () => {
         mailboxState.mailboxList[mailboxState.active].list = [];
         mailboxState.mailboxList[mailboxState.active].list.push(...data.records);
         mailboxState.mailboxList[mailboxState.active].total = data.total;
+        mailboxState.mailboxList[mailboxState.active].pageSize = data.size;
       }
     })
     .catch((error) => {

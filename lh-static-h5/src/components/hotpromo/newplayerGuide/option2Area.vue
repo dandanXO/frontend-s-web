@@ -50,11 +50,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -91,11 +91,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -126,18 +126,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15真人</td>
           </tr>
         </tbody>
       </table>
@@ -167,18 +159,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15棋牌</td>
           </tr>
         </tbody>
       </table>
@@ -208,18 +192,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15电子</td>
           </tr>
         </tbody>
       </table>
@@ -249,18 +225,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15捕鱼</td>
           </tr>
         </tbody>
       </table>
@@ -290,12 +258,13 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元獎金</div>
-        <div>
+        <div>已领取：{{ getDoneRewardItem1 }}元</div>
+        <div v-if="matchRewardItem1 && matchRewardItem1.earn">
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
           元
         </div>
+        <div v-else>已达成所有领取条件。</div>
       </div>
 
       <div class="rewards">
@@ -305,7 +274,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -330,12 +299,13 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元獎金</div>
-        <div>
+        <div>已领取：{{ getDoneRewardItem2 }}元</div>
+        <div v-if="matchRewardItem2 && matchRewardItem2.earn">
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
           元
         </div>
+        <div v-else>已达成所有领取条件。</div>
       </div>
 
       <div class="rewards">
@@ -345,7 +315,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -358,10 +328,15 @@
 import { ref, onMounted, computed } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { userStore } from "../../../stores/index";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
 
-const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
-const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
+const store = userStore();
+const notify = useNotify();
+
+const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
+const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
 
 const earnData = [
   { amount: 1000, earn: 5 },
@@ -390,11 +365,17 @@ const rewards1 = computed(() => {
 const rewards2 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount2.includes(item.ruleAmount));
 });
+const getDoneRewardItem1 = computed(() => {
+  return rewards1.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
+const getDoneRewardItem2 = computed(() => {
+  return rewards2.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
 const matchRewardItem1 = computed(() => {
-  return rewards1.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards1.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const matchRewardItem2 = computed(() => {
-  return rewards2.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards2.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const progressPercentage1 = computed(() => {
   if (matchRewardItem1.value) {
@@ -434,7 +415,11 @@ const handleRecieve = async (reward) => {
 };
 
 const handleRedirect = () => {
-  router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
+  if (window.location.pathname === "/promotion") {
+    document.location.href = `app://deposit`;
+  } else {
+    router.push("/finance/deposit?redirect=promo?name=lh1-newplayer-guide");
+  }
 };
 
 const $q = useQuasar();
@@ -445,11 +430,9 @@ const getData = async () => {
     const apiRes = await getNewUserAccumulateDepositInit();
     if (apiRes.data.state === "NOT_ELIGIBLE") {
       isEligibleState.value = false;
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "此账号要求不达标，无法参与此优惠。",
-        icon: "report_problem"
+      notify({
+        type: "error",
+        message: "此账号要求不达标，无法参与此优惠。"
       });
       return;
     }
@@ -474,6 +457,9 @@ const getData = async () => {
 };
 
 onMounted(async () => {
+  if (!store.token) {
+    return;
+  }
   await getData();
 });
 </script>
@@ -492,9 +478,10 @@ onMounted(async () => {
 
 .switch-bar {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
   flex-wrap: wrap;
+  gap: 6px;
 
   @media (max-width: 400px) {
     justify-content: space-evenly;
@@ -511,14 +498,18 @@ onMounted(async () => {
   align-items: center;
   gap: 15px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
+  border: 1px solid #7a80a1;
+
+  @media (max-width: 450px) {
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 .switch-option.active {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-
+  border: 0px;
   color: white;
 }
 
@@ -540,10 +531,22 @@ onMounted(async () => {
     margin-right: 8px;
   }
   .title {
-    margin-top: 4px;
+    margin-top: 0px;
     color: #000;
     font-weight: 600;
     font-size: 24px;
+  }
+}
+
+.promotion-block {
+  padding: 20px 13px;
+
+  table {
+    thead {
+      tr {
+        white-space: nowrap;
+      }
+    }
   }
 }
 
@@ -560,12 +563,14 @@ onMounted(async () => {
 }
 
 .title-area {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   .big-icon {
     width: 24px;
     height: 24px;
     margin-right: 8px;
+    margin-bottom: 0px;
   }
   .title {
     margin-top: 4px;
@@ -573,8 +578,12 @@ onMounted(async () => {
     font-weight: 600;
     font-size: 24px;
 
-    @media (max-width: 400px) {
-      font-size: 18px;
+    @media (max-width: 450px) {
+      font-size: 19px;
+    }
+
+    @media (max-width: 420px) {
+      font-size: 16px;
     }
   }
 }
@@ -660,8 +669,9 @@ tbody tr:last-child {
 
 .rewards {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+  padding: 8px 0px;
   row-gap: 5px;
   column-gap: 5px;
 

@@ -159,7 +159,7 @@
 
               <a
                 class="header-nav whatsapp"
-                href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+                href="https://whatsapp.com/channel/0029VaYIDfZ0gcfJxBnft81l"
                 target="_blank"
               >
                 {{ $t("layout.header.menu.whatsapp") }}

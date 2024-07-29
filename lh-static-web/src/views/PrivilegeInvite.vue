@@ -408,16 +408,18 @@
 </template>
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 
 import { getRecommendPrivilegeRecord, getRebateInfo } from "@/api/privilegeInvite/privilegeInvite";
 import { userStore } from "@/store/index";
+import { useNotify } from "@/hooks/notify"
 
 export default defineComponent({
   components: {},
   setup() {
+    const notify = useNotify()
     const route = useRoute();
     const store = userStore();
     const activeKey = ref(1);
@@ -468,7 +470,7 @@ export default defineComponent({
       getRecommendPrivilegeRecord(params).then((data) => {
         tableRecords.value = data.data;
         if(!tableRecords.value || tableRecords.value.length ===0){
-          ElMessage.error("推广纪录为空。");
+          notify.error("推广纪录为空。");
         }
       });
     };
@@ -478,6 +480,13 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (!store.token) {
+        // notify({
+        //   message: "请登录后操作",
+        //   type: "error"
+        // });
+        return;
+      }
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
 
       const type = route.query.type ?? "";

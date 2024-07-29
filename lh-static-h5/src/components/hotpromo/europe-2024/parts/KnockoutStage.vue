@@ -133,6 +133,9 @@ const formatDate = (matchTime) => {
 
 populateTeams();
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   resizeDom();
   window.addEventListener("resize", resizeDom, true);
 

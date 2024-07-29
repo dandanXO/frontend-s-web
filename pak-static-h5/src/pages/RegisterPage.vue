@@ -224,9 +224,9 @@
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
-      <div class="list-item" @click="openInsta()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/insta-icon.png" />
-        <div>Instagram</div>
+      <div class="list-item" @click="openYoutube()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+        <div>Youtube</div>
       </div>
       <!--      <div class="list-item" @click="openTiktok()">-->
       <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
@@ -433,7 +433,6 @@ export default defineComponent({
             }
           }
 
-
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
@@ -470,9 +469,8 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.push(jumpUrl);
+                  router.push({ path: jumpUrl, query: { register: "true" } });
                 }
-
               } else {
                 $q.notify({
                   color: "negative",
@@ -676,15 +674,19 @@ export default defineComponent({
       whatDragPos.value = [whatDragPos.value[0] - ev.delta.x, whatDragPos.value[1] - ev.delta.y];
     };
     const openWhatsApp = () => {
-      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+      window.open(ui.whatsappUrl, "_blank");
     };
 
     const openInsta = () => {
-      window.open("https://www.instagram.com/b9game?igsh=MTF1cWdjNHo1cTR6bA%3D%3D&utm_source=qr", "_blank");
-    }
+      window.open(ui.instagramUrl, "_blank");
+    };
 
     const openTiktok = () => {
-      window.open("https://www.tiktok.com/@b9game", "_blank");
+      window.open(ui.tiktokUrl, "_blank");
+    };
+
+    const openYoutube = () => {
+      window.open(ui.youtubeUrl, "_blank");
     };
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -696,7 +698,7 @@ export default defineComponent({
       if (ui.downloadAppUrl) {
         window.open(ui.downloadAppUrl, "_blank");
       } else {
-        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"))
+        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
       }
     };
 
@@ -768,6 +770,7 @@ export default defineComponent({
       whatDragPos,
       openWhatsApp,
       openTiktok,
+      openYoutube,
       downloadApp
     };
   }

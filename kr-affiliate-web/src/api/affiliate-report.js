@@ -45,3 +45,12 @@ export const getCommissionRecord = query => {
     ContentType.form
   )
 }
+
+export const getMemberPointRecordList = query => {
+  return https().request(
+    '/affiliate-report/point-record-list',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}

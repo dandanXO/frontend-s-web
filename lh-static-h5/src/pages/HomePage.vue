@@ -521,7 +521,7 @@
 
   <q-page-sticky v-if="showDomain" position="bottom-right" :offset="domainPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingDomainFab" v-touch-pan.prevent.mouse="moveDomainFab">
-      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideDomain()"></q-btn>
       <q-carousel
         class="float"
         :navigation="floatDomain.length > 1 ? true : false"
@@ -1716,10 +1716,15 @@ export default defineComponent({
       if (gamePromo.length === 0) {
         promoPos.value = [18, 18];
       }
+      if (showRocket.value === false) {
+        domainPos.value = [18, 158];
+      }
     };
 
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
+      
+      domainPos.value = [18, 18];
     };
     const domainPos= ref([18,258]);
     const fabPos = ref([18, 18]);

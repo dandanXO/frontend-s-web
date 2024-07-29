@@ -50,11 +50,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -99,11 +99,11 @@
             <td rowspan="3">15 倍</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥300 元</td>
             <td>28%</td>
           </tr>
           <tr>
-            <td>≥500 元</td>
+            <td>≥100 元</td>
             <td>12%</td>
           </tr>
         </tbody>
@@ -142,18 +142,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15真人</td>
           </tr>
         </tbody>
       </table>
@@ -191,18 +183,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15棋牌</td>
           </tr>
         </tbody>
       </table>
@@ -240,18 +224,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15电子</td>
           </tr>
         </tbody>
       </table>
@@ -289,18 +265,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>≥500 元</td>
-            <td>55%</td>
-            <td rowspan="3">688 元</td>
-            <td rowspan="3">15 倍</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>28%</td>
-          </tr>
-          <tr>
-            <td>≥500 元</td>
-            <td>12%</td>
+            <td>≥100 元</td>
+            <td>38%</td>
+            <td>588 元</td>
+            <td>（本金+红利）X15捕鱼</td>
           </tr>
         </tbody>
       </table>
@@ -338,7 +306,7 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元獎金</div>
+        <div>已领取：{{ getDoneRewardItem1 }}元</div>
         <div>
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
@@ -353,7 +321,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -378,7 +346,7 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元獎金</div>
+        <div>已领取：{{ getDoneRewardItem2 }}元</div>
         <div>
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
@@ -393,7 +361,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">領取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -406,10 +374,12 @@
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
-const targetRuleAmount1 = [188, 888, 3588, 6888, 35888, 88888];
-const targetRuleAmount2 = [1000, 1988, 3088, 5088, 8888, 28888];
+const notify = useNotify();
+
+const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
+const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
 
 const earnData = [
   { amount: 1000, earn: 5 },
@@ -432,6 +402,12 @@ const selectedTab = ref("sports");
 const depositAmount = ref(0);
 const updatedApiRes = ref([]);
 
+const getDoneRewardItem1 = computed(() => {
+  return rewards1.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
+const getDoneRewardItem2 = computed(() => {
+  return rewards2.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
 const rewards1 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount1.includes(item.ruleAmount));
 });
@@ -439,10 +415,10 @@ const rewards2 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount2.includes(item.ruleAmount));
 });
 const matchRewardItem1 = computed(() => {
-  return rewards1.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards1.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const matchRewardItem2 = computed(() => {
-  return rewards2.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards2.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const progressPercentage1 = computed(() => {
   if (matchRewardItem1.value) {
@@ -468,6 +444,11 @@ const handleRecieve = async (reward) => {
     const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
 
     if (apiRes.code === 0) {
+      notify({
+        type: "success",
+        message: `成功领取 ￥${apiRes.data}`
+      });
+
       updatedApiRes.value = updatedApiRes.value.map((item) => {
         if (item.ruleAmount === reward.ruleAmount) {
           return {
@@ -478,7 +459,7 @@ const handleRecieve = async (reward) => {
         return item;
       });
     } else {
-      ElMessage.error(apiRes.message);
+      notify.error(apiRes.message);
     }
   } catch (error) {
     console.log(error);
@@ -494,7 +475,7 @@ const getData = async () => {
     const apiRes = await getNewUserAccumulateDepositInit();
     if (apiRes.data.state === "NOT_ELIGIBLE") {
       isEligibleState.value = false;
-      ElMessage.error("此账号无法参与此优惠。");
+      notify.error("此账号无法参与此优惠。");
       return;
     }
     depositAmount.value = apiRes.data.depositAmount || 0;
@@ -552,15 +533,14 @@ onMounted(async () => {
   justify-content: center;
   gap: 5px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   font-size: 20px;
+  border: 1px solid #7a80a1;
 }
 
 .switch-option.active {
   background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-
+  border: 0px;
   color: white;
 }
 

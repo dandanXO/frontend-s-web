@@ -165,8 +165,11 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import VueQrious from "vue-qrious";
 import { getReferralLink, getReferredBonus } from "@/api/personal/share";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 import { claimBonusItem } from "@/api/index/promo";
+const notify = useNotify();
+const store = userStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -237,8 +240,8 @@ const getReferral = () => {
   getReferralLink()
     .then((res) => {
       if (res.code === 0) referralLink.value = `${window.location.origin}/refer/${res.data}`;
-      else 
-        ElMessage.error({
+      else
+        notify.error({
           type: "error",
           message: res.message
         });
@@ -251,7 +254,7 @@ const getReferral = () => {
 const copyLink = () => {
   navigator.clipboard.writeText(referralLink.value);
 
-  ElMessage({
+  notify({
     message: `复制成功`,
     type: "success"
   });
@@ -276,8 +279,8 @@ const getInviteCount = () => {
         registerMembers.value = res.data.registerMembers;
         bonusAmount.value = res.data.bonusAmount;
       } else {
-        
-        ElMessage.error({
+
+        notify.error({
           type: "error",
           message: res.message
         });
@@ -293,12 +296,12 @@ const retrieve = () => {
     .then((res) => {
       if (res.code === 0) {
         this.store.getBalance();
-        ElMessage({
+        notify({
           message: `领取成功`,
           type: "success"
         });
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((err) => {
@@ -325,6 +328,13 @@ onMounted(() => {
       activeTab.value = p.id;
     }
   });
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getReferral();
   getInviteCount();
 });

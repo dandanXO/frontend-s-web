@@ -568,6 +568,9 @@ const columns = [
 ];
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   loadGamePlayerCurrentStep();
 
   resizeGame();

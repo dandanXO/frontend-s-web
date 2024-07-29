@@ -117,6 +117,9 @@ import { ref } from 'vue';
 import { useQuasar } from 'quasar'
 import { duanwuVipUpgrade, duanwuDepositBet } from "../../../api/index/promo.js";
 import { userStore } from "stores/index";
+import { useNotify } from 'src/hooks/notify.js';
+
+const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
 const tabPosition = ref("duanwu");
@@ -128,11 +131,9 @@ const vipupgrade = async () => {
     amount.value = res.data;
     isBonusDialog.value = true
   } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: res.message,
-      icon: "report_problem"
     });
   }
 }
@@ -142,11 +143,9 @@ const depositBet = async () => {
     amount.value = res.data
     isBonusDialog.value = true
   } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: res.message,
-      icon: "report_problem"
     });
   }
 }

@@ -426,6 +426,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (!store.token) {
+          return
+      }
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
 
       const type = route.query.type ?? "";

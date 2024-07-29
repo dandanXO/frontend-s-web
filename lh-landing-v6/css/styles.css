@@ -72,14 +72,15 @@ a:hover {
   height: calc(100% - 180px);
 }
 
-.gold-text{
-  text-align: center;width:100%;
-  margin-bottom:5px;
+.gold-text {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 5px;
   font-weight: bold;
   font-size: 20px;
-  margin-top:5px;
+  margin-top: 5px;
   background-clip: text;
-  background: linear-gradient(180deg, #FFF8BD 0%, #FFBE81 100%);
+  background: linear-gradient(180deg, #fff8bd 0%, #ffbe81 100%);
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -109,7 +110,6 @@ a:hover {
 
 .pop-btns-item .item-icon {
   min-width: 110px;
-
 }
 
 .pop-btns-item .item-icon img {
@@ -167,7 +167,6 @@ a:hover {
 }
 
 @keyframes swing {
-
   0%,
   100% {
     transform: translateX(-5px);
@@ -215,7 +214,7 @@ a:hover {
 }
 
 .main-sticky-btn {
-  background: url(../imgs/sticky-btn.png)no-repeat center center;
+  background: url(../imgs/click-rev.png) no-repeat center center;
   background-size: contain;
   padding: 24px 16px;
   display: flex;
@@ -283,7 +282,6 @@ a:hover {
   width: 90%;
 }
 
-
 .close-overlay {
   position: absolute;
   bottom: 20px;
@@ -301,51 +299,49 @@ a:hover {
   display: none;
 }
 
-.qq-bg{
+.qq-bg {
   background-image: url("../imgs/qq-bg.png");
   background-size: 100% 100%;
   position: relative;
   text-align: left;
   padding-left: 65px;
   padding-top: 3px;
-
 }
 
-
-.voxis-bg{
+.voxis-bg {
   background-image: url("../imgs/voxis-bg.png");
   background-size: 100% 100%;
   position: relative;
   text-align: left;
   padding-left: 65px;
   padding-top: 3px;
-
 }
 
-@media(max-width: 400px){
-  .voxis-bg{
+@media (max-width: 400px) {
+  .voxis-bg {
     padding-left: 13vw;
   }
-  .qq-bg{
+  .qq-bg {
     padding-left: 13vw;
   }
-
 }
 
-.qq-bg span.title,.voxis-bg span.title{
+.qq-bg span.title,
+.voxis-bg span.title {
   font-size: 0.9em;
 
-  @media(max-width: 360px){
+  @media (max-width: 360px) {
     font-size: 12px;
   }
 }
 
-.qq-bg span,.voxis-bg span{
+.qq-bg span,
+.voxis-bg span {
   color: #fff;
   font-size: 1.1em;
   display: block;
   /*padding-right: 25px;*/
-  @media(max-width: 360px){
+  @media (max-width: 360px) {
     font-size: 14px;
   }
 }

@@ -65,8 +65,7 @@
             </el-form-item>
             <div class="account-tip">
               单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : store.currency.label }} -
-              {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
+              {{ isUSDT ? "USDT" : store.currency.label }}  -   {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
           </el-space>
@@ -115,11 +114,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="">
-            <div class="txt-center">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
-            </div>
-          </el-form-item>
+
           <!-- <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
@@ -143,6 +138,9 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
+          <div class="txt-center">
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+          </div>
         </el-form>
       </div>
       <el-dialog width="500px" v-model="isDeposited" :maskClosable="false" :closable="false" title="已存款">
@@ -565,7 +563,8 @@ onMounted(() => {
     font-weight: normal;
   }
 }
-
+</style>
+<style lang="scss">
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -701,6 +700,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .txt-center {
+  margin: 50px auto 20px;
   text-align: center;
 }
 :deep(.ant-form-item-label > label) {
@@ -716,10 +716,6 @@ onMounted(() => {
   height: 42px;
   width: 280px;
   margin-right: 24px;
-}
-
-.deposit-container :deep(.el-form-item) {
-  margin-bottom: 10px;
 }
 
 :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector) {

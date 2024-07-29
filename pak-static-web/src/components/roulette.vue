@@ -163,7 +163,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, defineExpose, defineProps, defineEmits } from "vue";
-import { getReferralLink } from "@/api/personal/reward";
+import { getReferralLink } from "@/api/personal/share";
 import { spinRoulette, spinWheelProgress } from "../api/index/promo";
 import { userStore } from "@/store";
 import { message } from "ant-design-vue";

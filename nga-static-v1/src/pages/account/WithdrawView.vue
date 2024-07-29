@@ -138,7 +138,7 @@
       <div class="top-wrapper">
         <div class="title">
           Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-          {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+          {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} NGN)
         </div>
       </div>
 
@@ -170,19 +170,21 @@
           <div class="desc-wrapper">
             <div class="desc">Withdrew Amount</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
+          <div class="desc">NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
+          <div class="desc">
+            NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">Remain Wagers</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
+          <div class="desc">NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
         </div>
       </div>
     </div>
@@ -211,7 +213,7 @@
     </template>
 
     <div class="bottom-tnc q-mt-md">
-      Note: 3%+6Rs of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
+      Note: 2% + 50NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
       information, if withdrawal failed or you have any other questions, please contact CS 24/7
     </div>
   </div>
@@ -247,7 +249,17 @@ const refreshBalance = () => {
 
 const isLoadingWithdrawalMethod = ref(false);
 const withdrawalDialogTab = ref("BANK");
-const withdrawalMethods = reactive({ BANK: {}, UPI: {} });
+const withdrawalMethods = reactive({
+  BANK: {
+    withdrawAmount: 0,
+    withdrawMaxAmount: 0,
+    remainWagers: 0,
+    withdrawMin: 0,
+    withdrawMax: 0,
+    withdrawableBalance: 0
+  },
+  UPI: {}
+});
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
   let cbCount = 0;
@@ -322,7 +334,7 @@ const loadCards = () => {
             message: "Please add a bank card first.",
             icon: "report_problem"
           });
-          router.push('/account/bank')
+          router.push("/account/bank");
         }
       }
     })

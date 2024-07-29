@@ -79,7 +79,7 @@
         <el-table-column prop="subRegCount" :label="t('fields.subRegCount')" width="180">
           <template
             #default="scope"
-            v-if="hasPermission(['sys:member-refer:summary'])"
+            v-if="hasPermission(['sys:member-refer-pak:summary'])"
           >
             <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.subRegCount }}</el-link>
           </template>

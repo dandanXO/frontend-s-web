@@ -117,8 +117,10 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => {
         this.token = null;
-        // this.vip = 'VIP0'
-        // this.currentDeposit = "0.0000"
+
+        // FB tracking :: logout
+        fbq("track", "logout");
+
         location.reload();
       });
     },
@@ -155,7 +157,7 @@ export const userStore = defineStore("userStore", {
 export const i18nStore = defineStore("i18nStore", () => {
   const languageLocale = localStorage.getItem("languageLocale") || "vi";
   const languageVal = ref(languageLocale);
-  
+
   function setLanguage(l) {
     languageVal.value = l;
     // when vue-i18n is being used with legacy: false, note that i18n.global.locale is a ref, so we must set it via .value:

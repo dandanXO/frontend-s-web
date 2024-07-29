@@ -111,9 +111,10 @@ import {
   giveCardToFriend,
   synthesisCard
 } from "@/api/promotion/tigerCard";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+const notify = useNotify();
 
 const cardInfo = reactive({
   cardDetail: {
@@ -144,7 +145,7 @@ const pageInit = () => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     } else {
-      ElMessage.error(res.message)
+      notify.error(res.message)
     }
   });
 };
@@ -154,7 +155,7 @@ const loadRanking = () => {
     if (res.code === 0) {
       rankingPage.records = res.data;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };
@@ -170,7 +171,7 @@ const getNewTigerCard = () => {
       cardWon.value = res.data.cardType;
       isPageLoading.value = false;
     } else {
-      ElMessage.error({
+      notify.error({
         type: "error",
         message: res.message
       });
@@ -185,13 +186,13 @@ const compoundCard = () => {
   synthesisCard({ promoCode: "dy1-tiger-card" }).then((res) => {
     if (res.code === 0) {
       pageInit();
-      ElMessage.success({
+      notify.success({
         type: "success",
         message: "success"
       });
       isPageLoading.value = false;
     } else {
-      ElMessage.error(res.message)
+      notify.error(res.message)
       isPageLoading.value = false;
     }
   });
@@ -240,12 +241,16 @@ const cardWon = ref("");
 const store = userStore();
 const router = useRouter();
 onMounted(() => {
-  if (store.token) {
-    pageInit();
-    loadRanking();
-  } else {
-    router.push("/login");
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
   }
+  
+  pageInit();
+    loadRanking();
 });
 const formLabelWidth = "140px";
 
@@ -292,13 +297,13 @@ const submitRegisterForm = async (elForm) => {
       form.promoCode = "dy1-tiger-card";
       giveCardToFriend(form).then((res) => {
         if (res.code === 0) {
-          ElMessage.error({
+          notify.error({
             type: "success",
             message: "success"
           });
           isSubmitting.value = false;
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
           isSubmitting.value = false;
         }
       });

@@ -103,15 +103,18 @@
             <q-skeleton type="text" v-if="isFetchingApi" />
             <div v-else class="text-grey text-bold text-caption">
               {{ $t('lang.deposit_deposit_unit') }}：{{
-                calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만"
-                  :
-                  store.currency.value) : 0
+                calculatedMinDeposit ? formatNumberComma(calculatedMinDeposit) + " " + (isUSDT ? "USDT" :
+                  store.currency.value === "₩"
+                    ? "원"
+                    :
+                    store.currency.value) : 0
               }}
               -
-              {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value ===
-                "₩"
-                ? "만" :
-                store.currency.value) : " " }}
+              {{ activeMethod.depositMax ? formatNumberComma(activeMethod.depositMax) + " " + (isUSDT ? "USDT" :
+                store.currency.value ===
+                  "₩"
+                  ? "원" :
+                  store.currency.value) : " " }}
             </div>
 
             <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
@@ -179,11 +182,12 @@ import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "../../components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
 import { useI18n } from "vue-i18n";
+import { formatNumberComma } from "src/boot/utils";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -225,7 +229,7 @@ const copybtntxt3 = ref("복사");
 const copybtntxt4 = ref("복사");
 
 const depositAmtRef = ref("");
-const { realName } = storeToRefs(store);
+const { realName, id } = storeToRefs(store);
 const depositAccName = realName;
 
 const extensionState = ref(false);
@@ -276,13 +280,13 @@ watch(() => depositAmountFormatted.value, () => {
   if (isNaN(depositAmount)) {
     form.localAmount = ''
   } else {
-    depositAmountFormatted.value = `${depositAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    depositAmountFormatted.value = formatNumberComma(depositAmount);;
     form.localAmount = Number(depositAmount);
   }
 })
 
 watch(() => form.localAmount, () => {
-  depositAmountFormatted.value = `${form.localAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  depositAmountFormatted.value = formatNumberComma(form.localAmount);
 })
 
 const verifyDepositAmount = ref([
@@ -311,8 +315,26 @@ function isDivisibleBy10000(val) {
   }
 }
 
+const checkIsGotBankCard = () => {
+  if (realName.value) {
+    api.get("/session/allBankCard").then((res) => {
+      const response = res.data;
+      if (response.data.length === 0) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: '먼저 은행 카드를 연결하세요',
+          icon: "report_problem"
+        });
+
+        router.push('/?page=bankcardlist');
+      }
+    });
+  }
+}
+
 const checkIsRealNameBinded = () => {
-  if (!realName.value) {
+  if (id.value && !realName.value) {
     $q.notify({
       color: "negative",
       position: "top",
@@ -324,7 +346,7 @@ const checkIsRealNameBinded = () => {
   }
 }
 
-watch(() => realName.value, () => {
+watch(() => [realName.value, id.value], () => {
   checkIsRealNameBinded();
 })
 
@@ -654,7 +676,7 @@ function selectPayType(value) {
 const selectAmt = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
-  depositAmountFormatted.value = `${Number(form.localAmount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  depositAmountFormatted.value = formatNumberComma(Number(form.localAmount) + (amt * multiple));
 };
 
 function clearInfo() {
@@ -688,6 +710,7 @@ function checkPrivilege(v) {
 }
 
 onMounted(() => {
+  checkIsGotBankCard();
   checkIsRealNameBinded();
   initPay();
   // checkNewUser();

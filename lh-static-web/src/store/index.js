@@ -5,7 +5,7 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
-import { ElMessage } from "element-plus";
+import { uiStore } from "./ui";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -48,7 +48,10 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
             this.getUnreadMail();
           } else {
-            ElMessage.error(ret.message);
+            uiStore().notify({
+              type: 'error',
+              message: ret.message
+            });
             // throw new Error(ret.message);
           }
         })
@@ -72,7 +75,10 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
             this.getUnreadMail();
           } else {
-            ElMessage.error(ret.message);
+            uiStore().notify({
+              type: 'error',
+              message: ret.message
+            });
             // throw new Error(ret.message);
           }
         })
@@ -106,7 +112,10 @@ export const userStore = defineStore("userStore", {
             this.levelUpDeposit = ret.data.levelUpDeposit;
             this.profilePhoto = ret.data.profilePhoto;
           } else {
-            ElMessage.error(ret.message);
+            uiStore().notify({
+              type: 'error',
+              message: ret.message
+            });
           }
         });
       }

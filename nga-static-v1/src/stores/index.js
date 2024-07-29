@@ -32,7 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "₹", label: "INR" },
+      currency: { value: "₦", label: "NGN" },
       personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://www.55ace.com/",
+      h5Url: "https://n9yvj69mw.com/",
       hasUpdatedOneSignal: false
     };
   },
@@ -276,7 +276,7 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
-      this.token= token;
+      this.token = token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {
