@@ -83,81 +83,81 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="turnover" :label="$t('transit.turnover')">
-          <div>
-            <el-form layout="inline" :model="searchForm.turnover">
-              <div class="left">
-                <el-form-item :label="$t('common.startDate')">
-                  <el-date-picker
-                    :clearable="false"
-                    v-model="searchForm.turnover.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item :label="$t('common.endDate')">
-                  <el-date-picker
-                    :clearable="false"
-                    v-model="searchForm.turnover.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">
-                    {{ $t("common.search") }}
-                  </el-button>
-                </el-form-item>
-              </div>
-            </el-form>
-          </div>
+        <!-- <el-tab-pane name="turnover" :label="$t('transit.turnover')"> -->
+        <!-- <div> -->
+        <!-- <el-form layout="inline" :model="searchForm.turnover"> -->
+        <!-- <div class="left"> -->
+        <!-- <el-form-item :label="$t('common.startDate')"> -->
+        <!-- <el-date-picker -->
+        <!-- :clearable="false" -->
+        <!-- v-model="searchForm.turnover.startDate" -->
+        <!-- valueFormat="YYYY-MM-DD" -->
+        <!-- placeholder="" -->
+        <!-- /> -->
+        <!-- </el-form-item> -->
+        <!-- <el-form-item :label="$t('common.endDate')"> -->
+        <!-- <el-date-picker -->
+        <!-- :clearable="false" -->
+        <!-- v-model="searchForm.turnover.endDate" -->
+        <!-- valueFormat="YYYY-MM-DD" -->
+        <!-- placeholder="" -->
+        <!-- /> -->
+        <!-- </el-form-item> -->
+        <!-- <el-form-item> -->
+        <!-- <el-button type="success" class="common-btn" @click="searchRecord"> -->
+        <!-- {{ $t("common.search") }} -->
+        <!-- </el-button> -->
+        <!-- </el-form-item> -->
+        <!-- </div> -->
+        <!-- </el-form> -->
+        <!-- </div> -->
 
-          <div class="unbind-record-wrapper">
-            <el-table :data="dataState.turnover" v-loading="loading">
-              <template #empty>
-                <EmptyData />
-              </template>
+        <!-- <div class="unbind-record-wrapper"> -->
+        <!-- <el-table :data="dataState.turnover" v-loading="loading"> -->
+        <!-- <template #empty> -->
+        <!-- <EmptyData /> -->
+        <!-- </template> -->
 
-              <el-table-column
-                v-for="tbl in tableColumns.turnover"
-                :key="tbl.key"
-                :prop="tbl.dataIndex"
-                :label="tbl.title"
-              >
-                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getPlatform(scope.row.platform) }}
-                  </div>
-                </template>
+        <!-- <el-table-column -->
+        <!-- v-for="tbl in tableColumns.turnover" -->
+        <!-- :key="tbl.key" -->
+        <!-- :prop="tbl.dataIndex" -->
+        <!-- :label="tbl.title" -->
+        <!-- > -->
+        <!-- <template v-if="tbl.dataIndex === 'platform'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- {{ getPlatform(scope.row.platform) }} -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getSubType(scope.row.subType, scope.row.type) }}
-                  </div>
-                </template>
+        <!-- <template v-if="tbl.dataIndex === 'subType'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- {{ getSubType(scope.row.subType, scope.row.type) }} -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-                <template v-if="tbl.dataIndex === 'platformCode'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getPlatform(scope.row.platformCode) }}
-                  </div>
-                </template>
+        <!-- <template v-if="tbl.dataIndex === 'platformCode'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- {{ getPlatform(scope.row.platformCode) }} -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.recordTime }}</span>
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-            <!-- <el-divider />
+        <!-- <template v-if="tbl.dataIndex === 'recordTime'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- <span>{{ scope.row.recordTime }}</span> -->
+        <!-- </div> -->
+        <!-- </template> -->
+        <!-- </el-table-column> -->
+        <!-- </el-table> -->
+        <!-- <el-divider />
             <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
               :page-size="searchForm[recordActive].size"
             /> -->
-          </div>
-        </el-tab-pane>
+        <!-- </div> -->
+        <!-- </el-tab-pane> -->
         <el-tab-pane name="withdraw" :label="$t('transit.withdraw')">
           <div>
             <el-form layout="inline" :model="searchForm.withdraw">
@@ -522,7 +522,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="reminderRecord" :label="$t('transit.reminderRecord')">
+        <!-- <el-tab-pane name="reminderRecord" :label="$t('transit.reminderRecord')">
           <div>
             <el-form layout="inline" :model="searchForm.reminderRecord">
               <div class="left">
@@ -583,7 +583,7 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
 
       <!-- <el-modal
@@ -1467,11 +1467,11 @@ export default defineComponent({
         return "";
       }
       if (depositStatus === "PENDING") {
-        return t('status.normalPayment'); // Pending
+        return t('status.pending'); // Pending
       } else if (depositStatus === "SUCCESS") {
-        return t('status.success'); // Success
+        return t('status.depositSuccess'); // Success
       } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-        return t('status.success'); // Supplement Success
+        return t('status.depositSuccess'); // Supplement Success
       } else if (depositStatus === "CLOSED") {
         return t('status.closed'); // Closed
       } else {

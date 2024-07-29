@@ -89,12 +89,14 @@
           <router-link to="/center/message" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-message.svg" />
+              <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
             </div>
             {{ $t("menu_item.menu_message") }}
           </router-link>
           <router-link to="/center/inquiry" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-freedback.svg" />
+              <el-badge class="unread-count" v-if="store.unrepliedTotal" :value="store.unrepliedTotal" color="red" />
             </div>
             {{ $t("menu_item.menu_inquiry") }}
           </router-link>
@@ -150,13 +152,13 @@
                     <span>{{ $t("menu.deposit") }}</span>
                   </div>
                 </el-dropdown-item> -->
-                <!-- <el-dropdown-item command="transfer">
+          <!-- <el-dropdown-item command="transfer">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item> -->
-                <!-- <el-dropdown-item command="promotion">
+          <!-- <el-dropdown-item command="promotion">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
@@ -171,18 +173,25 @@
             </template>
           </el-dropdown> -->
           <div class="profile-details">
-            <div class="name-and-vip-wrapper">
+            <div class="name-and-vip-wrapper details-balance">
               <!-- <div class="details-name">
                 {{ store.name2 || store.realName || store.nickName }}
               </div> -->
               <!-- <div class="account-vip-label">
                 {{ vip }}
               </div> -->
+              <div
+                class="flex-wrap"
+                style="display: grid; grid-template-columns: 70px 1fr; gap: 5px; align-items: center; flex-wrap: nowrap"
+              >
+                <span class="assets-text">{{ $t("account.nickname") }}:</span>
+                <span class="amount">{{ store.name2 }}</span>
+              </div>
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div
                 class="flex-wrap"
-                style="display: grid; grid-template-columns: 60px 1fr; gap: 5px; align-items: center; flex-wrap: nowrap"
+                style="display: grid; grid-template-columns: 70px 1fr; gap: 5px; align-items: center; flex-wrap: nowrap"
               >
                 <span class="assets-text">{{ $t("account.mainWallet") }}:</span>
                 <span class="amount">
@@ -197,7 +206,7 @@
             <a @click="store.toggleRedeemPointDialog" class="details-balance">
               <div
                 class="flex-wrap"
-                style="display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
+                style="display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 5px; flex-wrap: nowrap"
               >
                 <span class="assets-text">{{ $t("account.point") }}:</span>
                 <span class="amount blue">
@@ -215,7 +224,9 @@
           </div>
         </div>
         <div v-if="store.token" class="right-contents">
-          <router-link to="/center/personal" class="header-btn btn-color-blue">{{ $t("menu.personalInfo") }}</router-link>
+          <router-link to="/center/personal" class="header-btn btn-color-blue">
+            {{ $t("menu.personalInfo") }}
+          </router-link>
           <a class="header-btn btn-color-white" @click="logoutDialogVisible = true">
             {{ $t("menu.logout") }}
             <!-- <img src="../../assets/home/regbtn_side.png" /> -->
@@ -535,6 +546,7 @@ import HomeWelcome from "@/components/home/HomeWelcome.vue";
 import RedeemPointDialog from "@/components/home/RedeemPointDialog.vue";
 
 import { i18nStore } from '@/store/language'
+import { getSysReply } from "@/api/personal/feedback";
 export default defineComponent({
   name: "CommonHeader",
   components: {
@@ -1265,6 +1277,7 @@ export default defineComponent({
         store.getMemberInfo();
 
         getUnreadMail();
+        getUnrepliedCount();
       }
 
       // if(store.loginPageVisible) {
@@ -1511,6 +1524,18 @@ export default defineComponent({
       });
     };
 
+    const getUnrepliedCount = () => {
+      getSysReply().then(res => {
+        if(res.code === 0) {
+          const {records} = res.data
+          store.unrepliedTotal = records.reduce((total,record) => {
+            if(record.replyId === null) total++
+            return total
+          },0)
+        }
+      })
+    }
+
     const openLoginDialog = () => {
       registerDialogVisible.value = false;
       forgetPassDialogVisible.value = false;
@@ -1735,7 +1760,7 @@ body {
       display: flex;
       align-items: center;
 
-      color: #7A80A1;
+      color: #7a80a1;
       .assets-text {
         white-space: nowrap;
         text-align: right;
@@ -1744,8 +1769,7 @@ body {
       .amount {
         color: #313441;
         &.blue {
-          
-        color: #3981FF;
+          color: #3981ff;
         }
         font-family: "Roboto";
         margin-right: 0.5rem;
@@ -1790,6 +1814,7 @@ body {
       justify-content: center;
       border-radius: 50%;
       box-shadow: 0px 2px 5px 0px #bbdcff inset;
+      position: relative;
     }
 
     img {
@@ -2806,5 +2831,14 @@ body {
     text-align: center;
     font-weight: bold;
   }
+}
+
+.unread-count {
+  position: absolute !important;
+  top: 0;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  opacity: 1;
 }
 </style>

@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
 import { loadBalance, loadMemberInfo, loadPoint } from "@/api/personal/personal";
-import { getAnnouncement, getFinanceRecords } from "@/api/personal/common"
+import { getAnnouncement, getFinanceRecords } from "@/api/personal/common";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
 import { ElMessage } from "element-plus";
 import vueI18n from "@/i18n";
-import moment from 'moment';
+import moment from "moment";
 // import { message } from "ant-design-vue";
 
 const TOKEN_KEY = "TOKEN";
@@ -34,6 +34,7 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       siteId: 8,
       unreadTotal: 0,
+      unrepliedTotal: 0,
       visitorId: "",
       isAffiliateA: false,
       isShowAnnouncementDialog: false,
@@ -41,6 +42,7 @@ export const userStore = defineStore("userStore", {
       announcementList: undefined,
       financeRecords: undefined,
       pendingRebateAmt: 0,
+      name2: ""
     };
   },
   actions: {
@@ -94,6 +96,7 @@ export const userStore = defineStore("userStore", {
             this.id = ret.data.id;
             this.nickName = ret.data.loginName;
             this.realName = ret.data.realName;
+            this.name2 = ret.data.name2;
             this.birthday = ret.data.birthday;
             this.email = ret.data.email;
             this.phone = ret.data.telephone;
@@ -117,7 +120,7 @@ export const userStore = defineStore("userStore", {
             resolve();
           });
         }
-      })
+      });
     },
     getPendingRebateAmt() {
       return new Promise((resolve, reject) => {
@@ -132,7 +135,7 @@ export const userStore = defineStore("userStore", {
             resolve();
           });
         }
-      })
+      });
     },
     getCurrentDeposit() {
       return this.currentDeposit;
@@ -182,54 +185,55 @@ export const userStore = defineStore("userStore", {
     },
     getAnnouncementList() {
       return new Promise((resolve, reject) => {
-        if(Array.isArray(this.announcementList)) {
+        if (Array.isArray(this.announcementList)) {
           return resolve(this.announcementList);
         } else {
-          getAnnouncement().then(({ code, data: { announcements }}) => {
+          getAnnouncement()
+            .then(({ code, data: { announcements } }) => {
+              const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
 
-            const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-
-            if (code === 0) {
-              const announcementsFormattedData = announcements.map((item) => ({
-                ...item,
-                createTime: formatDate(item.createTime)
-              }));
-              this.announcementList = announcementsFormattedData;
-              resolve(this.announcementList);
-            }
-          })
-          .catch((err) => {
+              if (code === 0) {
+                const announcementsFormattedData = announcements.map((item) => ({
+                  ...item,
+                  createTime: formatDate(item.createTime)
+                }));
+                this.announcementList = announcementsFormattedData;
+                resolve(this.announcementList);
+              }
+            })
+            .catch((err) => {
               console.log(err);
               reject();
-          });
+            });
         }
-      })
+      });
     },
     getFinanceRecordsList() {
       return new Promise((resolve, reject) => {
-        if(this.financeRecords === null) {
+        if (this.financeRecords === null) {
           return;
-        } else if(Array.isArray(this.financeRecords)) {
+        } else if (Array.isArray(this.financeRecords)) {
           return resolve(this.financeRecords);
         } else {
-          if(this.financeRecords == undefined) {
+          if (this.financeRecords == undefined) {
             this.financeRecords = null;
           }
 
-          getFinanceRecords().then(({ code, data } ) => {
-            if (code === 0) {
-              const displayTypes = ['WITHDRAW'];
-              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
-              resolve(this.financeRecords);
-            }
-          })
-          .catch((err) => {
+          getFinanceRecords()
+            .then(({ code, data }) => {
+              if (code === 0) {
+                const displayTypes = ["WITHDRAW"];
+                this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
+                resolve(this.financeRecords);
+              }
+            })
+            .catch((err) => {
               console.log(err);
               reject();
-          });
+            });
         }
-      })
-    },
+      });
+    }
   }
 });
 
