@@ -1862,6 +1862,15 @@ export default {
     yesterdayRegCount: 'Yesterday Register Count',
     displayStartTime: 'Display Start Time',
     displayEndTime: 'Display End Time',
+    redirectType: 'Redirect Type',
+    redirectUrl: 'Redirect URL',
+    redirectButton: 'Redirect Button',
+    sendFrom: 'Sent From',
+    expiryTime: 'Expiry Time',
+    noExpiryTime: 'No Expiry Time',
+    hasPopUp: 'Has PopUp',
+    noPopUp: 'No PopUp',
+    selectedVIP: 'selected VIP',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2572,6 +2581,7 @@ export default {
     'KRW Stats Report': 'KRW Statistics Report',
     'Member Refer Pak': 'Member Refer Pak',
     'Member Refer Summary Pak': 'Member Refer Summary Pak',
+    Pm: 'Private Message',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2720,6 +2730,16 @@ export default {
     DOWNLOAD: 'Download',
     AFFILIATE: 'Affiliate',
     HOME: 'Home',
+  },
+  pmStatus: {
+    UNSENT: 'Unsent',
+    SENDING: 'Sending',
+    SENT: 'Sent',
+  },
+  pmRedirectType: {
+    NONE: 'No Redirect',
+    INNER: 'Inner Site Redirect',
+    OUTER: 'Outer Site Redirect',
   },
   error: {
     400: 'Bad Request',

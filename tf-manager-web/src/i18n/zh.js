@@ -1863,6 +1863,15 @@ export default {
     yesterdayRegCount: '昨日团队注册',
     displayStartTime: '显示开始时间',
     displayEndTime: '显示结束时间',
+    redirectType: '跳转类型',
+    redirectUrl: '跳转链接',
+    redirectButton: '跳转按钮',
+    sendFrom: '发送人',
+    expiryTime: '过期时间',
+    noExpiryTime: '无过期时间',
+    hasPopUp: '有弹窗',
+    noPopUp: '无弹窗',
+    selectedVIP: '指定VIP',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2530,6 +2539,7 @@ export default {
     'KRW Stats Report': '韩国站点数据报表',
     'Member Refer Pak': '邀请列表-巴基斯坦',
     'Member Refer Summary Pak': '会员邀请统计-巴基斯坦',
+    Pm: '会员私信',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2677,6 +2687,16 @@ export default {
     DOWNLOAD: '下载页',
     AFFILIATE: '代理',
     HOME: '首页',
+  },
+  pmStatus: {
+    UNSENT: '未发送',
+    SENDING: '发送中',
+    SENT: '已发送',
+  },
+  pmRedirectType: {
+    NONE: '无跳转',
+    INNER: '站内跳转',
+    OUTER: '站外跳转',
   },
   error: {
     400: '请求无效',

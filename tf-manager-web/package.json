@@ -20,6 +20,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^1.1.4",
+    "@tinymce/tinymce-vue": "^4.0.7",
     "axios-mapper": "^0.5.4",
     "chalk": "^4.1.0",
     "clipboard": "^2.0.6",
