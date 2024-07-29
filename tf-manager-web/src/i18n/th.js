@@ -1209,6 +1209,7 @@ export default {
     countryCode: 'รหัสประเทศ',
     lower: 'ขีดจำกัดล่าง',
     upper: 'ขีด จำกัด บน',
+    defaultConfigHint: 'Default',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1716,6 +1717,7 @@ export default {
     'User Login Log': 'บันทึกการเข้าสู่ระบบของผู้ใช้',
     'User Action Log': 'บันทึกการดำเนินการของผู้ใช้',
     'MQ Log': 'บันทึก MQ',
+    'System Config': 'การกำหนดค่าระบบ',
     'Promotion Coupon': 'คูปอง',
     'Affiliate Change Log': 'บันทึกการเปลี่ยนแปลงผู้ปกครองของ Affiliate',
   },
