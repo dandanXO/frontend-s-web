@@ -6,10 +6,11 @@
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss'" />
     <tf88Baohiemvon v-if="list.redirectUrl === 'tf88-baohiemvon'" :promo-code="list.promoCode" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' " :promo-code="list.promoCode" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone'" :promo-code="list.promoCode" />
     <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' " :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' " :promo-code="list.promoCode" />
+    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" :promo-code="list.promoCode" />
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" :promo-code="list.promoCode" />
+    <olympicClaim v-if="list.redirectUrl === 'CHINHPHUC-OLYMPIC'" :promo-code="list.promoCode" />
 
     <HongBaoYu2024
       v-if="listParam.type === 'redpacket' && store.token"
@@ -22,7 +23,7 @@
         <span class="img-item">
           <div class="inner-contents">
             <div class="amount">{{ amount }}</div>
-            <div class="bonus">{{ $t('promo.bonus')}}</div>
+            <div class="bonus">{{ $t("promo.bonus") }}</div>
           </div>
         </span>
         <img src="../assets/images/index/bonus.svg" />
@@ -43,7 +44,8 @@ import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vu
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
 import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
 import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
-import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
+import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
+import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -54,6 +56,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     tf88Baohiemvon,
+    olympicClaim,
     DailyLoginPromo,
     LotteryPromo,
     PennyBank,
@@ -300,10 +303,10 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },
