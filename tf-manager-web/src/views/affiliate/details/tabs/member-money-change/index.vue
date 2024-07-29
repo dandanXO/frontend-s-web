@@ -22,7 +22,7 @@
           icon="el-icon-search"
           size="mini"
           type="primary"
-          @click="loadMemberMoneyChange()"
+          @click="loadMemberMoneyChange(true)"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
@@ -65,8 +65,8 @@
         </el-table-column>
         <el-table-column prop="platformName" :label="t('fields.platformName')" align="center" min-width="180">
           <template #default="scope">
-            <span v-if="scope.row.platformName === null">-</span>
-            <span v-if="scope.row.platformName !== null">{{ scope.row.platformName }}</span>
+            <span v-if="scope.row.platformCode === null">-</span>
+            <span v-if="scope.row.platformCode !== null">{{ scope.row.platformCode }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable>
@@ -112,15 +112,14 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        :total="page.total"
         :page-sizes="[20, 50, 100, 150]"
-        layout="total,sizes,prev, pager, next"
+        layout="sizes,prev, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
         @current-change="loadMemberMoneyChange"
-        @size-change="loadMemberMoneyChange"
+        @size-change="loadMemberMoneyChange(true)"
       />
     </el-card>
   </div>
@@ -168,7 +167,8 @@ const page = reactive({
   pages: 0,
   records: [],
   total: 0,
-  loading: false
+  loading: false,
+  pagingState: ''
 });
 
 const sort = (column) => {
@@ -189,7 +189,12 @@ function disabledDate(time) {
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
 }
 
-async function loadMemberMoneyChange() {
+async function loadMemberMoneyChange(frombutton) {
+  if (frombutton === true) {
+    request.current = 1
+    page.pagingState = null
+  }
+
   page.loading = true;
   const requestCopy = { ...request };
   const query = {};
@@ -207,10 +212,11 @@ async function loadMemberMoneyChange() {
     }
   }
   query.memberId = props.affId;
+  query.pagingState = page.pagingState
   const { data: ret } = await getMemberMoneyChangeList(props.affId, query);
   page.pages = ret.pages;
   page.records = ret.records;
-  page.total = ret.total;
+  page.pagingState = ret.pagingState
   page.loading = false;
 }
 

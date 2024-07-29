@@ -25,7 +25,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 300px; margin-left: 10px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
           />
@@ -287,7 +286,7 @@
 
 <script setup>
 /* eslint-disable */
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed  } from 'vue'
 import moment from 'moment'
 import {
   queryDailySummary,
@@ -344,7 +343,7 @@ function convertDate(date) {
 }
 
 function disabledDate(time) {
-  if(store.state.user.siteId === "5" || store.state.user.siteId === "9"){
+  if(siteId.value === "5" || siteId.value === "9"){
     return false;
   }
 

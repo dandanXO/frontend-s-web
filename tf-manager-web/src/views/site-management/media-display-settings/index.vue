@@ -17,10 +17,10 @@
           />
         </el-select>
         <el-input
-          v-model="request.mediaDescription"
+          v-model="request.mediaDesc"
           size="small"
           style="width: 200px"
-          :placeholder="t('fields.key')"
+          :placeholder="t('fields.mediaDesc')"
         />
         <el-select
           clearable

@@ -20,7 +20,7 @@
       </el-form-item>
     </div>
 
-    <div class="light-bg form-field">
+    <!-- <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item :label="$t('login.captcha')" prop="captchaCode">
         <div style="display: flex; width: 100%">
@@ -34,7 +34,7 @@
           <img style="width: 100px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
-    </div>
+    </div> -->
 
     <div class="agreement-and-forget-pass">
       <div class="rememberMe">
@@ -54,7 +54,7 @@
   </button>
   <!-- <div class="flex-div">
     <div style="visibility:hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
-    
+
     <div style="text-align: left" class="font-gray">
       没有账号？
       <a @click="openRegDialog">去注册</a>
@@ -145,7 +145,7 @@ const submitLogin = () => {
             loginName: loginForm.loginName,
             password: loginForm.password,
             sid: sidParam,
-            captchaCode: loginForm.captchaCode,
+            // captchaCode: loginForm.captchaCode,
             codeId: loginForm.codeId
           })
           .then(() => {
@@ -164,9 +164,6 @@ const submitLogin = () => {
               closeLoginDialog();
 
               // FB tracking :: login-success
-              if (store.isAffiliateA) {
-                fbq("track", "login-success");
-              }
             } else {
               getCode();
             }

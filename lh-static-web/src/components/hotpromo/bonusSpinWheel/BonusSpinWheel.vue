@@ -76,6 +76,7 @@ import { userStore } from "@/store";
 import { getRecords, getSpinWheelPrize, initSpinWheelData } from "@/api/promotion/bonusSpinWheel";
 import moment from "moment";
 import { useNotify } from "@/hooks/notify";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const store = userStore();
 const notify = useNotify();
@@ -176,10 +177,16 @@ const reset = () => {
 };
 
 const spinWheel = () => {
-  if (!store.token) {
-    notify({
-      message: "请登录后操作",
-      type: "error"
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
     });
     return;
   }

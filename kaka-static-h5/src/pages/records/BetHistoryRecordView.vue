@@ -358,6 +358,11 @@ onMounted(async () => {
   width: 100%;
   gap: 10px;
 
+  .q-card {
+    color: rgb(0, 0, 0) !important;
+    background: rgb(255, 255, 255) !important;
+  }
+
   .select-platform {
     display: none;
   }

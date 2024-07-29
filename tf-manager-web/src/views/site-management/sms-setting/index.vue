@@ -113,8 +113,15 @@
           <el-input v-model="form.templateId" style="width: 350px" />
         </el-form-item>
         <el-form-item :label="t('fields.param')" prop="param">
+          <JsonEditor
+            class="editor"
+            v-model="editorValue"
+            currentMode="code"
+            :modeList="[]"
+            @update:modelValue="updataModel"
+          />
           <el-input
-            type="textarea"
+            type="hidden"
             v-model="form.param"
             :rows="15"
             style="width: 350px; white-space: pre-line"
@@ -122,9 +129,14 @@
             @change="json"
           />
         </el-form-item>
+
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -144,24 +156,52 @@
         v-if="!hasRole(['SUB_TENANT'])"
       />
       <el-table-column prop="siteName" :label="t('fields.site')" width="150" />
-      <el-table-column prop="signName" :label="t('fields.signName')" min-width="100" />
-      <el-table-column prop="secretId" :label="t('fields.secretId')" min-width="150" />
+      <el-table-column
+        prop="signName"
+        :label="t('fields.signName')"
+        min-width="100"
+      />
+      <el-table-column
+        prop="secretId"
+        :label="t('fields.secretId')"
+        min-width="150"
+      />
       <el-table-column prop="appId" :label="t('fields.appId')" width="150" />
-      <el-table-column prop="templateId" :label="t('fields.templateId')" width="150" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
+      <el-table-column
+        prop="templateId"
+        :label="t('fields.templateId')"
+        width="150"
+      />
+      <el-table-column
+        prop="updateTime"
+        :label="t('fields.updateTime')"
+        width="150"
+      >
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
+      <el-table-column
+        prop="updateBy"
+        :label="t('fields.updateBy')"
+        width="150"
+      />
       <el-table-column
         :label="t('fields.operate')"
         align="right"
-        v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:smssetting:update']) || hasPermission(['sys:smssetting:del']) )"
+        v-if="
+          !hasRole(['SUB_TENANT']) &&
+            (hasPermission(['sys:smssetting:update']) ||
+              hasPermission(['sys:smssetting:del']))
+        "
       >
         <template #default="scope">
           <el-button
@@ -204,14 +244,15 @@ import {
 } from '../../../api/sms-setting'
 import { getSiteListSimple } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
+import JsonEditor from 'json-editor-vue3'
 
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const settingForm = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
@@ -221,6 +262,7 @@ const uiControl = reactive({
   removeBtn: true,
   importDialogVisible: false,
 })
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -265,7 +307,7 @@ const sites = reactive({
 let chooseSetting = []
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : null
 }
 
 function handleSelectionChange(val) {
@@ -287,10 +329,11 @@ async function loadSetting() {
   const { data: ret } = await getSmsSetting(request)
   page.pages = ret.pages
   ret.records.forEach(data => {
-    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
-      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
-      : null
-  });
+    data.timeZone =
+      store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+        ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+        : null
+  })
   page.records = ret.records
   page.loading = false
 }
@@ -312,6 +355,7 @@ function json() {
     })
   }
 }
+
 function showDialog(type) {
   if (type === 'CREATE') {
     if (settingForm.value) {
@@ -320,11 +364,16 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.addSmsSetting')
     form.id = null
     form.siteName = null
+    editorValue = ''
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editSmsSetting')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+
+  nextTick(() => {
+    removeJsonEditorElement()
+  })
 }
 
 function showEdit(setting) {
@@ -337,6 +386,9 @@ function showEdit(setting) {
       if (Object.keys(form).find(k => k === key)) {
       }
       form[key] = setting[key]
+      if (key === 'param') {
+        editorValue = JSON.parse(form[key])
+      }
     }
   })
 }
@@ -364,14 +416,11 @@ function edit() {
 }
 
 async function removeSetting(setting) {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     if (setting) {
       await deleteSmsSetting([setting.id])
     } else {
@@ -394,13 +443,39 @@ function handleChangeSite(value) {
   form.siteId = value
 }
 
+let editorValue = ref({})
+
+const updataModel = val => {
+  form.param = JSON.stringify(val, null, 2)
+  editorValue = val
+}
+
+function removeJsonEditorElement() {
+  const classesToRemove = [
+    'jsoneditor-poweredBy',
+    'jsoneditor-sort',
+    'jsoneditor-transform',
+    'jsoneditor-undo',
+    'jsoneditor-redo',
+    'jsoneditor-repair',
+  ]
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className)
+    Array.from(elements).forEach(element => {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  })
+}
+
 onMounted(async () => {
-  await loadSites();
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
+    request.siteId = site.value.id
   }
-  await loadSetting();
+  await loadSetting()
 })
 </script>
 
@@ -425,5 +500,9 @@ onMounted(async () => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.full-screen {
+  right: 20px !important;
 }
 </style>

@@ -160,7 +160,8 @@ onMounted(() => {
     // });
     return;
   }
-  getNbaMatchData});
+  getNbaMatchData();
+});
 const claimHongBao = async () => {
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {

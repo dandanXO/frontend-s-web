@@ -258,12 +258,13 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元奖金</div>
-        <div>
+        <div>已领取：{{ getDoneRewardItem1 }}元</div>
+        <div v-if="matchRewardItem1 && matchRewardItem1.earn">
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
           元
         </div>
+        <div v-else>已达成所有领取条件。</div>
       </div>
 
       <div class="rewards">
@@ -298,12 +299,13 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元奖金</div>
-        <div>
+        <div>已领取：{{ getDoneRewardItem2 }}元</div>
+        <div v-if="matchRewardItem2 && matchRewardItem2.earn">
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
           <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
           元
         </div>
+        <div v-else>已达成所有领取条件。</div>
       </div>
 
       <div class="rewards">
@@ -326,9 +328,11 @@
 import { ref, onMounted, computed } from "vue";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { userStore } from "../../../stores/index";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 
+const store = userStore();
 const notify = useNotify();
 
 const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
@@ -361,11 +365,17 @@ const rewards1 = computed(() => {
 const rewards2 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount2.includes(item.ruleAmount));
 });
+const getDoneRewardItem1 = computed(() => {
+  return rewards1.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
+const getDoneRewardItem2 = computed(() => {
+  return rewards2.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
 const matchRewardItem1 = computed(() => {
-  return rewards1.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards1.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const matchRewardItem2 = computed(() => {
-  return rewards2.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards2.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const progressPercentage1 = computed(() => {
   if (matchRewardItem1.value) {
@@ -422,7 +432,7 @@ const getData = async () => {
       isEligibleState.value = false;
       notify({
         type: "error",
-        message: "此账号要求不达标，无法参与此优惠。",
+        message: "此账号要求不达标，无法参与此优惠。"
       });
       return;
     }
@@ -521,10 +531,22 @@ onMounted(async () => {
     margin-right: 8px;
   }
   .title {
-    margin-top: 4px;
+    margin-top: 0px;
     color: #000;
     font-weight: 600;
     font-size: 24px;
+  }
+}
+
+.promotion-block {
+  padding: 20px 13px;
+
+  table {
+    thead {
+      tr {
+        white-space: nowrap;
+      }
+    }
   }
 }
 
@@ -541,12 +563,14 @@ onMounted(async () => {
 }
 
 .title-area {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   .big-icon {
     width: 24px;
     height: 24px;
     margin-right: 8px;
+    margin-bottom: 0px;
   }
   .title {
     margin-top: 4px;
@@ -554,8 +578,12 @@ onMounted(async () => {
     font-weight: 600;
     font-size: 24px;
 
-    @media (max-width: 400px) {
-      font-size: 18px;
+    @media (max-width: 450px) {
+      font-size: 19px;
+    }
+
+    @media (max-width: 420px) {
+      font-size: 16px;
     }
   }
 }
@@ -641,8 +669,9 @@ tbody tr:last-child {
 
 .rewards {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+  padding: 8px 0px;
   row-gap: 5px;
   column-gap: 5px;
 

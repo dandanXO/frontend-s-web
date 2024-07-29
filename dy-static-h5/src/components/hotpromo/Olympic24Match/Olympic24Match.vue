@@ -5,18 +5,18 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年7月26日—2024年8月12日</div>
+          <div class="right">2024年7月24日—2024年8月10日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
             <th>竞猜正确场次</th>
-            <th>投注反比</th>
+            <th>投注返比</th>
             <th>彩金上限</th>
           </tr>
           <tr>
@@ -31,11 +31,6 @@
           </tr>
           <tr>
             <td>≥6</td>
-            <td>1.5%</td>
-            <td>388</td>
-          </tr>
-          <tr>
-            <td>≥8</td>
             <td>3.0%</td>
             <td>888</td>
           </tr>
@@ -300,8 +295,8 @@
       <q-dialog v-model="confirmVoteDialog" persistent>
         <q-card class="confirm-vote-card">
           <q-card-section class="q-mb-md row justify-center">
-            <div class="text-h6" v-if="submitParam.team === 'draw'">您确定要投"平局"吗？</div>
-            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+            <div class="text-h6" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
           </q-card-section>
 
           <q-card-actions align="center">
@@ -398,7 +393,7 @@ const handleVoteClick = (selectedData) => {
 };
 
 const convertDateTime = (datetime) => {
-  return datetime;
+  return moment(datetime, "YYYY-MM-DD HH:mm:ss").format("MM/DD hh:mm A");
 };
 
 const handleSubmitVote = () => {
@@ -482,8 +477,8 @@ const getData = () => {
             const { matchTime, id } = e;
 
             if (!isFirstTime[id]) {
-              const timeCN = moment(matchTime).locale("zh_cn");
-              e.matchTime = timeCN.format("MMMDo HH:mm");
+              // const timeCN = moment(matchTime).locale("zh_cn");
+              // e.matchTime = timeCN.format("MMMDo HH:mm");
 
               isFirstTime[id] = true;
             }

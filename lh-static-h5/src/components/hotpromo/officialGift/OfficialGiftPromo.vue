@@ -1,32 +1,5 @@
 <template>
   <div class="official-gift-container">
-    <div class="official-gift-block detail-block">
-      <div class="detail-block-title">
-        <img src="./img/gift.svg" />
-        <span>认准雷火电竞官方福利群管理</span>
-      </div>
-      <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
-        <div class="detail-block-content-voxis">
-          <img src="./img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis管理号：{{ paramsObj?.voxis_id }}</span>
-          <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="official-gift-block reason-block">
-      <div class="official-gift-block-title">为什么要加入官方福利群</div>
-      <div class="reason-block-content">
-        <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
-          <div class="reason-block-content-reason__inner">
-            <img :src="reason.icon" />
-            <span>{{ reason.description }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="official-gift-block download-block">
       <div class="download-block-left-side">
         <span class="download-block-title">添加雷火电竞指定管理账号，尽享全方位服务优待</span>
@@ -44,12 +17,38 @@
         <span>管理员：初夏</span>
       </div> -->
     </div>
+    <div class="official-gift-block detail-block">
+      <div class="detail-block-title">
+        <img src="./img/gift.svg" />
+        <span>认准雷火电竞官方福利群管理</span>
+      </div>
+      <div class="detail-block-content">
+        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
+        <div class="detail-block-content-voxis">
+          <img src="./img/voxis.svg" />
+          <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj?.voxis_id }}</span>
+          <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="official-gift-block reason-block">
+      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <div class="reason-block-content">
+        <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
+          <div class="reason-block-content-reason__inner">
+            <img :src="reason.icon" />
+            <span>{{ reason.description }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
 import { computed, ref } from "vue";
 import { writeClipboard } from "boot/utils";
-
+import { Platform } from "quasar";
 import BeautySvg from "./img/beauty.svg";
 import Clock24Svg from "./img/clock-24.svg";
 import QuestionSvg from "./img/question.svg";
@@ -58,6 +57,7 @@ import ClockSvg from "./img/clock.svg";
 import DateSvg from "./img/date.svg";
 import GiftLineSvg from "./img/gift-line.svg";
 import ThumbSvg from "./img/thumb.svg";
+import { useNotify } from "src/hooks/notify";
 
 const props = defineProps({
   params: String
@@ -82,7 +82,42 @@ const paramsObj = computed(() => {
   }
 });
 
-const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id);
+const handleCopyClick = async () => {
+  if (window.location.pathname === "/promotion") {
+    const textToCopy = paramsObj.value?.voxis_id;
+
+    const notify = useNotify();
+    if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+      await navigator.clipboard.writeText(textToCopy);
+    } else {
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+
+      document.body.prepend(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(textArea);
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }
+    }
+  } else {
+    writeClipboard(paramsObj.value?.voxis_id);
+  }
+};
 </script>
 <style lang="scss" scoped>
 .official-gift-container {

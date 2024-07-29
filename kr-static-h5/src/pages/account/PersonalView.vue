@@ -1,22 +1,25 @@
 <template>
   <div class="personal-account">
-   <!-- <div class="web">{{ $t("lang.personal_exclusiveurl") }}: <a :href="`https://${personalState.memberInfo.evip}`">{{ 'https://' + personalState.memberInfo.evip }}</a></div> -->
     <q-form ref="profileFormRef">
       <q-input
         standout
+        ref="name2Ref"
         class="q-pb-xs"
         hide-bottom-space
         filled
-        v-model="formDetail.nickName"
+        v-model="formDetail.name2"
+        :placeholder="$t('lang.personal_nickname')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入账号']"
+        :rules="[(val) => isValidName2(val)]"
         label-color="secondary"
-        :readonly="personalState.memberInfo.nickName ? true : false"
+        color="secondary"
+        :readonly="personalState.memberInfo.name2 ? true : false"
       >
         <template v-slot:prepend>
-          <span>{{ $t("lang.personal_username") }}</span>
+          <span>{{ $t("lang.personal_nickname") }}</span>
         </template>
       </q-input>
+
       <q-input
         standout
         ref="realNameRef"
@@ -35,105 +38,42 @@
           <span>{{ $t("lang.personal_realname") }}</span>
         </template>
       </q-input>
+
       <q-input
-        ref="birthdayRef"
         standout
-        :placeholder="$t('lang.personal_birthday')"
-        filled
-        label-color="secondary"
-        color="secondary"
-        lazy-rules
         class="q-pb-xs"
         hide-bottom-space
-        v-model="formDetail.birthday"
-        readonly
-        mask="date"
-        :rules="[(val) => (val && val.length > 0) || $t('lang.personal_birthday_val')]"
-        @click="toggleShowPopup"
+        filled
+        v-model="formDetail.nickName"
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || '']"
+        label-color="secondary"
+        :readonly="personalState.memberInfo.nickName ? true : false"
       >
         <template v-slot:prepend>
-          <span>{{ $t("lang.personal_birthday") }}</span>
-        </template>
-
-        <template v-slot:append>
-          <q-icon v-if="isEditBirthday" name="event" color="accent" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale" v-model="showDatePopup">
-              <q-date v-model="formDetail.birthday">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup :label="$t('lang.personal_confirm')" flat />
-                  <q-btn v-close-popup :label="$t('lang.personal_close')" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
+          <span>{{ $t("lang.personal_username") }}</span>
         </template>
       </q-input>
 
-      <div class="flex items-baseline no-wrap">
-        <q-input
-          standout
-          filled
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.phone"
-          type="tel"
-          :placeholder="$t('lang.personal_mobilenumber')"
-          lazy-rules
-          :rules="[(_) => isValidPhone()]"
-          label-color="secondary"
-          color="secondary"
-          readonly
-          style="width: 100%"
-        >
-          <template v-slot:prepend>
-            <span>{{ $t("lang.personal_mobilenumber") }}</span>
-          </template>
-        </q-input>
-        <template v-if="isEditPhone">
-          <div class="q-ml-md">
-            <q-btn
-              class="common-sm-btn"
-              color="brightbtn"
-              :label="$t('lang.personal_verify')"
-              @click="goToPage('/account/verifyTelephone')"
-              style="white-space: nowrap"
-              no-caps
-            />
-          </div>
+      <q-input
+        standout
+        filled
+        class="q-pb-xs"
+        hide-bottom-space
+        v-model="formDetail.phone"
+        type="tel"
+        :placeholder="$t('lang.personal_mobilenumber')"
+        lazy-rules
+        :rules="[(_) => isValidPhone()]"
+        label-color="secondary"
+        color="secondary"
+        readonly
+        style="width: 100%"
+      >
+        <template v-slot:prepend>
+          <span>{{ $t("lang.personal_mobilenumber") }}</span>
         </template>
-      </div>
-
-      <div class="flex items-baseline no-wrap">
-        <q-input
-          standout
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.email"
-          :placeholder="$t('lang.personal_email')"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-          label-color="secondary"
-          color="secondary"
-          readonly
-          style="width: 100%"
-        >
-          <template v-slot:prepend>
-            <span>{{ $t("lang.personal_email") }}</span>
-          </template>
-        </q-input>
-        <template v-if="isEditEmail">
-          <div class="q-ml-md">
-            <q-btn
-              class="common-sm-btn"
-              color="brightbtn"
-              :label="$t('lang.personal_verify')"
-              @click="goToPage('/account/verifyEmail')"
-              style="white-space: nowrap"
-              no-caps
-            />
-          </div>
-        </template>
-      </div>
+      </q-input>
 
       <div class="text-center q-mt-lg" v-if="isEditBirthday">
         <q-btn
@@ -232,6 +172,7 @@ export default defineComponent({
       formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
       formDetail.emailVerified = personalState.memberInfo.emailVerified;
+      formDetail.name2 = personalState.memberInfo.name2
 
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (!personalState.memberInfo.birthday) ? true : false;
@@ -256,6 +197,11 @@ export default defineComponent({
       loadInfo();
       getCode();
     });
+
+    const isValidName2 = (val) => {
+      const phonePattern = /^[a-zA-Z\uac00-\ud7ff\s]+$/;
+      return phonePattern.test(val) || t("lang.personal_realname_valid");
+    };
 
     const verificationImg = ref("");
     const getCode = () => {
@@ -369,6 +315,7 @@ export default defineComponent({
     const realNameRef = ref();
     const birthdayRef = ref();
     const emailRef = ref();
+    const name2Ref = ref()
 
     const captchaRef = ref();
     const showCaptchaDialog = ref(false);
@@ -376,21 +323,15 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
-      if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate();
-        if (birthdayRef.value.hasError) {
-          return;
-        }
+      if(personalState.memberInfo.name2){
+        return;
       }
-      if (!personalState.memberInfo.realName) {
-        realNameRef.value.validate();
-        if (realNameRef.value.hasError) {
-          return;
-        }
+      if(!personalState.memberInfo.name2) {
+        name2Ref.value.validate()
+        if(name2Ref.value.hasError) return
       }
-      // console.log(updateInfo);
-      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
-      updateInfo.realName = formDetail.realName;
+
+      updateInfo.name2 = formDetail.name2
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
@@ -506,7 +447,9 @@ export default defineComponent({
       openVerificationDialog,
       onCaptchaSubmit,
       showDatePopup,
-      toggleShowPopup
+      toggleShowPopup,
+      isValidName2,
+      name2Ref
     };
   }
 });
@@ -543,7 +486,6 @@ export default defineComponent({
     color: #aaaaaa;
     a {
       color: $primary;
-      
     }
   }
 }

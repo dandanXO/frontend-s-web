@@ -117,58 +117,48 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame:
-                    selectedPromo.promoCode === 'lh1-game-steps' ||
-                    selectedPromo.promoCode === 'lh-sport-zhongchao' ||
-                    selectedPromo.promoCode === 'lh-lpl-summer24',
-                  lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
-                  lhworldcup: selectedPromo.promoCode === 'lh1worldcup',
-                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
-                  lhduanwu:
-                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
-                  lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
-                  meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
-                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
-                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
+                  lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
+                  cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
+                  hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
+                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
+                  dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
+                  cs2:
+                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+                  msi: selectedPromo.promoCode === 'dy2-msi-promo',
+                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+                  lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
+                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
                 }"
-                :style="[
-                  selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
-                    ? 'background-image: url(' +
-                      imgURL +
-                      (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
-                      ')'
-                    : selectedPromo?.promoCode === 'lh1-intel-esl'
-                      ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
-                      : ''
-                ]"
+                :style="{
+                  backgroundImage: selectedPromo?.mobileImgBackgroundUrl
+                    ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
+                    : 'none'
+                }"
               >
-                <div v-if="selectedPromo.hasPromo">
+                <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
                   v-if="
                     selectedPromo.promoType &&
-                    selectedPromo.promoCode !== 'lh1-game-steps' &&
-                    selectedPromo.promoCode !== 'lh-eurocup-manual' &&
-                    selectedPromo.promoCode !== 'lh1-aijiasu'
+                    selectedPromo.promoCode !== 'dy2-cny-step-game' &&
+                    selectedPromo.promoCode !== 'dy2-game-steps'
                   "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-html="selectedPromo.pageContent"></div>
-                </div>
-                <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
-                  <img
-                    loading="lazy"
-                    v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
-                    src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
-                  />
+                  <div
+                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
+                    v-html="selectedPromo.pageContent"
+                  ></div>
                 </div>
               </div>
             </div>

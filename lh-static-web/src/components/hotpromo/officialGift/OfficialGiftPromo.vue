@@ -1,33 +1,5 @@
 <template>
   <div class="official-gift-container">
-    <div class="official-gift-block detail-block">
-      <div class="detail-block-title">
-        <img src="@/components/hotpromo/officialGift/img/gift.svg" />
-        <span>认准雷火电竞官方福利群管理</span>
-      </div>
-      <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
-        <div class="detail-block-content-voxis">
-          <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis管理号：{{ paramsObj?.voxis_id }}</span>
-          <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
-        </div>
-        <img class="detail-block-content-suffix" src="@/components/hotpromo/officialGift/img/detail-block-suffix.png" />
-      </div>
-    </div>
-
-    <div class="official-gift-block reason-block">
-      <div class="official-gift-block-title">为什么要加入官方福利群</div>
-      <div class="reason-block-content">
-        <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
-          <div class="reason-block-content-reason__inner">
-            <img :src="reason.icon" />
-            <span>{{ reason.description }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="official-gift-block download-block">
       <div class="download-block-left-side">
         <span class="download-block-title">添加雷火电竞指定管理账号，尽享全方位服务优待</span>
@@ -44,6 +16,34 @@
         <img src="@/components/hotpromo/officialGift/img/download-qr-code.png" />
         <span>管理员：初夏</span>
       </div> -->
+    </div>
+
+    <div class="official-gift-block detail-block">
+      <div class="detail-block-title">
+        <img src="@/components/hotpromo/officialGift/img/gift.svg" />
+        <span>认准雷火电竞官方福利群管理</span>
+      </div>
+      <div class="detail-block-content">
+        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
+        <div class="detail-block-content-voxis">
+          <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+          <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj?.voxis_id }}</span>
+          <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
+        </div>
+        <img class="detail-block-content-suffix" src="@/components/hotpromo/officialGift/img/detail-block-suffix.png" />
+      </div>
+    </div>
+
+    <div class="official-gift-block reason-block">
+      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <div class="reason-block-content">
+        <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
+          <div class="reason-block-content-reason__inner">
+            <img :src="reason.icon" />
+            <span>{{ reason.description }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

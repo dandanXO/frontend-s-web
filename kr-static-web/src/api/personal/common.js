@@ -7,3 +7,7 @@ export function getParamKey(key) {
 export function getAnnouncement() {
   return server.REST.get(`/announcement`);
 }
+
+export function getFinanceRecords() {
+  return server.REST.get(`/member/withdraw-deposit-record`);
+}

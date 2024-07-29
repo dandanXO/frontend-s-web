@@ -326,9 +326,11 @@
   import { ref, onMounted, computed } from "vue";
   import { useQuasar } from "quasar";
   import { useRouter } from "vue-router";
+  import { userStore } from "../../../stores/index";
   import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "../../../api/index/promo";
 
   
+  const store = userStore();
   const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
   const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
   

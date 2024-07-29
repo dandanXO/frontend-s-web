@@ -29,6 +29,11 @@
         {{ method.name }}
       </el-radio-button>
     </el-radio-group>
+    <div class="account-tip-warning">
+      <div>
+        {{ $t("withdraw.note") }}
+      </div>
+    </div>
     <el-card
       :class="{ selected: withdrawInfo.cardId === b.id }"
       v-if="withdrawState.bankCardList.length > 0"
@@ -46,7 +51,9 @@
       <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
     </el-card>
     <el-card v-else>
-      {{ $t('account.no_card_avail') }} <router-link to="/center/personal?name=Bank">{{ $t('account.add_a_bank_card') }}</router-link>.
+      {{ $t("account.no_card_avail") }}
+      <router-link to="/center/personal?name=Bank">{{ $t("account.add_a_bank_card") }}</router-link>
+      .
     </el-card>
     <div class="withdraw-form">
       <el-form
@@ -76,22 +83,26 @@
         <el-form-item class="helptxt" prop="amount" :label="$t('withdraw.amount')" name="amount">
           <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
-              <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
+              <el-input class="form-input" v-model="amountWithComma" :placeholder="$t('withdraw.amount')">
                 <template #append>{{ store.currency.label }}</template>
               </el-input>
             </el-col>
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${
-                    selectedWithdrawalMethod.withdrawMax.toLocaleString()
-                  } ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${
+                    store.currency.label
+                  } - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
                 }}
                 <br />
                 {{
                   `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString()} ${
                     store.currency.label
-                  }, ${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
+                  }`
+                }}
+                <br />
+                {{
+                  `${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
                 }}
               </span>
             </el-col>
@@ -188,7 +199,9 @@
         >
           <span style="color: #17cd27">
             {{
-              selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+              selectedWithdrawalMethod &&
+              (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
                 ? "0.00"
                 : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
             }}
@@ -226,7 +239,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, toRef } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -234,6 +247,7 @@ import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
+import { useCommaInput } from "@/hooks/commaInput";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -259,6 +273,9 @@ export default defineComponent({
       cardId: undefined,
       amount: ""
     });
+
+    const amountWithComma = useCommaInput(toRef(withdrawInfo, "amount"))
+
     const withdrawalMethods = ref([
       // {
       //   bankIcon: require('../../assets/images/finance/bank_deposit.png',
@@ -305,9 +322,6 @@ export default defineComponent({
               });
 
               // FB tracking :: apply-withdrawal
-              if (store.isAffiliateA) {
-                  fbq("track", "apply-withdrawal");
-                }
 
               getWithdrawalMethods();
               loadCards();
@@ -527,7 +541,8 @@ export default defineComponent({
       cardLabel,
       openEWalletTutorial,
       isLoaded,
-      amounts
+      amounts,
+      amountWithComma
     };
   }
 });
@@ -985,6 +1000,29 @@ export default defineComponent({
 .menu-title-container {
   .additional-title {
     padding-left: 16px;
+  }
+}
+
+.account-tip-warning {
+  border: 1px solid #f8dd9a;
+  background: #fef7e6;
+  color: #ffc024;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  white-space: pre-line;
+  margin: 20px 0;
+  ul {
+    margin: 0;
+    padding: 0 0 0 21px;
+  }
+  svg {
+    height: 15px;
+    fill: #ffc024;
+    margin-right: 10px;
   }
 }
 </style>

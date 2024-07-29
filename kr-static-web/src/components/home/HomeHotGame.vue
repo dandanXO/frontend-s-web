@@ -59,14 +59,14 @@
                 {{
                   hotgame.content &&
                   hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc.vimessage
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc.message
                 }}
               </div>
               <div class="desc" v-else>
                 {{
                   hotgame.content &&
                   hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc.vimessage
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc.message
                 }}
               </div>
               <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
@@ -120,7 +120,7 @@
                 class="common-btn game-start-btn"
                 @click="onEnterGameClick(hotgame, hotgame.type)"
               >
-                {{ hotgame.type !== "slot" ? $t('hotGame.enterGame') : $t('hotGame.enterPlat') }}
+                {{ hotgame.type !== "slot" ? $t("hotGame.enterGame") : $t("hotGame.enterPlat") }}
               </el-button>
             </template>
 
@@ -133,7 +133,7 @@
                 "
                 class="maintenance-p"
               >
-                {{ $t('hotgame.maintenanceTime') }}:
+                {{ $t("hotgame.maintenanceTime") }}:
                 <em>
                   {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
                   {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
@@ -174,8 +174,8 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
-import { i18nStore } from '@/store/language';
-import { storeToRefs } from 'pinia';
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
 import * as _ from "lodash";
 import {
   eSportsPlatforms,
@@ -184,474 +184,102 @@ import {
   liveCasinoPlatforms,
   lotteryPlatforms,
   pokerPlatforms,
-  sportsPlatforms
+  sportsPlatforms,
+  minigamePlatforms
 } from "@/shared/platformArray";
 import moment from "moment";
-import { useDark } from "@vueuse/core";
 
-const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage)
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
 const { t } = useI18n();
 const store = userStore();
 const router = useRouter();
 const platformGame = ref();
 
-const isDark = useDark();
+// const isDark = useDark();
 
 const hotgameData = ref([
   {
     number: "01",
-    icon: require("../../assets/home/hotgame/banner/esports/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/esports/icon-active.png"),
-    title: "eSport",
-    subtitle: "ESPORTS",
-    charImgPath: require("../../assets/home/hotgame/banner/esports/character.png"),
+    icon: require("../../assets/home/hotgame/banner/casino/icon.png"),
+    iconActive: require("../../assets/home/hotgame/banner/casino/icon-active.png"),
+    title: "라이브 카지노",
+    subtitle: `라이브 
+    카지노`,
+    charImgPath: require("../../assets/home/hotgame/banner/casino/character.png"),
     isShow: false,
-    path: "/eSports",
-    currentProvider: "lh",
-    section: "esports",
-    type: "esport",
+    path: "/live-casino",
+    currentProvider: "",
+    section: "live",
+    type: "live",
     content: {
-      isShowSportsIcon: [
-        require("../../assets/home/hotgame/content/esports/icon_cs.png"),
-        require("../../assets/home/hotgame/content/esports/icon_dota2.png"),
-        require("../../assets/home/hotgame/content/esports/icon_lol.png"),
-        require("../../assets/home/hotgame/content/esports/icon_pubg.png"),
-        require("../../assets/home/hotgame/content/esports/icon_valorant.png"),
-        require("../../assets/home/hotgame/content/esports/icon_sc2.png")
-      ],
-      providerList: [
-        // {
-        //   key: "lh",
-        //   name: "雷火电竞",
-        //   icon: require("../../assets/home/hotgame/content/esports/provider_lh.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "im",
-        //   name: "IM电竞",
-        //   icon: require("../../assets/home/hotgame/content/esports/provider_im.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "ia",
-        //   name: "IA电竞",
-        //   icon: require("../../assets/home/hotgame/content/esports/provider_ia.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "rg",
-        //   name: "RG电竞",
-        //   icon: require("../../assets/home/hotgame/content/esports/provider_rg.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // lh: {
-      //   title: "雷火电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/esports/lh/character.png")
-      // },
-      // im: {
-      //   title: "IM电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/esports/im/character.png")
-      // },
-      // ia: {
-      //   title: "IA电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/esports/ia/character.png")
-      // },
-      // rg: {
-      //   title: "RG电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/esports/rg/character.png")
-      // }
+      // isShowSportsIcon: [require("../../assets/live/live-pattern.png")],
+      providerList: []
     }
   },
   {
     number: "02",
-    icon: require("../../assets/home/hotgame/banner/sports/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/sports/icon-active.png"),
-    title: "Thể Thao",
-    subtitle: "SPORTS",
-    charImgPath: require("../../assets/home/hotgame/banner/sports/character.png"),
+    icon: require("../../assets/home/hotgame/banner/slots/icon.png"),
+    iconActive: require("../../assets/home/hotgame/banner/slots/icon-active.png"),
+    title: "슬롯게임",
+    subtitle: "슬롯게임",
+    charImgPath: require("../../assets/home/hotgame/banner/slots/character.png"),
     isShow: false,
-    path: "/sports",
-    currentProvider: "im",
-    section: "sports",
-    type: "sport",
+    path: "/slot",
+    currentProvider: "",
+    section: "slot",
+    type: "slot",
     content: {
-      isShowSportsIcon: [
-        require("../../assets/sports/sports-pattern.png")
-        // require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_football.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_volleyball.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_tennis.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_union.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_badminton.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_hockey.png")
-      ],
-      providerList: [
-        // {
-        //   key: "im",
-        //   name: "IM体育",
-        //   icon: require("../../assets/home/hotgame/content/sports/provider_im.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "saba",
-        //   name: "沙巴体育",
-        //   icon: require("../../assets/home/hotgame/content/sports/provider_saba.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "pinnacle",
-        //   name: "AP体育",
-        //   icon: require("../../assets/home/hotgame/content/sports/provider_pinnacle.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "panda",
-        //   name: "熊猫体育",
-        //   icon: require("../../assets/home/hotgame/content/sports/provider_panda.png"),
-        //   providerInfo: {}
-        // }
-        // {
-        //   key: "cr",
-        //   name: "CR体育",
-        //   icon: require("../../assets/home/hotgame/content/sports/provider_cr.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // im: {
-      //   title: "IM体育",
-      //   subtitle: "SPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/sports/im/character.png")
-      // },
-      // saba: {
-      //   title: "沙巴体育",
-      //   subtitle: "SPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/sports/saba/character.png")
-      // },
-      // pinnacle: {
-      //   title: "AP体育",
-      //   subtitle: "SPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/sports/pinnacle/character.png")
-      // },
-      // panda: {
-      //   title: "熊猫体育",
-      //   subtitle: "SPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/sports/panda/character.png")
-      // },
-      // cr: {
-      //   title: "CR体育",
-      //   subtitle: "SPORTS",
-      //   charImgPath: require("../../assets/home/hotgame/content/sports/cr/character.png")
-      // }
+      // isShowSportsIcon: [require("../../assets/slot/slot-pattern.png")],
+      providerList: []
     }
   },
   {
     number: "03",
-    icon: require("../../assets/home/hotgame/banner/casino/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/casino/icon-active.png"),
-    title: "Casino",
-    subtitle: "CASINO",
-    charImgPath: require("../../assets/home/hotgame/banner/casino/character.png"),
+    icon: require("../../assets/home/hotgame/banner/sports/icon.png"),
+    iconActive: require("../../assets/home/hotgame/banner/sports/icon-active.png"),
+    title: "스포츠",
+    subtitle: "스포츠",
+    charImgPath: require("../../assets/home/hotgame/banner/sports/character.png"),
     isShow: false,
-    path: "/live-casino",
-    currentProvider: "ag",
-    section: "live",
-    type: "live",
+    path: "/sports",
+    currentProvider: "",
+    section: "sports",
+    type: "sport",
     content: {
-      isShowSportsIcon: [require("../../assets/live/live-pattern.png")],
-      providerList: [
-        // {
-        //   key: "ag",
-        //   name: "AG真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_ag.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "db",
-        //   name: "DB真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_db.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "bg",
-        //   name: "BG真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_bg.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "we",
-        //   name: "WE真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_we.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "ob",
-        //   name: "欧博真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_ob.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "bbin",
-        //   name: "BBIN真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_bbin.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "evo",
-        //   name: "EVO真人",
-        //   icon: require("../../assets/home/hotgame/content/casino/provider_evo.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // ag: {
-      //   title: "AG真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/ag/character.png")
-      // },
-      // db: {
-      //   title: "DB真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/db/character.png")
-      // },
-      // bg: {
-      //   title: "BG真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/bg/character.png")
-      // },
-      // we: {
-      //   title: "WE真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/we/character.png")
-      // },
-      // ob: {
-      //   title: "欧博真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/ob/character.png")
-      // },
-      // bbin: {
-      //   title: "BBIN真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/bbin/character.png")
-      // },
-      // evo: {
-      //   title: "EVO真人",
-      //   subtitle: "CASINO",
-      //   charImgPath: require("../../assets/home/hotgame/content/casino/evo/character.png")
-      // }
+      providerList: []
     }
   },
   {
     number: "04",
-    icon: require("../../assets/home/hotgame/banner/lottery/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/lottery/icon-active.png"),
-    title: "Xổ số",
-    subtitle: "LOTTERY",
-    charImgPath: require("../../assets/home/hotgame/banner/lottery/character.png"),
-
-    isShow: false,
-    path: "/lottery",
-    currentProvider: "lh",
-    section: "lottery",
-    type: "lottery",
-    content: {
-      isShowSportsIcon: [
-        require("../../assets/lottery/lottery-pattern.png")
-        // require("../../assets/home/hotgame/content/sports/icon_basketball.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_football.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_volleyball.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_tennis.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_union.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_badminton.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
-        // require("../../assets/home/hotgame/content/sports/icon_hockey.png")
-      ],
-      providerList: [
-        // {
-        //   key: "lh",
-        //   name: "雷火彩票",
-        //   icon: require("../../assets/home/hotgame/content/lottery/provider_lh.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // lh: {
-      //   title: "雷火彩票",
-      //   subtitle: "LOTTERY",
-      //   charImgPath: require("../../assets/home/hotgame/content/lottery/lh/character.png")
-      // }
-    }
-  },
-  {
-    number: "05",
-    icon: require("../../assets/home/hotgame/banner/slots/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/slots/icon-active.png"),
-    title: "Nổ Hũ",
-    subtitle: "SLOTS",
-    charImgPath: require("../../assets/home/hotgame/banner/slots/character.png"),
-    isShow: false,
-    path: "/slot",
-    currentProvider: "pg",
-    section: "slot",
-    type: "slot",
-    content: {
-      isShowSportsIcon: [require("../../assets/slot/slot-pattern.png")],
-      providerList: [
-        // {
-        //   key: "pg",
-        //   name: "PG电子",
-        //   icon: require("../../assets/home/hotgame/content/slot/provider_pg.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "sw",
-        //   name: "SW电子",
-        //   icon: require("../../assets/home/hotgame/content/slot/provider_sw.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "pt",
-        //   name: "PT电子",
-        //   icon: require("../../assets/home/hotgame/content/slot/provider_pt.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "evo",
-        //   name: "EVO电子",
-        //   icon: require("../../assets/home/hotgame/content/slot/provider_evo.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // pg: {
-      //   title: "PG电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../assets/home/hotgame/content/slot/pg/character.png")
-      // },
-      // sw: {
-      //   title: "SW电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../assets/home/hotgame/content/slot/sw/character.png")
-      // },
-      // pt: {
-      //   title: "PT电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../assets/home/hotgame/content/slot/pt/character.png")
-      // },
-      // evo: {
-      //   title: "EVO电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../assets/home/hotgame/content/slot/evo/character.png")
-      // }
-    }
-  },
-  {
-    number: "06",
-    icon: require("../../assets/home/hotgame/banner/board/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
-    title: "Poker",
-    subtitle: "BOARD",
+    icon: require("../../assets/home/hotgame/banner/minigame/minigame.png"),
+    iconActive: require("../../assets/home/hotgame/banner/minigame/icon-active.png"),
+    title: "미니게임",
+    subtitle: "미니게임",
     charImgPath: require("../../assets/home/hotgame/banner/board/character.png"),
-    isShow: false,
-    path: "/poker",
-    currentProvider: "dat",
-    section: "poker",
-    type: "poker",
-    content: {
-      isShowSportsIcon: [require("../../assets/poker/poker-pattern.png")],
-      providerList: [
-        // {
-        //   key: "dat",
-        //   name: "大唐棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_dat.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "gd",
-        //   name: "高登棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_gd.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "ky",
-        //   name: "开元棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_ky.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "leyou",
-        //   name: "乐游棋牌",
-        //   icon: require("../../assets/home/hotgame/content/board/provider_leyou.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // dat: {
-      //   title: "大唐棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/dat/character.png")
-      // },
-      // gd: {
-      //   title: "高登棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/gd/character.png")
-      // },
-      // ky: {
-      //   title: "开元棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/ky/character.png")
-      // },
-      // leyou: {
-      //   title: "乐游棋牌",
-      //   subtitle: "BOARD",
-      //   charImgPath: require("../../assets/home/hotgame/content/board/leyou/character.png")
-      // }
-    }
-  },
-  {
-    number: "07",
-    icon: require("../../assets/home/hotgame/banner/fishing/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/fishing/icon-active.png"),
-    title: "Bắn Cá",
-    subtitle: "FISHING",
-    charImgPath: require("../../assets/home/hotgame/banner/fishing/character.png"),
     isShow: false,
     path: "/fishing",
     currentProvider: "ag",
     section: "fishing",
     type: "fish",
     content: {
-      isShowSportsIcon: [require("../../assets/fishing/fishing-pattern.png")],
-      providerList: [
-        // {
-        //   key: "ag",
-        //   name: "AG捕鱼",
-        //   icon: require("../../assets/home/hotgame/content/fishing/provider_ag.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "mw",
-        //   name: "决战中途岛",
-        //   icon: require("../../assets/home/hotgame/content/fishing/provider_mw.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // ag: {
-      //   title: "AG捕鱼",
-      //   subtitle: "FISHING",
-      //   charImgPath: require("../../assets/home/hotgame/content/fishing/ag/character.png")
-      // },
-      // mw: {
-      //   title: "决战中途岛",
-      //   subtitle: "FISHING",
-      //   charImgPath: require("../../assets/home/hotgame/content/fishing/mw/character.png")
-      // }
+      providerList: []
+    }
+  },
+  {
+    number: "05",
+    icon: require("../../assets/home/hotgame/banner/board/icon.png"),
+    iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
+    title: "포커",
+    subtitle: "POKER",
+    charImgPath: require("../../assets/home/hotgame/banner/poker/character.png"),
+    isShow: false,
+    path: "/poker",
+    currentProvider: "dat",
+    section: "poker",
+    type: "poker",
+    content: {
+      providerList: []
     }
   }
 ]);
@@ -686,10 +314,21 @@ const onEnterGameClick = (plat, platType) => {
     router.push({ path: plat.path, query: { plat: plat.currentPlat.code } });
   } else {
     const currentPlat = plat.currentPlat;
+    if (currentPlat.code === 'TFGaming' && platType === 'fish') {
+      router.push('/minigame?plat=TFGaming');
+      return
+    } else if (currentPlat.code === 'CQ9' && platType === 'fish') {
+      router.push('/fishing?plat=CQ9');
+      return
+    }
     if (currentPlat.code === "BBINDY") {
       currentPlat.gameCode = "bblive_lobby_pc";
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
+    } else if (currentPlat.code === "PP") {
+      currentPlat.gameCode = 101;
+    } else if (currentPlat.code === "Spribe") {
+      currentPlat.gameCode = 'aviator';
     }
 
     const platItem = plat.content[currentPlat.code.toLowerCase()];
@@ -704,12 +343,23 @@ const platformsListDisplay = ref([]);
 const setHotGame = () => {
   if (store.token) {
     getLoggedInPlatformList().then((res) => {
-      platformsListDisplay.value = res;
+      // esport games show at sport section
+      const formattedPlatforms = res.map((resItem) => ({
+        ...resItem,
+        gameType: resItem.gameType?.replace("ESPORT", "SPORT")
+      }));
+      platformsListDisplay.value = formattedPlatforms;
       checkPlatforms();
     });
   } else {
     getPlatformList().then((res) => {
-      platformsListDisplay.value = res;
+      // esport games show at sport section
+      const formattedPlatforms = res.map((resItem) => ({
+        ...resItem,
+        gameType: resItem.gameType?.replace("ESPORT", "SPORT")
+      }));
+
+      platformsListDisplay.value = formattedPlatforms;
       checkPlatforms();
     });
   }
@@ -720,12 +370,19 @@ const checkPlatforms = () => {
     hotgameData.value.forEach((item) => {
       const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
 
+      if (gameTypeArray.includes('CASUAL')) {
+        if (item.type === 'fish') {
+          const additem = _.clone(plat);
+          item.content.providerList.push(additem);
+        }
+      }
       if (containingItem) {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
           additem.alias = "XIN";
         }
+      
         item.content.providerList.push(additem);
       }
 
@@ -750,13 +407,16 @@ const checkPlatforms = () => {
       if (gameTypeArray.some((type) => type.toLowerCase() === "fish") && item.type === "fish") {
         updatePlatforms(fishingPlatforms, item, "");
       }
+      if (gameTypeArray.includes('CASUAL') && item.type === "fish") {
+        console.log(item)
+        updatePlatforms(minigamePlatforms, item, "");
+      }
     });
   });
   hotgameData.value.forEach((hot) => {
     hot.currentPlat = hot.content.providerList[0];
     hot.currentProvider = hot.currentPlat.code.toLowerCase();
   });
-  console.log(hotgameData.value);
 };
 const updatePlatforms = (platforms, item, keyModifier) => {
   // console.log(item.subtitle)
@@ -811,7 +471,10 @@ $transition_timer: 0.5s;
           padding: 1rem 4px;
           border-radius: 2.875rem;
           background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-          box-shadow: 0px 2px 4.58px 0px #FFA09A inset;
+          // box-shadow: 0px 2px 4.58px 0px #FFA09A inset;
+          box-shadow: 0px 1.81px 3.63px 0px #ffffff40 inset;
+          box-shadow: 0px 2.72px 5.44px 0px #0047ff40;
+
           overflow: hidden;
           position: relative;
           z-index: 1;
@@ -822,8 +485,11 @@ $transition_timer: 0.5s;
             color: white;
             // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
             // box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.664px 0px #275ec1 inset;
-            background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
-            box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
+            // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+            // box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
+
+            background: linear-gradient(0deg, #386fff -1.68%, #2be1d6 100%);
+            box-shadow: 0px 2px 4.58px 0px #bbdcff inset;
           }
 
           .hotgame-icon {
@@ -863,7 +529,7 @@ $transition_timer: 0.5s;
               // word-break: break-all;
               text-align: center;
               font-family: PingFang SC;
-              font-size: .756rem;
+              font-size: 0.756rem;
               font-weight: 600;
               line-height: 1.2rem;
             }
@@ -942,24 +608,26 @@ $transition_timer: 0.5s;
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
               word-break: keep-all;
-              background: linear-gradient(180deg, #BC4C4C 0%, #FD574C 100%);
+              background: linear-gradient(180deg, #bc4c4c 0%, #fd574c 100%);
 
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
               text-fill-color: transparent;
-              filter: drop-shadow(2px 1px #FFA09A);
+              filter: drop-shadow(2px 1px #ffa09a);
             }
 
             .subtitle {
               font-size: 2.70775rem;
-              background: linear-gradient(180deg, #BC4C4C 0%, #FD574C 100%);
+              font-weight: bold;
+              // background: linear-gradient(180deg, #BC4C4C 0%, #FD574C 100%);
+              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
 
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
               text-fill-color: transparent;
-              filter: drop-shadow(2px 1px #FFA09A);
+              filter: drop-shadow(2px 1px #ffa09a);
             }
           }
 
@@ -967,13 +635,13 @@ $transition_timer: 0.5s;
             display: flex;
             flex-direction: column;
             align-items: center;
-          max-height: 120px;
-          justify-content: flex-start;
-          overflow: hidden;
+            max-height: 120px;
+            justify-content: flex-start;
+            overflow: hidden;
           }
 
           .desc {
-            color: #0E0100;
+            color: #a0bcd6;
             font-family: Microsoft YaHei;
             font-size: 0.83838rem;
             font-weight: 400;
@@ -992,6 +660,7 @@ $transition_timer: 0.5s;
             img {
               width: 1.5rem;
               height: 1.5rem;
+              width: 100%;
             }
 
             &.sports,
@@ -1034,14 +703,17 @@ $transition_timer: 0.5s;
                 height: 2rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
-                border: 1px solid #FD574C;
-                background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
+                // border: 1px solid #FD574C;
+                // background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
+                background: linear-gradient(180deg, #c3e8fa 0%, #a1c4fc 100%);
+
                 object-fit: contain;
 
                 &.active {
                   border: 0px;
-                  background: linear-gradient(180deg, #FCFCFC -11.46%, #FD574C 100%);
-                  box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                  // background: linear-gradient(180deg, #FCFCFC -11.46%, #FD574C 100%);
+                  // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                  background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
                 }
               }
 
@@ -1055,20 +727,23 @@ $transition_timer: 0.5s;
                 white-space: nowrap;
 
                 &.active {
-                  color: #0E0100;
+                  color: #0e0100;
                   font-weight: 700;
                 }
               }
 
               &:hover {
                 .game-provider-text {
-                  color: #0E0100;
+                  color: #0e0100;
                   font-weight: 700;
                 }
+
                 .game-provider-img {
                   border: 0px;
-                  background: linear-gradient(180deg, #FCFCFC -11.46%, #FD574C 100%);
-                  box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                  // background: linear-gradient(180deg, #AE92FF 0%, #56C2FF 100%);
+                  // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+
+                  background: linear-gradient(180deg, #2eadee 0%, #a1c4fc 100%);
                 }
               }
             }
@@ -1089,8 +764,13 @@ $transition_timer: 0.5s;
             width: 10rem;
             height: 2.5rem;
             border-radius: 1.875rem;
-            background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
-            box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
+            // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+            // box-shadow: 0px -2.3px 5.26px 0px #FFA09A inset, 0px -1.15px 4.21px 0px #FF736A inset;
+
+            background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+            box-shadow: 0px -2px 4.58px 0px #b1d7ff inset;
+            box-shadow: 0px -1px 3.66px 0px #5894ff inset;
+
             font-family: Microsoft YaHei;
             font-size: 1.15281rem;
             font-weight: 400;
@@ -1189,7 +869,7 @@ $transition_timer: 0.5s;
             height: 30rem;
           }
 
-          // esports
+          // poker
           .character-esports-lh {
             position: relative;
             right: 8rem;
@@ -1432,13 +1112,13 @@ $transition_timer: 0.5s;
       .hotgame-wrapper {
         .hotgame-banner-wrapper {
           .hotgame-banner {
-            background: linear-gradient(180deg, #00273D 0%, #02132C 100%);
-            box-shadow: 0px -1px 3.66px 0px #11131E inset;
+            background: linear-gradient(180deg, #00273d 0%, #02132c 100%);
+            box-shadow: 0px -1px 3.66px 0px #11131e inset;
             // color: $font-5-dark;
 
             &.highlight {
               // background: $active-color-dark-linear;
-              box-shadow: 0px -2px 4.58px 0px #FFDCBB inset;
+              box-shadow: 0px -2px 4.58px 0px #ffdcbb inset;
               color: $color-white;
             }
 
@@ -1450,34 +1130,36 @@ $transition_timer: 0.5s;
 
         .hotgame-content-wrapper {
           // @include content-block-dark;
-          background: linear-gradient(180deg, #1B202D 0%, #00010B 100%);
+          background: linear-gradient(180deg, #1b202d 0%, #00010b 100%);
 
           .left-container {
             .title-wrapper {
               .title,
               .subtitle {
-                background: linear-gradient(180deg, #C2FBFB 0%, #299AAD 100%);
+                background: linear-gradient(180deg, #c2fbfb 0%, #299aad 100%);
                 background-clip: text;
               }
             }
 
             .description {
-                .desc {
-                  color: $font-3;
-                }
+              .desc {
+                color: $font-3;
               }
+            }
 
             .game-provider-wrapper {
               .game-provider {
                 .game-provider-img {
                   background: linear-gradient(180deg, #113765 0%, #212428 100%);
-                  border-color: #36677C;
+                  border-color: #36677c;
+
                   &.active {
-                    background: linear-gradient(180deg, #38D2DA 0%, #1B7893 100%);
-                    border-color: #52E4ED;
+                    background: linear-gradient(180deg, #38d2da 0%, #1b7893 100%);
+                    border-color: #52e4ed;
                     box-shadow: 0px 3.35px 3.35px 0px #00000040;
                   }
                 }
+
                 .game-provider-text.active {
                   color: $color-white;
                 }
@@ -1485,7 +1167,7 @@ $transition_timer: 0.5s;
             }
 
             .game-start-btn {
-              background: linear-gradient(180deg, #3BDCE2 0%, #18708E 100%);
+              background: linear-gradient(180deg, #3bdce2 0%, #18708e 100%);
               box-shadow: none;
             }
           }

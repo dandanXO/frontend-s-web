@@ -438,7 +438,9 @@ async function loadBetRecords() {
     query.gameType = 'SPORT,ESPORT';
   } else if (query.gameType === 'FISH') {
     query.gameType = 'FISH,CASUAL';
-  } 
+  } else if (query.gameType === 'LIVE') {
+    query.gameType = 'LIVE,POKER';
+  }
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;
