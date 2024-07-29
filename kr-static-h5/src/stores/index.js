@@ -46,7 +46,8 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       hasUpdatedOneSignal: false,
       isAffiliateA: false,
-      name2: ""
+      name2: "",
+      pendingRebateAmt: 0
     };
   },
   actions: {
@@ -244,6 +245,27 @@ export const userStore = defineStore("userStore", {
             }
           });
       }
+    },
+    getPendingRebateAmt() {
+      return new Promise((resolve, reject) => {
+        if (this.token) {
+          api
+            .get("/member-point", {
+              params: {
+                Platform: "MAIN"
+              }
+            })
+            .then((ret) => {
+              const res = ret.data;
+              if (res.code === 0) {
+                this.pendingRebateAmt = Math.floor(res.data);
+              } else {
+                this.pendingRebateAmt = 0;
+              }
+              resolve();
+            });
+        }
+      });
     },
     getUnreadTotal() {
       if (this.token) {

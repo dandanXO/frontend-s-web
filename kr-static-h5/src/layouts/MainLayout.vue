@@ -300,7 +300,7 @@ export default defineComponent({
             prevPage.value = "account";
           }
         } else if (route.path === "/account/announcement") {
-          prevPage.value = "account";
+          prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("lang.page_systemannouncement");
         } else if (route.path === "/feedback") {

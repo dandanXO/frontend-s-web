@@ -27,7 +27,7 @@
                   class="primary-button blue-square"
                   @click="redeemPoint(props?.props?.row.privilegeId)"
                 >
-                  {{ $t("lang.redeem") }}
+                  {{ $t("lang.btn_redeem") }}
                 </q-btn>
               </div>
             </q-td>
