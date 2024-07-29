@@ -135,7 +135,8 @@
               </div>
             </div>
             <div class="task-right">
-              <button class="button" @click="handleDeposit">去充值</button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值 </button>
             </div>
           </div>
           <div class="task-content">
@@ -162,8 +163,9 @@
               </div>
             </div>
             <div class="task-right">
-              <div style="margin-top: -20px">剩余补签卡：1/2</div>
-              <button class="button-finish">已完成</button>
+              <div style="margin-top: -20px">剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}</div>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
         </div>
@@ -285,6 +287,10 @@ const showSuccessDialog = ref(false);
 const showErrorDialog = ref(false);
 const vipLevel = ref(store.vip.split("VIP")[1]);
 const currentActivePoints = ref(0);
+const currentRecheckInChances = ref(0);
+const totalRecheckInChances = ref(0);
+const recheckTaskState = ref("CLOSE");
+
 const countiuneSign = computed(() => {
   let times = 0;
   sectionOneItems.value.forEach((item) => {
@@ -357,6 +363,9 @@ const fetchData = async () => {
     todayCheckInState.value = res.data.checkInState.todayCheckInState;
     sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
     currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
+    currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
+    totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+    recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
   } catch (error) {
     notify.error(res.message);
   }

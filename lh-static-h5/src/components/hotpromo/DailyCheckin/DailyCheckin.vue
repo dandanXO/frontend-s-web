@@ -123,7 +123,8 @@
               </div>
             </div>
             <div class="task-right">
-              <button class="button" @click="handleDeposit">去充值</button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值 </button>
             </div>
           </div>
           <div class="task-content">
@@ -146,8 +147,11 @@
               </div>
             </div>
             <div class="task-right">
-              <div style="margin-top: -20px">剩余补签卡：1/2</div>
-              <button class="button-finish">已完成</button>
+              <div style="margin-top: -20px">
+                剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
+              </div>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值 </button>
             </div>
           </div>
         </div>
@@ -259,6 +263,9 @@ const currentActivePoints = ref(0);
 // 是 "YES", 就是“已完成” + 打勾，
 // 是 "NO" 则是 "去充值“和 打 X
 const todayCheckInState = ref("YES");
+const currentRecheckInChances = ref(0);
+const totalRecheckInChances = ref(0);
+const recheckTaskState = ref("CLOSE");
 
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
@@ -329,6 +336,9 @@ const fetchData = async () => {
       todayCheckInState.value = res.data.checkInState.todayCheckInState;
       sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
       currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
+      currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
+      totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+      recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
     });
   } catch (error) {
     notify.error(res.message);
@@ -342,7 +352,6 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .seciont1 {
-  margin-top: -27px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -543,7 +552,7 @@ onMounted(async () => {
         background-image: url("./images/bg-3.png");
         background-repeat: no-repeat;
         background-position: center;
-        background-size: cover;
+        background-size: 100% 100%;
         width: 100%;
         height: 74px;
         padding: 0 16px;
