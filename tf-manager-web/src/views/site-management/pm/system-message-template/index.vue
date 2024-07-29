@@ -239,7 +239,7 @@
         </el-form-item>
         <el-form-item prop="title">
           <editor
-            api-key="arlf5h2wcrqydmiiogww80cfx98khxd8o81s2i93qhq0n7wv"
+            api-key="fm4ml3ytoifibaku86uuz7remkgdp5o22s2qv2utxonnkj4m"
             :init="{
               placeholder: 'Title',
               height: 150,
@@ -257,7 +257,7 @@
         </el-form-item>
         <el-form-item prop="content">
           <editor
-            api-key="arlf5h2wcrqydmiiogww80cfx98khxd8o81s2i93qhq0n7wv"
+            api-key="fm4ml3ytoifibaku86uuz7remkgdp5o22s2qv2utxonnkj4m"
             :init="{
               placeholder: 'Content',
               height: 500,
