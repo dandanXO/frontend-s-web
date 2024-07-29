@@ -514,13 +514,13 @@ const rows = [
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: "11",
+    reward: "Unlimited",
     flow: "58,888"
   },
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: "12",
+    reward: "Unlimited",
     flow: "88,888"
   }
 ];
