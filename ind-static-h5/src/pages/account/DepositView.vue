@@ -2,6 +2,17 @@
   <div class="deposit-wrapper">
     <div class="deposit-options">
       <div class="lil-title">Payment Channel</div>
+      <div class="deposit-option-container" style="margin-top: 16px" v-if="isLoadingInitPay">
+        <div class="deposit-option-btn-wrapper" style="width: 100%">
+          <q-skeleton class="skeleton-deposit-option" />
+        </div>
+        <div class="deposit-option-btn-wrapper" style="width: 100%">
+          <q-skeleton class="skeleton-deposit-option" />
+        </div>
+        <div class="deposit-option-btn-wrapper" style="width: 100%">
+          <q-skeleton class="skeleton-deposit-option" />
+        </div>
+      </div>
       <div class="deposit-option-container">
         <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
           <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
@@ -80,6 +91,7 @@
         <div class="deposit-enter-amt" v-if="amountList.length === 0">
           <div class="lil-title">Amount</div>
           <q-input
+            type="number"
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
             name="localAmount"
@@ -89,6 +101,7 @@
             :rules="verifyDepositAmount"
             dense
             clearable
+            @keyup.enter="confirmDeposit"
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="currency">
@@ -931,5 +944,10 @@ onMounted(() => {
 .deposit-wrapper {
   width: 95%;
   margin: auto;
+}
+
+.skeleton-deposit-option {
+  width: 100%;
+  aspect-ratio: 519 / 303;
 }
 </style>
