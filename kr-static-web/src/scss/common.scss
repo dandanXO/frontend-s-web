@@ -248,7 +248,7 @@ body {
       }
 
       .el-dialog__close {
-        color: #ffffff;
+        color: #000;
         height: 1.5em;
         width: 1.5em;
         svg {
@@ -258,7 +258,7 @@ body {
       }
       &:focus .el-dialog__close,
       &:hover .el-dialog__close {
-        color: $color-white;
+        color: #000;
       }
     }
   }

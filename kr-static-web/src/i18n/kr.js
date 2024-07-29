@@ -114,6 +114,7 @@ export default {
     playnow: "지금 플레이",
     betnow: "지금 베팅",
     systemError: "시스템 오류",
+    withdrawCancelled: "출금 취소",
     loginTitle: "알림",
     bankName: "은행",
     bankAcc: "계좌 이름",

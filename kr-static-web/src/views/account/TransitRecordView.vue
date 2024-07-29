@@ -232,6 +232,19 @@
                     </div>
                   </template>
 
+                  <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                        size="small"
+                        color="red"
+                        class="common-btn cancel"
+                        @click="openWithdrawCancel(scope.row)"
+                      >
+                        {{ $t("common.cancel") }}
+                      </el-button>
+                    </div>
+                  </template>
+
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
@@ -675,7 +688,7 @@ import { defineComponent, onMounted, reactive, watch, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
   loadRecords,
-  gameBetRecordTotal,
+  cancellationOfWithdrawalReceived,
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
@@ -1213,6 +1226,27 @@ export default defineComponent({
         }
       });
     };
+
+    const openWithdrawCancel = (record) => {
+      const obj = {
+        id: record.id,
+        withdrawDate: record.withdrawDate
+      };
+      cancellationOfWithdrawalReceived(obj).then((res) => {
+        if (res.code === 0) {
+          ElMessageBox.alert(t('common.withdrawCancelled'), {
+            title: t('common.systemError'),
+            center: true,
+            confirmButtonText: t('common.confirm'),
+            showClose: false,
+            buttonSize: "large"
+          }).then(() => {
+            getTime();
+          });
+        }
+      });
+    };
+
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
@@ -1818,6 +1852,7 @@ export default defineComponent({
       reminderDialog,
       openReminder,
       submitReminder,
+      openWithdrawCancel,
       getImageLink,
       getTurnoverType,
       getTransferType,
