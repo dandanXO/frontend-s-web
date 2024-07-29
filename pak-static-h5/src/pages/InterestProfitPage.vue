@@ -9,7 +9,6 @@
               <q-icon :name="isAmountVisible ? 'visibility' : 'visibility_off'" size="20px" />
             </div>
           </div>
-          <div class="do-side-title">More activities</div>
         </div>
 
         <div class="do-amount">
@@ -27,22 +26,12 @@
             <div class="item-amount">₹{{ isAmountVisible ? "0.00" : "*****" }}</div>
           </div>
         </div>
-
-        <div class="do-actions">
-          <div class="">
-            <q-btn no-caps unelevated class="do-btn-grey">Trial calculation</q-btn>
-          </div>
-
-          <div class="">
-            <q-btn no-caps unelevated class="do-btn-green">Deposit</q-btn>
-          </div>
-        </div>
       </div>
 
       <div class="do-input-container">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Storage time'">
+            <!-- <InputField :label="'Storage time'">
               <template #input>
                 <q-input
                   type="number"
@@ -52,13 +41,17 @@
                   v-model="interestProfitField.storageTime"
                   lazy-rules
                   label-color="secondary"
-                >
-                  <template v-slot:prepend>
-                    <div>₹</div>
-                  </template>
-                </q-input>
+                ></q-input>
               </template>
-            </InputField>
+            </InputField> -->
+
+            <div class="select-label">Storage time</div>
+            <q-select
+              class="do-select"
+              outlined
+              v-model="interestProfitField.storageTime"
+              :options="storageTimeOptions"
+            />
 
             <InputField :label="'Deposits'">
               <template #input>
@@ -79,26 +72,36 @@
             </InputField>
           </template>
         </InputRowGrid>
+
+        <div class="do-actions">
+          <div class="">
+            <q-btn no-caps unelevated class="do-btn-grey">Trial calculation</q-btn>
+          </div>
+          <div class="">
+            <q-btn no-caps unelevated class="do-btn-green">Deposit</q-btn>
+          </div>
+        </div>
+      </div>
+
+      <div class="do-results-container">
+        <div class="do-result-item">
+          <div class="item-title">Annual interest rate</div>
+          <div class="item-rates">0%</div>
+        </div>
+        <div class="do-result-item">
+          <div class="item-title">Distribute interest</div>
+          <div class="item-rates">0.00</div>
+        </div>
       </div>
 
       <div class="do-record-container q-mt-md">
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--title">
+          <!-- <div class="order-row order-row--title">
             <div class="order-col">No. {{ e.serialNumber }}</div>
-            <!-- <div class="order-col flex-c-end gap-8"> -->
-            <!-- <div @click="copyText(e.serialNumber)">
-                <img
-                  class="copy-btn btn-pointer"
-                  src="../../assets/images/account/content-copy.svg"
-                  size="24px"
-                  fill="#fff"
-                />
-              </div> -->
-            <!-- </div> -->
-          </div>
+          </div> -->
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ e.paymentType }}</div>
+              <div class="order-col">No. {{ e.serialNumber }}</div>
               <div class="order-col">
                 <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
                   {{ getDepositStatus(e.status) }}
@@ -118,7 +121,14 @@
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
               </div>
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+              <div class="order-col">
+                <span class="txt-green">+{{ convertToCommaAmount(e.depositAmount, true) }}</span>
+              </div>
+            </div>
+
+            <div class="order-btns">
+              <q-btn no-caps unelevated class="do-btn-grey shorter">Details</q-btn>
+              <q-btn no-caps unelevated class="do-btn-green shorter">Collect</q-btn>
             </div>
           </div>
         </div>
@@ -144,6 +154,7 @@ const interestProfitField = reactive({ storageTime: "", deposits: "" });
 const isLoading = ref(false);
 const depositData = ref([]);
 const isAmountVisible = ref(true);
+const storageTimeOptions = ref(["1 months", "3 months", "6 months", "1 year"]);
 
 const toggleAmountVisibility = () => {
   isAmountVisible.value = !isAmountVisible.value;
@@ -220,16 +231,16 @@ onMounted(() => {
     gap: 12px;
   }
 
-  .do-side-title {
-    color: #13a89e;
-    font-weight: bold;
-    background-image: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
-  }
+  // .do-side-title {
+  //   color: #13a89e;
+  //   font-weight: bold;
+  //   background-image: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
+  //   background-size: 100%;
+  //   -webkit-background-clip: text;
+  //   -moz-background-clip: text;
+  //   -webkit-text-fill-color: transparent;
+  //   -moz-text-fill-color: transparent;
+  // }
 }
 
 .do-amount {
@@ -282,40 +293,66 @@ onMounted(() => {
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-  .do-btn-green {
-    color: #ffffff;
-    height: 34px;
+.do-btn-green {
+  color: #ffffff;
+  height: 34px;
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  font-weight: 700;
+  border-radius: 6px;
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+
+  &:before {
+    content: "";
+    position: absolute;
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    font-weight: 700;
-    border-radius: 6px;
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-      z-index: -1;
-      top: -1px;
-      bottom: -1px;
-      left: -1px;
-      right: -1px;
-    }
+    z-index: -1;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
   }
 
-  .do-btn-grey {
-    color: #ffffff;
-    height: 34px;
-    background: #353535;
-    font-weight: 700;
-    border-radius: 6px;
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
+  &.shorter {
+    width: auto;
+  }
+}
+
+.do-btn-grey {
+  color: #ffffff;
+  height: 34px;
+  background: #353535;
+  font-weight: 700;
+  border-radius: 6px;
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+
+  &.shorter {
+    width: auto;
+  }
+}
+
+.do-results-container {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #1f1f1f;
+  margin-top: 16px;
+  .do-result-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+
+    .item-title {
+      font-weight: 600;
+    }
+    .item-rates {
+      font-weight: 600;
+      color: #00b900;
+    }
   }
 }
 
@@ -354,6 +391,13 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
     }
+
+    .order-btns {
+      display: flex;
+      margin-left: auto;
+      margin-top: 12px;
+      gap: 12px;
+    }
   }
 
   .copy-btn {
@@ -372,13 +416,6 @@ onMounted(() => {
 
     span.txt-green {
       color: #5bf25c;
-      background: #00b90033;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 0.825rem;
     }
 
     span.txt-red {
@@ -427,5 +464,24 @@ onMounted(() => {
   background: rgba(0, 185, 0, 0.2);
   min-height: unset;
   margin-bottom: 4px;
+}
+
+.select-label {
+  color: #98a6b4;
+}
+
+.do-select {
+  :deep(.q-field__control) {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    background-color: #0b0e0d;
+
+    &:before {
+      border-color: #072a19;
+      border-width: 2px;
+      border-radius: 10px;
+    }
+  }
 }
 </style>
