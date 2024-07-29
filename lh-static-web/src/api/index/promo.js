@@ -345,3 +345,15 @@ export function getOlympicDailySportBet() {
 export function claimOlympicDailySportBet() {
   return server.EVENT.put('/lhOlympicDailySportBet/claim')
 }
+
+export function getCheckInFreeTreasureInit() {
+  return server.EVENT.get('/checkInFreeTreasure/init')
+}
+
+export function putCheckInFreeTreasureCheckIn(checkInDay) {
+  return server.EVENT.put(`/checkInFreeTreasure/checkIn?checkInDay=${checkInDay}`, {})
+}
+
+export function putCheckInFreeTreasureClaim(point) {
+  return server.EVENT.put(`/checkInFreeTreasure/claimTreasure?point=${point}`, {})
+}
