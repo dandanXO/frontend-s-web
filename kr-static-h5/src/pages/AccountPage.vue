@@ -116,54 +116,6 @@
             </span>
           </div>
         </q-card-section>
-
-        <!-- <q-separator /> -->
-
-        <!-- <q-card class="bluecard vip-info-board" @click="goToVip"> -->
-        <!-- <div class="vipline q-mt-sm"> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel }}</span> -->
-        <!-- </div> -->
-        <!-- <div class="middle"> -->
-        <!-- <div class="row items-center justify-between"> -->
-        <!-- <div class="left">成长值</div> -->
-        <!-- <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div> -->
-        <!-- </div> -->
-
-        <!-- <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" /> -->
-        <!-- </div> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel + 1 }}</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-
-        <!-- <div class="vip-get-div row justify-between items-center q-mt-sm"> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>晋级礼包</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>生日礼金</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>每月活动</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>专属活动</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </q-card> -->
       </q-card-section>
     </div>
 
@@ -229,7 +181,7 @@
             </div>
           </div>
         </router-link> -->
-        <!--
+
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-changepwd-icon.png" />
@@ -237,7 +189,7 @@
               {{ $t("lang.mine_change_password") }}
             </div>
           </div>
-        </router-link> -->
+        </router-link>
 
         <!-- <router-link to="/affiliate">
           <div class="acct-nav-item">

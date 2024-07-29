@@ -417,7 +417,7 @@ export default {
     // mine
     version_no: "버전",
     central_wallet: "잔액",
-    central_rebate: "할인",
+    central_rebate: "포인트",
     loading: "로딩 중...",
     deposit_btn: "입금",
     withdraw_btn: "출금",
@@ -968,7 +968,7 @@ export default {
     footer_all_rights: "Jolly88 2023{'@'}모든 권리 보유.",
     announcement: "공지사항",
     question: "문의",
-    message: "문의",
+    message: "쪽지",
     name: "이름",
     surname: "성",
     dob: "생년월일",
@@ -1124,9 +1124,9 @@ export default {
 
     // mailbox
     mail_mailbox: "메일함",
-    mail_outbox: "보낸 편지함",
+    mail_outbox: "메시지함",
     mail_feedback: "피드백",
-    mail_compose: "메일 작성",
+    mail_compose: "메시지 작성",
     mail_nodata: "알림 없음",
     mail_nodatayet: "새로운 데이터가 아직 없습니다",
     mail_loading: "로딩 중",
@@ -1140,6 +1140,8 @@ export default {
     mail_selectone: "하나 더 선택하세요",
     mail_read: "읽음",
     mail_delete: "삭제",
+
+    feedback_delete_selected_message: "선택한 메시지를 삭제했습니다.",
 
     // compose
     compose_title: "제목",
@@ -1504,7 +1506,7 @@ export default {
     909: "전화번호를 찾을 수 없습니다.",
     910: "사용자 이름이 전화번호와 일치하지 않습니다.",
     1000: "사용자 이름 또는 비밀번호에 오류가 있습니다.",
-    1001: "계정이 폐쇄되었습니다.",
+    1001: "승인 대기 중입니다",
     1002: "파트너 계정입니다.",
     1004: "비밀번호를 여러 번 잘못 입력하여 계정이 잠깁니다.",
     1011: "현재 계정은 전화번호와 연결되어 있습니다.",

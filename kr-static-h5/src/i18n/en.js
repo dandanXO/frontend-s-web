@@ -1163,6 +1163,8 @@ We sincerely congratulate you on your exchange and wish you only the best days a
     mail_read: "Read",
     mail_delete: "Delete",
 
+    feedback_delete_selected_message: "Deleted selected messages",
+
     // compose
     compose_title: "Title",
     compose_pleaseinserttitle: "Please insert title",

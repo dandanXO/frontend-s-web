@@ -141,6 +141,10 @@ const onSubmit = () => {
           mailDetailList.value.feedbackType = "";
           mailDetailList.value.title = "";
           mailDetailList.value.content = "";
+
+          feedbackTypeRef.value.resetValidation();
+          titleRef.value.resetValidation();
+          contentRef.value.resetValidation();
         }
       })
       .catch((error) => {

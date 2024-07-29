@@ -1,18 +1,18 @@
 <template>
   <q-page>
-    <div class="chgpwd-tabs-div">
-      <div class="chgpwd-item" @click="goToTab('tabPassword')" :class="chgpwdTab === 'tabPassword' ? 'is-active' : ''">
-        <span>{{ $t("lang.chgpwd_password") }}</span>
-      </div>
+    <!--    <div class="chgpwd-tabs-div">-->
+    <!--      <div class="chgpwd-item" @click="goToTab('tabPassword')" :class="chgpwdTab === 'tabPassword' ? 'is-active' : ''">-->
+    <!--        <span>{{ $t("lang.chgpwd_password") }}</span>-->
+    <!--      </div>-->
 
-      <div
-        class="chgpwd-item"
-        @click="goToTab('tabWithdrawPassword')"
-        :class="chgpwdTab === 'tabWithdrawPassword' ? 'is-active' : ''"
-      >
-        <span>{{ $t("lang.chgpwd_withdraw_password") }}</span>
-      </div>
-    </div>
+    <!--      <div-->
+    <!--        class="chgpwd-item"-->
+    <!--        @click="goToTab('tabWithdrawPassword')"-->
+    <!--        :class="chgpwdTab === 'tabWithdrawPassword' ? 'is-active' : ''"-->
+    <!--      >-->
+    <!--        <span>{{ $t("lang.chgpwd_withdraw_password") }}</span>-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <template v-if="chgpwdTab === 'tabPassword'">
       <q-form @submit="submitUpdatePwd">

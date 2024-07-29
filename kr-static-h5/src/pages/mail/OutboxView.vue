@@ -1,10 +1,14 @@
 <template>
   <div class="table-record">
-    <!--    <MailComponent :loading="visible" :list="inquiriesList.records" type="outbox" />-->
+    <div class="action-buttons">
+      <q-toggle v-model="allowSelectMultiple" :label="$t('lang.mail_selectone')" left-label />
+      <q-btn v-if="hasMailSelected" class="common-md-btn" size="md" @click="deleteMails()">
+        {{ $t("lang.mail_delete") }}
+      </q-btn>
+    </div>
 
     <q-page>
       <div v-if="!visible">
-        <!--            <q-infinite-scroll @load="onLoad" :offset="150">-->
         <q-card
           v-for="(det, n) in mailData"
           :key="n"
@@ -30,13 +34,14 @@
             </div>
 
             <div class="right-title">
-              <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-              <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+              <img src="../../assets/images/inbox/arrow-up-s-line.svg" v-if="isSelectedMail === det.id" />
+              <img src="../../assets/images/inbox/arrow-down-s-line.svg" v-if="isSelectedMail !== det.id" />
             </div>
           </div>
           <div class="mailcontents" v-if="isSelectedMail === det.id">
-            <div style="text-align: right; width: 100%">
+            <div class="datetime-div">
               <span class="date-time">{{ det.sendTime }}</span>
+              <!--              <span>DELETE</span>-->
             </div>
             {{ det.content }}
 
@@ -53,18 +58,6 @@
             </div>
           </div>
         </q-card>
-
-        <!--              <template v-slot:loading>-->
-        <!--                <div v-if="comList.length > 0">-->
-        <!--                  <div class="row justify-center q-my-md">-->
-        <!--                    <q-spinner-dots color="primary" size="40px" />-->
-        <!--                  </div>-->
-        <!--                </div>-->
-        <!--                <div v-else class="q-pa-md" style="text-align: center">-->
-        <!--                  {{ truncatedList.length === 0 ? $t("lang.mail_nodata") : $t("lang.mail_nodatayet") }}-->
-        <!--                </div>-->
-        <!--              </template>-->
-        <!--            </q-infinite-scroll>-->
       </div>
 
       <div class="loading-container" v-else>
@@ -81,6 +74,8 @@ import { onMounted, ref, computed } from "vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import qs from "qs";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 const visible = ref(true);
 const mailData = ref([]);
@@ -88,22 +83,61 @@ const mailboxData = ref({
   type: null,
   orderBy: "createTime"
 });
+const { t } = useI18n();
 const selected = ref();
 const isLoading = ref(false);
 
-const onLoad = (index, done) => {
-  comList.value = props.list;
-  setTimeout(() => {
-    if (comList.value.length) {
-      var slicedArray = comList.value.splice(0, 6);
-      slicedArray.forEach((element) => {
-        truncatedList.value.push(element);
-      });
-      done();
-    }
-  }, 200);
-};
+const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
+
+const $q = useQuasar();
+// const onLoad = (index, done) => {
+//   comList.value = props.list;
+//   setTimeout(() => {
+//     if (comList.value.length) {
+//       var slicedArray = comList.value.splice(0, 6);
+//       slicedArray.forEach((element) => {
+//         truncatedList.value.push(element);
+//       });
+//       done();
+//     }
+//   }, 200);
+// };
 const isSelectedMail = ref(-1);
+
+const deleteMails = () => {
+  // console.log(selectedMailIds.value);
+  const mailIdArr = Object.keys(selectedMailIds.value)
+    .filter((key) => selectedMailIds.value[key] === true)
+    .map(Number);
+  const formattedIds = mailIdArr.join(",");
+  // console.log(formattedIds);
+
+  api
+    .post(
+      "session/feedback/delete",
+      qs.stringify({
+        ids: formattedIds
+      })
+    )
+    .then((res) => {
+      const { code, data } = res;
+
+      if (code === 0) {
+        $q.notify({
+          message: t("lang.feedback_delete_selected_message"),
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
+
+        loadOutbox();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const toggleMail = (mail) => {
   if (isSelectedMail.value !== mail.id) {
     isSelectedMail.value = mail.id;
@@ -119,11 +153,8 @@ const toggleMail = (mail) => {
 
 const theReplyId = ref();
 const selectedMailIds = ref({});
-const isFetchingContent = ref(false);
 const allowSelectMultiple = ref(false);
 
-const inquiriesList = ref([]);
-const replyInquiries = ref([]);
 const repliesOfInquiries = computed(() => replies.value.filter(({ id }) => id === theReplyId.value));
 
 const replies = ref([]);
@@ -207,7 +238,7 @@ const openMsg = (mail) => {
             position: "top",
             icon: "check_circle_outline"
           });
-          onLoad();
+          // onLoad();
         }
       })
       .catch((error) => {
@@ -267,18 +298,34 @@ onMounted(() => {
 
   .right-title {
     display: flex;
+    width: 30px;
   }
 
   .mailcontents {
     padding: 12px 12px 16px;
     background: #e0f0ff;
-    color: $font-1;
-    font-size: 1rem;
+    color: #000;
+    font-size: 1.2rem;
     height: auto;
     overflow: hidden;
     text-overflow: ellipsis;
 
+    .datetime-div {
+      text-align: right;
+      width: 100%;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .date-time {
+      color: $font-1;
+      font-size: 0.9rem;
+    }
+
     h4 {
+      font-size: 1.55rem;
       margin: 10px auto;
     }
   }
@@ -299,8 +346,8 @@ onMounted(() => {
 .action-buttons {
   display: flex;
   gap: 10px;
-  justify-content: flex-start;
-  margin: 0px 10px;
+  justify-content: flex-end;
+  margin: 8px 10px 4px;
   flex-wrap: wrap;
 }
 
