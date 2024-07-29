@@ -21,7 +21,7 @@ export default defineComponent({
       orderBy: "sendTime"
     })
     const loadInbox = () => {
-      api.get("/session/inbox", {
+      api.get("/session/pm/inbox", {
         params: {
           type: mailboxData.value.type,
           orderBy: mailboxData.value.orderBy
@@ -56,7 +56,6 @@ export default defineComponent({
     }
   }
 });
-
 </script>
 <style scoped lang="scss">
 .table-record {

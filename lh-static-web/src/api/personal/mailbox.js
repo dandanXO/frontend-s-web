@@ -9,7 +9,7 @@ export function loadMailbox(type, pageNum, pageSize) {
 }
 
 export function mailInbox(mailQuery) {
-  return server.REST.get("/session/inbox", {
+  return server.REST.get("/session/pm/inbox", {
     params: {
       type: mailQuery.type,
       current: mailQuery.current,
