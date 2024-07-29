@@ -5,24 +5,26 @@
         <div class="do-header">
           <div class="do-title">
             Deposit overview
-            <div><q-icon name="visibility" size="20px" /></div>
+            <div @click="toggleAmountVisibility">
+              <q-icon :name="isAmountVisible ? 'visibility' : 'visibility_off'" size="20px" />
+            </div>
           </div>
           <div class="do-side-title">More activities</div>
         </div>
 
         <div class="do-amount">
-          <div class="amount-txt">₹2041.86</div>
+          <div class="amount-txt">₹{{ isAmountVisible ? "2041.86" : "*****" }}</div>
           <img src="../assets/images/interest-profit/chevron-right.png" />
         </div>
 
         <div class="do-content">
           <div class="content-item">
             <div class="item-title">Unexpired earnings</div>
-            <div class="item-amount">0.00</div>
+            <div class="item-amount">₹{{ isAmountVisible ? "0.00" : "*****" }}</div>
           </div>
           <div class="content-item">
             <div class="item-title">Cumulative income</div>
-            <div class="item-amount">0.00</div>
+            <div class="item-amount">₹{{ isAmountVisible ? "0.00" : "*****" }}</div>
           </div>
         </div>
 
@@ -141,6 +143,11 @@ const interestProfitField = reactive({ storageTime: "", deposits: "" });
 
 const isLoading = ref(false);
 const depositData = ref([]);
+const isAmountVisible = ref(true);
+
+const toggleAmountVisibility = () => {
+  isAmountVisible.value = !isAmountVisible.value;
+};
 
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
