@@ -1,6 +1,5 @@
 <template>
   <div class="personal-account">
-    <!-- <div class="web">{{ $t("lang.personal_exclusiveurl") }}: <a :href="`https://${personalState.memberInfo.evip}`">{{ 'https://' + personalState.memberInfo.evip }}</a></div> -->
     <q-form ref="profileFormRef">
       <q-input
         standout
@@ -47,7 +46,7 @@
         filled
         v-model="formDetail.nickName"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入账号']"
+        :rules="[(val) => (val && val.length > 0) || '']"
         label-color="secondary"
         :readonly="personalState.memberInfo.nickName ? true : false"
       >
@@ -75,52 +74,6 @@
           <span>{{ $t("lang.personal_mobilenumber") }}</span>
         </template>
       </q-input>
-      <!-- <div class="flex items-baseline no-wrap">
-        <template v-if="isEditPhone">
-          <div class="q-ml-md">
-            <q-btn
-              class="common-sm-btn"
-              color="brightbtn"
-              :label="$t('lang.personal_verify')"
-              @click="goToPage('/account/verifyTelephone')"
-              style="white-space: nowrap"
-              no-caps
-            />
-          </div>
-        </template>
-      </div> -->
-
-      <!-- <div class="flex items-baseline no-wrap">
-        <q-input
-          standout
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.email"
-          :placeholder="$t('lang.personal_email')"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
-          label-color="secondary"
-          color="secondary"
-          readonly
-          style="width: 100%"
-        >
-          <template v-slot:prepend>
-            <span>{{ $t("lang.personal_email") }}</span>
-          </template>
-        </q-input>
-        <template v-if="isEditEmail">
-          <div class="q-ml-md">
-            <q-btn
-              class="common-sm-btn"
-              color="brightbtn"
-              :label="$t('lang.personal_verify')"
-              @click="goToPage('/account/verifyEmail')"
-              style="white-space: nowrap"
-              no-caps
-            />
-          </div>
-        </template>
-      </div> -->
 
       <div class="text-center q-mt-lg" v-if="isEditBirthday">
         <q-btn
@@ -370,25 +323,14 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
+      if(personalState.memberInfo.name2){
+        return;
+      }
       if(!personalState.memberInfo.name2) {
         name2Ref.value.validate()
         if(name2Ref.value.hasError) return
       }
-      // if (!personalState.memberInfo.birthday) {
-      //   birthdayRef.value.validate();
-      //   if (birthdayRef.value.hasError) {
-      //     return;
-      //   }
-      // }
-      // if (!personalState.memberInfo.realName) {
-      //   realNameRef.value.validate();
-      //   if (realNameRef.value.hasError) {
-      //     return;
-      //   }
-      // }
-      // console.log(updateInfo);
-      // updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
-      // updateInfo.realName = formDetail.realName;
+
       updateInfo.name2 = formDetail.name2
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {

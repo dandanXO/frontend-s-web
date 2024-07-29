@@ -67,12 +67,11 @@
           v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
-          type="number"
           :label="$t('lang.withdraw_amount')"
           class="deposit-field"
           color="accent"
           name="localAmount"
-          v-model="form.localAmount"
+          v-model="depositAmountFormatted"
           :placeholder="$t('lang.deposit_enter_deposit_amount')"
           :rules="verifyDepositAmount"
           padding="none"
@@ -241,6 +240,7 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import ReminderText from "src/assets/images/finance/ReminderText.vue";
+import { formatNumberComma } from "boot/utils";
 
 const store = userStore();
 const route = useRoute();
@@ -330,43 +330,26 @@ const blurCode = () => {
 
 // const verifyDepositAmount = ref([
 //   (val) => !!val || t("lang.deposit_please_enter_deposit"),
-//   (val) => (val && /^\d+$/.test(val)) || t("lang.deposit_cantcontaindecimals"),
-//   (val) =>
-//     val > calculatedMinDeposit.value - 1 ||
-//     t("lang.deposit_between") +
-//       calculatedMinDeposit.value.toLocaleString() +
-//       " - " +
-//       activeMethod.value.depositMax.toLocaleString(),
-//   (val) =>
-//     val < activeMethod.value.depositMax + 1 ||
-//     t("lang.deposit_between") +
-//       calculatedMinDeposit.value.toLocaleString() +
-//       " - " +
-//       activeMethod.value.depositMax.toLocaleString()
+//   (val) => (val && /^\d+(,\d{3})*(\.\d+)?$/.test(val.replace(/,/g, ""))) || t("lang.deposit_cantcontaindecimals"),
+//   (val) => {
+//     const value = parseFloat(val.replace(/,/g, ""));
+//     return (
+//       value > calculatedMinDeposit.value - 1 ||
+//       `${t(
+//         "lang.deposit_between"
+//       )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
+//     );
+//   },
+//   (val) => {
+//     const value = parseFloat(val.replace(/,/g, ""));
+//     return (
+//       value < activeMethod.value.depositMax + 1 ||
+//       `${t(
+//         "lang.deposit_between"
+//       )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
+//     );
+//   }
 // ]);
-
-const verifyDepositAmount = ref([
-  (val) => !!val || t("lang.deposit_please_enter_deposit"),
-  (val) => (val && /^\d+(,\d{3})*(\.\d+)?$/.test(val.replace(/,/g, ""))) || t("lang.deposit_cantcontaindecimals"),
-  (val) => {
-    const value = parseFloat(val.replace(/,/g, ""));
-    return (
-      value > calculatedMinDeposit.value - 1 ||
-      `${t(
-        "lang.deposit_between"
-      )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
-    );
-  },
-  (val) => {
-    const value = parseFloat(val.replace(/,/g, ""));
-    return (
-      value < activeMethod.value.depositMax + 1 ||
-      `${t(
-        "lang.deposit_between"
-      )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
-    );
-  }
-]);
 
 const form = reactive({
   paymentId: null,
@@ -379,6 +362,63 @@ const checkAmount = reactive({
   flag: true,
   errorMessage: ""
 });
+
+const depositAmountFormatted = ref("");
+
+const verifyDepositAmount = ref([
+  (val) => !!parseDigitsWithComma(val) || t("lang.deposit_please_enter_amount"),
+  (val) =>
+    (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) ||
+    (val && isUSDT.value) ||
+    "입금 금액에는 소수가 포함될 수 없습니다",
+  (val) =>
+    parseDigitsWithComma(val) > calculatedMinDeposit.value - 1 ||
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) =>
+    parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다." //存款金额必须以 10000 为单位
+]);
+
+const parseDigitsWithComma = (value) => {
+  const depositAmount = value?.replace(/\$\s?|(,*)/g, "");
+  return depositAmount;
+};
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g, "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+watch(
+  () => depositAmountFormatted.value,
+  () => {
+    const depositAmount = depositAmountFormatted.value?.replace(/\$\s?|(,*)/g, "");
+    // debugger;
+    if (isNaN(depositAmount)) {
+      form.localAmount = "";
+    } else {
+      depositAmountFormatted.value = formatNumberComma(depositAmount);
+      form.localAmount = Number(depositAmount);
+    }
+  }
+);
+
+watch(
+  () => form.localAmount,
+  () => {
+    depositAmountFormatted.value = formatNumberComma(form.localAmount);
+  }
+);
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");

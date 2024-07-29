@@ -54,7 +54,7 @@
 import { defineComponent, reactive } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -200,7 +200,7 @@ $node-color: #468cff;
   display: grid;
   margin-bottom: 8px;
   width: 100%;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
   .payment-method-item {
     text-align: center;
@@ -454,7 +454,7 @@ $node-color: #468cff;
 
 @media (max-width: 355px) {
   .payment-method-wrapper {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>

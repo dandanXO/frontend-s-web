@@ -62,15 +62,15 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
-        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/announce.svg" />
-          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
-          {{ $t("lang.message") }}
-        </q-route-tab>
         <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/message.svg" />
           <img class="hover" src="../assets/images/footer/message-active.svg" />
           {{ $t("lang.question") }}
+        </q-route-tab>
+        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/announce.svg" />
+          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
+          {{ $t("lang.message") }}
         </q-route-tab>
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/home-icon.svg" />
@@ -300,11 +300,11 @@ export default defineComponent({
             prevPage.value = "account";
           }
         } else if (route.path === "/account/announcement") {
-          prevPage.value = "account";
+          prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("lang.page_systemannouncement");
         } else if (route.path === "/feedback") {
-          prevPage.value = "account";
+          prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/inbox") {
@@ -312,15 +312,15 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/outbox") {
-          prevPage.value = "account/letters";
+          prevPage.value = "feedback";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/write") {
-          prevPage.value = "account/letters";
+          prevPage.value = "feedback";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/feedback") {
-          prevPage.value = "account/letters";
+          prevPage.value = "feedback";
           hasPage.value = true;
           pageName.value = t("lang.page_questionnaire");
         } else if (route.path === "/account/withdraw") {
