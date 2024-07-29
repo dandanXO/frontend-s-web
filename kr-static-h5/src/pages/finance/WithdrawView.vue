@@ -131,6 +131,7 @@
           <q-input
             hide-bottom-space
             ref="withdrawPwdRef"
+            maxlength="4"
             v-model="withdrawInfo.withdrawPassword"
             :label="$t('lang.withdraw_password')"
             class="withdraw-field"
