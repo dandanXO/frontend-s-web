@@ -82,16 +82,16 @@
           <img class="hover" src="../assets/images/footer/notifi-active.svg" />
           {{ $t("lang.announcement") }}
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
-          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
-          {{ $t("lang.promo") }}
-        </q-route-tab>
-        <!--        <q-route-tab to="/account" name="account" class="sm-screen-txt">-->
-        <!--          <img class="inactive" src="../assets/images/footer/account-icon.svg" />-->
-        <!--          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />-->
-        <!--          {{ $t("lang.account") }}-->
+        <!--        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">-->
+        <!--          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />-->
+        <!--          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />-->
+        <!--          {{ $t("lang.promo") }}-->
         <!--        </q-route-tab>-->
+        <q-route-tab to="/account" name="account" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
+          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
+          {{ $t("lang.account") }}
+        </q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>

@@ -131,7 +131,7 @@
               clearable
               :rules="[
                 (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_old_withdraw_password'),
-                (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
+                (val) => (val && val.length >= 4 && val.length <= 4) || $t('lang.length_must_4')
               ]"
             >
               <template v-slot:append>
@@ -206,7 +206,7 @@
             clearable
             :rules="[
               (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_new_withdraw_password'),
-              (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
+              (val) => (val && val.length >= 4 && val.length <= 4) || $t('lang.length_must_4')
             ]"
           >
             <template v-slot:append>
@@ -236,7 +236,7 @@
               clearable
               :rules="[
                 (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_confirm_withdraw_password'),
-                (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
+                (val) => (val && val.length >= 4 && val.length <= 4) || $t('lang.length_between_6_11'),
                 (val) => val === formChgWithdrawPwd.password || $t('lang.chgpwd_confirm_withdraw_password_not_match')
               ]"
             >
