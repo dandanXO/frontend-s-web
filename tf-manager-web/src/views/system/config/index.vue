@@ -367,44 +367,51 @@
           <el-input class="disable-input" v-model="item.code" />
           -
           <el-input class="disable-input" v-model="item.value" />
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            style="margin-left: 20px"
-            @click="showEdit(item)"
-            plain
-          >
-            {{ t('fields.edit') }}
-          </el-button>
-          <el-button
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            style="margin-left: 20px"
-            @click="delConfig(item.id)"
-            plain
-          >
-            {{ t('fields.delete') }}
-          </el-button>
-          <el-button
-            circle
-            icon="el-icon-arrow-up"
-            size="mini"
-            type="primary"
-            style="margin-left: 20px"
-            plain
-            @click="moveUp(item, groupConfig)"
-          />
-          <el-button
-            circle
-            icon="el-icon-arrow-down"
-            size="mini"
-            type="primary"
-            style="margin-left: 20px"
-            plain
-            @click="moveDown(item, groupConfig)"
-          />
+          <span v-if="item.siteId === 0" class="default-label">
+            {{ t('fields.defaultConfigHint') }}
+          </span>
+          <span v-else>
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="success"
+              style="margin-left: 20px"
+              @click="showEdit(item)"
+              plain
+            >
+              {{ t('fields.edit') }}
+            </el-button>
+            <el-button
+              icon="el-icon-remove"
+              size="mini"
+              type="danger"
+              style="margin-left: 20px"
+              @click="delConfig(item.id)"
+              plain
+            >
+              {{ t('fields.delete') }}
+            </el-button>
+            <el-button
+              circle
+              icon="el-icon-arrow-up"
+              size="mini"
+              type="primary"
+              style="margin-left: 20px"
+              plain
+              @click="moveUp(item, groupConfig)"
+              :disabled="!canClickMoveUpButton(item, groupConfig)"
+            />
+            <el-button
+              circle
+              icon="el-icon-arrow-down"
+              size="mini"
+              type="primary"
+              style="margin-left: 20px"
+              plain
+              @click="moveDown(item, groupConfig)"
+              :disabled="!canClickMoveDownButton(item, groupConfig)"
+            />
+          </span>
         </el-form-item>
       </el-collapse-item>
     </el-collapse>
@@ -620,6 +627,26 @@ const s3Url = computed({
     (configs.value.find(item => item.code === 's3_url').value = newVla),
 })
 
+const canClickMoveUpButton = (item, groupConfig) => {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index === 0) {
+    return false;
+  }
+
+  if (groupConfig.items[index - 1].siteId === 0) {
+    return false;
+  }
+  return true;
+}
+
+const canClickMoveDownButton = (item, groupConfig) => {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index === groupConfig.items.length - 1) {
+    return false;
+  }
+  return true;
+}
+
 function getter(code, isArray = true) {
   let subArray = configs.value.filter(config => config.code === code)
   if (subArray.length === 0) {
@@ -758,10 +785,16 @@ async function loadConfigs() {
     }
   }
 
-  // sort configs.customGroup.items by order index
+  // sort configs.customGroup.items by siteId and order index
   for (let index = 0; index < configs.customGroup.length; index++) {
     configs.customGroup[index].items = configs.customGroup[index].items.sort(
-      (a, b) => a.orderIndex - b.orderIndex
+      (a, b) => {
+        if (a.siteId !== b.siteId) {
+          return a.siteId - b.siteId;
+        } else {
+          return a.orderIndex - b.orderIndex;
+        }
+      }
     )
     // set item.orderIndex = item index
     for (let i = 0; i < configs.customGroup[index].items.length; i++) {
@@ -821,12 +854,19 @@ async function updateConfigs() {
       }
     }
   }
-  await updateBatch(configs.value)
+  const configsWithoutDefaultData = configs.value.filter(item => item.siteId !== 0);
+  await updateBatch(configsWithoutDefaultData)
   const orderUpdate = []
   for (let index = 0; index < configs.customGroup.length; index++) {
     for (let i = 0; i < configs.customGroup[index].items.length; i++) {
+      const item = configs.customGroup[index].items[i];
+
+      if (item.siteId === 0) {
+        continue;
+      }
+
       orderUpdate.push({
-        id: configs.customGroup[index].items[i].id,
+        id: item.id,
         orderIndex: i,
       })
     }
@@ -943,5 +983,11 @@ onMounted(() => {
 
 .disable-input {
   pointer-events: none;
+}
+
+.default-label {
+  font-size: 12px;
+  color: red;
+  margin-left: 10px;
 }
 </style>
