@@ -135,8 +135,8 @@
               </div>
             </div>
             <div class="task-right">
-              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
-              <button v-else class="button" @click="handleDeposit">去充值 </button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish">已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
           <div class="task-content">
@@ -163,8 +163,10 @@
               </div>
             </div>
             <div class="task-right">
-              <div style="margin-top: -20px">剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}</div>
-              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
+              <div style="margin-top: -20px">
+                剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
+              </div>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish">已完成</button>
               <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
@@ -297,9 +299,9 @@ const countiuneSign = computed(() => {
     if (item.claimState === "CLAIMED") {
       times++;
     }
-  })
-  return times
-})
+  });
+  return times;
+});
 const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
@@ -333,7 +335,7 @@ const handleClickSectionOneItem = async (item) => {
 };
 
 const handleClickBox = async (box) => {
-  console.log(box)
+  console.log(box);
   if (box.claimState !== "OPEN") return;
 
   putCheckInFreeTreasureClaim(box.requiredActivePoint)
@@ -627,13 +629,13 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
 }
-:el-dialog(.el-dialog) {
+:deep(.el-dialog) {
   background: transparent !important;
 }
-:global(.el-dialog__header) {
+:deep(.el-dialog__header) {
   background: transparent !important;
 }
-:global(.el-dialog__body) {
+:deep(.el-dialog__body) {
   display: none;
 }
 </style>
