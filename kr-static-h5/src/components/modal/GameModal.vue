@@ -268,6 +268,14 @@ const closeDialog = () => {
   }
 };
 const open = (gameName, platformCode, gameCode = "", gameType) => {
+  if (store.unreadInboxMail > 0) {
+    $q.notify({
+      message: $t("lang.msg_hasUnreadMail"),
+      color: "negative"
+    });
+    return;
+  }
+
   transferInfo.value.platform = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");

@@ -1,8 +1,8 @@
 <template>
   <div class="table-record">
     <div class="action-buttons">
-      <q-toggle v-model="allowSelectMultiple" :label="$t('lang.mail_selectone')" left-label />
-      <q-btn v-if="hasMailSelected" class="common-md-btn" size="md" @click="deleteMails()">
+      <!-- <q-toggle v-model="allowSelectMultiple" :label="$t('lang.mail_selectone')" left-label /> -->
+      <q-btn class="common-md-btn" size="md" @click="deleteMails()">
         {{ $t("lang.mail_delete") }}
       </q-btn>
     </div>
@@ -110,6 +110,7 @@ const deleteMails = () => {
     .filter((key) => selectedMailIds.value[key] === true)
     .map(Number);
   const formattedIds = mailIdArr.join(",");
+  if (!formattedIds) return;
   // console.log(formattedIds);
 
   api
@@ -153,7 +154,7 @@ const toggleMail = (mail) => {
 
 const theReplyId = ref();
 const selectedMailIds = ref({});
-const allowSelectMultiple = ref(false);
+const allowSelectMultiple = ref(true);
 
 const repliesOfInquiries = computed(() => replies.value.filter(({ id }) => id === theReplyId.value));
 
