@@ -62,15 +62,17 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
-        <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt">
+        <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt with-badge">
           <img class="inactive" src="../assets/images/footer/message.svg" />
           <img class="hover" src="../assets/images/footer/message-active.svg" />
           {{ $t("lang.question") }}
+          <q-badge v-if="store.unrepliedQuestion" color="red" class="badge">{{ store.unrepliedQuestion }}</q-badge>
         </q-route-tab>
-        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
+        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt with-badge">
           <img class="inactive" src="../assets/images/footer/announce.svg" />
           <img class="hover" src="../assets/images/footer/annouce-active.svg" />
           {{ $t("lang.message") }}
+          <q-badge v-if="store.unreadInboxMail" color="red" class="badge">{{ store.unreadInboxMail }}</q-badge>
         </q-route-tab>
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/home-icon.svg" />
@@ -566,5 +568,13 @@ svg path {
   position: absolute;
   top: 8px;
   right: 12px;
+}
+
+.with-badge {
+  position: relative;
+  .badge {
+    position: absolute;
+    top: -3px;
+  }
 }
 </style>

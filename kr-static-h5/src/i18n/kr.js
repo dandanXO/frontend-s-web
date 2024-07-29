@@ -91,6 +91,7 @@ export default {
     msg_readmsg: "메시지 읽기",
     msg_deleteselected: "선택한 메시지 삭제",
     msg_deleteallmsg: "모든 메시지 삭제",
+    msg_hasUnreadMail: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다",
 
     // login page
     login_title: "준비되셨나요?",
@@ -932,16 +933,16 @@ export default {
     deposit_reminder: "알림",
     deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
-    본인명의 이외 타명의 입금은 처리가 불가합니다
-    계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
+      본인명의 이외 타명의 입금은 처리가 불가합니다
+      계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+      최소 금액 꼭 확인하시고, 만원 단위로만 입금 가능합니다.
 
-    ※주의사항
-    충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
-    금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
+      ※주의사항
+      충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+      금액을 잘못 기재하셨다면 문의 주시면 취소 처리 도와드리겠습니다.
 
-    ※가상계좌 점검시간 안내
-    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+      ※가상계좌 점검시간 안내
+      23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
 
     // WithdrawBankView
     choose_a_card: "계좌 선택",
@@ -1207,8 +1208,8 @@ export default {
     menu_deposit: "입금",
     menu_withdraw: "출금",
     menu_moneychange: "거래 내역",
-    menu_promo: "베팅 기록",
-    menu_transaction: "알림 기록",
+    menu_promo: "알림 기록",
+    menu_transaction: "베팅 기록",
     menu_reminder: "알림 기록",
     no_more_data_le: "정보를 찾을 수 없습니다",
     float_rebate: "공지사항",
