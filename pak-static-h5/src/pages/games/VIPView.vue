@@ -453,73 +453,73 @@ const rows = [
   },
   {
     name: "VIP 1",
-    ugprade: "1,000",
+    ugprade: "2,000",
     reward: "3",
     flow: "38"
   },
   {
     name: "VIP 2",
-    ugprade: "3,000",
+    ugprade: "5,000",
     reward: "3",
     flow: "88"
   },
   {
     name: "VIP 3",
-    ugprade: "5,000",
+    ugprade: "10,000",
     reward: "3",
     flow: "188"
   },
   {
     name: "VIP 4",
-    ugprade: "10,000",
+    ugprade: "50,000",
     reward: "4",
     flow: "388"
   },
   {
     name: "VIP 5",
-    ugprade: "30,000",
+    ugprade: "100,000",
     reward: "5",
     flow: "588"
   },
   {
     name: "VIP 6",
-    ugprade: "50,000",
+    ugprade: "200,000",
     reward: "6",
     flow: "888"
   },
   {
     name: "VIP 7",
-    ugprade: "100,000",
+    ugprade: "500,000",
     reward: "7",
     flow: "1,888"
   },
   {
     name: "VIP 8",
-    ugprade: "300,000",
+    ugprade: "1,000,000",
     reward: "8",
     flow: "3,888"
   },
   {
     name: "VIP 9",
-    ugprade: "500,000",
+    ugprade: "2,000,000",
     reward: "9",
     flow: "8,888"
   },
   {
     name: "VIP 10",
-    ugprade: "1,000,000",
+    ugprade: "5,000,000",
     reward: "10",
     flow: "28,888"
   },
   {
     name: "VIP 11",
-    ugprade: "3,000,000",
+    ugprade: "10,000,000",
     reward: "11",
     flow: "58,888"
   },
   {
     name: "VIP 12",
-    ugprade: "5,000,000",
+    ugprade: "20,000,000",
     reward: "12",
     flow: "88,888"
   }
@@ -565,7 +565,7 @@ onActivated(() => {
     // show vip slide correspond to current vip level
     else {
       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = vipLevelNum - 1;
+      vipCarouselIndex.value = vipLevelNum;
     }
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
@@ -614,95 +614,6 @@ watch(
   }
 );
 
-const columns2 = [
-  {
-    name: "vip",
-    required: true,
-    label: "",
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
-];
-const rows2 = [
-  {
-    name: "VIP 0",
-    ugprade: "2,500",
-    flow: "x10"
-  },
-  {
-    name: "VIP 1",
-    ugprade: "5,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 2",
-    ugprade: "10,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 3",
-    ugprade: "20,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 4",
-    ugprade: "50,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 5",
-    ugprade: "100,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 6",
-    ugprade: "200,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 7",
-    ugprade: "500,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 8",
-    ugprade: "1,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 9",
-    ugprade: "2,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 10",
-    ugprade: "5,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 11",
-    ugprade: "10,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 12",
-    ugprade: "20,000,000",
-    flow: "x10"
-  }
-];
-
-const columns3 = [
-  {
-    name: "vip",
-    required: true,
-    label: "",
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
-  { name: "flow", field: "flow", align: "center" }
-];
 //row3 : Level Up Bonus.
 const rows3 = [
   {
