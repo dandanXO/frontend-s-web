@@ -1,17 +1,18 @@
 <template>
   <div class="container">
     <div class="seciont1">
-      <div class="basic-info">
-        <div>
-          VIP 等级
-          <span style="color: rgba(238, 202, 24, 1)">{{ vipLevel }}</span>
-        </div>
-        <div>
-          连续签到天数
-          <span style="color: rgba(24, 207, 238, 1)">{{ countiuneSign }}</span>
-        </div>
-      </div>
       <div class="first" v-show="todayCheckInState !== 'NOT_ELIGIBLE'">
+        <div class="basic-info">
+          <div>
+            VIP 等级
+            <span style="color: rgba(238, 202, 24, 1)">{{ vipLevel }}</span>
+          </div>
+          <div>
+            连续签到天数
+            <span style="color: rgba(24, 207, 238, 1)">{{ countiuneSign }}</span>
+          </div>
+        </div>
+
         <div
           v-for="(item, index) in sectionOneItems"
           :key="item.day"
@@ -111,7 +112,7 @@
               </div>
               <div>
                 <div style="font-size: 14px">今日签到任务</div>
-                <div style="font-size: 12px">
+                <div class="flex-item">
                   <img
                     v-if="todayCheckInState === 'YES'"
                     style="display: inline; vertical-align: middle; width: 12px; height: 12px"
@@ -123,8 +124,8 @@
               </div>
             </div>
             <div class="task-right">
-              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
-              <button v-else class="button" @click="handleDeposit">去充值 </button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish">已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
           <div class="task-content">
@@ -134,7 +135,7 @@
               </div>
               <div>
                 <div style="font-size: 14px">获得补签卡</div>
-                <div style="font-size: 12px">
+                <div class="flex-item">
                   <!-- reCheckInState  TODO 圖片判斷需要另外寫-->
                   <img
                     v-if="todayCheckInState === 'YES'"
@@ -150,8 +151,8 @@
               <div style="margin-top: -20px">
                 剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
               </div>
-              <button v-if="todayCheckInState === 'YES'" class="button-finish" >已完成</button>
-              <button v-else class="button" @click="handleDeposit">去充值 </button>
+              <button v-if="todayCheckInState === 'YES'" class="button-finish">已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
         </div>
@@ -290,7 +291,8 @@ const countPercent = computed(() => {
 
 const handleClickSectionOneItem = async (item) => {
   if (item.claimState === "OPEN" || item.claimState === "RECHECKIN") {
-    eventapi.put(`/checkInFreeTreasure/checkIn?checkInDay=${item.day}`)
+    eventapi
+      .put(`/checkInFreeTreasure/checkIn?checkInDay=${item.day}`)
       .then(async (res) => {
         if (res.code === 200) {
           showSuccessDialog.value = true;
@@ -308,7 +310,8 @@ const handleClickSectionOneItem = async (item) => {
 const handleClickBox = async (box) => {
   if (box.claimState !== "OPEN") return;
 
-  eventapi.put(`/checkInFreeTreasure/claimTreasure?point=${box.requiredActivePoint}`)
+  eventapi
+    .put(`/checkInFreeTreasure/claimTreasure?point=${box.requiredActivePoint}`)
     .then(async (res) => {
       console.log(res);
       if (res.code === 200) {
@@ -359,25 +362,26 @@ onMounted(async () => {
   position: relative;
   .basic-info {
     position: absolute;
-    top: 3.3rem;
+    top: 1.6rem;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 0 2.5rem;
     color: #fff;
-    font-size: 10px;
+    font-size: 14px;
   }
   .first {
+    position: relative;
     padding: 18px;
     padding-top: 50px;
     background-image: url("./images/bg-1.png");
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 100% 100%;
     background-position: center;
     width: 100%;
     height: 100%;
-    min-height: 320px;
+    min-height: 250px;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(4, 1fr); /* 四個等寬的列 */
@@ -398,11 +402,21 @@ onMounted(async () => {
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+
+      @media (max-width: 375px) {
+        width: 64px;
+        height: 76px;
+      }
     }
     .grid-item:nth-last-child(1) {
       grid-column: span 2;
       width: 154px;
       height: 86px;
+
+      @media (max-width: 375px) {
+        width: 135px;
+        height: 76px;
+      }
     }
     .item0 {
       background-image: url("./images/card-1-other.png");
@@ -472,26 +486,34 @@ onMounted(async () => {
   }
   .secend {
     background-image: url("./images/bg-2.png");
-    background-size: contain;
+    background-size: 100% 100%;
     background-position: center;
-    min-height: 217px;
+    min-height: 200px;
     height: 100%;
     background-repeat: no-repeat;
     width: 100%;
     display: flex;
-    margin-top: 2px;
+    margin-top: 16px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     .box-area {
-      padding-top: 60px;
-      display: flex;
+      padding-top: 8.5%;
+      display: grid;
       flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
+      align-items: center;
+      justify-content: center;
+      width: 85%;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+
+      @media (max-width: 400px) {
+        gap: 15px;
+      }
+
       .box {
-        width: 50px;
-        height: 50px;
+        width: 100%;
+        height: auto;
       }
     }
     .progressBar-area {
@@ -517,13 +539,21 @@ onMounted(async () => {
       }
     }
     .number-area {
-      margin-top: 4px;
-      display: flex;
+      margin: 4px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
-      font-size: 12px;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 85%;
+      gap: 25px;
+      font-size: 14px;
       color: #fff;
+    }
+
+    @media (min-width: 500px) {
+      min-height: 220px;
     }
   }
 }
@@ -554,7 +584,8 @@ onMounted(async () => {
         background-position: center;
         background-size: 100% 100%;
         width: 100%;
-        height: 74px;
+        min-height: 74px;
+        aspect-ratio: 640/140;
         padding: 0 16px;
         display: flex;
         flex-direction: row;
@@ -566,6 +597,14 @@ onMounted(async () => {
           flex-direction: row;
           justify-content: space-around;
           align-items: center;
+        }
+        .flex-item {
+          font-size: 12px;
+
+          @media (max-width: 400px) {
+            display: flex;
+            gap: 4px;
+          }
         }
         .task-right {
           height: 100%;
