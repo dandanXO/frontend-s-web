@@ -262,6 +262,7 @@ export default {
     vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
     upgrade: "Upgrade",
     experience: "Experience",
+    dailyWithdrawalTimes: "Daily Withdrawal Times",
     rewards: "Rewards",
     vipTable_txt:
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
