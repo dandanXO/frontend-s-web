@@ -2,10 +2,10 @@
   <div class="login-container">
     <q-form @submit="onSubmit">
       <div class="login-form-container">
-        <q-input ref="realNameRef" standout clearable v-model="regForm.loginName" placeholder="6-12个字符，包含大小写字母"
+        <q-input ref="realNameRef" standout clearable v-model="regForm.loginName" placeholder="6-11个字符，包含大小写字母"
                  lazy-rules :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
+            (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
             validLoginName
           ]" color="white">
           <template v-slot:prepend>
@@ -422,7 +422,7 @@ export default defineComponent({
     };
 
     const validLoginName = () => {
-      const namePattern = /^[a-zA-Z0-9_#+-]+$/;
+      const namePattern = /^[a-zA-Z0-9]+$/;
       return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
     };
 
