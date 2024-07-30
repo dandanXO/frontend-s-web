@@ -704,6 +704,7 @@ function showDialog(type) {
   form.type = "NOTIFICATION"
   form.siteId = null
   selected.site = request.siteId
+  selected.vips = []
   form.expiryTime = null
   form.popUp = false
   form.redirectType = "NONE"
