@@ -251,6 +251,28 @@ export default {
     withdrawal: "واپسی",
     recharge: "ریچارج"
   },
+  interestProfit: {
+    depositOverview: "جمع کروانے کا جائزہ",
+    unexpiredEarnings: "غیر ختم شدہ کمائی",
+    cumulativeIncome: "مجموعی آمدنی",
+    storageTime: "ذخیرہ وقت (دن)",
+    deposit: "جمع",
+    trialCalculation: "آزمائشی حساب",
+    annualInterestRate: "سالانہ شرح سود",
+    distributeInterest: "سود تقسیم کریں",
+    pending: "زیر التواء",
+    ended: "ختم ہو گیا",
+    details: "تفصیلات",
+    collect: "جمع کریں",
+    noData: "کوئی ڈیٹا نہیں",
+    annualInterestRate: "سالانہ شرح سود",
+    depositAmount: "جمع رقم",
+    depositDuration: "جمع کرنے کی مدت",
+    placeTime: "وقت مقرر کریں",
+    matureTime: "پختہ وقت",
+    status: "حالت",
+    confirm: "تصدیق کریں"
+  },
   vip: {
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
     received: "وصول کیا",

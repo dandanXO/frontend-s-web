@@ -227,7 +227,7 @@ export default {
     vip: "VIP",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit",
+    interestProfit: "Interest Profit"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -250,6 +250,28 @@ export default {
   order: {
     withdrawal: "Withdrawal",
     recharge: "Recharge"
+  },
+  interestProfit: {
+    depositOverview: "Deposit overview",
+    unexpiredEarnings: "Unexpired earnings",
+    cumulativeIncome: "Cumulative income",
+    storageTime: "Storage time (Days)",
+    deposit: "Deposit",
+    trialCalculation: "Trial calculation",
+    annualInterestRate: "Annual interest rate",
+    distributeInterest: "Distribute interest",
+    pending: "Pending",
+    ended: "Ended",
+    details: "Details",
+    collect: "Collect",
+    noData: "No data",
+    annualInterestRate: "Annual Interest Rate",
+    depositAmount: "Deposit Amount",
+    depositDuration: "Deposit Duration",
+    placeTime: "Place Time",
+    matureTime: "Mature Time",
+    status: "Status",
+    confirm: "Confirm"
   },
   vip: {
     receiveMonthlyRewards: "Receive monthly rewards",
@@ -295,7 +317,8 @@ export default {
       player: "Player",
       money: "Money",
       eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
-      betting_tips: "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
+      betting_tips:
+        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       shareTitle: "B9GAME Share and Earn",
       shareText:

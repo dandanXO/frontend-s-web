@@ -4,7 +4,7 @@
       <div class="do-container">
         <div class="do-header">
           <div class="do-title">
-            Deposit overview
+            {{ $t("interestProfit.depositOverview") }}
             <div @click="toggleAmountVisibility">
               <q-icon :name="isAmountVisible ? 'visibility' : 'visibility_off'" size="20px" />
             </div>
@@ -20,13 +20,13 @@
 
         <div class="do-content">
           <div class="content-item">
-            <div class="item-title">Unexpired earnings</div>
+            <div class="item-title">{{ $t("interestProfit.unexpiredEarnings") }}</div>
             <div class="item-amount">
               ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
             </div>
           </div>
           <div class="content-item">
-            <div class="item-title">Cumulative income</div>
+            <div class="item-title">{{ $t("interestProfit.cumulativeIncome") }}</div>
             <div class="item-amount">
               ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
             </div>
@@ -53,11 +53,11 @@
               </template>
             </InputField> -->
 
-            <div class="select-label">Storage time (Days)</div>
+            <div class="select-label">{{ $t("interestProfit.storageTime") }}</div>
             <q-select class="do-select" outlined v-model="interestProfitField.storageTime" :options="dayList" />
             <!-- :options="storageTimeOptions" -->
 
-            <InputField :label="'Deposits'">
+            <InputField :label="$t('interestProfit.deposit')">
               <template #input>
                 <q-input
                   type="number"
@@ -81,22 +81,24 @@
         <div class="do-actions">
           <div class="">
             <q-btn no-caps unelevated class="do-btn-grey" @click="submitTrialCalculation" :loading="isLoading">
-              Trial calculation
+              {{ $t("interestProfit.trialCalculation") }}
             </q-btn>
           </div>
           <div class="">
-            <q-btn no-caps unelevated class="do-btn-green" @click="submitDeposit" :loading="isLoading">Deposit</q-btn>
+            <q-btn no-caps unelevated class="do-btn-green" @click="submitDeposit" :loading="isLoading">
+              {{ $t("interestProfit.deposit") }}
+            </q-btn>
           </div>
         </div>
       </div>
 
       <div class="do-results-container">
         <div class="do-result-item">
-          <div class="item-title">Annual interest rate</div>
+          <div class="item-title">{{ $t("interestProfit.annualInterestRate") }}</div>
           <div class="item-rates">{{ estimatePlan.odds }}%</div>
         </div>
         <div class="do-result-item">
-          <div class="item-title">Distribute interest</div>
+          <div class="item-title">{{ $t("interestProfit.distributeInterest") }}</div>
           <div class="item-rates">{{ convertToTwoDecimalAmount(estimatePlan.profitAmount) }}</div>
         </div>
       </div>
@@ -117,8 +119,8 @@
         indicator-color="green"
         @update:model-value="onRecordTabChange"
       >
-        <q-tab name="pending" label="Pending"></q-tab>
-        <q-tab name="expired" label="Ended"></q-tab>
+        <q-tab name="pending" :label="$t('interestProfit.pending')"></q-tab>
+        <q-tab name="expired" :label="$t('interestProfit.ended')"></q-tab>
       </q-tabs>
 
       <div class="do-record-container q-mt-md">
@@ -155,7 +157,9 @@
                 </div>
 
                 <div class="order-btns">
-                  <q-btn no-caps unelevated class="do-btn-grey shorter" @click="viewDetails(e)">Details</q-btn>
+                  <q-btn no-caps unelevated class="do-btn-grey shorter" @click="viewDetails(e)">
+                    {{ $t("interestProfit.details") }}
+                  </q-btn>
                   <q-btn
                     no-caps
                     unelevated
@@ -164,14 +168,14 @@
                     :loading="isLoading"
                     v-if="e.status === 'PENDING' && recordTabs === 'expired'"
                   >
-                    Collect
+                    {{ $t("interestProfit.collect") }}
                   </q-btn>
                 </div>
               </div>
             </div>
           </template>
           <template v-else>
-            <div class="q-pa-lg text-center">No data</div>
+            <div class="q-pa-lg text-center">{{ $t("interestProfit.noData") }}</div>
           </template>
         </template>
       </div>
@@ -191,27 +195,27 @@
           <div class="box-value">{{ recordDetails.id }}</div>
         </div>
         <div class="details-box">
-          <div class="box-title">Annual Interest Rate</div>
+          <div class="box-title">{{ $t("interestProfit.annualInterestRate") }}</div>
           <div class="box-value">{{ recordDetails.odds }}%</div>
         </div>
         <div class="details-box">
-          <div class="box-title">Deposit Amount</div>
+          <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
           <div class="box-value">{{ recordDetails.amount }}</div>
         </div>
         <div class="details-box">
-          <div class="box-title">Deposit Duration</div>
+          <div class="box-title">{{ $t("interestProfit.depositDuration") }}</div>
           <div class="box-value">{{ recordDetails.days }} day(s)</div>
         </div>
         <div class="details-box">
-          <div class="box-title">Place Time</div>
+          <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
           <div class="box-value">{{ humanDatetime(recordDetails.placeTime) }}</div>
         </div>
         <div class="details-box">
-          <div class="box-title">Mature Time</div>
+          <div class="box-title">{{ $t("interestProfit.matureTime") }}</div>
           <div class="box-value">{{ humanDatetime(recordDetails.matureTime) }}</div>
         </div>
         <div class="details-box">
-          <div class="box-title">Status</div>
+          <div class="box-title">{{ $t("interestProfit.status") }}</div>
           <!-- <div class="box-value">{{ recordDetails.status }}</div> -->
           <div class="box-value">
             <q-btn
@@ -224,7 +228,7 @@
             ></q-btn>
           </div>
         </div>
-        <q-btn no-caps unelevated class="do-btn-green q-mt-md" v-close-popup>Confirm</q-btn>
+        <q-btn no-caps unelevated class="do-btn-green q-mt-md" v-close-popup>{{ $t("interestProfit.confirm") }}</q-btn>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -432,7 +436,6 @@ const collectDeposit = (planOrderId) => {
         });
         searchDepositRecord();
         isLoading.value = false;
-
       }
     })
     .catch((err) => {
