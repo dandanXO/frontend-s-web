@@ -76,7 +76,7 @@ export default {
     menu_hashgame: "미니 게임",
     menu_others: "기타",
     menu_cockfighting: "닭싸움",
-    menu_minigame: "미니게임",
+    menu_minigame: "미니 게임",
     menu_rebate: "환급",
 
     // notify msg
@@ -1318,7 +1318,7 @@ export default {
     upload_fail_please_try: "업로드 실패. 다시 시도해 주세요.",
     upload_image: "이미지 업로드",
     esport: "e스포츠",
-    hashgame: "해시 게임",
+    hashgame: "미니 게임",
     livecasino: "라이브",
     sport: "스포츠",
     slot: "슬롯",
@@ -1540,6 +1540,7 @@ export default {
     10006: "이 이름은 사용할 수 없습니다.",
     10007: "게임 참여 과정에서 오류가 발생했습니다.",
     10008: "오류가 발생했습니다.",
+    11000: '제휴사가 존재하지 않음',
     11003: "입금 실패.",
     12100: "출금 비밀번호가 일치하지 않습니다.",
     12101: "새 출금 비밀번호는 기존 출금 비밀번호와 같을 수 없습니다.",
