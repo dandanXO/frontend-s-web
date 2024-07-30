@@ -545,6 +545,7 @@ export default {
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     12104: "This feature is disabled, please contact customer service",
+    12105: "Your withdrawal operation has a network delay, resulting in payment failure. Please wait 30 minutes before withdrawing again, thank you!",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",
