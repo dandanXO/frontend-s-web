@@ -12,21 +12,29 @@
         </div>
 
         <div class="do-amount">
-          <div class="amount-txt">₹{{ isAmountVisible ? "2041.86" : "*****" }}</div>
+          <div class="amount-txt">
+            ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
+          </div>
           <img src="../assets/images/interest-profit/chevron-right.png" />
         </div>
 
         <div class="do-content">
           <div class="content-item">
             <div class="item-title">Unexpired earnings</div>
-            <div class="item-amount">₹{{ isAmountVisible ? "0.00" : "*****" }}</div>
+            <div class="item-amount">
+              ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
+            </div>
           </div>
           <div class="content-item">
             <div class="item-title">Cumulative income</div>
-            <div class="item-amount">₹{{ isAmountVisible ? "0.00" : "*****" }}</div>
+            <div class="item-amount">
+              ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- <pre> depositOverview~~{{ depositOverview }}</pre> -->
 
       <div class="do-input-container">
         <InputRowGrid>
@@ -45,13 +53,9 @@
               </template>
             </InputField> -->
 
-            <div class="select-label">Storage time</div>
-            <q-select
-              class="do-select"
-              outlined
-              v-model="interestProfitField.storageTime"
-              :options="storageTimeOptions"
-            />
+            <div class="select-label">Storage time (Days)</div>
+            <q-select class="do-select" outlined v-model="interestProfitField.storageTime" :options="dayList" />
+            <!-- :options="storageTimeOptions" -->
 
             <InputField :label="'Deposits'">
               <template #input>
@@ -63,6 +67,7 @@
                   v-model="interestProfitField.deposits"
                   lazy-rules
                   label-color="secondary"
+                  @keydown.enter="submitDeposit"
                 >
                   <template v-slot:prepend>
                     <div>₹</div>
@@ -75,10 +80,12 @@
 
         <div class="do-actions">
           <div class="">
-            <q-btn no-caps unelevated class="do-btn-grey">Trial calculation</q-btn>
+            <q-btn no-caps unelevated class="do-btn-grey" @click="submitTrialCalculation" :loading="isLoading">
+              Trial calculation
+            </q-btn>
           </div>
           <div class="">
-            <q-btn no-caps unelevated class="do-btn-green">Deposit</q-btn>
+            <q-btn no-caps unelevated class="do-btn-green" @click="submitDeposit" :loading="isLoading">Deposit</q-btn>
           </div>
         </div>
       </div>
@@ -86,55 +93,140 @@
       <div class="do-results-container">
         <div class="do-result-item">
           <div class="item-title">Annual interest rate</div>
-          <div class="item-rates">0%</div>
+          <div class="item-rates">{{ estimatePlan.odds }}%</div>
         </div>
         <div class="do-result-item">
           <div class="item-title">Distribute interest</div>
-          <div class="item-rates">0.00</div>
+          <div class="item-rates">{{ convertToTwoDecimalAmount(estimatePlan.profitAmount) }}</div>
         </div>
       </div>
 
-      <div class="do-record-container q-mt-md">
-        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
-          <!-- <div class="order-row order-row--title">
-            <div class="order-col">No. {{ e.serialNumber }}</div>
-          </div> -->
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">No. {{ e.serialNumber }}</div>
-              <div class="order-col">
-                <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
-                  {{ getDepositStatus(e.status) }}
-                </span> -->
-
-                <q-btn
-                  :class="{
-                    'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
-                    'btn--red': ['CLOSED'].includes(e.status),
-                    'btn--orange': e.status === 'PENDING'
-                  }"
-                  :label="`${getDepositStatus(e.status)}`"
-                ></q-btn>
-              </div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
-              </div>
-              <div class="order-col">
-                <span class="txt-green">+{{ convertToCommaAmount(e.depositAmount, true) }}</span>
-              </div>
-            </div>
-
-            <div class="order-btns">
-              <q-btn no-caps unelevated class="do-btn-grey shorter">Details</q-btn>
-              <q-btn no-caps unelevated class="do-btn-green shorter">Collect</q-btn>
-            </div>
-          </div>
+      <!-- <div class="do-record-selection-wrapper">
+        <div class="selection-item">
+          <div class="item-title active">Pending</div>
+          <div class="item-title">Ended</div>
         </div>
+      </div> -->
+
+      <q-tabs
+        v-model="recordTabs"
+        class="do-record-tabs q-mt-lg"
+        color="black"
+        no-caps
+        narrow-indicator
+        indicator-color="green"
+        @update:model-value="onRecordTabChange"
+      >
+        <q-tab name="pending" label="Pending"></q-tab>
+        <q-tab name="expired" label="Ended"></q-tab>
+      </q-tabs>
+
+      <div class="do-record-container q-mt-md">
+        <template v-if="isRecordLoading">
+          <div class="q-pa-lg text-center"><q-spinner color="primary" size="3em" :thickness="10" /></div>
+        </template>
+
+        <template v-else>
+          <template v-if="depositData.length > 0">
+            <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
+              <div class="order-row order-row--content">
+                <div class="order-subrow">
+                  <div class="order-col">
+                    <span class="txt-green">₹{{ e.amount }}</span>
+                  </div>
+                  <div class="order-col">
+                    <q-btn
+                      :class="{
+                        'btn--green': ['SUCCESS'].includes(e.status),
+                        'btn--red': ['CLOSED'].includes(e.status),
+                        'btn--orange': e.status === 'PENDING'
+                      }"
+                      :label="`${getDepositStatus(e.status)}`"
+                    ></q-btn>
+                  </div>
+                </div>
+                <div class="order-subrow">
+                  <div class="order-col">
+                    <span class="txt-gray">{{ convertToGMT55(e.placeTime) }}</span>
+                  </div>
+                  <div class="order-col">
+                    <span class="txt-green">+{{ convertToTwoDecimalAmount(e.estimateRate) }}</span>
+                  </div>
+                </div>
+
+                <div class="order-btns">
+                  <q-btn no-caps unelevated class="do-btn-grey shorter" @click="viewDetails(e)">Details</q-btn>
+                  <q-btn
+                    no-caps
+                    unelevated
+                    class="do-btn-green shorter"
+                    @click="collectDeposit(e.id)"
+                    v-if="e.status === 'PENDING' && recordTabs === 'expired'"
+                  >
+                    Collect
+                  </q-btn>
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="q-pa-lg text-center">No data</div>
+          </template>
+        </template>
       </div>
     </div>
   </div>
+
+  <q-dialog v-model="isRecordDetails" full-width>
+    <q-card class="q-pa-md record-details-card">
+      <q-card-section class="row items-center">
+        <q-space />
+        <div><q-btn icon="close" round dense v-close-popup /></div>
+      </q-card-section>
+
+      <q-card-section class="q-mt-md">
+        <div class="details-box">
+          <div class="box-title">No.</div>
+          <div class="box-value">{{ recordDetails.id }}</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">Annual Interest Rate</div>
+          <div class="box-value">{{ recordDetails.odds }}%</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">Deposit Amount</div>
+          <div class="box-value">{{ recordDetails.amount }}</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">Deposit Duration</div>
+          <div class="box-value">{{ recordDetails.days }} day(s)</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">Place Time</div>
+          <div class="box-value">{{ humanDatetime(recordDetails.placeTime) }}</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">Mature Time</div>
+          <div class="box-value">{{ humanDatetime(recordDetails.matureTime) }}</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">Status</div>
+          <!-- <div class="box-value">{{ recordDetails.status }}</div> -->
+          <div class="box-value">
+            <q-btn
+              :class="{
+                'btn--green': ['SUCCESS'].includes(recordDetails.status),
+                'btn--red': ['CLOSED'].includes(recordDetails.status),
+                'btn--orange': recordDetails.status === 'PENDING'
+              }"
+              :label="`${getDepositStatus(recordDetails.status)}`"
+            ></q-btn>
+          </div>
+        </div>
+        <q-btn no-caps unelevated class="do-btn-green q-mt-md" v-close-popup>Confirm</q-btn>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -142,19 +234,28 @@ import { ref, reactive, onMounted } from "vue";
 // import RecordComponent from "../../components/RecordComponent.vue";
 // import RecordComponent from "../components/RecordComponent.vue";
 import { updateDate, convertToGMT8, convertToGMT55, convertToCommaAmount } from "src/boot/utils";
+import { eventapi } from "src/boot/axios";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { t } from "src/boot/lang";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import { useQuasar } from "quasar";
 
 const interestProfitField = reactive({ storageTime: "", deposits: "" });
-
+const $q = useQuasar();
+const qs = require("qs");
 const isLoading = ref(false);
+const isRecordLoading = ref(false);
 const depositData = ref([]);
 const isAmountVisible = ref(true);
-const storageTimeOptions = ref(["1 months", "3 months", "6 months", "1 year"]);
+const storageTimeOptions = ref([
+  { label: "1 month", val: 30 },
+  { label: "3 months", val: 90 },
+  { label: "6 months", val: 180 },
+  { label: "1 year", val: 365 }
+]);
 
 const toggleAmountVisibility = () => {
   isAmountVisible.value = !isAmountVisible.value;
@@ -167,16 +268,17 @@ const setTime = () => {
 };
 
 const searchDepositRecord = () => {
-  isLoading.value = true;
+  isRecordLoading.value = true;
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
   const gmtStartDate = convertToGMT8(startDate);
   const gmtEndDate = convertToGMT8(endDate);
-  api
-    .get("/session/member/deposit", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
-    })
+  eventapi
+    // .get("/interestPlan/getPlanOrderList/expired", {
+    //   params: { current: 1, size: 10 }
+    // })
+    .get(`/interestPlan/getPlanOrderList/${recordTabs.value}`)
     .then((response) => {
       if (response.code === 0) {
         const data = response.data.records;
@@ -188,7 +290,7 @@ const searchDepositRecord = () => {
     })
     .catch((error) => {})
     .then(() => {
-      isLoading.value = false;
+      isRecordLoading.value = false;
     });
 };
 
@@ -207,9 +309,158 @@ const getDepositStatus = (depositStatus) => {
   }
 };
 
+const estimatePlan = reactive({
+  odds: 0,
+  profitAmount: 0
+});
+
+const submitTrialCalculation = () => {
+  isLoading.value = true;
+  const putData = {
+    days: interestProfitField.storageTime,
+    placeAmount: interestProfitField.deposits
+  };
+
+  eventapi
+    .put(`/interestPlan/calcEstimatePlan?days=${putData.days}&placeAmount=${putData.placeAmount}`)
+    // .put(`/interestPlan/calcEstimatePlan`, {
+    //   params: { days: putData.days, placeAmount: putData.placeAmount }
+    // })
+    .then((res) => {
+      if (res.code === 0) {
+        estimatePlan.odds = res.data.odds;
+        estimatePlan.profitAmount = res.data.profitAmount;
+
+        isLoading.value = false;
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const submitDeposit = () => {
+  isLoading.value = true;
+
+  const putData = {
+    days: interestProfitField.storageTime,
+    placeAmount: interestProfitField.deposits
+  };
+
+  eventapi
+    .put(`/interestPlan/submitPlanOrder?days=${putData.days}&placeAmount=${putData.placeAmount}`)
+    // .put(`/interestPlan/submitPlanOrder`, {
+    //   params: { days: putData.days, placeAmount: putData.placeAmount }
+    // })
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: `${putData.placeAmount} deposited successfully`,
+          icon: "check_circle_outline"
+        });
+        isLoading.value = false;
+        searchDepositRecord();
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const depositOverview = reactive({
+  totalDeposit: 0,
+  unexpiredEarning: 0,
+  profitAmount: 0
+});
+
+const getDepositOverview = () => {
+  isLoading.value = true;
+  eventapi
+    .get(`interestPlan/init`)
+    .then((res) => {
+      depositOverview.totalDeposit = res.data.totalDeposit;
+      depositOverview.unexpiredEarning = res.data.unexpiredEarning;
+      depositOverview.profitAmount = res.data.profitAmount;
+      isLoading.value = false;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+const dayList = ref([]);
+const getDayList = () => {
+  eventapi
+    .get(`interestPlan/form`)
+    .then((res) => {
+      dayList.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+const collectDeposit = (planOrderId) => {
+  isLoading.value = true;
+  eventapi
+    .put(`/interestPlan/claimProfit/${planOrderId}`)
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: `Collect successfully`,
+          icon: "check_circle_outline"
+        });
+        isLoading.value = false;
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const isRecordDetails = ref(false);
+const recordDetails = ref();
+const viewDetails = (record) => {
+  recordDetails.value = record;
+  isRecordDetails.value = true;
+};
+
+const humanDatetime = (ts) => {
+  return moment(ts).format("YYYY-MM-DD - HH:mm:ss");
+};
+
+const recordTabs = ref("pending");
+
+const onRecordTabChange = () => {
+  searchDepositRecord();
+};
+
 onMounted(() => {
   setTime();
   searchDepositRecord();
+  getDepositOverview();
+  getDayList();
 });
 </script>
 
@@ -361,6 +612,64 @@ onMounted(() => {
   border-radius: 12px;
   background-color: #1f1f1f;
   margin-top: 24px;
+}
+
+.do-record-tabs {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.do-record-container {
+  min-height: 100px;
+}
+
+.record-details-card {
+  background: #131313;
+
+  .details-box {
+    padding: 12px;
+    background: #0b0e0d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #072a19;
+    margin-bottom: 16px;
+
+    .box-title {
+      color: #ffffff;
+    }
+    .box-value {
+      color: #00b900;
+      font-weight: bold;
+    }
+  }
+}
+
+.selection-item {
+  display: flex;
+  margin-top: 16px;
+
+  .item-title {
+    width: 50%;
+    text-align: center;
+    padding: 12px 16px;
+    position: relative;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+
+    &.active {
+      color: #70bc62;
+      &:before {
+        content: "";
+        background-color: #70bc62;
+        position: absolute;
+        bottom: -2px;
+        width: 40%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 2px;
+      }
+    }
+  }
 }
 </style>
 
