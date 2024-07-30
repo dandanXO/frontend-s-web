@@ -161,6 +161,7 @@
                     unelevated
                     class="do-btn-green shorter"
                     @click="collectDeposit(e.id)"
+                    :loading="isLoading"
                     v-if="e.status === 'PENDING' && recordTabs === 'expired'"
                   >
                     Collect
@@ -365,6 +366,7 @@ const submitDeposit = () => {
         });
         isLoading.value = false;
         searchDepositRecord();
+        getDepositOverview();
       }
     })
     .catch((err) => {
@@ -428,7 +430,9 @@ const collectDeposit = (planOrderId) => {
           message: `Collect successfully`,
           icon: "check_circle_outline"
         });
+        searchDepositRecord();
         isLoading.value = false;
+
       }
     })
     .catch((err) => {
