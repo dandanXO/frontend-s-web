@@ -889,7 +889,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      window.open('https://t.me/city88888', '_blank').focus();
+      window.open('https://t.me/cityy88', '_blank').focus();
     }
 
     const getCaptcha = () => {
