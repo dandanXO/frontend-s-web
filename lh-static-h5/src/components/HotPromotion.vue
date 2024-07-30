@@ -30,11 +30,7 @@
       <div class="cs-btn" @click="goToCsChat()">联系客服</div>
     </div>
 
-    <AppHongBao
-      v-if="list.redirectUrl === 'lh1-app-hongbao'"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo'" />
 
     <PrivilegeInvitePromo
@@ -62,38 +58,35 @@
     <LplSummerPromo v-if="list.redirectUrl === 'lh1-lpl-game'"></LplSummerPromo>
 
     <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone'"></BbDacha2024Promo>
-    <LhStepGamePromo
-      v-if="list.redirectUrl === 'lh1-game-steps'"
-      :pageContent="list.pageContent"
-    ></LhStepGamePromo>
-    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
-    <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && store.token" />
-    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event' && store.token" :promo-code="list.promoCode" />
-    <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && store.token" />
-    <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token" :promo-code="list.promoCode" />
-    <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && store.token" />
-    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu' && store.token" />
-    <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
-    <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
-    <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
-    <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && store.token" />
-    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match' && store.token" />
-    <SlotLacky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token" :promo-code="list.promoCode" />
-    <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && store.token" />
-    <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && store.token" />
-    <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
-    <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && store.token" />
-    <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && store.token" />
-    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2' && store.token" />
-    <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess' && store.token" />
-    <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu' && store.token" />
-    <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && store.token" />
-    <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide' && store.token" />
-    <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin' && store.token" />
-    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback' && store.token" />
-    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift' && store.token" :params="list.param" />
-    <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund' && store.token" />
-    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin' && store.token" :promo-info="list" />
+    <LhStepGamePromo v-if="list.redirectUrl === 'lh1-game-steps'" :pageContent="list.pageContent"></LhStepGamePromo>
+    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel'" />
+    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match'" />
+    <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024'" :promo-code="list.promoCode" />
+    <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
+    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu'" />
+    <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
+    <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
+    <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match'" />
+    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match'" />
+    <SlotLacky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
+    <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
+    <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
+    <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl'" />
+    <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24'" />
+    <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
+    <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
+    <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
+    <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu'" />
+    <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen'" />
+    <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
+    <OlympicCheckin v-if="list.redirectUrl === 'lh1-olympic-checkin'" />
+    <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
+    <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
+    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -192,8 +185,8 @@ const ChallengeComebackPromo = defineAsyncComponent(() =>
 const OfficialGiftPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
 );
-const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"))
-const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"))
+const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"));
+const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -281,8 +274,7 @@ export default defineComponent({
       }
     }
   },
-  methods: {
-  },
+  methods: {},
   mounted() {
     this.hotPromoList.forEach((element) => {
       if (this.list.id === element.id) {
@@ -382,26 +374,26 @@ export default defineComponent({
     const handleSlot = (promoCode) => {
       if (!store.token) {
         $q.dialog({
-            class: "q-px-md q-pt-md",
-            title: "系统提示",
-            message: "请登录后再操作",
-            ok: {
-              push: true,
-              color: 'primary',
-              label: "去登录",
-              tabindex: 1
-            },
-            cancel: {
-              push: true,
-              color: 'warning',
-              label: "取消",
-              tabindex: 0
-            },
-            persistent: true,
-          }).onOk(() => {
-            router.push('/login');
-          })
-          return
+          class: "q-px-md q-pt-md",
+          title: "系统提示",
+          message: "请登录后再操作",
+          ok: {
+            push: true,
+            color: "primary",
+            label: "去登录",
+            tabindex: 1
+          },
+          cancel: {
+            push: true,
+            color: "warning",
+            label: "取消",
+            tabindex: 0
+          },
+          persistent: true
+        }).onOk(() => {
+          router.push("/login");
+        });
+        return;
       }
       const bonusItem = promoCode;
       const eventUrl = "/bonus/claim/" + bonusItem;
@@ -423,29 +415,29 @@ export default defineComponent({
         });
     };
     const goToCsChat = () => {
-  if (!store.token) {
-    $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'primary',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
-  }
+      if (!store.token) {
+        $q.dialog({
+          class: "q-px-md q-pt-md",
+          title: "系统提示",
+          message: "请登录后再操作",
+          ok: {
+            push: true,
+            color: "primary",
+            label: "去登录",
+            tabindex: 1
+          },
+          cancel: {
+            push: true,
+            color: "warning",
+            label: "取消",
+            tabindex: 0
+          },
+          persistent: true
+        }).onOk(() => {
+          router.push("/login");
+        });
+        return;
+      }
       router.push("/liveChat");
     };
 
