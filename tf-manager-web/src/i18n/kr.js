@@ -2261,6 +2261,10 @@ export default {
     validateDisplayUrlRequired: '비디오 디스플레이 링크가 필요합니다',
     validateModeRequired: '모드 필요',
     validateAutoplayRequired: '자동재생 필요',
+    validatePlanOddsRequired: '투자 이자율 필요',
+    validatePlanDaysRequired: '필요한 투자 기간',
+    validatePlanLimitMinRequired: '필요한 최소 투자 한도',
+    validatePlanLimitMaxRequired: '필요한 최대 투자 한도',
   },
   menu: {
     undefined: '',

@@ -476,8 +476,9 @@ const sites = reactive({
 let chooseMember = []
 
 function resetQuery() {
-  request.loginName = null
+  request.title = null
   request.siteId = site.value ? site.value.id : null;
+  request.status = null
 }
 
 function splitStrAndDisplay(limit) {

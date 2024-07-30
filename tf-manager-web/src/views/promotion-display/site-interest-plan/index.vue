@@ -179,7 +179,7 @@
           {{ Math.round(scope.row.odds * 100) }}%
         </template>
       </el-table-column>
-      <el-table-column prop="days" :label="t('fields.planDays')" min-width="50" />
+      <el-table-column prop="days" :label="t('fields.planDays')" min-width="100" />
       <el-table-column prop="limitMin" :label="t('fields.planLimitMin')" min-width="150" />
       <el-table-column prop="limitMax" :label="t('fields.planLimitMax')" min-width="150" />
       <el-table-column prop="timeLimit" :label="t('fields.planTimeLimit')" min-width="150" />
@@ -298,12 +298,11 @@ const form = reactive({
 const formRules = reactive({
   title: [required(t('message.validateLoginNameRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
-  odds: [required(t('message.validateMinDayRegLimitRequired'))],
-  days: [required(t('message.validateMaxDayRegLimitRequired'))],
-  limitMin: [required(t('message.validateDayRegProbabilityRequired'))],
-  limitMax: [required(t('message.validateMinDayDepositAmountRequired'))],
-  sort: [required(t('message.validateMaxDayDepositAmountRequired'))],
-  status: [required(t('message.validateDayDepositAmountProbabilityRequired'))],
+  odds: [required(t('message.validatePlanOddsRequired'))],
+  days: [required(t('message.validatePlanDaysRequired'))],
+  limitMin: [required(t('message.validatePlanLimitMinRequired'))],
+  limitMax: [required(t('message.validatePlanLimitMaxRequired'))],
+  status: [required(t('message.validateStatusRequired'))],
 })
 
 const sites = reactive({
@@ -313,8 +312,9 @@ const sites = reactive({
 let chooseMember = []
 
 function resetQuery() {
-  request.loginName = null
+  request.title = null
   request.siteId = site.value ? site.value.id : null;
+  request.status = null
 }
 
 function handleSelectionChange(val) {

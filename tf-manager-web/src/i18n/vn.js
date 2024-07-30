@@ -2266,6 +2266,10 @@ export default {
     validateDisplayUrlRequired: 'Yêu cầu liên kết hiển thị video',
     validateModeRequired: 'Chế độ cần thiết',
     validateAutoplayRequired: 'Yêu cầu tự động phát',
+    validatePlanOddsRequired: 'Yêu cầu lãi suất đầu tư',
+    validatePlanDaysRequired: 'Cần có thời gian đầu tư',
+    validatePlanLimitMinRequired: 'Yêu cầu giới hạn đầu tư tối thiểu',
+    validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
   },
   menu: {
     undefined: '',
