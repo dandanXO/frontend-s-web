@@ -227,7 +227,7 @@
                   <!--                </div>-->
                 </div>
 
-                <!-- <el-button
+                <el-button
                   style="margin-top: 10px; border-radius: 2em"
                   :loading="loadingBtn"
                   class="standard-button btn-color-blue"
@@ -237,13 +237,13 @@
                   {{ $t("common.submit") }}
                 </el-button>
 
-                <button
-                  class="standard-button btn-color-blue"
-                  v-if="!isEdit && !personalState.memberInfo.birthday"
-                  @click="isEdit = !isEdit"
-                >
-                  {{ $t("common.edit") }}
-                </button> -->
+                <!--                <button-->
+                <!--                  class="standard-button btn-color-blue"-->
+                <!--                  v-if="!isEdit && !personalState.memberInfo.birthday"-->
+                <!--                  @click="isEdit = !isEdit"-->
+                <!--                >-->
+                <!--                  {{ $t("common.edit") }}-->
+                <!--                </button> -->
               </div>
             </div>
             <!-- <div class="buttons">
@@ -703,6 +703,9 @@ const loadInfo = () => {
       personalState.memberInfo = response.data;
       if (personalState.memberInfo.birthday) {
         personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).utcOffset('+08:00').format("DD-MM-YYYY");
+      }
+      if(!personalState.memberInfo.name2 || !personalState.memberInfo.realName){
+        isEdit.value= true;
       }
     }
   }).catch((error) => {
@@ -1323,6 +1326,8 @@ const updateState = () => {
           })
           loadInfo();
           isEdit.value = false;
+          store.name2 = updateFormDetails.name2;
+          store.realName = updateFormDetails.realName
         } else {
           ElMessage.error(ret.message)
         }
