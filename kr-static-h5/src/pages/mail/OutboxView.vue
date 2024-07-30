@@ -76,6 +76,7 @@ import moment from "moment/moment";
 import qs from "qs";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import { userStore } from "src/stores";
 
 const visible = ref(true);
 const mailData = ref([]);
@@ -208,16 +209,17 @@ const loadOutbox = () => {
   // );
 };
 
+const store = userStore();
 const isDeleteMailModal = ref(false);
 const showMailId = ref();
 const openMsg = (mail) => {
-  const { id, readTime } = mail;
+  const { id, readTime, replyId } = mail;
   showMailId.value = id;
   mail.readTime = moment().format("YYYY-MM-DD");
 
-  if (!readTime) {
+  if (replyId) {
     api
-      .get(`/session/feedback/${id}/read`)
+      .get(`/session/feedback/${replyId}/read`)
       .then((res) => {
         if (res.code === 0) {
           $q.notify({
@@ -226,11 +228,33 @@ const openMsg = (mail) => {
             position: "top",
             icon: "check_circle_outline"
           });
+
+          store.repliedQuestion--;
+          if (store.repliedQuestion < 0) {
+            store.repliedQuestion = 0;
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  if (!readTime) {
+    api
+      .get(`/session/feedback/${id}/read`)
+      .then((res) => {
+        if (res.code === 0) {
+          // $q.notify({
+          //   message: t("lang.msg_readmsg"),
+          //   type: "positive",
+          //   position: "top",
+          //   icon: "check_circle_outline"
+          // });
           // onLoad();
         }
       })
       .catch((error) => {
-        isDeleteMailModal.value = false;
         console.log(error);
       });
   }

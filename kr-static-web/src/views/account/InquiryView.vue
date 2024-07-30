@@ -36,7 +36,7 @@
               <div
                 v-for="item in inquiriesList.records"
                 :key="item.page"
-                @click="readFeedback(item.id)"
+                @click="readFeedback(item)"
                 class="feedback"
                 :class="item === selected ? 'active-feedback' : ''"
               >
@@ -58,7 +58,7 @@
                       class="caption"
                       v-if="item.hasOwnProperty('readTime')"
                       style="font-size: 10px"
-                      :style="!item.readTime ? 'color:#808080' : 'color:#FFC000'"
+                      :style="!item.replyId ? 'color:#808080' : 'color:#33FF00'"
                     >
                       {{
                         !item.replyId
@@ -158,14 +158,14 @@ const selectedMessages = computed(() =>
 const selectFirstFeedback = () => {
   if (inquiriesList.value.records?.length) {
     // if don't have timeout, ellipsis for title won't show
-    setTimeout(() => {
-      const inquiry = inquiriesList.value.records[0];
-
-      selected.value = inquiry;
-      if (!inquiry.readTime) {
-        readFeedback(inquiry.id, false);
-      }
-    }, 100);
+    // setTimeout(() => {
+    //   const inquiry = inquiriesList.value.records[0];
+    //
+    //   selected.value = inquiry;
+    //   if (!inquiry.readTime) {
+    //     readFeedback(inquiry);
+    //   }
+    // }, 100);
   }
 };
 watch(
@@ -238,30 +238,38 @@ const initOutbox = () => {
     });
 };
 
-const readFeedback = (id, showReadNotify = true) => {
-  // debugger;
+const readFeedback = (mail) => {
+  const { id, readTime, replyId, replyReadTime } = mail;
   const currentMail = inquiriesList.value.records.find((data) => data.id === id);
   selected.value = currentMail;
 
-  if (!currentMail?.readTime) {
+  if (replyId && !replyReadTime) {
+    server.REST.get(`/session/feedback/${replyId}/read`)
+      .then((res) => {
+        if (res.code === 0) {
+          ElMessage.success("메시지 읽기");
+
+          store.repliedTotal--;
+          if (store.repliedTotal < 0) {
+            store.repliedTotal = 0;
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  if (!readTime) {
     isFetchingContent.value = true;
 
     server.REST.get(`/session/feedback/${id}/read`)
       .then((res) => {
         const { code, data } = res;
 
-        if (code === 0 && !currentMail.readTime && showReadNotify) {
-          ElMessage.success("메시지 읽기");
-        }
-
         if (!currentMail.readTime) {
           currentMail.readTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
         }
-
-        // store.repliedTotal--;
-        // if (store.repliedTotal < 0) {
-        //   store.repliedTotal = 0;
-        // }
 
         currentMail.content = data.content;
 

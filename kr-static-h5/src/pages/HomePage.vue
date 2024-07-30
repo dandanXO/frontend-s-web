@@ -49,7 +49,7 @@
     <div class="header-middle" v-else>
       <div class="icon" @click="router.push('/account')">
         <img src="../assets/images/home/personal-icon.png" />
-        <div class="nickname-div">{{ store.nickName }}</div>
+        <div class="nickname-div">{{ store.name2 ?? store.nickName }}</div>
       </div>
 
       <!-- <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div> -->
