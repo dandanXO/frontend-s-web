@@ -120,6 +120,7 @@ import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import { ElMessage } from "element-plus";
 import { i18nStore } from "@/store/language";
+import { userStore } from "@/store";
 
 const WriteInquiry = markRaw(defineAsyncComponent(() => import("./WriteInquiry.vue")));
 
@@ -180,6 +181,8 @@ onMounted(() => {
   }
 });
 
+const store = userStore();
+
 const deleteSelectedMessage = () => {
   const mailIdArr = selectedMessages.value;
   const formattedIds = mailIdArr.join(",");
@@ -236,10 +239,11 @@ const initOutbox = () => {
 };
 
 const readFeedback = (id, showReadNotify = true) => {
+  // debugger;
   const currentMail = inquiriesList.value.records.find((data) => data.id === id);
   selected.value = currentMail;
 
-  if (!currentMail?.content) {
+  if (!currentMail?.readTime) {
     isFetchingContent.value = true;
 
     server.REST.get(`/session/feedback/${id}/read`)
@@ -253,6 +257,11 @@ const readFeedback = (id, showReadNotify = true) => {
         if (!currentMail.readTime) {
           currentMail.readTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
         }
+
+        // store.repliedTotal--;
+        // if (store.repliedTotal < 0) {
+        //   store.repliedTotal = 0;
+        // }
 
         currentMail.content = data.content;
 

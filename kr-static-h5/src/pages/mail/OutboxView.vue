@@ -215,22 +215,9 @@ const openMsg = (mail) => {
   showMailId.value = id;
   mail.readTime = moment().format("YYYY-MM-DD");
 
-  // console.log(mail);
-  // mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
-  //   if (mail.id === id) {
-  //     mail.readTime = moment().format("YYYY-MM-DD");
-  //   }
-  // });
-  // console.log(mailboxNotifyState[mailboxMessageTab.value]);
-
   if (!readTime) {
     api
-      .post(
-        "/session/inbox/read",
-        qs.stringify({
-          id: id
-        })
-      )
+      .get(`/session/feedback/${id}/read`)
       .then((res) => {
         if (res.code === 0) {
           $q.notify({
