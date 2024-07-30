@@ -25,7 +25,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-12位非汉字字符" clearable>
+        <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-11位非汉字字符" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -169,7 +169,7 @@ const checkName = (v) => {
   return v.match(alphanumeric);
 };
 const checkName2 = (v) => {
-  const alphaRegex = /^[a-zA-Z0-9_#+-]+$/;
+  const alphaRegex = /^[a-zA-Z0-9]+$/;
   return v.match(alphaRegex);
 };
 
@@ -276,8 +276,8 @@ const regRules = {
     },
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: "长度应为 6 至 11",
       trigger: "blur"
     },
     {
