@@ -24,18 +24,10 @@
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift'" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8'" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz'" />
-    <AppHongBao
-      v-if="list.redirectUrl === 'lh1-app-hongbao'"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo'" />
 
-    <HongBaoPreEurocup
-      v-if="listParam.type === 'hongbaoyu'"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
+    <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu'" :promo-code="list.promoCode" :params="list.param" />
 
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A'" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball'" />
@@ -56,26 +48,23 @@
 
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
-    <LhStepGamePromo
-      v-if="list.redirectUrl === 'lh1-game-steps'"
-      :pageContent="list.pageContent"
-    ></LhStepGamePromo>
+    <LhStepGamePromo v-if="list.redirectUrl === 'lh1-game-steps'" :pageContent="list.pageContent"></LhStepGamePromo>
 
-    <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && store.token" />
-    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && store.token" :promo-code="list.promoCode" />
-    <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && store.token" :promo-code="list.promoCode" />
-    <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && store.token" />
-    <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && store.token" />
-    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu' && store.token" />
-    <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
-    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin' && store.token" :promo-info="list" />
-    <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && store.token" />
-    <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && store.token" />
-    <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && store.token" />
-    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match' && store.token" />
-    <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && store.token" :promo-code="list.promoCode" />
-    <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && store.token" />
-    <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl' && store.token" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel'" />
+    <Summoner v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
+    <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024'" :promo-code="list.promoCode" />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match'" />
+    <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot'" />
+    <Shoutouxinxiu v-if="list.redirectUrl === 'lh1-shoutouxinxiu'" />
+    <BlastPremierPromo v-if="list.redirectUrl === 'lh-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
+    <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual'" />
+    <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao'" />
+    <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match'" />
+    <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match'" />
+    <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
+    <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
+    <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
 
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
 
@@ -379,7 +368,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapActions(uiStore, ['notify']),
+    ...mapActions(uiStore, ["notify"]),
     handleSlot() {
       const store = userStore();
       if (!store.hasToken()) {

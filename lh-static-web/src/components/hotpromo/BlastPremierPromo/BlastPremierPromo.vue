@@ -201,6 +201,7 @@
 </template>
 <script setup>
 import { ref, onMounted, defineProps } from "vue";
+import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import {
   getTreasureDetail,
@@ -247,6 +248,20 @@ const reorderItems = (activeItem) => {
   }
 };
 const openBox = (item) => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
   const loading = ElLoading.service({
     lock: true,
     text: "开启中",
@@ -344,6 +359,20 @@ const keyRecords = ref([]);
 const openRecords = ref([]);
 
 const openModal = (modal, item, itemIndex) => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+
   if (modal === "getkey") {
     const loading = ElLoading.service({
       lock: true,
@@ -405,10 +434,10 @@ const openModal = (modal, item, itemIndex) => {
 // Reference
 onMounted(() => {
   if (!store.token) {
-    notify({
-      message: "请登录后操作",
-      type: "error"
-    });
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
     return;
   }
   init();
