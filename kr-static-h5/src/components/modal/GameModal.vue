@@ -290,7 +290,7 @@ const open = (gameName, platformCode, gameCode = "", gameType) => {
   // buttonInIFrame.style.visible = visible;
   //   console.log(iframe)
   title.value = gameName;
-  const store = userStore();
+  // const store = userStore();
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
