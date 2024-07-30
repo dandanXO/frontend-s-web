@@ -289,7 +289,7 @@ const open = (gameName, platformCode, gameCode = "", gameType) => {
     if (store.hasToken()) {
       if (store.unreadInboxMail > 0) {
         $q.notify({
-          message: $t("lang.msg_hasUnreadMail"),
+          message: t("lang.msg_hasUnreadMail"),
           color: "negative"
         });
         return;
