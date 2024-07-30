@@ -332,7 +332,7 @@
             <el-form-item label="用户名" prop="loginName">
               <el-space>
                 <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                  <template #append>范围在6-12位之间, 由字母和数字组成</template>
+                  <template #append>范围在6-11位之间, 由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
@@ -1002,7 +1002,7 @@ export default defineComponent({
       }
     };
     const checkName = (v) => {
-      const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const alphanumeric = /^[a-zA-Z0-9]+$/;
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {
@@ -1161,8 +1161,8 @@ export default defineComponent({
       loginName: [
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 至 12",
+          max: 11,
+          message: "长度应为 6 至 11",
           trigger: "blur"
         },
         {
