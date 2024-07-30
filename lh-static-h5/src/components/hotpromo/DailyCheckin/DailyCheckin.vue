@@ -294,7 +294,7 @@ const handleClickSectionOneItem = async (item) => {
     eventapi
       .put(`/checkInFreeTreasure/checkIn?checkInDay=${item.day}`)
       .then(async (res) => {
-        if (res.code === 200) {
+        if (res.code === 0) {
           showSuccessDialog.value = true;
           await fetchData();
         } else {
@@ -314,7 +314,7 @@ const handleClickBox = async (box) => {
     .put(`/checkInFreeTreasure/claimTreasure?point=${box.requiredActivePoint}`)
     .then(async (res) => {
       console.log(res);
-      if (res.code === 200) {
+      if (res.code === 0) {
         notify.success("领取成功");
         await fetchData();
       } else {

@@ -321,7 +321,7 @@ const handleClickSectionOneItem = async (item) => {
   if (item.claimState === "OPEN" || item.claimState === "RECHECKIN") {
     putCheckInFreeTreasureCheckIn(item.day)
       .then(async (res) => {
-        if (res.code === 200) {
+        if (res.code === 0) {
           showSuccessDialog.value = true;
           await fetchData();
         } else {
@@ -340,7 +340,7 @@ const handleClickBox = async (box) => {
 
   putCheckInFreeTreasureClaim(box.requiredActivePoint)
     .then(async (res) => {
-      if (res.code === 200) {
+      if (res.code === 0) {
         notify.success("领取成功");
         await fetchData();
       } else {
