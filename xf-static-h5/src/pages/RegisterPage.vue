@@ -8,9 +8,7 @@
       lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入姓名',
-        (val) =>
-          (val && val.length >= 2) ||
-          '姓名至少两个字符',
+        (val) => (val && val.length >= 2) || '姓名至少两个字符',
         isValidName
       ]"
       color="white"
@@ -28,9 +26,8 @@
       lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入用户名',
-        (val) =>
-          (val && val.length >= 6 && val.length <= 12) ||
-          '用户名个数必须在6和12之间'
+        (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
+        validLoginName
       ]"
       color="white"
     >
@@ -221,16 +218,9 @@
     </div>
   </q-form>
 
-  <q-dialog
-    v-model="showCaptchaDialog"
-    width="100%"
-    no-backdrop-dismiss
-    no-esc-dismiss
-  >
+  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
     <q-card width="100%">
-      <q-card-section
-        class="q-pa-md bg-brightbtn text-white"
-      >
+      <q-card-section class="q-pa-md bg-brightbtn text-white">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
@@ -285,6 +275,11 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
 
+    const validLoginName = () => {
+      const namePattern = /^[a-zA-Z0-9]+$/;
+      return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
+    };
+
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -304,8 +299,7 @@ export default defineComponent({
         .get("/member/verificationCode")
         .then((response) => {
           if (response.code === 0) {
-            verificationImg.value =
-              "data:image/png;base64," + response.data.img;
+            verificationImg.value = "data:image/png;base64," + response.data.img;
             regForm.codeId = response.data.id;
             regForm.captchaCode = "";
             verificationRef.value.resetValidation();
@@ -321,8 +315,7 @@ export default defineComponent({
         .get("/member/verificationCode")
         .then((response) => {
           if (response.code === 0) {
-            phoneVerificationImg.value =
-              "data:image/png;base64," + response.data.img;
+            phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
             innerCodeId.value = response.data.id;
             innerCaptchaRef.value = "";
           }
@@ -373,8 +366,7 @@ export default defineComponent({
     };
 
     const isValidCnPhone = () => {
-      const phonePattern =
-        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
       return phonePattern.test(regForm.telephone) || "请输入有效的电话号码";
     };
 
@@ -438,9 +430,7 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect
-                    ? route.query.redirect
-                    : "/";
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                   router.go(jumpUrl);
                 }
 
@@ -578,7 +568,8 @@ export default defineComponent({
       openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
-      hasAffiliate
+      hasAffiliate,
+      validLoginName
     };
   }
 });
@@ -638,8 +629,7 @@ function charType(num) {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
+    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   span.weak-pwd {
