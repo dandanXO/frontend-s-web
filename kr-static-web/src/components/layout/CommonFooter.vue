@@ -68,54 +68,7 @@
         <div class="footer-icon-wrapper">
           <img v-for="(icon, index) in footerBoxImgUrl" :key="index" :src="icon.imgUrl" />
         </div>
-        <div class="copyright">ⓒ 2023 RS9 CASINO All right reserved</div>
-        <!-- <div class="top-ft-left">
-        <div class="icon firefox" @mouseover="isFireFox = true" @mouseout="isFireFox = false" :class="{hovering: isFireFox}"></div>
-        <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
-        <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
-      </div> -->
-        <!-- <div style="display: flex; flex-direction: column; gap: 10px"> -->
-        <!-- <div class="title">{{ $t("about.partner") }}</div> -->
-        <!-- <div class="top-ft-rgt"> -->
-        <!-- <img src="../../assets/footer/games/AG.png" /> -->
-        <!-- <img src="../../assets/footer/games/CMD368.png" /> -->
-        <!-- <img src="../../assets/footer/games/DG.png" /> -->
-        <!-- <img src="../../assets/footer/games/WE.png" /> -->
-        <!-- <img src="../../assets/footer/games/Rich88.png" /> -->
-        <!-- <img src="../../assets/footer/games/TCG.png" /> -->
-        <!-- <img src="../../assets/footer/games/SABA.png" /> -->
-        <!-- <img src="../../assets/footer/games/SBO.png" /> -->
-        <!-- <img src="../../assets/footer/games/WM.png" /> -->
-        <!-- <img src="../../assets/footer/games/AE.png" /> -->
-        <!-- <img src="../../assets/footer/games/KingMaker.png" /> -->
-        <!-- <img src="../../assets/footer/games/EVO.png" /> -->
-        <!-- <img src="../../assets/footer/games/KingPoker.png" /> -->
-        <!-- <img src="../../assets/footer/games/PP.png" /> -->
-        <!-- <img src="../../assets/footer/games/V8.png" /> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- <div style="display: flex; flex-direction: column; gap: 10px"> -->
-        <!-- <div class="title">{{ $t("about.paymentMethod") }}</div> -->
-        <!-- <div class="top-ft-rgt"> -->
-        <!-- <img src="../../assets/footer/payment/VCB.png" />
-          <img src="../../assets/footer/payment/Sacombank.png" />
-          <img src="../../assets/footer/payment/MB.png" />
-          <img src="../../assets/footer/payment/Exim.png" />
-          <img src="../../assets/footer/payment/Viettin.png" />
-          <img src="../../assets/footer/payment/Techcombank.png" />
-          <img src="../../assets/footer/payment/VP.png" />
-          <img src="../../assets/footer/payment/BIDV.png" />
-          <img src="../../assets/footer/payment/ACB.png" /> -->
-        <!-- <img src="../../assets/footer/payment/bank-logo.png" /> -->
-        <!-- <img src="../../assets/footer/payment/momo.png" /> -->
-        <!-- <img src="../../assets/footer/payment/ZaloPay.png" /> -->
-        <!-- <img src="../../assets/footer/payment/scratch-card-logo.png" /> -->
-        <!-- <img src="../../assets/footer/payment/ViettelPayRed.png" /> -->
-        <!-- <img src="../../assets/footer/payment/tether-logo.png" /> -->
-        <!-- <img src="../../assets/footer/payment/lotterycard.png" /> -->
-        <!-- <img src="../../assets/footer/payment/bank-transfer.png" /> -->
-        <!-- </div> -->
-        <!-- </div> -->
+        <div class="copyright">ⓒ{{ year }} CITY8 CASINO All right reserved</div>
       </div>
     </div>
   </footer>
@@ -126,7 +79,7 @@
 import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
-
+import moment from "moment";
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 export default defineComponent({
@@ -137,6 +90,8 @@ export default defineComponent({
     const isFireFox = ref(false);
     const isChrome = ref(false);
     const store = userStore();
+
+    const year = moment().format("YYYY");
 
     const footerBoxImgUrl = ref([
       { imgUrl: require("@/assets/footer/logo/logo-pp.png") },
@@ -173,7 +128,8 @@ export default defineComponent({
       openRegPage,
       affCode,
       languageVal,
-      footerBoxImgUrl
+      footerBoxImgUrl,
+      year
     };
   }
 });

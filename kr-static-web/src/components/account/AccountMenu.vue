@@ -4,7 +4,7 @@
       <div class="account-info-bg">
         <img class="account-avatar" src="../../assets/images/home/profile-pic.png" />
         <div class="account-name">{{ $t("account.welcome") }} {{ loginName }}</div>
-        <span class="account-vip-label">{{ vip }}</span>
+        <!-- <span class="account-vip-label">{{ vip }}</span> -->
         <div @click="refreshBalance" class="account-details-balance">
           <span>{{ $t("account.mainWallet") }}:</span>
           <span class="amount">
@@ -14,6 +14,10 @@
           <el-icon>
             <RiRefreshLine color="#468CFF" />
           </el-icon>
+        </div>
+        <div @click="store.toggleRedeemPointDialog" class="account-details-balance">
+          <span>{{ $t("account.point") }}:</span>
+          <span>{{ displayBalance(store.pendingRebateAmt) }} {{ store.currency.value }}</span>
         </div>
         <div class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
@@ -28,12 +32,12 @@
             </div>
             {{ $t("menu.withdraw") }}
           </router-link>
-          <div class="action-btn" @click="showRebateValue">
+          <!-- <div class="action-btn" @click="showRebateValue">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-rebate.svg" />
             </div>
             {{ $t("menu.rebate") }}
-          </div>
+          </div> -->
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
@@ -50,7 +54,10 @@
             <img class="account-avatar" :src="require(`../../assets/images/account/menu-icon-${item.icon}.png`)" />
             {{ item.label }}
 
-            <div v-if="item.icon === 'inbox' && item.route === '/center/message' && store.unreadTotal > 0" class="unread-total">
+            <div
+              v-if="item.icon === 'inbox' && item.route === '/center/message' && store.unreadTotal > 0"
+              class="unread-total"
+            >
               <span>{{ store.unreadTotal }}</span>
             </div>
           </router-link>
@@ -131,27 +138,27 @@ const vip = computed(() => {
 
 watch(languageVal, (newValue, oldValue) => {
   menuItems.value = [
-    { route: "/center/share", label: t("menu.referFriend"), icon: "share" },
+    // { route: "/center/share", label: t("menu.referFriend"), icon: "share" },
     { route: "/center/transit-record", label: t("menu.transactionRecord"), icon: "transitrecord" },
-    { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
+    { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" }
     // { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
-    { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
-    { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
+    // { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
+    // { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
   ];
 });
 
 const menuItems = ref([
-  { route: "/center/share", label: t("menu.referFriend"), icon: "share" },
+  // { route: "/center/share", label: t("menu.referFriend"), icon: "share" },
   // { route: "/center/deposit", label: "充值中心", icon: "transitrecord" },
   // { route: "/center/withdraw", label: "快速提款", icon: "transitrecord" },
   // { route: "/center/transfer", label: "快速转账", icon: "transitrecord" },
   { route: "/center/transit-record", label: t("menu.transactionRecord"), icon: "transitrecord" },
   // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
-  { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
+  { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" }
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
   // { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
-  { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
-  { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
+  // { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
+  // { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
   // { route: "/vip", label: "VIP特权", icon: "vip" },
   // // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   // { route: "/center/feedback", label: "会员建议", icon: "feedback" },

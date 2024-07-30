@@ -50,6 +50,7 @@ export default {
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
+    btn_redeem: "redeem",
 
     // redeem point start
     redeem_point_pending_list: "Pending List",
@@ -86,6 +87,7 @@ export default {
     msg_readmsg: "Read message",
     msg_deleteselected: "Delete selected messages",
     msg_deleteallmsg: "Delete all messages",
+    msg_hasUnreadMail: "You have unread messages. You cannot access the deposit/withdrawal/game pages.",
 
     // login page
     login_title: "Are you ready",
@@ -1162,6 +1164,8 @@ We sincerely congratulate you on your exchange and wish you only the best days a
     mail_selectone: "Select one",
     mail_read: "Read",
     mail_delete: "Delete",
+
+    feedback_delete_selected_message: "Deleted selected messages",
 
     // compose
     compose_title: "Title",

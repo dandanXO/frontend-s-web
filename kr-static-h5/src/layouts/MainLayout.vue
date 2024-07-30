@@ -62,15 +62,17 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
-        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/announce.svg" />
-          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
-          {{ $t("lang.message") }}
-        </q-route-tab>
-        <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt">
+        <q-route-tab to="/feedback" name="feedback" class="sm-screen-txt with-badge">
           <img class="inactive" src="../assets/images/footer/message.svg" />
           <img class="hover" src="../assets/images/footer/message-active.svg" />
           {{ $t("lang.question") }}
+          <q-badge v-if="store.repliedQuestion" color="red" class="badge">{{ store.repliedQuestion }}</q-badge>
+        </q-route-tab>
+        <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt with-badge">
+          <img class="inactive" src="../assets/images/footer/announce.svg" />
+          <img class="hover" src="../assets/images/footer/annouce-active.svg" />
+          {{ $t("lang.message") }}
+          <q-badge v-if="store.unreadInboxMail" color="red" class="badge">{{ store.unreadInboxMail }}</q-badge>
         </q-route-tab>
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/home-icon.svg" />
@@ -82,16 +84,16 @@
           <img class="hover" src="../assets/images/footer/notifi-active.svg" />
           {{ $t("lang.announcement") }}
         </q-route-tab>
-        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
-          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
-          {{ $t("lang.promo") }}
-        </q-route-tab>
-        <!--        <q-route-tab to="/account" name="account" class="sm-screen-txt">-->
-        <!--          <img class="inactive" src="../assets/images/footer/account-icon.svg" />-->
-        <!--          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />-->
-        <!--          {{ $t("lang.account") }}-->
+        <!--        <q-route-tab to="/promo" name="promo" class="sm-screen-txt">-->
+        <!--          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />-->
+        <!--          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />-->
+        <!--          {{ $t("lang.promo") }}-->
         <!--        </q-route-tab>-->
+        <q-route-tab to="/account" name="account" class="sm-screen-txt">
+          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
+          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
+          {{ $t("lang.account") }}
+        </q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -300,11 +302,11 @@ export default defineComponent({
             prevPage.value = "account";
           }
         } else if (route.path === "/account/announcement") {
-          prevPage.value = "account";
+          prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("lang.page_systemannouncement");
         } else if (route.path === "/feedback") {
-          prevPage.value = "account";
+          prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/inbox") {
@@ -312,15 +314,15 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/outbox") {
-          prevPage.value = "account/letters";
+          prevPage.value = "feedback";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/write") {
-          prevPage.value = "account/letters";
+          prevPage.value = "feedback";
           hasPage.value = true;
           pageName.value = t("lang.page_messagenotification");
         } else if (route.path === "/account/feedback") {
-          prevPage.value = "account/letters";
+          prevPage.value = "feedback";
           hasPage.value = true;
           pageName.value = t("lang.page_questionnaire");
         } else if (route.path === "/account/withdraw") {
@@ -566,5 +568,13 @@ svg path {
   position: absolute;
   top: 8px;
   right: 12px;
+}
+
+.with-badge {
+  position: relative;
+  .badge {
+    position: absolute;
+    top: -3px;
+  }
 }
 </style>

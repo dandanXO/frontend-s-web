@@ -491,6 +491,7 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getAffiliateWithdrawRecordAutopay,
+  getAllAffiliateWithdrawRecordAutopay,
   fromAffiliateAutopayToPay,
   fromAffiliateAutopayToFail,
   fromAffiliateAutopayToSuccess,
@@ -667,7 +668,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "AFFILIATE";
-  const { data: ret } = await getAffiliateWithdrawRecordAutopay(query)
+  const { data: ret } = hasPermission(['sys:withdraw:all:pay']) ? await getAllAffiliateWithdrawRecordAutopay(query) : await getAffiliateWithdrawRecordAutopay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

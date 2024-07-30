@@ -1195,6 +1195,9 @@ export default defineComponent({
       if (downloadPopup) {
         topBoxVisible.value = false;
       }
+      if (window.location.href.indexOf('tf88bof.com') > -1) {
+        topBoxVisible.value = false;
+      }
     };
 
     const $q = useQuasar();

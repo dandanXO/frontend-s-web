@@ -41,7 +41,7 @@
         </div>
       </div> -->
       <div>
-        <span class="bottom-button" @click="showDrawer">{{ $t('deposit.depositMoney') }}</span>
+        <span class="bottom-button" @click="showDrawer">{{ $t("deposit.depositMoney") }}</span>
       </div>
 
       <span class="copy-button" @click="copyTo" @blur="changeText">{{ copyText }}</span>
@@ -145,7 +145,7 @@ const showDrawer = () => {
   quickTransferTab.value = false;
   drawerVisible.value = true;
 };
-const copyText = ref(t('deposit.copyWebsite'));
+const copyText = ref(t("deposit.copyWebsite"));
 let intervalId = null;
 const copyTo = () => {
   // copyToClipboard(src.value);
@@ -154,7 +154,7 @@ const copyTo = () => {
   // copyText.value = '复制网址';
 
   navigator.clipboard.writeText(src.value);
-  copyText.value = t('deposit.copied');
+  copyText.value = t("deposit.copied");
 
   // Clear previous interval if any
   if (intervalId) {
@@ -163,7 +163,7 @@ const copyTo = () => {
 
   // Set a new interval to change the text back after 5 seconds
   intervalId = setInterval(() => {
-    copyText.value = t('deposit.copyWebsite');
+    copyText.value = t("deposit.copyWebsite");
     clearInterval(intervalId);
     intervalId = null;
   }, 2000); // 5000 milliseconds = 5 seconds
@@ -226,6 +226,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     if (store.token) {
       // console.log(gameCode);
       // console.log(platformCode);
+      if (store.unreadTotal > 0) {
+        ElMessage.error(t("notification.hasUnreadMessage"));
+        return;
+      }
+
       if (gameCode === "bbkeno_lobby_pc") {
         iframeScroll.value = true;
       }
@@ -248,7 +253,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          if(res.code===0) {
+          if (res.code === 0) {
             var screenWidth = window.screen.width;
             var screenHeight = window.screen.height;
 
@@ -257,8 +262,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               "popUpWindow",
               `fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,width=${screenWidth},height=${screenHeight}`
             );
-          }else{
-            ElMessage.error(t('response.' + res.code) || res.message);
+          } else {
+            ElMessage.error(t("response." + res.code) || res.message);
           }
         });
       } else {
@@ -266,7 +271,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          if(res.code===0) {
+          if (res.code === 0) {
             let srcData = res.data;
 
             if (platformCode === "PG") {
@@ -279,18 +284,18 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             src.value = srcData;
             visible.value = true;
-          }else{
-            ElMessage.error(t('response.' + res.code) || res.message);
+          } else {
+            ElMessage.error(t("response." + res.code) || res.message);
           }
         });
       }
     } else {
       // router.push("/login");
-      ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.loginTitle'), {
+      ElMessageBox.alert(t("bankError.loginbeforeAction"), t("common.loginTitle"), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: t('common.confirm'),
+        confirmButtonText: t("common.confirm"),
         showClose: false,
         buttonSize: "large"
       }).then(() => {
@@ -397,21 +402,21 @@ defineExpose({
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 

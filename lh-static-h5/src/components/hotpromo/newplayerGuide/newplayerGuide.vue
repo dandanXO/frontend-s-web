@@ -44,7 +44,7 @@
             <div class="step-number">1</div>
             <div class="step-content">
               绑定手机号
-              <span
+              <q-btn
                 class="status"
                 :class="getStatus(telephoneBindState).class"
                 @click="handleClickStatusButton(telephoneBindState, 'new-user-setup-bonus-telephone')"
@@ -55,14 +55,14 @@
                   v-if="telephoneBindState === 'CLAIMED'"
                 />
                 {{ getStatus(telephoneBindState).text }}
-              </span>
+              </q-btn>
             </div>
           </div>
           <div class="step" :class="{ incomplete: bankCardBindState === 'NO' }">
             <div class="step-number">2</div>
             <div class="step-content">
               绑定银行卡
-              <span
+              <q-btn
                 class="status"
                 :class="getStatus(bankCardBindState).class"
                 @click="handleClickStatusButton('NO', 'new-user-setup-bonus-bankcard')"
@@ -73,14 +73,14 @@
                   v-if="bankCardBindState === 'CLAIMED'"
                 />
                 {{ getStatus(bankCardBindState).text }}
-              </span>
+              </q-btn>
             </div>
           </div>
           <div class="step" :class="{ incomplete: usdtAddrBindState === 'NO' }">
             <div class="step-number">3</div>
             <div class="step-content">
               绑定 USDT 地址
-              <span
+              <q-btn
                 class="status"
                 :class="getStatus(usdtAddrBindState).class"
                 @click="handleClickStatusButton(usdtAddrBindState, 'new-user-setup-bonus-usdt-addr')"
@@ -91,7 +91,7 @@
                   v-if="usdtAddrBindState === 'CLAIMED'"
                 />
                 {{ getStatus(usdtAddrBindState).text }}
-              </span>
+              </q-btn>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@
     </div>
     <div class="container2">
       <div class="left-panel">
-        <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 0px 8px">
           <div style="display: flex; align-items: center">
             <img
               class="big-icon"
@@ -115,9 +115,10 @@
                 style="width: 16px; height: 16px; vertical-align: sub; margin: 0px auto 4px"
                 src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
               />
-              <span>{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
+              <span style="white-space: nowrap">{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
             </div>
           </q-btn>
+          <span v-else class="status" :class="getStatus(usdtAddrBindState).class">无法领取</span>
         </div>
         <div class="section">
           <span>完成以下任务领取礼金 {{ minFirstWithdrawalBonus }} - {{ maxFirstWithdrawalBonus }} 元</span>
@@ -149,7 +150,7 @@
         />
         <div class="title">活动规则</div>
       </div>
-      <div>
+      <div v-if="selected === 'option1'">
         <ol class="rules-content">
           <li>
             <span class="step-number">1</span>
@@ -187,6 +188,44 @@
           </li>
           <li>
             <span class="step-number">7</span>
+            <div class="content">此活动最终解释权归雷火所有；</div>
+          </li>
+        </ol>
+      </div>
+      <div v-else>
+        <ol class="rules-content">
+          <li>
+            <span class="step-number">1</span>
+            <div class="content">
+              自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+            </div>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <div class="content">
+              每位新用户会员可选择各场馆参与1次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+            </div>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <div class="content">
+              新人指路任务完成后点击领取即可获得，首存活动（本+彩）15倍流水，成长攻略以及钱包冲刺彩金均为5倍流水。
+            </div>
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            <div class="content">
+              此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+            </div>
+          </li>
+          <li>
+            <span class="step-number">5</span>
+            <div class="content">
+              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+            </div>
+          </li>
+          <li>
+            <span class="step-number">6</span>
             <div class="content">此活动最终解释权归雷火所有；</div>
           </li>
         </ol>
@@ -537,7 +576,7 @@ h1 {
 }
 
 .status {
-  padding: 5px 10px;
+  padding: 5px 28px;
   border-radius: 6px;
   font-size: 14px;
   display: flex;
@@ -552,6 +591,7 @@ h1 {
 
 .complete {
   background-color: #fff;
+  width: 100px;
 }
 
 .incomplete {

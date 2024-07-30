@@ -4,7 +4,8 @@ import HomeView from "../views/HomeView.vue";
 import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
+import i18n from "@/i18n";
 
 const routes = [
   {
@@ -38,11 +39,11 @@ const routes = [
         name: "welcome",
         component: () => import(/* webpackChunkName: "Welcome" */ "../views/WelcomeView.vue")
       },
-      // {
-      //   path: "/slot",
-      //   name: "slot",
-      //   component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
-      // },
+      {
+        path: "/slot",
+        name: "slot",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
+      },
       {
         path: "/about",
         name: "about",
@@ -184,6 +185,12 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.nickName === "") {
         store.getMemberInfo().then(() => next({ ...to, replace: true }));
+      } else if (store.unreadTotal > 0) {
+        if (["/center/withdraw", "/center/deposit"].includes(to.path)) {
+          ElMessage.error(i18n.global.t("notification.hasUnreadMessage"));
+        } else {
+          next();
+        }
       } else {
         next();
       }

@@ -33,7 +33,8 @@
     </div>
     <!-- banner.redirectUrl.includes("https://") -->
     <div class="earn-money-details-grid">
-      <div class="details-item" v-if="isShowOnetime">
+      <!-- <div class="details-item" v-if="isShowOnetime"> -->
+        <div class="details-item">
         <div class="item-amount">
           Rs
           <span>{{ getRewardAmount("ONE_TIME") }}</span>
@@ -42,7 +43,8 @@
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-01.png" /></div>
       </div>
 
-      <div class="details-item" v-if="isShowDeposit">
+      <!-- <div class="details-item" v-if="isShowDeposit"> -->
+        <div class="details-item">
         <div class="item-amount">
           Rs
           <span>{{ getRewardAmount("DEPOSIT") }}</span>
@@ -51,7 +53,8 @@
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
       </div>
 
-      <div class="details-item details-item" v-if="isShowBet">
+      <!-- <div class="details-item details-item" v-if="isShowBet"> -->
+        <div class="details-item details-item">
         <div class="item-amount">
           Rs
           <span>{{ getRewardAmount("BET") }}</span>

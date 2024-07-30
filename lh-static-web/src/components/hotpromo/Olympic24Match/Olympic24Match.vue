@@ -256,7 +256,7 @@
           </table>
         </div>
       </el-dialog>
-      <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
+      <el-dialog class="olympic24-match-confirm-vote-dialog" v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
         <div class="dialog-header" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
         <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
         <div class="dialog-footer">
@@ -802,7 +802,22 @@ onMounted(() => {
     }
   }
 }
+:deep(.olympic24-match-confirm-vote-dialog) {
+  .el-dialog__header {
+    background: #00a4ff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .el-dialog__body {
+    padding: 20px;
+    display: block !important;
+  }
+  .el-dialog__header .el-dialog__title {
+    width: 100%;
+  }
 
+}
 :deep(.olympic24-match-table-record-dialog) {
   width: 1000px;
   height: 652px;
@@ -823,6 +838,7 @@ onMounted(() => {
   }
   .el-dialog__body {
     padding: 20px;
+    display: block !important;
   }
 
   .record-dialog-container {
