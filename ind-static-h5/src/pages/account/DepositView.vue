@@ -2,7 +2,7 @@
   <div class="deposit-wrapper">
     <div class="deposit-options">
       <div class="lil-title">Payment Channel</div>
-      <div class="deposit-option-container" style="margin-top: 16px" v-if="isLoadingInitPay">
+      <div class="deposit-option-container q-mt-md" v-if="isLoadingInitPay">
         <div class="deposit-option-btn-wrapper" style="width: 100%">
           <q-skeleton class="skeleton-deposit-option" />
         </div>
@@ -949,5 +949,6 @@ onMounted(() => {
 .skeleton-deposit-option {
   width: 100%;
   aspect-ratio: 519 / 303;
+  min-height: 50px;
 }
 </style>
