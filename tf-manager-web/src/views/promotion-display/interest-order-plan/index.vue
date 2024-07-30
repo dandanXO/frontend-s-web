@@ -76,6 +76,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="amount" :label="t('fields.amount')" min-width="100" />
+        <el-table-column prop="days" :label="t('fields.planDays')" min-width="100" />
+        <el-table-column prop="odds" :label="t('fields.planOdds')" min-width="50">
+          <template #default="scope">
+            {{ Math.round(scope.row.odds * 100) }}%
+          </template>
+        </el-table-column>
         <el-table-column prop="estimateRate" :label="t('fields.estimateRate')" min-width="100" />
         <el-table-column prop="actualRate" :label="t('fields.actualRate')" min-width="100" />
         <el-table-column prop="settleAmount" :label="t('fields.settleAmount')" min-width="100" />
