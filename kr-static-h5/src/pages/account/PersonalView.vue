@@ -323,15 +323,20 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
-      if(personalState.memberInfo.name2){
+      if(personalState.memberInfo.name2 && personalState.memberInfo.realName){
         return;
       }
       if(!personalState.memberInfo.name2) {
         name2Ref.value.validate()
         if(name2Ref.value.hasError) return
       }
+      if(!personalState.memberInfo.realName) {
+        realNameRef.value.validate()
+        if(realNameRef.value.hasError) return
+      }
 
-      updateInfo.name2 = formDetail.name2
+      updateInfo.name2 = formDetail.name2;
+      updateInfo.realName = formDetail.realName
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
