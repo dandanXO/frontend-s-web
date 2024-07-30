@@ -36,7 +36,7 @@ export const userStore = defineStore("userStore", {
       currency: { value: "원", label: "원" },
       personalAddress: "",
       unreadInboxMail: 0,
-      unrepliedQuestion: 0,
+      repliedQuestion: 0,
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
@@ -283,8 +283,10 @@ export const userStore = defineStore("userStore", {
         return api.get("/session/feedback/sysReply").then((res) => {
           if (res.code === 0) {
             const { records } = res.data;
-            this.unrepliedQuestion = records.reduce((total, record) => {
-              if (record.replyId === null) total++;
+            this.repliedQuestion = records.reduce((total, record) => {
+              if (record.replyId !== null && record.replyReadTime === null) {
+                total++;
+              }
               return total;
             }, 0);
           }

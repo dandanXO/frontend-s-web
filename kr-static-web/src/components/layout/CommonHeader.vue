@@ -96,7 +96,7 @@
           <router-link to="/center/inquiry" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-freedback.svg" />
-              <el-badge class="unread-count" v-if="store.unrepliedTotal" :value="store.unrepliedTotal" color="red" />
+              <el-badge class="unread-count" v-if="store.repliedTotal" :value="store.repliedTotal" color="red" />
             </div>
             {{ $t("menu_item.menu_inquiry") }}
           </router-link>
@@ -1528,8 +1528,10 @@ export default defineComponent({
       getSysReply().then(res => {
         if(res.code === 0) {
           const {records} = res.data
-          store.unrepliedTotal = records.reduce((total,record) => {
-            if(record.replyId === null) total++
+          store.repliedTotal = records.reduce((total,record) => {
+            if (record.replyId !== null && record.replyReadTime === null) {
+              total++;
+            }
             return total
           },0)
         }

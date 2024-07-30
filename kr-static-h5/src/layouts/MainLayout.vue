@@ -66,7 +66,7 @@
           <img class="inactive" src="../assets/images/footer/message.svg" />
           <img class="hover" src="../assets/images/footer/message-active.svg" />
           {{ $t("lang.question") }}
-          <q-badge v-if="store.unrepliedQuestion" color="red" class="badge">{{ store.unrepliedQuestion }}</q-badge>
+          <q-badge v-if="store.repliedQuestion" color="red" class="badge">{{ store.repliedQuestion }}</q-badge>
         </q-route-tab>
         <q-route-tab to="/account/inbox" name="deposit" class="sm-screen-txt with-badge">
           <img class="inactive" src="../assets/images/footer/announce.svg" />
