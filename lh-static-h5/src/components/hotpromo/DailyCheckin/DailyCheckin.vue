@@ -329,7 +329,11 @@ const handleClickBox = async (box) => {
 const handleDeposit = () => {
   if (todayCheckInState.value !== "NO") return;
 
-  router.push("/finance/deposit");
+  if (window.location.pathname === "/promotion") {
+    document.location.href = `app://deposit`;
+  } else {
+    router.push("/finance/deposit");
+  }
 };
 
 const fetchData = async () => {
