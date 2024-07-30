@@ -390,7 +390,6 @@
             <span v-else> {{ scope.row.loginName }} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="id" :label="t('fields.vipLevel')" width="150" />
         <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="150" />
         <el-table-column prop="financialName" :label="t('fields.financialLevel')" width="150" />
         <el-table-column v-if="uiControl.importDataOperatable" :label="t('fields.operate')"  width="100" >
