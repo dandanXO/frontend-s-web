@@ -30,6 +30,7 @@ export default {
     no_card_avail: "No cards available, proceed to ",
     add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
+    nickname: "Nickname",
     mainWallet: "Balance",
     point: "Point",
     reminder: "Require",
@@ -63,6 +64,7 @@ export default {
     fishing: "Fishing",
     cockfight: "Cockfight",
     deposit_should_between: "Deposit amount should between ",
+    deposit_amount_unit: "Deposit amount must be in units of 10,000.",
     msg_deleted: "Message deleted",
     please_select_bank: "Please select bank",
     you_account_has_been_sent_email: "Your Account Id has been sent to your email",
@@ -183,6 +185,8 @@ export default {
     confirmWithdrawPwd: "Confirm withdrawal password",
     loginPwd: "Login password",
     realName: "Real Name",
+    nickname: "Nickname",
+    loginName: "ID",
     birthday: "Birthday",
     zalo: "Zalo",
     email: "Email",
@@ -210,7 +214,9 @@ export default {
   },
   placeholder: {
     realName: "Please enter Real Name",
+    nickname: "Please enter Nickname",
     birthday: "Please enter Birthday",
+    loginName: "Please enter ID",
     zalo: "Please enter Zalo",
     email: "Please enter Email",
     mobileNo: "Please enter your phone number",
@@ -235,6 +241,7 @@ export default {
     min4: "Verification code should be 4 characters",
     emailFormat: "Please enter a valid email",
     between612: "Length should be between 6 - 11 characters",
+    length4: "Length should be 4 characters",
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
@@ -360,7 +367,10 @@ export default {
     lengthShouldBe: "The length should be",
     smsCodeRequired: "Please enter the SMS verification code",
     bankBranchAddress: "Bank branch address",
-    settleWithdrawPwd: "Please settle withdraw password"
+    settleWithdrawPwd: "Please settle withdraw password",
+    note: `Withdrawals cannot be processed to accounts in other names than your own.
+      The minimum withdrawal amount is 50,000 won and can only be in 10,000 won units.
+      We sincerely congratulate you on your money exchange and hope that you will always have good days.`
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
@@ -404,7 +414,17 @@ export default {
     realTimeExchangeRate: "Real Time Exchange Rate",
     inputUSDT: "Input USDT",
     chooseAmt: "Choose Amount",
-    note: "Please note:",
+    note: `After requesting a deposit account and depositing > Click on Complete Application below to process the recharge.
+      Deposits under a name other than your own cannot be processed.
+      The account changes in real time, so please check the account number each time you deposit.
+      Please check the minimum deposit amount, and it is only possible in units of 10,000 won.
+
+      ※Note
+      After entering the amount to recharge, you cannot change the amount when requesting a deposit account.
+      If you entered the wrong amount, please contact us and we will help you cancel.
+
+      ※Virtual account maintenance time information
+      Please refer to the use from 23:30 to 00:30.`,
     notept1: "The transaction unit in the game is TF 원, 1 원 = 1,000VND",
     redirected: "You will be redirected to your bank page to complete the deposit",
     successful: "If successful, you will receive a notification on this page",
@@ -838,7 +858,10 @@ export default {
     message_read_all_message: "Read all messages",
     message_delete_selected_message: "Deleted selected messages",
     message_delete_all_message: "Deleted all read messages",
-    message_total: "Total"
+    message_total: "Total",
+    message_no_real_name: "Real name is required",
+    message_no_bank_card: "Please link your bank card first",
+    message_no_withdraw_password: "Please add a withdrawal password first"
     // message end
   },
   feedback: {
@@ -964,6 +987,7 @@ export default {
     applying: "Processing",
     failed: "Failed",
     success: "Success",
+    depositSuccess: "Deposit Success",
     underReview: "Processing",
     toBePaid: "To be paid",
     normalPayment: "Normal payment",
@@ -991,6 +1015,9 @@ export default {
     claimed: "Claimed",
     pending: "Pending",
     login_to_continue: "Please login to continue"
+  },
+  notification: {
+    hasUnreadMessage: "You have unread messages. You cannot access the deposit/withdrawal/game pages."
   },
   response: {
     101: "Platform not found",

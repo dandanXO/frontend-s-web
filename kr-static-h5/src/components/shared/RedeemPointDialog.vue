@@ -10,7 +10,7 @@
           />
         </div>
       </div>
-      <q-card>
+      <q-card class="redeem-point-dialog-content-wrapper">
         <div class="title">{{ $t("lang.redeem_point_pending_list") }}</div>
         <DataTable :loading="isLoading" :tableColumns="tableColumns" :dataState="tableData">
           <template #body-cell-recordTime="props">
@@ -31,6 +31,26 @@
                 </q-btn>
               </div>
             </q-td>
+          </template>
+          <template #item="{ props }">
+            <q-card>
+              <q-list dense>
+                <q-item v-for="col in props.cols" :key="col.name">
+                  <q-item-section>{{ col.label }}</q-item-section>
+                  <q-item-section side>
+                    <q-btn
+                      v-if="col.name === 'operation'"
+                      style="min-width: 60px; width: 60px; height: 30px"
+                      class="primary-button blue-square q-my-sm"
+                      @click="redeemPoint(props?.props?.row.privilegeId)"
+                    >
+                      {{ $t("lang.btn_redeem") }}
+                    </q-btn>
+                    <q-item-label v-else>{{ col.value }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card>
           </template>
         </DataTable>
       </q-card>
@@ -154,7 +174,7 @@ watch(redeemDialogVisible, () => {
   }
 }
 
-.q-card {
+.redeem-point-dialog-content-wrapper {
   padding: 20px;
   box-shadow: none;
 }

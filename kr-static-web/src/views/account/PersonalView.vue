@@ -3,13 +3,13 @@
     <div class="menu-title-container">
       <div class="menu-title" style="display: flex; gap: 20px">
         {{ $t("personal.personalInfo") }}
-        <span style="font-size: 14px">
+        <!-- <span style="font-size: 14px">
           {{ $t("personal.url") }}:
           <a :href="evipWeb" style="color: #468cff">{{ evipWeb }}</a>
-        </span>
+        </span> -->
       </div>
     </div>
-    <el-tabs v-model="selectedTab">
+    <el-tabs v-model="selectedTab" class="func-tabs">
       <el-tab-pane :label="$t('personal.personalInfo')" name="personal">
         <!-- <el-form :inline="true" ref="updateFormRef" :model="updateFormDetails">
           <el-form-item ref="refRealName" :label="$t('personal.realName')" name="realName" prop="realName">
@@ -33,6 +33,25 @@
                 <div class="info-tbl-row">
                   <div class="info-tbl-col">
                     <div class="tbl-row">
+                      <div class="basic-info-cell title">{{ $t("personal.nickname") }}</div>
+                      <div v-if="personalState.memberInfo.name2" class="basic-info-cell contentwtxt">
+                        {{ personalState.memberInfo.name2 }}
+                      </div>
+
+                      <div v-else class="basic-info-cell content">
+                        <div class="datewsend" v-if="isEdit">
+                          <el-form-item
+                            name="name2"
+                            prop="name2"
+                            :rules="[{ required: true, message: $t('placeholder.realName') }]"
+                          >
+                            <el-input v-model="updateFormDetails.name2" :placeholder="$t('personal.nickname')" />
+                          </el-form-item>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tbl-row">
                       <div class="basic-info-cell title">{{ $t("personal.realName") }}</div>
                       <div v-if="personalState.memberInfo.realName" class="basic-info-cell contentwtxt">
                         {{ personalState.memberInfo.realName }}
@@ -50,11 +69,30 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="tbl-row">
+                      <div class="basic-info-cell title">{{ $t("personal.loginName") }}</div>
+                      <div v-if="personalState.memberInfo.loginName" class="basic-info-cell contentwtxt">
+                        {{ personalState.memberInfo.loginName }}
+                      </div>
+
+                      <div v-else class="basic-info-cell content">
+                        <div class="datewsend" v-if="isEdit">
+                          <el-form-item
+                            name="loginName"
+                            prop="loginName"
+                            :rules="[{ required: true, message: $t('placeholder.loginName') }]"
+                          >
+                            <el-input v-model="updateFormDetails.loginName" :placeholder="$t('personal.loginName')" />
+                          </el-form-item>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div class="info-tbl-row">
-                  <div class="info-tbl-col">
+                  <!-- <div class="info-tbl-col">
                     <div class="tbl-row">
                       <div class="basic-info-cell title">{{ $t("personal.birthday") }}</div>
                       <div v-if="personalState.memberInfo.birthday" class="basic-info-cell contentwtxt">
@@ -80,7 +118,7 @@
                         <div class="basic-info-cell contentwtxt" style="min-height: 40px" v-else></div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="info-tbl-col">
                     <div class="tbl-row">
                       <div class="basic-info-cell title">{{ $t("personal.mobileNo") }}</div>
@@ -90,14 +128,14 @@
                       >
                         {{ personalState.memberInfo.telephone }}
 
-                        <button
+                        <!-- <button
                           class="standard-button btn-color-blue sm-btn"
                           v-if="!personalState.memberInfo.phoneVerified"
                           type="button"
                           @click="updatePhoneModal"
                         >
                           {{ $t("common.verify") }}
-                        </button>
+                        </button> -->
                       </div>
 
                       <!--                    <div v-else class="basic-info-cell contentwtxt">-->
@@ -154,7 +192,7 @@
                 </div> -->
 
                 <div class="tbl-row">
-                  <div class="basic-info-cell title">{{ $t("personal.email") }}</div>
+                  <!-- <div class="basic-info-cell title">{{ $t("personal.email") }}</div>
                   <div
                     class="basic-info-cell contentwtxt"
                     style="display: flex; justify-content: space-between; align-items: center"
@@ -169,7 +207,7 @@
                     >
                       {{ $t("common.verify") }}
                     </button>
-                  </div>
+                  </div> -->
                   <!--                <div v-else class="basic-info-cell contentwtxt">-->
                   <!-- <div class="datewsend" v-if="isEdit">
                     <el-form-item
@@ -199,13 +237,13 @@
                   {{ $t("common.submit") }}
                 </el-button>
 
-                <button
-                  class="standard-button btn-color-blue"
-                  v-if="!isEdit && !personalState.memberInfo.birthday"
-                  @click="isEdit = !isEdit"
-                >
-                  {{ $t("common.edit") }}
-                </button>
+                <!--                <button-->
+                <!--                  class="standard-button btn-color-blue"-->
+                <!--                  v-if="!isEdit && !personalState.memberInfo.birthday"-->
+                <!--                  @click="isEdit = !isEdit"-->
+                <!--                >-->
+                <!--                  {{ $t("common.edit") }}-->
+                <!--                </button> -->
               </div>
             </div>
             <!-- <div class="buttons">
@@ -215,7 +253,7 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane :label="$t('personal.bank')" name="Bank"><WithdrawBank /></el-tab-pane>
-      <el-tab-pane :label="$t('personal.chgPwd')" name="chgPwd">
+      <!-- <el-tab-pane :label="$t('personal.chgPwd')" name="chgPwd">
         <div class="update-pwd-container">
           <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
             <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
@@ -267,7 +305,7 @@
             </div>
           </el-form>
         </div>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
           <el-form
@@ -292,7 +330,7 @@
               />
             </el-form-item>
 
-            <!-- <template v-if="receivedVerificationCode"></template> -->
+            <template v-if="receivedVerificationCode"></template>
 
             <el-form-item
               v-if="receivedVerificationCode"
@@ -364,9 +402,15 @@
                 show-password
               />
             </el-form-item>
-            <!-- <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
+            <el-form-item
+              v-if="receivedVerificationCode"
+              ref="refWithdrawVerificationCode"
+              :label="$t('personal.verificationCode')"
+              name="code"
+              prop="code"
+            >
               <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
-            </el-form-item> -->
+            </el-form-item>
 
             <div class="withdrawBottom">
               <div class="txt-center btn-container">
@@ -665,6 +709,9 @@ const loadInfo = () => {
       personalState.memberInfo = response.data;
       if (personalState.memberInfo.birthday) {
         personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).utcOffset('+08:00').format("DD-MM-YYYY");
+      }
+      if(!personalState.memberInfo.name2 || !personalState.memberInfo.realName){
+        isEdit.value= true;
       }
     }
   }).catch((error) => {
@@ -1198,9 +1245,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     }
   ],
@@ -1211,9 +1257,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     }
   ],
@@ -1224,9 +1269,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     },
     {
@@ -1250,9 +1294,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     }
   ],
@@ -1285,6 +1328,8 @@ const updateState = () => {
           })
           loadInfo();
           isEdit.value = false;
+          store.name2 = updateFormDetails.name2;
+          store.realName = updateFormDetails.realName
         } else {
           ElMessage.error(ret.message)
         }
@@ -1355,7 +1400,7 @@ const evipWeb = computed(() => {
       }
       return ''; // Return empty string if evipString is undefined
     });
-    
+
 
 onMounted(() => {
   if(sendOtpDisabledTimeoutLeft)
@@ -1367,10 +1412,13 @@ onMounted(() => {
 watch(
   () => route.query,
   (newQuery) => {
+    console.log(newQuery.name)
     if (newQuery.name === 'Bank') {
       if (store.registeredWithdrawPassword === false) {
         ElMessage.error(t('withdraw.settleWithdrawPwd'));
         selectedTab.value = 'chgWithdrawPwd'
+      } else {
+        selectedTab.value = 'Bank'
       }
     } else if (newQuery.name === 'chgWithdrawPwd') {
       selectedTab.value = 'chgWithdrawPwd'
@@ -1379,7 +1427,7 @@ watch(
   { immediate: true, deep: true }
 );
 watch (
-  () => selectedTab.value, 
+  () => selectedTab.value,
   (newTab) => {
     if (newTab) {
       router.push({query: {name: selectedTab.value}})
@@ -1551,6 +1599,12 @@ watch (
   display: flex;
   justify-content: flex-start;
   gap: 12px;
+}
+
+.func-tabs {
+  :deep(.el-tabs__header) {
+    display: none;
+  }
 }
 </style>
 <style lang="scss">

@@ -28,6 +28,16 @@
     <div class="header-left" @click="router.push('/')">
       <img alt="logo" src="../assets/logo-web.svg" />
     </div>
+    <div class="menulist">
+      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
+        <img src="../assets/images/home/deposit-mid.png" />
+        <div class="">{{ $t("lang.deposit") }}</div>
+      </router-link>
+      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
+        <img src="../assets/images/home/withdraw-mid.png" />
+        <div class="">{{ $t("lang.withdraw") }}</div>
+      </router-link>
+    </div>
     <div class="header-middle" v-if="!isLogined">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
         {{ $t("lang.login") }}
@@ -39,14 +49,23 @@
     <div class="header-middle" v-else>
       <div class="icon" @click="router.push('/account')">
         <img src="../assets/images/home/personal-icon.png" />
-        <div class="nickname-div">{{ store.nickName }}</div>
+        <div class="nickname-div">{{ store.name2 ?? store.nickName }}</div>
       </div>
+
       <!-- <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div> -->
-      <!-- <div class="header-middle-wallet-wrapper">
-        <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
-        <span>{{ $t("lang.central_wallet") }}</span>
-        <RedeemPoint class="redeem" />
-      </div> -->
+      <div class="header-middle-wallet-wrapper">
+        <div class="redeem-wrapper" @click="refreshBalance">
+          <template v-if="!isLoadingBalance">
+            <span>{{ $t("lang.central_wallet") }}:</span>
+            <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
+          </template>
+          <span v-else>{{ $t("lang.loading") }}</span>
+        </div>
+        <div class="redeem-wrapper">
+          {{ $t("lang.central_rebate") }}:
+          <RedeemPoint class="redeem" />
+        </div>
+      </div>
       <!-- <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div> -->
     </div>
     <div class="header-lang" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
@@ -118,11 +137,9 @@
     </div>
   </div>
 
-  <div class="details-bar">
+  <!-- <div class="details-bar">
     <div class="message-flex">
-      <!--      $t("lang.login_register_to_view")-->
-      <!--      $t("lang.not_logged_in")-->
-      <div :class="store.token ? 'message-islogged' : ''" class="message" @click="refreshBalance">
+      <div v-if="store.token" class="message message-islogged" @click="refreshBalance">
         <span class="message-t">{{ store.token ? $t("lang.central_wallet") : "" }} :</span>
         <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
           {{
@@ -142,10 +159,6 @@
       </div>
     </div>
     <div class="menulist">
-      <router-link to="/account/inbox" class="men btn-pointer">
-        <img src="../assets/images/home/mail-mid.png" />
-        <div class="">{{ $t("lang.message") }}</div>
-      </router-link>
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
         <div class="">{{ $t("lang.deposit") }}</div>
@@ -154,12 +167,8 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <!-- <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
-        <div class="">{{ $t("lang.vip") }}</div>
-      </router-link> -->
     </div>
-  </div>
+  </div> -->
 
   <div class="home-game-section">
     <div class="game-left-list">
@@ -1206,7 +1215,7 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_kr = casualObj.name + " 해시 게임";
+              casualObj.title_kr = casualObj.name + " 미니 게임";
               casualObj.title_en = casualObj.name + " Mini Game";
 
               if (casualObj.code === "Spribe") {
@@ -1414,6 +1423,10 @@ export default defineComponent({
         initOneSignal();
       }
       initFloating();
+      if (store.token) {
+        store.getUnreadTotal();
+        store.getUnrepliedTotal();
+      }
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -1429,13 +1442,15 @@ export default defineComponent({
       checkShowImgTop();
       //TODO:: ADD IT BACK.
       // getAppDownloadUrl();
-      getUnreadTotal();
+      // getUnreadTotal();
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
       getCheckRedPacket();
       if (store.token) {
         isLogined.value = true;
+        store.getUnreadTotal();
+        store.getUnrepliedTotal();
       } else {
         isLogined.value = false;
       }
@@ -2140,15 +2155,15 @@ export default defineComponent({
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
-    margin-top: 3px;
     display: flex;
     align-items: center;
     gap: 12px;
     .icon {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      gap: 6px;
+      gap: 2px;
 
       .nickname-div {
         font-size: 1rem;
@@ -2171,11 +2186,21 @@ export default defineComponent({
     .header-middle-wallet-wrapper {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      .redeem {
-        :deep(img) {
-          filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(5550%) hue-rotate(200deg)
-            brightness(101%) contrast(101%);
+
+      .redeem-wrapper {
+        display: grid;
+        align-items: center;
+        gap: 2px;
+        grid-template-columns: 40px 1fr;
+        white-space: nowrap;
+        :first-child {
+          text-align: right;
+        }
+        .redeem {
+          :deep(img) {
+            filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(5550%) hue-rotate(200deg)
+              brightness(101%) contrast(101%);
+          }
         }
       }
     }
@@ -2295,33 +2320,31 @@ export default defineComponent({
       font-size: 1rem;
     }
   }
+}
+.menulist {
+  display: flex;
+  justify-content: end;
+  flex-grow: 1;
+  gap: 4px;
+  margin-right: 4px;
 
-  .menulist {
-    flex: 4;
-    // padding-left: 8px;
+  .men {
+    text-decoration: none;
+    color: $font-4;
+    gap: 2px;
     display: flex;
-    // justify-content: space-evenly;
-    justify-content: space-between;
-    gap: 4px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
 
-    .men {
-      text-decoration: none;
-      color: $font-4;
-      gap: 2px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.2rem;
+    &:active {
+      background: $grey-color;
+    }
 
-      &:active {
-        background: $grey-color;
-      }
-
-      img {
-        display: block;
-        height: 3rem;
-      }
+    img {
+      display: block;
+      height: 40px;
     }
   }
 }
@@ -3311,5 +3334,11 @@ export default defineComponent({
 .alert-img {
   width: 70% !important;
   margin: auto;
+}
+
+@media (max-width: 380px) {
+  .menulist {
+    display: none;
+  }
 }
 </style>

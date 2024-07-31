@@ -27,12 +27,14 @@
 import { ref, reactive, computed, onMounted, defineProps } from "vue";
 import { submitSlotNewLossBonus, refundSlotBonus, gettT88Detail, claimT88Reward } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const { t } = useI18n();
 const newLossBonus = ref(null);
 const newLossBonusBtnLoading = ref(false);
 const props = defineProps(["promoCode", "params"]);
-const canClaim = ref(false)
+const canClaim = ref(false);
 function chooseNewLossBonus() {
   newLossBonusBtnLoading.value = true;
 
@@ -64,7 +66,7 @@ const getRefundSlotBonus = () => {
   gettT88Detail(props.promoCode).then((res) => {
     if (res.code === 0) {
       newLossBonus.value = res.data.betAmount;
-      canClaim.value = res.data.canClaim
+      canClaim.value = res.data.canClaim;
     }
   });
 };

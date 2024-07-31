@@ -131,6 +131,7 @@
           <q-input
             hide-bottom-space
             ref="withdrawPwdRef"
+            maxlength="4"
             v-model="withdrawInfo.withdrawPassword"
             :label="$t('lang.withdraw_password')"
             class="withdraw-field"
@@ -309,12 +310,14 @@ import { useI18n } from "vue-i18n";
 import {useLocalStorage} from "@vueuse/core";
 import ReminderText from "src/assets/images/finance/ReminderText.vue";
 import { formatNumberComma } from "boot/utils";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {AcctBal,ReminderText},
   setup() {
     const store = userStore();
+    const router= useRouter();
     const isNewUser = ref(false);
     const { t } = useI18n();
     const $q = useQuasar();
@@ -344,16 +347,46 @@ export default defineComponent({
 
 
     const checkNewUser = () => {
-      if (store.phone == "") {
+      if (store.phone === "" || !store.realName) {
         isNewUser.value = true;
       } else {
         getWithdrawalMethods()
       }
     };
 
+    const checkBankCardBinded = () => {
+      if (store.realName) {
+        if(!store.registeredWithdrawPassword){
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "출금 비밀번호를 추가해 주세요",
+            icon: "report_problem"
+          });
+          router.push("/account/changePwd?name=withdraw");
+          return;
+        }else{
+          api.get("/session/allBankCard").then((res) => {
+            const response = res;
+            if (response.data.length === 0) {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: "먼저 은행 카드를 연결하세요",
+                icon: "report_problem"
+              });
+
+              router.push("/account/withdraw");
+            }
+          });
+        }
+      }
+    };
+
     onMounted(() => {
       checkNewUser();
       store.getBalance();
+      checkBankCardBinded();
     });
     const platforms = reactive([]);
 

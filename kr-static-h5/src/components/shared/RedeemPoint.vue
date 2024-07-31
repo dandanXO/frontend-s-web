@@ -44,8 +44,7 @@ onMounted(() => {
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  color: #3981FF;
-
+  color: #3981ff;
 
   img {
     max-width: 16px;

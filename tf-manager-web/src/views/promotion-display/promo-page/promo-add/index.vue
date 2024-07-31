@@ -364,7 +364,7 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row v-if="form.siteId === 8">
+    <el-row>
       <el-form-item label="VIP" prop="vips">
         <el-checkbox
           v-model="checkboxes.vip.checkAll"
@@ -1157,9 +1157,9 @@ async function loadForm(id, siteId) {
 
     form.siteId = ret.siteId
     loadPromoTypes()
-    if (form.siteId === 8) {
-      loadVips()
-    }
+
+    loadVips()
+
     // checked promoType checkboxes
     // const promoArr = form.promoType.split(",").map(Number)
     const promoArr = form.promoType.split(',')
@@ -1367,9 +1367,9 @@ function submitImageUpload() {
 }
 
 function onChangeSite() {
-  if (parseInt(form.siteId) === 8) {
-    loadVips()
-  }
+  // if (parseInt(form.siteId) === 8) {
+  loadVips()
+  // }
 }
 
 async function loadVips() {

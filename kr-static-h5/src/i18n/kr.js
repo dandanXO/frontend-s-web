@@ -12,7 +12,7 @@ export default {
     transfer: "포인트 전환",
     vip: "VIP",
     home: "홈",
-    account: "입금",
+    account: "마이페이지",
     promo: "프로모션",
     customer_service: "고객 서비스",
     nickname: "닉네임",
@@ -76,7 +76,7 @@ export default {
     menu_hashgame: "미니 게임",
     menu_others: "기타",
     menu_cockfighting: "닭싸움",
-    menu_minigame: "미니게임",
+    menu_minigame: "미니 게임",
     menu_rebate: "환급",
 
     // notify msg
@@ -91,6 +91,7 @@ export default {
     msg_readmsg: "메시지 읽기",
     msg_deleteselected: "선택한 메시지 삭제",
     msg_deleteallmsg: "모든 메시지 삭제",
+    msg_hasUnreadMail: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다",
 
     // login page
     login_title: "준비되셨나요?",
@@ -321,10 +322,10 @@ export default {
     acct_transfernow: "지금 전송",
 
     // deposit
-    deposit_tipstitle: "팁",
+    deposit_tipstitle: "실명 없음",
     deposit_tiptologin: "자금을 안전하게 보호하기 위해, 입금 전에 휴대폰 번호를 인증해야 합니다.",
     deposit_tipdesc: "금액을 안전하게 보호하기 위해, 입금 전에 휴대폰 번호를 인증해야 합니다.",
-    deposit_tiptorealname: "플레이어 계정에 실제 이름을 추가해 주세요.",
+    deposit_tiptorealname: "실명이 필요합니다",
     deposit_proceedverify: "인증 계속",
     deposit_encounterproblem: "입금 관련 문제가 발생하면 즉시 고객 서비스에 문의해 주세요!",
     deposit_enter_usdt: "USDT 금액을 입력해 주세요.",
@@ -346,8 +347,8 @@ export default {
     // withdraw
     withdraw_amount: "금액",
     withdraw_withdrawallamount: "전체 인출",
-    withdraw_tipstitle: "팁",
-    withdraw_tipdesc: "자금을 안전하게 보호하기 위해, 인출 전에 휴대폰 번호를 인증해야 합니다.",
+    withdraw_tipstitle: "실명 없음",
+    withdraw_tipdesc: "실명이 필요합니다",
     withdraw_proceedverify: "인증 계속",
     withdraw_please_enter_withdraw_amount: "인출할 금액을 입력해 주세요.",
     withdraw_password: "인출 비밀번호",
@@ -795,6 +796,7 @@ export default {
     invalid_phone_num: "숫자만 허용됩니다.",
     register_successful: "등록 성공",
     no_special_characters: "계정 이름에는 특수 문자가 포함될 수 없습니다.",
+    length_must_4: "길이는 4자여야 합니다",
     length_between_6_11: "길이는 6자에서 11자 사이여야 합니다.",
     length_between_34_37: "길이는 34자에서 37자 사이여야 합니다.",
     receive_by_email: "이메일로 받기",
@@ -931,16 +933,16 @@ export default {
     deposit_reminder: "알림",
     deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
-    본인명의 이외 타명의 입금은 처리가 불가합니다
-    계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
+      본인명의 이외 타명의 입금은 처리가 불가합니다
+      계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+      최소 금액 꼭 확인하시고, 만원 단위로만 입금 가능합니다.
 
-    ※주의사항
-    충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
-    금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
+      ※주의사항
+      충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+      금액을 잘못 기재하셨다면 문의 주시면 취소 처리 도와드리겠습니다.
 
-    ※가상계좌 점검시간 안내
-    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+      ※가상계좌 점검시간 안내
+      23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
 
     // WithdrawBankView
     choose_a_card: "계좌 선택",
@@ -1206,8 +1208,8 @@ export default {
     menu_deposit: "입금",
     menu_withdraw: "출금",
     menu_moneychange: "거래 내역",
-    menu_promo: "베팅 기록",
-    menu_transaction: "알림 기록",
+    menu_promo: "알림 기록",
+    menu_transaction: "베팅 기록",
     menu_reminder: "알림 기록",
     no_more_data_le: "정보를 찾을 수 없습니다",
     float_rebate: "공지사항",
@@ -1304,6 +1306,8 @@ export default {
     str_confirmwithdraw: "출금 확인",
     str_remark: "비고",
     strsystem_message: "시스템 메시지",
+    str_cancelwithdraw: "출금을 취소하시겠습니까?",
+    withdraw_cancelled: "출금 취소",
     str_confirm: "확인",
     confirm_withdrawal_sucess: "출금 확인 성공",
     success_copied: "복사되었습니다!",
@@ -1314,7 +1318,7 @@ export default {
     upload_fail_please_try: "업로드 실패. 다시 시도해 주세요.",
     upload_image: "이미지 업로드",
     esport: "e스포츠",
-    hashgame: "해시 게임",
+    hashgame: "미니 게임",
     livecasino: "라이브",
     sport: "스포츠",
     slot: "슬롯",
@@ -1524,6 +1528,7 @@ export default {
     1307: "일일 출금 한도를 초과했습니다.",
     1308: "잔액이 충분하지 않습니다.",
     1309: "카드 계좌가 회원 이름과 일치하지 않습니다.",
+    1317: "은행 카드 바인딩",
     1401: "OTP 전송 시간이 초과되었습니다.",
     1402: "OTP 전송 일정 오류, OTP를 다시 전송하십시오.",
     1403: "OTP 확인 오류입니다.",
@@ -1536,6 +1541,7 @@ export default {
     10006: "이 이름은 사용할 수 없습니다.",
     10007: "게임 참여 과정에서 오류가 발생했습니다.",
     10008: "오류가 발생했습니다.",
+    11000: "제휴사가 존재하지 않음",
     11003: "입금 실패.",
     12100: "출금 비밀번호가 일치하지 않습니다.",
     12101: "새 출금 비밀번호는 기존 출금 비밀번호와 같을 수 없습니다.",

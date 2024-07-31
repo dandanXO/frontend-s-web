@@ -48,7 +48,8 @@ export default {
     transferRecord: "Transfer Record",
     promotionRecord: "Promotion Record",
     betRecord: "Bet Record",
-    referralRecord: "Referral Record"
+    referralRecord: "Referral Record",
+    interestProfit: "Interest Profit"
   },
   bottomNav: {
     home: "Home",
@@ -225,7 +226,8 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "LOG OUT",
-    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts"
+    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
+    interestProfit: "Interest Profit"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -249,6 +251,28 @@ export default {
     withdrawal: "Withdrawal",
     recharge: "Recharge"
   },
+  interestProfit: {
+    depositOverview: "Deposit overview",
+    unexpiredEarnings: "Unexpired earnings",
+    cumulativeIncome: "Cumulative income",
+    storageTime: "Storage time (Days)",
+    deposit: "Deposit",
+    trialCalculation: "Trial calculation",
+    annualInterestRate: "Annual interest rate",
+    distributeInterest: "Distribute interest",
+    pending: "Pending",
+    ended: "Ended",
+    details: "Details",
+    collect: "Collect",
+    noData: "No data",
+    annualInterestRate: "Annual Interest Rate",
+    depositAmount: "Deposit Amount",
+    depositDuration: "Deposit Duration",
+    placeTime: "Place Time",
+    matureTime: "Mature Time",
+    status: "Status",
+    confirm: "Confirm"
+  },
   vip: {
     receiveMonthlyRewards: "Receive monthly rewards",
     received: "Received",
@@ -262,6 +286,7 @@ export default {
     vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
     upgrade: "Upgrade",
     experience: "Experience",
+    dailyWithdrawalTimes: "Daily Withdrawal Times",
     rewards: "Rewards",
     vipTable_txt:
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
@@ -544,6 +569,7 @@ export default {
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     12104: "This feature is disabled, please contact customer service",
+    12105: "Your withdrawal operation has a network delay, resulting in payment failure. Please wait 30 minutes before withdrawing again, thank you!",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",

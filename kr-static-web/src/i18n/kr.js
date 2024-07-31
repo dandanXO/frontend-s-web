@@ -30,8 +30,9 @@ export default {
     no_card_avail: "사용 가능한 카드가 없습니다. 진행하려면 ",
     add_a_bank_card: "은행 카드 추가",
     welcome: "환영합니다",
+    nickname: "닉네임",
     mainWallet: "잔액",
-    point: "할인",
+    point: "포인트",
     reminder: "지원",
     require: "지원",
     str_copy: "복사",
@@ -63,6 +64,7 @@ export default {
     fishing: "낚시",
     cockfight: "투계",
     deposit_should_between: "금액을 입력하세요: ",
+    deposit_amount_unit: "입금 금액은 10,000 단위여야 합니다.",
     msg_deleted: "메시지가 삭제되었습니다.",
     please_select_bank: "은행을 선택하세요.",
     you_account_has_been_sent_email: "귀하의 계정 코드가 이메일로 전송되었습니다.",
@@ -113,6 +115,7 @@ export default {
     playnow: "지금 플레이",
     betnow: "지금 베팅",
     systemError: "시스템 오류",
+    withdrawCancelled: "출금 취소",
     loginTitle: "알림",
     bankName: "은행",
     bankAcc: "계좌 이름",
@@ -180,7 +183,9 @@ export default {
     bank: "은행",
     chgPwd: "비밀번호 변경",
     chgWithdrawPwd: "출금 비밀번호 변경",
-    realName: "이름",
+    realName: "실명",
+    nickname: "닉네임",
+    loginName: "아이디",
     birthday: "생일",
     zalo: "Zalo",
     mobileNo: "전화번호",
@@ -208,8 +213,10 @@ export default {
       "카드의 이름과 계좌 번호를 정확하게 입력해 주세요. 잘못된 정보로 인해 출금 시 손실이 발생할 수 있습니다! CITY8이 감사드립니다!"
   },
   placeholder: {
-    realName: "실명을 입력해 주세요",
+    realName: "실명 입력해 주세요",
+    nickname: "닉네임 입력해 주세요",
     birthday: "생년월일을 입력해 주세요",
+    loginName: "아이디 입력해 주세요",
     zalo: "Zalo를 입력해 주세요",
     email: "이메일 주소를 입력해 주세요",
     mobileNo: "전화번호를 입력해 주세요",
@@ -234,6 +241,7 @@ export default {
     min4: "인증 코드는 4자여야 합니다",
     emailFormat: "유효한 이메일 주소를 입력해 주세요",
     between612: "길이는 6-11자여야 합니다",
+    length4: "길이는 4자여야 합니다",
     noMatch: "확인 비밀번호가 새 비밀번호와 일치하지 않습니다",
     verifyPhone: "휴대전화 번호를 확인해 주세요",
     onlyNumber: "숫자만 입력할 수 있습니다",
@@ -320,9 +328,9 @@ export default {
     bindTime: "연결 시간",
     unbindTime: "해제 시간",
     amount: "금액",
-    singleLimit: "한도",
-    withdrawalToday: "오늘 출금",
-    remaining: "남은",
+    singleLimit: "거래 한도",
+    withdrawalToday: "일일 한도",
+    remaining: "남은 인출 횟수",
     times: "회",
     withdrawPwd: "출금 비밀번호",
     realNameNotEmpty: "실명이 비어 있을 수 없습니다.",
@@ -351,7 +359,10 @@ export default {
     lengthShouldBe: "길이는 다음과 같아야 합니다",
     smsCodeRequired: "SMS 확인 코드를 입력하세요",
     bankBranchAddress: "은행 지점 주소",
-    settleWithdrawPwd: "출금 비밀번호를 추가하세요"
+    settleWithdrawPwd: "출금 비밀번호를 추가하세요",
+    note: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+      출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+      회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`
   },
   referTerms: {
     promotionStart: "프로모션은 2022년 6월 1일 00:00:00 (GMT +8)부터 시작됩니다.",
@@ -386,14 +397,24 @@ export default {
     bank: "은행",
     selectBank: "은행 선택",
     napas: "다른 은행으로의 이체를 24/7 지원합니다.",
-    depositMoney: "돈을 입금하다",
+    depositMoney: "빠른 입금",
     copyWebsite: "링크 복사",
     copied: "복사 완료",
     quickDeposit: "빠른 입금",
     realTimeExchangeRate: "실시간 환율",
     inputUSDT: "USDT 입력",
     chooseAmt: "금액 선택",
-    note: "주의 사항:",
+    note: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+      본인명의 이외 타명의 입금은 처리가 불가합니다
+      계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+      입금 최소 금액 확인하시고, 만원 단위로만 가능합니다.
+
+      ※주의사항
+      충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+      금액을 잘못 기재하셨다면 문의 주시면 취소 처리 도와드리겠습니다.
+
+      ※가상계좌 점검시간 안내
+      23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     notept1: "게임 내 거래 단위는 원이며, 1 원 = 1,000 VND입니다.",
     redirected: "입금 완료를 위해 귀하의 은행 페이지로 리디렉션됩니다.",
     successful: "성공하면 이 페이지에서 알림을 받게 됩니다.",
@@ -758,9 +779,9 @@ export default {
   },
   redeem_point: {
     // redeem point start
-    redeem_point_pending_list: "보류 목록",
-    redeem_point_redeem: "상환하다",
-    redeem_point_points: "포인트들",
+    redeem_point_pending_list: "포인트 보유현황",
+    redeem_point_redeem: "전환",
+    redeem_point_points: "포인트",
     redeem_point_date: "날짜",
     redeem_point_source: "기록",
     redeem_point_condition: "롤링",
@@ -810,7 +831,10 @@ export default {
     message_read_all_message: "모든 메시지 읽기",
     message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
-    message_total: "총"
+    message_total: "총",
+    message_no_real_name: "실명이 필요합니다",
+    message_no_bank_card: "먼저 은행 카드를 연결하세요",
+    message_no_withdraw_password: "먼저 출금 비밀번호를 추가하세요"
     // message end
   },
   feedback: {
@@ -887,7 +911,7 @@ export default {
     bindEWallet: "먼저 전자 지갑을 등록하세요.",
     loginbeforeAction: "행동을 취하기 전에 먼저 로그인하세요.",
     safetyBeforePhone: "안전을 위해, 입금하기 전에 전화번호를 확인하세요.",
-    bindRealName: "실명을 업데이트하지 않았습니다. 업데이트해주세요.",
+    bindRealName: "실명 업데이트하지 않았습니다. 업데이트해주세요.",
     depositConfirmed: "입금이 확인되었습니다."
   },
   sports: {
@@ -925,7 +949,7 @@ export default {
     backToTop: "맨 위로"
   },
   status: {
-    pending: "대기 중",
+    pending: "입금 대기",
     claimed: "확인됨",
     withdrawFailed: "출금 실패",
     withdraw: "출금",
@@ -936,6 +960,7 @@ export default {
     applying: "처리 중",
     failed: "실패",
     success: "성공",
+    depositSuccess: "입금 완료",
     underReview: "검토 중",
     toBePaid: "지급 대기 중",
     normalPayment: "지급 중인 주문",
@@ -961,6 +986,9 @@ export default {
     otp_success_send_email: "OTP 코드가 이메일로 전송되었습니다.",
     otp_success_send_phone: "OTP 코드가 휴대전화로 전송되었습니다.",
     login_to_continue: "계속하려면 로그인 해주세요."
+  },
+  notification: {
+    hasUnreadMessage: "읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다."
   },
   response: {
     101: "플랫폼을 찾을 수 없습니다.",
@@ -1021,6 +1049,7 @@ export default {
     10006: "이 이름은 사용할 수 없습니다.",
     10007: "게임 참여 과정에서 오류가 발생했습니다.",
     10008: "오류가 발생했습니다.",
+    11000: "제휴사가 존재하지 않음",
     11003: "입금 실패.",
     12100: "출금 비밀번호가 일치하지 않습니다.",
     12101: "새 출금 비밀번호는 기존 출금 비밀번호와 같을 수 없습니다.",

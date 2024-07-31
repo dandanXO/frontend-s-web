@@ -48,7 +48,8 @@ export default {
     transferRecord: "منتقلی کا ریکارڈ",
     promotionRecord: "پروموشن کا ریکارڈ",
     betRecord: "شرط لگانے کا ریکارڈ",
-    referralRecord: "ریفرل کا ریکارڈ"
+    referralRecord: "ریفرل کا ریکارڈ",
+    interestProfit: "سود کا منافع"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -225,7 +226,8 @@ export default {
     feedback: "فیڈبیک",
     vip: "VIP",
     logout: "لاگ آوٹ",
-    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
+    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
+    interestProfit: "سود کا منافع"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
@@ -249,6 +251,28 @@ export default {
     withdrawal: "واپسی",
     recharge: "ریچارج"
   },
+  interestProfit: {
+    depositOverview: "جمع کروانے کا جائزہ",
+    unexpiredEarnings: "غیر ختم شدہ کمائی",
+    cumulativeIncome: "مجموعی آمدنی",
+    storageTime: "ذخیرہ وقت (دن)",
+    deposit: "جمع",
+    trialCalculation: "آزمائشی حساب",
+    annualInterestRate: "سالانہ شرح سود",
+    distributeInterest: "سود تقسیم کریں",
+    pending: "زیر التواء",
+    ended: "ختم ہو گیا",
+    details: "تفصیلات",
+    collect: "جمع کریں",
+    noData: "کوئی ڈیٹا نہیں",
+    annualInterestRate: "سالانہ شرح سود",
+    depositAmount: "جمع رقم",
+    depositDuration: "جمع کرنے کی مدت",
+    placeTime: "وقت مقرر کریں",
+    matureTime: "پختہ وقت",
+    status: "حالت",
+    confirm: "تصدیق کریں"
+  },
   vip: {
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
     received: "وصول کیا",
@@ -261,6 +285,7 @@ export default {
     vipStatus_txt: "وی آئی پی اسٹیٹس کو ماہانہ جمع شدہ رقم سے اپ گریڈ کیا جا سکتا ہے",
     upgrade: "اپ گریڈ",
     experience: "تجربہ",
+    dailyWithdrawalTimes: "روزانہ واپسی کے اوقات",
     rewards: "انعامات",
     vipTable_txt:
       "ایک بار جمع شدہ رقم اپ گریڈ کی ضروریات پوری کرتی ہے، آپ کا VIP سطح فوراً بلند کیا جائے گا، اور متعلقہ اپ گریڈ انعامات جاری کیے جائیں گے۔"
@@ -542,6 +567,7 @@ export default {
     12100: "نکال پاس ورڈ میل نہیں کھاتا",
     12101: "نیا نکال پاس ورڈ پرانا نکال پاس ورڈ کی طرح نہیں ہوسکتا",
     12104: "یہ بینک کارڈ نمبر بلاک کر دیا گیا ہے",
+    12105: "آپ کے نکالنے کے آپریشن میں نیٹ ورک کی تاخیر ہوئی، جس کی وجہ سے ادائیگی ناکام ہو گئی۔ براہ کرم رقم واپس لینے سے پہلے 30 منٹ انتظار کریں، شکریہ!",
     13000: "ڈومین نام نہیں ملا",
     13001: "3 مہینے سے پرانی معلومات پوچھنا ممکن نہیں",
     13002: "7 دن کے اندر ہونا چاہئے",

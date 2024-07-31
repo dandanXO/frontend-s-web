@@ -36,6 +36,7 @@ export const userStore = defineStore("userStore", {
       currency: { value: "원", label: "원" },
       personalAddress: "",
       unreadInboxMail: 0,
+      repliedQuestion: 0,
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
@@ -273,6 +274,21 @@ export const userStore = defineStore("userStore", {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
+          }
+        });
+      }
+    },
+    getUnrepliedTotal() {
+      if (this.token) {
+        return api.get("/session/feedback/sysReply").then((res) => {
+          if (res.code === 0) {
+            const { records } = res.data;
+            this.repliedQuestion = records.reduce((total, record) => {
+              if (record.replyId !== null && record.replyReadTime === null) {
+                total++;
+              }
+              return total;
+            }, 0);
           }
         });
       }

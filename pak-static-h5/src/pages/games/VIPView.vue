@@ -179,10 +179,8 @@
               <br />
               {{ $t("vip.experience") }}
             </q-td>
-            <q-td>
-              {{ $t("vip.upgrade") }}
-              <br />
-              {{ $t("vip.rewards") }}
+            <q-td style="">
+              {{ $t("vip.dailyWithdrawalTimes") }}
             </q-td>
             <!-- <q-td>
               {{ $t("vip.monthly") }}
@@ -195,7 +193,7 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1 || colIndex === 2 || colIndex === 3">
+              <template v-if="colIndex === 1 || colIndex === 3">
                 <div style="justify-content: flex-end; display: flex; align-items: center; gap: 4px">
                   <img src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
@@ -450,79 +448,79 @@ const rows = [
   {
     name: "VIP 0",
     ugprade: "0",
-    reward: "0",
+    reward: "3",
     flow: "0"
   },
   {
     name: "VIP 1",
     ugprade: "1,000",
-    reward: "30",
+    reward: "3",
     flow: "38"
   },
   {
     name: "VIP 2",
     ugprade: "3,000",
-    reward: "50",
+    reward: "3",
     flow: "88"
   },
   {
     name: "VIP 3",
     ugprade: "5,000",
-    reward: "100",
+    reward: "3",
     flow: "188"
   },
   {
     name: "VIP 4",
     ugprade: "10,000",
-    reward: "200",
+    reward: "4",
     flow: "388"
   },
   {
     name: "VIP 5",
     ugprade: "30,000",
-    reward: "500",
+    reward: "5",
     flow: "588"
   },
   {
     name: "VIP 6",
     ugprade: "50,000",
-    reward: "1,000",
+    reward: "6",
     flow: "888"
   },
   {
     name: "VIP 7",
     ugprade: "100,000",
-    reward: "2,000",
+    reward: "7",
     flow: "1,888"
   },
   {
     name: "VIP 8",
     ugprade: "300,000",
-    reward: "3,000",
+    reward: "8",
     flow: "3,888"
   },
   {
     name: "VIP 9",
     ugprade: "500,000",
-    reward: "4,000",
+    reward: "9",
     flow: "8,888"
   },
   {
     name: "VIP 10",
     ugprade: "1,000,000",
-    reward: "5,000",
+    reward: "10",
     flow: "28,888"
   },
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: "10,000",
+    reward: "Unlimited",
     flow: "58,888"
   },
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: "20,000",
+    reward: "Unlimited",
     flow: "88,888"
   }
 ];

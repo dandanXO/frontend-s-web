@@ -57,13 +57,9 @@
               {{ list.platformName }}
             </div>
           </template>
-          <span
-            v-formatter="{data: list.bet, type: 'money'}"
-          />
+          <span v-formatter="{data: list.bet, type: 'money'}" />
           /
-          <span
-            v-formatter="{data: list.payout, type: 'money'}"
-          />
+          <span v-formatter="{data: list.payout, type: 'money'}" />
         </el-descriptions-item>
         <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
         <el-descriptions-item
@@ -98,9 +94,7 @@
               {{ t('fields.thirdPartyTotalBet') }}
             </div>
           </template>
-          <span
-            v-formatter="{data: platform.totalBet, type: 'money'}"
-          />
+          <span v-formatter="{data: platform.totalBet, type: 'money'}" />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -124,9 +118,7 @@
               {{ t('fields.thirdPartyTotalWin') }}
             </div>
           </template>
-          <span
-            v-formatter="{data: platform.totalWin, type: 'money'}"
-          />
+          <span v-formatter="{data: platform.totalWin, type: 'money'}" />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -228,21 +220,21 @@ async function loadPlatformSummaryList() {
     if (item.list && item.list.length > 0) {
       sum += item.list.reduce((betSum, list) => betSum + list.bet, 0)
     }
-    return Math.ceil(sum)
+    return sum
   }, 0)
 
   const getTotalPayout = ret.reduce((sum, item) => {
     if (item.list && item.list.length > 0) {
       sum += item.list.reduce((payoutSum, list) => payoutSum + list.payout, 0)
     }
-    return Math.ceil(sum)
+    return sum
   }, 0)
 
   const getTotalWinLose = ret.reduce((sum, item) => {
     if (item.list && item.list.length > 0) {
       sum += item.list.reduce((winLoseSum, list) => winLoseSum + list.win, 0)
     }
-    return Math.ceil(sum)
+    return sum
   }, 0)
 
   console.log('getTotalBet : ', getTotalBet)
@@ -250,14 +242,26 @@ async function loadPlatformSummaryList() {
   const resultArray = Object.values(groupedByGameType)
 
   // compare allSitePlatforms items with resultArray, add missing platform to its type with 0 bet/payout
-  platform.allSitePlatforms.forEach((item) => {
-    const found = ret.find((element) => element.gameType === item.gameType && element.plaformName === item.code)
+  platform.allSitePlatforms.forEach(item => {
+    const found = ret.find(
+      element =>
+        element.gameType === item.gameType && element.plaformName === item.code
+    )
     if (!found) {
-      if (!resultArray.find((element) => element.gameType === item.gameType)) {
-        resultArray.push({ gameType: item.gameType, list: [[{ platformName: item.code, bet: 0, payout: 0 }]] })
+      if (!resultArray.find(element => element.gameType === item.gameType)) {
+        resultArray.push({
+          gameType: item.gameType,
+          list: [[{ platformName: item.code, bet: 0, payout: 0 }]],
+        })
       } else {
-        const index = resultArray.findIndex((element) => element.gameType === item.gameType)
-        resultArray[index].list[0].push({ platformName: item.code, bet: 0, payout: 0 })
+        const index = resultArray.findIndex(
+          element => element.gameType === item.gameType
+        )
+        resultArray[index].list[0].push({
+          platformName: item.code,
+          bet: 0,
+          payout: 0,
+        })
       }
     }
   })

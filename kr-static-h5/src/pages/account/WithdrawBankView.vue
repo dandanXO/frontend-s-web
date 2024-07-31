@@ -33,7 +33,7 @@
 
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
-      <div class="bank-bind-item q-my-sm">
+      <div class="bank-bind-item q-my-sm" v-if="!isGotBankCard">
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+{{ $t("lang.add_bank_card") }}</span>
@@ -42,14 +42,6 @@
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+{{ $t("lang.add_virtual_wallet") }}</span>
         </div>
-        <!--        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">-->
-        <!--          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />-->
-        <!--          <span>+{{ $t("lang.add_ewallet") }}</span>-->
-        <!--        </div>-->
-        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加支付宝</span>
-        </div> -->
       </div>
 
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
@@ -77,7 +69,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>
+          <!--          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>-->
         </div>
       </template>
 
@@ -106,7 +98,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>
+          <!--          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>-->
         </div>
       </template>
 
@@ -135,7 +127,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <!--          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>-->
         </div>
       </template>
 
@@ -164,7 +156,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <!--          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>-->
         </div>
       </template>
     </div>
@@ -176,7 +168,7 @@ import { reactive, ref, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { userStore } from "src/stores";
 const store = userStore();
@@ -190,7 +182,7 @@ const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 
 const onBindCardClick = (path) => {
   router.push(path);
@@ -264,6 +256,7 @@ const unbindCardLabel = () => {
   else if (bankType === EWALLET) return "电子钱包";
 };
 
+const isGotBankCard = ref(false);
 let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });
 const loadCards = () => {
   api
@@ -279,12 +272,8 @@ const loadCards = () => {
           const data = res.data[i];
           const { bankType, bankCode } = data;
 
-          if (isAlipay(bankCode)) {
-            const alipayBankType = "ALIPAY";
-            bankCardList[alipayBankType].push(data);
-          } else {
-            bankCardList[bankType].push(data);
-          }
+          bankCardList[bankType].push(data);
+          isGotBankCard.value = true;
         }
       }
     })
@@ -303,16 +292,16 @@ const formatCardNumber = (cardNumber) => {
 };
 
 onActivated(() => {
-  console.log(store)
+  console.log(store);
   if (store.registeredWithdrawPassword === false) {
-    router.push('/account/changePwd?name=withdraw');
-    
+    router.push("/account/changePwd?name=withdraw");
+
     $q.notify({
-        color: "negative",
-        position: "top",
-        message: t('lang.settle_withdraw_pwd'),
-        icon: "report_problem"
-      });
+      color: "negative",
+      position: "top",
+      message: t("lang.settle_withdraw_pwd"),
+      icon: "report_problem"
+    });
   }
   loadCards();
 });
@@ -382,7 +371,7 @@ onActivated(() => {
     }
 
     .bank-card {
-      background: url(../../assets/images/account/bank-card-bg.png);
+      background: #e0f0ff;
       background-size: 100% 100%;
       border-radius: 10px;
       display: flex;

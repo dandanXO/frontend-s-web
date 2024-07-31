@@ -4,7 +4,7 @@ import { eventapi } from "boot/axios";
 const qs = require("qs");
 
 export function claimBonusItem(item) {
-  return cached.put(`/bonus/claim/${item}`);
+  return eventapi.put(`/bonus/claim/${item}`);
 }
 
 export function getSportMatchQuizInfo() {
@@ -21,14 +21,14 @@ export function getMemberSportQuizTotal() {
 
 // tf88 baoheimvon
 export function gettT88Detail(promoCode) {
-  return eventapi.get('/lose-refund/get-ytd-loss', { 
+  return eventapi.get("/lose-refund/get-ytd-loss", {
     params: {
       promoCode
     }
   });
 }
 export function claimT88Reward(promoCode) {
-  return eventapi.post('/lose-refund/claim', { promoCode });
+  return eventapi.post("/lose-refund/claim", { promoCode });
 }
 
 export function submitMemberSportMatchQuiz(param) {
@@ -155,14 +155,16 @@ export function getStepRecords(current) {
 }
 
 export function selectNumber(promoCode, number) {
-  return eventapi.post('/uefa-lottery/select-number',
+  return eventapi.post(
+    "/uefa-lottery/select-number",
     qs.stringify({
       number: number,
       promoCode: promoCode
-    }));
+    })
+  );
 }
 export function getSelectedNumber() {
-  return eventapi.get('/uefa-lottery/selected-number')
+  return eventapi.get("/uefa-lottery/selected-number");
 }
 export function getWinners(promoCode) {
   return eventapi.get(`/uefa-lottery/winners?promoCode=${promoCode}`);

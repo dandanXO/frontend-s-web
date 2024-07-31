@@ -15,11 +15,11 @@
       </div>
       <div class="info-box">
         <div class="qr-code-box">
-          <div class="qr-code-item" v-if="mobileOS === 'Android'">
+          <a :href="value" class="qr-code-item" v-if="mobileOS === 'Android'" target="_blank">
             <div class="qrcode"><qrcode-vue :value="value" size="124" level="H" /></div>
             <div class="qrcode-info">安卓手机扫码下载</div>
-          </div>
-          <div class="qr-code-item" v-if="mobileOS === 'iOS'">
+          </a>
+          <div :href="value" class="qr-code-item" v-if="mobileOS === 'iOS'" target="_blank">
             <div class="qrcode">
               <div class="qrcode"><qrcode-vue :value="value" size="124" level="H" /></div>
             </div>
@@ -42,26 +42,26 @@
         <div class="download-content">
           <div class="download">
             <div class="icon">
-              <div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div>
+              <a :href="value" target="_blank" class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></a>
             </div>
             <div class="info">
               <div class="top">
                 <img src="../../../assets/promo/aijiasu/apple-icon.png" alt="" class="logo" />
                 <div>苹果手机</div>
               </div>
-              <div>长按二维码下载</div>
+              <div>点击二维码下载</div>
             </div>
           </div>
           <div class="download">
             <div class="icon">
-              <div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div>
+              <a :href="value" target="_blank" class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></a>
             </div>
             <div class="info">
               <div class="top">
                 <img src="../../../assets/promo/aijiasu/android-icon.png" alt="" class="logo" />
                 <div>安卓手机</div>
               </div>
-              <div>长按二维码下载</div>
+              <div>点击二维码下载</div>
             </div>
           </div>
         </div>
@@ -69,8 +69,8 @@
       <div class="session3">
         <img src="../../../assets/promo/aijiasu/title3.png" alt="" />
         <div class="tabs">
-          <div class="tab"><img src="../../../assets/promo/aijiasu/btn1.png" alt="" /></div>
-          <div class="tab"><img src="../../../assets/promo/aijiasu/btn2.png" alt="" /></div>
+          <a href="https://www.91ajs.com/Help/Tutorial#ios-tab" target="_blank" class="tab"><img src="../../../assets/promo/aijiasu/btn1.png" alt="" /></a>
+          <a href="https://www.91ajs.com/Help/Tutorial#android-tab" target="_blank" class="tab"><img src="../../../assets/promo/aijiasu/btn2.png" alt="" /></a>
         </div>
       </div>
 
@@ -107,7 +107,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import QrcodeVue from "qrcode.vue";
-const value = ref("https://example.com");
+const value = ref("https://www.91ajs.com/");
 
 const mobileOS = ref("unknown");
 
