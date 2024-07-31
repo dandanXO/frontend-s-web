@@ -487,11 +487,11 @@ export default {
   },
   mode: {
     DYNAMIC: '页面浮动',
-    STATIC: '直接显示'
+    STATIC: '直接显示',
   },
   autoplayStatus: {
     ON: '开',
-    OFF: '关'
+    OFF: '关',
   },
   fields: {
     account: '账号',
@@ -957,6 +957,7 @@ export default {
     exchangeRate: '兑换率',
     exportToExcel: '导出至Excel',
     expressCompany: '快递公司',
+    externalUrl: '外部网址',
     extraParam: '扩展信息',
     fail: '失败',
     failReason: '失败原因',
@@ -2633,7 +2634,7 @@ export default {
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
-    'Media Display Settings': '媒体显示设置'
+    'Media Display Settings': '媒体显示设置',
   },
   google: {
     google_auth_menu: '谷歌验证',
