@@ -356,18 +356,19 @@ export default defineComponent({
 
     const checkBankCardBinded = () => {
       if (store.realName) {
-        api.get("/session/allBankCard").then((res) => {
-          const response = res;
-          if (response.data.length === 0) {
-            if(!store.registeredWithdrawPassword){
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: "출금 비밀번호를 추가해 주세요",
-                icon: "report_problem"
-              });
-              router.push("/account/changePwd?name=withdraw");
-            }else{
+        if(!store.registeredWithdrawPassword){
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "출금 비밀번호를 추가해 주세요",
+            icon: "report_problem"
+          });
+          router.push("/account/changePwd?name=withdraw");
+          return;
+        }else{
+          api.get("/session/allBankCard").then((res) => {
+            const response = res;
+            if (response.data.length === 0) {
               $q.notify({
                 color: "negative",
                 position: "top",
@@ -377,8 +378,8 @@ export default defineComponent({
 
               router.push("/account/withdraw");
             }
-          }
-        });
+          });
+        }
       }
     };
 
