@@ -75,7 +75,7 @@
         </template>
       </q-input>
 
-      <div class="text-center q-mt-lg" v-if="isEditBirthday">
+      <div class="text-center q-mt-lg" v-if="isEdit">
         <q-btn
           class="common-large-btn full-width"
           no-caps
@@ -177,6 +177,11 @@ export default defineComponent({
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (!personalState.memberInfo.birthday) ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
+
+      if(!formDetail.name2 || !formDetail.realName){
+        isEdit.value= true;
+      }
+
     };
 
     const canEdit = computed(() => {
@@ -348,6 +353,8 @@ export default defineComponent({
             message: t("lang.msg_update_successful"),
             icon: "check_circle_outline"
           });
+
+          isEdit.value= false;
 
           store.getMemberInfo().then(() => {
             loadInfo();
