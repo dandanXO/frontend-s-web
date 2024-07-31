@@ -126,10 +126,10 @@ export default {
     virtualWallet_placeholder: "Please insert virtual wallet",
     virtualWallet_rules_01: "Please insert virtual wallet",
     virtualWallet_rules_02: "The phone number must start with '03'",
-    virtualWallet_rules_03: "The virtual wallet must have 11 digits",
+    virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
-    virtualWallet_untie: "Please enter untie virtual wallet",
+    virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
     notMatch: " not match",
@@ -244,8 +244,8 @@ export default {
     withdrawTutorial: "Withdraw Tutorial"
   },
   bank: {
-    virtualWallet: "Virtual Wallet",
-    virtualAccount: "Virtual Account"
+    virtualWallet: "eWallet",
+    virtualAccount: "eWallet Account"
   },
   order: {
     withdrawal: "Withdrawal",
@@ -286,7 +286,7 @@ export default {
     vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
     upgrade: "Upgrade",
     experience: "Experience",
-    dailyWithdrawalTimes: "Daily Withdrawal Times",
+    dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
