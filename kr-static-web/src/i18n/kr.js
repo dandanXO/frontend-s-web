@@ -988,7 +988,7 @@ export default {
     login_to_continue: "계속하려면 로그인 해주세요."
   },
   notification: {
-    hasUnreadMessage: "읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다."
+    hasUnreadMessage: "읽지 않은 공지사항,메시지가 있습니다, 입금/출금/게임 페이지에 접근할수없습니다."
   },
   response: {
     101: "플랫폼을 찾을 수 없습니다.",
