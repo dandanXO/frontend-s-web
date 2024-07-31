@@ -32,7 +32,8 @@
                   hide-bottom-space
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.cryptoAccount_rules_01'),
-                    (val) => (val && val.length >= 34 && val && val.length <= 36) || $t('form.cryptoAccount_rules_02')
+                    (val) => val.startsWith('T') || $t('form.cryptoAccount_rules_02'), // starts with 'T'
+                    (val) => val.length === 34 || $t('form.cryptoAccount_rules_03') // must be 34 characters
                   ]"
                 ></q-input>
               </template>
