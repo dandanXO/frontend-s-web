@@ -80,7 +80,14 @@
 
         <div class="do-actions">
           <div class="">
-            <q-btn no-caps unelevated class="do-btn-grey" @click="submitTrialCalculation" :loading="isLoading">
+            <q-btn
+              no-caps
+              unelevated
+              class="do-btn-grey"
+              @click="submitTrialCalculation"
+              :loading="isLoading"
+              style="white-space: nowrap"
+            >
               {{ $t("interestProfit.trialCalculation") }}
             </q-btn>
           </div>
