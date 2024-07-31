@@ -125,6 +125,7 @@
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
             </span>
             <template #dropdown>
@@ -154,6 +155,12 @@
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item command="mailbox">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                    <img src="../../assets/images/home/header-dropdown-inbox-icon.png" />
+                    <span>{{ $t("menu.mailbox") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
@@ -316,11 +323,18 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container login-container" :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : '' ">
-        <div class="acc-dialog-left" >
+      <div
+        class="acc-dialog-container login-container"
+        :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : ''"
+      >
+        <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img class="paris" v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-paris.png" />
-          <img v-else  src="../../assets/home/tf88club-img.png">
+          <img
+            class="paris"
+            v-if="isLandingClub !== 'tf88club'"
+            src="../../assets/home/acc-dialog-img-login-paris.png"
+          />
+          <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -644,6 +658,9 @@ export default defineComponent({
       }
       if (command === "promotion") {
         router.push("/promotion");
+      }
+      if(command === "mailbox") {
+        router.push("/center/mailbox")
       }
       if (command === "logout") {
         onLogout();
@@ -1661,6 +1678,15 @@ body {
       width: 12px;
       height: 12px;
     }
+
+    .unread-count {
+      position: absolute;
+      bottom: 2px;
+      right: 5px;
+      width: 12px;
+      height: 12px;
+      opacity: 1;
+    }
   }
 
   .profile-details {
@@ -1973,7 +1999,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -2556,7 +2582,6 @@ body {
       }
 
       .login-container {
-
         .acc-dialog-left {
           display: flex;
           align-items: flex-end;
@@ -2564,7 +2589,6 @@ body {
           background-size: 100% 100%;
           background-position: center center;
           min-height: 500px;
-
 
           img {
             display: block;
@@ -2575,26 +2599,22 @@ body {
               margin: 0;
             }
           }
-
-
-
         }
 
-        &.acc-dialog-landing{
-          .acc-dialog-left{
+        &.acc-dialog-landing {
+          .acc-dialog-left {
             background-image: url(../../assets/home/tf88club.png);
-            max-height:95vh;
+            max-height: 95vh;
 
-            img{
+            img {
               width: calc(100% + 20px);
               margin: -50px -10px 0px -10px;
             }
           }
 
-          .acc-dialog-right{
+          .acc-dialog-right {
             padding-left: 20px;
           }
-
         }
       }
 
