@@ -5,46 +5,13 @@
     label-position="left"
     class="config_form"
   >
-    <el-collapse v-model="uiControl.activeGroups">
-      <el-collapse-item v-for="groupConfig in defaultConfigs.customGroup" :title="groupConfig.group" :name="groupConfig.group" :key="groupConfig.group">
-        <el-form-item
-          v-for="item in groupConfig.items"
-          border-color="#dcdcdc"
-          border-style="dashed"
-          label=""
-          size="mini"
-          :key="item.orderIndex"
-        >
-          <el-input class="disable-input" v-model="item.code" />
-          -
-          <el-input class="disable-input" v-model="item.value" />
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            style="margin-left: 20px"
-            @click="showEdit(item)"
-            plain
-          >
-            {{ t('fields.edit') }}
-          </el-button>
-          <el-button
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            style="margin-left: 20px"
-            @click="delConfig(item.id)"
-            plain
-          >
-            {{ t('fields.delete') }}
-          </el-button>
-        </el-form-item>
-      </el-collapse-item>
-    </el-collapse>
-    <el-form-item size="mini" style="margin-top: 20px;">
-      <el-button type="primary" @click="updateConfigs">
-        {{ t('fields.confirm') }}
-      </el-button>
+    <div style="margin-bottom: 20px">
+      <el-input
+        v-model="searchTerm"
+        :placeholder="`${t('fields.defaultConfigSearchBarHint')}${t('fields.configGroup')}`"
+        :size="'mini'"
+        style="margin-right: 20px;"
+      />
       <el-button
         size="mini"
         type="success"
@@ -53,7 +20,35 @@
       >
         {{ t('fields.createConfig') }}
       </el-button>
-    </el-form-item>
+    </div>
+    <el-table :data="filteredData" style="width: 100%">
+      <el-table-column prop="configGroup" :label="t('fields.configGroup')" />
+      <el-table-column prop="code" :label="t('fields.configCode')" />
+      <el-table-column prop="value" :label="t('fields.configValue')" />
+      <el-table-column prop="describes" :label="t('fields.configDescribes')" width="200" />
+      <el-table-column>
+        <template #default="{row}">
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="success"
+            @click="showEdit(row)"
+            plain
+          >
+            {{ t('fields.edit') }}
+          </el-button>
+          <el-button
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            @click="delConfig(row.id)"
+            plain
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </el-form>
   <el-dialog
     :title="uiControl.dialogTitle"
@@ -80,6 +75,9 @@
       <el-form-item :label="t('fields.configValue')" prop="value">
         <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
       </el-form-item>
+      <el-form-item :label="t('fields.configDescribes')" prop="describes">
+        <el-input v-model="form.describes" :placeholder="t('fields.configDescribes')" />
+      </el-form-item>
     </el-form>
 
     <div class="dialog-footer">
@@ -94,13 +92,12 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import {
   createConfig,
   deleteById,
   getDefaultConfigs,
-  updateBatch, updateConfig,
-  updateOrderBatch
+  updateConfig,
 } from '../../../api/config'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
@@ -111,6 +108,7 @@ const { t } = useI18n()
 const defaultConfigs = reactive({
   value: [],
   customGroup: [],
+  mergeItems: [],
 })
 
 const uiControl = reactive({
@@ -127,7 +125,17 @@ const form = reactive({
   configGroup: null,
   code: null,
   value: null,
+  describes: "",
 })
+
+const searchTerm = ref('');
+
+const filteredData = computed(() => {
+  const term = searchTerm.value.toLowerCase();
+  return defaultConfigs.mergeItems.filter(item =>
+    item.configGroup.toLowerCase().includes(term)
+  );
+});
 
 const formRules = reactive({
   configGroup: [required(t('message.validateConfigGroupRequired'))],
@@ -200,6 +208,7 @@ async function loadDefaultConfigs() {
       defaultConfigs.customGroup[index].items[i].orderIndex = i
     }
   }
+  defaultConfigs.mergeItems = defaultConfigs.customGroup.flatMap(group => group.items);
 }
 
 function showEdit(customConfig) {
@@ -211,61 +220,6 @@ function showEdit(customConfig) {
       }
     }
   })
-}
-
-async function updateConfigs() {
-  const sub = defaultConfigs.value.filter(item => item.value === null)
-  if (sub.length > 0) {
-    ElMessage({ message: t('message.validateNoNullValue'), type: 'error' })
-    return
-  }
-  for (let index = 0; index < defaultConfigs.value.length; index++) {
-    if (typeof defaultConfigs.value[index].id !== 'number') {
-      delete defaultConfigs.value[index].id
-    }
-    if (defaultConfigs.value[index].code === 'platform_fee') {
-      if (defaultConfigs.value[index].value < 0 || defaultConfigs.value[index].value > 1) {
-        ElMessage({
-          message: t('message.validatePlatformFeeFormat'),
-          type: 'error',
-        })
-        return
-      }
-    }
-    if (defaultConfigs.value[index].code === 'payment_fee') {
-      if (defaultConfigs.value[index].value < 0 || defaultConfigs.value[index].value > 1) {
-        ElMessage({
-          message: t('message.validatePaymentFeeFormat'),
-          type: 'error',
-        })
-        return
-      }
-    }
-    if (defaultConfigs.value[index].code === 'cs_address') {
-      try {
-        JSON.parse(defaultConfigs.value[index].value)
-      } catch (e) {
-        ElMessage({
-          message: t('message.validateCustomerSupportAddressFormat'),
-          type: 'error',
-        })
-        return
-      }
-    }
-  }
-  await updateBatch(defaultConfigs.value)
-  const orderUpdate = []
-  for (let index = 0; index < defaultConfigs.customGroup.length; index++) {
-    for (let i = 0; i < defaultConfigs.customGroup[index].items.length; i++) {
-      orderUpdate.push({
-        id: defaultConfigs.customGroup[index].items[i].id,
-        orderIndex: i,
-      })
-    }
-  }
-  await updateOrderBatch(orderUpdate)
-  await loadDefaultConfigs()
-  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
 
 function showDialog(type) {
@@ -284,6 +238,8 @@ function showDialog(type) {
 async function submit() {
   configForm.value.validate(async valid => {
     if (valid) {
+      form.configGroup = form.configGroup.trim();
+      form.code = form.code.trim();
       if (uiControl.dialogTitle === t('fields.createConfig')) {
         form.siteId = 0; // siteId=0为默认资料
         await createConfig(form)
