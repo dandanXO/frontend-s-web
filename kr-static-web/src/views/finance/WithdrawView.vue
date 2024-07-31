@@ -248,6 +248,7 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
 import { useCommaInput } from "@/hooks/commaInput";
+import { usePersonalIntegrity } from "@/hooks/personalIntegrity";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -255,6 +256,7 @@ export default defineComponent({
     RiArrowRightSLine
   },
   setup() {
+    const checkPersonalInfoIntegrity = usePersonalIntegrity()
     const { t } = useI18n();
     const router = useRouter();
     const loadingBtn = ref(false);
@@ -299,6 +301,7 @@ export default defineComponent({
     ])
     onMounted(() => {
       getWithdrawalMethods();
+      checkPersonalInfoIntegrity();
     });
     const submitWithdraw = () => {
       loadingBtn.value = true;

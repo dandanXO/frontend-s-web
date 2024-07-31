@@ -191,6 +191,7 @@ import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useI18n } from "vue-i18n";
 import { useCommaInput } from "@/hooks/commaInput";
+import { usePersonalIntegrity } from "@/hooks/personalIntegrity";
 
 {
   RiVolumeUpFill;
@@ -198,8 +199,10 @@ import { useCommaInput } from "@/hooks/commaInput";
 
 const { t } = useI18n();
 const router = useRouter();
-const loadingBtn = ref(false);
 const store = userStore();
+const checkPersonalInfoIntegrity = usePersonalIntegrity();
+
+const loadingBtn = ref(false);
 const formRef = ref();
 const isDeposited = ref(false);
 const isLoading = ref(true);
@@ -596,6 +599,8 @@ async function verifyDepositAmount(r, v) {
       return Promise.reject(
         t("account.deposit_should_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
       );
+    } else if (Number(v) % 10000) {
+      return Promise.reject(t("account.deposit_amount_unit"));
     } else {
       if (checkAmount.flag) {
         return Promise.resolve();
@@ -620,6 +625,7 @@ async function verifyBank(r, v) {
 
 onMounted(() => {
   initPay();
+  checkPersonalInfoIntegrity();
 });
 </script>
 <style lang="scss">

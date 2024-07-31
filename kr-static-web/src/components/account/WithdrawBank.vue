@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="account-title-container">
-      <span class="account-title">{{ $t('withdraw.bankcard') }}</span>
+      <span class="account-title">{{ $t("withdraw.bankcard") }}</span>
     </div>
     <div class="account-content">
       <div class="account-tip-text wbot"></div>
@@ -44,12 +44,12 @@
         </div>
         <div class="bank-card-item add" @click="bankCardModal('bank')">
           <RiLink />
-          <span class="lock-card-txt">{{ $t('withdraw.addBankCard') }}</span>
+          <span class="lock-card-txt">{{ $t("withdraw.addBankCard") }}</span>
         </div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">{{ $t('withdraw.unbindBankCardRecords') }}</span>
+      <span class="account-title">{{ $t("withdraw.unbindBankCardRecords") }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
@@ -76,7 +76,9 @@
               />
             </el-form-item>
             <el-form-item>
-              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">{{ $t('withdraw.search') }}</button>
+              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">
+                {{ $t("withdraw.search") }}
+              </button>
             </el-form-item>
           </div>
         </el-form>
@@ -122,18 +124,32 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
+    <el-dialog
+      class="bankModal"
+      width="600"
+      v-model="bankCardModalState.visible"
+      :footer="null"
+      :title="$t('withdraw.bindCard')"
+    >
       <div type="warning" class="account-tip-warning">
         <ul>
-          <li>{{ $t('personal.bankCardReminder1') }}</li>
-          <li>{{ $t('personal.bankCardReminder2') }}</li>
+          <li>{{ $t("personal.bankCardReminder1") }}</li>
+          <li>{{ $t("personal.bankCardReminder2") }}</li>
         </ul>
       </div>
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
-        <el-form-item prop="bankId" :rules="[{ required: true, message: $t('placeholder.selectBank'), trigger: 'blur' }]">
+        <el-form-item
+          prop="bankId"
+          :rules="[{ required: true, message: $t('placeholder.selectBank'), trigger: 'blur' }]"
+        >
           <el-row :gutter="20">
             <el-col :span="9">
-              <el-select :placeholder="$t('withdraw.type')" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
+              <el-select
+                :placeholder="$t('withdraw.type')"
+                v-model="selectedBankType"
+                style="width: 100%"
+                @change="selectBankType"
+              >
                 <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
                   {{ bank.text }}
                 </el-option>
@@ -173,20 +189,20 @@
             :rules="[{ required: true, message: $t('placeholder.bankBranchAddress'), trigger: 'blur' }]"
           />
         </el-form-item>
-<!--        <el-form-item>-->
-<!--          <el-space>-->
-<!--            <el-input-->
-<!--              class="half"-->
-<!--              v-model="bankCardInfo.telephone"-->
-<!--              placeholder="输入电话号码"-->
-<!--              readonly-->
-<!--              :value="personalState.memberInfo.telephone"-->
-<!--            />-->
-<!--            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>-->
-<!--          </el-space>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item>-->
+        <!--          <el-space>-->
+        <!--            <el-input-->
+        <!--              class="half"-->
+        <!--              v-model="bankCardInfo.telephone"-->
+        <!--              placeholder="输入电话号码"-->
+        <!--              readonly-->
+        <!--              :value="personalState.memberInfo.telephone"-->
+        <!--            />-->
+        <!--            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>-->
+        <!--          </el-space>-->
+        <!--        </el-form-item>-->
 
-        <el-form-item name="smsCode" prop="smsCode" >
+        <!-- <el-form-item name="smsCode" prop="smsCode" >
           <el-space>
           <el-input
             class="half"
@@ -198,16 +214,22 @@
           />
             <el-button class="common-btn" @click="openCaptchaForm()">{{$t('personal.getVerificationCode')}}</el-button>
           </el-space>
-        </el-form-item>
+        </el-form-item> -->
 
-        <el-form-item class="txt-center" v-if="isSendOtp">
-          <el-button class="txt-center common-btn" @click="submitBankCard">{{ $t('common.submit') }}</el-button>
+        <el-form-item class="txt-center">
+          <el-button class="txt-center common-btn" @click="submitBankCard">{{ $t("common.submit") }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog v-model="phoneCaptchaDialogVisible" :title="$t('personal.captcha')" width="50%" align-center style="max-width: 500px">
-      <el-button size="large" color="#3bafda" class="common-btn" style="width:100%;" @click="sendOtp">
-        {{$t('common.submit')}}
+    <el-dialog
+      v-model="phoneCaptchaDialogVisible"
+      :title="$t('personal.captcha')"
+      width="50%"
+      align-center
+      style="max-width: 500px"
+    >
+      <el-button size="large" color="#3bafda" class="common-btn" style="width: 100%" @click="sendOtp">
+        {{ $t("common.submit") }}
       </el-button>
     </el-dialog>
 
@@ -221,10 +243,20 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="160" label-suffix=":">
-        <el-form-item tabindex="3" :label="$t('personal.captcha')" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captchareq'), trigger: 'blur' }]" >
+        <el-form-item
+          tabindex="3"
+          :label="$t('personal.captcha')"
+          prop="captchaCode"
+          :rules="[{ required: true, message: $t('placeholder.captchareq'), trigger: 'blur' }]"
+        >
           <el-row :gutter="10" style="justify-content: center; align-items: center">
             <el-col :span="12">
-              <el-input v-model="captchaForm.captchaCode" :label="$t('personal.captcha')" :placeholder="$t('personal.captcha')" @keyup.enter="sendOtp" />
+              <el-input
+                v-model="captchaForm.captchaCode"
+                :label="$t('personal.captcha')"
+                :placeholder="$t('personal.captcha')"
+                @keyup.enter="sendOtp"
+              />
             </el-col>
             <el-col :span="12">
               <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
@@ -232,7 +264,7 @@
           </el-row>
         </el-form-item>
         <el-button size="large" color="#3bafda" class="common-btn" style="margin-left: 100px" @click="sendOtp">
-          {{ $t('common.send') }}
+          {{ $t("common.send") }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -644,7 +676,7 @@ export default defineComponent({
 
     const sendOtp = async () => {
       if (captchaForm.captchaCode.length < 4) {
-        
+
         ElMessage({
           type: "error",
           message: t('placeholder.captcha')
@@ -898,7 +930,7 @@ export default defineComponent({
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     watch(languageVal, () => {
-      
+
       columns.value = [
       {
         title: t('withdraw.bank'),
@@ -1053,9 +1085,9 @@ body {
 }
 
 .account-tip-warning {
-  border: 1px solid #F8DD9A;
-  background: #FEF7E6; 
-  color: #FFC024;
+  border: 1px solid #f8dd9a;
+  background: #fef7e6;
+  color: #ffc024;
   padding: 10px;
   display: flex;
   justify-content: flex-start;
@@ -1070,7 +1102,7 @@ body {
   }
   svg {
     height: 15px;
-    fill: #FFC024;
+    fill: #ffc024;
     margin-right: 10px;
   }
 }
@@ -1144,7 +1176,7 @@ body {
     position: relative;
     flex-wrap: wrap;
     &.add {
-    justify-content: center;
+      justify-content: center;
     }
 
     .card-details {
@@ -1165,7 +1197,7 @@ body {
       .card-name {
         .card-bank-name {
           font-weight: 600;
-          font-size: .8rem;
+          font-size: 0.8rem;
           &.txt-blue {
             color: $font-blue;
           }
