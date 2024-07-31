@@ -281,42 +281,44 @@ const getNavigationData = () => {
         },
       ],
     },
+
+    // {
+    //   title: t('menu.SettlementManagement'),
+    //   label: 'Settlement Management',
+    //   display: true,
+    //   path: '',
+    //   children: [
+    //
+    //     // {
+    //     //   path: '/statistics-by-member',
+    //     //   title: t('menu.StatisticsByMember'),
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //     // {
+    //     //   path: '/settlement-by-casino-slot-vendor',
+    //     //   title: t('menu.SettlementByCasinoSlotVendor'),
+    //     //   label: 'Settlement By Casino / Slot Vendor',
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //   ],
+    // },
     {
-      title: t('menu.SettlementManagement'),
-      label: 'Settlement Management',
+      title: t('menu.financeCentre'),
       display: true,
-      path: '/settlement-management',
+      path: '',
       children: [
         {
-          path: '/monthly-step-by-step-settlement',
+          path: '/settlement-management/monthly-step-by-step-settlement',
           title: t('menu.MonthlyStepByStep'),
           label: 'Monthly Step By Step',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
-        // {
-        //   path: '/statistics-by-member',
-        //   title: t('menu.StatisticsByMember'),
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'clock',
-        // },
-        // {
-        //   path: '/settlement-by-casino-slot-vendor',
-        //   title: t('menu.SettlementByCasinoSlotVendor'),
-        //   label: 'Settlement By Casino / Slot Vendor',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'clock',
-        // },
-      ],
-    },
-    {
-      title: t('menu.financeCentre'),
-      display: true,
-      path: '',
-      children: [
         {
           path: '/settlement-management/deposit-withdraw-management',
           title: t('menu.DepositWithdrawManagement'),
