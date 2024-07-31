@@ -21,8 +21,8 @@ export const replyMember = (systemMessageTemplate) => {
   return https().request("/site-pm/reply", Method.POST, systemMessageTemplate, ContentType.json);
 };
 
-export const deleteMessageTemplate = async (ids) => {
-  await https().request(`/site-pm?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
+export const deleteMessageTemplate = async (siteId, ids) => {
+  await https().request(`/site-pm?_method=DELETE`, Method.POST, { siteId: siteId, ids: ids.join(",") }, ContentType.form);
 };
 
 export const createBatchMessageTemplate = (messages) => {
