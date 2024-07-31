@@ -1,0 +1,158 @@
+<template>
+  <el-dialog
+    v-model="visible"
+    destroyOnClose
+    :append-to-body="true"
+    :show-close="false"
+    width="540px"
+    class="announcement-modal"
+  >
+    <div>
+      <div class="dialog-wrapper">
+        <div class="dialog-header">
+          <div
+            class="dialog-tab-item"
+            :class="currentTab === 'announcement' ? 'active' : ''"
+            @click="currentTab = 'announcement'"
+          >
+            <img
+              v-if="currentTab === 'announcement'"
+              src="../../assets/home/announcement/tab-announcement-active.png"
+              alt=""
+            />
+            <p v-else>重要公告</p>
+          </div>
+          <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
+            <img v-if="currentTab === 'inbox'" src="../../assets/home/announcement/tab-inbox-active.png" alt="" />
+            <p v-else>站內信</p>
+          </div>
+        </div>
+        <div class="dialog-content">
+          <InboxComponent v-if="currentTab === 'inbox'" />
+          <AnnouncementComponent v-if="currentTab === 'announcement'" />
+        </div>
+        <!-- <div class="dialog-footer">
+          <div class="dot" :class="{ active: item === 3 }" v-for="item in 6" :key="item"></div>
+        </div> -->
+      </div>
+      <div class="dialog-action">
+        <div class="dialog-action-row today-not-remind">
+          <div class="dialog-action-item">
+            <el-checkbox v-model="checked" style="color: white" text-color="white">今天不再提醒</el-checkbox>
+          </div>
+        </div>
+
+        <div class="dialog-action-row">
+          <div class="dialog-action-item close-icon" @click="visible = false">
+            <el-icon size="32px">
+              <RiCloseFill />
+            </el-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </el-dialog>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import InboxComponent from "./InboxComponent.vue";
+import AnnouncementComponent from "./AnnouncementComponent.vue";
+import { RiCloseFill } from "vue-remix-icons";
+
+const visible = ref(true);
+const currentTab = ref("announcement");
+const checked = ref(false);
+</script>
+
+<style lang="scss" scoped>
+.dialog-header {
+  background: linear-gradient(0deg, #3480f9 0%, #6cadff 100%);
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  cursor: pointer;
+
+  .dialog-tab-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+
+    &.active {
+      img {
+        height: 50px;
+      }
+    }
+  }
+
+  p {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    white-space: nowrap;
+  }
+}
+
+.dialog-footer {
+  background: #e8f0fd;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 0 12px 12px;
+  gap: 4px;
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #bbcbdb;
+
+    &.active {
+      background: #2792fd;
+      width: 20px;
+      border-radius: 56px;
+    }
+  }
+}
+
+.dialog-action {
+  position: absolute;
+  right: 0;
+  width: 100%;
+
+  .dialog-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.today-not-remind {
+      justify-content: flex-end;
+    }
+  }
+
+  .dialog-action-item {
+
+    &.close-icon {
+      justify-content: center;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff99;
+      border: 1px solid #ffffffb2;
+      fill: black;
+    }
+  }
+}
+
+::v-deep(.el-checkbox__input.is-checked+.el-checkbox__label) {
+  color: white !important;
+}
+</style>
