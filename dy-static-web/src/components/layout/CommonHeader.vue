@@ -1002,7 +1002,7 @@ export default defineComponent({
       }
     };
     const checkName = (v) => {
-      const alphanumeric = /^[a-zA-Z0-9]+$/;
+      const alphanumeric = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {

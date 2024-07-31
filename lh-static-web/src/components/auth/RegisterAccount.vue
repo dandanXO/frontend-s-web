@@ -169,7 +169,7 @@ const checkName = (v) => {
   return v.match(alphanumeric);
 };
 const checkName2 = (v) => {
-  const alphaRegex = /^[a-zA-Z0-9]+$/;
+  const alphaRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
   return v.match(alphaRegex);
 };
 

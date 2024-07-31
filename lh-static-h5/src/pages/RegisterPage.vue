@@ -6,6 +6,7 @@
                  lazy-rules :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
             (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
+            (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
             validLoginName
           ]" color="white">
           <template v-slot:prepend>
