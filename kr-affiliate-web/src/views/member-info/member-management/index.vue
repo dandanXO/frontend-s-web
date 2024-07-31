@@ -950,6 +950,13 @@
           maxlength="11"
         />
       </el-form-item>
+      <el-form-item :label="t('fields.nickName')" prop="name2">
+        <el-input
+          v-model="createMemberForm.name2"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
       <el-form-item :label="t('fields.password')" prop="password">
         <el-input
           v-model="createMemberForm.password"
@@ -1315,6 +1322,7 @@ const createMemberForm = reactive({
   email: null,
   siteId: null,
   memberShareRatio: null,
+  name2: null,
 })
 
 const affInfo = reactive({
