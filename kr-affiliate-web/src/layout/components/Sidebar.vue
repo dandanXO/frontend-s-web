@@ -607,7 +607,7 @@ watch(languageVal, newVal => {
       font-size: 13px;
       border-bottom: 1px solid #4d5a6a;
 
-      background-color: #344151;
+      background-color: $primary-500;
       padding: 12px 13px;
       box-sizing: border-box;
       cursor: pointer;
@@ -636,7 +636,7 @@ watch(languageVal, newVal => {
         gap: 2px;
 
         .nickname {
-          color: #b7b1b5;
+          color: #fff;
           font-size: 10px;
         }
       }
@@ -661,7 +661,7 @@ watch(languageVal, newVal => {
       .route-content {
         display: flex;
         gap: 0.5rem;
-        background-color: #252e3b;
+        background-color: $primary-700;
         padding: 10px 10px 10px 20px;
       }
 
