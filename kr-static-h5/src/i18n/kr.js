@@ -91,7 +91,7 @@ export default {
     msg_readmsg: "메시지 읽기",
     msg_deleteselected: "선택한 메시지 삭제",
     msg_deleteallmsg: "모든 메시지 삭제",
-    msg_hasUnreadMail: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다",
+    msg_hasUnreadMail: "읽지 않은 공지사항,메시지가 있습니다, 입금/출금/게임 페이지에 접근할수없습니다.",
 
     // login page
     login_title: "준비되셨나요?",
