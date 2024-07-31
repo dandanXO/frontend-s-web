@@ -1668,6 +1668,7 @@ export default {
     posterType: 'Loại poster',
     createConfig: 'Tạo cấu hình',
     defaultConfigHint: 'mặc định',
+    defaultConfigSearchBarHint: 'Tìm kiếm ',
     configCode: 'Mã cấu hình',
     configValue: 'Giá trị cấu hình',
     configDescribes: 'Mô tả cấu hình',
