@@ -185,22 +185,22 @@ const logout = async () => {
 
 const getNavigationData = () => {
   navigationData.value = [
-    {
-      title: t('menu.Dashboard'),
-      label: 'Dashboard',
-      display: false,
-      path: '',
-      children: [
-        {
-          path: '/dashboard',
-          title: t('menu.Dashboard'),
-          label: 'Dashboard',
-          active: false,
-          isMainNav: true,
-          icon: 'home',
-        },
-      ],
-    },
+    // {
+    //   title: t('menu.Dashboard'),
+    //   label: 'Dashboard',
+    //   display: false,
+    //   path: '',
+    //   children: [
+    //     {
+    //       path: '/dashboard',
+    //       title: t('menu.Dashboard'),
+    //       label: 'Dashboard',
+    //       active: false,
+    //       isMainNav: true,
+    //       icon: 'home',
+    //     },
+    //   ],
+    // },
     {
       title: t('menu.Downline Info'),
       label: 'Downline',
