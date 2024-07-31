@@ -130,7 +130,7 @@
                     style="width: 20px; height: 20px"
                     :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-cancel.png')"
                   />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥500 元</span>
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ todayMinDeposit }} 元</span>
                 </div>
               </div>
             </div>
@@ -317,6 +317,7 @@ const countPercent = computed(() => {
 const todayCheckInState = ref("YES");
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
+const todayMinDeposit = ref(0);
 
 const handleClickSectionOneItem = async (item) => {
   if (item.claimState === "OPEN" || item.claimState === "RECHECKIN") {
@@ -364,6 +365,7 @@ const fetchData = async () => {
     const res = await getCheckInFreeTreasureInit();
     sectionOneItems.value = res.data.checkInState.checkInDayHistory;
     todayCheckInState.value = res.data.checkInState.todayCheckInState;
+    todayMinDeposit.value = res.data.checkInState.todayMinDeposit;
     sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
     currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
     currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
