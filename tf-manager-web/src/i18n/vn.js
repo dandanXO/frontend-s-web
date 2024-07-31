@@ -1670,6 +1670,7 @@ export default {
     defaultConfigHint: 'mặc định',
     configCode: 'Mã cấu hình',
     configValue: 'Giá trị cấu hình',
+    configDescribes: 'Mô tả cấu hình',
     s3Url: 'URL S3',
     allSites: 'Tất cả các trang web',
     allSource: 'Tất cả các loại nguồn',

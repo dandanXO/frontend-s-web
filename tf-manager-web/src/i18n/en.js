@@ -1754,6 +1754,7 @@ export default {
     defaultConfigHint: 'Default',
     configCode: 'Config Code',
     configValue: 'Config Value',
+    configDescribes: 'Config Describes',
     s3Url: 'S3 URL',
     allSites: 'All Sites',
     allSource: 'All Source Type',
