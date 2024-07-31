@@ -158,9 +158,15 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="mailbox">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div
+                    class="mailbox-dropdown"
+                    style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%"
+                  >
                     <img src="../../assets/images/home/header-dropdown-inbox-icon.png" />
                     <span>{{ $t("menu.mailbox") }}</span>
+                    <div v-if="store.unreadTotal > 0" class="unread-total">
+                      <span>{{ store.unreadTotal }}</span>
+                    </div>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
@@ -2142,6 +2148,21 @@ body {
     //background: linear-gradient(to right, #de4545, #db7e42) !important;
     background: #21ba45;
     font-weight: 600;
+  }
+}
+
+.mailbox-dropdown {
+  > span {
+    flex-grow: 1;
+  }
+  .unread-total {
+    min-width: 30px;
+    border-radius: 25px;
+    text-align: center;
+    color: #fff;
+    background: red;
+    padding: 0 10px;
+    width: max-content;
   }
 }
 </style>
