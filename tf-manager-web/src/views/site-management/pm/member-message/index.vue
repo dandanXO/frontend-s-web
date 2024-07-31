@@ -142,17 +142,13 @@ const uiControl = reactive({
   ],
   size: null,
   importDialogVisible: false,
-  type: [
-    { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
-    { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
-    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' }
-  ],
   searchType: [
     { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
     { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
     { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
-    { key: 4, displayName: 'PAYMENT', value: 'PAYMENT' }
-  ]
+    { key: 4, displayName: 'MATCH', value: 'MATCH' },
+    { key: 5, displayName: 'PAYMENT', value: 'PAYMENT' }
+  ],
 })
 
 const request = reactive({
