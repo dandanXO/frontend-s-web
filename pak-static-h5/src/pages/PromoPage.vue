@@ -167,8 +167,6 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
-
-
   </div>
 
   <GameModal
@@ -1031,6 +1029,10 @@ export default defineComponent({
           border-spacing: 0;
           border-collapse: collapse;
           margin-bottom: 20px;
+
+          p {
+            font-size: 12px;
+          }
 
           th {
             padding: 5px;
