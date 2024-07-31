@@ -5,21 +5,26 @@
     </div>
     <!--    <div class="banner-container" />-->
 
-    <Carousel v-model="currentSlide" :items-to-show="2.95" :wrap-around="true">
+    <Carousel v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="vipcontents">
               <div class="title">
-                VIP{{ vip.vipLevel }}
                 <span class="type">{{ vip.vipTitle }}</span>
               </div>
+              <div class="badge">
+                <img :src="require(`../assets/vip/badge/${vip.vipTitle}.png`)">
+              </div>
               <div class="description">
-                累计存款:
-                <span style="color: #424f72">{{ vip.upgrade }}</span>
+                累积存款:
+                <span>{{ vip.upgrade }}</span>
+              </div>
+              <div class="viplevel">
+                VIP {{ vip.vipLevel }}
               </div>
               <!-- vip progress bar start -->
-              <div class="progressBarContainer" v-if="vipLevel">
+              <!-- <div class="progressBarContainer" v-if="vipLevel">
                 <div class="progressBarOuterBar">
                   <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vip) + '%' }" />
                 </div>
@@ -31,9 +36,9 @@
                     {{ `V${+vip.vipLevel}` }}
                   </span>
                 </div>
-              </div>
+              </div> -->
               <!-- vip progress bar end -->
-              <div
+              <!-- <div
                 style="color: #cfb282; font-size: 18px; position: absolute; bottom: 25px; left: 0; right: 0"
                 v-if="vipLevel + 1 === Number(vip.vipLevel)"
               >
@@ -42,13 +47,13 @@
                     .toLocaleString("en-US", { style: "currency", currency: "CNY" })
                     .replace("CN", "")
                 }}
-              </div>
+              </div> -->
             </div>
-            <div
+            <!-- <div
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
             >
               <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "已达到" : "未达到" }}</span>
-            </div>
+            </div> -->
           </div>
           <router-link
             to="/center/deposit"
@@ -71,209 +76,169 @@
         <Navigation />
       </template>
     </Carousel>
-
-    <div class="vip-program">
-      <div class="buttons">
-        <div class="common-btn" :class="{ active: showRebate }" @click="onShowRebateClick(true)">升级细则</div>
-        <div class="common-btn" :class="{ active: !showRebate }" @click="onShowRebateClick(false)">VIP特权</div>
+    <div class="current-vip-status">
+      <div class="badge">
+        <img :src="badgeSrc">
       </div>
-      <div v-if="showRebate">
-        <table>
-          <thead>
-            <tr>
-              <th colspan="2">级别</th>
-              <th>升级要求累积存款</th>
-              <th>等级优惠</th>
-              <th>流水要求</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="2" width="100">青铜</td>
-              <td width="100">青铜Ⅱ</td>
-              <td width="260">一笔存款</td>
-              <td width="384" id="vipPromoInfo2">网站首存优惠</td>
-              <td width="252">无（不包含彩票场馆）</td>
-            </tr>
-            <tr>
-              <td>青铜Ⅰ</td>
-              <td>3,000</td>
-              <td id="vipPromoInfo3">存款最少20元可申请一次晋级奖金88元</td>
-              <td>电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-            </tr>
-            <tr>
-              <td rowspan="3">白银</td>
-              <td>白银Ⅲ</td>
-              <td>30,000</td>
-              <td id="vipPromoInfo4">
-                存款最少100元可申请每月一次再存20% 最高奖金1888元
-                <span style="color: #b8945d">（仅限白银Ⅲ申请）</span>
-              </td>
-              <td>电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-            </tr>
-            <tr>
-              <td>白银Ⅱ</td>
-              <td>80,000</td>
-              <td id="vipPromoInfo5" class="showTips4">存款最少20元可申请一次晋级奖金188元</td>
-              <td class="showTips4">电竞/体育 5倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips4">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>白银Ⅰ</td>
-              <td>200,000</td>
-              <td id="vipPromoInfo6" class="showTips5">存款最少20元可申请一次晋级奖金388元</td>
-              <td class="showTips5">电竞/体育 5倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips5">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="3">黄金</td>
-              <td>黄金Ⅲ</td>
-              <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金888元</td>
-              <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips6">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>黄金Ⅱ</td>
-              <td>600,000</td>
-              <td id="vipPromoInfo8" class="showTips7">存款最少20元可申请一次晋级奖金888元</td>
-              <td class="showTips7">电竞/体育 5倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips7">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>黄金Ⅰ</td>
-              <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金2888元</td>
-              <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips8">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="2">铂金</td>
-              <td>铂金Ⅱ</td>
-              <td>2,000,000</td>
-              <td id="vipPromoInfo10" class="showTips9">存款最少20元可申请一次晋级奖金1888元</td>
-              <td class="showTips9">电竞/体育 8倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips9">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td>铂金Ⅰ</td>
-              <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金5888元</td>
-              <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips10">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="1">钻石</td>
-              <td>钻石</td>
-              <td>8,000,000</td>
-              <td id="vipPromoInfo12" class="showTips11">存款最少20元可申请一次晋级奖金8888元</td>
-              <td class="showTips11">电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips11">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-            <tr>
-              <td rowspan="1">最强王者</td>
-              <td>王者</td>
-              <td>12,000,000</td>
-              <td id="vipPromoInfo13" class="showTips12">存款最少20元可申请一次晋级奖金18888元</td>
-              <td class="showTips12">电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
-              <!-- <td colspan="2" class="hideTips12">
-                <div class="vip-btn disable">未符合</div>
-              </td> -->
-            </tr>
-          </tbody>
-        </table>
+      <div class="vip-progress">
+        <div class="amount">
+          <div class="text">还要<div class="required-amount">{{ requiredDepAmt }}</div>存款升级到 VIP {{vipLevel + 1}}</div>
+          <div class="progressBarContainer">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel) + '%' }" />
+            </div>
+          </div>
+        </div>
+        <div class="amount">
+          <div class="text">还要<div class="required-amount">{{ requiredExpAmt }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
+          <div class="progressBarContainer">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel) + '%' }" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div v-else>
-        <table style="margin-top: 50px">
-          <tbody>
-            <tr>
-              <th width="137">等级</th>
-              <th width="137">青铜</th>
-              <th width="137">白银</th>
-              <th width="137">黄金</th>
-              <th width="137">铂金</th>
-              <th width="137">钻石</th>
-              <th width="137">最强王者</th>
-              <th width="137">反水限额</th>
-            </tr>
-            <tr>
-              <td>电竞</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td rowspan="2">无上限</td>
-            </tr>
-            <tr>
-              <td>体育</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-            </tr>
-            <tr>
-              <td>真人</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td>88888元</td>
-            </tr>
-            <tr>
-              <td>棋牌</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td>1.0%</td>
-              <td>8888元</td>
-            </tr>
-            <tr>
-              <td>老虎机</td>
-              <td>0.6%</td>
-              <td>0.8%</td>
-              <td>1.0%</td>
-              <td>1.2%</td>
-              <td>1.6%</td>
-              <td>2.0%</td>
-              <td>无上限</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="claim-btn">
+        一键领取
       </div>
-      <div class="left" />
-      <div class="right" />
+    </div>
+    <div class="month-birthday-bonus">
+      <div class="left">
+        <img src="../assets/vip/img-border.png">
+        <div class="inner-slide">
+          <el-carousel height="350px">
+            <el-carousel-item v-for="item in 4" :key="item">
+              <h3 class="small justify-center" text="2xl"><img src="../assets/vip/slide-img.png"></h3>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
+      <div class="right">
+        <template v-for="(item, i) in vipItems" :key="i">
+          <template v-if="+item.vipLevel === currentSlide + 1">
+            <div class="vip-boxes">
+              <div class="box">
+                <div class="icon"><img src="../assets/vip/levelup.png"></div>
+                <div class="item-name">晋级彩金</div>
+                <div class="item-amt">{{ item.upgrade }}</div>
+              </div>
+              <div class="box">
+                <div class="icon"><img src="../assets/vip/birthday.png"></div>
+                <template v-if="item.unavailable">
+                <div class="item-name">生日礼金</div>
+                <div class="item-amt">{{ item.upgrade }}</div>
+                </template>
+                <template v-else>
+                  <div class="claim-now">立即领取</div>
+                </template>
+              </div>
+              <div class="box">
+                <div class="icon"><img src="../assets/vip/rebate.png"></div>
+                <div class="item-name">日返水</div>
+                <div class="item-amt">0,20 -0,45%</div>
+              </div>
+              <div class="box">
+                <div class="icon"><img src="../assets/vip/redpacket.png"></div>
+                <div class="item-name">节日礼金</div>
+                <div class="item-amt">1,888</div>
+              </div>
+              <div class="box">
+                <div class="icon"><img src="../assets/vip/levelup.png"></div>
+                <div class="item-name">保级彩金</div>
+                <div class="item-amt">1,2%</div>
+              </div>
+              <div class="box inactive">
+                <div class="icon"><img src="../assets/vip/yearly.png"></div>
+                <div class="item-name">年度保级彩金</div>
+                <div class="item-amt">1,2%</div>
+              </div>
+            </div>
+          </template>
+        </template>
+      </div>
     </div>
 
+    <div class="tips">
+      等级晋升后开启90天保级期，保级期内完成存款和流水要求则保级成功，未完成则降一级。<div @click="isShowTable = !isShowTable" class="linktotable"> 查看升保级明细</div>
+      <div v-if="isShowTable" class="absolute-box">
+        <div class="arrow_box">
+          <div class="overflow-table">
+            <table border="1">
+              <thead>
+                <tr>
+                  <th style="background: #AD9870;">等级</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 1</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 2</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 3</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 4</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 5</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 6</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 7</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 8</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 9</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 10</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 11</th>
+                  <th style="background: #F1DDA0; color:#766442;">VIP 12</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>会员勋章</td>
+                  <td>青铜 I</td>
+                  <td>青铜 II</td>
+                  <td>白银 I</td>
+                  <td>白银 II</td>
+                  <td>白银 III</td>
+                  <td>黄金 I</td>
+                  <td>黄金 II</td>
+                  <td>黄金 III</td>
+                  <td>铂金 I</td>
+                  <td>铂金 II</td>
+                  <td>钻石</td>
+                  <td>王者</td>
+                </tr>
+                <tr>
+                  <td>升级条件<br>（流水）</td>
+                  <td>6,000</td>
+                  <td>17,500</td>
+                  <td>50,000</td>
+                  <td>130,000</td>
+                  <td>600,000</td>
+                  <td>1,200,000</td>
+                  <td>2,400,000</td>
+                  <td>6,400,000</td>
+                  <td>2,400,000</td>
+                  <td>6,400,000</td>
+                  <td>15,000,000</td>
+                  <td>25,000,000</td>
+                </tr>
+                <tr>
+                  <td>保级条件<br>（90天）</td>
+                  <td>3,500</td>
+                  <td>7,500</td>
+                  <td>19,000</td>
+                  <td>32,500</td>
+                  <td>75,000</td>
+                  <td>200,000</td>
+                  <td>620,000</td>
+                  <td>1,900,000</td>
+                  <td>6,250,000</td>
+                  <td>12,500,000</td>
+                  <td>21,000,000</td>
+                  <td>50,000,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="terms-conditions">
       <div class="section-title">规则与条款</div>
-      <img
+      <!-- <img
         class="terms-conditions-title-separator"
         :src="require('../assets/vip/terms-condition-title-separator.png')"
-      />
+      /> -->
       <ol class="terms">
         <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
           {{ term.text }}
@@ -283,22 +248,19 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, reactive, defineComponent, computed, onMounted } from "vue";
 import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
 import { useNotify } from "@/hooks/notify";
-
-export default defineComponent({
-  name: "VIPView",
-  components: {
-    Carousel,
-    Slide,
-    Navigation
-  },
-  setup() {
+    components: {
+      Carousel,
+      Slide,
+      Navigation
+    }
+    const isShowTable = ref(false);
     const notify = useNotify();
     const store = userStore();
     const amount = ref("$0");
@@ -309,29 +271,39 @@ export default defineComponent({
     const currentDepositAmt = computed(() => {
       return store.getCurrentDeposit();
     });
-    const getVipLevelProgress = (vipInfo) => {
+    const requiredDepAmt = ref(0)
+    const getVipLevelProgress = (lvl) => {
+      if (lvl === 0) {
+        return 0;
+      }
+      const vipInfo = vipItems.find(item => +item.vipLevel === lvl + 1);
+      console.log(vipInfo)
       const vipLevel = +store.vip.replace("VIP", "");
       const currentDeposit = +store.getCurrentDeposit();
       const upgradeStatus = vipInfo.upgrade;
 
-      if (vipLevel >= +vipInfo.vipLevel) {
-        return 100;
-      }
+      console.log('vip' + vipLevel)
+      console.log('currentdepo' + currentDeposit)
+      console.log('upgrade' + upgradeStatus)
+      // if (vipLevel >= +vipInfo.vipLevel) {
+      //   return 100;
+      // }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
         levelUpDeposit = 0;
       }
-      if (vipLevel === 0) {
-        return 0;
-      }
-      if (vipLevel + 1 === +vipInfo.vipLevel) {
+      // if (vipLevel === 0) {
+      //   return 0;
+      // }
+      if (lvl + 1 === +vipInfo.vipLevel) {
+        requiredDepAmt.value = (levelUpDeposit - currentDeposit).toLocaleString('en-US')
         return (currentDeposit / levelUpDeposit) * 100;
       }
-      if (currentDeposit > levelUpDeposit + 1) {
-        return 100;
-      } else {
-        return 0;
-      }
+      // if (currentDeposit > levelUpDeposit + 1) {
+      //   return 100;
+      // } else {
+      //   return 0;
+      // }
 
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       // return (currentDeposit / levelUpDeposit) * 100;
@@ -434,12 +406,16 @@ export default defineComponent({
       if (showRebate.value) currentDisplayTerms.value = terms;
       else currentDisplayTerms.value = vipTerms;
     };
+    const badgeSrc = computed(() => {
+      const vip = vipItems.find(vip => vip.vipLevel === vipLevel && vipLevel);
+      return require(`../assets/vip/level/vip${vip ? vip.vipLevel : '1'}.png`);
+    });
 
     const vipItems = reactive([
       {
         vipLevel: "1",
         upgrade: "一笔存款",
-        vipTitle: "青铜2",
+        vipTitle: "青铜 II",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -448,7 +424,7 @@ export default defineComponent({
       {
         vipLevel: "2",
         upgrade: "3,000",
-        vipTitle: "青铜1",
+        vipTitle: "青铜 I",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -457,7 +433,7 @@ export default defineComponent({
       {
         vipLevel: "3",
         upgrade: "30,000",
-        vipTitle: "白银3",
+        vipTitle: "白银 III",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -466,7 +442,7 @@ export default defineComponent({
       {
         vipLevel: "4",
         upgrade: "80,000",
-        vipTitle: "白银2",
+        vipTitle: "白银 II",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -475,7 +451,7 @@ export default defineComponent({
       {
         vipLevel: "5",
         upgrade: "200,000",
-        vipTitle: "白银1",
+        vipTitle: "白银 I",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -484,7 +460,7 @@ export default defineComponent({
       {
         vipLevel: "6",
         upgrade: "400,000",
-        vipTitle: "黄金3",
+        vipTitle: "黄金 III",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -493,7 +469,7 @@ export default defineComponent({
       {
         vipLevel: "7",
         upgrade: "600,000",
-        vipTitle: "黄金2",
+        vipTitle: "黄金 II",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -502,7 +478,7 @@ export default defineComponent({
       {
         vipLevel: "8",
         upgrade: "1,000,000",
-        vipTitle: "黄金1",
+        vipTitle: "黄金 I",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -511,7 +487,7 @@ export default defineComponent({
       {
         vipLevel: "9",
         upgrade: "2,000,000",
-        vipTitle: "铂金2",
+        vipTitle: "铂金 II",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -520,7 +496,7 @@ export default defineComponent({
       {
         vipLevel: "10",
         upgrade: "4,000,000",
-        vipTitle: "铂金1",
+        vipTitle: "铂金 I",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -538,7 +514,7 @@ export default defineComponent({
       {
         vipLevel: "12",
         upgrade: "12,000,000",
-        vipTitle: "王者",
+        vipTitle: "最强王者",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
@@ -596,7 +572,7 @@ export default defineComponent({
         }
       });
     };
-    const currentSlide = ref(0);
+    const currentSlide = ref(11);
     const slideTo = () => {
       const vipLevel = +store.vip.replace("VIP", "");
       if (vipLevel === 0) {
@@ -609,34 +585,10 @@ export default defineComponent({
       initVIPTable();
       slideTo();
     });
-
-    return {
-      showRebate,
-      onShowRebateClick,
-      terms,
-      vipItems,
-      vipLevel,
-      getVipLevelProgress,
-      storeToken,
-      dailySlot,
-      loadingClaim,
-      loadingMClaim,
-      loadingBClaim,
-      amount,
-      privilegeClaimedModalVisible,
-      currentDisplayTerms,
-      vipTerms,
-      claimVIPLevelItem,
-      currentSlide,
-      slideTo,
-      currentDepositAmt
-    };
-  }
-});
 </script>
 <style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap');
 $border-settings: 1px solid #e5e7eb;
-
 .carousel__slide {
   .vipLevelButton {
     display: none;
@@ -673,6 +625,7 @@ $border-settings: 1px solid #e5e7eb;
   background-attachment: fixed;
   color: #8d8d8d;
   min-height: 100vh;
+  padding: 0 0 80px;
 
   .header-section {
     margin: 0 auto;
@@ -680,7 +633,7 @@ $border-settings: 1px solid #e5e7eb;
     text-align: center;
   }
   .vip-header {
-    width: 400px;
+    width: 1200px;
     margin: 10px auto;
   }
 
@@ -691,128 +644,43 @@ $border-settings: 1px solid #e5e7eb;
     background-position: center center;
     min-height: 600px;
   }
-
-  .vipitem {
+  .current-vip-status {
+    border: 2px solid #799DF8;
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #212B4AE0;
+    border-radius: 30px;
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
-    position: relative;
-    width: 564px;
-    height: 284px;
-    background: url("../assets/vip/badge/banner-1.png") no-repeat top center;
-    background-size: contain;
-
-    &2 {
-      background: url("../assets/vip/badge/banner-2.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &3 {
-      background: url("../assets/vip/badge/banner-3.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &4 {
-      background: url("../assets/vip/badge/banner-4.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &5 {
-      background: url("../assets/vip/badge/banner-5.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &6 {
-      background: url("../assets/vip/badge/banner-6.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &7 {
-      background: url("../assets/vip/badge/banner-7.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &8 {
-      background: url("../assets/vip/badge/banner-8.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &9 {
-      background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &10 {
-      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &11 {
-      background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &12 {
-      background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
-      background-size: contain;
-    }
-    .vipLevelReachStatus {
-      background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
-      background-size: contain;
-      margin-top: 15px;
-      margin-left: 2px;
-      z-index: 1;
-      text-align: left;
-      height: 47px;
-
-      &.vipLevelReached {
-        background: url("../assets/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left center;
-        background-size: contain;
-      }
-
-      span {
-        color: #fff;
-        margin-left: 30px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    padding-right: 20px;
+    .badge {
+      width: 250px;
+      img {
+        width: 100%;
       }
     }
-    .vipcontents {
-      height: 100%;
-      border-radius: 20px;
+    .vip-progress {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
       flex-direction: column;
-      padding: 30px 30px;
-
-      .title {
-        color: #333;
-        text-align: center;
-        font-family: Arial Narrow;
-        font-size: 51.319px;
-        font-style: italic;
-        font-weight: 700;
-        line-height: normal;
-        .type {
-          color: #7a80a1;
-          font-weight: 400;
-          font-size: 30.84px;
-          display: inline-block;
-          font-style: normal;
+      width: 100%;
+      gap: 20px;
+      .amount {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        .text {
+          display: flex;
+          gap: 2px;
+          font-size: 24px;
+          color: #ffffff;
+          .required-amount {
+            color: #799DF8;
+            font-weight:600;
+          }
         }
       }
-
-      .description {
-        color: #7a80a1;
-        font-size: 17.987px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-
       .progressBarContainer {
         width: 100%;
         display: flex;
@@ -842,6 +710,376 @@ $border-settings: 1px solid #e5e7eb;
           font-weight: 400;
           line-height: normal;
         }
+      }
+    }
+    .claim-btn {
+      border: 2px solid #799DF8;
+      background: #405471;
+      padding: 8px 15px;
+      color: #ffffff;
+      width: 180px;
+      text-align: center;
+      display: block;
+      border-radius: 8px;
+      font-size: 24px;
+
+    }
+  }
+  .month-birthday-bonus {
+    border: 2px solid #799DF8;
+    max-width: 1200px;
+    margin: 50px auto 0;
+    background: #212B4AE0;
+    border-radius: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    .left {
+      flex: 1;
+      position: relative;
+      width: 400px;
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .inner-slide {
+        width: 98%;
+        margin: auto;
+        overflow: hidden;
+        height: 96%;
+        margin-top: 2.3%;
+      }
+    }
+    .right {
+      flex: 2;
+      .vip-boxes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+        height: 100%;
+        gap: 20px;
+        .box {
+          border: 2px solid #799DF8;
+          background: #1F2231;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          border-radius: 10px;
+          font-size: 20px;
+          &.inactive {
+            border: 2px solid #596589;
+            background: #2F3547;
+            .icon {
+            background: url(../assets/vip/bg-circle-inactive.png)no-repeat center center;
+            background-size: contain;
+            }
+            .item-amt {
+              color: #596589;
+            }
+          }
+          .icon {
+            background: url(../assets/vip/bg-circle.png)no-repeat center center;
+            background-size: contain;
+            padding: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 5px;
+            img { 
+              height: 50%;
+            }
+          }
+          .item-name {
+            color: #ffffff;
+          }
+          .item-amt {
+            color: #799DF8;
+          }
+          .claim-now {
+            background: linear-gradient(90deg, #F1DDA0 0%, #FFCC80 100%);
+            color: #000000;
+            font-family: PingFang SC;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 28px;
+            text-align: center;
+            padding: 8px 15px;
+            border-radius: 10px;
+            margin: 10px auto;
+          }
+        }
+      }
+    }
+  }
+  .tips {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 22.8px;
+    text-align: center;
+    margin: 30px auto;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    .linktotable {
+      border-bottom: 1px solid #F1DDA0;
+      color: #F1DDA0;
+      display: inline-block;
+    }
+    .absolute-box {
+      position: absolute;
+      width: auto;
+      z-index: 2;
+      right: -15%;
+    }
+    .arrow_box {
+      font-family: PingFang SC;
+      top: 40px;
+      position: relative;
+      background: #1F2231;
+      border: 2px solid #799DF8;  /*set border colour here*/
+      border-radius: 3px;
+      -webkit-filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8)); /*set shadow colour  and size here*/
+      -moz-box-shadow: 0 1px 10px rgba(113, 158, 206, 0.8);
+      filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8));
+      
+      padding: 30px;
+      border-radius: 10px;
+      .overflow-table {
+        overflow-x: auto;
+        width: 1150px;/* Make the scrollbar thin */
+        &::-webkit-scrollbar {
+          width: 8px;  /* Change this value to your desired width */
+          height: 8px; /* Change this value for horizontal scrollbars */
+        }
+
+        /* Customize the scrollbar track */
+        &::-webkit-scrollbar-track {
+          background: #1f2231; /* You can change this to the color you prefer */
+        }
+
+        /* Customize the scrollbar handle */
+        &::-webkit-scrollbar-thumb {
+          background: #799DF8; /* You can change this to the color you prefer */
+          border-radius: 10px; /* Makes the scrollbar handle rounded */
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: #2F3547; /* Darker color on hover */
+        }
+      }
+      table {
+        width: 1500px;
+        tr {
+          th {
+            border: 2px solid #F1DDA0;
+            padding: 20px 10px;
+          }
+          td {
+            padding: 20px 10px;
+            border: 2px solid #799DF8;
+          } 
+          &:first-child {
+            background: #2F3547;
+          }
+          &:nth-child(2) {
+            background: #2F3547;
+          }
+          &:nth-child(3) {
+            background: #282C3E;
+          }
+        }
+      }
+    }
+
+    .arrow_box:after,
+    .arrow_box:before {
+      bottom: 100%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .arrow_box:after {
+      border-color: rgba(255, 255, 255, 0);
+      border-bottom-color: #1F2231;
+      border-width: 19px;
+      left: 75%;
+      margin-left: -19px;
+    }
+
+    .arrow_box:before {
+      border-color: rgba(113, 158, 206, 0);
+      border-bottom-color: #799DF8;
+      border-width: 20px;
+      left: 75%;
+      margin-left: -20px;
+    }
+  }
+
+  .vipitem {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    position: relative;
+    width: 400px;
+    height: 520px;
+    background: url("../assets/vip/cardbg.png") no-repeat top center;
+    background-size: contain;
+    &9, &10, &11, &12 {
+      background: url("../assets/vip/cardbg-shiny.png") no-repeat top center;
+      background-size: contain;
+
+    }
+
+    // &2 {
+    //   background: url("../assets/vip/badge/banner-2.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &3 {
+    //   background: url("../assets/vip/badge/banner-3.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &4 {
+    //   background: url("../assets/vip/badge/banner-4.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &5 {
+    //   background: url("../assets/vip/badge/banner-5.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &6 {
+    //   background: url("../assets/vip/badge/banner-6.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &7 {
+    //   background: url("../assets/vip/badge/banner-7.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &8 {
+    //   background: url("../assets/vip/badge/banner-8.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &9 {
+    //   background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &10 {
+    //   background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &11 {
+    //   background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &12 {
+    //   background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+    .vipLevelReachStatus {
+      // background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
+      background-size: contain;
+      margin-top: 15px;
+      margin-left: 2px;
+      z-index: 1;
+      text-align: left;
+      height: 47px;
+
+      &.vipLevelReached {
+        // background: url("../assets/vip/badge/vip-level-banner-status-ribbon-achieved.png") no-repeat left center;
+        background-size: contain;
+      }
+
+      span {
+        color: #fff;
+        margin-left: 30px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
+      }
+    }
+    .vipcontents {
+      height: 100%;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      padding: 30px 30px;
+      .title {
+        color: #333;
+        text-align: center;
+        font-family: Arial Narrow;
+        font-size: 51.319px;
+        font-style: italic;
+        font-weight: 700;
+        line-height: normal;
+        top: 55px;
+        position: absolute;
+        .type {
+          color: #799DF8;
+          font-weight: 400;
+          font-size: 30.84px;
+          display: inline-block;
+          font-style: normal;
+        }
+      }
+      .badge {
+        width: 270px;
+        margin-top: 35px;
+        img { 
+          width: 100%;
+        }
+      }
+
+      .description {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        span {
+          color: #F1DDA0;
+          font-size: 36px;
+          font-weight: 600;
+          line-height: 50.4px;
+          text-align: center;
+
+        }
+      }
+      .viplevel {
+        color: #ffffff;
+        font-family: "Purple Purse", serif;
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 50px;
+        text-align: center;
+
       }
 
       .inner-vip {
@@ -933,13 +1171,38 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   .terms-conditions {
-    padding-bottom: 80px;
+    max-width: 1200px;
     margin: 0 auto;
     width: 80%;
     position: relative;
-
+    border: 2px solid #799DF8;
+    padding: 10px;
+    background: linear-gradient(0deg, #2F3547, #2F3547);
+    border-radius: 15px;
     .section-title {
-      background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #FFFFFF 18.57%, #B3D7F0 85%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      &:before {
+        content: "";
+        background: url(../assets/vip/decal.png);
+        width: 70px;
+        height: 70px;
+        display: block;
+        background-size: cover;
+      }
+      &:after {
+        content: "";
+        background: url(../assets/vip/decal.png);
+        width: 70px;
+        height: 70px;
+        display: block;
+        background-size: cover;
+        transform: rotateY(180deg);
+      }
       background-clip: text;
       text-align: center;
       font-size: 48px;
@@ -957,12 +1220,14 @@ $border-settings: 1px solid #e5e7eb;
       font-size: 16px;
       font-weight: 400;
       line-height: 30px;
+      background: linear-gradient(0deg, #2F3547, #2f3547ad);
 
       .term {
         max-width: 1300px;
         width: 100%;
-        margin-top: 39px;
+        margin-top: 10px;
         list-style-type: decimal;
+        color: #ffffff;
       }
     }
   }
@@ -981,7 +1246,7 @@ $border-settings: 1px solid #e5e7eb;
 
     .vipitem {
       width: 430px;
-      height: 215px;
+      height: 455px;
       margin: auto;
 
       .vipLevelReachStatus {
@@ -1030,7 +1295,7 @@ $border-settings: 1px solid #e5e7eb;
         color: $color-white;
       }
       .terms {
-        @include content-block-dark;
+        // @include content-block-dark;
         color: $font-3-dark;
         margin-top: 39px;
         .term {
@@ -1043,98 +1308,175 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 </style>
-<style lang="scss">
+
+<style scoped>
 .carousel {
-  max-width: 1080px;
+  max-width: 1200px;
   margin: 0 auto;
 }
-
-.carousel__item {
-  // background: url(../assets/vip/vipbg.png)no-repeat center center;
-  background-size: 100%;
-  font-size: 20px;
-  border-radius: 8px;
-}
-
 .carousel__slide {
-  padding: 10px;
-  align-items: flex-start;
+  padding: 5px;
 }
 
-.carousel__prev,
-.carousel__next {
-  box-sizing: content-box;
-  background: transparent;
-  top: 180px;
-  width: 40%;
-  height: 90%;
-
-  svg {
-    width: 30px;
-    height: 30px;
-    background: url(../assets/vip/nextprev.png) no-repeat center center;
-    background-size: contain;
-  }
+.carousel__viewport {
+  perspective: 2000px;
 }
 
-.carousel__prev {
-  left: 4%;
+.carousel__track {
+  transform-style: preserve-3d;
 }
 
-.carousel__next {
-  right: 4%;
-}
-
-.carousel__slide > .carousel__item {
-  transform: scale(0.2);
-  //filter: brightness(0.7);
+.carousel__slide--sliding {
   transition: 0.5s;
 }
 
-.carousel__slide--visible > .carousel__item {
+.carousel__slide {
+  opacity: 0;
+  transform: scale(0.5);
+  filter: grayscale(.5) brightness(.9);
+}
+
+.carousel__slide--active ~ .carousel__slide {
+  z-index: -1;
+  filter: grayscale(.8) brightness(.9);
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: 200px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}
+.carousel__slide--active ~ .carousel__slide.carousel__slide--next {
+  transform: scale(0.6);
+  filter: grayscale(1) brightness(.7);
+  z-index: -3;
+  
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: 110px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}
+.carousel__slide--active ~ .carousel__slide.carousel__slide--prev {
+  transform: scale(0.6);
+  filter: grayscale(1) brightness(.7);
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: -110px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}
+.carousel__slide--prev {
   opacity: 1;
-  filter: brightness(1);
-  transform: rotateY(0);
-}
-
-.carousel__slide--next > .carousel__item {
-  /* transform: scale(1.2) translate(-10px); */
-  transform: scale(0.8) translate(-170px);
+  transform: scale(0.6);
   z-index: -2;
+  filter: grayscale(1) brightness(.5);
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: -110px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
 }
 
-.carousel__slide--prev > .carousel__item {
-  transform: scale(0.8) translate(170px);
+.carousel__slide--next {
+  transform: scale(0.6);
+  opacity: 1;
   z-index: -2;
-  /* transform: scale(0.9) translate(10px); */
+  filter: grayscale(1) brightness(.5);
+  
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: 110px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}
+.carousel__slide--prev + .carousel__slide.carousel__slide--visible {
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: -200px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}
+.carousel__slide--next + .carousel__slide.carousel__slide--visible {
+  .vipcontents {
+    &:before {
+      content: "";            
+      box-shadow: 200px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
+  }
+}
+.carousel__slide--visible {
+  transform: scale(0.8);
+  opacity: 0.9;
+  z-index: -1;
 }
 
-.carousel__slide--active > .carousel__item {
+:deep(.carousel__prev) {
+  background: url('../assets/vip/nextprev.png');
+  background-size: contain;
+  padding: 25px;
+}
+:deep(.carousel__next) {
+  background: url('../assets/vip/nextprev.png');
+  background-size: contain;
+  padding: 25px;
+  transform: translate3d(20px, -20px, 10px) rotateY(180deg);
+}
+.carousel__slide--active {
+  opacity: 1;
   transform: scale(1);
-  z-index: 0;
-}
-
-@media (max-width: 767px) {
-  .carousel__prev,
-  .carousel__next {
-    top: 15%;
-  }
-
-  .carousel__next {
-    top: 13.5%;
-    right: 2%;
-  }
-
-  .carousel__slide > .carousel__item {
-    transform: scale(0);
-    filter: brightness(0.7);
-    transition: 0.5s;
-  }
-
-  .carousel__slide--visible > .carousel__item {
-    opacity: 1;
-    filter: brightness(1);
-    transform: rotateY(0);
+  filter: grayscale(0);
+  z-index: 1;
+  .vipcontents {
+    &:before {
+      content: unset !important;            
+      box-shadow: 200px 0 30px -10px black inset;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+    }
   }
 }
 </style>

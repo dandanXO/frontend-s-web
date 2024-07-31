@@ -236,6 +236,12 @@ export const userStore = defineStore("userStore", {
           });
       }
     },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
+    getLevelUpDeposit() {
+      return this.levelUpDeposit;
+    },
     getUnreadTotal() {
       if (this.token) {
         return api.get('/session/inbox/getUnreadTotal').then((total) => {
