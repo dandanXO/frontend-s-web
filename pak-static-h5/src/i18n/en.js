@@ -180,7 +180,8 @@ export default {
     search: "Search",
     downloadApp: "Download App",
     downloadNow: "Download Now",
-    recharge: "Recharge"
+    recharge: "Recharge",
+    getInterestProfit: "Get Interest Profit"
   },
   notify: {
     noRecord: "No Record",

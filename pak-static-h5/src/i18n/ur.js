@@ -179,7 +179,8 @@ export default {
     search: "تلاش",
     downloadApp: "ایپ ڈاؤن لوڈ کریں",
     downloadNow: "ابھی ڈاؤنلوڈ کریں",
-    recharge: "ری چارج کریں"
+    recharge: "ری چارج کریں",
+    getInterestProfit: "سود کا منافع حاصل کریں۔"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
