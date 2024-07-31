@@ -54,10 +54,10 @@
           <el-dropdown trigger="click">
             <el-button
               size="normal"
-              style="margin-left: 0px; width: 100%; border-color: #409eff"
+              style="margin-left: 0px; width: 100%; "
             >
-              <span style="color: #409eff;">{{ $t('fields.download') }}</span>
-              <el-icon class="el-icon--right" style="color: #409eff;">
+              <span style="">{{ $t('fields.download') }}</span>
+              <el-icon class="el-icon--right" style="color: #fff;">
                 <arrow-down-bold />
               </el-icon>
             </el-button>
@@ -132,10 +132,10 @@
           <el-dropdown trigger="click">
             <el-button
               size="normal"
-              style="margin-left: 0px; width: 100%; border-color: #409eff"
+              style="margin-left: 0px; width: 100%; "
             >
-              <span style="color: #409eff;">{{ $t('fields.download') }}</span>
-              <el-icon class="el-icon--right" style="color: #409eff;">
+              <span style="">{{ $t('fields.download') }}</span>
+              <el-icon class="el-icon--right" style="color: #fff;">
                 <arrow-down-bold />
               </el-icon>
             </el-button>
