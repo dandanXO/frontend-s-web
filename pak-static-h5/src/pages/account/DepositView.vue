@@ -150,7 +150,12 @@
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
           <span style="color: #fff">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">{{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}</template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
             {{ store.currency.value }}
           </span>
         </div>
@@ -822,6 +827,12 @@ const openDepositVideo = () => {
   //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   // }
 };
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 
 onActivated(() => {
   // checkNewUser();
