@@ -914,6 +914,8 @@ function showDialog(type) {
 async function submit() {
   configForm.value.validate(async valid => {
     if (valid) {
+      form.configGroup = form.configGroup.trim();
+      form.code = form.code.trim();
       if (uiControl.dialogTitle === t('fields.createConfig')) {
         form.siteId = siteId.value
         await createConfig(form)

@@ -1755,6 +1755,7 @@ export default {
     defaultConfigHint: '默認',
     configCode: '设置Code',
     configValue: '设置值',
+    configDescribes: '设置描述',
     s3Url: 'S3地址',
     allSites: '全部站点',
     allSource: '全部来源类型',

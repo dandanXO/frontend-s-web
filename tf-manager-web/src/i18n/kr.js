@@ -1668,6 +1668,7 @@ export default {
     defaultConfigHint: '기본값',
     configCode: '구성 코드',
     configValue: '구성 값',
+    configDescribes: '구성 설명',
     s3Url: 'S3 URL',
     allSites: '모든 사이트',
     allSource: '모든 소스 유형',
