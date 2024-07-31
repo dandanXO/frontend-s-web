@@ -106,7 +106,7 @@
               {{ t('fields.thirdPartyTotalPayout') }}
             </div>
           </template>
-          <span>{{ platform.totalPayout }}</span>
+          <span v-formatter="{data: platform.totalPayout, type: 'money'}" />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -237,7 +237,6 @@ async function loadPlatformSummaryList() {
     return sum
   }, 0)
 
-  console.log('getTotalBet : ', getTotalBet)
   // Convert the object back to an array
   const resultArray = Object.values(groupedByGameType)
 
