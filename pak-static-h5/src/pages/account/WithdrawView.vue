@@ -235,14 +235,14 @@
 
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 2">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
+              <span style="flex: 2">{{ $t("form.realTimeExchangeRates") }}:</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27">
-              <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
+              <span style="flex: 1">{{ $t("form.estimatedArrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
                   selectedWithdrawalMethod &&
@@ -254,7 +254,7 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_usdtspecialnote") }}</div>
+            <div class="q-mt-sm text-neontb">{{ $t("form.usdtSpecialNote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -436,7 +436,7 @@ const qs = require("qs");
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
-  withdrawPassword: ""
+  // withdrawPassword: ""
 });
 const isLoaded = ref(false);
 const hasWithdrawCard = computed(() => {
@@ -521,7 +521,7 @@ const submitWithdraw = async () => {
           }
 
           withdrawInfo.amount = "";
-          withdrawInfo.withdrawPassword = "";
+          // withdrawInfo.withdrawPassword = "";
           if (amountRef.value) {
             setTimeout(() => {
               amountRef.value.resetValidation();
