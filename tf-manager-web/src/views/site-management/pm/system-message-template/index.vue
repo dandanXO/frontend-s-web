@@ -847,9 +847,9 @@ async function removeSystemMessage(systemMessage) {
     }
   ).then(async () => {
     if (systemMessage) {
-      await deleteMessageTemplate([systemMessage.id])
+      await deleteMessageTemplate(systemMessage.siteId, [systemMessage.id])
     } else {
-      await deleteMessageTemplate(chooseMessage.map(u => u.id))
+      await deleteMessageTemplate(request.siteId, chooseMessage.map(u => u.id))
     }
     await loadSystemMessageTemplate()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
