@@ -396,6 +396,7 @@ export default {
     NOTIFICATION: 'Notification',
     ACTIVITY: 'Activity',
     ANNOUNCEMENT: 'Announcement',
+    MATCH: 'Match',
     PAYMENT: 'Payment',
   },
   sitePlatform: {

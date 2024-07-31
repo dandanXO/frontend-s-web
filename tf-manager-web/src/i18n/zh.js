@@ -401,6 +401,7 @@ export default {
     NOTIFICATION: '通知',
     ACTIVITY: '活动',
     ANNOUNCEMENT: '公告',
+    MATCH: '赛事',
     PAYMENT: '充提',
   },
   sitePlatform: {

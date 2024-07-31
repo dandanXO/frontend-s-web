@@ -559,13 +559,15 @@ const uiControl = reactive({
   type: [
     { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
     { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
-    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' }
+    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
+    { key: 4, displayName: 'MATCH', value: 'MATCH' }
   ],
   searchType: [
     { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
     { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
     { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
-    { key: 4, displayName: 'PAYMENT', value: 'PAYMENT' }
+    { key: 4, displayName: 'MATCH', value: 'MATCH' },
+    { key: 5, displayName: 'PAYMENT', value: 'PAYMENT' }
   ],
   redirectType: [
     { key: 1, displayName: 'None', value: 'NONE' },
@@ -686,7 +688,6 @@ const handleSelect = item => {
 }
 
 const formRules = reactive({
-  recipient: [required(t('message.validateRecipientRequired'))],
   title: [required(t('message.validateSubjectRequired'))],
   content: [required(t('message.validateContentRequired'))],
   type: [required(t('message.validateTypeRequired'))]
@@ -801,6 +802,10 @@ function submit() {
           form.recipient = dynamicTags.value
         } else if (form.receiveType === 'VIP') {
           form.recipient.push(form.vip)
+        }
+        if (form.receiveType !== 'ALL' && form.recipient.length === 0) {
+          ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
+          return
         }
         form.siteId = selected.site
         await createSystemMessageTemplate(form)
