@@ -48,7 +48,8 @@ export default {
     transferRecord: "Transfer Record",
     promotionRecord: "Promotion Record",
     betRecord: "Bet Record",
-    referralRecord: "Referral Record"
+    referralRecord: "Referral Record",
+    interestProfit: "Interest Profit"
   },
   bottomNav: {
     home: "Home",
@@ -225,7 +226,8 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "LOG OUT",
-    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts"
+    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
+    interestProfit: "Interest Profit"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -248,6 +250,28 @@ export default {
   order: {
     withdrawal: "Withdrawal",
     recharge: "Recharge"
+  },
+  interestProfit: {
+    depositOverview: "Deposit overview",
+    unexpiredEarnings: "Unexpired earnings",
+    cumulativeIncome: "Cumulative income",
+    storageTime: "Storage time (Days)",
+    deposit: "Deposit",
+    trialCalculation: "Trial calculation",
+    annualInterestRate: "Annual interest rate",
+    distributeInterest: "Distribute interest",
+    pending: "Pending",
+    ended: "Ended",
+    details: "Details",
+    collect: "Collect",
+    noData: "No data",
+    annualInterestRate: "Annual Interest Rate",
+    depositAmount: "Deposit Amount",
+    depositDuration: "Deposit Duration",
+    placeTime: "Place Time",
+    matureTime: "Mature Time",
+    status: "Status",
+    confirm: "Confirm"
   },
   vip: {
     receiveMonthlyRewards: "Receive monthly rewards",

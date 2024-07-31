@@ -48,7 +48,8 @@ export default {
     transferRecord: "منتقلی کا ریکارڈ",
     promotionRecord: "پروموشن کا ریکارڈ",
     betRecord: "شرط لگانے کا ریکارڈ",
-    referralRecord: "ریفرل کا ریکارڈ"
+    referralRecord: "ریفرل کا ریکارڈ",
+    interestProfit: "سود کا منافع"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -225,7 +226,8 @@ export default {
     feedback: "فیڈبیک",
     vip: "VIP",
     logout: "لاگ آوٹ",
-    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
+    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
+    interestProfit: "سود کا منافع"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
@@ -248,6 +250,28 @@ export default {
   order: {
     withdrawal: "واپسی",
     recharge: "ریچارج"
+  },
+  interestProfit: {
+    depositOverview: "جمع کروانے کا جائزہ",
+    unexpiredEarnings: "غیر ختم شدہ کمائی",
+    cumulativeIncome: "مجموعی آمدنی",
+    storageTime: "ذخیرہ وقت (دن)",
+    deposit: "جمع",
+    trialCalculation: "آزمائشی حساب",
+    annualInterestRate: "سالانہ شرح سود",
+    distributeInterest: "سود تقسیم کریں",
+    pending: "زیر التواء",
+    ended: "ختم ہو گیا",
+    details: "تفصیلات",
+    collect: "جمع کریں",
+    noData: "کوئی ڈیٹا نہیں",
+    annualInterestRate: "سالانہ شرح سود",
+    depositAmount: "جمع رقم",
+    depositDuration: "جمع کرنے کی مدت",
+    placeTime: "وقت مقرر کریں",
+    matureTime: "پختہ وقت",
+    status: "حالت",
+    confirm: "تصدیق کریں"
   },
   vip: {
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
