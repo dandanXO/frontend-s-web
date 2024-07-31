@@ -1666,6 +1666,7 @@ export default {
     posterType: '포스터 유형',
     createConfig: '구성 생성',
     defaultConfigHint: '기본값',
+    defaultConfigSearchBarHint: '검색',
     configCode: '구성 코드',
     configValue: '구성 값',
     configDescribes: '구성 설명',

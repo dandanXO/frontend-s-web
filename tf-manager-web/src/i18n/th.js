@@ -1210,6 +1210,7 @@ export default {
     lower: 'ขีดจำกัดล่าง',
     upper: 'ขีด จำกัด บน',
     defaultConfigHint: 'Default',
+    defaultConfigSearchBarHint: 'Search by ',
     configGroup: 'Config Group',
     configCode: 'Config Code',
     configValue: 'Config Value',

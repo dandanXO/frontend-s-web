@@ -1752,6 +1752,7 @@ export default {
     posterType: 'Poster Type',
     createConfig: 'Create Config',
     defaultConfigHint: 'Default',
+    defaultConfigSearchBarHint: 'Search by ',
     configCode: 'Config Code',
     configValue: 'Config Value',
     configDescribes: 'Config Describes',

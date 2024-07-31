@@ -1753,6 +1753,7 @@ export default {
     other: '其他',
     createConfig: '新增设置',
     defaultConfigHint: '默認',
+    defaultConfigSearchBarHint: '搜索',
     configCode: '设置Code',
     configValue: '设置值',
     configDescribes: '设置描述',

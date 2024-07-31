@@ -5,15 +5,23 @@
     label-position="left"
     class="config_form"
   >
-    <el-button
-      size="mini"
-      type="success"
-      icon="el-icon-circle-plus"
-      @click="showDialog('CREATE')"
-    >
-      {{ t('fields.createConfig') }}
-    </el-button>
-    <el-table :data="defaultConfigs.mergeItems" style="width: 100%">
+    <div style="margin-bottom: 20px">
+      <el-input
+        v-model="searchTerm"
+        :placeholder="`${t('fields.defaultConfigSearchBarHint')}${t('fields.configGroup')}`"
+        :size="'mini'"
+        style="margin-right: 20px;"
+      />
+      <el-button
+        size="mini"
+        type="success"
+        icon="el-icon-circle-plus"
+        @click="showDialog('CREATE')"
+      >
+        {{ t('fields.createConfig') }}
+      </el-button>
+    </div>
+    <el-table :data="filteredData" style="width: 100%">
       <el-table-column prop="configGroup" :label="t('fields.configGroup')" />
       <el-table-column prop="code" :label="t('fields.configCode')" />
       <el-table-column prop="value" :label="t('fields.configValue')" />
@@ -84,7 +92,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import {
   createConfig,
   deleteById,
@@ -119,6 +127,15 @@ const form = reactive({
   value: null,
   describes: "",
 })
+
+const searchTerm = ref('');
+
+const filteredData = computed(() => {
+  const term = searchTerm.value.toLowerCase();
+  return defaultConfigs.mergeItems.filter(item =>
+    item.configGroup.toLowerCase().includes(term)
+  );
+});
 
 const formRules = reactive({
   configGroup: [required(t('message.validateConfigGroupRequired'))],
