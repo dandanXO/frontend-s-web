@@ -898,6 +898,7 @@ export default {
     exclusiveUrl: '독점 URL',
     exportToExcel: 'Excel로 내보내기',
     expressCompany: '택배 회사',
+    externalUrl: '외부 URL',
     extraParam: '추가 매개변수',
     fail: '실패',
     failReason: '실패 사유',

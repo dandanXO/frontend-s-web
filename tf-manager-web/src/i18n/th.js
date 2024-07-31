@@ -607,6 +607,7 @@ export default {
     exclusiveUrlCashier: 'URL พิเศษ',
     exclusiveUrl: 'URL พิเศษ',
     exportToExcel: 'ส่งออกไปยัง Excel',
+    externalUrl: 'URL ภายนอก',
     extraParam: 'พารามิเตอร์พิเศษ',
     fail: 'ล้มเหลว',
     failReason: 'เหตุผลที่ล้มเหลว',
@@ -1578,7 +1579,8 @@ export default {
     'Affiliate Domain Management': 'การจัดการโดเมนพันธมิตร',
     'Affiliate List': 'รายชื่อพันธมิตร',
     'Affiliate Details': 'รายละเอียดพันธมิตร',
-    'Affiliate Facebook Pixel Management': 'Affiliate Facebook Pixel Management',
+    'Affiliate Facebook Pixel Management':
+      'Affiliate Facebook Pixel Management',
     'Site Affiliate Commission': 'ค่าคอมมิชชั่นพันธมิตรไซต์',
     'Deposit Management': 'การจัดการเงินฝาก',
     'Online Deposit': 'การฝากเงินออนไลน์',

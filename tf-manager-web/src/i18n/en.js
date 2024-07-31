@@ -954,6 +954,7 @@ export default {
     exclusiveUrl: 'Exclusive Url',
     exportToExcel: 'Export to Excel',
     expressCompany: 'Express Company',
+    externalUrl: 'External Url',
     extraParam: 'Extra Param',
     fail: 'Fail',
     failReason: 'Fail Reason',

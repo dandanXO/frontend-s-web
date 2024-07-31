@@ -900,6 +900,7 @@ export default {
     exclusiveUrl: 'URL độc quyền',
     exportToExcel: 'Xuất ra Excel',
     expressCompany: 'Công ty chuyển phát nhanh',
+    externalUrl: 'url bên ngoài',
     extraParam: 'Tham số bổ sung',
     fail: 'Thất bại',
     failReason: 'Lý do thất bại',
