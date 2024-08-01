@@ -110,7 +110,7 @@
       <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-3-spring.png" /></div>
       <div class="content">
         <p>
-          1. 活动期间,每日投注BLAST Premier
+          1. 活动期间,每日投注电竞场馆的BLAST Premier
           秋季小组赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
         </p>
         <p>

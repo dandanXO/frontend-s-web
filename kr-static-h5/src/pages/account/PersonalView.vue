@@ -75,7 +75,7 @@
         </template>
       </q-input>
 
-      <div class="text-center q-mt-lg" v-if="isEditBirthday">
+      <div class="text-center q-mt-lg" v-if="isEdit">
         <q-btn
           class="common-large-btn full-width"
           no-caps
@@ -177,6 +177,11 @@ export default defineComponent({
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (!personalState.memberInfo.birthday) ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
+
+      if(!formDetail.name2 || !formDetail.realName){
+        isEdit.value= true;
+      }
+
     };
 
     const canEdit = computed(() => {
@@ -323,15 +328,20 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
-      if(personalState.memberInfo.name2){
+      if(personalState.memberInfo.name2 && personalState.memberInfo.realName){
         return;
       }
       if(!personalState.memberInfo.name2) {
         name2Ref.value.validate()
         if(name2Ref.value.hasError) return
       }
+      if(!personalState.memberInfo.realName) {
+        realNameRef.value.validate()
+        if(realNameRef.value.hasError) return
+      }
 
-      updateInfo.name2 = formDetail.name2
+      updateInfo.name2 = formDetail.name2;
+      updateInfo.realName = formDetail.realName
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
@@ -343,6 +353,8 @@ export default defineComponent({
             message: t("lang.msg_update_successful"),
             icon: "check_circle_outline"
           });
+
+          isEdit.value= false;
 
           store.getMemberInfo().then(() => {
             loadInfo();

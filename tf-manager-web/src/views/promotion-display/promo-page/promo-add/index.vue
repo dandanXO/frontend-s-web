@@ -891,7 +891,7 @@ const formRules = reactive({
   promoCode: [required(t('message.validatePromoCodeRequired'))],
   pageContent: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
-  vips: [required(t('message.validateVIPRequired'))],
+  // vips: [required(t('message.validateVIPRequired'))],
   affiliates: [required(t('message.validateAffiliateCodeRequired'))],
 })
 

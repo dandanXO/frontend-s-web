@@ -114,7 +114,8 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT ||
         res.code === ResponseCode.EMPTY_PROMO_POPOUT ||
         res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG ||
-        res.code === ResponseCode.ERROR_GUEST_LOGGED
+        res.code === ResponseCode.ERROR_GUEST_LOGGED ||
+        res.code === ResponseCode.ERROR_WITHDRAW_LIMIT_MEMBER
       ) {
         // debugger;
         res.message =

@@ -514,8 +514,9 @@ const submitBankCard = () => {
     width: 100%;
   }
   .addcardbtn {
-    background: #1F6DE0;
-    box-shadow: 0px 6px 12px 0px #3F8CFF6B;
+    background: #46794f;
+    border:1px solid #305637;
+    box-shadow: 0px 6px 12px 0px #46794f6B;
     border-radius: 10px;
     line-height: 20px;
     :deep(span) {

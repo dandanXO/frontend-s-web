@@ -268,14 +268,6 @@ const closeDialog = () => {
   }
 };
 const open = (gameName, platformCode, gameCode = "", gameType) => {
-  if (store.unreadInboxMail > 0) {
-    $q.notify({
-      message: $t("lang.msg_hasUnreadMail"),
-      color: "negative"
-    });
-    return;
-  }
-
   transferInfo.value.platform = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");
@@ -295,6 +287,13 @@ const open = (gameName, platformCode, gameCode = "", gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
+      if (store.unreadInboxMail > 0) {
+        $q.notify({
+          message: t("lang.msg_hasUnreadMail"),
+          color: "negative"
+        });
+        // return;
+      }
       if (isAndroid() && !isHuaweiPhone()) {
         AppFullscreen.request();
         window.screen.orientation.unlock();

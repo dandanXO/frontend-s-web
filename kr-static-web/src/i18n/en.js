@@ -64,6 +64,7 @@ export default {
     fishing: "Fishing",
     cockfight: "Cockfight",
     deposit_should_between: "Deposit amount should between ",
+    deposit_amount_unit: "Deposit amount must be in units of 10,000.",
     msg_deleted: "Message deleted",
     please_select_bank: "Please select bank",
     you_account_has_been_sent_email: "Your Account Id has been sent to your email",
@@ -240,6 +241,7 @@ export default {
     min4: "Verification code should be 4 characters",
     emailFormat: "Please enter a valid email",
     between612: "Length should be between 6 - 11 characters",
+    length4: "Length should be 4 characters",
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
@@ -856,7 +858,10 @@ export default {
     message_read_all_message: "Read all messages",
     message_delete_selected_message: "Deleted selected messages",
     message_delete_all_message: "Deleted all read messages",
-    message_total: "Total"
+    message_total: "Total",
+    message_no_real_name: "Real name is required",
+    message_no_bank_card: "Please link your bank card first",
+    message_no_withdraw_password: "Please add a withdrawal password first"
     // message end
   },
   feedback: {

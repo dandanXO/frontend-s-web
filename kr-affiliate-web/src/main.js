@@ -7,6 +7,7 @@ import "@/assets/iconfont/iconfont.css";
 import "@/styles/index.scss";
 import 'element-plus/theme-chalk/index.css'
 import "normalize.css";
+import "@/styles/element-variables.scss";
 import * as directives from "@/directives";
 import "@/permission";
 import "@/icons";

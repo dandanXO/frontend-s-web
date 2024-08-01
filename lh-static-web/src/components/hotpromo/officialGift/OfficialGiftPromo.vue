@@ -21,13 +21,13 @@
     <div class="official-gift-block detail-block">
       <div class="detail-block-title">
         <img src="@/components/hotpromo/officialGift/img/gift.svg" />
-        <span>认准雷火电竞官方福利群管理</span>
+        <span>认准雷火电竞官方VIP客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
+        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：领取彩金、投资计划、赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj?.voxis_id }}</span>
+          <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
           <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
         </div>
         <img class="detail-block-content-suffix" src="@/components/hotpromo/officialGift/img/detail-block-suffix.png" />
@@ -59,10 +59,15 @@ import ClockSvg from "@/components/hotpromo/officialGift/img/clock.svg";
 import DateSvg from "@/components/hotpromo/officialGift/img/date.svg";
 import GiftLineSvg from "@/components/hotpromo/officialGift/img/gift-line.svg";
 import ThumbSvg from "@/components/hotpromo/officialGift/img/thumb.svg";
+import { userStore } from "@/store";
+import { storeToRefs } from "pinia";
 
 const props = defineProps({
   params: String
 });
+
+const store = userStore();
+const { vip } = storeToRefs(store);
 
 const reasons = ref([
   { icon: BeautySvg, description: "美女专属客服1对1优质服务" },
@@ -81,6 +86,11 @@ const paramsObj = computed(() => {
   } catch (e) {
     return {};
   }
+});
+
+const currentVoxisId = computed(() => {
+  const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
+  return paramsObj.value[key] || "";
 });
 
 const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id);

@@ -112,10 +112,8 @@ export default route(function (/* { store, ssrContext } */) {
               message: i18n.global.t("lang.msg_hasUnreadMail"),
               color: "negative"
             });
-            next("/");
-          } else {
-            next();
           }
+          next();
         } else {
           next();
         }

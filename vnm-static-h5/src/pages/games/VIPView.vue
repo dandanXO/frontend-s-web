@@ -105,7 +105,7 @@
                   class="btn-main"
                   no-caps
                   @click="claimMonthly()"
-                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+                  v-if="canClaimMonthly && vipLevel === Number(vipIndex + 1)"
                 >
                   {{ $t("lang.vip_claim") }}
                 </q-btn>
@@ -119,7 +119,7 @@
               <div class="common-btn" v-if="vip.birthdayBonus !== '-'">
                 <q-btn
                   class="btn-main"
-                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+                  v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3"
                   no-caps
                   @click="router.push('/liveChat')"
                 >
@@ -544,6 +544,7 @@ const currentDeposit = ref(0);
 //   }
 // }
 
+const canClaimMonthly = ref(false);
 const checkVipRedeem = () => {
   // console.log(claimDesc.value)
   if (!claimDesc.value) {
@@ -609,9 +610,9 @@ const checkVipRedeem = () => {
     }
   });
 
-  eventapi.get("/privi/vip/canRedeem", { promoCode: "vnm-vip-monthly" }).then((res) => {
+  eventapi.get("/privi/vip/canRedeem?promoCode=vnm-vip-monthly").then((res) => {
     if (res.code === 0) {
-      vipClaimItems[slide.value].monthlyBtn = res.data;
+      canClaimMonthly.value = res.data
     }
   });
 };

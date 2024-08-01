@@ -7,6 +7,9 @@
         <div class="right">
           <img src="../../assets/images/inbox/account-right-icon.svg" />
         </div>
+        <div v-if="trans.code === 'inbox' && store.unreadInboxMail" class="unread-count">
+          {{ store.unreadInboxMail }}
+        </div>
       </router-link>
     </div>
   </q-page>
@@ -107,6 +110,17 @@ export default defineComponent({
       img {
         width: 10px;
       }
+    }
+
+    .unread-count {
+      width: 45px;
+      height: 25px;
+      border-radius: 25px;
+      text-align: center;
+      color: #fff;
+      background: red;
+      font-size: 16px;
+      line-height: 25px;
     }
   }
 }

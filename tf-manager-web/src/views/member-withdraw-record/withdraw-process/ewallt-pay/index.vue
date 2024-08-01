@@ -624,7 +624,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordEwalltPay,
-  getAllMemberWithdrawRecordEwalltPay,
   fromPayToBeforePaid,
   fromPayToSuccess,
   fromPayToFail,
@@ -842,7 +841,7 @@ async function loadRecord() {
   }
   query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.withdrawCode = "KDPAY,EBPAY,OKPAY,SZPAY,BLBPAY,JDPAY,JAZZCASH,EASYPAISA";
-  const { data: ret } = hasPermission(['sys:withdraw:all:pay']) ? await getAllMemberWithdrawRecordEwalltPay(query) : await getMemberWithdrawRecordEwalltPay(query)
+  const { data: ret } = await getMemberWithdrawRecordEwalltPay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

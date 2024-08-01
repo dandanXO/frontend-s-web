@@ -176,6 +176,14 @@ export default defineComponent({
           } else {
             prevPage.value = "/account/bank";
           }
+        } else if (route.path === "/account/withdraw/crypto") {
+          hasPage.value = true;
+          pageName.value = t("header.addCrypto");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account/bank";
+          }
         } else if (route.path === "/account/withdraw/bank-card") {
           hasPage.value = true;
           pageName.value = t("header.addBankCard");
@@ -449,6 +457,10 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.withdraw");
+        } else if (route.path === "/interest-profit") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = t("header.interestProfit");
         }
       }
     };

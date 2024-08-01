@@ -145,7 +145,14 @@
           >
             <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper" :class="selectedPromoWrapperClass">
-              <div @click="showRuleDialog = true" v-if="selectedPromo.promoCode==='lh1-daily-checkin'" class="open-rule">活动规则</div>
+              <div
+                @click="showRuleDialog = true"
+                v-if="selectedPromo.promoCode === 'lh1-daily-checkin'"
+                class="open-rule"
+              >
+                <img src="../components/hotpromo/DailyCheckin/images/prize-icon.png" />
+                活动规则
+              </div>
               <div
                 class="banner-container"
                 v-if="
@@ -178,14 +185,17 @@
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu:
                     selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
-                  lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
+                  lheuromanual:
+                    selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
                     selectedPromo.promoCode === 'lh1meizhoubei' || selectedPromo.promoCode === 'lh1-olympic-fund',
                   aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
                   euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
                 }"
                 :style="[
-                  selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
+                  selectedPromo.promoCode === 'lh-eurocup-manual' ||
+                  selectedPromo.promoCode === 'lh1-deposit-rebates' ||
+                  selectedPromo.promoCode === 'lh1-daily-checkin'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
@@ -270,29 +280,48 @@
         <q-btn class="common-md-btn" label="确认" />
       </router-link>
     </q-card> -->
-    <q-card  class="text-black text-center" style="background: transparent;">
+    <q-card class="text-black text-center" style="background: transparent">
       <q-card-section class="row items-center justify-center">
         <div class="dialog-header-2">
-          <img class="closeX" @click="showRuleDialog=false" :src="require('../components/hotpromo/DailyCheckin/images/icon-close.png')" />
+          <img
+            class="closeX"
+            @click="showRuleDialog = false"
+            :src="require('../components/hotpromo/DailyCheckin/images/icon-close.png')"
+          />
           <div class="secend-rule">
-            <div class="title">
-              活动规则
-            </div>
-            <div style="width: 100%; text-align: left;">
-              <img style="width: 104px; height: 28px;" :src="require('../components/hotpromo/DailyCheckin/images/rule-time.png')">
+            <div class="title">活动规则</div>
+            <div style="width: 100%; text-align: left">
+              <img
+                style="width: 104px; height: 28px"
+                :src="require('../components/hotpromo/DailyCheckin/images/rule-time.png')"
+              />
               <div class="text">
                 {{ JSON.parse(selectedPromo.param).activity_date }}
               </div>
             </div>
-            <div style="width: 100%; text-align: left;">
-              <img style="width: 104px; height: 28px; " :src="require('../components/hotpromo/DailyCheckin/images/rule-content.png')">
-              <div class="text" style="margin-left: -20px; overflow: scroll; height: 250px;">
+            <div style="width: 100%; text-align: left">
+              <img
+                style="width: 104px; height: 28px"
+                :src="require('../components/hotpromo/DailyCheckin/images/rule-content.png')"
+              />
+              <div class="text" style="margin-left: -20px; overflow: scroll; height: 250px">
                 <ul>
-                  <li>所有雷火电竞会员存款达到相应 VIP 等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 + 奖金）*相应流水倍数即可提款。</li>
+                  <li>
+                    所有雷火电竞会员存款达到相应 VIP
+                    等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 +
+                    奖金）*相应流水倍数即可提款。
+                  </li>
                   <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
-                  <li>此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP 地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。</li>
+                  <li>
+                    此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP
+                    地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。
+                  </li>
                   <li>各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。</li>
-                  <li>所有雷火电竞会员存款达到相应 VIP 等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 + 奖金）*相应流水倍数即可提款。</li>
+                  <li>
+                    所有雷火电竞会员存款达到相应 VIP
+                    等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款 +
+                    奖金）*相应流水倍数即可提款。
+                  </li>
                 </ul>
               </div>
             </div>
@@ -588,7 +617,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.dialog-header-2{
+.dialog-header-2 {
   position: relative;
   width: 315px;
   height: 450px;
@@ -608,28 +637,28 @@ export default defineComponent({
     position: absolute;
   }
 }
-.secend-rule{
-    .title{
-      font-size: 20px;
-      width: 100%;
-      height: 28px;
-      margin-top: 16px;
-      margin-bottom: 12px;
-      text-align: center;
-      color: #fff;
-    }
-    .text{
-      text-align: left;
-      color: #fff;
-      font-size: 12px;
-      margin-top :8px;
-      margin-bottom :12px;
-    }
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.secend-rule {
+  .title {
+    font-size: 20px;
+    width: 100%;
+    height: 28px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    text-align: center;
+    color: #fff;
   }
+  .text {
+    text-align: left;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .promo-container {
   min-height: 100vh;
   background: $secondary;
@@ -929,12 +958,15 @@ export default defineComponent({
     }
 
     .selected-promo-wrapper {
-      .open-rule{
+      .open-rule {
         text-decoration: underline;
         color: #fff;
+        display: flex;
+        align-items: center;
+        line-height: 20px;
         position: absolute;
-        top:0;
-        right: 0;
+        top: 0;
+        right: 3px;
       }
       .banner-container {
         width: 100%;
@@ -1023,6 +1055,7 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           gap: 0px;
+          background-size: 100% 100%;
 
           .hot-promo {
             border-radius: 0px;
@@ -1305,13 +1338,13 @@ export default defineComponent({
 
     .selected-promo {
       .selected-promo-wrapper {
-        .open-rule{
-        text-decoration: underline;
-        color: #fff;
-        position: absolute;
-        top:0;
-        right: 0;
-      }
+        .open-rule {
+          text-decoration: underline;
+          color: #fff;
+          position: absolute;
+          top: 0;
+          right: 3px;
+        }
         .inner {
           table {
             th {

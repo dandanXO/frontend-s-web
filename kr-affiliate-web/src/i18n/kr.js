@@ -61,7 +61,7 @@ export default {
     CommissionHistoryList: '커미션내역 목록',
     StatisticsByMember: '회원별 통계',
     DepositWithdrawManagement: '입출금 관리',
-    MemberPointRecord: 'Member Point Record',
+    MemberPointRecord: '회원 포인트내역',
     // Settlement Management End
 
     gameRecord: '게임 기록',
@@ -510,7 +510,7 @@ export default {
     totalWithdraw: '총 출금액',
     transactionId: '베팅 티켓 번호',
     transfer: '대리입금',
-    transferAmount: '대리입금 기록',
+    transferAmount: '입금금액',
     transferDate: '대출 날짜',
     transferIn: '입금',
     transferOut: '출금',
@@ -655,7 +655,7 @@ export default {
     memberShareRatio: '플레이어 리베이트 비율',
     editShareRatio: '리베이트 수정',
     inquiry: '문의',
-    totalRolling: '총 압연',
+    totalRolling: '총 롤링',
     rolling: '구르는',
     numberOfbets: '베팅 횟수',
     redemptionRate: '상환율',

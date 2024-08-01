@@ -237,8 +237,8 @@ export default {
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
-    invalidPhoneLength: 'Mobile number must be 10 digits long.',
-    invalidPhoneStartsWith0: 'Mobile number must start with 0.',
+    invalidPhoneLength: "Mobile number must be 10 digits long.",
+    invalidPhoneStartsWith0: "Mobile number must start with 0.",
     phoneVerification: "Please enter phone verification",
     min6: "Length should be 6 characters",
     lessthan50: "Length should be 50 characters",
@@ -300,7 +300,7 @@ export default {
     claim: "Claim",
 
     record_win_status: "Win status",
-    record_win_prize: "Winner Prize",
+    record_win_prize: "Winner Prize"
   },
   mail: {
     inbox: "Inbox",
@@ -361,29 +361,58 @@ export default {
     settleWithdrawPwd: "Please settle withdraw password"
   },
   referTerms: {
-    promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
-    referralBonus: "Simply refer customers to join at KAKA and you will receive a bonus of 300 VNDP each.",
-    eligibilityConditions:
-      "To be eligible to receive the bonus, you will need to meet some of the following conditions:",
-    referrerConditions: "Referrer (you): ",
-    referrerConditions1: "Minimum total valid bet amount at least 10,000 VNDP",
-    referrerConditions2: "Reach vip level 1 or higher",
-    presenteeConditions: "Referred (your friend):",
-    presenteeConditions1: "Sign up for an account during the promotion period via specified refer a friend link.",
-    presenteeConditions2: "Never registered at KAKA and do not have any other account at KAKA.",
-    presenteeConditions3:
-      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000VNDP.",
     specifiedLink:
       'Members can get specified refer a friend link in "Personal information - Refer a friend". You will then send the referral link to your friend for them to click and register an account with via the link. ',
-    promotionReview:
-      "The promotion review will be done every week. After the verification is completed, the referral bonus will be automatically credited to your account and the referred client is around 6pm (GMT+8) every Monday.",
-    withdrawalConditions:
-      "The bet amount that must be reached before withdrawal is equal to 5 times the value of the bonus received. ",
-    notApplied:
-      "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion. ",
-    rightsReserved: "KAKA reserves the right to modify, refuse or cancel this Promotion without prior notice.",
-    concurrentPromotions: "The program can be applied at the same time with all promotions at KAKA. ",
-    generalTerms: "General Promotion Terms & Conditions apply."
+    intro: {
+      title: "An Introduction - Hundred Million on Hand",
+      desc: {
+        desc1: "Participants: All Members of KAKA.GAME",
+        desc2: "Duration: Unlimited",
+        desc3: "Note: 1 Point = 1000 VND"
+      }
+    },
+    promoDetail: {
+      title: "Promotion Details",
+      desc: "Just introduce more friends to join KAKA.GAME, you will receive 300 points for each successful referral."
+    },
+    howToJoin: {
+      title: "How to Join",
+      desc: "Go to 'Account - Introduce'. Then members can send their referral link to friends to register an account through this link."
+    },
+    term: {
+      title: "Terms and Conditions",
+      desc: {
+        desc1: {
+          desc: "Referring Member (You):",
+          children: {
+            desc1: "Minimum total eligible betting amount of 10,000 points or more",
+            desc2: "Reach VIP level 1 or higher."
+          }
+        },
+        desc2: {
+          desc: "Referred Member (Your Friend):",
+          children: {
+            desc1: "Register an account during the promotion period through the designated referral link.",
+            desc2: "Have never registered at KAKA.GAME and do not have any other accounts at KAKA.GAME.",
+            desc3:
+              "Must have a successful first deposit transaction and a minimum accumulated eligible betting amount of 4,000 points."
+          }
+        },
+        desc3:
+          "The promotion review will be conducted weekly. After verification, the referral bonus will automatically be updated to the accounts of the referring member and the referred member around 17:00 every Monday.",
+        desc4:
+          "Members receiving promotions need to complete 5 betting rounds of the promotion before withdrawing money.",
+        desc5:
+          "All draw bets, cancelled bets, both sides bets, Europe handicap bets below 1.75, Asian handicap bets below 0.75, virtual sports, horse racing, number game, will not be applied for this promotion.",
+        desc6:
+          "A member can only register 1 login name, 1 address, 1 email, 1 phone number, 1 IP address with 1 bank account number that must belong to only 1 person and will receive the bonus only once. If a member registers another account, KAKA.GAME has the right to reclaim the promotional bonus of that member!",
+        desc7:
+          "If group betting, using betting software, or abusing promotions is detected, KAKA.GAME has the right to freeze the account without notice, as well as not refund the original money and blacklist the account.",
+        desc8: "This promotion can be applied simultaneously with all other promotions of KAKA.GAME.",
+        desc9:
+          "To avoid misunderstanding in the text interpretation, KAKA.GAME reserves the right for the final explanation, change, suspension, cancellation, or withdrawal of the discount without prior notice."
+      }
+    }
   },
   deposit: {
     deposit: "Deposit",
@@ -488,7 +517,8 @@ export default {
     afftnc7:
       "Affiliate manipulation (faking downline account, interfering with downline’s betting behavior, multiple device login...) intercepted by our system or specialist will be punished.",
     afftnc8: "Kaka.game reserves the right to change or correct the commission percentage it deems appropriate.",
-    afftnc9: "Kaka.game reserves the right to change or modify the above terms or add any additional terms as necessary.",
+    afftnc9:
+      "Kaka.game reserves the right to change or modify the above terms or add any additional terms as necessary.",
     afftnc10:
       "Kaka.game reserves the right to cancel the affiliate status at any time without prior notice in the event that affiliate accounts do not meet the requirements given within a certain time and have acts of cheating and violation.",
     CommissionPlan: "Commission Plan Table",
@@ -938,6 +968,7 @@ export default {
     1307: "Exceeded daily withdrawal limit",
     1308: "Insufficient balance",
     1309: "Card account does not match member name",
+    1319: "This bank account has been used, cannot be duplicated, please link another bank account.",
     1401: "OTP sending time exceeded",
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",
