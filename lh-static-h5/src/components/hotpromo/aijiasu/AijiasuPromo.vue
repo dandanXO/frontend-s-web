@@ -28,7 +28,10 @@
         </div>
         <div class="info">
           <img src="../../../assets/promo/aijiasu/item-img.png" alt="" />
-          <div class="item-text1">无需配置，一键连接</div>
+          <div class="item-text1" v-if="store.token && store.memberType === 'TEST'" style="color: #ff0000">
+            无需配置，一键连接TEST
+          </div>
+          <div class="item-text1" v-else>无需配置，一键连接</div>
           <div class="item-text2">长按图片扫码</div>
         </div>
       </div>
@@ -69,8 +72,12 @@
       <div class="session3">
         <img src="../../../assets/promo/aijiasu/title3.png" alt="" />
         <div class="tabs">
-          <a href="https://www.91ajs.com/Help/Tutorial#ios-tab" target="_blank" class="tab"><img src="../../../assets/promo/aijiasu/btn1.png" alt="" /></a>
-          <a href="https://www.91ajs.com/Help/Tutorial#android-tab" target="_blank" class="tab"><img src="../../../assets/promo/aijiasu/btn2.png" alt="" /></a>
+          <a href="https://www.91ajs.com/Help/Tutorial#ios-tab" target="_blank" class="tab">
+            <img src="../../../assets/promo/aijiasu/btn1.png" alt="" />
+          </a>
+          <a href="https://www.91ajs.com/Help/Tutorial#android-tab" target="_blank" class="tab">
+            <img src="../../../assets/promo/aijiasu/btn2.png" alt="" />
+          </a>
         </div>
       </div>
 
@@ -107,8 +114,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import QrcodeVue from "qrcode.vue";
+import { userStore } from "src/stores";
 const value = ref("https://www.91ajs.com/");
 
+const store = userStore();
 const mobileOS = ref("unknown");
 
 const getMobileOperatingSystem = () => {

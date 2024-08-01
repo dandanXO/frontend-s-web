@@ -114,17 +114,19 @@
                 <div style="font-size: 14px">今日签到任务</div>
                 <div class="flex-item">
                   <img
-                    v-if="todayCheckInState === 'YES'"
+                    v-if="todayCheckInState === 'YES' || todayCheckInState === 'CLAIMED'"
                     style="display: inline; vertical-align: middle; width: 12px; height: 12px"
                     :src="require('./images/icon-done.png')"
                   />
                   <img v-else style="width: 20px; height: 20px" :src="require('./images/icon-cancel.png')" />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥500 元</span>
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ todayMinDeposit }} 元</span>
                 </div>
               </div>
             </div>
             <div class="task-right">
-              <button v-if="todayCheckInState === 'YES'" class="button-finish">已完成</button>
+              <button v-if="todayCheckInState === 'YES' || todayCheckInState === 'CLAIMED'" class="button-finish">
+                已完成
+              </button>
               <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
@@ -136,9 +138,8 @@
               <div>
                 <div style="font-size: 14px">获得补签卡</div>
                 <div class="flex-item">
-                  <!-- reCheckInState  TODO 圖片判斷需要另外寫-->
                   <img
-                    v-if="todayCheckInState === 'YES'"
+                    v-if="recheckTaskState === 'CLOSE'"
                     style="display: inline; vertical-align: middle; width: 12px; height: 12px"
                     :src="require('./images/icon-done.png')"
                   />
@@ -151,7 +152,7 @@
               <div style="margin-top: -20px">
                 剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
               </div>
-              <button v-if="todayCheckInState === 'YES'" class="button-finish">已完成</button>
+              <button v-if="recheckTaskState === 'CLOSE'" class="button-finish">已完成</button>
               <button v-else class="button" @click="handleDeposit">去充值</button>
             </div>
           </div>
@@ -267,6 +268,7 @@ const todayCheckInState = ref("YES");
 const currentRecheckInChances = ref(0);
 const totalRecheckInChances = ref(0);
 const recheckTaskState = ref("CLOSE");
+const todayMinDeposit = ref(0);
 
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
@@ -341,6 +343,7 @@ const fetchData = async () => {
     eventapi.get("/checkInFreeTreasure/init").then((res) => {
       sectionOneItems.value = res.data.checkInState.checkInDayHistory;
       todayCheckInState.value = res.data.checkInState.todayCheckInState;
+      todayMinDeposit.value = res.data.checkInState.todayMinDeposit;
       sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
       currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
       currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
@@ -611,6 +614,7 @@ onMounted(async () => {
           }
         }
         .task-right {
+          width: 100px;
           height: 100%;
           display: flex;
           flex-direction: column;
@@ -627,7 +631,7 @@ onMounted(async () => {
           .button-finish {
             color: #fff;
             background: linear-gradient(90deg, #23d2f0 0%, #9a7bff 100%);
-            opacity: 0.6;
+            opacity: 0.8;
             width: 80px;
             height: 26px;
             border-radius: 8px;

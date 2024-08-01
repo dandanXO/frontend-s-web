@@ -5,6 +5,10 @@ export const getConfigs = (config) => {
   return https().request("/config", Method.GET, config, ContentType.form);
 };
 
+export const getDefaultConfigs = (defaultConfig) => {
+  return https().request("/config/default", Method.GET, defaultConfig, ContentType.form);
+};
+
 export const createConfig = (config) => {
   return https().request("/config", Method.POST, config, ContentType.form);
 };

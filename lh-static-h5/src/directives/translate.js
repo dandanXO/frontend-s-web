@@ -143,7 +143,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "AGF") {
     return "AG捕鱼王"; // AG Fishing
   } else if (rec === "PMFISH") {
-    return "DB多宝捕鱼"; // DB Fishing
+    return "DB捕鱼"; // DB Fishing
   } else if (rec === "BBINDY" || rec === "BBIN") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "PINNACLE") {

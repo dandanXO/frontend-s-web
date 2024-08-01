@@ -290,3 +290,10 @@ export const updateDisplayAmountState = (id, state) => {
     ContentType.form
   )
 }
+
+export const reactivateAffiliate = (id) => {
+  return https().request(
+    `/affiliate/${id}/reactivate?_method=PUT`,
+    Method.POST
+  )
+}

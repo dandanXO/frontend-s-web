@@ -63,6 +63,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
   },
+  {
+    path: "/interest-profit",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/InterestProfitPage.vue") }],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/bonus",
   //   component: () => import("layouts/MainLayout.vue"),
@@ -230,6 +236,12 @@ const routes = [
     path: "/account/withdraw/ewallet",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/BindEWalletView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/withdraw/crypto",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/BindCryptoView.vue") }],
     meta: { requiresAuth: true }
   },
   {

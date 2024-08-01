@@ -20,10 +20,10 @@
     <div class="official-gift-block detail-block">
       <div class="detail-block-title">
         <img src="./img/gift.svg" />
-        <span>认准雷火电竞官方福利群管理</span>
+        <span>认准雷火电竞官方VIP客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
+        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：领取彩金、投资计划、赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="./img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
@@ -94,7 +94,7 @@ const currentVoxisId = computed(() => {
 
 const handleCopyClick = async () => {
   if (window.location.pathname === "/promotion") {
-    const textToCopy = paramsObj.value?.voxis_id;
+    const textToCopy = currentVoxisId.value;
 
     const notify = useNotify();
     if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
@@ -118,14 +118,15 @@ const handleCopyClick = async () => {
         console.error(error);
       } finally {
         document.body.removeChild(textArea);
-        notify({
-          type: "success",
-          message: "复制成功"
-        });
       }
     }
+
+    notify({
+      type: "success",
+      message: "复制成功"
+    });
   } else {
-    writeClipboard(paramsObj.value?.voxis_id);
+    writeClipboard(currentVoxisId.value);
   }
 };
 </script>

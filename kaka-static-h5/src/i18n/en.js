@@ -89,9 +89,9 @@ export default {
     please_enter_mobile_number: "Please enter mobile number",
     mobile_number: "Mobile number",
     mobile_number_valid: "Please enter valid mobile number",
-    mobile_number_required: 'Mobile number is required.',
-    mobile_number_length: 'Mobile number must be 10 digits long.',
-    mobile_number_starts_with_0: 'Mobile number must start with 0.',
+    mobile_number_required: "Mobile number is required.",
+    mobile_number_length: "Mobile number must be 10 digits long.",
+    mobile_number_starts_with_0: "Mobile number must start with 0.",
     please_enter_verification_code: "Please enter verification code",
     please_enter: "Please enter",
     length_is_4: "Length should be 4",
@@ -249,30 +249,58 @@ export default {
     share_table_header_03: "Bet",
     share_table_header_04: "Status",
     share_table_content_empty: "No matching history found",
-    share_tnc: "Terms and Conditions",
-    share_para_title: "Refer a friend",
-    share_tnc_para_01: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
-    share_tnc_para_02: "Simply refer customers to join at KAKA and you will receive a bonus of 300 VNDP each.",
-    share_tnc_para_03: "To be eligible to receive the bonus, you will need to meet some of the following conditions",
-    share_tnc_para_03_a: "Referrer (you):",
-    share_tnc_para_03_a_i: "Minimum total valid bet amount at least 10,000 VNDP",
-    share_tnc_para_03_a_ii: "Reach vip level 1 or higher",
-    share_tnc_para_03_b: "Presentee (your friend):",
-    share_tnc_para_03_b_i: "Sign up for an account during the promotion period via specified refer a friend link.",
-    share_tnc_para_03_b_ii: "Never registered at KAKA and do not have any other account at KAKA.",
-    share_tnc_para_03_b_iii:
-      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000VNDP within 20 days from account registration",
-    share_tnc_para_04:
-      'Members can get specified refer a friend link in "Personal Information-Refer a friend" You will then send the referral link to your friend for them to click and register an account with via the link. ',
-    share_tnc_para_05:
-      "The promotion review will be done every week. After the verification is completed, the referral bonus will be automatically credited to your account and the referred client is around 6pm (GMT+8) every Monday",
-    share_tnc_para_06:
-      "The bet amount that must be reached before withdrawal is equal to 5 times the value of the bonus received",
-    share_tnc_para_07:
-      "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion.",
-    share_tnc_para_08: "KAKA reserves the right to modify, refuse or cancel this Promotion without prior notice.",
-    share_tnc_para_09: "The program can be applied at the same time with all promotions at KAKA.",
-    share_tnc_para_10: "General Promotion Terms &amp; Conditions apply.",
+    terms: {
+      intro: {
+        title: "An Introduction - Hundred Million on Hand",
+        desc: {
+          desc1: "Participants: All Members of KAKA.GAME",
+          desc2: "Duration: Unlimited",
+          desc3: "Note: 1 Point = 1000 VND"
+        }
+      },
+      promoDetail: {
+        title: "Promotion Details",
+        desc: "Just introduce more friends to join KAKA.GAME, you will receive 300 points for each successful referral."
+      },
+      howToJoin: {
+        title: "How to Join",
+        desc: "Go to 'Account - Introduce'. Then members can send their referral link to friends to register an account through this link."
+      },
+      term: {
+        title: "Terms and Conditions",
+        desc: {
+          desc1: {
+            desc: "Referring Member (You):",
+            children: {
+              desc1: "Minimum total eligible betting amount of 10,000 points or more",
+              desc2: "Reach VIP level 1 or higher."
+            }
+          },
+          desc2: {
+            desc: "Referred Member (Your Friend):",
+            children: {
+              desc1: "Register an account during the promotion period through the designated referral link.",
+              desc2: "Have never registered at KAKA.GAME and do not have any other accounts at KAKA.GAME.",
+              desc3:
+                "Must have a successful first deposit transaction and a minimum accumulated eligible betting amount of 4,000 points."
+            }
+          },
+          desc3:
+            "The promotion review will be conducted weekly. After verification, the referral bonus will automatically be updated to the accounts of the referring member and the referred member around 17:00 every Monday.",
+          desc4:
+            "Members receiving promotions need to complete 5 betting rounds of the promotion before withdrawing money.",
+          desc5:
+            "All draw bets, cancelled bets, both sides bets, Europe handicap bets below 1.75, Asian handicap bets below 0.75, virtual sports, horse racing, number game, will not be applied for this promotion.",
+          desc6:
+            "A member can only register 1 login name, 1 address, 1 email, 1 phone number, 1 IP address with 1 bank account number that must belong to only 1 person and will receive the bonus only once. If a member registers another account, KAKA.GAME has the right to reclaim the promotional bonus of that member!",
+          desc7:
+            "If group betting, using betting software, or abusing promotions is detected, KAKA.GAME has the right to freeze the account without notice, as well as not refund the original money and blacklist the account.",
+          desc8: "This promotion can be applied simultaneously with all other promotions of KAKA.GAME.",
+          desc9:
+            "To avoid misunderstanding in the text interpretation, KAKA.GAME reserves the right for the final explanation, change, suspension, cancellation, or withdrawal of the discount without prior notice."
+        }
+      }
+    },
 
     // transfer
     transfer_transfer: "Transfer",
@@ -510,15 +538,21 @@ export default {
     vip_24_7_cc_team: "24/7 VIP Customer Care Team",
     vip_invitation_to_ee: "Invitation to Exclusive Events",
     vip_terms_title: "Terms & Conditions",
-    vip_terms_para_01: "When a member meets the level-up conditions, the system will immediately update to the new VIP level. There is no limit to the number of VIP level-ups and the number of times you can receive VIP level-up bonuses each day.",
-    vip_terms_para_02: "Level-up bonus: After reaching a new VIP level, members can click the CLAIM button on the VIP page to receive the level-up bonus.",
-    vip_terms_para_03: "Retention condition: Members need to maintain valid bets as stated above within 30 days after leveling up to maintain their level. If the valid bets are not completed within 30 days, the member will be downgraded by one level. The system ends the statistics at 23:59 on the 30th day.",
-    vip_terms_para_04: "Monthly bonus: From 01:00 on the 1st to 23:59 on the 7th of each month, members need to contact 24/7 customer service to receive the monthly bonus. If overdue, it is considered forfeited.",
-    vip_terms_para_05: "Birthday bonus: After registering an account and having a deposit history of at least 15 days, members need to contact 24/7 customer service on their birthday to receive the bonus.",
+    vip_terms_para_01:
+      "When a member meets the level-up conditions, the system will immediately update to the new VIP level. There is no limit to the number of VIP level-ups and the number of times you can receive VIP level-up bonuses each day.",
+    vip_terms_para_02:
+      "Level-up bonus: After reaching a new VIP level, members can click the CLAIM button on the VIP page to receive the level-up bonus.",
+    vip_terms_para_03:
+      "Retention condition: Members need to maintain valid bets as stated above within 30 days after leveling up to maintain their level. If the valid bets are not completed within 30 days, the member will be downgraded by one level. The system ends the statistics at 23:59 on the 30th day.",
+    vip_terms_para_04:
+      "Monthly bonus: From 01:00 on the 1st to 23:59 on the 7th of each month, members need to contact 24/7 customer service to receive the monthly bonus. If overdue, it is considered forfeited.",
+    vip_terms_para_05:
+      "Birthday bonus: After registering an account and having a deposit history of at least 15 days, members need to contact 24/7 customer service on their birthday to receive the bonus.",
     vip_terms_para_06: "Each member can only receive the level-up bonus once for each VIP level.",
     vip_terms_para_07: "The bonus only requires 1x betting turnover to withdraw.",
     vip_terms_para_08: "This VIP member program can be combined with other KAKAGAME promotions.",
-    vip_terms_para_09: "To avoid misunderstanding of the text, KAKAGAME reserves the final interpretation right and can change, reject, or cancel this VIP member program without prior notice.",
+    vip_terms_para_09:
+      "To avoid misunderstanding of the text, KAKAGAME reserves the final interpretation right and can change, reject, or cancel this VIP member program without prior notice.",
     vip_tableHeader1: "VIP Level",
     vip_tableHeader2: "Total Valid Bets",
     vip_tableHeader3: "Accumulated Deposits",
@@ -1523,6 +1557,7 @@ export default {
     1307: "Exceeded daily withdrawal limit",
     1308: "Insufficient balance",
     1309: "Card account does not match member name",
+    1319: "This bank account has been used, cannot be duplicated, please link another bank account.",
     1401: "OTP sending time exceeded",
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",

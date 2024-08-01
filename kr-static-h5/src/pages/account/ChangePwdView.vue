@@ -573,7 +573,7 @@ export default defineComponent({
                 message: t('lang.chgpwd_withdraw_password_updated_successfully'),
                 icon: "check_circle_outline"
               });
-              router.go(-1);
+              router.push('/account');
             } else {
               $q.notify({
                 color: "negative",

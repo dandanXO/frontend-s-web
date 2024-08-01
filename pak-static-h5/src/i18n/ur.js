@@ -11,6 +11,7 @@ export default {
     personalCenter: "شخصی مرکز",
     deposit: "جمع کروائیں",
     bank: "بینک",
+    addCrypto: "کرپٹو شامل کریں۔",
     addVirtualWallet: "ورچوئل والٹ شامل کریں",
     addBankCard: "بنک کارڈ شامل کریں",
     message: "پیغام",
@@ -48,7 +49,8 @@ export default {
     transferRecord: "منتقلی کا ریکارڈ",
     promotionRecord: "پروموشن کا ریکارڈ",
     betRecord: "شرط لگانے کا ریکارڈ",
-    referralRecord: "ریفرل کا ریکارڈ"
+    referralRecord: "ریفرل کا ریکارڈ",
+    interestProfit: "سود کا منافع"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -102,6 +104,9 @@ export default {
     withdrawalAmount_rules_02: "واپسی کی رقم 0 سے زیادہ ہونی چاہئے",
     withdrawalAmount_rules_03: "واپسی کی رقم ناکافی ہے",
     withdrawalAmount_rules_04: "واپسی کی رقم کے درمیان ہونی چاہئے",
+    realTimeExchangeRates: "ریئل ٹائم ایکسچینج ریٹس",
+    estimatedArrival: "متوقع آمد",
+    usdtSpecialNote: "*خصوصی نوٹ: تیسرا فریق خود بخود سکے نکالنے کے لیے 1.00 USDT کی ہینڈلنگ فیس وصول کرتا ہے!",
     fullName: "پورا نام",
     fullName_placeholder: "اپنا پورا نام درج کریں",
     fullName_rules_01: "براہ کرم اپنا پورا نام درج کریں",
@@ -120,11 +125,18 @@ export default {
     captchaCode_placeholder: "کیپچا کوڈ درج کریں",
     captchaCode_rules_01: "براہ کرم کیپچا کوڈ درج کریں",
     captchaCode_rules_02: "کیپچا کوڈ کی لمبائی 4 حروف ہے",
+    cryptoType: "کرپٹو ٹائپ",
+    cryptoAccount: "کرپٹو اکاؤنٹ",
+    cryptoAccount_placeholder: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
+    cryptoAccount_rules_01: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
+    cryptoAccount_rules_02: "کرپٹو اکاؤنٹ 'T' سے شروع ہونا چاہیے",
+    cryptoAccount_rules_03: "کریپٹو اکاؤنٹ میں 34 حروف کا ہونا ضروری ہے۔",
     virtualWalletType: "ورچوئل والٹ کی قسم",
     virtualWallet: "ورچوئل والٹ",
     virtualWallet_placeholder: "براہ کرم ورچوئل والٹ درج کریں",
     virtualWallet_rules_01: "براہ کرم ورچوئل والٹ درج کریں",
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہئے",
+    virtualWallet_id_rule: "راہ کرم 13 ہندسوں کی شناختی شناخت داخل کریں",
     virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
@@ -151,6 +163,7 @@ export default {
     addNewAccount: "نیا اکاؤنٹ شامل کریں",
     updated: "اپ ڈیٹ کیا گیا",
     updating: "اپ ڈیٹ کیا جا رہا ہے...",
+    addCrypto: "کرپٹو شامل کریں۔",
     addVirtualWallet: "ورچوئل والٹ شامل کریں",
     addBankCard: "بنک کارڈ شامل کریں",
     untie: "کھولیں",
@@ -167,7 +180,8 @@ export default {
     search: "تلاش",
     downloadApp: "ایپ ڈاؤن لوڈ کریں",
     downloadNow: "ابھی ڈاؤنلوڈ کریں",
-    recharge: "ری چارج کریں"
+    recharge: "ری چارج کریں",
+    getInterestProfit: "سود کا منافع حاصل کریں۔"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -225,7 +239,8 @@ export default {
     feedback: "فیڈبیک",
     vip: "VIP",
     logout: "لاگ آوٹ",
-    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
+    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
+    interestProfit: "سود کا منافع"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
@@ -248,6 +263,27 @@ export default {
   order: {
     withdrawal: "واپسی",
     recharge: "ریچارج"
+  },
+  interestProfit: {
+    depositOverview: "جمع کروانے کا جائزہ",
+    unexpiredEarnings: "غیر ختم شدہ کمائی",
+    cumulativeIncome: "مجموعی آمدنی",
+    storageTime: "ذخیرہ وقت (دن)",
+    deposit: "جمع",
+    trialCalculation: "آزمائشی حساب",
+    distributeInterest: "سود تقسیم کریں",
+    pending: "زیر التواء",
+    ended: "ختم ہو گیا",
+    details: "تفصیلات",
+    collect: "جمع کریں",
+    noData: "کوئی ڈیٹا نہیں",
+    annualInterestRate: "سالانہ شرح سود",
+    depositAmount: "جمع رقم",
+    depositDuration: "جمع کرنے کی مدت",
+    placeTime: "وقت مقرر کریں",
+    matureTime: "پختہ وقت",
+    status: "حالت",
+    confirm: "تصدیق کریں"
   },
   vip: {
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
@@ -531,6 +567,14 @@ export default {
     1402: "OTP بھیجنے کا شیڈول غلطی، براہ کرم OTP دوبارہ بھیجیں",
     1403: "OTP توثیق کی غلطی",
     1404: "OTP کوڈ بھیجنے میں ناکامی",
+    53000: "جمع کرنے سے قاصر، کوئی اہل منصوبہ نہیں ملا۔",
+    53001: "غیر موزوں جمع کی رقم",
+    53002: "غیر موزوں جمع کے دن",
+    53003: "بیٹنگ ریکارڈ موجود نہیں",
+    53004: "ابھی تک پختہ نہیں ہوا",
+    53005: "سرمایہ کاری پہلے ہی سیٹل ہو چکی ہے",
+    53006: "جمع کرانا ممکن نہیں، جاری سود کی تعداد حد تک پہنچ چکی ہے",
+    53007: "بیلنس ناکافی ہے",
     10000: "باقی رقم قابلیت کی کمی",
     10001: "نکالنے میں غلطی",
     10002: "جمع کرنے میں غلطی",
@@ -543,6 +587,8 @@ export default {
     12100: "نکال پاس ورڈ میل نہیں کھاتا",
     12101: "نیا نکال پاس ورڈ پرانا نکال پاس ورڈ کی طرح نہیں ہوسکتا",
     12104: "یہ بینک کارڈ نمبر بلاک کر دیا گیا ہے",
+    12105:
+      "آپ کے نکالنے کے آپریشن میں نیٹ ورک کی تاخیر ہوئی، جس کی وجہ سے ادائیگی ناکام ہو گئی۔ براہ کرم رقم واپس لینے سے پہلے 30 منٹ انتظار کریں، شکریہ!",
     13000: "ڈومین نام نہیں ملا",
     13001: "3 مہینے سے پرانی معلومات پوچھنا ممکن نہیں",
     13002: "7 دن کے اندر ہونا چاہئے",

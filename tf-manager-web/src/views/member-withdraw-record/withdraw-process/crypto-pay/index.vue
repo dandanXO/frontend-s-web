@@ -624,7 +624,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordCryptoPay,
-  getAllMemberWithdrawRecordCryptoPay,
   fromPayToBeforePaid,
   fromPayToSuccess,
   fromPayToFail,
@@ -844,7 +843,7 @@ async function loadRecord() {
   }
   query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.withdrawCode = "USDTTRC,USDTERC";
-  const { data: ret } = hasPermission(['sys:withdraw:all:pay']) ? await getAllMemberWithdrawRecordCryptoPay(query) : await getMemberWithdrawRecordCryptoPay(query)
+  const { data: ret } = await getMemberWithdrawRecordCryptoPay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

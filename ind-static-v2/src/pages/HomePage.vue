@@ -2706,7 +2706,7 @@ const getVersionNo = async () => {
     //   };
     // console.log("APP Info");
     // console.log(info);
-    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    var current_version = parseInt(info.version.replaceAll(".", ""));
     // alert("Cur:" + current_version);
     // info.version && info.build
     const appType = "ALL";
