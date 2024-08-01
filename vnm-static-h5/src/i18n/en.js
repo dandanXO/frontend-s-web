@@ -522,7 +522,7 @@ export default {
     vip_terms_para_06:
       "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
     vip_terms_para_07:
-      "Birthday Bonus: Members need to meet the maintenance requirements of their current VIP level before receiving the bonus. Once the VIP level maintenance requirements are met, members should contact online Customer Care to receive the bonus.",
+      "Birthday Bonus: Members need to meet the maintenance requirements of their current VIP level before receiving the bonus. Once the VIP level maintenance requirements are met, members should contact online Customer Care to receive the bonus. (The birthday bonus needs to go through 3 rounds of betting before withdrawal)",
     vip_terms_para_08:
       "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
     vip_terms_para_09:
