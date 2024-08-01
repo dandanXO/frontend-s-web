@@ -2416,6 +2416,7 @@ export default {
     'Member Distribute Privilege': '会员发放奖金',
     'Member Profit Ranking': '盈利排名',
     'Member Affiliate Change Log': '会员代理更换记录',
+    'Member Group Send SMS': '会员群发消息',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',

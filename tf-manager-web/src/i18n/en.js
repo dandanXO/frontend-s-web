@@ -2466,6 +2466,7 @@ export default {
     'Member Distribute Privilege': 'Member Distribute Privilege',
     'Member Profit Ranking': 'Profit Ranking',
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
+    'Member Group Send SMS': 'Member Group Send SMS',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',

@@ -2310,6 +2310,7 @@ export default {
     'Member Distribute Privilege': 'Phân phối đặc quyền thành viên',
     'Member Profit Ranking': 'Thứ hạng lợi nhuận thành viên',
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
+    'Member Group Send SMS': 'Member Group Send SMS',
     Affiliate: 'Đối tác liên kết',
     'Affiliate Amount Adjust': 'Điều chỉnh số tiền Đối tác liên kết',
     'Affiliate Summary': 'Tóm tắt Đối tác liên kết',

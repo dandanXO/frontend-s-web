@@ -2305,6 +2305,7 @@ export default {
     'Member Distribute Privilege': '회원 특권 배포',
     'Member Profit Ranking': '회원 수익 순위',
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
+    'Member Group Send SMS': 'Member Group Send SMS',
     Affiliate: '제휴사',
     'Affiliate Amount Adjust': '제휴사 금액 조정',
     'Affiliate Summary': '제휴사 요약',
