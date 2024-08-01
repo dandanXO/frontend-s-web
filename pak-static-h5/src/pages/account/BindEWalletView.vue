@@ -114,24 +114,27 @@
           </template>
         </InputRowGrid>
 
-        <!-- <InputRowGrid>
-          <template #fields>
-            <InputField :label="`IFSC`">
-              <template #input>
-                <q-input
-                  outlined
-                  clearable
-                  lazy-rules
-                  ref="ifscRef"
-                  placeholder="Please insert IFSC"
-                  v-model="bankCardInfo.cardAddress"
-                  hide-bottom-space
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert IFSC']"
-                ></q-input>
-              </template>
-            </InputField>
-          </template>
-        </InputRowGrid> -->
+        <!--        <InputRowGrid>-->
+        <!--          <template #fields>-->
+        <!--            <InputField :label="`Identity ID`">-->
+        <!--              <template #input>-->
+        <!--                <q-input-->
+        <!--                  outlined-->
+        <!--                  clearable-->
+        <!--                  lazy-rules-->
+        <!--                  ref="ifscRef"-->
+        <!--                  placeholder="Please insert 13 digits Identity ID"-->
+        <!--                  v-model="bankCardInfo.cardAddress"-->
+        <!--                  hide-bottom-space-->
+        <!--                  :rules="[-->
+        <!--                    (val) => (val && val.length > 0) || 'Please insert 13 digits Identity ID',-->
+        <!--                    (val) => (val && val.length === 13) || 'Please insert 13 digits Identity ID'-->
+        <!--                  ]"-->
+        <!--                ></q-input>-->
+        <!--              </template>-->
+        <!--            </InputField>-->
+        <!--          </template>-->
+        <!--        </InputRowGrid>-->
 
         <!-- <q-label>
           Virtual Wallet
