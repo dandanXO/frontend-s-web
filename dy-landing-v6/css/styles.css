@@ -215,7 +215,7 @@ a:hover {
 }
 
 .main-sticky-btn {
-  background: url(../imgs/sticky-btn.png)no-repeat center center;
+  background: url(../imgs/click-rev.png)no-repeat center center;
   background-size: contain;
   padding: 24px 16px;
   display: flex;

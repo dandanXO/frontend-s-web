@@ -420,9 +420,11 @@ import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privile
 import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
 import { isAndroid } from "boot/utils";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   setup() {
+    const notify = useNotify();
     const $q = useQuasar();
     const store = userStore();
     const activeKey = ref(1);
@@ -489,6 +491,19 @@ export default defineComponent({
       //   });
       // }
 
+      if (!store.hasToken()) {
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large",
+          closeOnClickModal: true
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
+      }
       isCheckRecordModalVisible.value = toggleStatus;
     };
 
@@ -505,11 +520,9 @@ export default defineComponent({
       getRecommendPrivilegeRecord(params).then((data) => {
         tableRecords.value = data.data;
         if(!tableRecords.value || tableRecords.value.length ===0) {
-          $q.notify({
-                  color: "negative",
-                  position: "top",
+          notify({
+                  type: "error",
                   message: '推广纪录为空。',
-                  icon: "report_problem"
                 });
         }
       });
@@ -559,11 +572,9 @@ export default defineComponent({
       copyText.select();
       document.execCommand("copy");
 
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已复制链接",
-        icon: "check_circle_outline"
       });
     };
 
@@ -575,11 +586,9 @@ export default defineComponent({
       link.click();
       document.body.removeChild(link);
 
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已下载二维码",
-        icon: "check_circle_outline"
       });
     };
 
@@ -588,11 +597,9 @@ export default defineComponent({
         .put("/bonus/claim/" + "lh1-vip-upgrade-bonus")
         .then((res) => {
           if (res.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
+            notify({
+              type: "success",
               message: "领取成功",
-              icon: "check_circle_outline"
             });
           }
         })
@@ -623,6 +630,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (!store.token) {
+        return;
+      }
       getRebateInfo().then(({ data }) => (rebateInfo.value = data));
       getReferral();
       checkActiveKey();

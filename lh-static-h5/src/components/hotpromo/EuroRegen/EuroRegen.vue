@@ -78,7 +78,9 @@
 import { userStore } from "src/stores";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 
@@ -89,11 +91,12 @@ const claimAmount = () => {
         .then((res) => {
           if (res.code === 0) {
             store.getBalance();
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: `成功领取 ${res.data} 元`,
-              icon: "check_circle_outline"
+            notify({
+              type: "red-packet",
+              message: `成功领取`,
+              params: {
+                redPacket: res.data
+              }
             });
           }
         })

@@ -215,9 +215,11 @@ import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import moment from "moment";
 import {useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 var qs = require("qs");
@@ -282,11 +284,9 @@ const getMatchPoints = () => {
         remainingTime.value = calculateRemainingTime(res.data.endDate);
       }
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
     }
   });
@@ -294,18 +294,14 @@ const getMatchPoints = () => {
 const claimPoint = (points) => {
   eventapi.post("/uefa/matchPoints/claim", qs.stringify({ point: points })).then((res) => {
     if (res.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "领取成功",
-        icon: "report_problem"
       });
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
     }
   });
@@ -337,11 +333,9 @@ const confirmMatchSelect = () => {
     })
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功",
-          icon: "report_problem"
         });
         confirmDialog.value = false;
         getMatches();
@@ -449,6 +443,9 @@ const getTeamsData = () => {
 };
 
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   getMatches();
   getMatchPoints();
   getTeamsData();

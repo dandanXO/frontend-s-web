@@ -83,12 +83,20 @@ export function confirmationOfWithdrawalReceived(bci) {
   return server.REST.post("/session/withdraw/confirm", bci);
 }
 
+export function cancellationOfWithdrawalReceived(bci) {
+  return server.REST.post("/session/withdraw/cancel", bci);
+}
+
 export function withdrawEntrance() {
   return server.REST.get("/session/withdraw/entrance");
 }
 
 export function deleteBankCard(cardId) {
   return server.REST.post(`/session/bankCard/${cardId}?_method=delete`);
+}
+
+export function deleteBankCardByNumber(cardNo) {
+  return server.REST.post(`/session/bankCardByCardNo/${cardNo}?_method=delete`);
 }
 
 export function sendEmail(emailInfo) {

@@ -48,7 +48,7 @@
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ convertToGMT7(e.betTime) }}</div>
+          <div class="date">{{ e.betTime }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
             :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
@@ -56,7 +56,7 @@
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
-          RS
+          NGN
           <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 

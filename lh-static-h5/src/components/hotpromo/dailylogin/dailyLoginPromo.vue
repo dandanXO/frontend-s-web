@@ -27,7 +27,12 @@
 import { ref, onMounted, reactive } from "vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
 
+const store = userStore();
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const dateDetails = ref([]);
@@ -70,11 +75,9 @@ const checkInOfTheDay = (mth) => {
   }
   eventapi.put("/sign-in/claim").then((res) => {
     if (res.code === 0) {
-      $q.notify({
-        type: "positive",
-        position: "top",
-        message: `签到成功`,
-        icon: "check_circle_outline"
+      notify({
+        type: "success",
+        message: `签到成功`
       });
       loadDailyCheckIn();
       setTimeout(() => {
@@ -85,6 +88,9 @@ const checkInOfTheDay = (mth) => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   loadDailyCheckIn();
 });
 </script>

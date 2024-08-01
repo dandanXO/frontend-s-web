@@ -1,6 +1,8 @@
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
+import { uiStore } from "@/store/ui";
+
 export const uploadImage = (formData) => {
+  const ui = uiStore();
   const requestOptions = {
     method: 'POST',
     body: formData,
@@ -18,7 +20,7 @@ export const uploadImage = (formData) => {
       return response.json()
     })
     .catch(error => {
-      ElMessage({
+      ui.notify({
         message: error.message,
         type: "error"
       });

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { defineAsyncComponent, defineComponent, markRaw, onUnmounted ,onMounted, ref } from "vue";
+import { defineAsyncComponent, defineComponent, markRaw, onUnmounted, onMounted, ref } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
@@ -12,6 +12,11 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { useUI } from "stores/ui";
 import axios from "axios";
+import dayjs from 'dayjs';
+
+require('dayjs/locale/ko');
+var localizedFormat = require("dayjs/plugin/localizedFormat");
+dayjs.extend(localizedFormat);
 
 export default defineComponent({
   name: "App",

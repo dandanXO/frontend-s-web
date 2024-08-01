@@ -224,7 +224,14 @@
 
                   <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" color="red" class="common-btn cancel" @click="openWithdrawCancel(scope.row)">取消</el-button>
+                      <el-button
+                        size="small"
+                        color="red"
+                        class="common-btn cancel"
+                        @click="openWithdrawCancel(scope.row)"
+                      >
+                        取消
+                      </el-button>
                     </div>
                   </template>
 
@@ -670,7 +677,7 @@
 
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 import {
   loadRecords,
   saveFinanceFeedback,
@@ -685,6 +692,10 @@ import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
 import EmptyData from "@/components/emptyData.vue";
 import { useRoute } from "vue-router";
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify()
+
 const copy = (text) => {
   const el = document.createElement("textarea");
   el.value = text;
@@ -692,7 +703,7 @@ const copy = (text) => {
   el.select();
   document.execCommand("copy");
   document.body.removeChild(el);
-  ElMessage.success("已复制");
+  notify.success("已复制");
 };
 const loadingBtn = ref(false);
 const store = userStore();
@@ -721,7 +732,7 @@ const searchForm = reactive({
     startDate: "",
     endDate: "",
     current: 1,
-    size: 10
+    size:10
   },
   withdraw: {
     startDate: "",
@@ -1020,7 +1031,7 @@ export default defineComponent({
       // console.log(tab)
       console.log(searchForm[recordActive.value]);
       if (!searchForm[recordActive.value]["startDate"] || !searchForm[recordActive.value]["endDate"]) {
-        ElMessage({
+        notify({
           message: "请输入开始与结束日期。",
           type: "error"
         });
@@ -1043,7 +1054,7 @@ export default defineComponent({
             dataSource.splice(0);
             dataSource.push(...response.data.records);
           } else {
-            ElMessage.error(response.message);
+            notify.error(response.message);
           }
         });
         return;
@@ -1078,7 +1089,7 @@ export default defineComponent({
             dataSource.push(...response.data.records);
             loading.value = false;
           } else {
-            ElMessage.error(response.message);
+            notify.error(response.message);
             loading.value = false;
           }
         })
@@ -1146,7 +1157,7 @@ export default defineComponent({
       const startMonth = new Date(searchForm[v].startDate).getMonth();
       const endMonth = new Date(searchForm[v].endDate).getMonth();
       if (startMonth !== endMonth) {
-        ElMessage.error("开始与结束月份必须一致");
+        notify.error("开始与结束月份必须一致");
       }
 
       getPlatformList().then((ret) => {
@@ -1164,7 +1175,7 @@ export default defineComponent({
       //     totalBetRecord.totalBet = ret.data.totalBet;
       //     totalBetRecord.totalPayout = ret.data.totalPayout;
       //   } else {
-      //     ElMessage.error(ret.message);
+      //     notify.error(ret.message);
       //   }
       // });
     };
@@ -1192,10 +1203,10 @@ export default defineComponent({
               reminderForm.recordTime = moment(record.withdrawDate).format("YYYY-MM-DD HH:mm:ss");
             }
           } else {
-            ElMessage.error("无法提交新催单，目前尚有未处理的催单。");
+            notify.error("无法提交新催单，目前尚有未处理的催单。");
           }
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1219,7 +1230,7 @@ export default defineComponent({
             getTime();
           });
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1243,7 +1254,7 @@ export default defineComponent({
             getTime();
           });
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };
@@ -1251,17 +1262,17 @@ export default defineComponent({
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
-        ElMessage.warning(`请上传图片提交`);
+        notify.warning(`请上传图片提交`);
       } else {
         console.log(reminderForm);
         saveFinanceFeedback(reminderForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success(`催单上传成功。`);
+            notify.success(`催单上传成功。`);
             reminderDialog.value = false;
             formRef.value.resetFields();
             uploadFileRef.value.clear();
           } else {
-            ElMessage.error(res.message);
+            notify.error(res.message);
           }
         });
       }
@@ -1286,7 +1297,7 @@ export default defineComponent({
           // dataState.betRecord = response.data.records
           dataState.betRecord.push(...response.data.records);
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       });
     };
@@ -1335,7 +1346,7 @@ export default defineComponent({
       } else if (transferType === "STEP_4") {
         return "自动支付"; // Automatic Payment
       } else if (transferType === "STEP_5") {
-        return "暂不处理"; // Suspend
+        return "请联系客服查询原因"; // Suspend
       } else if (transferType === "AUTOPAY") {
         return "自动支付"; // Automatic Payment
       } else if (transferType === "WAITING_CALLBACK") {
@@ -1491,7 +1502,7 @@ export default defineComponent({
       } else if (withdrawStatus === "STEP_4") {
         return "自动支付"; // Automatic Payment
       } else if (withdrawStatus === "STEP_5") {
-        return "暂不处理"; // Suspend
+        return "请联系客服查询原因"; // Suspend
       } else if (withdrawStatus === "AUTOPAY") {
         return "自动支付"; // Automatic Payment
       } else if (withdrawStatus === "WAITING_CALLBACK") {

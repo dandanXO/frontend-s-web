@@ -481,6 +481,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if(!store.token) {
+        return
+      }
       // debugger;
       getRebateInfo().then(({ data }) => {
         rebateInfo.value = data;

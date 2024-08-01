@@ -991,7 +991,7 @@ export default defineComponent({
       }  else if (withdrawStatus === 'STEP_4') {
         return 'Automatic Payment' // Automatic Payment
       }  else if (withdrawStatus === 'STEP_5') {
-        return 'Suspend' //Suspend
+        return '请联系客服查询原因' //Suspend
       } else {
         return withdrawStatus
       }

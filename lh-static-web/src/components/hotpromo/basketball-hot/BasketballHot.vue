@@ -101,17 +101,18 @@
 <script setup>
 import { ref, reactive } from "vue";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
 import { promoApplyWithGameType } from "@/api/index/promo";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify();
 
 const claimBtnStatus = reactive({
   btn: false
 });
 const onClaimBtnClicked = () => {
   if (!store.token) {
-    ElMessage.error("请登入后操作");
+    notify.error("请登入后操作");
     return;
   }
 
@@ -122,12 +123,12 @@ const onClaimBtnClicked = () => {
 
   promoApplyWithGameType(param)
     .then((res) => {
-      if (res.code == 0) ElMessage.success("申请成功");
-      else 
-                ElMessage.error({
-                type: "error",
-                message: res.message
-              });
+      if (res.code == 0) notify({type:'success',message:"申请成功"});
+      else
+                notify({
+                  type: "error",
+                  message: res.message
+                });
     })
     .catch(() => {})
     .then(() => {

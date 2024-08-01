@@ -134,12 +134,15 @@ import {
   giveCardToFriend,
   synthesisCard
 } from "@/api/promotion/tigerCard";
-import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
 
 const props = defineProps(["promoCode"]);
 // alert(props.promoCode);
+
+const notify = useNotify();
 
 const cardInfo = reactive({
   cardDetail: {
@@ -170,7 +173,7 @@ const pageInit = () => {
     if (res.code === 0) {
       cardInfo.cardDetail = res.data;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -183,7 +186,7 @@ const loadRanking = () => {
     if (res.code === 0) {
       rankingPage.records = res.data;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -193,6 +196,19 @@ const loadRanking = () => {
 const isPageLoading = ref(false);
 const pageLoadingText = ref("");
 const getNewTigerCard = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正领取龙卡";
   getMemberCard({ promoCode: props.promoCode }).then((res) => {
@@ -202,7 +218,7 @@ const getNewTigerCard = () => {
       cardWon.value = res.data.cardType;
       isPageLoading.value = false;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -212,18 +228,31 @@ const getNewTigerCard = () => {
 };
 
 const compoundCard = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
   synthesisCard({ promoCode: props.promoCode }).then((res) => {
     if (res.code === 0) {
       pageInit();
-      ElMessage.success({
+      notify({
         type: "success",
         message: "success"
       });
       isPageLoading.value = false;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -275,12 +304,15 @@ const cardWon = ref("");
 const store = userStore();
 const router = useRouter();
 onMounted(() => {
-  if (store.token) {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
     pageInit();
     loadRanking();
-  } else {
-    router.push("/login");
-  }
 });
 const formLabelWidth = "140px";
 
@@ -320,6 +352,20 @@ const resetRegForm = (formEl) => {
   formEl.resetFields();
 };
 const submitRegisterForm = async (elForm) => {
+  if (!store.hasToken()) {
+    isGiftModal.value = false
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   if (!elForm) return;
   await elForm.validate((valid) => {
     if (valid) {
@@ -327,13 +373,13 @@ const submitRegisterForm = async (elForm) => {
       form.promoCode = props.promoCode;
       giveCardToFriend(form).then((res) => {
         if (res.code === 0) {
-          ElMessage.success({
+          notify({
             type: "success",
             message: "success"
           });
           isSubmitting.value = false;
         } else {
-          ElMessage.error({
+          notify({
             type: "error",
             message: res.message
           });

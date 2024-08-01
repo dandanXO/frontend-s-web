@@ -41,6 +41,9 @@ const loginDay = ref(25);
 const dateDetails = ref([]);
 const init = () => {};
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   init();
 });
 </script>

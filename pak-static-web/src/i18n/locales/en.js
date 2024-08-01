@@ -420,16 +420,18 @@ export default {
         title: "Deposit",
         recharge: "Recharge amount",
         form: {
-          label: {
-            title: "Amount"
-          },
           amount: {
+            label: "Amount",
             placeholder: "Enter an amount",
             error: {
               required: "Deposit amount is required",
               pattern: "Amount should be a positive number",
               range: "Deposit should be between {min} - {max}"
             }
+          },
+          privilege: {
+            label: "Select Privilege",
+            placeholder: "Select Privilege"
           }
         },
         modal: {
@@ -858,6 +860,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
     21000: "This game is already in your favorite games list.",

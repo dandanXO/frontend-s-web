@@ -107,12 +107,16 @@ import { getReferralLink, getInviteFriendListCount, getSummonListCount } from "@
 import moment from 'moment'
 import VueQRCodeComponent from 'vue-qrcode-component'
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 
 export default defineComponent({
   name: "ShareView",
+  components: {
+    VueQRCodeComponent
+  },
   setup() {
+    const notify = useNotify();
     const store= userStore();
     const router = useRouter()
     const searchForm = reactive({
@@ -152,7 +156,7 @@ export default defineComponent({
           referralLink.value = 'https://' + location.hostname + `/refer/${res.data}`;
           summonerLink.value = 'https://' + location.hostname + `/summon/${res.data}`;
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -165,7 +169,7 @@ export default defineComponent({
           referredMember.value = res.data.referredMember;
           depositMember.value = res.data.depositMember;
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -176,7 +180,7 @@ export default defineComponent({
         if (res.code === 0) {
           summonMember.value = res.data
         } else {
-          ElMessage.error(res.message)
+          notify.error(res.message)
         }
       })
     }

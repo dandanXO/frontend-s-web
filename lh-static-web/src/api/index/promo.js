@@ -329,3 +329,31 @@ export function initUefaCheckin() {
 export function claimUefaCheckin() {
   return server.EVENT.put("/lh-uefa-check-in/claim");
 }
+
+export function getOlympicFirstDeposit() {
+  return server.EVENT.get('/lhOlympicDailyFirstDeposit/init')
+}
+
+export function claimOlympicFirstDeposit() {
+  return server.EVENT.put('/lhOlympicDailyFirstDeposit/claim')
+}
+
+export function getOlympicDailySportBet() {
+  return server.EVENT.get('/lhOlympicDailySportBet/init')
+}
+
+export function claimOlympicDailySportBet() {
+  return server.EVENT.put('/lhOlympicDailySportBet/claim')
+}
+
+export function getCheckInFreeTreasureInit() {
+  return server.EVENT.get('/checkInFreeTreasure/init')
+}
+
+export function putCheckInFreeTreasureCheckIn(checkInDay) {
+  return server.EVENT.put(`/checkInFreeTreasure/checkIn?checkInDay=${checkInDay}`, {})
+}
+
+export function putCheckInFreeTreasureClaim(point) {
+  return server.EVENT.put(`/checkInFreeTreasure/claimTreasure?point=${point}`, {})
+}

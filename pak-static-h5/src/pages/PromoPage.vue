@@ -81,6 +81,7 @@
                   </div>
                 </div>
               </div>
+              <MediaSettingsComponent />
             </div>
           </div>
           <div v-else class="selected-promo">
@@ -116,7 +117,13 @@
 
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
+                  <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
+                  <template v-if="selectedPromo.promoCode === 'pak-red-envelope-rain'">
+                    <div>asdasd</div>
+                  </template>
+                  <template v-else><HotPromotion :list="selectedPromo" /></template> -->
                   <HotPromotion :list="selectedPromo" />
+                  <!-- promo.redirectUrl -->
                 </div>
                 <div
                   v-if="selectedPromo.promoType"
@@ -181,6 +188,11 @@
       </router-link>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal" width="100%">
+    <MoneyRainModal />
+    <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -197,12 +209,17 @@ import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
+import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+// import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
+
 export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
     HotPromotion,
-    ProfileSummary
+    ProfileSummary,
+    MoneyRainModal,
+    // MediaSettingsComponent
   },
   setup() {
     const store = userStore();
@@ -329,6 +346,9 @@ export default defineComponent({
           // banners.value = response.data;
         })
     }
+
+    const isMoneyRainModal = ref(false);
+
     const showPromoDetails = (promo) => {
       if (!store.token) {
         // isDisplayLogin.value = true
@@ -344,13 +364,17 @@ export default defineComponent({
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
-          if (route.query.fromAccount) {
-            router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+          if (promo.redirectUrl === 'pak-redpacketrain') {
+            isMoneyRainModal.value = true;
           } else {
-            router.push({path: '/promo', query: {name: promo.redirectUrl}})
+            if (route.query.fromAccount) {
+              router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+            } else {
+              router.push({path: '/promo', query: {name: promo.redirectUrl}})
+            }
+            isPromoDetail.value = true
+            selectedPromo.value = promo
           }
-          isPromoDetail.value = true
-          selectedPromo.value = promo
         }
       }
     }
@@ -571,7 +595,10 @@ export default defineComponent({
       allGames,
       closeFullGameDialog,
       parsedParamSub,
-      parsedParamDate
+      parsedParamDate,
+      MoneyRainModal,
+      isMoneyRainModal,
+      // MediaSettingsComponent
     }
   },
 });
@@ -1003,6 +1030,10 @@ export default defineComponent({
           border-collapse: collapse;
           margin-bottom: 20px;
 
+          p {
+            font-size: 12px;
+          }
+
           th {
             padding: 5px;
             text-align: center;
@@ -1262,5 +1293,12 @@ export default defineComponent({
       width: 14px !important;
     }
   }
+}
+
+.money-rain-close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

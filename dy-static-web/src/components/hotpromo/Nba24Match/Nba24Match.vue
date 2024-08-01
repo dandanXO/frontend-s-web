@@ -224,6 +224,7 @@ import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
 import { ElMessage } from "element-plus";
+import { userStore } from "@/store";
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
@@ -302,7 +303,13 @@ const getNbaMatchData = async () => {
   }));
 };
 
-onMounted(getNbaMatchData);
+const store = userStore();
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+  getNbaMatchData();
+});
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {

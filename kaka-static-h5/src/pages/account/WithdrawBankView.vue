@@ -19,7 +19,7 @@
           ref="unbindBankCardNoRef"
           v-model="unbindBankCardNo"
           :label="unbindCardLabel()"
-          :rules="[(val) => val == selectedUnbindBankCard.cardNumber || unbindCardLabel() + ' ' + $t('lang.incorrect')]"
+          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter') + ' ' + unbindCardLabel()]"
         />
       </q-form>
       <div class="btnsreas">
@@ -237,7 +237,7 @@ const unbindBankCard = () => {
   unbindBankCardNoRef.value.validate();
   if (unbindBankCardNoRef.value.hasError) return;
 
-  api.post(`/session/bankCard/${selectedUnbindBankCard.value.id}?_method=delete`).then((response) => {
+  api.post(`session/bankCardByCardNo/${unbindBankCardNo.value}?_method=delete`).then((response) => {
     if (response.code === 0) {
       $q.notify({
         color: "positive",

@@ -1167,7 +1167,7 @@ onMounted(async () => {
 .affiliate-info {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 10px;
   margin-top: 10px;

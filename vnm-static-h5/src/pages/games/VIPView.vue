@@ -48,8 +48,8 @@
             <div class="amount q-mt-xs">
               <div class="vip-card-common-text">{{ $t("lang.vip_upgrade_require") }}</div>
               <div class="vip-card-common-text amount-text">
-                <span v-if="vipIndex === 0">{{ $t('lang.vip_3timedeposit') }}</span>
-                <span v-else>{{ $t('lang.totalBetMonth') }} {{ vip.amount }}</span>
+                <span v-if="vipIndex === 0">{{ $t("lang.vip_3timedeposit") }}</span>
+                <span v-else>{{ $t("lang.totalBetMonth") }} {{ vip.amount }}</span>
               </div>
             </div>
             <div class="progress">
@@ -63,7 +63,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num" v-if="vipLevel === vipIndex ">VNDP {{ currentDeposit }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex">VNDP {{ currentDeposit }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -105,7 +105,7 @@
                   class="btn-main"
                   no-caps
                   @click="claimMonthly()"
-                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+                  v-if="canClaimMonthly && vipLevel === Number(vipIndex + 1)"
                 >
                   {{ $t("lang.vip_claim") }}
                 </q-btn>
@@ -119,7 +119,7 @@
               <div class="common-btn" v-if="vip.birthdayBonus !== '-'">
                 <q-btn
                   class="btn-main"
-                  v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
+                  v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3"
                   no-caps
                   @click="router.push('/liveChat')"
                 >
@@ -268,6 +268,7 @@
           <li>{{ $t("lang.vip_terms_para_07") }}</li>
           <li>{{ $t("lang.vip_terms_para_08") }}</li>
           <li>{{ $t("lang.vip_terms_para_09") }}</li>
+          <li>{{ $t("lang.vip_terms_para_10") }}</li>
         </ul>
       </div>
     </div>
@@ -544,6 +545,7 @@ const currentDeposit = ref(0);
 //   }
 // }
 
+const canClaimMonthly = ref(false);
 const checkVipRedeem = () => {
   // console.log(claimDesc.value)
   if (!claimDesc.value) {
@@ -609,9 +611,9 @@ const checkVipRedeem = () => {
     }
   });
 
-  eventapi.get("/privi/vip/canRedeem", { promoCode: "vnm-vip-monthly" }).then((res) => {
+  eventapi.get("/privi/vip/canRedeem?promoCode=vnm-vip-monthly").then((res) => {
     if (res.code === 0) {
-      vipClaimItems[slide.value].monthlyBtn = res.data;
+      canClaimMonthly.value = res.data;
     }
   });
 };

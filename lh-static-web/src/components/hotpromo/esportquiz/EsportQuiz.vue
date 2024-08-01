@@ -233,7 +233,6 @@
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
-import { ElMessage } from "element-plus";
 import {
   getSportMatchQuizInfo,
   getMemberSportMatchRecord,
@@ -243,14 +242,20 @@ import {
 import moment from "moment";
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
+import { ElMessageBox } from "element-plus";
 
 const store = userStore();
+const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/";
 
 
 onMounted(() => {
   if (!store.token) {
-    ElMessage.error("请登录后操作");
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
     return;
   }
 
@@ -264,6 +269,19 @@ const uiIsShowStatus = reactive({
 });
 
 function onBtnStartAnswerClick() {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
 }
@@ -493,7 +511,7 @@ const thirdChoiceRef = ref("");
 function onChoiceSubmit(key) {
   if (key === "first") {
     if (!firstChoice) {
-      ElMessage.error("请选择答案");
+      notify.error("请选择答案");
       return;
     }
 
@@ -503,7 +521,7 @@ function onChoiceSubmit(key) {
     isFirstQuestionClicked.value = false;
   } else if (key === "second") {
     if (!secondChoice) {
-      ElMessage.error("请选择答案");
+      notify.error("请选择答案");
       return;
     }
 
@@ -513,7 +531,7 @@ function onChoiceSubmit(key) {
     isSecondQuestionClicked.value = false;
   } else if (key === "third") {
     if (!thirdChoice) {
-      ElMessage.error("请选择答案");
+      notify.error("请选择答案");
       return;
     }
 
@@ -531,10 +549,10 @@ function onSubmitClick() {
 
   const { answerOne, answerTwo, answerThree, quizId, quizTitle } = quizSubmitInfo;
   if (answerOne == "" || answerTwo == -1 || answerThree == -1) {
-    ElMessage.error("请完成3个答案再提交！");
+    notify.error("请完成3个答案再提交！");
     return;
   } else if (quizId == -1) {
-    ElMessage.error("提交答案失败,请刷新页面重试！");
+    notify.error("提交答案失败,请刷新页面重试！");
     return;
   }
 
@@ -554,10 +572,10 @@ function onSubmitClick() {
       //   ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
       // }
 
-      ElMessage.success("您好，您已成功提交本场竞猜答案");
+      notify.success("您好，您已成功提交本场竞猜答案");
       submittedFormStatus.value = true;
     } else {
-      ElMessage.error(message);
+      notify.error(message);
     }
   });
 }
@@ -1043,7 +1061,7 @@ const submittedFormStatus = ref(false);
   display: flex;
   justify-content: center;
   position: relative;
-  
+
   .close-btn {
     position: absolute;
     right: 10px;

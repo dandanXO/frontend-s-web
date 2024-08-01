@@ -166,8 +166,10 @@ import { ref, computed, onUnmounted, onMounted, reactive } from "vue";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { getCurrentStepInit, submitGameStep, getStepRecords } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
 const store = userStore();
+const notify = useNotify();
 const router = useRouter();
 
 const gameRulesDialog = ref(false);
@@ -191,7 +193,7 @@ const handleSpin = () => {
         handleSmoothSpin(res.data.steps, res.data.currentPlace);
         wonBonus.value = res.data.bonus;
       } else {
-        ElMessage.error({
+        notify({
           type: "error",
           message: res.message
         });
@@ -416,7 +418,7 @@ const getStepRecordsApi = (current) => {
         pagination.current = data.current;
       }
     } else {
-      ElMessage.error(message)
+      notify.error(message)
     }
   });
 };
@@ -428,6 +430,13 @@ const handleCurrentChange = (val) => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    notify({
+      message: "请登录后操作",
+      type: "error"
+    });
+    return;
+  }
   loadGamePlayerCurrentStep();
 });
 

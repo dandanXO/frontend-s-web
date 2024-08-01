@@ -69,7 +69,7 @@
                 {{ formatMoney(item.betAmount) }}
               </td>
               <td class="textRight">
-                {{ item.rebatePercentage * 100 }} %
+                {{ (item.rebatePercentage * 100).toFixed(2) }} %
               </td>
               <td class="textRight">
                 {{ formatMoney(item.rebateAmount) }}

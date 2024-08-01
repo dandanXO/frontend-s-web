@@ -212,12 +212,14 @@ import { convertToCommaAmount } from "boot/utils"
 import { userStore } from "src/stores";
 import {useLocalStorage} from "@vueuse/core"
 import moment from "moment";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "EurocupVotePromo",
   components: {
   },
   setup() {
+    const notify = useNotify();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
     const store = userStore();
     var qs = require("qs");
@@ -273,11 +275,9 @@ export default defineComponent({
       }
 
       if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "投票次数不足",
-          icon: "report_problem"
         });
         return;
       }
@@ -290,11 +290,9 @@ export default defineComponent({
       const res = await poolPrizeCastVote(qs.stringify(params));
 
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "投票成功",
-          icon: "check_circle_outline"
         });
         isCastVoteModalVisible.value= false;
         // loadVoteTeam();
@@ -349,6 +347,9 @@ export default defineComponent({
 
 
     onMounted(() => {
+      if (!store.token) {
+        return;
+      }
       loadVoteTeam();
     })
 

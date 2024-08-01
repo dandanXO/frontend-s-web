@@ -1,14 +1,22 @@
 <template>
   <div class="login-container">
+    <div style="height: 48px; text-align: center">
+      <img src="../assets/login/login-logo.png" height="100%" />
+    </div>
+
     <div class="top-image-div">
-      <img src="../assets/login/login-top.png" />
+      <img src="../assets/login/login-top-bg.png" />
+    </div>
+
+    <div v-if="tab === 'login'" style="padding: 15px 20px">
+      <img src="../assets/login/login-top.png" width="100%" />
     </div>
 
     <div class="login-tab-div">
-      <q-tabs v-model="tab" active-color="white" indicator-color="dark" align="justify" class="bg-dyblue">
+      <!-- <q-tabs v-model="tab" active-color="white" indicator-color="dark" align="justify" class="bg-dyblue">
         <q-tab name="login" label="登录" />
         <q-tab name="register" label="注册" />
-      </q-tabs>
+      </q-tabs> -->
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="login" class="form-container">
@@ -18,17 +26,18 @@
                 height="32px"
                 rounded
                 standout
-                bg-color="grey-2"
+                bg-color="#A9C9EA"
                 hide-bottom-space
                 ref="loginNameRef"
                 v-model="loginForm.loginName"
-                placeholder="用户名"
+                placeholder="请输入用户名"
                 :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
                 label-color=""
                 autocomplete="username"
               >
                 <template v-slot:prepend>
-                  <img src="../assets/login/user-icon.png" width="18" />
+                  <img src="../assets/login/user-icon.svg" width="14" />
+                  <span style="color: #424f72; font-size: 14px; margin-left: 8px">账号</span>
                 </template>
                 <template v-slot:append>
                   <img
@@ -48,14 +57,15 @@
                 ref="passwordRef"
                 hide-bottom-space
                 v-model="loginForm.password"
-                placeholder="请输入用户密码"
+                placeholder="请输入密码"
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
                 label-color=""
                 autocomplete="current-password"
               >
                 <template v-slot:prepend>
-                  <img src="../assets/login/pass-icon.png" width="18" />
+                  <img src="../assets/login/pass-icon.svg" width="14" />
+                  <span style="color: #424f72; font-size: 14px; margin-left: 8px">密码</span>
                 </template>
                 <template v-slot:append>
                   <img
@@ -99,7 +109,8 @@
                   <img :src="verificationImg" @click="getCode" />
                 </template>
                 <template v-slot:prepend>
-                  <img src="../assets/login/veri-icon.png" width="18" />
+                  <img src="../assets/login/pass-icon.svg" width="14" />
+                  <span style="color: #424f72; font-size: 14px; margin-left: 8px">验证码</span>
                 </template>
               </q-input>
             </div>
@@ -115,7 +126,7 @@
                 ref="telephoneRef"
                 v-model="phoneLoginForm.phoneNumber"
                 :readonly="phoneLoginForm.smsCodeId ? true : false"
-                placeholder="电话号码"
+                placeholder="请输入手机号码"
                 :rules="[(val) => (val && val.length > 0) || '请输入电话号码']"
                 color="white"
                 autocomplete="username"
@@ -134,40 +145,41 @@
                 hide-bottom-space
                 type="text"
                 v-model="phoneLoginForm.code"
-                placeholder="短信验证码"
+                placeholder="请输入短信验证码"
                 :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
               >
                 <template v-slot:append>
                   <q-btn
-                    size="md"
+                    size="15px"
                     color="brightbtn"
                     label="发送验证码"
                     @click="toggleInnerCode"
-                    style="white-space: nowrap"
+                    style="white-space: nowrap; height: 35px; min-height: 35px"
                   />
                 </template>
                 <template v-slot:prepend>
-                  <img src="../assets/login/veri-icon.png" width="18" />
+                  <img src="../assets/login/veri-icon.png" width="21" style="margin-left: 2px" />
                 </template>
               </q-input>
             </div>
 
             <div class="forgetpass-div">
               <div class="align-right">
-                <span @click="loginType = !loginType">
+                <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
                   {{ loginType ? "用户名登录" : "手机号登录" }}
                 </span>
               </div>
 
+              <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
+                <span>忘记密码？</span>
+              </router-link>
+
               <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
                 <q-checkbox
-                  rounded
                   v-model="isCheckRmb"
                   label="记住密码"
-                  size="md"
+                  size="20px"
                   style="font-size: 14px"
-                  checked-icon="task_alt"
-                  unchecked-icon="highlight_off"
                   color="light-blue-9"
                 />
               </div>
@@ -179,10 +191,26 @@
               class="q-mt-md"
               label="登录"
               width="100%"
-              color="primary"
-              style="width: 100%; letter-spacing: 2px"
+              style="
+                width: 100%;
+                letter-spacing: 2px;
+                margin-top: 40px;
+                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+                color: white;
+              "
               size="16px"
-              rounded
+            />
+
+            <q-btn
+              @click.prevent="tab = 'register'"
+              type="button"
+              class="q-mt-md"
+              label="注册"
+              width="100%"
+              color="white"
+              text-color="#4A4A4A"
+              style="width: 100%; letter-spacing: 2px; box-shadow: 0px -2px 4px 0px #5a9dff80 inset"
+              size="16px"
             />
           </q-form>
         </q-tab-panel>
@@ -194,27 +222,24 @@
     </div>
 
     <div class="login-bottom-section">
-      <div class="row justify-center items-center full-width q-mb-md">
+      <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
         <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
-            <img src="../assets/login/home-icon.png" />
-            <span>先去逛逛</span>
-          </div>
-        </router-link>
-
-        <div class="mid-gap">&nbsp;</div>
-
-        <router-link class="txt-tip" to="/forgot-account">
-          <div class="row items-center gap-8">
-            <img src="../assets/login/lock-icon.png" />
-            <span>忘记密码</span>
+            <img src="../assets/login/home-icon.svg" width="16px" />
+            <span style="color: #458bff">先去逛逛</span>
           </div>
         </router-link>
       </div>
 
-      <div class="text-center">
-        如需帮助，请
-        <router-link class="txt-link q-ml-xs cs-web-id" to="/liveChat">联系客服</router-link>
+      <div class="row justify-center items-center full-width q-mb-md">
+        <router-link class="txt-tip" to="/liveChat">
+          <div style="width: 60px; height: 1px; background-color: #7a80a199"></div>
+          <div class="row items-center gap-8">
+            <img src="../assets/login/service-icon.svg" width="16px" />
+            <span>联系客服</span>
+          </div>
+          <div style="width: 60px; height: 1px; background-color: #7a80a199"></div>
+        </router-link>
       </div>
     </div>
 
@@ -560,12 +585,15 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .login-container {
+  padding-top: 12px;
   height: fit-content;
   //min-height: 100vh;
 
   .top-image-div {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-height: 205px;
 
     img {
       width: 100%;
@@ -573,12 +601,8 @@ export default defineComponent({
   }
 
   .login-tab-div {
-    background: #fff;
-    padding: 15px 20px 15px;
-    border-radius: 20px;
-    position: relative;
-    top: -45px;
-    box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.1);
+    padding: 0px 20px;
+    margin-bottom: 32px;
   }
 
   .q-tab {
@@ -602,7 +626,7 @@ export default defineComponent({
   .form-container {
     width: 100%;
     margin: auto;
-    padding: 16px 8px;
+    padding: 16px 0px;
 
     > .q-tab-panel {
     }
@@ -615,11 +639,11 @@ export default defineComponent({
       }
     }
   }
+  .q-field__prepend {
+    padding-right: 20px;
+  }
 
   .login-bottom-section {
-    margin-top: -24px;
-    padding-bottom: 8px;
-
     > div {
       gap: 40px;
     }
@@ -653,7 +677,6 @@ export default defineComponent({
 
   .q-tab-panels {
     background: none;
-    padding: 10px;
   }
 
   .align-right {
@@ -666,6 +689,10 @@ export default defineComponent({
   .txt-tip {
     color: #434343;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
   }
 
   .forgetpass-div {
@@ -674,7 +701,7 @@ export default defineComponent({
     align-items: center;
     justify-content: space-between;
     width: calc(100% - 8px);
-    margin: 10px auto 0px;
+    margin: 15px auto 0px;
     gap: 10px;
 
     .mui-row {
@@ -702,6 +729,26 @@ export default defineComponent({
       text-decoration: none;
       color: #0089ed;
     }
+  }
+
+  .q-field--standout.q-field--rounded .q-field__control {
+    border-radius: 8px;
+    box-shadow: 0px 0px 2.91px 0px #a9c9ea inset;
+  }
+
+  .q-field--standout .q-field__control {
+    background: #f7f8fb;
+  }
+
+  .q-checkbox__bg {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .q-checkbox__label {
+    margin-left: 8px;
   }
 }
 

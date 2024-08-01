@@ -272,8 +272,12 @@ import {
   getBBDachaRecordsCount
 } from "@/api/index/promo";
 import moment from "moment";
-import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { userStore } from "@/store";
+import { useNotify } from "@/hooks/notify";
+const store = userStore()
+
+const notify = useNotify();
 
 // tabs
 const activeKey = ref("tabOne");
@@ -297,7 +301,7 @@ const handleSubmitVote = () => {
     .then((res) => {
       if (res.code === 0) {
         getData();
-        ElMessage.success("投票成功！");
+        notify.success("投票成功！");
       }
     })
     .catch(() => {})
@@ -361,6 +365,13 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    notify({
+      message: "请登录后操作",
+      type: "error"
+    });
+    return;
+  }
   getData();
 });
 </script>

@@ -4,14 +4,19 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" @click="toggleExpansion">
 
       <div class="stats">
-        <div class="stat-label">{{ t('statsHeader.memberMoney') }}
+        <div class="stat-label">{{ t('statsHeader.myMoney') }}
+        </div>
+        <div class="stat-value green">{{ parseInt(records.myMoney) }}</div>
+      </div>
 
-          <el-popover placement="bottom" title="Title" :width="200" trigger="hover"
-            content="this is content, this is content, this is content">
-            <template #reference>
-              <span style="cursor:pointer;">&nbsp;▷</span>
-            </template>
-          </el-popover>
+      <div class="stats">
+        <div class="stat-label">{{ t('statsHeader.myPoint') }}
+        </div>
+        <div class="stat-value green">{{ records.myPoint }}</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-label">{{ t('statsHeader.memberMoney') }}
         </div>
         <div class="stat-value green">{{ records.memberMoney }}</div>
       </div>
@@ -21,17 +26,13 @@
         <div class="stat-value green">{{ records.memberPoint }}</div>
       </div>
 
-      <div class="stats">
-        <div class="stat-label">{{ t('statsHeader.eggs') }}</div>
-        <div class="stat-value blue">{{ records.eggs }}</div>
-      </div>
 
       <!-- <div class="stats">
         <div class="stat-label">보드머니</div>
         <div class="stat-value blue">0</div>
       </div> -->
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.memberInquiry') }}</div>
         <div class="stat-value grey">{{ records.memberInquiry }}</div>
       </div>
@@ -49,7 +50,7 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.affiliateApplication') }}</div>
         <div class="stat-value grey">{{ records.affiliateApplication }}</div>
-      </div>
+      </div> -->
 
       <!-- <div class="stats">
         <div class="stat-label">경고</div>
@@ -61,10 +62,10 @@
         <div class="stat-value grey">{{ records.totalMembers }}</div>
       </div>
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.currentMembers') }}</div>
         <div class="stat-value grey">{{ records.currentMembers }}</div>
-      </div>
+      </div> -->
     </div>
 
     <div class="stats-row">
@@ -91,12 +92,12 @@
         <div class="stat-value blue">{{ records.manualMoney }}</div>
       </div>
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.manualPoint') }}</div>
         <div class="stat-value blue">{{ records.manualPoint }}</div>
-      </div>
+      </div> -->
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
         <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount)
           + (records.slotProfit - records.slotBetAmount - records.slotRollingAmount)
@@ -112,20 +113,20 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.casinoProfit') }}</div>
         <div class="stat-value grey">{{ records.casinoProfit }}</div>
-      </div>
+      </div> -->
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.casinoRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.casinoRollingAmount }}</div>
       </div>
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.casinoProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.casinoProfit - records.casinoBetAmount - records.casinoRollingAmount }}
         </div>
-      </div>
+      </div> -->
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.slotBetAmount') }}</div>
         <div class="stat-value grey">{{ records.slotBetAmount }}</div>
       </div>
@@ -133,19 +134,19 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.slotProfit') }}</div>
         <div class="stat-value grey">{{ records.slotProfit }}</div>
-      </div>
+      </div> -->
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.slotRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.slotRollingAmount }}</div>
       </div>
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.slotProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.slotProfit - records.slotBetAmount - records.slotRollingAmount }}</div>
-      </div>
+      </div> -->
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.sportBetAmount') }}</div>
         <div class="stat-value grey">{{ records.sportBetAmount }}</div>
       </div>
@@ -153,14 +154,14 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.sportProfit') }}</div>
         <div class="stat-value grey">{{ records.sportProfit }}</div>
-      </div>
+      </div> -->
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.sportRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.sportRollingAmount }}</div>
       </div>
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.sportProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.sportProfit - records.sportBetAmount - records.sportRollingAmount }}
         </div>
@@ -174,18 +175,25 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.miniGameProfit') }}</div>
         <div class="stat-value grey">{{ records.miniGameProfit }}</div>
-      </div>
+      </div> -->
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.miniGameRollingAmount') }}</div>
         <div class="stat-value grey">{{ records.miniGameRollingAmount }}</div>
       </div>
 
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="stat-label">{{ t('statsHeader.miniGameProfitLoss') }}</div>
         <div class="stat-value grey">{{ records.miniGameProfit - records.miniGameBetAmount -
           records.miniGameRollingAmount
           }}</div>
+      </div> -->
+      <div class="stats">
+        <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
+        <div class="stat-value grey">{{ (records.casinoBetAmount - records.casinoProfit - records.casinoRollingAmount)
+          + (records.slotBetAmount - records.slotProfit - records.slotRollingAmount)
+          + (records.sportBetAmount - records.sportProfit - records.slotRollingAmount)
+          + (records.miniGameBetAmount - records.miniGameProfit - records.miniGameRollingAmount) }}</div>
       </div>
     </div>
   </div>

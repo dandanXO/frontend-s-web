@@ -1,18 +1,43 @@
 import { boot, store } from "quasar/wrappers";
 import { createPinia } from "pinia";
-import { Loading, Notify, SessionStorage, Dialog, Platform } from "quasar";
+import { Loading, SessionStorage, Dialog, Platform } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
+import { useUI } from "src/stores/ui";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 console.log(window.location.hostname);
-const globalLinks=   ["lh050.","lh068.","lh131.","lh165.","lh318.","lh338.","lh360.","lh537.","lh556.","lh730.","lh739.","lh765.","lh768.","lh835.","lh866.","lh869.","lh887.","lh970.","lh971.","lh988."];
-const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+const globalLinks = [
+  "lh050.",
+  "lh068.",
+  "lh131.",
+  "lh165.",
+  "lh318.",
+  "lh338.",
+  "lh360.",
+  "lh537.",
+  "lh556.",
+  "lh730.",
+  "lh739.",
+  "lh765.",
+  "lh768.",
+  "lh835.",
+  "lh866.",
+  "lh869.",
+  "lh887.",
+  "lh970.",
+  "lh971.",
+  "lh988."
+];
+const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
+
+const globalAndCNLinks = ["leihuo", "e693.cc", "e890.cc", "e561.cc", "e396.cc"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 // const specialLinks= ["lh75561","lh77331","lh79669", "lh93371", "lh76390", "lh30553", "lh13179","lh36791", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987", "lh59376", "lh60108", "lh63133", "lh67319", "lh69166"];
 // const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
@@ -40,10 +65,10 @@ if (isGlobalLH) {
   var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
 
   localStorage.setItem("LH_H5_RST_URL", rstApi);
-  localStorage.setItem("LH_H5_EVT_URL",evtApi);
-  localStorage.setItem("LH_H5_CRT_URL",crtApi);
-
-} else if(window.location.hostname.includes("leihuo")){
+  localStorage.setItem("LH_H5_EVT_URL", evtApi);
+  localStorage.setItem("LH_H5_CRT_URL", crtApi);
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
   var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
   var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
   var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
@@ -51,8 +76,7 @@ if (isGlobalLH) {
   var rstApi = getInitApi(rstGlobalArray, "LH_H5_RST_URL");
   var evtApi = getInitApi(evtGlobalArray, "LH_H5_EVT_URL");
   var crtApi = getInitApi(crGlobalArray, "LH_H5_CRT_URL");
-
-}else {
+} else {
   var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
   var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
   var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
@@ -62,11 +86,10 @@ const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
-
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
-    if(isInApp()){
+    if (isInApp()) {
       return successRstUrl;
     }
     axios
@@ -91,7 +114,6 @@ function getInitApi(apiLinks, urlLsName) {
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
     }
 
-
     axios.get(initApi + "/ping").then((res) => {
       console.log(res);
       if (res.status === 200) {
@@ -104,22 +126,24 @@ function getInitApi(apiLinks, urlLsName) {
   }
 }
 
-function getErrorType(errorUrl){
+function getErrorType(errorUrl) {
   errorUrl = errorUrl.replace("https://", "");
-  const firstStr = errorUrl.substr(0,5);
+  const firstStr = errorUrl.substr(0, 5);
   console.log(firstStr);
 
   return firstStr;
 }
 
-function isInApp(){
-  if( window.location.pathname === "/vip" ||
+function isInApp() {
+  if (
+    window.location.pathname === "/vip" ||
     window.location.pathname === "/viptest" ||
     window.location.pathname === "/promotion" ||
     window.location.pathname === "/deposit" ||
     window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||
-    window.location.pathname === "/privilege/invite"){
+    window.location.pathname === "/privilege/invite"
+  ) {
     return true;
   }
   return false;
@@ -134,9 +158,7 @@ export default boot(({ app, router }) => {
     }
     config.headers["Authorization"] = process.env.SITE;
 
-    if(
-      window.location.pathname === "/deposittest" ||
-      window.location.pathname === "/viptest"){
+    if (window.location.pathname === "/deposittest" || window.location.pathname === "/viptest") {
       console.log(config.baseURL + config.url);
       alert(config.baseURL + config.url);
     }
@@ -151,10 +173,9 @@ export default boot(({ app, router }) => {
     // message.error(error.message);
     const errorType = getErrorType(error.config.baseURL);
 
-    Notify.create({
-      type: "negative",
+    useUI().notify({
+      type: "error",
       timeout: 2500,
-      position: "top",
       message: error.message + ` (${errorType})`
     });
     Loading.hide();
@@ -211,7 +232,8 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-        if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+        if (
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
           res.code === ResponseCode.ERROR_NAME_EXIST ||
           res.code === ResponseCode.ERROR_TOKEN_MISSED
         ) {
@@ -225,10 +247,9 @@ export default boot(({ app, router }) => {
           window.location.href = "/";
         }
 
-        Notify.create({
-          type: "negative",
+        useUI().notify({
+          type: "error",
           timeout: 2500,
-          position: "top",
           message: res.message + ` (${errorType} ${res.code})` || "错误"
         });
       }

@@ -3,6 +3,7 @@ import {api, cashier, eventapi} from "boot/axios";
 import {SessionStorage, Notify, Platform} from "quasar";
 import LocalStorage from "boot/local-storage";
 import {isAndroid} from "boot/utils"
+import { useUI } from "./ui";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -39,7 +40,8 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "",
       levelUpDeposit: "",
       visitorId: "",
-      profilePhoto: ""
+      profilePhoto: "",
+      isDisplayLogin: false
     };
   },
   actions: {
@@ -120,11 +122,9 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
-          Notify.create({
-            color: "negative",
-            position: "top",
+          useUI().notify({
+            type: "error",
             message: ret.message,
-            icon: "report_problem"
           });
         }
       });
@@ -149,11 +149,9 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
         } else {
-          Notify.create({
-            color: "negative",
-            position: "top",
+          useUI().notify({
+            type: "error",
             message: ret.message,
-            icon: "report_problem"
           });
         }
       });

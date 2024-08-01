@@ -148,9 +148,14 @@
           }}
         </div> -->
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
           <span style="color: #fff">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">{{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}</template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
             {{ store.currency.value }}
           </span>
         </div>
@@ -166,6 +171,40 @@
         ></BankComponent>
 
         <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
+
+        <!--        <q-select-->
+        <!--          style="width:100%;"-->
+        <!--          ref="offerRef"-->
+        <!--          class="deposit-selection q-mt-xs"-->
+        <!--          :label="$t('deposit.select_privilege')"-->
+        <!--          filled-->
+        <!--          :options="unselectedPrivileges"-->
+        <!--          v-model="selectedPrivilege"-->
+        <!--          emit-value-->
+        <!--          v-if="hasPrivilege && !isUSDT"-->
+        <!--          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"-->
+        <!--          clearable-->
+        <!--          @update:model-value="checkMinDepositAmt"-->
+        <!--        >-->
+        <!--          <template v-slot:option="scope">-->
+        <!--            <q-item v-bind="scope.itemProps">-->
+        <!--              <q-item-section>-->
+        <!--                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">-->
+        <!--                  {{ scope.opt.name }}-->
+        <!--                </q-item-label>-->
+        <!--              </q-item-section>-->
+        <!--            </q-item>-->
+        <!--          </template>-->
+        <!--        </q-select>-->
+
+        <!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          </p>-->
+        <!--          <p v-else>-->
+        <!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
+        <!--          </p>-->
+        <!--        </div>-->
       </q-form>
     </div>
 
@@ -182,7 +221,7 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="q-mt-sm step-desc-div q-mb-lg">
+    <div class="q-mt-lg step-desc-div q-mb-lg">
       <p>
         1. Recharge tutorial:
         <span class="tutorial-link" @click="openDepositPage">Picture</span>
@@ -196,8 +235,8 @@
         credited.
       </p>
     </div>
-
-    <div class="bottom-content" style="height: 110px"></div>
+    <!-- <MediaSettingsComponent /> -->
+    <div class="bottom-content" style="height: 40px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -269,6 +308,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
+// import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -464,7 +504,6 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 const onSelect = (value) => {
-  // debugger;
   depositItems.value.forEach((item) => (item.isActive = false));
 
   isDisplay.value = false;
@@ -494,18 +533,50 @@ const onSelect = (value) => {
       }));
       checkPrivilege(value);
     }
-    checkMinDepositAmt();
   }
 };
 
-function checkMinDepositAmt() {
+function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 300;
-  calculatedMaxDeposit.value = 50000;
+  calculatedMinDeposit.value = val.depositMin;
+  calculatedMaxDeposit.value = val.depositMax;
+
+  console.log(val.depositMin);
+  console.log(val.depositMax);
 }
 
 function checkPrivilege(v) {
   selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    checkMinDepositAmt(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = null;
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType == "FREE") {
+            freePrivilege.value = p;
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
 }
 
 function selectedBank(value) {
@@ -519,7 +590,7 @@ function clearInfo() {
   if (depositForm.value) {
     depositForm.value.reset();
   }
-  checkMinDepositAmt();
+  // checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
@@ -728,7 +799,7 @@ const refreshNode = () => {
 
 const isDepositTutorial = ref(false);
 
-const langSelect= localStorage.getItem("languageLocale") ?? "";
+const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
@@ -743,9 +814,9 @@ const openDepositPage = () => {
 };
 
 const openDepositVideo = () => {
-  if(langSelect==='ur'){
+  if (langSelect === "ur") {
     window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
-  }else{
+  } else {
     window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
   }
   // if (selectedPayType.value === "EASYPAISA") {
@@ -756,6 +827,12 @@ const openDepositVideo = () => {
   //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   // }
 };
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 
 onActivated(() => {
   // checkNewUser();
@@ -909,6 +986,17 @@ onMounted(() => {
       margin: 20px auto 0 auto;
 
       .deposit-input {
+        background-color: #0b0e0d;
+        border-radius: 5px;
+        width: 100%;
+        height: 46px;
+
+        :deep(.q-field__control) {
+          height: 46px;
+        }
+      }
+
+      .deposit-selection {
         background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;

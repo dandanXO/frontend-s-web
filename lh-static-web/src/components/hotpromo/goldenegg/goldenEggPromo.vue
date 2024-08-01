@@ -24,8 +24,10 @@
 import {onMounted, reactive, ref} from "vue";
 import { userStore } from "@/store";
 import { goldenEggInit, goldenEggSubmit } from "@/api/promotion/goldenEgg";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+
 const store = userStore();
+const notify = useNotify();
 
 const info = reactive({
   leftCount: 0,
@@ -40,7 +42,7 @@ const hitEgg = () => {
       info.amount = res.data.amount;
       isPrizeWon.value = true
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       })
@@ -56,7 +58,7 @@ onMounted(() => {
     if(res.code === 0) {
       info.leftCount = res.data.leftCount;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       })

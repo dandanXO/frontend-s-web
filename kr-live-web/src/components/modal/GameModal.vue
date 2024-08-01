@@ -1,44 +1,36 @@
 <template>
+  <q-ajax-bar ref="ajaxBarRef" position="top" size="5px" skip-hijack
+    style="background:linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%)" />
   <q-scroll-area>
     <q-dialog v-model="visible" class="gameDialog" full-height full-width>
       <q-toolbar>
-        <div class="game-wrapper">
-          <div class="topActions">
-            <q-toolbar-title></q-toolbar-title>
-            <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
-            <!-- <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />
-            <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" /> -->
-          </div>
-
-          <template v-if="transferInfo.platform === 'PG'">
-            <iframe @load="loadGame()" v-show="!logoShow" v-bind:srcdoc="src" id="game-iframe"
-              :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
-          </template>
-          <template v-else>
-            <iframe @load="loadGame()" v-show="!logoShow" :src="src" id="game-iframe"
-              :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
-          </template>
+        <div class="topActions">
+          <q-toolbar-title>{{ title }}</q-toolbar-title>
+          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
         </div>
+
+        <template v-if="isInnerHtmlSrc === false">
+          <iframe @load="loadGame()" v-show="!logoShow" :src="src" id="game-iframe" scrolling="auto" frameborder="0"
+            class="game-iframe"></iframe>
+        </template>
+        <template v-else>
+          <iframe @load="loadGame()" v-show="!logoShow" v-bind:srcdoc="src" id="game-iframe" scrolling="auto"
+            frameborder="0" class="game-iframe"></iframe>
+        </template>
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-      <!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
+      Coming Soon
     </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
 import { ref, defineExpose, reactive, shallowRef } from "vue";
-
-// import { transfer } from "api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen } from "quasar";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { useI18n } from "vue-i18n";
 
@@ -48,26 +40,11 @@ const { t } = useI18n();
 
 const store = userStore();
 const { token } = storeToRefs(store);
+const ajaxBarRef = ref(null);
 
-const formRef = ref();
-const payTypeClass = ref();
 var payMethods = reactive([]);
-const paymentNode = ref([]);
-const activeMethod = ref({});
 const bankCardList = ref([]);
-const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
-const isPaymentLoading = ref(true);
-
-const isMobileDrawerActive = ref(false);
-const values = ref(["100", "200", "300", "500", "1000"]);
-const hasPrivilege = ref(false);
-const quickTransferTab = ref(false);
-
-const checkAmount = reactive({
-  flag: true,
-  errorMessage: ""
-});
 
 function selectPayType(value) {
   if (value) {
@@ -147,132 +124,75 @@ const closeDialog = () => {
   // AppFullscreen.exit()
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
-  return new Promise((resolve, reject) => {
-    transferInfo.value = {
-      platform: platformCode
-    };
-    // debugger;
-    // AppFullscreen.request()
+  const newWindowOpenGames = ['EVOPLAY'];
+  const isNewWindow = newWindowOpenGames.includes(platformCode);
 
-    localStorage.removeItem("isOpenFromAccount");
-    localStorage.removeItem("isBacked");
+  // debugger;
+  // AppFullscreen.request()
+  ajaxBarRef.value.start();
+  localStorage.removeItem("isOpenFromAccount");
+  localStorage.removeItem("isBacked");
 
-    isInnerHtmlSrc.value = false;
-    // Get the iframe
-    const iFrame = document.getElementById("game-iframe");
+  isInnerHtmlSrc.value = false;
 
-    // Let's say that you want to access a button with the ID `'myButton'`,
-    // you can access via the followi ng code:
-    // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-    // buttonInIFrame.style.visible = visible;
-    //   console.log(iframe)
-    title.value = gameName;
-    const store = userStore();
-    if (store.memberType !== "TEST" && gameType === "TEST") {
-      visibleComingSoon.value = true;
-    } else {
-      if (store.hasToken()) {
-        var way = null;
-        if (Platform.is.android) {
-          way = "ANDROID";
-        } else if (Platform.is.ios) {
-          way = "IOS";
-        }
-
-        const apiParams = {
-          platform: platformCode,
-          gameCode: gameCode,
-          isMobile: Platform.is.mobile ? true : false,
-          way: way
-        };
-
-        if (platformCode === "CG") {
-          apiParams.language = t("lang.langVal");
-        }
-
-        const gameLaunchNotif = $q.notify({
-          position: 'top',
-          spinnerColor: 'blue',
-          group: false, // required to be updatable
-          timeout: 0, // we want to be in control when it gets dismissed
-          spinner: true,
-          message: '로드 중...'
-        })
-
-        api
-          .get(`/session/launch?_time=${new Date().getTime()}`, {
-            params: apiParams
-          })
-          .then((ret) => {
-            gameLaunchNotif({
-              position: 'top',
-              icon: 'done', // we add an icon
-              spinner: false, // we reset the spinner setting so the icon can be displayed
-              message: '게임 시작..',
-              timeout: 2500 // we will timeout it in 2.5s
-            })
-
-            let srcDoc = ret.data.data;
-
-
-            if (platformCode === "PG") {
-              var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-              if (firstFourChars === "http") {
-                src.value = srcDoc;
-              } else {
-                isInnerHtmlSrc.value = true;
-
-                const scriptEndTag = "</" + "script>";
-                srcDoc = srcDoc
-                  .replace(/<\/script>/g, scriptEndTag)
-                  .replace(/\\\"/g, '"')
-                  .replace(/\n/g, "");
-
-                src.value = srcDoc;
-              }
-
-              visible.value = true;
-            } else if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
-              //
-              const newWin = window.open(`/`, "_self");
-
-              if (newWin) {
-                newWin.location.href = srcDoc;
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
-                  icon: "report_problem"
-                });
-              }
-            } else {
-              window.open(srcDoc, "_blank");
-            }
-
-            resolve();
-          }).catch(() => {
-            gameLaunchNotif({
-              position: 'top',
-              icon: 'error', // we add an icon
-              spinner: false, // we reset the spinner setting so the icon can be displayed
-              message: '오류',
-              timeout: 2500 // we will timeout it in 2.5s
-            })
-            reject();
-          });
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: "로그인 해주세요",
-          icon: "report_problem"
-        });
-        reject();
-        // router.push({ path: "/login", query: { redirect: route.path } });
+  title.value = gameName;
+  const store = userStore();
+  if (store.memberType !== "TEST" && gameType === "TEST") {
+    visibleComingSoon.value = true;
+  } else {
+    if (store.hasToken()) {
+      if (!isNewWindow) {
+        visible.value = true;
       }
+      var way = null;
+      if (Platform.is.android) {
+        way = "ANDROID";
+      } else if (Platform.is.ios) {
+        way = "IOS";
+      }
+
+      const apiParams = {
+        platform: platformCode,
+        gameCode: gameCode,
+        isMobile: Platform.is.mobile ? true : false,
+        way: way
+      };
+
+      if (platformCode === "CG") {
+        apiParams.language = t("lang.langVal");
+      }
+
+      api
+        .get(`/session/launch?_time=${new Date().getTime()}`, {
+          params: apiParams
+        })
+        .then((ret) => {
+          let srcDoc = ret.data.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
+          } else {
+            isInnerHtmlSrc.value = true;
+
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
+
+            src.value = srcDoc;
+          }
+
+          if (isNewWindow) {
+            window.open(srcDoc, "_blank");
+          }
+        }).finally(() => {
+          ajaxBarRef.value.stop();
+        });
+    } else {
+      router.push({ path: "/login", query: { redirect: route.path } });
     }
-  })
+  }
 };
 
 const loadGame = () => {
@@ -292,6 +212,7 @@ defineExpose({
   open
 });
 </script>
+
 <style lang="scss">
 .gameDialog {
   background: #23263cbc;
@@ -358,13 +279,6 @@ defineExpose({
   align-items: flex-start;
   flex-direction: column;
   padding: 0;
-  background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
-  box-shadow: inset 0 0 5px #ffffff;
-
-  .game-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
 
   .topActions {
     display: flex;
@@ -521,20 +435,4 @@ defineExpose({
   left: 0px;
   z-index: 999;
 }
-
-// @media (orientation: portrait) {
-//   .game-iframe {
-//     top: 0;
-//       height: calc(100vh - 45px - env(safe-area-inset-top, 40px) - env(safe-area-inset-bottom, 59px) );
-//       // padding-bottom: env(safe-area-inset-bottom, 40px);
-//       padding-bottom: 45px;
-
-//   }
-// }
-// @media (orientation: landscape) {
-//   .game-iframe {
-//     top: 0;
-//       height: calc(100vh - env(safe-area-inset-left, 0) - env(safe-area-inset-right, 0) );
-//       // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
-//   }
-// }</style>
+</style>

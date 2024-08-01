@@ -257,7 +257,9 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -426,11 +428,9 @@ const checkVipRedeem = () => {
       vipClaimItems[slide.value].vip = slide.value;
       claimDesc.value = vipClaimItems[slide.value];
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
     }
   });
@@ -639,21 +639,17 @@ const claim = async () => {
     // const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: vipNumber.value }));
     const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: slide.value + 1 }));
     if (res.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "领取成功",
-        icon: "check_circle_outline"
       });
       claimDesc.value.claimedBtn = true;
 
       claimDesc.value.availableBtn = false;
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
     }
   } catch (error) {

@@ -185,12 +185,10 @@ export default defineComponent({
         }
       }).catch((err) => {
         isLoading.value = false;
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: "Loading failed",
-        //   icon: "report_problem"
-        // });
+        // notify({
+        //   type: "error",
+        //        //   message: "Loading failed",
+        //        // });
       })
 
     };

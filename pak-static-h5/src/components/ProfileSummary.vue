@@ -93,6 +93,13 @@
       <!--        Tik Tok-->
       <!--      </a>-->
 
+      <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
+        <div class="item-icon">
+          <img src="../assets/images/index/youtube-web-icon.png" />
+        </div>
+        Youtube
+      </a>
+
       <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/insta-web-icon.png" />
@@ -305,20 +312,6 @@ const loadCustomerAddress = () => {
     });
 };
 
-const loadSocialMediaLinks = () => {
-  cached
-    .get("socialMediaLinks", () =>
-      api.get("/config/uiconfigs").then((res) => {
-        return res;
-      })
-    )
-    .then((data) => {
-      // console.log("socialMediaLinks", data);
-      ui.instagramUrl = data.instagram;
-      ui.tiktokUrl = data.tiktok;
-      ui.whatsappUrl = data.whatsapp;
-    });
-};
 
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
@@ -476,7 +469,6 @@ onMounted(() => {
 
   checkTopDownloadAppear();
   loadCustomerAddress();
-  loadSocialMediaLinks();
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";

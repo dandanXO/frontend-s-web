@@ -164,7 +164,7 @@ export default {
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "EURO 2024 - CÒN ",
-    euroCountdown02: " NGÀY",
+    euroCountdown02: " NGÀY"
   },
   personal: {
     url: "Truy Cập",
@@ -223,14 +223,16 @@ export default {
     captchareq: "Vui lòng nhập mã captcha",
     captcha: "Mã captcha phải có 4 ký tự",
     verificationCode: "Vui lòng nhập mã xác nhận",
+    pleaseEnter: "Vui lòng nhập",
+    pleaseEnterCardNumber: "Vui lòng nhập số thẻ",
     min4: "Mã xác minh phải có 4 ký tự",
     emailFormat: "Vui lòng nhập một địa chỉ email hợp lệ",
     between612: "Độ dài phải từ 6 đến 11 ký tự",
     noMatch: "Mật khẩu xác nhận không khớp với mật khẩu mới",
     verifyPhone: "Vui lòng xác minh số điện thoại di động",
     onlyNumber: "Chỉ cho phép nhập số",
-    invalidPhoneLength: 'Số điện thoại phải dài 10 chữ số.',
-    invalidPhoneStartsWith0: 'Số điện thoại phải bắt đầu bằng số 0.',
+    invalidPhoneLength: "Số điện thoại phải dài 10 chữ số.",
+    invalidPhoneStartsWith0: "Số điện thoại phải bắt đầu bằng số 0.",
     phoneVerification: "Vui lòng nhập mã xác minh điện thoại",
     min6: "Độ dài phải là 6 ký tự",
     lessthan50: "Độ dài phải ít hơn 50 ký tự",
@@ -286,13 +288,13 @@ export default {
 
     bonus: "Phần thưởng",
     // vi-daily-checkin end
-    
+
     // vi-mualixi-redpacket
     congrats: "Chúc mừng",
     claim: "Nhận",
-    
+
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng",
+    record_win_prize: "Giải thưởng"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -691,9 +693,11 @@ export default {
     tnc4: "Tiền Thưởng Nâng Cấp sẽ không thể nhận đồng thời với Tiền Thưởng Hàng Tháng. Nếu thành viên được thăng hạng VIP trong tháng này, thì thành viên sẽ được nhận Tiền Thưởng Nâng Cấp. Hệ thống sẽ xét duyệt Tiền Thưởng Hàng Tháng cho các tài khoản chưa được thăng hạng VIP trong tháng này và có đạt đủ yêu cầu duy trì cấp độ VIP.",
     tnc5: "Tiền Thưởng Hàng Tháng: Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. (VD: Nếu thành viên đang ở VIP3, thì trong tháng cần đạt tối thiểu 600,000 VNDP tổng cược trong tháng). Sau khi đủ điều kiện thành viên có thể bấm nút NHẬN trên trang VIP vào ngày đầu tháng. Số tiền thưởng dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 3 vòng cược trước khi rút.",
     tnc6: "Tiền thưởng nâng cấp: thành viên cần bấm NHẬN trên trang VIP sau khi thành viên đã nâng cấp lên cấp độ mới vào ngày đầu tiên của tháng, Mỗi thành viên chỉ có thể nhận được 1 lần thưởng nâng cấp cho mỗi cấp độ. (tiền thưởng nâng cấp cần trải qua 1 vòng cược trước khi rút tiền.)",
-    tnc7: "Tiền thưởng hoàn trả: Thành viên được nâng cấp mức tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện có. Tiền thưởng hoàn trả tại sản phẩm Casino trực tuyến, quay hũ sẽ không nhận được quá 50,000 VNDP mỗi ngày và không giới hạn tại các sản phẩm khác.",
-    tnc8: "Tất cả các cược hòa, cược HỦY, cược 2 bên, cược Châu Âu chấp dưới 1.75, cược Châu Á dưới 0.75, Number Game, Thể thao ảo, Giải đặc biệt RNG lũy tiến, Xèng RNG lũy tiến sẽ không được tính doanh thu cược cho chương trình này. Điều kiện & điều khoản chung của khuyến mãi được áp dụng.",
-    tnc9: "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này bất kỳ lúc nào mà không cần thông báo trước.",
+    tnc7: "Tiền Thưởng Sinh Nhật : Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. Khi đã đạt đủ duy trì cấp VIP, Thành Viên liên hệ Chăm Sóc Khách Hàng trực tuyến để nhận thưởng.",
+    tnc8: "Tiền thưởng hoàn trả: Thành viên được nâng cấp mức tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện có. Tiền thưởng hoàn trả tại sản phẩm Casino trực tuyến, quay hũ sẽ không nhận được quá 50,000 VNDP mỗi ngày và không giới hạn tại các sản phẩm khác.",
+    tnc9: "Tất cả các cược hòa, cược HỦY, cược 2 bên, cược Châu Âu chấp dưới 1.75, cược Châu Á dưới 0.75, Number Game, Thể thao ảo, Giải đặc biệt RNG lũy tiến, Xèng RNG lũy tiến sẽ không được tính doanh thu cược cho chương trình này. Điều kiện & điều khoản chung của khuyến mãi được áp dụng.",
+    tnc10:
+      "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này bất kỳ lúc nào mà không cần thông báo trước.",
     vipMaintainRequired: "YÊU CẦU DUY TRÌ CẤP ĐỘ VIP",
     vipUpgradeRequired: "YÊU CẦU CẤP ĐỘ VIP",
     totalBetMonth: "TỔNG CƯỢC TRONG THÁNG",
@@ -785,7 +789,8 @@ export default {
     loginbeforeAction: "Vui lòng đăng nhập trước khi thực hiện bất kỳ hành động nào",
     safetyBeforePhone: "Vì sự an toàn, vui lòng xác minh số điện thoại của bạn trước khi nạp tiền",
     bindRealName: "Bạn chưa cập nhật tên thật, vui lòng cập nhật",
-    depositConfirmed: "Nạp tiền đã được xác nhận"
+    depositConfirmed: "Nạp tiền đã được xác nhận",
+    withdrawCancelled: "Rút tiền bị hủy"
   },
   sports: {
     saba: "Saba Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !",
@@ -945,6 +950,7 @@ export default {
     30006: "Những thành viên được liệt kê là chủ tài khoản bị cấm nhận đặc quyền này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
+    30010: "Hệ thống bận, vui lòng thử lại sau !",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

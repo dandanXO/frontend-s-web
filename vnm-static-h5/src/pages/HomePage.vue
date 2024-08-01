@@ -158,20 +158,20 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-<!--    <div class="hot-matches-title-wrapper">-->
-<!--      <div class="hot-matches-title">-->
-<!--        <div>-->
-<!--          <img src="../assets/images/home/icon-hot-matches.png" />-->
-<!--        </div>-->
-<!--        {{ $t("lang.hotMatches") }}-->
-<!--      </div>-->
+    <!--    <div class="hot-matches-title-wrapper">-->
+    <!--      <div class="hot-matches-title">-->
+    <!--        <div>-->
+    <!--          <img src="../assets/images/home/icon-hot-matches.png" />-->
+    <!--        </div>-->
+    <!--        {{ $t("lang.hotMatches") }}-->
+    <!--      </div>-->
 
-      <!--      <div>-->
-      <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
-      <!--          {{ $t("lang.bet_now") }}-->
-      <!--        </q-btn>-->
-      <!--      </div>-->
-<!--    </div>-->
+    <!--      <div>-->
+    <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+    <!--          {{ $t("lang.bet_now") }}-->
+    <!--        </q-btn>-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <div class="hot-matches-container">
       <swiper
@@ -201,7 +201,13 @@
               <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
-                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt match-btn-button" @click="openHotMatch(item)">
+                <q-btn
+                  rounded
+                  no-caps
+                  color="brightbtn"
+                  class="sm-screen-txt match-btn-button"
+                  @click="openHotMatch(item)"
+                >
                   {{ $t("lang.play_now") }}
                 </q-btn>
               </div>
@@ -313,11 +319,7 @@
         <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
-      <div
-        @click="selectTab('casual')"
-        class="game-platform btn-pointer"
-        id="casual-platform"
-      >
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
         <template v-if="tab === 'casual'">
           <img src="../assets/images/home/games/minigame-icon-active.png" />
         </template>
@@ -684,9 +686,6 @@
     </div>
   </div>
 
-
-
-
   <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
@@ -734,12 +733,7 @@
         infinite
         size="xs"
       >
-        <q-carousel-slide
-          v-for="(promo, i) in floatPromo"
-          :key="i"
-          :name="i"
-          @click="gotoFloatPromo(promo.code)"
-        >
+        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket"><img style="width: 75px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
@@ -1201,6 +1195,9 @@ export default defineComponent({
       if (downloadPopup) {
         topBoxVisible.value = false;
       }
+      if (window.location.href.indexOf("tf88bof.com") > -1) {
+        topBoxVisible.value = false;
+      }
     };
 
     const $q = useQuasar();
@@ -1211,7 +1208,7 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance;
     });
-    const isLogined= ref(false);
+    const isLogined = ref(false);
 
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
@@ -1223,7 +1220,7 @@ export default defineComponent({
     };
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
-    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
+    const imgURLFloat = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -1635,16 +1632,16 @@ export default defineComponent({
       }
     };
 
-    const unreadInboxMail = ref(0);
-    const getUnreadTotal = () => {
-      if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((res) => {
-          if (res.code === 0) {
-            unreadInboxMail.value = res.data;
-          }
-        });
-      }
-    };
+    // const unreadInboxMail = ref(0);
+    // const getUnreadTotal = () => {
+    //   if (store.token) {
+    //     return api.get("/session/inbox/getUnreadTotal").then((res) => {
+    //       if (res.code === 0) {
+    //         unreadInboxMail.value = res.data;
+    //       }
+    //     });
+    //   }
+    // };
 
     const pushNotificationData = ref();
     const populatePushNotificationData = (data) => {
@@ -1677,7 +1674,7 @@ export default defineComponent({
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
-        initFloating();
+      initFloating();
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -1692,15 +1689,16 @@ export default defineComponent({
       getVersionNo();
       checkShowImgTop();
       getAppDownloadUrl();
-      getUnreadTotal();
+      // getUnreadTotal();
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
       getCheckRedPacket();
-      if(store.token){
-        isLogined.value= true;
-      }else{
-        isLogined.value= false;
+      if (store.token) {
+        isLogined.value = true;
+        store.getUnreadTotal();
+      } else {
+        isLogined.value = false;
       }
     });
 
@@ -1710,7 +1708,6 @@ export default defineComponent({
         toggleMenuFloat();
       }, 2000);
     };
-
 
     const isMenuFloat = ref(false);
 
@@ -1742,7 +1739,13 @@ export default defineComponent({
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
       } else {
-        if (banner.redirectUrl.includes("https://")) {
+        const openPattern = /^\/open\/(.*)/;
+        if (banner.redirectUrl.match(openPattern)) {
+          const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+          const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+          allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+        } else if (banner.redirectUrl.includes("https://")) {
           window.open(banner.redirectUrl, "_blank");
         } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
@@ -1773,7 +1776,7 @@ export default defineComponent({
 
     const loadHotMatches = () => {
       api
-        .get("/platform-competition?type=Football")
+        .get("/platform-competition")
         .then((res) => {
           if (res.code === 0) {
             hotMatches.value = res.data;
@@ -1878,12 +1881,11 @@ export default defineComponent({
         }
       }
     );
-        const gotoFloatPromo = (code) => {
-
-      router.push(`/promo?name=${code}`)
-    }
-    const floatPromo = ([]);
-    const gamePromo = ([]);
+    const gotoFloatPromo = (code) => {
+      router.push(`/promo?name=${code}`);
+    };
+    const floatPromo = [];
+    const gamePromo = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
@@ -1891,13 +1893,13 @@ export default defineComponent({
         .get("/redirect")
         .then((res) => {
           if (res.code === 0) {
-            res.data.forEach(element => {
-              if (element.type === 'PROMO') {
+            res.data.forEach((element) => {
+              if (element.type === "PROMO") {
                 floatPromo.push(element);
                 showFloatPromo.value = true;
               }
-              if (element.type === 'GAME') {
-                gamePromo.push(element)
+              if (element.type === "GAME") {
+                gamePromo.push(element);
                 showRocket.value = true;
               }
             });
@@ -1916,16 +1918,16 @@ export default defineComponent({
         .catch((err) => {
           console.log(err);
         });
-    }
+    };
 
-    const currentPromo = ref(null)
+    const currentPromo = ref(null);
     const currentPromoIndex = ref(0);
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
 
-    const currentRocket = ref(null)
+    const currentRocket = ref(null);
     const currentRocketIndex = ref(0);
     const updateRocket = () => {
       currentRocket.value = gamePromo[currentRocketIndex.value];
@@ -1943,7 +1945,7 @@ export default defineComponent({
 
     const hideRocket = () => {
       showRocket.value = false;
-      promoPos.value = [18, 18]
+      promoPos.value = [18, 18];
     };
 
     const showFloatPromo = ref(false);
@@ -1952,7 +1954,7 @@ export default defineComponent({
       //   showFloatPromo.value = true;
       // }
       if (gamePromo.length === 0) {
-        promoPos.value = [18, 18]
+        promoPos.value = [18, 18];
       }
     };
 
@@ -1961,13 +1963,13 @@ export default defineComponent({
     };
     const fabPos = ref([18, 0]);
     const promoPos = ref([18, 108]);
-    const packetPos= ref([120, 18]);
+    const packetPos = ref([120, 18]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
     const currentElement = ref(null);
     const moveRocketFab = (ev) => {
-      console.log(ev)
+      console.log(ev);
       const maxX = window.innerWidth - 70;
       const maxY = window.innerHeight - 70;
       draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1986,8 +1988,7 @@ export default defineComponent({
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       promoPos.value = [newX, newY];
-
-    }
+    };
 
     return {
       imageLoading,
@@ -2065,8 +2066,8 @@ export default defineComponent({
       getImgPlatformLogo,
       getImgPlatformBg,
       moment,
-      unreadInboxMail,
-      getUnreadTotal,
+      // unreadInboxMail,
+      // getUnreadTotal,
       topBoxVisible,
       isMenuFloat,
       toggleMenuFloat,
@@ -2270,7 +2271,6 @@ export default defineComponent({
   }
 }
 
-
 .rocket-wrapper {
   transition: all 0.3s;
   // cursor: pointer;
@@ -2281,7 +2281,7 @@ export default defineComponent({
   }
 
   &:hover {
-    filter: brightness(0.9  );
+    filter: brightness(0.9);
   }
 }
 
@@ -3013,7 +3013,6 @@ export default defineComponent({
   align-items: center;
 }
 
-
 .close-btn {
   width: 14px;
   min-width: 14px;
@@ -3199,7 +3198,6 @@ export default defineComponent({
   width: calc(100% - 1rem);
   margin: auto;
   // margin: 20px auto 0px;
-
 
   .euro-countdown {
     display: flex;
@@ -3393,7 +3391,7 @@ export default defineComponent({
   }
 
   .hot-matches-container {
-    width:100%;
+    width: 100%;
     height: 125px;
     :deep(.swiper-pagination) {
       //bottom: -20px;
@@ -3433,9 +3431,8 @@ export default defineComponent({
     box-shadow: 0px 0px 6px 0px #00324433;
     padding-bottom: 15px;
 
-
     .top-match-title {
-      color: #033AC8;
+      color: #033ac8;
       font-weight: 700;
       font-size: 14px;
       text-align: center;
@@ -3483,9 +3480,9 @@ export default defineComponent({
         // margin-top: auto;
         margin-top: 0px;
 
-        .match-btn-button{
-          min-height:15px;
-          padding:3px 8px;
+        .match-btn-button {
+          min-height: 15px;
+          padding: 3px 8px;
           font-size: 10px !important;
         }
       }
@@ -3521,6 +3518,7 @@ export default defineComponent({
       .team-name {
         text-align: center;
         color: #444444;
+        min-height: 42px;
       }
     }
   }

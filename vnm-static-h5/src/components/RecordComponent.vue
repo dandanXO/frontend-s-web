@@ -2,7 +2,7 @@
   <div>
     <q-inner-loading :showing="loading">
       <q-spinner-gears size="50px" color="brightbtn" />
-      <div class="label" style="color: #fff">{{ t('lang.loading') }}</div>
+      <div class="label" style="color: #fff">{{ t("lang.loading") }}</div>
     </q-inner-loading>
 
     <div v-if="!loading">
@@ -31,7 +31,11 @@
                 </div>
                 <div
                   v-else-if="
-                    obj === 'commitDate' || obj === 'feedbackTime' || obj === 'recordTime' || obj === 'transferDate' || (obj === 'betTime' && recordType === 'bethistory')
+                    obj === 'commitDate' ||
+                    obj === 'feedbackTime' ||
+                    obj === 'recordTime' ||
+                    obj === 'transferDate' ||
+                    (obj === 'betTime' && recordType === 'bethistory')
                   "
                 >
                   {{ humanDatetime(det[obj]) }}
@@ -52,11 +56,24 @@
                 (recordType === 'withdraw' && det.status === 'STEP_1')
               "
             >
-              <q-btn outline :label="$t('lang.str_reminder')" @click="feedbackTrans(det)" size="sm" color="bright" class="q-mr-sm" />
+              <q-btn
+                outline
+                :label="$t('lang.str_reminder')"
+                @click="feedbackTrans(det)"
+                size="sm"
+                color="bright"
+                class="q-mr-sm"
+              />
             </template>
 
             <template v-if="recordType === 'deposit'">
-              <q-btn outline :label="$t('lang.str_copy')" @click="copyText(det.serialNumber, $t('lang.str_deposit_serialnumber'))" size="sm" color="bright" />
+              <q-btn
+                outline
+                :label="$t('lang.str_copy')"
+                @click="copyText(det.serialNumber, $t('lang.str_deposit_serialnumber'))"
+                size="sm"
+                color="bright"
+              />
             </template>
           </div>
 
@@ -68,9 +85,33 @@
                 det.confirmStatus === 0
               "
             >
-              <q-btn @click="openWithdrawConfirmDialog(det)" outline :label="$t('lang.str_confirmwithdraw')" size="sm" color="bright" />
+              <q-btn
+                @click="openWithdrawConfirmDialog(det)"
+                outline
+                :label="$t('lang.str_confirmwithdraw')"
+                size="sm"
+                color="bright"
+              />
             </template>
-            <q-btn outline :label="$t('lang.str_copy')" @click="copyText(det.serialNumber, $t('lang.str_serial_number'))" size="sm" color="bright" />
+
+            <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
+              <q-btn
+                @click="openWithdrawCancelDialog(det)"
+                outline
+                :label="$t('lang.msg_cancel')"
+                size="sm"
+                color="bright"
+                class="q-mr-sm"
+              />
+            </template>
+
+            <q-btn
+              outline
+              :label="$t('lang.str_copy')"
+              @click="copyText(det.serialNumber, $t('lang.str_serial_number'))"
+              size="sm"
+              color="bright"
+            />
           </div>
         </q-card>
         <template v-slot:loading>
@@ -83,7 +124,7 @@
             <div class="row justify-center q-my-md" v-if="!isEnded">
               <q-spinner-dots color="white" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">{{ t('lang.no_more_data_le') }}</span>
+            <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">{{ t("lang.no_more_data_le") }}</span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -96,7 +137,7 @@
     <q-card class="reminder-dialog-card bg-white" style="width: 100%; padding: 0px 0px 20px">
       <q-card-section class="text-white">
         <q-toolbar>
-          <q-toolbar-title>{{ $t('lang.str_reminder') }}</q-toolbar-title>
+          <q-toolbar-title>{{ $t("lang.str_reminder") }}</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
@@ -112,7 +153,14 @@
           label-cols="5"
           class="reminder-dialog-form"
         >
-          <q-input :label="$t('lang.str_deposit_serialnumber')" filled v-model="reminderForm.orderNo" padding="none" readonly disable />
+          <q-input
+            :label="$t('lang.str_deposit_serialnumber')"
+            filled
+            v-model="reminderForm.orderNo"
+            padding="none"
+            readonly
+            disable
+          />
           <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
           <q-input
             type="textarea"
@@ -125,7 +173,12 @@
             :rows="2"
             :max-rows="5"
           />
-          <q-btn class="common-btn q-mt-md" color="brightbtn" :label="$t('lang.personal_submit')" @click="submitReminder" />
+          <q-btn
+            class="common-btn q-mt-md"
+            color="brightbtn"
+            :label="$t('lang.personal_submit')"
+            @click="submitReminder"
+          />
         </q-form>
       </q-card-section>
     </q-card>
@@ -134,13 +187,36 @@
   <q-dialog width="100%" v-model="isConfirmWithdraw">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
       <q-card-section class="q-mb-md">
-        {{ $t('lang.strsystem_message') }}
+        {{ $t("lang.strsystem_message") }}
         <br />
         <br />
-        {{ $t('lang.str_confirmwithdraw') }}
+        {{ $t("lang.str_confirmwithdraw") }}
       </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" :label="$t('lang.str_confirm')" color="brightbtn" style="margin-right: 8px" />
+      <q-btn
+        @click="openWithdrawConfirm()"
+        :label="$t('lang.str_confirm')"
+        color="brightbtn"
+        style="margin-right: 8px"
+      />
       <q-btn @click="isConfirmWithdraw = false" :label="$t('lang.str_cancel')" color="warning" />
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isCancelWithdraw">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+      <q-card-section class="q-mb-md">
+        {{ $t("lang.strsystem_message") }}
+        <br />
+        <br />
+        {{ $t("lang.str_cancelwithdraw") }}
+      </q-card-section>
+      <q-btn
+        @click="openWithdrawCancel()"
+        :label="$t('lang.str_confirm')"
+        color="brightbtn"
+        style="margin-right: 8px"
+      />
+      <q-btn @click="isCancelWithdraw = false" :label="$t('lang.str_cancel')" color="warning" />
     </q-card>
   </q-dialog>
 </template>
@@ -153,7 +229,7 @@ import { SessionStorage, useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
 import * as _ from "lodash";
 import { useI18n } from "vue-i18n";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   props: {
@@ -198,8 +274,9 @@ export default defineComponent({
     const $q = useQuasar();
     const qs = require("qs");
     const isConfirmWithdraw = ref(false);
+    const isCancelWithdraw = ref(false);
     const passDet = ref(null);
-    const {t} =useI18n();
+    const { t } = useI18n();
 
     const clearTable = () => {
       truncatedList.value = [];
@@ -247,7 +324,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: t('lang.confirm_withdrawal_sucess'),
+              message: t("lang.confirm_withdrawal_sucess"),
               icon: "check_circle_outline"
             });
             removeSessionKeys("/session/member/withdraw");
@@ -256,6 +333,43 @@ export default defineComponent({
           setTimeout(() => {
             window.location.reload();
           }, 1000);
+
+          // console.log(response);
+        })
+
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
+    };
+
+    const openWithdrawCancelDialog = (det) => {
+      isCancelWithdraw.value = true;
+      passDet.value = det;
+    };
+
+    const openWithdrawCancel = () => {
+      const obj = {
+        id: passDet.value.id,
+        withdrawDate: passDet.value.withdrawDate
+      };
+
+      api
+        .post("/session/withdraw/cancel", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.code === 0) {
+            isCancelWithdraw.value = false;
+            $q.notify({
+              type: "success",
+              message: t("lang.withdraw_cancelled")
+            });
+            removeSessionKeys("/session/member/withdraw");
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
 
           // console.log(response);
         })
@@ -283,7 +397,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: `${msgTitle}` + t('lang.success_copied'),
+          message: `${msgTitle}` + t("lang.success_copied"),
           icon: "check_circle_outline"
         });
       }, 100);
@@ -316,7 +430,7 @@ export default defineComponent({
             $q.notify({
               color: "negative",
               position: "top",
-              message: t('lang.already_have_3_reminder'),
+              message: t("lang.already_have_3_reminder"),
               icon: "report_problem"
             });
           }
@@ -324,7 +438,7 @@ export default defineComponent({
       });
     };
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     const getImageLink = (linkId) => {
       // reminderForm.photos = linkId;
       reminderForm.photos = `${imgURL}/${linkId}`;
@@ -337,7 +451,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "bottom",
-          message: t('lang.please_upload_image'),
+          message: t("lang.please_upload_image"),
           icon: "report_problem"
         });
         return;
@@ -350,7 +464,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('lang.require_success_submit'),
+            message: t("lang.require_success_submit"),
             icon: "check_circle_outline"
           });
           reminderDialog.value = false;
@@ -384,6 +498,9 @@ export default defineComponent({
       comList,
       openWithdrawConfirmDialog,
       openWithdrawConfirm,
+      isCancelWithdraw,
+      openWithdrawCancelDialog,
+      openWithdrawCancel,
       isConfirmWithdraw,
       passDet,
       copyText,

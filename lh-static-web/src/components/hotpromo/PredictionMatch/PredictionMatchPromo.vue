@@ -43,7 +43,8 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { getTeamVotes, postVote } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 
 const validateVotes = (rule, value, callback) => {
   if (!value) {
@@ -111,7 +112,7 @@ const submitVotes = () => {
         if (res.code === 0) {
           isPredictModal.value = false;
         } else {
-          ElMessage.error({
+          notify.error({
             type: "error",
             message: res.message
           });
@@ -127,6 +128,13 @@ const reset = () => {
   formRef.value.resetFields();
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   init();
 });
 </script>

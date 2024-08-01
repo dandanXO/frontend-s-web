@@ -76,7 +76,7 @@
 
   <div class="prize-quiz-container">
     <div><img src="../../../assets/images/promo/hotpromo/esportquiz/pattern-top.png" /></div>
-    <div class="prize-quiz-content-container" v-if="matchInfo.homeTeam && matchInfo.awayTeam">
+    <div class="prize-quiz-content-container" v-if="matchInfo.homeTeam && matchInfo.awayTeam || !store.token">
       <div :class="`questions-main-title ${uiIsShowStatus.questionBox ? '' : 'hide'}`">{{ matchInfo.quizTitle }}</div>
 
       <div class="prize-quiz-jc-container" :class="`${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
@@ -89,7 +89,7 @@
           <!-- {{ getMatchDateOnly(matchInfo.matchTime) }} -->
         </div>
         <div class="start-answer-box">
-          <div class="team-content">
+          <div v-if="store.token" class="team-content">
             <div class="team-logo">
               <img :src="imgURL + `promo/` + matchInfo.homeTeamIcon" />
             </div>
@@ -105,7 +105,7 @@
             </div>
           </div>
 
-          <div class="team-content">
+          <div v-if="store.token"  class="team-content">
             <div class="team-logo">
               <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
             </div>
@@ -245,19 +245,19 @@ import {
   getMemberSportQuizTotal
 } from "../../../api/index/promo";
 import {useLocalStorage} from "@vueuse/core"
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
 
 onMounted(() => {
   if (!store.token) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "请登录后操作",
-      icon: "report_problem"
-    });
+    // notify({
+    //   type: "error",
+    //   message: "请登录后操作",
+    // });
     return;
   }
 
@@ -271,6 +271,29 @@ const uiIsShowStatus = reactive({
   questionBox: false
 });
 function onBtnStartAnswerClick() {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
 }
@@ -466,11 +489,9 @@ const thirdChoiceRef = ref("");
 function onChoiceSubmit(key) {
   if (key === "first") {
     if (!firstChoice) {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "请选择答案",
-        icon: "report_problem"
       });
       return;
     }
@@ -481,11 +502,9 @@ function onChoiceSubmit(key) {
     isFirstQuestionClicked.value = false;
   } else if (key === "second") {
     if (!secondChoice) {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "请选择答案",
-        icon: "report_problem"
       });
       return;
     }
@@ -496,11 +515,9 @@ function onChoiceSubmit(key) {
     isSecondQuestionClicked.value = false;
   } else if (key === "third") {
     if (!thirdChoice) {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: "请选择答案",
-        icon: "report_problem"
       });
       return;
     }
@@ -515,19 +532,15 @@ function onChoiceSubmit(key) {
 function onSubmitClick() {
   const { answerOne, answerTwo, answerThree, quizId, quizTitle } = quizSubmitInfo;
   if (answerOne == "" || answerTwo == -1 || answerThree == -1) {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: "请完成3个答案再提交！",
-      icon: "report_problem"
     });
     return;
   } else if (quizId == -1) {
-    $q.notify({
-      color: "negative",
-      position: "top",
+    notify({
+      type: "error",
       message: "提交答案失败,请刷新页面重试！",
-      icon: "report_problem"
     });
     return;
   }
@@ -541,18 +554,14 @@ function onSubmitClick() {
   }).then((res) => {
     const { code, data, message } = res;
     if (code == 0) {
-      $q.notify({
-        type: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "您好，您已成功提交本场竞猜答案",
-        icon: "check_circle_outline"
       });
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: message,
-        icon: "report_problem"
       });
     }
   });
