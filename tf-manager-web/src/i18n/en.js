@@ -1946,6 +1946,7 @@ export default {
     claimed: 'Claimed',
     notClaimed: 'Pending',
     displayAmount: 'Display Amount',
+    activate: 'Activate',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2439,6 +2440,7 @@ export default {
     validatePlanDaysRequired: 'Investment period required',
     validatePlanLimitMinRequired: 'Minimum investment limit required',
     validatePlanLimitMaxRequired: 'Maximum investment limit required',
+    affiliateReactivated: 'Affiliate Reactivated',
   },
   menu: {
     undefined: '',

@@ -1803,6 +1803,7 @@ export default {
     claimed: '청구됨',
     notClaimed: '보류 중',
     displayAmount: '표시금액',
+    activate: '활성화하다',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2280,6 +2281,7 @@ export default {
     validatePlanDaysRequired: '필요한 투자 기간',
     validatePlanLimitMinRequired: '필요한 최소 투자 한도',
     validatePlanLimitMaxRequired: '필요한 최대 투자 한도',
+    affiliateReactivated: '활성화 성공',
   },
   menu: {
     undefined: '',
