@@ -3169,6 +3169,7 @@ const getVersionNo = async () => {
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
+      var min_version = res.data.minVersion;
       var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
       // alert(latest_ver_no);
       download_url.value = res.data.downloadUrl;
@@ -3178,6 +3179,13 @@ const getVersionNo = async () => {
       store.h5Url = res.data.h5Url;
       if (latest_ver_no > current_version) {
         isAppUpdateModal.value = true;
+      }
+
+      if (min_version) {
+        var min_ver_no = parseInt(min_version.replaceAll(".", ""));
+        if (min_ver_no > current_version) {
+          isOutdatedApp.value = true;
+        }
       }
     }
   }
