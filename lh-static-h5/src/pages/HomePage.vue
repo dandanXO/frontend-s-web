@@ -5,7 +5,7 @@
       <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞 app 下载</span>
-        <span>APP专享礼包888元</span>
+        <span>APP 专享礼包 888 元</span>
       </div>
       <div class="buttons">
         <div class="buttons">
@@ -518,6 +518,7 @@
   </div>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
   <q-page-sticky v-if="showDomain" position="bottom-right" :offset="domainPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingDomainFab" v-touch-pan.prevent.mouse="moveDomainFab">
@@ -695,6 +696,7 @@ import { cached } from "boot/cache";
 import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -725,8 +727,9 @@ export default defineComponent({
     MarqueeText,
     UserProfile,
     LinkGroup,
-    SystemConfig
+    SystemConfig,
     // PlatformBlock
+    AnnouncementModal
   },
   setup() {
     const isFirstView = ref(false);
@@ -1243,7 +1246,7 @@ export default defineComponent({
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
-                spObj.title = "IM体育";
+                spObj.title = "IM 体育";
               }
               if (spObj.code === "IA") {
                 spObj.title = "小艾体育";
@@ -1252,16 +1255,16 @@ export default defineComponent({
                 spObj.title = "熊猫体育";
               }
               if (spObj.code === "CR") {
-                spObj.title = "CR体育";
+                spObj.title = "CR 体育";
               }
               if (spObj.code === "SABA") {
                 spObj.title = "沙巴体育";
               }
               if (spObj.code === "FB") {
-                spObj.title = "FB体育";
+                spObj.title = "FB 体育";
               }
               if (spObj.code === "PINNACLE") {
-                spObj.title = "AP体育";
+                spObj.title = "AP 体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -1277,11 +1280,11 @@ export default defineComponent({
               // }
 
               if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB真人";
+                liveObj.title = "DB 真人";
               } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE真人";
+                liveObj.title = "WE 真人";
               } else if (liveObj.code === "BBINDY") {
-                liveObj.title = "BBIN真人";
+                liveObj.title = "BBIN 真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }
@@ -1299,7 +1302,7 @@ export default defineComponent({
               var slotObj = Object.assign({}, element);
 
               if (slotObj.code === "AG") {
-                slotObj.title = "XIN电子";
+                slotObj.title = "XIN 电子";
               } else if (slotObj.alias) {
                 slotObj.title = translateRecord(slotObj.alias);
               } else {
