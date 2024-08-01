@@ -1180,7 +1180,7 @@ export default {
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",
     page_lobby: "Lobby",
-    page_about: "About TFgaming",
+    page_about: "General Information",
 
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",

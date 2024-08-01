@@ -1185,7 +1185,7 @@ export default {
     page_rescuefundrecords: "Lịch sử quỹ cứu trợ",
     page_register: "Đăng ký",
     page_lobby: "Sảnh chờ",
-    page_about: "About TFgaming",
+    page_about: "Thông tin chung",
 
     menu_deposit: "Nạp tiền",
     menu_withdraw: "Rút tiền",

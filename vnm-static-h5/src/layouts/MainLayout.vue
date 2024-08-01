@@ -406,7 +406,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("lang.page_register");
         } else if (route.path === "/about") {
-          prevPage.value = "";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("lang.page_about");
         }
