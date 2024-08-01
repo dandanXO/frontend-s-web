@@ -94,7 +94,7 @@ const currentVoxisId = computed(() => {
 
 const handleCopyClick = async () => {
   if (window.location.pathname === "/promotion") {
-    const textToCopy = paramsObj.value?.voxis_id;
+    const textToCopy = currentVoxisId.value;
 
     const notify = useNotify();
     if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
@@ -125,7 +125,7 @@ const handleCopyClick = async () => {
       }
     }
   } else {
-    writeClipboard(paramsObj.value?.voxis_id);
+    writeClipboard(currentVoxisId.value);
   }
 };
 </script>
