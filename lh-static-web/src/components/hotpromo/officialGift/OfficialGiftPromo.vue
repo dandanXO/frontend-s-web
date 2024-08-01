@@ -93,7 +93,7 @@ const currentVoxisId = computed(() => {
   return paramsObj.value[key] || "";
 });
 
-const handleCopyClick = () => writeClipboard(paramsObj.value?.voxis_id);
+const handleCopyClick = () => writeClipboard(currentVoxisId.value);
 </script>
 <style lang="scss" scoped>
 .official-gift-container {
