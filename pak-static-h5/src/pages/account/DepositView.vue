@@ -148,9 +148,14 @@
           }}
         </div> -->
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
           <span style="color: #fff">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">{{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}</template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
             {{ store.currency.value }}
           </span>
         </div>
@@ -216,7 +221,7 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="q-mt-sm step-desc-div q-mb-lg">
+    <div class="q-mt-lg step-desc-div q-mb-lg">
       <p>
         1. Recharge tutorial:
         <span class="tutorial-link" @click="openDepositPage">Picture</span>
@@ -528,20 +533,23 @@ const onSelect = (value) => {
       }));
       checkPrivilege(value);
     }
-    checkMinDepositAmt();
   }
 };
 
-function checkMinDepositAmt() {
+function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 300;
-  calculatedMaxDeposit.value = 50000;
+  calculatedMinDeposit.value = val.depositMin;
+  calculatedMaxDeposit.value = val.depositMax;
+
+  console.log(val.depositMin);
+  console.log(val.depositMax);
 }
 
 function checkPrivilege(v) {
   selectPayType(v);
   if (v.paymentId !== null && v.paymentId !== undefined) {
     loadPrivilege(v);
+    checkMinDepositAmt(v);
     // unselectedPrivileges.value = [];
   }
 }
@@ -582,7 +590,7 @@ function clearInfo() {
   if (depositForm.value) {
     depositForm.value.reset();
   }
-  checkMinDepositAmt();
+  // checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
@@ -819,6 +827,12 @@ const openDepositVideo = () => {
   //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   // }
 };
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 
 onActivated(() => {
   // checkNewUser();

@@ -185,22 +185,22 @@ const logout = async () => {
 
 const getNavigationData = () => {
   navigationData.value = [
-    {
-      title: t('menu.Dashboard'),
-      label: 'Dashboard',
-      display: false,
-      path: '',
-      children: [
-        {
-          path: '/dashboard',
-          title: t('menu.Dashboard'),
-          label: 'Dashboard',
-          active: false,
-          isMainNav: true,
-          icon: 'home',
-        },
-      ],
-    },
+    // {
+    //   title: t('menu.Dashboard'),
+    //   label: 'Dashboard',
+    //   display: false,
+    //   path: '',
+    //   children: [
+    //     {
+    //       path: '/dashboard',
+    //       title: t('menu.Dashboard'),
+    //       label: 'Dashboard',
+    //       active: false,
+    //       isMainNav: true,
+    //       icon: 'home',
+    //     },
+    //   ],
+    // },
     {
       title: t('menu.Downline Info'),
       label: 'Downline',
@@ -281,42 +281,44 @@ const getNavigationData = () => {
         },
       ],
     },
+
+    // {
+    //   title: t('menu.SettlementManagement'),
+    //   label: 'Settlement Management',
+    //   display: true,
+    //   path: '',
+    //   children: [
+    //
+    //     // {
+    //     //   path: '/statistics-by-member',
+    //     //   title: t('menu.StatisticsByMember'),
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //     // {
+    //     //   path: '/settlement-by-casino-slot-vendor',
+    //     //   title: t('menu.SettlementByCasinoSlotVendor'),
+    //     //   label: 'Settlement By Casino / Slot Vendor',
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //   ],
+    // },
     {
-      title: t('menu.SettlementManagement'),
-      label: 'Settlement Management',
+      title: t('menu.financeCentre'),
       display: true,
-      path: '/settlement-management',
+      path: '',
       children: [
         {
-          path: '/monthly-step-by-step-settlement',
+          path: '/settlement-management/monthly-step-by-step-settlement',
           title: t('menu.MonthlyStepByStep'),
           label: 'Monthly Step By Step',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
-        // {
-        //   path: '/statistics-by-member',
-        //   title: t('menu.StatisticsByMember'),
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'clock',
-        // },
-        // {
-        //   path: '/settlement-by-casino-slot-vendor',
-        //   title: t('menu.SettlementByCasinoSlotVendor'),
-        //   label: 'Settlement By Casino / Slot Vendor',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'clock',
-        // },
-      ],
-    },
-    {
-      title: t('menu.financeCentre'),
-      display: true,
-      path: '',
-      children: [
         {
           path: '/settlement-management/deposit-withdraw-management',
           title: t('menu.DepositWithdrawManagement'),
@@ -607,7 +609,7 @@ watch(languageVal, newVal => {
       font-size: 13px;
       border-bottom: 1px solid #4d5a6a;
 
-      background-color: #344151;
+      background-color: $primary-500;
       padding: 12px 13px;
       box-sizing: border-box;
       cursor: pointer;
@@ -636,7 +638,7 @@ watch(languageVal, newVal => {
         gap: 2px;
 
         .nickname {
-          color: #b7b1b5;
+          color: #fff;
           font-size: 10px;
         }
       }
@@ -661,7 +663,7 @@ watch(languageVal, newVal => {
       .route-content {
         display: flex;
         gap: 0.5rem;
-        background-color: #252e3b;
+        background-color: $primary-700;
         padding: 10px 10px 10px 20px;
       }
 

@@ -8,11 +8,13 @@
       hide-bottom-space
       ref="loginNameRef"
       v-model="regForm.loginName"
-      placeholder="6-12个字符，包含大小写字母"
+      placeholder="6-11个字符，包含大小写字母"
       lazy-rules
       :rules="[
         (val) => (val && val.length > 0) || '请输入用户名',
-        (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间'
+        (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
+        (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
+        validLoginName
       ]"
     >
       <template v-slot:prepend>
@@ -318,6 +320,12 @@ export default defineComponent({
     };
     const router = useRouter();
     const route = useRoute();
+
+    const validLoginName = () => {
+      const namePattern = /^[a-zA-Z0-9]+$/;
+      return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
+    };
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -464,7 +472,8 @@ export default defineComponent({
       regFormRef,
       hasAffiliate,
       getAffiliateCode,
-      changeTab
+      changeTab,
+      validLoginName
     };
   }
 });

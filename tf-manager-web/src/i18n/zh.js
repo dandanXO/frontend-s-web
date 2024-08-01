@@ -401,6 +401,7 @@ export default {
     NOTIFICATION: '通知',
     ACTIVITY: '活动',
     ANNOUNCEMENT: '公告',
+    MATCH: '赛事',
     PAYMENT: '充提',
   },
   sitePlatform: {
@@ -477,6 +478,11 @@ export default {
     DEPOSIT: '存款',
     ONE_TIME: '一次',
   },
+  smsSend: {
+    template1: '欢迎新用户',
+    template2: '存送优惠',
+    template3: '老用户回归',
+  },
   displayLocation: {
     HOMEPAGE: '首页',
     PROMO_PAGE: '优惠页面',
@@ -486,11 +492,11 @@ export default {
   },
   mode: {
     DYNAMIC: '页面浮动',
-    STATIC: '直接显示'
+    STATIC: '直接显示',
   },
   autoplayStatus: {
     ON: '开',
-    OFF: '关'
+    OFF: '关',
   },
   fields: {
     account: '账号',
@@ -759,6 +765,7 @@ export default {
     configGroup: '设置组',
     confirm: '确认',
     confirmAndImport: '确认并导入',
+    confirmAndSend: '确认并发送',
     confirmNewPassword: '确认新密码',
     confirmPassword: '确认密码',
     confirmPay: '确认结算',
@@ -956,6 +963,7 @@ export default {
     exchangeRate: '兑换率',
     exportToExcel: '导出至Excel',
     expressCompany: '快递公司',
+    externalUrl: '外部网址',
     extraParam: '扩展信息',
     fail: '失败',
     failReason: '失败原因',
@@ -1762,8 +1770,11 @@ export default {
     teamIcon: '队伍图标',
     other: '其他',
     createConfig: '新增设置',
+    defaultConfigHint: '默認',
+    defaultConfigSearchBarHint: '搜索',
     configCode: '设置Code',
     configValue: '设置值',
+    configDescribes: '设置描述',
     s3Url: 'S3地址',
     allSites: '全部站点',
     allSource: '全部来源类型',
@@ -1934,6 +1945,7 @@ export default {
     claimed: '已领取',
     notClaimed: '未领取',
     displayAmount: '显示金额',
+    activate: '解禁',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2378,6 +2390,7 @@ export default {
     validatePlanDaysRequired: '投资期限必填',
     validatePlanLimitMinRequired: '最小投资限额必填',
     validatePlanLimitMaxRequired: '最大投资限额必填',
+    affiliateReactivated: '解禁成功',
   },
   menu: {
     undefined: '',
@@ -2405,6 +2418,7 @@ export default {
     'Member Distribute Privilege': '会员发放奖金',
     'Member Profit Ranking': '盈利排名',
     'Member Affiliate Change Log': '会员代理更换记录',
+    'Member Group Send SMS': '会员群发消息',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',
@@ -2628,11 +2642,12 @@ export default {
     'Member Refer Summary Pak': '会员邀请统计-巴基斯坦',
     Pm: '会员私信',
     'MQ Log': 'MQ日志',
+    'System Config': '系统设置',
     'Promotion Coupon': '存款券',
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
-    'Media Display Settings': '媒体显示设置'
+    'Media Display Settings': '媒体显示设置',
   },
   google: {
     google_auth_menu: '谷歌验证',

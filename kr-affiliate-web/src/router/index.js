@@ -36,17 +36,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('../views/dashboard/index.vue'),
-        name: 'Dashboard',
-        meta: {
-          title: 'dashboard',
-        },
-      },
-    ],
+    redirect: '/downline/member',
   },
   {
     path: '/downline',

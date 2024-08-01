@@ -119,7 +119,7 @@
                     :src="require('./images/icon-done.png')"
                   />
                   <img v-else style="width: 20px; height: 20px" :src="require('./images/icon-cancel.png')" />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥500 元</span>
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ todayMinDeposit }} 元</span>
                 </div>
               </div>
             </div>
@@ -268,6 +268,7 @@ const todayCheckInState = ref("YES");
 const currentRecheckInChances = ref(0);
 const totalRecheckInChances = ref(0);
 const recheckTaskState = ref("CLOSE");
+const todayMinDeposit = ref(0);
 
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
@@ -342,6 +343,7 @@ const fetchData = async () => {
     eventapi.get("/checkInFreeTreasure/init").then((res) => {
       sectionOneItems.value = res.data.checkInState.checkInDayHistory;
       todayCheckInState.value = res.data.checkInState.todayCheckInState;
+      todayMinDeposit.value = res.data.checkInState.todayMinDeposit;
       sectionOneBoxItems.value = res.data.lhFreeTreasureState.treasureList;
       currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
       currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;

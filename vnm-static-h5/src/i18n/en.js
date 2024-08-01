@@ -89,9 +89,9 @@ export default {
     please_enter_mobile_number: "Please enter mobile number",
     mobile_number: "Mobile number",
     mobile_number_valid: "Please enter valid mobile number",
-    mobile_number_required: 'Mobile number is required.',
-    mobile_number_length: 'Mobile number must be 10 digits long.',
-    mobile_number_starts_with_0: 'Mobile number must start with 0.',
+    mobile_number_required: "Mobile number is required.",
+    mobile_number_length: "Mobile number must be 10 digits long.",
+    mobile_number_starts_with_0: "Mobile number must start with 0.",
     please_enter_verification_code: "Please enter verification code",
     please_enter: "Please enter",
     length_is_4: "Length should be 4",
@@ -512,7 +512,7 @@ export default {
     vip_terms_para_01:
       "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
     vip_terms_para_02:
-      "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
+      "The system will automatically upgrade the VIP level of all members after 00:00:00 (GMT +7) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     vip_terms_para_03:
       "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
     vip_terms_para_04:
@@ -522,10 +522,12 @@ export default {
     vip_terms_para_06:
       "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
     vip_terms_para_07:
-      "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
+      "Birthday Bonus: Members need to meet the maintenance requirements of their current VIP level before receiving the bonus. Once the VIP level maintenance requirements are met, members should contact online Customer Care to receive the bonus. (The birthday bonus needs to go through 3 rounds of betting before withdrawal)",
     vip_terms_para_08:
-      "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms &amp; conditions of the promotion apply.",
+      "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
     vip_terms_para_09:
+      "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms &amp; conditions of the promotion apply.",
+    vip_terms_para_10:
       "TF88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
     vip_sport_rebate: "Sport Rebate",
     vip_esport_rebate: "E-sports Rebate",
@@ -1178,7 +1180,7 @@ export default {
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",
     page_lobby: "Lobby",
-    page_about: "About TFgaming",
+    page_about: "General Information",
 
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",

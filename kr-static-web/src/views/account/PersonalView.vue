@@ -9,7 +9,7 @@
         </span> -->
       </div>
     </div>
-    <el-tabs v-model="selectedTab">
+    <el-tabs v-model="selectedTab" class="func-tabs">
       <el-tab-pane :label="$t('personal.personalInfo')" name="personal">
         <!-- <el-form :inline="true" ref="updateFormRef" :model="updateFormDetails">
           <el-form-item ref="refRealName" :label="$t('personal.realName')" name="realName" prop="realName">
@@ -252,7 +252,7 @@
           </div>
         </el-form>
       </el-tab-pane>
-      <!-- <el-tab-pane :label="$t('personal.bank')" name="Bank"><WithdrawBank /></el-tab-pane> -->
+      <el-tab-pane :label="$t('personal.bank')" name="Bank"><WithdrawBank /></el-tab-pane>
       <!-- <el-tab-pane :label="$t('personal.chgPwd')" name="chgPwd">
         <div class="update-pwd-container">
           <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
@@ -306,7 +306,7 @@
           </el-form>
         </div>
       </el-tab-pane> -->
-      <!-- <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
+      <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
           <el-form
             ref="updateWithdrawPwdFormRef"
@@ -402,7 +402,13 @@
                 show-password
               />
             </el-form-item>
-            <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
+            <el-form-item
+              v-if="receivedVerificationCode"
+              ref="refWithdrawVerificationCode"
+              :label="$t('personal.verificationCode')"
+              name="code"
+              prop="code"
+            >
               <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
             </el-form-item>
 
@@ -432,7 +438,7 @@
             </div>
           </el-form>
         </div>
-      </el-tab-pane> -->
+      </el-tab-pane>
     </el-tabs>
 
     <el-dialog
@@ -1239,9 +1245,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     }
   ],
@@ -1252,9 +1257,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     }
   ],
@@ -1265,9 +1269,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     },
     {
@@ -1291,9 +1294,8 @@ const updateWithdrawPwdRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 11,
-      message: t('placeholder.between612'),
+      len:4,
+      message: t('placeholder.length4'),
       trigger: "blur"
     }
   ],
@@ -1410,10 +1412,13 @@ onMounted(() => {
 watch(
   () => route.query,
   (newQuery) => {
+    console.log(newQuery.name)
     if (newQuery.name === 'Bank') {
       if (store.registeredWithdrawPassword === false) {
         ElMessage.error(t('withdraw.settleWithdrawPwd'));
         selectedTab.value = 'chgWithdrawPwd'
+      } else {
+        selectedTab.value = 'Bank'
       }
     } else if (newQuery.name === 'chgWithdrawPwd') {
       selectedTab.value = 'chgWithdrawPwd'
@@ -1594,6 +1599,12 @@ watch (
   display: flex;
   justify-content: flex-start;
   gap: 12px;
+}
+
+.func-tabs {
+  :deep(.el-tabs__header) {
+    display: none;
+  }
 }
 </style>
 <style lang="scss">

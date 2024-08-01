@@ -292,7 +292,7 @@ const open = (gameName, platformCode, gameCode = "", gameType) => {
           message: t("lang.msg_hasUnreadMail"),
           color: "negative"
         });
-        return;
+        // return;
       }
       if (isAndroid() && !isHuaweiPhone()) {
         AppFullscreen.request();

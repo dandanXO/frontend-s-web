@@ -959,6 +959,7 @@ export default {
     1307: "Vượt quá giới hạn rút hàng ngày",
     1308: "Số dư không đủ",
     1309: "Tài khoản thẻ không khớp với tên thành viên",
+    1319: "Tài khoản ngân hàng này đã được sử dụng, không thể liên kết trùng lặp, vui lòng liên kết tài khoản ngân hàng khác.",
     1401: "Thời gian gửi OTP đã vượt quá",
     1402: "Lỗi lịch gửi OTP, vui lòng gửi lại OTP",
     1403: "Lỗi xác minh OTP",

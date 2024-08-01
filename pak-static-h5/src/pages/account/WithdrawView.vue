@@ -235,14 +235,14 @@
 
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 2">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
+              <span style="flex: 2">{{ $t("form.realTimeExchangeRates") }}:</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27">
-              <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
+              <span style="flex: 1">{{ $t("form.estimatedArrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
                   selectedWithdrawalMethod &&
@@ -254,7 +254,7 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_usdtspecialnote") }}</div>
+            <div class="q-mt-sm text-neontb">{{ $t("form.usdtSpecialNote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -393,6 +393,27 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="errorDialog" persistent>
+    <q-card class="q-pa-md error-dialog">
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6">{{ $t("error.10008") }}</div>
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+
+      <q-card-section>
+        {{ $t("error.12105") }}
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <!-- <q-btn flat :label="$t('btn.confirm')" v-close-popup /> -->
+        <q-btn no-caps unelevated class="q-mt-md btn-primary btn-primary__full" v-close-popup>
+          {{ $t("btn.confirm") }}
+        </q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -435,8 +456,8 @@ const withdrawState = reactive({
 const qs = require("qs");
 const withdrawInfo = reactive({
   cardId: undefined,
-  amount: "",
-  withdrawPassword: ""
+  amount: ""
+  // withdrawPassword: ""
 });
 const isLoaded = ref(false);
 const hasWithdrawCard = computed(() => {
@@ -494,6 +515,8 @@ const refreshBalance = (plat) => {
   }
 };
 
+const errorDialog = ref(false);
+
 const submitWithdraw = async () => {
   cardRef.value.validate();
   amountRef.value.validate();
@@ -503,9 +526,11 @@ const submitWithdraw = async () => {
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
+    console.log("");
     api
       .post("/session/withdraw/", qs.stringify(withdrawInfo))
       .then((response) => {
+        console.log(response.code);
         if (response.code === 0) {
           $q.notify({
             color: "positive",
@@ -521,12 +546,14 @@ const submitWithdraw = async () => {
           }
 
           withdrawInfo.amount = "";
-          withdrawInfo.withdrawPassword = "";
+          // withdrawInfo.withdrawPassword = "";
           if (amountRef.value) {
             setTimeout(() => {
               amountRef.value.resetValidation();
             }, 0);
           }
+        } else if (response.code === 12105) {
+          errorDialog.value = true;
         } else {
           $q.notify({
             color: "negative",
@@ -536,15 +563,7 @@ const submitWithdraw = async () => {
           });
         }
       })
-      .catch((error) => {
-        console.log("error", error);
-        // $q.notify({
-        //   color: "negative",
-        //   position: "top",
-        //   message: response.message,
-        //   icon: "report_problem"
-        // });
-      });
+      .catch((error) => {});
     $q.loading.hide();
   }
 };
@@ -892,6 +911,8 @@ const openWithdrawTutorialVideo = () => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .tutorial-link {
@@ -1104,5 +1125,10 @@ const openWithdrawTutorialVideo = () => {
       justify-content: center;
     }
   }
+}
+
+.error-dialog {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
 }
 </style>

@@ -91,7 +91,7 @@ export default {
     msg_readmsg: "메시지 읽기",
     msg_deleteselected: "선택한 메시지 삭제",
     msg_deleteallmsg: "모든 메시지 삭제",
-    msg_hasUnreadMail: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다",
+    msg_hasUnreadMail: "읽지 않은 공지사항,메시지가 있습니다, 입금/출금/게임 페이지에 접근할수없습니다.",
 
     // login page
     login_title: "준비되셨나요?",
@@ -114,7 +114,7 @@ export default {
     length_is_4: "길이는 4여야 합니다",
     login_btn: "로그인",
     register_btn: "회원 가입",
-    contact_customer_service: "컨설팅 인력",
+    contact_customer_service: "고객센터",
     password_weak: "약함",
     password_good: "좋음",
     password_strong: "강함",
@@ -322,10 +322,10 @@ export default {
     acct_transfernow: "지금 전송",
 
     // deposit
-    deposit_tipstitle: "팁",
+    deposit_tipstitle: "실명 없음",
     deposit_tiptologin: "자금을 안전하게 보호하기 위해, 입금 전에 휴대폰 번호를 인증해야 합니다.",
     deposit_tipdesc: "금액을 안전하게 보호하기 위해, 입금 전에 휴대폰 번호를 인증해야 합니다.",
-    deposit_tiptorealname: "플레이어 계정에 실제 이름을 추가해 주세요.",
+    deposit_tiptorealname: "실명이 필요합니다",
     deposit_proceedverify: "인증 계속",
     deposit_encounterproblem: "입금 관련 문제가 발생하면 즉시 고객 서비스에 문의해 주세요!",
     deposit_enter_usdt: "USDT 금액을 입력해 주세요.",
@@ -347,8 +347,8 @@ export default {
     // withdraw
     withdraw_amount: "금액",
     withdraw_withdrawallamount: "전체 인출",
-    withdraw_tipstitle: "팁",
-    withdraw_tipdesc: "자금을 안전하게 보호하기 위해, 인출 전에 휴대폰 번호를 인증해야 합니다.",
+    withdraw_tipstitle: "실명 없음",
+    withdraw_tipdesc: "실명이 필요합니다",
     withdraw_proceedverify: "인증 계속",
     withdraw_please_enter_withdraw_amount: "인출할 금액을 입력해 주세요.",
     withdraw_password: "인출 비밀번호",
@@ -1528,6 +1528,7 @@ export default {
     1307: "일일 출금 한도를 초과했습니다.",
     1308: "잔액이 충분하지 않습니다.",
     1309: "카드 계좌가 회원 이름과 일치하지 않습니다.",
+    1317: "은행 카드 바인딩",
     1401: "OTP 전송 시간이 초과되었습니다.",
     1402: "OTP 전송 일정 오류, OTP를 다시 전송하십시오.",
     1403: "OTP 확인 오류입니다.",
@@ -1540,7 +1541,7 @@ export default {
     10006: "이 이름은 사용할 수 없습니다.",
     10007: "게임 참여 과정에서 오류가 발생했습니다.",
     10008: "오류가 발생했습니다.",
-    11000: '제휴사가 존재하지 않음',
+    11000: "제휴사가 존재하지 않음",
     11003: "입금 실패.",
     12100: "출금 비밀번호가 일치하지 않습니다.",
     12101: "새 출금 비밀번호는 기존 출금 비밀번호와 같을 수 없습니다.",

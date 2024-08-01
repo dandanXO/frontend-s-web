@@ -455,6 +455,7 @@
           <span v-else><el-link @click="showMembersDialog(scope.row.siteId, scope.row.receiveRange)">{{ t('fields.selectedMembers') + "(" + scope.row.recipient + ")" }}</el-link></span>
         </template>
       </el-table-column>
+      <el-table-column prop="sendFrom" :label="t('fields.sendFrom')" />
       <el-table-column prop="sendTime" :label="t('fields.sendTime')">
         <template #default="scope">
           <span v-if="scope.row.sendTime === null">-</span>
@@ -476,14 +477,7 @@
       </el-table-column>
       <el-table-column :label="t('fields.operate')"  width="200px;" >
         <template #default="scope">
-          <div class="btn-group" v-if="scope.row.status === 'UNSENT'">
-            <el-button
-              icon="el-icon-edit"
-              size="mini"
-              type="primary"
-              v-permission="['sys:pm:edit']"
-              @click="showEdit(scope.row)"
-            />
+          <div class="btn-group">
             <el-button
               icon="el-icon-remove"
               size="mini"
@@ -508,7 +502,7 @@
 
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { computed, nextTick, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx';
 import { getMemberNameList, getMemberVipFin, getMemberVipFinById } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
@@ -559,13 +553,15 @@ const uiControl = reactive({
   type: [
     { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
     { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
-    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' }
+    { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
+    { key: 4, displayName: 'MATCH', value: 'MATCH' }
   ],
   searchType: [
     { key: 1, displayName: 'NOTIFICATION', value: 'NOTIFICATION' },
     { key: 2, displayName: 'ACTIVITY', value: 'ACTIVITY' },
     { key: 3, displayName: 'ANNOUNCEMENT', value: 'ANNOUNCEMENT' },
-    { key: 4, displayName: 'PAYMENT', value: 'PAYMENT' }
+    { key: 4, displayName: 'MATCH', value: 'MATCH' },
+    { key: 5, displayName: 'PAYMENT', value: 'PAYMENT' }
   ],
   redirectType: [
     { key: 1, displayName: 'None', value: 'NONE' },
@@ -686,7 +682,6 @@ const handleSelect = item => {
 }
 
 const formRules = reactive({
-  recipient: [required(t('message.validateRecipientRequired'))],
   title: [required(t('message.validateSubjectRequired'))],
   content: [required(t('message.validateContentRequired'))],
   type: [required(t('message.validateTypeRequired'))]
@@ -715,23 +710,24 @@ function showDialog(type) {
   }
   form.receiveType = 'MULTIPLE'
   handleVipFilter()
+  loadMemberNameList()
   uiControl.dialogVisible = true
 }
 
-function showEdit(message) {
-  showDialog('EDIT')
-  nextTick(() => {
-    for (const key in message) {
-      if (Object.keys(form).find(k => k === key)) {
-        if (key === 'siteId') {
-          selected.site = message[key]
-        } else {
-          form[key] = message[key]
-        }
-      }
-    }
-  })
-}
+// function showEdit(message) {
+//   showDialog('EDIT')
+//   nextTick(() => {
+//     for (const key in message) {
+//       if (Object.keys(form).find(k => k === key)) {
+//         if (key === 'siteId') {
+//           selected.site = message[key]
+//         } else {
+//           form[key] = message[key]
+//         }
+//       }
+//     }
+//   })
+// }
 
 async function showMembersDialog(siteId, receiveRange) {
   uiControl.importDialogVisible = true
@@ -802,6 +798,10 @@ function submit() {
         } else if (form.receiveType === 'VIP') {
           form.recipient.push(form.vip)
         }
+        if (form.receiveType !== 'ALL' && form.recipient.length === 0) {
+          ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
+          return
+        }
         form.siteId = selected.site
         await createSystemMessageTemplate(form)
       } else {
@@ -847,9 +847,9 @@ async function removeSystemMessage(systemMessage) {
     }
   ).then(async () => {
     if (systemMessage) {
-      await deleteMessageTemplate([systemMessage.id])
+      await deleteMessageTemplate(systemMessage.siteId, [systemMessage.id])
     } else {
-      await deleteMessageTemplate(chooseMessage.map(u => u.id))
+      await deleteMessageTemplate(request.siteId, chooseMessage.map(u => u.id))
     }
     await loadSystemMessageTemplate()
     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
