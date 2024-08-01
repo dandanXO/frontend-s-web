@@ -1572,7 +1572,7 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, ""));
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
@@ -2450,7 +2450,9 @@ export default defineComponent({
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+  box-shadow:
+    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
+    0px 4px 10px 0px;
   font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
