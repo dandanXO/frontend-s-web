@@ -11,6 +11,7 @@ export default {
     personalCenter: "Personal Center",
     deposit: "Deposit",
     bank: "Bank",
+    addCrypto: "Add crypto",
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
     message: "Message",
@@ -48,7 +49,8 @@ export default {
     transferRecord: "Transfer Record",
     promotionRecord: "Promotion Record",
     betRecord: "Bet Record",
-    referralRecord: "Referral Record"
+    referralRecord: "Referral Record",
+    interestProfit: "Interest Profit"
   },
   bottomNav: {
     home: "Home",
@@ -102,6 +104,10 @@ export default {
     withdrawalAmount_rules_02: "Withdraw Amount Must Be Greater Than 0",
     withdrawalAmount_rules_03: "Withdraw Amount Insufficient",
     withdrawalAmount_rules_04: "Withdraw Amount Must In Between",
+    realTimeExchangeRates: "Real Time Exchange Rates",
+    estimatedArrival: "Estimated arrival",
+    usdtSpecialNote:
+    "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
     fullName: "Full Name",
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
@@ -120,15 +126,21 @@ export default {
     captchaCode_placeholder: "Enter Captcha Code",
     captchaCode_rules_01: "Please insert captcha code",
     captchaCode_rules_02: "Captcha code length is 4 characters",
+    cryptoType: "Crypto Type",
+    cryptoAccount: "Crypto Account",
+    cryptoAccount_placeholder: "Please insert crypto account",
+    cryptoAccount_rules_01: "Please insert crypto account",
+    cryptoAccount_rules_02: "Crypto account must start with 'T'",
+    cryptoAccount_rules_03: "Crypto account must have 34 characters",
     virtualWalletType: "Virtual Wallet Type",
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",
     virtualWallet_rules_01: "Please insert virtual wallet",
     virtualWallet_rules_02: "The phone number must start with '03'",
-    virtualWallet_rules_03: "The virtual wallet must have 11 digits",
+    virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
-    virtualWallet_untie: "Please enter untie virtual wallet",
+    virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
     notMatch: " not match",
@@ -151,6 +163,7 @@ export default {
     addNewAccount: "Add New Account",
     updated: "Updated",
     updating: "Updating...",
+    addCrypto: "Add crypto",
     addVirtualWallet: "Add virtual wallet",
     addBankCard: "Add bank card",
     untie: "Untie",
@@ -167,7 +180,8 @@ export default {
     search: "Search",
     downloadApp: "Download App",
     downloadNow: "Download Now",
-    recharge: "Recharge"
+    recharge: "Recharge",
+    getInterestProfit: "Get Interest Profit"
   },
   notify: {
     noRecord: "No Record",
@@ -225,7 +239,8 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "LOG OUT",
-    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts"
+    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
+    interestProfit: "Interest Profit"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -242,12 +257,34 @@ export default {
     withdrawTutorial: "Withdraw Tutorial"
   },
   bank: {
-    virtualWallet: "Virtual Wallet",
-    virtualAccount: "Virtual Account"
+    virtualWallet: "eWallet",
+    virtualAccount: "eWallet Account"
   },
   order: {
     withdrawal: "Withdrawal",
     recharge: "Recharge"
+  },
+  interestProfit: {
+    depositOverview: "Deposit overview",
+    unexpiredEarnings: "Unexpired earnings",
+    cumulativeIncome: "Cumulative income",
+    storageTime: "Storage time (Days)",
+    deposit: "Deposit",
+    trialCalculation: "Trial calculation",
+    annualInterestRate: "Annual interest rate",
+    distributeInterest: "Distribute interest",
+    pending: "Pending",
+    ended: "Ended",
+    details: "Details",
+    collect: "Collect",
+    noData: "No data",
+    annualInterestRate: "Annual Interest Rate",
+    depositAmount: "Deposit Amount",
+    depositDuration: "Deposit Duration",
+    placeTime: "Place Time",
+    matureTime: "Mature Time",
+    status: "Status",
+    confirm: "Confirm"
   },
   vip: {
     receiveMonthlyRewards: "Receive monthly rewards",
@@ -262,7 +299,7 @@ export default {
     vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
     upgrade: "Upgrade",
     experience: "Experience",
-    dailyWithdrawalTimes: "Daily Withdrawal Times",
+    dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
@@ -533,6 +570,14 @@ export default {
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
+    53000: "Unable to deposit, no eligible plan found",
+    53001: "Invalid deposit amount",
+    53002: "Invalid deposit days",
+    53003: "Betting record does not exist",
+    53004: "Not yet matured",
+    53005: "Investment has already been settled",
+    53006: "Cannot submit, the ongoing interest has reached the maximum limit",
+    53007: "Insufficient balance",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",
@@ -545,6 +590,7 @@ export default {
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     12104: "This feature is disabled, please contact customer service",
+    12105: "Your withdrawal operation has a network delay, resulting in payment failure. Please wait 30 minutes before withdrawing again, thank you!",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",

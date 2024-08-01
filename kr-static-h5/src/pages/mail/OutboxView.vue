@@ -1,8 +1,8 @@
 <template>
   <div class="table-record">
     <div class="action-buttons">
-      <q-toggle v-model="allowSelectMultiple" :label="$t('lang.mail_selectone')" left-label />
-      <q-btn v-if="hasMailSelected" class="common-md-btn" size="md" @click="deleteMails()">
+      <!-- <q-toggle v-model="allowSelectMultiple" :label="$t('lang.mail_selectone')" left-label /> -->
+      <q-btn class="common-md-btn" size="md" @click="deleteMails()">
         {{ $t("lang.mail_delete") }}
       </q-btn>
     </div>
@@ -76,6 +76,7 @@ import moment from "moment/moment";
 import qs from "qs";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import { userStore } from "src/stores";
 
 const visible = ref(true);
 const mailData = ref([]);
@@ -110,6 +111,7 @@ const deleteMails = () => {
     .filter((key) => selectedMailIds.value[key] === true)
     .map(Number);
   const formattedIds = mailIdArr.join(",");
+  if (!formattedIds) return;
   // console.log(formattedIds);
 
   api
@@ -153,7 +155,7 @@ const toggleMail = (mail) => {
 
 const theReplyId = ref();
 const selectedMailIds = ref({});
-const allowSelectMultiple = ref(false);
+const allowSelectMultiple = ref(true);
 
 const repliesOfInquiries = computed(() => replies.value.filter(({ id }) => id === theReplyId.value));
 
@@ -207,29 +209,17 @@ const loadOutbox = () => {
   // );
 };
 
+const store = userStore();
 const isDeleteMailModal = ref(false);
 const showMailId = ref();
 const openMsg = (mail) => {
-  const { id, readTime } = mail;
+  const { id, readTime, replyId } = mail;
   showMailId.value = id;
   mail.readTime = moment().format("YYYY-MM-DD");
 
-  // console.log(mail);
-  // mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
-  //   if (mail.id === id) {
-  //     mail.readTime = moment().format("YYYY-MM-DD");
-  //   }
-  // });
-  // console.log(mailboxNotifyState[mailboxMessageTab.value]);
-
-  if (!readTime) {
+  if (replyId) {
     api
-      .post(
-        "/session/inbox/read",
-        qs.stringify({
-          id: id
-        })
-      )
+      .get(`/session/feedback/${replyId}/read`)
       .then((res) => {
         if (res.code === 0) {
           $q.notify({
@@ -238,11 +228,33 @@ const openMsg = (mail) => {
             position: "top",
             icon: "check_circle_outline"
           });
+
+          store.repliedQuestion--;
+          if (store.repliedQuestion < 0) {
+            store.repliedQuestion = 0;
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  if (!readTime) {
+    api
+      .get(`/session/feedback/${id}/read`)
+      .then((res) => {
+        if (res.code === 0) {
+          // $q.notify({
+          //   message: t("lang.msg_readmsg"),
+          //   type: "positive",
+          //   position: "top",
+          //   icon: "check_circle_outline"
+          // });
           // onLoad();
         }
       })
       .catch((error) => {
-        isDeleteMailModal.value = false;
         console.log(error);
       });
   }

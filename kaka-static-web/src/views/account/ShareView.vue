@@ -1,28 +1,28 @@
 <template>
   <div class="share-container">
-      <div class="menu-title">{{ $t('menu.referFriend') }}</div>
+    <div class="menu-title">{{ $t("menu.referFriend") }}</div>
     <div class="form-field">
-      <div class="label">{{ $t('refer.specifiedLink') }}:</div>
+      <div class="label">{{ $t("refer.specifiedLink") }}:</div>
 
       <div class="content">
         <input class="referral-link-input" @blur="blurCode" ref="copyinput" v-model="referralLink" />
-          <el-button class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
-            {{ copybtntxt }}
-          </el-button>
+        <el-button class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
+          {{ copybtntxt }}
+        </el-button>
       </div>
     </div>
     <div class="friends">
       <div class="subtitle">
-        {{ $t('refer.friendList') }}
+        {{ $t("refer.friendList") }}
       </div>
       <el-table :data="dataSource">
         <template #empty>
           <EmptyData />
         </template>
         <el-table-column prop="loginName" :label="$t('refer.accountId')" width="300" />
-        <el-table-column prop="regTime" :label="$t('refer.regTime')"  width="300" />
-        <el-table-column prop="totalBet" :label="$t('refer.bet')"  width="250"   />
-        <el-table-column prop="status" :label="$t('refer.status')" >
+        <el-table-column prop="regTime" :label="$t('refer.regTime')" width="300" />
+        <el-table-column prop="totalBet" :label="$t('refer.bet')" width="250" />
+        <el-table-column prop="status" :label="$t('refer.status')">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               {{ getStatusType(scope.row.status) }}
@@ -33,55 +33,50 @@
     </div>
   </div>
   <div class="share-container">
-      <div class="menu-title">{{ $t('menu.referFriend') }}</div>
-      
-      <ul class="terms" style="list-style-type:decimal;">
-            <li>
-               {{ $t('referTerms.promotionStart')}}
-            </li>
-            <li> {{ $t('referTerms.referralBonus')}}</li>
-            <li>
-              {{ $t('referTerms.eligibilityConditions') }}
-            <ul style="list-style-type: lower-alpha">
-            <li> {{ $t('referTerms.referrerConditions')}}
-              <ul>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.referrerConditions1')}}
-                </li>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.referrerConditions2')}}
-                </li>
-              </ul>
-            </li>
-            <li> {{ $t('referTerms.presenteeConditions')}}
-              <ul>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions1')}}
-                </li>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions2')}}
-                </li>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions3')}}
-                </li>
-              </ul></li>
-            </ul>
-            </li>
-            
-            <li> {{ $t('referTerms.specifiedLink')}}</li>
-            <li> {{ $t('referTerms.promotionReview')}}</li>
-            <li> {{ $t('referTerms.withdrawalConditions')}}</li>
-            <li> {{ $t('referTerms.notApplied')}}</li>
-            <li> {{ $t('referTerms.rightsReserved')}}</li>
-            <li> {{ $t('referTerms.concurrentPromotions')}}</li>
-            <li> {{ $t('referTerms.generalTerms')}}</li>
-        </ul>
+    <div class="menu-title">
+      {{ $t("referTerms.intro.title") }}
     </div>
-  
+    <ul class="terms">
+      <li v-for="(content, index) in currentLocaleTerms.intro.desc" :key="index">
+        {{ content }}
+      </li>
+    </ul>
+
+    <div class="menu-title">
+      {{ $t("referTerms.promoDetail.title") }}
+    </div>
+    <div class="terms">
+      {{ $t("referTerms.promoDetail.desc") }}
+    </div>
+
+    <div class="menu-title">
+      {{ $t("referTerms.howToJoin.title") }}
+    </div>
+    <div class="terms">
+      {{ $t("referTerms.howToJoin.desc") }}
+    </div>
+
+    <div class="menu-title">
+      {{ $t("referTerms.term.title") }}
+    </div>
+    <ol class="terms">
+      <li v-for="(content, index) in currentLocaleTerms.term.desc" :key="index">
+        <template v-if="typeof content === 'string'">
+          {{ content }}
+        </template>
+        <template v-else>
+          {{ content.desc }}
+          <ol style="list-style-type: upper-alpha">
+            <li v-for="(child, childIndex) in content.children" :key="`${index}-${childIndex}`">{{ child }}</li>
+          </ol>
+        </template>
+      </li>
+    </ol>
+  </div>
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, watch, onMounted } from "vue";
+import { defineComponent, reactive, ref, watch, onMounted, computed } from "vue";
 import { getReferralLink, getInviteFriendListCount, getVNMReferred } from "@/api/personal/share"
 import {
   RiFacebookCircleLine, RiWhatsappLine, RiTelegramLine, RiTwitterLine, RiInstagramLine,
@@ -103,7 +98,7 @@ export default defineComponent({
   setup() {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const { t } = useI18n();
+    const { t,messages,locale } = useI18n();
     const router = useRouter()
     const searchForm = reactive({
       date: moment('2022-03-03', 'YYYY-MM-DD'),
@@ -122,6 +117,11 @@ export default defineComponent({
     const blurCode = () => {
       copybtntxt.value = t('common.copy')
     };
+
+    const currentLocaleTerms = computed(() => {
+      const currentLocaleMessages = messages.value[locale.value]
+      return currentLocaleMessages.referTerms
+    })
 
     const getReferral = () => {
       getReferralLink().then((res) => {
@@ -163,7 +163,7 @@ export default defineComponent({
       }
     })
     }
-    
+
     const getStatusType = (statusType) => {
       if (!statusType) {
         return "";
@@ -189,7 +189,8 @@ export default defineComponent({
       depositMember,
       dataSource,
       getVNMReferred,
-      getStatusType
+      getStatusType,
+      currentLocaleTerms
     };
   },
 });
@@ -203,16 +204,16 @@ export default defineComponent({
   padding: 20px 40px;
   height: 100%;
   .terms {
-    color: #9AA8CB;
+    color: #9aa8cb;
     font-size: 16px;
-    margin: 20px 0 0 15px;
+    margin: 20px 0 40px 15px;
     padding: 0;
     li {
       margin-bottom: 10px;
     }
   }
   .menu-title {
-    color: #9AA8CB;
+    color: #9aa8cb;
     font-weight: 700;
     font-size: 24px;
   }
@@ -237,12 +238,11 @@ export default defineComponent({
         width: 400px;
         border: none;
         padding: 10px;
-        background: #F7F8FB;
-        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
+        background: #f7f8fb;
+        box-shadow: 0px 0px 8px 0px #ffa09a inset;
         border-radius: 20px;
-    outline: none;
-        color: #7A80A1;
-
+        outline: none;
+        color: #7a80a1;
       }
 
       .qr-code-and-stats-wrapper {
@@ -255,12 +255,11 @@ export default defineComponent({
 
 .friends {
   .subtitle {
-      color: #9AA8CB;
-  font-weight: 700;
-  margin-bottom: 10px;
-
+    color: #9aa8cb;
+    font-weight: 700;
+    margin-bottom: 10px;
   }
-    }
+}
 .divider-style {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -319,7 +318,7 @@ export default defineComponent({
     color: #fff;
     font-size: 18px;
   }
-  
+
   .total-span {
     font-size: 24px;
     color: #fff;
@@ -328,8 +327,8 @@ export default defineComponent({
   }
 }
 
-.copy-btn{
-  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+.copy-btn {
+  background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
   border-radius: 30px;
 }
 </style>

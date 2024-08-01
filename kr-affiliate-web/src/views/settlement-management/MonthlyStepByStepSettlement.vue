@@ -82,8 +82,7 @@
                 v-formatter="{ data: item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount, type: 'p&l' }">
               </td>
               <td class="bgYellow" v-formatter="{
-                data: item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount
-                  - item.casinoProfit - item.slotProfit - item.sportProfit - item.miniGameProfit, type: 'p&l'
+                data: item.casinoProfit + item.slotProfit + item.sportProfit + item.miniGameProfit, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -92,9 +91,13 @@
               }">
               </td>
               <td
-                :class="item.casinoProfit + item.slotProfit + item.sportProfit + item.miniGameProfit > 0 ? 'bgGreen' : 'bgRed'"
+                :class="item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount
+                  - item.casinoProfit - item.slotProfit - item.sportProfit - item.miniGameProfit
+                  - item.casinoRollingAmount - item.slotRollingAmount - item.sportRollingAmount - item.miniGameRollingAmount > 0 ? 'bgGreen' : 'bgRed'"
                 v-formatter="{
-                  data: item.casinoProfit + item.slotProfit + item.sportProfit + item.miniGameProfit, type: 'p&l'
+                  data: item.casinoBetAmount + item.slotBetAmount + item.sportBetAmount + item.miniGameBetAmount
+                  - item.casinoProfit - item.slotProfit - item.sportProfit - item.miniGameProfit
+                  - item.casinoRollingAmount - item.slotRollingAmount - item.sportRollingAmount - item.miniGameRollingAmount, type: 'p&l'
                 }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -102,7 +105,7 @@
               }">
               </td>
               <td class="bgYellow" v-formatter="{
-                data: item.casinoBetAmount - item.casinoProfit, type: 'p&l'
+                data: item.casinoProfit, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -110,7 +113,7 @@
               }">
               </td>
               <td :class="item.casinoProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
-                data: item.casinoProfit, type: 'p&l'
+                data: item.casinoBetAmount - item.casinoProfit - item.casinoRollingAmount, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -118,7 +121,7 @@
               }">
               </td>
               <td class="bgYellow" v-formatter="{
-                data: item.slotBetAmount - item.slotProfit, type: 'p&l'
+                data: item.slotProfit, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -126,7 +129,7 @@
               }">
               </td>
               <td :class="item.slotProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
-                data: item.slotProfit, type: 'p&l'
+                data: item.slotBetAmount - item.slotProfit - item.slotRollingAmount, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -134,7 +137,7 @@
               }">
               </td>
               <td class="bgYellow" v-formatter="{
-                data: item.sportBetAmount - item.sportProfit, type: 'p&l'
+                data: item.sportProfit, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -142,7 +145,7 @@
               }">
               </td>
               <td :class="item.sportProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
-                data: item.sportProfit, type: 'p&l'
+                data: item.sportBetAmount - item.sportProfit - item.sportRollingAmount, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -150,7 +153,7 @@
               }">
               </td>
               <td class="bgYellow" v-formatter="{
-                data: item.miniGameBetAmount - item.miniGameProfit, type: 'p&l'
+                data: item.miniGameProfit, type: 'p&l'
               }">
               </td>
               <td class="bgYellow" v-formatter="{
@@ -158,7 +161,7 @@
               }">
               </td>
               <td :class="item.miniGameProfit > 0 ? 'bgGreen' : 'bgRed'" v-formatter="{
-                data: item.miniGameProfit, type: 'p&l'
+                data: item.miniGameBetAmount - item.miniGameProfit - item.miniGameRollingAmount, type: 'p&l'
               }">
               </td>
             </tr>

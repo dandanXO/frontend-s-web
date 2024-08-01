@@ -401,6 +401,7 @@ export default {
     NOTIFICATION: '通知',
     ACTIVITY: '活动',
     ANNOUNCEMENT: '公告',
+    MATCH: '赛事',
     PAYMENT: '充提',
   },
   sitePlatform: {
@@ -486,11 +487,11 @@ export default {
   },
   mode: {
     DYNAMIC: '页面浮动',
-    STATIC: '直接显示'
+    STATIC: '直接显示',
   },
   autoplayStatus: {
     ON: '开',
-    OFF: '关'
+    OFF: '关',
   },
   fields: {
     account: '账号',
@@ -505,6 +506,7 @@ export default {
     activeMemberCount: '活跃会员数',
     activePlayer: '活跃玩家',
     activeUser: '活跃会员',
+    actualRate: '实际利息',
     add: '新增',
     addAds: '新增弹窗广告',
     addAdjustmentReason: '新增平账原因',
@@ -945,6 +947,7 @@ export default {
     endMatch: '结束赛事',
     endQuiz: '结束赛事问答',
     endTime: '结束时间',
+    estimateRate: '预估利息',
     event: '活动',
     exclusiveUrlWeb: '专属网址（网页版）',
     exclusiveUrlWap: '专属网址（手机版）',
@@ -954,6 +957,7 @@ export default {
     exchangeRate: '兑换率',
     exportToExcel: '导出至Excel',
     expressCompany: '快递公司',
+    externalUrl: '外部网址',
     extraParam: '扩展信息',
     fail: '失败',
     failReason: '失败原因',
@@ -1099,6 +1103,7 @@ export default {
     messageAffiliateDepositDisplay: '请设置新代理支付显示',
     matchTime: '赛事时间',
     matchTitle: '赛事标题',
+    matureTime: '满期时间',
     maxBonus: '最高奖金',
     maxDailyWithdraw: '每日最高提款金额',
     maxDailyWithdrawTimes: '每日最多提款次数',
@@ -1249,6 +1254,12 @@ export default {
     piggyBankRecords: '存钱罐记录',
     piggyBankSettings: '存钱罐设置',
     place: '位置',
+    placeTime: '存入时间',
+    planDays: '投资期限(天)',
+    planOdds: '利率',
+    planLimitMin: '投资最小限额',
+    planLimitMax: '投资最大限额',
+    planTimeLimit: '限购次数(0为不限)',
     platform: '平台',
     platformAccount: '平台账号',
     platformId: '平台 ID',
@@ -1413,6 +1424,7 @@ export default {
     sequence: '排序',
     serialNo: '平台订单号',
     settle: '结算',
+    settleAmount: '结算金额',
     settleAllPending: '结算所有待审核',
     settleGameMatch: '结算赛事',
     settlement: '结算',
@@ -2367,6 +2379,10 @@ export default {
     validateDisplayUrlRequired: '视频展示链接必填',
     validateModeRequired: '模式必填',
     validateAutoplayRequired: '自动播放必填',
+    validatePlanOddsRequired: '投资利率必填',
+    validatePlanDaysRequired: '投资期限必填',
+    validatePlanLimitMinRequired: '最小投资限额必填',
+    validatePlanLimitMaxRequired: '最大投资限额必填',
   },
   menu: {
     undefined: '',
@@ -2496,6 +2512,8 @@ export default {
     'Loss Rebate Record': '亏损返水记录',
     'Fish Red Packet': '捕鱼红包配置',
     'Bet Game Type Rebate Record': '投注游戏类型返水记录',
+    'Site Interest Plan': '利息宝投资方案',
+    'Interest Plan Order Record': '利息宝投资记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
@@ -2620,7 +2638,7 @@ export default {
     'Member Invite Limit': '会员邀请限制',
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
-    'Media Display Settings': '媒体显示设置'
+    'Media Display Settings': '媒体显示设置',
   },
   google: {
     google_auth_menu: '谷歌验证',

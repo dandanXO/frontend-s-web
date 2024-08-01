@@ -64,6 +64,7 @@ export default {
     fishing: "낚시",
     cockfight: "투계",
     deposit_should_between: "금액을 입력하세요: ",
+    deposit_amount_unit: "입금 금액은 10,000 단위여야 합니다.",
     msg_deleted: "메시지가 삭제되었습니다.",
     please_select_bank: "은행을 선택하세요.",
     you_account_has_been_sent_email: "귀하의 계정 코드가 이메일로 전송되었습니다.",
@@ -240,6 +241,7 @@ export default {
     min4: "인증 코드는 4자여야 합니다",
     emailFormat: "유효한 이메일 주소를 입력해 주세요",
     between612: "길이는 6-11자여야 합니다",
+    length4: "길이는 4자여야 합니다",
     noMatch: "확인 비밀번호가 새 비밀번호와 일치하지 않습니다",
     verifyPhone: "휴대전화 번호를 확인해 주세요",
     onlyNumber: "숫자만 입력할 수 있습니다",
@@ -829,7 +831,10 @@ export default {
     message_read_all_message: "모든 메시지 읽기",
     message_delete_selected_message: "선택한 메시지를 삭제했습니다.",
     message_delete_all_message: "읽은 메시지를 모두 삭제했습니다.",
-    message_total: "총"
+    message_total: "총",
+    message_no_real_name: "실명이 필요합니다",
+    message_no_bank_card: "먼저 은행 카드를 연결하세요",
+    message_no_withdraw_password: "먼저 출금 비밀번호를 추가하세요"
     // message end
   },
   feedback: {
@@ -983,7 +988,7 @@ export default {
     login_to_continue: "계속하려면 로그인 해주세요."
   },
   notification: {
-    hasUnreadMessage: "당신은 읽지 않은 메시지가 있습니다. 입금/출금/게임 페이지에 접근할 수 없습니다"
+    hasUnreadMessage: "읽지 않은 공지사항,메시지가 있습니다, 입금/출금/게임 페이지에 접근할수없습니다."
   },
   response: {
     101: "플랫폼을 찾을 수 없습니다.",
@@ -1044,6 +1049,7 @@ export default {
     10006: "이 이름은 사용할 수 없습니다.",
     10007: "게임 참여 과정에서 오류가 발생했습니다.",
     10008: "오류가 발생했습니다.",
+    11000: "제휴사가 존재하지 않음",
     11003: "입금 실패.",
     12100: "출금 비밀번호가 일치하지 않습니다.",
     12101: "새 출금 비밀번호는 기존 출금 비밀번호와 같을 수 없습니다.",

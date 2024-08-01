@@ -1195,6 +1195,9 @@ export default defineComponent({
       if (downloadPopup) {
         topBoxVisible.value = false;
       }
+      if (window.location.href.indexOf("tf88bof.com") > -1) {
+        topBoxVisible.value = false;
+      }
     };
 
     const $q = useQuasar();
@@ -1629,16 +1632,16 @@ export default defineComponent({
       }
     };
 
-    const unreadInboxMail = ref(0);
-    const getUnreadTotal = () => {
-      if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((res) => {
-          if (res.code === 0) {
-            unreadInboxMail.value = res.data;
-          }
-        });
-      }
-    };
+    // const unreadInboxMail = ref(0);
+    // const getUnreadTotal = () => {
+    //   if (store.token) {
+    //     return api.get("/session/inbox/getUnreadTotal").then((res) => {
+    //       if (res.code === 0) {
+    //         unreadInboxMail.value = res.data;
+    //       }
+    //     });
+    //   }
+    // };
 
     const pushNotificationData = ref();
     const populatePushNotificationData = (data) => {
@@ -1686,13 +1689,14 @@ export default defineComponent({
       getVersionNo();
       checkShowImgTop();
       getAppDownloadUrl();
-      getUnreadTotal();
+      // getUnreadTotal();
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
       getCheckRedPacket();
       if (store.token) {
         isLogined.value = true;
+        store.getUnreadTotal();
       } else {
         isLogined.value = false;
       }
@@ -2062,8 +2066,8 @@ export default defineComponent({
       getImgPlatformLogo,
       getImgPlatformBg,
       moment,
-      unreadInboxMail,
-      getUnreadTotal,
+      // unreadInboxMail,
+      // getUnreadTotal,
       topBoxVisible,
       isMenuFloat,
       toggleMenuFloat,

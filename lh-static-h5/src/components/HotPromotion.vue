@@ -30,11 +30,7 @@
       <div class="cs-btn" @click="goToCsChat()">联系客服</div>
     </div>
 
-    <AppHongBao
-      v-if="list.redirectUrl === 'lh1-app-hongbao'"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo'" />
 
     <PrivilegeInvitePromo
@@ -62,10 +58,7 @@
     <LplSummerPromo v-if="list.redirectUrl === 'lh1-lpl-game'"></LplSummerPromo>
 
     <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone'"></BbDacha2024Promo>
-    <LhStepGamePromo
-      v-if="list.redirectUrl === 'lh1-game-steps'"
-      :pageContent="list.pageContent"
-    ></LhStepGamePromo>
+    <LhStepGamePromo v-if="list.redirectUrl === 'lh1-game-steps'" :pageContent="list.pageContent"></LhStepGamePromo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel'" />
     <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
@@ -93,6 +86,7 @@
     <ChallengeComebackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
+    <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -191,13 +185,15 @@ const ChallengeComebackPromo = defineAsyncComponent(() =>
 const OfficialGiftPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
 );
-const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"))
+const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"));
+const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    DailyCheckin,
     Olympic24Match,
     SlotLacky8,
     IntelEls24,
@@ -278,8 +274,7 @@ export default defineComponent({
       }
     }
   },
-  methods: {
-  },
+  methods: {},
   mounted() {
     this.hotPromoList.forEach((element) => {
       if (this.list.id === element.id) {
@@ -379,26 +374,26 @@ export default defineComponent({
     const handleSlot = (promoCode) => {
       if (!store.token) {
         $q.dialog({
-            class: "q-px-md q-pt-md",
-            title: "系统提示",
-            message: "请登录后再操作",
-            ok: {
-              push: true,
-              color: 'primary',
-              label: "去登录",
-              tabindex: 1
-            },
-            cancel: {
-              push: true,
-              color: 'warning',
-              label: "取消",
-              tabindex: 0
-            },
-            persistent: true,
-          }).onOk(() => {
-            router.push('/login');
-          })
-          return
+          class: "q-px-md q-pt-md",
+          title: "系统提示",
+          message: "请登录后再操作",
+          ok: {
+            push: true,
+            color: "primary",
+            label: "去登录",
+            tabindex: 1
+          },
+          cancel: {
+            push: true,
+            color: "warning",
+            label: "取消",
+            tabindex: 0
+          },
+          persistent: true
+        }).onOk(() => {
+          router.push("/login");
+        });
+        return;
       }
       const bonusItem = promoCode;
       const eventUrl = "/bonus/claim/" + bonusItem;
@@ -420,29 +415,29 @@ export default defineComponent({
         });
     };
     const goToCsChat = () => {
-  if (!store.token) {
-    $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'primary',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
-  }
+      if (!store.token) {
+        $q.dialog({
+          class: "q-px-md q-pt-md",
+          title: "系统提示",
+          message: "请登录后再操作",
+          ok: {
+            push: true,
+            color: "primary",
+            label: "去登录",
+            tabindex: 1
+          },
+          cancel: {
+            push: true,
+            color: "warning",
+            label: "取消",
+            tabindex: 0
+          },
+          persistent: true
+        }).onOk(() => {
+          router.push("/login");
+        });
+        return;
+      }
       router.push("/liveChat");
     };
 

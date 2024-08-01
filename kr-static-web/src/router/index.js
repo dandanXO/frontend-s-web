@@ -188,9 +188,8 @@ router.beforeEach((to, from, next) => {
       } else if (store.unreadTotal > 0) {
         if (["/center/withdraw", "/center/deposit"].includes(to.path)) {
           ElMessage.error(i18n.global.t("notification.hasUnreadMessage"));
-        } else {
-          next();
         }
+        next();
       } else {
         next();
       }

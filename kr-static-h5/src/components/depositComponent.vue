@@ -260,15 +260,34 @@ const checkNewUser = () => {
     isNoRealName.value = true;
     return;
   }
-  // else {
-  //   api.get("/session/bankCard").then((response) => {
-  //     if (response.code === 0) {
-  //       if (response.data.length === 0) {
-  //         isNoBankCard.value = true;
-  //       }
-  //     }
-  //   });
-  // }
+};
+
+const checkBankCardBinded = () => {
+  if (store.realName) {
+    if (!store.registeredWithdrawPassword) {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "출금 비밀번호를 추가해 주세요",
+        icon: "report_problem"
+      });
+      router.push("/account/changePwd?name=withdraw");
+    } else {
+      api.get("/session/allBankCard").then((res) => {
+        const response = res;
+        if (response.data.length === 0) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "먼저 은행 카드를 연결하세요",
+            icon: "report_problem"
+          });
+
+          router.push("/account/withdraw");
+        }
+      });
+    }
+  }
 };
 
 const isLoading = ref(true);
@@ -827,6 +846,7 @@ onMounted(() => {
   if (route.meta && !route.meta.isApp) {
     checkNewUser();
   }
+  checkBankCardBinded();
 });
 </script>
 

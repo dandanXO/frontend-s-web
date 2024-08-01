@@ -621,7 +621,6 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getAffiliateWithdrawRecordCryptoPay,
-  getAllAffiliateWithdrawRecordCryptoPay,
   fromAffiliatePayToBeforePaid,
   fromAffiliatePayToSuccess,
   fromAffiliatePayToFail,
@@ -839,7 +838,7 @@ async function loadRecord() {
   }
   query.memberType = "AFFILIATE";
   query.withdrawCode = "USDTTRC,USDTERC";
-  const { data: ret } = hasPermission(['sys:withdraw:all:pay']) ? await getAllAffiliateWithdrawRecordCryptoPay(query) : await getAffiliateWithdrawRecordCryptoPay(query)
+  const { data: ret } = await getAffiliateWithdrawRecordCryptoPay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

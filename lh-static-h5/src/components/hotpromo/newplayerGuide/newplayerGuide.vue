@@ -54,7 +54,7 @@
                   src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="telephoneBindState === 'CLAIMED'"
                 />
-                {{ getStatus(telephoneBindState).text }}
+                <span>{{ getStatus(telephoneBindState).text }}</span>
               </q-btn>
             </div>
           </div>
@@ -72,7 +72,7 @@
                   src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="bankCardBindState === 'CLAIMED'"
                 />
-                {{ getStatus(bankCardBindState).text }}
+                <span>{{ getStatus(bankCardBindState).text }}</span>
               </q-btn>
             </div>
           </div>
@@ -90,7 +90,7 @@
                   src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
                   v-if="usdtAddrBindState === 'CLAIMED'"
                 />
-                {{ getStatus(usdtAddrBindState).text }}
+                <span>{{ getStatus(usdtAddrBindState).text }}</span>
               </q-btn>
             </div>
           </div>
@@ -108,15 +108,13 @@
             />
             <div class="title">首次提款</div>
           </div>
-          <q-btn v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
-            <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
-              <img
-                v-if="firstWithdrawalState === 'CLAIMED'"
-                style="width: 16px; height: 16px; vertical-align: sub; margin: 0px auto 4px"
-                src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
-              />
-              <span style="white-space: nowrap">{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
-            </div>
+          <q-btn v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }" @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
+            <img
+              v-if="firstWithdrawalState === 'CLAIMED'"
+              style="width: 16px; height: 16px; vertical-align: sub; margin: 0px auto 4px"
+              src="../../../assets/images/promotion/hotpromo/newplayerguide/green-check.png"
+            />
+            <span style="white-space: nowrap">{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
           </q-btn>
           <span v-else class="status" :class="getStatus(usdtAddrBindState).class">无法领取</span>
         </div>
@@ -441,6 +439,17 @@ onMounted(async () => {
     background: white;
     color: rgba(0, 133, 232, 1);
   }
+
+  :deep(.q-btn__content) {
+    flex-wrap: nowrap;
+    gap: 4px;
+    img {
+      margin-bottom: 0 !important;
+    }
+    span{
+      flex-shrink: 0
+    }
+  }
 }
 .container {
   background-color: #f9fbfe;
@@ -583,10 +592,19 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   border: 1px solid rgba(0, 133, 232, 1);
-
   color: rgba(0, 133, 232, 1);
+
+  :deep(.q-btn__content) {
+    flex-wrap: nowrap;
+    gap: 4px;
+    img {
+      margin-bottom: 0 !important;
+    }
+    span{
+      flex-shrink: 0
+    }
+  }
 }
 
 .complete {

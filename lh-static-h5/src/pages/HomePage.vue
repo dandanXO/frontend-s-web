@@ -5,7 +5,7 @@
       <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞 app 下载</span>
-        <span>亚洲第一实时滚球</span>
+        <span>APP专享礼包888元</span>
       </div>
       <div class="buttons">
         <div class="buttons">
