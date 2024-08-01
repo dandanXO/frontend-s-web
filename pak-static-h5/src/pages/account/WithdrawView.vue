@@ -456,7 +456,7 @@ const withdrawState = reactive({
 const qs = require("qs");
 const withdrawInfo = reactive({
   cardId: undefined,
-  amount: "",
+  amount: ""
   // withdrawPassword: ""
 });
 const isLoaded = ref(false);
@@ -911,6 +911,8 @@ const openWithdrawTutorialVideo = () => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .tutorial-link {
