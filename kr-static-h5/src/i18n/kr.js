@@ -114,7 +114,7 @@ export default {
     length_is_4: "길이는 4여야 합니다",
     login_btn: "로그인",
     register_btn: "회원 가입",
-    contact_customer_service: "컨설팅 인력",
+    contact_customer_service: "고객센터",
     password_weak: "약함",
     password_good: "좋음",
     password_strong: "강함",
