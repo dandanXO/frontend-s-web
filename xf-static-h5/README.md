@@ -61,9 +61,9 @@ npx cap open android
 ### Change Android Version Name
 
 1. open src-capacitor/android/app/build.gradle
-2. Edit Version No:
+2. Edit Version No & versionName:
   -     versionCode 7
-        versionName "1.0"
+        versionName "1.0.7"
 3. Rebuild Apk.
 
 

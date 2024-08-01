@@ -935,7 +935,7 @@ export default defineComponent({
         //   version: "1.0.1"
         // };
         // alert(info.version);
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replaceAll(".", ""));
         // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
