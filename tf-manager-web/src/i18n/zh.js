@@ -477,6 +477,11 @@ export default {
     DEPOSIT: '存款',
     ONE_TIME: '一次',
   },
+  smsSend: {
+    template1: '欢迎新用户',
+    template2: '存送优惠',
+    template3: '老用户回归',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -741,6 +746,7 @@ export default {
     configGroup: '设置组',
     confirm: '确认',
     confirmAndImport: '确认并导入',
+    confirmAndSend: '确认并发送',
     confirmNewPassword: '确认新密码',
     confirmPassword: '确认密码',
     confirmPay: '确认结算',

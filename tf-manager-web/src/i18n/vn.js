@@ -426,6 +426,11 @@ export default {
       'Thông tin đăng ký của thành viên và người triệu hồi là giống nhau',
     MEMBER_ALREADY_SUMMONED: 'Thành viên đã được triệu hồi',
   },
+  smsSend: {
+    template1: 'Welcome New Member',
+    template2: 'Deposit Promotion',
+    template3: 'Welcome Back',
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -687,6 +692,7 @@ export default {
     consumingTime: 'Thời gian tiêu hao',
     confirm: 'Xác nhận',
     confirmAndImport: 'Xác nhận và nhập',
+    confirmAndSend: 'Confirm and Send',
     confirmNewPassword: 'Xác nhận mật khẩu mới',
     confirmPassword: 'Xác nhận mật khẩu',
     confirmPay: 'Xác nhận thanh toán',

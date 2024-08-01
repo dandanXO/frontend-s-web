@@ -474,6 +474,11 @@ export default {
     DEPOSIT: 'DEPOSIT',
     ONE_TIME: 'ONE TIME',
   },
+  smsSend: {
+    template1: 'Welcome New Member',
+    template2: 'Deposit Promotion',
+    template3: 'Welcome Back',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -738,6 +743,7 @@ export default {
     consumingTime: 'Consuming Time',
     confirm: 'Confirm',
     confirmAndImport: 'Confirm and Import',
+    confirmAndSend: 'Confirm and Send',
     confirmNewPassword: 'Confirm New Password',
     confirmPassword: 'Confirm Password',
     confirmPay: 'Confirm Pay',

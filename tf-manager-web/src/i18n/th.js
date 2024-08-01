@@ -261,6 +261,11 @@ export default {
     NORMAL: 'โดยปกติ',
     BET_RECORDS: 'ข้อมูลผลตอบแทนการเดิมพัน',
   },
+  smsSend: {
+    template1: 'Welcome New Member',
+    template2: 'Deposit Promotion',
+    template3: 'Welcome Back',
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',
@@ -450,6 +455,7 @@ export default {
     consumingTime: 'เวลาที่หมด',
     confirm: 'ยืนยัน',
     confirmAndImport: 'ยืนยันและนำเข้า',
+    confirmAndSend: 'Confirm and Send',
     confirmNewPassword: 'ยืนยันรหัสผ่านใหม่',
     confirmPassword: 'ยืนยันรหัสผ่าน',
     confirmPay: 'ยืนยันการชำระเงิน',
