@@ -118,12 +118,13 @@ const handleCopyClick = async () => {
         console.error(error);
       } finally {
         document.body.removeChild(textArea);
-        notify({
-          type: "success",
-          message: "复制成功"
-        });
       }
     }
+
+    notify({
+      type: "success",
+      message: "复制成功"
+    });
   } else {
     writeClipboard(currentVoxisId.value);
   }
