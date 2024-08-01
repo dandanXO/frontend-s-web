@@ -183,7 +183,7 @@ let validateName = async (r, v) => {
   if (v === "") {
     return Promise.reject("请输入登录名");
   } else if (!checkName2(v)) {
-    return Promise.reject("不允许使用特殊字符");
+    return Promise.reject("用户名必须包含英文字母与数字");
   } else {
     return Promise.resolve();
   }
@@ -475,9 +475,9 @@ const closeRegDialog = () => {
 };
 
 const openLoginDialog = () => {
-  if(route.path === '/register'){
+  if (route.path === "/register") {
     router.push("/login");
-  }else{
+  } else {
     emits("open-login-dialog");
   }
 };
@@ -490,7 +490,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
 
 <style lang="scss">
 .form-field {

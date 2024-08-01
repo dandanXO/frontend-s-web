@@ -1009,7 +1009,7 @@ export default defineComponent({
       if (v === "") {
         return Promise.reject("请输入登录名");
       } else if (!checkName(v)) {
-        return Promise.reject("不允许使用特殊字符");
+        return Promise.reject("用户名必须包含英文字母与数字");
       } else {
         return Promise.resolve();
       }
