@@ -399,7 +399,7 @@ export default {
     bd_length_between_34_36: "Chiều dài nên từ 34-36",
     bd_note: "Lưu ý",
     bd_note_para_01:
-      'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!',
+      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
     bd_note_para_02:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! TF88 xin chân thành cảm ơn!",
 
@@ -528,10 +528,12 @@ export default {
     vip_terms_para_06:
       "Tiền thưởng Sinh nhật: Trong tháng sinh nhật, thành viên có thể liên hệ với Dịch vụ Khách hàng để được xác minh và nhận tiền thưởng tương ứng với cấp độ VIP hiện tại của thành viên. Lưu ý: tất cả thông tin xác minh với Dịch vụ Khách hàng",
     vip_terms_para_07:
-      "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
+      "Tiền Thưởng Sinh Nhật : Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. Khi đã đạt đủ duy trì cấp VIP, Thành Viên liên hệ Chăm Sóc Khách Hàng trực tuyến để nhận thưởng.",
     vip_terms_para_08:
-      "Tất cả cược hòa, cược HỦY, cược 2 chiều, kèo châu Âu dưới 1,75, cược châu Á dưới 0,75, Trò chơi số, Thể thao ảo, Jackpot tiến triển RNG, Máy đánh bạc tiến triển RNG sẽ không được tính. doanh thu cược cho chương trình này. Điều khoản và điều kiện chung của chương trình áp dụng.",
+      "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
     vip_terms_para_09:
+      "Tất cả cược hòa, cược HỦY, cược 2 chiều, kèo châu Âu dưới 1,75, cược châu Á dưới 0,75, Trò chơi số, Thể thao ảo, Jackpot tiến triển RNG, Máy đánh bạc tiến triển RNG sẽ không được tính. doanh thu cược cho chương trình này. Điều khoản và điều kiện chung của chương trình áp dụng.",
+    vip_terms_para_10:
       "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này vào bất kỳ thời điểm nào mà không cần thông báo trước.",
     vip_sport_rebate: "Thể Thao",
     vip_esport_rebate: "E-Sport",

@@ -344,7 +344,7 @@
         <!-- <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
           {{ term.text }}
         </li> -->
-        <li class="term" v-for="term in 9">
+        <li class="term" v-for="term in 10" :key="term">
           {{ $t(`vip.tnc${term}`)}}
         </li>
       </ol>
