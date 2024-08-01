@@ -533,7 +533,7 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        appVersionNo.value = info.version + "." + info.build;
+        appVersionNo.value = info.version;
       }
     };
 
