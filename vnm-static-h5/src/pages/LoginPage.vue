@@ -413,7 +413,6 @@ export default defineComponent({
       const sidParam = store.visitorId;
 
       (async () => {
-
         const appVer = appVersionNo.value;
 
         if (loginType.value === false) {
@@ -529,7 +528,7 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        appVersionNo.value = info.version + "." + info.build;
+        appVersionNo.value = info.version;
       }
     };
 
