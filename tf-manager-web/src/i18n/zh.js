@@ -478,6 +478,11 @@ export default {
     DEPOSIT: '存款',
     ONE_TIME: '一次',
   },
+  smsSend: {
+    template1: '欢迎新用户',
+    template2: '存送优惠',
+    template3: '老用户回归',
+  },
   displayLocation: {
     HOMEPAGE: '首页',
     PROMO_PAGE: '优惠页面',
@@ -760,6 +765,7 @@ export default {
     configGroup: '设置组',
     confirm: '确认',
     confirmAndImport: '确认并导入',
+    confirmAndSend: '确认并发送',
     confirmNewPassword: '确认新密码',
     confirmPassword: '确认密码',
     confirmPay: '确认结算',
@@ -2410,6 +2416,7 @@ export default {
     'Member Distribute Privilege': '会员发放奖金',
     'Member Profit Ranking': '盈利排名',
     'Member Affiliate Change Log': '会员代理更换记录',
+    'Member Group Send SMS': '会员群发消息',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',

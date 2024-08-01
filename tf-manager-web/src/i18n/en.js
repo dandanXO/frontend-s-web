@@ -475,6 +475,11 @@ export default {
     DEPOSIT: 'DEPOSIT',
     ONE_TIME: 'ONE TIME',
   },
+  smsSend: {
+    template1: 'Welcome New Member',
+    template2: 'Deposit Promotion',
+    template3: 'Welcome Back',
+  },
   displayLocation: {
     HOMEPAGE: 'HOMEPAGE',
     PROMO_PAGE: 'PROMO PAGE',
@@ -757,6 +762,7 @@ export default {
     consumingTime: 'Consuming Time',
     confirm: 'Confirm',
     confirmAndImport: 'Confirm and Import',
+    confirmAndSend: 'Confirm and Send',
     confirmNewPassword: 'Confirm New Password',
     confirmPassword: 'Confirm Password',
     confirmPay: 'Confirm Pay',
@@ -2460,6 +2466,7 @@ export default {
     'Member Distribute Privilege': 'Member Distribute Privilege',
     'Member Profit Ranking': 'Profit Ranking',
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
+    'Member Group Send SMS': 'Member Group Send SMS',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',

@@ -424,6 +424,11 @@ export default {
       '회원과 소환자의 등록 정보가 동일합니다',
     MEMBER_ALREADY_SUMMONED: '회원이 이미 소환되었습니다',
   },
+  smsSend: {
+    template1: 'Welcome New Member',
+    template2: 'Deposit Promotion',
+    template3: 'Welcome Back',
+  },
   displayLocation: {
     HOMEPAGE: '홈페이지',
     PROMO_PAGE: '프로모 페이지',
@@ -703,6 +708,7 @@ export default {
     consumingTime: '소비 시간',
     confirm: '확인',
     confirmAndImport: '확인 및 가져오기',
+    confirmAndSend: 'Confirm and Send',
     confirmNewPassword: '새 비밀번호 확인',
     confirmPassword: '비밀번호 확인',
     confirmPay: '지불 확인',
@@ -2299,6 +2305,7 @@ export default {
     'Member Distribute Privilege': '회원 특권 배포',
     'Member Profit Ranking': '회원 수익 순위',
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
+    'Member Group Send SMS': 'Member Group Send SMS',
     Affiliate: '제휴사',
     'Affiliate Amount Adjust': '제휴사 금액 조정',
     'Affiliate Summary': '제휴사 요약',
