@@ -277,12 +277,12 @@
         <!-- </div> -->
         <!-- </router-link> -->
 
-        <!-- <router-link to="/account/personal"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-storage-icon.png" /> -->
-        <!-- <div class="acct-nav-label">仓库</div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
+        <router-link to="/about">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-storage-icon.png" />
+            <div class="acct-nav-label">{{ $t("lang.page_about") }}</div>
+          </div>
+        </router-link>
       </div>
     </q-item-section>
 

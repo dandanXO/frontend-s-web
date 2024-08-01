@@ -512,7 +512,7 @@ export default {
     vip_terms_para_01:
       "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
     vip_terms_para_02:
-      "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
+      "The system will automatically upgrade the VIP level of all members after 00:00:00 (GMT +7) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     vip_terms_para_03:
       "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
     vip_terms_para_04:
@@ -1180,7 +1180,7 @@ export default {
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",
     page_lobby: "Lobby",
-    page_about: "About TFgaming",
+    page_about: "General Information",
 
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",

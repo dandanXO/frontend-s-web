@@ -518,7 +518,7 @@ export default {
     vip_terms_para_01:
       "Chương trình áp dụng cho tất cả các thành viên có tài khoản VNDP hợp lệ tại TF88. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của người chơi từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
     vip_terms_para_02:
-      "Hệ thống sẽ tự động nâng cấp cấp độ VIP của tất cả các thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, miễn là tổng số tiền cược hợp lệ của thành viên phải đủ điều kiện để tiến lên cấp độ VIP tương ứng. Khuyến mãi sẽ không cần tuân thủ từng cấp độ VIP.",
+      "Hệ thống sẽ tự động nâng cấp cấp độ VIP của tất cả các thành viên sau 00:00:00 (GMT +7) vào ngày đầu tiên của tháng mới, miễn là tổng số tiền cược hợp lệ của thành viên phải đủ điều kiện để tiến lên cấp độ VIP tương ứng. Khuyến mãi sẽ không cần tuân thủ từng cấp độ VIP.",
     vip_terms_para_03:
       "Tiền thưởng Nâng cấp: sau khi thành viên được nâng cấp lên một cấp độ VIP mới, thành viên có thể nhấp vào nút NHẬN trên trang VIP. Số tiền thưởng sẽ dựa trên cấp độ VIP tương ứng và số tiền thưởng cần phải qua 1 vòng cược trước khi rút tiền.",
     vip_terms_para_04:
@@ -1185,7 +1185,7 @@ export default {
     page_rescuefundrecords: "Lịch sử quỹ cứu trợ",
     page_register: "Đăng ký",
     page_lobby: "Sảnh chờ",
-    page_about: "About TFgaming",
+    page_about: "Thông tin chung",
 
     menu_deposit: "Nạp tiền",
     menu_withdraw: "Rút tiền",
