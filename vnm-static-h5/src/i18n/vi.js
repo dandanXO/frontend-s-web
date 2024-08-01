@@ -528,7 +528,7 @@ export default {
     vip_terms_para_06:
       "Tiền thưởng Sinh nhật: Trong tháng sinh nhật, thành viên có thể liên hệ với Dịch vụ Khách hàng để được xác minh và nhận tiền thưởng tương ứng với cấp độ VIP hiện tại của thành viên. Lưu ý: tất cả thông tin xác minh với Dịch vụ Khách hàng",
     vip_terms_para_07:
-      "Tiền Thưởng Sinh Nhật : Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. Khi đã đạt đủ duy trì cấp VIP, Thành Viên liên hệ Chăm Sóc Khách Hàng trực tuyến để nhận thưởng.",
+      "Tiền Thưởng Sinh Nhật : Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. Khi đã đạt đủ duy trì cấp VIP, Thành Viên liên hệ Chăm Sóc Khách Hàng trực tuyến để nhận thưởng. ( tiền thưởng sinh nhật cần trải qua 3 vòng cược trước khi rút tiền )",
     vip_terms_para_08:
       "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
     vip_terms_para_09:
