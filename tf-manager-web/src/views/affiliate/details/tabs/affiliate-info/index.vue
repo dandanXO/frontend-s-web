@@ -135,6 +135,16 @@
           >
             {{ t('fields.disable') }}
           </el-button>
+          <el-button
+            v-if="memberDetail.affiliateStatus === 'DISABLE'"
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:state']"
+            @click="reactivate"
+          >
+            {{ t('fields.activate') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" v-permission="['sys:affiliate:detail']">
           <template #label>
@@ -1518,6 +1528,7 @@ import {
   getAffiliateShareRatio,
   updateLevel,
   getDownlineShareRatio,
+  reactivateAffiliate,
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -2084,6 +2095,16 @@ async function approve() {
   })
   uiControl.dialogVisible = false
   ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+}
+
+async function reactivate() {
+  await reactivateAffiliate(props.affId)
+  const data = await getAffiliateRecord(props.affId)
+  Object.keys({ ...data.data }).forEach(detailField => {
+    memberDetail[detailField] = data.data[detailField]
+  })
+  uiControl.dialogVisible = false
+  ElMessage({ message: t('message.affiliateReactivated'), type: 'success' })
 }
 
 async function syncMember() {

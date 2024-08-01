@@ -1945,6 +1945,7 @@ export default {
     claimed: '已领取',
     notClaimed: '未领取',
     displayAmount: '显示金额',
+    activate: '解禁',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2389,6 +2390,7 @@ export default {
     validatePlanDaysRequired: '投资期限必填',
     validatePlanLimitMinRequired: '最小投资限额必填',
     validatePlanLimitMaxRequired: '最大投资限额必填',
+    affiliateReactivated: '解禁成功',
   },
   menu: {
     undefined: '',
