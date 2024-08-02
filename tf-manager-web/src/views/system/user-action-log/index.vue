@@ -91,6 +91,7 @@
           :shortcuts="shortcuts"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
 
         <el-button
@@ -225,6 +226,10 @@ const uiControl = reactive({
     },
   ],
 })
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+]
 const page = reactive({
   pages: 0,
   records: [],
