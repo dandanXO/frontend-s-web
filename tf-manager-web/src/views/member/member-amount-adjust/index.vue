@@ -263,6 +263,16 @@
         <el-form-item :label="t('fields.amount')" prop="amount">
           <el-input v-model="form.amount" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event)" />
         </el-form-item>
+        <el-form-item v-if="uiControl.dialogType === 'CREATE_ADD'" :label="t('fields.rollover')" prop="rollover">
+          <el-input-number
+            v-model="form.rollover"
+            style="width: 145px"
+            :min="0"
+            :max="100"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.cause')" prop="cause">
           <el-select
             v-model="form.cause"
@@ -507,6 +517,7 @@ const form = reactive({
   memberId: null,
   loginName: null,
   amount: null,
+  rollover: null,
   cause: null,
   remark: null
 });
@@ -541,6 +552,7 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   loginName: [required(t('message.validateLoginNameRequired')), { validator: loginNameValidator, trigger: "blur" }],
   amount: [required(t('message.validateAmountRequired'))],
+  rollover: [required(t('message.validateRolloverRequired'))],
   cause: [required(t('message.validateCauseRequired'))]
 });
 
@@ -555,6 +567,13 @@ function convertDate(date) {
 
 function disabledDate(time) {
   return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
 }
 
 async function loadSites() {
