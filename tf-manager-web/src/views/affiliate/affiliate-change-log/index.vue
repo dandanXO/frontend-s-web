@@ -189,7 +189,7 @@ async function loadUserActionLog() {
   page.loading = true
   const requestCopy = { ...request }
   const query = {}
-  query.targetType = 'AFFILIATE'
+  // query.targetType = 'AFFILIATE'
   query.field = 'parentAffiliateId'
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
