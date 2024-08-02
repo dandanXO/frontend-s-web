@@ -249,7 +249,7 @@ export function bonusClaimSlotsRefund() {
   return server.EVENT.put('/bonus/claim/vnm-slots-refund');
 }
 export function getBonusSlotsCashback() {
-  return server.EVENT.get('//ka2-refund/slots');
+  return server.EVENT.get('/ka2-refund/slots');
 }
 
 // poker cashback
