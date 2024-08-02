@@ -1092,6 +1092,7 @@ export default {
     15201: "Old password is incorrect.",
     15204: "Phone number is incorrect.",
     15205: "Login Password is incorrect",
+    15206: "Duplicate nickname/name",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

@@ -1588,6 +1588,7 @@ We sincerely congratulate you on your exchange and wish you only the best days a
     15202: "The new password cannot be the same as the old password",
     15204: "Phone number is incorrect.",
     15205: "Login Password is incorrect",
+    15206: "Duplicate nickname/name",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",
