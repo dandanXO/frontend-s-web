@@ -90,6 +90,7 @@ export default {
     'Daily Detail': 'Daily Detail',
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
+    CommWithdraw: 'Commission Withdraw',
     'Rebate Report': 'Rebate Report',
     message: 'Message',
     inquiry: 'Inquiry',
