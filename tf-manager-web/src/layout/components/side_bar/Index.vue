@@ -38,6 +38,7 @@ import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordApply, getMe
 import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
+import { getNewRegisterMemberLists } from "../../../api/member";
 
 export default defineComponent({
   components: {
@@ -149,6 +150,17 @@ export default defineComponent({
       }
     };
 
+    const checkGetNewRegisterMember = async() => {
+      const { data: ret } = await getNewRegisterMemberLists(10);
+      console.log("HERe")
+      console.log(ret);
+      if (ret === 0) {
+        sessionStorage.setItem("NEW_REGISTER_USER", 0);
+      } else {
+        sessionStorage.setItem("NEW_REGISTER_USER", ret);
+      }
+    }
+
     onMounted(async() => {
       if (!hasPermission(["sys:withdraw:apply"]) && hasPermission(["sys:withdraw:simple:list"])) {
         await checkOutstandingAutoWithdraw();
@@ -164,6 +176,12 @@ export default defineComponent({
       }
       if (hasPermission(["sys:feedback:list"])) {
         await checkOutstandingFinancialFeedback();
+      }
+      if (hasPermission(["sys:member:list"])) {
+        await checkGetNewRegisterMember();
+        setInterval(async() => {
+          await checkGetNewRegisterMember();
+        }, 180000)
       }
       isMounted.value = true;
     });
