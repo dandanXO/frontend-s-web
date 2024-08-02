@@ -5,7 +5,7 @@ var next = urlLists[randNum - 1];
 var hostname = window.location.hostname;
 console.log(hostname);
 if (hostname.indexOf("ft609.cc") > -1 || hostname.indexOf("ro396.cc") > -1 || hostname.indexOf("pt505.cc") > -1) {
-  next = "https://vb88123.com/register";
+  next = "https://p886866.com?redirect=6677";
 }
 
 let timeoutId;
