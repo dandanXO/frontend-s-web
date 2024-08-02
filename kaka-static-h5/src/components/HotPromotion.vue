@@ -12,9 +12,9 @@
 
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
 
-    <ViPokerCashbackPromo v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
+    <ViPokerCashbackPromo v-if="list.redirectUrl === 'HOAN THUA POKER' && !isCommonPromo" />
 
-    <ViSlotNetLossPromo v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
+    <ViSlotNetLossPromo v-if="list.redirectUrl === 'HOAN THUA NO HU 10%' && !isCommonPromo" />
 
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
 
@@ -61,7 +61,7 @@ import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankProm
 import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
 import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
 import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
-import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
+import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -131,8 +131,8 @@ export default defineComponent({
     if (
       this.list.redirectUrl === "vnm-iphone" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
-      this.list.redirectUrl === "vi-poker-cashback" ||
-      this.list.redirectUrl === "vi-slot-netloss" ||
+      this.list.redirectUrl === "HOAN THUA POKER" ||
+      this.list.redirectUrl === "HOAN THUA NO HU 10%" ||
       this.list.redirectUrl === "vi-penny-bank" ||
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
@@ -252,7 +252,6 @@ export default defineComponent({
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-
 
   .promo-bg {
     background-size: cover;

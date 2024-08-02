@@ -4,12 +4,18 @@
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
-    <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
-    <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo " :promo-code="list.promoCode" />
+    <SlotNetloss v-if="list.redirectUrl === 'HOAN THUA NO HU 10%' && !isCommonPromo" />
+    <PokerCashback v-if="list.redirectUrl === 'HOAN THUA POKER' && !isCommonPromo" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo" :promo-code="list.promoCode" />
     <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo " :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo " :promo-code="list.promoCode" />
+    <Eurocup2024bet
+      v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo"
+      :promo-code="list.promoCode"
+    />
+    <EurocupLuckyDraw
+      v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo"
+      :promo-code="list.promoCode"
+    />
 
     <HongBaoYu2024
       v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
@@ -22,7 +28,7 @@
         <span class="img-item">
           <div class="inner-contents">
             <div class="amount">{{ amount }}</div>
-            <div class="bonus">{{ $t('promo.bonus')}}</div>
+            <div class="bonus">{{ $t("promo.bonus") }}</div>
           </div>
         </span>
         <img src="../assets/images/index/bonus.svg" />
@@ -43,7 +49,7 @@ import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vu
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
 import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
 import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
-import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
+import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -307,10 +313,10 @@ export default defineComponent({
       this.list.redirectUrl === "vnm-iphone" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
       this.list.redirectUrl === "vi-penny-bank" ||
-      this.list.redirectUrl === "vi-slot-netloss" ||
-      this.list.redirectUrl === "vi-poker-cashback" ||
+      this.list.redirectUrl === "HOAN THUA NO HU 10%" ||
+      this.list.redirectUrl === "HOAN THUA POKER" ||
       this.list.redirectUrl === "Red_pocket_euro2024" ||
-      this.list.redirectUrl === "vnm-eurocup24"||
+      this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
       this.list.redirectUrl === "vnm-eurocup-luckydraw"
     ) {
