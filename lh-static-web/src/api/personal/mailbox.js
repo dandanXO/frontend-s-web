@@ -1,11 +1,7 @@
 import { server } from "@/utils/request";
 
-export function loadMailbox(type, pageNum, pageSize) {
-  return server.REST.post("auth/mailbox", {
-    type,
-    pageNum,
-    pageSize
-  });
+export function loadMailbox() {
+  return server.REST.get("/session/inbox", {});
 }
 
 export function mailInbox(mailQuery) {

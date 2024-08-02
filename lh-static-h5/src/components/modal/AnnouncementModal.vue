@@ -3,44 +3,45 @@
     <q-dialog v-model="visible">
       <div style="overflow: unset">
         <div class="dialog-wrapper">
-          <div class="dialog-header">
+          <div class="dialog-header only-inbox">
             <div
               class="dialog-tab-item announcement"
-              style="justify-content: flex-start"
               :class="currentTab === 'announcement' ? 'active' : ''"
               @click="changeTab('announcement')"
+              v-if="announceData.length > 0"
             >
               <div v-if="currentTab === 'announcement'">
-                <img
-                  class="bg-img"
-                  src="../../assets/images/home/announcement/tab-active-background-2.png"
-                  alt=""
-                />
+                <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background-2.png" alt="" />
                 <p class="text">重要公告</p>
               </div>
               <p v-else>重要公告</p>
             </div>
             <div
               class="dialog-tab-item inbox"
-              style="justify-content: flex-end"
               :class="currentTab === 'inbox' ? 'active' : ''"
               @click="changeTab('inbox')"
             >
               <div v-if="currentTab === 'inbox'">
-                <img
-                  class="bg-img"
-                  src="../../assets/images/home/announcement/tab-active-background.png"
-                  alt=""
-                />
+                <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background.png" alt="" />
                 <p class="text">
-                  <img src="../../assets/images/home/announcement/icon-mail.svg" alt="" style="width: 24px; height: 24px;">
-                  站内消息</p>
+                  <img
+                    src="../../assets/images/home/announcement/icon-mail.svg"
+                    alt=""
+                    style="width: 24px; height: 24px"
+                  />
+                  站内消息
+                </p>
               </div>
               <p v-else>站內信</p>
             </div>
           </div>
           <div class="dialog-content">
-            <InboxComponent @chageSlide="hChageSlide" v-if="currentTab === 'inbox'" ref="inboxComponentRef" :slide="activeDot" />
+            <InboxComponent
+              @chageSlide="hChageSlide"
+              v-if="currentTab === 'inbox'"
+              ref="inboxComponentRef"
+              :slide="activeDot"
+            />
             <AnnouncementComponent
               @chageSlide="hChageSlide"
               v-if="currentTab === 'announcement'"
@@ -81,11 +82,15 @@
 import { ref } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
+import { userStore } from "src/stores";
 
-const visible = ref(true);
+const store = userStore();
+const visible = ref(false);
 const currentTab = ref("inbox");
 const checked = ref(false);
 const activeDot = ref(0);
+
+const announceData = ref([]);
 
 const changeTab = (name) => {
   currentTab.value = name;
@@ -93,12 +98,12 @@ const changeTab = (name) => {
 };
 
 const handleDotClick = (index) => {
-  activeDot.value = index ;
+  activeDot.value = index;
 };
 
-const hChageSlide = (val)=>{
-  activeDot.value = val
-}
+const hChageSlide = (val) => {
+  activeDot.value = val;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -118,6 +123,16 @@ const hChageSlide = (val)=>{
   cursor: pointer;
   padding: 0 32px;
 
+  &.only-inbox {
+    height: 52px;
+    background: #fff;
+    border-bottom: 1px solid #999;
+
+    .dialog-tab-item {
+      justify-content: center !important;
+    }
+  }
+
   .dialog-tab-item {
     display: flex;
     align-items: center;
@@ -125,6 +140,14 @@ const hChageSlide = (val)=>{
     border-radius: 12px 12px 0 0;
     overflow: hidden;
     height: 42px;
+
+    &.inbox {
+      justify-content: flex-end;
+    }
+
+    &.announcement {
+      justify-content: flex-start;
+    }
 
     &.inbox.active {
       .bg-img {
@@ -137,7 +160,7 @@ const hChageSlide = (val)=>{
       .text {
         position: relative;
         z-index: 0;
-        color: #2792FD;
+        color: #2792fd;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -155,7 +178,7 @@ const hChageSlide = (val)=>{
       .text {
         position: relative;
         z-index: 0;
-        color: #2792FD;
+        color: #2792fd;
         display: flex;
         align-items: center;
         gap: 8px;

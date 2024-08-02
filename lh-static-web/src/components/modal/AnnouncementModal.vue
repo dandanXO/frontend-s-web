@@ -9,11 +9,12 @@
   >
     <div>
       <div class="dialog-wrapper">
-        <div class="dialog-header">
+        <div class="dialog-header only-inbox">
           <div
             class="dialog-tab-item"
             :class="currentTab === 'announcement' ? 'active' : ''"
             @click="currentTab = 'announcement'"
+            v-if="announceData.length > 0"
           >
             <img
               v-if="currentTab === 'announcement'"
@@ -31,9 +32,6 @@
           <InboxComponent v-if="currentTab === 'inbox'" />
           <AnnouncementComponent v-if="currentTab === 'announcement'" />
         </div>
-        <!-- <div class="dialog-footer">
-          <div class="dot" :class="{ active: item === 3 }" v-for="item in 6" :key="item"></div>
-        </div> -->
       </div>
       <div class="dialog-action">
         <div class="dialog-action-row today-not-remind">
@@ -55,14 +53,31 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
 import { RiCloseFill } from "vue-remix-icons";
+import { loadMailbox } from "@/api/personal/mailbox";
+import { userStore } from "@/store";
 
-const visible = ref(true);
-const currentTab = ref("announcement");
+const store = userStore();
+const visible = ref(false);
+const currentTab = ref("inbox");
 const checked = ref(false);
+const mailData = ref([]);
+const announceData = ref([]);
+
+watch(
+  () => store.token,
+  () => {
+    if (store.token) {
+      // loadMailbox().then((res) => {
+      //   console.log("MAil");
+      //   console.log(res);
+      // });
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -75,6 +90,12 @@ const checked = ref(false);
   border-radius: 12px 12px 0 0;
   position: relative;
   cursor: pointer;
+
+  &.only-inbox {
+    background: #fff;
+    height: 52px;
+    border-bottom: 1px solid #999;
+  }
 
   .dialog-tab-item {
     display: flex;
@@ -138,7 +159,6 @@ const checked = ref(false);
   }
 
   .dialog-action-item {
-
     &.close-icon {
       justify-content: center;
       cursor: pointer;
@@ -152,7 +172,7 @@ const checked = ref(false);
   }
 }
 
-::v-deep(.el-checkbox__input.is-checked+.el-checkbox__label) {
+::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
 }
 </style>

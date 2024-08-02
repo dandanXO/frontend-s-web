@@ -23,8 +23,10 @@ import HomeDownload from "@/components/home/HomeDownload.vue";
 // import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
 import HomeService from "@/components/home/HomeService.vue";
+import { userStore } from "@/store";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 
+const store = userStore();
 const gameMenu = ref(null);
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
