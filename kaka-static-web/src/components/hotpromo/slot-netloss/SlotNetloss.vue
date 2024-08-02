@@ -1,22 +1,20 @@
 <template>
-  <div class="row">
-    <img src="../../../assets/images/promotion/hotpromo/slot-netloss/icon.png" />
-    <div class="col">
-      <div class="row">
-        <div>{{ t("promo.net_work_bonus") }}</div>
-        <el-input v-model="claimAmt" :readonly="true" />
-      </div>
-      <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">
-        {{ t("promo.btn_claim_now") }}
-      </div>
+    <div class="row">
+        <img src="../../../assets/images/promotion/hotpromo/slot-netloss/slot-netloss-coins.png" />
+        <div class="col">
+            <div class="row">
+                <div style="color: #ffffff;">{{ t('promo.net_work_bonus') }}</div>
+                <el-input v-model="claimAmt" :readonly="true" />
+            </div>
+            <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
-import { bonusClaimSlotsRefund, getBonusSlotsCashback } from "../../../api/index/promo";
+import { ref, onMounted } from 'vue';
+import { ElMessage } from 'element-plus';
+import { claimBonusItem, getBonusSlotsCashback } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -31,14 +29,14 @@ const getAmount = () => {
   });
 };
 const onClickClaimNow = () => {
-  bonusClaimSlotsRefund().then((res) => {
-    if (res.code === 0) {
-      ElMessage.success(t("common.claimedSuccess"));
-    } else {
-      ElMessage.error(res.message);
-    }
-  });
-};
+    claimBonusItem('ka2-slots-refund').then((res) => {
+        if(res.code === 0) {
+            ElMessage.success(t('common.claimedSuccess'))
+        } else {
+            ElMessage.error(res.message)
+        }
+    })
+}
 onMounted(() => {
   getAmount();
 });

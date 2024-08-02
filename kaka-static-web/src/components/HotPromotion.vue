@@ -4,9 +4,9 @@
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
-    <SlotNetloss v-if="list.redirectUrl === 'HOAN THUA NO HU 10%' && !isCommonPromo" />
-    <PokerCashback v-if="list.redirectUrl === 'HOAN THUA POKER' && !isCommonPromo" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo" :promo-code="list.promoCode" />
+    <SlotNetloss v-if="list.redirectUrl === 'ka2-slot-netloss' && !isCommonPromo" />
+    <PokerCashback v-if="list.redirectUrl === 'ka2-poker-cashback' && !isCommonPromo" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo " :promo-code="list.promoCode" />
     <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" :promo-code="list.promoCode" />
     <Eurocup2024bet
       v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo"
@@ -313,8 +313,8 @@ export default defineComponent({
       this.list.redirectUrl === "vnm-iphone" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
       this.list.redirectUrl === "vi-penny-bank" ||
-      this.list.redirectUrl === "HOAN THUA NO HU 10%" ||
-      this.list.redirectUrl === "HOAN THUA POKER" ||
+      this.list.redirectUrl === "ka2-slot-netloss" ||
+      this.list.redirectUrl === "ka2-poker-cashback" ||
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||

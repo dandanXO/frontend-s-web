@@ -12,9 +12,9 @@
 
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
 
-    <ViPokerCashbackPromo v-if="list.redirectUrl === 'HOAN THUA POKER' && !isCommonPromo" />
+    <ViPokerCashbackPromo v-if="list.redirectUrl === 'ka2-poker-cashback' && !isCommonPromo" />
 
-    <ViSlotNetLossPromo v-if="list.redirectUrl === 'HOAN THUA NO HU 10%' && !isCommonPromo" />
+    <ViSlotNetLossPromo v-if="list.redirectUrl === 'ka2-slot-netloss' && !isCommonPromo" />
 
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
 
@@ -131,8 +131,8 @@ export default defineComponent({
     if (
       this.list.redirectUrl === "vnm-iphone" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
-      this.list.redirectUrl === "HOAN THUA POKER" ||
-      this.list.redirectUrl === "HOAN THUA NO HU 10%" ||
+      this.list.redirectUrl === "ka2-poker-cashback" ||
+      this.list.redirectUrl === "ka2-slot-netloss" ||
       this.list.redirectUrl === "vi-penny-bank" ||
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
