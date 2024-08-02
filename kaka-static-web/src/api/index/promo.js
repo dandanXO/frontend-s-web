@@ -249,7 +249,7 @@ export function bonusClaimSlotsRefund() {
   return server.EVENT.put('/bonus/claim/vnm-slots-refund');
 }
 export function getBonusSlotsCashback() {
-  return server.EVENT.get('/vnm-refund/slots');
+  return server.EVENT.get('//ka2-refund/slots');
 }
 
 // poker cashback
@@ -257,7 +257,7 @@ export function bonusClaimPokerRefund() {
   return server.EVENT.put('/bonus/claim/vnm-poker-refund');
 }
 export function getBonusPokerCashback() {
-  return server.EVENT.get('/vnm-refund/poker');
+  return server.EVENT.get('/ka2-refund/poker');
 }
 export function selectNumber(promoCode, number) { 
   return server.EVENT.post('/uefa-lottery/select-number',  
