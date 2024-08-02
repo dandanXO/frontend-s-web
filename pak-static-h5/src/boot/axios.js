@@ -41,7 +41,7 @@ export default boot(({ app, router }) => {
   const onRequest = (config) => {
     if (store.token) {
       api.defaults.headers["token"] = store.token;
-      cashier.defaults.headers["TOKEN"] = store.token;
+      cashier.defaults.headers["token"] = store.token;
       eventapi.defaults.headers["token"] = store.token;
     }
     // config.headers["Authorization"] = process.env.SITE;
@@ -76,12 +76,16 @@ export default boot(({ app, router }) => {
     });
     // debugger;
     const originalRequest = errorresp.config;
+    console.log(originalRequest);
     const res = await api.post("/member/token/refresh");
     // console.log(res);
+    // debugger;
     SessionStorage.set("TOKEN", res.data);
     LocalStorage.set("TOKEN", res.data);
     store.token = res.data;
     originalRequest.headers.token = store.token;
+
+    // originalRequest.headers.TOKEN = store.token;
 
     return new Promise((resolve, reject) => {
       axios(originalRequest)
