@@ -379,51 +379,49 @@
           <el-input class="disable-input" v-model="item.code" />
           -
           <el-input class="disable-input" v-model="item.value" />
-          <span v-if="item.siteId === 0" class="default-label">
-            {{ t('fields.defaultConfigHint') }}
-          </span>
-          <span v-else>
-            <el-button
-              icon="el-icon-edit"
-              size="mini"
-              type="success"
-              style="margin-left: 20px"
-              @click="showEdit(item)"
-              plain
-            >
-              {{ t('fields.edit') }}
-            </el-button>
-            <el-button
-              icon="el-icon-remove"
-              size="mini"
-              type="danger"
-              style="margin-left: 20px"
-              @click="delConfig(item.id)"
-              plain
-            >
-              {{ t('fields.delete') }}
-            </el-button>
-            <el-button
-              circle
-              icon="el-icon-arrow-up"
-              size="mini"
-              type="primary"
-              style="margin-left: 20px"
-              plain
-              @click="moveUp(item, groupConfig)"
-              :disabled="!canClickMoveUpButton(item, groupConfig)"
-            />
-            <el-button
-              circle
-              icon="el-icon-arrow-down"
-              size="mini"
-              type="primary"
-              style="margin-left: 20px"
-              plain
-              @click="moveDown(item, groupConfig)"
-              :disabled="!canClickMoveDownButton(item, groupConfig)"
-            />
-          </span>
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="success"
+            style="margin-left: 20px"
+            @click="item.siteId === 0 ? showOverrideDefaultConfig(item) : showEdit(item)"
+            plain
+          >
+            {{ t('fields.edit') }}
+          </el-button>
+          <el-button
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            style="margin-left: 20px"
+            @click="delConfig(item.id)"
+            plain
+            v-if="item.siteId !== 0"
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+          <el-button
+            circle
+            icon="el-icon-arrow-up"
+            size="mini"
+            type="primary"
+            style="margin-left: 20px"
+            plain
+            @click="moveUp(item, groupConfig)"
+            v-if="item.siteId !== 0"
+            :disabled="!canClickMoveUpButton(item, groupConfig)"
+          />
+          <el-button
+            circle
+            icon="el-icon-arrow-down"
+            size="mini"
+            type="primary"
+            style="margin-left: 20px"
+            plain
+            @click="moveDown(item, groupConfig)"
+            v-if="item.siteId !== 0"
+            :disabled="!canClickMoveDownButton(item, groupConfig)"
+          />
         </el-form-item>
       </el-collapse-item>
     </el-collapse>
@@ -445,6 +443,7 @@
     :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
+    :before-close="closeDialog"
   >
     <el-form
       ref="configForm"
@@ -458,10 +457,11 @@
         <el-input
           v-model="form.configGroup"
           :placeholder="t('fields.configGroup')"
+          :disabled="dialogMode === 'OVERRIDE_DEFAULT'"
         />
       </el-form-item>
       <el-form-item :label="t('fields.configCode')" prop="code">
-        <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
+        <el-input v-model="form.code" :placeholder="t('fields.configCode')" :disabled="dialogMode === 'OVERRIDE_DEFAULT'" />
       </el-form-item>
       <el-form-item :label="t('fields.configValue')" prop="value">
         <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
@@ -469,7 +469,7 @@
     </el-form>
 
     <div class="dialog-footer">
-      <el-button @click="uiControl.dialogVisible = false">
+      <el-button @click="closeDialog">
         {{ $t('fields.cancel') }}
       </el-button>
       <el-button type="primary" @click="submit()">
@@ -526,6 +526,12 @@ const uiControl = reactive({
 })
 
 const configForm = ref(null)
+
+const dialogMode = ref(null)
+const closeDialog = () => {
+  dialogMode.value = null;
+  uiControl.dialogVisible = false
+}
 
 const form = reactive({
   id: null,
@@ -836,6 +842,17 @@ function showEdit(customConfig) {
   })
 }
 
+function showOverrideDefaultConfig(customConfig) {
+  showDialog('OVERRIDE_DEFAULT')
+  nextTick(() => {
+    for (const key in customConfig) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = customConfig[key]
+      }
+    }
+  })
+}
+
 async function updateConfigs() {
   const sub = configs.value.filter(item => item.value === null)
   if (sub.length > 0) {
@@ -899,6 +916,8 @@ async function updateConfigs() {
 }
 
 function showDialog(type) {
+  dialogMode.value = type;
+
   if (type === 'CREATE') {
     if (configForm.value) {
       form.id = null
@@ -906,6 +925,8 @@ function showDialog(type) {
     }
     uiControl.dialogTitle = t('fields.createConfig')
   } else if (type === 'EDIT') {
+    uiControl.dialogTitle = t('fields.editConfig')
+  } else if (type === 'OVERRIDE_DEFAULT') {
     uiControl.dialogTitle = t('fields.editConfig')
   }
   uiControl.dialogVisible = true
@@ -916,16 +937,22 @@ async function submit() {
     if (valid) {
       form.configGroup = form.configGroup.trim();
       form.code = form.code.trim();
-      if (uiControl.dialogTitle === t('fields.createConfig')) {
+      if (dialogMode.value === 'CREATE') {
         form.siteId = siteId.value
         await createConfig(form)
         ElMessage({ message: t('message.addSuccess'), type: 'success' })
-      } else if (uiControl.dialogTitle === t('fields.editConfig')) {
+      } else if (dialogMode.value === 'EDIT') {
         await updateConfig(form)
         ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+      } else if (dialogMode.value === 'OVERRIDE_DEFAULT') {
+        form.siteId = siteId.value;
+        form.id = null
+        await createConfig(form)
+        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
       }
+
       await loadConfigs()
-      uiControl.dialogVisible = false
+      closeDialog()
     }
   })
 }
