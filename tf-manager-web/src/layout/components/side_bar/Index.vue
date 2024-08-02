@@ -21,9 +21,13 @@
           :key="route.path"
           :item="route"
           :base-path="route.path"
+          :has-new-user="hasNewUser"
         />
       </el-menu>
     </el-scrollbar>
+    <audio ref="notificationAudioRef">
+      <source src="@/assets/tones/chime.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 
@@ -47,6 +51,8 @@ export default defineComponent({
   },
   setup() {
     const isMounted = ref(false);
+    const hasNewUser = ref(false);
+    const notificationAudioRef = ref();
     const startDate = new Date();
     startDate.setDate(startDate.getDate());
     const defaultStartDate = convertStartDate(startDate);
@@ -151,13 +157,17 @@ export default defineComponent({
     };
 
     const checkGetNewRegisterMember = async() => {
-      const { data: ret } = await getNewRegisterMemberLists(10);
+      const siteId = store.state.user.siteId
+      const { data: ret } = await getNewRegisterMemberLists(siteId);
       console.log("HERe")
       console.log(ret);
       if (ret === 0) {
-        sessionStorage.setItem("NEW_REGISTER_USER", 0);
+        // sessionStorage.setItem("NEW_REGISTER_USER", 0);
+        hasNewUser.value = false
       } else {
-        sessionStorage.setItem("NEW_REGISTER_USER", ret);
+        if (notificationAudioRef.value) notificationAudioRef.value.play()
+        hasNewUser.value = true
+        // sessionStorage.setItem("NEW_REGISTER_USER", ret);
       }
     }
 
@@ -193,7 +203,9 @@ export default defineComponent({
       variables,
       activeMenu,
       isCollapse,
-      isMounted
+      isMounted,
+      notificationAudioRef,
+      hasNewUser
     }
   }
 })
