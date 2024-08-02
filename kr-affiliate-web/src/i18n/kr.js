@@ -90,6 +90,7 @@ export default {
     'Daily Detail': '일일 상세 내역',
     'Daily Summary': '일일 총괄',
     Withdraw: '은행 출금',
+    CommWithdraw: '수수료 인출',
     'Rebate Report': '리베이트 보고서',
     message: '사이트 메시지',
     'Bet Management': '베팅관리',
