@@ -5,7 +5,7 @@ var next = urlLists[randNum - 1];
 var hostname = window.location.hostname;
 console.log(hostname);
 if (hostname.indexOf("ft609.cc") > -1 || hostname.indexOf("ro396.cc") > -1 || hostname.indexOf("pt505.cc") > -1) {
-  next = "https://p886866.com?redirect=6677";
+  next = "https://vb88123.com/register";
 }
 const t667788Links = [
   "localhost",
@@ -31,9 +31,8 @@ const t667788Links = [
   "me413.cc"
 ];
 const is667788LH = t667788Links.some((link) => hostname.includes(link));
-
 if (is667788LH) {
-  next = "https://t667788.com/";
+  next = "https://p886866.com?redirect=6677";
 }
 
 let timeoutId;
