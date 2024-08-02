@@ -65,7 +65,7 @@
               <q-btn
                 class="status"
                 :class="getStatus(bankCardBindState).class"
-                @click="handleClickStatusButton('NO', 'new-user-setup-bonus-bankcard')"
+                @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')"
               >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 0px"
@@ -108,7 +108,12 @@
             />
             <div class="title">首次提款</div>
           </div>
-          <q-btn v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }" @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
+          <q-btn
+            v-if="isValidUser"
+            class="go-btn"
+            :class="{ complete: firstWithdrawalState === 'CLAIMED' }"
+            @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')"
+          >
             <img
               v-if="firstWithdrawalState === 'CLAIMED'"
               style="width: 16px; height: 16px; vertical-align: sub; margin: 0px auto 4px"
@@ -328,7 +333,7 @@ const handleClickStatusButton = (status, promoCode) => {
       }
     } else {
       if (window.location.pathname === "/promotion") {
-        document.location.href = `app://deposit`;
+        document.location.href = `app://bindcard`;
       } else {
         router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
       }
@@ -446,8 +451,8 @@ onMounted(async () => {
     img {
       margin-bottom: 0 !important;
     }
-    span{
-      flex-shrink: 0
+    span {
+      flex-shrink: 0;
     }
   }
 }
@@ -601,8 +606,8 @@ h1 {
     img {
       margin-bottom: 0 !important;
     }
-    span{
-      flex-shrink: 0
+    span {
+      flex-shrink: 0;
     }
   }
 }
