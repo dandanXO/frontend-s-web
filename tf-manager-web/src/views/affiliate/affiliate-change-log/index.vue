@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.targetType"
+          size="small"
+          :placeholder="t('fields.targetType')"
+          class="filter-item"
+          style="width: 200px;"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in uiControl.targetType"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY HH:mm:ss"
@@ -100,6 +115,11 @@ const uiControl = reactive({
   requestParam: '',
   responseBody: '',
   targetType: [
+    {
+      key: 'MEMBER',
+      displayName: 'MEMBER',
+      value: 'MEMBER',
+    },
     {
       key: 'AFFILIATE',
       displayName: 'AFFILIATE',
