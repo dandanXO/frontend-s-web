@@ -139,7 +139,7 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam && store.isNotAppPromo()) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+        const res = await api.post("/memberStatistics/submit", {
           params: {
             way: way,
             sid: sidParam,

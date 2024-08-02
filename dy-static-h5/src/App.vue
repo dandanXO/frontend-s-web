@@ -121,7 +121,7 @@ export default defineComponent({
       const way = "h5";
 
       if (sidParam && store.isNotAppPromo()) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+        const res = await api.post("/memberStatistics/submit", {
           params: {
             way: way,
             sid: sidParam,

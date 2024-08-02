@@ -13,3 +13,8 @@ export function getAppDownloadUrlFromServer() {
 export function getCSAFromServer() {
   return server.REST.get("/config/customerAddress");
 }
+
+
+export function submitMemberStats(stats) {
+  return server.REST.post("/memberStatistics/submit", stats);
+}
