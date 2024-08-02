@@ -101,18 +101,21 @@ function isHuaweiBrowser() {
 const handleCopyClick = async () => {
   if (window.location.pathname === "/promotion") {
     const textToCopy = currentVoxisId.value;
-
-    alert(textToCopy);
+    // alert(textToCopy);
 
     const notify = useNotify();
     if (isHuaweiBrowser()) {
-      alert("Here1");
       writeClipboard(currentVoxisId.value);
     } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
-      alert("Here");
       await navigator.clipboard.writeText(textToCopy);
+
+      setTimeout(() => {
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }, 100);
     } else {
-      alert("Here2");
       // Use the 'out of viewport hidden text area' trick
       const textArea = document.createElement("textarea");
       textArea.value = textToCopy;
@@ -132,11 +135,14 @@ const handleCopyClick = async () => {
       } finally {
         document.body.removeChild(textArea);
       }
+
+      setTimeout(() => {
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }, 100);
     }
-    notify({
-      type: "success",
-      message: "复制成功"
-    });
   } else {
     writeClipboard(currentVoxisId.value);
   }
