@@ -34,7 +34,7 @@
 
     <div class="official-gift-block reason-block">
       <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
-       <img src="./img/reason-block-title.png"/>
+      <img src="./img/reason-block-title.png" />
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
@@ -93,14 +93,26 @@ const currentVoxisId = computed(() => {
   return paramsObj.value[key] || "";
 });
 
+function isHuaweiBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return userAgent.includes("huawei") || userAgent.includes("honor");
+}
+
 const handleCopyClick = async () => {
   if (window.location.pathname === "/promotion") {
     const textToCopy = currentVoxisId.value;
 
+    alert(textToCopy);
+
     const notify = useNotify();
-    if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+    if (isHuaweiBrowser()) {
+      alert("Here1");
+      writeClipboard(currentVoxisId.value);
+    } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+      alert("Here");
       await navigator.clipboard.writeText(textToCopy);
     } else {
+      alert("Here2");
       // Use the 'out of viewport hidden text area' trick
       const textArea = document.createElement("textarea");
       textArea.value = textToCopy;
@@ -121,7 +133,6 @@ const handleCopyClick = async () => {
         document.body.removeChild(textArea);
       }
     }
-
     notify({
       type: "success",
       message: "复制成功"
@@ -259,7 +270,7 @@ const handleCopyClick = async () => {
           max-width: 2.5rem;
         }
         span {
-          font-size: .9rem;
+          font-size: 0.9rem;
           font-weight: 400;
           line-height: 1.3rem;
           margin-bottom: 10px;
