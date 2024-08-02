@@ -153,7 +153,9 @@
             <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
             <template v-else>1.00</template>
             USDT ≈
-            <template v-if="form.localAmount > 0">{{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}</template>
+            <template v-if="form.localAmount > 0">
+              {{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}
+            </template>
             <template v-else>{{ activeMethod.currencyRate }}</template>
 
             {{ store.currency.value }}
@@ -222,18 +224,37 @@
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
-      <p>
-        1. Recharge tutorial:
-        <span class="tutorial-link" @click="openDepositPage">Picture</span>
-        /
-        <span class="tutorial-link" @click="openDepositVideo">Video</span>
-      </p>
-      <p>2. Fill in the correct wallet account number</p>
-      <p>3. Fill in the correct CNIC number</p>
-      <p>
-        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-        credited.
-      </p>
+      <template v-if="isUSDT">
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
+        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>
+          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+        </p>
+        <p>
+          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+        </p>
+        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+      </template>
+      <template v-else>
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Fill in the correct wallet account number</p>
+        <p>3. Fill in the correct CNIC number</p>
+        <p>
+          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+          credited.
+        </p>
+      </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
     <div class="bottom-content" style="height: 40px"></div>
@@ -540,9 +561,6 @@ function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
   calculatedMinDeposit.value = val.depositMin;
   calculatedMaxDeposit.value = val.depositMax;
-
-  console.log(val.depositMin);
-  console.log(val.depositMax);
 }
 
 function checkPrivilege(v) {
@@ -832,7 +850,6 @@ const convertToTwoDecimalAmount = (amount) => {
   let formattedAmount = parseFloat(amount).toFixed(2);
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
-
 
 onActivated(() => {
   // checkNewUser();

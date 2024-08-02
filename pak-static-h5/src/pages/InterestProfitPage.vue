@@ -215,11 +215,11 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
-          <div class="box-value">{{ humanDatetime(recordDetails.placeTime) }}</div>
+          <div class="box-value">{{ convertToGMT55(recordDetails.placeTime) }}</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.matureTime") }}</div>
-          <div class="box-value">{{ humanDatetime(recordDetails.matureTime) }}</div>
+          <div class="box-value">{{ convertToGMT55(recordDetails.matureTime) }}</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.status") }}</div>
