@@ -21,9 +21,13 @@
           :key="route.path"
           :item="route"
           :base-path="route.path"
+          :has-new-user="hasNewUser"
         />
       </el-menu>
     </el-scrollbar>
+    <audio ref="notificationAudioRef">
+      <source src="@/assets/tones/chime.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 
@@ -38,6 +42,7 @@ import { getMemberWithdrawRecordApplySimple, getMemberWithdrawRecordApply, getMe
 import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
+import { getNewRegisterMemberLists } from "../../../api/member";
 
 export default defineComponent({
   components: {
@@ -46,6 +51,8 @@ export default defineComponent({
   },
   setup() {
     const isMounted = ref(false);
+    const hasNewUser = ref(false);
+    const notificationAudioRef = ref();
     const startDate = new Date();
     startDate.setDate(startDate.getDate());
     const defaultStartDate = convertStartDate(startDate);
@@ -149,6 +156,21 @@ export default defineComponent({
       }
     };
 
+    const checkGetNewRegisterMember = async() => {
+      const siteId = store.state.user.siteId
+      const { data: ret } = await getNewRegisterMemberLists(siteId);
+      console.log("HERe")
+      console.log(ret);
+      if (ret === 0) {
+        // sessionStorage.setItem("NEW_REGISTER_USER", 0);
+        hasNewUser.value = false
+      } else {
+        if (notificationAudioRef.value) notificationAudioRef.value.play()
+        hasNewUser.value = true
+        // sessionStorage.setItem("NEW_REGISTER_USER", ret);
+      }
+    }
+
     onMounted(async() => {
       if (!hasPermission(["sys:withdraw:apply"]) && hasPermission(["sys:withdraw:simple:list"])) {
         await checkOutstandingAutoWithdraw();
@@ -165,6 +187,12 @@ export default defineComponent({
       if (hasPermission(["sys:feedback:list"])) {
         await checkOutstandingFinancialFeedback();
       }
+      if (hasPermission(["sys:member:list"])) {
+        await checkGetNewRegisterMember();
+        setInterval(async() => {
+          await checkGetNewRegisterMember();
+        }, 180000)
+      }
       isMounted.value = true;
     });
 
@@ -175,7 +203,9 @@ export default defineComponent({
       variables,
       activeMenu,
       isCollapse,
-      isMounted
+      isMounted,
+      notificationAudioRef,
+      hasNewUser
     }
   }
 })
