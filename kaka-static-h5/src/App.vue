@@ -334,7 +334,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("Kaka H5");
       checkSID();
       // initCsWeb();
       getCSA();
