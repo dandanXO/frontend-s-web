@@ -33,7 +33,8 @@
     </div>
 
     <div class="official-gift-block reason-block">
-      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
+       <img src="./img/reason-block-title.png"/>
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
@@ -258,7 +259,7 @@ const handleCopyClick = async () => {
           max-width: 2.5rem;
         }
         span {
-          font-size: 0.7rem;
+          font-size: .9rem;
           font-weight: 400;
           line-height: 1.3rem;
           margin-bottom: 10px;
