@@ -1484,6 +1484,7 @@ export default defineComponent({
     };
 
     const gotoPromo = (banner) => {
+      if (!banner.redirectUrl.trim()) return;
       const urlSplit = banner.redirectUrl.split("|");
       if (urlSplit.length >= 2) {
         const type = urlSplit[0];
