@@ -24,7 +24,7 @@
         <span>认准雷火电竞官方VIP客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：领取彩金、投资计划、赛事推荐</span>
+        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
@@ -36,7 +36,7 @@
 
     <div class="official-gift-block reason-block">
       <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
-      <img class="official-gift-block-title" src="./img/reason-block-title.png"/>
+      <img class="official-gift-block-title" src="./img/reason-block-title.png" />
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">

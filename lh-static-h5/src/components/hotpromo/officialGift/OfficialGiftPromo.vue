@@ -23,7 +23,7 @@
         <span>认准雷火电竞官方VIP客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：领取彩金、投资计划、赛事推荐</span>
+        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="./img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
