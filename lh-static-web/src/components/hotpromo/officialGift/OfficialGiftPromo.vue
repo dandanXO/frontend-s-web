@@ -35,7 +35,8 @@
     </div>
 
     <div class="official-gift-block reason-block">
-      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
+      <img class="official-gift-block-title" src="./img/reason-block-title.png"/>
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
@@ -116,15 +117,17 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
   box-shadow: 0px 0px 4px 0px #01497b0f;
 
   .official-gift-block-title {
-    background: url(@/components/hotpromo/officialGift/img/block-title-bg.png) no-repeat;
-    background-size: contain;
-    aspect-ratio: 966 / 44;
+    max-width: 966px;
     margin: 0 auto;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 44px;
-    text-align: center;
-    color: #4c4c6c;
+    // background: url(@/components/hotpromo/officialGift/img/block-title-bg.png) no-repeat;
+    // background-size: contain;
+    // aspect-ratio: 966 / 44;
+    // margin: 0 auto;
+    // font-size: 32px;
+    // font-weight: 400;
+    // line-height: 44px;
+    // text-align: center;
+    // color: #4c4c6c;
   }
 }
 
