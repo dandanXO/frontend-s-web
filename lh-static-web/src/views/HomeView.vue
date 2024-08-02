@@ -30,9 +30,7 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
 
-onMounted(() => {
-  // console.log("Home");
-});
+onMounted(() => {});
 </script>
 
 <style scoped lang="scss">
