@@ -157,17 +157,18 @@ export default defineComponent({
     };
 
     const checkGetNewRegisterMember = async() => {
-      const siteId = store.state.user.siteId
-      const { data: ret } = await getNewRegisterMemberLists(siteId);
-      console.log("HERe")
-      console.log(ret);
-      if (ret === 0) {
-        // sessionStorage.setItem("NEW_REGISTER_USER", 0);
-        hasNewUser.value = false
-      } else {
-        if (notificationAudioRef.value) notificationAudioRef.value.play()
-        hasNewUser.value = true
-        // sessionStorage.setItem("NEW_REGISTER_USER", ret);
+      const siteId = store.state.user.siteId;
+      if (siteId === 10) {
+        const { data: ret } = await getNewRegisterMemberLists(siteId);
+        // console.log(ret);
+        if (ret === 0) {
+          // sessionStorage.setItem("NEW_REGISTER_USER", 0);
+          hasNewUser.value = false
+        } else {
+          if (notificationAudioRef.value) notificationAudioRef.value.play()
+          hasNewUser.value = true
+          // sessionStorage.setItem("NEW_REGISTER_USER", ret);
+        }
       }
     }
 
