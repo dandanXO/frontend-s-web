@@ -59,6 +59,11 @@
           </tr>
         </tbody>
       </table>
+      <div style="width: 100%; margin: 0 auto; text-align: center">
+        <q-btn class="godeposit-btn" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </q-btn>
+      </div>
       <div class="reward-description">
         <div style="display: flex; align-items: center">
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -100,6 +105,11 @@
           </tr>
         </tbody>
       </table>
+      <div style="width: 100%; margin: 0 auto; text-align: center">
+        <q-btn class="godeposit-btn" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </q-btn>
+      </div>
       <div class="reward-description">
         <div style="display: flex; align-items: center">
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -133,6 +143,11 @@
           </tr>
         </tbody>
       </table>
+      <div style="width: 100%; margin: 0 auto; text-align: center">
+        <q-btn class="godeposit-btn" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </q-btn>
+      </div>
       <div class="reward-description">
         <div style="display: flex; align-items: center">
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -166,6 +181,11 @@
           </tr>
         </tbody>
       </table>
+      <div style="width: 100%; margin: 0 auto; text-align: center">
+        <q-btn class="godeposit-btn" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </q-btn>
+      </div>
       <div class="reward-description">
         <div style="display: flex; align-items: center">
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -199,6 +219,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div style="width: 100%; margin: 0 auto; text-align: center">
+        <q-btn class="godeposit-btn" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </q-btn>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex; align-items: center">
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -232,6 +259,12 @@
           </tr>
         </tbody>
       </table>
+      <div style="width: 100%; margin: 0 auto; text-align: center">
+        <q-btn class="godeposit-btn" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </q-btn>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex; align-items: center">
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -401,6 +434,11 @@ const handleRecieve = async (reward) => {
     if (apiRes.code === 0) {
       updatedApiRes.value = updatedApiRes.value.map((item) => {
         if (item.ruleAmount === reward.ruleAmount) {
+          notify({
+            type: "success",
+            message: `成功领取 ￥${apiRes.data}`
+          });
+
           return {
             ...item,
             state: "CLAIMED"
@@ -791,5 +829,9 @@ button:disabled {
     background: url("../../../assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
     background-size: cover;
   }
+}
+
+.godeposit-btn {
+  width: 120px;
 }
 </style>
