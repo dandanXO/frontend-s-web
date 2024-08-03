@@ -1948,6 +1948,8 @@ export default {
     notClaimed: '未领取',
     displayAmount: '显示金额',
     activate: '解禁',
+    withdrawPassword: '提款密码',
+    updateWithdrawPassword: '更新提款密码',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

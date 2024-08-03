@@ -1949,6 +1949,8 @@ export default {
     notClaimed: 'Pending',
     displayAmount: 'Display Amount',
     activate: 'Activate',
+    withdrawPassword: 'Withdraw Password',
+    updateWithdrawPassword: 'Update Withdraw Password',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
