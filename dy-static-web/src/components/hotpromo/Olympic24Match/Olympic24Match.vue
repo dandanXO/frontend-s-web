@@ -20,19 +20,14 @@
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>≥3</td>
+            <td>≥1</td>
             <td>0.8%</td>
             <td>88</td>
           </tr>
           <tr>
-            <td>≥5</td>
+            <td>≥2</td>
             <td>1.0%</td>
             <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>3.0%</td>
-            <td>888</td>
           </tr>
         </table>
 
@@ -311,7 +306,6 @@ const recordList = ref([]);
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
 const showTableRecordDialog = () => {
-  
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
       autofocus: false,
@@ -325,8 +319,8 @@ const showTableRecordDialog = () => {
     });
     return;
   }
-  tableRecordDialog.value = true
-}
+  tableRecordDialog.value = true;
+};
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -423,8 +417,8 @@ const getData = () => {
   });
 };
 onMounted(() => {
-  if(!store.token) {
-    return
+  if (!store.token) {
+    return;
   }
   getData();
 });

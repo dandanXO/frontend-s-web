@@ -20,19 +20,14 @@
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>≥3</td>
+            <td>≥1</td>
             <td>0.8%</td>
             <td>88</td>
           </tr>
           <tr>
-            <td>≥5</td>
+            <td>≥2</td>
             <td>1.0%</td>
             <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>3.0%</td>
-            <td>888</td>
           </tr>
         </table>
 
@@ -341,52 +336,52 @@ let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 const showTableRecordDialog = () => {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'dyblue',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "dyblue",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
-  tableRecordDialog.value = true
-}
+  tableRecordDialog.value = true;
+};
 const handleVoteClick = (selectedData) => {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'dyblue',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "dyblue",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
   submitParam = selectedData;
   confirmVoteDialog.value = true;
