@@ -59,6 +59,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -108,6 +115,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -149,6 +163,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -190,6 +211,12 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn v" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -231,6 +258,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -272,6 +306,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -776,6 +817,33 @@ button:disabled {
   &-active {
     background: url("@/assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
     background-size: cover;
+  }
+}
+
+.go-btn-div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.go-btn {
+  width: 150px;
+  background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+  color: #fff;
+  padding: 5px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  text-align: center;
+
+  &.status {
+    color: #fff;
+  }
+
+  &.complete {
+    border: 1px solid rgba(0, 133, 232, 1);
+    background: white;
+    color: rgba(0, 133, 232, 1);
   }
 }
 </style>
