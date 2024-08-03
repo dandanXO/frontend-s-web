@@ -433,7 +433,6 @@ function selectTab(tab) {
 }
 
 const handleRecieve = async (reward, type) => {
-  debugger;
   try {
     const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount, type);
 
