@@ -121,13 +121,14 @@ export default defineComponent({
       const way = "h5";
 
       if (sidParam && store.isNotAppPromo()) {
-        const res = await api.post("/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: sidParam,
             siteCode: "dy2"
-          }
-        });
+          })
+        );
       }
     };
 
