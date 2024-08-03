@@ -6,9 +6,7 @@ export function getSiteParamFromServer() {
 }
 
 export function getAppDownloadUrlFromServer() {
-  return cached.get("APPDOWNLOAD_URL", () =>
-    server.REST.get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
-  );
+  return cached.get("APPDOWNLOAD_URL", () => server.REST.get("/app/getAppData?siteCode=lh1&appType=ALL_SITE"));
 }
 
 export function getCSAFromServer() {
@@ -17,4 +15,8 @@ export function getCSAFromServer() {
 
 export function getFloatingItems() {
   return server.REST.get("/redirect");
+}
+
+export function submitMemberStats(stats) {
+  return server.REST.post("/memberStatistics/submit", stats);
 }

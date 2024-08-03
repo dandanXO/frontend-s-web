@@ -242,7 +242,7 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam) {
-        const res = await axios.get("https://memstapak.thilhe946li.com/memberStatistics/submit", {
+        const res = await api.post("/memberStatistics/submit", {
           params: {
             way: way,
             sid: store.visitorId,

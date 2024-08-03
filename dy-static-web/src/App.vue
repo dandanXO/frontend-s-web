@@ -8,6 +8,7 @@ import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
+import { submitMemberStats } from "@/api/index/site";
 
 export default defineComponent({
   setup() {
@@ -41,13 +42,13 @@ export default defineComponent({
       const way = "web";
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
-          params: {
-            way: way,
-            sid: sidParam,
-            siteCode: "dy2"
-          }
-        });
+        const params = {
+          way: way,
+          sid: sidParam,
+          siteCode: "dy2"
+        };
+
+        submitMemberStats(params);
       }
     };
 
