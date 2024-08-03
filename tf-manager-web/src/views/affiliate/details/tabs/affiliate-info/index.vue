@@ -542,6 +542,31 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon
+                icon-class="password"
+                style="height: 16px;width: 16px;"
+              />
+              {{ t('fields.withdrawPassword') }}
+            </div>
+          </template>
+          <el-button
+            type="info"
+            size="mini"
+            v-permission="['sys:affiliate:update:password']"
+            @click="showDialog('UPDATE_WITHDRAW_PASSWORD')"
+          >
+            {{ t('fields.updatePassword') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item />
+        <el-descriptions-item />
       </el-descriptions>
     </el-card>
 
@@ -1030,7 +1055,7 @@
       width="580px"
     >
       <el-form
-        v-if="uiControl.dialogType === 'UPDATE_PASSWORD'"
+        v-if="uiControl.dialogType === 'UPDATE_PASSWORD' || uiControl.dialogType === 'UPDATE_WITHDRAW_PASSWORD'"
         ref="updatePasswordForm"
         :model="passwordForm"
         :rules="passwordFormRules"
@@ -1529,6 +1554,7 @@ import {
   updateLevel,
   getDownlineShareRatio,
   reactivateAffiliate,
+  updateAffiliateWithdrawPassword,
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1922,11 +1948,14 @@ async function loadMemberStatus() {
 
 function showDialog(type) {
   uiControl.dialogType = type
-  if (type === 'UPDATE_PASSWORD') {
+  if (type === 'UPDATE_PASSWORD' || type === 'UPDATE_WITHDRAW_PASSWORD') {
     if (updatePasswordForm.value) {
       updatePasswordForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.updatePassword')
+    if (type === 'UPDATE_WITHDRAW_PASSWORD') {
+      uiControl.dialogTitle = t('fields.updateWithdrawPassword')
+    }
   } else if (type === 'DISABLE_AFFILIATE') {
     if (freezeMemberForm.value) {
       freezeMemberForm.value.resetFields()
@@ -2043,11 +2072,19 @@ function showDialog(type) {
 function changePassword() {
   updatePasswordForm.value.validate(async valid => {
     if (valid) {
-      await updateAffiliatePassword(
-        props.affId,
-        passwordForm.password,
-        memberDetail.siteId
-      )
+      if (uiControl.dialogType === 'UPDATE_WITHDRAW_PASSWORD') {
+        await updateAffiliateWithdrawPassword(
+          props.affId,
+          passwordForm.password,
+          memberDetail.siteId
+        )
+      } else {
+        await updateAffiliatePassword(
+          props.affId,
+          passwordForm.password,
+          memberDetail.siteId
+        )
+      }
       uiControl.dialogVisible = false
       ElMessage({
         message: t('message.updatePasswordSuccess'),

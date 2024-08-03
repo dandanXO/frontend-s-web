@@ -1806,6 +1806,8 @@ export default {
     notClaimed: '보류 중',
     displayAmount: '표시금액',
     activate: '활성화하다',
+    withdrawPassword: '비밀번호 철회',
+    updateWithdrawPassword: '출금 비밀번호 업데이트',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
