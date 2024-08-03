@@ -582,7 +582,12 @@ h1 {
   width: 80px;
   border: 1px solid rgba(0, 133, 232, 1);
 
+  cursor: pointer;
   color: rgba(0, 133, 232, 1);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 }
 
 .complete {
