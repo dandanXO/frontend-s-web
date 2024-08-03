@@ -840,7 +840,7 @@ export default {
     channelPackUrlCopied: '채널 패킹 링크가 클립보드에 복사되었습니다',
     validateAppNameRequired: '앱 이름은 필수입니다',
     validateAppIconRequired: '앱 아이콘은 필수입니다',
-    validateShareRatioFormat: '공유 비율은 0에서 1 사이여야 합니다.',
+    validateShareRatioFormat: '공유 비율은 0에서 100 사이여야 합니다.',
     depositShouldBetween: '입금액은 다음 사이여야 합니다 ',
     requiredPositiveInteger: '숫자를 입력해주세요',
     replySuccess: '성공적인 답변',

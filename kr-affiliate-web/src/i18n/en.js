@@ -848,7 +848,7 @@ export default {
     channelPackUrlCopied: 'Channel Pack Url has been copied to clipboard.',
     validateAppNameRequired: 'App Name is required',
     validateAppIconRequired: 'App Icon is required',
-    validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
+    validateShareRatioFormat: 'Share Ratio must be between 0 to 100',
     depositShouldBetween: 'Deposit amount should be between ',
     requiredPositiveInteger: 'Required Positive Integer',
     confirmRecycle: 'Confirm Recycle Balance for Member ',
