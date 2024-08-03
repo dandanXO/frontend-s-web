@@ -294,7 +294,9 @@
         <div>已领取：{{ getDoneRewardItem1 }}元</div>
         <div v-if="matchRewardItem1 && matchRewardItem1.earn">
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
-          <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
+          <span style="color: rgba(0, 136, 215, 1)">
+            {{ (matchRewardItem1?.ruleAmount - depositAmount).toFixed(2) }}
+          </span>
           元
         </div>
         <div v-else>已达成所有领取条件。</div>
@@ -307,7 +309,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward, 'all')">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -324,7 +326,7 @@
         </div>
         <div class="title">
           已累计充值：
-          <span style="color: rgba(0, 136, 215, 1)">{{ depositAmount }}</span>
+          <span style="color: rgba(0, 136, 215, 1)">{{ depositWalletAmount }}</span>
           元
         </div>
       </div>
@@ -335,7 +337,9 @@
         <div>已领取：{{ getDoneRewardItem2 }}元</div>
         <div v-if="matchRewardItem2 && matchRewardItem2.earn">
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
-          <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
+          <span style="color: rgba(0, 136, 215, 1)">
+            {{ (matchRewardItem2?.ruleAmount - depositWalletAmount).toFixed(2) }}
+          </span>
           元
         </div>
         <div v-else>已达成所有领取条件。</div>
@@ -348,7 +352,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward, 'wallet')">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -390,6 +394,7 @@ const router = useRouter();
 const selectedTab = ref("sports");
 
 const depositAmount = ref(0);
+const depositWalletAmount = ref(0);
 const updatedApiRes = ref([]);
 
 const rewards1 = computed(() => {
@@ -408,7 +413,7 @@ const matchRewardItem1 = computed(() => {
   return rewards1.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const matchRewardItem2 = computed(() => {
-  return rewards2.value.find((item) => item.ruleAmount > depositAmount.value);
+  return rewards2.value.find((item) => item.ruleAmount > depositWalletAmount.value);
 });
 const progressPercentage1 = computed(() => {
   if (matchRewardItem1.value) {
@@ -418,7 +423,7 @@ const progressPercentage1 = computed(() => {
 });
 const progressPercentage2 = computed(() => {
   if (matchRewardItem2.value) {
-    return (depositAmount.value / matchRewardItem2.value.ruleAmount) * 100;
+    return (depositWalletAmount.value / matchRewardItem2.value.ruleAmount) * 100;
   }
   return 100;
 });
@@ -427,9 +432,10 @@ function selectTab(tab) {
   selectedTab.value = tab;
 }
 
-const handleRecieve = async (reward) => {
+const handleRecieve = async (reward, type) => {
+  debugger;
   try {
-    const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
+    const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount, type);
 
     if (apiRes.code === 0) {
       updatedApiRes.value = updatedApiRes.value.map((item) => {
@@ -475,6 +481,7 @@ const getData = async () => {
       return;
     }
     depositAmount.value = apiRes.data.depositAmount || 0;
+    depositWalletAmount.value = apiRes.data.depositWalletAmount || 0;
 
     const parseApiRes = JSON.parse(apiRes.data.state);
 
