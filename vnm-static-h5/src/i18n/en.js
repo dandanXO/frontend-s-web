@@ -1413,6 +1413,7 @@ export default {
         doubleBetAmount: "Double the bet amount for each consecutive bet",
         betOnBothSides: "Bet on both sides",
         doubleBet: "Double bet",
+        allin: "All in",
         affiliateAbuse: "Affiliate agent CPA or revenue sharing abuse"
       },
       excludedBets:

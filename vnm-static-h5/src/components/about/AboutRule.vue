@@ -26,6 +26,7 @@
             <li>{{ $t("lang.about.abuseExamples.doubleBetAmount") }}</li>
             <li>{{ $t("lang.about.abuseExamples.betOnBothSides") }}</li>
             <li>{{ $t("lang.about.abuseExamples.doubleBet") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.allin") }}</li>
             <li>{{ $t("lang.about.abuseExamples.affiliateAbuse") }}</li>
           </ul>
         </li>
