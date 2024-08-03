@@ -36,7 +36,7 @@
 
     <div class="official-gift-block reason-block">
       <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
-      <img class="official-gift-block-title" src="./img/reason-block-title.png" />
+      <img class="official-gift-block-title" src="./img/web-title.png" />
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
@@ -72,13 +72,13 @@ const { vip } = storeToRefs(store);
 
 const reasons = ref([
   { icon: BeautySvg, description: "美女专属客服1对1优质服务" },
-  { icon: Clock24Svg, description: "客服全天7*24小时在线" },
+  // { icon: Clock24Svg, description: "客服全天7*24小时在线" },
   { icon: QuestionSvg, description: "优先解答您游戏中各种问题" },
   { icon: StackSvg, description: "提供各种优惠活动信息资料" },
   { icon: ClockSvg, description: "每日活动领取提醒专业引导" },
   { icon: DateSvg, description: "各种游戏类型专业投资计划" },
-  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" },
-  { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
+  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" }
+  // { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
 ]);
 
 const paramsObj = computed(() => {
@@ -213,7 +213,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
   .reason-block-content {
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     .reason-block-content-reason {
       border-radius: 10px;
       background-color: $color-white;
