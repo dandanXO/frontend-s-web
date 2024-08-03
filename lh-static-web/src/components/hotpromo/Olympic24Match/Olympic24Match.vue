@@ -20,19 +20,14 @@
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>≥3</td>
+            <td>≥1</td>
             <td>0.8%</td>
             <td>88</td>
           </tr>
           <tr>
-            <td>≥5</td>
+            <td>≥2</td>
             <td>1.0%</td>
             <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>3.0%</td>
-            <td>888</td>
           </tr>
         </table>
 
@@ -57,7 +52,11 @@
             <div class="olympic24-match-game-content-left">
               <div
                 class="olympic24-match-game-content-team"
-                :class="`${data.status === 'ENDED' && data.answerOne === data.homeTeam ? 'olympic24-match-game-content-team--voted' : ''}`"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.homeTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
               >
                 <img :src="imgURL + data.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
                 <div class="olympic24-match-game-content-team-name">{{ data.homeTeam }}</div>
@@ -122,7 +121,11 @@
             <div class="olympic24-match-game-content-right">
               <div
                 class="olympic24-match-game-content-team"
-                :class="`${data.status === 'ENDED' && data.answerOne === data.awayTeam ? 'olympic24-match-game-content-team--voted' : ''}`"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.awayTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
               >
                 <img :src="imgURL + data.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
                 <div class="olympic24-match-game-content-team-name">{{ data.awayTeam }}</div>
@@ -256,7 +259,14 @@
           </table>
         </div>
       </el-dialog>
-      <el-dialog class="olympic24-match-confirm-vote-dialog" v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
+      <el-dialog
+        class="olympic24-match-confirm-vote-dialog"
+        v-model="confirmVoteDialog"
+        width="500px"
+        align-center
+        persistent
+        title="投票"
+      >
         <div class="dialog-header" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
         <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
         <div class="dialog-footer">
@@ -305,7 +315,6 @@ const recordList = ref([]);
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
 const showTableRecordDialog = () => {
-  
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
       autofocus: false,
@@ -319,8 +328,8 @@ const showTableRecordDialog = () => {
     });
     return;
   }
-  tableRecordDialog.value = true
-}
+  tableRecordDialog.value = true;
+};
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -816,7 +825,6 @@ onMounted(() => {
   .el-dialog__header .el-dialog__title {
     width: 100%;
   }
-
 }
 :deep(.olympic24-match-table-record-dialog) {
   width: 1000px;
