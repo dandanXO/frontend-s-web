@@ -46,7 +46,7 @@
               <th scope="col" class="textCenter">{{ t('fields.loginName') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.bet') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.rebatePercentage') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.rebate') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.pointAmount') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.recordTime') }}</th>
             </tr>
           </thead>
