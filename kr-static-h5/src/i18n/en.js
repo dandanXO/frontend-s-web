@@ -148,6 +148,9 @@ export default {
     reg_bank_acc_holder_placeholder:
       "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
     reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
+    card_account_cannot_empty: "Please enter the depositor's name",
+    reg_withdraw_password_placeholder: "Withdrawal Password",
+    reg_withdraw_password_4_digits: "Please enter your 4-digit withdrawal password",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
