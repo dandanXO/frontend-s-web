@@ -7,14 +7,15 @@
           <em>*</em>
         </q-label> -->
         <q-input
-          v-if="!hasAffiliate"
+          v-if="!hasReferral"
           ref="affiliateCodeRef"
           rounded
           standout
           dense
           clearable
-          v-model="regForm.referrer"
-          :hint="$t('lang.referral_hints')"
+          :disable="hasAffiliate"
+          v-model="regForm.codeAffiliate"
+          :hint="hasAffiliate ? '' : $t('lang.referral_hints')"
           :placeholder="$t('lang.referral_code')"
         >
           <template v-slot:prepend>
@@ -466,6 +467,7 @@ export default defineComponent({
     };
 
     const hasAffiliate = ref(false);
+    const hasReferral = ref(false);
 
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
@@ -477,7 +479,7 @@ export default defineComponent({
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
-        hasAffiliate.value = true;
+        hasReferral.value = true;
         regForm.referrer = refCode;
       }
     };
@@ -789,6 +791,7 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
+      hasReferral,
       trackRegisterSuccessEvent,
       trackRegisterFailedEvent,
       ui,
