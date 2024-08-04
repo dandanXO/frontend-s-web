@@ -258,7 +258,11 @@
             <div style="width: 24px; display: flex; align-items: center">
               <img src="../assets/images/login/withdraw-pwd-icon.png" width="24" />
             </div>
+
+            <span class="text-grey" v-if="!regForm.withdrawPassword" @click="withdrawPasswordRef.focus()">{{$t('lang.reg_withdraw_password_placeholder')}}</span>
           </template>
+
+
         </q-input>
 
         <!-- <q-label>
