@@ -282,7 +282,7 @@
                 :label="t('fields.shareRatio')"
               >
                 <div v-for="item in affInfo.shareRatio" :key="item.code">
-                  <el-row>{{ t('affiliateShareRatio.' + item.code) }} : {{ item.value }}</el-row>
+                  <el-row>{{ t('affiliateShareRatio.' + item.code) }} : {{ (item.value*100).toFixed(2) }}%</el-row>
                 </div>
               </el-form-item>
             </el-row>
