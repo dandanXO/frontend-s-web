@@ -1660,7 +1660,7 @@ function showEditRemark(member) {
 
 function showEditShareRatio(member) {
   selectedMember.id = member.id
-  selectedMember.shareRatio = member.shareRatio
+  selectedMember.shareRatio = JSON.parse(JSON.stringify(member.shareRatio))
   if (
     selectedMember.shareRatio === null ||
     selectedMember.shareRatio === undefined
