@@ -7,7 +7,6 @@
           <em>*</em>
         </q-label> -->
         <q-input
-          v-if="!hasReferral"
           ref="affiliateCodeRef"
           rounded
           standout
