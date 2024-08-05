@@ -27,6 +27,12 @@
 import { userStore } from "@/store";
 import { RiArrowDropRightLine } from "vue-remix-icons";
 
+const props = defineProps({
+  announceData: {
+    type: Array,
+    default: () => []
+  }
+})
 const store = userStore();
 
 const handleDetail = () => {

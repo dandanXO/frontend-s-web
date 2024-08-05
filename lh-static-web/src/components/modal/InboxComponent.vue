@@ -1,18 +1,14 @@
 <template>
   <div class="announcement-component">
     <el-carousel height="auto" class="banner-slider"  :autoplay="false" :interval="5000">
-      <el-carousel-item class="banner-container" v-for="item in 2" :key="item">
-        <div class="announcement-title">体育场馆维护公告{{ item }}</div>
-        <div class="announcement-content">
-          尊敬的会员，恭喜您于 2023/08/1
-          使用 PAY 钱包、USDT 进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。恭喜您于 2023/08/1
-          使用 PAY 钱包、USDT 进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。
-        </div>
+      <el-carousel-item class="banner-container" v-for="item in mailData" :key="item.id">
+        <div class="announcement-title" v-html="item.title"></div>
+        <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
           <div class="footer-button" @click="store.openLiveChat()">联系客服
             <img src="@/assets/images/home/sticky-sidebar/cs-icon.svg" />
           </div>
-          <div class="footer-button detail" @click="handleDetail">查看详情
+          <div class="footer-button detail" v-show="item.redirectType !== 'NONE'" @click="handleDetail(item)">{{ item.redirectButton ?? '查看详情' }}
             <el-icon :size="20">
               <RiArrowDropRightLine />
             </el-icon>
@@ -26,18 +22,34 @@
 <script setup>
 import { userStore } from "@/store";
 import { RiArrowDropRightLine } from "vue-remix-icons";
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+
+const props = defineProps({
+  mailData: {
+    type: Array,
+    default: () => []
+  }
+})
 const store = userStore();
 
-const handleDetail = () => {
-  console.log('handleDetail')
+const handleDetail = (mail) => {
+  if (mail.redirectType === 'INNER') {
+    router.push({ path: mail.redirectUrl })
+  } else if (mail.redirectType === 'OUTER') {
+    window.open(mail.redirectUrl, '_blank')
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.banner-container{
+.banner-container {
   min-height: 400px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 46px;
 }
 .announcement-component {
   padding: 10px 12px 16px;
@@ -54,6 +66,8 @@ const handleDetail = () => {
   font-size: 16px;
   color: #666666;
   margin-bottom: 12px;
+  flex: 1;
+  overflow: auto;
 }
 
 .announcement-footer {
