@@ -12,11 +12,12 @@
               <q-expansion-item class="expansion-bg" expand-separator :label="ann.title">
                 <q-card>
                   <q-card-section>
-                    {{ ann.content }}
+                    <div class="datetime-p">{{ formatDate(ann.createTime) }}</div>
+                    <p class="announcement-p">{{ ann.content }}</p>
                   </q-card-section>
                 </q-card>
               </q-expansion-item>
-              <div class="text-center q-pa-md text-brand" v-if="ann.content.length === 0">暂时无通知</div>
+              <div class="text-center q-pa-md text-brand" v-if="ann.content.length === 0">현재 통지 없음</div>
             </div>
           </span>
         </q-list>
@@ -27,6 +28,7 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {api} from "boot/axios";
+import moment from "moment"
 
 export default defineComponent({
   name: "AnnouncementView",
@@ -36,6 +38,9 @@ export default defineComponent({
     const announcementsList = ref([]);
     const announcementTypes = ref([]);
     const activeKey = ref(null);
+
+    const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
+
 
     const loadAnnouncement = () => {
       api.get("/announcement").then((res) => {
@@ -65,7 +70,8 @@ export default defineComponent({
       tabItems,
       announcementsList,
       announcementTypes,
-      activeKey
+      activeKey,
+      formatDate
     };
   }
 });
@@ -77,6 +83,18 @@ export default defineComponent({
     //background: linear-gradient(312deg, #0286ff, #00ff85);
     width: 100%;
     margin: 0 auto;
+  }
+
+  .announcement-p {
+    white-space: pre-line;
+    font-size: 1rem;
+  }
+
+  .datetime-p {
+    width: 100%;
+    text-align: right;
+    margin: 3px 10px 6px;
+    color: $font-4;
   }
 
   .q-tabs__content {

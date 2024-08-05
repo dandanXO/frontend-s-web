@@ -184,10 +184,10 @@ import {
   liveCasinoPlatforms,
   lotteryPlatforms,
   pokerPlatforms,
-  sportsPlatforms
+  sportsPlatforms,
+  minigamePlatforms
 } from "@/shared/platformArray";
 import moment from "moment";
-import { useDark } from "@vueuse/core";
 
 const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
@@ -251,33 +251,33 @@ const hotgameData = ref([
     }
   },
   {
-    number: "05",
-    icon: require("../../assets/home/hotgame/banner/board/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
-    title: "Poker",
-    subtitle: "BOARD",
-    charImgPath: require("../../assets/home/hotgame/banner/board/character.png"),
-    isShow: false,
-    path: "/poker",
-    currentProvider: "dat",
-    section: "poker",
-    type: "poker",
-    content: {
-      providerList: []
-    }
-  },
-  {
-    number: "06",
-    icon: require("../../assets/home/hotgame/banner/fishing/icon.png"),
-    iconActive: require("../../assets/home/hotgame/banner/fishing/icon-active.png"),
+    number: "04",
+    icon: require("../../assets/home/hotgame/banner/minigame/minigame.png"),
+    iconActive: require("../../assets/home/hotgame/banner/minigame/icon-active.png"),
     title: "미니게임",
     subtitle: "미니게임",
-    charImgPath: require("../../assets/home/hotgame/banner/fishing/character.png"),
+    charImgPath: require("../../assets/home/hotgame/banner/board/character.png"),
     isShow: false,
     path: "/fishing",
     currentProvider: "ag",
     section: "fishing",
     type: "fish",
+    content: {
+      providerList: []
+    }
+  },
+  {
+    number: "05",
+    icon: require("../../assets/home/hotgame/banner/board/icon.png"),
+    iconActive: require("../../assets/home/hotgame/banner/board/icon-active.png"),
+    title: "포커",
+    subtitle: "POKER",
+    charImgPath: require("../../assets/home/hotgame/banner/poker/character.png"),
+    isShow: false,
+    path: "/poker",
+    currentProvider: "dat",
+    section: "poker",
+    type: "poker",
     content: {
       providerList: []
     }
@@ -314,12 +314,21 @@ const onEnterGameClick = (plat, platType) => {
     router.push({ path: plat.path, query: { plat: plat.currentPlat.code } });
   } else {
     const currentPlat = plat.currentPlat;
+    if (currentPlat.code === 'TFGaming' && platType === 'fish') {
+      router.push('/minigame?plat=TFGaming');
+      return
+    } else if (currentPlat.code === 'CQ9' && platType === 'fish') {
+      router.push('/fishing?plat=CQ9');
+      return
+    }
     if (currentPlat.code === "BBINDY") {
       currentPlat.gameCode = "bblive_lobby_pc";
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
     } else if (currentPlat.code === "PP") {
       currentPlat.gameCode = 101;
+    } else if (currentPlat.code === "Spribe") {
+      currentPlat.gameCode = 'aviator';
     }
 
     const platItem = plat.content[currentPlat.code.toLowerCase()];
@@ -361,12 +370,19 @@ const checkPlatforms = () => {
     hotgameData.value.forEach((item) => {
       const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
 
+      if (gameTypeArray.includes('CASUAL')) {
+        if (item.type === 'fish') {
+          const additem = _.clone(plat);
+          item.content.providerList.push(additem);
+        }
+      }
       if (containingItem) {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
           additem.alias = "XIN";
         }
+      
         item.content.providerList.push(additem);
       }
 
@@ -390,6 +406,10 @@ const checkPlatforms = () => {
       }
       if (gameTypeArray.some((type) => type.toLowerCase() === "fish") && item.type === "fish") {
         updatePlatforms(fishingPlatforms, item, "");
+      }
+      if (gameTypeArray.includes('CASUAL') && item.type === "fish") {
+        console.log(item)
+        updatePlatforms(minigamePlatforms, item, "");
       }
     });
   });
@@ -849,7 +869,7 @@ $transition_timer: 0.5s;
             height: 30rem;
           }
 
-          // esports
+          // poker
           .character-esports-lh {
             position: relative;
             right: 8rem;

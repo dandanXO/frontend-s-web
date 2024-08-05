@@ -29,6 +29,11 @@
         {{ method.name }}
       </el-radio-button>
     </el-radio-group>
+    <div class="account-tip-warning">
+      <div>
+        {{ $t("withdraw.note") }}
+      </div>
+    </div>
     <el-card
       :class="{ selected: withdrawInfo.cardId === b.id }"
       v-if="withdrawState.bankCardList.length > 0"
@@ -78,7 +83,7 @@
         <el-form-item class="helptxt" prop="amount" :label="$t('withdraw.amount')" name="amount">
           <el-row :gutter="10" style="align-items: center; width: 54%">
             <el-col :span="24">
-              <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('withdraw.amount')">
+              <el-input class="form-input" v-model="amountWithComma" :placeholder="$t('withdraw.amount')">
                 <template #append>{{ store.currency.label }}</template>
               </el-input>
             </el-col>
@@ -93,7 +98,11 @@
                 {{
                   `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString()} ${
                     store.currency.label
-                  }, ${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
+                  }`
+                }}
+                <br />
+                {{
+                  `${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
                 }}
               </span>
             </el-col>
@@ -230,7 +239,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, toRef } from "vue";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -238,6 +247,8 @@ import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
+import { useCommaInput } from "@/hooks/commaInput";
+import { usePersonalIntegrity } from "@/hooks/personalIntegrity";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -245,6 +256,7 @@ export default defineComponent({
     RiArrowRightSLine
   },
   setup() {
+    const checkPersonalInfoIntegrity = usePersonalIntegrity()
     const { t } = useI18n();
     const router = useRouter();
     const loadingBtn = ref(false);
@@ -263,6 +275,9 @@ export default defineComponent({
       cardId: undefined,
       amount: ""
     });
+
+    const amountWithComma = useCommaInput(toRef(withdrawInfo, "amount"))
+
     const withdrawalMethods = ref([
       // {
       //   bankIcon: require('../../assets/images/finance/bank_deposit.png',
@@ -286,6 +301,7 @@ export default defineComponent({
     ])
     onMounted(() => {
       getWithdrawalMethods();
+      checkPersonalInfoIntegrity();
     });
     const submitWithdraw = () => {
       loadingBtn.value = true;
@@ -528,7 +544,8 @@ export default defineComponent({
       cardLabel,
       openEWalletTutorial,
       isLoaded,
-      amounts
+      amounts,
+      amountWithComma
     };
   }
 });
@@ -986,6 +1003,29 @@ export default defineComponent({
 .menu-title-container {
   .additional-title {
     padding-left: 16px;
+  }
+}
+
+.account-tip-warning {
+  border: 1px solid #f8dd9a;
+  background: #fef7e6;
+  color: #ffc024;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  white-space: pre-line;
+  margin: 20px 0;
+  ul {
+    margin: 0;
+    padding: 0 0 0 21px;
+  }
+  svg {
+    height: 15px;
+    fill: #ffc024;
+    margin-right: 10px;
   }
 }
 </style>

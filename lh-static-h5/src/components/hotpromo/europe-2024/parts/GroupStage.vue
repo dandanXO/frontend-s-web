@@ -180,6 +180,9 @@ const betNow = (platformMatchId) => {
 };
 
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   eventapi.get("/uefa/match/all").then((res) => {
     if (res.code === 0) {
       matches.value = res.data;

@@ -1,10 +1,14 @@
 <template>
   <div class="table-record">
-    <!--    <MailComponent :loading="visible" :list="inquiriesList.records" type="outbox" />-->
+    <div class="action-buttons">
+      <!-- <q-toggle v-model="allowSelectMultiple" :label="$t('lang.mail_selectone')" left-label /> -->
+      <q-btn class="common-md-btn" size="md" @click="deleteMails()">
+        {{ $t("lang.mail_delete") }}
+      </q-btn>
+    </div>
 
     <q-page>
       <div v-if="!visible">
-        <!--            <q-infinite-scroll @load="onLoad" :offset="150">-->
         <q-card
           v-for="(det, n) in mailData"
           :key="n"
@@ -24,35 +28,36 @@
                 style="font-size: 14px"
                 color="#0089ED"
               />
-              <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
+              <q-chip size="sm" color="yellow" label="답변완료" v-if="det.replyId" />
+              <q-chip size="sm" color="red" text-color="white" label="답변대기" v-else />
               {{ det.title }}
             </div>
 
             <div class="right-title">
-              <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-              <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+              <img src="../../assets/images/inbox/arrow-up-s-line.svg" v-if="isSelectedMail === det.id" />
+              <img src="../../assets/images/inbox/arrow-down-s-line.svg" v-if="isSelectedMail !== det.id" />
             </div>
           </div>
           <div class="mailcontents" v-if="isSelectedMail === det.id">
+            <div class="datetime-div">
+              <span class="date-time">{{ det.sendTime }}</span>
+              <!--              <span>DELETE</span>-->
+            </div>
             {{ det.content }}
-          </div>
-          <div v-if="mailType === 'outbox'" class="buttons">
-            <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
-            <q-btn outline label="复制" size="sm" color="bright" />
+
+            <div v-if="theReplyId && repliesOfInquiries.length > 0">
+              <hr />
+              <h4>{{ repliesOfInquiries[0].title }}</h4>
+
+              <div>
+                {{ repliesOfInquiries[0].content }}
+              </div>
+              <div style="text-align: right; width: 100%">
+                <span class="date-time">{{ repliesOfInquiries[0].sendTime }}</span>
+              </div>
+            </div>
           </div>
         </q-card>
-
-        <!--              <template v-slot:loading>-->
-        <!--                <div v-if="comList.length > 0">-->
-        <!--                  <div class="row justify-center q-my-md">-->
-        <!--                    <q-spinner-dots color="primary" size="40px" />-->
-        <!--                  </div>-->
-        <!--                </div>-->
-        <!--                <div v-else class="q-pa-md" style="text-align: center">-->
-        <!--                  {{ truncatedList.length === 0 ? $t("lang.mail_nodata") : $t("lang.mail_nodatayet") }}-->
-        <!--                </div>-->
-        <!--              </template>-->
-        <!--            </q-infinite-scroll>-->
       </div>
 
       <div class="loading-container" v-else>
@@ -67,6 +72,11 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { api } from "boot/axios";
+import moment from "moment/moment";
+import qs from "qs";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
+import { userStore } from "src/stores";
 
 const visible = ref(true);
 const mailData = ref([]);
@@ -74,66 +84,99 @@ const mailboxData = ref({
   type: null,
   orderBy: "createTime"
 });
+const { t } = useI18n();
 const selected = ref();
 const isLoading = ref(false);
 
-const onLoad = (index, done) => {
-  comList.value = props.list;
-  setTimeout(() => {
-    if (comList.value.length) {
-      var slicedArray = comList.value.splice(0, 6);
-      slicedArray.forEach((element) => {
-        truncatedList.value.push(element);
-      });
-      done();
-    }
-  }, 200);
-};
+const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
+
+const $q = useQuasar();
+// const onLoad = (index, done) => {
+//   comList.value = props.list;
+//   setTimeout(() => {
+//     if (comList.value.length) {
+//       var slicedArray = comList.value.splice(0, 6);
+//       slicedArray.forEach((element) => {
+//         truncatedList.value.push(element);
+//       });
+//       done();
+//     }
+//   }, 200);
+// };
 const isSelectedMail = ref(-1);
+
+const deleteMails = () => {
+  // console.log(selectedMailIds.value);
+  const mailIdArr = Object.keys(selectedMailIds.value)
+    .filter((key) => selectedMailIds.value[key] === true)
+    .map(Number);
+  const formattedIds = mailIdArr.join(",");
+  if (!formattedIds) return;
+  // console.log(formattedIds);
+
+  api
+    .post(
+      "session/feedback/delete",
+      qs.stringify({
+        ids: formattedIds
+      })
+    )
+    .then((res) => {
+      const { code, data } = res;
+
+      if (code === 0) {
+        $q.notify({
+          message: t("lang.feedback_delete_selected_message"),
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
+
+        loadOutbox();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const toggleMail = (mail) => {
   if (isSelectedMail.value !== mail.id) {
     isSelectedMail.value = mail.id;
+
+    // debugger;
+    theReplyId.value = mail.replyId;
+
     openMsg(mail);
   } else {
     isSelectedMail.value = -1;
   }
 };
 
-const isFetchingContent = ref(false);
+const theReplyId = ref();
+const selectedMailIds = ref({});
+const allowSelectMultiple = ref(true);
 
-const inquiriesList = ref([]);
-const replyInquiries = ref([]);
-const repliesOfInquiries = computed(() =>
-  replyInquiries.value.records.filter(({ id }) => id === selected.value.replyId)
-);
+const repliesOfInquiries = computed(() => replies.value.filter(({ id }) => id === theReplyId.value));
 
+const replies = ref([]);
 const loadOutbox = () => {
   isLoading.value = true;
 
-  // api
-  //   .get("/session/feedback/replies", {
-  //     params: {
-  //       type: mailboxData.value.type,
-  //       orderBy: mailboxData.value.orderBy
-  //     }
-  //   })
-  //   .then((response) => {
-  //     if (response.code === 0) {
-  //       mailData.value = response.data.records;
-  //       visible.value = false;
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log("error", error);
-  //   });
-
   api
-    .get("/session/feedback/sysReply", {
-      params: {
-        type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy
+    .get("/session/feedback/replies")
+    .then((response) => {
+      if (response.code === 0) {
+        replies.value = response.data.records;
+        visible.value = false;
       }
     })
+    .catch((error) => {
+      console.log("error", error);
+    });
+
+  api
+    .get("/session/feedback/sysReply")
     .then((response) => {
       if (response.code === 0) {
         mailData.value = response.data.records;
@@ -165,6 +208,58 @@ const loadOutbox = () => {
   //   }
   // );
 };
+
+const store = userStore();
+const isDeleteMailModal = ref(false);
+const showMailId = ref();
+const openMsg = (mail) => {
+  const { id, readTime, replyId } = mail;
+  showMailId.value = id;
+  mail.readTime = moment().format("YYYY-MM-DD");
+
+  if (replyId) {
+    api
+      .get(`/session/feedback/${replyId}/read`)
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            message: t("lang.msg_readmsg"),
+            type: "positive",
+            position: "top",
+            icon: "check_circle_outline"
+          });
+
+          store.repliedQuestion--;
+          if (store.repliedQuestion < 0) {
+            store.repliedQuestion = 0;
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  if (!readTime) {
+    api
+      .get(`/session/feedback/${id}/read`)
+      .then((res) => {
+        if (res.code === 0) {
+          // $q.notify({
+          //   message: t("lang.msg_readmsg"),
+          //   type: "positive",
+          //   position: "top",
+          //   icon: "check_circle_outline"
+          // });
+          // onLoad();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+
 onMounted(() => {
   loadOutbox();
 });
@@ -215,16 +310,36 @@ onMounted(() => {
 
   .right-title {
     display: flex;
+    width: 30px;
   }
 
   .mailcontents {
     padding: 12px 12px 16px;
     background: #e0f0ff;
-    color: $font-1;
-    font-size: 1rem;
+    color: #000;
+    font-size: 1.2rem;
     height: auto;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    .datetime-div {
+      text-align: right;
+      width: 100%;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .date-time {
+      color: $font-1;
+      font-size: 0.9rem;
+    }
+
+    h4 {
+      font-size: 1.55rem;
+      margin: 10px auto;
+    }
   }
 }
 
@@ -243,8 +358,8 @@ onMounted(() => {
 .action-buttons {
   display: flex;
   gap: 10px;
-  justify-content: flex-start;
-  margin: 0px 10px;
+  justify-content: flex-end;
+  margin: 8px 10px 4px;
   flex-wrap: wrap;
 }
 

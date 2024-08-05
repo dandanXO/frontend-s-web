@@ -57,6 +57,9 @@ const claimPrize = () => {
   store.getBalance();
 };
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   eventapi.get("/goldEgg/init", { params: { promoCode: "xf-gold-egg" } }).then((res) => {
     if (res.code === 0) {
       info.leftCount = res.data.leftCount;

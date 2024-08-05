@@ -39,6 +39,16 @@
       // Now you can use globalThis safely
       // console.log(globalThis);
     </script>
+
+    <% if (!ctx.mode.cordova && !ctx.mode.capacitor) { %>
+    <script>
+      var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3YJXtoAysvtGDccqu1vHLn0Ya**jMIRAizN";
+    </script>
+    <script
+      src="https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YJXtoAysvtGDccqu1vHLn0Ya**jMIRAizN"
+      async
+    ></script>
+    <% } %>
   </head>
   <body>
     <!-- DO NOT touch the following DIV -->

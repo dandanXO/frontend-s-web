@@ -324,7 +324,7 @@
                     }
                   ]"
                 >
-                  <template #append>范围在2-12位之间, 由中文字符组成</template>
+                  <template #append>范围在 2-12 位之间，由中文字符组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
@@ -332,14 +332,14 @@
             <el-form-item label="用户名" prop="loginName">
               <el-space>
                 <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                  <template #append>范围在6-12位之间, 由字母和数字组成</template>
+                  <template #append>范围在 6-11 位之间，由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-space>
                 <el-input class="wTip" v-model="regForm.password" placeholder="输入密码" type="password" show-password>
-                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
+                  <template #append>密码范围在 6-12 位之间，由字母和数字组成</template>
                 </el-input>
               </el-space>
               <el-row>
@@ -371,7 +371,7 @@
               <el-space>
                   <el-input class="half" v-model="regForm.password" placeholder="输入密码" type="password"
                             show-password/>
-                  <el-tooltip content="范围在6-12位之间, 由字母和数字组成" placement="right">
+                  <el-tooltip content="范围在 6-12 位之间，由字母和数字组成" placement="right">
                     <el-icon :size="10">
                       <InfoFilled/>
                     </el-icon>
@@ -387,7 +387,7 @@
                   type="password"
                   show-password
                 >
-                  <template #append>密码范围在6-12位之间, 由字母和数字组成</template>
+                  <template #append>密码范围在 6-12 位之间，由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
@@ -987,7 +987,7 @@ export default defineComponent({
       if (v === "") {
         return Promise.reject("请输入登录名");
       } else if (!checkName(v)) {
-        return Promise.reject("不允许使用特殊字符");
+        return Promise.reject("用户名必须包含英文字母与数字");
       } else {
         return Promise.resolve();
       }
@@ -1002,7 +1002,7 @@ export default defineComponent({
       }
     };
     const checkName = (v) => {
-      const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const alphanumeric = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {
@@ -1161,8 +1161,8 @@ export default defineComponent({
       loginName: [
         {
           min: 6,
-          max: 12,
-          message: "长度应为 6 至 12",
+          max: 11,
+          message: "长度应为 6 至 11",
           trigger: "blur"
         },
         {

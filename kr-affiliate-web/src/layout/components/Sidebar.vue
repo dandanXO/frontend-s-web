@@ -9,7 +9,7 @@
       </a>
       <div class="row-item">
         <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
-          size="small">
+                   size="small">
           <el-option key="1" value="en">en</el-option>
           <el-option key="5" value="kr">kr</el-option>
         </el-select>
@@ -19,6 +19,7 @@
           <div class="name-wrapper">
             <div class="name">{{ store.state.user.name }}</div>
             <div class="nickname">{{ store.state.user.name }}</div>
+            <div class="nickname">{{ affInfo.affiliateCode }}</div>
           </div>
           <div class="action-wrapper">
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">
@@ -185,22 +186,22 @@ const logout = async () => {
 
 const getNavigationData = () => {
   navigationData.value = [
-    {
-      title: t('menu.Dashboard'),
-      label: 'Dashboard',
-      display: false,
-      path: '',
-      children: [
-        {
-          path: '/dashboard',
-          title: t('menu.Dashboard'),
-          label: 'Dashboard',
-          active: false,
-          isMainNav: true,
-          icon: 'home',
-        },
-      ],
-    },
+    // {
+    //   title: t('menu.Dashboard'),
+    //   label: 'Dashboard',
+    //   display: false,
+    //   path: '',
+    //   children: [
+    //     {
+    //       path: '/dashboard',
+    //       title: t('menu.Dashboard'),
+    //       label: 'Dashboard',
+    //       active: false,
+    //       isMainNav: true,
+    //       icon: 'home',
+    //     },
+    //   ],
+    // },
     {
       title: t('menu.Downline Info'),
       label: 'Downline',
@@ -215,14 +216,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'squares',
         },
-        {
-          path: '/member-tree',
-          title: t('menu.MemberTree'),
-          label: 'Member Tree',
-          active: false,
-          isMainNav: true,
-          icon: 'branch',
-        },
+        // {
+        //   path: '/member-tree',
+        //   title: t('menu.MemberTree'),
+        //   label: 'Member Tree',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'branch',
+        // },
         {
           path: '/affiliate',
           title: t('menu.Affiliate'),
@@ -231,14 +232,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'affiliate',
         },
-        {
-          path: '/summary',
-          title: t('menu.AffiliateSummary'),
-          label: 'Affiliate Summary',
-          active: false,
-          isMainNav: true,
-          icon: 'report',
-        }
+        // {
+        //   path: '/summary',
+        //   title: t('menu.AffiliateSummary'),
+        //   label: 'Affiliate Summary',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'report',
+        // }
       ],
     },
     {
@@ -281,14 +282,38 @@ const getNavigationData = () => {
         },
       ],
     },
+
+    // {
+    //   title: t('menu.SettlementManagement'),
+    //   label: 'Settlement Management',
+    //   display: true,
+    //   path: '',
+    //   children: [
+    //
+    //     // {
+    //     //   path: '/statistics-by-member',
+    //     //   title: t('menu.StatisticsByMember'),
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //     // {
+    //     //   path: '/settlement-by-casino-slot-vendor',
+    //     //   title: t('menu.SettlementByCasinoSlotVendor'),
+    //     //   label: 'Settlement By Casino / Slot Vendor',
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //   ],
+    // },
     {
-      title: t('menu.SettlementManagement'),
-      label: 'Settlement Management',
+      title: t('menu.financeCentre'),
       display: true,
-      path: '/settlement-management',
+      path: '',
       children: [
         {
-          path: '/monthly-step-by-step-settlement',
+          path: '/settlement-management/monthly-step-by-step-settlement',
           title: t('menu.MonthlyStepByStep'),
           label: 'Monthly Step By Step',
           active: false,
@@ -296,53 +321,15 @@ const getNavigationData = () => {
           icon: 'clock',
         },
         {
-          path: '/statistics-by-member',
-          title: t('menu.StatisticsByMember'),
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/settlement-by-casino-slot-vendor',
-          title: t('menu.SettlementByCasinoSlotVendor'),
-          label: 'Settlement By Casino / Slot Vendor',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/commission-history-list',
-          title: t('menu.CommissionHistoryList'),
-          label: 'CommissionHistoryList',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/member-point-record-list',
-          title: t('menu.MemberPointRecord'),
-          label: 'MemberPointRecord',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/deposit-withdraw-management',
+          path: '/settlement-management/deposit-withdraw-management',
           title: t('menu.DepositWithdrawManagement'),
           label: 'DepositWithdrawManagement',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
-      ],
-    },
-    {
-      title: t('menu.financeCentre'),
-      display: true,
-      path: '/affiliate',
-      children: [
         {
-          path: '/bank-card',
+          path: '/affiliate/bank-card',
           title: t('menu.Bind Bank Cards'),
           label: 'Bind Bank Cards',
           active: false,
@@ -350,7 +337,7 @@ const getNavigationData = () => {
           icon: 'money-bag',
         },
         {
-          path: '/withdraw',
+          path: '/affiliate/withdraw',
           title: t('fields.affiliateWithdraw'),
           label: 'withdrawRecord',
           active: false,
@@ -358,7 +345,7 @@ const getNavigationData = () => {
           icon: 'form-w-pencil',
         },
         {
-          path: '/transfer',
+          path: '/affiliate/transfer',
           title: t('menu.Transfer'),
           label: 'Transfer',
           active: false,
@@ -366,7 +353,7 @@ const getNavigationData = () => {
           icon: 'users',
         },
         {
-          path: '/deposit',
+          path: '/affiliate/deposit',
           title: t('menu.Deposit'),
           label: 'Deposit',
           active: false,
@@ -374,7 +361,7 @@ const getNavigationData = () => {
           icon: 'wallet',
         },
         {
-          path: '/finance',
+          path: '/affiliate/finance',
           title: t('menu.Finance Report'),
           label: 'Finance Report',
           active: false,
@@ -382,28 +369,44 @@ const getNavigationData = () => {
           icon: 'report',
         },
         {
-          path: '/settlement',
+          path: '/affiliate/settlement',
           title: t('menu.Settlement Report'),
           label: 'Settlement Report',
           active: false,
           isMainNav: true,
           icon: 'money',
         },
+        // {
+        //   path: '/rebate',
+        //   title: t('menu.Rebate Report'),
+        //   label: 'Rebate Report',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'monitor',
+        // },
         {
-          path: '/rebate',
-          title: t('menu.Rebate Report'),
-          label: 'Rebate Report',
+          path: '/settlement-management/commission-history-list',
+          title: t('menu.CommissionHistoryList'),
+          label: 'CommissionHistoryList',
           active: false,
           isMainNav: true,
-          icon: 'monitor',
+          icon: 'clock',
         },
         {
-          path: '/credit-flow',
+          path: '/affiliate/credit-flow',
           title: t('fields.creditFlow'),
           label: 'creditFlow',
           active: false,
           isMainNav: true,
           icon: 'ledger',
+        },
+        {
+          path: '/settlement-management/member-point-record-list',
+          title: t('menu.MemberPointRecord'),
+          label: 'MemberPointRecord',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
         },
       ],
     },
@@ -420,22 +423,22 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'link',
         },
-        {
-          path: '/referral-material',
-          title: t('menu.Referral Material'),
-          label: 'Referral Material',
-          active: false,
-          isMainNav: true,
-          icon: 'photo',
-        },
-        {
-          path: '/channel-pack',
-          title: t('menu.Channel Pack'),
-          label: 'Channel Pack',
-          active: false,
-          isMainNav: true,
-          icon: 'folder',
-        },
+        // {
+        //   path: '/referral-material',
+        //   title: t('menu.Referral Material'),
+        //   label: 'Referral Material',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'photo',
+        // },
+        // {
+        //   path: '/channel-pack',
+        //   title: t('menu.Channel Pack'),
+        //   label: 'Channel Pack',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'folder',
+        // },
       ],
     },
     {
@@ -607,7 +610,7 @@ watch(languageVal, newVal => {
       font-size: 13px;
       border-bottom: 1px solid #4d5a6a;
 
-      background-color: #344151;
+      background-color: $primary-500;
       padding: 12px 13px;
       box-sizing: border-box;
       cursor: pointer;
@@ -636,7 +639,7 @@ watch(languageVal, newVal => {
         gap: 2px;
 
         .nickname {
-          color: #b7b1b5;
+          color: #fff;
           font-size: 10px;
         }
       }
@@ -661,7 +664,7 @@ watch(languageVal, newVal => {
       .route-content {
         display: flex;
         gap: 0.5rem;
-        background-color: #252e3b;
+        background-color: $primary-700;
         padding: 10px 10px 10px 20px;
       }
 

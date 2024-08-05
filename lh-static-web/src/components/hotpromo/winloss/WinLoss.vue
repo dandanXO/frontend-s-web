@@ -216,6 +216,13 @@ const confirmMatchSelect = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getMatches();
 })
 </script>

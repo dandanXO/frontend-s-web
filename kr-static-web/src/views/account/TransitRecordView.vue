@@ -83,81 +83,81 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="turnover" :label="$t('transit.turnover')">
-          <div>
-            <el-form layout="inline" :model="searchForm.turnover">
-              <div class="left">
-                <el-form-item :label="$t('common.startDate')">
-                  <el-date-picker
-                    :clearable="false"
-                    v-model="searchForm.turnover.startDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item :label="$t('common.endDate')">
-                  <el-date-picker
-                    :clearable="false"
-                    v-model="searchForm.turnover.endDate"
-                    valueFormat="YYYY-MM-DD"
-                    placeholder=""
-                  />
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">
-                    {{ $t("common.search") }}
-                  </el-button>
-                </el-form-item>
-              </div>
-            </el-form>
-          </div>
+        <!-- <el-tab-pane name="turnover" :label="$t('transit.turnover')"> -->
+        <!-- <div> -->
+        <!-- <el-form layout="inline" :model="searchForm.turnover"> -->
+        <!-- <div class="left"> -->
+        <!-- <el-form-item :label="$t('common.startDate')"> -->
+        <!-- <el-date-picker -->
+        <!-- :clearable="false" -->
+        <!-- v-model="searchForm.turnover.startDate" -->
+        <!-- valueFormat="YYYY-MM-DD" -->
+        <!-- placeholder="" -->
+        <!-- /> -->
+        <!-- </el-form-item> -->
+        <!-- <el-form-item :label="$t('common.endDate')"> -->
+        <!-- <el-date-picker -->
+        <!-- :clearable="false" -->
+        <!-- v-model="searchForm.turnover.endDate" -->
+        <!-- valueFormat="YYYY-MM-DD" -->
+        <!-- placeholder="" -->
+        <!-- /> -->
+        <!-- </el-form-item> -->
+        <!-- <el-form-item> -->
+        <!-- <el-button type="success" class="common-btn" @click="searchRecord"> -->
+        <!-- {{ $t("common.search") }} -->
+        <!-- </el-button> -->
+        <!-- </el-form-item> -->
+        <!-- </div> -->
+        <!-- </el-form> -->
+        <!-- </div> -->
 
-          <div class="unbind-record-wrapper">
-            <el-table :data="dataState.turnover" v-loading="loading">
-              <template #empty>
-                <EmptyData />
-              </template>
+        <!-- <div class="unbind-record-wrapper"> -->
+        <!-- <el-table :data="dataState.turnover" v-loading="loading"> -->
+        <!-- <template #empty> -->
+        <!-- <EmptyData /> -->
+        <!-- </template> -->
 
-              <el-table-column
-                v-for="tbl in tableColumns.turnover"
-                :key="tbl.key"
-                :prop="tbl.dataIndex"
-                :label="tbl.title"
-              >
-                <template v-if="tbl.dataIndex === 'platform'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getPlatform(scope.row.platform) }}
-                  </div>
-                </template>
+        <!-- <el-table-column -->
+        <!-- v-for="tbl in tableColumns.turnover" -->
+        <!-- :key="tbl.key" -->
+        <!-- :prop="tbl.dataIndex" -->
+        <!-- :label="tbl.title" -->
+        <!-- > -->
+        <!-- <template v-if="tbl.dataIndex === 'platform'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- {{ getPlatform(scope.row.platform) }} -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-                <template v-if="tbl.dataIndex === 'subType'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getSubType(scope.row.subType, scope.row.type) }}
-                  </div>
-                </template>
+        <!-- <template v-if="tbl.dataIndex === 'subType'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- {{ getSubType(scope.row.subType, scope.row.type) }} -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-                <template v-if="tbl.dataIndex === 'platformCode'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    {{ getPlatform(scope.row.platformCode) }}
-                  </div>
-                </template>
+        <!-- <template v-if="tbl.dataIndex === 'platformCode'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- {{ getPlatform(scope.row.platformCode) }} -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-                <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.recordTime }}</span>
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-            <!-- <el-divider />
+        <!-- <template v-if="tbl.dataIndex === 'recordTime'" #default="scope"> -->
+        <!-- <div style="display: flex; align-items: center"> -->
+        <!-- <span>{{ scope.row.recordTime }}</span> -->
+        <!-- </div> -->
+        <!-- </template> -->
+        <!-- </el-table-column> -->
+        <!-- </el-table> -->
+        <!-- <el-divider />
             <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
               :page-size="searchForm[recordActive].size"
             /> -->
-          </div>
-        </el-tab-pane>
+        <!-- </div> -->
+        <!-- </el-tab-pane> -->
         <el-tab-pane name="withdraw" :label="$t('transit.withdraw')">
           <div>
             <el-form layout="inline" :model="searchForm.withdraw">
@@ -226,7 +226,22 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">{{ $t('account.reminder') }}</el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">
+                        {{ $t("account.reminder") }}
+                      </el-button>
+                    </div>
+                  </template>
+
+                  <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
+                    <div style="display: flex; align-items: center">
+                      <el-button
+                        size="small"
+                        color="red"
+                        class="common-btn cancel"
+                        @click="openWithdrawCancel(scope.row)"
+                      >
+                        {{ $t("common.cancel") }}
+                      </el-button>
                     </div>
                   </template>
 
@@ -239,7 +254,7 @@
                   >
                     <div style="display: flex; align-items: center">
                       <el-button size="small" class="common-btn" @click="openWithdrawConfirm(scope.row)">
-                        {{ $t('account.confirm_deposit') }}
+                        {{ $t("account.confirm_deposit") }}
                       </el-button>
                     </div>
                   </template>
@@ -520,7 +535,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="reminderRecord" :label="$t('transit.reminderRecord')">
+        <!-- <el-tab-pane name="reminderRecord" :label="$t('transit.reminderRecord')">
           <div>
             <el-form layout="inline" :model="searchForm.reminderRecord">
               <div class="left">
@@ -568,7 +583,7 @@
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.type === 1 ? $t('status.deposit') : $t('status.withdraw') }}</span>
+                    <span>{{ scope.row.type === 1 ? $t("status.deposit") : $t("status.withdraw") }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -581,7 +596,7 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
 
       <!-- <el-modal
@@ -659,7 +674,7 @@
               :loading="loadingBtn"
               @click="submitReminder()"
             >
-              {{ $t('account.submit') }}
+              {{ $t("account.submit") }}
             </el-button>
           </el-form>
         </span>
@@ -673,7 +688,7 @@ import { defineComponent, onMounted, reactive, watch, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
   loadRecords,
-  gameBetRecordTotal,
+  cancellationOfWithdrawalReceived,
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
@@ -1211,6 +1226,27 @@ export default defineComponent({
         }
       });
     };
+
+    const openWithdrawCancel = (record) => {
+      const obj = {
+        id: record.id,
+        withdrawDate: record.withdrawDate
+      };
+      cancellationOfWithdrawalReceived(obj).then((res) => {
+        if (res.code === 0) {
+          ElMessageBox.alert(t('common.withdrawCancelled'), {
+            title: t('common.systemError'),
+            center: true,
+            confirmButtonText: t('common.confirm'),
+            showClose: false,
+            buttonSize: "large"
+          }).then(() => {
+            getTime();
+          });
+        }
+      });
+    };
+
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
@@ -1273,7 +1309,7 @@ export default defineComponent({
       } else if (turnoverType === "PROMO") {
         return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return t('status.deposit'); // 
+        return t('status.deposit'); //
       } else if (turnoverType === "TRANSFER") {
         return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
@@ -1319,7 +1355,7 @@ export default defineComponent({
       } else if (turnoverType === "PROMO") {
         return t('status.promotion'); // 优惠
       } else if (turnoverType === "DEPOSIT") {
-        return t('status.deposit'); // 
+        return t('status.deposit'); //
       } else if (turnoverType === "TRANSFER") {
         return t('status.transfer'); // 转账
       } else if (turnoverType === "ADJUST") {
@@ -1359,47 +1395,47 @@ export default defineComponent({
       }  else if (platformName === "BBINDY") {
         return "BBIN "  + t('account.livecasino');
       } else if (platformName === "KP") {
-        return "King Poker" ; 
+        return "King Poker" ;
       } else if (platformName === "KM") {
-        return "King Maker"; 
+        return "King Maker";
       } else if (platformName === "V8") {
         return "V8 " + t('account.poker');
       } else if (platformName === "TCG") {
-        return "TCG " + t('account.lottery') ; 
+        return "TCG " + t('account.lottery') ;
       }else if (platformName === "LOTTO") {
-        return "LOTTO " + t('account.lottery') ; 
+        return "LOTTO " + t('account.lottery') ;
       }else if (platformName === "MGP") {
-        return "MGP " + t('account.slot') ; 
+        return "MGP " + t('account.slot') ;
       }  else if (platformName === "EBET") {
         return "WE " + t('account.livecasino');
       } else if (platformName === "PT") {
-        return "PT " + t('account.slot'); 
+        return "PT " + t('account.slot');
       } else if (platformName === "PG") {
         return "PG " + t('account.slot');
       } else if (platformName === "SW") {
-        return "SW " + t('account.slot'); 
+        return "SW " + t('account.slot');
       } else if (platformName === "SABA") {
-        return "SABA " + t('account.sport'); 
+        return "SABA " + t('account.sport');
       }else if(platformName === 'GFSBO'){
-        return "SBOBET " + t('account.sport'); 
+        return "SBOBET " + t('account.sport');
       }else if(platformName === 'CMD'){
-        return "CMD " + t('account.sport'); 
+        return "CMD " + t('account.sport');
       } else if (platformName === "BG") {
-        return "BG " + t('account.livecasino'); 
+        return "BG " + t('account.livecasino');
       } else if (platformName === "Evo") {
-        return "Evo " + t('account.livecasino'); 
+        return "Evo " + t('account.livecasino');
       } else if (platformName === "BBINDY") {
-        return "BBIN " + t('account.livecasino'); 
+        return "BBIN " + t('account.livecasino');
       } else if (platformName === "BBIN") {
-        return "BBIN " + t('account.livecasino'); 
+        return "BBIN " + t('account.livecasino');
       } else if (platformName === "WE") {
         return "WE " + t('account.livecasino');
       }else if (platformName === "WM") {
-        return "WM " + t('account.livecasino'); 
+        return "WM " + t('account.livecasino');
       } else if (platformName === "AE") {
-        return "Sexy " + t('account.livecasino'); 
+        return "Sexy " + t('account.livecasino');
       } else if (platformName === "PMLIVE") {
-        return "DB " + t('account.livecasino'); 
+        return "DB " + t('account.livecasino');
       }else if (platformName === "TFGaming") {
         return "TFGaming " + t('account.esport');
       } else if (platformName === "WS") {
@@ -1465,11 +1501,11 @@ export default defineComponent({
         return "";
       }
       if (depositStatus === "PENDING") {
-        return t('status.normalPayment'); // Pending
+        return t('status.pending'); // Pending
       } else if (depositStatus === "SUCCESS") {
-        return t('status.success'); // Success
+        return t('status.depositSuccess'); // Success
       } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-        return t('status.success'); // Supplement Success
+        return t('status.depositSuccess'); // Supplement Success
       } else if (depositStatus === "CLOSED") {
         return t('status.closed'); // Closed
       } else {
@@ -1533,7 +1569,7 @@ export default defineComponent({
       } else if (gameType === "SPORT") {
         return t('menu.sports'); // Sport
       } else if (gameType === "ESPORT") {
-        return t('menu.esports'); // E-Sport
+        return t('menu.poker'); // E-Sport
       } else if (gameType === "POKER") {
         return t('menu.poker'); // Poker
       } else if (gameType === "LOTTERY") {
@@ -1816,6 +1852,7 @@ export default defineComponent({
       reminderDialog,
       openReminder,
       submitReminder,
+      openWithdrawCancel,
       getImageLink,
       getTurnoverType,
       getTransferType,

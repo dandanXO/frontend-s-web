@@ -28,6 +28,16 @@
     <div class="header-left" @click="router.push('/')">
       <img alt="logo" src="../assets/logo-web.svg" />
     </div>
+    <div class="menulist">
+      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
+        <img src="../assets/images/home/deposit-mid.png" />
+        <div class="">{{ $t("lang.deposit") }}</div>
+      </router-link>
+      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
+        <img src="../assets/images/home/withdraw-mid.png" />
+        <div class="">{{ $t("lang.withdraw") }}</div>
+      </router-link>
+    </div>
     <div class="header-middle" v-if="!isLogined">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
         {{ $t("lang.login") }}
@@ -37,11 +47,24 @@
       </q-btn>
     </div>
     <div class="header-middle" v-else>
-      <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div>
+      <div class="icon" @click="router.push('/account')">
+        <img src="../assets/images/home/personal-icon.png" />
+        <div class="nickname-div">{{ store.name2 ?? store.nickName }}</div>
+      </div>
+
+      <!-- <div @click="router.push('/account')">{{ $t("lang.nickname") }}: {{ store.name2 || "-" }}</div> -->
       <div class="header-middle-wallet-wrapper">
-        <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
-        <span>{{ $t("lang.central_wallet") }}</span>
-        <RedeemPoint class="redeem" />
+        <div class="redeem-wrapper" @click="refreshBalance">
+          <template v-if="!isLoadingBalance">
+            <span>{{ $t("lang.central_wallet") }}:</span>
+            <span>{{ mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원" }}</span>
+          </template>
+          <span v-else>{{ $t("lang.loading") }}</span>
+        </div>
+        <div class="redeem-wrapper">
+          {{ $t("lang.central_rebate") }}:
+          <RedeemPoint class="redeem" />
+        </div>
       </div>
       <!-- <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div> -->
     </div>
@@ -114,130 +137,26 @@
     </div>
   </div>
 
-  <!--  <div class="hot-matches-wrapper">-->
-  <!--    <div class="euro-countdown">-->
-  <!--      <div class="euro-countdown-fly-01">-->
-  <!--        <img src="../assets/images/home/eurocup-countdown-fly-01.png" />-->
-  <!--      </div>-->
-  <!--      <div class="euro-countdown-fly-02">-->
-  <!--        <img src="../assets/images/home/eurocup-countdown-fly-02.png" />-->
-  <!--      </div>-->
-  <!--      <div class="euro-countdown-fly-03">-->
-  <!--        <img src="../assets/images/home/eurocup-countdown-fly-03.png" />-->
-  <!--      </div>-->
-  <!--      <div class="euro-countdown-fly-04">-->
-  <!--        <img src="../assets/images/home/eurocup-countdown-fly-04.png" />-->
-  <!--      </div>-->
-  <!--      <div class="euro-countdown-fly-05">-->
-  <!--        <img src="../assets/images/home/eurocup-countdown-fly-05.png" />-->
-  <!--      </div>-->
-  <!--      <div class="euro-countdown-fly-06">-->
-  <!--        <img src="../assets/images/home/eurocup-countdown-fly-06.png" />-->
-  <!--      </div>-->
-  <!--      &lt;!&ndash;      <div class="euro-countdown-content">&ndash;&gt;-->
-  <!--      &lt;!&ndash;        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />&ndash;&gt;-->
-
-  <!--      &lt;!&ndash;        <div class="euro-countdown-txt">&ndash;&gt;-->
-  <!--      &lt;!&ndash;          <div class="txt-logo">&ndash;&gt;-->
-  <!--      &lt;!&ndash;            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />&ndash;&gt;-->
-  <!--      &lt;!&ndash;          </div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>&ndash;&gt;-->
-
-  <!--      &lt;!&ndash;          <div class="euro-countdown-num-wrap">&ndash;&gt;-->
-  <!--      &lt;!&ndash;            {{ $t("lang.euroCountdown01a") }}&ndash;&gt;-->
-  <!--      &lt;!&ndash;            <div class="euro-countdown-num">&ndash;&gt;-->
-  <!--      &lt;!&ndash;              &lt;!&ndash; <img src="../assets/images/home/eurocup-countdown-numbers.png" /> &ndash;&gt;&ndash;&gt;-->
-  <!--      &lt;!&ndash;              <div class="num">&ndash;&gt;-->
-  <!--      &lt;!&ndash;                <span>{{ countDay01 }}</span>&ndash;&gt;-->
-  <!--      &lt;!&ndash;              </div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;              <div class="num">&ndash;&gt;-->
-  <!--      &lt;!&ndash;                <span>{{ countDay02 }}</span>&ndash;&gt;-->
-  <!--      &lt;!&ndash;              </div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;            </div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;            {{ $t("lang.euroCountdown02") }}&ndash;&gt;-->
-  <!--      &lt;!&ndash;          </div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-  <!--    </div>-->
-
-  <!--    &lt;!&ndash; <div class="euro-countdown">-->
-  <!--      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>-->
-  <!--    </div> &ndash;&gt;-->
-
-  <!--&lt;!&ndash;    <div class="hot-matches-title-wrapper">&ndash;&gt;-->
-  <!--&lt;!&ndash;      <div class="hot-matches-title">&ndash;&gt;-->
-  <!--&lt;!&ndash;        <div>&ndash;&gt;-->
-  <!--&lt;!&ndash;          <img src="../assets/images/home/icon-hot-matches.png" />&ndash;&gt;-->
-  <!--&lt;!&ndash;        </div>&ndash;&gt;-->
-  <!--&lt;!&ndash;        {{ $t("lang.hotMatches") }}&ndash;&gt;-->
-  <!--&lt;!&ndash;      </div>&ndash;&gt;-->
-
-  <!--      &lt;!&ndash;      <div>&ndash;&gt;-->
-  <!--      &lt;!&ndash;        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">&ndash;&gt;-->
-  <!--      &lt;!&ndash;          {{ $t("lang.bet_now") }}&ndash;&gt;-->
-  <!--      &lt;!&ndash;        </q-btn>&ndash;&gt;-->
-  <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-  <!--&lt;!&ndash;    </div>&ndash;&gt;-->
-
-  <!--    <div class="hot-matches-container">-->
-  <!--      <swiper-->
-  <!--        :slides-per-view="1"-->
-  <!--        :modules="modules"-->
-  <!--        :loop="false"-->
-  <!--        @swiper="onSwiper"-->
-  <!--        effect="fade"-->
-  <!--        :auto-height="false"-->
-  <!--        :allow-slide-next="true"-->
-  <!--        :pagination="{ clickable: true, type: 'bullets' }"-->
-  <!--        :space-between="10"-->
-  <!--        class="hot-matches-carousel"-->
-  <!--      >-->
-  <!--        <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">-->
-  <!--          <div class="hot-matches-item">-->
-  <!--            <div class="top-match-title">-->
-  <!--              <div class="title-frame">{{ item.competitionName }}</div>-->
-  <!--            </div>-->
-  <!--            <div class="team-details team-details__home">-->
-  <!--              <div class="team-icon">-->
-  <!--                <img :src="hotMatchesImgURL + item.teamOneLogo" />-->
-  <!--              </div>-->
-  <!--              <div class="team-name">{{ item.teamOneName }}</div>-->
-  <!--            </div>-->
-  <!--            <div class="match-details">-->
-  <!--              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>-->
-  <!--              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>-->
-  <!--              <div class="match-btn">-->
-  <!--                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt match-btn-button" @click="openHotMatch(item)">-->
-  <!--                  {{ $t("lang.play_now") }}-->
-  <!--                </q-btn>-->
-  <!--              </div>-->
-  <!--            </div>-->
-  <!--            <div class="team-details team-details__away">-->
-  <!--              <div class="team-icon">-->
-  <!--                <img-->
-  <!--                  :src="hotMatchesImgURL + item.teamTwoLogo"-->
-  <!--                  :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"-->
-  <!--                />-->
-  <!--              </div>-->
-  <!--              <div class="team-name">{{ item.teamTwoName }}</div>-->
-  <!--            </div>-->
-  <!--          </div>-->
-  <!--        </swiper-slide>-->
-  <!--      </swiper>-->
-  <!--    </div>-->
-  <!--  </div>-->
-  <div class="details-bar">
-    <div class="message" @click="refreshBalance">
-      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{
-          store.token
-            ? !isLoadingBalance
-              ? mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원"
-              : $t("lang.loading")
-            : $t("lang.not_logged_in")
-        }}
-      </span>
-      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
+  <!-- <div class="details-bar">
+    <div class="message-flex">
+      <div v-if="store.token" class="message message-islogged" @click="refreshBalance">
+        <span class="message-t">{{ store.token ? $t("lang.central_wallet") : "" }} :</span>
+        <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+          {{
+            store.token
+              ? !isLoadingBalance
+                ? mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 }) + " 원"
+                : $t("lang.loading")
+              : ""
+          }}
+        </span>
+      </div>
+      <div v-if="store.token" class="message message-islogged">
+        <span class="message-t">{{ $t("lang.central_rebate") }} :</span>
+        <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+          <RedeemPoint class="redeem" />
+        </span>
+      </div>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
@@ -248,12 +167,8 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
-        <div class="">{{ $t("lang.vip") }}</div>
-      </router-link>
     </div>
-  </div>
+  </div> -->
 
   <div class="home-game-section">
     <div class="game-left-list">
@@ -277,16 +192,14 @@
         <span :class="tab === 'slot' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_slots") }}</span>
       </div>
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/minigame-icon-active.png" />
+      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
+        <template v-if="tab === 'poker'">
+          <img src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/minigame-icon.png" />
+          <img src="../assets/images/home/games/poker-icon.png" />
         </template>
-        <span :class="tab === 'casual' && 'active'">
-          {{ $t("lang.menu_hashgame") }}
-        </span>
+        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
       </div>
 
       <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
@@ -301,80 +214,20 @@
         </span>
       </div>
 
-      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
+        <template v-if="tab === 'casual'">
+          <img src="../assets/images/home/games/minigame-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
+          <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
-        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
+        <span :class="tab === 'casual' && 'active'">
+          {{ $t("lang.menu_hashgame") }}
+        </span>
       </div>
-
-      <!-- <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
-        <template v-if="tab === 'esport'">
-          <img src="../assets/images/home/games/esport-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/esport-icon.png" />
-        </template>
-        <span :class="tab === 'esport' && 'active'">{{ $t("lang.menu_esports") }}</span>
-      </div> -->
-
-      <!-- <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
-        <template v-if="tab === 'lottery'">
-          <img src="../assets/images/home/games/lottery-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/lottery-icon.png" />
-        </template>
-        <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
-      </div> -->
-      <!-- <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/others-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/others-icon.png" />
-        </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
-      </div> -->
     </div>
 
-    <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
-    <!--        <template v-if="tab === 'cockfight'">-->
-    <!--          <img src="../assets/images/home/games/cockfight-icon-active.png" />-->
-    <!--        </template>-->
-    <!--        <template v-else>-->
-    <!--          <img src="../assets/images/home/games/cockfight-icon.png" />-->
-    <!--        </template>-->
-    <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
-    <!--      </div>-->
-
     <div class="game-right-platform" id="id-right-platform">
-      <!-- <div class="game-lists fade-in-image" id="esport-lists">
-        <template v-for="(item, index) in esport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">{{ item.title }}</div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div> -->
-
       <div v-if="!tab || tab === 'live'" class="game-lists fade-in-image" id="live-lists">
         <template v-for="(item, index) in livecasino" :key="index">
           <div
@@ -425,81 +278,6 @@
         </template>
       </div>
 
-      <div v-if="!tab || tab === 'casual'" class="game-lists fade-in-image" id="casual-lists">
-        <template v-for="(item, index) in casuals" :key="index">
-          <div
-            class="platform-block"
-            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div v-if="!tab || tab === 'sport'" class="game-lists fade-in-image" id="sport-lists">
-        <template v-for="(item, index) in sport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <!-- <div class="game-lists fade-in-image" id="esport-lists">
-        <template v-for="(item, index) in esport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div> -->
-
       <div v-if="!tab || tab === 'poker'" class="game-lists fade-in-image" id="poker-lists">
         <template v-for="(item, index) in poker" :key="index">
           <div
@@ -525,8 +303,31 @@
         </template>
       </div>
 
-      <!-- <div class="game-lists fade-in-image" id="lottery-lists">
-        <template v-for="(item, index) in lottery" :key="index">
+      <div v-if="!tab || tab === 'sport'" class="game-lists fade-in-image" id="sport-lists">
+        <template v-for="(item, index) in esport" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template v-for="(item, index) in sport" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
@@ -549,8 +350,7 @@
           </div>
         </template>
       </div>
-
-      <div class="game-lists fade-in-image" id="fishing-lists">
+      <div v-if="!tab || tab === 'casual'" class="game-lists fade-in-image" id="casual-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
             class="platform-block"
@@ -573,101 +373,32 @@
             </div>
           </div>
         </template>
-      </div>
 
-      <div class="game-lists fade-in-image" id="cockfight-lists">
-        <template v-if="cockfight.length == 0">
-          <div class="platform-block" @click="isPlatformComingSoon = true">
+        <template v-for="(item, index) in casuals" :key="index">
+          <div
+            class="platform-block"
+            @click="playMiniGame(item.gameName, item.code, item.gameCode)"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
             <div
               class="platform-img-frame"
               :style="{
-                'background-image': getImgPlatformBg('cockfight', 'ws')
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
               }"
             >
               <div class="platform-content">
                 <div class="platform-title">
-                  {{ $t("lang.coming_soon") }}
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
                 </div>
               </div>
             </div>
           </div>
         </template>
-
-        <template v-else>
-          <template v-for="(item, index) in cockfight" :key="index">
-            <div
-              class="platform-block"
-              @click="playGame(item.gameName, item.code, item.gameCode)"
-              :class="item.underMaintenance === true ? 'maintenance' : ''"
-            >
-              <MaintenanceBox :item="item" />
-
-              <div
-                class="platform-img-frame"
-                :style="{
-                  'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-                }"
-              >
-                <div class="platform-content">
-                  <div class="platform-title">
-                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_kr }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </template>
-      </div> -->
-    </div>
-  </div>
-
-  <!-- <div class="home-news">
-    <div class="home-news-title-section">
-      <div class="news-title">{{ $t("lang.tf88_news") }}</div>
-      <div class="news-see-all">
-        <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToNewsPage">
-          {{ $t("lang.see_all") }}
-        </q-btn>
       </div>
     </div>
-    <div class="home-news-top-container">
-      <a
-        :href="newsDetail_00.url"
-        target="_blank"
-        class="top-news"
-        :style="{ backgroundImage: `url(${newsDetail_00.pictureurl})` }"
-      >
-        <div class="title-txt">{{ newsDetail_00.title }}</div>
-      </a>
-      <a
-        :href="newsDetail_01.url"
-        target="_blank"
-        class="top-news"
-        :style="{ backgroundImage: `url(${newsDetail_01.pictureurl})` }"
-      >
-        <div class="title-txt">{{ newsDetail_01.title }}</div>
-      </a>
-    </div>
-
-    <div class="home-news-bottom-container">
-      <a :href="newsDetail_02.url" target="_blank" class="bottom-news">
-        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_02.pictureurl})` }"></div>
-        <div class="news-txt">{{ newsDetail_02.title }}</div>
-      </a>
-      <a :href="newsDetail_03.url" target="_blank" class="bottom-news">
-        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_03.pictureurl})` }"></div>
-        <div class="news-txt">{{ newsDetail_03.title }}</div>
-      </a>
-      <a :href="newsDetail_04.url" target="_blank" class="bottom-news">
-        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_04.pictureurl})` }"></div>
-        <div class="news-txt">{{ newsDetail_04.title }}</div>
-      </a>
-      <a :href="newsDetail_05.url" target="_blank" class="bottom-news">
-        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_05.pictureurl})` }"></div>
-        <div class="news-txt">{{ newsDetail_05.title }}</div>
-      </a>
-    </div>
-  </div> -->
+  </div>
 
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
@@ -1182,7 +913,8 @@ export default defineComponent({
     const ui = useUI();
     const scrollPageRef = ref(null);
     const isH5 = ref(false);
-    const topBoxVisible = ref(true);
+    //TODO:: HIDe 1st.
+    const topBoxVisible = ref(false);
     const checkPlatform = () => {
       //Is iOS Webclip App || Is Android Apk
       if (
@@ -1217,6 +949,14 @@ export default defineComponent({
       // console.log(gameCode)
       // console.log(gameStatus);
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
+    };
+
+    const playMiniGame = (gameName, platformCode, gameCode) => {
+      if (platformCode === "Spribe") {
+        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+      } else {
+        router.push({ path: "/minigame", query: { platform: platformCode } });
+      }
     };
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
@@ -1452,7 +1192,7 @@ export default defineComponent({
               if (fishObj.name === "JiliGames") {
                 fishObj.name = "Jili";
               }
-              fishObj.title_kr = fishObj.name + " Bắn Cá";
+              fishObj.title_kr = fishObj.name + " 낚시 게임";
               fishObj.title_en = fishObj.name + " Fishing";
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
@@ -1475,8 +1215,12 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_kr = casualObj.name + " 해시 게임";
+              casualObj.title_kr = casualObj.name + " 미니 게임";
               casualObj.title_en = casualObj.name + " Mini Game";
+
+              if (casualObj.code === "Spribe") {
+                casualObj.gameCode = "aviator";
+              }
 
               casualObj.icon = "casual";
               casuals.value.push(casualObj);
@@ -1679,6 +1423,10 @@ export default defineComponent({
         initOneSignal();
       }
       initFloating();
+      if (store.token) {
+        store.getUnreadTotal();
+        store.getUnrepliedTotal();
+      }
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -1694,13 +1442,15 @@ export default defineComponent({
       checkShowImgTop();
       //TODO:: ADD IT BACK.
       // getAppDownloadUrl();
-      getUnreadTotal();
+      // getUnreadTotal();
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
       getCheckRedPacket();
       if (store.token) {
         isLogined.value = true;
+        store.getUnreadTotal();
+        store.getUnrepliedTotal();
       } else {
         isLogined.value = false;
       }
@@ -1734,6 +1484,7 @@ export default defineComponent({
     };
 
     const gotoPromo = (banner) => {
+      if (!banner.redirectUrl.trim()) return;
       const urlSplit = banner.redirectUrl.split("|");
       if (urlSplit.length >= 2) {
         const type = urlSplit[0];
@@ -2003,6 +1754,7 @@ export default defineComponent({
       mainWallet,
       isLogined,
       playGame,
+      playMiniGame,
       allGames,
       gamePage,
       selectedPlatId,
@@ -2288,7 +2040,7 @@ export default defineComponent({
 }
 
 .download-top-container {
-  padding: 8px 10px;
+  padding: 4px 10px;
   background: $white;
   box-shadow: 0px 5px 10px 0px #0000001f;
 
@@ -2396,17 +2148,33 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 75px;
+      max-width: 56px;
+      height: auto;
     }
   }
 
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
-    margin-top: 3px;
     display: flex;
     align-items: center;
     gap: 12px;
+    .icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2px;
+
+      .nickname-div {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      img {
+        width: 40px;
+      }
+    }
 
     :deep(.q-btn) {
       min-width: 80px;
@@ -2419,11 +2187,21 @@ export default defineComponent({
     .header-middle-wallet-wrapper {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      .redeem {
-        :deep(img) {
-          filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(5550%) hue-rotate(200deg)
-            brightness(101%) contrast(101%);
+
+      .redeem-wrapper {
+        display: grid;
+        align-items: center;
+        gap: 2px;
+        grid-template-columns: 40px 1fr;
+        white-space: nowrap;
+        :first-child {
+          text-align: right;
+        }
+        .redeem {
+          :deep(img) {
+            filter: brightness(0) saturate(100%) invert(63%) sepia(65%) saturate(5550%) hue-rotate(200deg)
+              brightness(101%) contrast(101%);
+          }
         }
       }
     }
@@ -2505,6 +2283,14 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  .message-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    width: 45%;
+  }
 
   .message {
     flex: 3;
@@ -2516,43 +2302,50 @@ export default defineComponent({
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    &-islogged {
+      flex-direction: row;
+      display: flex;
+      gap: 10px;
+      .message-t {
+        color: #7a80a1;
+      }
+    }
   }
 
   .main-balance {
-    font-size: 1.6rem;
-    color: $font-4;
+    // font-size: 1.6rem;
+    // color: $font-4;
+    color: #313441;
 
     &.main-nologin {
       font-size: 1rem;
     }
   }
+}
+.menulist {
+  display: flex;
+  justify-content: end;
+  flex-grow: 1;
+  gap: 4px;
+  margin-right: 4px;
 
-  .menulist {
-    flex: 4;
-    // padding-left: 8px;
+  .men {
+    text-decoration: none;
+    color: $font-4;
+    gap: 2px;
     display: flex;
-    // justify-content: space-evenly;
-    justify-content: space-between;
-    gap: 4px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
 
-    .men {
-      text-decoration: none;
-      color: $font-4;
-      gap: 2px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.2rem;
+    &:active {
+      background: $grey-color;
+    }
 
-      &:active {
-        background: $grey-color;
-      }
-
-      img {
-        display: block;
-        height: 2rem;
-      }
+    img {
+      display: block;
+      height: 40px;
     }
   }
 }
@@ -2841,6 +2634,7 @@ export default defineComponent({
 
         @media (max-width: 400px) {
           font-size: 9px;
+          top: 59%;
         }
 
         &.active {
@@ -3541,5 +3335,11 @@ export default defineComponent({
 .alert-img {
   width: 70% !important;
   margin: auto;
+}
+
+@media (max-width: 380px) {
+  .menulist {
+    display: none;
+  }
 }
 </style>

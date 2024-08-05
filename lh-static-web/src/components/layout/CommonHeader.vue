@@ -13,11 +13,11 @@
                 class="header-menu-item"
                 :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
               >
-                <img
+                <!-- <img
                   v-if="nav.code === 'sports'"
                   class="hot-label"
                   :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
-                />
+                /> -->
                 <a
                   v-if="nav.code === 'minigame'"
                   @click="openMiniGame"

@@ -171,19 +171,20 @@ export const sportsPlatforms = [
   }
 ];
 
-// esports
+// poker
 export const eSportsPlatforms = [];
 
 // poker
 export const pokerPlatforms = [
-  // {
-  //   code: "REVOLUTION",
-  //   name: "REVOLUTION",
-  //   image: "revolution",
-  //   message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
-  //   caption: "",
-  //   gameCode: ""
-  // },
+  {
+    code: "REVOLUTION",
+    name: "REVOLUTION",
+    image: "revolution",
+    message:
+      "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
+    caption: "",
+    gameCode: ""
+  }
 ];
 
 // lottery
@@ -260,9 +261,18 @@ export const minigamePlatforms = [
     code: "TFGaming",
     name: "TFGaming",
     image: "TFGaming",
-    message: "World class minigame online",
+    message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
     vimessage: "",
     caption: "",
     gameCode: "CASUAL"
+  },
+  {
+    code: "Spribe",
+    name: "Spribe",
+    image: "Spribe",
+    message: "수년 동안 복권 게임 산업에 초점을 맞춰 왔으며, 고전적인 복권 유형과 게임 플레이를 갖추고 있습니다.또한 독점적이고 혁신적인 게임 플레이, 충분히 참신하고 조작하기 쉬운 게임 인터페이스가 많이 있습니다.그것은 당신의 게임 과정에 빛을 더할 것입니다",
+    vimessage: "",
+    caption: "",
+    gameCode: "aviator"
   }
 ];

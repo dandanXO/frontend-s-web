@@ -26,6 +26,15 @@
           </div>
           <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
+        <router-link
+          v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')"
+          to="/interest-profit"
+        >
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/interest-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.interestProfit") }}</div>
+        </router-link>
       </div>
     </div>
 
@@ -245,7 +254,7 @@ const logout = () => {
     margin: -20px auto 0px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 30px;
     gap: 10px;
@@ -274,9 +283,12 @@ const logout = () => {
 
       .acct-nav-label {
         color: #fff;
-
         font-size: 14px;
         white-space: normal;
+
+        @media (max-width: 400px) {
+          font-size: 12px;
+        }
       }
 
       .acct-nav-item {
@@ -284,7 +296,7 @@ const logout = () => {
         aspect-ratio: 1/1;
         padding: 8px;
         height: 50px;
-        width: 80px;
+        width: 70px;
         cursor: pointer;
         display: flex;
         text-align: center;
@@ -292,6 +304,11 @@ const logout = () => {
         justify-content: center;
         color: #000;
         text-decoration: none;
+
+        @media (max-width: 400px) {
+          width: auto;
+          padding: 0;
+        }
 
         img {
           width: 70%;

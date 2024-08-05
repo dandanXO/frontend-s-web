@@ -20,10 +20,10 @@
               <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
             </div>
           </div>
-          <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
+          <span v-if="isValidUser" style="font-size: 14px; font-weight: bold; color: #15c201">
             (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
           </span>
-          <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+          <span v-else style="font-size: 14px; font-weight: bold; color: #ff0000">
             (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
           </span>
           <div class="section">
@@ -108,7 +108,7 @@
               <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
               <div class="title">首次提款</div>
             </div>
-            <button v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
+            <div v-if="isValidUser" class="go-btn status" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
               <div @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
                 <img
                   v-if="firstWithdrawalState === 'CLAIMED'"
@@ -117,10 +117,11 @@
                 />
                 <span>{{ getStatus2(firstWithdrawalState)?.text || "" }}</span>
               </div>
-            </button>
+            </div>
+            <span v-else class="status" :class="getStatus(usdtAddrBindState).class">无法领取</span>
           </div>
           <div class="section">
-            <span>完成以下任务领取礼金 {{ firstWithdrawalBonus }} 元</span>
+            <span>完成以下任务领取礼金 {{ minFirstWithdrawalBonus }} - {{ maxFirstWithdrawalBonus }} 元</span>
             <div class="progress-bar-container">
               <div class="progress-bar">
                 <div class="progress" :style="{ width: progressPercentage + '%' }"></div>
@@ -156,34 +157,83 @@
           />
           <div class="title">活动规则</div>
         </div>
-        <div>
+        <div v-if="selected === 'option1'">
           <ol class="rules-content">
             <li>
               <span class="step-number">1</span>
-              自注册日起算 30 天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺 3
-              个优惠，让新手会员进行游戏体验。
+              <div class="content">
+                自注册日起算30天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+              </div>
             </li>
             <li>
               <span class="step-number">2</span>
-              每位新用户会员可选择各场馆参与 1
-              次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+              <div class="content">
+                新注册会员可以进入【个人信息】-【个人资料】-【提款银行卡】完成个人信息的绑定领取新手礼包；
+              </div>
             </li>
             <li>
               <span class="step-number">3</span>
-              新人指路任务完成后点击领取即可获得，首存活动（本 + 彩）15 倍流水，成长攻略以及钱包冲刺彩金均为 5 倍流水。
+              <div class="content">
+                每位新用户仅可领取一次新手礼包，绑定完成后点击领取即可到账，绑定有礼彩金5倍水即可提款，首次提款彩金为2倍流水；
+              </div>
             </li>
             <li>
               <span class="step-number">4</span>
-              此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+              <div class="content">完成新手礼包任务，即可进入下一阶段【新人指路】，继续进行您的游戏之旅；</div>
             </li>
             <li>
               <span class="step-number">5</span>
-              每位有效玩家、每个手机号码、电子邮箱、银行卡、IP
-              地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+              <div class="content">
+                此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+              </div>
             </li>
             <li>
               <span class="step-number">6</span>
-              此活动最终解释权归雷火所有；
+              <div class="content">
+                每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+              </div>
+            </li>
+            <li>
+              <span class="step-number">7</span>
+              <div class="content">此活动最终解释权归雷火所有；</div>
+            </li>
+          </ol>
+        </div>
+        <div v-else>
+          <ol class="rules-content">
+            <li>
+              <span class="step-number">1</span>
+              <div class="content">
+                自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+              </div>
+            </li>
+            <li>
+              <span class="step-number">2</span>
+              <div class="content">
+                每位新用户会员可选择各场馆参与1次首存奖励，在本活动页面选择好首存场馆后，点击【点击首存】按钮跳转至存款页面后，核实优惠一栏是否是您申请的优惠按钮，确认无误后进行存款即可；
+              </div>
+            </li>
+            <li>
+              <span class="step-number">3</span>
+              <div class="content">
+                新人指路任务完成后点击领取即可获得，首存活动（本+彩）15倍流水，成长攻略以及钱包冲刺彩金均为5倍流水。
+              </div>
+            </li>
+            <li>
+              <span class="step-number">4</span>
+              <div class="content">
+                此活动不与任何存款活动共享，所有存款活动要求的存款金额与本活动无关，每个账户仅限申请一次。活动奖金比例以第一笔存款金额为准；
+              </div>
+            </li>
+            <li>
+              <span class="step-number">5</span>
+              <div class="content">
+                每位有效玩家、每个手机号码、电子邮箱、银行卡、IP地址、设备只能使用一个账号享受优惠，如发现有违规者我们将保留无限期审核扣回红利以及所产生的利润权利；
+              </div>
+            </li>
+            <li>
+              <span class="step-number">6</span>
+              <div class="content">此活动最终解释权归雷火所有；</div>
             </li>
           </ol>
         </div>
@@ -303,13 +353,19 @@ const getBonus = async (promoCode) => {
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
+    } else {
+      notify({
+        type: "error",
+        message: apiRes.message
+      });
     }
   } catch (err) {
     console.error(err);
   }
 };
 
-const firstWithdrawalBonus = ref();
+const minFirstWithdrawalBonus = ref();
+const maxFirstWithdrawalBonus = ref();
 
 const getData = async () => {
   try {
@@ -320,7 +376,8 @@ const getData = async () => {
     telephoneBindState.value = apiRes.data.telephoneBindState;
     usdtAddrBindState.value = apiRes.data.usdtAddrBindState;
     memberRegTime.value = apiRes.data.memberRegTime;
-    firstWithdrawalBonus.value = apiRes.data.firstWithdrawalBonus;
+    minFirstWithdrawalBonus.value = apiRes.data.minFirstWithdrawalBonus;
+    maxFirstWithdrawalBonus.value = apiRes.data.maxFirstWithdrawalBonus;
 
     progress.value = apiRes.data.firstWithdrawalState === "NO" ? 0 : 1;
   } catch (err) {
@@ -374,6 +431,10 @@ onMounted(async () => {
   padding: 5px 28px;
   font-size: 16px;
   border-radius: 8px;
+
+  &.status {
+    color: #fff;
+  }
 
   &.complete {
     border: 1px solid rgba(0, 133, 232, 1);
@@ -517,10 +578,16 @@ h1 {
   padding: 5px 10px;
   border-radius: 6px;
   font-size: 14px;
-
+  text-align: center;
+  width: 80px;
   border: 1px solid rgba(0, 133, 232, 1);
 
+  cursor: pointer;
   color: rgba(0, 133, 232, 1);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 }
 
 .complete {

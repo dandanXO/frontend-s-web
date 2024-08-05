@@ -36,6 +36,7 @@ export const userStore = defineStore("userStore", {
       currency: { value: "원", label: "원" },
       personalAddress: "",
       unreadInboxMail: 0,
+      repliedQuestion: 0,
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
@@ -46,7 +47,8 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       hasUpdatedOneSignal: false,
       isAffiliateA: false,
-      name2: ""
+      name2: "",
+      pendingRebateAmt: 0
     };
   },
   actions: {
@@ -245,12 +247,48 @@ export const userStore = defineStore("userStore", {
           });
       }
     },
+    getPendingRebateAmt() {
+      return new Promise((resolve, reject) => {
+        if (this.token) {
+          api
+            .get("/member-point", {
+              params: {
+                Platform: "MAIN"
+              }
+            })
+            .then((ret) => {
+              const res = ret.data;
+              if (res.code === 0) {
+                this.pendingRebateAmt = Math.floor(res.data);
+              } else {
+                this.pendingRebateAmt = 0;
+              }
+              resolve();
+            });
+        }
+      });
+    },
     getUnreadTotal() {
       if (this.token) {
         return api.get("/session/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
+          }
+        });
+      }
+    },
+    getUnrepliedTotal() {
+      if (this.token) {
+        return api.get("/session/feedback/sysReply").then((res) => {
+          if (res.code === 0) {
+            const { records } = res.data;
+            this.repliedQuestion = records.reduce((total, record) => {
+              if (record.replyId !== null && record.replyReadTime === null) {
+                total++;
+              }
+              return total;
+            }, 0);
           }
         });
       }

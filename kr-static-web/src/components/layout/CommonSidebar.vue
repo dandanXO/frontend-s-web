@@ -33,12 +33,12 @@
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
         <div>{{ $t("stickySidebar.customerService") }}</div>
       </div>
-      <div @mouseover="customerHovered = false">
+      <!-- <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
           <div>{{ $t("stickySidebar.appDownload") }}</div>
         </router-link>
-      </div>
+      </div> -->
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
         <div>{{ $t("stickySidebar.backToTop") }}</div>

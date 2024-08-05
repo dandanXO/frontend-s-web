@@ -2,10 +2,11 @@ import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
-import { SessionStorage } from "quasar";
+import { Notify, SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
+import i18n from "src/i18n";
 
 /*
  * If not building with SSR mode, you can
@@ -105,6 +106,14 @@ export default route(function (/* { store, ssrContext } */) {
       } else {
         if (user.nickName === "") {
           user.getMemberInfo().then(() => next({ ...to, replace: true }));
+        } else if (user.unreadInboxMail > 0) {
+          if (["/finance/deposit", "/finance/withdraw"].includes(to.path)) {
+            Notify.create({
+              message: i18n.global.t("lang.msg_hasUnreadMail"),
+              color: "negative"
+            });
+          }
+          next();
         } else {
           next();
         }

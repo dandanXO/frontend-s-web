@@ -193,8 +193,8 @@ export function getNewUserAccumulateDepositInit() {
   return eventapi.get("/new-user-accumulate-deposit/init");
 }
 
-export function putNewUserAccumulateDepositClaim(ruleAmount) {
-  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
+export function putNewUserAccumulateDepositClaim(ruleAmount, type) {
+  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}&type=${type}`, {});
 }
 export function initUefaCheckin() {
   return eventapi.get("/lh-uefa-check-in/init");

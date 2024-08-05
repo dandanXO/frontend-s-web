@@ -249,6 +249,9 @@ const getPromotionListing = () => {
     });
 };
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   getPromotionListing();
 });
 </script>

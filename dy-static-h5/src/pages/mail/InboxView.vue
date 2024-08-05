@@ -1,9 +1,5 @@
 <template>
   <div class="table-record">
-    <q-tabs v-model="tab" indicator-color="primary" align="justify" @update:model-value="updateMailBox">
-      <q-tab v-for="(tab, i) in mailboxMessageTypeData" :key="i" :name="tab.type" :label="tab.name" />
-    </q-tabs>
-
     <MailComponent :loading="visible" :list="mailData" :type="tab" />
   </div>
 </template>
@@ -40,8 +36,7 @@ const loadInbox = (tab) => {
     .get("/session/inbox", {
       params: {
         type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy,
-        messageType: tab
+        orderBy: mailboxData.value.orderBy
       }
     })
     .then((response) => {

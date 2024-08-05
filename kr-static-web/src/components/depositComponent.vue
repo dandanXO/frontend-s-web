@@ -6,12 +6,15 @@
     <div v-if="!isLoading">
       <div class="account-tip-warning">
         <div>
+          {{ $t("deposit.note") }}
+        </div>
+        <!-- <div>
           <RiVolumeUpFill />
           {{ $t("deposit.note") }}
         </div>
         <ul>
           <li>{{ $t("deposit.notept1") }}</li>
-        </ul>
+        </ul> -->
 
         <div v-if="selectedPayType" v-html="activeMethod.msg"></div>
       </div>
@@ -59,7 +62,7 @@
             <el-form-item class="helptxt" :label="$t('deposit.amount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
-                v-model="form.localAmount"
+                v-model="localAmountWithComma"
                 :placeholder="isUSDT ? $t('deposit.inputUSDT') : $t('deposit.inputDeposit')"
               />
 
@@ -174,7 +177,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef, watch, computed, toRef } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiVolumeUpFill } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
@@ -187,14 +190,19 @@ import { useRouter } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 import { useI18n } from "vue-i18n";
+import { useCommaInput } from "@/hooks/commaInput";
+import { usePersonalIntegrity } from "@/hooks/personalIntegrity";
 
 {
   RiVolumeUpFill;
 }
+
 const { t } = useI18n();
 const router = useRouter();
-const loadingBtn = ref(false);
 const store = userStore();
+const checkPersonalInfoIntegrity = usePersonalIntegrity();
+
+const loadingBtn = ref(false);
 const formRef = ref();
 const isDeposited = ref(false);
 const isLoading = ref(true);
@@ -263,6 +271,8 @@ const checkAmount = reactive({
   flag: true,
   errorMessage: ""
 });
+
+const localAmountWithComma = useCommaInput(toRef(form, "localAmount"));
 
 const calculatedMinDeposit = ref("");
 const rules = {
@@ -589,6 +599,8 @@ async function verifyDepositAmount(r, v) {
       return Promise.reject(
         t("account.deposit_should_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
       );
+    } else if (Number(v) % 10000) {
+      return Promise.reject(t("account.deposit_amount_unit"));
     } else {
       if (checkAmount.flag) {
         return Promise.resolve();
@@ -613,6 +625,7 @@ async function verifyBank(r, v) {
 
 onMounted(() => {
   initPay();
+  checkPersonalInfoIntegrity();
 });
 </script>
 <style lang="scss">
@@ -697,6 +710,7 @@ onMounted(() => {
   align-items: flex-start;
   flex-direction: column;
   gap: 10px;
+  white-space: pre-line;
   ul {
     margin: 0;
     padding: 0 0 0 21px;

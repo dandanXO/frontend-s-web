@@ -9,10 +9,37 @@ import { uiStore } from "@/store/ui";
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
+const imgCDN = process.env.VUE_APP_IMAGE_CDN;
 
 console.log(window.location.hostname);
-const globalLinks = ["lh050.","lh068.","lh131.","lh165.","lh318.","lh338.","lh360.","lh537.","lh556.","lh730.","lh739.","lh765.","lh768.","lh835.","lh866.","lh869.","lh887.","lh970.","lh971.","lh988."];
+const globalLinks = [
+  "lh050.",
+  "lh068.",
+  "lh131.",
+  "lh165.",
+  "lh318.",
+  "lh338.",
+  "lh360.",
+  "lh537.",
+  "lh556.",
+  "lh730.",
+  "lh739.",
+  "lh765.",
+  "lh768.",
+  "lh835.",
+  "lh866.",
+  "lh869.",
+  "lh887.",
+  "lh970.",
+  "lh971.",
+  "lh988."
+];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
+
+const globalAndCNLinks = ["leihuo", "e693.cc", "e890.cc", "e561.cc", "e396.cc"];
+const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
+const REPLACEMENT_DOMAIN = "random";
 
 // const specialLinks= ["lh75561","lh77331","lh79669", "lh93371", "lh76390", "lh30553", "lh13179", "lh36791", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987", "lh59376", "lh60108", "lh63133", "lh67319", "lh69166"];
 // const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
@@ -40,10 +67,10 @@ if (isGlobalLH) {
   var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
 
   localStorage.setItem("LH_WEB_RST_URL", rstApi);
-  localStorage.setItem("LH_WEB_EVT_URL",evtApi);
-  localStorage.setItem("LH_WEB_CRT_URL",crtApi);
-
-}  else if (window.location.hostname.includes("leihuo")) {
+  localStorage.setItem("LH_WEB_EVT_URL", evtApi);
+  localStorage.setItem("LH_WEB_CRT_URL", crtApi);
+} else if (isGlobalAndCN) {
+  console.log("IS Global + CN");
   var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
   var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
   var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
@@ -55,6 +82,15 @@ if (isGlobalLH) {
   var rstApi = getInitApi(rstArray, "LH_WEB_RST_URL");
   var evtApi = getInitApi(evtArray, "LH_WEB_EVT_URL");
   var crtApi = getInitApi(crArray, "LH_WEB_CRT_URL");
+}
+
+if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+  const successImgCdn = localStorage.getItem("IMAGE_CDN");
+  if (!successImgCdn) {
+    const newDomain = replaceRndDomain("IMAGE_CDN");
+    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+    localStorage.setItem("IMAGE_CDN", newImgCDN);
+  }
 }
 
 function getInitApi(apiLinks, urlLsName) {
@@ -81,6 +117,10 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       initApi = apiLists[getRndInteger(0, apiLists.length)];
+      if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+        const newDomain = replaceRndDomain(urlLsName);
+        initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+      }
     }
 
     axios.get(initApi + "/ping").then((res) => {
@@ -92,6 +132,36 @@ function getInitApi(apiLinks, urlLsName) {
       }
     });
     return initApi;
+  }
+}
+
+function replaceRndDomain(urlLsName) {
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
+  const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${domainPrefix}${rndSecondLevelDomain}`;
+}
+
+function generateRndSecondLevelDomain(unit) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < unit; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+function getApiDomainPrefix(urlLsName) {
+  if (urlLsName.indexOf("RST") > -1) {
+    return "ap";
+  } else if (urlLsName.indexOf("CR") > -1) {
+    return "ca";
+  } else if (urlLsName.indexOf("EVT") > -1) {
+    return "pr";
+  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+    return "fi";
+  } else {
+    return "";
   }
 }
 
@@ -155,11 +225,11 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
-      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code=== ResponseCode.ERROR_PROMO_NOT_STARTED) {
+      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED) {
         ui.notify({
-          type: 'error',
+          type: "error",
           message: res.message
-        })
+        });
       }
       // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {
       //   // 龙卡
@@ -180,9 +250,9 @@ const onResponseError = (error) => {
   // message.error(error.message);
 
   ui.notify({
-    type: 'warning',
+    type: "warning",
     message: error.message
-  })
+  });
   return Promise.reject(error);
 };
 

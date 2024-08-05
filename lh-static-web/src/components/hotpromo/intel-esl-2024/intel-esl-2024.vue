@@ -97,30 +97,51 @@
           </table>
         </div>
         <div class="intel-els-activities">
-          注：会员参与 IEM 达拉斯总有效投注达到≥3000 元后在 IEM 科隆赛开赛日可获得对应开赛彩金；
+          例：
+          <br />
+          1.会员A：今年历史投注IEM达拉斯总有效投注为5,000元，在IEM开赛日可获得8元开赛奖金。
+          <br />
+          2.会员B：IEM科隆赛事在IM电竞投注5,000元后又在雷火电竞投注IEM赛事投注5,000元，会员B在次日可获雷火专属金38元。
         </div>
 
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
           <div class="item-content">
             <div class="item-text">
-              1.任何低于欧洲盘 1.7 或亚洲盘 0.7
+              1.活动开赛当日，会员历史投注IEM达拉斯赛事有效投注≥3000的会员在IEM科隆赛事开赛当日可获得对应开赛奖金，彩金于次日24小时内派发；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              2.活动期间，投注IEM科隆赛事有效≥1,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注IEM科隆赛事可获更高奖励金额。
+              <br />
+              注：奖金不叠加派发，奖金按最高档位每日派发一次。
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              3.开赛金于IEM达拉斯开赛当日24小时内派发。投注嘉奖与雷火专属金彩金于次日24小时内派发，彩金3倍流水即可提款；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              4.任何低于欧洲盘 1.7 或亚洲盘 0.7
               水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
             </div>
           </div>
           <div class="item-content">
             <div class="item-text">
-              2.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+              5.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
             </div>
           </div>
           <div class="item-content">
             <div class="item-text">
-              3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
               地址视为同一账户，若有违规者，将不享受此红利；
             </div>
           </div>
           <div class="item-content">
-            <div class="item-text">4.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+            <div class="item-text">7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
           </div>
         </div>
       </div>
@@ -199,27 +220,42 @@
             </tr>
           </tbody>
         </table>
+        <div class="intel-els-activities">
+          例：
+          <br />
+          1.会员A：今年历史投注IEM达拉斯赛事有效投注6,000元，IEM科隆有效投注10,000元后，IEM里约赛事开赛当日投注≥5,000元，会员在次日可获得12+8+8=28元。
+          <br />
+          2.会员B：今年历史投注IEM科隆30,000元，IEM里约赛事开塞当日投注10,000元，会员B在次日可获得58+18=76元。
+        </div>
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
           <div class="item-content">
             <div class="item-text">
-              1.任何低于欧洲盘 1.7 或亚洲盘 0.7
+              1.活动期间，会员IEM里约赛事有效投注≥1,000元可获对应档位投注嘉奖彩金，若会员今年历史投注IEM科隆赛事与IEM达拉斯赛事有效投注分别都≥5,000元，可分别在活动对应档位奖上奖彩金；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">2.活动与次日24小时内派发，彩金3倍流水即可提款；</div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              3.任何低于欧洲盘 1.7 或亚洲盘 0.7
               水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
             </div>
           </div>
           <div class="item-content">
             <div class="item-text">
-              2.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+              4.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
             </div>
           </div>
           <div class="item-content">
             <div class="item-text">
-              3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              5.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
               地址视为同一账户，若有违规者，将不享受此红利；
             </div>
           </div>
           <div class="item-content">
-            <div class="item-text">4.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+            <div class="item-text">6.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
           </div>
         </div>
       </div>
@@ -255,7 +291,7 @@ const activeTab = ref("first");
   }
   .intel-els-box {
     width: 1200px;
-    min-height:1366px;
+    min-height: 1366px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -295,7 +331,6 @@ const activeTab = ref("first");
     align-items: center;
   }
 }
-
 
 .active {
   background-image: url("@/assets/promo/intel-esl-24/active.png");
@@ -472,7 +507,7 @@ const activeTab = ref("first");
   .intel-els-rule-content {
     border-top: 3px solid rgba(255, 225, 183, 1);
     padding: 0px 16px;
-
+    margin-bottom: 27px;
     padding-top: 41px;
     padding-bottom: 30px;
     background-color: #202427;
@@ -517,13 +552,8 @@ const activeTab = ref("first");
     margin-bottom: 25px;
   }
   .intel-els-activities {
+    color: #fece94;
     font-size: 20px;
-    font-weight: 400;
-    line-height: 25.4px;
-    color: #fdffe9;
-    padding: 16px 24px;
-    border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
   }
   .intel-els-table {
     width: 100%;
@@ -613,6 +643,7 @@ const activeTab = ref("first");
     padding: 0px 16px;
     padding-top: 41px;
     padding-bottom: 30px;
+    margin-bottom: 27px;
     background-color: #202427;
     display: flex;
     flex-direction: column;

@@ -299,7 +299,6 @@ onMounted(() => {
 
 .message-page {
     height: 100%;
-    padding: 0 20px 20px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -357,8 +356,9 @@ onMounted(() => {
         flex-direction: column;
         gap: 5px;
         min-height: 100%;
-        background-color: white;
+        background-color: #ffffff94;
         padding: 20px;
+        border-radius: 20px;
 
         .header {
             display: flex;
@@ -376,25 +376,29 @@ onMounted(() => {
                 grid-template-columns: 20px 1fr auto;
                 gap: 5px;
                 padding: 8px 10px;
-                border-bottom: 1px solid grey;
-
+                border-bottom: 1px solid #eeeeee;
                 .info-wrapper {
                     display: flex;
                     flex-direction: column;
                     align-items: flex-end;
                 }
+                &:hover {
+                    background: #bdddff;
+                }
             }
 
             .active-message {
-                background: #aed0f7;
+                background: #a3d0ff;
+                border-left: 4px solid #409eff;
+                border-bottom: 0;
             }
 
-            .active-message,
             .unread {
 
                 .title,
                 .caption,
                 .date-time {
+                    color: #000000;
                     // color: #fff;
                     font-weight: bold;
                 }

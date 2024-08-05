@@ -39,8 +39,8 @@
         <span v-if="isGiftSelected" class="detail-block-content__suffix">{{ depositData.helpBonus }}元</span>
         <span v-else class="detail-block-content__suffix">{{ depositData.breakthroughBonus }}元</span>
       </div>
-      <div class="bonus-block-btn-wrapper" :class="selected">
-        <div class="bonus-block-btn" @click="handleClick"></div>
+      <div class="bonus-block-btn-wrapper" @click="handleClick" :class="selected">
+        <div class="bonus-block-btn"></div>
       </div>
     </div>
 
@@ -152,7 +152,11 @@ import { computed, onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
 import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+const store = userStore();
 const notify = useNotify();
 const $q = useQuasar();
 
@@ -177,6 +181,29 @@ const claimOlympicDailySportBet = () => {
 };
 
 const handleClick = () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
@@ -194,6 +221,9 @@ const handleClick = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   eventapi.get("/lhOlympicDailyFirstDeposit/init").then((res) => {
     if (res.code === 0) {
       const { todayFirstDepositAmount, claimableAmount } = res.data;

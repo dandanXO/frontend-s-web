@@ -45,7 +45,7 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       visitorId: "",
-      h5Url: "https://m.b9mega1.com/",
+      h5Url: "https://m.b9mega1.com/"
     };
   },
   actions: {
@@ -180,7 +180,7 @@ export const userStore = defineStore("userStore", {
         } else {
           token = SessionStorage.getItem("TOKEN");
         }
-        req.headers.TOKEN = token;
+        req.headers.token = token;
         return req;
       });
       eventapi.interceptors.request.use(async (req) => {
@@ -190,7 +190,7 @@ export const userStore = defineStore("userStore", {
         } else {
           token = SessionStorage.getItem("TOKEN");
         }
-        req.headers.TOKEN = token;
+        req.headers.token = token;
         return req;
       });
       this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");

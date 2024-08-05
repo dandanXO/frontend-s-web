@@ -59,6 +59,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -108,6 +115,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -149,6 +163,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -190,6 +211,12 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn v" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -231,6 +258,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -272,6 +306,13 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="go-btn-div">
+        <div class="go-btn status" @click="handleRedirect">
+          <span style="white-space: nowrap">立即前往</span>
+        </div>
+      </div>
+
       <div class="reward-description">
         <div style="display: flex">
           <div
@@ -306,10 +347,12 @@
         <div class="progress" :style="{ width: progressPercentage1 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem1?.earn }} 元奖金</div>
+        <div>已领取：{{ getDoneRewardItem1 }}元</div>
         <div>
           距 {{ matchRewardItem1?.earn }} 元奖金，还需充值
-          <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem1?.ruleAmount - depositAmount }}</span>
+          <span style="color: rgba(0, 136, 215, 1)">
+            {{ (matchRewardItem1?.ruleAmount - depositAmount).toFixed(2) }}
+          </span>
           元
         </div>
       </div>
@@ -321,7 +364,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward, 'all')">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -338,7 +381,7 @@
         </div>
         <div class="title">
           已累计充值：
-          <span style="color: rgba(0, 136, 215, 1)">{{ depositAmount }}</span>
+          <span style="color: rgba(0, 136, 215, 1)">{{ depositWalletAmount }}</span>
           元
         </div>
       </div>
@@ -346,10 +389,12 @@
         <div class="progress" :style="{ width: progressPercentage2 + '%' }"></div>
       </div>
       <div style="display: flex; justify-content: space-between; align-items: center">
-        <div>{{ matchRewardItem2?.earn }} 元奖金</div>
+        <div>已领取：{{ getDoneRewardItem2 }}元</div>
         <div>
           距 {{ matchRewardItem2?.earn }} 元奖金，还需充值
-          <span style="color: rgba(0, 136, 215, 1)">{{ matchRewardItem2?.ruleAmount - depositAmount }}</span>
+          <span style="color: rgba(0, 136, 215, 1)">
+            {{ (matchRewardItem2?.ruleAmount - depositWalletAmount).toFixed(2) }}
+          </span>
           元
         </div>
       </div>
@@ -361,7 +406,7 @@
             alt=""
             width="100%"
           />
-          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward)">领取</button>
+          <button class="YES" v-if="reward.state === 'YES'" @click="handleRecieve(reward, 'wallet')">领取</button>
           <button class="NO" v-if="reward.state === 'NO'" @click="handleRedirect">立即前往</button>
           <button class="CLAIMED" v-if="reward.state === 'CLAIMED'">已领取</button>
         </div>
@@ -400,8 +445,15 @@ const router = useRouter();
 const selectedTab = ref("sports");
 
 const depositAmount = ref(0);
+const depositWalletAmount = ref(0);
 const updatedApiRes = ref([]);
 
+const getDoneRewardItem1 = computed(() => {
+  return rewards1.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
+const getDoneRewardItem2 = computed(() => {
+  return rewards2.value.filter((item) => item.state === "CLAIMED").reduce((sum, item) => sum + item.earn, 0);
+});
 const rewards1 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount1.includes(item.ruleAmount));
 });
@@ -409,10 +461,10 @@ const rewards2 = computed(() => {
   return updatedApiRes.value.filter((item) => targetRuleAmount2.includes(item.ruleAmount));
 });
 const matchRewardItem1 = computed(() => {
-  return rewards1.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards1.value.find((item) => item.ruleAmount > depositAmount.value);
 });
 const matchRewardItem2 = computed(() => {
-  return rewards2.value.find((item) => item.ruleAmount >= depositAmount.value);
+  return rewards2.value.find((item) => item.ruleAmount > depositWalletAmount.value);
 });
 const progressPercentage1 = computed(() => {
   if (matchRewardItem1.value) {
@@ -422,7 +474,7 @@ const progressPercentage1 = computed(() => {
 });
 const progressPercentage2 = computed(() => {
   if (matchRewardItem2.value) {
-    return (depositAmount.value / matchRewardItem2.value.ruleAmount) * 100;
+    return (depositWalletAmount.value / matchRewardItem2.value.ruleAmount) * 100;
   }
   return 100;
 });
@@ -433,9 +485,9 @@ function selectTab(tab) {
 
 const isEligibleState = ref(true);
 
-const handleRecieve = async (reward) => {
+const handleRecieve = async (reward, type) => {
   try {
-    const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount);
+    const apiRes = await putNewUserAccumulateDepositClaim(reward.ruleAmount, type);
 
     if (apiRes.code === 0) {
       notify({
@@ -473,6 +525,7 @@ const getData = async () => {
       return;
     }
     depositAmount.value = apiRes.data.depositAmount || 0;
+    depositWalletAmount.value = apiRes.data.depositWalletAmount || 0;
 
     const parseApiRes = JSON.parse(apiRes.data.state);
 
@@ -527,9 +580,7 @@ onMounted(async () => {
   justify-content: center;
   gap: 5px;
   color: #7a80a1;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   font-size: 20px;
   border: 1px solid #7a80a1;
 }
@@ -772,6 +823,33 @@ button:disabled {
   &-active {
     background: url("@/assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
     background-size: cover;
+  }
+}
+
+.go-btn-div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.go-btn {
+  width: 150px;
+  background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+  color: #fff;
+  padding: 5px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  text-align: center;
+
+  &.status {
+    color: #fff;
+  }
+
+  &.complete {
+    border: 1px solid rgba(0, 133, 232, 1);
+    background: white;
+    color: rgba(0, 133, 232, 1);
   }
 }
 </style>

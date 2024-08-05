@@ -100,11 +100,11 @@
             <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
             <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
-            <div class="eshare-div">
+          <div class="eshare-div">
             <span v-if="store.evip">
               {{ $t("lang.personal_exclusiveurl") }}:
-              <a class="share-link" :href="'https://' +store.evip" target="_blank">
-                {{ 'https://' + store.evip }}
+              <a class="share-link" :href="'https://' + store.evip" target="_blank">
+                {{ "https://" + store.evip }}
               </a>
               <!-- <img
                 class="copy-btn btn-pointer"
@@ -207,6 +207,9 @@
             <div class="acct-nav-label">
               {{ $t("lang.mine_mailbox") }}
             </div>
+            <q-badge v-if="store.unreadInboxMail" color="red" class="unread-count" rounded>
+              {{ store.unreadInboxMail }}
+            </q-badge>
           </div>
         </router-link>
 
@@ -274,12 +277,12 @@
         <!-- </div> -->
         <!-- </router-link> -->
 
-        <!-- <router-link to="/account/personal"> -->
-        <!-- <div class="acct-nav-item"> -->
-        <!-- <img src="../assets/images/account/account-storage-icon.png" /> -->
-        <!-- <div class="acct-nav-label">仓库</div> -->
-        <!-- </div> -->
-        <!-- </router-link> -->
+        <router-link to="/about">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-storage-icon.png" />
+            <div class="acct-nav-label">{{ $t("lang.page_about") }}</div>
+          </div>
+        </router-link>
       </div>
     </q-item-section>
 
@@ -392,7 +395,7 @@ import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import LangOptions from "components/LangOptions";
@@ -457,7 +460,7 @@ export default defineComponent({
     const getVersionNo = async () => {
       if (store.getDeviceType() == "ANDROID") {
         const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
+        var current_version = info.version;
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
         appVersionNo.value = "iOS v0.6";
@@ -498,7 +501,7 @@ export default defineComponent({
       getVipProgress();
     });
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
@@ -879,32 +882,31 @@ export default defineComponent({
         }
       }
     }
-
   }
 
   .eshare-div {
-      margin-right: auto;
-      width: 100%;
-      color: #A4AABB;
-      font-size: 1rem;
-      // font-weight: bold;
+    margin-right: auto;
+    width: 100%;
+    color: #a4aabb;
+    font-size: 1rem;
+    // font-weight: bold;
 
-      > span {
-        display: flex;
-        justify-content: flex-start;
-        gap: 10px;
-          }
-
-      .copy-btn {
-        width: 20px;
-      }
-
-      .share-link {
-        color: $white;
-        font-weight: bold;
-        text-decoration: none;
-      }
+    > span {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
     }
+
+    .copy-btn {
+      width: 20px;
+    }
+
+    .share-link {
+      color: $white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
   //.bluecard {
   //  width: 98%;
   //  margin: 0 0px !important;
@@ -1040,6 +1042,7 @@ export default defineComponent({
         text-decoration: none;
         padding: 6px;
         border-radius: 4px;
+        position: relative;
 
         .acct-nav-label {
           // white-space: nowrap;
@@ -1051,6 +1054,12 @@ export default defineComponent({
           height: 32px;
           fill: white;
           padding: 0;
+        }
+
+        .unread-count {
+          position: absolute;
+          right: 1rem;
+          top: 0;
         }
 
         &:active {

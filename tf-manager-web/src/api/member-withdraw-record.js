@@ -268,3 +268,43 @@ export const getUnsuccessfulIn10time = (memberWithdrawRecord) => {
 export const getqueryUnsuccessIn30min = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/queryUnsuccessIn30min", Method.GET, memberWithdrawRecord, ContentType.form);
 };
+
+export const getAllMemberWithdrawRecordPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllMemberWithdrawRecordCryptoPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllCryptoPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllMemberWithdrawRecordEwalltPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllEwalltPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllMemberWithdrawRecordAliPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAliPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllMemberWithdrawRecordAutopay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllAffiliateWithdrawRecordAutopay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAffiliateAutopay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllAffiliateWithdrawRecordPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAffiliatePay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllAffiliateWithdrawRecordCryptoPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAffiliateCryptoPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllAffiliateWithdrawRecordEwalltPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAffiliateEwalltPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
+export const getAllAffiliateWithdrawRecordAliPay = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getAllAffiliateAliPay", Method.GET, memberWithdrawRecord, ContentType.form);
+};

@@ -20,20 +20,21 @@
     <div class="official-gift-block detail-block">
       <div class="detail-block-title">
         <img src="./img/gift.svg" />
-        <span>认准雷火电竞官方福利群管理</span>
+        <span>认准雷火电竞官方VIP客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下雷火官方福利群管理：领取彩金、投资计划、赛事推荐</span>
+        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="./img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj?.voxis_id }}</span>
+          <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
           <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
         </div>
       </div>
     </div>
 
     <div class="official-gift-block reason-block">
-      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
+      <img src="./img/h5-title.png" />
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
@@ -58,20 +59,25 @@ import DateSvg from "./img/date.svg";
 import GiftLineSvg from "./img/gift-line.svg";
 import ThumbSvg from "./img/thumb.svg";
 import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
+import { storeToRefs } from "pinia";
 
 const props = defineProps({
   params: String
 });
 
+const store = userStore();
+const { vip } = storeToRefs(store);
+
 const reasons = ref([
   { icon: BeautySvg, description: "美女专属客服1对1优质服务" },
-  { icon: Clock24Svg, description: "客服全天7*24小时在线" },
+  // { icon: Clock24Svg, description: "客服全天7*24小时在线" },
   { icon: QuestionSvg, description: "优先解答您游戏中各种问题" },
   { icon: StackSvg, description: "提供各种优惠活动信息资料" },
   { icon: ClockSvg, description: "每日活动领取提醒专业引导" },
   { icon: DateSvg, description: "各种游戏类型专业投资计划" },
-  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" },
-  { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
+  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" }
+  // { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
 ]);
 
 const paramsObj = computed(() => {
@@ -82,13 +88,33 @@ const paramsObj = computed(() => {
   }
 });
 
+const currentVoxisId = computed(() => {
+  const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
+  return paramsObj.value[key] || "";
+});
+
+function isHuaweiBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return userAgent.includes("huawei") || userAgent.includes("honor");
+}
+
 const handleCopyClick = async () => {
   if (window.location.pathname === "/promotion") {
-    const textToCopy = paramsObj.value?.voxis_id;
+    const textToCopy = currentVoxisId.value;
+    // alert(textToCopy);
 
     const notify = useNotify();
-    if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+    if (isHuaweiBrowser()) {
+      writeClipboard(currentVoxisId.value);
+    } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
       await navigator.clipboard.writeText(textToCopy);
+
+      setTimeout(() => {
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }, 100);
     } else {
       // Use the 'out of viewport hidden text area' trick
       const textArea = document.createElement("textarea");
@@ -108,14 +134,17 @@ const handleCopyClick = async () => {
         console.error(error);
       } finally {
         document.body.removeChild(textArea);
+      }
+
+      setTimeout(() => {
         notify({
           type: "success",
           message: "复制成功"
         });
-      }
+      }, 100);
     }
   } else {
-    writeClipboard(paramsObj.value?.voxis_id);
+    writeClipboard(currentVoxisId.value);
   }
 };
 </script>
@@ -247,7 +276,7 @@ const handleCopyClick = async () => {
           max-width: 2.5rem;
         }
         span {
-          font-size: 0.7rem;
+          font-size: 0.9rem;
           font-weight: 400;
           line-height: 1.3rem;
           margin-bottom: 10px;

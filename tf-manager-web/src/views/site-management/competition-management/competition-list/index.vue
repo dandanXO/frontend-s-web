@@ -286,6 +286,9 @@
             </el-button>
           </el-row>
         </el-form-item>
+        <el-form-item :label="t('fields.externalUrl')" prop="externalUrl">
+          <el-input v-model="form.externalUrl" style="width: 350px" />
+        </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
           <el-input-number
             type="number"
@@ -699,7 +702,7 @@
         />
       </el-form-item>
       <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">
+        <el-button @click="uiControl.imageDialogVisible = false">
           {{ t('fields.cancel') }}
         </el-button>
         <el-button type="primary" @click="submitImageUpload">
@@ -800,6 +803,7 @@ const form = reactive({
   teamOneLogo: null,
   teamTwoName: null,
   teamTwoLogo: null,
+  externalUrl: null,
   sequence: null,
   status: null,
 })

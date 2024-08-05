@@ -10,7 +10,7 @@
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥1场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
@@ -20,26 +20,26 @@
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>≥3</td>
+            <th>竞猜正确场次</th>
+            <th>投注返比</th>
+            <th>彩金上限</th>
+          </tr>
+          <tr>
+            <td>≥1</td>
             <td>0.8%</td>
             <td>88</td>
           </tr>
           <tr>
-            <td>≥5</td>
+            <td>≥2</td>
             <td>1.0%</td>
             <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>3.0%</td>
-            <td>888</td>
           </tr>
         </table>
 
         <div class="olympic24-match-game-bottom">
           <div class="olympic24-match-game-bottom-left-title">
             <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
-            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数2次，用户可获得30,000*1.0%=300元，用户A彩金金额超出彩金上限，用户A最终可获得188元。
           </div>
         </div>
       </div>
@@ -158,7 +158,7 @@
           <div class="olympic24-match-game-bottom-left-title">
             注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
           </div>
-          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
+          <div class="olympic24-match-game-bottom-left-btn" @click="showTableRecordDialog">[投票记录]</div>
         </div>
       </div>
       <div class="olympic24-match-game-bottom-rule">
@@ -166,7 +166,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥1场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -174,7 +174,7 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            活动期间会员竞猜正确场次≥3次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            活动期间会员竞猜正确场次≥1次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -240,7 +240,13 @@
           </table>
         </div>
       </el-dialog> -->
-      <q-dialog v-model="tableRecordDialog" full-width position="bottom" class="olympic24-match-table-record-dialog">
+      <q-dialog
+        v-if="recordsCount"
+        v-model="tableRecordDialog"
+        full-width
+        position="bottom"
+        class="olympic24-match-table-record-dialog"
+      >
         <div class="record-dialog-container">
           <div class="record-header-container">
             <div class="title"></div>
@@ -295,8 +301,8 @@
       <q-dialog v-model="confirmVoteDialog" persistent>
         <q-card class="confirm-vote-card">
           <q-card-section class="q-mb-md row justify-center">
-            <div class="text-h6" v-if="submitParam.team === 'draw'">您确定要投"平局"吗？</div>
-            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+            <div class="text-h6" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
+            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
           </q-card-section>
 
           <q-card-actions align="center">
@@ -324,7 +330,11 @@ import {
 import { useQuasar } from "quasar";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
+import { userStore } from "../../../stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+const store = userStore();
 const notify = useNotify();
 const $q = useQuasar();
 
@@ -337,6 +347,32 @@ const recordList = ref([]);
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
+const showTableRecordDialog = () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
+  tableRecordDialog.value = true;
+};
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -443,6 +479,9 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getData();
 });
 </script>

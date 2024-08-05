@@ -6,24 +6,24 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.myMoney') }}
         </div>
-        <div class="stat-value green">{{ parseInt(records.myMoney) }}</div>
+        <div class="stat-value green">{{ parseInt(records.myMoney).toFixed(0) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.myPoint') }}
         </div>
-        <div class="stat-value green">{{ records.myPoint }}</div>
+        <div class="stat-value green">{{ (records.myPoint).toFixed(0) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.memberMoney') }}
         </div>
-        <div class="stat-value green">{{ records.memberMoney }}</div>
+        <div class="stat-value green">{{ (records.memberMoney).toFixed(0) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.memberPoint') }}</div>
-        <div class="stat-value green">{{ records.memberPoint }}</div>
+        <div class="stat-value green">{{ (records.memberPoint).toFixed(0) }}</div>
       </div>
 
 
@@ -74,22 +74,22 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.todayDepositAmount') }}</div>
-        <div class="stat-value grey">{{ records.todayDepositAmount }}</div>
+        <div class="stat-value grey">{{ (records.todayDepositAmount).toFixed(0) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.todayWithdrawAmount') }}</div>
-        <div class="stat-value grey">{{ records.todayWithdrawAmount }}</div>
+        <div class="stat-value grey">{{ (records.todayWithdrawAmount).toFixed(0) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.refundProfitAndLoss') }}</div>
-        <div class="stat-value grey">{{ records.todayDepositAmount - records.todayWithdrawAmount }}</div>
+        <div class="stat-value grey">{{ (records.todayDepositAmount - records.todayWithdrawAmount).toFixed(0) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.manualMoney') }}</div>
-        <div class="stat-value blue">{{ records.manualMoney }}</div>
+        <div class="stat-value blue">{{ (records.manualMoney).toFixed(0) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -117,7 +117,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.casinoRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.casinoRollingAmount }}</div>
+        <div class="stat-value grey">{{ (records.casinoRollingAmount).toFixed(0) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -138,7 +138,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.slotRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.slotRollingAmount }}</div>
+        <div class="stat-value grey">{{ (records.slotRollingAmount).toFixed(0) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -158,7 +158,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.sportRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.sportRollingAmount }}</div>
+        <div class="stat-value grey">{{ (records.sportRollingAmount).toFixed(0) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -179,7 +179,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.miniGameRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.miniGameRollingAmount }}</div>
+        <div class="stat-value grey">{{ (records.miniGameRollingAmount).toFixed(0) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -190,10 +190,10 @@
       </div> -->
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
-        <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount)
-          + (records.slotProfit - records.slotBetAmount)
-          + (records.sportProfit - records.sportBetAmount)
-          + (records.miniGameProfit - records.miniGameBetAmount) }}</div>
+        <div class="stat-value grey">{{ ((records.casinoBetAmount - records.casinoProfit - records.casinoRollingAmount)
+          + (records.slotBetAmount - records.slotProfit - records.slotRollingAmount)
+          + (records.sportBetAmount - records.sportProfit - records.sportRollingAmount)
+          + (records.miniGameBetAmount - records.miniGameProfit - records.miniGameRollingAmount)).toFixed(0) }}</div>
       </div>
     </div>
   </div>
@@ -218,6 +218,7 @@ const toggleExpansion = () => {
 const records = ref({
   memberMoney: 0,
   memberPoint: 0,
+  myPoint: 0,
   eggs: 0,
   memberInquiry: 0,
   depositApplication: 0,

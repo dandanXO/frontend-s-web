@@ -148,9 +148,16 @@
           }}
         </div> -->
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
           <span style="color: #fff">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">
+              {{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}
+            </template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
             {{ store.currency.value }}
           </span>
         </div>
@@ -216,22 +223,41 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>
-        1. Recharge tutorial:
-        <span class="tutorial-link" @click="openDepositPage">Picture</span>
-        /
-        <span class="tutorial-link" @click="openDepositVideo">Video</span>
-      </p>
-      <p>2. Fill in the correct wallet account number</p>
-      <p>3. Fill in the correct CNIC number</p>
-      <p>
-        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-        credited.
-      </p>
+    <div class="q-mt-lg step-desc-div q-mb-lg">
+      <template v-if="isUSDT">
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
+        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>
+          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+        </p>
+        <p>
+          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+        </p>
+        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+      </template>
+      <template v-else>
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Fill in the correct wallet account number</p>
+        <p>3. Fill in the correct CNIC number</p>
+        <p>
+          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+          credited.
+        </p>
+      </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
-    <div class="bottom-content" style="height: 40px"></div>
+    <div class="bottom-content" style="height: 60px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -528,20 +554,20 @@ const onSelect = (value) => {
       }));
       checkPrivilege(value);
     }
-    checkMinDepositAmt();
   }
 };
 
-function checkMinDepositAmt() {
+function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 300;
-  calculatedMaxDeposit.value = 50000;
+  calculatedMinDeposit.value = val.depositMin;
+  calculatedMaxDeposit.value = val.depositMax;
 }
 
 function checkPrivilege(v) {
   selectPayType(v);
   if (v.paymentId !== null && v.paymentId !== undefined) {
     loadPrivilege(v);
+    checkMinDepositAmt(v);
     // unselectedPrivileges.value = [];
   }
 }
@@ -582,7 +608,7 @@ function clearInfo() {
   if (depositForm.value) {
     depositForm.value.reset();
   }
-  checkMinDepositAmt();
+  // checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
@@ -818,6 +844,11 @@ const openDepositVideo = () => {
   // } else {
   //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   // }
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 onActivated(() => {
@@ -1117,7 +1148,7 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0;
+  padding: 20px 0 40px;
   position: fixed;
   bottom: 0;
   width: calc(100% - 32px);

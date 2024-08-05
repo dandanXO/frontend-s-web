@@ -1,9 +1,9 @@
 <template>
   <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
     <div v-if="platformsListDisplay.length > 0" class="platform-container"
-         :class="(platformType === 'slot' || platformType === 'fishing' || platformType === 'casual') ? 'slot-container' : ''"
+         :class="[(platformType === 'fishing') ? 'slot-container' : '', platformType === 'slot' || platformType === 'casual'? 'casual-container': '']"
     >
-      <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'  || platformType === 'casual'">
+      <div class="platform-container-slot" v-if="platformType === 'fishing'">
         <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'">
@@ -107,7 +107,8 @@
           <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
-              <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
+              <div v-if="item.code !== 'Spribe'" class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
+                     
                 <!-- <img
                   :src="
                   require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
@@ -120,6 +121,7 @@
                   <span v-else>{{ item.code }}</span>
                 </div>
               </div>
+
             </template>
           </div>
         </div>
@@ -403,6 +405,9 @@ const changePage = (page, pageSize) => {
 const gameCat = ref("allGame");
 
 onMounted(() => {
+  if (route.query.plat === 'Spribe') {
+    router.push({ query: { ...route.query, plat: 'TFGaming' } });
+  }
   getPlatList();
   getPlatGameList();
 
@@ -414,9 +419,9 @@ watch(
     if (route.path === route.path) {
       platformsListDisplay.value.forEach((element) => {
         if (element.code === route.query.plat) {
-          clickPlat(element);
-          getPlatGameList();
-          loadGameList();
+            clickPlat(element);
+            getPlatGameList();
+            loadGameList();
         }
       });
     }

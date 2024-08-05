@@ -7,14 +7,14 @@
           <em>*</em>
         </q-label> -->
         <q-input
-          v-if="!hasAffiliate"
           ref="affiliateCodeRef"
           rounded
           standout
           dense
           clearable
-          v-model="regForm.referrer"
-          :hint="$t('lang.referral_hints')"
+          :disable="hasAffiliate"
+          v-model="regForm.codeAffiliate"
+          :hint="hasAffiliate ? '' : $t('lang.referral_hints')"
           :placeholder="$t('lang.referral_code')"
         >
           <template v-slot:prepend>
@@ -160,7 +160,7 @@
           dense
           standout
           rounded
-          :placeholder="$t('lang.reg_bank_placeholder')"
+          :label="$t('lang.reg_bank_placeholder')"
           ref="bankCardRef"
           v-model="regForm.bankId"
           :options="banks"
@@ -258,7 +258,11 @@
             <div style="width: 24px; display: flex; align-items: center">
               <img src="../assets/images/login/withdraw-pwd-icon.png" width="24" />
             </div>
+
+            <span class="text-grey" v-if="!regForm.withdrawPassword" @click="withdrawPasswordRef.focus()">{{$t('lang.reg_withdraw_password_placeholder')}}</span>
           </template>
+
+
         </q-input>
 
         <!-- <q-label>
@@ -466,6 +470,7 @@ export default defineComponent({
     };
 
     const hasAffiliate = ref(false);
+    const hasReferral = ref(false);
 
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
@@ -477,7 +482,7 @@ export default defineComponent({
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
-        hasAffiliate.value = true;
+        hasReferral.value = true;
         regForm.referrer = refCode;
       }
     };
@@ -789,6 +794,7 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
+      hasReferral,
       trackRegisterSuccessEvent,
       trackRegisterFailedEvent,
       ui,

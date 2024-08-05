@@ -364,7 +364,7 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row v-if="form.siteId === 8">
+    <el-row>
       <el-form-item label="VIP" prop="vips">
         <el-checkbox
           v-model="checkboxes.vip.checkAll"
@@ -467,6 +467,22 @@
     <el-form-item :label="t('fields.content')" prop="pageContent">
       <!-- editor here -->
       <Editor v-model:value="form.pageContent" @input="getInput" />
+    </el-form-item>
+    <el-form-item :label="t('fields.startTime')" prop="startTime">
+      <el-date-picker
+        type="datetime"
+        value-format="YYYY-MM-DD HH:mm:ss"
+        v-model="form.startTime"
+        :disabled-date="disabledStartDate"
+      />
+    </el-form-item>
+    <el-form-item :label="t('fields.endTime')" prop="endTime">
+      <el-date-picker
+        type="datetime"
+        value-format="YYYY-MM-DD HH:mm:ss"
+        v-model="form.endTime"
+        :disabled-date="disabledEndDate"
+      />
     </el-form-item>
     <div class="form-footer">
       <el-button type="primary" @click="submit">
@@ -783,6 +799,7 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
+import moment from 'moment'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -831,6 +848,8 @@ const form = reactive({
   param: null,
   vips: null,
   affiliates: null,
+  startTime: null,
+  endTime: null,
 })
 
 const imageForm = reactive({
@@ -891,7 +910,7 @@ const formRules = reactive({
   promoCode: [required(t('message.validatePromoCodeRequired'))],
   pageContent: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
-  vips: [required(t('message.validateVIPRequired'))],
+  // vips: [required(t('message.validateVIPRequired'))],
   affiliates: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
@@ -974,15 +993,15 @@ function loadPromoTypes() {
   } else if (LOGIN_SITE_ID === 6) {
     // Dongying 东赢
     promoTypes.value = [
-      { typeName: 'WELCOME', value: 1, displayName: "新人优惠" },
+      { typeName: 'WELCOME', value: 1, displayName: '新人优惠' },
       { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
       { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-      { typeName: 'LIVE CASINO', value: 5, displayName: "真人棋牌" },
-      { typeName: 'SLOT GAME', value: 6, displayName: "电游活动" },
+      { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
+      { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
       { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
-      { typeName: 'LIMITED', value: 16, displayName: "限时热门" },
-      { typeName: 'FTD', value: 9, displayName: "充提优惠" },
-    ];
+      { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
+      { typeName: 'FTD', value: 9, displayName: '充提优惠' },
+    ]
   } else {
     promoTypes.value = [
       { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
@@ -1004,6 +1023,27 @@ function loadPromoTypes() {
       { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
     ]
   }
+}
+
+function disabledStartDate(time) {
+  if (form.endTime !== null) {
+    const changedDate = form.endTime.replace(/(..)\/(..)\/(....)/, '$3-$2-$1')
+    var date = new Date(changedDate)
+    return (
+      time.getTime() <= moment(Date.now()).subtract(1, 'days') ||
+      time.getTime() >= moment(date)
+    )
+  }
+  return time.getTime() <= moment(Date.now()).subtract(1, 'days')
+}
+
+function disabledEndDate(time) {
+  if (form.startTime !== null) {
+    const changedDate = form.startTime.replace(/(..)\/(..)\/(....)/, '$3-$2-$1')
+    var date = new Date(changedDate)
+    return time.getTime() <= date.getTime()
+  }
+  return time.getTime() <= Date.now()
 }
 
 function handleCheckedChangePromoType() {
@@ -1115,10 +1155,10 @@ function constructParam() {
   } else {
     form.affiliates = uiControl.affList.join(',')
   }
-  if (form.vips === "") {
+  if (form.vips === '') {
     form.vips = null
   }
-  if (form.affiliates === "") {
+  if (form.affiliates === '') {
     form.affiliates = null
   }
   return JSON.stringify(json)
@@ -1157,9 +1197,9 @@ async function loadForm(id, siteId) {
 
     form.siteId = ret.siteId
     loadPromoTypes()
-    if (form.siteId === 8) {
-      loadVips()
-    }
+
+    loadVips()
+
     // checked promoType checkboxes
     // const promoArr = form.promoType.split(",").map(Number)
     const promoArr = form.promoType.split(',')
@@ -1171,7 +1211,7 @@ async function loadForm(id, siteId) {
       selectedVIPs.vipChecked.push(parseInt(element))
     })
     if (vipArr.length === 0) {
-      form.vips = "test"
+      form.vips = 'test'
       checkboxes.vip.checkAll = true
     }
     const affArr = form.affiliates ? form.affiliates.split(',') : []
@@ -1367,9 +1407,9 @@ function submitImageUpload() {
 }
 
 function onChangeSite() {
-  if (parseInt(form.siteId) === 8) {
-    loadVips()
-  }
+  // if (parseInt(form.siteId) === 8) {
+  loadVips()
+  // }
 }
 
 async function loadVips() {
@@ -1407,9 +1447,9 @@ const showInput = () => {
 function onCheckAllAffiliate(value) {
   checkAllAff.value = value
   if (value) {
-    form.affiliates = "test"
+    form.affiliates = 'test'
   } else {
-    form.affiliates = uiControl.affList.join(",")
+    form.affiliates = uiControl.affList.join(',')
   }
 }
 
@@ -1429,7 +1469,7 @@ const handleInputConfirm = () => {
         }
       })
     }
-    form.affiliates = uiControl.affList.join(",")
+    form.affiliates = uiControl.affList.join(',')
   }
   uiControl.inputVisible = false
   inputValue.value = ''

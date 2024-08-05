@@ -151,6 +151,11 @@
 import { computed, onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
+import { userStore } from "../../../stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const store = userStore();
 
 const $q = useQuasar();
 
@@ -175,6 +180,29 @@ const claimOlympicDailySportBet = () => {
 };
 
 const handleClick = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'dyblue',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
@@ -196,6 +224,9 @@ const handleClick = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   eventapi.get("/lhOlympicDailyFirstDeposit/init").then((res) => {
     if (res.code === 0) {
       const { todayFirstDepositAmount, claimableAmount } = res.data;
