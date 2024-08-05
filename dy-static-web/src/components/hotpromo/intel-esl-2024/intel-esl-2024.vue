@@ -1,0 +1,675 @@
+<template>
+  <div class="intel-els">
+    <!-- <div class="intel-els-background-img"></div> -->
+    <div class="intel-els-box">
+      <div class="intel-els-tab">
+        <div class="intel-els-tab-item" :class="{ active: activeTab === 'first' }" @click="activeTab = 'first'">
+          <div class="color-box">IEM 科隆</div>
+        </div>
+        <div class="intel-els-tab-item" :class="{ active: activeTab === 'second' }" @click="activeTab = 'second'">
+          <div class="color-box">IEM 里约</div>
+        </div>
+      </div>
+      <div class="intel-els-first-container" v-if="activeTab === 'first'">
+        <div class="intel-els-fisrt-title"></div>
+        <div class="intel-els-team-box">
+          <table class="intel-els-table">
+            <thead>
+              <tr>
+                <th>IEM 达拉斯总有效投注</th>
+                <th>开赛金</th>
+                <th>奖金派发时间</th>
+                <th>奖金派发形式</th>
+                <th>奖金流水</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥3,000</td>
+                <td>8 元</td>
+                <td rowspan="2">IEM 科隆开赛日</td>
+                <td rowspan="2">自动派发</td>
+                <td rowspan="2">3 倍不限场馆</td>
+              </tr>
+              <tr>
+                <td>≥10,000</td>
+                <td>58 元</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="intel-els-team-box">
+          <table class="intel-els-table">
+            <thead>
+              <tr>
+                <th>有效投注</th>
+                <th>投注嘉奖</th>
+                <th>雷火专属金</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥1,000</td>
+                <td>8 元</td>
+                <td>10 元</td>
+              </tr>
+              <tr>
+                <td>≥5,000</td>
+                <td>18 元</td>
+                <td>38 元</td>
+              </tr>
+              <tr>
+                <td>≥10,000</td>
+                <td>58 元</td>
+                <td>88 元</td>
+              </tr>
+              <tr>
+                <td>≥30,000</td>
+                <td>88 元</td>
+                <td>108 元</td>
+              </tr>
+              <tr>
+                <td>≥50,000</td>
+                <td>188 元</td>
+                <td>328 元</td>
+              </tr>
+              <tr>
+                <td>≥100,000</td>
+                <td>328 元</td>
+                <td>588 元</td>
+              </tr>
+              <tr>
+                <td>≥200,000</td>
+                <td>588 元</td>
+                <td>888 元</td>
+              </tr>
+              <tr>
+                <td>≥500,000</td>
+                <td>1,088 元</td>
+                <td>1,588 元</td>
+              </tr>
+              <tr>
+                <td>≥1,000,000</td>
+                <td>1,888 元</td>
+                <td>2,188 元</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="intel-els-activities">
+          例：
+          <br />
+          1.会员A：今年历史投注IEM达拉斯总有效投注为5,000元，在IEM开赛日可获得8元开赛奖金。
+          <br />
+          2.会员B：IEM科隆赛事在IM电竞投注5,000元后又在雷火电竞投注IEM赛事投注5,000元，会员B在次日可获雷火专属金38元。
+        </div>
+
+        <div class="intel-els-rule-title"></div>
+        <div class="intel-els-rule-content">
+          <div class="item-content">
+            <div class="item-text">
+              1.活动开赛当日，会员历史投注IEM达拉斯赛事有效投注≥3000的会员在IEM科隆赛事开赛当日可获得对应开赛奖金，彩金于次日24小时内派发；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              2.活动期间，投注IEM科隆赛事有效≥1,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注IEM科隆赛事可获更高奖励金额。
+              <br />
+              注：奖金不叠加派发，奖金按最高档位每日派发一次。
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              3.开赛金于IEM科隆开赛次日24小时内派发。投注嘉奖与雷火专属金彩金于次日24小时内派发，彩金3倍流水即可提款；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              4.任何低于欧洲盘 1.7 或亚洲盘 0.7
+              水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              5.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              地址视为同一账户，若有违规者，将不享受此红利；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-els-second-container" v-if="activeTab === 'second'">
+        <div class="intel-els-second-title"></div>
+        <!-- <div class="special-discounts-rebates">
+          <div class="title">特惠返利场</div>
+          <div class="line"></div>
+        </div> -->
+        <table class="intel-els-table">
+          <thead>
+            <tr>
+              <th rowspan="2">有效投注</th>
+              <th rowspan="2">投注嘉奖</th>
+              <th colspan="2">奖上奖</th>
+            </tr>
+            <tr>
+              <th>IEM 达拉斯总有效投注≥5,000</th>
+              <th>IEM 科隆总有效投注≥5,000</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>≥1,000</td>
+              <td>5 元</td>
+              <td>5 元</td>
+              <td>5 元</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>12 元</td>
+              <td>8 元</td>
+              <td>8 元</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>58 元</td>
+              <td>18 元</td>
+              <td>18 元</td>
+            </tr>
+            <tr>
+              <td>≥30,000</td>
+              <td>88 元</td>
+              <td>28 元</td>
+              <td>28 元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>188 元</td>
+              <td>58 元</td>
+              <td>58 元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>328 元</td>
+              <td>108 元</td>
+              <td>108 元</td>
+            </tr>
+            <tr>
+              <td>≥200,000</td>
+              <td>588 元</td>
+              <td>218 元</td>
+              <td>218 元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,088 元</td>
+              <td>388 元</td>
+              <td>388 元</td>
+            </tr>
+            <tr>
+              <td>≥1,000,000</td>
+              <td>1,888 元</td>
+              <td>588 元</td>
+              <td>588 元</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="intel-els-activities">
+          例：
+          <br />
+          1.会员A：今年历史投注IEM达拉斯赛事有效投注6,000元，IEM科隆有效投注10,000元后，IEM里约赛事开赛当日投注≥5,000元，会员在次日可获得12+8+8=28元。
+          <br />
+          2.会员B：今年历史投注IEM科隆30,000元，IEM里约赛事开塞当日投注10,000元，会员B在次日可获得58+18=76元。
+        </div>
+        <div class="intel-els-rule-title"></div>
+        <div class="intel-els-rule-content">
+          <div class="item-content">
+            <div class="item-text">
+              1.活动期间，会员IEM里约赛事有效投注≥1,000元可获对应档位投注嘉奖彩金，若会员今年历史投注IEM科隆赛事与IEM达拉斯赛事有效投注分别都≥5,000元，可分别在活动对应档位奖上奖彩金；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">2.活动与次日24小时内派发，彩金3倍流水即可提款；</div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              3.任何低于欧洲盘 1.7 或亚洲盘 0.7
+              水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              4.根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">
+              5.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              地址视为同一账户，若有违规者，将不享受此红利；
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="item-text">6.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { ref } from "vue";
+
+const activeTab = ref("first");
+</script>
+
+<style scoped lang="scss">
+.intel-els {
+  //font-family: FZLanTingHeiS-EB-GB;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-bottom: 80px;
+  .intel-els-background-img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1074px;
+    background-image: url("@/assets/promo/intel-esl-24/background-img.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .intel-els-box {
+    width: 1200px;
+    min-height: 1366px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+.intel-els-tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.intel-els-tab-item {
+  font-family: FZHanZhenGuangBiaoS-GB;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 34.75px;
+  /* color: #f8e1a3; */
+  background-image: url("@/assets/promo/intel-esl-24/inactive.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 330px;
+  height: 78px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  .color-box {
+    height: 78px;
+    background: linear-gradient(180deg, #ffdaa6 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.active {
+  background-image: url("@/assets/promo/intel-esl-24/active.png");
+  .color-box {
+    height: 78px;
+    background: linear-gradient(180deg, #fcbf11 0%, #ffdaa6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.intel-els-first-container {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  .intel-els-fisrt-title {
+    // width: 100%;
+    height: 48px;
+    background-image: url("@/assets/promo/intel-esl-24/title.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 25px;
+  }
+  .intel-els-rule-title {
+    width: 100%;
+    height: 48px;
+    background-image: url("@/assets/promo/intel-esl-24/rule.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 40px;
+    margin-bottom: 25px;
+  }
+
+  .intel-els-team-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 27px;
+    .intel-els-game-team {
+      width: 567px;
+      height: 184px;
+      background-image: url("@/assets/promo/intel-esl-24/team-back.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 87px;
+      .intel-els-game-team-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .intel-els-game-team-icon {
+          width: 91px;
+          height: 91px;
+        }
+        .intel-els-game-team-name {
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 24.82px;
+          color: #fff;
+          margin-top: 16px;
+        }
+      }
+
+      .intel-els-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .vs-icon {
+          width: 91px;
+          height: 91px;
+          background-image: url("@/assets/promo/intel-esl-24/vs.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        .vs-time {
+          color: #aeafa2;
+          margin-top: 8px;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 25.4px;
+        }
+      }
+    }
+  }
+
+  .intel-els-activities {
+    color: #fece94;
+    font-size: 20px;
+  }
+
+  .intel-els-table {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25.4px;
+    border-collapse: collapse;
+    border: 1px solid #ffdba633;
+    border-top: 2px solid rgba(255, 207, 148, 0.3);
+    margin-bottom: 16px;
+    thead {
+      border-top: 3px solid rgba(255, 225, 183, 1);
+      color: #fece94;
+      background: #333840;
+      tr {
+        height: 41px;
+        th {
+          border: 1px solid #ffdba633;
+        }
+      }
+    }
+    tbody {
+      color: #c2c2c2;
+      background: #202427;
+      tr {
+        height: 60px;
+        td {
+          border: 1px solid #ffdba633;
+        }
+      }
+    }
+  }
+
+  .winning-bonus,
+  .reversal-bonus {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25.4px;
+    color: #fdffe9;
+    border: 3px solid #3d3d3d;
+    margin-bottom: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    .title {
+      width: 176px;
+      height: 100%;
+      background: linear-gradient(90deg, #ff4d00 0%, #ffc700 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #381800;
+      font-family: Microsoft YaHei UI;
+      font-weight: 700;
+    }
+    .content {
+      width: calc(100% - 176px);
+      padding-left: 27px;
+    }
+  }
+
+  .intel-els-example {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25.4px;
+    color: #fdffe9;
+    padding: 16px 24px;
+    border: 3px solid #3d3d3d;
+    margin-bottom: 17px;
+    margin-bottom: 57px;
+  }
+
+  .intel-els-rule-content {
+    border-top: 3px solid rgba(255, 225, 183, 1);
+    padding: 0px 16px;
+    margin-bottom: 27px;
+    padding-top: 41px;
+    padding-bottom: 30px;
+    background-color: #202427;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    .item-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      .item-icon {
+        width: 20px;
+        height: 20px;
+        background-image: url("@/assets/promo/intel-esl-24/rule-icon.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 17px;
+      }
+      .item-text {
+        width: calc(100% - 40px);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 25.4px;
+        color: #c2c2c2;
+      }
+    }
+  }
+}
+
+.intel-els-second-container {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  .intel-els-second-title {
+    width: 100%;
+    height: 48px;
+    background-image: url("@/assets/promo/intel-esl-24/title.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 25px;
+  }
+  .intel-els-activities {
+    color: #fece94;
+    font-size: 20px;
+  }
+  .intel-els-table {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25.4px;
+    border-collapse: collapse;
+    border: 1px solid #ffdba633;
+    border-top: 2px solid rgba(255, 207, 148, 0.3);
+    margin-bottom: 16px;
+    thead {
+      border-top: 3px solid rgba(255, 225, 183, 1);
+      color: #fece94;
+      background: #333840;
+
+      tr {
+        height: 41px;
+        th {
+          border: 1px solid #ffdba633;
+        }
+      }
+    }
+    tbody {
+      color: #c2c2c2;
+      background: #202427;
+      tr {
+        height: 41px;
+        td {
+          border: 1px solid #ffdba633;
+        }
+      }
+    }
+  }
+  .special-discounts-rebates {
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    .line {
+      width: 100%;
+      height: 1px;
+      background: #373737;
+    }
+    .title {
+      width: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 35.56px;
+      background-color: #1d1d1e;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .intel-els-notice {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25.4px;
+    color: #fece94;
+    padding: 16px 0px;
+    margin-bottom: 17px;
+    margin-bottom: 57px;
+  }
+
+  .intel-els-rule-title {
+    width: 100%;
+    height: 48px;
+    background-image: url("@/assets/promo/intel-esl-24/rule.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 40px;
+    margin-bottom: 25px;
+  }
+
+  .intel-els-rule-content {
+    border-top: 3px solid rgba(255, 225, 183, 1);
+    padding: 0px 16px;
+    padding-top: 41px;
+    padding-bottom: 30px;
+    margin-bottom: 27px;
+    background-color: #202427;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    .item-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      .item-icon {
+        width: 20px;
+        height: 20px;
+        background-image: url("@/assets/promo/intel-esl-24/rule-icon.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 17px;
+      }
+      .item-text {
+        width: calc(100% - 40px);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 25.4px;
+        color: #c2c2c2;
+      }
+    }
+  }
+}
+</style>
