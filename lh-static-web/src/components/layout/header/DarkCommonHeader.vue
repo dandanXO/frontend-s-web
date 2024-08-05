@@ -1624,7 +1624,7 @@
     }
   
     width: 100%;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 999;
     transition: all 0.3s ease;
@@ -1891,7 +1891,7 @@
   </style>
   
   <!-- Menu Styles -->
-  <style lang="scss">
+  <style lang="scss" scoped>
   .platform-menu {
     a {
       text-decoration: none;
@@ -2414,8 +2414,10 @@
                 font-size: 12px;
                 
                 &.active, &:hover {
-                    background: linear-gradient(180deg, rgb(255 255 255 / 10%), rgb(66 66 66));
+                    background: linear-gradient(180deg, rgb(255 255 255 / 10%), rgb(102, 102, 102));
                     color: #fff;
+                    // box-shadow: 0 20px 15px -20px #FF9800;
+                    box-shadow: 0 8px 15px -10px #FF9800;
                 .nav-title {
                   color: #fff;
                 }
