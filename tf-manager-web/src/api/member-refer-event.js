@@ -21,6 +21,10 @@ export const getPakMemberReferParent = (form) => {
   return https().request("/refer-friend/parent-pak", Method.GET, form, ContentType.form);
 };
 
+export const requestPakReferRecord = (query) => {
+  return https().request("/refer-friend/requestPakReferExport", Method.GET, query, ContentType.form);
+};
+
 export const getPakMemberReferSummary = (form) => {
   return https().request("/refer-friend/summary-pak", Method.GET, form, ContentType.form);
 };

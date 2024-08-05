@@ -50,6 +50,13 @@
         <el-button size="mini" type="warning" @click="resetQuery()">
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:member-refer-pak:export']"
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -164,7 +171,8 @@
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
   getPakMemberReferParent,
-  changeMemberReferrer
+  changeMemberReferrer,
+  requestPakReferRecord
 } from '../../../api/member-refer-event'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
@@ -175,6 +183,7 @@ import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { required } from "@/utils/validate";
 import { getShortcuts } from "@/utils/datetime";
+import moment from "moment/moment";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -251,6 +260,16 @@ function search() {
   uiControl.referrer = null
   request.referrerId = null
   loadMembers()
+}
+
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await requestPakReferRecord(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 async function reloadMembers(loginName, uplineId) {
