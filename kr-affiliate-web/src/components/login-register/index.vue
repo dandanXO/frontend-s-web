@@ -81,6 +81,11 @@
                       :placeholder="$t('fields.referralCode')" name="codeAffiliate" type="text" tabindex="8"
                       autocomplete="on" />
                   </el-form-item>
+                  <el-form-item prop="codePersonalAffiliate" v-if="props.siteId === '10'">
+                    <el-input ref="codePersonalAffiliateRef" v-model="regForm.codePersonalAffiliate"
+                      :placeholder="$t('fields.affiliateCode') + ' (본인)'" name="codePersonalAffiliate" type="text" tabindex="8"
+                      autocomplete="on" @input="handleInput" />
+                  </el-form-item>
                   <el-form-item prop="captchaCode">
                     <el-input ref="verificationRef" v-model="regForm.captchaCode"
                       :placeholder="$t('common.verificationcode')" name="captchaCode" type="text" tabindex="7"
@@ -403,6 +408,7 @@ export default defineComponent({
         regHost: location.hostname,
         codeId: '',
         codeAffiliate: '',
+        codePersonalAffiliate: '',
       },
       regRules: {
         userName: [
@@ -492,6 +498,19 @@ export default defineComponent({
             trigger: 'change',
           },
         ],
+        codePersonalAffiliate: [
+          {
+            min: 6,
+            max: 6,
+            message: t('message.required_6_digits_code'),
+            trigger: 'change',
+          },
+          {
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: t('message.required_only_digits_and_alphabet'),
+            trigger: 'blur',
+          },
+        ]
       },
       googleAuthForm: {
         loginName: '',
@@ -892,6 +911,10 @@ export default defineComponent({
       window.open('https://t.me/cityy88', '_blank').focus();
     }
 
+    const handleInput = (event) => {
+      state.regForm.codePersonalAffiliate = state.regForm.codePersonalAffiliate.toUpperCase();
+    }
+
     const getCaptcha = () => {
       state.loginForm.captchaCode = ''
 
@@ -961,7 +984,8 @@ export default defineComponent({
       resetFormRef,
       getCaptcha,
       captchaImg,
-      krLogo
+      krLogo,
+      handleInput
     }
   },
 })

@@ -779,6 +779,8 @@ export default {
     requried_password: '로그인 비밀번호는 필수입니다',
     required_captcha: '캡차는 필수입니다',
     required_4_digits: '4자리 숫자로 구성',
+    required_6_digits_code: '6자리 숫자로 구성',
+    required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
     required_confirm_pwd: '비밀번호 확인은 필수입니다',
     required_same_with_password: '로그인 비밀번호와 일치하지 않습니다',
     requiredAmount: '금액을 입력하십시오',

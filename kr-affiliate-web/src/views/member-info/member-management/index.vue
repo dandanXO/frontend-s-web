@@ -230,7 +230,6 @@
               <th scope="col">{{ t('statsHeader.memberPoint') }}</th>
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
-              <th scope="col">{{ t('fields.netProfit') }}</th>
               <!-- <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th> -->
@@ -301,11 +300,6 @@
                 <td :data-label="t('fields.totalWithdraw')" rowspan="4">
                   <div
                     v-formatter="{ data: item.totalWithdraw, type: 'money' }"
-                  />
-                </td>
-                <td :data-label="t('fields.netProfit')" rowspan="4">
-                  <div
-                    v-formatter="{ data: item.revenueShare, type: 'money' }"
                   />
                 </td>
                 <td :data-label="t('fields.gameType')">
