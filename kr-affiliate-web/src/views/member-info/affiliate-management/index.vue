@@ -439,6 +439,9 @@
               :label="t(`affiliate.level.${item.value}`)" :value="item.value" />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.affiliateCode')" prop="codePersonalAffiliate">
+          <el-input v-model="cForm.codePersonalAffiliate" style="width: 350px;" maxlength="6" @input="handleInput"/>
+        </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="cForm.loginName" style="width: 350px;" maxlength="11" />
         </el-form-item>
@@ -707,6 +710,7 @@ const cForm = reactive({
   affiliateCode: null,
   commission: 0,
   shareRatio: null,
+  codePersonalAffiliate: null,
 })
 
 const eForm = reactive({
@@ -783,6 +787,19 @@ const cFormRules = reactive({
     { validator: validateCommission, trigger: 'blur' },
   ],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
+  codePersonalAffiliate: [
+          {
+            min: 6,
+            max: 6,
+            message: t('message.required_6_digits_code'),
+            trigger: 'change',
+          },
+          {
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: t('message.required_only_digits_and_alphabet'),
+            trigger: 'blur',
+          },
+        ]
 })
 
 const eFormRules = reactive({
@@ -911,6 +928,10 @@ async function addAffiliate() {
       await search()
     }
   })
+}
+
+const handleInput = (event) => {
+  cForm.codePersonalAffiliate = cForm.codePersonalAffiliate.toUpperCase();
 }
 
 async function editAffiliate() {
