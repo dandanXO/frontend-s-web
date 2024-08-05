@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LayoutView from "@/views/layouts/MainLayout.vue";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/home/index.vue";
 import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
