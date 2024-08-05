@@ -120,7 +120,7 @@
           </div>
           <div class="item-content">
             <div class="item-text">
-              3.开赛金于IEM达拉斯开赛当日24小时内派发。投注嘉奖与雷火专属金彩金于次日24小时内派发，彩金3倍流水即可提款；
+              3.开赛金于IEM科隆开赛次日24小时内派发。投注嘉奖与雷火专属金彩金于次日24小时内派发，彩金3倍流水即可提款；
             </div>
           </div>
           <div class="item-content">
