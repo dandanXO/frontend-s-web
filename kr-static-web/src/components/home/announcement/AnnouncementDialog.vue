@@ -9,9 +9,9 @@
   >
     <div class="notice-header">
       {{ $t("home.announcementList") }}
-      <div @click="toggleAnnouncementDialog">
+      <!-- <div @click="toggleAnnouncementDialog">
         <img src="../../../assets//home/announcement/close-btn.png" />
-      </div>
+      </div> -->
     </div>
 
     <div class="announcement-wrapper">
@@ -105,9 +105,13 @@ onMounted(() => {
 
 .announcement-wrapper {
   :deep(.el-collapse-item__header) {
+    padding: 0 10px;
     &.is-active {
       background: linear-gradient(312deg, #0286ff, #00ff85);
     }
+  }
+  :deep(.el-collapse-item__wrap) {
+    padding: 10px;
   }
 }
 
@@ -120,8 +124,8 @@ onMounted(() => {
   text-align: left;
   max-width: 1150px;
   height: auto;
-  margin-top: 20px;
-  padding: 0px 10px;
+  // margin-top: 20px;
+  // padding: 0px 10px;
 
   .announcement-date {
     text-align: right;
@@ -198,5 +202,17 @@ onMounted(() => {
       }
     }
   }
+}
+</style>
+<style>
+
+.notice-modal .el-dialog__header .el-dialog__headerbtn {
+    
+    top: 10px;
+    right: 10px;
+}
+.notice-modal .notice-header {
+  
+  padding: 0 0 10px;
 }
 </style>
