@@ -19,6 +19,7 @@
           <div class="name-wrapper">
             <div class="name">{{ store.state.user.name }}</div>
             <div class="nickname">{{ store.state.user.name }}</div>
+            <div class="nickname">{{ affInfo.affiliateCode }}</div>
           </div>
           <div class="action-wrapper">
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">

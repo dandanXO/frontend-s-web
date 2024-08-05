@@ -10,7 +10,7 @@
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥1场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
@@ -20,26 +20,21 @@
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>≥3</td>
+            <td>≥1</td>
             <td>0.8%</td>
             <td>88</td>
           </tr>
           <tr>
-            <td>≥5</td>
+            <td>≥2</td>
             <td>1.0%</td>
             <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>3.0%</td>
-            <td>888</td>
           </tr>
         </table>
 
         <div class="olympic24-match-game-bottom">
           <div class="olympic24-match-game-bottom-left-title">
             <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
-            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数2次，用户可获得30,000*1.0%=300元，用户A彩金金额超出彩金上限，用户A最终可获得188元。
           </div>
         </div>
       </div>
@@ -184,7 +179,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥1场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -192,7 +187,7 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            活动期间会员竞猜正确场次≥3次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            活动期间会员竞猜正确场次≥1次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -311,7 +306,6 @@ const recordList = ref([]);
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
 const showTableRecordDialog = () => {
-  
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
       autofocus: false,
@@ -325,8 +319,8 @@ const showTableRecordDialog = () => {
     });
     return;
   }
-  tableRecordDialog.value = true
-}
+  tableRecordDialog.value = true;
+};
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -423,8 +417,8 @@ const getData = () => {
   });
 };
 onMounted(() => {
-  if(!store.token) {
-    return
+  if (!store.token) {
+    return;
   }
   getData();
 });

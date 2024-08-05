@@ -297,3 +297,12 @@ export const reactivateAffiliate = (id) => {
     Method.POST
   )
 }
+
+export const updateAffiliateWithdrawPassword = (id, password, site) => {
+  return https().request(
+    `/affiliate/${id}/withdraw-password?_method=PUT`,
+    Method.POST,
+    { password: password, site: site },
+    ContentType.form
+  )
+}

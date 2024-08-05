@@ -460,7 +460,7 @@
             style="width: 350px; display: flex; margin-bottom:5px;">
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input v-model="item.value" style=" width:100px; margin-left: auto" />
-            <span style="color:red"> &emsp; (0 - {{ getAffiliateRatio(item.code) }}) </span>
+            <span style="color:red"> &emsp; (0% - {{ (getAffiliateRatio(item.code)*100).toFixed(2) }}%) </span>
           </div>
         </el-form-item>
         <div class="dialog-footer">
@@ -499,7 +499,7 @@
             style="width: 350px; display: flex; margin-bottom:5px;">
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input v-model="item.value" style=" width:100px; margin-left: auto" />
-            <span style="color:red"> &emsp; ( {{ getDownlineRatio(item.code) }} - {{ getAffiliateRatio(item.code) }})
+            <span style="color:red"> &emsp; ( {{ (getDownlineRatio(item.code)*100).toFixed(2) }}% - {{ (getAffiliateRatio(item.code)*100).toFixed(2) }}%)
             </span>
           </div>
         </el-form-item>
@@ -755,7 +755,7 @@ const validateCommission = (rule, value, callback) => {
 
 const validateShareRatio = (rule, value, callback) => {
   shareRatioList.list.forEach((item) => {
-    if (item.value === '' || item.value < 0 || item.value > 1) {
+    if (item.value === '' || item.value < 0 || item.value > 100) {
       callback(new Error(t('message.validateShareRatioFormat')))
     }
   })
@@ -889,6 +889,10 @@ function showEdit(affiliate) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
+    for (var index = 0; index < eForm.shareRatio.length; index++) {
+      eForm.shareRatio[index].value *= 100.00;
+      eForm.shareRatio[index].value = parseFloat(eForm.shareRatio[index].value).toFixed(2);
+    }
     const { data: downlineShareRatio } = await getDownlineShareRatio(eForm.id)
     downlineShareRatioList.list = downlineShareRatio
   })
@@ -899,7 +903,7 @@ async function addAffiliate() {
     if (valid) {
       if (parseInt(cForm.siteId) === 10) {
         // join share ratio by comma
-        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + (item.value/100)).join(',');
       }
       await regsterAffiliate(cForm)
       uiControl.dialogVisible = false
@@ -917,7 +921,7 @@ async function editAffiliate() {
       form.siteId = store.state.user.siteId
       if (parseInt(form.siteId) === 10) {
         // join share ratio by comma
-        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + item.value).join(',');
+        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + (item.value/100)).join(',');
       }
       form.affiliateLevel = eForm.affiliateLevel
       await editAffiliateCommission(eForm.id, form)

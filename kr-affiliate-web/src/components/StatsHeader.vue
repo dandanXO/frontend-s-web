@@ -192,7 +192,7 @@
         <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
         <div class="stat-value grey">{{ ((records.casinoBetAmount - records.casinoProfit - records.casinoRollingAmount)
           + (records.slotBetAmount - records.slotProfit - records.slotRollingAmount)
-          + (records.sportBetAmount - records.sportProfit - records.slotRollingAmount)
+          + (records.sportBetAmount - records.sportProfit - records.sportRollingAmount)
           + (records.miniGameBetAmount - records.miniGameProfit - records.miniGameRollingAmount)).toFixed(0) }}</div>
       </div>
     </div>

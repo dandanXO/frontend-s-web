@@ -33,6 +33,10 @@ export const confirmWithdraw = (bci) => {
   return https('affiliate').request(`/session/withdraw/`, Method.POST, bci, ContentType.form);
 }
 
+export const confirmMainWithdraw = (bci) => {
+  return https('affiliate').request(`/session/aff-main-wallet-withdraw/`, Method.POST, bci, ContentType.form);
+}
+
 export const withdrawEntrance = () => {
   return https('affiliate').request(`/session/withdraw/entrance`);
 }
