@@ -83,7 +83,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/deposit.png" />
               </div>
             </div>
             <div class="right-container">
@@ -100,7 +100,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/deposit.png" />
               </div>
             </div>
             <div class="right-container">
@@ -116,7 +116,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/deposit.png" />
               </div>
             </div>
             <div class="right-container">
@@ -133,7 +133,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/deposit.png" />
               </div>
             </div>
             <div class="right-container">
@@ -161,8 +161,8 @@ const isDark = useDark();
 
 const loadCircleBg = () => {
   return isDark.value
-    ? require("../../assets/home/service/circle-bg-dark.png")
-    : require("../../assets/home/service/circle-bg.png");
+    ? require("../../../assets/home/service/circle-bg-dark.png")
+    : require("../../../assets/home/service/circle-bg.png");
 };
 
 onMounted(() => {});
@@ -193,7 +193,7 @@ onMounted(() => {});
           border-radius: 50%;
           //border: 3px solid #94baf8;
           //background: linear-gradient(180deg, #93f2ff 3.39%, #3a69f7 100%);
-          background-image: url("../../assets/home/blue-circle.png");
+          background-image: url("../../../assets/home/blue-circle.png");
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;

@@ -20,7 +20,7 @@ import HomeAnnouncement from "@/components/home/announcement/index.vue";
 import HomeDownload from "@/components/home/HomeDownload.vue";
 // import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
-import HomeService from "@/components/home/HomeService.vue";
+import HomeService from "@/components/home/service/index.vue";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 
 const gameMenu = ref(null);

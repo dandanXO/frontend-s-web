@@ -1648,6 +1648,16 @@
         gap: 12px;
         padding: 0px 10%;
         overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+          height: 2px;
+          background-color: #fff;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #A98F7C;
+        }
   
         .logospon {
           display: flex;
