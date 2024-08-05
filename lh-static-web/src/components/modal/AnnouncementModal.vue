@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="dialog-content">
-          <InboxComponent v-if="currentTab === 'inbox'" />
-          <AnnouncementComponent v-if="currentTab === 'announcement'" />
+          <InboxComponent v-if="currentTab === 'inbox' && mailData.length > 0" :mailData="mailData" />
+          <AnnouncementComponent v-if="currentTab === 'announcement' && announceData.length > 0" :announceData="announceData" />
         </div>
       </div>
       <div class="dialog-action">
@@ -61,7 +61,7 @@ import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 
 const store = userStore();
-const visible = ref(true);
+const visible = ref(false);
 const currentTab = ref("inbox");
 const checked = ref(false);
 const mailData = ref([]);
@@ -70,9 +70,16 @@ const announceData = ref([]);
 onMounted(() => {
   if (store.token) {
     popupMailBox().then((res) => {
-      console.log("MAil");
-      console.log(res);
-    });
+      if (res.code === 0) {
+        mailData.value = res.data;
+      }
+    }).catch((err) => {
+      console.log(err)
+    }).finally(() => {
+      if (mailData.value.length > 0) {
+        visible.value = true
+      }
+    })
   }
 });
 
@@ -81,9 +88,16 @@ watch(
   () => {
     if (store.token) {
       popupMailBox().then((res) => {
-        console.log("MAil");
-        console.log(res);
-      });
+        if (res.code === 0) {
+          mailData.value = res.data;
+        }
+      }).catch((err) => {
+        console.log(err)
+      }).finally(() => {
+        if (mailData.value.length > 0) {
+          visible.value = true
+        }
+      })
     }
   }
 );
