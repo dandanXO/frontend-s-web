@@ -57,7 +57,7 @@ import { ref, watch, onMounted } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
 import { RiCloseFill } from "vue-remix-icons";
-import { loadMailbox } from "@/api/personal/mailbox";
+import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 
 const store = userStore();
@@ -68,17 +68,19 @@ const mailData = ref([]);
 const announceData = ref([]);
 
 onMounted(() => {
-  loadMailbox().then((res) => {
-    console.log("MAil");
-    console.log(res);
-  });
+  if (store.token) {
+    popupMailBox().then((res) => {
+      console.log("MAil");
+      console.log(res);
+    });
+  }
 });
 
 watch(
   () => store.token,
   () => {
     if (store.token) {
-      loadMailbox().then((res) => {
+      popupMailBox().then((res) => {
         console.log("MAil");
         console.log(res);
       });
