@@ -296,9 +296,10 @@ $node-color: #b81212;
       }
       .node-text {
         display: flex;
-        // gap: 5px;
         justify-content: center;
         align-items: center;
+        position: relative;
+
         & > div {
           font-size: 12px;
           color: #ffffff;
@@ -339,7 +340,7 @@ $node-color: #b81212;
       display: flex;
       justify-content: center;
       align-items: center;
-      // gap: 5px;
+      position: relative;
       flex-direction: column;
 
       & > div {
@@ -401,9 +402,9 @@ $node-color: #b81212;
 
     .promo {
       position: absolute;
-      right: 50%;
-      top: -10px;
-      transform: translate(50%, 0);
+      right: 0px;
+      top: 0px;
+      transform: translate(0%, 0);
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
