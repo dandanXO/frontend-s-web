@@ -46,11 +46,4 @@ onMounted(() => {
   padding-top: 20px;
   padding-bottom: 2.5rem;
 }
-
-.dark {
-  .home {
-    background-image: none;
-    background: $background-dark;
-  }
-}
 </style>

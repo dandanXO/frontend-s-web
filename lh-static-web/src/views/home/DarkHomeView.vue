@@ -36,7 +36,7 @@
   <style scoped lang="scss">
   .home {
     margin: 0px;
-    background-image: url("../../assets/images/home/home-bg.jpg");
+    background-image: url("../../assets/images/home/home-bg-dark.jpg");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: top center;
@@ -45,13 +45,6 @@
   .home-mid-section {
     padding-top: 20px;
     padding-bottom: 2.5rem;
-  }
-  
-  .dark {
-    .home {
-      background-image: none;
-      background: $background-dark;
-    }
   }
   </style>
   
