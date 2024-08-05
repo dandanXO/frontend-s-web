@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
 import { RiCloseFill } from "vue-remix-icons";
@@ -61,20 +61,27 @@ import { loadMailbox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 
 const store = userStore();
-const visible = ref(false);
+const visible = ref(true);
 const currentTab = ref("inbox");
 const checked = ref(false);
 const mailData = ref([]);
 const announceData = ref([]);
 
+onMounted(() => {
+  loadMailbox().then((res) => {
+    console.log("MAil");
+    console.log(res);
+  });
+});
+
 watch(
   () => store.token,
   () => {
     if (store.token) {
-      // loadMailbox().then((res) => {
-      //   console.log("MAil");
-      //   console.log(res);
-      // });
+      loadMailbox().then((res) => {
+        console.log("MAil");
+        console.log(res);
+      });
     }
   }
 );

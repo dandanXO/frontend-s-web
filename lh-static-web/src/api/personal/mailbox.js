@@ -1,7 +1,7 @@
 import { server } from "@/utils/request";
 
 export function loadMailbox() {
-  return server.REST.get("/session/inbox", {});
+  return server.REST.get("/session/pm/inbox", {});
 }
 
 export function mailInbox(mailQuery) {
