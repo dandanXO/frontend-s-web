@@ -108,7 +108,7 @@
             <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
               <span class="el-dropdown-link">
                 <div class="profile-img-wrapper">
-                  <img v-if="!store.profilePhoto" class="profile-img" src="../../../assets/images/home/profile-pic.png" />
+                  <img style="visibility: hidden;" v-if="!store.profilePhoto" class="profile-img" src="../../../assets/images/home/profile-pic.png" />
                   <img
                     v-if="store.profilePhoto && store.profilePhoto.includes('default')"
                     class="profile-img"
@@ -1469,12 +1469,15 @@
       width: 65px;
       margin-right: 0.75rem;
       position: relative;
+      background: url('../../../assets/images/home/profile-pic-wrapper.svg') no-repeat center center;
+      background-size: 100% 100%;
   
       .profile-img {
         display: block;
         width: 100%;
         border-radius: 50%;
         aspect-ratio: 1/1;
+        padding: 10px;
       }
   
       .dropdown-icon {
@@ -1644,6 +1647,7 @@
         align-items: center;
         gap: 12px;
         padding: 0px 10%;
+        overflow-y: scroll;
   
         .logospon {
           display: flex;
@@ -2520,9 +2524,19 @@
           color: $color-white;
         }
         .details-balance {
-          .reload-btn {
-            fill: $active-color-dark;
+          .amount {
+            font-family: 'FZHanZhenGuangBiaoS-GB';
+            font-weight: 400;
           }
+          
+          .reload-btn {
+            fill: #A98F7C;
+          }
+        }
+        .details-name, .details-balance {
+          color: #A98F7C;
+          font-family: PingFang SC;
+          font-weight: bold;
         }
       }
     }

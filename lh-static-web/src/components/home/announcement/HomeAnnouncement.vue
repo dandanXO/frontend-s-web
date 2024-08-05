@@ -10,7 +10,7 @@
     <div class="notice-header">
       公告列表
       <div @click="isStationNotice = false">
-        <img src="../../assets//home/announcement/close-btn.png" />
+        <img src="../../../assets//home/announcement/close-btn.png" />
       </div>
     </div>
 
@@ -51,7 +51,7 @@
         <div class="station-notice-box">
           <img
             class="announcement-img"
-            src="../../assets/home/announcement/announcement-img.png"
+            src="../../../assets/home/announcement/announcement-img.png"
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
