@@ -20,3 +20,7 @@ export const pay = (id) => {
 export const getMonthlyCommissionReport = (id, date) => {
   return https().request(`/affiliateSettlement/monthlyCommissionReport/${id}`, Method.GET, { recordMonth: date }, ContentType.form);
 };
+
+export const getCommissionReportByDate = (query) => {
+  return https().request('/affiliateSettlement/commissionReportByDates', Method.GET, { recordDates: query.recordTime }, ContentType.form);
+};
