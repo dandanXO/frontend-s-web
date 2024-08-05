@@ -28,3 +28,23 @@ export const updateAffiliateDepositSetting = (affiliateDepositSetting) => {
 export const getAffiliateBySiteId = (siteId) => {
   return https().request(`/affiliate-deposit-display/affiliate-list?siteId=${siteId}`, Method.GET);
 };
+
+export const getAffiliatePaymentSettingList = (affiliatePaymentSetting) => {
+  return https().request("/affiliate-payment-setting", Method.GET, affiliatePaymentSetting, ContentType.form);
+};
+
+export const createAffiliatePaymentSetting = (affiliatePaymentSetting) => {
+  return https().request(`/affiliate-payment-setting`, Method.POST, affiliatePaymentSetting, ContentType.form);
+};
+
+export const updateAffiliatePaymentSetting = (affiliatePaymentSetting) => {
+  return https().request(`/affiliate-payment-setting/update?_method=PUT`, Method.POST, affiliatePaymentSetting, ContentType.form);
+};
+
+export const getAffiliateRecordBySiteId = (siteId) => {
+  return https().request(`/affiliate-payment-setting/affiliate-list?siteId=${siteId}`, Method.GET);
+};
+
+export const batchupdateAffiliatePaymentSetting = (affiliatePaymentSetting) => {
+  return https().request("/affiliate-payment-setting/batchUpdate", Method.POST, affiliatePaymentSetting, ContentType.json);
+};
