@@ -8,21 +8,17 @@
     :arrows="false"
     @update:model-value="emits('chageSlide',$event)"
   >
-    <q-carousel-slide v-for="(item, index) in 6" :key="index" :name="index" class="column no-wrap flex-center">
+    <q-carousel-slide v-for="(item, index) in mailData" :key="item.id" :name="index" class="column no-wrap flex-center">
       <div class="announcement-component">
-        <div class="announcement-title">体育场馆维护公告 {{ index + 1 }}</div>
-        <div class="announcement-content">
-          尊敬的会员，恭喜您于 2023/08/1
-          使用 PAY 钱包、USDT 进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。恭喜您于 2023/08/1
-          使用 PAY 钱包、USDT 进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。
-        </div>
+        <div class="announcement-title" v-html="item.title"></div>
+        <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
           <div class="footer-button" @click="handleService">
             联系客服
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
           </div>
-          <div class="footer-button" @click="handleDetail">
-            查看详情
+          <div class="footer-button" v-show="item.redirectType !== 'NONE'" @click="handleDetail(item)">
+            {{ item.redirectButton ?? '查看详情' }}
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
           </div>
         </div>
@@ -33,11 +29,18 @@
 
 <script setup>
 import { ref,defineEmits ,watch } from "vue";
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
   slide: {
     type: Number,
     default: 1
+  },
+  mailData: {
+    type: Array,
+    default: () => []
   }
 })
 const emits = defineEmits(['chageSlide']);
@@ -59,8 +62,12 @@ watch(()=> innerSlide, (newV)=>{
 
 const handleService = () => {};
 
-const handleDetail = () => {
-  console.log("handleDetail");
+const handleDetail = (mail) => {
+  if (mail.redirectType === 'INNER') {
+    router.push({ path: mail.redirectUrl })
+  } else if (mail.redirectType === 'OUTER') {
+    window.open(mail.redirectUrl, '_blank')
+  }
 };
 </script>
 
@@ -70,6 +77,9 @@ const handleDetail = () => {
   background: white;
   height: 100%;
   overflow: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .announcement-title {
@@ -83,6 +93,7 @@ const handleDetail = () => {
   font-size: 16px;
   color: #666666;
   margin-bottom: 12px;
+  flex: 1;
 }
 
 .announcement-footer {

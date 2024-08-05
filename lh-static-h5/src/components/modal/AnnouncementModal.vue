@@ -1,7 +1,7 @@
 <template>
   <q-scroll-area>
     <q-dialog v-model="visible">
-      <div style="overflow: unset">
+      <div style="overflow: unset; width: 90%;">
         <div class="dialog-wrapper">
           <div class="dialog-header only-inbox">
             <div
@@ -41,12 +41,14 @@
               v-if="currentTab === 'inbox'"
               ref="inboxComponentRef"
               :slide="activeDot"
+              :mailData="mailData"
             />
             <AnnouncementComponent
               @chageSlide="hChageSlide"
               v-if="currentTab === 'announcement'"
               ref="announcementComponentRef"
               :slide="activeDot"
+              :announceData="announceData"
             />
           </div>
           <div class="dialog-footer">
@@ -54,7 +56,7 @@
               <div
                 class="dot"
                 :class="{ active: index === activeDot }"
-                v-for="(item, index) in 6"
+                v-for="(item, index) in currentComponentData"
                 :key="index"
                 @click="handleDotClick(index)"
               ></div>
@@ -79,10 +81,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
 import { userStore } from "src/stores";
+import { api } from "boot/axios";
 
 const store = userStore();
 const visible = ref(false);
@@ -90,7 +93,12 @@ const currentTab = ref("inbox");
 const checked = ref(false);
 const activeDot = ref(0);
 
+const mailData = ref([])
 const announceData = ref([]);
+
+const currentComponentData = computed(() => {
+  return currentTab.value === 'inbox' ? mailData.value : announceData.value
+})
 
 const changeTab = (name) => {
   currentTab.value = name;
@@ -104,6 +112,39 @@ const handleDotClick = (index) => {
 const hChageSlide = (val) => {
   activeDot.value = val;
 };
+
+const getInbox = () => {
+  return api.get("/session/pm/inbox/popup")
+};
+
+onMounted(() => {
+  if (store.token) {
+    getInbox().then((res) => {
+      if (res.code === 0) {
+        mailData.value = res.data;
+      }
+    }).catch((err) => {
+      console.log(err)
+    }).finally(() => {
+      if (mailData.value.length > 0) {
+        visible.value = true
+      }
+    })
+  }
+});
+
+watch(
+  () => store.token,
+  () => {
+    if (store.token) {
+      getInbox().then((res) => {
+        if (res.code === 0) {
+          mailData.value = res.data;
+        }
+      });
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
