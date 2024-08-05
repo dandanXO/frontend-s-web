@@ -1622,18 +1622,19 @@
   .header-container {
     &.on-scrolled {
     }
-  
+    
     width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 999;
-    transition: all 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: all 0.3s ease;
   
     .top-nav-wrapper {
       background: $color-white;
   
       position: relative;
       box-shadow: $shadow-header;
+      backdrop-filter: blur(2px);
   
       .top-nav-inner {
         margin: 0 auto;
