@@ -257,7 +257,7 @@
       </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
-    <div class="bottom-content" style="height: 40px"></div>
+    <div class="bottom-content" style="height: 60px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -1148,7 +1148,7 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0;
+  padding: 20px 0 40px;
   position: fixed;
   bottom: 0;
   width: calc(100% - 32px);
