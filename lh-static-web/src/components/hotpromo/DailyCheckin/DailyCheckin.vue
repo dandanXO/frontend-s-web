@@ -522,6 +522,7 @@ onMounted(async () => {
         border-radius: 30px;
         overflow: hidden;
         margin: 20px 0;
+        border: 1px solid #065092;
       }
 
       .progress-bar {

@@ -283,9 +283,12 @@ const logout = () => {
 
       .acct-nav-label {
         color: #fff;
-
         font-size: 14px;
         white-space: normal;
+
+        @media (max-width: 400px) {
+          font-size: 12px;
+        }
       }
 
       .acct-nav-item {
@@ -301,6 +304,11 @@ const logout = () => {
         justify-content: center;
         color: #000;
         text-decoration: none;
+
+        @media (max-width: 400px) {
+          width: auto;
+          padding: 0;
+        }
 
         img {
           width: 70%;

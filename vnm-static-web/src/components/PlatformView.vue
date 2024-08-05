@@ -1,10 +1,10 @@
 <template>
   <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
     <div v-if="platformsListDisplay.length > 0" class="platform-container"
-         :class="(platformType === 'slot' || platformType === 'fishing' || platformType === 'casual') ? 'slot-container' : ''"
+         :class="(platformType === 'slot' || platformType === 'fishing' || platformType === 'casual') ? `${platformType}-container` : ''"
     >
-      <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'  || platformType === 'casual'">
-        <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
+      <div class="platform-container-slot" :class="platformType" v-if="platformType === 'slot' || platformType === 'fishing'  || platformType === 'casual'">
+        <img :src="require(`../assets/slot/${platformType}-top-bg-${languageVal}.png`)">
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->

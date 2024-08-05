@@ -134,10 +134,10 @@ const requestClipboardPermission = () => {
   });
 };
 
-export const writeClipboard = async (content) => {
+export const writeClipboard = async (content, useExecCommand = false) => {
   const notify = useNotify();
   try {
-    if (window.isSecureContext && navigator.clipboard) {
+    if (window.isSecureContext && navigator.clipboard && !useExecCommand) {
       const permission = await requestClipboardPermission();
       if (permission.state !== "granted") throw new Error();
       await navigator.clipboard.writeText(content);
@@ -156,9 +156,13 @@ export const writeClipboard = async (content) => {
       message: "复制成功"
     });
   } catch (error) {
-    notify({
-      type: "error",
-      message: "复制失败"
-    });
+    if (!useExecCommand) {
+      await writeClipboard(content, true);
+    } else {
+      notify({
+        type: "error",
+        message: "复制失败"
+      });
+    }
   }
 };

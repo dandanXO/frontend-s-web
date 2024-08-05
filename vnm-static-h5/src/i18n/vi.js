@@ -1413,6 +1413,7 @@ export default {
         doubleBetAmount: "Gấp đôi số tiền cược cho mỗi lượt cược liên tiếp",
         betOnBothSides: "Cược hai bên",
         doubleBet: "Cược kép",
+        allin: "Cược kép",
         affiliateAbuse: "Lạm dụng đại lý liên kết CPA hoặc chia sẻ doanh thu"
       },
       excludedBets:

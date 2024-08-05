@@ -76,7 +76,7 @@
         <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
       </el-form-item>
       <el-form-item :label="t('fields.configDescribes')" prop="describes">
-        <el-input v-model="form.describes" :placeholder="t('fields.configDescribes')" />
+        <el-input v-model="form.describes" :placeholder="t('fields.configDescribes')" type="textarea" :rows="5" />
       </el-form-item>
     </el-form>
 
