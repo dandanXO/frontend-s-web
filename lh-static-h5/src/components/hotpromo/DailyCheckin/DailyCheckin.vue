@@ -302,7 +302,7 @@ const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
     console.log(currentActivePoints.value)
-    if ((currentActivePoints.value >= +item.requiredActivePoint) && item.claimState === "OPEN") {
+    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
       times++
     }
   });
