@@ -149,7 +149,7 @@
               @click="openPhoneVeriDialog()"
               type="submit"
               class="common-sm-btn bottom-btn get-otp-btn"
-              label="获取验证码"
+              :disable="otpCountdownCount > 0" :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
               color="brightbtn"
               rounded
             />
@@ -290,6 +290,18 @@ const isOtpSent = ref(false);
 const showCaptchaSuccessDialog = ref(false);
 const showCaptchaFailedDialog = ref(false);
 const captchaFailedMessage = ref("");
+const otpCountdownCount = ref(0);
+let otpCountdownSchedule;
+const countdownOtp = () => {
+  otpCountdownCount.value = 60;
+  otpCountdownSchedule = setInterval(() => {
+    if (otpCountdownCount.value <= 0) {
+      clearInterval(otpCountdownSchedule);
+      return;
+    }
+    otpCountdownCount.value--;
+  }, 1000);
+};
 const onCaptchaSubmit = () => {
   innerCaptchaRef.value.validate();
   if (innerCaptchaRef.value.hasError) return;
@@ -305,6 +317,7 @@ const onCaptchaSubmit = () => {
     .then((res) => {
       if (res.code === 0) {
         isOtpSent.value = true;
+        countdownOtp();
 
         bankCardInfo.smsCode = "";
         bankCardInfo.smsCodeId = res.data.codeId;
