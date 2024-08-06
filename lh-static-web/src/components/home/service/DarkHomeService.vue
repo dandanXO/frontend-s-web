@@ -2,80 +2,82 @@
     <div class="service-section">
       <!-- <HomeTitle title="优质服务" subtitle="EXCELLENT SERVICE"></HomeTitle> -->
       <!-- <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/> -->
-      <img style="display:flex;margin:auto;" src="../../../assets//home/service/excellent-service-title.png" />
       <div class="service-container">
-        <div class="top-container" data-aos="fade-down">
-          <div class="counter">
-            <div class="circle">
-              <div class="inner-circle">
-                <!-- <div class="type">CURRENT SPEED</div> -->
-                <Vue3Autocounter
-                  class="auto-counter"
-                  :startAmount="0"
-                  :endAmount="Math.floor(Math.random() * 31) + 50"
-                  :duration="1"
-                  separator=","
-                  :autoinit="true"
-                />
-                <div class="unit">秒</div>
+        <div  data-aos="fade-down">
+          <img style="display:flex;margin:auto;" src="../../../assets//home/service/excellent-service-title.png" />
+          <div class="top-container">
+            <div class="counter">
+              <div class="circle">
+                <div class="inner-circle">
+                  <!-- <div class="type">CURRENT SPEED</div> -->
+                  <Vue3Autocounter
+                    class="auto-counter"
+                    :startAmount="0"
+                    :endAmount="Math.floor(Math.random() * 31) + 50"
+                    :duration="1"
+                    separator=","
+                    :autoinit="true"
+                  />
+                  <div class="unit">秒</div>
+                </div>
               </div>
+              <div class="title">平均存款时间</div>
+              <div class="title-en">Average Time To Deposit</div>
             </div>
-            <div class="title">平均存款时间</div>
-            <div class="title-en">Average Time To Deposit</div>
-          </div>
-          <div class="counter">
-            <div class="circle">
-              <div class="inner-circle">
-                <!-- <div class="type">TOTALLY AMOUNT</div> -->
-                <Vue3Autocounter
-                  class="auto-counter"
-                  :startAmount="0"
-                  :endAmount="14"
-                  :duration="3"
-                  separator=","
-                  :autoinit="true"
-                />
-                <div class="unit">家</div>
+            <div class="counter">
+              <div class="circle">
+                <div class="inner-circle">
+                  <!-- <div class="type">TOTALLY AMOUNT</div> -->
+                  <Vue3Autocounter
+                    class="auto-counter"
+                    :startAmount="0"
+                    :endAmount="14"
+                    :duration="3"
+                    separator=","
+                    :autoinit="true"
+                  />
+                  <div class="unit">家</div>
+                </div>
               </div>
+              <div class="title">合作支付平台</div>
+              <div class="title-en">Cooperative Payment Platform</div>
             </div>
-            <div class="title">合作支付平台</div>
-            <div class="title-en">Cooperative Payment Platform</div>
-          </div>
-          <div class="counter">
-            <div class="circle">
-              <div class="inner-circle">
-                <!-- <div class="type">CURRENT SPEED</div> -->
-                <Vue3Autocounter
-                  class="auto-counter"
-                  :startAmount="0"
-                  :endAmount="Math.floor(Math.random() * 31) + 70"
-                  :duration="2"
-                  separator=","
-                  :autoinit="true"
-                />
-                <div class="unit">秒</div>
+            <div class="counter">
+              <div class="circle">
+                <div class="inner-circle">
+                  <!-- <div class="type">CURRENT SPEED</div> -->
+                  <Vue3Autocounter
+                    class="auto-counter"
+                    :startAmount="0"
+                    :endAmount="Math.floor(Math.random() * 31) + 70"
+                    :duration="2"
+                    separator=","
+                    :autoinit="true"
+                  />
+                  <div class="unit">秒</div>
+                </div>
               </div>
+              <div class="title">平均取款时间</div>
+              <div class="title-en">Average time To Withdraw</div>
             </div>
-            <div class="title">平均取款时间</div>
-            <div class="title-en">Average time To Withdraw</div>
-          </div>
-          <div class="counter">
-            <div class="circle">
-              <div class="inner-circle">
-                <!-- <div class="type">TOTALLY AMOUNT</div> -->
-                <Vue3Autocounter
-                  class="auto-counter"
-                  :startAmount="0"
-                  :endAmount="90"
-                  :duration="3"
-                  separator=","
-                  :autoinit="true"
-                />
-                <div class="unit">家</div>
+            <div class="counter">
+              <div class="circle">
+                <div class="inner-circle">
+                  <!-- <div class="type">TOTALLY AMOUNT</div> -->
+                  <Vue3Autocounter
+                    class="auto-counter"
+                    :startAmount="0"
+                    :endAmount="90"
+                    :duration="3"
+                    separator=","
+                    :autoinit="true"
+                  />
+                  <div class="unit">家</div>
+                </div>
               </div>
+              <div class="title">合作游戏平台</div>
+              <div class="title-en">Cooperative Gaming Platform</div>
             </div>
-            <div class="title">合作游戏平台</div>
-            <div class="title-en">Cooperative Gaming Platform</div>
           </div>
         </div>
         <div class="bot-container" data-aos="fade-up">
@@ -101,7 +103,7 @@
               <div class="left-container">
                 <div class="circle-wrapper">
                   <img class="circle" :src="loadCircleBg()" />
-                  <img class="icon" src="../../../assets/home/service/deposit.png" />
+                  <img class="icon" src="../../../assets/home/service/category.png" />
                 </div>
               </div>
               <div class="right-container">
@@ -117,7 +119,7 @@
               <div class="left-container">
                 <div class="circle-wrapper">
                   <img class="circle" :src="loadCircleBg()" />
-                  <img class="icon" src="../../../assets/home/service/deposit.png" />
+                  <img class="icon" src="../../../assets/home/service/security.png" />
                 </div>
               </div>
               <div class="right-container">
@@ -134,7 +136,7 @@
               <div class="left-container">
                 <div class="circle-wrapper">
                   <img class="circle" :src="loadCircleBg()" />
-                  <img class="icon" src="../../../assets/home/service/deposit.png" />
+                  <img class="icon" src="../../../assets/home/service/mobile.png" />
                 </div>
               </div>
               <div class="right-container">
@@ -186,8 +188,8 @@
   
         .counter {
           .circle {
-            width: 10rem;
-            height: 10rem;
+            width: 15rem;
+            height: 15rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -202,8 +204,9 @@
             margin: 0 0 2rem 0;
   
             .inner-circle {
-              width: 9rem;
-              height: 9rem;
+              margin-top: 20px;
+              width: 15rem;
+              height: 15rem;
               display: flex;
               flex-direction: column;
               align-items: center;
@@ -223,7 +226,7 @@
               .auto-counter {
                 // filter: drop-shadow(0px 2px #c4effa);
                 font-family: serif;
-                font-size: 2rem;
+                font-size: 4rem;
                 font-weight: 600;
                 line-height: normal;
                 letter-spacing: 0.14144rem;
@@ -271,23 +274,19 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        gap: 1.5rem;
   
         .item-wrapper {
-          border-radius: 1.25rem;
           background: #eef8ff;
-          box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
           padding: 0.5rem;
           width: calc((100% - 2rem) / 2);
-  
+
           .item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 0.8125rem;
-            border: 1px solid #5c9fff;
-            padding: 2rem;
-            gap: 16px;
+            padding: 4rem;
+            gap: 10px;
   
             .left-container {
               .circle-wrapper {
@@ -298,6 +297,7 @@
   
                 .circle {
                   width: 7.5rem;
+                  visibility: hidden;
                 }
   
                 .icon {
@@ -358,16 +358,22 @@
         }
   
         .bot-container {
+          padding: 30px 0;
           .item-wrapper {
-            @include content-block-dark;
+            // @include content-block-dark;
+            background: url("../../../assets/home/service/bg.png") no-repeat center center;
+            background-size: 100% 100%;
+            width: 325px;
+            height: 480px;
   
             .item {
               .right-container {
                 .title {
-                  color: $active-color-dark;
+                  color: #fff;
+                  text-align: center;
                 }
                 .desc {
-                  color: $font-3-dark;
+                  color: #fff;
                 }
               }
             }
