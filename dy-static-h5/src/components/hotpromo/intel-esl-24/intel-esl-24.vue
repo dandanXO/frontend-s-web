@@ -41,7 +41,7 @@
             <tr style="border-top: 2px solid">
               <th>有效投注</th>
               <th>投注嘉奖</th>
-              <th>雷火专属金</th>
+              <th>东赢专属金</th>
             </tr>
           </thead>
           <tbody>
@@ -97,7 +97,7 @@
           <br />
           1.会员A：今年历史投注IEM达拉斯总有效投注为5,000元，在IEM开赛日可获得8元开赛奖金。
           <br />
-          2.会员B：IEM科隆赛事在IM电竞投注5,000元后又在雷火电竞投注IEM赛事投注5,000元，会员B在次日可获雷火专属金38元。
+          2.会员B：IEM科隆赛事在IM电竞投注5,000元后又在东赢电竞投注IEM赛事投注5,000元，会员B在次日可获东赢专属金38元。
         </div>
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
@@ -108,14 +108,14 @@
           </div>
           <div class="item-content">
             <div class="item-text">
-              2.活动期间，投注IEM科隆赛事有效≥1,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注IEM科隆赛事可获更高奖励金额。
+              2.活动期间，投注IEM科隆赛事有效≥1,000元或以上可获的对应投注嘉奖，若在东赢电竞场馆进行投注IEM科隆赛事可获更高奖励金额。
               <br />
               注：奖金不叠加派发，奖金按最高档位每日派发一次。
             </div>
           </div>
           <div class="item-content">
             <div class="item-text">
-              3.开赛金于IEM科隆开赛次日24小时内派发。投注嘉奖与雷火专属金彩金于次日24小时内派发，彩金3倍流水即可提款；
+              3.开赛金于IEM科隆开赛次日24小时内派发。投注嘉奖与东赢专属金彩金于次日24小时内派发，彩金3倍流水即可提款；
             </div>
           </div>
           <div class="item-content">
@@ -136,7 +136,7 @@
             </div>
           </div>
           <div class="item-content">
-            <div class="item-text">7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+            <div class="item-text">7.为避免文字理解差异，本站保留此活动最终解释权；</div>
           </div>
         </div>
       </div>
@@ -251,7 +251,7 @@
             </div>
           </div>
           <div class="item-content">
-            <div class="item-text">6.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
+            <div class="item-text">6.为避免文字理解差异，本站保留此活动最终解释权；</div>
           </div>
         </div>
       </div>
