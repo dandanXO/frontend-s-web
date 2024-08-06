@@ -336,6 +336,7 @@ const handleClickBox = async (box) => {
       console.log(res);
       if (res.code === 0) {
         notify.success("领取成功");
+        store.getBalance();
         await fetchData();
       } else {
         notify.error(res.message);
