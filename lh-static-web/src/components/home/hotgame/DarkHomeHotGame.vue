@@ -1065,45 +1065,49 @@ const tabPosition = ref('left')
                 width: 3.25rem;
   
                 .game-provider-img {
-                  width: 2rem;
-                  height: 2rem;
-                  padding: 0.25rem;
+                  width: 4rem;
+                  height: 4rem;
+                  padding: 1.30rem;
                   border-radius: 0.3145rem;
-                  border: 1px solid #0e7dff;
-                  background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
+                  background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
+                  background-size: 100% 100%;
                   object-fit: contain;
   
                   &.active {
-                    border: 0px;
-                    background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-                    box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                    background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                    background-size: 100% 100%;
+                    // border: 0px;
+                    // background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
+                    // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                   }
                 }
   
                 .game-provider-text {
-                  color: #a5c0e4;
+                  color: #c5c5c5;
                   text-align: center;
-                  font-family: Microsoft YaHei;
+                  font-family: PingFang SC;
                   font-size: 0.73363rem;
                   font-weight: 400;
                   line-height: 1.46719rem;
                   white-space: nowrap;
   
                   &.active {
-                    color: #3063ab;
+                    color: #fff;
                     font-weight: 700;
                   }
                 }
   
                 &:hover {
                   .game-provider-text {
-                    color: #3063ab;
+                    color: #fff;
                     font-weight: 700;
                   }
                   .game-provider-img {
-                    border: 0px;
-                    background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-                    box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                    // border: 0px;
+                    // background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
+                    // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                    background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                    background-size: 100% 100%;
                   }
                 }
               }
@@ -1673,18 +1677,19 @@ const tabPosition = ref('left')
                 width: 3.25rem;
   
                 .game-provider-img {
-                  width: 2rem;
-                  height: 2rem;
-                  padding: 0.25rem;
+                  width: 4rem;
+                  height: 4rem;
+                  padding: 0.8rem;
                   border-radius: 0.3145rem;
-                  border: 1px solid #0e7dff;
-                  background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
+                  background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
+                  background-size: 100% 100%;
                   object-fit: contain;
   
                   &.active {
                     border: 0px;
-                    background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-                    box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                    background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                    background-size: 100% 100%;
+                    // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                   }
                 }
   
@@ -1709,9 +1714,11 @@ const tabPosition = ref('left')
                     font-weight: 700;
                   }
                   .game-provider-img {
-                    border: 0px;
-                    background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-                    box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                    // border: 0px;
+                    // background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
+                    // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                    background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                    background-size: 100% 100%;
                   }
                 }
               }
