@@ -5,6 +5,9 @@
     <SidebarLogo
       :collapse="isCollapse"
     />
+    <SidebarSearchInput
+      :isVisible="!isCollapse"
+    />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :collapse="isCollapse"
@@ -35,6 +38,7 @@
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
+import SidebarSearchInput from "./SidebarSearchInput.vue";
 import variables from '@/styles/_variables.scss'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
@@ -46,6 +50,7 @@ import { getNewRegisterMemberLists } from "../../../api/member";
 
 export default defineComponent({
   components: {
+    SidebarSearchInput,
     SidebarItem,
     SidebarLogo
   },
