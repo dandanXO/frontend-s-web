@@ -15,10 +15,7 @@
           <br />
           <span class="slot-game-platform-btn__text-description">{{ $t("home.slotEdition.description") }}</span>
         </div>
-        <img
-          class="slot-game-platform-btn__icon"
-          :src="require(`@/assets/images/home/slotEdition/${platform.code.toLowerCase()}-platform-icon.png`)"
-        />
+        <img class="slot-game-platform-btn__icon" :src="getPlatformIcon(platform.code)" />
       </button>
     </div>
     <div v-if="isLoading" v-loading="isLoading" class="slot-game-loading-wrapper" />
@@ -86,6 +83,14 @@ const activePlat = ref(null);
 const gameListData = ref([]);
 const gameRef = ref();
 const isLoading = ref(false);
+
+const getPlatformIcon = (code) => {
+  try {
+    return require(`@/assets/images/home/slotEdition/${code.toLowerCase()}-platform-icon.png`);
+  } catch (e) {
+    return "";
+  }
+};
 
 const getPlatformList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
