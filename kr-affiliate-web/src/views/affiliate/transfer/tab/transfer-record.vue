@@ -46,6 +46,7 @@
           <td :data-label="t('fields.transferType')">
             <el-tag v-if="item.type === 'DEPOSIT'" type="success" size="normal">{{ t('transferType.' + item.type) }}</el-tag>
             <el-tag v-else-if="item.type === 'COMMISSION'" type="warning" size="normal">{{ t('transferType.' + item.type) }}</el-tag>
+            <el-tag v-else-if="item.type === 'RECYCLE'" type="warning" size="normal">{{ t('fields.recycle') }}</el-tag>
           </td>
         </tr>
       </tbody>
