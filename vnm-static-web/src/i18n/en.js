@@ -164,7 +164,13 @@ export default {
     hotMatches: "Hot Matches",
     euroCountdown01: "ROAD TO ",
     euroCountdown01a: "EURO 2024 - ",
-    euroCountdown02: " DAYS LEFT"
+    euroCountdown02: " DAYS LEFT",
+    slotEdition: {
+      allPlatform: "ALL",
+      description: "Slot Games",
+      promotion: "Promotions",
+      moreGame: "MORE GAMES"
+    }
   },
   personal: {
     url: "URL",

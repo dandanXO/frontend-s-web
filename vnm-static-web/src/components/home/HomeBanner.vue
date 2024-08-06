@@ -10,7 +10,7 @@
     </a>
   </el-dialog>
 
-  <el-carousel class="banner-slider" indicator-position="outside" :autoplay="true" :interval="5000">
+  <el-carousel class="banner-slider" :class="ui.edition" indicator-position="outside" :autoplay="true" :interval="5000">
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
         <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
@@ -28,10 +28,12 @@ import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
+import { uiStore } from "@/store/ui";
 
 const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
+const ui = uiStore();
 
 const allGames = ref(null);
 const goToUrl = (redirectUrl) => {
