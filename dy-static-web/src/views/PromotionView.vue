@@ -70,7 +70,8 @@
           :class="{
             isCSBanner:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
-              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
+              selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
             iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
@@ -105,7 +106,7 @@
               selectedPromo.promoCode === 'dy2-olympic-match',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
-            esl:selectedPromo.promoCode === 'dy2-intel-esl',
+            esl: selectedPromo.promoCode === 'dy2-intel-esl',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -698,13 +699,15 @@ export default defineComponent({
         margin: 0 auto;
 
         &.isCSBanner {
-          // min-height: 660px;
-          // max-width: none;
+          aspect-ratio: 3840/1136;
+          max-width: none;
 
-          // .promo-bg {
-          //   min-height: 660px !important;
-          //   background-size: 100% 100%;
-          // }
+          .promo-bg {
+            height: 100% !important;
+            aspect-ratio: 3840/1136;
+            //min-height: 550px !important;
+            background-size: 100% 100%;
+          }
         }
 
         &.isDuanwuBanner {
