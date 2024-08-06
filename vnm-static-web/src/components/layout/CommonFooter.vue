@@ -129,7 +129,11 @@
         </div>
       </div>
     </div>
-    <img class="footer-bg" src="@/assets/footer/footer-bg-slot-edition.png" />
+    <img
+      v-if="ui.edition === 'SLOT' && route.path === '/home'"
+      class="footer-bg"
+      src="@/assets/footer/footer-bg-slot-edition.png"
+    />
   </footer>
   <!--
   <RegisterModal ref="regModal" /> -->
@@ -137,7 +141,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { useRoute } from "vue-router";
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
@@ -151,6 +155,8 @@ export default defineComponent({
     const isChrome = ref(false);
     const store = userStore();
     const ui = uiStore();
+    const route = useRoute();
+    console.log(route);
     const openRegPage = () => {
       store.regPageVisible = true;
     };
@@ -162,7 +168,8 @@ export default defineComponent({
       openRegPage,
       affCode,
       languageVal,
-      ui
+      ui,
+      route
     };
   }
 });
