@@ -1,11 +1,8 @@
 <template>
-  <img style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" />
-    <div class="hotgame-section">
-      <!-- <HomeTitle title="热门游戏" subtitle="TOP GAMES"></HomeTitle> -->
-      <!-- <HomeTitleV2 title="热门游戏" subtitle="TOP GAMES"/> -->
-      <img style="display:flex;margin:auto;width:55%;" src="../../../assets//home/hotgame/hotgame-title.png" />
-
-      <div class="hotgame-tabs-wrapper">
+  <div class="hotgame-section">
+    <div class="hotgame-tabs-wrapper">
+        <img class="separator-img" style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" />
+        <img class="title-img" style="display:flex;margin:auto;width:55%;" src="../../../assets//home/hotgame/hotgame-title.png" />
         <el-tabs :tab-position="tabPosition" class="hotgame-tabs">
           <el-tab-pane :label="hotgame.title" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`" @click="onBannerClick(hotgameIndex)">
             <div :class="`hotgame-content-wrapper show`">
@@ -120,9 +117,7 @@
                   "
                   :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
                   :src="
-                    require(`../../../assets/home/hotgame/content/${hotgame.section}/${
-                      hotgame.content[hotgame.currentProvider].charImgPath
-                    }/character.png`)
+                    require(`../../../assets/home/hotgame/content/${hotgame.section}/character.png`)
                   "
                 />
               </Transition>
@@ -904,20 +899,37 @@ const tabPosition = ref('left')
     width: 100%;
     // max-width: 1100px;
     margin: 0 auto;
+    position: relative;
+
+    .separator-img {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .title-img {
+      position: absolute;
+      top: 17%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     .hotgame-tabs-wrapper {
       background: url("../../../assets/home/hotgame/hotgame-bg2.png") no-repeat center center;
       background-size: 100% 100%;
-      aspect-ratio: 1960 / 1380;
+      aspect-ratio: 1960 / 1200;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .hotgame-tabs {
-        position: absolute;
-        top: 40%;
-        left: 10%;
+        height: 400px;
+        margin-top: 11%;
 
         :deep(.el-tabs__header) {
-          transform: translate(0%, 25%);
+          transform: translate(0%, 15%);
           top: 0%;
           left: 0%;
         }
@@ -942,9 +954,9 @@ const tabPosition = ref('left')
 
         .hotgame-content-wrapper {
           display: grid;
-          grid-template-columns: auto 1fr;
+          grid-template-columns: 500px 500px;
           align-items: center;
-          gap: 3rem;
+          gap: 1rem;
           width: 0;
           height: 0;
           overflow: hidden;
@@ -1040,7 +1052,7 @@ const tabPosition = ref('left')
             .game-provider-wrapper {
               display: flex;
               // flex-wrap: wrap;
-              gap: 12.5px;
+              gap: 7.5px;
               // width: 20rem;
               z-index: 2;
   
@@ -1195,6 +1207,7 @@ const tabPosition = ref('left')
               right: 4rem;
               bottom: 0px;
               height: 30rem;
+              margin-top: -80px;
   
               &.character-fishing-gps {
                 right: 9rem;
@@ -1526,9 +1539,9 @@ const tabPosition = ref('left')
   
         .hotgame-content-wrapper {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 400px 650px;
           align-items: center;
-          gap: 3rem;
+          gap: 1rem;
           width: 0;
           height: 0;
           overflow: hidden;
@@ -1647,7 +1660,7 @@ const tabPosition = ref('left')
             .game-provider-wrapper {
               display: flex;
               // flex-wrap: wrap;
-              gap: 12.5px;
+              gap: 7.5px;
               width: 20rem;
               z-index: 2;
   
