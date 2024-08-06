@@ -426,6 +426,11 @@ export default {
       'Thông tin đăng ký của thành viên và người triệu hồi là giống nhau',
     MEMBER_ALREADY_SUMMONED: 'Thành viên đã được triệu hồi',
   },
+  smsSend: {
+    template1: 'Welcome New Member',
+    template2: 'Deposit Promotion',
+    template3: 'Welcome Back',
+  },
   displayLocation: {
     HOMEPAGE: 'TRANG CHỦ',
     PROMO_PAGE: 'TRANG KHUYẾN MÃI',
@@ -705,6 +710,7 @@ export default {
     consumingTime: 'Thời gian tiêu hao',
     confirm: 'Xác nhận',
     confirmAndImport: 'Xác nhận và nhập',
+    confirmAndSend: 'Confirm and Send',
     confirmNewPassword: 'Xác nhận mật khẩu mới',
     confirmPassword: 'Xác nhận mật khẩu',
     confirmPay: 'Xác nhận thanh toán',
@@ -2304,6 +2310,7 @@ export default {
     'Member Distribute Privilege': 'Phân phối đặc quyền thành viên',
     'Member Profit Ranking': 'Thứ hạng lợi nhuận thành viên',
     'Member Affiliate Change Log': 'Member Affiliate Change Log',
+    'Member Group Send SMS': 'Member Group Send SMS',
     Affiliate: 'Đối tác liên kết',
     'Affiliate Amount Adjust': 'Điều chỉnh số tiền Đối tác liên kết',
     'Affiliate Summary': 'Tóm tắt Đối tác liên kết',

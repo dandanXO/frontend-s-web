@@ -1,11 +1,7 @@
 import { server } from "@/utils/request";
 
-export function loadMailbox(type, pageNum, pageSize) {
-  return server.REST.post("auth/mailbox", {
-    type,
-    pageNum,
-    pageSize
-  });
+export function loadMailbox() {
+  return server.REST.get("/session/pm/inbox", {});
 }
 
 export function mailInbox(mailQuery) {
@@ -18,6 +14,10 @@ export function mailInbox(mailQuery) {
       messageType: mailQuery.messageType
     }
   });
+}
+
+export function popupMailBox() {
+  return server.REST.get("/session/pm/inbox/popup", {});
 }
 
 export function mailOutbox() {

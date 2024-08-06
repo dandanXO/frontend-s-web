@@ -204,7 +204,6 @@ export default defineComponent({
       showFloatPromo.value = false;
       promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
       domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
-      
     };
     const floatPromo = [];
     const gamePromo = [];
@@ -371,7 +370,7 @@ export default defineComponent({
 /* rocket animation */
 .rocket-wrapper {
   position: fixed;
-  z-index: 999;
+  z-index: 666;
   // bottom: 220px;
   // right: 0px;
   transition: all 0.3s;
@@ -503,14 +502,13 @@ export default defineComponent({
   position: fixed;
   right: 0;
   bottom: 60px;
-  z-index: 1000;
+  z-index: 777;
   display: flex;
   flex-direction: row;
   background: transparent;
   border-radius: 6px 0 0 6px;
   -webkit-transition: right 0.3s ease-out;
   transition: right 0.3s ease-out;
-  display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;

@@ -107,7 +107,7 @@ export default {
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
-    "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
     fullName: "Full Name",
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
@@ -136,6 +136,7 @@ export default {
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",
     virtualWallet_rules_01: "Please insert virtual wallet",
+    virtualWallet_id_rule: "Please insert 13 digits Identity ID",
     virtualWallet_rules_02: "The phone number must start with '03'",
     virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_warmReminder:
@@ -278,7 +279,6 @@ export default {
     details: "Details",
     collect: "Collect",
     noData: "No data",
-    annualInterestRate: "Annual Interest Rate",
     depositAmount: "Deposit Amount",
     depositDuration: "Deposit Duration",
     placeTime: "Place Time",
@@ -590,7 +590,8 @@ export default {
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     12104: "This feature is disabled, please contact customer service",
-    12105: "Your withdrawal operation has a network delay, resulting in payment failure. Please wait 30 minutes before withdrawing again, thank you!",
+    12105:
+      "Your withdrawal operation has a network delay, resulting in payment failure. Please wait 30 minutes before withdrawing again, thank you!",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
     13002: "Must be within 7 days",

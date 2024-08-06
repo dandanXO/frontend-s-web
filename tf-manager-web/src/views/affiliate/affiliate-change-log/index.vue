@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-select
+          v-model="request.targetType"
+          size="small"
+          :placeholder="t('fields.targetType')"
+          class="filter-item"
+          style="width: 200px;"
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in uiControl.targetType"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY HH:mm:ss"
@@ -15,6 +30,7 @@
           :shortcuts="shortcuts"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
 
         <el-button
@@ -101,6 +117,11 @@ const uiControl = reactive({
   responseBody: '',
   targetType: [
     {
+      key: 'MEMBER',
+      displayName: 'MEMBER',
+      value: 'MEMBER',
+    },
+    {
       key: 'AFFILIATE',
       displayName: 'AFFILIATE',
       value: 'AFFILIATE',
@@ -124,6 +145,12 @@ const uiControl = reactive({
     },
   ],
 })
+
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+]
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -169,7 +196,7 @@ async function loadUserActionLog() {
   page.loading = true
   const requestCopy = { ...request }
   const query = {}
-  query.targetType = 'AFFILIATE'
+  //  query.targetType = 'AFFILIATE'
   query.field = 'parentAffiliateId'
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {

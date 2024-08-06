@@ -171,6 +171,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "LoginPage",
@@ -306,6 +307,15 @@ export default defineComponent({
       router.push("/register");
     };
 
+
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version;
+      }
+    };
+
     const onSubmit = () => {
       $q.loading.show({
         message: "Logging in"
@@ -338,7 +348,8 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                codeId: loginForm.codeId,
+                ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
               })
               .then(() => {
                 $q.loading.hide();
@@ -500,6 +511,7 @@ export default defineComponent({
 
     onMounted(() => {
       getAppInfo();
+      getVersionNo();
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {

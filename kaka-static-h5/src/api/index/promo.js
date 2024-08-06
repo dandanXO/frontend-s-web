@@ -60,19 +60,19 @@ export function submitNewLossBonus(item) {
 }
 
 export function submitPokerNewLossBonus() {
-  return eventapi.put(`/bonus/claim/vnm-poker-refund`);
+  return eventapi.put(`/bonus/claim/ka2-poker-refund`);
 }
 
 export function refundPokerBonus() {
-  return eventapi.get(`vnm-refund/poker`);
+  return eventapi.get(`ka2-refund/poker`);
 }
 
 export function submitSlotNewLossBonus() {
-  return eventapi.put(`/bonus/claim/vnm-slots-refund`);
+  return eventapi.put(`/bonus/claim/ka2-slots-refund`);
 }
 
 export function refundSlotBonus() {
-  return eventapi.get(`vnm-refund/slots`);
+  return eventapi.get(`ka2-refund/slots`);
 }
 
 export function luckyNumberList(queryItems, memberId) {

@@ -136,6 +136,7 @@ export default {
     virtualWallet_placeholder: "براہ کرم ورچوئل والٹ درج کریں",
     virtualWallet_rules_01: "براہ کرم ورچوئل والٹ درج کریں",
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہئے",
+    virtualWallet_id_rule: "راہ کرم 13 ہندسوں کی شناختی شناخت داخل کریں",
     virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
@@ -270,7 +271,6 @@ export default {
     storageTime: "ذخیرہ وقت (دن)",
     deposit: "جمع",
     trialCalculation: "آزمائشی حساب",
-    annualInterestRate: "سالانہ شرح سود",
     distributeInterest: "سود تقسیم کریں",
     pending: "زیر التواء",
     ended: "ختم ہو گیا",

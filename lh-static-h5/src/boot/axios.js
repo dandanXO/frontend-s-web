@@ -10,6 +10,7 @@ import { useUI } from "src/stores/ui";
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
+const imgCDN = process.env.IMAGE_CDN;
 
 console.log(window.location.hostname);
 const globalLinks = [
@@ -38,6 +39,8 @@ const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(
 
 const globalAndCNLinks = ["leihuo", "e693.cc", "e890.cc", "e561.cc", "e396.cc"];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
+
+const REPLACEMENT_DOMAIN = "random";
 
 // const specialLinks= ["lh75561","lh77331","lh79669", "lh93371", "lh76390", "lh30553", "lh13179","lh36791", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987", "lh59376", "lh60108", "lh63133", "lh67319", "lh69166"];
 // const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
@@ -86,6 +89,15 @@ const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
+if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+  const successImgCdn = localStorage.getItem("IMAGE_CDN");
+  if (!successImgCdn) {
+    const newDomain = replaceRndDomain("IMAGE_CDN");
+    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+    localStorage.setItem("IMAGE_CDN", newImgCDN);
+  }
+}
+
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
@@ -112,6 +124,10 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
+      if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+        const newDomain = replaceRndDomain(urlLsName);
+        initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+      }
     }
 
     axios.get(initApi + "/ping").then((res) => {
@@ -123,6 +139,36 @@ function getInitApi(apiLinks, urlLsName) {
       }
     });
     return initApi;
+  }
+}
+
+function replaceRndDomain(urlLsName) {
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
+  const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${domainPrefix}${rndSecondLevelDomain}`;
+}
+
+function generateRndSecondLevelDomain(unit) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < unit; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+function getApiDomainPrefix(urlLsName) {
+  if (urlLsName.indexOf("RST") > -1) {
+    return "ap";
+  } else if (urlLsName.indexOf("CR") > -1) {
+    return "ca";
+  } else if (urlLsName.indexOf("EVT") > -1) {
+    return "pr";
+  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+    return "fi";
+  } else {
+    return "";
   }
 }
 

@@ -353,6 +353,11 @@ const getBonus = async (promoCode) => {
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
+    } else {
+      notify({
+        type: "error",
+        message: apiRes.message
+      });
     }
   } catch (err) {
     console.error(err);
@@ -426,6 +431,10 @@ onMounted(async () => {
   padding: 5px 28px;
   font-size: 16px;
   border-radius: 8px;
+
+  &.status {
+    color: #fff;
+  }
 
   &.complete {
     border: 1px solid rgba(0, 133, 232, 1);
@@ -569,10 +578,16 @@ h1 {
   padding: 5px 10px;
   border-radius: 6px;
   font-size: 14px;
-
+  text-align: center;
+  width: 80px;
   border: 1px solid rgba(0, 133, 232, 1);
 
+  cursor: pointer;
   color: rgba(0, 133, 232, 1);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 }
 
 .complete {

@@ -60,7 +60,7 @@
                     <img src="../assets/images/inbox/unread-mail.png" />
                   </div>
 
-                  <div class="title-text" :title="det.title">{{ det.title }}</div>
+                  <div class="title-text" :title="det.title" v-html="det.title"></div>
                   <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
                     <i>{{ formatSendTime(det.sendTime) }}</i>
                   </div>
@@ -160,11 +160,12 @@ export default defineComponent({
   setup(props, context) {
     const notify = useNotify();
     const mailboxMessageTypeData = ref([
+      { num: 1, type: "NOTIFICATION", name: "通知" },
+      { num: 5, type: "MATCH", name: "赛事" },
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" },
-      { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 5, type: "ALL", name: "全部" }
+      { num: 4, type: "PAYMENT", name: "充提" }
+      // { num: 5, type: "ALL", name: "全部" }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
@@ -346,10 +347,10 @@ export default defineComponent({
           )
           .then((res) => {
             if (res.code === 0) {
-              notify({
-                message: "已读消息",
-                type: "success"
-              });
+              // notify({
+              //   message: "已读消息",
+              //   type: "success"
+              // });
               onLoad();
             }
           })
@@ -538,6 +539,11 @@ export default defineComponent({
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+        margin: 0px;
+
+        p {
+          margin: 0px 0px 0px 0px;
+        }
       }
 
       .send-time {
@@ -637,5 +643,9 @@ export default defineComponent({
       color: $primary-dark;
     }
   }
+}
+
+p {
+  margin: 0px;
 }
 </style>

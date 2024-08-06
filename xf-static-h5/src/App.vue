@@ -12,6 +12,7 @@ import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import { getVisitorId } from "boot/utils";
+import qs from "qs";
 export default defineComponent({
   name: "App",
   setup() {
@@ -108,13 +109,11 @@ export default defineComponent({
       const way = "h5";
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post("/memberStatistics/submit", qs.stringify({
             way: way,
             sid: sidParam,
             siteCode: "xf1"
-          }
-        });
+        }));
       }
     };
 
