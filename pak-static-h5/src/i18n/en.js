@@ -132,6 +132,8 @@ export default {
     cryptoAccount_rules_01: "Please insert crypto account",
     cryptoAccount_rules_02: "Crypto account must start with 'T'",
     cryptoAccount_rules_03: "Crypto account must have 34 characters",
+    cryptoAccount_rules_04: "Crypto account must start with '0x'",
+    cryptoAccount_rules_05: "Crypto account must have 42 characters",
     virtualWalletType: "Virtual Wallet Type",
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",

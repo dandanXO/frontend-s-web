@@ -130,6 +130,8 @@ export default {
     cryptoAccount_placeholder: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
     cryptoAccount_rules_01: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
     cryptoAccount_rules_02: "کرپٹو اکاؤنٹ 'T' سے شروع ہونا چاہیے",
+    cryptoAccount_rules_04: "کرپٹو اکاؤنٹ کو '0x' سے شروع ہونا چاہیے",
+    cryptoAccount_rules_05: "کرپٹو اکاؤنٹ میں 42 حروف ہونے چاہئیں",
     cryptoAccount_rules_03: "کریپٹو اکاؤنٹ میں 34 حروف کا ہونا ضروری ہے۔",
     virtualWalletType: "ورچوئل والٹ کی قسم",
     virtualWallet: "ورچوئل والٹ",
