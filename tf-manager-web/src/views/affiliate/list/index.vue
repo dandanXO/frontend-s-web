@@ -162,6 +162,14 @@
               maxlength="11"
             />
           </el-form-item>
+          <el-form-item :label="t('fields.affiliateCode') + ' ' + t('fields.self')" prop="codePersonalAffiliate" v-if="form.siteId === 10">
+            <el-input
+              v-model="form.codePersonalAffiliate"
+              style="width: 350px;"
+              maxlength="6"
+              @input="handleInput"
+            />
+          </el-form-item>
           <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
             <el-select
               v-model="form.affiliateLevel"
@@ -840,6 +848,7 @@ const form = reactive({
   timeType: null,
   belongType: null,
   shareRatio: null,
+  codePersonalAffiliate: null,
 })
 
 const freezeForm = reactive({
@@ -964,6 +973,19 @@ const formRules = reactive({
   commissionModel: [required(t('message.validateCommissionModelRequired'))],
   timeType: [required(t('message.validateTimeTypeRequired'))],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
+  codePersonalAffiliate: [
+    {
+      min: 6,
+      max: 6,
+      message: t('message.required_6_digits_code'),
+      trigger: 'change',
+    },
+    {
+      pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+      message: t('message.required_only_digits_and_alphabet'),
+      trigger: 'blur',
+    },
+  ]
 })
 
 const freezeFormRules = reactive({
@@ -1098,6 +1120,10 @@ function addAffiliate() {
       }
     }
   })
+}
+
+function handleInput() {
+  form.codePersonalAffiliate = form.codePersonalAffiliate.toUpperCase();
 }
 
 async function performUpdate() {
