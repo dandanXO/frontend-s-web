@@ -747,3 +747,10 @@ onMounted(() => {
   }
 }
 </style>
+<style lang="scss">
+.title-text {
+  p {
+    margin-bottom: 0;
+  }
+}
+</style>
