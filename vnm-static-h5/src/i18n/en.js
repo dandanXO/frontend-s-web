@@ -49,6 +49,11 @@ export default {
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
+    slotEdition: {
+      allPlatform: "ALL",
+      promotion: "Promotions",
+      moreGame: "MORE GAMES"
+    },
 
     // side menu
     menu_sports: "Sports",

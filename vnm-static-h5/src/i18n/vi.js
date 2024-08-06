@@ -52,6 +52,11 @@ export default {
     euroCountdown01a: "CÒN ",
     euroCountdown02: " NGÀY",
     helloUsername: "Xin chào,",
+    slotEdition: {
+      allPlatform: "tất cả",
+      promotion: "Khuyến mãi",
+      moreGame: "Nhiều trò chơi hơn"
+    },
 
     // side menu
     menu_sports: "Thể Thao",
