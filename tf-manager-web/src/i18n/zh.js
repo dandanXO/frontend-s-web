@@ -743,6 +743,7 @@ export default {
     choiceTwo: '题目二选项',
     choiceThree: '题目三选项',
     claimTime: '领取时间',
+    claimableRebate: '可领取返水金额',
     className: '类别名',
     clearingSum: '结算总和',
     clientType: '客户类型',

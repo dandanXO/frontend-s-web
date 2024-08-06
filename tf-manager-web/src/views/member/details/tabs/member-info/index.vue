@@ -885,6 +885,25 @@
               @click="refreshDnW"
             />
           </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.claimableRebate')">
+            <div style="display: inline-block;" v-loading="loading.rebate">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{
+                    data: memberDetail.claimableRebate,
+                    type: 'money',
+                  }"
+                />
+              </div>
+            </div>
+            <el-button
+              class="refresh-btn"
+              icon="el-icon-refresh"
+              size="mini"
+              @click="refreshClaimableRebate"
+            />
+          </el-descriptions-item>
         </el-descriptions>
         <el-descriptions size="small" class="margin-top" :column="4" border>
           <el-descriptions-item
@@ -1486,6 +1505,7 @@ import {
   unlockMember,
   refreshBalance,
   getDnW,
+  getClaimableRebate,
   forceLogout,
   syncMemberDetail,
   getShareRatio,
@@ -1540,6 +1560,7 @@ export default defineComponent({
       total: false,
       dnw: false,
       balance: [],
+      rebate: false
     })
 
     const updatePasswordForm = ref(null)
@@ -1633,6 +1654,7 @@ export default defineComponent({
       memberType: '',
       dupName: '',
       dupIp: '',
+      claimableRebate: 0
     })
 
     const affiliateDetail = reactive({
@@ -2241,6 +2263,13 @@ export default defineComponent({
       loading.dnw = false
     }
 
+    const refreshClaimableRebate = async () => {
+      loading.rebate = true
+      const { data: rebate } = await getClaimableRebate(props.mbrId, site.id)
+      memberDetail.claimableRebate = rebate
+      loading.rebate = false
+    }
+
     const refreshPlatformBalance = async key => {
       loading.balance[key] = true
       const { data: balance } = await getPlatformBalance(
@@ -2390,6 +2419,7 @@ export default defineComponent({
       loading.loginInfo = false
 
       await loadBalance()
+      await refreshClaimableRebate()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true
@@ -2465,6 +2495,7 @@ export default defineComponent({
       loadBalance,
       refreshAllBalance,
       refreshDnW,
+      refreshClaimableRebate,
       refreshPlatformBalance,
       unmaskDetail,
       unmaskedValue,
