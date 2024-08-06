@@ -108,10 +108,10 @@
               selectedPromo?.promoCode === 'lh1-olympic-checkin'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
-                  ? '#F5F6F8'
-                  : selectedPromo?.promoCode === 'lh-lpl-summer24'
-                    ? '#1D1D1E'
-                    : '',
+                ? '#F5F6F8'
+                : selectedPromo?.promoCode === 'lh-lpl-summer24'
+                ? '#1D1D1E'
+                : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
@@ -470,7 +470,7 @@ export default defineComponent({
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
-        color: #7a8eb9;
+        color: #333;
       }
       tr {
         p {
@@ -865,7 +865,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
-          color: #7a8eb9;
+          color: #333;
           font-size: 20px;
           ol {
             li {
