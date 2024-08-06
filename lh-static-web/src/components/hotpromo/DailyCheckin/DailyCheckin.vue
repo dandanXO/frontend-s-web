@@ -314,13 +314,14 @@ const countiuneSign = computed(() => {
   return times;
 });
 const countPercent = computed(() => {
-  // let times = 0;
-  // sectionOneBoxItems.value.forEach((item) => {
-  //   if (item.claimState === "CLAIMED") {
-  //     times++;
-  //   }
-  // });
-  return currentActivePoints.value;
+  let times = 0;
+  sectionOneBoxItems.value.forEach((item) => {
+    console.log(currentActivePoints.value)
+    if ((currentActivePoints.value >= +item.requiredActivePoint) && item.claimState === "OPEN") {
+      times++
+    }
+  });
+  return times * 25;
 });
 // 是 "YES", 就是“已完成” + 打勾，
 // 是 "NO" 则是 "去充值“和 打 X
