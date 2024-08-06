@@ -181,7 +181,9 @@
                     selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhworldcup:
-                    selectedPromo.promoCode === 'lh1worldcup' || selectedPromo.promoCode === 'lh1worldcupdota2',
+                    selectedPromo.promoCode === 'lh1worldcup' ||
+                    selectedPromo.promoCode === 'lh1worldcupdota2' ||
+                    selectedPromo.promoCode === 'lh1-football',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu:
                     selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
@@ -1034,10 +1036,12 @@ export default defineComponent({
             }
 
             th {
+              border: 1px solid #999;
               background-color: inherit;
             }
 
             td {
+              border: 1px solid #999;
               background-color: inherit;
             }
           }

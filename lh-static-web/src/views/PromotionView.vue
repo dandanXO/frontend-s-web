@@ -105,7 +105,8 @@
               selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
-              selectedPromo?.promoCode === 'lh1-olympic-checkin'
+              selectedPromo?.promoCode === 'lh1-olympic-checkin' ||
+              selectedPromo?.promoCode === 'lh1-football'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
                 ? '#F5F6F8'
@@ -131,7 +132,8 @@
               selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
-            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
+            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
+            lhfootball: selectedPromo?.promoCode === 'lh1-football'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -146,7 +148,8 @@
               fish: selectedPromo.promoType?.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game',
-              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
+              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin',
+              football1: selectedPromo.promoCode === 'lh1-football'
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
@@ -907,6 +910,15 @@ export default defineComponent({
               padding: 0;
             }
           }
+          &.football1 {
+            table {
+              th,
+              td {
+                border: 1px solid #999;
+              }
+            }
+          }
+
           .game-title {
             color: #ffd800;
             margin: 30px auto 50px;
@@ -1084,6 +1096,16 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.football1 {
+  table {
+    th,
+    td {
+      border: 1px solid #dcdce8;
     }
   }
 }
