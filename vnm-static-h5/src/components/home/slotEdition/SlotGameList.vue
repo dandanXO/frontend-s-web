@@ -210,10 +210,19 @@ watch(
       margin-bottom: 4px;
       .slot-game-game-item__name {
         margin-bottom: 4px;
-        font-size: 0.75rem;
+        padding-top: 3px;
+        font-size: 0.9rem;
         font-weight: 500;
         line-height: 1rem;
         color: #7a80a1;
+        text-align: center;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
       }
       .slot-game-game-item__logo {
         max-height: 1rem;
@@ -240,6 +249,9 @@ watch(
             color: #73b2ff;
           }
         }
+      }
+      .q-img {
+        aspect-ratio: 1/1;
       }
     }
   }

@@ -40,7 +40,7 @@
               {{ game.name }}
             </div>
 
-            <div class="slot-fav"></div>
+            <!--            <div class="slot-fav"></div>-->
           </div>
           <!-- <div class="slot-logo">
             <img :src="require(`@/assets/images/home/slotEdition/${selectedPlat.toLowerCase()}-logo.png`)" />
@@ -358,6 +358,8 @@ onMounted(() => {
         }
 
         .slot-name {
+          text-align: center;
+
           img {
             opacity: 1;
             transition: all 0.3s ease-out;
@@ -384,6 +386,15 @@ onMounted(() => {
 
         .el-image {
           height: 100%;
+
+          .image-slot {
+            height: 100%;
+
+            img {
+              height: 100%;
+              width: 100%;
+            }
+          }
         }
 
         img {
@@ -397,7 +408,7 @@ onMounted(() => {
       .slot-details {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         position: relative;
       }
 
