@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <div class="seciont2">
+    <div class="seciont2">
       <div class="first">
         <div class="title"></div>
         <div class="day-task">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
     <div class="seciont1">
       <div class="basic-info">
         <div>
@@ -86,7 +86,10 @@
           @click="handleClickSectionOneItem(item)"
         >
           <div class="numbers">
-            <div class="bonus-number">{{ item.bonus }}<span class="rmb">¥</span></div>
+            <div class="bonus-number">
+              {{ item.bonus }}
+              <span class="rmb">¥</span>
+            </div>
             <div class="active-point" v-if="item.activePoint > 0">+{{ item.activePoint }}活跃</div>
           </div>
           <div class="day-number">0{{ index + 1 }}</div>
@@ -118,6 +121,7 @@
           <div v-for="(box, index) in sectionOneBoxItems" :key="box.requiredActivePoint">
             <template v-if="index === 0">
               <img
+                :class="box.claimState === 'OPEN' ? 'can-claim' : ''"
                 :src="
                   box.claimState === 'OPEN'
                     ? require('../../../assets/images/promotion/hotpromo/dailyCheckin/box-blue.png')
@@ -316,7 +320,7 @@ const countPercent = computed(() => {
   //     times++;
   //   }
   // });
-  return currentActivePoints.value
+  return currentActivePoints.value;
 });
 // 是 "YES", 就是“已完成” + 打勾，
 // 是 "NO" 则是 "去充值“和 打 X
@@ -379,7 +383,8 @@ const fetchData = async () => {
     currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
     totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
     if (totalRecheckInChances.value !== 0) {
-      totalRecheckMinusWeekChances.value = res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
+      totalRecheckMinusWeekChances.value =
+        res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
     }
     reCheckinMinDeposit.value = res.data.reCheckInState.minDeposit;
     recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
@@ -446,7 +451,7 @@ onMounted(async () => {
         top: 36%;
         text-align: center;
         .bonus-number {
-          background: linear-gradient(180deg, #FFFFFF 22.73%, #FFEF81 79.55%);
+          background: linear-gradient(180deg, #ffffff 22.73%, #ffef81 79.55%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -462,7 +467,6 @@ onMounted(async () => {
         .active-point {
           font-size: 14px;
         }
-
       }
     }
     .grid-item:nth-last-child(1) {
@@ -476,9 +480,9 @@ onMounted(async () => {
     }
     .day-number {
       position: absolute;
-    top: 80px;
-    left: 12px;
-    font-size: 20px;
+      top: 80px;
+      left: 12px;
+      font-size: 20px;
     }
     .status-img {
       position: absolute;
@@ -513,6 +517,19 @@ onMounted(async () => {
       flex-direction: row;
       justify-content: space-around;
       width: 100%;
+
+      img {
+        cursor: pointer;
+        &.can-claim {
+          &:hover {
+            filter: brightness(0.9);
+          }
+          &:active {
+            filter: brightness(0.85);
+            transform: translate(0px, 1px);
+          }
+        }
+      }
     }
     .progressBar-area {
       width: 100%;
@@ -534,7 +551,7 @@ onMounted(async () => {
         text-align: center;
         line-height: 30px;
         color: white;
-        border-radius: 5px;
+        border-radius: 5px 30px 30px 5px;
       }
     }
     .number-area {
@@ -591,6 +608,10 @@ onMounted(async () => {
             height: 50px;
             border-radius: 8px;
             font-size: 24px;
+
+            &:hover {
+              opacity: 0.9;
+            }
           }
           .button-finish {
             background: linear-gradient(90deg, #23d2f0 0%, #9a7bff 100%);
