@@ -300,15 +300,16 @@ $node-color: #b81212;
         align-items: center;
         position: relative;
 
+        .promo {
+          right: 2px;
+        }
+
         & > div {
           font-size: 12px;
           color: #ffffff;
         }
         img {
-          //width: 15px;
           border: 0;
-          //background-color: #2a313e;
-          // max-width: 1.5rem;
           padding: 0px;
           margin-bottom: 0;
         }
@@ -408,9 +409,10 @@ $node-color: #b81212;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
-      width: 100%;
-      max-width: 40px;
-
+      //width: 100%;
+      max-width: 36px;
+      width: 34px;
+      height: 34px;
       img {
         padding: 0;
         border: 0;
@@ -466,6 +468,17 @@ $node-color: #b81212;
   .node-txt-img {
     width: 54px !important;
     height: 54px !important;
+  }
+
+  .node .node.node-group .node-text .promo {
+    width: 34px;
+    height: 34px;
+    right: 4px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
