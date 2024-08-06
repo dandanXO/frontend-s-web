@@ -1951,6 +1951,7 @@ export default {
     activate: 'Activate',
     withdrawPassword: 'Withdraw Password',
     updateWithdrawPassword: 'Update Withdraw Password',
+    self: '(SELF)',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2445,6 +2446,8 @@ export default {
     validatePlanLimitMinRequired: 'Minimum investment limit required',
     validatePlanLimitMaxRequired: 'Maximum investment limit required',
     affiliateReactivated: 'Affiliate Reactivated',
+    required_6_digits_code: 'Must be composed of 6 digits code.',
+    required_only_digits_and_alphabet: 'Must be composed of digits and alphabet',
   },
   menu: {
     undefined: '',

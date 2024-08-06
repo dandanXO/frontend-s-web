@@ -1950,6 +1950,7 @@ export default {
     activate: '解禁',
     withdrawPassword: '提款密码',
     updateWithdrawPassword: '更新提款密码',
+    self: '(自己)',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2395,6 +2396,8 @@ export default {
     validatePlanLimitMinRequired: '最小投资限额必填',
     validatePlanLimitMaxRequired: '最大投资限额必填',
     affiliateReactivated: '解禁成功',
+    required_6_digits_code: '只能六个字符',
+    required_only_digits_and_alphabet: '只许字母或数字',
   },
   menu: {
     undefined: '',
