@@ -48,7 +48,7 @@
                   v-for="(provider, providerIndex) in hotgame.content.providerList"
                   :key="`${provider}-${providerIndex}`"
                   class="game-provider"
-                  @click="setCurrentProvider(hotgame, provider)"
+                  @click="onEnterGameClick(hotgame, hotgame.type)"
                 >
                   <img
                     :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
@@ -80,13 +80,13 @@
                 </el-button>
               </template>
               <template v-else>
-                <el-button
+                <!-- <el-button
                   size="small"
                   class="common-btn game-start-btn"
                   @click="onEnterGameClick(hotgame, hotgame.type)"
                 >
                   {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
-                </el-button>
+                </el-button> -->
               </template>
   
               <div style="height: 50px">
@@ -918,7 +918,7 @@ const tabPosition = ref('left')
     .hotgame-tabs-wrapper {
       background: url("../../../assets/home/hotgame/hotgame-bg2.png") no-repeat center center;
       background-size: 100% 100%;
-      aspect-ratio: 1960 / 1200;
+      aspect-ratio: 1960 / 1000;
       position: relative;
       display: flex;
       align-items: center;
@@ -972,7 +972,7 @@ const tabPosition = ref('left')
           .left-container {
             display: flex;
             flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.8rem;
             position: relative;
             align-items: center;
   
@@ -1069,7 +1069,7 @@ const tabPosition = ref('left')
                   height: 4rem;
                   padding: 1.30rem;
                   border-radius: 0.3145rem;
-                  background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
+                  background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
                   background-size: 100% 100%;
                   object-fit: contain;
   
@@ -1083,11 +1083,11 @@ const tabPosition = ref('left')
                 }
   
                 .game-provider-text {
-                  color: #c5c5c5;
+                  color: #fff;
                   text-align: center;
                   font-family: PingFang SC;
                   font-size: 0.73363rem;
-                  font-weight: 400;
+                  font-weight: 700;
                   line-height: 1.46719rem;
                   white-space: nowrap;
   
@@ -1563,7 +1563,7 @@ const tabPosition = ref('left')
           .left-container {
             display: flex;
             flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.8rem;
             position: relative;
             align-items: center;
   
@@ -1681,7 +1681,7 @@ const tabPosition = ref('left')
                   height: 4rem;
                   padding: 0.8rem;
                   border-radius: 0.3145rem;
-                  background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
+                  background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
                   background-size: 100% 100%;
                   object-fit: contain;
   
@@ -1694,11 +1694,11 @@ const tabPosition = ref('left')
                 }
   
                 .game-provider-text {
-                  color: #a5c0e4;
+                  color: #fff;
                   text-align: center;
                   font-family: Microsoft YaHei;
                   font-size: 0.73363rem;
-                  font-weight: 400;
+                  font-weight: 700;
                   line-height: 1.46719rem;
                   white-space: nowrap;
   
