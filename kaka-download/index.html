@@ -143,7 +143,6 @@
 
     var apiUrl = '';
     var adjustUrlCode = '';
-    getApiUrl();
 
     var code = getQueryVariable("code")
     var pp = new Array(7)
@@ -151,8 +150,6 @@
         pp[i] = getQueryVariable("p" + i)
         pp[i] = pp[i].replace(/{|}/g, "")
     }
-
-    getApiUrl();
 
     async function getApiUrl() {
         var button;
@@ -243,7 +240,6 @@
             }else {
                 showAndroid();
                 getApiUrl();
-
             };
             // var host = window.location.host;
             // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
@@ -261,7 +257,6 @@
 
     function showIOS()
     {
-
         $("#ver-no").html("(iOS " + versionNo + ")");
 
         $("#installButton").attr("href", "./download/KAKAGame.mobileconfig");
@@ -277,8 +272,6 @@
             if(getIsPath())
             {
                 showIOS();
-                // var path=getTestFlightIosPath();
-                // $('#download').attr('href',path);
             }
             else
             {
