@@ -4,7 +4,7 @@
     <HomeTitleV2 title="APP下载" subtitle="APP DOWNLOAD" />
     <div class="download-container">
       <div class="left-container" data-aos="fade-left">
-        <img src="../../assets/home/download/download-bg.png" width="100%" />
+        <img src="../../../assets/home/download/download-bg.png" width="100%" />
       </div>
 
       <div class="right-container" data-aos="fade-right">
@@ -19,7 +19,7 @@
             </div>
             <div class="download">
               <div class="dl-mobile-img">
-                <img src="../../assets/home/download/mobile-img2.png" width="100%" />
+                <img src="../../../assets/home/download/mobile-img2.png" width="100%" />
               </div>
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
@@ -40,7 +40,7 @@
               </div>
               <div class="download"> -->
           <!--                <div class="qr-wrapper">-->
-          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <img src="../../../assets/home/download/app.png" />-->
           <!--                  <div class="link-desc">扫码进入下载页面</div>-->
           <!--                  <div class="link">www.leihuo.com</div>-->
           <!--                </div>-->
@@ -59,12 +59,12 @@
           <!--              </div>-->
           <!--              <div class="download">-->
           <!--                <div class="qr-wrapper">-->
-          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <img src="../../../assets/home/download/app.png" />-->
           <!--                  <div class="link-desc">扫码进入下载页面</div>-->
           <!--                  <div class="link">www.leihuo.com</div>-->
           <!--                </div>-->
           <!--                <div class="dl-wrapper">-->
-          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <img src="../../../assets/home/download/app.png" />-->
           <!--                  <div class="link-desc">手机免费下载地址</div>-->
           <!--                  <div class="link">www.leihuo.com</div>-->
           <!--                </div>-->
@@ -78,12 +78,12 @@
           <!--              </div>-->
           <!--              <div class="download">-->
           <!--                <div class="qr-wrapper">-->
-          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <img src="../../../assets/home/download/app.png" />-->
           <!--                  <div class="link-desc">扫码进入下载页面</div>-->
           <!--                  <div class="link">www.leihuo.com</div>-->
           <!--                </div>-->
           <!--                <div class="dl-wrapper">-->
-          <!--                  <img src="../../assets/home/download/app.png" />-->
+          <!--                  <img src="../../../assets/home/download/app.png" />-->
           <!--                  <div class="link-desc">手机免费下载地址</div>-->
           <!--                  <div class="link">www.leihuo.com</div>-->
           <!--                </div>-->
@@ -110,7 +110,7 @@ const ui = uiStore();
 onMounted(() => {});
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .download-section {
   width: 80%;
   max-width: 1040px;
@@ -181,7 +181,7 @@ onMounted(() => {});
             }
 
             .dl-frame {
-              background-image: url(../../assets/home/download/qr-frame.png);
+              background-image: url(../../../assets/home/download/qr-frame.png);
               background-position: center center;
               background-size: 100% 100%;
               padding: 40px 12px 24px;
@@ -282,7 +282,7 @@ onMounted(() => {});
                   color: $font-3-dark;
                 }
                 .dl-frame {
-                  background-image: url(../../assets/home/download/qr-frame-dark.png);
+                  background-image: url(../../../assets/home/download/qr-frame-dark.png);
                 }
               }
             }

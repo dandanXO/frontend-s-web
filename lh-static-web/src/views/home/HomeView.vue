@@ -17,7 +17,7 @@ import GameModal from "@/components/modal/GameModal.vue";
 import { ref, onMounted } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
 import HomeAnnouncement from "@/components/home/announcement/index.vue";
-import HomeDownload from "@/components/home/HomeDownload.vue";
+import HomeDownload from "@/components/home/download/index.vue";
 // import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
 import HomeService from "@/components/home/service/index.vue";
