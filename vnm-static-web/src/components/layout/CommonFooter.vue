@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="bottom-footer">
-      <div class="sitemap" style="display:none;">
+      <div class="sitemap" style="display: none">
         <ul class="index_bottom_des">
           <li>关于雷火</li>
           <li><router-link to="/promotion">优惠活动</router-link></li>
@@ -35,7 +35,8 @@
           </li>
           <li>
             <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
+              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
+            >
               IE9浏览器
             </a>
           </li>
@@ -46,19 +47,33 @@
       </div>
       <div class="bottom-footer-inner">
         <div>
-            <router-link to="/about?id=aboutus">
-              <div style="display:flex;align-items:center;gap:5px;">
-                <img src="@/assets/footer/logo.png" />
-              </div>
-            </router-link>
-          </div>
+          <router-link to="/about?id=aboutus">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <img src="@/assets/footer/logo.png" />
+            </div>
+          </router-link>
+        </div>
         <ul>
-          <li><router-link to="/about?id=aboutus">{{ $t('about.aboutus') }}</router-link></li>
-          <li><router-link to="/about?id=info">{{ $t('about.collectInformation') }}</router-link></li>
-          <li><router-link to="/about?id=law">{{ $t('about.legalBasis') }}</router-link></li>
-          <li><router-link to="/about?id=rule">{{ $t('about.bettingRules') }}</router-link></li>
-          <li><a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">{{ $t('about.affiliate') }} </a></li>
-          <li><router-link to="/about?id=blame">{{ $t('about.blame') }}</router-link></li>
+          <li>
+            <router-link to="/about?id=aboutus">{{ $t("about.aboutus") }}</router-link>
+          </li>
+          <li>
+            <router-link to="/about?id=info">{{ $t("about.collectInformation") }}</router-link>
+          </li>
+          <li>
+            <router-link to="/about?id=law">{{ $t("about.legalBasis") }}</router-link>
+          </li>
+          <li>
+            <router-link to="/about?id=rule">{{ $t("about.bettingRules") }}</router-link>
+          </li>
+          <li>
+            <a :href="'https://vnm-affiliate.th80to83w1.com?agent=' + (affCode ? affCode : '')">
+              {{ $t("about.affiliate") }}
+            </a>
+          </li>
+          <li>
+            <router-link to="/about?id=blame">{{ $t("about.blame") }}</router-link>
+          </li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
       </div>
@@ -70,30 +85,30 @@
         <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
         <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
       </div> -->
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-          <div class="title">{{ $t('about.partner') }}</div>
-        <div class="top-ft-rgt">
-          <img src="../../assets/footer/games/AG.png" />
-          <img src="../../assets/footer/games/CMD368.png" />
-          <img src="../../assets/footer/games/DG.png" />
-          <img src="../../assets/footer/games/WE.png" />
-          <img src="../../assets/footer/games/Rich88.png" />
-          <img src="../../assets/footer/games/TCG.png" />
-          <img src="../../assets/footer/games/SABA.png" />
-          <img src="../../assets/footer/games/SBO.png" />
-          <img src="../../assets/footer/games/WM.png" />
-          <img src="../../assets/footer/games/AE.png" />
-          <img src="../../assets/footer/games/KingMaker.png" />
-          <img src="../../assets/footer/games/EVO.png" />
-          <img src="../../assets/footer/games/KingPoker.png" />
-          <img src="../../assets/footer/games/PP.png" />
-          <img src="../../assets/footer/games/V8.png" />
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div class="title">{{ $t("about.partner") }}</div>
+          <div class="top-ft-rgt">
+            <img src="../../assets/footer/games/AG.png" />
+            <img src="../../assets/footer/games/CMD368.png" />
+            <img src="../../assets/footer/games/DG.png" />
+            <img src="../../assets/footer/games/WE.png" />
+            <img src="../../assets/footer/games/Rich88.png" />
+            <img src="../../assets/footer/games/TCG.png" />
+            <img src="../../assets/footer/games/SABA.png" />
+            <img src="../../assets/footer/games/SBO.png" />
+            <img src="../../assets/footer/games/WM.png" />
+            <img src="../../assets/footer/games/AE.png" />
+            <img src="../../assets/footer/games/KingMaker.png" />
+            <img src="../../assets/footer/games/EVO.png" />
+            <img src="../../assets/footer/games/KingPoker.png" />
+            <img src="../../assets/footer/games/PP.png" />
+            <img src="../../assets/footer/games/V8.png" />
+          </div>
         </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-          <div class="title">{{$t('about.paymentMethod')}}</div>
-        <div class="top-ft-rgt">
-          <!-- <img src="../../assets/footer/payment/VCB.png" />
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div class="title">{{ $t("about.paymentMethod") }}</div>
+          <div class="top-ft-rgt">
+            <!-- <img src="../../assets/footer/payment/VCB.png" />
           <img src="../../assets/footer/payment/Sacombank.png" />
           <img src="../../assets/footer/payment/MB.png" />
           <img src="../../assets/footer/payment/Exim.png" />
@@ -102,18 +117,19 @@
           <img src="../../assets/footer/payment/VP.png" />
           <img src="../../assets/footer/payment/BIDV.png" />
           <img src="../../assets/footer/payment/ACB.png" /> -->
-          <img src="../../assets/footer/payment/bank-logo.png" />
-          <img src="../../assets/footer/payment/momo.png" />
-          <img src="../../assets/footer/payment/ZaloPay.png" />
-          <img src="../../assets/footer/payment/scratch-card-logo.png" />
-          <img src="../../assets/footer/payment/ViettelPayRed.png" />
-          <img src="../../assets/footer/payment/tether-logo.png" />
-          <img src="../../assets/footer/payment/lotterycard.png" />
-          <img src="../../assets/footer/payment/bank-transfer.png" />
+            <img src="../../assets/footer/payment/bank-logo.png" />
+            <img src="../../assets/footer/payment/momo.png" />
+            <img src="../../assets/footer/payment/ZaloPay.png" />
+            <img src="../../assets/footer/payment/scratch-card-logo.png" />
+            <img src="../../assets/footer/payment/ViettelPayRed.png" />
+            <img src="../../assets/footer/payment/tether-logo.png" />
+            <img src="../../assets/footer/payment/lotterycard.png" />
+            <img src="../../assets/footer/payment/bank-transfer.png" />
+          </div>
         </div>
       </div>
-      </div>
     </div>
+    <img class="footer-bg" src="@/assets/footer/footer-bg-slot-edition.png" />
   </footer>
   <!--
   <RegisterModal ref="regModal" /> -->
@@ -123,16 +139,18 @@ import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 
-import { i18nStore } from '@/store/language'
-import { storeToRefs } from 'pinia'
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
+import { uiStore } from "@/store/ui";
 export default defineComponent({
   components: {},
   setup() {
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const isFireFox = ref(false);
     const isChrome = ref(false);
     const store = userStore();
+    const ui = uiStore();
     const openRegPage = () => {
       store.regPageVisible = true;
     };
@@ -143,7 +161,8 @@ export default defineComponent({
       store,
       openRegPage,
       affCode,
-      languageVal
+      languageVal,
+      ui
     };
   }
 });
@@ -157,8 +176,9 @@ export default defineComponent({
   // right: 0;
   // margin: auto;
   font-size: 0.8rem;
+  position: relative;
   .top-footer {
-      background-color: $footer-black;
+    background-color: $footer-black;
     .top-footer-inner {
       border-top: 1px solid $font-1;
       margin: 0 auto;
@@ -195,11 +215,11 @@ export default defineComponent({
         }
       }
       .title {
-        color: #A4AABB;
+        color: #a4aabb;
         text-decoration: none;
         font-size: 15px;
         display: block;
-        white-space:nowrap;;
+        white-space: nowrap;
       }
       .top-ft-rgt {
         .s1 {
@@ -213,13 +233,13 @@ export default defineComponent({
         flex-wrap: wrap;
         img {
           height: 25px;
-      // filter: grayscale(1);
-    filter: brightness(0.5);
-    mix-blend-mode: luminosity;
-      &:hover {
-        mix-blend-mode: normal;
-      filter:  brightness(1)
-      }
+          // filter: grayscale(1);
+          filter: brightness(0.5);
+          mix-blend-mode: luminosity;
+          &:hover {
+            mix-blend-mode: normal;
+            filter: brightness(1);
+          }
         }
         .recBrowser {
           width: 40px;
@@ -284,10 +304,9 @@ export default defineComponent({
           a {
             display: block;
             padding: 10px 10px;
-            color:#A4AABB;
+            color: #a4aabb;
             text-decoration: none;
             font-size: 22px;
-
           }
         }
       }
@@ -332,6 +351,13 @@ export default defineComponent({
       color: $color-white;
       font-size: 0.8rem;
     }
+  }
+
+  .footer-bg {
+    position: absolute;
+    top: -100%;
+    width: 100%;
+    z-index: 0;
   }
 }
 </style>

@@ -1,32 +1,19 @@
 <template>
   <div class="home">
-    <HomeBanner></HomeBanner>
-    <div class="home-mid-section">
-      <HomeAnnouncement></HomeAnnouncement>
-      <HomeHotMatches></HomeHotMatches>
-      <NewsSection></NewsSection>
-      <HomeDownload></HomeDownload>
-      <HomeService></HomeService>
-    </div>
+    <HomeViewLayoutAdapter />
   </div>
   <GameModal ref="gameMenu" />
 </template>
 
 <script setup>
-import GameModal from "@/components/modal/GameModal.vue";
 import { ref } from "vue";
-import HomeBanner from "@/components/home/HomeBanner.vue";
-import NewsSection from "@/components/home/NewsSection.vue";
-import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
-import HomeDownload from "@/components/home/HomeDownload.vue";
-import HomeHotMatches from "@/components/home/HomeHotMatches.vue";
-import HomeService from "@/components/home/HomeService.vue";
+import GameModal from "@/components/modal/GameModal.vue";
+import HomeViewLayoutAdapter from "@/components/home/HomeViewLayoutAdapter.vue";
 
 const gameMenu = ref(null);
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
-
 </script>
 
 <style scoped lang="scss">
@@ -36,10 +23,5 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
-}
-
-.home-mid-section {
-  padding-top: 20px;
-  padding-bottom: 2.5rem;
 }
 </style>

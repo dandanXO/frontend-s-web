@@ -15,6 +15,7 @@ import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "src/stores/ui";
+import { EDITION } from "./constant/edition";
 
 export default defineComponent({
   name: "App",
@@ -307,11 +308,16 @@ export default defineComponent({
       );
     };
 
+    const checkEdition = () => {
+      // TODO: check edition here
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
       getAppInfo();
+      checkEdition();
 
       // onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       // onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);

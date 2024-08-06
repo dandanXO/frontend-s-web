@@ -164,7 +164,13 @@ export default {
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "EURO 2024 - CÒN ",
-    euroCountdown02: " NGÀY"
+    euroCountdown02: " NGÀY",
+    slotEdition: {
+      allPlatform: "tất cả",
+      description: "Trò chơi xèng",
+      promotion: "Khuyến mãi",
+      moreGame: "Nhiều trò chơi hơn"
+    }
   },
   personal: {
     url: "Truy Cập",
