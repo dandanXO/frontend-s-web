@@ -2385,6 +2385,7 @@
       font-weight: 600;
       font-size: 12px;
       margin: 0;
+      white-space: nowrap;
       &.cn {
         font-weight: 600;
         font-size: 16px;

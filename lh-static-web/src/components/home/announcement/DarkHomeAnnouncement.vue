@@ -184,6 +184,7 @@
     // box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin: 0 auto;
+    padding-bottom: 30px;
   
     .top-bar-inner {
     //   max-width: $maxwidth;
@@ -191,13 +192,13 @@
       margin: 0 auto;
       display: flex;
       font-size: 0.75em;
-      line-height: 1.2em;
+      line-height: 1.5em;
       justify-content: flex-start;
       align-items: center;
       gap: 5px;
       background: url('../../../assets/home/announcement/marquee-bg.png') no-repeat center center;
       background-size: 100% 100%;
-      height: 58px;
+      aspect-ratio: 2880 / 94;
   
       .station-notice-container {
         width: 100%;
@@ -205,10 +206,13 @@
   
         .station-notice-box {
           display: grid;
-          grid-template-columns: 35% 1fr;
+          grid-template-columns: auto 1fr;
           gap: 5px;
           padding: 0 10px 0 5px;
           overflow: hidden;
+          width: 67%;
+          margin-left: auto;
+          margin-right: 15px;
   
           .announcement-img {
             width: 36px;
@@ -225,8 +229,7 @@
             .station-notice-item {
               color: #fff;
               margin-right: 50px;
-              font-size: 15px;
-              line-height: 15px;
+              font-size: 1.5em;
               font-family: PingFang SC;
             }
           }

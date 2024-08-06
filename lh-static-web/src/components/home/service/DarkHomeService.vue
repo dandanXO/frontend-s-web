@@ -4,7 +4,7 @@
       <!-- <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/> -->
       <div class="service-container">
         <div  data-aos="fade-down">
-          <img style="display:flex;margin:auto;width:40%;" src="../../../assets//home/service/excellent-service-title.png" />
+          <img style="display:flex;margin:auto;width:55%;" src="../../../assets//home/service/excellent-service-title.png" />
           <div class="top-container">
             <div class="counter">
               <div class="circle">
@@ -371,9 +371,11 @@
                 .title {
                   color: #fff;
                   text-align: center;
+                  font-family: PingFang SC;
                 }
                 .desc {
                   color: #fff;
+                  font-family: PingFang SC;
                 }
               }
             }

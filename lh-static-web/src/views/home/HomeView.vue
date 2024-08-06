@@ -19,7 +19,7 @@ import HomeBanner from "@/components/home/HomeBanner.vue";
 import HomeAnnouncement from "@/components/home/announcement/index.vue";
 import HomeDownload from "@/components/home/download/index.vue";
 // import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
-import HomeHotGame from "@/components/home/HomeHotGame.vue";
+import HomeHotGame from "@/components/home/hotgame/index.vue";
 import HomeService from "@/components/home/service/index.vue";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 

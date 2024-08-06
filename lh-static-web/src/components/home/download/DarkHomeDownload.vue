@@ -1,6 +1,6 @@
 <template>
     <div class="download-section">
-      <img style="display:flex;margin:auto;width:40%;" src="../../../assets//home/download/app-download-title.png" />
+      <img style="display:flex;margin:auto;width:55%;" src="../../../assets//home/download/app-download-title.png" />
       <div class="app-download-wrapper">
         <div class="dl-frame">
             <VueQRCodeComponent :size="100" :text="ui.downloadUrl" class="qr-code" />
