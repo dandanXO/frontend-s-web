@@ -740,6 +740,7 @@ export default {
     choiceTwo: 'Question Two Choices',
     choiceThree: 'Question Three Choices',
     claimTime: 'Claim Time',
+    claimableRebate: 'Claimable Rebate',
     className: 'Class Name',
     clearingSum: 'Clearing Sum',
     clientType: 'Client Type',

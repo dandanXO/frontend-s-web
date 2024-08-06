@@ -176,6 +176,10 @@ export const getDnW = (id, site) => {
   return https().request(`/member/dnw/${id}/${site}`, Method.GET, {}, ContentType.form);
 };
 
+export const getClaimableRebate = (id, site) => {
+  return https().request(`/member/claimableRebate/${id}/${site}`, Method.GET, {}, ContentType.form);
+};
+
 export const forceLogout = (id, siteId) => {
   return https().request(`/member/logoutPLayer/${id}`, Method.POST, { siteId: siteId }, ContentType.form);
 };
