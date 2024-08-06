@@ -30,7 +30,10 @@
         </div>
         <div class="dialog-content">
           <InboxComponent v-if="currentTab === 'inbox' && mailData.length > 0" :mailData="mailData" />
-          <AnnouncementComponent v-if="currentTab === 'announcement' && announceData.length > 0" :announceData="announceData" />
+          <AnnouncementComponent
+            v-if="currentTab === 'announcement' && announceData.length > 0"
+            :announceData="announceData"
+          />
         </div>
       </div>
       <div class="dialog-action">
@@ -68,36 +71,39 @@ const mailData = ref([]);
 const announceData = ref([]);
 
 onMounted(() => {
-  if (store.token) {
-    popupMailBox().then((res) => {
-      if (res.code === 0) {
-        mailData.value = res.data;
-      }
-    }).catch((err) => {
-      console.log(err)
-    }).finally(() => {
-      if (mailData.value.length > 0) {
-        visible.value = true
-      }
-    })
-  }
+  // if (store.token) {
+  //   popupMailBox().then((res) => {
+  //     if (res.code === 0) {
+  //       mailData.value = res.data;
+  //     }
+  //   }).catch((err) => {
+  //     console.log(err)
+  //   }).finally(() => {
+  //     if (mailData.value.length > 0) {
+  //       visible.value = true
+  //     }
+  //   })
+  // }
 });
 
 watch(
   () => store.token,
   () => {
     if (store.token) {
-      popupMailBox().then((res) => {
-        if (res.code === 0) {
-          mailData.value = res.data;
-        }
-      }).catch((err) => {
-        console.log(err)
-      }).finally(() => {
-        if (mailData.value.length > 0) {
-          visible.value = true
-        }
-      })
+      popupMailBox()
+        .then((res) => {
+          if (res.code === 0) {
+            mailData.value = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          if (mailData.value.length > 0) {
+            visible.value = true;
+          }
+        });
     }
   }
 );

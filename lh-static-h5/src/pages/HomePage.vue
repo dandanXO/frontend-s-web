@@ -234,7 +234,11 @@
         <div class="platform-item">
           <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
           <div class="platform-icon--active" :class="tab === 'lottery' ? 'show' : ''">
-            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
+            <img
+              loading="lazy"
+              v-if="$q.dark.isActive"
+              src="../assets/images/home/games/lottery-icon-active-dark.png"
+            />
             <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
           </div>
           <div class="platform-icon">
@@ -534,12 +538,7 @@
         infinite
         size="xs"
       >
-        <q-carousel-slide
-          v-for="(game, i) in floatDomain"
-          :key="i"
-          :name="i"
-          @click="openLink(game.code)"
-        >
+        <q-carousel-slide v-for="(game, i) in floatDomain" :key="i" :name="i" @click="openLink(game.code)">
           <div class="rocket-wrapper">
             <div class="rocket">
               <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${game.icon}`" />
@@ -1613,7 +1612,7 @@ export default defineComponent({
     const unreadInboxMail = ref(0);
     const getUnreadTotal = () => {
       if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((res) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
           // console.log(res);
           if (res.code === 0) {
             unreadInboxMail.value = res.data;
@@ -1627,8 +1626,8 @@ export default defineComponent({
     const floatPromo = [];
     const gamePromo = [];
     const floatDomain = [];
-    const openLink= (link) => {
-      if(link) {
+    const openLink = (link) => {
+      if (link) {
         if (link.indexOf(",") > -1) {
           const splitLink = link.split(",");
           const randomIndex = Math.floor(Math.random() * splitLink.length);
@@ -1637,11 +1636,11 @@ export default defineComponent({
           window.open(link, "_blank");
         }
       }
-    }
+    };
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
-      floatDomain.value= [];
+      floatDomain.value = [];
       api
         .get("/redirect")
         .then((res) => {
@@ -1694,7 +1693,7 @@ export default defineComponent({
     const selectedLiveTab = ref();
 
     const showRocket = ref(false);
-    const showDomain= ref(false);
+    const showDomain = ref(false);
     const checkShowRocket = () => {
       // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
       //   showRocket.value = true;
@@ -1726,14 +1725,14 @@ export default defineComponent({
 
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
-      
+
       domainPos.value = [18, 18];
     };
-    const domainPos= ref([18,258]);
+    const domainPos = ref([18, 258]);
     const fabPos = ref([18, 18]);
     const promoPos = ref([18, 128]);
     const draggingRocketFab = ref(false);
-    const draggingDomainFab= ref(false);
+    const draggingDomainFab = ref(false);
     const draggingPromoFab = ref(false);
 
     const currentElement = ref(null);
@@ -2366,7 +2365,7 @@ export default defineComponent({
         left: 0;
       }
 
-      .platform-icon--active{
+      .platform-icon--active {
         position: absolute;
         top: 0;
         left: 0;
