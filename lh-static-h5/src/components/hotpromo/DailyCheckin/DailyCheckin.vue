@@ -286,16 +286,27 @@ const countiuneSign = computed(() => {
   });
   return times;
 });
-const countPercent = computed(() => {
-  // let times = 0;
-  // sectionOneBoxItems.value.forEach((item) => {
-  //   if (item.claimState === "CLAIMED") {
-  //     times++;
-  //   }
-  // });
-  // return times * 25;
+// const countPercent = computed(() => {
+//   // let times = 0;
+//   // sectionOneBoxItems.value.forEach((item) => {
+//   //   if (item.claimState === "CLAIMED") {
+//   //     times++;
+//   //   }
+//   // });
+//   // return times * 25;
   
-  return currentActivePoints.value
+//   return currentActivePoints.value
+// });
+
+const countPercent = computed(() => {
+  let times = 0;
+  sectionOneBoxItems.value.forEach((item) => {
+    console.log(currentActivePoints.value)
+    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
+      times++
+    }
+  });
+  return times * 25;
 });
 
 const handleClickSectionOneItem = async (item) => {
