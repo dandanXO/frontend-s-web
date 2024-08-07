@@ -37,8 +37,16 @@ export const createAffiliatePaymentSetting = (affiliatePaymentSetting) => {
   return https().request(`/affiliate-payment-setting`, Method.POST, affiliatePaymentSetting, ContentType.form);
 };
 
+export const createAffiliatePaymentSettingItem = (affiliatePaymentSetting) => {
+  return https().request(`/affiliate-payment-setting/item`, Method.POST, affiliatePaymentSetting, ContentType.form);
+};
+
 export const updateAffiliatePaymentSetting = (affiliatePaymentSetting) => {
   return https().request(`/affiliate-payment-setting/update?_method=PUT`, Method.POST, affiliatePaymentSetting, ContentType.form);
+};
+
+export const deleteAffiliatePaymentSetting = (affiliatePaymentSetting) => {
+  return https().request(`/affiliate-payment-setting/delete?_method=PUT`, Method.POST, affiliatePaymentSetting, ContentType.form);
 };
 
 export const getAffiliateRecordBySiteId = (siteId) => {
