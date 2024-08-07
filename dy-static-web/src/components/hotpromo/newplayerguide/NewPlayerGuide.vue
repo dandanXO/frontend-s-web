@@ -315,6 +315,9 @@
   };
   
   onMounted(async () => {
+    if (!store.hasToken()) {
+      return
+    }
     await getData();
   });
   </script>
