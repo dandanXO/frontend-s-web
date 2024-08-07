@@ -330,7 +330,11 @@
       </div>
     </div>
   </div>
-  <div class="promotion-container" v-if="isEligibleState">
+  
+  <div v-if="!store.token" class="promotion-container" style="text-align: center; width: 100%; padding: 10px;font-size: 12px; font-weight: 400; color: #00000099">
+    您还未登录，请登录后参与活动
+  </div>
+  <div class="promotion-container" v-if="isEligibleState && store.token">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -372,7 +376,7 @@
     </div>
   </div>
 
-  <div class="promotion-container" v-if="isEligibleState">
+  <div class="promotion-container" v-if="isEligibleState && store.token">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -420,8 +424,10 @@ import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
 const notify = useNotify();
+const store = userStore();
 
 const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
 const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
