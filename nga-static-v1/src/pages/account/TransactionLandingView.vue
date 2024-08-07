@@ -10,7 +10,7 @@
         <DepositView></DepositView>
       </q-tab-panel>
       <q-tab-panel name="withdraw">
-        <WithdrawView ref="withdrawViewRef"></WithdrawView>
+        <WithdrawMethodView ref="withdrawViewRef"></WithdrawMethodView>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -21,6 +21,7 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import DepositView from "../account/DepositView.vue";
 import WithdrawView from "../account/WithdrawView.vue";
+import WithdrawMethodView from "../account/WithdrawMethodView.vue";
 
 const route = useRoute();
 const activeKey = ref("");
