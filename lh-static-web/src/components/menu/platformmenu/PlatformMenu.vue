@@ -27,7 +27,7 @@
           <img
             :src="
               require(
-                '../../assets/' +
+                '../../../assets/' +
                   props.platformType +
                   '/' +
                   props.platformType +
@@ -118,4 +118,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss" src="../../scss/pages/submenu.scss" />
+<style scoped lang="scss" src="../../../scss/pages/submenu.scss" />

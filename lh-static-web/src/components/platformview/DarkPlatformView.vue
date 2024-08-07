@@ -13,7 +13,7 @@
                 <img
                   :src="
                     require(
-                      '../../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png'
+                      '../../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '-dark.png'
                     )
                   "
                 />

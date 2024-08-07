@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref } from "vue";
-import PlatformView from "@/components/platform/index";
+import PlatformView from "@/components/platformview/index";
 import { eSportsPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("esports");
