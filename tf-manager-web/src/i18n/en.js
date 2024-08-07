@@ -1955,6 +1955,9 @@ export default {
     withdrawPassword: 'Withdraw Password',
     updateWithdrawPassword: 'Update Withdraw Password',
     self: '(SELF)',
+    levelUpBet: 'Level Up Bet',
+    retainLevelBet: 'Retain Level Bet',
+    retainLevelDays: 'Retain Level Days',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2873,6 +2876,14 @@ export default {
     NONE: 'No Redirect',
     INNER: 'Inner Site Redirect',
     OUTER: 'Outer Site Redirect',
+  },
+  vipCategory: {
+    BRONZE: 'BRONZE',
+    SILVER: 'SILVER',
+    GOLD: 'GOLD',
+    PLATINUM: 'PLATINUM',
+    DIAMOND: 'DIAMOND',
+    WANGZE: 'WANGZE',
   },
   error: {
     400: 'Bad Request',

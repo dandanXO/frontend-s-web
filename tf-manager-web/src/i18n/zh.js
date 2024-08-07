@@ -1954,6 +1954,9 @@ export default {
     withdrawPassword: '提款密码',
     updateWithdrawPassword: '更新提款密码',
     self: '(自己)',
+    levelUpBet: '升级流水',
+    retainLevelBet: '保级流水',
+    retainLevelDays: '保级天数',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2821,6 +2824,14 @@ export default {
     NONE: '无跳转',
     INNER: '站内跳转',
     OUTER: '站外跳转',
+  },
+  vipCategory: {
+    BRONZE: '青铜',
+    SILVER: '白银·',
+    GOLD: '黄金',
+    PLATINUM: '铂金',
+    DIAMOND: '钻石',
+    WANGZE: '王者',
   },
   error: {
     400: '请求无效',
