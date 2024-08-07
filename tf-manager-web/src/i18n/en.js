@@ -2712,6 +2712,7 @@ export default {
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
+    'Vip Report': 'Vip Report'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
