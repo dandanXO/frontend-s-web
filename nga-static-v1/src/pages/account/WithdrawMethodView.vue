@@ -292,21 +292,34 @@
     <template v-else>
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
-        <!-- <div class="method-title">Bank Transfer</div> -->
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div class="method-item" @click="goSelectedMethod(item)">
+          <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-            <div class="item-detail">
-              <div class="txt-title">{{ item.nodeName }}</div>
-              <div class="txt-content">
-                ETA: {{ item.eta }}
-                <br />
-                Fee: {{ item.fee }}
+
+            <template v-if="item.maintenance">
+              <div class="item-detail">
+                <div class="txt-maintenance">
+                  <q-icon name="build" size="16px" />
+                  This channel is under maintenance
+                </div>
               </div>
-            </div>
+            </template>
+
+            <template v-else>
+              <div class="item-detail">
+                <div class="txt-title">{{ item.nodeName }}</div>
+                <div class="txt-content">
+                  ETA: {{ item.eta }}
+                  <br />
+                  Fee: {{ item.fee }}
+                </div>
+              </div>
+            </template>
+
             <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
               {{ item.withdrawMin }}~{{ item.withdrawMax }} NGN
             </div>
+
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
         </template>
@@ -900,6 +913,13 @@ const toggleAmount = (type) => {
     display: flex;
     align-items: center;
 
+    &.disabled {
+      cursor: not-allowed;
+      backdrop-filter: grayscale(1) brightness(0.7);
+      pointer-events: none;
+      // opacity: 0.6;
+    }
+
     .item-icon {
       border-right: 1px solid #4b6185;
       padding-right: 8px;
@@ -921,6 +941,10 @@ const toggleAmount = (type) => {
         color: #576373;
         white-space: nowrap;
         margin-top: 4px;
+      }
+      .txt-maintenance {
+        color: #f4b975;
+        font-size: 11px;
       }
     }
     .item-amount {

@@ -4,16 +4,29 @@
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div class="method-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === index }">
+          <div
+            class="method-item"
+            @click="goSelectedMethod(item)"
+            :class="{ active: selectedItem === index, disabled: item.maintenance }"
+          >
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-            <div class="item-detail">
-              <div class="txt-title">{{ item.nodeName }}</div>
-              <div class="txt-content">
-                ETA: {{ item.extra.eta }}
-                <!-- <br />
-                Fee: {{ item.extra.fee }} -->
+
+            <template v-if="item.maintenance">
+              <div class="item-detail">
+                <div class="txt-maintenance">
+                  <q-icon name="build" size="16px" />
+                  This channel is under maintenance
+                </div>
               </div>
-            </div>
+            </template>
+
+            <template v-else>
+              <div class="item-detail">
+                <div class="txt-title">{{ item.nodeName }}</div>
+                <div class="txt-content">ETA: {{ item.extra.eta }}</div>
+              </div>
+            </template>
+
             <div class="item-amount" v-if="item.depositMin && item.depositMax">
               {{ item.depositMin }}~{{ item.depositMax }} NGN
             </div>
@@ -91,7 +104,10 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
-            <div class="lil-title">Amount</div>
+            <div class="lil-title">
+              Amount ({{ convertToCommaAmount(selectedItem.depositMin) }} -
+              {{ convertToCommaAmount(selectedItem.depositMax) }} NGN)
+            </div>
             <q-input
               type="number"
               class="deposit-input q-mt-sm"
@@ -100,7 +116,12 @@
               hide-bottom-space
               filled
               v-model="form.localAmount"
-              :rules="verifyDepositAmount"
+              :rules="[
+                verifyDepositAmount,
+                (val) =>
+                  (val >= selectedItem.depositMin && val <= selectedItem.depositMax) ||
+                  `Deposit Amount Must In Between ${selectedItem.depositMin} - ${selectedItem.depositMax}`
+              ]"
               dense
               clearable
               @keyup.enter="confirmDeposit"
@@ -1033,6 +1054,13 @@ onMounted(() => {
     background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   }
 
+  &.disabled {
+    cursor: not-allowed;
+    backdrop-filter: grayscale(1) brightness(0.7);
+    pointer-events: none;
+    // opacity: 0.6;
+  }
+
   .item-icon {
     border-right: 1px solid #4b6185;
     padding-right: 8px;
@@ -1054,6 +1082,10 @@ onMounted(() => {
       color: #576373;
       white-space: nowrap;
       margin-top: 4px;
+    }
+    .txt-maintenance {
+      color: #f4b975;
+      font-size: 11px;
     }
   }
   .item-amount {
