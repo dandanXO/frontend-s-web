@@ -2523,6 +2523,7 @@ export default {
     'Member Point Record': '회원 포인트 기록',
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
+    'Vip Report': 'VIP 보고서'
   },
   google: {
     google_auth_menu: 'Google 인증자',
