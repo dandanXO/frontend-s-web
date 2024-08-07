@@ -2,8 +2,8 @@
   <div class="platform-section">
     <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
       <div class="platform-container-slot" v-if="platformType === 'slot'">
-        <img v-if="isDark" src="../assets/slot/slot-top-bg-dark.png" />
-        <img v-else src="../assets/slot/slot-top-bg.png" />
+        <img v-if="isDark" src="../../assets/slot/slot-top-bg-dark.png" />
+        <img v-else src="../../assets/slot/slot-top-bg.png" />
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'slot'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
@@ -13,7 +13,7 @@
               <img
                 :src="
                   require(
-                    '../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png'
+                    '../../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png'
                   )
                 "
               />
@@ -28,7 +28,7 @@
               <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
-                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
+                <img :src="require('../../assets/' + platformType + '/' + platformType + '-pattern.png')" />
               </div>
 
               <div class="platform-list-box">
@@ -51,7 +51,7 @@
                       <img
                         :src="
                           require(
-                            '../assets/' +
+                            '../../assets/' +
                               platformType +
                               '/' +
                               platformType +
@@ -77,7 +77,7 @@
                   :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
                 >
                   <span class="maintenance-state" v-if="item.underMaintenance === true">
-                    <img src="../assets/svg/maintenance-icon.svg" />
+                    <img src="../../assets/svg/maintenance-icon.svg" />
                     维护中
                   </span>
                   <span v-else>进入游戏</span>
@@ -110,7 +110,7 @@
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
                 <!-- <img
                   :src="
-                  require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
+                  require(`../../assets/game/plat-logo-${item.code.toLowerCase()}${
                     selectedPlat !== item.code ? '-blue' : ''
                   }.png`)
                 "
@@ -184,7 +184,7 @@
                 </div>
 
                 <!-- <div class="slot-name">
-                  <img src="../assets/images/games/play-icon.png" />
+                  <img src="../../assets/images/games/play-icon.png" />
                   {{ game.name }}
 
                   <div class="slot-fav">
@@ -379,7 +379,7 @@ const loadGameList = () => {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
-          element.default = require("../assets/images/games/aviator/default.png");
+          element.default = require("../../assets/images/games/aviator/default.png");
           var imageUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
           element.icon = `${imageUrl}/game/${element.icon}`;
         });
@@ -422,4 +422,4 @@ watch(
 );
 </script>
 
-<style scoped lang="scss" src="../scss/pages/platform.scss" />
+<style scoped lang="scss" src="../../scss/pages/platform.scss" />
