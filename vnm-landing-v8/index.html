@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>TF88</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="icon" href="imgs/favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="main">
+      <h1 class="title" title="Chào Mừng">Chào Mừng</h1>
+      <p class="description">
+        <span>Casino Trực Tuyến</span>
+        <br />
+        <span>Chiếc máy Tài Lộc</span>
+        <br />
+        <span>
+          Miễn phí tặng
+          <!-- <span class="highlight">38k</span> -->
+          <img class="highlight" src="./imgs/38k.svg" />
+          vnd
+        </span>
+      </p>
+      <a class="go-btn" href="https://tf88vip.com/register" target="_blank">Chơi ngay</a>
+    </div>
+    <div class="h5-main">
+      <img class="title" src="./imgs/title.png" />
+      <div class="bottom">
+        <p class="description">
+          <span>Casino Trực Tuyến</span>
+          <br />
+          <span>Chiếc máy Tài Lộc</span>
+        </p>
+        <a class="go-btn" href="https://tf88vip.com/register" target="_blank">Chơi ngay</a>
+        <span class="gift">
+          Miễn phí tặng
+          <img class="highlight" src="./imgs/38k.svg" />
+          vnd
+        </span>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    window.addEventListener("resize", function () {
+      var screenWidth = window.innerWidth;
+      var mainSection = document.querySelector(".main");
+      var h5MainSection = document.querySelector(".h5-main");
+
+      if (screenWidth >= 640) {
+        mainSection.style.display = "flex";
+        h5MainSection.style.display = "none";
+      } else {
+        mainSection.style.display = "none";
+        h5MainSection.style.display = "block";
+      }
+    });
+
+    window.dispatchEvent(new Event("resize"));
+  </script>
+</html>
