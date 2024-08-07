@@ -545,7 +545,10 @@ const getData = async () => {
   }
 };
 
-onMounted(async () => {
+onMounted(async() => {
+  if (!store.token) {
+    return;
+  }
   await getData();
 });
 </script>
