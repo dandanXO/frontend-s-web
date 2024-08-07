@@ -274,7 +274,10 @@
       </div>
     </div>
   </div>
-  <div class="promotion-container" v-if="isEligibleState">
+  <div v-if="!store.token" class="promotion-container" style="text-align: center; width: 100%; padding: 10px;font-size: 12px; font-weight: 400; color: #00000099">
+    您还未登录，请登录后参与活动
+  </div>
+  <div class="promotion-container" v-if="isEligibleState && store.token">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -317,7 +320,7 @@
     </div>
   </div>
 
-  <div class="promotion-container" v-if="isEligibleState">
+  <div class="promotion-container" v-if="isEligibleState && store.token">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">

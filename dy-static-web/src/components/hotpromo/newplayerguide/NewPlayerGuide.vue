@@ -20,12 +20,17 @@
                 <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
               </div>
             </div>
-            <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
-              (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
-            </span>
-            <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
-              (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
-            </span>
+            <div v-if="store.hasToken()">
+              <span v-if="isValidUser" style="font-size: 12px; font-weight: 400; color: #00000099">
+                (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
+              </span>
+              <span v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+                (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
+              </span>
+            </div>
+            <div v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+              您还未登录，请登录后参与活动
+            </div>
             <div class="section">
               <div style="display: flex">
                 <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
