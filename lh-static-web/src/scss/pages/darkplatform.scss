@@ -778,7 +778,9 @@
   
           .platform-play-btn {
             .btn-blue {
-              background: $active-color-dark-linear;
+              // background: $active-color-dark-linear;
+              background: url("../../assets/images/home/menu/submenu-enter-game-btn.png");
+              background-size: 100% 100%;
               box-shadow: $active-color-dark-shadow;
             }
           }

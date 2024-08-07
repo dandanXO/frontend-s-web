@@ -40,7 +40,6 @@
           <div class="navigations second-nav">
             <template v-for="nav in navigations" :key="nav.name">
               <template v-if="nav.hasicon">
-                {{ console.log('here', route.name, nav.code) }}
                 <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
                   <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                     <span style="width:32px;height:25px;">
@@ -2461,7 +2460,8 @@
             }
   
             .sub-menu {
-              background: $background-content-block-dark;
+              // background: $background-content-block-dark;
+              background-color: rgba(15, 24, 45, 0.77);
               box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
             }
   

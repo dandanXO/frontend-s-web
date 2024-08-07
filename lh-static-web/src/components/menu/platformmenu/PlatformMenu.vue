@@ -118,4 +118,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss" src="../../../scss/pages/submenu.scss" />
+<style scoped lang="scss" src="../../../scss/pages/submenu/submenu.scss" />
