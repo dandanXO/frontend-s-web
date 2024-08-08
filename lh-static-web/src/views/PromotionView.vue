@@ -107,7 +107,7 @@
               selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
               selectedPromo?.promoCode === 'lh1-olympic-checkin' ||
               selectedPromo?.promoCode === 'lh1-football' ||
-              selectedPromo?.promoCode === 'lh1-livepoker-rebate'
+              selectedPromo?.redirectUrl === 'lh1-livepoker-rebate'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
                 ? '#F5F6F8'
@@ -123,6 +123,7 @@
                 : ''
           }"
           :class="{
+            'livepoker-rebate-bg': selectedPromo?.redirectUrl === 'lh1-livepoker-rebate',
             fullwidth:
               selectedPromo.promoCode === 'lh1-game-steps' ||
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
@@ -134,8 +135,7 @@
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
-            lhfootball: selectedPromo?.promoCode === 'lh1-football',
-            'livepoker-rebate-bg': selectedPromo?.promoCode === 'lh1-livepoker-rebate',
+            lhfootball: selectedPromo?.promoCode === 'lh1-football'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -831,7 +831,7 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
-        background-color: #E7F1FD;
+        background-color: #e7f1fd;
 
         &.bgautosize {
           background-size: 100% auto;
@@ -930,7 +930,7 @@ export default defineComponent({
         }
 
         &.livepoker-rebate-bg {
-          background-image: url('../assets/promo/lh-livepoker-rebate/content-bg.png');
+          background-image: url("../assets/promo/lh-livepoker-rebate/content-bg.png");
           background-size: contain;
           background-position: bottom center;
         }
