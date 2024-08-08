@@ -16,7 +16,7 @@
               <span
                 class="amount"
               >
-                888元
+                {{ totalValidBet }}元
               </span>
             </div>
           </div>
@@ -29,13 +29,15 @@
               <span
                 class="amount"
               >
-                8元
+                {{ bonus }}元
               </span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus">
+            <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+          </div>
         </div>
       </div>
       <div class="livepoker-rebate-game-info">
@@ -132,6 +134,40 @@
 </template>
 
 <script setup>
+import { getLivePoker, claimLivePokerBonus } from '@/api/index/promo'
+import { onMounted, ref } from 'vue'
+import { useNotify } from "@/hooks/notify";
+
+const notify = useNotify();
+
+const totalValidBet = ref(0)
+const bonus = ref(0)
+
+const handleClaimBonus = () => {
+  claimLivePokerBonus().then(res => {
+    if (res.code === 0) {
+      fetchData()
+    } else {
+      notify.error(res.message)
+    }
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
+const fetchData = async () => {
+  try {
+    const res = await getLivePoker()
+    totalValidBet.value = res.data.totalValidBet
+    bonus.value = res.data.bonus
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 <style scoped lang="scss">
@@ -163,6 +199,11 @@
 
   .livepoker-rebate-section-right {
     width: 254px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+    }
   }
 
   .livepoker-rebate-section-title {
