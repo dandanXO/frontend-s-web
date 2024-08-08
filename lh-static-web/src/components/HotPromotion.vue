@@ -32,6 +32,7 @@
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A'" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball'" />
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game'" />
+    <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
@@ -165,6 +166,7 @@ import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/Cha
 import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LPLLCK from "@/components/hotpromo/lpllck/LPLLCK.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -231,7 +233,8 @@ export default defineComponent({
     OlympicCheckin,
     ChallengeComeBackPromo,
     OfficialGiftPromo,
-    OlympicFund
+    OlympicFund,
+    LPLLCK
   },
   props: {
     list: {
