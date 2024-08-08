@@ -384,7 +384,7 @@
         </el-checkbox-group>
       </el-form-item>
     </el-row>
-    <el-row v-if="form.siteId === 8">
+    <el-row v-if="isVnm(form.siteId)">
       <el-form-item :label="t('fields.affiliateCode')" prop="affiliates">
         <el-checkbox @change="onCheckAllAffiliate" v-model="checkAllAff">
           {{ t('fields.all') }}
@@ -676,16 +676,16 @@
               {{ t('fields.desktopImage') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 355*180
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 800*188
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 355*180
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*600
           </span>
         </div>
@@ -702,16 +702,16 @@
               {{ t('fields.mobileImage') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1004*252
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1000*454
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1004*252
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*512
           </span>
         </div>
@@ -728,16 +728,16 @@
               {{ t('fields.desktopBanner') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*500
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 2000*500
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*500
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*568
           </span>
         </div>
@@ -747,16 +747,16 @@
               {{ t('fields.mobileBanner') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*534
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*675
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*534
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1000*400
           </span>
         </div>
@@ -800,6 +800,7 @@ import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
+import { isVnm, isXF, isThai, isDY, isLH, isPak } from '@/utils/site'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -954,7 +955,7 @@ const promoTypes = ref([])
 const selectedVIPs = reactive({ vipChecked: [] })
 
 function loadPromoTypes() {
-  if (LOGIN_SITE_ID === 11 || form.siteId === 11) {
+  if (isPak(LOGIN_SITE_ID) || isPak(form.siteId)) {
     promoTypes.value = [
       { typeName: 'EARN', value: 12, displayName: 'EARN' },
       { typeName: 'HOT', value: 13, displayName: 'HOT' },

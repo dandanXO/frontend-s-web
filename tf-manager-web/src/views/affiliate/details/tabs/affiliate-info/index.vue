@@ -621,7 +621,7 @@
           </span>
           <span v-if="affiliateDetails.affiliateLevel === null">-</span>
           <el-button
-            v-if="parseInt(memberDetail.siteId) === 10 && memberDetail.affiliateStatus === 'NORMAL'"
+            v-if="isKorea(memberDetail.siteId) && memberDetail.affiliateStatus === 'NORMAL'"
             type="info"
             size="mini"
             style="float: right;"
@@ -959,6 +959,7 @@
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.registerIp')"
           label-class-name="member-label"
@@ -970,6 +971,7 @@
           <span v-if="memberDetail.regIp === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.registerAddress')"
           label-class-name="member-label"
@@ -1011,6 +1013,7 @@
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.lastLoginIp')"
           label-class-name="member-label"
@@ -1022,6 +1025,7 @@
           <span v-if="memberDetail.lastLoginIp === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.lastLoginAddress')"
           label-class-name="member-label"
@@ -1560,6 +1564,7 @@ import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getConfigList, getConfigListByGroup } from '../../../../../api/config'
 import { selectList } from "@/api/risk-level";
+import { isKorea } from "@/utils/site"
 
 const { t } = useI18n()
 const store = useStore()
@@ -1580,6 +1585,7 @@ const route = useRoute()
 const site = reactive({
   id: route.query.site,
 })
+const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 const riskList = reactive({
   list: []
 });

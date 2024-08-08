@@ -717,6 +717,7 @@
           <span v-if="memberDetail.regTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.registerIp')"
           label-class-name="member-label"
@@ -741,6 +742,7 @@
           <span v-if="memberDetail.regIp === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.registerAddress')"
           label-class-name="member-label"
@@ -782,6 +784,7 @@
           <span v-if="memberDetail.lastLoginTime === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.lastLoginIp')"
           label-class-name="member-label"
@@ -800,6 +803,7 @@
           <span v-if="memberDetail.lastLoginIp === null">-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          v-if="!isKorea(LOGIN_USER_SITEID)"
           label-align="left"
           :label="t('fields.lastLoginAddress')"
           label-class-name="member-label"
@@ -851,7 +855,7 @@
             />
           </el-descriptions-item>
           <el-descriptions-item
-            v-if="memberDetail.siteId === '5' || memberDetail.site === 5"
+            v-if="isInd(memberDetail.siteId)"
             :label="t('fields.withdrawableBalance')"
           >
             <div style="display: inline-block;" v-loading="loading.total">
@@ -1478,7 +1482,7 @@
 </template>
 
 <script>
-import { nextTick, defineComponent, onMounted, reactive, ref } from 'vue'
+import { nextTick, defineComponent, onMounted, reactive, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { required, size, isNumeric } from '../../../../../utils/validate'
@@ -1523,6 +1527,7 @@ import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
 import { getConfigListByGroup } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
+import { isInd, isKorea } from '@/utils/site'
 
 const store = useStore()
 export default defineComponent({
@@ -1550,6 +1555,7 @@ export default defineComponent({
     const site = reactive({
       id: route.query.site,
     })
+    const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 
     const loading = reactive({
       accountInfo: false,
@@ -2520,6 +2526,9 @@ export default defineComponent({
       updateModelForm,
       modelForm,
       getAffiliateRatio,
+      isInd,
+      isKorea,
+      LOGIN_USER_SITEID
     }
   },
 })
