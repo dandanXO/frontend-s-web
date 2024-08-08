@@ -65,6 +65,7 @@
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
+    <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" />
 
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
 
@@ -165,6 +166,7 @@ import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/Cha
 import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -231,7 +233,8 @@ export default defineComponent({
     OlympicCheckin,
     ChallengeComeBackPromo,
     OfficialGiftPromo,
-    OlympicFund
+    OlympicFund,
+    LivepokerRebate
   },
   props: {
     list: {

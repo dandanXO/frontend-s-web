@@ -106,7 +106,8 @@
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
               selectedPromo?.promoCode === 'lh1-olympic-checkin' ||
-              selectedPromo?.promoCode === 'lh1-football'
+              selectedPromo?.promoCode === 'lh1-football' ||
+              selectedPromo?.promoCode === 'lh1-livepoker-rebate'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
                 ? '#F5F6F8'
@@ -133,7 +134,8 @@
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
-            lhfootball: selectedPromo?.promoCode === 'lh1-football'
+            lhfootball: selectedPromo?.promoCode === 'lh1-football',
+            'livepoker-rebate-bg': selectedPromo?.promoCode === 'lh1-livepoker-rebate',
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -924,6 +926,12 @@ export default defineComponent({
             margin: 30px auto 50px;
             text-align: center;
           }
+        }
+
+        &.livepoker-rebate-bg {
+          background-image: url('../assets/promo/lh-livepoker-rebate/content-bg.png');
+          background-size: contain;
+          background-position: bottom center;
         }
       }
     }
