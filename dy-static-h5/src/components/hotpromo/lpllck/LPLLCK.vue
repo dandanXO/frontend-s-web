@@ -197,6 +197,8 @@ const claimHongBao = async () => {
     justify-content: center;
     align-items: center;
     font-family: 'PingFang';
+    background-color: #E7F1FD;
+    padding: 20px;
 }
 
 .match-container {
