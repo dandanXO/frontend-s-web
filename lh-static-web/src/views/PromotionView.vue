@@ -829,6 +829,7 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+        background-color: #E7F1FD;
 
         &.bgautosize {
           background-size: 100% auto;
