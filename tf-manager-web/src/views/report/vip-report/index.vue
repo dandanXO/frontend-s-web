@@ -219,7 +219,7 @@ async function loadVipReport() {
   page.records = page.records.map(record => {
     return {
       ...record,
-      ratio: (record.payout / record.bet).toFixed(2)
+      ratio: (Math.floor((record.payout / record.bet) * 100) / 100).toFixed(2)
     };
   });
 
