@@ -26,6 +26,7 @@
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
     <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match'" />
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B'"></LPLSummer>
+    <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
     <PrivilegeInvite
@@ -136,6 +137,7 @@ import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -184,7 +186,8 @@ export default defineComponent({
     DragonBoat,
     EurocupManual,
     OuZuLianPromo,
-    NewplayerGuide
+    NewplayerGuide,
+    LPLLCK
   },
   props: {
     list: {
