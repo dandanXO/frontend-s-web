@@ -214,7 +214,7 @@ const claimHongBao = async () => {
 .match-game {
     width: 100%;
     border-radius: 12px;
-    border: 1px solid #acd4f6;
+    border: 1px solid #def0ff;
     background: url("../../../assets/promo/lpl-lck/bg.png") no-repeat center center;
     background-size: 100% 100%;
     position: relative;
@@ -494,7 +494,7 @@ const claimHongBao = async () => {
     background: #f2f8fe;
     border-radius: 12px;
     padding: 20px;
-    border: 1px solid #acd4f6;
+    border: 1px solid #def0ff;
     box-shadow: 0px 0px 4px 0px #01497b0f;
     display: flex;
     flex-direction: column;
