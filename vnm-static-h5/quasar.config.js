@@ -323,7 +323,7 @@ module.exports = configure(function (ctx) {
       extendWebpack(cfg) {
         cfg.plugins.push(
           new SitemapPlugin({
-            base: "https://www.tf88vip.com",
+            base: process.env.SERVER ? process.env.SERVER : "https://www.tkeochuan88.com",
             paths
           })
         );
