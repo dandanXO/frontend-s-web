@@ -134,9 +134,12 @@
 import { getLivePoker, claimLivePokerBonus } from "@/api/index/promo";
 import { onMounted, ref } from "vue";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 
 const notify = useNotify();
 
+const store = userStore();
 const totalValidBet = ref(0);
 const bonus = ref(0);
 
@@ -155,6 +158,19 @@ const handleClaimBonus = () => {
 };
 
 const fetchData = async () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   try {
     const res = await getLivePoker();
     totalValidBet.value = res.data.totalValidBet;
@@ -165,6 +181,13 @@ const fetchData = async () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   fetchData();
 });
 </script>

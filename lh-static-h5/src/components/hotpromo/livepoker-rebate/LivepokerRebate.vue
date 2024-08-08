@@ -155,8 +155,10 @@
 import { onMounted, ref } from "vue";
 import { getLivePoker, claimLivePokerBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
 
 const notify = useNotify();
+const store = userStore();
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
@@ -186,6 +188,9 @@ const fetchData = async () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   fetchData();
 });
 </script>
