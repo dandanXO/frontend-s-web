@@ -1179,6 +1179,7 @@ export default {
     paymentOnGoing: '결제 진행 중',
     paymentType: '결제 유형',
     payout: '지급',
+    return_ratio: '환급률',
     pcWay: 'PC',
     pending: '보류',
     pendingTransaction: '보류 중인 거래',

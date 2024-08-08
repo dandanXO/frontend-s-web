@@ -1251,6 +1251,7 @@ export default {
     paymentOnGoing: 'Payment on going',
     paymentType: 'Payment Type',
     payout: 'Payout',
+    return_ratio: 'Ratio Return',
     pcWay: 'PC',
     pending: 'SUSPEND',
     pendingTransaction: 'Pending',
