@@ -1,7 +1,7 @@
 <template>
   <LangToggle />
 
-  <q-page-sticky position="bottom-right" :offset="[40, 130]" style="z-index:999999" class="telegram-sticky floating">
+  <q-page-sticky position="bottom-right" :offset="[20, 100]" style="z-index:5999" class="telegram-sticky floating">
     <a href="https://t.me/cityy88" target="_blank">
       <img src="../assets/images/index/telegram-icon.png" class="telegram-sticky-img"></a>
   </q-page-sticky>
@@ -10,7 +10,7 @@
 
   <RollingText />
 
-  <JackpotPrize />
+  <!-- <JackpotPrize /> -->
 
   <GamesList />
 

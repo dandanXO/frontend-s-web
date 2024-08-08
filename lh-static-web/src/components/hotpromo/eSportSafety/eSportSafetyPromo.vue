@@ -160,7 +160,6 @@
   </div>
 </template>
 <script setup>
-import { ElMessage } from "element-plus";
 import { onMounted, ref, reactive } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -170,15 +169,17 @@ import { userStore } from "@/store";
 import {
   getUpcomingESportMatches,
   getESportInsurancePlatformOptions,
-  submitESportInsuranceForm,
+  submitESportInsurance,
   getESportInsuranceRecords
 } from "@/api/promotion/eSportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
 
 import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify();
 const matchDetails = ref([]);
 const isESportInsuranceModalVisible = ref(false);
 const eSportInsuranceFormData = reactive({
@@ -244,13 +245,14 @@ const loadESportPlatformOptions = () => {
 };
 
 const applyESportInsurance = () => {
-  toggleESportInsuranceModal(true);
+  // toggleESportInsuranceModal(true);
+  submitForm();
 };
 
 const toggleESportInsuranceModal = (status) => {
   if (status === true) {
     if (!store.token) {
-      ElMessage.error("请登录后操作");
+      notify.error("请登录后操作");
       return;
     }
   }
@@ -275,49 +277,38 @@ const init = () => {
           insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
         }
       } else {
-        ElMessage.error({
+        notify({
           type: "error",
           message: res.message
         });
       }
     })
     .catch((err) => {
-      ElMessage.error(err.message);
+      notify.error(err.message);
       console.log(err.message);
     });
 };
 
 const submitForm = async (elForm) => {
-  if (!elForm) return;
+  isSubmitting.value = true;
+  const res = await submitESportInsurance();
 
-  await elForm.validate(async (valid) => {
-    if (valid) {
-      isSubmitting.value = true;
-      const params = {
-        gameMatchId: eSportInsuranceFormData.gameMatchId,
-        transactionId: eSportInsuranceFormData.transactionId,
-        platform: eSportInsuranceFormData.platform
-      };
-      const res = await submitESportInsuranceForm(params);
-
-      if (res.code === 0) {
-        ElMessage.success({
-          type: "success",
-          message: "提交成功"
-        });
-        eSportInsuranceFormRef.value.resetFields();
-        isESportInsuranceModalVisible.value = false;
-        isSubmitting.value = false;
-      } else {
-        ElMessage.error({
-          type: "error",
-          message: res.message
-        });
-        isSubmitting.value = false;
-      }
-    }
-  });
-};
+  if (res.code === 0) {
+    notify({
+      type: "success",
+      message: "提交成功"
+    });
+    // eSportInsuranceFormRef.value.resetFields();
+    // isESportInsuranceModalVisible.value = false;
+    isSubmitting.value = false;
+  } else {
+    notify({
+      type: "error",
+      message: res.message
+    });
+    isSubmitting.value = false;
+  }
+}
 
 const $swiper = ref(null);
 
@@ -369,7 +360,7 @@ const loadESportInsuranceRecords = (param) => {
       insuranceRecordsParam.total = res.data.total;
       insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
     } else {
-      ElMessage({
+      notify({
         message: "没有记录",
         type: "error"
       });
@@ -383,12 +374,12 @@ const recordPageControl = (direction) => {
       insuranceRecordsParam.current--;
       loadESportInsuranceRecords(insuranceRecordsParam);
     } else {
-      ElMessage.error("已经是第一页了");
+      notify.error("已经是第一页了");
     }
   } else {
     let maxPage = insuranceRecordsParam.maxPage;
     if (maxPage === insuranceRecordsParam.current) {
-      ElMessage.error("这是最后一页了");
+      notify.error("这是最后一页了");
     } else {
       insuranceRecordsParam.current++;
       loadESportInsuranceRecords(insuranceRecordsParam);
@@ -397,6 +388,13 @@ const recordPageControl = (direction) => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   init();
   getPlatList();
 });

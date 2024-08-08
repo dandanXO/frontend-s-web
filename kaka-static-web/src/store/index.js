@@ -117,8 +117,10 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => {
         this.token = null;
-        // this.vip = 'VIP0'
-        // this.currentDeposit = "0.0000"
+
+        // FB tracking :: logout
+        fbq("track", "logout");
+
         location.reload();
       });
     },
@@ -138,7 +140,8 @@ export const userStore = defineStore("userStore", {
           }
           window.open(
             // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${vueI18n.global.locale.value === 'vi'? 'vn' : vueI18n.global.locale.value}&token=${this.token}`,
+            // `https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${vueI18n.global.locale.value === 'vi'? 'vn' : vueI18n.global.locale.value}&token=${this.token}`,
+            `https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`,
             `${lineUrl}&token=${this.token}`,
             "Chat Server",
             "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
@@ -154,7 +157,7 @@ export const userStore = defineStore("userStore", {
 export const i18nStore = defineStore("i18nStore", () => {
   const languageLocale = localStorage.getItem("languageLocale") || "vi";
   const languageVal = ref(languageLocale);
-  
+
   function setLanguage(l) {
     languageVal.value = l;
     // when vue-i18n is being used with legacy: false, note that i18n.global.locale is a ref, so we must set it via .value:

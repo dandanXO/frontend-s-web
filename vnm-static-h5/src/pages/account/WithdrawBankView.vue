@@ -19,7 +19,7 @@
           ref="unbindBankCardNoRef"
           v-model="unbindBankCardNo"
           :label="unbindCardLabel()"
-          :rules="[(val) => val == selectedUnbindBankCard.cardNumber || unbindCardLabel() + ' ' + $t('lang.incorrect')]"
+          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter') + ' ' + unbindCardLabel()]"
         />
       </q-form>
       <div class="btnsreas">
@@ -178,7 +178,8 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
 import {useLocalStorage} from "@vueuse/core";
 import { useI18n } from "vue-i18n";
-
+import { userStore } from "src/stores";
+const store = userStore();
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
 const CRYPTO = "CRYPTO";
@@ -236,7 +237,7 @@ const unbindBankCard = () => {
   unbindBankCardNoRef.value.validate();
   if (unbindBankCardNoRef.value.hasError) return;
 
-  api.post(`/session/bankCard/${selectedUnbindBankCard.value.id}?_method=delete`).then((response) => {
+  api.post(`session/bankCardByCardNo/${unbindBankCardNo.value}?_method=delete`).then((response) => {
     if (response.code === 0) {
       $q.notify({
         color: "positive",
@@ -302,6 +303,17 @@ const formatCardNumber = (cardNumber) => {
 };
 
 onActivated(() => {
+  console.log(store)
+  if (store.registeredWithdrawPassword === false) {
+    router.push('/account/changePwd?name=withdraw');
+    
+    $q.notify({
+        color: "negative",
+        position: "top",
+        message: t('lang.settle_withdraw_pwd'),
+        icon: "report_problem"
+      });
+  }
   loadCards();
 });
 </script>

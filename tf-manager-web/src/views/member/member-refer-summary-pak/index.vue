@@ -79,7 +79,7 @@
         <el-table-column prop="subRegCount" :label="t('fields.subRegCount')" width="180">
           <template
             #default="scope"
-            v-if="hasPermission(['sys:member-refer:summary'])"
+            v-if="hasPermission(['sys:member-refer-pak:summary'])"
           >
             <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.subRegCount }}</el-link>
           </template>
@@ -99,6 +99,7 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column prop="regCount" :label="t('fields.registerCount')" width="120" />
         <el-table-column prop="downlineFtdCount" :label="t('fields.ftdDownlineCount')" width="120" />
         <el-table-column
           prop="downlineFtdAmount"
@@ -106,10 +107,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.downlineFtdAmount, type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineFtdAmount) }}
           </template>
         </el-table-column>
         <el-table-column prop="downlineDepositCount" :label="t('fields.depositDownlineCount')" width="120" />
@@ -119,10 +117,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.downlineDepositAmount, type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineDepositAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -131,10 +126,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.downlineWithdrawAmount, type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineWithdrawAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -143,10 +135,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.downlineBetAmount, type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlineBetAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -155,10 +144,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.downlinePayoutAmount, type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlinePayoutAmount) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -167,10 +153,7 @@
           width="120"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.downlinePayoutAmount - scope.row.downlineBetAmount, type: 'money'}"
-            />
+            $ {{ Math.floor(scope.row.downlinePayoutAmount - scope.row.downlineBetAmount) }}
           </template>
         </el-table-column>
       </el-table>
@@ -331,9 +314,9 @@ function getSummaries(val) {
     if (index === 0) {
       sums[index] = 'Total';
     } else if (sumKeys.includes(column.property)) {
-      sums[index] = page.sums[column.property].toFixed(2);
-    } else if (index === 10) {
-      sums[index] = (sums[8] - sums[9]).toFixed(2);
+      sums[index] = Math.floor(page.sums[column.property]);
+    } else if (index === 11) {
+      sums[index] = Math.floor(sums[10] - sums[9]);
     }
   });
   return sums;

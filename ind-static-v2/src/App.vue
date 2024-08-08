@@ -16,6 +16,8 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 // import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default defineComponent({
   name: "App",
@@ -90,19 +92,19 @@ export default defineComponent({
 
         Adjust.create(adjustConfig);
         setTimeout(() => {
-          Adjust.getGoogleAdId(function(googleid)  {
+          Adjust.getGoogleAdId(function (googleid) {
             console.log("Google AdID");
             console.log(googleid);
-            if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
+            if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
               (async () => {
-                Adjust.getAdid(function(adid) {
+                Adjust.getAdid(function (adid) {
                   console.log("Attribution 2");
                   console.log(adid);
                   store.aaid = adid;
                   trackAppStartEvent();
                 });
               })();
-            }else{
+            } else {
               store.googleadid = googleid;
               trackAppStartEvent();
             }
@@ -129,18 +131,17 @@ export default defineComponent({
           console.log("Web Adid");
           console.log(attribution);
           store.aaid = attribution ? attribution.adid : "";
-
         }, 500);
       }
     };
 
     const trackAppStartEvent = () => {
       // debugger;
-      if(ui.adjust_open_app_event) {
+      if (ui.adjust_open_app_event) {
         var adjustEvent = new AdjustEvent(ui.adjust_open_app_event);
         Adjust.trackEvent(adjustEvent);
       }
-    }
+    };
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
@@ -158,16 +159,16 @@ export default defineComponent({
           sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
           // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
           // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          if(res.data.adjust_register_event){
+          if (res.data.adjust_register_event) {
             ui.adjust_register_event = res.data.adjust_register_event;
           }
-          if(res.data.adjust_open_app_event){
+          if (res.data.adjust_open_app_event) {
             ui.adjust_open_app_event = res.data.adjust_open_app_event;
           }
-          if(res.data.adjust_register_fail_event){
+          if (res.data.adjust_register_fail_event) {
             ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
           }
-          if(res.data.adjust_click_register_event){
+          if (res.data.adjust_click_register_event) {
             ui.adjust_click_register_event = res.data.adjust_click_register_event;
           }
           affAppToken.value = res.data.adjust_app_token;
@@ -201,16 +202,16 @@ export default defineComponent({
                       if (res.code === 0) {
                         // debugger;
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                        if(res.data.adjust_register_event){
+                        if (res.data.adjust_register_event) {
                           ui.adjust_register_event = res.data.adjust_register_event;
                         }
-                        if(res.data.adjust_open_app_event){
+                        if (res.data.adjust_open_app_event) {
                           ui.adjust_open_app_event = res.data.adjust_open_app_event;
                         }
-                        if(res.data.adjust_register_fail_event){
+                        if (res.data.adjust_register_fail_event) {
                           ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
                         }
-                        if(res.data.adjust_click_register_event){
+                        if (res.data.adjust_click_register_event) {
                           ui.adjust_click_register_event = res.data.adjust_click_register_event;
                         }
                         // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
@@ -282,10 +283,9 @@ export default defineComponent({
       // const script = document.createElement('script');
       // script.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';
       // script.async = true;
-
       // document.head.appendChild(script0);
       // document.head.appendChild(script);
-    }
+    };
 
     const getOnlineStatApi = async () => {
       // console.log("Ok Online.");
@@ -304,13 +304,14 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: theSid,
             siteCode: "iw2"
-          }
-        });
+          })
+        );
       }
     };
 
@@ -322,6 +323,7 @@ export default defineComponent({
       // getCSA();
       getAppInfo();
       initOrientation();
+      AOS.init();
 
       if (isAndroid()) {
         document.addEventListener(

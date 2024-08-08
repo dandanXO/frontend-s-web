@@ -35,7 +35,7 @@ import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { AppMain, Navbar, Sidebar } from './components'
 import resize from './resize'
-import { hasPermission } from "@/utils/util";
+import { hasPermission, hasRole } from "@/utils/util";
 
 export default defineComponent({
   name: 'Layout',
@@ -70,7 +70,7 @@ export default defineComponent({
 
     onMounted(async() => {
       resizeMounted();
-      if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
+      if ((store.state.user.siteId && hasPermission(['sys:member-stats:list'])) || hasRole(['ADMIN', 'MANAGER'])) {
         await proxy.$socket.connection();
       }
     })

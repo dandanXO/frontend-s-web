@@ -21,6 +21,9 @@ export const getMemberRemark = (id, query) => {
   return https().request(`/member/${id}/memberRemark`, Method.GET, query, ContentType.form);
 };
 
+export const getNewRegisterMemberLists = (siteId) => {
+  return https().request(`/member/getNewRegister/${siteId}`, Method.GET, { }, ContentType.form);
+}
 export const registerMember = (member) => {
   return https().request("/member/registration", Method.POST, member, ContentType.form);
 };
@@ -216,4 +219,12 @@ export const getShareRatio = (memberId) => {
 
 export const editShareRatio = (memberId, ratio) => {
   return https().request(`/member/${memberId}/editShareRatio?_method=PUT`, Method.POST, { memberShareRatio: ratio }, ContentType.form);
+};
+
+export const getMemberVipFin = (siteId, names) => {
+  return https().request(`/member/memberVipFin`, Method.GET, { siteId: siteId, memberLoginNames: names }, ContentType.form);
+};
+
+export const getMemberVipFinById = (siteId, ids, loginName) => {
+  return https().request(`/member/memberVipFinById`, Method.GET, { siteId: siteId, memberIds: ids, loginName: loginName }, ContentType.form);
 };

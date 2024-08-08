@@ -19,7 +19,7 @@
           <div class="h5access">
             <img src="../assets/images/affiliate/h5.png" />
             <div>{{ $t("lang.direct_browser_access") }}</div>
-            <a href="https://jolly88.com" target="_blank">Jolly88.com</a>
+            <a href="https://Jolly8858.com" target="_blank">Jolly8858.com</a>
           </div>
         </div>
       </div>

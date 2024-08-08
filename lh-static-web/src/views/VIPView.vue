@@ -99,7 +99,7 @@
               <td>青铜Ⅰ</td>
               <td>3,000</td>
               <td id="vipPromoInfo3">存款最少20元可申请一次晋级奖金88元</td>
-              <td>电竞/体育10倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td>电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
             </tr>
             <tr>
               <td rowspan="3">白银</td>
@@ -109,13 +109,13 @@
                 存款最少100元可申请每月一次再存20% 最高奖金1888元
                 <span style="color: #b8945d">（仅限白银Ⅲ申请）</span>
               </td>
-              <td>电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td>电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
             </tr>
             <tr>
               <td>白银Ⅱ</td>
               <td>80,000</td>
               <td id="vipPromoInfo5" class="showTips4">存款最少20元可申请一次晋级奖金188元</td>
-              <td class="showTips4">电竞/体育 5倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips4">电竞/体育 5倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips4">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -124,7 +124,7 @@
               <td>白银Ⅰ</td>
               <td>200,000</td>
               <td id="vipPromoInfo6" class="showTips5">存款最少20元可申请一次晋级奖金388元</td>
-              <td class="showTips5">电竞/体育 5倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips5">电竞/体育 5倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips5">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -134,7 +134,7 @@
               <td>黄金Ⅲ</td>
               <td>400,000</td>
               <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金888元</td>
-              <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips6">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -143,7 +143,7 @@
               <td>黄金Ⅱ</td>
               <td>600,000</td>
               <td id="vipPromoInfo8" class="showTips7">存款最少20元可申请一次晋级奖金888元</td>
-              <td class="showTips7">电竞/体育 5倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips7">电竞/体育 5倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips7">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -152,7 +152,7 @@
               <td>黄金Ⅰ</td>
               <td>1,000,000</td>
               <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金2888元</td>
-              <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips8">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -162,7 +162,7 @@
               <td>铂金Ⅱ</td>
               <td>2,000,000</td>
               <td id="vipPromoInfo10" class="showTips9">存款最少20元可申请一次晋级奖金1888元</td>
-              <td class="showTips9">电竞/体育 8倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips9">电竞/体育 8倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips9">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -171,7 +171,7 @@
               <td>铂金Ⅰ</td>
               <td>4,000,000</td>
               <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金5888元</td>
-              <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips10">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -181,7 +181,7 @@
               <td>钻石</td>
               <td>8,000,000</td>
               <td id="vipPromoInfo12" class="showTips11">存款最少20元可申请一次晋级奖金8888元</td>
-              <td class="showTips11">电竞/体育10倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips11">电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips11">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -191,7 +191,7 @@
               <td>王者</td>
               <td>12,000,000</td>
               <td id="vipPromoInfo13" class="showTips12">存款最少20元可申请一次晋级奖金18888元</td>
-              <td class="showTips12">电竞/体育10倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
+              <td class="showTips12">电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips12">
                 <div class="vip-btn disable">未符合</div>
               </td> -->
@@ -289,7 +289,7 @@ import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 
 export default defineComponent({
   name: "VIPView",
@@ -299,6 +299,7 @@ export default defineComponent({
     Navigation
   },
   setup() {
+    const notify = useNotify();
     const store = userStore();
     const amount = ref("$0");
     const privilegeClaimedModalVisible = ref(false);
@@ -361,7 +362,7 @@ export default defineComponent({
             loadingBClaim.value = false;
             store.getBalance();
           } else {
-            ElMessage.error(res.message);
+            notify.error(res.message);
             loadingClaim.value = false;
             loadingMClaim.value = false;
             loadingBClaim.value = false;
@@ -579,7 +580,7 @@ export default defineComponent({
             // Now, vipItems array has the updated properties based on the provided elements
             // console.log(vipItems);
           } else {
-            ElMessage.error(res.message);
+            notify.error(res.message);
           }
         });
       }
@@ -587,11 +588,11 @@ export default defineComponent({
     const claimVIPLevelItem = (vip) => {
       claim(vip.vipLevel).then((res) => {
         if (res.code === 0) {
-          ElMessage.success("领取成功！");
+          notify.success("领取成功！");
           store.getBalance();
           initVIPTable();
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       });
     };

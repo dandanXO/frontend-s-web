@@ -1077,8 +1077,6 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1700,7 +1698,7 @@ const getVersionNo = async () => {
     const info = await App.getInfo();
     // console.log("APP Info");
     // console.log(info);
-    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    var current_version = parseInt(info.version.replaceAll(".", ""));
     // alert("Cur:" + current_version);
     // info.version && info.build
     const appType = "ALL";
@@ -1711,6 +1709,7 @@ const getVersionNo = async () => {
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
+      var min_version = res.data.minVersion;
       var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
       // alert(latest_ver_no);
       download_url.value = res.data.downloadUrl;
@@ -1720,6 +1719,13 @@ const getVersionNo = async () => {
       store.h5Url = res.data.h5Url;
       if (latest_ver_no > current_version) {
         isAppUpdateModal.value = true;
+      }
+
+      if (min_version) {
+        var min_ver_no = parseInt(min_version.replaceAll(".", ""));
+        if (min_ver_no > current_version) {
+          isOutdatedApp.value = true;
+        }
       }
     }
   }
@@ -1849,7 +1855,6 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadCustomerAddress();
-  AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {

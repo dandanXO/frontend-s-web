@@ -251,11 +251,22 @@ import { ref, onMounted } from "vue";
 import { getLplSummer24Match } from "@/api/index/promo.js";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
+import { userStore } from "@/store";
+import { useNotify } from "@/hooks/notify";
+const store = userStore()
+const notify = useNotify()
 
 const activeTab = ref("first");
 const matchList = ref([]);
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 onMounted(async () => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   const apiRes = await getLplSummer24Match();
   console.log(apiRes);
   matchList.value = apiRes.data.map((res) => ({

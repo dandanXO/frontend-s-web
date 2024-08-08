@@ -27,6 +27,8 @@ export default {
     rebate: "Hoàn Trả"
   },
   account: {
+    no_card_avail: "Không có thẻ sẵn có, tiến hành ",
+    add_a_bank_card: "Thêm thẻ ngân hàng",
     welcome: "Chào mừng",
     mainWallet: "Số dư",
     reminder: "Hỗ trợ",
@@ -129,6 +131,7 @@ export default {
     success: "Gửi thành công",
     sendPhoneVerificationSuccess: "Gửi xác minh số điện thoại thành công",
     bankCard: "Số thẻ",
+    bankCardPlaceholder: "Vui lòng nhập số tài khoản ngân hàng",
     successful_sent: "Số đã được gửi thành công.",
     not_drawn_yet: "Chưa được rút",
     won: "Thắng",
@@ -161,7 +164,7 @@ export default {
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "EURO 2024 - CÒN ",
-    euroCountdown02: " NGÀY",
+    euroCountdown02: " NGÀY"
   },
   personal: {
     url: "Truy Cập",
@@ -192,7 +195,7 @@ export default {
     common_and_new_password_not_match: "Xác nhận mật khẩu chưa chính xác.",
     forgetWithdrawPassword: "Quên mật khẩu rút tiền?",
     bankCardReminder1:
-      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
+      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
     bankCardReminder2:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! TF88 xin chân thành cảm ơn!"
   },
@@ -220,14 +223,16 @@ export default {
     captchareq: "Vui lòng nhập mã captcha",
     captcha: "Mã captcha phải có 4 ký tự",
     verificationCode: "Vui lòng nhập mã xác nhận",
+    pleaseEnter: "Vui lòng nhập",
+    pleaseEnterCardNumber: "Vui lòng nhập số thẻ",
     min4: "Mã xác minh phải có 4 ký tự",
     emailFormat: "Vui lòng nhập một địa chỉ email hợp lệ",
     between612: "Độ dài phải từ 6 đến 11 ký tự",
     noMatch: "Mật khẩu xác nhận không khớp với mật khẩu mới",
     verifyPhone: "Vui lòng xác minh số điện thoại di động",
     onlyNumber: "Chỉ cho phép nhập số",
-    invalidPhoneLength: 'Số điện thoại phải dài 10 chữ số.',
-    invalidPhoneStartsWith0: 'Số điện thoại phải bắt đầu bằng số 0.',
+    invalidPhoneLength: "Số điện thoại phải dài 10 chữ số.",
+    invalidPhoneStartsWith0: "Số điện thoại phải bắt đầu bằng số 0.",
     phoneVerification: "Vui lòng nhập mã xác minh điện thoại",
     min6: "Độ dài phải là 6 ký tự",
     lessthan50: "Độ dài phải ít hơn 50 ký tự",
@@ -283,13 +288,13 @@ export default {
 
     bonus: "Phần thưởng",
     // vi-daily-checkin end
-    
+
     // vi-mualixi-redpacket
     congrats: "Chúc mừng",
     claim: "Nhận",
-    
+
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng",
+    record_win_prize: "Giải thưởng"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -327,7 +332,7 @@ export default {
     exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 1.00 USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
-    accountNo: "Số thẻ",
+    accountNo: "Vui lòng nhập số tài khoản ngân hàng",
     accountNoUnmatched: "Số thẻ không hợp lệ, vui lòng đăng nhập lại",
     confirmUnbind: "Xác nhận bỏ thẻ",
     confirmCorrectNumber: "Vui lòng nhập chính xác số thẻ",
@@ -345,7 +350,8 @@ export default {
     enterDigits: "Vui lòng nhập các chữ số",
     lengthShouldBe: "Chiều dài nên là",
     smsCodeRequired: "Vui lòng nhập mã xác minh qua tin nhắn SMS",
-    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng"
+    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng",
+    settleWithdrawPwd: "Vui lòng thêm mật khẩu rút tiền"
   },
   referTerms: {
     promotionStart: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8). ",
@@ -631,6 +637,7 @@ export default {
       doubleBetAmount: "Gấp đôi số tiền cược cho mỗi lượt cược liên tiếp",
       betOnBothSides: "Cược hai bên",
       doubleBet: "Cược kép",
+      allin: "Cược tất tay",
       affiliateAbuse: "Lạm dụng đại lý liên kết CPA hoặc chia sẻ doanh thu"
     },
     excludedBets:
@@ -682,14 +689,16 @@ export default {
   vip: {
     vipTerms: "ĐIỀU KHOẢN VÀ ĐIỀU KIỆN",
     tnc1: "Chương trình áp dụng cho tất cả thành viên có tài khoản VNDP hợp lệ tại TF88. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của thành viên tính từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
-    tnc2: "Hệ thống sẽ tự động nâng cấp độ VIP của tất cả thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, điều kiện là tổng tiền cược hợp lệ của thành viên phải đủ điều kiện để thăng cấp VIP tương ứng. Việc thăng hạng sẽ không cần tuân thủ theo từng cấp bậc VIP.",
+    tnc2: "Hệ thống sẽ tự động nâng cấp độ VIP của tất cả thành viên sau 00:00:00 (GMT +7) vào ngày đầu tiên của tháng mới, điều kiện là tổng tiền cược hợp lệ của thành viên phải đủ điều kiện để thăng cấp VIP tương ứng. Việc thăng hạng sẽ không cần tuân thủ theo từng cấp bậc VIP.",
     tnc3: "Tiền Thưởng Nâng Cấp: sau khi thành viên được nâng cấp độ VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP. Số tiền thưởng sẽ được dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 1 vòng cược trước khi rút.",
     tnc4: "Tiền Thưởng Nâng Cấp sẽ không thể nhận đồng thời với Tiền Thưởng Hàng Tháng. Nếu thành viên được thăng hạng VIP trong tháng này, thì thành viên sẽ được nhận Tiền Thưởng Nâng Cấp. Hệ thống sẽ xét duyệt Tiền Thưởng Hàng Tháng cho các tài khoản chưa được thăng hạng VIP trong tháng này và có đạt đủ yêu cầu duy trì cấp độ VIP.",
     tnc5: "Tiền Thưởng Hàng Tháng: Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. (VD: Nếu thành viên đang ở VIP3, thì trong tháng cần đạt tối thiểu 600,000 VNDP tổng cược trong tháng). Sau khi đủ điều kiện thành viên có thể bấm nút NHẬN trên trang VIP vào ngày đầu tháng. Số tiền thưởng dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 3 vòng cược trước khi rút.",
     tnc6: "Tiền thưởng nâng cấp: thành viên cần bấm NHẬN trên trang VIP sau khi thành viên đã nâng cấp lên cấp độ mới vào ngày đầu tiên của tháng, Mỗi thành viên chỉ có thể nhận được 1 lần thưởng nâng cấp cho mỗi cấp độ. (tiền thưởng nâng cấp cần trải qua 1 vòng cược trước khi rút tiền.)",
-    tnc7: "Tiền thưởng hoàn trả: Thành viên được nâng cấp mức tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện có. Tiền thưởng hoàn trả tại sản phẩm Casino trực tuyến, quay hũ sẽ không nhận được quá 50,000 VNDP mỗi ngày và không giới hạn tại các sản phẩm khác.",
-    tnc8: "Tất cả các cược hòa, cược HỦY, cược 2 bên, cược Châu Âu chấp dưới 1.75, cược Châu Á dưới 0.75, Number Game, Thể thao ảo, Giải đặc biệt RNG lũy tiến, Xèng RNG lũy tiến sẽ không được tính doanh thu cược cho chương trình này. Điều kiện & điều khoản chung của khuyến mãi được áp dụng.",
-    tnc9: "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này bất kỳ lúc nào mà không cần thông báo trước.",
+    tnc7: "Tiền Thưởng Sinh Nhật : Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. Khi đã đạt đủ duy trì cấp VIP, Thành Viên liên hệ Chăm Sóc Khách Hàng trực tuyến để nhận thưởng. ( tiền thưởng sinh nhật cần trải qua 3 vòng cược trước khi rút tiền )",
+    tnc8: "Tiền thưởng hoàn trả: Thành viên được nâng cấp mức tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện có. Tiền thưởng hoàn trả tại sản phẩm Casino trực tuyến, quay hũ sẽ không nhận được quá 50,000 VNDP mỗi ngày và không giới hạn tại các sản phẩm khác.",
+    tnc9: "Tất cả các cược hòa, cược HỦY, cược 2 bên, cược Châu Âu chấp dưới 1.75, cược Châu Á dưới 0.75, Number Game, Thể thao ảo, Giải đặc biệt RNG lũy tiến, Xèng RNG lũy tiến sẽ không được tính doanh thu cược cho chương trình này. Điều kiện & điều khoản chung của khuyến mãi được áp dụng.",
+    tnc10:
+      "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này bất kỳ lúc nào mà không cần thông báo trước.",
     vipMaintainRequired: "YÊU CẦU DUY TRÌ CẤP ĐỘ VIP",
     vipUpgradeRequired: "YÊU CẦU CẤP ĐỘ VIP",
     totalBetMonth: "TỔNG CƯỢC TRONG THÁNG",
@@ -781,7 +790,8 @@ export default {
     loginbeforeAction: "Vui lòng đăng nhập trước khi thực hiện bất kỳ hành động nào",
     safetyBeforePhone: "Vì sự an toàn, vui lòng xác minh số điện thoại của bạn trước khi nạp tiền",
     bindRealName: "Bạn chưa cập nhật tên thật, vui lòng cập nhật",
-    depositConfirmed: "Nạp tiền đã được xác nhận"
+    depositConfirmed: "Nạp tiền đã được xác nhận",
+    withdrawCancelled: "Rút tiền bị hủy"
   },
   sports: {
     saba: "Saba Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !",
@@ -826,10 +836,10 @@ export default {
     deposit: "Nạp tiền",
     transfer: "Chuyển điểm",
     adjustment: "Sao kê tài khoản",
-    applying: "Đang chờ xét duyệt",
+    applying: "Đang xử lý",
     failed: "Thất bại",
     success: "Thành công",
-    underReview: "Đang thẩm định",
+    underReview: "Đang xử lý",
     toBePaid: "Đang chờ thanh toán",
     normalPayment: "Đơn đang thanh toán",
     automaticPayment: "Thanh toán tự động",
@@ -941,6 +951,7 @@ export default {
     30006: "Những thành viên được liệt kê là chủ tài khoản bị cấm nhận đặc quyền này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
+    30010: "Hệ thống bận, vui lòng thử lại sau !",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

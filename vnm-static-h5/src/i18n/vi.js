@@ -97,6 +97,7 @@ export default {
     mobile_number_length: "Số điện thoại phải dài 10 chữ số.",
     mobile_number_starts_with_0: "Số điện thoại phải bắt đầu bằng số 0.",
     please_enter_verification_code: "Vui lòng nhập mã xác minh",
+    please_enter: "Vui lòng nhập",
     verification_code: "Mã xác minh",
     length_is_4: "Chiều dài phải là 4",
     login_btn: "Đăng nhập",
@@ -140,7 +141,7 @@ export default {
     change_password_btn: "Đổi mật khẩu",
     please_enter_email: "Vui lòng nhập email",
     email: "Địa chỉ email",
-    email_sent_txt: "OTP đã được gửi đến email của bạn, vui lòng nhập OTP và mật khẩu mới.",
+    email_sent_txt: "OTP đã được đến số điện thoại đăng ký của bạn, vui lòng nhập OTP và mật khẩu mới.",
     otp_code: "Mã OTP",
     please_enter_otp: "Vui lòng nhập mã OTP",
     new_password: "Mật khẩu mới",
@@ -149,6 +150,7 @@ export default {
     password_security_level_must_be_at_least_good: "Mức độ bảo mật mật khẩu phải ít nhất là tốt",
     password_reset_complete: "Đặt lại mật khẩu hoàn tất",
     account_sent_to_email: "Tên người dùng đã được gửi đến email của bạn",
+    settle_withdraw_pwd: "Vui lòng thêm mật khẩu rút tiền",
 
     // change password
     chgpwd_password: "Mật khẩu",
@@ -360,7 +362,7 @@ export default {
     withdraw_bind: "Liên kết",
 
     // bank details
-    please_enter_unbind_bank_card: "Vui lòng nhập số thẻ ngân hàng cần hủy liên kết",
+    please_enter_unbind_bank_card: "Vui lòng nhập số tài khoản ngân hàng",
     add_bank_card: "Thêm thẻ ngân hàng",
     add_virtual_wallet: "Thêm địa chỉ ví điện tử",
     add_ewallet: "Thêm ví điện tử",
@@ -382,7 +384,7 @@ export default {
     bd_otp_code: "Mã OTP",
     bd_please_enter_otp: "Vui lòng nhập mã OTP",
     bd_reminder_name_issue:
-      "Nhắc nhở nhẹ nhàng: Nếu tên chủ thẻ không khớp, bạn có thể liên hệ với dịch vụ khách hàng trực tuyến để sửa thông tin. Cảm ơn bạn đã ủng hộ và hiểu biết!",
+      "Chú ý: Nếu tên tài khoản không khớp với tên tài khoản ngân hàng, Quý Khách vui lòng liên hệ Chăm sóc khách hàng 24/7 để yêu cầu sửa thông tin. ",
     bd_submit: "Gửi",
     bd_please_enter_digit_only: "Vui lòng chỉ nhập số",
     bd_length_between_16_19: "Chiều dài nên từ 16-19",
@@ -397,7 +399,7 @@ export default {
     bd_length_between_34_36: "Chiều dài nên từ 34-36",
     bd_note: "Lưu ý",
     bd_note_para_01:
-      'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để" kịp thời xử lý. Chân thành cảm ơn!',
+      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
     bd_note_para_02:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! TF88 xin chân thành cảm ơn!",
 
@@ -516,7 +518,7 @@ export default {
     vip_terms_para_01:
       "Chương trình áp dụng cho tất cả các thành viên có tài khoản VNDP hợp lệ tại TF88. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của người chơi từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
     vip_terms_para_02:
-      "Hệ thống sẽ tự động nâng cấp cấp độ VIP của tất cả các thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, miễn là tổng số tiền cược hợp lệ của thành viên phải đủ điều kiện để tiến lên cấp độ VIP tương ứng. Khuyến mãi sẽ không cần tuân thủ từng cấp độ VIP.",
+      "Hệ thống sẽ tự động nâng cấp cấp độ VIP của tất cả các thành viên sau 00:00:00 (GMT +7) vào ngày đầu tiên của tháng mới, miễn là tổng số tiền cược hợp lệ của thành viên phải đủ điều kiện để tiến lên cấp độ VIP tương ứng. Khuyến mãi sẽ không cần tuân thủ từng cấp độ VIP.",
     vip_terms_para_03:
       "Tiền thưởng Nâng cấp: sau khi thành viên được nâng cấp lên một cấp độ VIP mới, thành viên có thể nhấp vào nút NHẬN trên trang VIP. Số tiền thưởng sẽ dựa trên cấp độ VIP tương ứng và số tiền thưởng cần phải qua 1 vòng cược trước khi rút tiền.",
     vip_terms_para_04:
@@ -526,10 +528,12 @@ export default {
     vip_terms_para_06:
       "Tiền thưởng Sinh nhật: Trong tháng sinh nhật, thành viên có thể liên hệ với Dịch vụ Khách hàng để được xác minh và nhận tiền thưởng tương ứng với cấp độ VIP hiện tại của thành viên. Lưu ý: tất cả thông tin xác minh với Dịch vụ Khách hàng",
     vip_terms_para_07:
-      "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
+      "Tiền Thưởng Sinh Nhật : Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. Khi đã đạt đủ duy trì cấp VIP, Thành Viên liên hệ Chăm Sóc Khách Hàng trực tuyến để nhận thưởng. ( tiền thưởng sinh nhật cần trải qua 3 vòng cược trước khi rút tiền )",
     vip_terms_para_08:
-      "Tất cả cược hòa, cược HỦY, cược 2 chiều, kèo châu Âu dưới 1,75, cược châu Á dưới 0,75, Trò chơi số, Thể thao ảo, Jackpot tiến triển RNG, Máy đánh bạc tiến triển RNG sẽ không được tính. doanh thu cược cho chương trình này. Điều khoản và điều kiện chung của chương trình áp dụng.",
+      "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
     vip_terms_para_09:
+      "Tất cả cược hòa, cược HỦY, cược 2 chiều, kèo châu Âu dưới 1,75, cược châu Á dưới 0,75, Trò chơi số, Thể thao ảo, Jackpot tiến triển RNG, Máy đánh bạc tiến triển RNG sẽ không được tính. doanh thu cược cho chương trình này. Điều khoản và điều kiện chung của chương trình áp dụng.",
+    vip_terms_para_10:
       "TF88 có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này vào bất kỳ thời điểm nào mà không cần thông báo trước.",
     vip_sport_rebate: "Thể Thao",
     vip_esport_rebate: "E-Sport",
@@ -1181,7 +1185,7 @@ export default {
     page_rescuefundrecords: "Lịch sử quỹ cứu trợ",
     page_register: "Đăng ký",
     page_lobby: "Sảnh chờ",
-    page_about: "About TFgaming",
+    page_about: "Thông tin chung",
 
     menu_deposit: "Nạp tiền",
     menu_withdraw: "Rút tiền",
@@ -1242,11 +1246,11 @@ export default {
     str_moneychangedeposit: "Chuyển Tiền",
     str_deposit: "Nạp Tiền",
     str_promo: "Khuyến Mãi",
-    str_applying: "Đang chờ xét duyệt",
+    str_applying: "Đang xử lý",
     str_failed: "Thất Bại",
     str_success: "Thành công",
     str_sending: "Đơn đang gửi",
-    str_underreview: "Đang thẩm định",
+    str_underreview: "Đang xử lý",
     str_tobepaid: "Đang chờ thanh toán",
     str_paymentongoing: "Đơn đang thanh toán ",
     str_automaticpayment: "Thanh toán tự động",
@@ -1282,10 +1286,12 @@ export default {
     str_deposit_serialnumber: "Số Serial Nạp Tiền",
     str_serial_number: "Số Serial",
     str_confirmwithdraw: "Xác Nhận Rút Tiền",
+    str_cancelwithdraw: "Hủy rút tiền",
     str_remark: "Ghi chú",
     strsystem_message: "Thông Báo Hệ Thống",
     str_confirm: "Xác Nhận",
     confirm_withdrawal_sucess: "Xác nhận rút tiền thành công",
+    withdraw_cancelled: "Việc rút tiền đã bị hủy",
     success_copied: "Đã sao chép!",
     already_have_3_reminder: "Bạn đã có 3 yêu cầu",
     please_upload_image: "Vui lòng tải lên hình ảnh",
@@ -1294,6 +1300,7 @@ export default {
     upload_fail_please_try: "Tải lên thất bại. Vui lòng thử lại sau.",
     upload_image: "Tải Ảnh Lên",
     esport: "E-sport",
+    hashgame: "Hash game",
     livecasino: "Live",
     sport: "Sport",
     slot: "Slot",
@@ -1406,6 +1413,7 @@ export default {
         doubleBetAmount: "Gấp đôi số tiền cược cho mỗi lượt cược liên tiếp",
         betOnBothSides: "Cược hai bên",
         doubleBet: "Cược kép",
+        allin: "Cược kép",
         affiliateAbuse: "Lạm dụng đại lý liên kết CPA hoặc chia sẻ doanh thu"
       },
       excludedBets:
@@ -1552,6 +1560,7 @@ export default {
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
+    30010: "Hệ thống bận, vui lòng thử lại sau !",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",

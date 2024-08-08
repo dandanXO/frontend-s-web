@@ -39,6 +39,9 @@ const tabPosition = ref("play-in");
 const matchList = ref([]);
 
 onMounted(async () => {
+  if (!store.token) {
+    return;
+  }
   const apiRes = await getLOLMsiMatchRecord();
   matchList.value = apiRes.data.map((res) => ({
     ...res,

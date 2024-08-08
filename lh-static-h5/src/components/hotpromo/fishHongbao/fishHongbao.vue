@@ -2,7 +2,7 @@
   <div class="fish-match-box">
     <div class="fish-match-container">
       <div class="fish-match-game-info-sub">
-        活动期间，每日参与捕鱼场馆有效投注≥1,500元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金58,888元
+        活动期间，每日参与捕鱼场馆有效投注≥1,000元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金1,888元
       </div>
 
       <div class="fish-match-game">
@@ -13,7 +13,7 @@
           </div>
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">抽奖次数</div>
-            <div class="fish-match-game-detail">{{ availableDraw  }} 次</div>
+            <div class="fish-match-game-detail">{{ availableDraw }} 次</div>
           </div>
         </div>
         <div class="fish-match-honbao-content">
@@ -45,45 +45,50 @@
             <th>随机奖金</th>
           </tr>
           <tr>
-            <td>1,500</td>
+            <td>1,000</td>
             <td>1</td>
             <td>3~8</td>
           </tr>
           <tr>
-            <td>60,000</td>
+            <td>5,000</td>
             <td>2</td>
-            <td>18~88</td>
+            <td>8~38</td>
           </tr>
           <tr>
-            <td>300,000</td>
+            <td>12,000</td>
             <td>3</td>
-            <td>88~288</td>
+            <td>28~88</td>
           </tr>
           <tr>
-            <td>1,200,000</td>
+            <td>30,000</td>
             <td>4</td>
-            <td>388~888</td>
+            <td>58~188</td>
           </tr>
           <tr>
-            <td>2,500,000</td>
+            <td>50,000</td>
             <td>5</td>
-            <td>888~5,888</td>
+            <td>188~288</td>
           </tr>
           <tr>
-            <td>12,000,000</td>
+            <td>100,000</td>
             <td>6</td>
-            <td>5,888~58,888</td>
+            <td>288~888</td>
+          </tr>
+          <tr>
+            <td>500,000</td>
+            <td>7</td>
+            <td>888~1,888</td>
           </tr>
         </table>
         <div class="fish-match-game-info-sub">
-          例：用户A当日在捕鱼场馆娱乐金额为500,000，用户A可分别获得对应1,500档位、60,000档位、300,000档位各一次红包抽奖，彩金只需完成3倍流水即可出款；
+          用户A当日在捕鱼场馆总有效投注金额为5,000，用户A可获得对应1,000档位1次、5,000档位一次，共2次红包抽奖，彩金只需完成3倍流水即可出款；
         </div>
       </div>
       <div class="fish-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户参与捕鱼场馆日总有效投注≥1500元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取1次，彩金只需完成3倍流水即可出款；
+            1.活动期间，用户参与捕鱼场馆日总有效投注≥1,000元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取1次，彩金只需完成3倍流水即可出款
           </div>
           <div class="item">
             2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20
@@ -103,9 +108,8 @@
         </div>
       </div>
       <q-dialog v-model="tableRecordDialog" persistent class="fish-match-table-record-dialog">
-
         <q-card class="confirm-vote-card">
-          <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
+          <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png" /></div>
           <div class="title">恭喜你抽中</div>
           <div class="close-btn" @click="tableRecordDialog = false"></div>
           <div class="record-dialog-container">
@@ -129,10 +133,17 @@ import { getHongbaoInfo, getHongbaoMoney } from "../../../api/promotion/fishHong
 
 import { useLocalStorage } from "@vueuse/core";
 
+import { useQuasar } from "quasar";
+import { userStore } from "src/stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const store = userStore();
 const availableDraw = ref(0);
 const validBet = ref(0);
 const tableRecordDialog = ref(false);
 const rewardMoney = ref(0);
+const $q = useQuasar();
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
@@ -145,18 +156,44 @@ const getHongbao = async () => {
   }
 };
 
-onMounted(getHongbao);
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+  getHongbao();
+});
 
 const claimHongBao = async () => {
+  if (!store.token) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
+  }
   const res = await getHongbaoMoney();
   console.log(res);
   if (res.code === 0) {
     tableRecordDialog.value = true;
     rewardMoney.value = res.data;
   }
-}
-
-
+};
 </script>
 
 <style scoped lang="scss">
@@ -437,7 +474,7 @@ const claimHongBao = async () => {
         }
       }
     }
-    &:nth-child(7) {
+    &:nth-child(8) {
       td {
         &:last-child {
           border-bottom-right-radius: 12px;

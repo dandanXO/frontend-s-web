@@ -29,6 +29,9 @@ export default {
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",
 
+    i_agree_to: "I have Agree To The",
+    use_privacy: "Use Privacy Agreement",
+
     // vip
     level: "Level",
     upgrade: "Upgrade",
@@ -299,9 +302,9 @@ export default {
     adjust: "Adjust",
     promo: "Promo",
     deposit: "Deposit",
-    applying: "Send processed",
+    applying: "Processing",
     failed: "Failed",
-    under_review: "Reviewing",
+    under_review: "Processing",
     to_be_paid: "Payment in progress",
     payment_on_going: "Transfer in progress",
     automatic_payment: "Automatic payment",

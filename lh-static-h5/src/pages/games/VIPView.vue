@@ -257,7 +257,9 @@ import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
+const notify = useNotify();
 var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -285,77 +287,77 @@ const vipClaimItems = [
   { benefit: "网站首存优惠", turnover: "无", availableBtn: false, claimedBtn: false, depositPromoBtn: false },
   {
     benefit: "存款最少20元可申请一次晋级奖金88元",
-    turnover: "电竞/体育10倍 老虎机12倍 真人18倍",
+    turnover: "电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少100元可申请一次再存20% 最高奖金1888元",
-    turnover: "电竞/体育15倍 老虎机12倍 真人18倍",
+    turnover: "电竞/体育15倍 老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金188元",
-    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金388元",
-    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少200元可申请一次再存30%最高奖金888元",
-    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金888元",
-    turnover: "电竞/体育 5倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少500元可申请每月一次再存35% 最高奖金2888元",
-    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金1888元",
-    turnover: "电竞/体育 8倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 8倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少500元可申请一次再存40%最高奖金5888元",
-    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金8888元",
-    turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育10倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金18888元",
-    turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育10倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
@@ -426,11 +428,9 @@ const checkVipRedeem = () => {
       vipClaimItems[slide.value].vip = slide.value;
       claimDesc.value = vipClaimItems[slide.value];
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
     }
   });
@@ -639,21 +639,17 @@ const claim = async () => {
     // const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: vipNumber.value }));
     const res = await eventapi.post("/vip-upgrade/lh/claim", qs.stringify({ vipLevel: slide.value + 1 }));
     if (res.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "领取成功",
-        icon: "check_circle_outline"
       });
       claimDesc.value.claimedBtn = true;
 
       claimDesc.value.availableBtn = false;
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "report_problem"
       });
     }
   } catch (error) {

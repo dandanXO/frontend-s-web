@@ -95,13 +95,14 @@
             <InputField :label="$t('form.virtualWallet')">
               <template #input>
                 <q-input
+                  type="number"
                   outlined
+                  maxlength="11"
                   clearable
                   ref="cardNumberRef"
                   :placeholder="$t('form.virtualWallet_placeholder')"
                   v-model="bankCardInfo.cardNumber"
                   hide-bottom-space
-                  maxlength="11"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.virtualWallet_rules_01'),
                     (val) => val.startsWith('03') || $t('form.virtualWallet_rules_02'),
@@ -113,24 +114,29 @@
           </template>
         </InputRowGrid>
 
-        <!-- <InputRowGrid>
+        <InputRowGrid v-if="selectedTypeToggleName === 'JAZZCASH'">
           <template #fields>
-            <InputField :label="`IFSC`">
+            <InputField :label="`Identity ID`">
               <template #input>
                 <q-input
                   outlined
                   clearable
                   lazy-rules
                   ref="ifscRef"
-                  placeholder="Please insert IFSC"
+                  type="number"
+                  maxlength="13"
+                  placeholder="Please insert 13 digits Identity ID"
                   v-model="bankCardInfo.cardAddress"
                   hide-bottom-space
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert IFSC']"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('form.virtualWallet_id_rule'),
+                    (val) => (val && val.length === 13) || $t('form.virtualWallet_id_rule')
+                  ]"
                 ></q-input>
               </template>
             </InputField>
           </template>
-        </InputRowGrid> -->
+        </InputRowGrid>
 
         <!-- <q-label>
           Virtual Wallet
@@ -457,6 +463,8 @@ const handleEnterKey = () => {
 };
 
 onActivated(() => {
+  bankCardInfo.cardAddress = "";
+
   loadBankCards();
 });
 </script>

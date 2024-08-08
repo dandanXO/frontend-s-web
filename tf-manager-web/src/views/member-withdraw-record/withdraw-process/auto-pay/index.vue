@@ -492,6 +492,7 @@ import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   getMemberWithdrawRecordAutopay,
+  getAllMemberWithdrawRecordAutopay,
   fromAutopayToPay,
   fromAutopayToFail,
   fromAutopayToSuccess,
@@ -668,9 +669,9 @@ async function loadRecord() {
       query.withdrawDate = request.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   query.siteId = request.siteId;
-  const { data: ret } = await getMemberWithdrawRecordAutopay(query)
+  const { data: ret } = hasPermission(['sys:withdraw:all:pay']) ? await getAllMemberWithdrawRecordAutopay(query) : await getMemberWithdrawRecordAutopay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined

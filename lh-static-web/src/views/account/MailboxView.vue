@@ -63,9 +63,11 @@
                       <img src="../../assets/images/mail/unread-mail.png" />
                     </div>
                     <div class="title-wrapper">
-                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">
-                        {{ item.title }}
-                      </div>
+                      <div
+                        :class="`title-text ${item.readTime ? '' : 'unread'}`"
+                        :title="item.title"
+                        v-html="item.title"
+                      ></div>
                       <div
                         v-if="item.sendTime"
                         class="send-time"
@@ -117,9 +119,11 @@ import {
   readMail
 } from "@/api/personal/mailbox";
 import moment from "moment";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import Mail from "@/components/mailbox/Mail.vue";
+
+const notify = useNotify();
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -132,11 +136,13 @@ const showMailId = ref();
 const activeNames = ref();
 
 const mailboxMessageTypeData = ref([
+  { num: 1, type: "NOTIFICATION", name: "通知" },
+  { num: 5, type: "MATCH", name: "赛事" },
   { num: 2, type: "ACTIVITY", name: "活动" },
   { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-  { num: 4, type: "PAYMENT", name: "充提" },
-  { num: 1, type: "NOTIFICATION", name: "通知" },
-  { num: 5, type: "ALL", name: "全部" }
+  { num: 4, type: "PAYMENT", name: "充提" }
+  // { num: 6, type: "ALL", name: "全部" }
+  // { num: 5, type: "ALL", name: "全部" }
 ]);
 const mailboxMessageType = ref(mailboxMessageTypeData.value[0].type);
 const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
@@ -160,6 +166,7 @@ const mailboxNotifyState = reactive({
   ACTIVITY: [],
   ANNOUNCEMENT: [],
   PAYMENT: [],
+  MATCH: [],
   ALL: []
 });
 const mailboxState = reactive({
@@ -236,7 +243,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
       })
       .catch((error) => {
@@ -257,7 +264,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
           mailboxState.mailboxList[mailboxState.active].total = response.data.total;
         } else {
-          ElMessage.error(response.message);
+          notify.error(response.message);
         }
       })
       .catch((error) => {
@@ -276,15 +283,15 @@ const readAllMsg = (m) => {
   readAllMail(m)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
-          message: "已全读部消息",
+        notify({
+          message: "已全部已读",
           type: "success"
         });
 
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -307,7 +314,7 @@ const readMultipleMsg = () => {
   readMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "读取已选择的消息",
           type: "success"
         });
@@ -317,7 +324,7 @@ const readMultipleMsg = () => {
 
         isShowSelect.value = false;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -386,7 +393,7 @@ const deleteMultipleMsg = () => {
   deleteMultipleMail(formattedIds)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "删除已选择的消息",
           type: "success"
         });
@@ -408,7 +415,7 @@ const deleteMultipleMsg = () => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -436,7 +443,7 @@ const deleteAllMsg = (m) => {
   deleteAllMail(params)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage({
+        notify({
           message: "已删除全部消息",
           type: "success"
         });
@@ -444,7 +451,7 @@ const deleteAllMsg = (m) => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((error) => {
@@ -503,7 +510,7 @@ const onSubmit = (e) => {
       wirteMail(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            ElMessage({
+            notify({
               message: "成功",
               type: "success"
             });
@@ -512,7 +519,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
-            ElMessage.error(response.message);
+            notify.error(response.message);
             // message.error(response.message);
           }
         })
@@ -537,6 +544,9 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+:deep(.el-tabs__content) {
+  overflow: unset;
+}
 .mail-content {
   overflow-wrap: break-word;
   .mailbox-checkbox {
@@ -547,6 +557,10 @@ onMounted(() => {
 
   .title-text {
     font-weight: normal;
+
+    p {
+      margin: 0px;
+    }
 
     &.unread {
       font-weight: bold;
@@ -588,6 +602,11 @@ onMounted(() => {
       display: flex;
       align-items: center;
       gap: 15px;
+    }
+    .right {
+      position: absolute;
+      right: 0;
+      top: -50px;
     }
 
     .left,
@@ -683,7 +702,7 @@ onMounted(() => {
   line-height: 18px;
   margin-right: 10px;
 
-  img{
+  img {
     width: 100%;
   }
 }
@@ -699,6 +718,11 @@ onMounted(() => {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    p {
+      margin: 0px;
+      margin-bottom: 0 !important;
+    }
   }
 
   .send-time {
@@ -720,6 +744,13 @@ onMounted(() => {
         color: $font-0;
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.title-text {
+  p {
+    margin-bottom: 0;
   }
 }
 </style>

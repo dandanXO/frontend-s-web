@@ -29,7 +29,8 @@
     </div>
     <div>
         <header class="S3WLMd" role="banner">
-            <nav class="oPjgQb"><a class="f0UV3d">
+            <nav class="oPjgQb">
+                <a class="f0UV3d">
                 <svg class="kOqhQd" style="width:40px;height: 40px;" aria-hidden="true" viewBox="0 0 40 40"
                      xmlns="http://www.w3.org/2000/svg">
                     <path fill="none" d="M0,0h40v40H0V0z"></path>
@@ -44,15 +45,21 @@
                               fill="#34A853"></path>
                     </g>
                 </svg>
-                <span aria-hidden="true">Google Play</span></a>
-                <div>
+                <span aria-hidden="true" style="padding-right:25px">Google Play</span>
+                <div class="header-icon">เกม</div>
+                <div class="header-icon active-icon">แอปพลิเคชัน</div>
+                <div class="header-icon">ภาพยนตร์</div>
+                <div class="header-icon">หนังสือ</div>
+                <div class="header-icon">เด็ก</div>
+            </a>
+                <!-- <div>
                     <div class="P8HBFd">
                         <div>
                             <div class="ucf8re"><span class=""><span class="VfPpkd-N5Lhkf"><span
                                     class="VfPpkd-jY41G-V67aGc WbUJNb">เกม</span></span></span></div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </nav>
         </header>
         <div></div>
@@ -585,6 +592,66 @@
                         </div>
                     </div>
                 </div>
+                <div class="similar-games-section">
+                    <div class="similar-games-header"><span style="font-size:22px">เกมที่คล้ายกัน</span><img
+                            src="img/righticon.png"></div>
+                    <div class="similar-games-list">
+                        <div class="similar-games-list-item"><img class="similar-game-icon"
+                                                                  src="img/similar-games/similar-games-1.jpg">
+                            <div class="similar-game-info">
+                                <div class="similar-game-title">ปาร์ตี้ผลไม้</div>
+                                <div class="similar-game-developer">สตูดิโอสล็อต</div>
+                                <div class="rating-div similar-game-rating"><span>4.9</span><span
+                                        class="material-icons"><img width="12px" src="img/star.svg"></span></div>
+                            </div>
+                        </div>
+                        <div class="similar-games-list-item"><img class="similar-game-icon"
+                                                                  src="img/similar-games/similar-games-2.jpg">
+                            <div class="similar-game-info">
+                                <div class="similar-game-title">ประตูแห่งโอลิมปัส 2</div>
+                                <div class="similar-game-developer">สตูดิโอสล็อต</div>
+                                <div class="rating-div similar-game-rating"><span>4.9</span><span
+                                        class="material-icons"><img width="12px" src="img/star.svg"></span></div>
+                            </div>
+                        </div>
+                        <div class="similar-games-list-item"><img class="similar-game-icon"
+                                                                  src="img/similar-games/similar-games-3.jpg">
+                            <div class="similar-game-info">
+                                <div class="similar-game-title">ยิงปลา</div>
+                                <div class="similar-game-developer">สตูดิโอสล็อต</div>
+                                <div class="rating-div similar-game-rating"><span>4.9</span><span
+                                        class="material-icons"><img width="12px" src="img/star.svg"></span></div>
+                            </div>
+                        </div>
+                        <div class="similar-games-list-item"><img class="similar-game-icon"
+                                                                  src="img/similar-games/similar-games-4.jpg">
+                            <div class="similar-game-info">
+                                <div class="similar-game-title">สแคทเตอร์</div>
+                                <div class="similar-game-developer">สตูดิโอสล็อต</div>
+                                <div class="rating-div similar-game-rating"><span>4.9</span><span
+                                        class="material-icons"><img width="12px" src="img/star.svg"></span></div>
+                            </div>
+                        </div>
+                        <div class="similar-games-list-item"><img class="similar-game-icon"
+                                                                  src="img/similar-games/similar-games-5.jpg">
+                            <div class="similar-game-info">
+                                <div class="similar-game-title">งานปาร์ตี้ของเทพเจ้าความมั่งคั่ง</div>
+                                <div class="similar-game-developer">สตูดิโอสล็อต</div>
+                                <div class="rating-div similar-game-rating"><span>4.9</span><span
+                                        class="material-icons"><img width="12px" src="img/star.svg"></span></div>
+                            </div>
+                        </div>
+                        <div class="similar-games-list-item"><img class="similar-game-icon"
+                                                                  src="img/similar-games/similar-games-6.jpg">
+                            <div class="similar-game-info">
+                                <div class="similar-game-title">5 สิงห์</div>
+                                <div class="similar-game-developer">สตูดิโอสล็อต</div>
+                                <div class="rating-div similar-game-rating"><span>4.9</span><span
+                                        class="material-icons"><img width="12px" src="img/star.svg"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -709,7 +776,7 @@
 
 <script type="text/javascript">
     //NEED TO CHANGE THIS VERSION NO.
-    var versionNo = "1.0.42";
+    var versionNo = "1.0.43";
 
     const searchParams = new URLSearchParams(window.location.search);
     let affidValue = searchParams.get('id');
@@ -742,40 +809,74 @@
         var button;
         var apkUrl = '';
 
-        if (!affidValue) {
-            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                });
-                const data = await response.json();
-                if (data) {
-                    console.log("data", data);
-                    apkUrl = data.data;
-                    button = document.getElementById("installButton");
-                    // //Android or Browser.
-                    // //Change URL ./download/jb_app.apk when go Live.
-                    button.classList.remove("disabled-btn");
-                    button.onclick = function () {
-                        downloadApk(apkUrl, affidValue)
-                        return false;
-                    }
-                }
-            } catch (error) {
-                console.log(error)
-            }
+        apiUrl = "https://file.rd7etvkrgt.com/apps/3/tha-app-1.0.43.apk";
+        button = document.getElementById("installButton");
+        // //Android or Browser.
+        // //Change URL ./download/jb_app.apk when go Live.
+        button.classList.remove("disabled-btn");
+        button.onclick = function () {
+            downloadApk(apiUrl, affidValue)
+            return false;
+        }
 
-        } else {
-            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/th1/${affidValue}`;
-            button = document.getElementById("installButton");
-            // //Android or Browser.
-            // //Change URL ./download/jb_app.apk when go Live.
-            button.classList.remove("disabled-btn");
-            button.onclick = function () {
-                downloadApk(apiUrl, affidValue)
+        const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+        for (let i = 0; i < similarGamesListElements.length; i++) {
+            similarGamesListElements[i].onclick = function () {
+                downloadApk(apkUrl, affidValue)
                 return false;
             }
         }
+
+        // if (!affidValue) {
+        //     apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=th1&appType=ALL_SITE`;
+        //     try {
+        //         const response = await fetch(apiUrl, {
+        //             method: 'GET',
+        //         });
+        //         const data = await response.json();
+        //         if (data) {
+        //             console.log("data", data);
+        //             apkUrl = data.data;
+        //             button = document.getElementById("installButton");
+        //             // //Android or Browser.
+        //             // //Change URL ./download/jb_app.apk when go Live.
+        //             button.classList.remove("disabled-btn");
+        //             button.onclick = function () {
+        //                 downloadApk(apkUrl, affidValue)
+        //                 return false;
+        //             }
+        //
+        //             const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+        //             for (let i = 0; i < similarGamesListElements.length; i++) {
+        //                 similarGamesListElements[i].onclick = function () {
+        //                     downloadApk(apkUrl, affidValue)
+        //                     return false;
+        //                 }
+        //             }
+        //         }
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        //
+        // } else {
+        //     apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/th1/${affidValue}`;
+        //     button = document.getElementById("installButton");
+        //     // //Android or Browser.
+        //     // //Change URL ./download/jb_app.apk when go Live.
+        //     button.classList.remove("disabled-btn");
+        //     button.onclick = function () {
+        //         downloadApk(apiUrl, affidValue)
+        //         return false;
+        //     }
+        //
+        //     const similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+        //     for (let i = 0; i < similarGamesListElements.length; i++) {
+        //         similarGamesListElements[i].onclick = function () {
+        //             downloadApk(apkUrl, affidValue)
+        //             return false;
+        //         }
+        //     }
+        // }
 
 
     }
@@ -806,7 +907,7 @@
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = apkUrl;
-        link.download = 'jb_app_1.0.42.apk'
+        link.download = 'jb_app_1.0.43.apk'
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

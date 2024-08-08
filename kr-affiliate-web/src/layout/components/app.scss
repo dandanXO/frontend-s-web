@@ -1,6 +1,8 @@
 .page-container {
     margin: 10px 20px;
     font-family: 'NanumNeo';
+    display: flex;
+    flex-direction: column;
 }
 
 .panel-item {
@@ -18,42 +20,38 @@
     font-weight: 700;
 }
 
+.custom-table-wrapper {
+  overflow: auto;
+}
+
 .custom-table {
     width: 100%;
     border: 0;
     border-collapse: collapse;
 
-    tr:hover {
-      background-color: #ddecf3;
+    tr:hover > td {
+      background-color: #ddecf3 !important;
     }
   
     th {
-      background: #35414f;
+      background: $primary-700;
       text-align: left;
       color: #fff;
       font-family: 'NanumNeo';
+      white-space: nowrap;
     }
   
     th,
     td {
-      padding: 15px;
+      padding: 5px;
       font-family: 'NanumNeo';
       font-size: 13px;
       font-weight: 400;
       border-color: #cfd8dc;
+      height: 40px;
     }
 
     td {
-      .money-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 20px;
-        text-align: right;
-      
-        .won-icon {
-          color: #9f9f9f;
-        }
-      }
-      
       .vip-name-wrapper {
         display: flex;
         gap: 8px;
@@ -79,6 +77,62 @@
         }
       }
     }
+
+    .bgGreen {
+      background-color: #f4fff8;
+    }
+
+    .textGreen {
+      color: #4dbd74;
+      font-weight: bold;
+    }
+
+    .bgRed {
+      background-color: #fff5f5;
+    }
+
+    .textRed {
+      color: #f86c6b;
+      font-weight: bold;
+    }
+
+    .bgYellow {
+      background-color: #fffef7;
+    }
+
+    .bgGrey {
+      background-color: #eceff1;
+    }
+
+    .textCenter {
+      text-align: center;
+    }
+    
+    .textRight {
+      text-align: right;
+    }
+
+    .colorBox {
+      color: #fff;
+      font-size: 11px;
+      padding: 5px;
+      border-radius: 3px;
+      width: 60px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .orange {
+      background-color: #f0ad4e;
+    }
+
+    .purple {
+      background-color: #a462dd;
+    }
+
+    .blue {
+      background-color: #0384fc;
+    }
   }
 
   .table-footer {
@@ -86,4 +140,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+  }
+
+  .money-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    text-align: right;
+  
+    .won-icon {
+      color: #9f9f9f;
+    }
   }

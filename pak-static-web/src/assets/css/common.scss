@@ -486,6 +486,11 @@ $glow-clr: #ff5a00;
 }
 .ant-select-clear {
   right: 30px;
+  background: transparent;
+  color: #ffffff4d;
+  &:hover {
+    color: #fff;
+  }
 }
 .dark-theme {
   .ant-select-clear {
@@ -1575,7 +1580,7 @@ a {
     background: #131313;
     border-radius: 12px;
     color: #fff;
-    width: 100%; 
+    width: 100%;
 
     td {
       border: 1px solid #ffffff1a;
@@ -1689,6 +1694,9 @@ a {
     padding: 0;
     border: none;
     border-radius: 0;
+  }
+  .ant-input-prefix {
+    color: #ffffff4d;
   }
 }
 

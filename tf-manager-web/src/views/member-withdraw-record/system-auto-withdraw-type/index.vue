@@ -173,7 +173,6 @@
         row-key="id"
         size="small"
         highlight-current-row
-        @selection-change="handleSelectionChange"
         :empty-text="t('fields.noData')"
         style="width: 100%;"
       >
@@ -217,7 +216,7 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-table :data="props.row.withdrawalChannelOrderVO" ref="table" size="small" style="margin-left: 60px; width: 60%;" v-if="request.siteId === 11">
+            <el-table :data="props.row.withdrawalChannelOrderVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId === 11">
               <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
               <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
                 <template #default="scope">
@@ -231,21 +230,23 @@
               </el-table-column>
               <el-table-column :label="t('fields.sequence')" prop="sequence">
                 <template #default="scope">
-                  <el-input-number v-model="scope.row.sequence" :min="1" :max="50" @change="handleChange" size="small" />
+                  <el-input-number v-model="scope.row.sequence" :min="1" :max="50" size="small" />
                 </template>
               </el-table-column>
-              <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
-                <template #default="scope">
+              <el-table-column align="right">
+                <template #header>
                   <el-button
                     icon="el-icon-save"
                     size="mini"
                     type="success"
-                    @click="saveOrder(scope.row)"
-                  >{{ t('fields.save') }}</el-button>
+                    @click="batchSave(props.row.withdrawalChannelOrderVO)"
+                    v-if="request.siteId === 11 && hasPermission(['sys:systemautowithdraw:update'])"
+                  >{{ t('fields.update') }}
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
-            <el-table :data="props.row.withdrawalChannelOrderTest" ref="table" size="small" style="margin-left: 60px; width: 60%;">
+            <el-table :data="props.row.withdrawalChannelOrderTest" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId === 11">
               <el-table-column :label="t('types.TEST') + ' ' + t('fields.withdrawPlatformName')" prop="withdrawPlatformName">
                 <template #default="scope">
                   <el-select
@@ -271,14 +272,14 @@
                   <el-input v-model="scope.row.loginName" style="width: 240px" placeholder="Please input" size="small" />
                 </template>
               </el-table-column>
-              <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+              <el-table-column align="right" :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
                 <template #default="scope">
                   <el-button
                     icon="el-icon-save"
                     size="mini"
                     type="success"
                     @click="saveOrder(scope.row)"
-                  >{{ t('fields.save') }}</el-button>
+                  >{{ t('fields.update') }}</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -332,7 +333,7 @@ import { getSiteListSimple } from '../../../api/site'
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { getCurrencyNames } from '../../../api/currency'
 import { disableSystemAutoPaymentTypeBySite, getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform } from '../../../api/system-auto-withdraw-type'
-import { createWithdrawalChannelOrder } from '../../../api/withdrawal-channel-order'
+import { createWithdrawalChannelOrder, batchupdateWithdrawalOrder } from '../../../api/withdrawal-channel-order'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 import { required } from '../../../utils/validate'
@@ -447,7 +448,7 @@ async function loadSiteWithdrawPlatform(siteId) {
 }
 
 async function loadWithdrawPlatform() {
-  const { data: ret } = await getWithdrawPlatforms();
+  const { data: ret } = await getWithdrawPlatforms(request);
   list.withdrawPlatform = ret.records
 }
 
@@ -497,6 +498,28 @@ async function saveOrder(data) {
   data.siteId = request.siteId
   console.log(data)
   await createWithdrawalChannelOrder(data)
+  await loadAutoPaymentType()
+  ElMessage({ message: t('message.addSuccess'), type: 'success' })
+}
+
+async function batchSave(data) {
+  console.log(data)
+  var sequenceList = []
+  var isDuplicate = false
+  data.forEach(setting => {
+    if (!isDuplicate && setting.status) {
+      if (sequenceList.includes(setting.sequence)) {
+        isDuplicate = true
+      } else {
+        sequenceList.push(setting.sequence)
+      }
+    }
+  })
+  if (isDuplicate) {
+    ElMessage({ message: t('message.validateWithdrawChannel'), type: 'error' })
+    return
+  }
+  await batchupdateWithdrawalOrder(data)
   await loadAutoPaymentType()
   ElMessage({ message: t('message.addSuccess'), type: 'success' })
 }

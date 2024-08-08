@@ -1314,7 +1314,7 @@ export default defineComponent({
       } else if (transferType === 'STEP_4') {
         return '自动支付' // Automatic Payment
       } else if (transferType === 'STEP_5') {
-        return '暂不处理' // Suspend
+        return '请联系客服查询原因' // Suspend
       } else if (transferType === 'AUTOPAY') {
         return '自动支付' // Automatic Payment
       } else if (transferType === 'WAITING_CALLBACK') {
@@ -1371,13 +1371,13 @@ export default defineComponent({
 
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
-        return '申请中' //Applying
+        return '处理中' //Applying
       } else if (withdrawStatus === 'FAIL') {
         return '失败' // Failed
       } else if (withdrawStatus === 'SUCCESS') {
         return '成功' // Success
       } else if (withdrawStatus === 'STEP_1' || withdrawStatus === 'PENDING') {
-        return '审核中' //Under review
+        return '处理中' //Under review
       } else if (withdrawStatus === 'STEP_2') {
         return '待支付' // To be paid
       } else if (withdrawStatus === 'STEP_3') {
@@ -1385,7 +1385,7 @@ export default defineComponent({
       } else if (withdrawStatus === 'STEP_4') {
         return '自动支付' // Automatic Payment
       } else if (withdrawStatus === 'STEP_5') {
-        return '暂不处理' // Suspend
+        return '请联系客服查询原因' // Suspend
       } else if (withdrawStatus === 'AUTOPAY') {
         return '自动支付' // Automatic Payment
       } else if (withdrawStatus === 'WAITING_CALLBACK') {

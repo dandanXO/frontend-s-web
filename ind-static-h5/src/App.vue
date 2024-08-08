@@ -14,6 +14,8 @@ import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default defineComponent({
   name: "App",
@@ -248,13 +250,11 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post("/memberStatistics/submit", qs.stringify({
             way: way,
             sid: theSid,
             siteCode: "ind"
-          }
-        });
+        }));
       }
     };
 
@@ -266,6 +266,7 @@ export default defineComponent({
       // getCSA();
       getAppInfo();
       initOrientation();
+      AOS.init();
 
       if (isAndroid()) {
         document.addEventListener(

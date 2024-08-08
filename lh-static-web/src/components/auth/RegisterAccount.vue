@@ -25,7 +25,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-12位非汉字字符" clearable>
+        <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-11位非汉字字符" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -125,10 +125,11 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
+import { useNotify } from "@/hooks/notify";
 
 const store = userStore();
+const notify = useNotify();
 const registerTelephoneKey = `registerTelephoneKey`;
 let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
@@ -168,7 +169,7 @@ const checkName = (v) => {
   return v.match(alphanumeric);
 };
 const checkName2 = (v) => {
-  const alphaRegex = /^[a-zA-Z0-9_#+-]+$/;
+  const alphaRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
   return v.match(alphaRegex);
 };
 
@@ -182,7 +183,7 @@ let validateName = async (r, v) => {
   if (v === "") {
     return Promise.reject("请输入登录名");
   } else if (!checkName2(v)) {
-    return Promise.reject("不允许使用特殊字符");
+    return Promise.reject("用户名必须包含英文字母与数字");
   } else {
     return Promise.resolve();
   }
@@ -275,8 +276,8 @@ const regRules = {
     },
     {
       min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      max: 11,
+      message: "长度应为 6 至 11",
       trigger: "blur"
     },
     {
@@ -376,7 +377,7 @@ const getCode = () => {
       verificationImg.value = "data:image/png;base64," + res.data.img;
       regForm.codeId = res.data.id;
     } else {
-      ElMessage.error({
+      notify({
         type: "error",
         message: res.message
       });
@@ -414,22 +415,25 @@ const submitRegisterForm = async (elForm) => {
             .then((response) => {
               const regResult = response.code;
               if (regResult === 0) {
-                ElMessage({
+                notify({
                   type: "success",
                   message: "注册成功"
                 });
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                router.push("/welcome");
+                router.push("/");
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  router.push("/welcome");
+                  router.push("/");
                 }
               } else {
-                ElMessage.error(response.message);
+                notify({
+                  type: "error",
+                  message: response.message
+                });
                 getCode();
               }
             })
@@ -471,9 +475,9 @@ const closeRegDialog = () => {
 };
 
 const openLoginDialog = () => {
-  if(route.path === '/register'){
+  if (route.path === "/register") {
     router.push("/login");
-  }else{
+  } else {
     emits("open-login-dialog");
   }
 };
@@ -486,7 +490,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
 
 <style lang="scss">
 .form-field {

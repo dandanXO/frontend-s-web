@@ -1,15 +1,15 @@
 <template>
   <q-page>
-    <!--    <template v-if="props.type !== 'outbox'">-->
-    <!--      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">-->
-    <!--        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">-->
-    <!--          <div class="tab-flex">-->
-    <!--            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />-->
-    <!--            <div>{{ item.name }}</div>-->
-    <!--          </div>-->
-    <!--        </q-tab>-->
-    <!--      </q-tabs>-->
-    <!--    </template>-->
+    <template v-if="props.type !== 'outbox'">
+      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
+          <div class="tab-flex">
+            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+            <div>{{ item.name }}</div>
+          </div>
+        </q-tab>
+      </q-tabs>
+    </template>
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -65,18 +65,16 @@
                     <i>{{ formatSendTime(det.sendTime) }}</i>
                   </div>
                   <div class="right-title">
-                    <img class="svg" v-if="isSelectedMail === det.id" src="~assets/account/mail/arrow-up-s-line.svg" />
                     <img
-                      class="svg"
-                      v-if="isSelectedMail !== det.id"
-                      src="~assets/account/mail/arrow-down-s-line.svg"
+                      src="../assets/images/inbox/arrow-down-icon.svg"
+                      :class="isSelectedMail === det.id && 'arrow-rotate'"
                     />
                   </div>
                 </div>
               </div>
               <div
                 class="mailcontents"
-                v-if="isSelectedMail === det.id"
+                v-if="isSelectedMail === det.id && det.content"
                 v-html="det.content.replace(/\n/g, '<br/>')"
               ></div>
               <div v-if="mailType === 'outbox'" class="buttons">
@@ -225,9 +223,7 @@ export default defineComponent({
             if (res.code === 0) {
               $q.notify({
                 message: "读取已选择的消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
 
               // Update the readTime property of selected messages
@@ -256,9 +252,7 @@ export default defineComponent({
             if (res.code === 0) {
               $q.notify({
                 message: "全部消息已读",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
 
               // Update the readTime property of all messages
@@ -285,9 +279,7 @@ export default defineComponent({
             if (res.code === 0) {
               $q.notify({
                 message: "全部消息已读",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
 
               // Update the readTime property of all messages
@@ -332,9 +324,7 @@ export default defineComponent({
               !readTime &&
                 $q.notify({
                   message: "已读消息",
-                  type: "positive",
-                  position: "top",
-                  icon: "check_circle_outline"
+                  type: "success"
                 });
               mail.content = res.data.content;
               onLoad();
@@ -356,9 +346,7 @@ export default defineComponent({
             if (res.code === 0) {
               $q.notify({
                 message: "已读消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
               onLoad();
             }
@@ -396,11 +384,9 @@ export default defineComponent({
               // Remove items from truncatedListByType if their IDs match with selectedMailIds and are marked as true
               truncatedList.value = truncatedList.value.filter((mail) => !selectedMailIds.value[mail.id]);
 
-              $q.notify({
+              notify({
                 message: "删除已选择的消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
               onLoad();
 
@@ -424,11 +410,9 @@ export default defineComponent({
 
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已删除全部消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
               onLoad();
               // truncatedList.value = [];
@@ -447,11 +431,9 @@ export default defineComponent({
 
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
-              $q.notify({
+              notify({
                 message: "已删除全部消息",
-                type: "positive",
-                position: "top",
-                icon: "check_circle_outline"
+                type: "success"
               });
               onLoad();
               truncatedList.value = [];
@@ -569,6 +551,16 @@ export default defineComponent({
 
   .right-title {
     display: flex;
+    width: 20px;
+    img {
+      display: block;
+      width: 16px;
+      transition: 0.3s all;
+
+      &.arrow-rotate {
+        transform: scaleY(-1);
+      }
+    }
   }
 
   .mailcontents {
@@ -612,5 +604,11 @@ export default defineComponent({
   background: #db0011;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.q-tab {
+  &--active {
+    color: #000;
+  }
 }
 </style>

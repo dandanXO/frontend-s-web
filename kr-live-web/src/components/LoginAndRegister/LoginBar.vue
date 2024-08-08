@@ -122,7 +122,7 @@ const logout = () => {
 const iconInfo = reactive([
   {
     info: 'lang.menu_announcement',
-    iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/loudspeaker-icon.svg"),
     page: 'announcement',
   },
   {
@@ -146,10 +146,16 @@ const iconInfo = reactive([
   //   page: 'transaction/records&tab=rebates',
   // },
   {
+    type: 'inquiry',
+    info: "lang.menu_inquiry",
+    iconUrl: require("../../assets/icon/pageModal/inquiry-icon.svg"),
+    page: 'personal/inquiry',
+  },
+  {
     type: 'message',
     info: "lang.menu_message",
-    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    page: 'personal/messages',
+    iconUrl: require("../../assets/icon/pageModal/mails-icon.svg"),
+    page: 'personal/message',
   },
 ]);
 </script>
@@ -267,7 +273,7 @@ const iconInfo = reactive([
   .sidebar-section-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 
     .sidebar-section-title {
@@ -302,7 +308,7 @@ const iconInfo = reactive([
       &.top {
         border-radius: 6px;
         background-color: #1D243D;
-        padding: 20px;
+        padding: 10px 20px;
 
         .sidebar-section-item img {
           background-color: #00FFFF1A;

@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 250px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -606,15 +605,6 @@ const defaultTime = [
   new Date(2000, 1, 1, 23, 59, 59),
 ]
 const shortcuts = getShortcuts(t)
-function disabledDate(time) {
-  return (
-    time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
-}
 
 function submit() {
   reviewForm.value.validate(async valid => {
@@ -660,9 +650,9 @@ async function loadMemberRecord() {
     timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
     if (request.recordTime !== null) {
       if (request.recordTime.length === 2) {
-        query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+        /* query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
         query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
-        query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+        query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone); */
         query.recordTime = query.recordTime.join(',')
       }
     }

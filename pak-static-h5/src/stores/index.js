@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import OneSignal from "onesignal-cordova-plugin";
 import { isAndroid } from "boot/utils";
 import { useUI } from "stores/ui";
 
@@ -46,8 +45,7 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       visitorId: "",
-      h5Url: "https://m.b9mega1.com/",
-      hasUpdatedOneSignal: false
+      h5Url: "https://m.b9mega1.com/"
     };
   },
   actions: {
@@ -182,7 +180,7 @@ export const userStore = defineStore("userStore", {
         } else {
           token = SessionStorage.getItem("TOKEN");
         }
-        req.headers.TOKEN = token;
+        req.headers.token = token;
         return req;
       });
       eventapi.interceptors.request.use(async (req) => {
@@ -192,9 +190,10 @@ export const userStore = defineStore("userStore", {
         } else {
           token = SessionStorage.getItem("TOKEN");
         }
-        req.headers.TOKEN = token;
+        req.headers.token = token;
         return req;
       });
+      this.token = isAndroid() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -231,13 +230,6 @@ export const userStore = defineStore("userStore", {
           this.currentDeposit = parseFloat(currentDeposit);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
-
-          if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
-            OneSignal.login(this.nickName);
-            OneSignal.User.addTag("user_name", this.nickName);
-            OneSignal.User.addTag("VIP", this.vip);
-            this.hasUpdatedOneSignal = true;
-          }
 
           if (evip) {
             var exclusive = JSON.parse(evip);
@@ -280,7 +272,6 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       const ui = useUI();
-      this.token = token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
         ui.showLoggedIn();
@@ -293,12 +284,6 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
-
-        this.hasUpdatedOneSignal = false;
-
-        if (isAndroid() && OneSignal !== undefined) {
-          OneSignal.logout();
-        }
 
         location.href = "/";
       });

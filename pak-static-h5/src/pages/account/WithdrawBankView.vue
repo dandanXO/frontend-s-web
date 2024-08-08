@@ -62,17 +62,20 @@
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
-
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <span>+添加虚拟币账户</span>
         </div> -->
+
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
+          <span>+ {{ $t("btn.addBankCard") }}</span>
+        </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
           <span>+ {{ $t("btn.addVirtualWallet") }}</span>
         </div>
-
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
-          <span>+ {{ $t("btn.addBankCard") }}</span>
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
+          <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
+          <span>+ {{ $t("btn.addCrypto") }}</span>
         </div>
 
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
@@ -114,7 +117,7 @@
       </template>
 
       <div v-if="bankCardList[CRYPTO].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(CRYPTO)">
-        <div class="bank-detail-type">虚拟账户</div>
+        <div class="bank-detail-type">{{ t("form.cryptoAccount") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[CRYPTO] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[CRYPTO]">
@@ -129,7 +132,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>dd卡号：</div>
+              <div>{{ t("form.cryptoAccount") }}:&nbsp;</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -371,7 +374,7 @@ onActivated(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        // width: 47.5%;
+        width: 47.5%;
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         padding: 12px 5px;
         border-radius: 8px;
@@ -379,7 +382,7 @@ onActivated(() => {
         font-size: 1.15rem;
         white-space: nowrap;
         font-weight: 500;
-        flex: 1;
+        // flex: 1;
         //   font-weight: 500;
 
         .bank-bind-img {
@@ -466,6 +469,7 @@ onActivated(() => {
         color: #3dff47;
         font-size: 1rem;
         font-weight: 400;
+        display: none;
       }
     }
   }

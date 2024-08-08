@@ -5,16 +5,16 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
-import { getVisitorId } from "boot/utils";
+import { getVisitorId, isAndroid } from "boot/utils";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
-//test-update
 import { userStore } from "stores/index";
 import * as _ from "lodash";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -25,7 +25,6 @@ export default defineComponent({
     const $q = useQuasar();
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
-    const channelValue = ref("");
     const store = userStore();
 
     const checkSID = () => {
@@ -134,6 +133,114 @@ export default defineComponent({
       console.error("File error: " + error.code);
     };
 
+    const channelValue = ref("");
+    const affAppToken = ref("");
+
+    const initAdjustEventTrack = () => {
+      if (isAndroid()) {
+        //Android App.
+        console.log("Init Adjust Sdk");
+        console.log(affAppToken.value);
+
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+        adjustConfig.setAttributionCallbackListener(function (e) {
+          console.log("setAttributionCallbackListener");
+          console.log(e);
+        });
+
+        //TESTING ONLY.
+        // Adjust.getSdkVersion(function(version){
+        //   alert(version);
+        //   alert(AdjustConfig.EnvironmentProduction);
+        //   alert(AdjustConfig.LogLevelVerbose);
+        //
+        //   var adjEve = new AdjustEvent("123456");
+        //   alert(adjEve);
+        // })
+
+        Adjust.create(adjustConfig);
+        setTimeout(() => {
+          Adjust.getGoogleAdId(function (googleid) {
+            console.log("Google AdID");
+            console.log(googleid);
+            if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
+              (async () => {
+                Adjust.getAdid(function (adid) {
+                  console.log("Attribution 2");
+                  console.log(adid);
+                  store.aaid = adid;
+                  trackAppStartEvent();
+                });
+              })();
+            } else {
+              store.googleadid = googleid;
+              trackAppStartEvent();
+            }
+          });
+        }, 100);
+      } else {
+        //Normal WEb / H5 / iOS WEbclip.
+        console.log("Init Web Adjust");
+        console.log(affAppToken.value);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.initSdk({
+          appToken: affAppToken.value,
+          environment: "production",
+          attributionCallback: function (e, attribution) {
+            // e: internal event name, can be ignored
+            // attribution: details about the changed attribution
+            console.log("CALLBACK");
+            console.log(attribution);
+            store.aaid = attribution && attribution.adid ? attribution.adid : "";
+          }
+        });
+        setTimeout(() => {
+          const attribution = AdjustWeb.getAttribution();
+          console.log("Web Adid");
+          console.log(attribution);
+          store.aaid = attribution ? attribution.adid : "";
+        }, 500);
+      }
+    };
+
+    const trackAppStartEvent = () => {
+      // debugger;
+      if (ui.adjust_open_app_event) {
+        var adjustEvent = new AdjustEvent(ui.adjust_open_app_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
+    const trackH5Affiliate = () => {
+      var affiliateCode = "4DF2C4";
+
+      // sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((ret) => {
+        const res = ret.data;
+        if (res.code === 0) {
+          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          if (res.data.adjust_register_event) {
+            ui.adjust_register_event = res.data.adjust_register_event;
+          }
+          if (res.data.adjust_open_app_event) {
+            ui.adjust_open_app_event = res.data.adjust_open_app_event;
+          }
+          if (res.data.adjust_register_fail_event) {
+            ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
+          }
+          if (res.data.adjust_click_register_event) {
+            ui.adjust_click_register_event = res.data.adjust_click_register_event;
+          }
+          affAppToken.value = res.data.adjust_app_token;
+          initAdjustEventTrack();
+          // alert(affAppToken.value);
+        }
+      });
+    };
+
     const onDeviceReady = () => {
       // Get the file system
       window.resolveLocalFileSystemURL(
@@ -154,6 +261,30 @@ export default defineComponent({
                   if (json && json.channel) {
                     sessionStorage.setItem("AFFILIATE_CODE", json.channel);
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
+                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((ret) => {
+                      const res = ret.data;
+                      if (res.code === 0) {
+                        // debugger;
+                        sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+                        if (res.data.adjust_register_event) {
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
+                        if (res.data.adjust_open_app_event) {
+                          ui.adjust_open_app_event = res.data.adjust_open_app_event;
+                        }
+                        if (res.data.adjust_register_fail_event) {
+                          ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
+                        }
+                        if (res.data.adjust_click_register_event) {
+                          ui.adjust_click_register_event = res.data.adjust_click_register_event;
+                        }
+                        // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+                        // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        affAppToken.value = res.data.adjust_app_token;
+                        initAdjustEventTrack();
+                        // alert(affAppToken.value);
+                      }
+                    });
                   }
                 };
 
@@ -168,6 +299,24 @@ export default defineComponent({
       );
     };
 
+    const getOnlineStatApi = async () => {
+      // console.log("Ok Online.");
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+      const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId;
+      console.log(theSid);
+
+      if (theSid) {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
+            way: way,
+            sid: theSid,
+            siteCode: "th1"
+          })
+        );
+      }
+    };
+
     onMounted(() => {
       checkSID();
       initCsWeb();
@@ -176,13 +325,20 @@ export default defineComponent({
       // initListenApp();
       // getCSA();
 
-      document.addEventListener(
-        "deviceready",
-        () => {
-          onDeviceReady();
-        },
-        false
-      );
+      if (isAndroid()) {
+        document.addEventListener(
+          "deviceready",
+          () => {
+            onDeviceReady();
+          },
+          false
+        );
+      } else {
+        trackH5Affiliate();
+      }
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
   }
 });

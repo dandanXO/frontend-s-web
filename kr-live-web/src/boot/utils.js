@@ -1,6 +1,8 @@
 import { Platform, Notify } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { i18nStore } from "src/router/language";
+import daysjs from 'dayjs';
 
 export const MAIN = "MAIN";
 
@@ -158,3 +160,19 @@ export const successNotify = (message) => {
     icon: "check_circle_outline"
   });
 }
+
+export const getLocaleDateTime = (dateTimeStr, isIncludeTime = false) => {
+  const { languageVal } = i18nStore();
+
+  if(languageVal === 'kr') {
+    return daysjs(dateTimeStr).locale('ko').format(isIncludeTime ? "LLL" : "LL");
+  }
+
+  if(languageVal === 'en') {
+    return isIncludeTime ? daysjs(dateTimeStr).format('YYYY-MM-DD hh:mm A') : daysjs(dateTimeStr).format('YYYY-MM-DD');
+  }
+
+  return daysjs(dateTimeStr).locale('ko').format(isIncludeTime ? "LLL" : "LL");
+}
+
+export const formatNumberComma = (amt) => `${amt}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')

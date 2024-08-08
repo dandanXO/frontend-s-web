@@ -93,14 +93,25 @@
             "
           ></div>
         </div>
+        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'lh-cs2-blast-2024'" />
         <div
           class="inner"
           :style="{
-            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh1-slot-lucky8' ? '#E7F1FD' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh1worldcup' || selectedPromo?.promoCode === 'lh1worldcupdota2' ? '#E7F1FD' : '',
+            backgroundColor:
+              selectedPromo?.promoCode === 'lh1worldcup' ||
+              selectedPromo?.promoCode === 'lh1worldcupdota2' ||
+              selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
+              selectedPromo?.promoCode === 'lh-official-gift' ||
+              selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
+              selectedPromo?.promoCode === 'lh-nba24-match' ||
+              selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
+              selectedPromo?.promoCode === 'lh1-olympic-checkin'
+                ? '#E7F1FD'
+                : selectedPromo?.promoCode === 'lh-sport-zhongchao'
+                  ? '#F5F6F8'
+                  : selectedPromo?.promoCode === 'lh-lpl-summer24'
+                    ? '#1D1D1E'
+                    : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
@@ -119,6 +130,7 @@
               selectedPromo.promoCode === 'lh1-aijiasu' ||
               selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
@@ -133,9 +145,10 @@
               eSport: selectedPromo.promoType?.toLowerCase() === 'esport',
               fish: selectedPromo.promoType?.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType?.toLowerCase() === 'slot game',
+              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
             }"
-            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual'"
+            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
@@ -164,58 +177,58 @@
 import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
-import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 
-import HotPromotion from '@/components/HotPromotion'
+import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
+import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const isDark = useDark();
 
     const store = userStore();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
-      promoList: [],
+      promoList: []
     });
     const promoTypes = ref([
-      { code:"ALL", img: 'all', label: '全站优惠' },
-      { code: "FTD", img: 'deposit', label: '新人优惠'},
-      { code: "ESPORT", img: 'esport', label: '电竞优惠'},
-      { code: "SPORT", img: 'sport', label: '体育优惠'},
-      { code: "LIVE CASINO", img: 'live', label: '真人优惠'},
-      { code: "POKER", img: 'poker', label: '棋牌优惠'},
+      { code: "ALL", img: "all", label: "全站优惠" },
+      { code: "FTD", img: "deposit", label: "新人优惠" },
+      { code: "ESPORT", img: "esport", label: "电竞优惠" },
+      { code: "SPORT", img: "sport", label: "体育优惠" },
+      { code: "LIVE CASINO", img: "live", label: "真人优惠" },
+      { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "DAILY", img: 'daily', label: '日常优惠'},
-      { code: "OTHER", img: 'slot', label: '其他优惠'},
-
-
+      { code: "DAILY", img: "daily", label: "日常优惠" },
+      { code: "OTHER", img: "slot", label: "其他优惠" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if(route.query && route.query?.name && store.token){
+      if (route.query && route.query?.name) {
         return true;
       }
       return false;
-    })
+    });
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
 
-    const countDay= ref(5);
+    const countDay = ref(5);
     const euroCupStartDate = moment("2024-06-15");
-    countDay.value= euroCupStartDate.diff(moment(),'days');
-    if( countDay.value <= 0 ){
+    countDay.value = euroCupStartDate.diff(moment(), "days");
+    if (countDay.value <= 0) {
       countDay.value = 0;
     }
 
@@ -226,36 +239,37 @@ export default defineComponent({
     //     isPromoDetail.value = route.query.name
     //   }
     // });
-    const loadBanner = () => {
-      loadPromoBanner("PROMO").then((res) => {
-        if (res.code === 0) {
-          banner.value = res.data[0]
-        } else {
-          ElMessage.error(res.message)
-        }
-      })
-    }
+    // const loadBanner = () => {
+    //   loadPromoBanner("PROMO").then((res) => {
+    //     if (res.code === 0) {
+    //       banner.value = res.data[0]
+    //     } else {
+    //       ElMessage.error(res.message)
+    //     }
+    //   })
+    // }
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        ElMessageBox.alert('请登录后再操作', '系统提示', {
-          // if you want to disable its autofocus
-          // autofocus: false,sd
-          center: true,
-          confirmButtonText: '确认',
-          showClose: false,
-          buttonSize: 'large'
-        }).then(() => {
-          // router.push('/login');
-          store.loginPageVisible = true
-        })
-        return
-      } else {
-        if (promo.redirectUrl.includes("page-vip")) {
+      // if (!store.token) {
+      //   ElMessageBox.alert("请登录后再操作", "系统提示", {
+      //     // if you want to disable its autofocus
+      //     // autofocus: false,sd
+      //     center: true,
+      //     confirmButtonText: "确认",
+      //     showClose: false,
+      //     buttonSize: "large"
+      //   }).then(() => {
+      //     // router.push('/login');
+      //     store.loginPageVisible = true;
+      //   });
+      //   return;
+      // } else {
+      // }
+      if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
           router.push("/privilege/invite");
         } else {
-          router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+          router.push({ name: "promotion", query: { name: promo.redirectUrl } });
           // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
           //   router.push({name: 'promotion', query: {name: route.query.name}})
           // } else {
@@ -263,11 +277,10 @@ export default defineComponent({
           // }
           // isPromoDetail.value = true;
 
-          console.log(promo,'promo')
-          selectedPromo.value = promo
+          console.log(promo, "promo");
+          selectedPromo.value = promo;
         }
-      }
-    }
+    };
 
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -278,44 +291,48 @@ export default defineComponent({
 
       promoTabActive.value = type;
       if (type !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
-          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
+        filteredArray.value = promoState.promoList.filter(function (promo) {
+          return promo.promoType.toLowerCase().split(",").includes(type.toLowerCase());
         });
       } else {
-        filteredArray.value = promoState.promoList
+        filteredArray.value = promoState.promoList;
       }
     };
 
     const loadAll = () => {
-      loadPromo().then((res) => {
-        if(res.code === 0) {
-          if(promoState.promoList.length === 0){
-            promoState.promoList.push(...res.data);
-          }
+      loadPromo()
+        .then((res) => {
+          if (res.code === 0) {
+            if (promoState.promoList.length === 0) {
+              promoState.promoList.push(...res.data);
+            }
 
-          res.data.forEach(element => {
-            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            // } else {
-            if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
-              if (element.redirectUrl === 'lh1-invite') {
-                showPromoDetails(element)
+            res.data.forEach((element) => {
+              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+              //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              // } else {
+              if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
+                if (element.redirectUrl === "lh1-invite") {
+                  showPromoDetails(element);
+                }
               }
-            }
-            if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-              if (element.redirectUrl === 'lh1-football-fight') {
-                showPromoDetails(element)
+              if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
+                if (element.redirectUrl === "lh1-football-fight") {
+                  showPromoDetails(element);
+                }
               }
-            }
-            if (element.redirectUrl === route.query.name) {
-              showPromoDetails(element)
-            }
-            // }
-          });
-        }
-      }).catch((e) => { console.log("error", e); });
-      switchPromoType(promoState.active)
-    }
+              if (element.redirectUrl === route.query.name) {
+                showPromoDetails(element);
+              }
+              // }
+            });
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+      switchPromoType(promoState.active);
+    };
 
     const getPromoLabel = (labelType) => {
       switch (labelType) {
@@ -336,15 +353,19 @@ export default defineComponent({
       }
     };
     onMounted(() => {
+      //COMMENT: I GUESS We not Using This So I Remove it.
       // loadBanner();
       loadAll();
     });
 
-    watch(() => route.query.name, () => {
-      if (route.query.name) {
-        loadAll();
+    watch(
+      () => route.query.name,
+      () => {
+        if (route.query.name) {
+          loadAll();
+        }
       }
-    });
+    );
 
     return {
       promoState,
@@ -360,8 +381,8 @@ export default defineComponent({
       getPromoLabel,
       countDay,
       isDark
-    }
-  },
+    };
+  }
 });
 </script>
 
@@ -875,6 +896,17 @@ export default defineComponent({
           // &.slot {
           //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
           // }
+          &.olympicCheckin {
+            border: 1px solid #acd4f6;
+            border-radius: 10px;
+            padding: 10px 10px 10px 30px;
+            background: #f2f8fe;
+            max-width: 1200px;
+            margin: 0 auto;
+            img:nth-child(1) {
+              padding: 0;
+            }
+          }
           .game-title {
             color: #ffd800;
             margin: 30px auto 50px;
@@ -979,11 +1011,12 @@ export default defineComponent({
 
           .type-list {
             > img {
-              filter: brightness(0) saturate(100%) invert(58%) sepia(83%) saturate(350%) hue-rotate(135deg) brightness(100%) contrast(93%);
+              filter: brightness(0) saturate(100%) invert(58%) sepia(83%) saturate(350%) hue-rotate(135deg)
+                brightness(100%) contrast(93%);
             }
 
             .type-item {
-              background: #394A65;
+              background: #394a65;
               box-shadow: none;
 
               &.active,
@@ -994,7 +1027,8 @@ export default defineComponent({
 
               &:not(&.active) {
                 img {
-                  filter: brightness(0) saturate(100%) invert(70%) sepia(87%) saturate(444%) hue-rotate(140deg) brightness(83%) contrast(87%);
+                  filter: brightness(0) saturate(100%) invert(70%) sepia(87%) saturate(444%) hue-rotate(140deg)
+                    brightness(83%) contrast(87%);
                 }
               }
 
@@ -1031,7 +1065,7 @@ export default defineComponent({
 
               .promo-details {
                 .front-title {
-                  color: #2AA6B8;
+                  color: #2aa6b8;
                 }
 
                 .front-sub {

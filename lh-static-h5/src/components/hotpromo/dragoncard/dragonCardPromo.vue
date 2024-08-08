@@ -171,7 +171,14 @@ import { eventapi } from "boot/axios";
 // import { tigerCardInit, getLeaderboard, getMemberCard, giveCardToFriend, synthesisCard } from "@/api/promo/tigerCard";
 // import { ElMessage } from "element-plus";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores/index";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+const store = userStore();
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const cardInfo = reactive({
@@ -231,6 +238,29 @@ const loadRanking = () => {
 const isPageLoading = ref(false);
 const pageLoadingText = ref("");
 const getNewTigerCard = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正领取龙卡";
   eventapi.post("/tigerCard/getMemberCard", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
@@ -239,19 +269,15 @@ const getNewTigerCard = () => {
       isCardModal.value = true;
       cardWon.value = res.data.cardType;
       isPageLoading.value = false;
-      $q.notify({
-        color: "positive",
-        position: "top",
+      notify({
+        type: "success",
         message: "已领取龙卡",
-        icon: "check_circle_outline"
       });
       pageInit();
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
+      notify({
+        type: "error",
         message: res.message,
-        icon: "check_circle_outline"
       });
     }
     isPageLoading.value = false;
@@ -259,6 +285,29 @@ const getNewTigerCard = () => {
 };
 
 const compoundCard = () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
   eventapi.post("/tigerCard/synthesisCard", qs.stringify({ promoCode: "lh1-dragon-card" })).then((res) => {
@@ -315,6 +364,9 @@ const isGiftModal = ref(false);
 const isCardModal = ref(false);
 const cardWon = ref("");
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   pageInit();
   loadRanking();
 });
@@ -365,6 +417,29 @@ const resetRegForm = (formEl) => {
   realNameRef.value.resetValidation();
 };
 const submitRegisterForm = async () => {
+  if (!store.token) {
+    $q.dialog({
+        class: "q-px-md q-pt-md",
+        title: "系统提示",
+        message: "请登录后再操作",
+        ok: {
+          push: true,
+          color: 'primary',
+          label: "去登录",
+          tabindex: 1
+        },
+        cancel: {
+          push: true,
+          color: 'warning',
+          label: "取消",
+          tabindex: 0
+        },
+        persistent: true,
+      }).onOk(() => {
+        router.push('/login');
+      })
+      return
+  }
   typeRef.value.validate();
   friendLoginNameRef.value.validate();
   realNameRef.value.validate();
@@ -376,19 +451,15 @@ const submitRegisterForm = async () => {
     form.promoCode = "lh1-dragon-card";
     eventapi.post("/tigerCard/giveCardToFriend", qs.stringify(form)).then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "成功",
-          icon: "check_circle_outline"
         });
         isSubmitting.value = false;
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: res.message,
-          icon: "report_problem"
         });
       }
     });

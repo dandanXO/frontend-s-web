@@ -94,28 +94,6 @@
 
         <InputRowGrid>
           <template #fields>
-            <!-- <InputField :label="$t('form.virtualWallet')"> -->
-            <InputField :label="$t('bankCard.bankAccountNum')">
-              <template #input>
-                <q-input
-                  outlined
-                  clearable
-                  ref="cardNumberRef"
-                  :placeholder="$t('bankCard.pleaseEnterCardAccount')"
-                  v-model="bankCardInfo.cardNumber"
-                  hide-bottom-space
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterCardAccount'),
-                    (val) => (val && val.length >= 16) || $t('bankCard.bankCardMust16NumberandAbove')
-                  ]"
-                ></q-input>
-              </template>
-            </InputField>
-          </template>
-        </InputRowGrid>
-
-        <InputRowGrid>
-          <template #fields>
             <InputField :label="$t('bankCard.nameofCardAcc')">
               <template #input>
                 <q-input
@@ -127,6 +105,29 @@
                   v-model="bankCardInfo.cardAccount"
                   hide-bottom-space
                   :rules="[(val) => (val && val.length > 0) || $t('bankCard.insertCardAccName')]"
+                ></q-input>
+              </template>
+            </InputField>
+          </template>
+        </InputRowGrid>
+
+        <InputRowGrid>
+          <template #fields>
+            <!-- <InputField :label="$t('form.virtualWallet')"> -->
+            <InputField :label="$t('bankCard.bankAccountNum')">
+              <template #input>
+                <q-input
+                  outlined
+                  clearable
+                  ref="cardNumberRef"
+                  :placeholder="$t('bankCard.pleaseEnterCardAccount')"
+                  v-model="bankCardInfo.cardNumber"
+                  hide-bottom-space
+                  type="number"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterCardAccount'),
+                    (val) => (val && val.length >= 16) || $t('bankCard.bankCardMust16NumberandAbove')
+                  ]"
                 ></q-input>
               </template>
             </InputField>

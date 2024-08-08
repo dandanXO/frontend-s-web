@@ -17,7 +17,6 @@
         <span v-else>
           <span v-if="showBalance" class="card-panel-num">
             <span v-formatter="{data: balance, type: 'money'}" />
-            {{ returnCurrency() }}
           </span>
           <span v-else>****</span>
           <el-icon
@@ -84,13 +83,13 @@
           {{ $t('message.singleLimit') }} :
           {{
             formatMoney(selectedWithdrawalMethod.withdrawMin) +
-              ' - ' +
-              formatMoney(selectedWithdrawalMethod.withdrawMax)
+              ' 원 - ' +
+              formatMoney(selectedWithdrawalMethod.withdrawMax) + ' 원'
           }}
         </div>
         <div v-if="selectedWithdrawalMethod.withdrawMaxAmount">
           {{ $t('message.withdrawalToday') }} :
-          {{ formatMoney(selectedWithdrawalMethod.withdrawMaxAmount) }}
+          {{ formatMoney(selectedWithdrawalMethod.withdrawMaxAmount) + ' 원'}}
         </div>
         <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
           {{ $t('message.remaining') }} :
@@ -406,7 +405,7 @@ const returnCurrency = () => {
   } else if (siteId === 8 || siteId === '8') {
     return "VNDP"
   } else if (siteId === 10 || siteId === '10') {
-    return "₩"
+    return "원"
   } else {
     return "RMB"
   }

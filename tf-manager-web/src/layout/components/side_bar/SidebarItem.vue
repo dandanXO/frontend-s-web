@@ -44,6 +44,7 @@
           :is-collapse="isCollapse"
           :is-first-level="false"
           :base-path="resolvePath(child.path)"
+          :has-new-user="hasNewUser"
           class="nest-menu"
         />
       </template>
@@ -79,6 +80,10 @@ export default defineComponent({
     basePath: {
       type: String,
       required: true
+    },
+    hasNewUser: {
+      type: Boolean,
+      required: false
     }
   },
   components: {
@@ -100,6 +105,7 @@ export default defineComponent({
       autoWithdraw: 'AutoWithdraw Under review',
       upperLevelDeposit: ['Deposit Management'],
       financeFeedback: 'Finance Feedback',
+      member: 'Member List'
     })
 
     const alwaysShowRootMenu = computed(() => {
@@ -157,7 +163,7 @@ export default defineComponent({
         withdrawDate: [defaultStartDate, defaultEndDate]
       }
       query.withdrawDate = query.withdrawDate.join(',');
-      query.memberType = "NORMAL,TEST,OUTSIDE";
+      query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
       return query;
     }
 
@@ -270,6 +276,13 @@ export default defineComponent({
       }
     }
 
+    const checkNewUser = () => {
+      const menuItem = props.item.name;
+      if (menu.member === menuItem) {
+        hasTips.value = props.hasNewUser
+      }
+    }
+
     const resolvePath = (routePath) => {
       if (isExternal(routePath)) {
         return routePath;
@@ -283,6 +296,8 @@ export default defineComponent({
     onMounted(async () => {
       checkTips();
     })
+
+    watch(() => props.hasNewUser, checkNewUser)
 
     return {
       alwaysShowRootMenu,

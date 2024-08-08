@@ -104,7 +104,7 @@
     </div>
     <div class="table-footer">
       <span style="margin-right:20px;">
-        {{ t('fields.totalWithdraw') }}: $
+        {{ t('fields.totalWithdraw') }}:
         <span v-formatter="{data: page.totalWithdraw, type: 'money'}" />
       </span>
     </div>
@@ -288,7 +288,7 @@ const returnCurrency = () => {
   } else if (siteId === 8 || siteId === '8') {
     return "VNDP"
   } else if (siteId === 10 || siteId === '10') {
-    return "₩"
+    return "원"
   } else {
     return "RMB"
   }

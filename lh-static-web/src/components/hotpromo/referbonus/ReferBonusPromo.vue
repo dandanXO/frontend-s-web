@@ -55,14 +55,15 @@ import { onMounted, ref } from "vue";
 import HotPromotionNav from "@/components/HotPromotionNav.vue";
 import VueQrious from "vue-qrious";
 import { getReferralLink } from "@/api/personal/share";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 
 const referralLink = ref("referralLink");
 const getReferral = () => {
   getReferralLink()
     .then((res) => {
       if (res.code === 0) referralLink.value = "https://" + location.hostname + `/refer/${res.data}`;
-      else ElMessage.error(res.message)
+      else notify.error(res.message)
     })
     .catch((err) => {
       console.log(err);
@@ -72,7 +73,7 @@ const getReferral = () => {
 const copyLink = () => {
   navigator.clipboard.writeText(referralLink.value);
 
-  ElMessage({
+  notify({
     message: `复制成功`,
     type: "success"
   });
@@ -89,6 +90,13 @@ const downloadQRCode = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getReferral();
 });
 </script>

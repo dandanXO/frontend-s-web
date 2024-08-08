@@ -910,7 +910,7 @@
                 <h2 class="row items-center justify-between">
                   电子游戏
 
-                  <div class="row items-center justify-center">
+                  <div class="row items-center justify-center" v-if="!isSlotSlideBegin && !isSlotSlideEnd">
                     <q-btn
                       flat
                       size="xs"
@@ -1638,32 +1638,32 @@ export default defineComponent({
       {
         name: "esport",
         icon: "slide-esport-svg.svg",
-        label: "电竞赛事",
-        labelact: "电竞赛事",
+        label: "电竞",
+        labelact: "电竞",
         mb: 0,
         gap: 3
       },
       {
         name: "sport",
         icon: "slide-sport-svg.svg",
-        label: "体育赛事",
-        labelact: "体育赛事",
+        label: "体育",
+        labelact: "体育",
         mb: 0,
         gap: 3
       },
       {
         name: "live",
         icon: "slide-live-svg.svg",
-        label: "真人娱乐",
-        labelact: "真人娱乐",
+        label: "真人",
+        labelact: "真人",
         mb: 0,
         gap: 3
       },
       {
         name: "slot",
         icon: "slide-slot-svg.svg",
-        label: "电子游艺",
-        labelact: "电子游艺",
+        label: "电子",
+        labelact: "电子",
         mb: 0,
         gap: 3
       },
@@ -1678,8 +1678,8 @@ export default defineComponent({
       {
         name: "lottery",
         icon: "slide-lottery-svg.svg",
-        label: "彩票游戏",
-        labelact: "彩票游戏",
+        label: "彩票",
+        labelact: "彩票",
         mb: 0,
         gap: 3
       },

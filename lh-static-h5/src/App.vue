@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <notification-wrapper />
 </template>
 
 <script>
@@ -14,8 +15,13 @@ import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
 import { useLocalStorage } from "@vueuse/core";
 
+import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
+
 export default defineComponent({
   name: "App",
+  components: {
+    NotificationWrapper
+  },
   setup() {
     var qs = require("qs");
     const store = userStore();
@@ -36,7 +42,7 @@ export default defineComponent({
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
         store.visitorId = visitorId;
 
-        if(store.isNotAppPromo()) {
+        if (store.isNotAppPromo()) {
           console.log("SID");
           console.log(visitorId);
 
@@ -56,7 +62,7 @@ export default defineComponent({
     let CSAUrl;
 
     const getCSA = () => {
-      if(store.isNotAppPromo()) {
+      if (store.isNotAppPromo()) {
         cached
           .get("customerAddress", () =>
             api.get("/config/customerAddress/v2").then((res) => {
@@ -119,11 +125,11 @@ export default defineComponent({
       //CsClient Event Listener.
       window.addEventListener("message", function (event) {
         // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
-          // if (event.data == 'sess_timeout') {
-          //   router.push({ path: "/" });
-          // }
-        }
+        // if (typeof event.data === "string") {
+        // if (event.data == 'sess_timeout') {
+        //   router.push({ path: "/" });
+        // }
+        // }
       });
     };
 
@@ -133,34 +139,34 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam && store.isNotAppPromo()) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: sidParam,
             siteCode: "lh1"
-          }
-        });
+          })
+        );
       }
     };
 
     const getAffiliateByDomain = () => {
       var host = window.location.host;
       // host = "www.lh56917.com";
-      if(store.isNotAppPromo()) {
+      if (store.isNotAppPromo()) {
         api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
           console.log(res);
           if (res.code === 0 && res.data !== "") {
             // alert(res.data)
             var agentCode = res.data;
-            sessionStorage.setItem("AFFILIATE_CODE", agentCode)
+            sessionStorage.setItem("AFFILIATE_CODE", agentCode);
           }
         });
       }
-
-    }
+    };
 
     onMounted(() => {
-      console.log("TEST 3")
+      console.log("TEST 3");
       checkSID();
       // initCsWeb();
       getCSA();

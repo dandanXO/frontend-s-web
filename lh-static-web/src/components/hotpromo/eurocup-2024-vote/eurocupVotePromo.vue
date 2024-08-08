@@ -169,7 +169,7 @@
           <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
             <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
             <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
-            
+
 
           </div>
         </div>
@@ -191,11 +191,11 @@
 <script>
 import { onMounted, ref, defineComponent, reactive, computed } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeVote";
-import { ElMessage } from "element-plus";
 import { convertToCommaAmount } from "@/utils/utils"
 import { userStore } from "@/store/index"
 import { useLocalStorage } from "@vueuse/core";
 import moment from 'moment'
+import { useNotify } from "@/hooks/notify";
 
 
 export default defineComponent({
@@ -206,6 +206,7 @@ export default defineComponent({
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
     const store = userStore();
+    const notify = useNotify();
     const castVoteFormValidationRules = {
       votes: [
         {
@@ -251,7 +252,7 @@ export default defineComponent({
 
       await elForm.validate(async (valid) => {
         if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
-          ElMessage.error({
+          notify({
             type: "error",
             message: "投票次数不足"
           })
@@ -266,7 +267,7 @@ export default defineComponent({
           const res = await poolPrizeCastVote(params);
 
           if (res.code === 0) {
-            ElMessage.success({
+            notify({
               type: "success",
               message: "投票成功"
             })
@@ -280,7 +281,7 @@ export default defineComponent({
             },2000)
 
           } else {
-            ElMessage.error(res.message)
+            notify.error(res.message)
           }
 
           isSubmitting.value = false;
@@ -325,6 +326,13 @@ export default defineComponent({
     }
 
     onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
       loadVoteTeam();
     })
 
@@ -836,4 +844,3 @@ export default defineComponent({
   color: #ffffff;
 }
 </style>
-  

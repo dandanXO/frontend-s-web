@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper">
+  <div class="hot-matches-wrapper" v-if="hotMatches.length > 1">
     <div class="euro-countdown">
       <div class="euro-countdown-fly-01">
         <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
@@ -173,7 +173,7 @@
     <!--      </div>-->
     <!--    </div>-->
 
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" v-if="hotMatches.length > 1">
       <swiper
         :slides-per-view="1"
         :modules="modules"
@@ -346,7 +346,7 @@
         <template v-else>
           <img src="../assets/images/home/games/hashgame-icon.png" />
         </template>
-        <span :class="tab === 'hashgame' && 'active'" style="top:30px;">{{ $t("lang.menu_hashgame") }}</span>
+        <span :class="tab === 'hashgame' && 'active'" style="top: 30px">{{ $t("lang.menu_hashgame") }}</span>
       </div>
       <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
@@ -689,18 +689,30 @@
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
-      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@KAKA.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a
+        href="https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11"
+        target="_blank"
+        class="menu-item"
+      >
+        <img src="../assets/images/home/float-cs-01.png" />
+      </a>
+      <a href="mailto:kakagame1688@gmail.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
       <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
-      <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
+      <!-- <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a> -->
+      <a href="https://t.me/kakagamecskh247" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+      <a href="https://t.me/CSKHkakagame247" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>
       <a href="https://www.facebook.com/KAKAvnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
-      </a>
+      </a> -->
     </div>
   </div>
 
@@ -1168,7 +1180,6 @@ export default defineComponent({
       if (tab === "casual" || tab === "hashgame") {
         scrollToSlide("casual-lists");
       }
-
     };
 
     const onSlideChange = (swiper) => {
@@ -1594,7 +1605,8 @@ export default defineComponent({
         //   build: "1",
         //   version: "1.0"
         // }
-        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, ""));
+        console.log("Current Version:" + current_version);
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
@@ -2261,7 +2273,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
+    box-shadow: 0px -8px 8px 0px #e6c3c3 inset;
     background: rgba(252, 253, 254, 0.3);
     padding: 12px 6px;
     border-top-left-radius: 12px;
@@ -2307,9 +2319,9 @@ export default defineComponent({
 
 .download-top-container {
   padding: 8px 10px;
-  background: #1E212C;
-  border-bottom: 1px solid #FFFFFF66;
-  box-shadow: 0px 1.74px 3.47px 0px #0000001F;
+  background: #1e212c;
+  border-bottom: 1px solid #ffffff66;
+  box-shadow: 0px 1.74px 3.47px 0px #0000001f;
 
   .download-top-box {
     display: flex;
@@ -2465,7 +2477,9 @@ export default defineComponent({
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+  box-shadow:
+    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
+    0px 4px 10px 0px;
   font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
@@ -2698,7 +2712,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 20px 12px 15px;
       text-align: center;
-      color: #FD574C;
+      color: #fd574c;
       font-size: 2.2rem;
 
       .contentfonts {
@@ -2973,7 +2987,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
-          color: $font-4;
+          color: #000000;
         }
 
         .platform-subtitle {

@@ -710,7 +710,7 @@ const appVersionNo = ref(null);
 const getVersionNo = async () => {
   if (store.getDeviceType() == "ANDROID") {
     const info = await App.getInfo();
-    var current_version = info.version + "." + info.build;
+    var current_version = info.version;
     appVersionNo.value = current_version;
   } else if (store.getDeviceType() == "IOS") {
     appVersionNo.value = "iOS v0.3";

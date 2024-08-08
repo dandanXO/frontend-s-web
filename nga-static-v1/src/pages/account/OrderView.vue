@@ -46,7 +46,7 @@
             </div>
             <div class="order-subrow">
               <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT7(e.withdrawDate) }}</span>
+                <span class="txt-gray">{{ e.withdrawDate }}</span>
               </div>
               <div class="order-col">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
@@ -82,7 +82,7 @@
             </div>
             <div class="order-subrow">
               <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT7(e.depositDate) }}</span>
+                <span class="txt-gray">{{ e.depositDate }}</span>
               </div>
               <div class="order-col">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">

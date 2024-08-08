@@ -375,6 +375,9 @@ const recordPageControl = (direction) => {
 };
 
 onMounted(() => {
+  if (!store.hasToken()) {
+    return
+  }
   init();
   getPlatList();
 });

@@ -1,12 +1,13 @@
 <template>
   <div class="main-section">
-    <q-form class="login-form q-gutter-y-md rounded-borders q-pa-md" style="margin: 0px auto">
+    <q-form class="login-form q-gutter-y-xs rounded-borders q-pa-md q-ma-md" style="margin: 0px auto">
       <q-input
         class="login-input text-main"
         ref="loginNameRef"
-        filled
+        outlined
+        hide-bottom-space
         v-model="loginForm.loginName"
-        :label="$t('lang.input_username')"
+        :placeholder="$t('lang.input_username')"
         :rules="[
           (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
           (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
@@ -15,13 +16,18 @@
         color="white"
         autocomplete="username"
         clearable
-      ></q-input>
+      >
+        <template v-slot:prepend>
+          <q-icon name="person_outline" />
+        </template>
+      </q-input>
       <q-input
         class="login-input text-main"
         ref="passwordRef"
-        filled
+        outlined
+        hide-bottom-space
         v-model="loginForm.password"
-        :label="$t('lang.password')"
+        :placeholder="$t('lang.password')"
         :type="isPwd ? 'password' : 'text'"
         :rules="[(val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
         color="white"
@@ -31,15 +37,19 @@
         <template v-slot:append>
           <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
         </template>
+        <template v-slot:prepend>
+          <q-icon name="lock_open" />
+        </template>
       </q-input>
 
       <q-input
         ref="verificationRef"
         class="verification-input"
-        filled
+        outlined
+        hide-bottom-space
         type="text"
         v-model="loginForm.captchaCode"
-        :label="$t('lang.verification_code')"
+        :placeholder="$t('lang.verification_code')"
         :rules="[(val) => (val && val.length > 3) || $t('lang.input_code_empty')]"
         color="white"
         @keyup.enter="onSubmit"
@@ -53,51 +63,57 @@
       </q-input>
 
       <!-- label="Remember password" -->
-      <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
-        <q-checkbox
-          rounded
-          v-model="isCheckRmb"
-          :label="$t('lang.remember_me')"
-          size="md"
-          style="font-size: 14px"
-          checked-icon="task_alt"
-          unchecked-icon="highlight_off"
-          color="amber-9"
-        />
-      </div>
+      <!--      <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">-->
+      <!--        <q-checkbox-->
+      <!--          rounded-->
+      <!--          v-model="isCheckRmb"-->
+      <!--          :label="$t('lang.remember_me')"-->
+      <!--          size="md"-->
+      <!--          style="font-size: 14px"-->
+      <!--          checked-icon="task_alt"-->
+      <!--          unchecked-icon="highlight_off"-->
+      <!--          color="amber-9"-->
+      <!--        />-->
+      <!--      </div>-->
 
-      <div class="row justify-between items-center">
+      <div class="row items-center justify-end">
         <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}?</router-link>
 
-        <router-link class="forget-pwd-tip" to="/register">
-          {{ $t("lang.signup_now") }}
-        </router-link>
+        <!--        <router-link class="forget-pwd-tip" to="/register">-->
+        <!--          {{ $t("lang.signup_now") }}-->
+        <!--        </router-link>-->
+      </div>
+      <div class="login-btn-list">
+        <q-btn
+          class="common-large-btn login-btn"
+          @click.prevent="onSubmit"
+          :label="$t('lang.log_in')"
+          type="submit"
+          color="brand"
+          rounded
+          size="md"
+        />
+
+        <q-btn
+          v-if="!isIOS()"
+          class="common-large-btn line-login-btn"
+          @click="loginViaLine"
+          type="submit"
+          color="brand"
+          rounded
+          size="md"
+        >
+          <img src="../assets/images/common/line-official.svg" />
+          <span>LINE Login</span>
+        </q-btn>
+      </div>
+
+      <hr class="end-of-form-separator" />
+
+      <div class="create-account row justify-center">
+        <router-link class="forget-pwd-tip" to="/register">{{ $t("lang.signup_now") }}</router-link>
       </div>
     </q-form>
-    <div class="login-btn-list">
-      <q-btn
-        class="common-large-btn"
-        @click.prevent="onSubmit"
-        :label="$t('lang.log_in')"
-        type="submit"
-        color="brand"
-        rounded
-        size="md"
-      />
-
-      <q-btn
-        v-if="!isIOS()"
-        class="common-large-btn line-login-btn"
-        @click="loginViaLine"
-        type="submit"
-        color="brand"
-        rounded
-        size="md"
-      >
-        <img src="../assets/images/common/line-official.svg" />
-        <span>LINE Login</span>
-      </q-btn>
-    </div>
   </div>
 </template>
 
@@ -142,7 +158,7 @@ export default defineComponent({
     const clientSecret = isH5() ? "6625f545954c947d95864a7c9cc144d9" : "4e90ef3551da974394de3486261f0b7f";
     const redirectUrl = isH5()
       ? encodeURI(`https://p8s1-files.camestible.com/login`)
-      : encodeURI(`https://jolly88.com/login`);
+      : encodeURI(`https://jolly8858.com/login`);
     // const redirectUrl = encodeURI(`http://192.168.79.63:9090/login`);
     const nonce = `jolly88`;
     const stateId = uuid.v1();
@@ -168,7 +184,7 @@ export default defineComponent({
         });
     };
 
-    const isCheckRmb = ref(false);
+    const isCheckRmb = ref(true);
 
     const checkRememberPwd = () => {
       const d = localStorage.getItem("userpass");
@@ -182,11 +198,9 @@ export default defineComponent({
 
     const onSubmit = () => {
       const appVer = appVersionNo.value;
-      const sidParam = store.visitorId;
       (async () => {
         loginNameRef.value.validate();
         passwordRef.value.validate();
-        // verificationRef.value.validate();
         $q.loading.show({
           message: t("lang.loading")
         });
@@ -197,7 +211,7 @@ export default defineComponent({
             .memberLogin({
               loginName: loginForm.loginName.trim(),
               password: loginForm.password,
-              sid: sidParam,
+              sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId,
               captchaCode: loginForm.captchaCode,
               codeId: loginForm.codeId,
               ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
@@ -261,7 +275,7 @@ export default defineComponent({
             if (res.data && res.data.access_token) {
               const siteId = process.env.SITEID;
               const accessToken = res.data.access_token;
-              const sidParam = store.visitorId;
+              const sidParam = store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId;
 
               (async () => {
                 var regDevice = Platform.is.mobile ? "H5" : "WEB";
@@ -360,6 +374,8 @@ export default defineComponent({
 
   .line-login-btn {
     background: $line-app;
+    width: 100%;
+    height: 50px;
 
     img {
       width: 28px;
@@ -386,12 +402,14 @@ export default defineComponent({
 
 .forget-pwd-tip {
   color: $info;
+  margin: 5px 0px;
 }
 
 .login-form {
   width: calc(100% - 12px);
   max-width: 600px;
   margin: 0 auto;
+  height: calc(100vh - 130px);
 }
 
 .mui-row {
@@ -414,5 +432,21 @@ export default defineComponent({
 
 .q-field--dark:not(.q-field--highlighted) .q-field__label {
   color: #979797;
+}
+
+.login-btn {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+}
+
+.end-of-form-separator {
+  margin: 15px 0px 0px;
+  border-color: #ffffff26;
+}
+
+.create-account {
+  margin: 20px 0px;
+  text-align: center;
 }
 </style>

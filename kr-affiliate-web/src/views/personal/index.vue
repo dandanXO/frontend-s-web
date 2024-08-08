@@ -82,7 +82,6 @@
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.balance')">
-                $
                 <span v-formatter="{data: balance, type: 'money'}" />
               </el-form-item>
             </el-row>
@@ -91,7 +90,6 @@
                 <Icon :icon="bookCoins20Filled" class="stats-icon" />
               </el-icon>
               <el-form-item style="display: flex" :label="t('fields.commissionBalance')">
-                $
                 <span v-formatter="{data: commissionBalance, type: 'money'}" />
               </el-form-item>
             </el-row>
@@ -284,7 +282,7 @@
                 :label="t('fields.shareRatio')"
               >
                 <div v-for="item in affInfo.shareRatio" :key="item.code">
-                  <el-row>{{ t('affiliateShareRatio.' + item.code) }} : {{ item.value }}</el-row>
+                  <el-row>{{ t('affiliateShareRatio.' + item.code) }} : {{ (item.value*100).toFixed(2) }}%</el-row>
                 </div>
               </el-form-item>
             </el-row>
@@ -1169,7 +1167,7 @@ onMounted(async () => {
 .affiliate-info {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 10px;
   margin-top: 10px;

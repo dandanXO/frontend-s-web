@@ -3,7 +3,6 @@
     <div class="form-wrapper">
       <div class="modal-body-wrap">
         <q-card-section class="modal-body-content">
-
           <ReminderText :reminderText="$t('lang.withdraw_reminder_text')" />
 
           <div class="withdrawalmethod">
@@ -80,7 +79,8 @@
                   (val) => !!parseDigitsWithComma(val) || '출금 금액을 입력해주세요',
                   (val) => parseDigitsWithComma(val) >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
                   (val) => parseDigitsWithComma(val) <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
-                  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || '출금 금액에는 소수점을 사용할 수 없습니다'
+                  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || '출금 금액에는 소수점을 사용할 수 없습니다',
+                  (val) => (isDivisibleBy10000(val)) || '출금 금액은 10,000 단위여야 합니다.'
                 ]" clearable>
                 <template v-slot:prepend>
                   <span style="z-index:1;font-size:16px;">
@@ -119,15 +119,15 @@
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_item') }}</span>
                 <span>：</span>
-                <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMin} 만 -
-                  ${selectedWithdrawalMethod.withdrawMax} 만` }}</span>
+                <span class="q-pa-xs">{{ `${formatNumberComma(selectedWithdrawalMethod.withdrawMin)} 원 -
+                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMax)} 원` }}</span>
               </template>
               <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
                 <span>{{
                   $t('lang.withdraw_withdraw_amount_per_day') }}</span>
                 <span>：</span>
                 <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMaxTimes}회 총
-                  ${selectedWithdrawalMethod.withdrawMaxAmount}억`
+                  ${formatNumberComma(selectedWithdrawalMethod.withdrawMaxAmount)}억`
                   }}
                 </span>
               </template>
@@ -183,10 +183,16 @@ import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import ReminderText from 'components/finance/ReminderText';
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { formatNumberComma } from "src/boot/utils";
 
 const $q = useQuasar();
 const { t } = useI18n();
 const store = userStore();
+const { realName, id } = storeToRefs(store);
+const router = useRouter();
+
 const imgURL = process.env.IMAGE_CDN;
 
 const isLoading = ref(false);
@@ -220,21 +226,54 @@ const withdrawAmountFormatted = ref('');
 
 const parseDigitsWithComma = (value) => {
   const withdrawAmount = value?.replace(/\$\s?|(,*)/g, '');
+  // console.log(withdrawAmount)
+  // console.log(selectedWithdrawalMethod.value.withdrawMin)
   return withdrawAmount;
 }
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g, "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const checkIsRealNameBinded = () => {
+  if (id.value && !realName.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '실명이 필요합니다',
+      icon: "report_problem"
+    });
+
+    router.push('/?page=personal/info');
+  }
+}
+
+watch(() => [realName.value, id.value], () => {
+  checkIsRealNameBinded();
+})
 
 watch(() => withdrawAmountFormatted.value, () => {
   const withdrawAmount = withdrawAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
   if (isNaN(withdrawAmount)) {
     withdrawInfo.amount = '';
   } else {
-    withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    withdrawAmountFormatted.value = formatNumberComma(withdrawAmount);
     withdrawInfo.amount = Number(withdrawAmount);
   }
 })
 
 watch(() => withdrawInfo.amount, () => {
-  withdrawAmountFormatted.value = `${withdrawInfo.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  withdrawAmountFormatted.value = formatNumberComma(withdrawInfo.amount);
 })
 
 const loadCards = () => {
@@ -250,8 +289,7 @@ const loadCards = () => {
 const updateWithdrawItem = (amt) => {
   const multiple = 10000;
   // 1원 = 10000;
-
-  withdrawAmountFormatted.value = `${Number(withdrawInfo.amount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  withdrawAmountFormatted.value = formatNumberComma(Number(withdrawInfo.amount) + (amt * multiple));
 }
 
 
@@ -380,6 +418,7 @@ const initWithdraw = () => {
 }
 
 onMounted(() => {
+  checkIsRealNameBinded();
   initWithdraw();
 });
 </script>

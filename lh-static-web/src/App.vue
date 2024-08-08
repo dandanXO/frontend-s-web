@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <notification-wrapper />
 </template>
 
 <script>
@@ -10,8 +11,14 @@ import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { uiStore } from "@/store/ui";
 import { loadAffiliateByDomain } from "@/api/index/promo";
+import { submitMemberStats } from "@/api/index/site";
+
+import NotificationWrapper from "@/components/notification/NotificationWrapper.vue";
 
 export default defineComponent({
+  components: {
+    NotificationWrapper
+  },
   setup() {
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
@@ -44,13 +51,13 @@ export default defineComponent({
       store.visitorId = sidParam;
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
-          params: {
-            way: "web",
-            sid: sidParam,
-            siteCode: "lh1"
-          }
-        });
+        const params = {
+          way: "web",
+          sid: sidParam,
+          siteCode: "lh1"
+        };
+
+        submitMemberStats(params);
       }
     };
 
@@ -62,11 +69,10 @@ export default defineComponent({
         if (res.code === 0 && res.data !== "") {
           // alert(res.data)
           var agentCode = res.data;
-          sessionStorage.setItem("AFFILIATE_CODE", agentCode)
+          sessionStorage.setItem("AFFILIATE_CODE", agentCode);
         }
       });
-
-    }
+    };
 
     onMounted(() => {
       checkSID();

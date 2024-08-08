@@ -2,10 +2,11 @@
   <div class="login-container">
     <q-form @submit="onSubmit">
       <div class="login-form-container">
-        <q-input ref="realNameRef" standout clearable v-model="regForm.loginName" placeholder="6-12个字符，包含大小写字母"
+        <q-input ref="realNameRef" standout clearable v-model="regForm.loginName" placeholder="6-11个字符，包含大小写字母"
                  lazy-rules :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
+            (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
+            (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
             validLoginName
           ]" color="white">
           <template v-slot:prepend>
@@ -170,6 +171,7 @@ import { useRoute, useRouter } from "vue-router";
 // import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -182,6 +184,7 @@ export default defineComponent({
     onActivated(() => {
       getCode();
     });
+    const notify = useNotify();
     const store = userStore();
     const verificationImg = ref("");
     const isValidName = () => {
@@ -347,11 +350,9 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
+                notify({
+                  type: "success",
                   message: "注册成功",
-                  icon: "check_circle_outline"
                 });
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -361,11 +362,9 @@ export default defineComponent({
 
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
+                notify({
+                  type: "error",
                   message: res.message,
-                  icon: "report_problem"
                 });
               }
               $q.loading.hide();
@@ -424,17 +423,15 @@ export default defineComponent({
     };
 
     const validLoginName = () => {
-      const namePattern = /^[a-zA-Z0-9_#+-]+$/;
+      const namePattern = /^[a-zA-Z0-9]+$/;
       return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
     };
 
     const onCaptchaSubmit = () => {
       if (!regForm.telephone) {
-        $q.notify({
-          color: "negative",
-          position: "top",
+        notify({
+          type: "error",
           message: "手机号码不能为空",
-          icon: "report_problem"
         });
         getInnerCode();
         return;
@@ -450,7 +447,7 @@ export default defineComponent({
         )
         .then((res) => {
           let message = res.message || "发送手机验证码成功",
-            color = "positive";
+            type = "success";
 
           if (res.code === 0) {
             showCaptchaDialog.value = false;
@@ -458,12 +455,12 @@ export default defineComponent({
             regForm.smsCodeId = res.data.codeId;
             // console.log(res.data.codeId);
           } else {
-            color = "negative";
+            type = "error";
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            notify({ message, type });
           }
 
           // console.log("onCaptchaSubmit", res);

@@ -66,10 +66,15 @@
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
-import { ElMessage } from "element-plus";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import { userStore } from "@/store";
+import { useNotify } from "@/hooks/notify";
+const store = userStore()
 
 const props = defineProps(["promoCode", "params"]);
+
+const notify = useNotify();
+
 const params = JSON.parse(props.params || "{}");
 const promoCode = ref(props.promoCode);
 const loadingClaim = ref(false);
@@ -82,7 +87,7 @@ const getAppDownloadUrl = () => {
       if (res.downloadPageUrl) {
         downloadUrl.value = res.downloadPageUrl;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((err) => {
@@ -103,13 +108,19 @@ const getPromotion = () => {
 
       if (res.code === 0) {
         const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
-        ElMessage.success(`恭喜中奖！获得：${claimedAmt}`);
+        notify({
+          type: 'red-packet',
+          message: "恭喜中奖！",
+          params: {
+            redPacket: claimedAmt
+          }
+        })
 
         store.getBalance();
 
         bonusOpened.value = true;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
         loadingClaim.value = false;
       }
     })

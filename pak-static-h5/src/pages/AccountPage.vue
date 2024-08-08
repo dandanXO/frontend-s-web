@@ -143,6 +143,8 @@
           <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
         </div> -->
       </q-form>
+
+      <!-- <MediaSettingsComponent /> -->
     </div>
   </q-page>
   <!-- <q-dialog width="100%" v-model="showCaptchaDialog">
@@ -645,6 +647,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import { t } from "src/boot/lang";
+// import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -733,7 +736,7 @@ const closeUserKYCDialog = (updateInfo) => {
   store.getMemberInfo().then(() => {
     loadInfo();
     userKYCDialog.value = false;
-    if(updateInfo.realName){
+    if (updateInfo.realName) {
       formDetail.realName = updateInfo.realName;
     }
   });
@@ -876,7 +879,7 @@ const appVersionNo = ref(null);
 const getVersionNo = async () => {
   if (store.getDeviceType() == "ANDROID") {
     const info = await App.getInfo();
-    var current_version = info.version + "." + info.build;
+    var current_version = info.version;
     appVersionNo.value = current_version;
   } else if (store.getDeviceType() == "IOS") {
     appVersionNo.value = "iOS v0.3";

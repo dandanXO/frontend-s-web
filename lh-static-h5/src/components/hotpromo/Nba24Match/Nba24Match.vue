@@ -71,7 +71,8 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="right">
-            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。 每日最高可获 2,888 元。
+            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。
+            每日最高可获 2,888 元。
           </div>
         </div>
         <table class="nba24-match-game-info-table">
@@ -215,21 +216,21 @@
           </div>
           <table class="record-table">
             <thead>
-            <tr>
-              <th>投票时间</th>
-              <th>参赛队伍</th>
-              <th>投票队伍</th>
-              <th>投票结果</th>
-            </tr>
+              <tr>
+                <th>投票时间</th>
+                <th>参赛队伍</th>
+                <th>投票队伍</th>
+                <th>投票结果</th>
+              </tr>
             </thead>
             <tbody>
-            <tr v-for="(record, index) in recordList" :key="index">
-              <td>{{ moment(record.createTime).format("MM-DD HH:mm") }}</td>
-              <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
-              <td>{{ displayTeamVictory(record) }}</td>
-              <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
-            </tr>
-            <!-- <tr>
+              <tr v-for="(record, index) in recordList" :key="index">
+                <td>{{ moment(record.createTime).format("MM-DD HH:mm") }}</td>
+                <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
+                <td>{{ displayTeamVictory(record) }}</td>
+                <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
+              </tr>
+              <!-- <tr>
               <td>2024-05-11 16:00</td>
               <td>老鷹 vs 火箭</td>
               <td>平局</td>
@@ -275,7 +276,10 @@ import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 import { useQuasar } from "quasar";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const tableRecordDialog = ref(false);
@@ -297,19 +301,15 @@ const handleSubmitVote = () => {
   submitNbaMatch(submitParam)
     .then((res) => {
       if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "投票成功！",
-          icon: "check_circle_outline"
+        notify({
+          type: "success",
+          message: "投票成功！"
         });
         getNbaMatchData();
       } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: res.message,
-          icon: "report_problem"
+        notify({
+          type: "error",
+          message: res.message
         });
       }
     })
@@ -318,7 +318,7 @@ const handleSubmitVote = () => {
     });
 };
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const displayTeamVictory = (record) => {
   if (record.teamChosen === "DRAW") return "平局";
   return record.teamChosen + "胜";
@@ -359,7 +359,12 @@ const getNbaMatchData = async () => {
   }));
 };
 
-onMounted(getNbaMatchData);
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+  getNbaMatchData();
+});
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {

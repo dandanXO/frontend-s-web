@@ -102,8 +102,11 @@ const AnnouncementComponent = markRaw(defineAsyncComponent(() =>
 const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/AddWithdrawBankCard.vue')
 ))
+const InquiryPage = markRaw(defineAsyncComponent(() =>
+  import('src/components/pageModalContent/inquiry/InquiryPage.vue')
+))
 const MessagesPage = markRaw(defineAsyncComponent(() =>
-  import('components/pageModalContent/MessagesPage.vue')
+  import('components/pageModalContent/message/MessagesPage.vue')
 ))
 const RegisterComponent = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/RegisterComponent.vue')
@@ -116,9 +119,6 @@ const TransitRecord = markRaw(defineAsyncComponent(() =>
 ))
 const MyPasswordChange = markRaw(defineAsyncComponent(() =>
   import('components/pageModalContent/MyPasswordChange.vue')
-))
-const MessageCompose = markRaw(defineAsyncComponent(() =>
-  import('components/pageModalContent/MessageCompose.vue')
 ))
 
 const pagesInfo = reactive([
@@ -146,37 +146,48 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "message",
-    page: "personal/messages",
-    info: 'lang.page_modal_message',
-    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: MessagesPage,
-    headerInfo: {
-      title: 'lang.page_modal_message',
-      description: "lang.page_modal_desc_text"
-    }
-  },
-  {
-    tabIndex: "message",
-    page: "personal/messages/create",
-    info: 'lang.page_modal_message_compose',
-    iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
-    component: MessageCompose,
-    headerInfo: {
-      title: 'lang.page_modal_message_compose',
-      description: "lang.page_modal_desc_text"
-    }
-  },
-  {
-    tabIndex: "message",
     page: "announcement",
     info: 'lang.page_modal_announcement',
-    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/loudspeaker-icon.svg"),
     component: AnnouncementComponent,
     headerInfo: {
       title: 'lang.page_modal_announcement',
       description: "lang.page_modal_desc_text"
     }
   },
+  {
+    tabIndex: "message",
+    page: "personal/inquiry",
+    info: 'lang.menu_inquiry',
+    iconActiveUrl: require("../../assets/icon/pageModal/inquiry-icon.svg"),
+    component: InquiryPage,
+    headerInfo: {
+      title: 'lang.menu_inquiry',
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  {
+    tabIndex: "message",
+    page: "personal/message",
+    info: 'lang.menu_message',
+    iconActiveUrl: require("../../assets/icon/pageModal/mails-icon.svg"),
+    component: MessagesPage,
+    headerInfo: {
+      title: 'lang.menu_message',
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  // {
+  //   tabIndex: "message",
+  //   page: "personal/messages/create",
+  //   info: 'lang.page_modal_message_compose',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
+  //   component: MessageCompose,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_message_compose',
+  //     description: "lang.page_modal_desc_text"
+  //   }
+  // },
   {
     tabIndex: "personal",
     page: "personal/info",

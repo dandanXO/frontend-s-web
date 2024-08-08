@@ -32,8 +32,11 @@
 .customer_icon{
 	position: absolute;
 	right: 0;
-	width: 115px;
-	margin-top: 40%;
+	/* width: 115px; */
+	/* margin-top: 40%; */
+    width: 100px;
+	top: 0;
+    margin-top: 10px;
 }
 
 .games_title_container {

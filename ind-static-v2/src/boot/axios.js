@@ -63,7 +63,9 @@ export default boot(({ app, router }) => {
     return Promise.reject(error);
   };
 
+  var attemptTimes = 0;
   async function refreshTokenAndRetry(errorresp) {
+    attemptTimes++;
     Notify.create({
       spinner: true,
       type: "warning",
@@ -85,6 +87,7 @@ export default boot(({ app, router }) => {
       // 重新发起请求
       axios(originalRequest)
         .then((response) => {
+          attemptTimes = 0;
           resolve(response.data);
         })
         .catch((err) => {
@@ -127,11 +130,17 @@ export default boot(({ app, router }) => {
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
+          if (attemptTimes > 10) {
+            SessionStorage.remove("TOKEN");
+            LocalStorage.remove("TOKEN");
+            router.push("/login");
+            return;
+          }
           // debugger;
           return refreshTokenAndRetry(response);
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          if(response.config.url && response.config.url.indexOf("/balance") > -1){
+          if (response.config.url && response.config.url.indexOf("/balance") > -1) {
             return res;
           }
           return Dialog.create({

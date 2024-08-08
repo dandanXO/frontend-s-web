@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'cloudwise'
+
+cloudwise { injectDebug = true }
 
 android {
-    namespace "com.ind.app55ace"
+    namespace "com.ind.appnga"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.ind.app55ace"
+        applicationId "com.ind.appnga"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -40,6 +43,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    implementation files('libs/cloudwise-mobile-distribute-2.5.1.1.jar')
 }
 
 apply from: 'capacitor.build.gradle'

@@ -14,13 +14,13 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "PROMO") {
     return "优惠"; // 优惠
   } else if (rec === "APPLY") {
-    return "申请中"; //Applying
+    return "处理中"; //Applying
   } else if (rec === "FAIL") {
     return "失败"; // Failed
   } else if (rec === "SUCCESS") {
     return "成功"; // Success
   } else if (rec === "STEP_1") {
-    return "审核中"; //Under review
+    return "处理中"; //Under review
   } else if (rec === "STEP_2") {
     return "待支付"; // To be paid
   } else if (rec === "STEP_3") {
@@ -28,7 +28,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "STEP_4") {
     return "自动支付"; // Automatic Payment
   } else if (rec === "STEP_5") {
-    return "暂不处理"; // Suspend
+    return "请联系客服查询原因"; // Suspend
   } else if (rec === "AUTOPAY") {
     return "自动支付"; // Automatic Payment
   } else if (rec === "BANK") {

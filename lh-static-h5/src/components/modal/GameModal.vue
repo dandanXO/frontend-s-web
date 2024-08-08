@@ -150,6 +150,9 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 const $q = useQuasar();
 
 const store = userStore();
@@ -230,11 +233,9 @@ const submitTransfer = (amount) => {
     .post("/session/balance/transfer/deposit", transferInfo.value)
     .then((response) => {
       if (response.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "转账成功",
-          icon: "check_circle_outline"
         });
         isClicked.value = amount;
         if (token) {
@@ -246,12 +247,10 @@ const submitTransfer = (amount) => {
       }
     })
     .catch((error) => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: error.message,
-      //   icon: "report_problem"
-      // });
+      // notify({
+      //   type: "error",
+      //      //   message: error.message,
+      //      // });
     });
 };
 const closeDialog = () => {
@@ -321,11 +320,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .catch((err) => {
               $q.loading.hide();
-              $q.notify({
-                color: "negative",
-                position: "top",
+              notify({
+                type: "error",
                 message: err.message,
-                icon: "report_problem"
               });
             });
           return;
@@ -349,11 +346,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: err.message,
-              icon: "report_problem"
             });
           });
       } else {
@@ -387,15 +382,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             let srcData = response.data;
 
-            if (platformCode === "PT" ||
-              (platformCode === 'TFGaming' && gameCode === 0)
-            ) {
-              if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+            if (platformCode === "PT" || (platformCode === "TFGaming" && gameCode === 0)) {
+              if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
                 const newWin = window.open(`/`, "_self");
-                if(newWin){
+                if (newWin) {
                   newWin.location.href = response.data;
                 }
-              }else{
+              } else {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
@@ -410,16 +403,22 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               window.location.href = srcData;
             }
 
+            //NO NEED LIAO
+          // else if (platformCode === "PM") {
+          //     let url = new URL(srcData);
+          //     srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
+          //     src.value = srcData;
+          //     visible.value = true;
+          //   }
+
             // newWin.location.href = response.data;
             // window.location.href = response.data;
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
+            notify({
+              type: "error",
               message: err.message,
-              icon: "report_problem"
             });
           });
       }

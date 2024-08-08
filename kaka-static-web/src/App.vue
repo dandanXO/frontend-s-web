@@ -6,10 +6,11 @@
 
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
-import { memberAccessLog } from "@/api/index/login";
+import { memberAccessLog, getFbPixelCode } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
+import { submitMemberStats } from "@/api/index/site";
 import { ElConfigProvider } from "element-plus";
 
 import vi from "element-plus/dist/locale/vi.mjs";
@@ -54,27 +55,55 @@ export default defineComponent({
       store.visitorId = sidParam;
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
-            way: "web",
-            sid: sidParam,
-            siteCode: "ka2"
+        const params = {
+          way: "web",
+          sid: sidParam,
+          siteCode: "ka2"
+        };
+
+        submitMemberStats(params);
+      }
+    };
+
+    const checkFBPixelInit = () => {
+      var windowLocation = window.location.hostname;
+      console.log(windowLocation);
+      const pixelCode = sessionStorage.getItem("FB_PIXEL_CODE");
+      const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
+      if (isNoPixel) {
+        return;
+      } else if (pixelCode) {
+        console.log("Got Fb Id:" + pixelCode);
+        fbq("init", pixelCode);
+        fbq("track", "PageView");
+      } else {
+        // windowLocation = "kakavn.shop";
+        getFbPixelCode(windowLocation).then((res) => {
+          // console.log(res);
+          if (res.code === 0) {
+            const fbId = res.data.fbId;
+            sessionStorage.setItem("FB_PIXEL_CODE", fbId);
+            fbq("init", fbId);
+            fbq("track", "PageView");
+          } else {
+            sessionStorage.setItem("NO_FB_PIXEL_CODE", "1");
           }
         });
       }
     };
 
     onMounted(() => {
-      console.log("KAKA Web")
+      console.log("KAKA Web 22");
       checkSID();
+      checkFBPixelInit();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
     });
 
     onUnmounted(() => {
-      clearTimeout(onlineStatTimeout);
-      clearInterval(onlineStatInterval);
+      // clearTimeout(onlineStatTimeout);
+      // clearInterval(onlineStatInterval);
     });
     return {
       languageVal,

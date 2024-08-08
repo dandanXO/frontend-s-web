@@ -8,9 +8,16 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <div class="key-value-container">
-        <div class="flex-div"><div class="text-2"><span style="color: red;">{{ message }}</span></div></div>
-      </div>
+      <el-select
+        v-if="hasRole(['ADMIN', 'MANAGER'])"
+        class="right-menu-item"
+        placeholder=""
+        style="width: 150px;"
+        v-model="selectedSite"
+        @change="updateData"
+      >
+        <el-option v-for="site in sites" :label="site.siteName" :key="site.siteCode" :value="site.siteCode" />
+      </el-select>
       <div v-if="selectedData" class="key-value-container">
         <div class="flex-div">
           <div class="green-circle-dot" />
@@ -26,6 +33,9 @@
             </router-link>
           </div>
         </div>
+      </div>
+      <div class="key-value-container">
+        <div class="flex-div"><div class="text-2"><span style="color: red;">{{ message }}</span></div></div>
       </div>
       <el-select
         class="lang-container right-menu-item"
@@ -88,11 +98,12 @@ import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
-import { hasPermission } from "@/utils/util";
+import { hasPermission, hasRole } from "@/utils/util";
 import { showAlert } from '../../../api/member'
+import { getSiteListSimple } from "@/api/site";
 
 export default {
-  methods: { hasPermission },
+  methods: { hasPermission, hasRole },
   components: {
     BreadCrumb,
     Hamburger,
@@ -118,6 +129,12 @@ export default {
     const name = computed(() => {
       return store.state.user.name
     })
+    const sites = ref([]);
+    const loadSites = async () => {
+      const response = await getSiteListSimple();
+      const { data: site } = response;
+      sites.value = site;
+    };
     const state = reactive({
       toggleSideBar: () => {
         store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false)
@@ -160,7 +177,7 @@ export default {
     }
 
     function updateData() {
-      const selectedSiteData = statisticsList.list.find(site => site.siteCode === selectedSite.value);
+      const selectedSiteData = statisticsList.list.find(site => site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase());
       selectedData.value = selectedSiteData || null;
     }
 
@@ -176,10 +193,27 @@ export default {
       }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
+      // 根据情况赋值sites
+      if (hasRole(["ADMIN"])) {
+        sites.value = store.state.user.sites;
+      } else if (hasRole(["MANAGER"])) {
+        await loadSites();
+      } else {
+        sites.value = store.state.user.sites;
+      }
+      // 根据情况指定selectedSite
+      if (hasRole(["ADMIN", "MANAGER"])) {
+        selectedSite.value = sites.value[0]?.siteCode || null;
+      } else {
+        selectedSite.value = sites.value.find(site => site.id === store.state.user.siteId)?.siteCode || null;
+      }
+      // 根据情况捞取所需的统计资料
       if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
         loadMemberStatistics();
         updateApplyWithdrawCount();
+      } else if (hasRole(["ADMIN", "MANAGER"])) {
+        loadMemberStatistics();
       }
       if (hasPermission(['sys:member:alert'])) {
         showAlertMessage()
@@ -189,7 +223,6 @@ export default {
     watch(statisticsList, () => {
       if (statisticsList.list.length > 0) {
         statisticsList.list.sort((a, b) => b.APPLY_WITHDRAW - a.APPLY_WITHDRAW);
-        selectedSite.value = statisticsList.list[0].siteCode;
       }
       updateData();
     });
@@ -209,9 +242,10 @@ export default {
       device,
       avatar,
       name,
+      sites,
       languageVal,
-      handleLanguage,
       ...toRefs(state),
+      handleLanguage,
       changePassword,
       goToGoogleAuth,
       statisticsList,
@@ -220,7 +254,7 @@ export default {
       updateData,
       applyWithdrawCount,
       updateApplyWithdrawCount,
-      message
+      message,
     }
   },
 }

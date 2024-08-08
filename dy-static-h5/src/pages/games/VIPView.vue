@@ -453,8 +453,8 @@ export default defineComponent({
     const loadingMClaim = ref(false);
     const loadingBClaim = ref(false);
 
-    const isBeforeCheckBonus = ref(false);
-    const isBeforeCheckBirthday = ref(false);
+    const isBeforeCheckBonus = ref(true);
+    const isBeforeCheckBirthday = ref(true);
 
     const isClaimedBonus = ref(false);
     const isClaimedBirthday = ref(false);
@@ -1076,6 +1076,9 @@ program at any time without prior notice.`
     const claimMsg = ref("");
 
     onMounted(() => {
+      if (!store.token) {
+        return
+      }
       vipLevel.value = store.vip.replace("VIP", "");
       if (vipLevel.value >= 1) {
         slide.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;

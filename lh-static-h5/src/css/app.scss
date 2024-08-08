@@ -140,6 +140,12 @@ a:focus {
   }
 }
 
+.title-div {
+  p {
+    margin: 0px;
+  }
+}
+
 .q-scrollarea__content {
   width: 100%;
   height: 100%;
@@ -726,7 +732,8 @@ svg {
         box-shadow: none;
         .input-icon-label-wrapper {
           .input-icon {
-            filter: brightness(0) saturate(100%) invert(88%) sepia(100%) saturate(0%) hue-rotate(81deg) brightness(102%) contrast(104%);
+            filter: brightness(0) saturate(100%) invert(88%) sepia(100%) saturate(0%) hue-rotate(81deg) brightness(102%)
+              contrast(104%);
           }
           .input-label {
             color: $white;
@@ -788,4 +795,15 @@ svg {
   .bg-brightbtn {
     background: $linear-bg-dark;
   }
+}
+
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  transition: opacity 0.5s ease, top 0.5s ease;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
 }

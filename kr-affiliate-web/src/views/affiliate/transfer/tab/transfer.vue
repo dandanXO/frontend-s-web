@@ -9,7 +9,7 @@
         </span>
         <span v-else>
           <span v-if="showBalance" class="card-panel-num">
-            $ <span v-formatter="{data: balance,type: 'money'}" />
+            <span v-formatter="{data: balance,type: 'money'}" />
           </span>
           <span v-else>****</span>
           <el-icon v-if="!showBalance" class="pointer" @click="showBalance = true"><View /></el-icon>
@@ -44,7 +44,8 @@
       </el-form-item>
       <el-form-item :label="t('fields.transferAmount')" prop="transferAmount">
         <el-input
-          v-model="form.transferAmount"
+          v-model="formattedNumber"
+          @input="formatMoney"
           :placeholder="t('fields.transferAmount')"
         />
       </el-form-item>
@@ -71,7 +72,7 @@
 
 <script setup>
 import { View, Hide, Refresh } from "@element-plus/icons-vue";
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, computed } from 'vue';
 import { useStore } from "@/store";
 import { useI18n } from "vue-i18n";
 import { isNumeric, required } from '../../../../utils/validate';
@@ -97,11 +98,26 @@ const uiControl = reactive({
 const form = reactive({
   memberType: null,
   loginName: null,
-  transferAmount: null,
+  transferAmount: '',
   rollover: null,
   siteId: null,
   withdrawPassword: null
 });
+
+const formattedNumber = computed({
+  get() {
+    return formatWithCommas(form.transferAmount);
+  },
+  set(newValue) {
+    form.transferAmount = newValue.replace(/,/g, '');
+  }
+});
+const formatMoney = () => {
+  rawNumber.value = rawNumber.value.replace(/,/g, '');
+}
+const formatWithCommas = (value) => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 
 const formRules = reactive({
   memberType: [required(t('message.requiredMemberType'))],

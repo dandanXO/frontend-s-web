@@ -103,15 +103,18 @@
             <q-skeleton type="text" v-if="isFetchingApi" />
             <div v-else class="text-grey text-bold text-caption">
               {{ $t('lang.deposit_deposit_unit') }}：{{
-                calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만"
-                  :
-                  store.currency.value) : 0
+                calculatedMinDeposit ? formatNumberComma(calculatedMinDeposit) + " " + (isUSDT ? "USDT" :
+                  store.currency.value === "₩"
+                    ? "원"
+                    :
+                    store.currency.value) : 0
               }}
               -
-              {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value ===
-                "₩"
-                ? "만" :
-                store.currency.value) : " " }}
+              {{ activeMethod.depositMax ? formatNumberComma(activeMethod.depositMax) + " " + (isUSDT ? "USDT" :
+                store.currency.value ===
+                  "₩"
+                  ? "원" :
+                  store.currency.value) : " " }}
             </div>
 
             <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
@@ -179,11 +182,12 @@ import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "../../components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
 import { useI18n } from "vue-i18n";
+import { formatNumberComma } from "src/boot/utils";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -225,7 +229,7 @@ const copybtntxt3 = ref("복사");
 const copybtntxt4 = ref("복사");
 
 const depositAmtRef = ref("");
-const { realName } = storeToRefs(store);
+const { realName, id } = storeToRefs(store);
 const depositAccName = realName;
 
 const extensionState = ref(false);
@@ -276,13 +280,13 @@ watch(() => depositAmountFormatted.value, () => {
   if (isNaN(depositAmount)) {
     form.localAmount = ''
   } else {
-    depositAmountFormatted.value = `${depositAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    depositAmountFormatted.value = formatNumberComma(depositAmount);;
     form.localAmount = Number(depositAmount);
   }
 })
 
 watch(() => form.localAmount, () => {
-  depositAmountFormatted.value = `${form.localAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  depositAmountFormatted.value = formatNumberComma(form.localAmount);
 })
 
 const verifyDepositAmount = ref([
@@ -293,8 +297,58 @@ const verifyDepositAmount = ref([
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
-    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다."  //存款金额必须以 10000 为单位
 ]);
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g, "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const checkIsGotBankCard = () => {
+  if (realName.value) {
+    api.get("/session/allBankCard").then((res) => {
+      const response = res.data;
+      if (response.data.length === 0) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: '먼저 은행 카드를 연결하세요',
+          icon: "report_problem"
+        });
+
+        router.push('/?page=bankcardlist');
+      }
+    });
+  }
+}
+
+const checkIsRealNameBinded = () => {
+  if (id.value && !realName.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '실명이 필요합니다',
+      icon: "report_problem"
+    });
+
+    router.push('/?page=personal/info');
+  }
+}
+
+watch(() => [realName.value, id.value], () => {
+  checkIsRealNameBinded();
+})
 
 async function confirmDeposit() {
   if (btnLoading.value) {
@@ -622,7 +676,7 @@ function selectPayType(value) {
 const selectAmt = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
-  depositAmountFormatted.value = `${Number(form.localAmount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  depositAmountFormatted.value = formatNumberComma(Number(form.localAmount) + (amt * multiple));
 };
 
 function clearInfo() {
@@ -656,6 +710,8 @@ function checkPrivilege(v) {
 }
 
 onMounted(() => {
+  checkIsGotBankCard();
+  checkIsRealNameBinded();
   initPay();
   // checkNewUser();
 });

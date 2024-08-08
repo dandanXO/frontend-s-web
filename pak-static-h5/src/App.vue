@@ -15,6 +15,7 @@ import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
+import { cached } from "boot/cache";
 
 export default defineComponent({
   name: "App",
@@ -241,14 +242,31 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: store.visitorId,
             siteCode: "pak"
-          }
-        });
+          })
+        );
       }
+    };
+
+    const loadSocialMediaLinks = async () => {
+      cached
+        .get("socialMediaLinks", () =>
+          api.get("/config/uiconfigs").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          // console.log("socialMediaLinks", data);
+          ui.instagramUrl = data.instagram;
+          ui.tiktokUrl = data.tiktok;
+          ui.whatsappUrl = data.whatsapp;
+          ui.youtubeUrl = data.youtube;
+        });
     };
 
     onMounted(async () => {
@@ -259,6 +277,7 @@ export default defineComponent({
       // getCSA();
       getAppInfo();
       initOrientation();
+      loadSocialMediaLinks();
 
       if (isAndroid()) {
         document.addEventListener(
@@ -279,7 +298,10 @@ export default defineComponent({
       setInterval(getOnlineStatApi, 60000);
     });
 
-    watch(() => ui.shouldFetchDownloadAppUrl, (value) => value && ui.getTopDownloadUrl())
+    watch(
+      () => ui.shouldFetchDownloadAppUrl,
+      (value) => value && ui.getTopDownloadUrl()
+    );
   }
 });
 

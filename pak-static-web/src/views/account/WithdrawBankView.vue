@@ -38,9 +38,9 @@
               <!-- <div>Bank Account Number</div> -->
             </div>
           </div>
-          <div class="unlink-btn" @click="unbindBankCard(bc)">
+          <!-- <div class="unlink-btn" @click="unbindBankCard(bc)">
             <RiLinkUnlink />
-          </div>
+          </div> -->
           <!-- TODO: click event? -->
           <!-- <div class="setting-btn">
             <RiSettings3Line />

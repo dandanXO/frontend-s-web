@@ -4,7 +4,7 @@
       <el-tabs v-model="tabPosition" class="summoner-tabs">
         <el-tab-pane name="first" label="精英召唤">
           <div class="main-desc">
-            唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。
+            被唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -95,7 +95,7 @@
         <el-tab-pane name="sec" label="唤醒圣堂">
 
           <div class="sub-desc">
-            活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，唤醒会员需当日存款与投注≥100元即可领取彩金。
+            活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，被唤醒人需当日存款与投注≥100元即可领取彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -225,8 +225,9 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { claimSummon, getSummonRewardRecord } from "@/api/index/promo.js";
+import { useNotify } from "@/hooks/notify";
+const notify = useNotify();
 const tabPosition = ref('first');
-import { ElMessage } from "element-plus";
 const isShowFriendDialog = ref(false);
 const tableData = ref([]);
 const page = reactive({
@@ -247,9 +248,9 @@ const claimReward = () => {
   // debugger;
   claimSummon(props.promoCode).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("成功领取奖励 " + res.data + "元。");
+      notify.redPacket("成功领取奖励", res.data)
     }else{
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   })
 }

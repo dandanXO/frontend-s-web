@@ -188,6 +188,16 @@
           min-width="120"
         />
         <el-table-column
+          prop="riskLevel"
+          :label="t('fields.riskLevel')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span :style="{color: scope.row.riskLevelColor}">{{ scope.row.riskLevel }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="300"
@@ -210,7 +220,7 @@
       </el-table>
       <el-pagination
         :total="page.total"
-        :page-sizes="[20, 50, 100, 150]"
+        :page-sizes="[50, 100, 150]"
         layout="total,sizes,prev, pager, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
@@ -439,7 +449,6 @@ import {
   fromApplyToAutopay,
   getMemberWithdrawRecordApplySimple,
   getTotalWithdrawAmountByStatus,
-  getWithdrawPlatformList,
 } from '../../../../api/member-withdraw-record'
 import { getSiteListSimple } from "@/api/site"
 import { ElMessage } from 'element-plus'
@@ -464,9 +473,6 @@ const financialList = reactive({
   list: [],
 })
 const bankList = reactive({
-  list: [],
-})
-const withdrawPlatformList = reactive({
   list: [],
 })
 
@@ -495,7 +501,7 @@ const siteList = reactive({
 });
 
 const request = reactive({
-  size: 20,
+  size: 50,
   current: 1,
   withdrawDate: [defaultStartDate, defaultEndDate],
   serialNumber: null,
@@ -545,9 +551,9 @@ function resetQuery() {
 
 function handleSelectionChange(val) {
   chooseRecord = val
-  if (chooseRecord.length > 10) {
+  if (chooseRecord.length > 50) {
     uiControl.toApproveBtn = true
-    ElMessage.warning("最多只能选择十条记录");
+    ElMessage.warning("最多只能选择五十条记录");
   } else {
     uiControl.toApproveBtn = false
   }
@@ -640,7 +646,7 @@ async function loadRecord() {
       query.withdrawDate = query.withdrawDate.join(',')
     }
   }
-  query.memberType = "NORMAL,TEST,OUTSIDE";
+  query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
   const { data: ret } = await getMemberWithdrawRecordApplySimple(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
@@ -660,22 +666,17 @@ async function loadRecord() {
   page.loading = false
 }
 
-async function loadWithdrawPlatforms(id, wd) {
-  const { data: wp } = await getWithdrawPlatformList(id, wd, request.siteId)
-  withdrawPlatformList.list = wp
-}
-
 async function toCheck(memberWithdrawRecord) {
+  page.loading = true
   if (memberWithdrawRecord) {
-    await loadWithdrawPlatforms(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
-    await fromApplyToAutopay(memberWithdrawRecord.id, withdrawPlatformList.list[0].id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+    await fromApplyToAutopay(memberWithdrawRecord.id, 0, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
   } else {
-    await loadWithdrawPlatforms(chooseRecord[0].id, chooseRecord[0].withdrawDate);
     await Promise.all(chooseRecord.map(async (a) => {
-      await fromApplyToAutopay(a.id, withdrawPlatformList.list[0].id, a.withdrawDate, a.siteId);
+      await fromApplyToAutopay(a.id, 0, a.withdrawDate, a.siteId);
     }));
   }
   await loadRecord()
+  page.loading = false
   ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
   checkBtnRef.value.blur();
   checkBtnsRef.value.blur();

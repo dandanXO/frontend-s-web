@@ -4,13 +4,13 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
     <div class="navigation">
-      <div class="logo-section" />
+      <a :href="krwUrl" target="_blank">
+        <div class="logo-section" />
+      </a>
       <div class="row-item">
-        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
+        <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage"
+                   size="small">
           <el-option key="1" value="en">en</el-option>
-          <el-option key="2" value="zh">zh</el-option>
-          <el-option key="3" value="th">th</el-option>
-          <el-option key="4" value="vi">vi</el-option>
           <el-option key="5" value="kr">kr</el-option>
         </el-select>
       </div>
@@ -19,6 +19,7 @@
           <div class="name-wrapper">
             <div class="name">{{ store.state.user.name }}</div>
             <div class="nickname">{{ store.state.user.name }}</div>
+            <div class="nickname">{{ affInfo.affiliateCode }}</div>
           </div>
           <div class="action-wrapper">
             <ForgetPasswordModal :requireOld="true" @submit="changePassword">
@@ -28,10 +29,22 @@
           </div>
         </div>
       </div>
+      <div class="row-item" style="cursor: auto">
+        <div class="balance-item">
+          <span>{{ t('statsHeader.myMoney') }}</span>
+          <span>{{ affInfo.balance }}</span>
+        </div>
+        <div class="balance-item" style="margin-top: 10px; cursor: pointer" @click="redeemDialogVisible = true">
+          <span>{{ t('statsHeader.myPoint') }}</span>
+          <span>{{ affInfo.point }}</span>
+        </div>
+      </div>
       <div class="row-item route-title">
         <div class="icon-wrapper">
-          <svg-icon :icon-class="'right'" />
-          <span>유저사이트</span>
+          <a :href="krwUrl" target="_blank" style="display:flex;align-items: center;gap:6px;">
+            <svg-icon :icon-class="'right'" />
+            <span>유저사이트</span>
+          </a>
         </div>
       </div>
       <div v-for="nav in navigationData" :key="nav.id" :class="`route-wrapper ${nav.active ? 'active' : ''}`">
@@ -46,8 +59,8 @@
           <template v-if="child.path === '/commission-info' ? false : true">
             <RouterLink :to="nav.path + child.path" class="route" v-if="child.isMainNav">
               <div class="route-content">
-                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''" />
+                <!-- <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" /> -->
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -58,6 +71,18 @@
       </div>
     </div>
   </nav>
+
+  <el-dialog :title="t('fields.redeemPoint')" v-model="redeemDialogVisible" width="580px" append-to-body>
+    <p>{{ t('message.yourCurrentPoint') }} <b> {{ affInfo.point }}</b></p>
+    <p>{{ t('message.confirmRedeem') }}</p>
+
+    <div class="redeemDialogActionButtons">
+      <el-button size="normal" @click="redeemDialogVisible = false">
+        {{ $t('fields.cancel') }}
+      </el-button>
+      <el-button size="normal" type="primary" @click="onRedeem" :disabled="affInfo.point <= 0">{{ $t('fields.confirm') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -72,21 +97,27 @@ import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
 import {
   getAffiliateBalance,
-  getAffiliateCommissionBalance,
+  getAffiliatePoint,
   getAffiliateInfo,
+  redeemPoint,
 } from '@/api/affiliate'
+import { ElMessage } from 'element-plus'
 import ForgetPasswordModal from '@/components/forgetpassword-modal/Index.vue'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const navigationData = ref([])
+const redeemDialogVisible = ref(false);
 
 const store = useStore()
 
+const krwUrl = ref("https://city8.vip");
+
+
 const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage);
-const { setLanguage } = i18nStoreLanguage;
+const { languageVal } = storeToRefs(i18nStoreLanguage)
+const { setLanguage } = i18nStoreLanguage
 
 const affInfo = reactive({
   affiliateCode: null,
@@ -96,10 +127,12 @@ const affInfo = reactive({
   commission: 0,
   revenueShare: 0,
   shareRatio: [],
+  balance: 0,
+  point: 0,
 })
 
 const handleLanguage = () => {
-  setLanguage(languageVal.value);
+  setLanguage(languageVal.value)
 }
 
 const setActiveNav = () => {
@@ -114,7 +147,8 @@ const setActiveNav = () => {
       const activeIconColor = '#f2c46f'
       const defaultIconColor = '#1e95ba'
       c.isMenuShow = true
-      if (c.path === currentPath) {
+
+      if (c.path === currentPath || c.path.endsWith(currentPath)) {
         c.active = true
         iconEl.style.fill = activeIconColor
       } else {
@@ -152,22 +186,22 @@ const logout = async () => {
 
 const getNavigationData = () => {
   navigationData.value = [
-    {
-      title: t('menu.Dashboard'),
-      label: 'Dashboard',
-      display: false,
-      path: '',
-      children: [
-        {
-          path: '/dashboard',
-          title: t('menu.Dashboard'),
-          label: 'Dashboard',
-          active: false,
-          isMainNav: true,
-          icon: 'home',
-        },
-      ],
-    },
+    // {
+    //   title: t('menu.Dashboard'),
+    //   label: 'Dashboard',
+    //   display: false,
+    //   path: '',
+    //   children: [
+    //     {
+    //       path: '/dashboard',
+    //       title: t('menu.Dashboard'),
+    //       label: 'Dashboard',
+    //       active: false,
+    //       isMainNav: true,
+    //       icon: 'home',
+    //     },
+    //   ],
+    // },
     {
       title: t('menu.Downline Info'),
       label: 'Downline',
@@ -182,14 +216,14 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'squares',
         },
-        {
-          path: '/member-tree',
-          title: t('menu.Member Tree'),
-          label: 'Member Tree',
-          active: false,
-          isMainNav: true,
-          icon: 'branch',
-        },
+        // {
+        //   path: '/member-tree',
+        //   title: t('menu.MemberTree'),
+        //   label: 'Member Tree',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'branch',
+        // },
         {
           path: '/affiliate',
           title: t('menu.Affiliate'),
@@ -198,55 +232,104 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'affiliate',
         },
-        {
-          path: '/summary',
-          title: t('menu.AffiliateSummary'),
-          label: 'Affiliate Summary',
-          active: false,
-          isMainNav: true,
-          icon: 'report',
-        }
+        // {
+        //   path: '/summary',
+        //   title: t('menu.AffiliateSummary'),
+        //   label: 'Affiliate Summary',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'report',
+        // }
       ],
     },
     {
-      title: t('menu.Bet Management'),
+      title: t('menu.BetManagement'),
       label: 'Bet Management',
       display: true,
       path: '/bet-management',
       children: [
         {
-          path: '/game-record?gameType=LIVE',
-          title: t('menu.Bet History LIVE'),
+          path: '/live-bet-history',
+          title: t('menu.LiveBetHistory'),
           label: 'Bet History LIVE',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
         {
-          path: '/game-record?gameType=SLOT',
-          title: t('menu.Bet History SLOT'),
+          path: '/slot-bet-history',
+          title: t('menu.SlotBetHistory'),
           label: 'Bet History SLOT',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
         {
-          path: '/game-record?gameType=SPORT',
-          title: t('menu.Bet History SPORT'),
+          path: '/sport-bet-history',
+          title: t('menu.SportBetHistory'),
           label: 'Bet History SPORT',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/minigame-bet-history',
+          title: t('menu.MiniGameBetHistory'),
+          label: 'Bet History Mini Game',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
       ],
     },
+
+    // {
+    //   title: t('menu.SettlementManagement'),
+    //   label: 'Settlement Management',
+    //   display: true,
+    //   path: '',
+    //   children: [
+    //
+    //     // {
+    //     //   path: '/statistics-by-member',
+    //     //   title: t('menu.StatisticsByMember'),
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //     // {
+    //     //   path: '/settlement-by-casino-slot-vendor',
+    //     //   title: t('menu.SettlementByCasinoSlotVendor'),
+    //     //   label: 'Settlement By Casino / Slot Vendor',
+    //     //   active: false,
+    //     //   isMainNav: true,
+    //     //   icon: 'clock',
+    //     // },
+    //   ],
+    // },
     {
       title: t('menu.financeCentre'),
       display: true,
-      path: '/affiliate',
+      path: '',
       children: [
         {
-          path: '/bank-card',
+          path: '/settlement-management/monthly-step-by-step-settlement',
+          title: t('menu.MonthlyStepByStep'),
+          label: 'Monthly Step By Step',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/settlement-management/deposit-withdraw-management',
+          title: t('menu.DepositWithdrawManagement'),
+          label: 'DepositWithdrawManagement',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
+        },
+        {
+          path: '/affiliate/bank-card',
           title: t('menu.Bind Bank Cards'),
           label: 'Bind Bank Cards',
           active: false,
@@ -254,7 +337,7 @@ const getNavigationData = () => {
           icon: 'money-bag',
         },
         {
-          path: '/withdraw',
+          path: '/affiliate/withdraw',
           title: t('fields.affiliateWithdraw'),
           label: 'withdrawRecord',
           active: false,
@@ -262,7 +345,7 @@ const getNavigationData = () => {
           icon: 'form-w-pencil',
         },
         {
-          path: '/transfer',
+          path: '/affiliate/transfer',
           title: t('menu.Transfer'),
           label: 'Transfer',
           active: false,
@@ -270,7 +353,7 @@ const getNavigationData = () => {
           icon: 'users',
         },
         {
-          path: '/deposit',
+          path: '/affiliate/deposit',
           title: t('menu.Deposit'),
           label: 'Deposit',
           active: false,
@@ -278,7 +361,7 @@ const getNavigationData = () => {
           icon: 'wallet',
         },
         {
-          path: '/finance',
+          path: '/affiliate/finance',
           title: t('menu.Finance Report'),
           label: 'Finance Report',
           active: false,
@@ -286,28 +369,44 @@ const getNavigationData = () => {
           icon: 'report',
         },
         {
-          path: '/settlement',
+          path: '/affiliate/settlement',
           title: t('menu.Settlement Report'),
           label: 'Settlement Report',
           active: false,
           isMainNav: true,
           icon: 'money',
         },
+        // {
+        //   path: '/rebate',
+        //   title: t('menu.Rebate Report'),
+        //   label: 'Rebate Report',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'monitor',
+        // },
         {
-          path: '/rebate',
-          title: t('menu.Rebate Report'),
-          label: 'Rebate Report',
+          path: '/settlement-management/commission-history-list',
+          title: t('menu.CommissionHistoryList'),
+          label: 'CommissionHistoryList',
           active: false,
           isMainNav: true,
-          icon: 'monitor',
+          icon: 'clock',
         },
         {
-          path: '/credit-flow',
+          path: '/affiliate/credit-flow',
           title: t('fields.creditFlow'),
           label: 'creditFlow',
           active: false,
           isMainNav: true,
           icon: 'ledger',
+        },
+        {
+          path: '/settlement-management/member-point-record-list',
+          title: t('menu.MemberPointRecord'),
+          label: 'MemberPointRecord',
+          active: false,
+          isMainNav: true,
+          icon: 'clock',
         },
       ],
     },
@@ -324,22 +423,22 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'link',
         },
-        {
-          path: '/referral-material',
-          title: t('menu.Referral Material'),
-          label: 'Referral Material',
-          active: false,
-          isMainNav: true,
-          icon: 'photo',
-        },
-        {
-          path: '/channel-pack',
-          title: t('menu.Channel Pack'),
-          label: 'Channel Pack',
-          active: false,
-          isMainNav: true,
-          icon: 'folder',
-        },
+        // {
+        //   path: '/referral-material',
+        //   title: t('menu.Referral Material'),
+        //   label: 'Referral Material',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'photo',
+        // },
+        // {
+        //   path: '/channel-pack',
+        //   title: t('menu.Channel Pack'),
+        //   label: 'Channel Pack',
+        //   active: false,
+        //   isMainNav: true,
+        //   icon: 'folder',
+        // },
       ],
     },
     {
@@ -355,6 +454,14 @@ const getNavigationData = () => {
           active: false,
           isMainNav: true,
           icon: 'user',
+        },
+        {
+          path: '/inquiry',
+          title: t('fields.inquiry'),
+          label: 'inquiry',
+          active: false,
+          isMainNav: true,
+          icon: 'email',
         },
         {
           path: '/message',
@@ -392,6 +499,15 @@ const getNavigationData = () => {
     },
   ]
 }
+const onRedeem = async () => {
+  await redeemPoint();
+  ElMessage({ message: t('message.redeemSuccess'), type: 'success' })
+  redeemDialogVisible.value = false
+  const { data: affBal } = await getAffiliateBalance(store.state.user.id)
+  affInfo.balance = affBal
+  const { data: affPoint } = await getAffiliatePoint()
+  affInfo.point = affPoint
+}
 onMounted(async () => {
   if (window.innerWidth < 768) {
     $('.navigation').animate({ width: 0 })
@@ -414,10 +530,9 @@ onMounted(async () => {
   setActiveNav()
 
   const { data: affBal } = await getAffiliateBalance(store.state.user.id)
-  const { data: commBal } = await getAffiliateCommissionBalance(
-    store.state.user.id
-  )
-  console.log({ affBal, commBal })
+  affInfo.balance = affBal
+  const { data: affPoint } = await getAffiliatePoint()
+  affInfo.point = affPoint
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]
@@ -495,7 +610,7 @@ watch(languageVal, newVal => {
       font-size: 13px;
       border-bottom: 1px solid #4d5a6a;
 
-      background-color: #344151;
+      background-color: $primary-500;
       padding: 12px 13px;
       box-sizing: border-box;
       cursor: pointer;
@@ -504,6 +619,12 @@ watch(languageVal, newVal => {
       .icon-wrapper {
         display: flex;
         gap: 10px;
+      }
+
+      .balance-item {
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Jura';
       }
     }
 
@@ -518,7 +639,7 @@ watch(languageVal, newVal => {
         gap: 2px;
 
         .nickname {
-          color: #b7b1b5;
+          color: #fff;
           font-size: 10px;
         }
       }
@@ -543,7 +664,7 @@ watch(languageVal, newVal => {
       .route-content {
         display: flex;
         gap: 0.5rem;
-        background-color: #252e3b;
+        background-color: $primary-700;
         padding: 10px 10px 10px 20px;
       }
 
@@ -616,5 +737,10 @@ watch(languageVal, newVal => {
       }
     }
   }
+}
+
+.redeemDialogActionButtons {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

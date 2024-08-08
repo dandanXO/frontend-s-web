@@ -126,7 +126,7 @@ body {
       color: #000000;
     }
     &.is-error {
-      margin-bottom: 30px;
+      margin-bottom: 30px !important;
     }
     &__content {
       line-height: unset;
@@ -233,8 +233,9 @@ body {
 
   .imptann-modal {
     background: transparent;
-    max-width: 750px;
-    height: 500px;
+    max-width: 1300px;
+    width: max-content;
+    height: auto;
     margin-top: 25%;
     transform: translate(0px, -50%);
     box-shadow: none;
@@ -247,14 +248,14 @@ body {
       align-items: center;
       flex-direction: column;
       justify-content: center;
-      height: 100%;
+      height: auto;
 
       a{
-        width: 100%;
+        //width: 100%;
         display:block;
 
         img{
-          width: 100%;
+          //width: 100%;
         }
       }
     }
@@ -482,6 +483,17 @@ button {
   color: #555;
 }
 
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  transition: opacity .5s ease, top .5s ease;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
+}
+
 .dark {
   #app {
     background: $background-dark;
@@ -549,4 +561,8 @@ button {
     background-image: $active-color-dark-linear ;
     box-shadow: $active-color-dark-shadow;
   }
+}
+
+body .announcement-modal.el-dialog .el-dialog__body {
+  padding: 0;
 }

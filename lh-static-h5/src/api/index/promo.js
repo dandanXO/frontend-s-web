@@ -167,7 +167,7 @@ export function getEurocupManualSchedule() {
 }
 
 export function getSportMatch() {
-  return eventapi.get('/sport-match/today')
+  return eventapi.get("/sport-match/today");
 }
 
 export function getLplSummer24Match() {
@@ -179,4 +179,26 @@ export function duanwuVipUpgrade() {
 }
 export function duanwuDepositBet() {
   return eventapi.post("/duan-wu/deposit-bet");
+}
+
+export function getNewUserSetupBonusInit() {
+  return eventapi.get("/new-user-setup-bonus/init");
+}
+
+export function putNewUserSetupBonusClaim(promoCode) {
+  return eventapi.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
+}
+
+export function getNewUserAccumulateDepositInit() {
+  return eventapi.get("/new-user-accumulate-deposit/init");
+}
+
+export function putNewUserAccumulateDepositClaim(ruleAmount, type) {
+  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}&type=${type}`, {});
+}
+export function initUefaCheckin() {
+  return eventapi.get("/lh-uefa-check-in/init");
+}
+export function claimUefaCheckin() {
+  return eventapi.put("/lh-uefa-check-in/claim");
 }

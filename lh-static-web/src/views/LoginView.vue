@@ -110,8 +110,9 @@ import { getVerificationCode } from "@/api/index/login";
 import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
 import AccountLogin from "@/components/auth/AccountLogin.vue";
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { useRoute, useRouter } from "vue-router";
+const notify = useNotify();
 
 const captchaRules = {
   captchaCode: [
@@ -211,7 +212,7 @@ const sendOtp = async () => {
     sendSms(smsDetail).then((response) => {
       if (response.code == 0) {
         loginForm.smsCodeId = response.data.codeId;
-        ElMessage({
+        notify({
           type: "success",
           message: "发送手机验证码成功"
         });
@@ -220,7 +221,7 @@ const sendOtp = async () => {
         loginCountdown.value = 60;
         countdownTimer("LOGIN");
       } else {
-        ElMessage.error(response.message);
+        notify.error(response.message);
         getCode();
       }
     });
@@ -246,7 +247,7 @@ const phoneLogin = () => {
   (async () => {
     mobileLoginRef.value.validate().then(() => {
       if (!loginForm.smsCodeId) {
-        ElMessage.error("请先获取验证码");
+        notify.error("请先获取验证码");
         return;
       }
       store
@@ -285,7 +286,7 @@ const getCode = () => {
       captchaForm.codeId = res.data.id;
       passForm.codeId = res.data.id;
     } else {
-      ElMessage.error(res.message);
+      notify.error(res.message);
     }
   });
 };

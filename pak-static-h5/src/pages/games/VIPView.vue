@@ -15,14 +15,14 @@
     </q-tabs>
   </div>
 
-  <div class="receive-monthly">
-    <div class="monthly-img"><img src="../../assets/images/vip/receive-monthly-img.png" width="120" /></div>
-    <div class="monthly-txt">{{ $t("vip.receiveMonthlyRewards") }}</div>
-    <div class="monthly-btn" @click="getMonthlyVip" :class="!monthlyVipReceive && 'disable'">
-      <span v-if="!monthlyVipReceive">{{ $t("vip.received") }}</span>
-      <span v-else>{{ $t("vip.receive") }}</span>
-    </div>
-  </div>
+  <!--  <div class="receive-monthly">-->
+  <!--    <div class="monthly-img"><img src="../../assets/images/vip/receive-monthly-img.png" width="120" /></div>-->
+  <!--    <div class="monthly-txt">{{ $t("vip.receiveMonthlyRewards") }}</div>-->
+  <!--    <div class="monthly-btn" @click="getMonthlyVip" :class="!monthlyVipReceive && 'disable'">-->
+  <!--      <span v-if="!monthlyVipReceive">{{ $t("vip.received") }}</span>-->
+  <!--      <span v-else>{{ $t("vip.receive") }}</span>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
   <div class="vip-container">
     <Carousel
@@ -38,13 +38,13 @@
             <div class="vip-level-header">VIP{{ vip.vipLevel }}</div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
-              <div class="upgrade-requirements">
+              <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ vip.ugprade }}
+                {{ vipItems[vipIndex + 1].ugprade }}
               </div>
 
               <div class="progress-bar-container">
-                <div class="progress-bar-outer-bar">
+                <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
                   <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
 
                   <div
@@ -73,74 +73,74 @@
     </Carousel>
 
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <div class="vip-rewards">
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
-              <br />
-              {{ $t("vip.reward") }}
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/monthly-reward-icon.svg" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.monthly") }}</span>
-              <br />
-              {{ $t("vip.reward") }}
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
-              <br />
-              {{ $t("vip.limit") }}
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-      </div>
+      <!--      <div class="vip-rewards">-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>-->
+      <!--              <br />-->
+      <!--              {{ $t("vip.reward") }}-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/monthly-reward-icon.svg" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.monthly") }}</span>-->
+      <!--              <br />-->
+      <!--              {{ $t("vip.reward") }}-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>-->
+      <!--              <br />-->
+      <!--              {{ $t("vip.limit") }}-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
       <div class="header-wrapper">
         <div class="header">{{ $t("vip.vipStatus_txt") }}</div>
@@ -179,23 +179,21 @@
               <br />
               {{ $t("vip.experience") }}
             </q-td>
-            <q-td>
-              {{ $t("vip.upgrade") }}
-              <br />
-              {{ $t("vip.rewards") }}
+            <q-td style="">
+              {{ $t("vip.dailyWithdrawalTimes") }}
             </q-td>
-            <q-td>
+            <!-- <q-td>
               {{ $t("vip.monthly") }}
               <br />
               {{ $t("vip.rewards") }}
-            </q-td>
+            </q-td> -->
           </q-tr>
         </template>
 
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1 || colIndex === 2 || colIndex === 3">
+              <template v-if="colIndex === 1 || colIndex === 3">
                 <div style="justify-content: flex-end; display: flex; align-items: center; gap: 4px">
                   <img src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
@@ -429,8 +427,8 @@ const columns = [
     field: (row) => row.name
   },
   { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
-  { name: "reward", field: "reward", align: "center" },
-  { name: "flow", field: "flow", align: "center" }
+  { name: "reward", field: "reward", align: "center" }
+  // { name: "flow", field: "flow", align: "center" }
 ];
 
 // 1	5000	20	38
@@ -450,79 +448,79 @@ const rows = [
   {
     name: "VIP 0",
     ugprade: "0",
-    reward: "0",
+    reward: "3",
     flow: "0"
   },
   {
     name: "VIP 1",
-    ugprade: "5,000",
-    reward: "20",
+    ugprade: "1,000",
+    reward: "3",
     flow: "38"
   },
   {
     name: "VIP 2",
-    ugprade: "10,000",
-    reward: "25",
+    ugprade: "3,000",
+    reward: "3",
     flow: "88"
   },
   {
     name: "VIP 3",
-    ugprade: "20,000",
-    reward: "50",
+    ugprade: "5,000",
+    reward: "3",
     flow: "188"
   },
   {
     name: "VIP 4",
-    ugprade: "50,000",
-    reward: "100",
+    ugprade: "10,000",
+    reward: "4",
     flow: "388"
   },
   {
     name: "VIP 5",
-    ugprade: "100,000",
-    reward: "200",
+    ugprade: "30,000",
+    reward: "5",
     flow: "588"
   },
   {
     name: "VIP 6",
-    ugprade: "200,000",
-    reward: "300",
+    ugprade: "50,000",
+    reward: "6",
     flow: "888"
   },
   {
     name: "VIP 7",
-    ugprade: "500,000",
-    reward: "1,000",
+    ugprade: "100,000",
+    reward: "7",
     flow: "1,888"
   },
   {
     name: "VIP 8",
-    ugprade: "1,000,000",
-    reward: "2,000",
+    ugprade: "300,000",
+    reward: "8",
     flow: "3,888"
   },
   {
     name: "VIP 9",
-    ugprade: "2,000,000",
-    reward: "3,000",
+    ugprade: "500,000",
+    reward: "9",
     flow: "8,888"
   },
   {
     name: "VIP 10",
-    ugprade: "5,000,000",
-    reward: "10,000",
+    ugprade: "1,000,000",
+    reward: "10",
     flow: "28,888"
   },
   {
     name: "VIP 11",
-    ugprade: "10,000,000",
-    reward: "20,000",
+    ugprade: "3,000,000",
+    reward: "Unlimited",
     flow: "58,888"
   },
   {
     name: "VIP 12",
-    ugprade: "20,000,000",
-    reward: "30,000",
+    ugprade: "5,000,000",
+    reward: "Unlimited",
     flow: "88,888"
   }
 ];

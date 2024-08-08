@@ -11,6 +11,7 @@ export default {
     personalCenter: "شخصی مرکز",
     deposit: "جمع کروائیں",
     bank: "بینک",
+    addCrypto: "کرپٹو شامل کریں۔",
     addVirtualWallet: "ورچوئل والٹ شامل کریں",
     addBankCard: "بنک کارڈ شامل کریں",
     message: "پیغام",
@@ -48,7 +49,8 @@ export default {
     transferRecord: "منتقلی کا ریکارڈ",
     promotionRecord: "پروموشن کا ریکارڈ",
     betRecord: "شرط لگانے کا ریکارڈ",
-    referralRecord: "ریفرل کا ریکارڈ"
+    referralRecord: "ریفرل کا ریکارڈ",
+    interestProfit: "سود کا منافع"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -102,6 +104,9 @@ export default {
     withdrawalAmount_rules_02: "واپسی کی رقم 0 سے زیادہ ہونی چاہئے",
     withdrawalAmount_rules_03: "واپسی کی رقم ناکافی ہے",
     withdrawalAmount_rules_04: "واپسی کی رقم کے درمیان ہونی چاہئے",
+    realTimeExchangeRates: "ریئل ٹائم ایکسچینج ریٹس",
+    estimatedArrival: "متوقع آمد",
+    usdtSpecialNote: "*خصوصی نوٹ: تیسرا فریق خود بخود سکے نکالنے کے لیے 1.00 USDT کی ہینڈلنگ فیس وصول کرتا ہے!",
     fullName: "پورا نام",
     fullName_placeholder: "اپنا پورا نام درج کریں",
     fullName_rules_01: "براہ کرم اپنا پورا نام درج کریں",
@@ -120,11 +125,18 @@ export default {
     captchaCode_placeholder: "کیپچا کوڈ درج کریں",
     captchaCode_rules_01: "براہ کرم کیپچا کوڈ درج کریں",
     captchaCode_rules_02: "کیپچا کوڈ کی لمبائی 4 حروف ہے",
+    cryptoType: "کرپٹو ٹائپ",
+    cryptoAccount: "کرپٹو اکاؤنٹ",
+    cryptoAccount_placeholder: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
+    cryptoAccount_rules_01: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
+    cryptoAccount_rules_02: "کرپٹو اکاؤنٹ 'T' سے شروع ہونا چاہیے",
+    cryptoAccount_rules_03: "کریپٹو اکاؤنٹ میں 34 حروف کا ہونا ضروری ہے۔",
     virtualWalletType: "ورچوئل والٹ کی قسم",
     virtualWallet: "ورچوئل والٹ",
     virtualWallet_placeholder: "براہ کرم ورچوئل والٹ درج کریں",
     virtualWallet_rules_01: "براہ کرم ورچوئل والٹ درج کریں",
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہئے",
+    virtualWallet_id_rule: "راہ کرم 13 ہندسوں کی شناختی شناخت داخل کریں",
     virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
@@ -151,6 +163,7 @@ export default {
     addNewAccount: "نیا اکاؤنٹ شامل کریں",
     updated: "اپ ڈیٹ کیا گیا",
     updating: "اپ ڈیٹ کیا جا رہا ہے...",
+    addCrypto: "کرپٹو شامل کریں۔",
     addVirtualWallet: "ورچوئل والٹ شامل کریں",
     addBankCard: "بنک کارڈ شامل کریں",
     untie: "کھولیں",
@@ -165,7 +178,10 @@ export default {
     moreGames: "مزید کھیل",
     addCash: "کیش شامل کریں",
     search: "تلاش",
-    downloadApp: "ایپ ڈاؤن لوڈ کریں"
+    downloadApp: "ایپ ڈاؤن لوڈ کریں",
+    downloadNow: "ابھی ڈاؤنلوڈ کریں",
+    recharge: "ری چارج کریں",
+    getInterestProfit: "سود کا منافع حاصل کریں۔"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -223,16 +239,19 @@ export default {
     feedback: "فیڈبیک",
     vip: "VIP",
     logout: "لاگ آوٹ",
-    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
+    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
+    interestProfit: "سود کا منافع"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",
-    depositTutorial: "جمع کرنے کا ٹیوٹوریل"
+    depositTutorial: "جمع کرنے کا ٹیوٹوریل",
+    select_privilege: "خصوصی اختیار منتخب کریں"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
     withdrawable: "واپسی کے قابل",
     withdrewAmount: "واپس لی گئی رقم",
+    withdrawMaxTimes: "باقی نکالنے کی کوششیں",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں",
     withdrawTutorial: "نکالنے کا ٹیوٹوریل"
@@ -245,6 +264,27 @@ export default {
     withdrawal: "واپسی",
     recharge: "ریچارج"
   },
+  interestProfit: {
+    depositOverview: "جمع کروانے کا جائزہ",
+    unexpiredEarnings: "غیر ختم شدہ کمائی",
+    cumulativeIncome: "مجموعی آمدنی",
+    storageTime: "ذخیرہ وقت (دن)",
+    deposit: "جمع",
+    trialCalculation: "آزمائشی حساب",
+    distributeInterest: "سود تقسیم کریں",
+    pending: "زیر التواء",
+    ended: "ختم ہو گیا",
+    details: "تفصیلات",
+    collect: "جمع کریں",
+    noData: "کوئی ڈیٹا نہیں",
+    annualInterestRate: "سالانہ شرح سود",
+    depositAmount: "جمع رقم",
+    depositDuration: "جمع کرنے کی مدت",
+    placeTime: "وقت مقرر کریں",
+    matureTime: "پختہ وقت",
+    status: "حالت",
+    confirm: "تصدیق کریں"
+  },
   vip: {
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
     received: "وصول کیا",
@@ -252,12 +292,12 @@ export default {
     accumulateDeposit: "جمع شدہ جمع",
     reward: "انعام",
     levelUpgrade: "سطح اپ گریڈ",
-    monthly: "ماہانہ",
     dailyWithdrawal: "یومیہ واپسی",
     limit: "حد",
     vipStatus_txt: "وی آئی پی اسٹیٹس کو ماہانہ جمع شدہ رقم سے اپ گریڈ کیا جا سکتا ہے",
     upgrade: "اپ گریڈ",
     experience: "تجربہ",
+    dailyWithdrawalTimes: "روزانہ واپسی کے اوقات",
     rewards: "انعامات",
     vipTable_txt:
       "ایک بار جمع شدہ رقم اپ گریڈ کی ضروریات پوری کرتی ہے، آپ کا VIP سطح فوراً بلند کیا جائے گا، اور متعلقہ اپ گریڈ انعامات جاری کیے جائیں گے۔"
@@ -273,9 +313,9 @@ export default {
     reward: {
       myTotalIncome: "میری کل آمدنی",
       myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
-      invite: "دعوت دیں",
-      topUp: "اپ ڈاؤن",
-      bet: "شرط لگائیں",
+      invite: "دعوتی بونس",
+      topUp: "جمع بونس",
+      bet: "شرط بونس",
       eligibleRefer: "اہل ریفر",
       inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
       howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
@@ -288,7 +328,10 @@ export default {
       totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
       player: "پلیئر",
       money: "پیسہ",
-      eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔",
+      eligibility_tips: "اہلیت: <br /> مدعو کا جمع کردہ رقم ≥ 300 ہونا چاہیے۔",
+      betting_tips:
+        "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
+      deposit_tips: "ڈپازٹ کمیشن: <br /> ہر نئے ممبر کی پہلی جمع کردہ رقم پر 5% ریبیٹ حاصل کریں جو آپ مدعو کریں۔",
       shareTitle: "B9GAME شیئر کریں اور کمائیں",
       shareText:
         "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
@@ -305,6 +348,13 @@ export default {
         searchButton: "تلاش"
       },
       table: {
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
+        todayRegCount: "آج کی رجسٹر تعداد",
+        ytdRegCount: "کل کی رجسٹر تعداد",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -341,7 +391,11 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی"
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     },
     profitAndLoss: {
@@ -366,7 +420,23 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس"
+        ftdamount: "FTD رقم",
+        ftdcount: "FTD تعداد",
+        depositcount: "جمع کرنے کی تعداد",
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        betamount: "شرط کی رقم",
+        depositcount: "جمع کی تعداد",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا",
+        firstdepositcount: "پہلی جمع"
       }
     }
   },
@@ -383,10 +453,10 @@ export default {
     jackpot: "جیک پاٹ",
     bonus: "بونس",
     amount: "رقم",
-    applying: "درخواست دی جارہی ہے",
+    applying: "پروسیسنگ",
     failed: "ناکام",
     Success: "کامیابی",
-    underReview: "جائزے کے تحت",
+    underReview: "پروسیسنگ",
     toBePaid: "ادائیگی ہونی ہے",
     paymentOnGoing: "ادائیگی جاری ہے",
     automaticPayment: "خودکار ادائیگی",
@@ -398,7 +468,10 @@ export default {
     orderNo: "آرڈر نمبر",
     bank: "بینک",
     noRecord: "کوئی ریکارڈ نہیں",
-    noMoreRecord: "مزید ریکارڈ نہیں"
+    noMoreRecord: "مزید ریکارڈ نہیں",
+    bytoday: " آج تک",
+    byyesterday: "کل تک",
+    all: "سب"
   },
   appUpdate: {
     updateHeader: "اعلانِ اپ ڈیٹ",
@@ -408,9 +481,9 @@ export default {
     cancel: "منسوخ کریں",
     updateNow: "ابھی اپ ڈیٹ کریں"
   },
-  bankCard:{
-    bankAccountNum : "بینک اکاؤنٹ نمبر",
-    pleaseEnterCardAccount : "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
+  bankCard: {
+    bankAccountNum: "بینک اکاؤنٹ نمبر",
+    pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
     bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"
@@ -488,10 +561,20 @@ export default {
     1307: "روزانہ نکالنے کی حد کی حد سے زیادہ ہوگیا",
     1308: "قابلیت نہیں",
     1309: "کارڈ کا کھاتہ ممبر کے نام سے میل نہیں کھاتا",
+    1318: "یہ عمل تعاون یافتہ نہیں ہے، براہ کرم مدد کے لیے آن لائن کسٹمر سروس سے رابطہ کریں۔",
+    1319: "کارڈ نمبر کو دو بار سے زیادہ باندھ دیا گیا ہے",
     1401: "OTP بھیجنے کی وقت کی حد سے زیادہ",
     1402: "OTP بھیجنے کا شیڈول غلطی، براہ کرم OTP دوبارہ بھیجیں",
     1403: "OTP توثیق کی غلطی",
     1404: "OTP کوڈ بھیجنے میں ناکامی",
+    53000: "جمع کرنے سے قاصر، کوئی اہل منصوبہ نہیں ملا۔",
+    53001: "غیر موزوں جمع کی رقم",
+    53002: "غیر موزوں جمع کے دن",
+    53003: "بیٹنگ ریکارڈ موجود نہیں",
+    53004: "ابھی تک پختہ نہیں ہوا",
+    53005: "سرمایہ کاری پہلے ہی سیٹل ہو چکی ہے",
+    53006: "جمع کرانا ممکن نہیں، جاری سود کی تعداد حد تک پہنچ چکی ہے",
+    53007: "بیلنس ناکافی ہے",
     10000: "باقی رقم قابلیت کی کمی",
     10001: "نکالنے میں غلطی",
     10002: "جمع کرنے میں غلطی",
@@ -503,6 +586,9 @@ export default {
     11005: "موجودہ صارف کی کارروائیاں بہت زیادہ ہیں۔ براہ کرم دوبارہ کوشش کریں۔",
     12100: "نکال پاس ورڈ میل نہیں کھاتا",
     12101: "نیا نکال پاس ورڈ پرانا نکال پاس ورڈ کی طرح نہیں ہوسکتا",
+    12104: "یہ بینک کارڈ نمبر بلاک کر دیا گیا ہے",
+    12105:
+      "آپ کے نکالنے کے آپریشن میں نیٹ ورک کی تاخیر ہوئی، جس کی وجہ سے ادائیگی ناکام ہو گئی۔ براہ کرم رقم واپس لینے سے پہلے 30 منٹ انتظار کریں، شکریہ!",
     13000: "ڈومین نام نہیں ملا",
     13001: "3 مہینے سے پرانی معلومات پوچھنا ممکن نہیں",
     13002: "7 دن کے اندر ہونا چاہئے",
@@ -511,6 +597,7 @@ export default {
     14001: "یہ فون نمبر پہلے ہی رجسٹر ہو چکا ہے",
     14002: "یہ ای میل پہلے ہی رجسٹر ہو چکا ہے",
     14003: "ایفلییٹ کوڈ نہیں ملا",
+    15011: "2024-07-10 سے پہلے کی تاریخ منتخب نہیں کی جا سکتی",
     15201: "پرانا کوڈ غلط",
     15202: "نیا پاس ورڈ پرانا پاس ورڈ کی طرح نہیں ہوسکتا",
     21000: "یہ گیم آپ کی مقبول گیمز کی فہرست میں پہلے ہی ہے۔",
@@ -543,6 +630,7 @@ export default {
     35009: "امتیاز جلد فعال ہوگا",
     35010: "ممبر کو یہ امتیاز نہیں مل سکتا",
     35011: "ممبر کو یہ امتیاز نہیں مل سکتا",
+    37001: "وصول کرنے کا وقت سرگرمی کے دوران نہیں ہے۔",
     45000: "نیچے انتقالی رقم تک نہیں پہنچا",
     45001: "آج کوئی بے ربط بونس ملا ہے",
     50000: "آج کے لیے قابلِ منتقلی تعداد کی حد پہنچ چکی ہے",

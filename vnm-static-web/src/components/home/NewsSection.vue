@@ -159,6 +159,9 @@ onMounted(() => {
         height: 165px;
         overflow: hidden;
         border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img {
           height: 100%;
         }

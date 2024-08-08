@@ -174,6 +174,13 @@ const betNow = (platformMatchId) => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   euroMatchAll().then((res) => {
     if (res.code === 0) {
       matches.value = res.data;

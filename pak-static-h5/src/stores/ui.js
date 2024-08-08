@@ -16,7 +16,11 @@ export const useUI = defineStore("ui-store", {
       LiveUrl: null,
       downloadAppUrl: "",
       loggedIn: false,
-      shouldFetchDownloadAppUrl: false
+      shouldFetchDownloadAppUrl: false,
+      instagramUrl: "",
+      tiktokUrl: "",
+      whatsappUrl: "",
+      youtubeUrl: ""
     };
   },
   actions: {

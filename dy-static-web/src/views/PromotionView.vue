@@ -1,10 +1,6 @@
 <template>
   <div class="promo-container">
     <div class="all-promotions" v-if="!isPromoDetail">
-      <!--      <div class="promo-top">-->
-      <!--        <img src="../assets/promo/promo-top-bg1.jpg" alt="" class="all-promotions-bg" />-->
-      <!--      </div>-->
-
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
           <div class="type-list">
@@ -100,10 +96,13 @@
           ></div>
         </div>
 
+        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
         <div
           class="inner"
           :class="{
-            isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isCS:
+              selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+              selectedPromo.promoCode === 'dy2-olympic-match',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             fullwidth:
@@ -112,8 +111,7 @@
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
-              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+              selectedPromo.promoCode === 'dy2-eurocup-manual',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
           }"
@@ -139,6 +137,16 @@
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
+            <div
+              v-if="['dy2-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
+              class="corner-decor"
+              style="position: absolute; left: 0px; bottom: 0px"
+            >
+              <img
+                v-if="selectedPromo.redirectUrl === 'dy2-cs2-blast-2024'"
+                src="@/assets/images/promotion/hotpromo/blastpremier/bg.png"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -153,13 +161,15 @@ import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
+import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 
 import HotPromotion from "@/components/HotPromotion";
 
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion
+    HotPromotion,
+    BlastPremierMarquee
   },
   setup() {
     const store = userStore();
@@ -171,11 +181,15 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code: "ALL", img: "all", label: "所有优惠" },
-      { code: "ESPORT", img: "esport", label: "电竞" },
-      { code: "SPORT", img: "sport", label: "体育" },
+      { code: "WELCOME", img: "all", label: "新人优惠" },
+      { code: "ESPORT", img: "esport", label: "电竞活动" },
+      { code: "SPORT", img: "sport", label: "体育活动" },
       // { code: "POKER", img: 'poker', label: '棋牌'},
-      { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
-      { code: "FISH", img: "game", label: "老虎机/捕鱼" }
+      { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
+      { code: "SLOT GAME", img: "game", label: "电游活动" },
+      { code: "VIP", img: "vip", label: "VIP特权" },
+      { code: "LIMITED", img: "other", label: "限时热门" },
+      { code: "FTD", img: "ftd", label: "充提优惠" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -202,19 +216,19 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false)
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
-          // if you want to disable its autofocus
-          // autofocus: false,
-          center: true,
-          confirmButtonText: "确认",
-          showClose: false,
-          buttonSize: "large"
-        }).then(() => {
-          store.loginPageVisible = true;
-        });
-        return;
-      } else {
+      // if (!store.token) {
+      //   ElMessageBox.alert("请登录后再操作", "系统提示", {
+      //     // if you want to disable its autofocus
+      //     // autofocus: false,
+      //     center: true,
+      //     confirmButtonText: "确认",
+      //     showClose: false,
+      //     buttonSize: "large"
+      //   }).then(() => {
+      //     store.loginPageVisible = true;
+      //   });
+      //   return;
+      // } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("Dongying-refer")) {
@@ -232,8 +246,9 @@ export default defineComponent({
           isPromoDetail.value = true;
           selectedPromo.value = promo;
         }
-      }
+      // }
     };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type;
       if (type !== "ALL") {
@@ -250,6 +265,8 @@ export default defineComponent({
           return "最新";
         case 1:
           return "热门";
+        case 2:
+          return "正常";
         case 3:
           return "推荐";
         case 4:
@@ -258,6 +275,8 @@ export default defineComponent({
           return "新人";
         case 6:
           return "限时";
+        case 7:
+          return "精选";
         default:
           return "";
       }
@@ -317,17 +336,21 @@ export default defineComponent({
   }
   // background: #090b19;
   .all-promotions {
-    min-height: 40vh;
-    padding: 0px 0px 50px 0px;
+    min-height: calc(100vh - 310px);
+    padding: 16px 50px 50px;
     position: relative;
-    background-image: url("../assets/promo/promo-bg-new.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% auto;
     background-color: #ebf4ff;
-    min-height: 100vh;
 
     margin: 0 auto;
     //max-width: 1920px;
+  }
+
+  .all-promotions-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0.5;
   }
 
   .promo-view-container {
@@ -408,15 +431,18 @@ export default defineComponent({
   }
 
   .promo-top {
-    width: 100%;
     display: flex;
     justify-content: space-around;
-    padding: 0 0px;
+    padding: 0 20px;
     position: relative;
     z-index: 1;
 
-    img {
-      width: 100%;
+    .promo-top-img1 {
+      width: 543px;
+    }
+
+    .promo-top-img2 {
+      width: 305px;
     }
   }
 
@@ -448,7 +474,7 @@ export default defineComponent({
       width: 100%;
       max-width: $maxwidth;
       margin: 0 auto;
-      padding: 280px 0 10px;
+      padding: 10px 0;
 
       .promo-type-wrapper {
         display: flex;
@@ -464,11 +490,11 @@ export default defineComponent({
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 20px 0;
+          padding: 10px 0 20px;
           overflow: auto;
           width: 90%;
           margin-bottom: 20px;
-          margin-top: 16px;
+          margin-top: 10px;
 
           .type-item {
             cursor: pointer;
@@ -497,7 +523,7 @@ export default defineComponent({
               position: absolute;
               width: 100%;
               height: 100%;
-              background: linear-gradient(180deg, #fcfeff 0%, #ebf5ff 52.01%, #fafdff 98%);
+              // box-shadow: 0 3px 4px 0 rgb(0 0 0 / 15%);
               box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.15);
               border-radius: 30px;
             }
@@ -543,6 +569,8 @@ export default defineComponent({
           background-color: #f2f6ff;
           box-shadow: 0 3px 9px 0 rgba(112, 122, 143, 0.4);
           border-radius: 16px;
+          width: 285px;
+          height: 360px;
 
           a {
             display: flex;
@@ -594,6 +622,7 @@ export default defineComponent({
             left: 0;
             bottom: 0;
             width: 100%;
+            gap: 10px;
             display: flex;
             flex-direction: column;
             align-items: start;
@@ -612,8 +641,9 @@ export default defineComponent({
               font-size: 28px;
               overflow: hidden;
               text-align: left;
-              width: 100%;
-              font-family: PingFang SC;
+              width: 220px;
+              white-space: pre-wrap;
+              word-wrap: break-word;
               font-weight: 600;
             }
 
@@ -634,7 +664,7 @@ export default defineComponent({
             font-weight: 400;
             color: #ffffff;
             position: absolute;
-            top: 0px;
+            top: -2px;
             right: 0px;
             background: url("../assets/images/promotion/hotpromo/common/promo-label-ribbon.png") no-repeat 100%/100%;
             display: flex;
@@ -666,13 +696,13 @@ export default defineComponent({
         margin: 0 auto;
 
         &.isCSBanner {
-          min-height: 660px;
-          max-width: none;
+          // min-height: 660px;
+          // max-width: none;
 
-          .promo-bg {
-            min-height: 660px !important;
-            background-size: 100% 100%;
-          }
+          // .promo-bg {
+          //   min-height: 660px !important;
+          //   background-size: 100% 100%;
+          // }
         }
 
         &.isDuanwuBanner {

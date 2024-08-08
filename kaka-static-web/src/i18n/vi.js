@@ -199,7 +199,7 @@ export default {
     common_and_new_password_not_match: "Xác nhận mật khẩu chưa chính xác.",
     forgetWithdrawPassword: "Quên mật khẩu rút tiền?",
     bankCardReminder1:
-      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoàn và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
+      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
     bankCardReminder2:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!"
   },
@@ -227,6 +227,8 @@ export default {
     captchareq: "Vui lòng nhập mã captcha",
     captcha: "Mã captcha phải có 4 ký tự",
     verificationCode: "Vui lòng nhập mã xác nhận",
+    pleaseEnter: "Vui lòng nhập",
+    pleaseEnterCardNumber: "Vui lòng nhập số thẻ",
     min4: "Mã xác minh phải có 4 ký tự",
     emailFormat: "Vui lòng nhập một địa chỉ email hợp lệ",
     between612: "Độ dài phải từ 6 đến 11 ký tự",
@@ -356,29 +358,57 @@ export default {
     settleWithdrawPwd: "Vui lòng thêm mật khẩu rút tiền"
   },
   referTerms: {
-    promotionStart: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8). ",
-    referralBonus:
-      "Chỉ cần giới thiệu thêm bạn tham gia tại KAKA, bạn sẽ nhận được 300 VNDP trên mỗi một người giới thiệu thành công. ",
-    eligibilityConditions: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây:",
-    referrerConditions: "Thành viên giới thiệu (Khách hàng)",
-    referrerConditions1: "Tổng tiền cược hợp lệ tối thiểu từ 10.000 VNDP trở lên",
-    referrerConditions2: "Đạt cấp độ vip 1 trở lên",
-    presenteeConditions: "Thành viên được giới thiệu(Bạn của bạn): ",
-    presenteeConditions1:
-      "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định. ",
-    presenteeConditions2: "Chưa từng đăng ký tại KAKA và không có bất kỳ tài khoản nào khác tại KAKA. ",
-    presenteeConditions3:
-      "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP. ",
     specifiedLink:
       'Thành viên đủ điều kiện có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" . Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này. ',
-    promotionReview:
-      "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần. ",
-    withdrawalConditions: "Thành viên nhận khuyến mãi cần hoàn thành 5 vòng cược của khuyến mãi trước khi rút tiền.",
-    notApplied:
-      "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
-    rightsReserved: "KAKA có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước. ",
-    concurrentPromotions: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại KAKA. ",
-    generalTerms: "Điều khoản & Điềukiện khuyến mãi chung được áp dụng."
+    intro: {
+      title: "MỘT LỜI GIỚI THIỆU - TRĂM TRIỆU VỀ TAY",
+      desc: {
+        desc1: "ĐỐI TƯỢNG THAM GIA: TẤT CẢ THÀNH VIÊN CỦA KAKA.GAME",
+        desc2: "THỜI GIAN DIỄN RA: VÔ THỜI HẠN",
+        desc3: "CHÚ Ý: 1 ĐIỂM = 1000 VND"
+      }
+    },
+    promoDetail: {
+      title: "CHI TIẾT KHUYẾN MÃ",
+      desc: "CHỈ CẦN GIỚI THIỆU THÊM BẠN THAM GIA TẠI KAKA.GAME, BẠN SẼ NHẬN ĐƯỢC 300 ĐIỂM TRÊN MỖI MỘT NGƯỜI GIỚI THIỆU THÀNH CÔNG."
+    },
+    howToJoin: {
+      title: "CÁCH THỨC THAM GIA",
+      desc: `VÀO MỤC "TÀI KHOẢN - GIỚI THIỆU" . SAU ĐÓ THÀNH VIÊN CÓ THỂ GỬI LIÊN KẾT GIỚI THIỆU CỦA MÌNH CHO BẠN BÈ ĐỂ ĐĂNG KÝ TÀI KHOẢN THÔNG QUA LIÊN KẾT NÀY.`
+    },
+    term: {
+      title: "QUY ĐỊNH VÀ ĐIỀU KHOẢN",
+      desc: {
+        desc1: {
+          desc: "THÀNH VIÊN GIỚI THIỆU（BẠN）:",
+          children: {
+            desc1: "TỔNG TIỀN CƯỢC HỢP LỆ TỐI THIỂU TỪ 10,000 ĐIỂM TRỞ LÊN",
+            desc2: "ĐẠT CẤP ĐỘ VIP 1 TRỞ LÊN."
+          }
+        },
+        desc2: {
+          desc: "THÀNH VIÊN ĐƯỢC GIỚI THIỆU（BẠN CỦA BẠN）:",
+          children: {
+            desc1: "ĐĂNG KÝ TÀI KHOẢN TRONG THỜI GIAN KHUYẾN MÃI THÔNG QUA LIÊN KẾT GIỚI THIỆU BẠN BÈ ĐƯỢC CHỈ ĐỊNH.",
+            desc2: "CHƯA TỪNG ĐĂNG KÝ TẠI KAKA.GAME VÀ KHÔNG CÓ BẤT KỲ TÀI KHOẢN NÀO KHÁC TẠI KAKA.GAME.",
+            desc3:
+              "PHẢI CÓ GIAO DỊCH GỬI TIỀN ĐẦU TIÊN THÀNH CÔNG VÀ CÓ TỔNG SỐ TIỀN CƯỢC HỢP LỆ TÍCH LŨY TỐI THIỂU 4.000 ĐIỂM."
+          }
+        },
+        desc3:
+          "VIỆC XÉT DUYỆT CHƯƠNG TRÌNH KHUYẾN MÃI SẼ ĐƯỢC THỰC HIỆN HÀNG TUẦN. SAU KHI XÁC MINH XONG, PHẦN THƯỞNG GIỚI THIỆU SẼ TỰ ĐỘNG CẬP NHẬT VÀO TÀI KHOẢN CỦA THÀNH VIÊN GIỚI THIỆU VÀ THÀNH VIÊN ĐƯỢC GIỚI THIỆU VÀO KHOẢNG 17:00 GIỜ VÀO THỨ HAI HÀNG TUẦN.",
+        desc4: "THÀNH VIÊN NHẬN KHUYẾN MÃI CẦN HOÀN THÀNH 5 VÒNG CƯỢC CỦA KHUYẾN MÃI TRƯỚC KHI RÚT TIỀN.",
+        desc5:
+          "TẤT CẢ CƯỢC HÒA, CƯỢC HỦY, CƯỢC 2 BÊN, KIỂU CƯỢC EUROPE HANDICAP TỶ LỆ DƯỚI 1.75, ASIAN HANDICAP DƯỚI 0.75, THỂ THAO ẢO, ĐUA NGỰA, NUMBER GAME, SẼ KHÔNG ĐƯỢC ÁP DỤNG CHO CHƯƠNG TRÌNH NÀY.",
+        desc6:
+          "MỘT THÀNH VIÊN CHỈ ĐƯỢC ĐĂNG KÝ 1 TÊN ĐĂNG NHẬP, 1 ĐỊA CHỈ 1 EMAIL, 1 SỐ ĐIỆN THOẠI, 1 ĐỊA CHỈ IP VỚI 1 SỐ TÀI KHOẢN NGÂN HÀNG PHẢI ĐÚNG VỚI CHỈ 1 NGƯỜI DUY NHẤT VÀ CHỈ PHÁT THƯỞNG 1 LẦN DUY NHẤT. NẾU THÀNH VIÊN CÓ ĐĂNG KÝ THÊM 1 TÀI KHOẢN NÀO KHÁC, KAKA.GAME CÓ QUYỀN TRÍCH THU LẠI SỐ TIỀN KHUYẾN MÃI CỦA HỘI VIÊN ĐÓ!",
+        desc7:
+          "KHI PHÁT HIỆN CÁC TRƯỜNG HỢP CƯỢC CHUỖI NHÓM, SỬ DỤNG PHẦN MỀM VI PHẠM ĐẶT CƯỢC, VÀ CÁC THÀNH VIÊN LẠM DỤNG KHUYẾN MÃI. KAKA.GAME CÓ QUYỀN ĐÓNG BĂNG TÀI KHOẢN MÀ KHÔNG CẦN THÔNG BÁO, CŨNG NHƯ KHÔNG HOÀN TRẢ TIỀN GỐC VÀ LIỆT VÀO DANH SÁCH ĐEN",
+        desc8: "KHUYẾN MÃI NÀY CÓ THỂ ÁP DỤNG CÙNG LÚC VỚI TẤT CẢ CÁC KHUYẾN MÃI KHÁC CỦA KAKA.GAME.",
+        desc9:
+          "ĐỂ TRÁNH SỰ HIỂU NHẦM TRONG CÁCH HIỂU VĂN BẢN, KAKA.GAME BẢO LƯU QUYỀN GIẢI THÍCH CUỐI CÙNG, THAY ĐỔI, DỪNG, HỦY BỎ HOẶC THU HỒI CHIẾT KHẤU MÀ KHÔNG CẦN BÁO TRƯỚC."
+      }
+    }
   },
   deposit: {
     deposit: "Nạp tiền",
@@ -467,26 +497,26 @@ export default {
     eSportsCommissionProgram: "KẾ HOẠCH CHIẾT KHÂU HOA HỒNG",
     bonusTerms: "Điều khoản khuyến mãi",
     afftnc1:
-      "Tỷ lệ % hoa hồng được tính dựa trên tổng số tiền thua cược của các thành viên hàng tháng của Đại lý tại TF.com và số lượng thành viên hoạt động trong từng giai đoạn trong tháng.",
+      "Tỷ lệ % hoa hồng được tính dựa trên tổng số tiền thua cược của các thành viên hàng tháng của Đại lý tại Kaka.game và số lượng thành viên hoạt động trong từng giai đoạn trong tháng.",
     afftnc2:
-      " Phần trăm hoa hồng của đại lý sẽ được dựa vào tổng doanh thu từ tất cả các khách hàng của đại lý đang cược tại TF.com và thỏa mãn những điều kiện để nhận thanh toán Hoa hồng:",
+      " Phần trăm hoa hồng của đại lý sẽ được dựa vào tổng doanh thu từ tất cả các khách hàng của đại lý đang cược tại Kaka.game và thỏa mãn những điều kiện để nhận thanh toán Hoa hồng:",
     "afftnc2-1": "Phí gửi rút tiền của ngân hàng.",
     "afftnc2-2": "Phí tiền thưởng khách nhận.",
     "afftnc2-3": "Phí dịch vụ hệ thống trò chơi. (thanh toán trả nhà cung cấp dịch vụ).",
     afftnc3:
-      "Với 55% hoa hồng cho đại lý, Lợi nhuận hoa hồng sẽ dựa vào 55% và được tính trên tổng số tiền thua cược của các thành viên tham gia đặt cược tại Công ty TF.com. ( tổng tiền thua cược sau khi trừ mọi chi phí ) sẽ là tổng số tiền hoa hồng của đại lý được nhận.",
+      "Với 55% hoa hồng cho đại lý, Lợi nhuận hoa hồng sẽ dựa vào 55% và được tính trên tổng số tiền thua cược của các thành viên tham gia đặt cược tại Công ty Kaka.game. ( tổng tiền thua cược sau khi trừ mọi chi phí ) sẽ là tổng số tiền hoa hồng của đại lý được nhận.",
     afftnc4:
-      "Với ít nhất 05 thành viên có hoạt động động trong tháng (Nếu số thành viên hoạt động ít hơn 05 sẽ không được tính hoa hồng) thì đại lý sẽ có cơ hội nhận được hoa hồng từ TF.com. Phần trăm hoa hồng tăng hay giảm sẽ phụ thuộc vào số lượng thành viên hoạt động và số tiền thua cược của các thành viên trong tháng.",
+      "Với ít nhất 05 thành viên có hoạt động động trong tháng (Nếu số thành viên hoạt động ít hơn 05 sẽ không được tính hoa hồng) thì đại lý sẽ có cơ hội nhận được hoa hồng từ Kaka.game. Phần trăm hoa hồng tăng hay giảm sẽ phụ thuộc vào số lượng thành viên hoạt động và số tiền thua cược của các thành viên trong tháng.",
     afftnc5:
       "Nếu tài khoản đại lý có lợi nhuận hoa hồng là số âm trong tháng (lợi nhuận âm: là số tiền nợ của đại lý với Công ty) thì số tiền âm đó sẽ được chuyển sang những tháng tiếp theo để khấu trừ cho đến hết thì đại lý mới được tiếp tục nhận tiền hoa hồng.",
     afftnc6:
       "Thanh toán hoa hồng đại lí cũ: trong tháng ít nhất có 3 khách mới và tổng khách hoạt động 5 khách trở lên",
     afftnc7: "Tất cả các thành viên đại lý phải thanh toán chi phí.",
-    afftnc8: "TF.com có quyền thay đổi hoặc điều chỉnh tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
+    afftnc8: "Kaka.game có quyền thay đổi hoặc điều chỉnh tỷ lệ hoa hồng mà chúng tôi cho là phù hợp.",
     afftnc9:
-      "TF.com có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào nếu cần thiết.",
+      "Kaka.game có quyền thay đổi hoặc sửa đổi các điều khoản trên hoặc thêm bất kỳ điều khoản bổ sung nào nếu cần thiết.",
     afftnc10:
-      "TF.com có quyền hủy tư cách đối tác bất cứ lúc nào mà không cần thông báo trước trong trường hợp tài khoản đối tác không đáp ứng các yêu cầu được đề ra trong một khoảng thời gian nhất định và có hành vi gian lận và vi phạm.",
+      "Kaka.game có quyền hủy tư cách đối tác bất cứ lúc nào mà không cần thông báo trước trong trường hợp tài khoản đối tác không đáp ứng các yêu cầu được đề ra trong một khoảng thời gian nhất định và có hành vi gian lận và vi phạm.",
     CommissionPlan: "Kế hoạch hoa hồng",
     deposit1000: "Đại lí A đạt lợi nhuận hoa hồng trong tháng là 40%",
     deposit130000: "Đại lí B đạt lợi nhuận hoa hồng trong tháng là 55%",
@@ -509,15 +539,16 @@ export default {
     downlineAffiliatept2:
       "10% hoa hồng từ các đại lý tuyến dưới của mình. ( khi giới thiệu thành viên thường khi đã đăng ký tài khoản dưới mã đại lý (đại lý A) của mình. Thành viên đó đăng ký và trở thành đại lý (đại lý B). Đại lý A sẽ được nhận 10% hoa hồng trên tổng tiền hoa hồng đại lý B được nhận, với điều kiện Đại lý A tháng đó cũng phải có tiền hoa hồng.",
     downlineAffiliate2:
-      "Ví dụ: Đại lý của bạn Đại lý A -> bạn giới thiệu 1 người nào đó làm đại lý của TF.com (Đại lý B) Thu nhập của đại lý A trong tháng = 10,000 VND. Tiền hoa hồng của Đại lý B trong tháng = 20,000 VND⇨Đại lý A sẽ được nhận 10% hoa hồng từ Đại lý B: 10% x 20,000 = 2000 VND Tổng thu nhập Đại lý A sẽ được nhận: 10,000 + 2000 = 12,000 VND",
+      "Ví dụ: Đại lý của bạn Đại lý A -> bạn giới thiệu 1 người nào đó làm đại lý của Kaka.game (Đại lý B) Thu nhập của đại lý A trong tháng = 10,000 VND. Tiền hoa hồng của Đại lý B trong tháng = 20,000 VND⇨Đại lý A sẽ được nhận 10% hoa hồng từ Đại lý B: 10% x 20,000 = 2000 VND Tổng thu nhập Đại lý A sẽ được nhận: 10,000 + 2000 = 12,000 VND",
     paymentMethods: "PHƯƠNG THỨC THANH TOÁN",
     paymentMethods1: "Tiền hoa hồng sẽ được thanh toán vào ngày 5 hàng tháng.",
     paymentMethods2: "Tiền hoa hồng sẽ được thanh toán VND.",
     paymentMethods3:
-      "Tiền hoa hồng hàng tháng sẽ được chốt tổng kết và chốt vào ngày 5 hàng tháng và hệ thống sẽ cập tiền hoa hồng vào tài khoản của đại lý trên TF.com vào ngày 5 hàng tháng. Từ ngày 5 trở đi đại lý có thể thực hiện lệnh rút tiền về tài khoản.",
-    paymentMethods4: "TF.com có quyền thay đổi hoặc chỉnh sửa về tỷ lệ phần trăm hoa hồng mà chúng tôi cho là phù hợp.",
+      "Tiền hoa hồng hàng tháng sẽ được chốt tổng kết và chốt vào ngày 5 hàng tháng và hệ thống sẽ cập tiền hoa hồng vào tài khoản của đại lý trên Kaka.game vào ngày 5 hàng tháng. Từ ngày 5 trở đi đại lý có thể thực hiện lệnh rút tiền về tài khoản.",
+    paymentMethods4:
+      "Kaka.game có quyền thay đổi hoặc chỉnh sửa về tỷ lệ phần trăm hoa hồng mà chúng tôi cho là phù hợp.",
     paymentMethods5:
-      "TF.com có quyền thay đổi hoặc chỉnh sửa các điều khoản bên trên hoặc thêm bất kỳ điều khoản nào trong trường hợp cần thiết.",
+      "Kaka.game có quyền thay đổi hoặc chỉnh sửa các điều khoản bên trên hoặc thêm bất kỳ điều khoản nào trong trường hợp cần thiết.",
     activeUser: "Thành viên hoạt động",
     bronze: "Đồng",
     lessThanW: "<10W",
@@ -806,7 +837,8 @@ export default {
     loginbeforeAction: "Vui lòng đăng nhập trước khi thực hiện bất kỳ hành động nào",
     safetyBeforePhone: "Vì sự an toàn, vui lòng xác minh số điện thoại của bạn trước khi nạp tiền",
     bindRealName: "Bạn chưa cập nhật tên thật, vui lòng cập nhật",
-    depositConfirmed: "Nạp tiền đã được xác nhận"
+    depositConfirmed: "Nạp tiền đã được xác nhận",
+    withdrawCancelled: "Rút tiền bị hủy"
   },
   sports: {
     saba: "Saba Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !",
@@ -851,10 +883,10 @@ export default {
     deposit: "Nạp tiền",
     transfer: "Chuyển điểm",
     adjustment: "Sao kê tài khoản",
-    applying: "Đang chờ xét duyệt",
+    applying: "Đang xử lý",
     failed: "Thất bại",
     success: "Thành công",
-    underReview: "Đang thẩm định",
+    underReview: "Đang xử lý",
     toBePaid: "Đang chờ thanh toán",
     normalPayment: "Đơn đang thanh toán",
     automaticPayment: "Thanh toán tự động",
@@ -927,6 +959,7 @@ export default {
     1307: "Vượt quá giới hạn rút hàng ngày",
     1308: "Số dư không đủ",
     1309: "Tài khoản thẻ không khớp với tên thành viên",
+    1319: "Tài khoản ngân hàng này đã được sử dụng, không thể liên kết trùng lặp, vui lòng liên kết tài khoản ngân hàng khác.",
     1401: "Thời gian gửi OTP đã vượt quá",
     1402: "Lỗi lịch gửi OTP, vui lòng gửi lại OTP",
     1403: "Lỗi xác minh OTP",

@@ -48,7 +48,7 @@
   <GameModal ref="gameMenu" />
 
   <div
-    class="rocket-wrapper"
+    class="rocket-wrapper domain-wrapper"
     v-if="showDomain"
     :class="'show-domain'"
     :style="{ top: domainPosition.top + 'px', left: domainPosition.left + 'px' }"
@@ -57,7 +57,13 @@
     <div>
       <div class="close-btn" @click="hideDomain()">X</div>
 
-      <el-carousel height="130px" :indicator-position="floatDomain.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+      <el-carousel
+        height="110px"
+        :indicator-position="floatDomain.length > 1 ? 'outside' : 'none'"
+        arrow="never"
+        :autoplay="true"
+        :interval="3000"
+      >
         <el-carousel-item v-for="(game, i) in floatDomain" :key="i">
           <div @click="openLink(game.code)" class="rocket-container">
             <div class="rocket"><img :src="`${imgURL}/promo/${game.icon}`" /></div>
@@ -66,7 +72,6 @@
       </el-carousel>
     </div>
   </div>
-
 
   <div
     class="rocket-wrapper"
@@ -82,39 +87,51 @@
           <img :src="`${imgURL}/game/${game.icon}`" />
         </div>
       </div> -->
-      <el-carousel height="130px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+      <el-carousel
+        height="130px"
+        :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'"
+        arrow="never"
+        :autoplay="true"
+        :interval="3000"
+      >
         <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
-            <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
-              <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
-            </div>
+          <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
+            <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
+          </div>
         </el-carousel-item>
       </el-carousel>
     </div>
   </div>
 
-    <div
-      class="rocket-wrapper"
-      v-if="showFloatPromo"
-      :class="'show-promo'"
-      :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
-      @mousedown="startDragging('promo', $event)"
-    >
-      <div style="position: relative">
-        <div class="close-btn" @click="hideFloatPromo()">X</div>
-        <!-- <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
+  <div
+    class="rocket-wrapper"
+    v-if="showFloatPromo"
+    :class="'show-promo'"
+    :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
+    @mousedown="startDragging('promo', $event)"
+  >
+    <div style="position: relative">
+      <div class="close-btn" @click="hideFloatPromo()">X</div>
+      <!-- <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
           <div class="rocket">
             <img :src="`${imgURL}/promo/${currentPromo.icon}`" />
           </div>
         </div> -->
-        <el-carousel height="130px"  :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
-          <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
-              <div @click="gotoPromo(promo.code)" class="rocket-container">
-                <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
-              </div>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
+      <el-carousel
+        height="130px"
+        :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
+        arrow="never"
+        :autoplay="true"
+        :interval="3000"
+      >
+        <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
+          <div @click="gotoPromo(promo.code)" class="rocket-container">
+            <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
+  </div>
 </template>
 <script>
 import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
@@ -123,16 +140,16 @@ import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site"
 import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
-import { ElMessage } from "element-plus";
-import { useRoute, useRouter } from "vue-router";
+import { useNotify } from "@/hooks/notify";
+import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
-    const route = useRoute();
+    const notify = useNotify();
     const router = useRouter();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const customerHovered = ref(false);
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -163,50 +180,50 @@ export default defineComponent({
     };
 
     const showRocket = ref(false);
-    const showDomain= ref(false);
+    const showDomain = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      rocketPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      rocketPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
     };
-    const openLink= (link) => {
-      if(link) {
-        if (link.indexOf(",") > -1) {
-          const splitLink = link.split(",");
-          const randomIndex = Math.floor(Math.random() * splitLink.length);
-          window.open(splitLink[randomIndex], "_blank");
-        } else {
-          window.open(link, "_blank");
+    const openLink = (link) => {
+      if (!isDragging.value && clickAllowed.value) {
+        if (link) {
+          if (link.indexOf(",") > -1) {
+            const splitLink = link.split(",");
+            const randomIndex = Math.floor(Math.random() * splitLink.length);
+            window.open(splitLink[randomIndex], "_blank");
+          } else {
+            window.open(link, "_blank");
+          }
         }
       }
-    }
-    const hideDomain = () => {
-      showDomain.value = false;
-      domainPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
     };
+
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
-      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+      domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
     };
-    const floatPromo = ([]);
-    const gamePromo = ([]);
-    const floatDomain = ([]);
+    const floatPromo = [];
+    const gamePromo = [];
+    const floatDomain = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
       getFloatingItems().then((res) => {
         if (res.code === 0) {
-          res.data.forEach(element => {
-            if (element.type === 'PROMO') {
+          res.data.forEach((element) => {
+            if (element.type === "PROMO") {
               floatPromo.push(element);
               showFloatPromo.value = true;
             }
-            if (element.type === 'GAME') {
-              gamePromo.push(element)
+            if (element.type === "GAME") {
+              gamePromo.push(element);
               showRocket.value = true;
             }
-            if (element.type === 'DOMAIN') {
-              floatDomain.push(element)
+            if (element.type === "DOMAIN") {
+              floatDomain.push(element);
               showDomain.value = true;
             }
           });
@@ -215,17 +232,25 @@ export default defineComponent({
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
         } else {
-          ElMessage.error(res.message);
+          notify.error(res.message);
         }
-      })
-    }
+      });
+    };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+        promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
       }
-    }
+      if (showRocket.value === false) {
+        domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
+      }
+    };
 
-    const domainPosition=  ref({ top: window.innerHeight - 440, left: window.innerWidth - 220 });
+    const hideDomain = () => {
+      showDomain.value = false;
+      domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
+    };
+
+    const domainPosition = ref({ top: window.innerHeight - 430, left: window.innerWidth - 240 });
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
     const isDragging = ref(false);
@@ -234,7 +259,7 @@ export default defineComponent({
     const shiftY = ref(0);
     const currentElement = ref(null);
     const startDragging = (element, event) => {
-      currentElement.value = element
+      currentElement.value = element;
       const rect = event.target.getBoundingClientRect();
       shiftX.value = event.clientX - rect.left;
       shiftY.value = event.clientY - rect.top;
@@ -246,18 +271,18 @@ export default defineComponent({
       // Change cursor to dragging
       document.body.style.cursor = "pointer";
       event.target.style.cursor = "pointer";
-    }
+    };
     const onMouseMove = (event) => {
       isDragging.value = true;
       clickAllowed.value = false;
       if (isDragging.value) {
-        if (currentElement.value === 'rocket') {
+        if (currentElement.value === "rocket") {
           rocketPosition.value.left = event.clientX - shiftX.value;
           rocketPosition.value.top = event.clientY - shiftY.value;
-        } else if (currentElement.value === 'promo') {
+        } else if (currentElement.value === "promo") {
           promoPosition.value.left = event.clientX - shiftX.value;
           promoPosition.value.top = event.clientY - shiftY.value;
-        }else if (currentElement.value === 'domain') {
+        } else if (currentElement.value === "domain") {
           domainPosition.value.left = event.clientX - shiftX.value;
           domainPosition.value.top = event.clientY - shiftY.value;
         }
@@ -274,20 +299,21 @@ export default defineComponent({
       // Reset cursor to default
       document.body.style.cursor = "default";
     };
-    const currentPromo = ref(null)
+    const currentPromo = ref(null);
     const currentPromoIndex = ref(0);
     const gotoPromo = (code) => {
       if (!isDragging.value && clickAllowed.value) {
-        router.push(`/promotion?name=${code}`)
+        router.push(`/promotion?name=${code}`);
       }
-    }
+    };
+
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
     onMounted(() => {
       getAppDownloadUrl();
-      if ((store.token)) {
+      if (store.token) {
         initFloating();
       }
       document.addEventListener("mouseup", stopDragging);
@@ -301,7 +327,6 @@ export default defineComponent({
         }
       }
     );
-
     onBeforeUnmount(() => {
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);
@@ -345,7 +370,7 @@ export default defineComponent({
 /* rocket animation */
 .rocket-wrapper {
   position: fixed;
-  z-index: 999;
+  z-index: 666;
   // bottom: 220px;
   // right: 0px;
   transition: all 0.3s;
@@ -356,6 +381,19 @@ export default defineComponent({
 
   &.show-promo {
     display: block;
+  }
+
+  &.domain-wrapper {
+    height: auto;
+    width: 155px;
+
+    .rocket {
+      img {
+        display: block;
+        width: 155px;
+        cursor: pointer;
+      }
+    }
   }
 
   &.show-rocket {
@@ -408,6 +446,7 @@ export default defineComponent({
   background: #fff;
   height: min-content;
   border-radius: 25px;
+  z-index: 1001;
 
   .additional-info-item {
     display: flex;
@@ -437,7 +476,7 @@ export default defineComponent({
 
   > :first-child {
     padding-bottom: 15px;
-    border-bottom: 1px solid #7A80A14D;
+    border-bottom: 1px solid #7a80a14d;
   }
 
   .sticky-sidebar-item {
@@ -463,14 +502,13 @@ export default defineComponent({
   position: fixed;
   right: 0;
   bottom: 60px;
-  z-index: 300;
+  z-index: 777;
   display: flex;
   flex-direction: row;
   background: transparent;
   border-radius: 6px 0 0 6px;
   -webkit-transition: right 0.3s ease-out;
   transition: right 0.3s ease-out;
-  display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -478,10 +516,10 @@ export default defineComponent({
 
 .dark {
   .sticky-sidebar-items {
-    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
+    background: linear-gradient(180deg, #2a2e3b 0%, #1f3342 100%);
 
     > :first-child {
-      border-color: #FFFFFF1A;
+      border-color: #ffffff1a;
     }
 
     .sticky-sidebar-item {
@@ -498,7 +536,7 @@ export default defineComponent({
   }
 
   .additional-info-items {
-    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
+    background: linear-gradient(180deg, #2a2e3b 0%, #1f3342 100%);
 
     .additional-info-item {
       color: $color-white;

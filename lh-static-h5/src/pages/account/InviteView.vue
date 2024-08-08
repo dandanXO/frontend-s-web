@@ -1,7 +1,7 @@
 <template>
   <q-page class="share-container">
     <div class="personal-content-box">
-      <div class="shadow-box">
+      <div class="shadow-box grad">
         <div class="qr-title">推广分享</div>
         <div class="title-top-line1">
           <div class="top-line1-content">
@@ -68,7 +68,7 @@
     </div>
 
     <div class="personal-content-box">
-      <div class="shadow-box" id="summon-share">
+      <div class="shadow-box grad" id="summon-share">
         <div class="qr-title">唤醒分享</div>
         <div class="title-top-line1">
           <div class="top-line1-content">
@@ -124,6 +124,7 @@ import {userStore} from "src/stores";
 import {useQuasar, Platform, scroll} from "quasar";
 import {api, eventapi} from "boot/axios"
 import { useRoute } from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "ShareView",
@@ -131,6 +132,7 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
+    const notify = useNotify();
     const { getScrollTarget, setVerticalScrollPosition } = scroll;
     const route = useRoute();
     const $q = useQuasar();
@@ -145,8 +147,8 @@ export default defineComponent({
 
 
     let tgDomain = location.origin;
-    if (store.isApp()) {
-      tgDomain = 'https://' + store.evip;
+    if (store.isApp() || window.location.pathname === "/invitefriend") {
+      tgDomain = store.evip;
     }
 
 
@@ -170,11 +172,9 @@ export default defineComponent({
     const copyText = (text) => {
       copyToClipboard(text);
       setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
+        notify({
+          type: "success",
           message: "复制成功！",
-          icon: "check_circle_outline"
         });
       }, 100)
 
@@ -270,6 +270,13 @@ export default defineComponent({
     padding: 15px 12px 24px;
     box-shadow: $shadow-bg;
     margin-bottom: 15px;
+    &.grad {
+      background: linear-gradient(180deg, #4ad8fc, #3f9dff);
+      color: #ffffff;
+      .qr-title, .prize-span, .top-line1-content a {
+        color: #ffffff;
+      }
+    }
   }
 
   .personal-content-box {

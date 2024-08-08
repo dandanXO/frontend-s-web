@@ -41,7 +41,7 @@ export default boot(({ app, router }) => {
   const onRequest = (config) => {
     if (store.token) {
       api.defaults.headers["token"] = store.token;
-      cashier.defaults.headers["TOKEN"] = store.token;
+      cashier.defaults.headers["token"] = store.token;
       eventapi.defaults.headers["token"] = store.token;
     }
     // config.headers["Authorization"] = process.env.SITE;
@@ -64,7 +64,7 @@ export default boot(({ app, router }) => {
     return Promise.reject(error);
   };
 
-  var attemptTimes= 0;
+  var attemptTimes = 0;
   async function refreshTokenAndRetry(errorresp) {
     attemptTimes++;
     Notify.create({
@@ -76,17 +76,21 @@ export default boot(({ app, router }) => {
     });
     // debugger;
     const originalRequest = errorresp.config;
+    console.log(originalRequest);
     const res = await api.post("/member/token/refresh");
     // console.log(res);
-    SessionStorage.set("TOKEN", res.data );
-    LocalStorage.set("TOKEN", res.data );
+    // debugger;
+    SessionStorage.set("TOKEN", res.data);
+    LocalStorage.set("TOKEN", res.data);
     store.token = res.data;
     originalRequest.headers.token = store.token;
+
+    // originalRequest.headers.TOKEN = store.token;
 
     return new Promise((resolve, reject) => {
       axios(originalRequest)
         .then((response) => {
-          attemptTimes= 0;
+          attemptTimes = 0;
           resolve(response.data);
         })
         .catch((err) => {
@@ -108,13 +112,18 @@ export default boot(({ app, router }) => {
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
 
-      if (res.code === ResponseCode.ERROR_SYSTEM ||
-        res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT ||
-        res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG ||
-        res.code === ResponseCode.ERROR_GUEST_LOGGED
+      if (
+        res.code === ResponseCode.ERROR_SYSTEM ||
+        res.code === ResponseCode.TOO_OFTEN_REQUEST ||
+        res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT ||
+        res.code === ResponseCode.EMPTY_PROMO_POPOUT ||
+        res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG ||
+        res.code === ResponseCode.ERROR_GUEST_LOGGED ||
+        res.code === ResponseCode.ERROR_WITHDRAW_LIMIT_MEMBER
       ) {
         // debugger;
-        res.message= i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
+        res.message =
+          i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
         return res;
       }
 
@@ -126,7 +135,7 @@ export default boot(({ app, router }) => {
           res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED
         ) {
-          if(attemptTimes > 10){
+          if (attemptTimes > 10) {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
             router.push("/login");
@@ -135,9 +144,6 @@ export default boot(({ app, router }) => {
           return refreshTokenAndRetry(response);
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          if(response.config.url && response.config.url.indexOf("/balance") > -1){
-            return res;
-          }
           return Dialog.create({
             class: "login-card",
             title: "Please Login",

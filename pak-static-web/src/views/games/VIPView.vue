@@ -346,74 +346,74 @@ const vipTableData = ref([
   },
   {
     name: "VIP 1",
-    qualification: 5000,
-    oneOff: 20,
+    qualification: 1000,
+    oneOff: 30,
     monthly: 38
   },
   {
     name: "VIP 2",
-    qualification: 10000,
-    oneOff: 25,
+    qualification: 3000,
+    oneOff: 50,
     monthly: 88
   },
   {
     name: "VIP 3",
-    qualification: 20000,
-    oneOff: 50,
+    qualification: 5000,
+    oneOff: 100,
     monthly: 188
   },
   {
     name: "VIP 4",
-    qualification: 50000,
-    oneOff: 100,
+    qualification: 10000,
+    oneOff: 200,
     monthly: 388
   },
   {
     name: "VIP 5",
-    qualification: 100000,
-    oneOff: 200,
+    qualification: 30000,
+    oneOff: 500,
     monthly: 588
   },
   {
     name: "VIP 6",
-    qualification: 200000,
-    oneOff: 300,
+    qualification: 50000,
+    oneOff: 1000,
     monthly: 888
   },
   {
     name: "VIP 7",
-    qualification: 500000,
-    oneOff: 1000,
+    qualification: 100000,
+    oneOff: 2000,
     monthly: 1888
   },
   {
     name: "VIP 8",
-    qualification: 1000000,
-    oneOff: 2000,
+    qualification: 300000,
+    oneOff: 3000,
     monthly: 3888
   },
   {
     name: "VIP 9",
-    qualification: 2000000,
-    oneOff: 3000,
+    qualification: 500000,
+    oneOff: 4000,
     monthly: 8888
   },
   {
     name: "VIP 10",
-    qualification: 5000000,
-    oneOff: 10000,
+    qualification: 1000000,
+    oneOff: 5000,
     monthly: 28888
   },
   {
     name: "VIP 11",
-    qualification: 10000000,
-    oneOff: 20000,
+    qualification: 3000000,
+    oneOff: 10000,
     monthly: 58888
   },
   {
     name: "VIP 12",
-    qualification: 20000000,
-    oneOff: 30000,
+    qualification: 5000000,
+    oneOff: 20000,
     monthly: 88888
   }
 ]);

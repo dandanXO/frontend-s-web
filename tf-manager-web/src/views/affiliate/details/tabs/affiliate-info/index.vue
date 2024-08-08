@@ -135,6 +135,16 @@
           >
             {{ t('fields.disable') }}
           </el-button>
+          <el-button
+            v-if="memberDetail.affiliateStatus === 'DISABLE'"
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:state']"
+            @click="reactivate"
+          >
+            {{ t('fields.activate') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" class-name="member-context" v-permission="['sys:affiliate:detail']">
           <template #label>
@@ -532,6 +542,31 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon
+                icon-class="password"
+                style="height: 16px;width: 16px;"
+              />
+              {{ t('fields.withdrawPassword') }}
+            </div>
+          </template>
+          <el-button
+            type="info"
+            size="mini"
+            v-permission="['sys:affiliate:update:password']"
+            @click="showDialog('UPDATE_WITHDRAW_PASSWORD')"
+          >
+            {{ t('fields.updatePassword') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item />
+        <el-descriptions-item />
       </el-descriptions>
     </el-card>
 
@@ -1020,7 +1055,7 @@
       width="580px"
     >
       <el-form
-        v-if="uiControl.dialogType === 'UPDATE_PASSWORD'"
+        v-if="uiControl.dialogType === 'UPDATE_PASSWORD' || uiControl.dialogType === 'UPDATE_WITHDRAW_PASSWORD'"
         ref="updatePasswordForm"
         :model="passwordForm"
         :rules="passwordFormRules"
@@ -1518,6 +1553,8 @@ import {
   getAffiliateShareRatio,
   updateLevel,
   getDownlineShareRatio,
+  reactivateAffiliate,
+  updateAffiliateWithdrawPassword,
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1838,7 +1875,7 @@ const remarkFormRules = reactive({
 })
 
 const affFormRules = reactive({
-  affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
+  // affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
 const riskFormRules = reactive({
@@ -1860,18 +1897,16 @@ const loadRiskLevels = async () => {
 
 const loadShareRatio = async () => {
   const { data: shareRatio } = await getAffiliateShareRatio(memberDetail.id)
+  shareRatioList.list = shareRatio
   if (shareRatio.length > 0) {
-    shareRatioList.list = shareRatio
-    if (shareRatio.length !== 5) {
-      const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
-      const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
-      missingRatio.forEach(ratio => {
-        shareRatioList.list.push({
-          code: ratio.code,
-          value: 0
-        })
+    const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
+    const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+    missingRatio.forEach(ratio => {
+      shareRatioList.list.push({
+        code: ratio.code,
+        value: 0
       })
-    }
+    })
   } else {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
     shareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
@@ -1913,11 +1948,14 @@ async function loadMemberStatus() {
 
 function showDialog(type) {
   uiControl.dialogType = type
-  if (type === 'UPDATE_PASSWORD') {
+  if (type === 'UPDATE_PASSWORD' || type === 'UPDATE_WITHDRAW_PASSWORD') {
     if (updatePasswordForm.value) {
       updatePasswordForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.updatePassword')
+    if (type === 'UPDATE_WITHDRAW_PASSWORD') {
+      uiControl.dialogTitle = t('fields.updateWithdrawPassword')
+    }
   } else if (type === 'DISABLE_AFFILIATE') {
     if (freezeMemberForm.value) {
       freezeMemberForm.value.resetFields()
@@ -2034,11 +2072,19 @@ function showDialog(type) {
 function changePassword() {
   updatePasswordForm.value.validate(async valid => {
     if (valid) {
-      await updateAffiliatePassword(
-        props.affId,
-        passwordForm.password,
-        memberDetail.siteId
-      )
+      if (uiControl.dialogType === 'UPDATE_WITHDRAW_PASSWORD') {
+        await updateAffiliateWithdrawPassword(
+          props.affId,
+          passwordForm.password,
+          memberDetail.siteId
+        )
+      } else {
+        await updateAffiliatePassword(
+          props.affId,
+          passwordForm.password,
+          memberDetail.siteId
+        )
+      }
       uiControl.dialogVisible = false
       ElMessage({
         message: t('message.updatePasswordSuccess'),
@@ -2086,6 +2132,16 @@ async function approve() {
   })
   uiControl.dialogVisible = false
   ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+}
+
+async function reactivate() {
+  await reactivateAffiliate(props.affId)
+  const data = await getAffiliateRecord(props.affId)
+  Object.keys({ ...data.data }).forEach(detailField => {
+    memberDetail[detailField] = data.data[detailField]
+  })
+  uiControl.dialogVisible = false
+  ElMessage({ message: t('message.affiliateReactivated'), type: 'success' })
 }
 
 async function syncMember() {
@@ -2210,6 +2266,15 @@ function updateAffiliateLevel() {
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField]
       })
+      const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+      superiorAffiliateDetail.id = 0
+      superiorAffiliateDetail.loginName = null
+      superiorAffiliateDetail.affiliateCode = null
+      superiorAffiliateDetail.affiliateLevel = null
+      superiorAffiliateDetail.affiliateShareRatio = []
+      Object.keys({ ...aff }).forEach(detailField => {
+        superiorAffiliateDetail[detailField] = aff[detailField]
+      })
       uiControl.dialogVisible = false
       affiliateDetails.affiliateLevel = levelForm.level
       ElMessage({
@@ -2221,7 +2286,6 @@ function updateAffiliateLevel() {
 }
 
 function updateMemberBelongType() {
-  console.log('updateMemberBelongType')
   updateBelongTypeModel.value.validate(async valid => {
     if (valid) {
       await updateBelongType(props.affId, belongTypeForm.belongType)
@@ -2358,19 +2422,45 @@ async function unmaskDetail(type) {
 }
 
 async function changeAffiliate() {
-  await changeNewAffilaite(
-    props.affId,
-    affForm.affiliateCode,
-    memberDetail.memberType
-  )
-  ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
-  uiControl.dialogVisible = false
-  loading.superiorAffiliateInfo = true
-  const { data: aff } = await getAffiliateInfo(props.affId, site.id)
-  Object.keys({ ...aff }).forEach(detailField => {
-    superiorAffiliateDetail[detailField] = aff[detailField]
-  })
-  loading.superiorAffiliateInfo = false
+  if (!affForm.affiliateCode) {
+    ElMessageBox.confirm(t('message.confirmUnbindAffiliateAccesss'), {
+      title: t('message.confirmUnbindAffiliateAccesss'),
+      confirmButtonText: t('fields.confirm'), // Replace with your translation key for "OK"
+      cancelButtonText: t('fields.cancel') // Optional: Replace with your translation key for "Cancel"
+    })
+      .then(async () => {
+        await changeNewAffilaite(
+          props.affId,
+          affForm.affiliateCode,
+          memberDetail.memberType
+        )
+        ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
+        uiControl.dialogVisible = false
+        loading.superiorAffiliateInfo = true
+        const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+        Object.keys({ ...aff }).forEach(detailField => {
+          superiorAffiliateDetail[detailField] = aff[detailField]
+        })
+        loading.superiorAffiliateInfo = false
+      })
+      .catch(() => {
+        // catch error
+      })
+  } else {
+    await changeNewAffilaite(
+      props.affId,
+      affForm.affiliateCode,
+      memberDetail.memberType
+    )
+    ElMessage({ message: t('message.changeAffiliateSuccess'), type: 'success' })
+    uiControl.dialogVisible = false
+    loading.superiorAffiliateInfo = true
+    const { data: aff } = await getAffiliateInfo(props.affId, site.id)
+    Object.keys({ ...aff }).forEach(detailField => {
+      superiorAffiliateDetail[detailField] = aff[detailField]
+    })
+    loading.superiorAffiliateInfo = false
+  }
 }
 
 async function resetSecurityQuestion() {

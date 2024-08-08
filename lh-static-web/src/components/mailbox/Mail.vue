@@ -5,7 +5,7 @@
   </div>
   <div class="mail-container">
     <div class="mail-title">
-      <span class="mail-title-text">{{ props.mail?.title }}</span>
+      <span class="mail-title-text" v-html="props.mail?.title"></span>
       <span class="send-time">{{ props.mail?.sendTime }}</span>
     </div>
     <el-divider />

@@ -45,7 +45,7 @@
       <div class="swiper-button-next" @click="nextSlide"></div>
       <button
         class="common-btn apply-btn"
-        @click="applySportInsurance()"
+        @click="submitForm()"
         :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
       >
         点击申请
@@ -161,7 +161,7 @@
   </div>
 </template>
 <script setup>
-import { ElMessage } from "element-plus";
+import { useNotify } from "@/hooks/notify";
 import { onActivated, ref, reactive, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -171,7 +171,7 @@ import { userStore } from "@/store";
 import {
   getUpcomingSportMatches,
   getSportInsurancePlatformOptions,
-  submitSportInsuranceForm,
+  submitSportInsurance,
   getSportInsuranceRecords
 } from "@/api/promotion/sportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
@@ -179,6 +179,7 @@ import { getLoggedInPlatformList } from "@/api/platform/platform";
 import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
 
+const notify = useNotify();
 const store = userStore();
 const matchDetails = ref([]);
 const isSportInsuranceModalVisible = ref(false);
@@ -252,7 +253,7 @@ const applySportInsurance = () => {
 const toggleSportInsuranceModal = (status) => {
   if (status === true) {
     if (!store.token) {
-      ElMessage.error("请登录后操作");
+      notify.error("请登录后操作");
       return;
     }
   }
@@ -275,42 +276,32 @@ const init = () => {
         matchDetails.value = Array.isArray(res.data) ? res.data : [res.data];
         insuranceRecordsParam.gameType = matchDetails.value[0].gameType;
       } else {
-        ElMessage.error(res.message);
+        notify.error(res.message);
       }
     })
     .catch((err) => {
-      ElMessage.error(err.message);
+      notify.error(err.message);
       console.log(err.message);
     });
 };
 
 const submitForm = async (elForm) => {
-  if (!elForm) return;
 
-  await elForm.validate(async (valid) => {
-    if (valid) {
-      isSubmitting.value = true;
-      const params = {
-        gameMatchId: sportInsuranceFormData.gameMatchId,
-        transactionId: sportInsuranceFormData.transactionId,
-        platform: sportInsuranceFormData.platform
-      };
-      const res = await submitSportInsuranceForm(params);
+  isSubmitting.value = true;
+  const res = await submitSportInsurance();
 
-      if (res.code === 0) {
-        ElMessage.success({
-          type: "success",
-          message: "提交成功"
-        });
-        sportInsuranceFormRef.value.resetFields();
-        isSportInsuranceModalVisible.value = false;
-        isSubmitting.value = false;
-      } else {
-        ElMessage.error(res.message);
-        isSubmitting.value = false;
-      }
-    }
-  });
+  if (res.code === 0) {
+    notify.success({
+      type: "success",
+      message: "提交成功"
+    });
+    // sportInsuranceFormRef.value.resetFields();
+    // isSportInsuranceModalVisible.value = false;
+    isSubmitting.value = false;
+  } else {
+    notify.error(res.message);
+    isSubmitting.value = false;
+  }
 };
 
 const $swiper = ref(null);
@@ -363,7 +354,7 @@ const loadSportInsuranceRecords = (param) => {
       insuranceRecordsParam.total = res.data.total;
       insuranceRecordsParam.maxPage = Math.ceil(insuranceRecordsParam.total / insuranceRecordsParam.size);
     } else {
-      ElMessage({
+      notify({
         message: "没有记录",
         type: "error"
       });
@@ -377,12 +368,12 @@ const recordPageControl = (direction) => {
       insuranceRecordsParam.current--;
       loadSportInsuranceRecords(insuranceRecordsParam);
     } else {
-      ElMessage.error("已经是第一页了");
+      notify.error("已经是第一页了");
     }
   } else {
     let maxPage = insuranceRecordsParam.maxPage;
     if (maxPage === insuranceRecordsParam.current) {
-      ElMessage.error("这是最后一页了");
+      notify.error("这是最后一页了");
     } else {
       insuranceRecordsParam.current++;
       loadSportInsuranceRecords(insuranceRecordsParam);
@@ -390,6 +381,13 @@ const recordPageControl = (direction) => {
   }
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   init();
   getPlatList();
 });

@@ -1,213 +1,90 @@
 <template>
-  <div
-    class="firstPage"
-    :class="[
-      (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
-      props.siteId !== '7' ? '' : 'lh',
-      props.siteId !== '8' ? '' : 'vi',
-      props.siteId !== '10' ? '' : 'kr',
-      props.siteId !== '11' ? '' : 'pak',
-    ]"
-  >
+  <div class="firstPage kr">
     <div class="inner">
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img :src="currentSite.logo">
+            <img :src="krLogo">
           </div>
-          <div class="first-liner" v-html="currentSite.firstLiner" />
-          <div class="second-liner" v-html="currentSite.secondLiner" />
+          <div class="first-liner">
+            Start From CITY8
+          </div>
+          <div class="second-liner">
+            Become a legend<br>Or become the eulogist of legend?
+          </div>
         </div>
         <div class="right">
-          <div class="bg swiper-no-swiping">
+          <div class="bg">
             <div class="top">
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
-              <!--              <div class="topright" v-if="props.siteId !== '5'">-->
-              <!--                <span class="noaccabs">-->
-              <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
-              <!--                </span>-->
-              <!--                <a @click="isReg = !isReg" class="signlog">-->
-              <!--                  {{ isReg ? '请登录' : '立即注册' }}-->
-              <!--                </a>-->
-              <!--              </div>-->
             </div>
             <div class="mid">
-              <el-form
-                v-if="!isReg"
-                ref="loginFormRef"
-                :model="loginForm"
-                :rules="props.siteId === '8' ? loginRulesVi : loginRules"
-                class="login-form"
-                autocomplete="no-fill"
-              >
+              <el-form v-if="!isReg" ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form"
+                autocomplete="no-fill">
                 <el-form-item prop="userName">
-                  <el-input
-                    ref="userNameRef"
-                    v-model="loginForm.userName"
-                    :placeholder="$t('common.username')"
-                    name="username"
-                    type="text"
-                    tabindex="1"
-                    autocomplete="no-fill"
-                  />
+                  <el-input ref="userNameRef" v-model="loginForm.userName" :placeholder="$t('common.username')"
+                    name="username" type="text" tabindex="1" autocomplete="no-fill" />
                 </el-form-item>
 
-                <el-tooltip
-                  v-model="capsTooltip"
-                  content="Caps lock is On"
-                  placement="right"
-                  manual
-                >
+                <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
                   <el-form-item prop="password">
-                    <el-input
-                      :key="passwordType"
-                      ref="passwordRef"
-                      v-model="loginForm.password"
-                      :type="passwordType"
-                      :placeholder="$t('common.password')"
-                      name="password"
-                      tabindex="2"
-                      autocomplete="no-fill"
-                      @keyup="checkCapslock"
-                      @blur="capsTooltip = false"
-                      @keyup.enter="props.siteId !== '8' ? handleLogin() : null"
-                    />
+                    <el-input :key="passwordType" ref="passwordRef" v-model="loginForm.password" :type="passwordType"
+                      :placeholder="$t('common.password')" name="password" tabindex="2" autocomplete="no-fill"
+                      @keyup="checkCapslock" @blur="capsTooltip = false" @keyup.enter="handleLogin()" />
                   </el-form-item>
                 </el-tooltip>
-                <el-form-item prop="captchaCode" v-if="props.siteId === '8'">
-                  <el-input
-                    v-model="loginForm.captchaCode"
-                    :placeholder="$t('common.verificationcode')"
-                    name="captchaCode"
-                    type="text"
-                    tabindex="7"
-                    autocomplete="on"
-                    @keyup.enter="handleLogin"
-                    clearable
-                  >
-                    <template #append class="verification">
-                      <img :src="captchaImg" @click="getCaptcha()">
-                    </template>
-                  </el-input>
-                </el-form-item>
-                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
+                <div style="margin:20px 0px">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{ $t('common.forgetpass') }}
                   </el-link>
                 </div>
                 <div class="flex-c-center-div">
-                  <el-button
-                    class="common-btn"
-                    type="danger"
-                    style="width:50%;"
-                    @click.prevent="handleLogin"
-                  >
+                  <el-button class="common-btn" type="danger" style="width:50%;" @click.prevent="handleLogin">
                     {{ $t('common.loginnow') }}
                   </el-button>
-                  <el-button
-                    class="common-btn default-btn"
-                    type="primary"
-                    style="width:50%;"
-                    @click="isReg = !isReg"
-                  >
+                  <el-button class="common-btn default-btn" type="primary" style="width:50%;" @click="isReg = !isReg">
                     {{ $t('common.register_affi') }}
                   </el-button>
                 </div>
 
-                <div
-                  v-if="props.siteId !== '5' || props.siteId !== '8'"
-                  class="flex-c-center-div"
-                >
+                <div class="flex-c-center-div">
                   <div class="contact-div" @click="swipeToContactUs">
                     {{ $t('common.contact_us') }}
                   </div>
                 </div>
               </el-form>
-              <el-form
-                v-if="isReg"
-                ref="regFormRef"
-                :model="regForm"
-                :rules="regRules"
-                class="reg-form"
-                autocomplete="on"
-              >
+              <el-form v-if="isReg" ref="regFormRef" :model="regForm" :rules="regRules" class="reg-form"
+                autocomplete="on">
                 <div v-if="step === 1">
                   <el-form-item prop="userName">
-                    <el-input
-                      ref="userNameRef"
-                      v-model="regForm.userName"
-                      :placeholder="$t('common.affiliateaccount')"
-                      name="userName"
-                      type="text"
-                      tabindex="1"
-                      autocomplete="off"
-                    />
+                    <el-input ref="userNameRef" v-model="regForm.userName" :placeholder="$t('common.affiliateaccount')"
+                      name="userName" type="text" tabindex="1" autocomplete="off" />
                   </el-form-item>
-                  <el-tooltip
-                    v-model="capsTooltip"
-                    content="Caps lock is On"
-                    placement="right"
-                    manual
-                  >
+                  <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
                     <el-form-item prop="password">
-                      <el-input
-                        :key="passwordType"
-                        ref="passwordRef"
-                        v-model="regForm.password"
-                        :type="passwordType"
-                        :placeholder="$t('common.password')"
-                        name="password"
-                        tabindex="2"
-                        autocomplete="on"
-                        @keyup="checkCapslock"
-                        @blur="capsTooltip = false"
-                      />
+                      <el-input :key="passwordType" ref="passwordRef" v-model="regForm.password" :type="passwordType"
+                        :placeholder="$t('common.password')" name="password" tabindex="2" autocomplete="on"
+                        @keyup="checkCapslock" @blur="capsTooltip = false" />
                     </el-form-item>
                   </el-tooltip>
-                  <el-tooltip
-                    v-model="capsTooltip"
-                    content="Caps lock is On"
-                    placement="right"
-                    manual
-                  >
+                  <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
                     <el-form-item prop="confirmPwd">
-                      <el-input
-                        :key="passwordType"
-                        ref="confirmPwdRef"
-                        v-model="regForm.confirmPwd"
-                        :type="passwordType"
-                        :placeholder="$t('common.confirmpassword')"
-                        name="password"
-                        tabindex="3"
-                        autocomplete="on"
-                        @keyup="checkCapslock"
-                        @blur="capsTooltip = false"
-                      />
+                      <el-input :key="passwordType" ref="confirmPwdRef" v-model="regForm.confirmPwd"
+                        :type="passwordType" :placeholder="$t('common.confirmpassword')" name="password" tabindex="3"
+                        autocomplete="on" @keyup="checkCapslock" @blur="capsTooltip = false" />
                     </el-form-item>
                   </el-tooltip>
                   <el-form-item prop="codeAffiliate" v-if="props.siteId === '10'">
-                    <el-input
-                      ref="codeAffiliateRef"
-                      v-model="regForm.codeAffiliate"
-                      :placeholder="$t('fields.referralCode')"
-                      name="codeAffiliate"
-                      type="text"
-                      tabindex="8"
-                      autocomplete="on"
-                    />
+                    <el-input ref="codeAffiliateRef" v-model="regForm.codeAffiliate"
+                      :placeholder="$t('fields.referralCode')" name="codeAffiliate" type="text" tabindex="8"
+                      autocomplete="on" />
                   </el-form-item>
                   <el-form-item prop="captchaCode">
-                    <el-input
-                      ref="verificationRef"
-                      v-model="regForm.captchaCode"
-                      :placeholder="$t('common.verificationcode')"
-                      name="captchaCode"
-                      type="text"
-                      tabindex="7"
-                      autocomplete="on"
-                    >
+                    <el-input ref="verificationRef" v-model="regForm.captchaCode"
+                      :placeholder="$t('common.verificationcode')" name="captchaCode" type="text" tabindex="7"
+                      autocomplete="on">
                       <template #append class="verification">
                         <img :src="verificationImg" @click="getCode()">
                       </template>
@@ -215,27 +92,15 @@
                   </el-form-item>
 
                   <div class="flex-c-center-div">
-                    <el-button
-                      class="common-btn"
-                      :loading="loading"
-                      type="danger"
-                      style="width:50%;"
-                      @click.prevent="handleRegister"
-                    >
-                      {{ props.siteId === '8' || props.siteId === 8 ? $t('google.next_step') :$t('common.apply') }}
+                    <el-button class="common-btn" :loading="loading" type="danger" style="width:50%;"
+                      @click.prevent="handleRegister">
+                      {{ props.siteId === '8' || props.siteId === 8 ? $t('google.next_step') : $t('common.apply') }}
                     </el-button>
-                    <el-button
-                      class="common-btn default-btn"
-                      style="width:50%;"
-                      @click="isReg = !isReg"
-                    >
+                    <el-button class="common-btn default-btn" style="width:50%;" @click="isReg = !isReg">
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div
-                    v-if="props.siteId !== '5' || props.siteId !== '8'"
-                    class="flex-c-center-div"
-                  >
+                  <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
                     <div class="contact-div" @click="swipeToContactUs">
                       {{ $t('common.contact_us') }}
                     </div>
@@ -243,94 +108,23 @@
                 </div>
                 <div v-if="step === 2 && props.siteId === '8'">
                   <el-form-item prop="realName">
-                    <el-input
-                      ref="realNameRef"
-                      v-model="regForm.realName"
-                      :placeholder="$t('fields.realName')"
-                      name="realName"
-                      type="text"
-                      tabindex="4"
-                      autocomplete="on"
-                    />
+                    <el-input ref="realNameRef" v-model="regForm.realName" :placeholder="$t('fields.realName')"
+                      name="realName" type="text" tabindex="4" autocomplete="on" />
                   </el-form-item>
                   <el-form-item prop="telephone">
-                    <el-input
-                      ref="telephoneRef"
-                      v-model="regForm.telephone"
-                      :placeholder="$t('fields.telephone')"
-                      name="telephone"
-                      type="text"
-                      tabindex="4"
-                      autocomplete="on"
-                    />
+                    <el-input ref="telephoneRef" v-model="regForm.telephone" :placeholder="$t('fields.telephone')"
+                      name="telephone" type="text" tabindex="4" autocomplete="on" />
                   </el-form-item>
                   <el-form-item prop="email">
-                    <el-input
-                      ref="emailRef"
-                      v-model="regForm.email"
-                      :placeholder="$t('fields.email')"
-                      name="Email"
-                      type="text"
-                      tabindex="5"
-                      autocomplete="on"
-                    />
+                    <el-input ref="emailRef" v-model="regForm.email" :placeholder="$t('fields.email')" name="Email"
+                      type="text" tabindex="5" autocomplete="on" />
                   </el-form-item>
-                  <!-- <el-form-item prop="birthday">
-                        <el-date-picker
-                            v-model="regForm.birthday"
-                            type="date"
-                            :placeholder="'生日'"
-                            format="YYYY-MM-DD"
-                            value-format="YYYY-MM-DD"
-                            popper-class="custom-date-picker"
-                            :disabled-date="disabledDate"
-                        />
-                  </el-form-item-->
-                  <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
-                  <el-input v-if="hasAffiliate"
-                              ref="codeAffiliateRef"
-                              v-model="regForm.codeAffiliate"
-                              :placeholder="'代理码'"
-                              name="codeAffiliate"
-                              type="text"
-                              tabindex="8"
-                              autocomplete="on"
-                              :disabled="true"
-                  />
-                  <el-input
-                      ref="codeAffiliateRef"
-                      v-model="regForm.codeAffiliate"
-                      :placeholder="'代理码'"
-                      name="codeAffiliate"
-                      type="text"
-                      tabindex="8"
-                      autocomplete="on"
-                  />
-                  </el-form-item> -->
-                  <!-- <el-button
-                    class="common-btn"
-                    :loading="loading"
-                    type="danger"
-                    style="width:100%;"
-                    @click.prevent="handleRegister"
-                  >
-                    申请
-                  </el-button> -->
                   <div class="flex-c-center-div">
-                    <el-button
-                      class="common-btn default-btn"
-                      style="width:50%;"
-                      @click="step = 1"
-                    >
+                    <el-button class="common-btn default-btn" style="width:50%;" @click="step = 1">
                       {{ $t('google.prev_step') }}
                     </el-button>
-                    <el-button
-                      class="common-btn"
-                      :loading="loading"
-                      type="danger"
-                      style="width:50%;"
-                      @click.prevent="handleRegister"
-                    >
+                    <el-button class="common-btn" :loading="loading" type="danger" style="width:50%;"
+                      @click.prevent="handleRegister">
                       {{ $t('common.apply') }}
                     </el-button>
                   </div>
@@ -343,12 +137,8 @@
       </div>
     </div>
   </div>
-  <el-dialog
-    v-model="showDialog"
-    custom-class="dialog400"
-    @close="onCloseDialog"
-    :title="$t('common.verification_title') + words.join(' , ')"
-  >
+  <el-dialog v-model="showDialog" custom-class="dialog400" @close="onCloseDialog"
+    :title="$t('common.verification_title') + words.join(' , ')">
     <template #title>
       <span class="verification-title">
         {{ $t('common.verification_title') }}
@@ -358,67 +148,41 @@
       </span>
     </template>
     <div id="loadDiv" v-loading="dialogLoading">
-      <el-image
-        style="cursor: pointer"
-        id="imageRef"
-        fit="contain"
-        :src="img"
-        @click="onClickImage"
-      />
-      <div
-        :style="{
-          width: imageOffSetWidth + 'px',
-          height: imageOffSetHeight + 'px',
-          position: 'absolute',
-          'z-index': '3000',
-          display: resultDisplay,
-          'justify-content': 'center',
-          'align-items': 'center',
-        }"
-      >
-        <i
-          class="el-icon-success"
-          :style="{
-            'font-size': imageOffSetHeight / 2 + 'px',
-            color: 'rgb(130, 208, 130)',
-          }"
-        />
-        <span
-          :style="{
-            'font-size': imageOffSetHeight / 3 + 'px',
-            color: 'rgb(130, 208, 130)',
-          }"
-        >
+      <el-image style="cursor: pointer" id="imageRef" fit="contain" :src="img" @click="onClickImage" />
+      <div :style="{
+        width: imageOffSetWidth + 'px',
+        height: imageOffSetHeight + 'px',
+        position: 'absolute',
+        'z-index': '3000',
+        display: resultDisplay,
+        'justify-content': 'center',
+        'align-items': 'center',
+      }">
+        <i class="el-icon-success" :style="{
+          'font-size': imageOffSetHeight / 2 + 'px',
+          color: 'rgb(130, 208, 130)',
+        }" />
+        <span :style="{
+          'font-size': imageOffSetHeight / 3 + 'px',
+          color: 'rgb(130, 208, 130)',
+        }">
           {{ $t('common.verify_success') }}
         </span>
       </div>
     </div>
     <div>
-      <el-button
-        type="info"
-        icon="el-icon-refresh"
-        style="margin-top: 20px;"
-        @click="onGetImage()"
-      >
+      <el-button type="info" icon="el-icon-refresh" style="margin-top: 20px;" @click="onGetImage()">
         {{ $t('common.refresh') }}
       </el-button>
-      <el-button
-        type="success"
-        icon="el-icon-check"
-        style="margin-top: 20px;"
-        @click="userLogin()"
-        :disabled="coordinates.length === 0"
-      >
+      <el-button type="success" icon="el-icon-check" style="margin-top: 20px;" @click="userLogin()"
+        :disabled="coordinates.length === 0">
         {{ $t('common.submit') }}
       </el-button>
     </div>
   </el-dialog>
   <div v-for="(point, index) in coordinates" :key="index">
-    <div
-      class="image-number-point"
-      :style="{left: point.displayLeft + 'px', top: point.displayTop + 'px'}"
-      @click="onClickNumber(index)"
-    >
+    <div class="image-number-point" :style="{ left: point.displayLeft + 'px', top: point.displayTop + 'px' }"
+      @click="onClickNumber(index)">
       {{ index + 1 }}
     </div>
   </div>
@@ -430,72 +194,36 @@
     </el-steps>
     <div class="auth-container" v-if="passwordStep === 1">
       <div class="auth-title">{{ $t('forgetPassword.messageAuth') }}</div>
-      <el-form
-        ref="googleAuthFormRef"
-        :model="googleAuthForm"
-        :rules="googleAuthRules"
-        class="login-form"
-        autocomplete="no-fill"
-        label-width="100px"
-      >
+      <el-form ref="googleAuthFormRef" :model="googleAuthForm" :rules="googleAuthRules" class="login-form"
+        autocomplete="no-fill" label-width="100px">
         <el-form-item prop="loginName" :label="t('fields.loginName')">
-          <el-input
-            v-model="googleAuthForm.loginName"
-            :placeholder="t('fields.loginName')"
-            name="loginName"
-            type="text"
-            autocomplete="no-fill"
-          />
+          <el-input v-model="googleAuthForm.loginName" :placeholder="t('fields.loginName')" name="loginName" type="text"
+            autocomplete="no-fill" />
         </el-form-item>
         <el-form-item prop="code" :label="t('google.auth_code')">
-          <el-input
-            v-model="googleAuthForm.code"
-            :placeholder="t('google.auth_code')"
-            name="code"
-            maxlength="6"
-            @keypress="restrictIntegerInput($event)"
-          />
+          <el-input v-model="googleAuthForm.code" :placeholder="t('google.auth_code')" name="code" maxlength="6"
+            @keypress="restrictIntegerInput($event)" />
         </el-form-item>
         <div class="flex-c-center-div">
-          <el-button
-            class="common-btn"
-            type="danger"
-            @click="submitVerifyGoogle"
-          >
+          <el-button class="common-btn" type="danger" @click="submitVerifyGoogle">
             {{ $t('forgetPassword.verify') }}
           </el-button>
         </div>
       </el-form>
     </div>
     <div class="auth-container" v-if="passwordStep === 2">
-      <el-form
-        ref="quesAuthFormRef"
-        :model="quesAuthForm"
-        :rules="quesAuthRules"
-        class="login-form"
-        autocomplete="no-fill"
-        label-position="top"
-      >
+      <el-form ref="quesAuthFormRef" :model="quesAuthForm" :rules="quesAuthRules" class="login-form"
+        autocomplete="no-fill" label-position="top">
         <div class="auth-title">{{ $t('forgetPassword.messageQues') }}</div>
         <div>
           <span>
             {{ securityQuestion.question[securityQuestion.currentIndex] }}
           </span>
-          <el-link
-            icon="el-icon-refresh"
-            :underline="false"
-            style="margin:20px"
-            @click="nextQuestion()"
-          />
+          <el-link icon="el-icon-refresh" :underline="false" style="margin:20px" @click="nextQuestion()" />
         </div>
         <el-form-item prop="answer">
-          <el-input
-            v-model="quesAuthForm.answer"
-            :placeholder="t('forgetPassword.answer')"
-            name="answer"
-            type="text"
-            autocomplete="no-fill"
-          />
+          <el-input v-model="quesAuthForm.answer" :placeholder="t('forgetPassword.answer')" name="answer" type="text"
+            autocomplete="no-fill" />
         </el-form-item>
         <div class="flex-c-center-div">
           <el-button class="common-btn" type="danger" @click="submitVerifyQues">
@@ -505,48 +233,20 @@
       </el-form>
     </div>
     <div class="auth-container" v-if="passwordStep === 3">
-      <el-form
-        ref="resetFormRef"
-        :model="resetForm"
-        :rules="resetRules"
-        class="login-form"
-        autocomplete="no-fill"
-        label-width="100px"
-      >
+      <el-form ref="resetFormRef" :model="resetForm" :rules="resetRules" class="login-form" autocomplete="no-fill"
+        label-width="100px">
         <div class="auth-title">{{ $t('forgetPassword.messageReset') }}</div>
         <el-form-item prop="password" :label="t('fields.newPassword')">
-          <el-input
-            v-model="resetForm.password"
-            :placeholder="t('fields.newPassword')"
-            name="password"
-            :type="passwordType"
-            tabindex="2"
-            autocomplete="on"
-            @keyup="checkCapslock"
-            @blur="capsTooltip = false"
-          />
+          <el-input v-model="resetForm.password" :placeholder="t('fields.newPassword')" name="password"
+            :type="passwordType" tabindex="2" autocomplete="on" @keyup="checkCapslock" @blur="capsTooltip = false" />
         </el-form-item>
-        <el-form-item
-          prop="confirmPassword"
-          :label="t('fields.confirmNewPassword')"
-        >
-          <el-input
-            v-model="resetForm.confirmPassword"
-            :placeholder="t('fields.confirmNewPassword')"
-            name="confirmPassword"
-            :type="passwordType"
-            tabindex="2"
-            autocomplete="on"
-            @keyup="checkCapslock"
-            @blur="capsTooltip = false"
-          />
+        <el-form-item prop="confirmPassword" :label="t('fields.confirmNewPassword')">
+          <el-input v-model="resetForm.confirmPassword" :placeholder="t('fields.confirmNewPassword')"
+            name="confirmPassword" :type="passwordType" tabindex="2" autocomplete="on" @keyup="checkCapslock"
+            @blur="capsTooltip = false" />
         </el-form-item>
         <div class="flex-c-center-div">
-          <el-button
-            class="common-btn"
-            type="danger"
-            @click="submitResetPassword"
-          >
+          <el-button class="common-btn" type="danger" @click="submitResetPassword">
             {{ $t('forgetPassword.reset') }}
           </el-button>
         </div>
@@ -568,15 +268,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification, ElMessage } from 'element-plus'
-import dyLogo from '@/assets/images/dy/logowhitee.png'
-import xfLogo from '@/assets/images/xf/logowhitee.png'
-import indLogo from '@/assets/images/ind/ind-logo.png'
-import ind2Logo from '@/assets/images/ind2/789logo.png'
-import lhLogo from '@/assets/images/lh/logo.png'
-import viLogo from '@/assets/images/vi/vilogo.svg'
-import kakaLogo from "@/assets/images/kaka/logo-kaka-game.png"
 import krLogo from '@/assets/images/kr/kr-logo.png'
-import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -643,7 +335,7 @@ export default defineComponent({
             state.loginForm.codeId = res.data.id
           }
         })
-        .catch(e => {})
+        .catch(e => { })
     }
     const isReg = ref(false)
     const userNameRef = ref(null)
@@ -672,7 +364,7 @@ export default defineComponent({
       loginForm: {
         userName: '',
         password: '',
-        site: 'DY2',
+        site: 'KRW',
         key: '',
         coordinates: '',
         captchaCode: '',
@@ -697,41 +389,6 @@ export default defineComponent({
             required: true,
             message: t('message.requiredPassword'),
             trigger: 'blur',
-          },
-        ],
-      },
-      loginRulesVi: {
-        userName: [
-          {
-            required: true,
-            message: t('message.requiredLoginName'),
-            trigger: 'blur',
-          },
-          {
-            required: true,
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: t('common.affiliateaccountcanonlycontainnumchar'),
-            trigger: 'blur',
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: t('message.requiredPassword'),
-            trigger: 'blur',
-          },
-        ],
-        captchaCode: [
-          {
-            required: true,
-            message: t('message.required_captcha'),
-            trigger: 'blur',
-          },
-          {
-            min: 4,
-            max: 4,
-            message: t('message.required_4_digits'),
-            trigger: 'change',
           },
         ],
       },
@@ -995,12 +652,6 @@ export default defineComponent({
               state.loading = false
               return
             }
-            // router.push({
-            //   path: state.redirect || "/dy/login",
-            //   query: state.otherQuery
-            // }).catch(err => {
-            //   console.warn(err);
-            // });
             isReg.value = false
           }
         })
@@ -1238,13 +889,7 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      if (props.siteId !== '10') {
-        var myElement = document.getElementById('login-swiper')
-        console.log(myElement)
-        myElement.swiper.slideTo(1)
-      } else {
-        window.open('https://t.me/city88888', '_blank').focus();
-      }
+      window.open('https://t.me/cityy88', '_blank').focus();
     }
 
     const getCaptcha = () => {
@@ -1263,84 +908,10 @@ export default defineComponent({
       })
     }
 
-    const currentSite = ref({})
     const i18nStoreLanguage = i18nStore()
     const { setLanguage, languageVal } = i18nStoreLanguage
-    const populateCurrentSiteData = () => {
-      if (props.siteId === '6') {
-        currentSite.value.firstLiner = '从东赢开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = dyLogo
-        state.loginForm.site = 'DY2'
-        setLanguage('zh')
-      }
-      if (props.siteId === '1') {
-        currentSite.value.firstLiner = '从兴发开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = xfLogo
-        state.loginForm.site = 'XF1'
-        setLanguage('zh')
-      }
-      if (props.siteId === '5') {
-        currentSite.value.firstLiner = 'Starts from 55ACE'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = indLogo
-        state.loginForm.site = 'IND'
-        currentSite.value.lang = 'EN'
-        setLanguage('en')
-      }
-      if (props.siteId === '9') {
-        currentSite.value.firstLiner = 'Starts from 789F'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = ind2Logo
-        state.loginForm.site = 'IW2'
-        currentSite.value.lang = 'EN'
-        setLanguage('en')
-      }
-      if (props.siteId === '7') {
-        currentSite.value.firstLiner = '从雷火开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
-        currentSite.value.logo = lhLogo
-        state.loginForm.site = 'LH1'
-        setLanguage('zh')
-      }
-      if (props.siteId === '8') {
-        currentSite.value.firstLiner = 'Start From TFGaming'
-        currentSite.value.secondLiner =
-          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
-        currentSite.value.logo = viLogo
-        state.loginForm.site = 'VNM'
-        setLanguage('vi')
-      }
-      if (props.siteId === '15') {
-        currentSite.value.firstLiner = 'Start From KAKA Live'
-        currentSite.value.secondLiner =
-          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
-        currentSite.value.logo = kakaLogo
-        state.loginForm.site = 'KA1'
-        setLanguage('vi')
-      }
-      if (props.siteId === '10') {
-        currentSite.value.firstLiner = 'Start From CITY8'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = krLogo
-        state.loginForm.site = 'KRW'
-        setLanguage('kr')
-      }
-      if (props.siteId === '11') {
-        currentSite.value.firstLiner = 'Start From B9'
-        currentSite.value.secondLiner =
-          'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = pakLogo
-        state.loginForm.site = 'PAK'
-        setLanguage('zh')
-      }
-    }
+
     onMounted(() => {
-      // const swiper = new Swiper('.swiper-container', swiperOptions);
       if (route.query.agent) {
         hasAffiliate.value = true
         state.regForm.codeAffiliate = route.query.agent
@@ -1350,9 +921,8 @@ export default defineComponent({
       if (route.query.isreg) {
         isReg.value = true;
       }
-      // if (props.siteId !== '8') {
       getCode()
-      // }
+
       if (state.loginForm.userName === '') {
         userNameRef.value.focus()
       } else if (state.loginForm.password === '') {
@@ -1361,10 +931,7 @@ export default defineComponent({
       var dialog = document.querySelector('.el-overlay-dialog')
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
-      populateCurrentSiteData()
-      if (props.siteId === '8') {
-        getCaptcha()
-      }
+      setLanguage('kr');
     })
     return {
       userNameRef,
@@ -1377,9 +944,6 @@ export default defineComponent({
       birthdayRef,
       verificationRef,
       regFormRef,
-      dyLogo,
-      xfLogo,
-      lhLogo,
       verificationImg,
       disabledDate,
       ...toRefs(state),
@@ -1388,7 +952,6 @@ export default defineComponent({
       hasAffiliate,
       step,
       isReg,
-      currentSite,
       props,
       t,
       swipeToContactUs,
@@ -1398,6 +961,7 @@ export default defineComponent({
       resetFormRef,
       getCaptcha,
       captchaImg,
+      krLogo
     }
   },
 })
@@ -1407,6 +971,7 @@ export default defineComponent({
 a {
   cursor: pointer;
 }
+
 .common-btn {
   font-family: Jura;
   transition: all 0.8s, color 0.3s 0.3s;
@@ -1422,6 +987,7 @@ a {
   color: #ffffff;
   border: 1px solid transparent;
   opacity: 0.9;
+
   &:hover {
     opacity: 1;
   }
@@ -1435,43 +1001,52 @@ a {
   &:hover {
     opacity: 0.9;
   }
+
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
   }
 }
+
 :deep(.el-input-group__append) {
   background-color: #ffffff;
   border: 0;
   padding: 0 10px;
   border-radius: 0;
+
   img {
     display: flex;
   }
 }
+
 :deep(.el-input-group__prepend) {
   background-color: #2144c6;
   border: 0;
   padding: 0;
   border-radius: 0;
+
   i {
     display: flex;
     justify-content: center;
+
     img {
       height: 40px;
     }
   }
 }
+
 :deep(.el-input__inner) {
   background: #f4f9fd;
   background-color: #f4f9fd;
   border: 1px solid #d8e0f0;
   color: #458bff;
   border-radius: 14px;
+
   &::placeholder {
     color: #aaaaaa;
   }
 }
+
 .wrapper {
   background: url('../../assets/images/dy/main.jpg') no-repeat center top;
   background-size: cover;
@@ -1484,15 +1059,18 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     .game-title {
       font-family: trending;
       font-size: 36px;
       text-transform: uppercase;
+
       &.sub {
         font-size: 30px;
         font-weight: normal;
         font-family: Jura;
       }
+
       &.underline {
         background-image: linear-gradient(to right, #de4545, #db7e42);
         background-clip: text;
@@ -1500,6 +1078,7 @@ a {
         -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 40px;
+
         &:after {
           content: '';
           width: 60px;
@@ -1510,6 +1089,7 @@ a {
         }
       }
     }
+
     .affiliate-login {
       width: 95%;
       max-width: 480px;
@@ -1518,12 +1098,15 @@ a {
       // border-radius: 10px;
       // border: solid 1px #24222e;
       padding: 10px 50px;
+
       .el-form-item {
         margin-bottom: 30px;
       }
+
       :deep(.el-form-item__error) {
         padding-top: 10px;
       }
+
       .signlog {
         font-family: Jura;
         font-size: 14px;
@@ -1554,42 +1137,31 @@ a {
   max-height: 100% !important;
   max-width: 100% !important;
 }
+
 .firstPage {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   padding: 20px;
-  background: url('../../assets/images/login/firstbg.svg') no-repeat center
-    center;
+  background: url('../../assets/images/login/bg_login.jpg') no-repeat center center;
   background-size: cover;
-  &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
-      center;
-  }
-  &.vi {
-    font-family: 'Roboto';
-    .loginPage .right .top .log {
-      font-family: 'Roboto';
-    }
-    .loginPage .left {
-      .second-liner {
-        font-family: 'Roboto';
-      }
-    }
-  }
+
   .inner {
     max-width: 1200px;
     width: 100%;
     margin: 50px auto;
-    height: 50%;
+    height: 100%;
   }
+
   .logo {
     width: 200px;
+
     img {
       width: 100%;
     }
   }
+
   .loginPage {
     height: 80%;
     display: flex;
@@ -1599,24 +1171,26 @@ a {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
+
     .left {
       flex: 1;
+
       .first-liner,
       .second-liner {
         max-width: 400px;
         width: 100%;
+
         img {
           width: 100%;
         }
       }
+
       .first-liner {
-        margin-bottom: 3rem;
-        background: linear-gradient(
-          180deg,
-          #f6d99e 13.1%,
-          #ffe3bd 50.03%,
-          #fbbd68 79.37%
-        );
+        margin-bottom: 1rem;
+        background: linear-gradient(180deg,
+            #f6d99e 13.1%,
+            #ffe3bd 50.03%,
+            #fbbd68 79.37%);
         text-shadow: 0px 4px 4px 0px #1c1614;
         font-size: 5rem;
         -webkit-background-clip: text;
@@ -1624,23 +1198,27 @@ a {
         filter: drop-shadow(0px 4px 4px #1c1614);
         font-family: fzh;
       }
+
       .second-liner {
         font-family: fzh;
         color: #ffffff;
         font-size: 2rem;
       }
     }
+
     .right {
       flex: 1;
+
       .bg {
         width: 520px;
       }
+
       .top {
-        background: url(../../assets/images/login/top.png) no-repeat center
-          center;
+        background: url(../../assets/images/login/top.png) no-repeat center center;
         background-size: cover;
         padding: 20px;
         position: relative;
+
         .log {
           font-weight: bold;
           //font-family: fzh;
@@ -1650,14 +1228,17 @@ a {
           font-size: 32px;
           padding-left: 15px;
         }
+
         .topright {
           position: absolute;
           right: 30px;
           top: 18px;
+
           .noaccabs {
             font-size: 16px;
             color: #ffffff;
           }
+
           a {
             font-family: PFBold;
             font-size: 16px;
@@ -1665,53 +1246,24 @@ a {
           }
         }
       }
+
       .mid {
-        background: url(../../assets/images/login/mid.png) no-repeat center
-          center;
+        background: url(../../assets/images/login/mid.png) no-repeat center center;
         background-size: cover;
         margin: 0 10px;
         padding: 25px 20px;
+
         .el-form {
           width: 95%;
           margin: 0 auto;
         }
       }
+
       .bot {
-        background: url(../../assets/images/login/dow.png) no-repeat center
-          bottom;
+        background: url(../../assets/images/login/dow.png) no-repeat center bottom;
         background-size: cover;
         padding: 10px;
       }
-    }
-  }
-
-  &.ind-firstPage {
-    background: url('../../assets/images/ind/ind-bg.png') no-repeat center;
-    height: 100vh;
-    .logo {
-      position: absolute;
-      left: 70px;
-      top: 40px;
-      width: 207px;
-    }
-
-    .loginPage .left .first-liner {
-      max-width: 750px;
-      width: 750px;
-    }
-
-    .loginPage .left .second-liner {
-      max-width: 600px;
-      width: 600px;
-    }
-
-    .inner {
-      max-width: 1300px;
-    }
-
-    .common-btn {
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      color: #fff;
     }
   }
 }
@@ -1733,6 +1285,7 @@ a {
     &:hover {
       opacity: 0.9;
     }
+
     &:active {
       filter: brightness(0.85);
       transform: translate(0px, 1px);
@@ -1753,6 +1306,7 @@ a {
 @media (max-width: 1100px) {
   .firstPage {
     height: auto;
+
     .inner {
       padding-top: 100px;
     }
@@ -1766,34 +1320,43 @@ a {
 @media (max-width: 768px) {
   .firstPage {
     height: auto;
+
     .inner {
       padding-top: 50px;
     }
+
     .loginPage {
       flex-direction: column;
       gap: 60px;
+
       .right {
         width: 100%;
+
         .bg {
           width: 100%;
         }
+
         .top {
           padding: 15px;
           background-size: 100%;
           background-position: bottom;
           min-height: 13vw;
+
           .log {
             font-size: 20px;
           }
+
           .topright {
             right: 20px;
             top: 10px;
           }
         }
+
         .mid {
           background-size: 100% 100%;
           margin: 0;
         }
+
         .bot {
           background-size: 100%;
           background-position: top;
@@ -1801,42 +1364,15 @@ a {
         }
       }
     }
+
     .logo {
       position: absolute;
       right: 20px;
       top: 20px;
       width: 120px;
     }
-
-    &.ind-firstPage {
-      .logo {
-        position: absolute;
-        left: 20px;
-        top: 20px;
-        width: 150px;
-      }
-
-      .loginPage {
-        padding-top: 30px;
-      }
-      .loginPage .left {
-        width: calc(100% - 20px);
-      }
-      .loginPage .left .first-liner {
-        max-width: none;
-        width: 100%;
-      }
-
-      .loginPage .left .second-liner {
-        max-width: none;
-        width: 100%;
-      }
-
-      .common-btn {
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      }
-    }
   }
+
   .wrapper {
     .affiliate {
       .game-title {
@@ -1844,6 +1380,7 @@ a {
           font-size: 25px;
         }
       }
+
       .description {
         flex-direction: column-reverse;
       }
@@ -1855,6 +1392,7 @@ a {
         justify-content: center;
         gap: 10px;
         padding: 0;
+
         .step {
           display: flex;
           color: #ffffff;
@@ -1863,12 +1401,14 @@ a {
           gap: 25px;
           justify-content: space-evenly;
           align-items: center;
+
           .stepdesc {
             flex-direction: row;
             gap: 5px;
             flex: 3;
             justify-content: flex-start;
           }
+
           .game-title {
             font-family: Wave;
             color: #ffd200;
@@ -1879,6 +1419,7 @@ a {
       }
     }
   }
+
   .swiper-slide {
     max-height: unset;
     overflow: auto;
@@ -1901,6 +1442,7 @@ a {
   .dialog400 {
     width: 80%;
   }
+
   .el-dialog {
     --el-dialog-padding-primary: 10px;
 
@@ -1916,6 +1458,56 @@ a {
 
   .verification-title {
     font-size: 0.8rem;
+  }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+
+  10% {
+    transform: translate(-1px, -2px);
+  }
+
+  20% {
+    transform: translate(-3px, 0px);
+  }
+
+  30% {
+    transform: translate(3px, 2px);
+  }
+
+  40% {
+    transform: translate(1px, -1px);
+  }
+
+  50% {
+    transform: translate(-1px, 2px);
+  }
+
+  60% {
+    transform: translate(-3px, 1px);
+  }
+
+  70% {
+    transform: translate(3px, 1px);
+  }
+
+  80% {
+    transform: translate(-1px, -1px);
+  }
+
+  90% {
+    transform: translate(1px, 2px);
+  }
+
+  100% {
+    transform: translate(1px, -2px);
   }
 }
 </style>

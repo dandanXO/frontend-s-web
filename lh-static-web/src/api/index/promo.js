@@ -275,7 +275,7 @@ export function claimSummon(promoCode) {
   return server.EVENT.post("/member-summon/claim", { promoCode });
 }
 
-export function loadAffiliateByDomain(host){
+export function loadAffiliateByDomain(host) {
   return server.REST.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`);
 }
 
@@ -299,44 +299,61 @@ export function getLplSummer24Match() {
   return server.EVENT.get("game-match/upcoming/MSI");
 }
 
-
 export function duanwuVipUpgrade() {
   return server.EVENT.post("/duan-wu/vip-upgrade");
-
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      token: `${userStore().token}`,
-      "Content-Type": "application/json"
-    }
-  };
-  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
-
-  return fetch(evtUrl + "/duan-wu/vip-upgrade", requestOptions)
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
 }
 
 export function duanwuDepositBet() {
   return server.EVENT.post("/duan-wu/deposit-bet");
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      token: `${userStore().token}`,
-      "Content-Type": "application/json"
-    }
-  };
-  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+}
 
-  return fetch(evtUrl + "/duan-wu/deposit-bet", requestOptions)
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+export function getNewUserSetupBonusInit() {
+  return server.EVENT.get("/new-user-setup-bonus/init");
+}
+
+export function putNewUserSetupBonusClaim(promoCode) {
+  return server.EVENT.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
+}
+
+export function getNewUserAccumulateDepositInit() {
+  return server.EVENT.get("/new-user-accumulate-deposit/init");
+}
+
+export function putNewUserAccumulateDepositClaim(ruleAmount, type) {
+  return server.EVENT.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}&type=${type}`, {});
+}
+
+export function initUefaCheckin() {
+  return server.EVENT.get("/lh-uefa-check-in/init");
+}
+export function claimUefaCheckin() {
+  return server.EVENT.put("/lh-uefa-check-in/claim");
+}
+
+export function getOlympicFirstDeposit() {
+  return server.EVENT.get("/lhOlympicDailyFirstDeposit/init");
+}
+
+export function claimOlympicFirstDeposit() {
+  return server.EVENT.put("/lhOlympicDailyFirstDeposit/claim");
+}
+
+export function getOlympicDailySportBet() {
+  return server.EVENT.get("/lhOlympicDailySportBet/init");
+}
+
+export function claimOlympicDailySportBet() {
+  return server.EVENT.put("/lhOlympicDailySportBet/claim");
+}
+
+export function getCheckInFreeTreasureInit() {
+  return server.EVENT.get("/checkInFreeTreasure/init");
+}
+
+export function putCheckInFreeTreasureCheckIn(checkInDay) {
+  return server.EVENT.put(`/checkInFreeTreasure/checkIn?checkInDay=${checkInDay}`, {});
+}
+
+export function putCheckInFreeTreasureClaim(point) {
+  return server.EVENT.put(`/checkInFreeTreasure/claimTreasure?point=${point}`, {});
 }
