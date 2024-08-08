@@ -18,7 +18,7 @@
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow txt-title">{{ item.nodeName }}</div>
-          <div class="" v-if="level > 1">
+          <div class="payment-range-div" v-if="level > 1">
             {{ displayWithThousand(item.depositMin) }} - {{ displayWithThousand(item.depositMax) }}
           </div>
           <div class="promo">
@@ -323,6 +323,11 @@ $node-color: #b81212;
           border: 0;
           padding: 0px;
           margin-bottom: 0;
+        }
+
+        .payment-range-div {
+          font-size: 11px;
+          line-height: 14px;
         }
       }
     }

@@ -91,10 +91,10 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
-          <div class="lil-title flex-div">
-            {{ $t("form.depositAmount") }}
-            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)
-            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+          <div class="lil-title flex-div" style="justify-content: flex-end">
+            <!--            {{ $t("form.depositAmount") }}-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
