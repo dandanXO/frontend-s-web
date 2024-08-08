@@ -274,7 +274,11 @@
       </div>
     </div>
   </div>
-  <div v-if="!store.token" class="promotion-container" style="text-align: center; width: 100%; padding: 10px;font-size: 12px; font-weight: 400; color: #00000099">
+  <div
+    v-if="!store.token"
+    class="promotion-container"
+    style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-weight: 400; color: #00000099"
+  >
     您还未登录，请登录后参与活动
   </div>
   <div class="promotion-container" v-if="isEligibleState && store.token">
@@ -736,6 +740,10 @@ tbody tr:last-child {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  img {
+    width: 130px !important;
+  }
 
   button {
     &:hover {
