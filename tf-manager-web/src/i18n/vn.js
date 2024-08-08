@@ -1180,6 +1180,7 @@ export default {
     paymentOnGoing: 'Đang tiến hành thanh toán',
     paymentType: 'Loại thanh toán',
     payout: 'Thanh toán',
+    return_ratio: 'Tỷ lệ hoàn trả',
     pcWay: 'Máy tính',
     pending: 'Đang chờ xử lý',
     pendingTransaction: 'Giao dịch đang chờ xử lý',

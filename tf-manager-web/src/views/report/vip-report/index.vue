@@ -109,6 +109,7 @@
       <el-table-column prop="platform" :label="t('fields.platform')" />
       <el-table-column prop="bet" :label="t('fields.bet')" />
       <el-table-column prop="payout" :label="t('fields.payout')" />
+      <el-table-column prop="ratio" :label="t('fields.return_ratio')" />
     </el-table>
     <el-pagination
       class="pagination"
@@ -212,8 +213,15 @@ async function loadVipReport() {
     }
   }
   const { data: ret } = await getVipReport(query)
-  page.records = ret.records
+  page.records = ret.records;
   // page.columns = ret.data
+
+  page.records = page.records.map(record => {
+    return {
+      ...record,
+      ratio: (record.payout / record.bet).toFixed(2)
+    };
+  });
 
   // const { data: ret1 } = await getTotalFinanceReport(query)
   // totalPage.records = ret1.financeReportItemVOS

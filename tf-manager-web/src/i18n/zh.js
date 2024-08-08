@@ -1251,6 +1251,7 @@ export default {
     paymentOnGoing: '支付中',
     paymentType: '支付类型',
     payout: '派彩',
+    return_ratio: '返奖率',
     pcWay: 'PC端',
     pending: '中止',
     pendingTransaction: '待处理',
