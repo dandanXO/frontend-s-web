@@ -464,10 +464,6 @@
         </el-button>
       </div>
     </el-form-item>
-    <el-form-item :label="t('fields.content')" prop="pageContent">
-      <!-- editor here -->
-      <Editor v-model:value="form.pageContent" @input="getInput" />
-    </el-form-item>
     <el-form-item :label="t('fields.startTime')" prop="startTime">
       <el-date-picker
         type="datetime"
@@ -483,6 +479,10 @@
         v-model="form.endTime"
         :disabled-date="disabledEndDate"
       />
+    </el-form-item>
+    <el-form-item :label="t('fields.content')" prop="pageContent">
+      <!-- editor here -->
+      <Editor v-model:value="form.pageContent" @input="getInput" />
     </el-form-item>
     <div class="form-footer">
       <el-button type="primary" @click="submit">
@@ -1186,8 +1186,8 @@ function back() {
   })
 }
 
-async function loadForm(id, siteId) {
-  const { data: ret } = await getPromoPageById(id, siteId)
+async function loadForm(id) {
+  const { data: ret } = await getPromoPageById(id)
 
   nextTick(() => {
     for (const key in ret) {
@@ -1483,7 +1483,7 @@ onMounted(() => {
   }
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
-    loadForm(route.params.id, route.params.siteId)
+    loadForm(route.params.id)
   } else {
     addParam()
     loadPromoTypes()
