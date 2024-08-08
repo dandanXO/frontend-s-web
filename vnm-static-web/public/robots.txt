@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.tf88vip.com/sitemap.xml
+Sitemap: https://www.tkeochuan88.com/sitemap.xml
