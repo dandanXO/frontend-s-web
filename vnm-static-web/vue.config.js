@@ -2,38 +2,38 @@ const { defineConfig } = require("@vue/cli-service");
 const defaultSettings = require("./src/settings.js");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-const SitemapPlugin = require('sitemap-webpack-plugin').default;
+const SitemapPlugin = require("sitemap-webpack-plugin").default;
 
 const paths = [
-  { path: '/', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/login', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/register', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/forgotPwd', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/home', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/slot', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/about', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/esports', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/sports', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/live-casino', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/lottery', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/poker', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/fishing', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/others', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/cockfight', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/minigame', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/agent', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/promotion', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/app', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/vip', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/affiliate', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/personal', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/mailbox', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/feedback', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/share', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/transit-record', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/deposit', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/transfer', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
-  { path: '/center/withdraw', lastmod: '2024-08-01', priority: 1.0, changefreq: 'monthly' },
+  { path: "/", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/login", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/register", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/forgotPwd", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/home", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/slot", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/about", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/esports", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/sports", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/live-casino", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/lottery", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/poker", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/fishing", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/others", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/cockfight", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/minigame", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/agent", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/promotion", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/app", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/vip", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/affiliate", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/personal", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/mailbox", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/feedback", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/share", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/transit-record", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/deposit", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/transfer", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" },
+  { path: "/center/withdraw", lastmod: "2024-08-01", priority: 1.0, changefreq: "monthly" }
 ];
 
 module.exports = defineConfig({
@@ -76,7 +76,10 @@ module.exports = defineConfig({
       ]
     },
     plugins: [
-      new SitemapPlugin({ base: 'https://www.tf88vip.com', paths })
+      new SitemapPlugin({
+        base: process.env.VUE_APP_SERVER ? process.env.VUE_APP_SERVER : "https://www.tkeochuan88.com",
+        paths
+      })
     ]
   },
   chainWebpack: (config) => {
@@ -85,14 +88,14 @@ module.exports = defineConfig({
       return args;
     });
 
-    config.plugin('define').tap((definitions) => {
+    config.plugin("define").tap((definitions) => {
       Object.assign(definitions[0], {
-        __VUE_OPTIONS_API__: 'true',
-        __VUE_PROD_DEVTOOLS__: 'false',
-        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
-      })
-      return definitions
-    })
+        __VUE_OPTIONS_API__: "true",
+        __VUE_PROD_DEVTOOLS__: "false",
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false"
+      });
+      return definitions;
+    });
   },
   css: {
     loaderOptions: {
