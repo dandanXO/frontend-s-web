@@ -252,7 +252,7 @@ const claimHongBao = async () => {
     .match-game-content {
         position: relative;
         display: grid;
-        grid-template-columns: 250px 1fr;
+        grid-template-columns: 1fr 1fr;
         border: 1px solid rgba(215, 235, 255, 1);
         border-radius: 12px;
         padding: 10px 15px;
