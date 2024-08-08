@@ -327,6 +327,7 @@ async function loadMemberMoneyChange(frombutton) {
       query.recordTime = query.recordTime.join(',')
     }
   }
+  query.siteId = site.id
   query.memberId = props.mbrId
   query.pagingState = page.pagingState
   const { data: ret } = await getMemberMoneyChangeList(props.mbrId, query)
