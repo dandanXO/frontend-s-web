@@ -379,7 +379,8 @@ export default defineComponent({
 
     const selectedPromoWrapperClass = computed(() => ({
       "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
-      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin'
+      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin',
+      'livepoker-rebate': selectedPromo.value.promoCode === 'lh1-livepoker-rebate',
     }))
 
     // const routeQuery  = computed(() => route.query || {});
@@ -1184,6 +1185,10 @@ export default defineComponent({
       &.slot-lucky8,
       &.challenge-comeback {
         background: #e7f1fd;
+      }
+
+      &.livepoker-rebate {
+        background: #E7F1FD;
       }
     }
   }
