@@ -18,6 +18,9 @@
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow txt-title">{{ item.nodeName }}</div>
+          <div class="" v-if="level > 1">
+            {{ displayWithThousand(item.depositMin) }} - {{ displayWithThousand(item.depositMax) }}
+          </div>
           <div class="promo">
             <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
@@ -37,6 +40,7 @@
       </div>
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
+      <!--      <pre>{{ item }}</pre>-->
       <node
         @click="clickChildItem(item)"
         :name="item.nodeName"
@@ -102,8 +106,15 @@ export default defineComponent({
       }
     });
   },
-
   methods: {
+    displayWithThousand(value) {
+      if (value < 1000) {
+        return value;
+      } else {
+        const newval = value / 1000;
+        return newval + "k";
+      }
+    },
     firstTime(item) {
       if (item) {
         item.hasActive = true;
