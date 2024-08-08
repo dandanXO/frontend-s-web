@@ -7,11 +7,13 @@
           <div
             class="method-item"
             @click="goSelectedMethod(item)"
-            :class="{ active: selectedItem === index, disabled: item.maintenance }"
+            :class="{ active: selectedItem === index, disabled: item.extra && item.extra.maintenance }"
           >
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
 
-            <template v-if="item.maintenance">
+<!--            <pre>{{item}}</pre>-->
+
+            <template v-if="item.extra && item.extra.maintenance">
               <div class="item-detail">
                 <div class="txt-maintenance">
                   <q-icon name="build" size="16px" />
