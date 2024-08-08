@@ -1216,6 +1216,7 @@ export default defineComponent({
 }
 
 .promo {
+  background-color: #E7F1FD;
   .q-tabs {
     background: $secondary;
     width: 100%;
