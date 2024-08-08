@@ -16,7 +16,7 @@
               <span
                 class="amount"
               >
-                888元
+                888 元
               </span>
             </div>
           </div>
@@ -29,7 +29,7 @@
               <span
                 class="amount"
               >
-                8元
+                8 元
               </span>
             </div>
           </div>
@@ -51,7 +51,7 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，统计当日真人视讯与棋牌场馆游戏总有效投注≥1,500元或以上，次日00:00起，即可在本活动页面点击[点击领取]按钮领取彩金,彩金秒到账！！
+            活动期间，统计当日真人视讯与棋牌场馆游戏总有效投注≥1,500 元或以上，次日 00:00 起，即可在本活动页面点击 [点击领取] 按钮领取彩金，彩金秒到账！！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -63,7 +63,7 @@
           <tr>
             <td>≥1,500</td>
             <td>18</td>
-            <td rowspan="7">12倍</td>
+            <td rowspan="7">12 倍</td>
           </tr>
           <tr>
             <td>≥6,000</td>
@@ -97,7 +97,7 @@
               <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px;" />
               <span>示例</span>
             </div>
-            8月08日会员A在AG真人场馆有效投注1,000元，在乐游棋牌有效投注5,000元，会员A在次日活动页面可点击领取58元彩金；
+            8 月 08 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A 在次日活动页面可点击领取 58 元彩金；
           </div>
         </div>
       </div>
@@ -107,23 +107,23 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，真人全部场馆与棋牌全部场馆当日总有效投注≥1,500元或以上即可符合条件，其他场馆有效投注不计算；
+            活动期间，真人全部场馆与棋牌全部场馆当日总有效投注≥1,500 元或以上即可符合条件，其他场馆有效投注不计算；
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，符合条件的会员需在次日前往本活动活动页面点击【点击领取】按钮即可获得彩金，彩金需12倍流水即可提款；
+            活动期间，符合条件的会员需在次日前往本活动活动页面点击【点击领取】按钮即可获得彩金，彩金需 12 倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过24个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计；
+            真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过 24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            同一手机号、姓名、邮箱地址、银行卡号、IP地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
+            同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            为避免文字理解差异,本站保留本活动最终解释权；
+            为避免文字理解差异，本站保留本活动最终解释权；
           </div>
         </div>
       </div>
@@ -153,7 +153,6 @@
   padding: 20px 12px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -230,7 +229,7 @@
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
 
   .title {
     background-image: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/info-title.png");
@@ -276,8 +275,9 @@
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
+  background-color: #f2f8fe;
   th {
-    height: 56px;
+    height: 36px;
     font-size: 12px;
     font-weight: 400;
     line-height: 28px;
@@ -291,6 +291,7 @@
     }
   }
   tr {
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     &:last-child {
       td {
         &:first-child {
@@ -307,8 +308,9 @@
     }
   }
   td {
+    background: transparent;
     border: 1px solid #acd4f6;
-    height: 56px;
+    height: 36px;
     font-size: 12px;
     font-weight: 400;
     line-height: 28px;
@@ -339,9 +341,9 @@
   .content {
     font-size: 12px;
     font-weight: 400;
-    line-height: 36px;
+    line-height: 20px;
     color: #000000;
-    padding: 8px;
+    padding: 8px; 
     .item {
       display: flex;
       gap: 10px;
