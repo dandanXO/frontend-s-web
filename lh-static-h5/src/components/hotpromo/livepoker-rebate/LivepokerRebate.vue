@@ -4,39 +4,48 @@
       <div class="livepoker-rebate-section">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div><img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png" style="width: 20px; height: 20px; margin-bottom: 0px;" /></div>
+            <div>
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png"
+                style="width: 20px; height: 20px; margin-bottom: 0px"
+              />
+            </div>
             每日彩金
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%">
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png"
+                alt=""
+                width="100%"
+              />
             </div>
             <div class="reward-info-content">
               当日真人棋牌场馆投注：
-              <span
-                class="amount"
-              >
-                {{ totalValidBet }}元
-              </span>
+              <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%">
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png"
+                alt=""
+                width="100%"
+              />
             </div>
             <div class="reward-info-content">
               当日可领彩金：
-              <span
-                class="amount"
-              >
-                {{ bonus }}元
-              </span>
+              <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus">
-            <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+            <img
+              src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png"
+              alt=""
+              width="100%"
+            />
           </div>
         </div>
       </div>
@@ -53,7 +62,8 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，统计当日真人视讯与棋牌场馆游戏总有效投注≥1,500 元或以上，次日 00:00 起，即可在本活动页面点击 [点击领取] 按钮领取彩金，彩金秒到账！！
+            活动期间，统计当日真人视讯与棋牌场馆游戏总有效投注≥1,500 元或以上，次日 00:00 起，即可在本活动页面点击
+            [点击领取] 按钮领取彩金，彩金秒到账！！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -96,10 +106,15 @@
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
-              <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px;" />
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png"
+                alt=""
+                style="width: 10px"
+              />
               <span>示例</span>
             </div>
-            8 月 08 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A 在次日活动页面可点击领取 58 元彩金；
+            8 月 08 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A
+            在次日活动页面可点击领取 58 元彩金；
           </div>
         </div>
       </div>
@@ -113,15 +128,18 @@
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，符合条件的会员需在次日前往本活动活动页面点击【点击领取】按钮即可获得彩金，彩金需 12 倍流水即可提款；
+            活动期间，符合条件的会员需在次日前往本活动活动页面点击【点击领取】按钮即可获得彩金，彩金需 12
+            倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过 24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计；
+            真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
+            24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
+            同一手机号、姓名、邮箱地址、银行卡号、IP
+            地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
           </div>
           <div class="item">
             <div class="item-num">5</div>
@@ -134,40 +152,42 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from "vue";
 import { getLivePoker, claimLivePokerBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 
-const notify = useNotify()
+const notify = useNotify();
 
-const totalValidBet = ref(0)
-const bonus = ref(0)
+const totalValidBet = ref(0);
+const bonus = ref(0);
 
 const handleClaimBonus = () => {
-  claimLivePokerBonus().then(res => {
-    if (res.code === 0) {
-      fetchData()
-    } else {
-      notify.error(res.message)
-    }
-  }).catch(err => {
-    console.log(err)
-  })
-}
+  claimLivePokerBonus()
+    .then((res) => {
+      if (res.code === 0) {
+        fetchData();
+      } else {
+        notify.error(res.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const fetchData = async () => {
   try {
-    const res = await getLivePoker()
-    totalValidBet.value = res.data.totalValidBet
-    bonus.value = res.data.bonus
+    const res = await getLivePoker();
+    totalValidBet.value = res.data.totalValidBet;
+    bonus.value = res.data.bonus;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 onMounted(() => {
-  fetchData()
-})
+  fetchData();
+});
 </script>
 
 <style scoped lang="scss">
@@ -211,6 +231,11 @@ onMounted(() => {
     .bonus-image {
       width: 100%;
       cursor: pointer;
+
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
     }
   }
 
@@ -382,7 +407,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 20px;
     color: #000000;
-    padding: 8px; 
+    padding: 8px;
     .item {
       display: flex;
       gap: 10px;
@@ -430,7 +455,7 @@ onMounted(() => {
   color: black;
 
   .amount {
-    color: #00A1FF;
+    color: #00a1ff;
     font-weight: 600;
   }
 }
