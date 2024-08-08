@@ -4,26 +4,25 @@
             <div class="match-game">
                 <div class="match-content-warp">
                     <div class="daily-prize-title">
-                        <img :src="require(`../../../assets/promo/lpl-lck/gift-icon.png`)" />
+                        <img style="width:25px;" :src="require(`../../../assets/promo/lpl-lck/gift-icon.png`)" />
                         <span>每日彩金</span>
                     </div>
                     <div class="match-game-content">
                         <div class="match-game-status">
-                            <img :src="require(`../../../assets/promo/lpl-lck/piggy-icon.png`)" />当日赛事有效投注：
+                            <img style="width:25px;"
+                                :src="require(`../../../assets/promo/lpl-lck/piggy-icon.png`)" />当日赛事有效投注：
                         </div>
                         <div class="match-game-detail">{{ totalValidBet }} 元</div>
                     </div>
                     <div class="match-game-content">
                         <div class="match-game-status">
-                            <img :src="require(`../../../assets/promo/lpl-lck/money-sack-icon.png`)" />当日可领彩金：
+                            <img style="width:25px;"
+                                :src="require(`../../../assets/promo/lpl-lck/money-sack-icon.png`)" />当日可领彩金：
                         </div>
                         <div class="match-game-detail">{{ bonus }} 元</div>
                     </div>
-                </div>
-                <div class="match-honbao-content">
-                    <div class="hongbao-1" @click="claimHongBao">
-                        <img :src="require(`../../../assets/promo/lpl-lck/hongbao.png`)" />
-                    </div>
+                    <img @click="claimHongBao" class="hongbao-1" style="width: 215px;margin:auto;"
+                        :src="require(`../../../assets/promo/lpl-lck/hongbao.png`)" />
                 </div>
             </div>
             <div class="match-game-info">
@@ -108,32 +107,32 @@
                 </div>
             </div>
 
-            <el-dialog v-model="tableRecordDialog" width="800px" align-center :close-on-click-modal="false"
-                class="match-table-record-dialog">
-                <template #header>
+            <q-dialog v-model="tableRecordDialog" persistent class="fish-match-table-record-dialog">
+                <q-card class="confirm-vote-card">
+                    <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png" /></div>
                     <div class="title">恭喜你抽中</div>
-                </template>
-                <div class="record-dialog-container">
-                    <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
-                    <div class="record-dialog-content-detail">
-                        <span>{{ rewardMoney }}</span>
-                        元
+                    <div class="close-btn" @click="tableRecordDialog = false"></div>
+                    <div class="record-dialog-container">
+                        <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
+                        <div class="record-dialog-content-detail">
+                            <span>{{ rewardMoney }}</span>
+                            元
+                        </div>
+                        <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
                     </div>
-                    <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
-                </div>
-            </el-dialog>
+                </q-card>
+            </q-dialog>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getMatchAndPrizeInfo, getPrizeMoney } from "@/api/promotion/lpllck";
-import { useNotify } from "@/hooks/notify";
-import { userStore } from "@/store";
-import { ElMessageBox } from "element-plus";
+import { getMatchAndPrizeInfo, getPrizeMoney } from "../../../api/promotion/lpllck";
+import { userStore } from "../../../stores/index";
+import { useQuasar } from "quasar";
 
-const notify = useNotify();
+const $q = useQuasar();
 const store = userStore();
 const bonus = ref(0);
 const totalValidBet = ref(0);
@@ -160,25 +159,32 @@ onMounted(() => {
 });
 const claimHongBao = async () => {
     if (!store.hasToken()) {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
-            autofocus: false,
-            center: true,
-            confirmButtonText: "确认",
-            showClose: false,
-            buttonSize: "large",
-            closeOnClickModal: true
-        }).then(() => {
-            store.loginPageVisible = true;
+        $q.dialog({
+            class: "q-px-md q-pt-md",
+            title: "系统提示",
+            message: "请登录后再操作",
+            ok: {
+                push: true,
+                color: "primary",
+                label: "去登录",
+                tabindex: 1
+            },
+            cancel: {
+                push: true,
+                color: "warning",
+                label: "取消",
+                tabindex: 0
+            },
+            persistent: true
+        }).onOk(() => {
+            router.push("/login");
         });
-        return;
     }
     const res = await getPrizeMoney();
     console.log(res);
     if (res.code === 0) {
         tableRecordDialog.value = true;
         rewardMoney.value = res.data;
-    } else {
-        notify.error(res.message);
     }
 };
 
@@ -191,11 +197,11 @@ const claimHongBao = async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'PingFang SC';
+    font-family: 'PingFang';
 }
 
 .match-container {
-    width: 1200px;
+    width: 100%;
     height: 100%;
 }
 
@@ -208,7 +214,6 @@ const claimHongBao = async () => {
 
 .match-game {
     width: 100%;
-    height: 250px;
     border-radius: 12px;
     border: 1px solid #acd4f6;
     background: url("../../../assets/promo/lpl-lck/bg.png") no-repeat center center;
@@ -216,14 +221,14 @@ const claimHongBao = async () => {
     position: relative;
     margin-bottom: 12px;
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+    flex-direction: column;
     padding: 30px;
 
     .match-content-warp {
         display: flex;
         justify-content: space-around;
         flex-direction: column;
+        gap: 10px;
 
         .daily-prize-title {
             display: flex;
@@ -232,12 +237,23 @@ const claimHongBao = async () => {
             font-weight: 600;
             font-size: 24px;
         }
+
+        .hongbao-1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &:hover {
+                filter: brightness(0.9);
+            }
+        }
     }
 
     .match-game-content {
         position: relative;
         display: grid;
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 250px 1fr;
         border: 1px solid rgba(215, 235, 255, 1);
         border-radius: 12px;
         padding: 10px 15px;
@@ -330,34 +346,14 @@ const claimHongBao = async () => {
     }
 }
 
-.match-honbao-content {
-    max-height: 288px;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-
-    .hongbao-1 {
-        margin-left: -85px;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-
-        &:hover {
-            filter: brightness(0.9);
-        }
-    }
-}
-
 .match-game-info {
     width: 100%;
     height: 100%;
     margin-top: 40px;
     background: #f2f8fe;
     border-radius: 12px;
-    padding: 40px;
-    border: 1px solid #acd4f6;
+    padding: 20px;
+    border: 1px solid #def0ff;
     box-shadow: 0px 0px 4px 0px #01497b0f;
     display: flex;
     flex-direction: column;
@@ -366,10 +362,10 @@ const claimHongBao = async () => {
     .title {
         background-image: url("../../../assets/promo/lpl-lck/info-title-2.png");
         background-repeat: no-repeat;
-        background-size: 100% 100%;
-        width: 738px;
-        height: 44px;
-        margin-bottom: 40px;
+        background-size: 100% auto;
+        width: 100%;
+        aspect-ratio: 240 / 20;
+        margin-bottom: 20px;
     }
 
     .subtitle {
@@ -498,7 +494,7 @@ const claimHongBao = async () => {
     margin-top: 40px;
     background: #f2f8fe;
     border-radius: 12px;
-    padding: 40px;
+    padding: 20px;
     border: 1px solid #acd4f6;
     box-shadow: 0px 0px 4px 0px #01497b0f;
     display: flex;
@@ -508,10 +504,10 @@ const claimHongBao = async () => {
     .title {
         background-image: url("../../../assets/promo/lpl-lck/rule-title.png");
         background-repeat: no-repeat;
-        background-size: 100% 100%;
-        width: 738px;
-        height: 44px;
+        background-size: 100% auto;
+        width: 100%;
         margin-bottom: 20px;
+        aspect-ratio: 240 / 20;
     }
 
     .content {
@@ -523,7 +519,7 @@ const claimHongBao = async () => {
         .item {
             display: grid;
             grid-template-columns: 50px 1fr;
-            font-family: 'PingFang SC';
+            font-family: 'PingFang';
 
             .rounded-number {
                 text-align: center;

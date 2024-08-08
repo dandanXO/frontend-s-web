@@ -87,6 +87,7 @@
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
+    <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -187,6 +188,7 @@ const OfficialGiftPromo = defineAsyncComponent(() =>
 );
 const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"));
 const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
+const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpl-lck/LPLLCK.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -243,7 +245,8 @@ export default defineComponent({
     OlympicCheckin,
     ChallengeComebackPromo,
     OfficialGiftPromo,
-    OlympicFund
+    OlympicFund,
+    LPLLCK
   },
   props: {
     list: {
