@@ -202,3 +202,11 @@ export function initUefaCheckin() {
 export function claimUefaCheckin() {
   return eventapi.put("/lh-uefa-check-in/claim");
 }
+
+export function getLivePoker() {
+  return eventapi.get("/live-poker");
+}
+
+export function claimLivePokerBonus() {
+  return eventapi.put("/bonus/claim/lh1-live-poker-bonus");
+}

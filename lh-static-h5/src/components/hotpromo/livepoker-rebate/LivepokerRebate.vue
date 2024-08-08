@@ -16,7 +16,7 @@
               <span
                 class="amount"
               >
-                888 元
+                {{ totalValidBet }}元
               </span>
             </div>
           </div>
@@ -29,13 +29,15 @@
               <span
                 class="amount"
               >
-                8 元
+                {{ bonus }}元
               </span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus">
+            <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+          </div>
         </div>
       </div>
       <div class="livepoker-rebate-game-info">
@@ -132,6 +134,40 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
+import { getLivePoker, claimLivePokerBonus } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify()
+
+const totalValidBet = ref(0)
+const bonus = ref(0)
+
+const handleClaimBonus = () => {
+  claimLivePokerBonus().then(res => {
+    if (res.code === 0) {
+      fetchData()
+    } else {
+      notify.error(res.message)
+    }
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
+const fetchData = async () => {
+  try {
+    const res = await getLivePoker()
+    totalValidBet.value = res.data.totalValidBet
+    bonus.value = res.data.bonus
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 <style scoped lang="scss">
@@ -171,6 +207,11 @@
   .livepoker-rebate-section-right {
     width: 180px;
     margin-top: 20px;
+
+    .bonus-image {
+      width: 100%;
+      cursor: pointer;
+    }
   }
 
   .livepoker-rebate-section-title {
@@ -275,7 +316,6 @@
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
-  background-color: #f2f8fe;
   th {
     height: 36px;
     font-size: 12px;
@@ -291,7 +331,6 @@
     }
   }
   tr {
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     &:last-child {
       td {
         &:first-child {
