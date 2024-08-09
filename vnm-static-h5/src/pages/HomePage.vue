@@ -3283,7 +3283,7 @@ export default defineComponent({
 
     .team-details {
       display: flex;
-      justify-content: center;
+      justify-content: end;
       flex-direction: column;
       align-items: center;
       gap: 3px;
@@ -3311,7 +3311,7 @@ export default defineComponent({
       .team-name {
         text-align: center;
         color: #444444;
-        min-height: 42px;
+        // min-height: 22px;
       }
     }
   }
