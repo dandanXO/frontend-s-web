@@ -289,7 +289,6 @@
         width="200"
       />
       <el-table-column
-        v-if="!isKorea(LOGIN_USER_SITEID)"
         prop="lastLoginIp"
         :label="t('fields.lastLoginIp')"
         width="200"

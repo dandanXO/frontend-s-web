@@ -50,7 +50,6 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!isKorea(LOGIN_USER_SITEID)"
         :label="t('fields.loginIp')"
         align="center"
         min-width="150"
@@ -68,7 +67,6 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="!isKorea(LOGIN_USER_SITEID)"
         :label="t('fields.loginAddress')"
         prop="loginAddress"
         align="center"

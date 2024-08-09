@@ -21,7 +21,6 @@
           :placeholder="t('fields.telephone')"
         />
         <el-input
-          v-if="!isKorea(LOGIN_USER_SITEID)"
           v-model="request.lastLoginIp"
           size="small"
           style="width: 200px; margin-left: 5px;"
@@ -170,14 +169,14 @@
               maxlength="20"
             />
           </el-form-item>
-          <el-form-item v-if="!isKorea(LOGIN_USER_SITEID)" :label="t('fields.lastLoginIp')" prop="lastLoginIp">
+          <el-form-item :label="t('fields.lastLoginIp')" prop="lastLoginIp">
             <el-input
               v-model="request.lastLoginIp"
               style="width: 300px;"
               maxlength="50"
             />
           </el-form-item>
-          <el-form-item v-if="!isKorea(LOGIN_USER_SITEID)" :label="t('fields.registerIp')" prop="regIp">
+          <el-form-item :label="t('fields.registerIp')" prop="regIp">
             <el-input
               v-model="request.regIp"
               style="width: 300px;"

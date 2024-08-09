@@ -35,10 +35,10 @@
           <span v-formatter="{data: scope.row.loginTime,timeZone: timeZone,type: 'date'}" />
         </template>
       </el-table-column>
-      <el-table-column v-if="!isKorea(LOGIN_USER_SITEID)" :label="t('fields.loginIp')" prop="loginIp"
+      <el-table-column :label="t('fields.loginIp')" prop="loginIp"
                        align="center" min-width="150"
       />
-      <el-table-column v-if="!isKorea(LOGIN_USER_SITEID)" :label="t('fields.loginAddress')" prop="loginAddress"
+      <el-table-column :label="t('fields.loginAddress')" prop="loginAddress"
                        align="center" min-width="180"
       >
         <template #default="scope">

@@ -91,7 +91,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="loginTime" :label="t('fields.loginTime')" />
-      <el-table-column v-if="!isKorea(LOGIN_USER_SITEID)" prop="loginIp" :label="t('fields.loginIp')" />
+      <el-table-column prop="loginIp" :label="t('fields.loginIp')" />
     </el-table>
     <el-pagination
       class="pagination"
