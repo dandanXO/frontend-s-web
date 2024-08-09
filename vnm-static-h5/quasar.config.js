@@ -14,6 +14,8 @@ const { configure } = require("quasar/wrappers");
 
 const SitemapPlugin = require("sitemap-webpack-plugin").default;
 
+const { resolve } = require("path");
+
 const paths = [
   {
     path: "/",
@@ -327,6 +329,10 @@ module.exports = configure(function (ctx) {
             paths
           })
         );
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          "@": resolve(__dirname, "./src")
+        };
       }
     },
 
