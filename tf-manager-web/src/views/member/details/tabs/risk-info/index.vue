@@ -3,24 +3,6 @@
     <div class="header-container">
       <div class="search">
         <el-select
-          v-if="!isKorea(LOGIN_USER_SITEID)"
-          clearable
-          v-model="request.queryValue"
-          size="small"
-          :placeholder="t('fields.status')"
-          class="filter-item"
-          style="width: 240px; margin-right: 10px"
-          @change="clearRecords"
-        >
-          <el-option
-            v-for="item in queryValueList.list"
-            :key="item.key"
-            :label="t('fields.' + item.name)"
-            :value="item.value"
-          />
-        </el-select>
-        <el-select
-          v-else
           clearable
           v-model="request.queryValue"
           size="small"
