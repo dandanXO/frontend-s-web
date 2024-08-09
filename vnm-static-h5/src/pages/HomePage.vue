@@ -2989,7 +2989,7 @@ export default defineComponent({
 
 .hot-matches-wrapper {
   width: calc(100% - 1rem);
-  margin: auto;
+  margin: 0 auto 20px;
   // margin: 20px auto 0px;
 
   .euro-countdown {
@@ -3184,14 +3184,15 @@ export default defineComponent({
   }
 
   .hot-matches-container {
-    width: 100%;
+    width: calc(100% - 2rem);
     height: 125px;
+    margin: auto;
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
       // margin-top: 10px;
       transform: scale(0.75);
-      margin-top: -10px;
+      margin-top: 10px;
     }
   }
 
@@ -3214,7 +3215,6 @@ export default defineComponent({
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 16px;
-    margin: auto;
     max-width: 450px;
     margin-top: 0px;
     padding: 8px 18px 6px;
