@@ -12,7 +12,7 @@
           @change="clearRecords"
         >
           <el-option
-            v-for="item in queryValueList.sublist"
+            v-for="item in queryValueList.list"
             :key="item.key"
             :label="t('fields.' + item.name)"
             :value="item.value"
