@@ -203,6 +203,7 @@ onMounted(() => {
 
 .livepoker-rebate-container {
   width: 100%;
+  height: 100%;
   max-width: 1200px;
   display: flex;
   flex-direction: column;
@@ -307,7 +308,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
-    height: 40px;
+    height: 26px;
     margin: 0 auto 20px;
   }
   .little-title {
