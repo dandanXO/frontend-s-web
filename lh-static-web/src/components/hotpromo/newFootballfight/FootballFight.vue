@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日真人棋牌场馆投注：
+              昨日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -21,7 +21,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日可领彩金：
+              可领彩金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -34,30 +34,31 @@
       </div>
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
-        <div class="little-title">
-          <div class="left">活动平台</div>
-          <div class="right">真人场馆、棋牌场馆</div>
-        </div>
-        <div class="little-title">
-          <div class="left">活动时间</div>
-          <div class="right">永久</div>
-        </div>
+        <!--        <div class="little-title">-->
+        <!--          <div class="left">活动平台</div>-->
+        <!--          <div class="right">真人场馆、棋牌场馆</div>-->
+        <!--        </div>-->
+        <!--        <div class="little-title">-->
+        <!--          <div class="left">活动时间</div>-->
+        <!--          <div class="right">永久</div>-->
+        <!--        </div>-->
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，用户每日在体育场馆投注"五大联赛"累计有效投注≥1,000 元，即可在次日点击活动页面【点击领取】按钮领取对应彩金。
+            活动期间，用户每日在体育场馆投注"五大联赛"累计有效投注≥1,000
+            元，即可在次日点击活动页面【点击领取】按钮领取对应彩金。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
-            <th>当日真人与棋牌有效投注</th>
-            <th>彩金上限</th>
-            <th>流水要求</th>
+            <th>当日有效总流水</th>
+            <th>奖金</th>
+            <th>奖金流水</th>
           </tr>
           <tr>
             <td>≥1,000</td>
             <td>8</td>
-            <td rowspan="7">12 倍</td>
+            <td rowspan="9">3倍流水/限体育场馆</td>
           </tr>
           <tr>
             <td>≥3,000</td>
@@ -99,7 +100,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
               <span>示例</span>
             </div>
-            会员 A 在 17 号有效投注为 1,000，在 18 号 00:00-23:59 期间，即可在此活动页面点击“领取奖金”；
+            会员A在17号有效投注为1,000，在18号00:00-23:59期间，即可在此活动页面点击“领取奖金”；
           </div>
         </div>
       </div>
@@ -117,7 +118,8 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -125,7 +127,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -139,7 +142,7 @@
 
 <script setup>
 import { footballHistroy, claimBonusItem } from "@/api/index/promo";
-import { onMounted, ref,defineProps } from "vue";
+import { onMounted, ref, defineProps } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
@@ -345,6 +348,7 @@ onMounted(() => {
   height: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  table-layout: fixed;
   text-align: center;
   vertical-align: middle;
   th {
