@@ -17,7 +17,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
-              当日可领彩金：
+              可领彩金：
             </div>
             <div class="match-game-detail">{{ bonus }} 元</div>
           </div>
@@ -40,8 +40,8 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>累计有效投注</th>
-            <th>彩金</th>
+            <th>昨日赛事有效投注</th>
+            <th>彩金金额</th>
             <th>流水倍数</th>
           </tr>
           <tr>
