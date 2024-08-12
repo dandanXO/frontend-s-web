@@ -16,18 +16,33 @@
       </el-button>
     </div>
   </div>
+
+  <GameModal ref="modalGame"></GameModal>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { ArrowLeft } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+import GameModal from "@/components/modal/GameModal.vue";
 const props = defineProps(["mail", "closeMail"]);
 const router = useRouter();
 
+const modalGame = ref(null);
+const openGame = (gameName, code, gameCode) => {
+  modalGame.value.open(gameName, code, gameCode);
+};
 const handleDetail = (mail) => {
   // debugger;
   if (mail.redirectType === "INNER") {
-    router.push(mail.redirectUrl);
+    const openPattern = /^\/open\/(.*)/;
+    if (mail.redirectUrl.match(openPattern)) {
+      const extractedUrl = mail.redirectUrl.match(openPattern)[1];
+      const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+      openGame(gameName, platformCode, gameCode);
+    } else {
+      router.push(mail.redirectUrl);
+    }
   } else if (mail.redirectType === "OUTER") {
     window.open(mail.redirectUrl, "_blank");
   }
