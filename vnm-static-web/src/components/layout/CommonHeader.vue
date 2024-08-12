@@ -1,14 +1,22 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <template v-if="ui.edition === EDITION.SLOT">
-      <img class="header-decoration left" src="@/assets/images/home/header-decoration-slot-left.png" />
-      <img class="header-decoration right" src="@/assets/images/home/header-decoration-slot-right.png" />
+      <img
+        class="header-decoration left"
+        src="@/assets/images/home/header-decoration-slot-left.png"
+        alt="TF88 slot left ribbon"
+      />
+      <img
+        class="header-decoration right"
+        src="@/assets/images/home/header-decoration-slot-right.png"
+        alt="TF88 slot right ribbon"
+      />
     </template>
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo-bebest.svg" />
+          <img class="logo" src="../../assets/logo-bebest.svg" alt="TF88 logo" />
         </router-link>
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
@@ -19,11 +27,16 @@
                     <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
+                      :alt="nav.code"
                     />
                     <h2 class="nav-title active">{{ nav.name }}</h2>
                   </template>
                   <template v-else>
-                    <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
+                    <img
+                      class="menu-icon"
+                      :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)"
+                      :alt="nav.code"
+                    />
                     <h2 class="nav-title">{{ nav.name }}</h2>
                   </template>
                 </a>
@@ -41,21 +54,25 @@
                     <img
                       class="hover-icon"
                       src="../../assets/images/home/header-promo-icon.svg"
+                      alt="promotion"
                       v-if="nav.code === 'Promotion'"
                     />
                     <img
                       class="hover-icon"
                       src="../../assets/images/home/header-affiliate-icon.svg"
+                      alt="affiliate"
                       v-if="nav.code === 'Agent'"
                     />
                     <img
                       class="hover-icon"
                       src="../../assets/images/home/header-download-icon.svg"
+                      alt="download TF88 app"
                       v-if="nav.code === 'App'"
                     />
                     <img
                       class="hover-icon"
                       src="../../assets/images/home/header-vip-icon.svg"
+                      alt="vip"
                       v-if="nav.code === 'VIP'"
                     />
                   </span>
@@ -92,8 +109,8 @@
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
           <a class="header-btn btn-color-white" :class="ui.edition" @click="registerDialogVisible = true">
             {{ $t("common.register") }}
-            <img v-if="ui.edition === EDITION.NORMAL" src="../../assets/home/regbtn_side.png" />
-            <img v-if="ui.edition === EDITION.SLOT" src="@/assets/home/regbtn-side-slot-edition.png" />
+            <img v-if="ui.edition === EDITION.NORMAL" src="../../assets/home/regbtn_side.png" alt="football" />
+            <img v-if="ui.edition === EDITION.SLOT" src="@/assets/home/regbtn-side-slot-edition.png" alt="slot" />
           </a>
         </div>
 
