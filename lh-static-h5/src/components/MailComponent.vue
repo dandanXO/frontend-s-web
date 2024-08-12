@@ -60,12 +60,15 @@
                     <img src="../assets/images/inbox/unread-mail.png" />
                   </div>
 
-                  <div class="title-text" :title="det.title">{{ det.title }}</div>
+                  <div class="title-text" :title="det.title" v-html="det.title"></div>
                   <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
                     <i>{{ formatSendTime(det.sendTime) }}</i>
                   </div>
                   <div class="right-title">
-                    <img src="../assets/images/inbox/arrow-down-icon.svg" :class="isSelectedMail === det.id && 'arrow-rotate'"  />
+                    <img
+                      src="../assets/images/inbox/arrow-down-icon.svg"
+                      :class="isSelectedMail === det.id && 'arrow-rotate'"
+                    />
                   </div>
                 </div>
               </div>
@@ -157,11 +160,12 @@ export default defineComponent({
   setup(props, context) {
     const notify = useNotify();
     const mailboxMessageTypeData = ref([
+      { num: 1, type: "NOTIFICATION", name: "通知" },
+      { num: 5, type: "MATCH", name: "赛事" },
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" },
-      { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 5, type: "ALL", name: "全部" }
+      { num: 4, type: "PAYMENT", name: "充提" }
+      // { num: 5, type: "ALL", name: "全部" }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
@@ -213,7 +217,7 @@ export default defineComponent({
         const formattedIds = messagesIdArr.join(",");
         api
           .post(
-            "/session/inbox/readMultiple",
+            "/session/pm/inbox/readMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -222,7 +226,7 @@ export default defineComponent({
             if (res.code === 0) {
               notify({
                 message: "读取已选择的消息",
-                type: "success",
+                type: "success"
               });
 
               // Update the readTime property of selected messages
@@ -242,7 +246,7 @@ export default defineComponent({
       } else if (type !== "ALL") {
         api
           .post(
-            "/session/inbox/readAll",
+            "/session/pm/inbox/readAll",
             qs.stringify({
               type: type
             })
@@ -251,7 +255,7 @@ export default defineComponent({
             if (res.code === 0) {
               notify({
                 message: "全部消息已读",
-                type: "success",
+                type: "success"
               });
 
               // Update the readTime property of all messages
@@ -273,12 +277,12 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/readAll")
+          .post("/session/pm/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
               notify({
                 message: "全部消息已读",
-                type: "success",
+                type: "success"
               });
 
               // Update the readTime property of all messages
@@ -323,7 +327,7 @@ export default defineComponent({
               !readTime &&
                 notify({
                   message: "已读消息",
-                  type: "success",
+                  type: "success"
                 });
               mail.content = res.data.content;
               onLoad();
@@ -336,17 +340,17 @@ export default defineComponent({
       } else if (!readTime) {
         api
           .post(
-            "/session/inbox/read",
+            "/session/pm/inbox/read",
             qs.stringify({
               id: id
             })
           )
           .then((res) => {
             if (res.code === 0) {
-              notify({
-                message: "已读消息",
-                type: "success",
-              });
+              // notify({
+              //   message: "已读消息",
+              //   type: "success"
+              // });
               onLoad();
             }
           })
@@ -372,7 +376,7 @@ export default defineComponent({
         const formattedIds = mailIdArr.join(",");
         api
           .post(
-            "/session/inbox/deleteMultiple",
+            "/session/pm/inbox/deleteMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -385,7 +389,7 @@ export default defineComponent({
 
               notify({
                 message: "删除已选择的消息",
-                type: "success",
+                type: "success"
               });
               onLoad();
 
@@ -399,7 +403,7 @@ export default defineComponent({
       } else if (msgType.value !== null) {
         api
           .post(
-            "/session/inbox/deleteAll",
+            "/session/pm/inbox/deleteAll",
             qs.stringify({
               type: msgType.value
             })
@@ -411,7 +415,7 @@ export default defineComponent({
             if (res.code === 0) {
               notify({
                 message: "已删除全部消息",
-                type: "success",
+                type: "success"
               });
               onLoad();
               // truncatedList.value = [];
@@ -424,7 +428,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/deleteAll")
+          .post("/session/pm/inbox/deleteAll")
           .then((res) => {
             isDeleteMailModal.value = false;
 
@@ -432,7 +436,7 @@ export default defineComponent({
             if (res.code === 0) {
               notify({
                 message: "已删除全部消息",
-                type: "success",
+                type: "success"
               });
               onLoad();
               truncatedList.value = [];
@@ -535,6 +539,11 @@ export default defineComponent({
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+        margin: 0px;
+
+        p {
+          margin: 0px 0px 0px 0px;
+        }
       }
 
       .send-time {
@@ -557,8 +566,8 @@ export default defineComponent({
       width: 16px;
       transition: 0.3s all;
 
-      &.arrow-rotate{
-        transform:  scaleY(-1);
+      &.arrow-rotate {
+        transform: scaleY(-1);
       }
     }
   }
@@ -634,5 +643,9 @@ export default defineComponent({
       color: $primary-dark;
     }
   }
+}
+
+p {
+  margin: 0px;
 }
 </style>

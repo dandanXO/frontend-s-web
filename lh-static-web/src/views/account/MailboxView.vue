@@ -63,9 +63,11 @@
                       <img src="../../assets/images/mail/unread-mail.png" />
                     </div>
                     <div class="title-wrapper">
-                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">
-                        {{ item.title }}
-                      </div>
+                      <div
+                        :class="`title-text ${item.readTime ? '' : 'unread'}`"
+                        :title="item.title"
+                        v-html="item.title"
+                      ></div>
                       <div
                         v-if="item.sendTime"
                         class="send-time"
@@ -134,11 +136,13 @@ const showMailId = ref();
 const activeNames = ref();
 
 const mailboxMessageTypeData = ref([
+  { num: 1, type: "NOTIFICATION", name: "通知" },
+  { num: 5, type: "MATCH", name: "赛事" },
   { num: 2, type: "ACTIVITY", name: "活动" },
   { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-  { num: 4, type: "PAYMENT", name: "充提" },
-  { num: 1, type: "NOTIFICATION", name: "通知" },
-  { num: 5, type: "ALL", name: "全部" }
+  { num: 4, type: "PAYMENT", name: "充提" }
+  // { num: 6, type: "ALL", name: "全部" }
+  // { num: 5, type: "ALL", name: "全部" }
 ]);
 const mailboxMessageType = ref(mailboxMessageTypeData.value[0].type);
 const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
@@ -162,6 +166,7 @@ const mailboxNotifyState = reactive({
   ACTIVITY: [],
   ANNOUNCEMENT: [],
   PAYMENT: [],
+  MATCH: [],
   ALL: []
 });
 const mailboxState = reactive({
@@ -553,6 +558,10 @@ onMounted(() => {
   .title-text {
     font-weight: normal;
 
+    p {
+      margin: 0px;
+    }
+
     &.unread {
       font-weight: bold;
     }
@@ -709,6 +718,11 @@ onMounted(() => {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    p {
+      margin: 0px;
+      margin-bottom: 0 !important;
+    }
   }
 
   .send-time {
@@ -730,6 +744,13 @@ onMounted(() => {
         color: $font-0;
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.title-text {
+  p {
+    margin-bottom: 0;
   }
 }
 </style>
