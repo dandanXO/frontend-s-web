@@ -7,7 +7,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download TF88" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -31,7 +31,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-web.svg" />
+      <img alt="TF88 logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!isLogined">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
@@ -100,7 +100,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/home/announce-icon.png" />
+          <img src="../assets/images/home/announce-icon.png" alt="announcement" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -198,12 +198,12 @@
             </div>
             <div class="team-details team-details__home">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamOneLogo" />
+                <img :src="hotMatchesImgURL + item.teamOneLogo" :alt="item.teamOneName" />
               </div>
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
             <div class="match-details">
-              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
+              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" alt="matchup" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
                 <q-btn
@@ -222,6 +222,7 @@
                 <img
                   :src="hotMatchesImgURL + item.teamTwoLogo"
                   :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"
+                  :alt="item.teamTwoName"
                 />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
@@ -376,17 +377,21 @@
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
-      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <router-link to="/liveChat" class="menu-item">
+        <img src="../assets/images/home/float-cs-01.png" alt="customer service" />
+      </router-link>
+      <a href="mailto:vnsupport@tf88.com" class="menu-item">
+        <img src="../assets/images/home/float-cs-02.png" alt="vnsupport@tf88.com" />
+      </a>
       <!-- <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a> -->
       <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
-        <img src="../assets/images/home/float-cs-04.png" />
+        <img src="../assets/images/home/float-cs-04.png" alt="TF88_CS Telegram" />
       </a>
       <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a> -->
       <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
-        <img src="../assets/images/home/float-cs-06.png" />
+        <img src="../assets/images/home/float-cs-06.png" alt="TF88 VNOfficial facebook" />
       </a>
     </div>
   </div>
@@ -574,7 +579,7 @@
         <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
-            <img :src="homePopupImg" class="alert-img" />
+            <img :src="homePopupImg" class="alert-img" alt="popup" />
           </div>
         </router-link>
       </q-card-section>

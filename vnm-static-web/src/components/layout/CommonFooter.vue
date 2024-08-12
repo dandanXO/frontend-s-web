@@ -49,7 +49,7 @@
         <div>
           <router-link to="/about?id=aboutus">
             <div style="display: flex; align-items: center; gap: 5px">
-              <img src="@/assets/footer/logo.png" />
+              <img src="@/assets/footer/logo.png" alt="TF88 logo" />
             </div>
           </router-link>
         </div>
@@ -88,21 +88,21 @@
         <div style="display: flex; flex-direction: column; gap: 10px">
           <div class="title">{{ $t("about.partner") }}</div>
           <div class="top-ft-rgt">
-            <img src="../../assets/footer/games/AG.png" />
-            <img src="../../assets/footer/games/CMD368.png" />
-            <img src="../../assets/footer/games/DG.png" />
-            <img src="../../assets/footer/games/WE.png" />
-            <img src="../../assets/footer/games/Rich88.png" />
-            <img src="../../assets/footer/games/TCG.png" />
-            <img src="../../assets/footer/games/SABA.png" />
-            <img src="../../assets/footer/games/SBO.png" />
-            <img src="../../assets/footer/games/WM.png" />
-            <img src="../../assets/footer/games/AE.png" />
-            <img src="../../assets/footer/games/KingMaker.png" />
-            <img src="../../assets/footer/games/EVO.png" />
-            <img src="../../assets/footer/games/KingPoker.png" />
-            <img src="../../assets/footer/games/PP.png" />
-            <img src="../../assets/footer/games/V8.png" />
+            <img src="../../assets/footer/games/AG.png" alt="AG logo" />
+            <img src="../../assets/footer/games/CMD368.png" alt="CMD368 logo" />
+            <img src="../../assets/footer/games/DG.png" alt="DG logo" />
+            <img src="../../assets/footer/games/WE.png" alt="WE logo" />
+            <img src="../../assets/footer/games/Rich88.png" alt="RICH88 logo" />
+            <img src="../../assets/footer/games/TCG.png" alt="TCG logo" />
+            <img src="../../assets/footer/games/SABA.png" alt="SABA logo" />
+            <img src="../../assets/footer/games/SBO.png" alt="SBO logo" />
+            <img src="../../assets/footer/games/WM.png" alt="WM logo" />
+            <img src="../../assets/footer/games/AE.png" alt="AE logo" />
+            <img src="../../assets/footer/games/KingMaker.png" alt="KingMaker logo" />
+            <img src="../../assets/footer/games/EVO.png" alt="EVO logo" />
+            <img src="../../assets/footer/games/KingPoker.png" alt="KingPoker logo" />
+            <img src="../../assets/footer/games/PP.png" alt="PP logo" />
+            <img src="../../assets/footer/games/V8.png" alt="V8 logo" />
           </div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 10px">
@@ -117,14 +117,14 @@
           <img src="../../assets/footer/payment/VP.png" />
           <img src="../../assets/footer/payment/BIDV.png" />
           <img src="../../assets/footer/payment/ACB.png" /> -->
-            <img src="../../assets/footer/payment/bank-logo.png" />
-            <img src="../../assets/footer/payment/momo.png" />
-            <img src="../../assets/footer/payment/ZaloPay.png" />
-            <img src="../../assets/footer/payment/scratch-card-logo.png" />
-            <img src="../../assets/footer/payment/ViettelPayRed.png" />
-            <img src="../../assets/footer/payment/tether-logo.png" />
-            <img src="../../assets/footer/payment/lotterycard.png" />
-            <img src="../../assets/footer/payment/bank-transfer.png" />
+            <img src="../../assets/footer/payment/bank-logo.png" alt="bank" />
+            <img src="../../assets/footer/payment/momo.png" alt="momo" />
+            <img src="../../assets/footer/payment/ZaloPay.png" alt="ZaloPay" />
+            <img src="../../assets/footer/payment/scratch-card-logo.png" alt="scratch card" />
+            <img src="../../assets/footer/payment/ViettelPayRed.png" alt="ViettelPay" />
+            <img src="../../assets/footer/payment/tether-logo.png" alt="tether" />
+            <img src="../../assets/footer/payment/lotterycard.png" alt="lotteryCard" />
+            <img src="../../assets/footer/payment/bank-transfer.png" alt="bankTransfer" />
           </div>
         </div>
       </div>
@@ -133,6 +133,7 @@
       v-if="ui.edition === 'SLOT' && route.path === '/home'"
       class="footer-bg"
       src="@/assets/footer/footer-bg-slot-edition.png"
+      alt="coin background"
     />
   </footer>
   <!--
