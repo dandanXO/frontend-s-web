@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LayoutView from "@/views/layouts/MainLayout.vue";
 import HomeView from "../views/home/index.vue";
-import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
+import PersonalLayoutView from "@/views/layouts/personallayout/index.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";

@@ -76,7 +76,7 @@ export default defineComponent({
 
 <style lang="scss">
 .account-container {
-  background-image: url("../../assets/images/home/main-bg.jpg");
+  background-image: url("../../../assets/images/home/main-bg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
@@ -172,7 +172,7 @@ export default defineComponent({
         position: relative;
 
         .account-info-bg {
-          background-image: url(../../assets/images/account/personal-bg.png);
+          background-image: url(../../../assets/images/account/personal-bg.png);
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
@@ -204,7 +204,7 @@ export default defineComponent({
               height: 100%;
               left: 0;
               top: 0;
-              background: url(../../assets/images/profile/edit.png)no-repeat center center;
+              background: url(../../../assets/images/profile/edit.png)no-repeat center center;
               background-size: 30%;
               background-color: #0000008f;
             }
@@ -255,7 +255,7 @@ export default defineComponent({
 
               &:before {
                 content: "";
-                background-image: url(../../assets/images/account/menu-icon-active.png);
+                background-image: url(../../../assets/images/account/menu-icon-active.png);
                 background-repeat: no-repeat;
                 position: absolute;
                 top: 50%;
