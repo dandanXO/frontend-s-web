@@ -159,6 +159,8 @@ onMounted(() => {
         mission.missionProgress = data[`task${index + 1}`];
         mission.status = data[`available${index + 1}`];
       });
+    } else {
+      ElMessage.error(res.message);
     }
   });
 });

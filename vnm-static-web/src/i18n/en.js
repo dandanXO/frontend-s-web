@@ -967,6 +967,7 @@ export default {
     30007: "The user's deposit history does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
     30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",
