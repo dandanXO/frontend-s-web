@@ -71,19 +71,22 @@ const mailData = ref([]);
 const announceData = ref([]);
 
 onMounted(() => {
-  // if (store.token) {
-  //   popupMailBox().then((res) => {
-  //     if (res.code === 0) {
-  //       mailData.value = res.data;
-  //     }
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   }).finally(() => {
-  //     if (mailData.value.length > 0) {
-  //       visible.value = true
-  //     }
-  //   })
-  // }
+  if (store.token) {
+    popupMailBox()
+      .then((res) => {
+        if (res.code === 0) {
+          mailData.value = res.data;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        if (mailData.value.length > 0) {
+          visible.value = true;
+        }
+      });
+  }
 });
 
 watch(

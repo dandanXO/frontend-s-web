@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import {
   mailInbox,
   mailOutbox,
@@ -122,6 +122,7 @@ import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import Mail from "@/components/mailbox/Mail.vue";
+import { useRoute } from "vue-router";
 
 const notify = useNotify();
 
@@ -191,6 +192,8 @@ const mailboxState = reactive({
   }
 });
 
+const route = useRoute();
+
 const loadNotifyMailbox = () => {
   mailboxNotifyData.value = {
     type: null,
@@ -209,6 +212,20 @@ const loadNotifyMailbox = () => {
         mailboxNotifyState[type].push(record);
         mailboxNotifyState["ALL"].push(record);
       });
+
+      if (isMailDetail.value) {
+        // debugger;
+        const mailIndex = mailboxNotifyState[mailboxMessageTab.value].findIndex(
+          (mail) => mail.id === parseInt(route.query.mailid)
+        );
+        if (mailIndex > -1) {
+          console.log(mailIndex);
+          const mailItem = mailboxNotifyState[mailboxMessageTab.value].find(
+            (mail) => mail.id === parseInt(route.query.mailid)
+          );
+          openMsg(mailItem, mailIndex);
+        }
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -227,6 +244,7 @@ const isAnyReadTimeNull = (mailboxList) => {
 };
 
 const loadPersonalMailbox = () => {
+  // debugger;
   mailboxState.mailboxList[mailboxState.active].list = [];
   if (mailboxState.active === "inbox") {
     mailboxData.value = {
@@ -298,6 +316,21 @@ const readAllMsg = (m) => {
       console.log(error);
     });
 };
+
+const isMailDetail = ref(false);
+watch(
+  () => route.query,
+  () => {
+    if (route.query && route.query.mailid) {
+      isMailDetail.value = true;
+    }
+    if (route.query && route.query.type) {
+      mailboxMessageType.value = route.query.type;
+      mailboxMessageTab.value = route.query.type;
+    }
+  },
+  { immediate: true }
+);
 
 const readMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
