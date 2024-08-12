@@ -10,7 +10,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              当日电子盈利：
+              昨日赛事有效投注：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
@@ -87,7 +87,7 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
             </span>
           </div>
           <div class="item">
@@ -145,12 +145,14 @@ const bonus = ref(0);
 const totalValidBet = ref(0);
 const tableRecordDialog = ref(false);
 const rewardMoney = ref(0);
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
 
 const getMatchData = async () => {
   const res = await getMatchAndPrizeInfo();
   if (res.code === 0) {
-    bonus.value = res.data.profitAmount;
-    totalValidBet.value = res.data.betAmount;
+    bonus.value = res.data.betAmount;
+    totalValidBet.value = res.data.expectedBonus;
   }
 };
 
@@ -178,7 +180,7 @@ const claimHongBao = async () => {
     });
     return;
   }
-  const res = await getPrizeMoney();
+  const res = await getPrizeMoney(promoCode.value);
   console.log(res);
   if (res.code === 0) {
     tableRecordDialog.value = true;

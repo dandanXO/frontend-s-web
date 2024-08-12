@@ -10,20 +10,12 @@
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
-    <PrivilegeInvite
-      v-if="
-        store.token &&
-        (list.redirectUrl === 'invitefriend')
-      "
-    />
+    <PrivilegeInvite v-if="store.token && list.redirectUrl === 'invitefriend'" />
     <SlotLacky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
-    <HongBaoYu2024Promo
-      :promo-code="list.promoCode"
-      v-if="list.redirectUrl === 'cny-hongbaoyu'"
-    />
+    <HongBaoYu2024Promo :promo-code="list.promoCode" v-if="list.redirectUrl === 'cny-hongbaoyu'" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
@@ -38,9 +30,10 @@
       v-if="listParam.type === 'hongbaoyu'"
     />
 
-    <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bonus'" />
+    <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
+    <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bet-bonus'" :promo-code="list.promoCode" />
 
-    <div v-if="list.redirectUrl === 'fucaiiphone' " class="promo-4">
+    <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <q-card-section>
           <q-tabs v-model="activeKey" dense color="black" indicator-color="black" align="justify" narrow-indicator>
@@ -72,9 +65,7 @@
                       color="black"
                       :input-style="{ color: 'black' }"
                       type="number"
-                      :rules="[
-                        (val) => (val && val.length === 3) || '号码长度应为3'
-                      ]"
+                      :rules="[(val) => (val && val.length === 3) || '号码长度应为3']"
                       label="幸运号码"
                     />
                     <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="发送" />
@@ -224,7 +215,8 @@ import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
-import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue"
+import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
+import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -244,6 +236,7 @@ export default defineComponent({
     ReturnPromo,
     SlotLacky8,
     DepositAwardPromo,
+    SlotsRebatePromo,
     SlotsBonusPromo
   },
   props: {
@@ -268,10 +261,10 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },
@@ -451,11 +444,11 @@ export default defineComponent({
         onlyMeParam = "&memberId=" + user_id;
       }
 
-      if(filterDate){
+      if (filterDate) {
         var filterDateStart = moment(filterDate).format("YYYY-MM-DD 00:00:00");
-        var filterDateEnd =  moment(filterDate).format("YYYY-MM-DD 23:59:59");
-        var betweenDate= "recordTimeBetween=" + filterDateStart + "," + filterDateEnd;
-      }else{
+        var filterDateEnd = moment(filterDate).format("YYYY-MM-DD 23:59:59");
+        var betweenDate = "recordTimeBetween=" + filterDateStart + "," + filterDateEnd;
+      } else {
         var betweenDate = "";
       }
 

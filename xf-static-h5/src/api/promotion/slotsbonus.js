@@ -4,8 +4,6 @@ export function getMatchAndPrizeInfo() {
   return eventapi.get("/privi/memberSlotBetInfo");
 }
 
-export function getPrizeMoney() {
-    return eventapi.put("/bonus/claim/xf1-slots-bet-bonus");
+export function getPrizeMoney(promoCode) {
+  return eventapi.put(`/bonus/claim/${promoCode}`);
 }
-
-

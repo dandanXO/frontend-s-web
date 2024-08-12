@@ -4,6 +4,6 @@ export function getMatchAndPrizeInfo() {
   return server.EVENT.get("/privi/memberSlotBetInfo");
 }
 
-export function getPrizeMoney() {
-    return server.EVENT.put("/bonus/claim/xf1-slots-bet-bonus");
+export function getPrizeMoney(promoCode) {
+  return server.EVENT.put(`/bonus/claim/${promoCode}`);
 }
