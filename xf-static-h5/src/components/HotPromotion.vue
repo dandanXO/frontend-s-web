@@ -38,6 +38,8 @@
       v-if="listParam.type === 'hongbaoyu'"
     />
 
+    <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bonus'" />
+
     <div v-if="list.redirectUrl === 'fucaiiphone' " class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -222,6 +224,7 @@ import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
+import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -240,7 +243,8 @@ export default defineComponent({
     BonusSpinWheelPromo,
     ReturnPromo,
     SlotLacky8,
-    DepositAwardPromo
+    DepositAwardPromo,
+    SlotsBonusPromo
   },
   props: {
     list: {
