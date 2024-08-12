@@ -500,7 +500,7 @@ button {
   }
 
   a {
-    color: $link-color-dark;
+    color: #fff;
   }
 
   .el-dialog {
@@ -516,6 +516,12 @@ button {
   .el-table {
     --el-table-header-bg-color: #{$background-content-block-lighter-dark};
     --el-table-tr-bg-color: #{$background-content-block-lighter-dark};
+
+    th {
+      &.el-table__cell {
+        background-color: #273354;
+      }
+    }
   }
 
   .el-tabs {
@@ -552,8 +558,11 @@ button {
   }
 
   .standard-button {
-    background: $active-color-dark-linear;
-    box-shadow: 0px -2.28px 5.51px 0px #93F2FF inset;
+    // background: $active-color-dark-linear;
+    background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background-size: auto;
+    box-shadow: none;
+    border-radius: 8px;
   }
 
   .common-btn,

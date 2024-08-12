@@ -1,5 +1,5 @@
 <template>
-    <div class="account-container">
+    <div class="account-container dark-account-container">
       <div class="account-container-wrap">
         <div class="account-box account-menu-wrapper">
           <account-menu />
@@ -40,7 +40,7 @@
   
   <script lang="js">
   import { defineComponent, ref } from "vue";
-  import AccountMenu from "@/components/account/AccountMenu.vue";
+  import AccountMenu from "@/components/account/accountmenu/index.vue";
   import "@/scss/account.scss";
   import { userStore } from "@/store";
   import { Refresh } from '@element-plus/icons-vue'
@@ -75,7 +75,7 @@
   </script>
   
   <style lang="scss">
-  .account-container {
+  .dark-account-container {
     background-image: url("../../../assets/images/home/main-bg.jpg");
     background-repeat: no-repeat;
     background-size: 100% auto;
@@ -113,6 +113,8 @@
         display: flex;
         flex-direction: column;
         gap: 14px;
+        font-family: 'PingFang SC';
+
         .account-balance {
           font-size: 14px;
           display: flex;
@@ -137,14 +139,17 @@
             // border-right: 1px solid #2a313e;
             margin-right: 10px;
             padding: 5px 0px;
+            color: #fff;
+
             .balance-txt {
               font-weight: 600;
+              color: #fff;
               // color: #30a73b;
             }
             .trans-tip {
               width: 225px;
               font-size: 14px;
-              color: $font-2;
+              color: #a98f7c;
             }
           }
         }
@@ -240,7 +245,7 @@
               color: $font-0;
               margin: 5px 10px;
               border-radius: 8px;
-              transition: 0.3s all;
+              transition: none;
   
               img {
                 height: 28px;
@@ -273,7 +278,7 @@
   }
   
   .dark {
-    .account-container {
+    .dark-account-container {
       background-image: url("../../../assets/images/home/page-bg.jpg");
       // background: $background-dark;
   
@@ -292,6 +297,7 @@
             .account-menu-list {
               .account-menu-item {
                 color: #a98f7c;
+                font-family: 'PingFang SC';
                 margin: 0px;
                 border-radius: 0px;
   
@@ -300,6 +306,9 @@
                   color: $color-white;
                   // background: #e7f3ff1a;
                   background: linear-gradient(90deg, #455884 0%, rgba(69, 88, 132, 0) 100%);
+                  // .account-avatar {
+                  //     filter: brightness(0) invert(1);
+                  // }
                 }
               }
             }
@@ -319,12 +328,13 @@
   
           .account-balance {
             .balance-details {
-              color: $font-3-dark;
+              // color: $font-3-dark;
+              color: #fff;
             }
   
             .balance-container {
               .trans-tip {
-                color: $font-3-dark;
+                color: #a98f7c;
               }
             }
           }

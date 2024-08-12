@@ -40,7 +40,7 @@
 
 <script lang="js">
 import { defineComponent, ref } from "vue";
-import AccountMenu from "@/components/account/AccountMenu.vue";
+import AccountMenu from "@/components/account/accountmenu/index.vue";
 import "@/scss/account.scss";
 import { userStore } from "@/store";
 import { Refresh } from '@element-plus/icons-vue'
@@ -273,7 +273,7 @@ export default defineComponent({
 }
 
 .dark {
-  .account-container {
+  .dark-account-container {
     background-image: none;
     background: $background-dark;
 

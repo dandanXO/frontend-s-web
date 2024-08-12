@@ -3,8 +3,8 @@
     <div class="account-info-wrapper">
       <div class="account-info-bg" >
         <div @click="onShowProfile" class="account-avatar">
-          <img v-if="!store.profilePhoto" src="../../assets/images/home/profile-pic.png" />
-          <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
+          <img v-if="!store.profilePhoto" src="../../../assets/images/home/profile-pic.png" />
+          <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../../assets/images/profile/${store.profilePhoto}.png`)" />
           <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
         </div>
         <div class="account-name">欢迎您 {{ loginName }}</div>
@@ -22,19 +22,19 @@
         <div class="profile-actions">
           <router-link to="/center/deposit" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
+              <img src="../../../assets/images/home/profile-action-deposit.png" />
             </div>
             存款
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
+              <img src="../../../assets/images/home/profile-action-withdraw.png" />
             </div>
             取款
           </router-link>
           <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
+              <img src="../../../assets/images/home/profile-action-transfer.png" />
             </div>
             转账
           </router-link>
@@ -68,7 +68,7 @@
     <el-form :inline="true" size="small" label-width="180px">
       <div class="grid-container">
         <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
-          <img :src="require(`../../assets/images/profile/default-${profIndex + 1}.png`)">
+          <img :src="require(`../../../assets/images/profile/default-${profIndex + 1}.png`)">
         </div>
       <div class="grid-item">
               <div @click="updateDialogVisible = true" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
@@ -396,7 +396,7 @@ const loadMenuItemIcon = (icon) => {
   }
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .account-container {
   background-size: cover;
   background-position: center center;
@@ -411,7 +411,7 @@ const loadMenuItemIcon = (icon) => {
       color: $color-white;
     }
     .account-vip-label {
-      background-image: url(../../assets/images/account/vip-label.png);
+      background-image: url(../../../assets/images/account/vip-label.png);
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 63px 17px;
