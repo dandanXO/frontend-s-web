@@ -29,6 +29,7 @@
     <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
+    <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode"/>
     <PrivilegeInvite
       v-if="
         list.redirectUrl === 'Dongying-refer' ||
@@ -135,6 +136,7 @@ import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPre
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
@@ -147,6 +149,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
     fishHongbao,
