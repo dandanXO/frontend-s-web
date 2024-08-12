@@ -18,7 +18,7 @@
               </div>
               <div class="description">
                 累积存款:
-                <span>{{ vip.upgrade }}</span>
+                <span>{{ formatNumber(vip.upgradeDepositAmount) }}</span>
               </div>
               <div class="viplevel">
                 VIP {{ vip.vipLevel }}
@@ -37,7 +37,7 @@
       </div>
       <div class="vip-progress">
         <div class="amount">
-          <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">还要<div class="required-amount">{{ currentDepAmt }}</div>存款升级到 VIP {{vipLevel + 1}}</div>
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">还要<div class="required-amount">{{ formatNumber(currentUpgradeDepAmt - currentDepAmt) }}</div>存款升级到 VIP {{vipLevel + 1}}</div>
           <div class="text" v-else-if="vipLevel === 0">需要一笔存款到达 VIP 1</div>
           <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeDepAmt }}</div> 存款 VIP {{ vipLevel + 1 }}</div>
           <div class="progressBarContainer">
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="amount">
-          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">还要<div class="required-amount">{{ currentBetAmt }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">还要<div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
           <div class="text" v-else-if="vipLevel === 0">需要一笔存款到达 VIP 1</div>
           <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeBetAmt }}</div> 经验值 VIP {{ vipLevel + 1 }}</div>
           <div class="progressBarContainer">
@@ -81,7 +81,7 @@
                 <div class="vip-inner">
                   <div class="box-det">
                     <div class="icon">
-                      <img :src="require(`../assets/vip/${category.image}${item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' ? '-inactive' : ''}.png`)">
+                      <img :src="require(`../assets/vip/${category.image}${store.token && item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' ? '-inactive' : ''}.png`)">
                     </div>
                     <div>
                       <div class="item-name">{{ category.displayName }}</div>
@@ -488,9 +488,22 @@ import { useNotify } from "@/hooks/notify";
       }
       currentSlide.value = vipLevel - 1;
     };
+    function formatNumber(value) {
+      // Convert the string to a float
+      const number = parseFloat(value);
+
+      // Check if there are any decimal places
+      if (number % 1 !== 0) {
+        // Return with two decimal places
+        return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      } else {
+        // Return without decimal places
+        return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+    }
     watch(() => store.token, () => {
-      initVIPTable(); // Call your function to repopulate the table
-    }, { immediate: true }); // `immediate: true` if you want to run it on component mount
+      initVIPTable(); 
+    }, { immediate: true }); 
 
 </script>
 <style scoped lang="scss">
@@ -582,6 +595,7 @@ $border-settings: 1px solid #e5e7eb;
           gap: 2px;
           font-size: 24px;
           color: #ffffff;
+          white-space: nowrap;
           .required-amount {
             color: #799DF8;
             font-weight:600;
