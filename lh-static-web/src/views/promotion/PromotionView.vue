@@ -2,8 +2,8 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img v-if="!isDark" src="../assets/promo/top-promo-banner.jpg" />
-        <img v-else src="../assets/promo/promo-banner-dark.png" />
+        <img v-if="!isDark" src="../../assets/promo/top-promo-banner.jpg" />
+        <img v-else src="../../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
 
@@ -12,7 +12,7 @@
         <div class="promo-type-wrapper">
           <div>
             <div class="type-list">
-              <img src="../assets/promo/menu-title.png" />
+              <img src="../../assets/promo/menu-title.png" />
               <div
                 class="type-item"
                 v-for="p in promoTypes"
@@ -20,7 +20,7 @@
                 :key="p.code"
                 @click="switchPromoType(p.code)"
               >
-                <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <img :src="require('../../assets/promo/menu-' + p.img + '.png')" />
                 <span style="width: 100px" class="label">{{ p.label }}</span>
               </div>
             </div>
@@ -160,7 +160,7 @@
             <img
               width="125px"
               v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'"
-              src="../assets/images/promotion/hotpromo/cs2/bottombg.png"
+              src="../../assets/images/promotion/hotpromo/cs2/bottombg.png"
             />
             <img
               v-if="selectedPromo.redirectUrl === 'lh-cs2-blast-2024'"
@@ -404,7 +404,7 @@ export default defineComponent({
   }
 
   .all-promotions {
-    // background: url(../assets/promo/top-promo-banner.jpg) no-repeat center top;
+    // background: url(../../assets/promo/top-promo-banner.jpg) no-repeat center top;
     // background-size: 100% auto;
     // padding-top: max(110px, 16vw);
     width: 100%;
@@ -620,7 +620,7 @@ export default defineComponent({
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          background: url(../assets/promo/front-bg.png) no-repeat center center;
+          background: url(../../assets/promo/front-bg.png) no-repeat center center;
           background-size: cover;
           box-shadow: 0px 4px 26px 0px #00000026;
 
@@ -879,22 +879,22 @@ export default defineComponent({
           // border-radius: 10px;
           overflow: auto;
           // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/welcome.png");
           // }
           // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/sport.png");
           // }
           // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/esport.png");
           // }
           // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/fish.png");
           // }
           // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/livecasino.png");
           // }
           // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/slot.png");
           // }
           &.olympicCheckin {
             border: 1px solid #acd4f6;
@@ -1041,7 +1041,7 @@ export default defineComponent({
 
         .promo-list-wrapper {
           .promo-item {
-            background: url(../assets/promo/front-bg-dark.png) no-repeat center center;
+            background: url(../../assets/promo/front-bg-dark.png) no-repeat center center;
             background-size: cover;
 
             .promo-img-wrapper {

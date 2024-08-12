@@ -92,7 +92,7 @@ const routes = [
       {
         path: "/promotion",
         name: "promotion",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/PromotionView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/promotion/index.vue")
       },
       {
         path: "/app",
