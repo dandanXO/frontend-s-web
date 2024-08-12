@@ -103,9 +103,16 @@ body {
       // box-shadow: 0 0 0 1px #518bf7;
       // border: 1px solid white;
       background: url(../assets/images/common/ball.png) no-repeat center center;
-      background-size: cover;
+      background-size: contain;
       width: 25px;
       height: 25px;
+    }
+  }
+  .SLOT {
+    .is-active {
+      .el-carousel__button {
+        background-image: url(@/assets/images/common/ingot.png);
+      }
     }
   }
   .el-carousel__arrow {

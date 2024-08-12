@@ -204,7 +204,7 @@
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_changePwd.svg" />
-            <div class="acct-nav-label">密码</div>
+            <div class="acct-nav-label">修改密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">

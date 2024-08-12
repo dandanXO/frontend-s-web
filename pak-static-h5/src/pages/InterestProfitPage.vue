@@ -54,9 +54,13 @@
             </InputField> -->
 
             <div class="select-label">{{ $t("interestProfit.storageTime") }}</div>
-            <q-select class="do-select" outlined v-model="interestProfitField.storageTime" :options="dayList" />
-            <!-- :options="storageTimeOptions" -->
-
+            <q-select
+              class="do-select"
+              outlined
+              v-model="interestProfitField.storageTime"
+              :options="dayList"
+              :rules="[(val) => !!val || $t('interestProfit.storageTime_required')]"
+            />
             <InputField :label="$t('interestProfit.deposit')">
               <template #input>
                 <q-input
@@ -65,9 +69,9 @@
                   hide-bottom-space
                   outlined
                   v-model="interestProfitField.deposits"
-                  lazy-rules
                   label-color="secondary"
                   @keydown.enter="submitDeposit"
+                  :rules="[(val) => !!val || $t('interestProfit.deposit_required')]"
                 >
                   <template v-slot:prepend>
                     <div>₹</div>
@@ -326,8 +330,35 @@ const estimatePlan = reactive({
   profitAmount: 0
 });
 
+const showValidationErrors = () => {
+  if (!interestProfitField.storageTime) {
+    // interestProfit.storageTime_required
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("interestProfit.storageTime_required"),
+      icon: "report_problem"
+    });
+  }
+  if (!interestProfitField.deposits) {
+    // interestProfit.deposit_required
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("interestProfit.deposit_required"),
+      icon: "report_problem"
+    });
+  }
+};
+
 const submitTrialCalculation = () => {
+  if (!interestProfitField.storageTime || !interestProfitField.deposits) {
+    showValidationErrors();
+    return;
+  }
+
   isLoading.value = true;
+
   const putData = {
     days: interestProfitField.storageTime,
     placeAmount: interestProfitField.deposits
@@ -355,6 +386,11 @@ const submitTrialCalculation = () => {
 };
 
 const submitDeposit = () => {
+  if (!interestProfitField.storageTime || !interestProfitField.deposits) {
+    showValidationErrors();
+    return;
+  }
+
   isLoading.value = true;
 
   const putData = {

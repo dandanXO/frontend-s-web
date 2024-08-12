@@ -832,6 +832,7 @@ export default {
     paymentOnGoing: 'กำลังดำเนินการจ่ายเงิน',
     paymentType: 'ประเภทการชำระเงิน',
     payout: 'การจ่ายเงิน',
+    return_ratio: 'Ratio Return',
     pcWay: 'พีซี',
     pending: 'ระงับ',
     pendingTransaction: 'รอดำเนินการ',

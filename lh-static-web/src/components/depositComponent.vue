@@ -127,13 +127,17 @@
             </el-select>
           </el-form-item>
 
-          <div class="btn-confirm rollover-info" v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)">
-            <p v-if="selectedPromo.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
-              {{getRollOverText(selectedPromo.gameTypeRollover) }}
-            </p>
-            <p v-else>
-              流水倍数要求（本金+彩金）：{{selectedPromo.rollover}}倍
-            </p>
+          <div
+            class="btn-confirm rollover-info"
+            v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
+          >
+            <span v-if="selectedPromo.depositMin">
+              优惠最低存款要求：{{ selectedPromo.depositMin }}元，&nbsp;&nbsp;&nbsp;
+            </span>
+            <span v-if="selectedPromo.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
+              {{ getRollOverText(selectedPromo.gameTypeRollover) }}
+            </span>
+            <span v-else>流水倍数要求（本金+彩金）：{{ selectedPromo.rollover }}倍</span>
           </div>
 
           <div class="btn-confirm">
@@ -173,7 +177,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef , watch } from "vue";
+import { ref, reactive, onMounted, shallowRef, watch } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
@@ -286,37 +290,37 @@ const rules = {
 };
 
 const getRollOverText = (rolltext) => {
-  const thetext= JSON.parse(rolltext);
+  const thetext = JSON.parse(rolltext);
 
-  var fulltext= '流水倍数要求（本金+彩金）：';
-  var rolloverlists= [];
-  if(thetext.sport){
-    rolloverlists.push("体育"+thetext.sport+"倍");
+  var fulltext = "流水倍数要求（本金+彩金）：";
+  var rolloverlists = [];
+  if (thetext.sport) {
+    rolloverlists.push("体育" + thetext.sport + "倍");
   }
-  if(thetext.esport){
-    rolloverlists.push("电竞"+thetext.esport+"倍");
+  if (thetext.esport) {
+    rolloverlists.push("电竞" + thetext.esport + "倍");
   }
-  if(thetext.slot){
-    rolloverlists.push("电子"+thetext.slot+"倍");
+  if (thetext.slot) {
+    rolloverlists.push("电子" + thetext.slot + "倍");
   }
-  if(thetext.live){
-    rolloverlists.push("真人"+thetext.live+"倍");
+  if (thetext.live) {
+    rolloverlists.push("真人" + thetext.live + "倍");
   }
-  if(thetext.poker){
-    rolloverlists.push("棋牌"+thetext.poker+"倍");
+  if (thetext.poker) {
+    rolloverlists.push("棋牌" + thetext.poker + "倍");
   }
-  if(thetext.fish){
-    rolloverlists.push("捕鱼"+thetext.fish+"倍");
+  if (thetext.fish) {
+    rolloverlists.push("捕鱼" + thetext.fish + "倍");
   }
-  if(thetext.lottery){
-    rolloverlists.push("彩票"+thetext.lottery+"倍");
+  if (thetext.lottery) {
+    rolloverlists.push("彩票" + thetext.lottery + "倍");
   }
-  if(thetext.casual){
-    rolloverlists.push("小游戏"+thetext.casual+"倍");
+  if (thetext.casual) {
+    rolloverlists.push("小游戏" + thetext.casual + "倍");
   }
-  fulltext += rolloverlists.join("，")
+  fulltext += rolloverlists.join("，");
   return fulltext;
-}
+};
 
 function initPay() {
   isLoading.value = true;
@@ -335,9 +339,9 @@ function initPay() {
       }
     } else {
       notify({
-        type: 'error',
+        type: "error",
         message: d.message
-      })
+      });
     }
   });
 }
@@ -448,7 +452,7 @@ function clearInfo() {
   form.localAmount = "";
   form.bankId = "";
   selectedPrivilege.value = null;
-  selectedPromo.value= {};
+  selectedPromo.value = {};
   checkMinDepositAmt();
 }
 
@@ -513,9 +517,9 @@ function confirmDeposit() {
             form.localAmount = d.data.suggestion;
             // message.error(d.message, 4);
             notify({
-              type: 'error',
+              type: "error",
               message: d.message
-            })
+            });
             loadingBtn.value = false;
           } else {
             const copy = { ...form };
@@ -590,9 +594,9 @@ function doDeposit(data) {
         loadingBtn.value = false;
       } else {
         notify({
-          type: 'error',
+          type: "error",
           message: d.message
-        })
+        });
       }
     })
     .catch((err) => {
@@ -641,14 +645,13 @@ async function verifyBank(r, v) {
   }
 }
 
-
 watch(
   () => selectedPrivilege.value,
   () => {
     if (selectedPrivilege.value) {
-      selectedPromo.value = unselectedPrivileges.value.find(item => item.id === selectedPrivilege.value);
-    }else{
-      selectedPromo.value= null;
+      selectedPromo.value = unselectedPrivileges.value.find((item) => item.id === selectedPrivilege.value);
+    } else {
+      selectedPromo.value = null;
     }
   }
 );
@@ -729,7 +732,6 @@ onMounted(() => {
   align-items: flex-start;
   margin-bottom: 18px;
 }
-
 
 .account-content {
   .wload {
@@ -851,7 +853,6 @@ onMounted(() => {
   color: #ffffff;
 }
 
-
 :deep(.ant-select) {
   height: 42px;
   width: 280px;
@@ -873,12 +874,11 @@ onMounted(() => {
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
 }
-.deposit-container :deep(.el-form-item){
+.deposit-container :deep(.el-form-item) {
   margin-bottom: 10px;
 }
 </style>
 <style scoped lang="scss">
-
 .dark {
   .deposit-container {
     color: $font-3-dark;
@@ -954,8 +954,8 @@ onMounted(() => {
   }
 }
 
-.rollover-info{
-  color:  #bd4646;
+.rollover-info {
+  color: #bd4646;
 }
 
 .btn-confirm {

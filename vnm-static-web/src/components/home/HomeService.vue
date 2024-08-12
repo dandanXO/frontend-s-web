@@ -82,7 +82,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" src="../../assets/home/service/circle-bg.png" />
-                <img class="icon" src="../../assets/home/service/security.png" />
+                <img class="icon" src="../../assets/home/service/security.png" alt="Network security">
               </div>
             </div>
             <div class="right-container">
@@ -99,7 +99,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" src="../../assets/home/service/circle-bg.png" />
-                <img class="icon" src="../../assets/home/service/trust.png" />
+                <img class="icon" src="../../assets/home/service/trust.png" alt="Trustworthy"/>
               </div>
             </div>
             <div class="right-container">
@@ -117,7 +117,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" src="../../assets/home/service/circle-bg.png" />
-                <img class="icon" src="../../assets/home/service/service.png" />
+                <img class="icon" src="../../assets/home/service/service.png" alt="Product Service"/>
               </div>
             </div>
             <div class="right-container">

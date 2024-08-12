@@ -871,9 +871,9 @@ export default {
   },
   maintenance: {
     title: "시스템 점검 중...",
-    desc: `2024년 4월 17일 06:00 (GMT +8)부터 10:00 (GMT +8)까지<br>
-          모든 서비스와 게임이 위 시간 동안 일시 중지됩니다.<br>불편을 드려 죄송합니다!`,
-    email: "이메일 보내기",
+    desc: `웹 사이트 점검중이오니 모든 게임 및 서비스 사용할수없습니다<br>
+      불편을 끼쳐드려서 죄송합니다<br>
+      정검시간: 2024년 8월 6일 ~ 2024년 8월7일(GMT+8)`,
     customerService: "24/7 온라인 지원",
     currentlyMaintaining: "점검 중",
     maintainenceTime: "점검 시간",

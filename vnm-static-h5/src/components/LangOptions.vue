@@ -10,7 +10,7 @@
     map-options
   >
     <template v-slot:selected>
-      <img :src="require(`../assets/images/home/flag-${languageVal}.png`)" />
+      <img :src="require(`../assets/images/home/flag-${languageVal}.png`)" :alt="languageVal" />
     </template>
   </q-select>
 </template>

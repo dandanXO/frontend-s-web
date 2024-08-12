@@ -18,6 +18,9 @@
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow txt-title">{{ item.nodeName }}</div>
+          <div class="payment-range-div" v-if="level > 1">
+            {{ displayWithThousand(item.depositMin) }} - {{ displayWithThousand(item.depositMax) }}
+          </div>
           <div class="promo">
             <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
@@ -37,6 +40,7 @@
       </div>
     </div>
     <div :key="i + nodeKey" v-for="(item, i) in list">
+      <!--      <pre>{{ item }}</pre>-->
       <node
         @click="clickChildItem(item)"
         :name="item.nodeName"
@@ -102,8 +106,15 @@ export default defineComponent({
       }
     });
   },
-
   methods: {
+    displayWithThousand(value) {
+      if (value < 1000) {
+        return value;
+      } else {
+        const newval = value / 1000;
+        return newval + "k";
+      }
+    },
     firstTime(item) {
       if (item) {
         item.hasActive = true;
@@ -296,20 +307,27 @@ $node-color: #b81212;
       }
       .node-text {
         display: flex;
-        // gap: 5px;
         justify-content: center;
         align-items: center;
+        position: relative;
+
+        .promo {
+          right: 2px;
+        }
+
         & > div {
           font-size: 12px;
           color: #ffffff;
         }
         img {
-          //width: 15px;
           border: 0;
-          //background-color: #2a313e;
-          // max-width: 1.5rem;
           padding: 0px;
           margin-bottom: 0;
+        }
+
+        .payment-range-div {
+          font-size: 11px;
+          line-height: 14px;
         }
       }
     }
@@ -339,7 +357,7 @@ $node-color: #b81212;
       display: flex;
       justify-content: center;
       align-items: center;
-      // gap: 5px;
+      position: relative;
       flex-direction: column;
 
       & > div {
@@ -401,15 +419,16 @@ $node-color: #b81212;
 
     .promo {
       position: absolute;
-      right: 50%;
-      top: -10px;
-      transform: translate(50%, 0);
+      right: 0px;
+      top: 0px;
+      transform: translate(0%, 0);
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
-      width: 100%;
-      max-width: 40px;
-
+      //width: 100%;
+      max-width: 36px;
+      width: 34px;
+      height: 34px;
       img {
         padding: 0;
         border: 0;
@@ -465,6 +484,17 @@ $node-color: #b81212;
   .node-txt-img {
     width: 54px !important;
     height: 54px !important;
+  }
+
+  .node .node.node-group .node-text .promo {
+    width: 34px;
+    height: 34px;
+    right: 4px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 

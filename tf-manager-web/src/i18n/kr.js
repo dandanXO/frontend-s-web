@@ -1179,6 +1179,7 @@ export default {
     paymentOnGoing: '결제 진행 중',
     paymentType: '결제 유형',
     payout: '지급',
+    return_ratio: '환급률',
     pcWay: 'PC',
     pending: '보류',
     pendingTransaction: '보류 중인 거래',
@@ -1808,6 +1809,7 @@ export default {
     activate: '활성화하다',
     withdrawPassword: '비밀번호 철회',
     updateWithdrawPassword: '출금 비밀번호 업데이트',
+    self: '(본인)',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2286,6 +2288,8 @@ export default {
     validatePlanLimitMinRequired: '필요한 최소 투자 한도',
     validatePlanLimitMaxRequired: '필요한 최대 투자 한도',
     affiliateReactivated: '활성화 성공',
+    required_6_digits_code: '6자리 숫자로 구성',
+    required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
   },
   menu: {
     undefined: '',
@@ -2520,6 +2524,7 @@ export default {
     'Member Point Record': '회원 포인트 기록',
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
+    'Vip Report': 'VIP 보고서'
   },
   google: {
     google_auth_menu: 'Google 인증자',

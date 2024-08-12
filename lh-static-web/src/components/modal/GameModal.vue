@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame">
+  <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame" :before-close="handleBeforeClose">
     <TFLoading v-if="logoShow"></TFLoading>
 
     <template v-if="!logoShow && transferInfo.platform === 'TFGaming' && UI.innerWidth > 1440">
@@ -122,6 +122,23 @@
   >
     <ComingSoon></ComingSoon>
   </el-dialog>
+
+  <el-dialog v-model="closeGameConfirmModalVisible" title="温馨提示" width="500" center class="game-close-modal">
+    <span>
+      您当前操作将会离开游戏，是否继续
+    </span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="handleCancelCloseGame" plain>
+          <span class="cancel">取消</span>
+        </el-button>
+        <el-button type="primary" @click="handleConfirmCloseGame">
+          确定
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
+
 </template>
 <script setup id="GameModal">
 import { userStore } from "@/store";
@@ -149,6 +166,8 @@ const bannerWidth = computed(() => {
 const quickTransferTab = ref(true);
 
 const drawerVisible = ref(false);
+const closeGameConfirmModalVisible = ref(false)
+const closeGameDoneFnRef = ref(null)
 
 const showDrawer = () => {
   quickTransferTab.value = false;
@@ -177,6 +196,20 @@ const copyTo = () => {
     intervalId = null;
   }, 2000); // 5000 milliseconds = 5 seconds
 };
+
+const handleBeforeClose = (done) => {
+  closeGameConfirmModalVisible.value = true;
+  closeGameDoneFnRef.value = done;
+}
+
+const handleConfirmCloseGame = (done) => {
+  closeGameConfirmModalVisible.value = false;
+  closeGameDoneFnRef.value();
+}
+
+const handleCancelCloseGame = () => {
+  closeGameConfirmModalVisible.value = false;
+}
 
 const onClose = () => {
   drawerVisible.value = false;
@@ -370,6 +403,16 @@ defineExpose({
 
 .el-popper.is-pure.is-light.el-select__popper {
   z-index: 5000 !important;
+}
+
+.game-close-modal {
+  .cancel {
+    color: var(--el-color-primary);
+  }
+
+  // .el-button {
+  //   --el-button-hover-bg-color: transparent !important;
+  // }
 }
 </style>
 

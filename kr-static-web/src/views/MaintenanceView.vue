@@ -7,17 +7,14 @@
       <div class="maintenance-title" v-html="$t('maintenance.title')"></div>
       <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>
       <div class="maintenance-contact">
-        <a href="mailto:vnsupport@tf88.com" class="email" target="_blank">
-          {{ $t("maintenance.email") }}: vnsupport@tf88.com
-        </a>
         <a
-          :href="`https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${languageVal === 'vi' ? 'vn' : 'en'}`"
+          :href="`https://csweb01.amv4xjcbd.com/?partnerId=12&way=WEB&lang=${languageVal}`"
           class="email"
           target="_blank"
         >
           {{ $t("maintenance.customerService") }}
         </a>
-        <a href="https://t.me/cityy88" class="email" target="_blank">Telegram: @CITY8_CS</a>
+        <a href="https://t.me/cityy88" class="email" target="_blank">Telegram: @cityy88</a>
       </div>
     </div>
     <div class="maintenance-img">

@@ -56,6 +56,7 @@
     <LplSummerPromo
       v-if="list.redirectUrl === 'lpl-summer' || list.redirectUrl === 'dy-promo-application-B'"
     ></LplSummerPromo>
+    <IntelEsl24 v-if="list.redirectUrl === 'dy2-intel-esl'" />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei'">
       <div class="cs-btn" @click="goToCsChat()">联系客服</div>
@@ -79,6 +80,7 @@
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
+    <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
@@ -165,6 +167,9 @@ const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Ol
 const Olympic24Match = defineAsyncComponent(() => import("../components/hotpromo/Olympic24Match/Olympic24Match.vue"));
 const OuZuLianPromo = defineAsyncComponent(() => import("../components/hotpromo/ouzulian/OuZuLianPromo.vue"));
 const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
+
+const IntelEsl24 = defineAsyncComponent(() => import("../components/hotpromo/intel-esl-24/intel-esl-24.vue"));
+const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpllck/LPLLCK.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -206,7 +211,9 @@ export default defineComponent({
     DragonBoat,
     EurocupManual,
     OuZuLianPromo,
-    NewplayerGuide
+    IntelEsl24,
+    NewplayerGuide,
+    LPLLCK
   },
   props: {
     list: {

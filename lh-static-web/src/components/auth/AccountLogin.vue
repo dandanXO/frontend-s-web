@@ -84,6 +84,12 @@ const loginRules = {
       required: true,
       message: "请输入密码",
       trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 12,
+      message: "长度要在 6-12 之间",
+      trigger: "blur"
     }
   ],
   captchaCode: [
@@ -133,8 +139,8 @@ const submitLogin = () => {
             const jumpUrl = route.query.redirect
               ? route.query.redirect.toString()
               : props.pageType === "view"
-                ? "/"
-                : route.path;
+              ? "/"
+              : route.path;
             if (store.token) {
               router.push(jumpUrl);
 
@@ -183,9 +189,9 @@ const closeLoginDialog = () => {
 
 const openRegDialog = () => {
   // console.log(route.path)
-  if(route.path === '/login'){
+  if (route.path === "/login") {
     router.push("/register");
-  }else{
+  } else {
     emits("open-reg-dialog");
   }
 };
@@ -207,7 +213,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
 
 <style lang="scss">
 .form-field {
