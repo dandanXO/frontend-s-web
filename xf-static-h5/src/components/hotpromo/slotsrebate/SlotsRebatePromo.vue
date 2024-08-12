@@ -10,14 +10,14 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              当日电子盈利：
+              昨日电子盈利：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
               <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
-              当日可领彩金：
+              可领彩金：
             </div>
             <div class="match-game-detail">{{ bonus }} 元</div>
           </div>
@@ -41,7 +41,7 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>当日电子盈利</th>
+            <th>昨日电子盈利</th>
             <th>救援金</th>
             <th>流水倍数</th>
           </tr>
