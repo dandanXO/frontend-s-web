@@ -145,7 +145,7 @@
               ></q-input>
             </div>
           </div>
-          <div class="w-form-item w-form-item--bankcard">
+          <!-- <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -161,7 +161,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div>
+          </div> -->
         </template>
 
         <div class="top-wrapper">
@@ -489,7 +489,7 @@ const loadCards = () => {
 
 const cardRef = ref();
 const amountRef = ref();
-const bankAddressRef = ref();
+// const bankAddressRef = ref();
 const bankNumberRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
@@ -500,14 +500,14 @@ const withdrawInfo = reactive({
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: ""
+  // cardAddress: ""
 });
 
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: "",
+  // cardAddress: "",
   withdrawCode: "",
   withdrawPlatformId: "",
   amount: ""
@@ -584,10 +584,10 @@ const submitWithdrawBank = () => {
   // isSubmitDisable.value = true;
   // if (bankCardList.value.length === 0) {
   amountRef.value.validate();
-  bankAddressRef.value.validate();
+  // bankAddressRef.value.validate();
   bankNumberRef.value.validate();
 
-  if (amountRef.value.hasError || bankAddressRef.value.hasError || bankNumberRef.value.hasError) {
+  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;
@@ -613,15 +613,15 @@ const submitWithdrawBank = () => {
         refreshBalance();
         getWithdrawalMethods();
 
-        emits("closeWithdraw");
+        // emits("closeWithdraw");
 
         resetSelectedMethod();
 
-        // bankCardField.cardNumber = "";
+        bankCardField.cardNumber = "";
         // bankCardField.cardAddress = "";
         // bankCardField.withdrawCode = "";
         // bankCardField.withdrawPlatformId = "";
-        // bankCardField.amount = "";
+        bankCardField.amount = "";
 
         // bankCardField.cardAddress = "";
         // bankCardField.cardNumber = "";
