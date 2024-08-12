@@ -23,82 +23,41 @@
               <div class="viplevel">
                 VIP {{ vip.vipLevel }}
               </div>
-              <!-- vip progress bar start -->
-              <!-- <div class="progressBarContainer" v-if="vipLevel">
-                <div class="progressBarOuterBar">
-                  <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vip) + '%' }" />
-                </div>
-                <div class="progressBarDescription">
-                  <span>
-                    {{ `V${vip.vipLevel - 1}` }}
-                  </span>
-                  <span>
-                    {{ `V${+vip.vipLevel}` }}
-                  </span>
-                </div>
-              </div> -->
-              <!-- vip progress bar end -->
-              <!-- <div
-                style="color: #cfb282; font-size: 18px; position: absolute; bottom: 25px; left: 0; right: 0"
-                v-if="vipLevel + 1 === Number(vip.vipLevel)"
-              >
-                {{
-                  Number(currentDepositAmt)
-                    .toLocaleString("en-US", { style: "currency", currency: "CNY" })
-                    .replace("CN", "")
-                }}
-              </div> -->
             </div>
-            <!-- <div
-              :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
-            >
-              <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? "已达到" : "未达到" }}</span>
-            </div> -->
           </div>
-          <router-link
-            to="/center/deposit"
-            class="vipLevelButton"
-            v-if="vip.depositPromoAvailable && !vip.unavailable && !vip.claimed"
-          >
-            前往存款
-          </router-link>
-          <div
-            @click="claimVIPLevelItem(vip)"
-            class="vipLevelButton"
-            v-if="vip.promoAvailable && !vip.unavailable && !vip.claimed"
-          >
-            领取VIP等级奖励
-          </div>
-          <div class="vipLevelButton claimed" v-if="vip.claimed && !vip.unavailable">领取成功</div>
         </div>
       </Slide>
       <template #addons>
         <Navigation />
       </template>
     </Carousel>
-    <div class="current-vip-status">
+    <div class="current-vip-status" v-if="store.token">
       <div class="badge">
         <img :src="badgeSrc">
       </div>
       <div class="vip-progress">
         <div class="amount">
-          <div class="text">还要<div class="required-amount">{{ requiredDepAmt }}</div>存款升级到 VIP {{vipLevel + 1}}</div>
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">还要<div class="required-amount">{{ currentDepAmt }}</div>存款升级到 VIP {{vipLevel + 1}}</div>
+          <div class="text" v-else-if="vipLevel === 0">需要一笔存款到达 VIP 1</div>
+          <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeDepAmt }}</div> 存款 VIP {{ vipLevel + 1 }}</div>
           <div class="progressBarContainer">
             <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel) + '%' }" />
+              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'deposit') + '%' }" />
             </div>
           </div>
         </div>
         <div class="amount">
-          <div class="text">还要<div class="required-amount">{{ requiredExpAmt }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">还要<div class="required-amount">{{ currentBetAmt }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
+          <div class="text" v-else-if="vipLevel === 0">需要一笔存款到达 VIP 1</div>
+          <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeBetAmt }}</div> 经验值 VIP {{ vipLevel + 1 }}</div>
           <div class="progressBarContainer">
             <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel) + '%' }" />
+              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }" />
             </div>
           </div>
         </div>
       </div>
-      <div class="claim-btn">
+      <div class="claim-btn" :class="{disabled: currentClaimAllStatus === 'CANT_CLAIM'}" @click="claimVIPLevelItem('all', vipLevel)">
         一键领取
       </div>
     </div>
@@ -114,47 +73,37 @@
         </div>
       </div>
       <div class="right">
-        <template v-for="(item, i) in vipItems" :key="i">
-          <template v-if="+item.vipLevel === currentSlide + 1">
-            <div class="vip-boxes">
-              <div class="box">
-                <div class="icon"><img src="../assets/vip/levelup.png"></div>
-                <div class="item-name">晋级彩金</div>
-                <div class="item-amt">{{ item.upgrade }}</div>
-              </div>
-              <div class="box">
-                <div class="icon"><img src="../assets/vip/birthday.png"></div>
-                <template v-if="item.unavailable">
-                <div class="item-name">生日礼金</div>
-                <div class="item-amt">{{ item.upgrade }}</div>
+        <div class="vip-boxes">
+        <template v-for="category in categories" :key="category">
+          <template v-for="item in vipItems" :key="item">
+            <template v-if="+item.vipLevel === currentSlide + 1">
+              <div class="box" :class="{inactive: store.token && item[`${category.key}ClaimStatus`] === 'CANT_CLAIM'}">
+                <div class="vip-inner">
+                  <div class="box-det">
+                    <div class="icon">
+                      <img :src="require(`../assets/vip/${category.image}${item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' ? '-inactive' : ''}.png`)">
+                    </div>
+                    <div>
+                      <div class="item-name">{{ category.displayName }}</div>
+                      <div class="item-amt">{{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}</div>
+                    </div>
+                  </div>
+                </div>
+                <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
+                  <div class="claim-now" @click="claimVIPLevelItem(category.key, item)">立即领取</div>
                 </template>
-                <template v-else>
-                  <div class="claim-now">立即领取</div>
+                <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
+                  <div class="claimed">已领取</div>
+                </template>
+                <template v-else-if="item[`${category.key}ClaimStatus`] === 'EXPIRED'">
+                  <div class="expired">已过期</div>
                 </template>
               </div>
-              <div class="box">
-                <div class="icon"><img src="../assets/vip/rebate.png"></div>
-                <div class="item-name">日返水</div>
-                <div class="item-amt">0,20 -0,45%</div>
-              </div>
-              <div class="box">
-                <div class="icon"><img src="../assets/vip/redpacket.png"></div>
-                <div class="item-name">节日礼金</div>
-                <div class="item-amt">1,888</div>
-              </div>
-              <div class="box">
-                <div class="icon"><img src="../assets/vip/levelup.png"></div>
-                <div class="item-name">保级彩金</div>
-                <div class="item-amt">1,2%</div>
-              </div>
-              <div class="box inactive">
-                <div class="icon"><img src="../assets/vip/yearly.png"></div>
-                <div class="item-name">年度保级彩金</div>
-                <div class="item-amt">1,2%</div>
-              </div>
-            </div>
+            </template>
           </template>
         </template>
+
+      </div>
       </div>
     </div>
 
@@ -249,8 +198,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, defineComponent, computed, onMounted } from "vue";
-import { claimBonusItem, canRedeem, claim } from "@/api/index/promo";
+import { ref, reactive, defineComponent, computed, onMounted, watch } from "vue";
+import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
@@ -271,79 +220,78 @@ import { useNotify } from "@/hooks/notify";
     const currentDepositAmt = computed(() => {
       return store.getCurrentDeposit();
     });
-    const requiredDepAmt = ref(0)
-    const getVipLevelProgress = (lvl) => {
-      if (lvl === 0) {
+    const currentDepAmt = ref(0)
+    const currentBetAmt = ref(0)
+    const currentUpgradeDepAmt = ref(0)
+    const currentUpgradeBetAmt = ref(0)
+    const currentClaimAllStatus = ref('CANT_CLAIM')
+    const getVipLevelProgress = (lvl, status) => {
+      if (lvl === 0 || !lvl) {
         return 0;
       }
-      const vipInfo = vipItems.find(item => +item.vipLevel === lvl + 1);
+      const vipInfo = vipItems.find(item => +item.vipLevel === lvl);
       console.log(vipInfo)
       const vipLevel = +store.vip.replace("VIP", "");
       const currentDeposit = +store.getCurrentDeposit();
-      const upgradeStatus = vipInfo.upgrade;
-
-      console.log('vip' + vipLevel)
-      console.log('currentdepo' + currentDeposit)
-      console.log('upgrade' + upgradeStatus)
-      // if (vipLevel >= +vipInfo.vipLevel) {
-      //   return 100;
-      // }
-      var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
-      if (!levelUpDeposit) {
-        levelUpDeposit = 0;
+      currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
+      currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
+      currentClaimAllStatus.value = vipInfo.claimAllStatus
+      if (status === 'bet') {
+      if (currentBetAmt.value > currentUpgradeBetAmt.value) {
+        return 100;
       }
-      // if (vipLevel === 0) {
-      //   return 0;
-      // }
-      if (lvl + 1 === +vipInfo.vipLevel) {
-        requiredDepAmt.value = (levelUpDeposit - currentDeposit).toLocaleString('en-US')
-        return (currentDeposit / levelUpDeposit) * 100;
+      if (currentUpgradeBetAmt.value === 0) {
+        return 0; // Avoid division by zero
       }
-      // if (currentDeposit > levelUpDeposit + 1) {
-      //   return 100;
-      // } else {
-      //   return 0;
-      // }
+        return (currentBetAmt.value / currentUpgradeBetAmt.value) * 100;
+      }
 
-      // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
-      // return (currentDeposit / levelUpDeposit) * 100;
+      if (status === 'deposit') {
+        // Ensure that currentDepAmt equals currentUpgradeDepAmt.value for 100%
+        if (currentDepAmt.value > currentUpgradeDepAmt.value) {
+          return 100;
+        }
+        if (currentUpgradeDepAmt.value === 0) {
+          return 0; // Avoid division by zero
+        }
+        return (currentDepAmt.value / currentUpgradeDepAmt.value) * 100;
+      }
 
-      // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
-      // return (currentDeposit / levelUpDeposit) * 100;
+      return 0; // Default return value if status doesn't match
     };
-    const storeToken = computed(() => {
-      return store.token;
-    });
-    const loadingClaim = ref(false);
-    const loadingMClaim = ref(false);
-    const loadingBClaim = ref(false);
-    const dailySlot = (bonusItem, vipType) => {
-      loadingClaim.value = true;
-      if (vipType === "monthly") {
-        loadingMClaim.value = true;
-      } else if (vipType === "birthday") {
-        loadingBClaim.value = true;
-      }
-      claimBonusItem(bonusItem)
-        .then((res) => {
-          if (res.code === 0) {
-            amount.value = "$" + res.data;
-            privilegeClaimedModalVisible.value = true;
-            loadingClaim.value = false;
-            loadingMClaim.value = false;
-            loadingBClaim.value = false;
-            store.getBalance();
-          } else {
-            notify.error(res.message);
-            loadingClaim.value = false;
-            loadingMClaim.value = false;
-            loadingBClaim.value = false;
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    };
+    // const storeToken = computed(() => {
+    //   return store.token;
+    // });
+    // const loadingClaim = ref(false);
+    // const loadingMClaim = ref(false);
+    // const loadingBClaim = ref(false);
+    // const dailySlot = (bonusItem, vipType) => {
+    //   loadingClaim.value = true;
+    //   if (vipType === "monthly") {
+    //     loadingMClaim.value = true;
+    //   } else if (vipType === "birthday") {
+    //     loadingBClaim.value = true;
+    //   }
+    //   claimBonusItem(bonusItem)
+    //     .then((res) => {
+    //       if (res.code === 0) {
+    //         amount.value = "$" + res.data;
+    //         privilegeClaimedModalVisible.value = true;
+    //         loadingClaim.value = false;
+    //         loadingMClaim.value = false;
+    //         loadingBClaim.value = false;
+    //         store.getBalance();
+    //       } else {
+    //         notify.error(res.message);
+    //         loadingClaim.value = false;
+    //         loadingMClaim.value = false;
+    //         loadingBClaim.value = false;
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //     });
+    // };
 
     const terms = [
       {
@@ -399,13 +347,13 @@ import { useNotify } from "@/hooks/notify";
       }
     ];
 
-    const showRebate = ref(true);
+    // const showRebate = ref(true);
     const currentDisplayTerms = ref(terms);
-    const onShowRebateClick = (flag) => {
-      showRebate.value = flag;
-      if (showRebate.value) currentDisplayTerms.value = terms;
-      else currentDisplayTerms.value = vipTerms;
-    };
+    // const onShowRebateClick = (flag) => {
+    //   showRebate.value = flag;
+    //   if (showRebate.value) currentDisplayTerms.value = terms;
+    //   else currentDisplayTerms.value = vipTerms;
+    // };
     const badgeSrc = computed(() => {
       const vip = vipItems.find(vip => vip.vipLevel === vipLevel && vipLevel);
       return require(`../assets/vip/level/vip${vip ? vip.vipLevel : '1'}.png`);
@@ -415,176 +363,135 @@ import { useNotify } from "@/hooks/notify";
       {
         vipLevel: "1",
         upgrade: "一笔存款",
-        vipTitle: "青铜 II",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "青铜 II"
       },
       {
         vipLevel: "2",
         upgrade: "3,000",
-        vipTitle: "青铜 I",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "青铜 I"
       },
       {
         vipLevel: "3",
         upgrade: "30,000",
-        vipTitle: "白银 III",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "白银 III"
       },
       {
         vipLevel: "4",
         upgrade: "80,000",
-        vipTitle: "白银 II",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "白银 II"
       },
       {
         vipLevel: "5",
         upgrade: "200,000",
-        vipTitle: "白银 I",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "白银 I"
       },
       {
         vipLevel: "6",
         upgrade: "400,000",
-        vipTitle: "黄金 III",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "黄金 III"
       },
       {
         vipLevel: "7",
         upgrade: "600,000",
-        vipTitle: "黄金 II",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "黄金 II"
       },
       {
         vipLevel: "8",
         upgrade: "1,000,000",
-        vipTitle: "黄金 I",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "黄金 I"
       },
       {
         vipLevel: "9",
         upgrade: "2,000,000",
-        vipTitle: "铂金 II",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "铂金 II"
       },
       {
         vipLevel: "10",
         upgrade: "4,000,000",
-        vipTitle: "铂金 I",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "铂金 I"
       },
       {
         vipLevel: "11",
         upgrade: "8,000,000",
-        vipTitle: "钻石",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "钻石"
       },
       {
         vipLevel: "12",
         upgrade: "12,000,000",
-        vipTitle: "最强王者",
-        depositPromoAvailable: false,
-        promoAvailable: false,
-        unavailable: false,
-        claimed: false
+        vipTitle: "最强王者"
       }
     ]);
-    const initVIPTable = () => {
-      if (store.token) {
-        canRedeem().then((res) => {
-          if (res.code === 0) {
-            // Your arrays of elements
-            const depositPromoAvailableElements = res.data.depositPromoAvailable;
-            const promoAvailableElements = res.data.promoAvailable;
-            const unavailableElements = res.data.unavailable;
-            const claimedElements = res.data.claimed;
+    const formatPercentageRange = (range) => {
+      const percentages = range.split(' - '); // Split the range into two percentages
+      const formattedPercentages = percentages.map((percentage) =>
+        parseFloat(percentage).toFixed(2) // Convert to float and fix to two decimal places
+      );
+      return formattedPercentages.join('% - ') + '%'; // Join the formatted percentages
+    }
+    const initVIPTable = async () => {
+      var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
+      
+      if (res.code === 0) {
+        const { vipBonusVOList } = res.data;
+        vipBonusVOList.forEach(vipBonusItem => {
+          vipBonusItem.holidayClaimStatus = 'NO_STATUS'
+          vipBonusItem.rebateClaimStatus = 'NO_STATUS'
+          vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange)
+          const index = vipItems.findIndex(
+            item => item.vipLevel === vipBonusItem.vipLevel.toString()
+          );
 
-            // Function to update properties based on the provided elements
-            function updatePropertiesBasedOnElements(elements, property) {
-              elements.forEach((element) => {
-                const index = element - 1;
-                if (index >= 0 && index < vipItems.length) {
-                  vipItems[index][property] = true;
-                }
-              });
-            }
-
-            // Call the function to update properties based on depositPromoAvailable elements
-            updatePropertiesBasedOnElements(depositPromoAvailableElements, "depositPromoAvailable");
-
-            // Call the function to update properties based on promoAvailable elements
-            updatePropertiesBasedOnElements(promoAvailableElements, "promoAvailable");
-
-            // Call the function to update properties based on unavailable elements
-            updatePropertiesBasedOnElements(unavailableElements, "unavailable");
-
-            // Call the function to update properties based on unavailable elements
-            updatePropertiesBasedOnElements(claimedElements, "claimed");
-
-            // Now, vipItems array has the updated properties based on the provided elements
-            // console.log(vipItems);
-          } else {
-            notify.error(res.message);
-          }
-        });
-      }
-    };
-    const claimVIPLevelItem = (vip) => {
-      claim(vip.vipLevel).then((res) => {
-        if (res.code === 0) {
-          notify.success("领取成功！");
-          store.getBalance();
-          initVIPTable();
+          if (index !== -1) {
+            vipItems[index] = {
+              ...vipItems[index],
+              ...vipBonusItem
+            };
+          } 
+        })
+        currentDepAmt.value = res.data.currentDepositAmount
+        currentBetAmt.value = res.data.currentBetAmount
         } else {
           notify.error(res.message);
         }
-      });
+        slideTo();
+    };
+    const categories = [
+      { key: 'upgrade', image: 'upgrade', displayName: '晋级彩金' },
+      { key: 'monthly', image: 'monthly',  displayName: '会员日红包' },
+      { key: 'coupon', image: 'coupon',  displayName: '会员专属加码卷' },
+      { key: 'rebate', image: 'rebate',  displayName: '日返水' },
+      { key: 'retain', image: 'retain',  displayName: '保级彩金' },
+      { key: 'yearlyRetain', image: 'yearly',  displayName: '年度保级彩金' },
+      { key: 'birthday', image: 'birthday',  displayName: '生日礼金' },
+      { key: 'holiday', image: 'holiday',  displayName: '节日礼金' },
+    ];
+    const claimVIPLevelItem = async (type, item) => {
+      const res = await claimItems(type, type === 'all' ? item : item.vipLevel);
+      if (res.code === 0) {
+        if (type !== 'all') {
+          item[`${type}ClaimStatus`] = 'CLAIMED';
+        }
+        notify.success("领取成功！");
+        store.getBalance();
+        initVIPTable();
+        getVipLevelProgress();
+      } else {
+        notify.error(res.message);
+      }
     };
     const currentSlide = ref(11);
     const slideTo = () => {
       const vipLevel = +store.vip.replace("VIP", "");
-      if (vipLevel === 0) {
+      if (vipLevel === 0 || !vipLevel) {
         currentSlide.value = 0;
         return;
       }
       currentSlide.value = vipLevel - 1;
     };
-    onMounted(() => {
-      initVIPTable();
-      slideTo();
-    });
+    watch(() => store.token, () => {
+      initVIPTable(); // Call your function to repopulate the table
+    }, { immediate: true }); // `immediate: true` if you want to run it on component mount
+
 </script>
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap');
@@ -722,6 +629,13 @@ $border-settings: 1px solid #e5e7eb;
       display: block;
       border-radius: 8px;
       font-size: 24px;
+      cursor: pointer;
+      &.disabled {
+        border: 2px solid #596589;
+        color: #596589;
+        background: #2f3547;
+        pointer-events: none;
+      }
 
     }
   }
@@ -758,23 +672,29 @@ $border-settings: 1px solid #e5e7eb;
       flex: 2;
       .vip-boxes {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         width: 100%;
         height: 100%;
         gap: 20px;
         .box {
-          border: 2px solid #799DF8;
-          background: #1F2231;
-          padding: 10px;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           flex-direction: column;
-          border-radius: 10px;
           font-size: 20px;
+          .vip-inner {
+            border: 2px solid #799DF8;
+            background: #1F2231;
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+          }
           &.inactive {
-            border: 2px solid #596589;
-            background: #2F3547;
+            .vip-inner {
+              border: 2px solid #596589;
+              background: #2F3547;
+            }
             .icon {
             background: url(../assets/vip/bg-circle-inactive.png)no-repeat center center;
             background-size: contain;
@@ -791,8 +711,8 @@ $border-settings: 1px solid #e5e7eb;
             justify-content: center;
             align-items: center;
             width: 80px;
-            height: 80px;
-            margin-bottom: 5px;
+            height: 80px; 
+            margin: 0 auto 5px;
             img { 
               height: 50%;
             }
@@ -808,6 +728,19 @@ $border-settings: 1px solid #e5e7eb;
             color: #000000;
             font-family: PingFang SC;
             font-size: 20px;
+            font-weight: 600;
+            line-height: 28px;
+            text-align: center;
+            padding: 8px 15px;
+            border-radius: 10px;
+            margin: 10px auto;
+            cursor: pointer;
+          }
+          .claimed, .expired {
+            // background: linear-gradient(90deg, #F1DDA0 0%, #FFCC80 100%);
+            color: #ffffff;
+            font-family: PingFang SC;
+            font-size: 20px;
             font-weight: 400;
             line-height: 28px;
             text-align: center;
@@ -815,6 +748,19 @@ $border-settings: 1px solid #e5e7eb;
             border-radius: 10px;
             margin: 10px auto;
           }
+          // .expired {
+          //   border: 2px solid #596589;
+          //   background: #2F3547;
+          //   color: #ffffff;
+          //   font-family: PingFang SC;
+          //   font-size: 20px;
+          //   font-weight: 600;
+          //   line-height: 28px;
+          //   text-align: center;
+          //   padding: 8px 15px;
+          //   border-radius: 10px;
+          //   margin: 10px auto;
+          // }
         }
       }
     }
@@ -1217,16 +1163,34 @@ $border-settings: 1px solid #e5e7eb;
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 16px;
+      font-size: 24px;
       font-weight: 400;
       line-height: 30px;
       background: linear-gradient(0deg, #2F3547, #2f3547ad);
-
+      counter-reset: item;
+      li {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+        list-style-type: none;
+        position: relative;
+        &::before {
+          content: counter(item);
+          counter-increment: item;
+          background: url("../assets/vip/tnc-no-bg.png")no-repeat center center;
+          font-weight: 600;
+          padding: 10px;
+          margin-top: -8px;
+          background-size: contain;
+          color: #000000;
+          text-align: center;
+        }
+      }
       .term {
         max-width: 1300px;
         width: 100%;
         margin-top: 10px;
-        list-style-type: decimal;
         color: #ffffff;
       }
     }
@@ -1312,6 +1276,7 @@ $border-settings: 1px solid #e5e7eb;
 <style scoped>
 .carousel {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 }
 .carousel__slide {
