@@ -32,6 +32,10 @@
       <div class="match-game-info">
         <div class="title"></div>
         <div class="subtitle">
+          <span class="subtitle-1">活动时间</span>
+          <span class="subtitle-2">2024年8月12日起</span>
+        </div>
+        <div class="subtitle">
           <span class="subtitle-1">活动内容</span>
           <span class="subtitle-2">
             活动期间，投注LPL与LCK赛事当日累计总有效投注≥2,000元即可符合获取活动彩金条件，最高可获1,288元
