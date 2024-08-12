@@ -10,7 +10,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img style="width: 25px" :src="require(`../../../assets/promo/lpl-lck/piggy-icon.png`)" />
-              赛事有效投注：
+              昨日赛事有效投注：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
@@ -114,7 +114,8 @@
           <div class="item">
             <span class="rounded-number">5</span>
             <span>
-              任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+              任何低于欧洲盘 1.7 或亚洲盘 0.7
+              水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
             </span>
           </div>
           <div class="item">
