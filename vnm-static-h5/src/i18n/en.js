@@ -473,6 +473,9 @@ export default {
     hong_congrats: "Congratulations",
     claim: "Claim",
 
+    //promo -- newPlayer
+    new_player_successfully: "Claimed successfully",
+
     // slot
     slot_search: "Search for games",
 

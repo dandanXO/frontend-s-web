@@ -300,7 +300,9 @@ export default {
     claim: "Nhận",
 
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng"
+    record_win_prize: "Giải thưởng",
+    // vnm-newplayer-welcome
+    new_player_success: "Đã nhận thành công"
   },
   mail: {
     inbox: "Hộp thư đến",

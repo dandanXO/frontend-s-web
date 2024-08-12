@@ -479,6 +479,10 @@ export default {
     // promo -- upgradeHongbao
     hong_congrats: "Chúc mừng",
     claim: "Nhận",
+
+    //promo -- newPlayer
+    new_player_successfully: "Đã yêu cầu thành công",
+
     // slot
     slot_search: "Tìm kiếm trò chơi",
 

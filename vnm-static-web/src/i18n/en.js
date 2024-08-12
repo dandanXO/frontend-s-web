@@ -301,7 +301,9 @@ export default {
     claim: "Claim",
 
     record_win_status: "Win status",
-    record_win_prize: "Winner Prize"
+    record_win_prize: "Winner Prize",
+    // vnm-newplayer-welcome
+    new_player_success: "Claimed successfully"
   },
   mail: {
     inbox: "Inbox",
