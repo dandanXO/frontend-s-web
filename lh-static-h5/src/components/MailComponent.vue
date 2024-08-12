@@ -1,15 +1,13 @@
 <template>
   <q-page>
-    <template v-if="props.type !== 'outbox'">
-      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
-        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-          <div class="tab-flex">
-            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
-            <div>{{ item.name }}</div>
-          </div>
-        </q-tab>
-      </q-tabs>
-    </template>
+    <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+      <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
+        <div class="tab-flex">
+          <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+          <div>{{ item.name }}</div>
+        </div>
+      </q-tab>
+    </q-tabs>
 
     <q-tab-panels v-model="mailboxMessageTab" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
@@ -169,7 +167,7 @@ export default defineComponent({
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
-      mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
+      mailboxMessageTab.value = "ALL";
     }
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
@@ -183,7 +181,7 @@ export default defineComponent({
         return listItem.type === mailboxMessageTab.value;
       });
     });
-    const comList = ref({});
+    const comList = ref([]);
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
     const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
