@@ -1534,6 +1534,7 @@ export default {
     1403: "Lỗi xác minh OTP",
     1404: "Gửi mã OTP thất bại",
     14010: "IP hoặc SID trùng lặp",
+    14014: "Định dạng số điện thoại không đúng.",
     10000: "Lỗi trong số dư còn lại của người dùng",
     10001: "Lỗi trong quá trình rút tiền",
     10002: "Lỗi trong quá trình gửi tiền",
