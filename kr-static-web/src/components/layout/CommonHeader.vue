@@ -1275,6 +1275,7 @@ export default defineComponent({
       if (store.token) {
         store.getBalance();
         store.getMemberInfo();
+        store.getPendingRebateAmt();
 
         getUnreadMail();
         getUnrepliedCount();

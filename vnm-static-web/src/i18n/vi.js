@@ -164,7 +164,13 @@ export default {
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "EURO 2024 - CÒN ",
-    euroCountdown02: " NGÀY"
+    euroCountdown02: " NGÀY",
+    slotEdition: {
+      allPlatform: "tất cả",
+      description: "Trò chơi xèng",
+      promotion: "Khuyến mãi",
+      moreGame: "Nhiều trò chơi hơn"
+    }
   },
   personal: {
     url: "Truy Cập",
@@ -294,7 +300,9 @@ export default {
     claim: "Nhận",
 
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng"
+    record_win_prize: "Giải thưởng",
+    // vnm-newplayer-welcome
+    new_player_success: "Đã nhận thành công"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -952,6 +960,7 @@ export default {
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

@@ -164,7 +164,13 @@ export default {
     hotMatches: "Hot Matches",
     euroCountdown01: "ROAD TO ",
     euroCountdown01a: "EURO 2024 - ",
-    euroCountdown02: " DAYS LEFT"
+    euroCountdown02: " DAYS LEFT",
+    slotEdition: {
+      allPlatform: "ALL",
+      description: "Slot Games",
+      promotion: "Promotions",
+      moreGame: "MORE GAMES"
+    }
   },
   personal: {
     url: "URL",
@@ -295,7 +301,9 @@ export default {
     claim: "Claim",
 
     record_win_status: "Win status",
-    record_win_prize: "Winner Prize"
+    record_win_prize: "Winner Prize",
+    // vnm-newplayer-welcome
+    new_player_success: "Claimed successfully"
   },
   mail: {
     inbox: "Inbox",
@@ -959,6 +967,7 @@ export default {
     30007: "The user's deposit history does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
     30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

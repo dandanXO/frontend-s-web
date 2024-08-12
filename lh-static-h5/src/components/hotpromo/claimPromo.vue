@@ -1,9 +1,18 @@
 <template>
-  <div class="common-promo">
+  <div class="common-promo" :class="{ football: promoCode }">
     <img :src="require(`../../assets/images/promo/hotpromo/${promoId}/icon.png`)" />
     <div class="contents">
       <!--      存款成功后，每日充值奖金将自动创建到会员的主钱包中。-->
-      <q-btn color="brightbtn" :loading="loadingClaim" @click="$emit('daily-slot')">领取</q-btn>
+      <q-btn
+        color="brightbtn"
+        :loading="loadingClaim"
+        :class="{
+          'common-md-btn': promoCode === 'lh1-football'
+        }"
+        @click="$emit('daily-slot')"
+      >
+        领取
+      </q-btn>
       <div v-if="promoId === 19" class="orange">
         <!--      *返利红利需要1倍流水后才能提现，30天内未使用将退回。-->
       </div>
@@ -25,6 +34,10 @@ export default defineComponent({
     promoId: {
       type: Number,
       default: null
+    },
+    promoCode: {
+      type: String,
+      default: ""
     }
   },
   emits: ["daily-slot"],
@@ -51,6 +64,12 @@ export default defineComponent({
       color: #ffffff;
       background: #33bcd4;
       border: 0;
+    }
+  }
+  &.football {
+    img {
+      max-width: 55%;
+      margin: 0 auto;
     }
   }
 }

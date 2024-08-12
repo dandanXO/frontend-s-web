@@ -218,7 +218,9 @@ export default {
     maintenance_to: "to 10:00 (GMT +8)",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
-    maintenance_contact_01: "Email Us:",
+    maintenance_desc: `We are currently under maintenance on our website, so all games and services will be unavailable.<br>
+We apologize for any inconvenience.<br>
+Maintenance time: August 6, 2024 ~ August 7, 2024 (GMT+8)`,
     maintenance_contact_02: "24/7 Customer Service",
     maintenance_contact_03: "Telegram:",
     currently_maintaining: "Maintenance in progress",

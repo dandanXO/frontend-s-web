@@ -1,0 +1,137 @@
+html,
+body {
+  position: relative;
+  height: 100%;
+}
+@font-face {
+  font-family: "PingFang";
+  src: url("../fonts/PingFangNormal.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  background: #eee;
+  font-family: "PingFang", "Roboto", "-apple-system", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+.main {
+  background-image: url(../imgs/bg-wide.png);
+  background-color: rgb(56, 75, 135);
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #fff;
+}
+.main .title {
+  position: absolute;
+  top: 17%;
+  left: 49%;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 100px;
+}
+.main .description {
+  position: absolute;
+  top: 400px;
+  left: 49%;
+  width: max-content;
+  transform: translate(-50%, -50%);
+  font-size: 55px;
+  font-weight: 700;
+  line-height: 80px;
+  text-align: center;
+}
+.main .description .highlight {
+  height: 60px;
+}
+
+.go-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  width: max-content;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(180deg, #83cbff 0%, #0064b5 45.5%, #1c337e 99%);
+  box-shadow: 0px -8.3px 19px 0px #93c7ff inset, 0px -4.15px 15.2px 0px #275ec1 inset;
+  padding: 20px 50px;
+  border-radius: 120px;
+  text-decoration: none;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 70px;
+  color: inherit;
+}
+.go-btn:hover {
+  box-shadow: 0px 8.3px 19px 0px #93c7ff inset, 0px 4.15px 15.2px 0px #275ec1 inset;
+}
+
+.h5-main {
+  background-image: url(../imgs/bg-sm.png);
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.h5-main .title {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  max-width: 60%;
+}
+.h5-main .bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  width: max-content;
+  transform: translate(-50%);
+  font-weight: 700;
+  text-align: center;
+}
+.h5-main .bottom .description {
+  font-size: 2rem;
+  line-height: 2.5rem;
+  margin-bottom: 0px 0px 30px 0px;
+}
+.h5-main .bottom .gift {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+.h5-main .bottom .highlight {
+  max-height: 1.5rem;
+}
+.h5-main .go-btn {
+  position: static;
+  transform: none;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  padding: 8px 30px;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 440px) {
+  .h5-main .bottom {
+    bottom: 10%;
+  }
+}

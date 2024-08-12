@@ -17,7 +17,9 @@
             :value="item.id"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRedirect">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRedirect"
+                   :disabled="!uiControl.isLoaded"
+        >
           {{ t('fields.search') }}
         </el-button>
       </div>
@@ -385,6 +387,7 @@ const selectedImage = reactive({
 })
 
 const uiControl = reactive({
+  isLoaded: false,
   dialogVisible: false,
   dialogTitle: "",
   dialogType: "CREATE",
@@ -592,6 +595,7 @@ async function changeRedirectStatus(id, status) {
 
 onMounted(async () => {
   await loadSites();
+  uiControl.isLoaded = true;
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
   } else {

@@ -32,6 +32,7 @@
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A'" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball'" />
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game'" />
+    <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
@@ -65,6 +66,7 @@
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
+    <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" />
 
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
 
@@ -165,6 +167,8 @@ import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/Cha
 import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LPLLCK from "@/components/hotpromo/lpllck/LPLLCK.vue";
+import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -231,7 +235,9 @@ export default defineComponent({
     OlympicCheckin,
     ChallengeComeBackPromo,
     OfficialGiftPromo,
-    OlympicFund
+    OlympicFund,
+    LPLLCK,
+    LivepokerRebate
   },
   props: {
     list: {

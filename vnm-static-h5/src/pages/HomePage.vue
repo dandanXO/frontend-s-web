@@ -1,4 +1,9 @@
 <template>
+  <!-- TODO: -->
+  <select v-if="store.token && store.memberType === 'TEST'" v-model="ui.edition">
+    <option value="NORMAL">normal</option>
+    <option value="SLOT">slot</option>
+  </select>
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
@@ -108,7 +113,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper">
+  <div v-if="ui.edition === EDITION.NORMAL" class="hot-matches-wrapper">
     <div class="euro-countdown">
       <div class="euro-countdown-fly-01">
         <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
@@ -226,6 +231,14 @@
       </swiper>
     </div>
   </div>
+  <template v-else-if="ui.edition === EDITION.SLOT">
+    <SlotGameList
+      :slot-platforms="slot"
+      @game-click="playGame"
+      @platform-click="(code) => router.push({ path: '/slot', query: { platform: code } })"
+    />
+    <SlotPromotion :promotions="promotions" />
+  </template>
   <!--  <div class="details-bar">-->
   <!--    <div class="message" @click="refreshBalance">-->
   <!--      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">-->
@@ -257,88 +270,15 @@
 
   <div class="home-game-section">
     <div class="game-left-list">
-      <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
-        <template v-if="tab === 'sport'">
-          <img src="../assets/images/home/games/sport-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/sport-icon.png" />
-        </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'sport' && 'active'">
-          {{ $t("lang.menu_sports") }}
-        </span>
-      </div>
-
-      <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
-        <template v-if="tab === 'live'">
-          <img src="../assets/images/home/games/live-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/live-icon.png" />
-        </template>
-        <span :class="tab === 'live' && 'active'">{{ $t("lang.menu_livecasino") }}</span>
-      </div>
-
-      <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
-        <template v-if="tab === 'slot'">
-          <img src="../assets/images/home/games/slot-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/slot-icon.png" />
-        </template>
-        <span :class="tab === 'slot' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_slots") }}</span>
-      </div>
-
-      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
-        </template>
-        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
-      </div>
-
-      <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
-        <template v-if="tab === 'esport'">
-          <img src="../assets/images/home/games/esport-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/esport-icon.png" />
-        </template>
-        <span :class="tab === 'esport' && 'active'">{{ $t("lang.menu_esports") }}</span>
-      </div>
-
-      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
-        <template v-if="tab === 'lottery'">
-          <img src="../assets/images/home/games/lottery-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/lottery-icon.png" />
-        </template>
-        <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
-      </div>
-
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/minigame-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/minigame-icon.png" />
-        </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">
-          {{ $t("lang.menu_hashgame") }}
-        </span>
-      </div>
-      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/others-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/others-icon.png" />
-        </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
-      </div>
+      <GameTab
+        v-for="(_tab, index) in tabs"
+        v-model="tab"
+        :key="index"
+        :id="`${_tab.code}-platform`"
+        :code="_tab.code"
+        :text="_tab.text"
+        @click="selectTab(_tab.code)"
+      />
     </div>
 
     <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
@@ -352,269 +292,34 @@
     <!--      </div>-->
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
-      <!-- <div class="game-lists fade-in-image" id="esport-lists">
-        <template v-for="(item, index) in esport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">{{ item.title }}</div>
-              </div>
-            </div>
-          </div>
+      <div
+        v-for="(gameList, listIndex) in fullGameList"
+        :key="listIndex"
+        :id="`${gameList.code}-lists`"
+        class="game-lists fade-in-image"
+      >
+        <template v-if="gameList.code === 'cockfight' && gameList.list.length === 0">
+          <GameList
+            :game="{ icon: 'cockfight', name: 'ws' }"
+            :text="$t('lang.coming_soon')"
+            @click="isPlatformComingSoon = true"
+          />
         </template>
-      </div> -->
-
-      <div class="game-lists fade-in-image" id="sport-lists">
-        <template v-for="(item, index) in sport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
+        <template v-else-if="gameList.redirectUrl">
+          <GameList
+            v-for="(game, index) in gameList.list"
+            :key="`${listIndex}-${index}`"
+            :game="game"
+            @click="router.push({ path: gameList.redirectUrl, query: { platform: game.code } })"
+          />
         </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="live-lists">
-        <template v-for="(item, index) in livecasino" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="slot-lists">
-        <template v-for="(item, index) in slot" :key="index">
-          <div
-            class="platform-block"
-            @click="router.push({ path: '/slot', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="poker-lists">
-        <template v-for="(item, index) in poker" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="esport-lists">
-        <template v-for="(item, index) in esport" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="lottery-lists">
-        <template v-for="(item, index) in lottery" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="casual-lists">
-        <template v-for="(item, index) in casuals" :key="index">
-          <div
-            class="platform-block"
-            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-      <div class="game-lists fade-in-image" id="fishing-lists">
-        <template v-for="(item, index) in fishing" :key="index">
-          <div
-            class="platform-block"
-            @click="router.push({ path: '/fishing', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="cockfight-lists">
-        <template v-if="cockfight.length == 0">
-          <div class="platform-block" @click="isPlatformComingSoon = true">
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg('cockfight', 'ws')
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.coming_soon") }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-
         <template v-else>
-          <template v-for="(item, index) in cockfight" :key="index">
-            <div
-              class="platform-block"
-              @click="playGame(item.gameName, item.code, item.gameCode)"
-              :class="item.underMaintenance === true ? 'maintenance' : ''"
-            >
-              <MaintenanceBox :item="item" />
-
-              <div
-                class="platform-img-frame"
-                :style="{
-                  'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-                }"
-              >
-                <div class="platform-content">
-                  <div class="platform-title">
-                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
+          <GameList
+            v-for="(game, index) in gameList.list"
+            :key="`${listIndex}-${index}`"
+            :game="game"
+            @click="playGame(game.gameName, game.code, game.gameCode)"
+          />
         </template>
       </div>
     </div>
@@ -979,20 +684,32 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
 import { isAndroid } from "src/boot/utils";
+import { useI18n } from "vue-i18n";
+import { EDITION } from "src/constant/edition";
+import GameTab from "src/components/home/GameTab.vue";
+import GameList from "src/components/home/GameList.vue";
+import SlotPromotion from "src/components/home/slotEdition/SlotPromotion.vue";
+import SlotGameList from "src/components/home/slotEdition/SlotGameList.vue";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
-    MaintenanceBox,
+    // MaintenanceBox,
     GameModal,
     MarqueeText,
     LangOptions,
     Swiper,
     SwiperSlide,
     PushNotification,
-    VueQRCodeComponent
+    VueQRCodeComponent,
+    GameTab,
+    GameList,
+    SlotPromotion,
+    SlotGameList
   },
   setup() {
+    const { t } = useI18n();
+
     const isWelcomeFlag = ref(true);
     const isRebateModalVisible = ref(false);
     const rebateAmt = ref(0);
@@ -1165,7 +882,6 @@ export default defineComponent({
 
     const imgNotFound = require(`../assets/images/home/img-not-found.png`);
 
-    const selectedTab = ref("");
     const esport = ref([]);
     const sport = ref([]);
     const livecasino = ref([]);
@@ -1438,7 +1154,6 @@ export default defineComponent({
                 icon: slotObj.name,
                 title: slotObj.title
               };
-
               ui.slotLists.push(slotItem);
               slot.value.push(slotObj);
             }
@@ -1670,11 +1385,20 @@ export default defineComponent({
       });
     };
 
+    const checkEdition = () => {
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          tab.value = "slot";
+          break;
+      }
+    };
+
     onMounted(() => {
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
       initFloating();
+      checkEdition();
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -1839,6 +1563,64 @@ export default defineComponent({
     const countDay02 = computed(() => {
       return parseInt(countDayString.value.substr(1, 1));
     });
+
+    const selectedTab = ref();
+    const tabs = computed(() => {
+      let index = -1;
+      const fixedTabs = [];
+      const baseTabs = [
+        { code: "sport", text: t("lang.menu_sports") },
+        { code: "live", text: t("lang.menu_livecasino") },
+        { code: "slot", text: t("lang.menu_slots") },
+        { code: "poker", text: t("lang.menu_poker") },
+        { code: "esport", text: t("lang.menu_esports") },
+        { code: "lottery", text: t("lang.menu_lottery") },
+        { code: "casual", text: t("lang.menu_hashgame") },
+        { code: "fishing", text: t("lang.menu_others") }
+      ];
+
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          index = baseTabs.findIndex((tab) => tab.code === "slot");
+          break;
+      }
+
+      if (index > -1) {
+        fixedTabs.push(baseTabs[index]);
+        baseTabs.splice(index, 1);
+      }
+
+      return [...fixedTabs, ...baseTabs];
+    });
+
+    const fullGameList = computed(() => {
+      let index = -1;
+      const fixedGameList = [];
+      const baseGameList = [
+        { code: "sport", list: sport.value },
+        { code: "live", list: livecasino.value },
+        { code: "slot", list: slot.value, redirectUrl: "/slot" },
+        { code: "poker", list: poker.value },
+        { code: "esport", list: esport.value },
+        { code: "lottery", list: lottery.value },
+        { code: "casual", list: casuals.value, redirectUrl: "/minigame" },
+        { code: "fishing", list: fishing.value, redirectUrl: "/fishing" },
+        { code: "cockfight", list: cockfight.value }
+      ];
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          index = baseGameList.findIndex((game) => game.code === "slot");
+          break;
+      }
+
+      if (index > -1) {
+        fixedGameList.push(baseGameList[index]);
+        baseGameList.splice(index, 1);
+      }
+
+      return [...fixedGameList, ...baseGameList];
+    });
+
     const removeRouterWelcome = () => {
       router.push("/");
     };
@@ -1990,6 +1772,13 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
+    // TODO:
+    const promotions = computed(() => [
+      { img: require("../assets/images/home/slotEdition/promotion-1.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" },
+      { img: require("../assets/images/home/slotEdition/promotion-2.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" },
+      { img: require("../assets/images/home/slotEdition/promotion-3.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" }
+    ]);
+
     return {
       imageLoading,
       slide: ref(0),
@@ -2131,7 +1920,11 @@ export default defineComponent({
       currentRocket,
       currentRocketIndex,
       rocketSlide: ref(0),
-      promoSlide: ref(0)
+      promoSlide: ref(0),
+      tabs,
+      fullGameList,
+      EDITION,
+      promotions
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2450,9 +2243,7 @@ export default defineComponent({
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow:
-    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
-    0px 4px 10px 0px;
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
   font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
@@ -3198,7 +2989,7 @@ export default defineComponent({
 
 .hot-matches-wrapper {
   width: calc(100% - 1rem);
-  margin: auto;
+  margin: 0 auto 20px;
   // margin: 20px auto 0px;
 
   .euro-countdown {
@@ -3393,14 +3184,15 @@ export default defineComponent({
   }
 
   .hot-matches-container {
-    width: 100%;
+    width: calc(100% - 2rem);
     height: 125px;
+    margin: auto;
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
       // margin-top: 10px;
       transform: scale(0.75);
-      margin-top: -10px;
+      margin-top: 10px;
     }
   }
 
@@ -3423,7 +3215,6 @@ export default defineComponent({
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 16px;
-    margin: auto;
     max-width: 450px;
     margin-top: 0px;
     padding: 8px 18px 6px;
@@ -3492,7 +3283,7 @@ export default defineComponent({
 
     .team-details {
       display: flex;
-      justify-content: center;
+      justify-content: end;
       flex-direction: column;
       align-items: center;
       gap: 3px;
@@ -3520,7 +3311,7 @@ export default defineComponent({
       .team-name {
         text-align: center;
         color: #444444;
-        min-height: 42px;
+        // min-height: 22px;
       }
     }
   }

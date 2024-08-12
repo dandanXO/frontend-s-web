@@ -228,28 +228,28 @@
           </el-select>
           <!--insert image size-->
           <div v-if="form.promoType === 'DESKTOP_IMAGE'">
-            <span v-if="form.siteId === 1">{{ t('fields.imageSize') }}: 355*180</span>
-            <span v-if="form.siteId === 3">{{ t('fields.imageSize') }}: 800*188</span>
-            <span v-if="form.siteId === 6">{{ t('fields.imageSize') }}: 355*180</span>
-            <span v-if="form.siteId === 7">{{ t('fields.imageSize') }}: 1920*600</span>
+            <span v-if="isXF(form.siteId)">{{ t('fields.imageSize') }}: 355*180</span>
+            <span v-if="isThai(form.siteId)">{{ t('fields.imageSize') }}: 800*188</span>
+            <span v-if="isDY(form.siteId)">{{ t('fields.imageSize') }}: 355*180</span>
+            <span v-if="isLH(form.siteId)">{{ t('fields.imageSize') }}: 1920*600</span>
           </div>
           <div v-if="form.promoType === 'MOBILE_IMAGE'">
-            <span v-if="form.siteId === 1">{{ t('fields.imageSize') }}: 1004*252</span>
-            <span v-if="form.siteId === 3">{{ t('fields.imageSize') }}: 1000*454</span>
-            <span v-if="form.siteId === 6">{{ t('fields.imageSize') }}: 1004*252</span>
-            <span v-if="form.siteId === 7">{{ t('fields.imageSize') }}: 1080*512</span>
+            <span v-if="isXF(form.siteId)">{{ t('fields.imageSize') }}: 1004*252</span>
+            <span v-if="isThai(form.siteId)">{{ t('fields.imageSize') }}: 1000*454</span>
+            <span v-if="isDY(form.siteId)">{{ t('fields.imageSize') }}: 1004*252</span>
+            <span v-if="isLH(form.siteId)">{{ t('fields.imageSize') }}: 1080*512</span>
           </div>
           <div v-if="form.promoType === 'DESKTOP_BANNER'">
-            <span v-if="form.siteId === 1">{{ t('fields.imageSize') }}: 1920*500</span>
-            <span v-if="form.siteId === 3">{{ t('fields.imageSize') }}: 2000*500</span>
-            <span v-if="form.siteId === 6">{{ t('fields.imageSize') }}: 1920*500</span>
-            <span v-if="form.siteId === 7">{{ t('fields.imageSize') }}: 1920*568</span>
+            <span v-if="isXF(form.siteId)">{{ t('fields.imageSize') }}: 1920*500</span>
+            <span v-if="isThai(form.siteId)">{{ t('fields.imageSize') }}: 2000*500</span>
+            <span v-if="isDY(form.siteId)">{{ t('fields.imageSize') }}: 1920*500</span>
+            <span v-if="isLH(form.siteId)">{{ t('fields.imageSize') }}: 1920*568</span>
           </div>
           <div v-if="form.promoType === 'MOBILE_BANNER'">
-            <span v-if="form.siteId === 1">{{ t('fields.imageSize') }}: 1080*534</span>
-            <span v-if="form.siteId === 3">{{ t('fields.imageSize') }}: 1080*675</span>
-            <span v-if="form.siteId === 6">{{ t('fields.imageSize') }}: 1080*534</span>
-            <span v-if="form.siteId === 7">{{ t('fields.imageSize') }}: 1000*400</span>
+            <span v-if="isXF(form.siteId)">{{ t('fields.imageSize') }}: 1080*534</span>
+            <span v-if="isThai(form.siteId)">{{ t('fields.imageSize') }}: 1080*675</span>
+            <span v-if="isDY(form.siteId)">{{ t('fields.imageSize') }}: 1080*534</span>
+            <span v-if="isLH(form.siteId)">{{ t('fields.imageSize') }}: 1000*400</span>
           </div>
         </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
@@ -381,6 +381,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getPlatformsBySite } from '../../../api/platform'
+import { isXF, isThai, isDY, isLH } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()

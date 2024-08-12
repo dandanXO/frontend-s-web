@@ -114,7 +114,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed } from 'vue'
 import { getUserLoginLog } from '../../../api/user-login-log'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
@@ -123,12 +123,16 @@ import {
   convertDateToStart,
   convertDateToEnd,
 } from '@/utils/datetime'
+import { useStore } from '@/store'
+import { isKorea } from '@/utils/site'
 
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
+const store = useStore()
+const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 
 const uiControl = reactive({
   dialogVisible: false,
