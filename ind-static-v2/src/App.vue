@@ -311,7 +311,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: "iw2"
+            siteCode: process.env.SITE
           })
         );
       }
@@ -319,7 +319,7 @@ export default defineComponent({
 
     // check server status
     const checkServerStatus = () => {
-      axios.get(`https://sumbtf.tebarncale.com/server/status/${ui.siteID}`).then((response) => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
         if (response.data.code === 0) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {
