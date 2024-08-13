@@ -1,7 +1,7 @@
 import { server } from "@/utils/request";
 
-export function getMatchAndPrizeInfo() {
-  return server.EVENT.get("/privi/memberSlotBetInfo");
+export function getMatchAndPrizeInfo(type) {
+  return server.EVENT.get(`/privi/memberSlotBetInfo?type=${type}`);
 }
 
 export function getPrizeMoney(promoCode) {

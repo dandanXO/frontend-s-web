@@ -145,7 +145,7 @@ const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
 const getMatchData = async () => {
-  const res = await getMatchAndPrizeInfo();
+  const res = await getMatchAndPrizeInfo('profit');
   if (res.code === 0) {
     bonus.value = res.data.profitAmount;
     totalValidBet.value = res.data.expectedBonus;
