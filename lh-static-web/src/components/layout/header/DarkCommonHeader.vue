@@ -425,8 +425,8 @@
         { code: "app", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
         { code: "vip", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
         { code: "deposit", name: "存款", enName: "Deposit", path: "/center/deposit", hasicon: true, isTest: false },
-        { code: "withdraw", name: "取款", enName: "Deposit", path: "/center/withdraw", hasicon: true, isTest: false },
-        { code: "transfer", name: "转账", enName: "Deposit", path: "/center/transfer", hasicon: true, isTest: false }
+        { code: "withdraw", name: "取款", enName: "Withdraw", path: "/center/withdraw", hasicon: true, isTest: false },
+        { code: "transfer", name: "转账", enName: "Transfer", path: "/center/transfer", hasicon: true, isTest: false }
       ]);
       const { token } = storeToRefs(store);
       const router = useRouter();
@@ -2225,6 +2225,10 @@
   
         .acc-dialog-container {
           display: flex;
+          background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
+          border: 1px solid #997B54;
+          border-radius: 20px;
+          overflow: hidden;
         }
   
         .acc-dialog-left {
@@ -2233,11 +2237,8 @@
           background-size: 100% 100%;
           background-position: center center;
           background-color: transparent;
-          border-top-left-radius: 20px;
-          border-bottom-left-radius: 20px;
           background-color: #ffffff;
-          border-radius: 20px;
-          overflow: hidden;
+          border-radius: 0px;
   
           .acc-dialog-img {
             max-width: 963px;

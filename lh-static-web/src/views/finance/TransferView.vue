@@ -462,6 +462,12 @@ body .transferinout .el-dialog__header .el-dialog__title {
   color: #468cff;
 }
 
+.dark {
+  .el-button.outline.blue-btn > span {
+    color: #fff;
+  }
+}
+
 .el-dialog {
   border-radius: 12px;
 }
@@ -729,6 +735,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   .card {
     @include content-block-dark;
     color: $font-3-dark;
+    background-color: #17223e;
 
     .balance-wrapper {
       color: $color-white;
@@ -740,20 +747,35 @@ body .transferinout .el-dialog__header .el-dialog__title {
   }
 
   .balance-plat-item {
-    background-color: $background-content-block-lighter-dark;
+    background: linear-gradient(90deg, #344468 0%, #1A2338 100%);
+    border: 1px solid rgba(120, 171, 219, 1);
+
+    .right-box {
+      .action-wrapper {
+        .transfer-btn {
+          border-radius: 8px;
+        }
+      }
+    }
   }
 
   .blue-btn {
-    background: $active-color-dark-linear;
-    box-shadow: $active-color-dark-shadow;
+    background: url('../../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background-size: auto;
+    box-shadow: none;
+    border-radius: 8px;
+    min-width: 70px;
+    height: 36px;
+    padding: 6px 26px;
+
     &.outline{
+      background: url('../../assets/images/home/standard-button-bg.svg') no-repeat center center;
+      background-size: auto;
       box-shadow: none;
-      background: #394A65;
-      :deep(span) {
-        background: $active-color-dark-linear;
-        background-clip: text;
-        color: transparent;
-      }
+      border-radius: 8px;
+      min-width: 70px;
+      height: 36px;
+      padding: 6px 26px;
     }
   }
 
@@ -776,7 +798,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
 
   .transfer-plat-wrapper {
     .transfer-plat-item {
-      border-color: #ecedf01a;
+      border-color: #78abdb;
       .platform-details {
         .plat-name {
           svg {

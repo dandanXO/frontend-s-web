@@ -560,14 +560,18 @@ button {
   .standard-button {
     // background: $active-color-dark-linear;
     background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
-    background-size: auto;
+    background-size: cover;
     box-shadow: none;
     border-radius: 8px;
+    border: 1px solid #3A93CE;
   }
 
   .common-btn,
   .common-btn.el-button {
-    background-image: $active-color-dark-linear ;
-    box-shadow: $active-color-dark-shadow;
+    background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid #3A93CE;
   }
 }
