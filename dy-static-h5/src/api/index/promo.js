@@ -195,3 +195,11 @@ export function getEurocupManualSchedule() {
 export function getSportMatch() {
   return eventapi.get('/sport-match/today')
 }
+
+export function getLivePoker() {
+  return eventapi.get("/live-poker");
+}
+
+export function claimLivePokerBonus(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
+}

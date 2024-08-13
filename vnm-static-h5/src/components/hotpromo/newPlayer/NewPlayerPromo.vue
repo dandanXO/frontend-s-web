@@ -52,7 +52,7 @@
             <button
               class="mission-block-mission-btn"
               :disabled="mission.status !== 'Claim'"
-              @click="handleClaimClick(mission)"
+              @click="handleClaimClick(mission, index)"
             >
               <span v-if="mission.status === 'Claimed'">Đã Nhận</span>
               <span v-else-if="mission.status === 'Incomplete'">Không Hợp Lệ</span>
@@ -138,7 +138,7 @@ const missions = ref([
   }
 ]);
 
-const handleClaimClick = (mission) => {
+const handleClaimClick = (mission, index) => {
   if (mission.status !== "Claim") return;
   submitNewPlayerMission(mission.code).then((res) => {
     if (res.code === 0) {
@@ -148,7 +148,7 @@ const handleClaimClick = (mission) => {
         message: t("lang.new_player_successfully"),
         icon: "check_circle_outline"
       });
-      luckyNumber.value = null;
+      missions.value[index].status = "Claimed";
     } else {
       $q.notify({
         color: "negative",
