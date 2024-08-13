@@ -12,7 +12,6 @@ export const useUI = defineStore("ui-store", {
       bottomInsetHeight: 0,
       CSAUrl: "",
       adjust_register_event: "",
-      siteID: 14,
       maintenanceStartTime:"",
       maintenanceEndTime:""
     };
