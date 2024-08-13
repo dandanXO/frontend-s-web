@@ -1,53 +1,60 @@
 <template>
   <div class="maintenance-container">
     <div class="maintenance-img">
-      <img :src="require('../assets/images/maintenance/maintenance-img.png')" />
+      <img src="../assets/images/maintenance/maintenance-img.png" />
     </div>
-    <div class="maintenance-btn">
-      <router-link to="/" class="maintenance-cta">返回主页</router-link>
+    <div class="maintenance-title">Under maintenance</div>
+    <div class="maintenance-content">
+      Our website is currently undergoing maintenance...
+      <br />
+      <template v-if="ui.maintenanceStartTime">
+        From: {{ ui.maintenanceStartTime }}
+        <br />
+      </template>
+      <template v-if="ui.maintenanceEndTime">
+        To: {{ ui.maintenanceEndTime }}
+        <br />
+      </template>
+      During this period, all games and services will be unavailable.
+      <br />
+      We sincerely apologize for any inconvenience this may cause and appreciate your patience!
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<script setup>
+import { useUI } from "src/stores/ui";
+const ui = useUI();
+</script>
+
+<style lang="scss" scoped>
 .maintenance-container {
-  min-height: calc(100vh - 60px);
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../assets/images/maintenance/maintenance-bg.jpg");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
   flex-direction: column;
 
   .maintenance-img {
+    padding-bottom: 12px;
     img {
       display: block;
       width: 100%;
-      max-width: 450px;
+      max-width: 200px;
     }
   }
 
-  .maintenance-btn {
-    margin-top: -90px;
-    .maintenance-cta {
-      border: 2px solid #32e5e5;
-      background: linear-gradient(96deg, #095c6f 0%, #00161b 100%);
-      padding: 12px 40px;
-      border-radius: 8px;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      min-width: 160px;
-      display: block;
-      text-align: center;
+  .maintenance-title {
+    color: #fff;
+    display: flex;
+  }
 
-      &:hover {
-        filter: brightness(0.8);
-      }
-    }
+  .maintenance-content {
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
+    padding: 16px;
+    color: #5f6061;
   }
 }
 </style>

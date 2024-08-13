@@ -75,17 +75,17 @@ const routes = [
   //   children: [{ path: "", component: () => import("pages/BonusPage.vue") }],
   //   meta: { requiresAuth: true }
   // },
-  // {
-  //   path: "/maintenance",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       name: "maintenance",
-  //       component: () => import("pages/MaintenancePage.vue")
-  //     }
-  //   ]
-  // },
+  {
+    path: "/maintenance",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "maintenance",
+        component: () => import("pages/MaintenancePage.vue")
+      }
+    ]
+  },
   // {
   //   path: "/aviator",
   //   component: () => import("layouts/MainLayout.vue"),

@@ -16,6 +16,7 @@ import { useUI } from "src/stores/ui";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { cached } from "boot/cache";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -23,6 +24,7 @@ export default defineComponent({
     var qs = require("qs");
     const store = userStore();
     const ui = useUI();
+    const router = useRouter();
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
@@ -269,10 +271,25 @@ export default defineComponent({
         });
     };
 
+    // check server status
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${ui.siteID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.push(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
+      checkServerStatus();
       checkSID();
       // getCSA();
       getAppInfo();

@@ -519,6 +519,14 @@ export default {
       signedIn: "Signed in"
     }
   },
+  maintenance: {
+    underMaintenance: "Under maintenance",
+    content01: "Our website is currently undergoing maintenance...",
+    from: "From",
+    to: "To",
+    content02: "During this period, all games and services will be unavailable.",
+    content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",

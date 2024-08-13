@@ -11,7 +11,10 @@ export const useUI = defineStore("ui-store", {
       slotLists: [],
       bottomInsetHeight: 0,
       CSAUrl: "",
-      adjust_register_event: ""
+      adjust_register_event: "",
+      siteID: 5,
+      maintenanceStartTime:"",
+      maintenanceEndTime:""
     };
   },
   actions: {

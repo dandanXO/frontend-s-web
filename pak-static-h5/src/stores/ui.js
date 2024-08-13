@@ -20,7 +20,10 @@ export const useUI = defineStore("ui-store", {
       instagramUrl: "",
       tiktokUrl: "",
       whatsappUrl: "",
-      youtubeUrl: ""
+      youtubeUrl: "",
+      siteID: 11,
+      maintenanceStartTime:"",
+      maintenanceEndTime:""
     };
   },
   actions: {
@@ -53,10 +56,10 @@ export const useUI = defineStore("ui-store", {
   },
   getters: {
     hideDownload() {
-      const store = userStore()
+      const store = userStore();
       const hasReferralCode = !!sessionStorage.getItem("REFERRAL_CODE");
-      if(!store.token && hasReferralCode) return true
-      return false
+      if (!store.token && hasReferralCode) return true;
+      return false;
     }
   }
 });
