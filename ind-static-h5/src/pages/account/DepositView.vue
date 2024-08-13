@@ -60,8 +60,8 @@
       <div class="deposit-item-container q-mt-sm">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
-            <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>
-              +{{ convertToCommaAmount(amount * 0.05) }}
+            <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
+              +{{ convertToCommaAmount(amount * selectedItemPrivilege) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
@@ -251,7 +251,7 @@ import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
@@ -261,6 +261,7 @@ const imgURL = process.env.IMAGE_CDN;
 var qs = require("qs");
 const store = userStore();
 const router = useRouter();
+const route = useRoute();
 const emits = defineEmits(["closeModal"]);
 
 const checkNewUser = () => {
@@ -369,6 +370,8 @@ const handleDepositNodeClick = (item) => {
 
 const selectedItem = ref();
 const selectedItemAmount = ref();
+const selectedItemPrivilege = ref();
+const selectedItemPrivilegeId = ref();
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -383,9 +386,15 @@ function initPay() {
     message: "Loading data... Please wait..."
   });
 
+  let promoParam = "";
+
+  if (route.query.from === "/promo") {
+    promoParam = "?promo=1";
+  }
+
   payMethods.value = [];
 
-  cashier.get("/session/nga/deposit/index/").then((res) => {
+  cashier.get(`/session/nga/deposit/index/${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
@@ -399,6 +408,8 @@ function initPay() {
       paymentMethodsItems.value = bankDeposits.flat();
 
       selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
+      selectedItemPrivilege.value = paymentMethodsItems.value[0].extra.privilegePercent;
+      selectedItemPrivilegeId.value = paymentMethodsItems.value[0].extra.privilegeId;
 
       const d = res.data;
       if (!payMethods.value.length) {
@@ -534,8 +545,8 @@ async function confirmDeposit() {
           }
           form.paymentId = activeMethod.value.paymentId;
 
-          if (activeMethod.value.privilegeId) {
-            form.privilegeId = activeMethod.value.privilegeId;
+          if (selectedItemPrivilegeId.value) {
+            form.privilegeId = selectedItemPrivilegeId.value;
           }
 
           const copy = { ...form };
