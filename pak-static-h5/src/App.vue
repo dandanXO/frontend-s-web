@@ -277,7 +277,7 @@ export default defineComponent({
         if (response.data.code === 0) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {
-            router.push(`/maintenance`);
+            router.replace(`/maintenance`);
             ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
             ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
           }
