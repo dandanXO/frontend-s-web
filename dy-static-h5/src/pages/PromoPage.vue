@@ -117,58 +117,50 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame:
-                    selectedPromo.promoCode === 'lh1-game-steps' ||
-                    selectedPromo.promoCode === 'lh-sport-zhongchao' ||
-                    selectedPromo.promoCode === 'lh-lpl-summer24',
-                  lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
-                  lhworldcup: selectedPromo.promoCode === 'lh1worldcup',
-                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
-                  lhduanwu:
-                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
-                  lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
-                  meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
-                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
-                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
+                  lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
+                  cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
+                  hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
+                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
+                  dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
+                  cs2:
+                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+                  msi: selectedPromo.promoCode === 'dy2-msi-promo',
+                  dyftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'dy2-intel-esl',
+                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+                  lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
+                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+                  lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus'
                 }"
-                :style="[
-                  selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
-                    ? 'background-image: url(' +
-                      imgURL +
-                      (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
-                      ')'
-                    : selectedPromo?.promoCode === 'lh1-intel-esl'
-                      ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')'
-                      : ''
-                ]"
+                :style="{
+                  backgroundImage: selectedPromo?.mobileImgBackgroundUrl
+                    ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
+                    : 'none'
+                }"
               >
-                <div v-if="selectedPromo.hasPromo">
+                <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
                   v-if="
                     selectedPromo.promoType &&
-                    selectedPromo.promoCode !== 'lh1-game-steps' &&
-                    selectedPromo.promoCode !== 'lh-eurocup-manual' &&
-                    selectedPromo.promoCode !== 'lh1-aijiasu'
+                    selectedPromo.promoCode !== 'dy2-cny-step-game' &&
+                    selectedPromo.promoCode !== 'dy2-game-steps'
                   "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
-                    liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
+                    liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-html="selectedPromo.pageContent"></div>
-                </div>
-                <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
-                  <img
-                    loading="lazy"
-                    v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
-                    src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
-                  />
+                  <div
+                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
+                    v-html="selectedPromo.pageContent"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -350,6 +342,8 @@ export default defineComponent({
           return "最新";
         case 1:
           return "热门";
+        case 2:
+          return "正常";
         case 3:
           return "推荐";
         case 4:
@@ -358,6 +352,8 @@ export default defineComponent({
           return "新人";
         case 6:
           return "限时";
+        case 7:
+          return "精选";
         default:
           return "";
       }
@@ -447,9 +443,9 @@ export default defineComponent({
         store.token = extensionToken.value;
       } else {
         // non extension
-        if (!store.token) {
-          isDisplayLogin.value = true;
-        } else {
+        // if (!store.token) {
+        //   isDisplayLogin.value = true;
+        // } else {
           if (promo.redirectUrl.includes("page-vip")) {
             router.push({ path: "/account/vip" });
           } else {
@@ -460,7 +456,7 @@ export default defineComponent({
             }
             isPromoDetail.value = true;
             selectedPromo.value = promo;
-          }
+          // }
         }
       }
     };
@@ -703,6 +699,7 @@ export default defineComponent({
           padding: 32px 24px 16px;
           position: relative;
           border-radius: 12px;
+          min-height: 150px;
 
           .promo-label {
             height: 24px;
@@ -786,6 +783,8 @@ export default defineComponent({
             position: absolute;
             right: 0px;
             top: 50%;
+            width: 50%;
+            height: 100%;
             transform: translateY(-50%);
             // height: 70%;
 
@@ -794,7 +793,9 @@ export default defineComponent({
               // height: 100%;
               // width: auto;
               width: 100%;
-              max-width: calc(100% - 180px);
+              object-fit: contain;
+              object-position: center;
+              height: 96%;
               margin-left: auto;
             }
           }
@@ -934,6 +935,15 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.lpllck {
+          width: 100%;
+          margin: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+
         &.lhworldcup {
           background: #e7f1fd;
           margin: 0px;
@@ -985,6 +995,15 @@ export default defineComponent({
         &.lplSummer2024 {
           margin: 0;
           width: 100%;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+        &.dyftd {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
 
           .hot-promo {
             border-radius: 0px;

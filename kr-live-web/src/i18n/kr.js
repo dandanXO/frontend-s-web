@@ -75,6 +75,7 @@ export default {
     game_category_slot: "슬롯게임",
     game_category_sport: "스포츠",
     game_category_minigame: "미니게임",
+    game_category_poker: "포커",
     // game category end
     // game item start
     game_item_entry: "게임입장",
@@ -257,9 +258,10 @@ export default {
     redeem_point_redeem: "상환하다",
     redeem_point_points: "포인트들",
     redeem_point_date: "날짜",
-    redeem_point_source: "원천",
-    redeem_point_condition: "탈퇴 조건",
-    redeem_point_actions: "액션 버튼",
+    redeem_point_source: "기록",
+    redeem_point_condition: "롤링",
+    redeem_point_actions: "포인트전환",
+    redeem_point_redeemed: "상환된 포인트",
     // redeem point end
     file_too_large_or_invalid_file: "파일이 너무 크거나 잘못된 파일입니다. 새 파일을 업로드하세요.",
     langVal: "en",

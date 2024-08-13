@@ -15,11 +15,12 @@ export const ResponseCode = {
   ERROR_TOKEN_MISSED: 603,
   ERROR_TOKEN_LOGGED: 604,
   ERROR_AMOUNT_DEPOSIT: 11003,
+  ERROR_PIXEL_CODE_NOTFOUND: 18002,
   ERROR_AMOUNT_PRIVILEGE_DEPOSIT: 11004,
   ERROR_WITHDRAW_PASSWORD_NOT_MATCH: 12100
 };
 
-const skipCode = [11002];
+const skipCode = [11002, 18002];
 
 export function SkipErrorCode(code) {
   for (let i = 0; i < skipCode.length; i++) {

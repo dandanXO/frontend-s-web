@@ -12,6 +12,9 @@
         </div>
       </div>
     </div>
+    <div class="q-px-md q-mx-sm">
+      <ReminderText :reminder-text="$t('lang.withdraw_reminder_text')" />
+    </div>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -89,27 +92,22 @@
             </template>
           </q-select>
 
-          <!-- {
-          pattern: '^([1-9][0-9]*)$',
-          message: "金额应为正数",
-          trigger: "change",
-        }, -->
-
           <q-input
             hide-bottom-space
             ref="amountRef"
-            type="number"
-            v-model="withdrawInfo.amount"
+            v-model="withdrawAmountFormatted"
             :label="$t('lang.withdraw_amount')"
             class="withdraw-field q-mt-sm q-mb-sm"
             :rules="[
-              (val) => (val && val.length > 0) || $t('lang.withdraw_please_enter_withdraw_amount'),
+              (val) => !!parseDigitsWithComma(val) || '출금 금액을 입력해주세요',
               (val) =>
-                val >= selectedWithdrawalMethod.withdrawMin || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
+                parseDigitsWithComma(val) >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
               (val) =>
-                val <= selectedWithdrawalMethod.withdrawMax || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
-              (val) => (val && /^([1-9][0-9]*)$/.test(val)) || $t('lang.withdraw_amt_no_decimal_allow'),
-              isValidUSDTAmt
+                parseDigitsWithComma(val) <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
+              (val) =>
+                (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) ||
+                '출금 금액에는 소수점을 사용할 수 없습니다',
+              (val) => isDivisibleBy10000(val) || '출금 금액은 10,000 단위여야 합니다.'
             ]"
             clearable
           >
@@ -133,6 +131,7 @@
           <q-input
             hide-bottom-space
             ref="withdrawPwdRef"
+            maxlength="4"
             v-model="withdrawInfo.withdrawPassword"
             :label="$t('lang.withdraw_password')"
             class="withdraw-field"
@@ -162,14 +161,19 @@
                 $t("lang.withdraw_singlewithdrawal") +
                 ": " +
                 selectedWithdrawalMethod.withdrawMin.toLocaleString() +
-                "VNDP - " +
+                " 원 - " +
                 selectedWithdrawalMethod.withdrawMax.toLocaleString() +
-                "VNDP"
+                " 원"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() + "VNDP" }}
+              {{
+                $t("lang.withdraw_withdrawtoday") +
+                ": " +
+                selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() +
+                " 원"
+              }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
               <br />
@@ -191,12 +195,16 @@
                 {{ store.currency.value }}
               </span>
             </div>
-            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27;">
+            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27">
               <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{  selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
-                ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) }}
+                {{
+                  selectedWithdrawalMethod &&
+                  (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
+                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+                    ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                }}
                 USDT
               </span>
             </div>
@@ -293,19 +301,23 @@
 
 <script lang="js">
 /* eslint-disable */
-import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
+import { defineComponent, reactive, ref, watch, computed, onMounted } from "vue";
 import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
 import {useLocalStorage} from "@vueuse/core";
+import ReminderText from "src/assets/images/finance/ReminderText.vue";
+import { formatNumberComma } from "boot/utils";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal},
+  components: {AcctBal,ReminderText},
   setup() {
     const store = userStore();
+    const router= useRouter();
     const isNewUser = ref(false);
     const { t } = useI18n();
     const $q = useQuasar();
@@ -331,34 +343,53 @@ export default defineComponent({
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
 
+    const withdrawAmountFormatted = ref('');
+
+
     const checkNewUser = () => {
-      if (store.phone == "") {
+      if (store.phone === "" || !store.realName) {
         isNewUser.value = true;
       } else {
         getWithdrawalMethods()
       }
     };
 
+    const checkBankCardBinded = () => {
+      if (store.realName) {
+        if(!store.registeredWithdrawPassword){
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "출금 비밀번호를 추가해 주세요",
+            icon: "report_problem"
+          });
+          router.push("/account/changePwd?name=withdraw");
+          return;
+        }else{
+          api.get("/session/allBankCard").then((res) => {
+            const response = res;
+            if (response.data.length === 0) {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: "먼저 은행 카드를 연결하세요",
+                icon: "report_problem"
+              });
+
+              router.push("/account/withdraw");
+            }
+          });
+        }
+      }
+    };
+
     onMounted(() => {
       checkNewUser();
       store.getBalance();
-      // loadPlatform()
+      checkBankCardBinded();
     });
     const platforms = reactive([]);
-    const loadPlatform = () => {
-      api.get("/platform").then((res) => {
-        res.data.forEach(p => {
-          if (p.walletType !== "SEAMLESS") {
-            platforms.push({
-              id: p.id,
-              code: p.code,
-              amount: 0
-            });
-          }
-        });
-        refreshBalance("all");
-      });
-    };
+
     const refreshBalance = (plat) => {
       if (plat === "all") {
         platforms.forEach(platform => {
@@ -399,9 +430,6 @@ export default defineComponent({
             getWithdrawalMethods();
 
             // FB tracking :: apply-withdrawal
-            if (store.isAffiliateA) {
-              fbq("track", "apply-withdrawal");
-            }
 
 
             withdrawInfo.amount = "";
@@ -467,13 +495,6 @@ export default defineComponent({
               }
             }
           });
-          // else {
-          //   response.data.forEach(element => {
-          //     if (element.bankId !== 39) {
-          //       withdrawState.bankCardList.push(element)
-          //     }
-          //   });
-          // }
 
           if (cardRef.value) {
             cardRef.value.resetValidation();
@@ -483,6 +504,10 @@ export default defineComponent({
             setTimeout(()=>{
               amountRef.value.resetValidation();
             },0)
+          }
+
+          if (withdrawState.bankCardList?.[0]) {
+            withdrawInfo.cardId = withdrawState.bankCardList[0].id;
           }
         }
       }).catch((error) => {
@@ -563,9 +588,48 @@ export default defineComponent({
       }
     };
 
+
+    const parseDigitsWithComma = (value) => {
+      const withdrawAmount = value?.replace(/\$\s?|(,*)/g, '');
+      // console.log(withdrawAmount)
+      // console.log(selectedWithdrawalMethod.value.withdrawMin)
+      return withdrawAmount;
+    }
+
+    function isDivisibleBy10000(val) {
+      // Convert input to a number
+      const input = val.replace(/,/g, "");
+      const number = Number(input);
+      // console.log(number)
+
+      // Check if the number is divisible by 10000
+      if (number % 10000 === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    watch(() => withdrawAmountFormatted.value, () => {
+      const withdrawAmount = withdrawAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
+      if (isNaN(withdrawAmount)) {
+        withdrawInfo.amount = '';
+      } else {
+        withdrawAmountFormatted.value = formatNumberComma(withdrawAmount);
+        withdrawInfo.amount = Number(withdrawAmount);
+      }
+    })
+
+    watch(() => withdrawInfo.amount, () => {
+      withdrawAmountFormatted.value = formatNumberComma(withdrawInfo.amount);
+    })
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
+      isDivisibleBy10000,
+      parseDigitsWithComma,
+      withdrawAmountFormatted,
       withdrawPwdRef,
       cardRef,
       withdrawInfo,

@@ -150,6 +150,13 @@ export default defineComponent({
         }
 
         onMounted(() => {
+            if (!store.token) {
+                // notify({
+                // message: "请登录后操作",
+                // type: "error"
+                // });
+                return;
+            }
             poolPrizeVoteInit().then((res) => {
                 votesData.value = res.data;
             });

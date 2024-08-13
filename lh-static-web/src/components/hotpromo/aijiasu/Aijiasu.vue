@@ -46,7 +46,7 @@
         </div>
         <div class="download-content">
           <img src="../../../assets/promo/aijiasu/item-img.png" width="300" height="111.57" alt="" />
-          <div class="download">
+          <a class="download" :href="value" target="_blank">
             <div class="icon">
               <img src="../../../assets/promo/aijiasu/download.png" alt="" />
             </div>
@@ -54,7 +54,7 @@
               <img src="../../../assets/promo/aijiasu/window-icon.png" alt="" />
               <div>Windows下载</div>
             </div>
-          </div>
+          </a>
           <div class="download">
             <div class="icon">
               <div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div>
@@ -146,10 +146,53 @@
             class="swiper-wrapper"
           >
             <swiper-slide>
-              <div class="img-box"><img src="../../../assets/promo/aijiasu/demo-img.png" alt="" /></div>
+              <div class="img-box">
+                1. 打开爱加速软件，使用手机注册并登录爱加速。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-1.png" alt="" />
+              </div>
             </swiper-slide>
-            <swiper-slide><div style="color: #fff">2</div></swiper-slide>
-            <swiper-slide><div style="color: #fff">3</div></swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                2. 在首页选择所需线路，选中线路，点击“连接”即可。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-2.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                3. 在连接服务器情况下，如果需要连接其他服务器，需要先断开当前连接的服务器再进入服务器列表重新选择连接。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-3.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                4. 服务器列表分为“最近使用”、“我的收藏” 以及全部线路地区，点击服务器前端“星标”即可收藏线路，再次点击即可取消收藏，收藏的线路保存在“我的收藏”。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-4.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                5. 最近使用的服务器可在全部列表“最近使用”分组查看。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-5.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                6. 首页可设置上网模式，系统默认为自动模式。使用手动代理，能配置您需要使用爱加速的程序及应用，不需要加速的应用则不影响。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-6.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                7. 海外回国模式：只有访问中国大陆的应用、网站才使用爱加速。海外华人用户使用此功能，对本地网络的访问也不会受影响。需要先断开节点才能修改设置。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-7.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                8. 首页右上方为个人中心页面，包括：会员续费、联系客服、消息中心等功能。如需切换账号可在此退出登录。
+                <img src="../../../assets/promo/aijiasu/tutorial/web-8.png" alt="" />
+              </div>
+            </swiper-slide>
           </swiper>
           <div class="swiper-button-prev" @click="prevSlide"></div>
           <div class="swiper-button-next" @click="nextSlide"></div>
@@ -161,12 +204,54 @@
             @swiper="onSwiper"
             @slideChange="onSlideChange"
             class="swiper-wrapper"
-          >
-            <swiper-slide>
-              <div class="img-box"><img src="../../../assets/promo/aijiasu/demo-img.png" alt="" /></div>
+          ><swiper-slide>
+              <div class="img-box">
+                1. 打开爱加速软件，使用手机注册并登录爱加速。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-1.png" alt="" />
+              </div>
             </swiper-slide>
-            <swiper-slide><div style="color: #fff">2-2</div></swiper-slide>
-            <swiper-slide><div style="color: #fff">2-3</div></swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                2. 首页点击服务器按钮，进入服务器列表。爱加速支持【自动匹配节点】功能，点击所需省份即可为您自动选择合适的服务器。如需具体线路，请点击省份右方按钮根据城市进行线路选择。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-2.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                3. 在连接服务器情况下，如果需要连接其他服务器，需要先断开当前连接的服务器再进入服务器列表重新选择连接。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-3.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                4. 服务器列表分为“全部”和“收藏”，点击服务器前端“星标”即可收藏线路，再次点击即可取消收藏，收藏的线路保存在收藏。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-4.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                5. 首页可设置上网模式，上网模式包括：自动、UDP协议、TCP协议。推荐设置自动模式（默认模式）。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-5.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                6. 开启“网络锁”功能，能有效避免本地网络泄露。即当服务器意外断开连接时，也不会恢复本地网络，此时只有您手动断开服务器，才能恢复网络。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-6.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                7. 首页下方为“主界面”、“购买”、“我的”页面导航。点击“我的”进入个人中心页面。个人中心账号信息模块功能包括：当前在线、联系客服、设置等功能。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-7.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                8. 账号设置可选择是否开启“海外回国模式”（仅限国外用户）与“指定应用”功能，“账号与安全”可绑定邮箱、修改密码。
+                <img src="../../../assets/promo/aijiasu/tutorial/ios-8.png" alt="" />
+              </div>
+            </swiper-slide>
           </swiper>
           <div class="swiper-button-prev" @click="prevSlide"></div>
           <div class="swiper-button-next" @click="nextSlide"></div>
@@ -179,11 +264,54 @@
             @slideChange="onSlideChange"
             class="swiper-wrapper"
           >
-            <swiper-slide>
-              <div class="img-box"><img src="../../../assets/promo/aijiasu/demo-img.png" alt="" /></div>
+          <swiper-slide>
+              <div class="img-box">
+                1. 打开爱加速软件，使用手机注册并登录爱加速。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-1.png" alt="" />
+              </div>
             </swiper-slide>
-            <swiper-slide><div style="color: #fff">3-2</div></swiper-slide>
-            <swiper-slide><div style="color: #fff">3-3</div></swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                2. 首页点击服务器按钮，进入服务器列表。爱加速支持【自动匹配节点】功能，点击所需省份即可为您自动选择合适的服务器。如需具体线路，请点击省份右方按钮根据城市进行线路选择。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-2.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                3. 在连接服务器情况下，如果需要连接其他服务器，需要先断开当前连接的服务器再进入服务器列表重新选择连接。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-3.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                4. 服务器列表分为“全部”和“收藏”，点击服务器前端“星标”即可收藏线路，再次点击即可取消收藏，收藏的线路保存在收藏。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-4.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                5. 首页可设置上网模式，上网模式包括：自动、UDP协议、TCP协议。推荐设置自动模式（默认模式）。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-5.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                6. 开启“网络锁”功能，能有效避免本地网络泄露。即当服务器意外断开连接时，也不会恢复本地网络，此时只有您手动断开服务器，才能恢复网络。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-6.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                7. 首页下方为“主界面”、“购买”、“我的”页面导航。点击“我的”进入个人中心页面。个人中心账号信息模块功能包括：当前在线、联系客服、设置等功能。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-7.png" alt="" />
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <div class="img-box">
+                8. 账号设置可选择是否开启“海外回国模式”（仅限国外用户）与“指定应用”功能，“账号与安全”可绑定邮箱、修改密码。
+                <img src="../../../assets/promo/aijiasu/tutorial/android-8.png" alt="" />
+              </div>
+            </swiper-slide>
           </swiper>
           <div class="swiper-button-prev" @click="prevSlide"></div>
           <div class="swiper-button-next" @click="nextSlide"></div>
@@ -220,7 +348,7 @@ import "swiper/css/navigation";
 import QrcodeVue from "qrcode.vue";
 const activeTab = ref(0);
 
-const value = ref("https://example.com");
+const value = ref("https://www.91ajs.com/");
 
 const handleActiveClick = (num) => {
   activeTab.value = num;
@@ -512,8 +640,16 @@ const nextSlide = () => {
 
     .img-box {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
+      align-items: flex-start;
+      gap: 10px;
+      color: #ffffff;
+      img {
+        max-height: 620px;
+        margin: 0 auto;
+        border-radius: 10px;
+      }
     }
     :deep(.swiper-button-prev) {
       left: -110px;

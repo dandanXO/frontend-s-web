@@ -1,5 +1,6 @@
 <template>
   <div class="q-pa-xs" style="overflow: auto; margin: 0px 8px">
+    <ReminderText :reminder-text="$t('lang.deposit_reminder_text')" />
     <!-- <div class="q-mb-lg">
       <span class="additional-tips">
         {{ $t("lang.deposit_encounterproblem") }}
@@ -66,12 +67,11 @@
           v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
-          type="number"
           :label="$t('lang.withdraw_amount')"
           class="deposit-field"
           color="accent"
           name="localAmount"
-          v-model="form.localAmount"
+          v-model="depositAmountFormatted"
           :placeholder="$t('lang.deposit_enter_deposit_amount')"
           :rules="verifyDepositAmount"
           padding="none"
@@ -239,6 +239,8 @@ var qs = require("qs");
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import ReminderText from "src/assets/images/finance/ReminderText.vue";
+import { formatNumberComma } from "boot/utils";
 
 const store = userStore();
 const route = useRoute();
@@ -258,15 +260,34 @@ const checkNewUser = () => {
     isNoRealName.value = true;
     return;
   }
-  // else {
-  //   api.get("/session/bankCard").then((response) => {
-  //     if (response.code === 0) {
-  //       if (response.data.length === 0) {
-  //         isNoBankCard.value = true;
-  //       }
-  //     }
-  //   });
-  // }
+};
+
+const checkBankCardBinded = () => {
+  if (store.realName) {
+    if (!store.registeredWithdrawPassword) {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "출금 비밀번호를 추가해 주세요",
+        icon: "report_problem"
+      });
+      router.push("/account/changePwd?name=withdraw");
+    } else {
+      api.get("/session/allBankCard").then((res) => {
+        const response = res;
+        if (response.data.length === 0) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "먼저 은행 카드를 연결하세요",
+            icon: "report_problem"
+          });
+
+          router.push("/account/withdraw");
+        }
+      });
+    }
+  }
 };
 
 const isLoading = ref(true);
@@ -328,43 +349,26 @@ const blurCode = () => {
 
 // const verifyDepositAmount = ref([
 //   (val) => !!val || t("lang.deposit_please_enter_deposit"),
-//   (val) => (val && /^\d+$/.test(val)) || t("lang.deposit_cantcontaindecimals"),
-//   (val) =>
-//     val > calculatedMinDeposit.value - 1 ||
-//     t("lang.deposit_between") +
-//       calculatedMinDeposit.value.toLocaleString() +
-//       " - " +
-//       activeMethod.value.depositMax.toLocaleString(),
-//   (val) =>
-//     val < activeMethod.value.depositMax + 1 ||
-//     t("lang.deposit_between") +
-//       calculatedMinDeposit.value.toLocaleString() +
-//       " - " +
-//       activeMethod.value.depositMax.toLocaleString()
+//   (val) => (val && /^\d+(,\d{3})*(\.\d+)?$/.test(val.replace(/,/g, ""))) || t("lang.deposit_cantcontaindecimals"),
+//   (val) => {
+//     const value = parseFloat(val.replace(/,/g, ""));
+//     return (
+//       value > calculatedMinDeposit.value - 1 ||
+//       `${t(
+//         "lang.deposit_between"
+//       )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
+//     );
+//   },
+//   (val) => {
+//     const value = parseFloat(val.replace(/,/g, ""));
+//     return (
+//       value < activeMethod.value.depositMax + 1 ||
+//       `${t(
+//         "lang.deposit_between"
+//       )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
+//     );
+//   }
 // ]);
-
-const verifyDepositAmount = ref([
-  (val) => !!val || t("lang.deposit_please_enter_deposit"),
-  (val) => (val && /^\d+(,\d{3})*(\.\d+)?$/.test(val.replace(/,/g, ""))) || t("lang.deposit_cantcontaindecimals"),
-  (val) => {
-    const value = parseFloat(val.replace(/,/g, ""));
-    return (
-      value > calculatedMinDeposit.value - 1 ||
-      `${t(
-        "lang.deposit_between"
-      )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
-    );
-  },
-  (val) => {
-    const value = parseFloat(val.replace(/,/g, ""));
-    return (
-      value < activeMethod.value.depositMax + 1 ||
-      `${t(
-        "lang.deposit_between"
-      )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
-    );
-  }
-]);
 
 const form = reactive({
   paymentId: null,
@@ -377,6 +381,63 @@ const checkAmount = reactive({
   flag: true,
   errorMessage: ""
 });
+
+const depositAmountFormatted = ref("");
+
+const verifyDepositAmount = ref([
+  (val) => !!parseDigitsWithComma(val) || t("lang.deposit_please_enter_amount"),
+  (val) =>
+    (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) ||
+    (val && isUSDT.value) ||
+    "입금 금액에는 소수가 포함될 수 없습니다",
+  (val) =>
+    parseDigitsWithComma(val) > calculatedMinDeposit.value - 1 ||
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) =>
+    parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
+    "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+  (val) => isDivisibleBy10000(val) || "입금 금액은 10,000 단위여야 합니다." //存款金额必须以 10000 为单位
+]);
+
+const parseDigitsWithComma = (value) => {
+  const depositAmount = value?.replace(/\$\s?|(,*)/g, "");
+  return depositAmount;
+};
+
+function isDivisibleBy10000(val) {
+  // Convert input to a number
+  const input = val.replace(/,/g, "");
+  const number = Number(input);
+  // console.log(number)
+
+  // Check if the number is divisible by 10000
+  if (number % 10000 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+watch(
+  () => depositAmountFormatted.value,
+  () => {
+    const depositAmount = depositAmountFormatted.value?.replace(/\$\s?|(,*)/g, "");
+    // debugger;
+    if (isNaN(depositAmount)) {
+      form.localAmount = "";
+    } else {
+      depositAmountFormatted.value = formatNumberComma(depositAmount);
+      form.localAmount = Number(depositAmount);
+    }
+  }
+);
+
+watch(
+  () => form.localAmount,
+  () => {
+    depositAmountFormatted.value = formatNumberComma(form.localAmount);
+  }
+);
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
@@ -443,10 +504,10 @@ async function loadPrivilege(val) {
         code: "LATER",
         depositMin: 0,
         id: 0,
-        name: t('lang.choose_later'),
+        name: t("lang.choose_later"),
         payTypes: "",
         triggerType: ""
-      })
+      });
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
@@ -455,10 +516,10 @@ async function loadPrivilege(val) {
 }
 
 watch(selectedPrivilege, (newVal) => {
-  if(newVal && newVal.id ===0){
+  if (newVal && newVal.id === 0) {
     selectedPrivilege.value = null;
   }
-})
+});
 
 function selectPayType(value) {
   if (value) {
@@ -619,9 +680,13 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
-          otag("event", "deposit");
-        }
+        // if (
+        //   window.location.href.indexOf("5svn88.com") > -1 ||
+        //   window.location.href.indexOf("tfpromo88.com") > -1 ||
+        //   window.location.href.indexOf("tf88bof.com") > -1
+        // ) {
+        //   otag("event", "deposit");
+        // }
 
         console.log(res);
         const response = res.data.result;
@@ -781,6 +846,7 @@ onMounted(() => {
   if (route.meta && !route.meta.isApp) {
     checkNewUser();
   }
+  checkBankCardBinded();
 });
 </script>
 
@@ -841,35 +907,33 @@ onMounted(() => {
   background: #4fb2ff !important;
 }
 
-
 .deposit-selection {
   &.q-field {
     border-radius: 10px;
     box-shadow: $shadow-bg;
   }
-  &.q-field--float .q-field__label{
-    display:none;
+  &.q-field--float .q-field__label {
+    display: none;
   }
-  .q-field--auto-height .q-field__native{
+  .q-field--auto-height .q-field__native {
     line-height: 48px;
   }
-  .q-field__control{
+  .q-field__control {
     min-height: 48px;
     height: 48px;
 
-    .q-field__control-container{
+    .q-field__control-container {
       padding-top: 0px;
     }
-    .q-field__marginal{
+    .q-field__marginal {
       height: 48px;
     }
 
-    .q-field__label{
+    .q-field__label {
       line-height: 16px;
     }
   }
 }
-
 
 .deposit-field {
   &.q-field {
@@ -883,14 +947,14 @@ onMounted(() => {
     color: $dark;
   }
 
-  .q-field__control{
+  .q-field__control {
     min-height: 48px;
     height: 48px;
 
-    .q-field__control-container{
+    .q-field__control-container {
       padding-top: 0px;
     }
-    .q-field__marginal{
+    .q-field__marginal {
       height: 48px;
     }
   }

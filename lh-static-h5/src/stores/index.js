@@ -40,7 +40,8 @@ export const userStore = defineStore("userStore", {
       currentDeposit: "",
       levelUpDeposit: "",
       visitorId: "",
-      profilePhoto: ""
+      profilePhoto: "",
+      isDisplayLogin: false
     };
   },
   actions: {

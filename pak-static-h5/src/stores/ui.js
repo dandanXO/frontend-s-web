@@ -20,6 +20,7 @@ export const useUI = defineStore("ui-store", {
       instagramUrl: "",
       tiktokUrl: "",
       whatsappUrl: "",
+      youtubeUrl: ""
     };
   },
   actions: {

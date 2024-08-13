@@ -339,14 +339,26 @@
 import { onMounted, ref } from "vue";
 import { getSportMatch } from "@/api/index/promo";
 import MatchGame from "./components/MatchGame.vue";
+import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 
+import { useNotify } from "@/hooks/notify";
+
+const store = userStore();
+const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const tab = ref("first");
 const matchList = ref([]);
 
 onMounted(async () => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   const apiRes = await getSportMatch();
   matchList.value = apiRes.data.map((match) => ({
     ...match,

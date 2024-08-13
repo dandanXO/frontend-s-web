@@ -282,6 +282,9 @@ const getPlatList = () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   getPlatList();
 });
 </script>

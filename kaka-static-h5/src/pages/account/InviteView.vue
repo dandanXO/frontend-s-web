@@ -42,32 +42,47 @@
         </table>
       </div>
 
-      <div class="qr-title">{{ $t("lang.share_para_title") }}</div>
+      <div class="qr-title">
+        {{ $t("lang.terms.intro.title") }}
+      </div>
+      <div class="share-tnc">
+        <ul>
+          <li v-for="(content, index) in currentLocaleTerms.intro.desc" :key="index">
+            {{ content }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="qr-title">
+        {{ $t("lang.terms.promoDetail.title") }}
+      </div>
+      <div class="share-tnc">
+        {{ $t("lang.terms.promoDetail.desc") }}
+      </div>
+
+      <div class="qr-title">
+        {{ $t("lang.terms.howToJoin.title") }}
+      </div>
+      <div class="share-tnc">
+        {{ $t("lang.terms.howToJoin.desc") }}
+      </div>
+
+      <div class="qr-title">
+        {{ $t("lang.terms.term.title") }}
+      </div>
       <div class="share-tnc">
         <ol>
-          <li v-html="$t('lang.share_tnc_para_01')" />
-          <li v-html="$t('lang.share_tnc_para_02')" />
-          <li v-html="$t('lang.share_tnc_para_03')" />
-          <ol type="a">
-            <li v-html="$t('lang.share_tnc_para_03_a')" />
-            <ol type="i">
-              <li v-html="$t('lang.share_tnc_para_03_a_i')" />
-              <li v-html="$t('lang.share_tnc_para_03_a_ii')" />
-            </ol>
-            <li v-html="$t('lang.share_tnc_para_03_b')" />
-            <ol type="i">
-              <li v-html="$t('lang.share_tnc_para_03_b_i')" />
-              <li v-html="$t('lang.share_tnc_para_03_b_ii')" />
-              <li v-html="$t('lang.share_tnc_para_03_b_iii')" />
-            </ol>
-          </ol>
-          <li v-html="$t('lang.share_tnc_para_04')" />
-          <li v-html="$t('lang.share_tnc_para_05')" />
-          <li v-html="$t('lang.share_tnc_para_06')" />
-          <li v-html="$t('lang.share_tnc_para_07')" />
-          <li v-html="$t('lang.share_tnc_para_08')" />
-          <li v-html="$t('lang.share_tnc_para_09')" />
-          <li v-html="$t('lang.share_tnc_para_10')" />
+          <li v-for="(content, index) in currentLocaleTerms.term.desc" :key="index">
+            <template v-if="typeof content === 'string'">
+              {{ content }}
+            </template>
+            <template v-else>
+              {{ content.desc }}
+              <ol style="list-style-type: upper-alpha">
+                <li v-for="(child, childIndex) in content.children" :key="`${index}-${childIndex}`">{{ child }}</li>
+              </ol>
+            </template>
+          </li>
         </ol>
       </div>
     </div>
@@ -91,7 +106,7 @@ export default defineComponent({
     const $q = useQuasar();
     const store = userStore();
     const selfTgurl = ref("");
-    const { t } = useI18n();
+    const { t,messages,locale } = useI18n();
     const refCode = ref("");
     const refTotalRegister = ref("");
     const refTotalDeposit = ref("");
@@ -106,6 +121,11 @@ export default defineComponent({
     const qrCode = computed(() => {
       return selfTgurl.value;
     });
+
+    const currentLocaleTerms = computed(() => {
+      const currentLocaleMessages = messages.value[locale.value]
+      return currentLocaleMessages.lang.terms
+    })
 
 
     const copyText = (text) => {
@@ -192,7 +212,8 @@ export default defineComponent({
       refTotalRegister,
       refTotalDeposit,
       copyText,
-      referredData
+      referredData,
+      currentLocaleTerms
     }
   }
 });
@@ -201,12 +222,15 @@ export default defineComponent({
 <style lang="scss">
 .share-container {
   .share-tnc {
-    ol {
+    margin-bottom: 20px;
+    color: #ffffffc2;
+
+    ol,
+    ul {
       padding-left: 20px;
 
       li {
         margin-bottom: 10px;
-        color: #ffffffc2;
       }
     }
   }
@@ -218,7 +242,7 @@ export default defineComponent({
     margin-bottom: 15px;
 
     .box-header-row {
-      background: #FFE7E7;
+      background: #ffe7e7;
 
       td {
         font-weight: bold;

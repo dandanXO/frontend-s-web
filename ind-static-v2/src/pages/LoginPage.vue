@@ -34,7 +34,7 @@
                   color="white"
                 >
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/phone.svg">
+                    <img src="../assets/images/auth/phone.svg" />
                   </template>
                 </q-input>
               </template>
@@ -50,6 +50,7 @@
                   :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
                   label-color="brand"
                   autocomplete="current-password"
+                  placeholder="Enter Password"
                   outlined
                   color="white"
                 >
@@ -63,7 +64,7 @@
                   </template>
 
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/pass.svg">
+                    <img src="../assets/images/auth/pass.svg" />
                   </template>
                 </q-input>
               </template>
@@ -97,7 +98,7 @@
           <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
         </div>
 
-        <div style="margin-top: 10px;">
+        <div style="margin-top: 10px">
           <PrimaryButton :onClick="onSubmit" :label="'Login'" />
         </div>
 
@@ -111,13 +112,13 @@
       <div class="create-account">
         <span class="form-text">Not a member?</span>
         &nbsp;
-        <router-link class="form-text" to="/register" style="color: #00AE00">Create account</router-link>
+        <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
       </div>
     </div>
 
-<!--    <div class="register-form-logo-img">-->
-<!--      <img src="../assets/images/auth/auth-logo.png" />-->
-<!--    </div>-->
+    <!--    <div class="register-form-logo-img">-->
+    <!--      <img src="../assets/images/auth/auth-logo.png" />-->
+    <!--    </div>-->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -156,9 +157,10 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import PrimaryButton from '../components/auth/PrimaryButton.vue';
-import InputField from '../components/auth/InputField.vue';
-import InputRowGrid from '../components/auth/InputRowGrid.vue';
+import PrimaryButton from "../components/auth/PrimaryButton.vue";
+import InputField from "../components/auth/InputField.vue";
+import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "LoginPage",
@@ -297,6 +299,14 @@ export default defineComponent({
       router.push("/register");
     };
 
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version;
+      }
+    };
+
     const onSubmit = () => {
       $q.loading.show({
         message: "Logging in"
@@ -329,7 +339,8 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                codeId: loginForm.codeId,
+                ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
               })
               .then(() => {
                 $q.loading.hide();
@@ -348,7 +359,6 @@ export default defineComponent({
                 }
 
                 loginFormRef.value.reset();
-
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
@@ -486,6 +496,7 @@ export default defineComponent({
 
     onMounted(() => {
       getAppInfo();
+      getVersionNo();
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -525,6 +536,7 @@ export default defineComponent({
       guestLogin,
       guestDeviceInfo,
       getAppInfo,
+      getVersionNo,
       Platform,
       affQuickRegEvent
     };
@@ -565,7 +577,7 @@ export default defineComponent({
   text-align: right;
 
   .form-text {
-    color: #C1DFFC;
+    color: #c1dffc;
   }
 }
 

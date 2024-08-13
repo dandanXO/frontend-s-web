@@ -267,7 +267,7 @@ const closeDialog = () => {
     window.screen.orientation.lock("portrait");
   }
 };
-const open = (gameName, platformCode, gameCode, gameType) => {
+const open = (gameName, platformCode, gameCode = "", gameType) => {
   transferInfo.value.platform = platformCode;
 
   localStorage.removeItem("isOpenFromAccount");
@@ -287,6 +287,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
+      if (store.unreadInboxMail > 0) {
+        $q.notify({
+          message: t("lang.msg_hasUnreadMail"),
+          color: "negative"
+        });
+        // return;
+      }
       if (isAndroid() && !isHuaweiPhone()) {
         AppFullscreen.request();
         window.screen.orientation.unlock();
@@ -305,7 +312,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       }
 
       $q.loading.show({ message: t("lang.loading") });
-
       if (way !== "H5") {
         //Change to open at same page.
         if (platformCode === "platformType") {
@@ -344,8 +350,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             params: {
               platform: platformCode,
               gameCode: gameCode,
-              isMobile: Platform.is.mobile ? true : false,
-              way: way
+              isMobile: Platform.is.mobile ? true : false
             }
           })
           .then((response) => {
@@ -356,7 +361,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
               src.value = srcData;
               visible.value = true;
-            }else if (way === "ANDROID") {
+            } else if (way === "ANDROID") {
               var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
               window.location.href = srcData;
@@ -391,6 +396,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           return;
         }
+        // debugger;
         // ,headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
         api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
@@ -529,21 +535,21 @@ defineExpose({
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 

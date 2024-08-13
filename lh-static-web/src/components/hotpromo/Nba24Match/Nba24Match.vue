@@ -40,7 +40,6 @@
             <div v-else class="nba2-match-game-content-btn__pseudo" />
           </div>
           <div class="nba24-match-game-content-right">
-
             <div class="nba24-match-game-content-team">
               <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
               <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
@@ -73,7 +72,8 @@
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。 每日最高可获 2,888 元。
+            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。
+            每日最高可获 2,888 元。
           </div>
         </div>
         <table class="nba24-match-game-info-table">
@@ -186,7 +186,7 @@
             </thead>
             <tbody>
               <tr v-for="(record, index) in recordList" :key="index">
-                <td>{{ moment(record.createTime).format('YYYY-MM-DD HH:mm') }}</td>
+                <td>{{ moment(record.createTime).format("YYYY-MM-DD HH:mm") }}</td>
                 <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
                 <td>{{ displayTeamVictory(record) }}</td>
                 <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
@@ -246,13 +246,13 @@ const handleSubmitVote = () => {
   console.log(submitParam);
   submitNbaMatch(submitParam)
     .then((res) => {
-      if(res.code === 0) {
+      if (res.code === 0) {
         notify.success({
           type: "success",
           message: "成功投票"
         });
-        getNbaMatchData()
-      }else {
+        getNbaMatchData();
+      } else {
         notify.error(res.message);
       }
     })
@@ -264,10 +264,10 @@ const handleSubmitVote = () => {
     });
 };
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const displayTeamVictory = (record) => {
-  if(record.teamChosen === 'DRAW') return '平局'
-  return record.teamChosen + '胜'
+  if (record.teamChosen === "DRAW") return "平局";
+  return record.teamChosen + "胜";
 };
 const displayGuessResult = (record) => {
   if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
@@ -303,9 +303,11 @@ const getNbaMatchData = async () => {
     awayTeamIcon: imgURL + res.awayTeamIcon,
     homeTeamIcon: imgURL + res.homeTeamIcon
   }));
-}
+};
 
-onMounted(getNbaMatchData);
+onMounted(() => {
+  getNbaMatchData();
+});
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {

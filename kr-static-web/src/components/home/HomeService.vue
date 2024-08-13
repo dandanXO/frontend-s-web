@@ -1,6 +1,6 @@
 <template>
   <div class="service-section">
-    <HomeTitle title="TF88 Service"></HomeTitle>
+    <HomeTitle title="CITY8 Service"></HomeTitle>
     <div class="service-container">
       <!-- <div class="top-container" data-aos="fade-down">
         <div class="counter">
@@ -86,10 +86,10 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">{{ $t('home.networkSecurity') }}</div>
+              <div class="title">{{ $t("home.networkSecurity") }}</div>
               <div class="desc">
-                <span>{{ $t('home.networkSecurityPt1') }}</span> 
-                <span>{{ $t('home.networkSecurityPt2') }}</span> 
+                <span>{{ $t("home.networkSecurityPt1") }}</span>
+                <span>{{ $t("home.networkSecurityPt2") }}</span>
               </div>
             </div>
           </div>
@@ -103,11 +103,11 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">{{ $t('home.trustWorthy') }}</div>
+              <div class="title">{{ $t("home.trustWorthy") }}</div>
               <div class="desc">
-                <span>{{ $t('home.trustWorthyPt1') }}</span> 
-                <span>{{ $t('home.trustWorthyPt2') }}</span>
-                <span>{{ $t('home.trustWorthyPt3') }}</span>
+                <span>{{ $t("home.trustWorthyPt1") }}</span>
+                <span>{{ $t("home.trustWorthyPt2") }}</span>
+                <span>{{ $t("home.trustWorthyPt3") }}</span>
               </div>
             </div>
           </div>
@@ -121,11 +121,11 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">{{ $t('home.productService' ) }}</div>
+              <div class="title">{{ $t("home.productService") }}</div>
               <div class="desc">
-                <span>{{ $t('home.productServicePt1') }}</span>
-                <span>{{ $t('home.productServicePt2') }}</span>
-                <span>{{ $t('home.productServicePt3') }}</span>
+                <span>{{ $t("home.productServicePt1") }}</span>
+                <span>{{ $t("home.productServicePt2") }}</span>
+                <span>{{ $t("home.productServicePt3") }}</span>
               </div>
             </div>
           </div>
@@ -252,7 +252,7 @@ onMounted(() => {});
         background: #ffffff;
         box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
-        width: calc((100% - 4rem )/ 3);
+        width: calc((100% - 4rem) / 3);
 
         .item {
           display: flex;
@@ -281,13 +281,13 @@ onMounted(() => {});
           }
 
           .right-container {
-            .title{
+            .title {
               color: #444444;
               font-size: 20px;
               margin-bottom: 5px;
               font-weight: 600;
             }
-            .desc{
+            .desc {
               color: #444444;
               display: flex;
               flex-direction: column;

@@ -105,13 +105,15 @@
               selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
-              selectedPromo?.promoCode === 'lh1-olympic-checkin'
+              selectedPromo?.promoCode === 'lh1-olympic-checkin' ||
+              selectedPromo?.promoCode === 'lh1-football' ||
+              selectedPromo?.redirectUrl === 'lh1-livepoker-rebate'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
-                  ? '#F5F6F8'
-                  : selectedPromo?.promoCode === 'lh-lpl-summer24'
-                    ? '#1D1D1E'
-                    : '',
+                ? '#F5F6F8'
+                : selectedPromo?.promoCode === 'lh-lpl-summer24'
+                ? '#1D1D1E'
+                : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
@@ -121,6 +123,7 @@
                 : ''
           }"
           :class="{
+            'livepoker-rebate-bg': selectedPromo?.redirectUrl === 'lh1-livepoker-rebate',
             fullwidth:
               selectedPromo.promoCode === 'lh1-game-steps' ||
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
@@ -131,7 +134,8 @@
               selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
-            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
+            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
+            lhfootball: selectedPromo?.promoCode === 'lh1-football'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -146,7 +150,8 @@
               fish: selectedPromo.promoType?.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game',
-              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
+              olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin',
+              football1: selectedPromo.promoCode === 'lh1-football'
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
@@ -216,7 +221,7 @@ export default defineComponent({
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
-      if (route.query && route.query?.name && store.token) {
+      if (route.query && route.query?.name) {
         return true;
       }
       return false;
@@ -249,21 +254,22 @@ export default defineComponent({
     //   })
     // }
     const showPromoDetails = (promo) => {
-      if (!store.token) {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
-          // if you want to disable its autofocus
-          // autofocus: false,sd
-          center: true,
-          confirmButtonText: "确认",
-          showClose: false,
-          buttonSize: "large"
-        }).then(() => {
-          // router.push('/login');
-          store.loginPageVisible = true;
-        });
-        return;
-      } else {
-        if (promo.redirectUrl.includes("page-vip")) {
+      // if (!store.token) {
+      //   ElMessageBox.alert("请登录后再操作", "系统提示", {
+      //     // if you want to disable its autofocus
+      //     // autofocus: false,sd
+      //     center: true,
+      //     confirmButtonText: "确认",
+      //     showClose: false,
+      //     buttonSize: "large"
+      //   }).then(() => {
+      //     // router.push('/login');
+      //     store.loginPageVisible = true;
+      //   });
+      //   return;
+      // } else {
+      // }
+      if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
           router.push("/privilege/invite");
@@ -279,7 +285,6 @@ export default defineComponent({
           console.log(promo, "promo");
           selectedPromo.value = promo;
         }
-      }
     };
 
     const scrollToTop = () => {
@@ -470,7 +475,7 @@ export default defineComponent({
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
-        color: #7a8eb9;
+        color: #333;
       }
       tr {
         p {
@@ -826,6 +831,7 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+        background-color: #e7f1fd;
 
         &.bgautosize {
           background-size: 100% auto;
@@ -865,7 +871,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
-          color: #7a8eb9;
+          color: #333;
           font-size: 20px;
           ol {
             li {
@@ -907,11 +913,26 @@ export default defineComponent({
               padding: 0;
             }
           }
+          &.football1 {
+            table {
+              th,
+              td {
+                border: 1px solid #999;
+              }
+            }
+          }
+
           .game-title {
             color: #ffd800;
             margin: 30px auto 50px;
             text-align: center;
           }
+        }
+
+        &.livepoker-rebate-bg {
+          background-image: url("../assets/promo/lh-livepoker-rebate/content-bg.png");
+          background-size: contain;
+          background-position: bottom center;
         }
       }
     }
@@ -1084,6 +1105,16 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.football1 {
+  table {
+    th,
+    td {
+      border: 1px solid #dcdce8;
     }
   }
 }

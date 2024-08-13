@@ -5,46 +5,36 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年7月26日—2024年8月12日</div>
+          <div class="right">2024年7月24日—2024年8月10日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金
+            活动期间，每日【巴黎奥运会男/女足】赛事竞猜正确次数≥1场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金
           </div>
         </div>
         <table class="olympic24-match-game-info-table">
           <tr>
             <th>竞猜正确场次</th>
-            <th>投注反比</th>
+            <th>投注返比</th>
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>≥3</td>
+            <td>≥1</td>
             <td>0.8%</td>
             <td>88</td>
           </tr>
           <tr>
-            <td>≥5</td>
+            <td>≥2</td>
             <td>1.0%</td>
             <td>188</td>
-          </tr>
-          <tr>
-            <td>≥6</td>
-            <td>1.5%</td>
-            <td>388</td>
-          </tr>
-          <tr>
-            <td>≥8</td>
-            <td>3.0%</td>
-            <td>888</td>
           </tr>
         </table>
 
         <div class="olympic24-match-game-bottom">
           <div class="olympic24-match-game-bottom-left-title">
             <div class="olympic24-match-game-bottom-left-btn">| 注意事项</div>
-            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+            用户A当日投注【巴黎奥运会男/女足】总有效投注30,000元且免费竞猜正确次数2次，用户可获得30,000*1.0%=300元，用户A彩金金额超出彩金上限，用户A最终可获得188元。
           </div>
         </div>
       </div>
@@ -54,15 +44,34 @@
           冠军竞猜
         </div>
         <div class="olympic24-match-game" v-for="(data, index) in upcomingData" :key="index">
-          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status==='ENDED'">已结束</div>
+          <div class="olympic24-match-game-status olympic24-match-game-status-ended" v-if="data.status === 'ENDED'">
+            已结束
+          </div>
           <div v-else class="olympic24-match-game-status">{{ data.matchTime }}</div>
           <div class="olympic24-match-game-content">
             <div class="olympic24-match-game-content-left">
-              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.homeTeam ? 'olympic24-match-game-content-team--voted': ''}`">
+              <div
+                class="olympic24-match-game-content-team"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.homeTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
+              >
                 <img :src="imgURL + data.homeTeamIcon" alt="" class="olympic24-match-game-icon" />
                 <div class="olympic24-match-game-content-team-name">{{ data.homeTeam }}</div>
-                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam">获胜</div>
-                <div v-else-if="((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
+                <div
+                  class="olympic24-match-game-content-center-btn"
+                  v-if="data.status === 'ENDED' && data.answerOne === data.homeTeam"
+                >
+                  获胜
+                </div>
+                <div
+                  v-else-if="
+                    ((data.votedTeam && data.votedTeam === data.homeTeam) || !data.votedTeam) && data.status !== 'ENDED'
+                  "
+                  class="team-vote"
+                >
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.homeTeam })"
@@ -77,7 +86,10 @@
             <div class="olympic24-match-game-content-center">
               <div class="olympic24-match-game-content-center-venue">巴黎体育馆</div>
               <div class="olympic24-match-game-content-center-title">{{ data.quizTitle }}</div>
-              <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'">
+              <div
+                class="olympic24-match-game-content-center-btn"
+                v-if="data.status === 'ENDED' && data.answerOne === 'DRAW'"
+              >
                 平局
               </div>
               <!--              <div v-if="data.teamChosen != null && data.teamChosen == 'DRAW'" class="olympic24-match-game-content-btn">-->
@@ -91,7 +103,9 @@
               <!--                平局-->
               <!--              </div>-->
               <div
-                v-else-if="(data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam))"
+                v-else-if="
+                  data.status !== 'ENDED' && ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)
+                "
                 class="team-vote"
               >
                 <button
@@ -105,10 +119,22 @@
               <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
             <div class="olympic24-match-game-content-right">
-              <div class="olympic24-match-game-content-team" :class="`${data.status === 'ENDED' && data.answerOne === data.awayTeam ? 'olympic24-match-game-content-team--voted': ''}`">
+              <div
+                class="olympic24-match-game-content-team"
+                :class="`${
+                  data.status === 'ENDED' && data.answerOne === data.awayTeam
+                    ? 'olympic24-match-game-content-team--voted'
+                    : ''
+                }`"
+              >
                 <img :src="imgURL + data.awayTeamIcon" alt="" class="olympic24-match-game-icon" />
                 <div class="olympic24-match-game-content-team-name">{{ data.awayTeam }}</div>
-                <div class="olympic24-match-game-content-center-btn" v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam">获胜</div>
+                <div
+                  class="olympic24-match-game-content-center-btn"
+                  v-if="data.status === 'ENDED' && data.answerOne === data.awayTeam"
+                >
+                  获胜
+                </div>
                 <!--                <div-->
                 <!--                  v-if="data.teamChosen != null && match.teamChosen == match.awayTeam"-->
                 <!--                  class="olympic24-match-game-content-btn"-->
@@ -122,7 +148,12 @@
                 <!--                >-->
                 <!--                  投票-->
                 <!--                </div>-->
-                <div v-else-if="((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'" class="team-vote">
+                <div
+                  v-else-if="
+                    ((data.votedTeam && data.votedTeam === data.awayTeam) || !data.votedTeam) && data.status !== 'ENDED'
+                  "
+                  class="team-vote"
+                >
                   <button
                     class="olympic24-match-game-content-btn"
                     @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: data.awayTeam })"
@@ -140,7 +171,7 @@
           <div class="olympic24-match-game-bottom-left-title">
             注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。
           </div>
-          <div class="olympic24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
+          <div class="olympic24-match-game-bottom-left-btn" @click="showTableRecordDialog">[投票记录]</div>
         </div>
       </div>
       <div class="olympic24-match-game-bottom-rule">
@@ -148,7 +179,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥3场可获每日【巴黎奥运会男/女足】总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+            活动期间，每日【巴黎奥运会男/女足】竞猜正确次数≥1场可获每日【巴黎奥运会男/女足】总有效投注的对应投注返比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">2</div>
@@ -156,11 +187,11 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            活动期间会员竞猜正确场次≥3次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+            活动期间会员竞猜正确场次≥1次且会员当日未进行【巴黎奥运会男/女足】投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            本活动仅计算FB体育、IM体育、熊猫体育场馆世预赛总有效投注。沙巴体育与AP体育不在统计范围内；
+            本活动仅计算FB体育、IM体育、熊猫体育场【巴黎奥运会男/女足】总有效投注。沙巴体育与AP体育不在统计范围内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
@@ -228,7 +259,14 @@
           </table>
         </div>
       </el-dialog>
-      <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
+      <el-dialog
+        class="olympic24-match-confirm-vote-dialog"
+        v-model="confirmVoteDialog"
+        width="500px"
+        align-center
+        persistent
+        title="投票"
+      >
         <div class="dialog-header" v-if="submitParam.answerOne === 'draw'">您确定要投"平局"吗？</div>
         <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.answerOne }} 吗？</div>
         <div class="dialog-footer">
@@ -242,6 +280,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
+import { userStore } from "@/store";
 import moment from "moment";
 // import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
 import {
@@ -251,10 +290,12 @@ import {
   getBBDachaRecordsCount
 } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
+import { ElMessageBox } from "element-plus";
 import { useNotify } from "@/hooks/notify";
 
-const notify = useNotify()
+const notify = useNotify();
 
+const store = userStore();
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
@@ -273,6 +314,22 @@ const recordList = ref([]);
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 
+const showTableRecordDialog = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+  tableRecordDialog.value = true;
+};
 const handleVoteClick = (selectedData) => {
   submitParam = selectedData;
   confirmVoteDialog.value = true;
@@ -369,6 +426,13 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   getData();
 });
 </script>
@@ -465,7 +529,7 @@ onMounted(() => {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position:relative;
+      position: relative;
       &--voted {
         &:before {
           content: "";
@@ -747,7 +811,21 @@ onMounted(() => {
     }
   }
 }
-
+:deep(.olympic24-match-confirm-vote-dialog) {
+  .el-dialog__header {
+    background: #00a4ff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .el-dialog__body {
+    padding: 20px;
+    display: block !important;
+  }
+  .el-dialog__header .el-dialog__title {
+    width: 100%;
+  }
+}
 :deep(.olympic24-match-table-record-dialog) {
   width: 1000px;
   height: 652px;
@@ -768,6 +846,7 @@ onMounted(() => {
   }
   .el-dialog__body {
     padding: 20px;
+    display: block !important;
   }
 
   .record-dialog-container {

@@ -6,9 +6,9 @@
         <img class="top" src="../../../assets/images/promo/hotpromo/blastpremier/section-1-spring.png" />
       </div>
       <div class="tips">
+        <div class="tips-inner">活动时间：2024年07月29日—2024年08月06日</div>
         <div class="tips-inner">
-          参与BLAST Premier
-          秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
+          参与BLAST Premier 秋季小组赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙.
         </div>
       </div>
       <div class="title">
@@ -56,9 +56,7 @@
         </div>
       </div>
       <div class="tips">
-        <div class="tips-inner">
-          系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。
-        </div>
+        <div class="tips-inner">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。</div>
       </div>
     </div>
     <div class="section second">
@@ -112,19 +110,25 @@
       <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-3-spring.png" /></div>
       <div class="content">
         <p>
-          1. 活动期间,每日投注BLAST Premier
+          1. 活动期间,每日投注电竞场馆的BLAST Premier
           秋季小组赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
         </p>
         <p>
           2.
           活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿；
         </p>
-        <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金3倍流水即可出款；</p>
+        <p>
+          3.任何低于欧洲盘 1.7 或亚洲盘 0.7
+          水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+        </p>
         <p>
           4. 活动期间,参与BLAST Premier
-          秋季小组赛有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个签到宝箱每位用户仅可开启一次；
+          秋季小组赛当日有效投注≥1,000元则视为签到成功,达到指定签到天数则可开启签到宝箱,每个签到宝箱每位用户仅可开启一次；
         </p>
-        <p>5. 活动期间,若用户连续签到中断,则重新开始计算,已开启过的签到宝箱无法二次开启；</p>
+        <p>
+          5.
+          活动期间，开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金3倍流水即可出款，若用户连续签到中断,则重新开始计算,已开启过的签到宝箱无法二次开启；
+        </p>
         <p>6. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；</p>
         <p>
           7.
@@ -425,6 +429,9 @@ const openModal = (modal, item, itemIndex) => {
 
 // Reference
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   init();
 });
 </script>
@@ -534,7 +541,7 @@ onMounted(() => {
               align-items: flex-start;
               gap: 10px;
               img {
-                 max-width: 120px;
+                max-width: 130px;
               }
               .sign-day {
                 color: #fffd66;
@@ -542,6 +549,7 @@ onMounted(() => {
               }
             }
             img {
+              max-width: 120px;
               width: 100%;
               flex: 1;
             }
@@ -757,11 +765,14 @@ onMounted(() => {
 .q-dialog__inner--minimized > div .dialog-close {
   background: url(../../../assets/images/promo/hotpromo/cs2/close.png) no-repeat center center;
   top: 10px;
-  right: 15px;
+  right: 7px;
   background-size: contain;
   position: absolute;
   .q-btn {
     content-visibility: hidden;
+    width: 24px;
+    height: 24px;
+    padding: 0px;
   }
 }
 .modal-title {

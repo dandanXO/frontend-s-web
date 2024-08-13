@@ -289,7 +289,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/account/letters",
+    path: "/feedback",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/StationLettersView.vue") }],
     meta: { requiresAuth: true }
@@ -367,11 +367,6 @@ const routes = [
     path: "/about",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "about", component: () => import("pages/AboutView.vue") }]
-  },
-  {
-    path: "/landing",
-    name: "landing",
-    component: () => import("pages/LandingPage.vue")
   },
   // Always leave this as last one,
   // but you can also remove it

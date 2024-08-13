@@ -172,10 +172,34 @@ export function duanwuDepositBet() {
   return eventapi.post("/duan-wu/deposit-bet");
 }
 
+export function getNewUserSetupBonusInit() {
+  return eventapi.get("/new-user-setup-bonus/init");
+}
+
+export function putNewUserSetupBonusClaim(promoCode) {
+  return eventapi.put(`/new-user-setup-bonus/claim?promoCode=${promoCode}`, {});
+}
+
+export function getNewUserAccumulateDepositInit() {
+  return eventapi.get("/new-user-accumulate-deposit/init");
+}
+
+export function putNewUserAccumulateDepositClaim(ruleAmount) {
+  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
+}
+
 export function getEurocupManualSchedule() {
   return eventapi.get("/uefa/match/all");
 }
 
 export function getSportMatch() {
   return eventapi.get('/sport-match/today')
+}
+
+export function getLivePoker() {
+  return eventapi.get("/live-poker");
+}
+
+export function claimLivePokerBonus(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
 }

@@ -40,12 +40,13 @@
           </td>
           <td :data-label="t('fields.transferDate')">
             <span v-if="item.transferDate === null">-</span>
-            <span v-if="item.transferDate !== null">{{ item.transferDate }}</span>
+            <span v-if="item.transferDate !== null" v-formatter="{ data: item.transferDate, type: 'date'}" />
           </td>
           <td :data-label="t('fields.rollover')">{{ item.rollover }}</td>
           <td :data-label="t('fields.transferType')">
             <el-tag v-if="item.type === 'DEPOSIT'" type="success" size="normal">{{ t('transferType.' + item.type) }}</el-tag>
             <el-tag v-else-if="item.type === 'COMMISSION'" type="warning" size="normal">{{ t('transferType.' + item.type) }}</el-tag>
+            <el-tag v-else-if="item.type === 'RECYCLE'" type="warning" size="normal">{{ t('fields.recycle') }}</el-tag>
           </td>
         </tr>
       </tbody>

@@ -458,6 +458,7 @@ import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getConfigList } from '../../../../api/config'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { isPak } from '@/utils/site'
 
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
@@ -683,7 +684,7 @@ async function toCheck(memberWithdrawRecord) {
 }
 
 async function toFail(memberWithdrawRecord) {
-  if (request.siteId === 11) {
+  if (isPak(request.siteId)) {
     showDialog('FAIL', memberWithdrawRecord)
   } else {
     await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)

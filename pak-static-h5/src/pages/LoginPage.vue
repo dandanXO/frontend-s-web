@@ -151,9 +151,9 @@
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>{{ $t("btn.downloadApp") }}</div>
       </div>
-      <div class="list-item" @click="openInsta()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/insta-icon.png" />
-        <div>Instagram</div>
+      <div class="list-item" @click="openYoutube()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/youtube-icon.png" />
+        <div>Youtube</div>
       </div>
       <!--      <div class="list-item" @click="openTiktok()">-->
       <!--        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />-->
@@ -206,6 +206,7 @@ import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid } from "boot/utils";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "LoginPage",
@@ -346,6 +347,14 @@ export default defineComponent({
       router.push("/register");
     };
 
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version;
+      }
+    };
+
     const openWhatsApp = () => {
       window.open(ui.whatsappUrl, "_blank");
     };
@@ -356,6 +365,10 @@ export default defineComponent({
 
     const openTiktok = () => {
       window.open(ui.tiktokUrl, "_blank");
+    };
+
+    const openYoutube = () => {
+      window.open(ui.youtubeUrl, "_blank");
     };
 
     const onSubmit = () => {
@@ -382,7 +395,8 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                codeId: loginForm.codeId,
+                ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
               })
               .then(() => {
                 $q.loading.hide();
@@ -406,8 +420,8 @@ export default defineComponent({
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
                   ui.showLoggedIn();
-                  router.push(jumpUrl);
-                  // router.push({ path: jumpUrl, query: { login: "true" } });
+                  // router.push(jumpUrl);
+                  router.push({ path: jumpUrl, query: { login: "true" } });
                 }
               })
               .catch((error) => {
@@ -606,6 +620,7 @@ export default defineComponent({
 
     onMounted(() => {
       getAppInfo();
+      getVersionNo();
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -646,6 +661,7 @@ export default defineComponent({
       guestLogin,
       guestDeviceInfo,
       getAppInfo,
+      getVersionNo,
       Platform,
       affQuickRegEvent,
       regLoginTab,
@@ -660,7 +676,8 @@ export default defineComponent({
       ui,
       openWhatsApp,
       openInsta,
-      openTiktok
+      openTiktok,
+      openYoutube
     };
   }
 });

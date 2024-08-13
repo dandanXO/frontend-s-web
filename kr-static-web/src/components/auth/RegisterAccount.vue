@@ -1,101 +1,20 @@
 <template>
   <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="200" size="large">
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
-      <el-form-item :label="$t('login.username')" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" :placeholder="$t('login.username')" clearable>
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div>
-
-    <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item :label="$t('login.password')" prop="password">
-        <el-input
-          class="wTip"
-          v-model="regForm.password"
-          :placeholder="$t('login.password')"
-          type="password"
-          show-password
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div>
-<!-- 
-    <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item :label="$t('login.confirmPwd')" prop="confirmPwd">
-        <el-input
-          class="half wTip"
-          v-model="regForm.confirmPwd"
-          :placeholder="$t('login.confirmPwd')"
-          type="password"
-          show-password
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div> -->
-    <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
-      <el-form-item :label="$t('login.realName')" prop="realName">
-        <el-input
-          class="wTip"
-          v-model="regForm.realName"
-          :placeholder="$t('login.realName')"
-          :rules="[{ required: true, message: t('placeholder.realName') }]"
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div>
-    <!-- <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/email-icon.png" />
-      <el-form-item :label="$t('login.email')" prop="email">
-        <el-input
-          class="wTip"
-          v-model="regForm.email"
-          :placeholder="$t('login.email')"
-          :rules="[{ required: true, message: t('placeholder.email') }]"
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div> -->
-    <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
-      <el-form-item :label="$t('login.mobileNo')" prop="telephone">
-        <el-input
-          class="wTip"
-          v-model="regForm.telephone"
-          :placeholder="$t('login.mobileNo')"
-          clearable
-        >
-          <template #append></template>
-        </el-input>
-      </el-form-item>
-    </div>
-    <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
-      <el-form-item :label="t('login.codeAffiliate')" prop="codeAffiliate">
+      <el-form-item :label="t('register.reg_referrer')" prop="codeAffiliate">
         <el-input
           v-if="!hasAffiliate"
           class="half"
           v-model="regForm.codeAffiliate"
-          :placeholder="t('login.codeAffiliate')"
+          :placeholder="t('register.reg_referrer_placeholder')"
           clearable
         />
         <el-input
           v-else
           class="half"
           v-model="regForm.codeAffiliate"
-          :placeholder="t('login.codeAffiliate')"
+          :placeholder="t('register.reg_referrer_placeholder')"
           readonly
           disabled
           clearable
@@ -104,38 +23,136 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-      <el-form-item :label="$t('login.captcha')" prop="captchaCode">
-        <div style="display: flex; width: 100%">
-          <el-input
-            @keyup.enter="submitRegisterForm(registerRef)"
-            v-model="regForm.captchaCode"
-            :placeholder="$t('login.captcha')"
-            clearable
-          />
-          <img style="width: 90px" :src="verificationImg" @click="getCode" />
-        </div>
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
+      <el-form-item :label="$t('register.reg_nickname')" prop="name2">
+        <el-input class="wTip" v-model="regForm.name2" clearable>
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
+      <el-form-item :label="$t('register.reg_userid')" prop="loginName">
+        <el-input class="wTip" v-model="regForm.loginName" clearable>
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <el-form-item :label="$t('register.reg_pass')" prop="password">
+        <el-input
+          class="wTip"
+          v-model="regForm.password"
+          :placeholder="$t('register.reg_pass_placeholder')"
+          type="password"
+          show-password
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <el-form-item :label="$t('register.reg_confirm_pass')" prop="confirmPwd">
+        <el-input
+          class="half wTip"
+          v-model="regForm.confirmPwd"
+          :placeholder="$t('register.reg_confirm_pass_placeholder')"
+          type="password"
+          show-password
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+      <el-form-item :label="$t('register.reg_phone_num')" prop="telephone">
+        <el-input
+          class="wTip"
+          v-model="regForm.telephone"
+          :placeholder="$t('register.reg_phone_placeholder')"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/bank-icon.png" />
+      <el-form-item :label="$t('register.reg_bank')" prop="bankId">
+        <el-select
+          v-model="regForm.bankId"
+          :placeholder="$t('register.reg_bank_placeholder')"
+          size="large"
+          class="wTip"
+        >
+          <el-option v-for="item in bankCards" :key="item.id" :label="item.name" :value="item.id">
+            <div style="height: 34px; display: flex; gap: 5px">
+              <img style="height: 100%; width: auto" :src="imgURL + '/payment/' + item.bankIcon" />
+              <div>{{ item.name }}</div>
+            </div>
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/bank-acc-icon.png" />
+      <el-form-item :label="$t('register.reg_bank_acc_num')" prop="cardNumber">
+        <el-input
+          class="wTip"
+          v-model="regForm.cardNumber"
+          :placeholder="$t('register.reg_bank_acc_num_placeholder')"
+          clearable
+          type="number"
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/bank-holder-icon.png" />
+      <el-form-item :label="$t('register.reg_bank_acc_holder')" prop="cardAccount">
+        <el-input
+          class="wTip"
+          v-model="regForm.cardAccount"
+          :placeholder="$t('register.reg_bank_acc_holder_placeholder')"
+          clearable
+        >
+          <template #append></template>
+        </el-input>
+      </el-form-item>
+    </div>
+
+    <div class="light-bg form-field">
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <el-form-item :label="$t('register.reg_withdraw_password')" prop="withdrawPassword">
+        <el-input
+          class="wTip"
+          v-model="regForm.withdrawPassword"
+          :placeholder="$t('register.reg_withdraw_password_placeholder')"
+          clearable
+          type="number"
+        >
+          <template #append></template>
+        </el-input>
       </el-form-item>
     </div>
   </el-form>
-  <!-- <div>
-      <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
-  </div> -->
   <div>
     <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">
       {{ $t("login.register") }}
     </button>
-  </div>
-
-  <div style="width: 100%; margin-top: 5px">
-    <!-- <div style="visibility:hidden">
-      <a @click="closeRegDialog">先去逛逛</a>
-    </div> -->
-
-    <!--    <div style="text-align: center" class="font-gray">-->
-    <!--      {{ $t('login.alreadyAccount') }}?-->
-    <!--      <a @click="openLoginDialog">{{ $t('login.login') }}</a>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -144,9 +161,8 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { ElMessage } from "element-plus";
-import { getVerificationCode, register } from "@/api/index/login";
+import { getVerificationCode, register, bankCardList } from "@/api/index/login";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -162,6 +178,21 @@ const resetRegForm = (formEl) => {
   formEl.resetFields();
 };
 
+let validateBankLength = async (r, v) => {
+  const paymentType = bankCards.value.find(({ id }) => id === regForm.bankId);
+  if (!/^[A-Za-z0-9]+$/.test(v)) {
+    return Promise.reject("숫자를 입력하세요");
+  }
+
+  if (!v) {
+    return Promise.reject(t("register.reg_please_enter_card_num"));
+  } else if (paymentType.bankType === "BANK" && v.length > 17) {
+    return Promise.reject(t("register.reg_bank_acc_num_less_than_17_char"));
+  } else if (paymentType.code.includes("USDT") && v.length >= 34 && v.length <= 36) {
+    return Promise.reject(t("길이는 34에서 36자 여야 합니다"));
+  }
+};
+
 function charType(num) {
   if (num >= 48 && num <= 57) {
     return 1;
@@ -175,20 +206,11 @@ function charType(num) {
   return 8;
 }
 
-const checkName = (v) => {
-  const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  return v.match(alphanumeric);
-};
-
-const checkRealName = (v) => {
-  // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
-  return v.match(chineseCharOnly);
-};
-
 let validateName = async (r, v) => {
   if (v === "") {
     return Promise.reject(t("placeholder.username"));
+  } else if (!/^[A-Za-z0-9]+$/.test(v)) {
+    return Promise.reject(t("placeholder.only_letter_number_allowed"));
   } else {
     return Promise.resolve();
   }
@@ -198,18 +220,13 @@ let validatePhoneNumber = async (r, v) => {
     return Promise.reject(t("placeholder.verifyPhone"));
   } else if (!/^\d+$/.test(v)) {
     return Promise.reject(t("placeholder.onlyNumber"));
-  } else if (v.length !== 10) {
+  } else if (v.length !== 11) {
     return Promise.reject(t("placeholder.invalidPhoneLength"));
-  } else if (v.charAt(0) !== '0') {
-    return Promise.reject(t("placeholder.invalidPhoneStartsWith0"));
-  } else {
-    return Promise.resolve();
   }
-};
-let validateRealName = async (r, v) => {
-  if (v === "") {
-    return Promise.reject(t("placeholder.realName"));
-  } else {
+  // else if (v.charAt(0) !== '0') {
+  //   return Promise.reject(t("placeholder.invalidPhoneStartsWith0"));
+  // }
+  else {
     return Promise.resolve();
   }
 };
@@ -255,24 +272,6 @@ let validatePass = async (r, v) => {
 };
 
 const regRules = {
-  realName: [
-    // {
-    //   required: false,
-    //   min: 2,
-    //   max: 12,
-    //   message: "长度应为 2 至 12",
-    //   trigger: "blur"
-    // },
-    {
-      required: true,
-      trigger: "change",
-      message: t("placeholder.realName")
-    },
-    {
-      validator: validateRealName,
-      trigger: "change"
-    }
-  ],
   loginName: [
     {
       min: 6,
@@ -319,41 +318,37 @@ const regRules = {
       trigger: "change"
     }
   ],
-  smsCode: [
+  bankId: [
     {
       required: true,
-      message: t("placeholder.phoneVerification"),
-      trigger: "blur"
-    },
-    {
-      min: 6,
-      max: 6,
-      message: t("placeholder.min6"),
-      trigger: "blur"
+      message: t("register.reg_please_select_a_bank_account"),
+      trigger: "change"
     }
   ],
-  email: [
-    {
-      type: "email",
-      message: t("placeholder.emailFormat"),
-      trigger: "blur"
-    },
-    {
-      max: 50,
-      message: t("placeholder.lessthan50"),
-      trigger: "blur"
-    }
-  ],
-  captchaCode: [
+  cardNumber: [
     {
       required: true,
-      message: t("placeholder.captchareq"),
-      trigger: "blur"
-    },
+      validator: validateBankLength,
+      trigger: "change"
+    }
+  ],
+  cardAccount: [
+    {
+      required: true,
+      message: t("register.reg_card_account_cannot_empty"),
+      trigger: "change"
+    }
+  ],
+  withdrawPassword: [
     {
       min: 4,
       max: 4,
-      message: t("placeholder.captcha"),
+      message: t("register.reg_withdraw_password_4_digits"),
+      trigger: "blur"
+    },
+    {
+      required: true,
+      message: t("register.reg_withdraw_password_4_digits"),
       trigger: "change"
     }
   ]
@@ -392,8 +387,6 @@ const getReferalCode = () => {
 
 const verificationImg = ref("");
 
-const welcomeHome = ref(false);
-
 const submitRegisterForm = async (elForm) => {
   if (!elForm) return;
   await elForm
@@ -412,16 +405,10 @@ const submitRegisterForm = async (elForm) => {
                 });
 
                 // FB tracking :: signup-success
-                if (store.isAffiliateA) {
-                  fbq("track", "signup-success");
-                }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
-                  otag("event", "registration");
-                }
 
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                emits("open-welcome-dialog")
+                // emits("open-welcome-dialog")
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
@@ -432,16 +419,16 @@ const submitRegisterForm = async (elForm) => {
                 }
               } else {
                 ElMessage.error(response.message);
-                getCode();
+                // getCode();
               }
             })
             .catch((err) => {
               console.log(err.message);
-              getCode();
+              // getCode();
             });
         })();
       } else {
-        getCode();
+        // getCode();
       }
     })
     .catch((errr) => {
@@ -450,36 +437,40 @@ const submitRegisterForm = async (elForm) => {
 };
 
 const regForm = reactive({
-  realName: "",
+  name2: "",
   loginName: "",
   password: "",
   confirmPwd: "",
   telephone: cachedTelephone ?? "",
-  email: "",
-  captchaCode: "",
-  regHost: location.hostname,
-  codeId: "",
+  cardNumber: "",
+  cardAccount: "",
   codeAffiliate: "",
-  smsCode: "",
-  smsCodeId: ""
+  withdrawPassword: "",
+  regHost: location.hostname
 });
 
 const registerRef = ref([]);
+const bankCards = ref([]);
+
+const getBankCards = () => {
+  bankCardList().then((res) => {
+    const { code, data } = res;
+
+    if (code === 0) {
+      bankCards.value = data;
+    }
+  });
+};
 
 const emits = defineEmits(["close-dialog, open-login-dialog"]);
 
-const closeRegDialog = () => {
-  emits("close-dialog");
-};
-
-const openLoginDialog = () => {
-  emits("open-login-dialog");
-};
+const imgURL = process.env.VUE_APP_IMAGE_CDN;
 
 onMounted(() => {
-  getCode();
+  // getCode();
   getAffiliateCode();
   getReferalCode();
+  getBankCards();
 });
 </script>
 
@@ -503,7 +494,7 @@ onMounted(() => {
   width: 100%;
 
   margin: 15px 0px;
-  margin-top: 50px !important;
+  margin-top: 35px !important;
   padding: 5px;
 
   position: relative;

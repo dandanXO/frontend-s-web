@@ -15,6 +15,7 @@ export default {
     account: "Account",
     promo: "Promo",
     customer_service: "CS",
+    nickname: "Nickname",
     mine: "Mine",
     personal_information: "Personal Information",
     input_username_cannot_empty: "Username cannot be empty.",
@@ -40,7 +41,7 @@ export default {
     rebate_claim_now: "Claim now",
     not_logged_in: "Not logged in yet",
     login_register_to_view: "Log in/Register to view",
-    tf88_news: "TF88 News",
+    tf88_news: "CITY8 News",
     see_all: "See all",
     play_now: "Play now",
     bet_now: "Bet Now",
@@ -49,6 +50,18 @@ export default {
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
+    btn_redeem: "redeem",
+
+    // redeem point start
+    redeem_point_pending_list: "Pending List",
+    redeem_point_redeem: "Redeem",
+    redeem_point_points: "Points",
+    redeem_point_date: "Date",
+    redeem_point_source: "Source",
+    redeem_point_condition: "Condition",
+    redeem_point_actions: "Actions",
+    redeem_point_redeemed: "Redeemed points",
+    // redeem point end
 
     // side menu
     menu_sports: "Sports",
@@ -58,7 +71,7 @@ export default {
     menu_lottery: "Lottery",
     menu_slots: "Slots",
     menu_fishing: "Fishing",
-    menu_hashgame: "Hash Game",
+    menu_hashgame: "Mini Game",
     menu_others: "Others",
     menu_cockfighting: "Cock Fighting",
     menu_minigame: "Others",
@@ -74,6 +87,7 @@ export default {
     msg_readmsg: "Read message",
     msg_deleteselected: "Delete selected messages",
     msg_deleteallmsg: "Delete all messages",
+    msg_hasUnreadMail: "You have unread messages. You cannot access the deposit/withdrawal/game pages.",
 
     // login page
     login_title: "Are you ready",
@@ -89,9 +103,9 @@ export default {
     please_enter_mobile_number: "Please enter mobile number",
     mobile_number: "Mobile number",
     mobile_number_valid: "Please enter valid mobile number",
-    mobile_number_required: 'Mobile number is required.',
-    mobile_number_length: 'Mobile number must be 10 digits long.',
-    mobile_number_starts_with_0: 'Mobile number must start with 0.',
+    mobile_number_required: "Mobile number is required.",
+    mobile_number_length: "Mobile number must be 10 digits long.",
+    mobile_number_starts_with_0: "Mobile number must start with 0.",
     please_enter_verification_code: "Please enter verification code",
     length_is_4: "Length should be 4",
     remember_me: "Remember me",
@@ -126,6 +140,17 @@ export default {
     user_registration_protocol: "User Registration protocol",
     register_success: "Registered Successfully.",
     register_in_progress: "Registering...",
+    reg_bank: "Bank",
+    reg_bank_placeholder: "Select bank",
+    reg_bank_acc_num: "Bank Account",
+    reg_bank_acc_num_placeholder: "Enter only numbers without '-'",
+    reg_bank_acc_holder: "Bank Account Holder",
+    reg_bank_acc_holder_placeholder:
+      "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
+    card_account_cannot_empty: "Please enter the depositor's name",
+    reg_withdraw_password_placeholder: "Withdrawal Password",
+    reg_withdraw_password_4_digits: "Please enter your 4-digit withdrawal password",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -193,7 +218,9 @@ export default {
     maintenance_to: "to 10:00 (GMT +8)",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
-    maintenance_contact_01: "Email Us:",
+    maintenance_desc: `We are currently under maintenance on our website, so all games and services will be unavailable.<br>
+We apologize for any inconvenience.<br>
+Maintenance time: August 6, 2024 ~ August 7, 2024 (GMT+8)`,
     maintenance_contact_02: "24/7 Customer Service",
     maintenance_contact_03: "Telegram:",
     currently_maintaining: "Maintenance in progress",
@@ -201,7 +228,8 @@ export default {
 
     // personal | verify
     personal_exclusiveurl: "URL",
-    personal_username: "Username",
+    personal_username: "ID",
+    personal_nickname: "Nickname",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
     personal_realname_valid: "Please enter a valid real name",
@@ -209,7 +237,7 @@ export default {
     personal_birthday_val: "Please enter birthday",
     personal_confirm: "Confirm",
     personal_close: "Close",
-    personal_mobilenumber: "Mobile Number",
+    personal_mobilenumber: "phone",
     personal_mobilenumber_val: "Please enter your mobile number",
     personal_mobilenumber_verify: "Please verify your mobile number",
     personal_mobilenumber_allownumsonly: "Phone numbers only allow digits",
@@ -234,7 +262,7 @@ export default {
     // share
     share_promoshare: "Promote and share",
     share_promodesc:
-      "If users you invite through the promotional link register and deposit, you will receive a maximum cumulative reward of 2,000VNDP.",
+      "If users you invite through the promotional link register and deposit, you will receive a maximum cumulative reward of 2,000원.",
     share_sponsoredlinks: "Sponsored links",
     share_copy: "Copy",
     share_copy_success: "Copied successfully",
@@ -251,16 +279,16 @@ export default {
     share_tnc: "Terms and Conditions",
     share_para_title: "Refer a friend",
     share_tnc_para_01: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
-    share_tnc_para_02: "Simply refer customers to join at TF88 and you will receive a bonus of 300 VNDP each.",
+    share_tnc_para_02: "Simply refer customers to join at CITY8 and you will receive a bonus of 300 원 each.",
     share_tnc_para_03: "To be eligible to receive the bonus, you will need to meet some of the following conditions",
     share_tnc_para_03_a: "Referrer (you):",
-    share_tnc_para_03_a_i: "Minimum total valid bet amount at least 10,000 VNDP",
+    share_tnc_para_03_a_i: "Minimum total valid bet amount at least 10,000 원",
     share_tnc_para_03_a_ii: "Reach vip level 1 or higher",
     share_tnc_para_03_b: "Presentee (your friend):",
     share_tnc_para_03_b_i: "Sign up for an account during the promotion period via specified refer a friend link.",
-    share_tnc_para_03_b_ii: "Never registered at TF88 and do not have any other account at TF88.",
+    share_tnc_para_03_b_ii: "Never registered at CITY8 and do not have any other account at CITY8.",
     share_tnc_para_03_b_iii:
-      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000VNDP within 20 days from account registration",
+      "Must have the first successful deposit transaction and have a cumulative valid bet of at least 4,000원 within 20 days from account registration",
     share_tnc_para_04:
       'Members can get specified refer a friend link in "Personal Information-Refer a friend" You will then send the referral link to your friend for them to click and register an account with via the link. ',
     share_tnc_para_05:
@@ -269,8 +297,8 @@ export default {
       "The bet amount that must be reached before withdrawal is equal to 5 times the value of the bonus received",
     share_tnc_para_07:
       "All draw bets, CANCEL bets, 2 sided bets, Europe Handicap bets with odds under 1.75, Asian Handicap under 0.75, Fantasy Sports, Horse Racing, Number Game, will not be applied to this promotion.",
-    share_tnc_para_08: "TF88 reserves the right to modify, refuse or cancel this Promotion without prior notice.",
-    share_tnc_para_09: "The program can be applied at the same time with all promotions at TF88.",
+    share_tnc_para_08: "CITY8 reserves the right to modify, refuse or cancel this Promotion without prior notice.",
+    share_tnc_para_09: "The program can be applied at the same time with all promotions at CITY8.",
     share_tnc_para_10: "General Promotion Terms &amp; Conditions apply.",
 
     // transfer
@@ -392,16 +420,17 @@ export default {
     bd_note_para_01:
       'Linking NH account needs to be identical in account name and NH registered name. Any incorrect information entered will lead to the failure of the withdrawal of the delay in processing the bank. Please contact our customer service to promptly handle it. Sincerely thanks!"',
     bd_note_para_02:
-      "Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from TF88!",
+      "Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from CITY8!",
 
     // mine
     version_no: "Version",
     central_wallet: "Central wallet",
+    central_rebate: "Rebate",
     loading: "Loading...",
     deposit_btn: "Deposit",
     withdraw_btn: "Withdraw",
     transfer_btn: "Transfer",
-    account_title: "Enjoy discounts",
+    account_title: "Personal Info",
     account_bonus_redeem: "Redeem bonus",
     mine_personal_info: "Personal",
     mine_bank: "Bank",
@@ -489,7 +518,7 @@ export default {
     vip_monthly_reload: "Monthly Reload",
     vip_exclusive_promotions: "Exclusive promotions and benefits",
     vip_upgraderequire: "Upgrade requires accumulated deposits",
-    vip_notes: "Note: all promotions, deposits and withdrawals are calculated in VNDP units",
+    vip_notes: "Note: all promotions, deposits and withdrawals are calculated in 원 units",
     vip_iron: "Iron",
     vip_bronze: "Bronze",
     vip_silver: "Silver",
@@ -509,7 +538,7 @@ export default {
     vip_invitation_to_ee: "Invitation to Exclusive Events",
     vip_terms_title: "Terms & Conditions",
     vip_terms_para_01:
-      "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
+      "The program applies to all members who have a valid 원 account at CITY8. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
     vip_terms_para_02:
       "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     vip_terms_para_03:
@@ -517,15 +546,15 @@ export default {
     vip_terms_para_04:
       "The Upgrade Bonus cannot be claimed at the same time as the Monthly Bonus. If member is promoted to VIP this month, member will receive Upgrade Bonus. The system will review the Monthly Bonus for accounts that have not been promoted to VIP this month and have met the requirements to maintain the VIP level.",
     vip_terms_para_05:
-      "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 VNDP total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
+      "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 원 total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
     vip_terms_para_06:
       "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
     vip_terms_para_07:
-      "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
+      "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 원 per day and is not limited to other products.",
     vip_terms_para_08:
       "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms &amp; conditions of the promotion apply.",
     vip_terms_para_09:
-      "TF88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
+      "CITY8 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
     vip_sport_rebate: "Sport Rebate",
     vip_esport_rebate: "E-sports Rebate",
     vip_livecasino_rebate: "Live Casino Rebate",
@@ -607,7 +636,7 @@ export default {
     affiliate_01_para_03:
       "Commission will be audited by 5th of every month, Release on 10th of every month using VND currency. From 10th onwards, affiliate may proceed to withdraw their commission.",
     affiliate_01_para_04:
-      "TF88 monitor all affiliate’s user and have our own criterion (risk level, deposit amount, betting index…) when evaluate such users. If they fail to meet our criterion, we reverse the right to refuse to release commission to affiliate.",
+      "CITY8 monitor all affiliate’s user and have our own criterion (risk level, deposit amount, betting index…) when evaluate such users. If they fail to meet our criterion, we reverse the right to refuse to release commission to affiliate.",
     affiliate_01_para_05: "One unique affiliate must register only one Email, Phone number, and Name",
     affiliate_01_para_06:
       "The old agent who settles the commission must have no less than 3 new active members in the current month, and the total number of active members must not be less than five.",
@@ -918,6 +947,19 @@ export default {
     suspend: "Suspend",
     pending: "Pending",
     supplement_success: "Supplement success",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
+    deposit_reminder_text: `After requesting the deposit account and making the deposit, click "Complete Application" below to process the charge.
+Deposits made in names other than your own cannot be processed.
+The account number is subject to real-time changes, so please verify it each time you deposit.
+The minimum deposit amount is KRW 30,000 and must be in units of KRW 10,000.
+
+※Important Notes
+Once you request a deposit account after entering the amount to be charged, the amount cannot be modified.
+If you entered the wrong amount, please submit a charge application first and we will assist with the cancellation process.
+
+※Virtual Account Maintenance Time
+Please note the maintenance time from 23:30 to 00:30.`,
 
     // WithdrawBankView
     choose_a_card: "Choose a card",
@@ -925,6 +967,11 @@ export default {
     add_a_card: "Add card",
     bank_card_unbind_record: "Bank card binding record",
     add_a_virtual_currency: "Add virtual currency",
+    withdraw_reminder: "Reminder",
+    withdraw_reminder_caption: "Please read this before making a withdrawal.",
+    withdraw_reminder_text: `Withdrawals cannot be processed to accounts in names other than your own.
+The minimum withdrawal amount is KRW 50,000 and must be in units of KRW 10,000.
+We sincerely congratulate you on your exchange and wish you only the best days ahead.`,
     select_account_add_different_banks: "Select account (add different banks)",
     please_select_a_bank_account: "Please select a bank account",
     account_name_with_desc: "Account name (name matches the account used for deposit)",
@@ -932,6 +979,7 @@ export default {
     branch_not_required: "Branch (not required)",
     cancel: "Cancel",
     confirm: "Confirm",
+    redeem: "Redeem",
     incorrect: "Incorrect",
     security_check: "Security Check",
     fish2_list: "Aviator",
@@ -940,6 +988,8 @@ export default {
       "Jolly88 (TNC) Terms of Service: The services we provide are subject to the terms of use and privacy policy. Please refer to our service agreement for more information.",
     footer_all_rights: "Jolly88 2023{'@'}All Rights Reserved.",
     announcement: "Announcement",
+    question: "Question",
+    message: "Message",
     name: "Name",
     surname: "Surname",
     dob: "DOB",
@@ -1119,6 +1169,8 @@ export default {
     mail_selectone: "Select one",
     mail_read: "Read",
     mail_delete: "Delete",
+
+    feedback_delete_selected_message: "Deleted selected messages",
 
     // compose
     compose_title: "Title",
@@ -1308,32 +1360,32 @@ export default {
       affiliate: "Affiliates",
       aboutus: "About TFgaming",
       welcome:
-        "Welcome to TF88 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
+        "Welcome to CITY8 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
       product: "PRODUCT",
       productDescription:
-        "TF88 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",
+        "CITY8 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",
       liquidity: "LIQUIDITY",
       liquidityDescription:
-        "Owning a flexible and diverse payment system through local banks, e-wallets, mobile cards, Usdt... TF88 is committed to processing customer transactions as quickly as possible, on the basis of ensuring maximum information transaction.",
+        "Owning a flexible and diverse payment system through local banks, e-wallets, mobile cards, Usdt... CITY8 is committed to processing customer transactions as quickly as possible, on the basis of ensuring maximum information transaction.",
       security: "SECURITY",
       securityDescription:
-        "TF88 uses advanced security technologies to ensure that customer information is protected in the best way. We take the necessary security precautions to protect our members' personal information and privacy. So, rest assured that the information you provide is always safe in our secure data system.",
+        "CITY8 uses advanced security technologies to ensure that customer information is protected in the best way. We take the necessary security precautions to protect our members' personal information and privacy. So, rest assured that the information you provide is always safe in our secure data system.",
       promotion: "PROMOTION",
       promotionDescription:
-        "We understand that the odds may not always be what you want, that's why TF88 has created many promotions to make sure you always get the best deal on every bet. We are always looking for ways to create the best gaming environment for our customers.",
+        "We understand that the odds may not always be what you want, that's why CITY8 has created many promotions to make sure you always get the best deal on every bet. We are always looking for ways to create the best gaming environment for our customers.",
       license: "LICENSE",
       licenseDescription:
-        "TF88 is licensed by North Cagayan (NCGAC) under the Philippine government. The company is headquartered in Manila, Philippines.",
+        "CITY8 is licensed by North Cagayan (NCGAC) under the Philippine government. The company is headquartered in Manila, Philippines.",
       // Collect Info
       collectInformation: "Collect information",
       policyMessage:
-        "During your visit, the system and your browser may transmit information to our servers, this information is intended to collect and help TF88 always improve the quality for you to have a better experience.",
+        "During your visit, the system and your browser may transmit information to our servers, this information is intended to collect and help CITY8 always improve the quality for you to have a better experience.",
       personalInformation:
-        "Your personal information when registering includes: Full name, email, phone number, date of birth and other information in order for TF88 to complete your information for account management.",
+        "Your personal information when registering includes: Full name, email, phone number, date of birth and other information in order for CITY8 to complete your information for account management.",
       processingPurposes: "Your information will be processed for a variety of purposes, including:",
-      manageProcessInfo: "On TF88's website to manage and process your information.",
+      manageProcessInfo: "On CITY8's website to manage and process your information.",
       offerGames: "Offers games and approves bets for you.",
-      determineLegalAge: "To determine your legal age when participating in the game at TF88.",
+      determineLegalAge: "To determine your legal age when participating in the game at CITY8.",
       meetProductPreferences: "Based on preferences to meet the right products.",
       webMaintenance: "For web maintenance and problem diagnosis.",
       improveServiceQuality: "To improve service quality.",
@@ -1342,38 +1394,38 @@ export default {
       statisticalAnalysis:
         "In the course of serving you, we conduct statistical analysis based on different regions. We may provide 3rd parties to display ads.",
       cooperateSuppliers:
-        "TF88 cooperates with many suppliers, so your information can be provided to the supplier to look up the results for the purpose of ensuring the fairness of the results and ensuring your interests.",
+        "CITY8 cooperates with many suppliers, so your information can be provided to the supplier to look up the results for the purpose of ensuring the fairness of the results and ensuring your interests.",
       promotionInformation: "Promotion information",
       marketingPromotions:
-        "In order for Marketing to conduct promotions, and announce the prize of a winning promotion, TF88 may publish your account nick information or your initials and the prize number you received.",
+        "In order for Marketing to conduct promotions, and announce the prize of a winning promotion, CITY8 may publish your account nick information or your initials and the prize number you received.",
       privacy: "Privacy",
       privacyAssurance:
-        "TF88 will ensure the security of your personal information. Because TF88 uses the strongest firewall system to prevent the intrusion of illegal acts.",
+        "CITY8 will ensure the security of your personal information. Because CITY8 uses the strongest firewall system to prevent the intrusion of illegal acts.",
       dataSecurity: "Data Security",
       dataSecurityAssurance:
         "For any data and information related to the company, confidentiality is required when handling.",
       // Legal Basis
       legalBasis: "Legal Basis",
       generalTermsMessage:
-        "Below are general terms and conditions for using TF88. By registering for an account, you agree to abide by our general terms. All activity in a visitor's account on the website is subject to and monitored by the following terms:",
+        "Below are general terms and conditions for using CITY8. By registering for an account, you agree to abide by our general terms. All activity in a visitor's account on the website is subject to and monitored by the following terms:",
       ageRequirement:
         "Members must be at least 18 years old and have the intellectual capacity to take responsibility for their own actions.",
       singleAccount:
-        "Each customer can only open one account on TF88's website. We may close any additional accounts opened and any remaining funds in the account will be handled at TF88's sole discretion.",
+        "Each customer can only open one account on CITY8's website. We may close any additional accounts opened and any remaining funds in the account will be handled at CITY8's sole discretion.",
       personalInformation2:
-        "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, TF88 disclaims related liability. We ensure that customer information is safe and secure.",
+        "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, CITY8 disclaims related liability. We ensure that customer information is safe and secure.",
       checkAccountBalance:
         "The customer must regularly check the account balance, when there is any deviation, the customer is responsible for immediately reporting to Online Support to check and verify the account.",
       accountSecurity:
-        "Customers must ensure the security of their account information, when customers disclose information to others, any disputes or conflicts later TF88 is not responsible.",
+        "Customers must ensure the security of their account information, when customers disclose information to others, any disputes or conflicts later CITY8 is not responsible.",
       depositInstructions:
-        "Customers who need to deposit money need to comply with the information and instructions on the Web site, TF88 is not responsible for all transactions that are not made according to instructions.",
+        "Customers who need to deposit money need to comply with the information and instructions on the Web site, CITY8 is not responsible for all transactions that are not made according to instructions.",
       accessFromRestrictedArea:
-        "TF88 does not encourage or prohibit attempts to access the Website from an area not designated for our service.",
+        "CITY8 does not encourage or prohibit attempts to access the Website from an area not designated for our service.",
       entertainmentPurpose:
-        "TF88 provides products for entertainment purposes, customers who agree to participate in TF88 will have certain risks. When using the service at TF88, we disclaim the website's responsibility for any customer's losses.",
+        "CITY8 provides products for entertainment purposes, customers who agree to participate in CITY8 will have certain risks. When using the service at CITY8, we disclaim the website's responsibility for any customer's losses.",
       withdrawalRequest:
-        "TF88 reserves the right to refuse a withdrawal request if the registration information is incorrect, TF88 has the right to request relevant documents to confirm the registration information.",
+        "CITY8 reserves the right to refuse a withdrawal request if the registration information is incorrect, CITY8 has the right to request relevant documents to confirm the registration information.",
       honestyPolicy:
         "Customers must ensure not to deceive, misrepresent or release inaccurate information to smear TF88.",
       suspensionPolicyMessage:
@@ -1460,9 +1512,9 @@ export default {
     esportapp: "Esports App",
     firstSlide: "DOWN LOAD APPS",
     firstSlideContent: "Super smooth experience on TF88's high class apps",
-    firstSlideSub: "DOWNLOAD +60 VNDP",
+    firstSlideSub: "DOWNLOAD +60 원",
     secondSlide: "GET WELCOME BONUS",
-    secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 VNDP",
+    secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 원",
     thirdSlide: "ESPORTS BETTING DEVELOPER",
     thirdSlideContent:
       "TF88 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
@@ -1541,6 +1593,7 @@ export default {
     15202: "The new password cannot be the same as the old password",
     15204: "Phone number is incorrect.",
     15205: "Login Password is incorrect",
+    15206: "Duplicate nickname/name",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

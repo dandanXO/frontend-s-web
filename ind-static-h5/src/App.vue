@@ -250,13 +250,11 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post("/memberStatistics/submit", qs.stringify({
             way: way,
             sid: theSid,
             siteCode: "ind"
-          }
-        });
+        }));
       }
     };
 

@@ -282,6 +282,13 @@ deploy-vnm-landing-v6:
 
 #===============================================================================================
 
+deploy-vnm-landing-v8:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v8
+
+#===============================================================================================
+
 deploy-vnm-maintenance:
   extends: .s3-deploy
   variables:
@@ -636,6 +643,34 @@ build-image-kr-live-web:
     PROJECT: kr-live-web
   needs:
     - build-kr-live-web
+
+#===============================================================================================
+
+build-kr-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-static-web
+
+build-image-kr-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-static-web
+  needs:
+    - build-kr-static-web
+
+#===============================================================================================
+
+build-kr-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-static-h5
+
+build-image-kr-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-static-h5
+  needs:
+    - build-kr-static-h5
 
 #===============================================================================================
 

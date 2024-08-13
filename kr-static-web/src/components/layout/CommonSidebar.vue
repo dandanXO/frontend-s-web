@@ -5,10 +5,10 @@
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
         <span>CSKH 24/7</span>
       </div>
-      <div class="additional-info-item">
+      <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
         <span style="margin-left: 5px">vnsupport@tf88.com</span>
-      </div>
+      </div> -->
       <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
         <span style="margin-left: 5px"
@@ -21,58 +21,63 @@
       </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <span style="margin-left: 5px">@TF88_CS</span>
+        <span style="margin-left: 5px">@cityy88</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
-      <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
-        <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
-        <div>{{ $t("stickySidebar.hotPromotions") }}</div>
-      </router-link>
+      <!--      <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">-->
+      <!--        <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />-->
+      <!--        <div>{{ $t("stickySidebar.hotPromotions") }}</div>-->
+      <!--      </router-link>-->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
         <div>{{ $t("stickySidebar.customerService") }}</div>
       </div>
-      <div @mouseover="customerHovered = false">
+      <!-- <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
           <div>{{ $t("stickySidebar.appDownload") }}</div>
         </router-link>
-      </div>
+      </div> -->
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
         <div>{{ $t("stickySidebar.backToTop") }}</div>
       </div>
     </div>
-     <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+    <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../../assets/home/red_envelope.png" />
     </div>
-    
 
-  <GameModal ref="gameMenu" />
-  <div
-    class="rocket-wrapper"
-    v-if="showRocket"
-    :class="'show-rocket'"
-    :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
-    @mousedown="startDragging('rocket', $event)"
-  >
-    <div>
-      <div class="close-btn" @click="hideRocket()">X</div>
-      <!-- <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
+    <GameModal ref="gameMenu" />
+    <div
+      class="rocket-wrapper"
+      v-if="showRocket"
+      :class="'show-rocket'"
+      :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
+      @mousedown="startDragging('rocket', $event)"
+    >
+      <div>
+        <div class="close-btn" @click="hideRocket()">X</div>
+        <!-- <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
         <div class="rocket">
           <img :src="`${imgURL}/game/${game.icon}`" />
         </div>
       </div> -->
-      <el-carousel height="100px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
-        <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
+        <el-carousel
+          height="100px"
+          :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'"
+          arrow="never"
+          :autoplay="true"
+          :interval="3000"
+        >
+          <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
             <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
               <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
             </div>
-        </el-carousel-item>
-      </el-carousel>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
-  </div>
 
     <div
       class="rocket-wrapper"
@@ -88,11 +93,17 @@
             <img :src="`${imgURL}/promo/${currentPromo.icon}`" />
           </div>
         </div> -->
-        <el-carousel height="130px"  :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+        <el-carousel
+          height="130px"
+          :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
+          arrow="never"
+          :autoplay="true"
+          :interval="3000"
+        >
           <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
-              <div @click="gotoPromo(promo.code)" class="rocket-container">
-                <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
-              </div>
+            <div @click="gotoPromo(promo.code)" class="rocket-container">
+              <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+            </div>
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -121,7 +132,7 @@ export default defineComponent({
     const ui = uiStore();
     const router = useRouter();
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
       getAppDownloadUrlFromServer()
@@ -138,11 +149,11 @@ export default defineComponent({
       router.push("/promotion?name=vi-mualixi-redpacket");
     };
 
-    const isRedPacketShow= ref(false);
-    const isPacketChecked= ref(null);
+    const isRedPacketShow = ref(false);
+    const isPacketChecked = ref(null);
     const getCheckRedPacket = () => {
-      isPacketChecked.value= setInterval(() => {
-        if(store && store.token) {
+      isPacketChecked.value = setInterval(() => {
+        if (store && store.token) {
           getRedEnvelopeFromServer()
             .then((res) => {
               clearInterval(isPacketChecked.value);
@@ -155,8 +166,8 @@ export default defineComponent({
               clearInterval(isPacketChecked.value);
             });
         }
-      },10000)
-    }
+      }, 10000);
+    };
 
     const gameMenu = ref(null);
     const openGame = (gameName, platType, gameCode, scrollingState) => {
@@ -165,26 +176,26 @@ export default defineComponent({
     const showRocket = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
     };
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
-    const floatPromo = ([]);
-    const gamePromo = ([]);
+    const floatPromo = [];
+    const gamePromo = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
       getFloatingItems().then((res) => {
         if (res.code === 0) {
-          res.data.forEach(element => {
-            if (element.type === 'PROMO') {
+          res.data.forEach((element) => {
+            if (element.type === "PROMO") {
               floatPromo.push(element);
               showFloatPromo.value = true;
             }
-            if (element.type === 'GAME') {
-              gamePromo.push(element)
+            if (element.type === "GAME") {
+              gamePromo.push(element);
               showRocket.value = true;
             }
           });
@@ -195,13 +206,13 @@ export default defineComponent({
         } else {
           ElMessage.error(res.message);
         }
-      })
-    }
+      });
+    };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+        promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
       }
-    }
+    };
 
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
@@ -210,7 +221,7 @@ export default defineComponent({
     const shiftY = ref(0);
     const currentElement = ref(null);
     const startDragging = (element, event) => {
-      currentElement.value = element
+      currentElement.value = element;
       const rect = event.target.getBoundingClientRect();
       shiftX.value = event.clientX - rect.left;
       shiftY.value = event.clientY - rect.top;
@@ -221,13 +232,13 @@ export default defineComponent({
       // Change cursor to dragging
       document.body.style.cursor = "pointer";
       event.target.style.cursor = "pointer";
-    }
+    };
     const onMouseMove = (event) => {
       if (isDragging.value) {
-        if (currentElement.value === 'rocket') {
+        if (currentElement.value === "rocket") {
           rocketPosition.value.left = event.clientX - shiftX.value;
           rocketPosition.value.top = event.clientY - shiftY.value;
-        } else if (currentElement.value === 'promo') {
+        } else if (currentElement.value === "promo") {
           promoPosition.value.left = event.clientX - shiftX.value;
           promoPosition.value.top = event.clientY - shiftY.value;
         }
@@ -241,12 +252,11 @@ export default defineComponent({
       // Reset cursor to default
       document.body.style.cursor = "default";
     };
-    const currentPromo = ref(null)
+    const currentPromo = ref(null);
     const currentPromoIndex = ref(0);
     const gotoPromo = (code) => {
-
-      router.push(`/promotion?name=${code}`)
-    }
+      router.push(`/promotion?name=${code}`);
+    };
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
@@ -257,7 +267,6 @@ export default defineComponent({
       getCheckRedPacket();
       initFloating();
     });
-
 
     // watch(
     //   () => store.token,
@@ -423,14 +432,24 @@ export default defineComponent({
 }
 
 @keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  50% { transform: translateX(10px); }
-  75% { transform: translateX(-10px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.red-envelope{
+.red-envelope {
   width: 150px;
   height: 150px;
   cursor: pointer;
@@ -445,23 +464,47 @@ export default defineComponent({
   }
 }
 @keyframes tilt-shaking {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  50% { transform: rotate(0eg); }
-  75% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 @keyframes shake-with-pause {
-  0% { transform: translateX(0); }
-  10% { transform: translateX(-10px); }
-  20% { transform: translateX(10px); }
-  30% { transform: translateX(-10px); }
-  40% { transform: translateX(10px); }
-  50% { transform: translateX(0); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-10px);
+  }
+  20% {
+    transform: translateX(10px);
+  }
+  30% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.red-envelope { 
+.red-envelope {
   animation: tilt-shaking 1s infinite;
 }
 </style>

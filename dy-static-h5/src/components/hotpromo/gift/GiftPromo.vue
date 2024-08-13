@@ -373,6 +373,9 @@ function loadMemberBet() {
 }
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   loadGifts(() => {
     if (store.token) loadMemberBet();
   });

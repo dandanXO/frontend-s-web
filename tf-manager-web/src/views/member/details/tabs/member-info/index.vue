@@ -276,6 +276,15 @@
             v-permission="['sys:member:stop:phone']"
             @click="stopPhone(memberDetail.id, memberDetail.siteId)"
           />
+          <el-button
+            style="margin-left: 5px"
+            icon="el-icon-message"
+            size="mini"
+            type="warning"
+            v-if="memberDetail.telephone !== null && uiControl.showSend"
+            v-permission="['sys:sendsms:onesms:send']"
+            @click="showDialog('SEND_SMS')"
+          />
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -842,7 +851,7 @@
             />
           </el-descriptions-item>
           <el-descriptions-item
-            v-if="memberDetail.siteId === '5' || memberDetail.site === 5"
+            v-if="isInd(memberDetail.siteId)"
             :label="t('fields.withdrawableBalance')"
           >
             <div style="display: inline-block;" v-loading="loading.total">
@@ -874,6 +883,25 @@
               icon="el-icon-refresh"
               size="mini"
               @click="refreshDnW"
+            />
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.claimableRebate')">
+            <div style="display: inline-block;" v-loading="loading.rebate">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{
+                    data: memberDetail.claimableRebate,
+                    type: 'money',
+                  }"
+                />
+              </div>
+            </div>
+            <el-button
+              class="refresh-btn"
+              icon="el-icon-refresh"
+              size="mini"
+              @click="refreshClaimableRebate"
             />
           </el-descriptions-item>
         </el-descriptions>
@@ -981,7 +1009,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="580px"
+      width="680px"
     >
       <el-form
         v-if="uiControl.dialogType === 'UPDATE_PASSWORD'"
@@ -1420,12 +1448,37 @@
           </el-button>
         </div>
       </el-form>
+
+      <el-form
+        v-if="uiControl.dialogType === 'SEND_SMS'"
+        ref="sendSmsForm"
+        :model="smsForm"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.smsType')" prop="param">
+          <el-radio-group v-model="smsForm.param" size="mini" style="width: 450px">
+            <el-radio-button label="1">{{ t('smsSend.template1') }}</el-radio-button>
+            <el-radio-button label="2">{{ t('smsSend.template2') }}</el-radio-button>
+            <el-radio-button label="3">{{ t('smsSend.template3') }}</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="sendSms">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { nextTick, defineComponent, onMounted, reactive, ref } from 'vue'
+import { nextTick, defineComponent, onMounted, reactive, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { required, size, isNumeric } from '../../../../../utils/validate'
@@ -1452,6 +1505,7 @@ import {
   unlockMember,
   refreshBalance,
   getDnW,
+  getClaimableRebate,
   forceLogout,
   syncMemberDetail,
   getShareRatio,
@@ -1468,6 +1522,8 @@ import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
 import { getConfigListByGroup } from '../../../../../api/config'
+import { sendOneSms } from '../../../../../api/send-sms'
+import { isInd, isKorea } from '@/utils/site'
 
 const store = useStore()
 export default defineComponent({
@@ -1489,11 +1545,13 @@ export default defineComponent({
       dialogType: '',
       showCall: false,
       showCall1: false,
+      showSend: false,
     })
     const route = useRoute()
     const site = reactive({
       id: route.query.site,
     })
+    const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 
     const loading = reactive({
       accountInfo: false,
@@ -1504,6 +1562,7 @@ export default defineComponent({
       total: false,
       dnw: false,
       balance: [],
+      rebate: false
     })
 
     const updatePasswordForm = ref(null)
@@ -1520,6 +1579,7 @@ export default defineComponent({
     const updateUserTypeForm = ref(null)
     const changeAffForm = ref(null)
     const updateModelForm = ref(null)
+    const sendSmsForm = ref(null)
 
     const freezeType = reactive({
       list: [
@@ -1596,6 +1656,7 @@ export default defineComponent({
       memberType: '',
       dupName: '',
       dupIp: '',
+      claimableRebate: 0
     })
 
     const affiliateDetail = reactive({
@@ -1677,6 +1738,12 @@ export default defineComponent({
 
     const shareRatioList = reactive({
       list: [],
+    })
+
+    const smsForm = reactive({
+      param: "1",
+      memberId: null,
+      siteId: null
     })
 
     const validateShareRatio = (rule, value, callback) => {
@@ -1827,6 +1894,7 @@ export default defineComponent({
     }
 
     const showDialog = async type => {
+      console.log(type)
       uiControl.dialogType = type
       if (type === 'UPDATE_PASSWORD') {
         if (updatePasswordForm.value) {
@@ -1918,6 +1986,8 @@ export default defineComponent({
       } else if (type === 'UPDATE_SHARE_RATIO') {
         await loadShareRatio()
         uiControl.dialogTitle = t('fields.updateShareRatio')
+      } else if (type === 'SEND_SMS') {
+        uiControl.dialogTitle = t('fields.send')
       }
       uiControl.dialogVisible = true
     }
@@ -2195,6 +2265,13 @@ export default defineComponent({
       loading.dnw = false
     }
 
+    const refreshClaimableRebate = async () => {
+      loading.rebate = true
+      const { data: rebate } = await getClaimableRebate(props.mbrId, site.id)
+      memberDetail.claimableRebate = rebate
+      loading.rebate = false
+    }
+
     const refreshPlatformBalance = async key => {
       loading.balance[key] = true
       const { data: balance } = await getPlatformBalance(
@@ -2307,6 +2384,14 @@ export default defineComponent({
       return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
     }
 
+    const sendSms = async () => {
+      smsForm.siteId = site.id
+      smsForm.memberId = props.mbrId
+      await sendOneSms(smsForm)
+      uiControl.dialogVisible = false
+      ElMessage({ message: t('message.success'), type: 'success' })
+    }
+
     onMounted(async () => {
       loading.accountInfo = true
       loading.affiliateInfo = true
@@ -2336,10 +2421,12 @@ export default defineComponent({
       loading.loginInfo = false
 
       await loadBalance()
+      await refreshClaimableRebate()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true
         uiControl.showCall1 = true
+        uiControl.showSend = true
       }
     })
 
@@ -2384,6 +2471,9 @@ export default defineComponent({
       platformTransferForm,
       transferForm,
       transferFormRules,
+      smsForm,
+      sendSmsForm,
+      sendSms,
       showTransferDialogue,
       validatePassword,
       validateReEnterPassword,
@@ -2407,6 +2497,7 @@ export default defineComponent({
       loadBalance,
       refreshAllBalance,
       refreshDnW,
+      refreshClaimableRebate,
       refreshPlatformBalance,
       unmaskDetail,
       unmaskedValue,
@@ -2431,6 +2522,9 @@ export default defineComponent({
       updateModelForm,
       modelForm,
       getAffiliateRatio,
+      isInd,
+      isKorea,
+      LOGIN_USER_SITEID
     }
   },
 })

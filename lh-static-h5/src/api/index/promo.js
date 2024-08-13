@@ -7,6 +7,10 @@ export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
 }
 
+export function claimBonusItem2(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
+}
+
 export function getSportMatchQuizInfo() {
   return eventapi.get(`/quiz/upcoming`, {});
 }
@@ -193,12 +197,24 @@ export function getNewUserAccumulateDepositInit() {
   return eventapi.get("/new-user-accumulate-deposit/init");
 }
 
-export function putNewUserAccumulateDepositClaim(ruleAmount) {
-  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
+export function putNewUserAccumulateDepositClaim(ruleAmount, type) {
+  return eventapi.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}&type=${type}`, {});
 }
 export function initUefaCheckin() {
   return eventapi.get("/lh-uefa-check-in/init");
 }
 export function claimUefaCheckin() {
   return eventapi.put("/lh-uefa-check-in/claim");
+}
+
+export function getLivePoker() {
+  return eventapi.get("/live-poker");
+}
+
+export function claimLivePokerBonus() {
+  return eventapi.put("/bonus/claim/lh1-live-poker-bonus");
+}
+
+export function footballHistroy() {
+  return eventapi.get("/lh1-football/history");
 }

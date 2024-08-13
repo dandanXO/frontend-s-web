@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div class="q-mt-sm">
+      <div class="q-mt-sm" v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')">
         <LangOptions />
       </div>
     </div>
@@ -31,12 +31,14 @@
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? "VNDP " + mainWallet : $t("lang.loading") }}
+              {{ !isLoadingBalance ? mainWallet + " 원" : $t("lang.loading") }}
             </div>
+            <!-- TODO: -->
+            <RedeemPoint class="redeem" />
           </div>
         </q-card-section>
         <q-card-section class="acct-btm-section">
-          <div class="vip-level-detail">
+          <!-- <div class="vip-level-detail">
             <div class="vip-link">{{ store.vip }}</div>
 
             <div class="vip-progress">
@@ -44,7 +46,7 @@
             </div>
 
             <div class="vip-link">{{ updatedVip() }}</div>
-          </div>
+          </div> -->
           <!-- <div class="vip-info-div">
             <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
               <div>晋级存款（元）</div>
@@ -97,14 +99,14 @@
             <q-btn :label="$t('lang.deposit_btn')" no-caps class="btn-main btn-pointer" @click="openDeposit" />
 
             <q-btn :label="$t('lang.withdraw_btn')" no-caps class="btn-main btn-pointer" @click="openWithdraw" />
-            <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
+            <!-- <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" /> -->
             <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
-            <div class="eshare-div">
+          <div class="eshare-div">
             <span v-if="store.evip">
               {{ $t("lang.personal_exclusiveurl") }}:
-              <a class="share-link" :href="'https://' +store.evip" target="_blank">
-                {{ 'https://' + store.evip }}
+              <a class="share-link" :href="'https://' + store.evip" target="_blank">
+                {{ "https://" + store.evip }}
               </a>
               <!-- <img
                 class="copy-btn btn-pointer"
@@ -114,64 +116,16 @@
             </span>
           </div>
         </q-card-section>
-
-        <!-- <q-separator /> -->
-
-        <!-- <q-card class="bluecard vip-info-board" @click="goToVip"> -->
-        <!-- <div class="vipline q-mt-sm"> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel }}</span> -->
-        <!-- </div> -->
-        <!-- <div class="middle"> -->
-        <!-- <div class="row items-center justify-between"> -->
-        <!-- <div class="left">成长值</div> -->
-        <!-- <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div> -->
-        <!-- </div> -->
-
-        <!-- <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" /> -->
-        <!-- </div> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel + 1 }}</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-
-        <!-- <div class="vip-get-div row justify-between items-center q-mt-sm"> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>晋级礼包</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>生日礼金</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>每月活动</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>专属活动</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </q-card> -->
       </q-card-section>
     </div>
 
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">{{ $t("lang.account_title") }}</div>
-        <router-link class="acct-title-link" to="/promo?redirect=account">
+        <!-- <router-link class="acct-title-link" to="/promo?redirect=account">
           {{ $t("lang.account_bonus_redeem") }}
           <q-icon name="chevron_right" size="20px" />
-        </router-link>
+        </router-link> -->
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
@@ -183,14 +137,14 @@
           </div>
         </router-link>
 
-        <router-link to="/account/withdraw">
+        <!-- <router-link to="/account/withdraw">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-bank-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_bank") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <router-link to="/account/records">
           <div class="acct-nav-item">
@@ -201,23 +155,23 @@
           </div>
         </router-link>
 
-        <router-link to="/account/letters">
+        <!-- <router-link to="/account/letters">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_mailbox") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <router-link to="/account/invite">
+        <!-- <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-share-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_refer_friend") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <!-- <router-link to="/account/letters">
           <div class="acct-nav-item">
@@ -237,14 +191,14 @@
           </div>
         </router-link>
 
-        <router-link to="/affiliate">
+        <!-- <router-link to="/affiliate">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-affiliate-icon.png" />
             <div class="acct-nav-label">
               {{ $t("lang.mine_apply_for_partnership") }}
             </div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <!-- <router-link to="/promo?redirect=account"> -->
         <!-- <div class="acct-nav-item"> -->
@@ -392,14 +346,15 @@ import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import LangOptions from "components/LangOptions";
+import RedeemPoint from "src/components/shared/RedeemPoint.vue";
 
 export default defineComponent({
   name: "AccountPage",
-  components: { LangOptions },
+  components: { LangOptions, RedeemPoint },
   setup() {
     const router = useRouter();
     const store = userStore();
@@ -498,7 +453,7 @@ export default defineComponent({
       getVipProgress();
     });
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
@@ -806,8 +761,9 @@ export default defineComponent({
     color: $white;
     font-size: 1rem;
     font-weight: bold;
-    width: calc(100% - 135px);
+    // width: calc(100% - 135px);
     // margin-left: 25px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -815,6 +771,10 @@ export default defineComponent({
     img {
       height: 1.2rem;
     }
+  }
+
+  .redeem {
+    color: #fff;
   }
 
   .acct-btm-section {
@@ -879,32 +839,31 @@ export default defineComponent({
         }
       }
     }
-
   }
 
   .eshare-div {
-      margin-right: auto;
-      width: 100%;
-      color: #A4AABB;
-      font-size: 1rem;
-      // font-weight: bold;
+    margin-right: auto;
+    width: 100%;
+    color: #a4aabb;
+    font-size: 1rem;
+    // font-weight: bold;
 
-      > span {
-        display: flex;
-        justify-content: flex-start;
-        gap: 10px;
-          }
-
-      .copy-btn {
-        width: 20px;
-      }
-
-      .share-link {
-        color: $white;
-        font-weight: bold;
-        text-decoration: none;
-      }
+    > span {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
     }
+
+    .copy-btn {
+      width: 20px;
+    }
+
+    .share-link {
+      color: $white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
   //.bluecard {
   //  width: 98%;
   //  margin: 0 0px !important;
@@ -1009,7 +968,7 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    // grid-template-rows: repeat(2, 1fr);
     grid-gap: 10px;
     gap: 10px;
     row-gap: 10px;

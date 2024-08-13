@@ -1,6 +1,6 @@
 {
   "name": "vnm-static-h5",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "TF88 - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
   "productName": "TF88",
   "author": "WeiSeng <weiseng@eagrp.net>",
@@ -47,6 +47,7 @@
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
     "quasar": "^2.14.3",
+    "sitemap-webpack-plugin": "^1.1.1",
     "sweetalert2": "^11.7.12",
     "swiper": "^9.3.2",
     "vue": "^3.4.18",

@@ -369,6 +369,13 @@ const getData = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    ElMessage({
+      message: "请登录后操作",
+      type: "error"
+    });
+    return;
+  }
   getData();
 });
 </script>

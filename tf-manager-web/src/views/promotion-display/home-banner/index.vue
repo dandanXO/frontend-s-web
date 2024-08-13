@@ -491,19 +491,19 @@
           <el-row>
             <span style="width: 350px" disabled>{{ t('fields.desktopBanner') }}</span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1920*500</span>
-          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 2000*500</span>
-          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1920*500</span>
-          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1920*568</span>
+          <span v-if="isXF(imageForm.siteId)">{{ t('fields.imageSize') }}: 1920*500</span>
+          <span v-if="isThai(imageForm.siteId)">{{ t('fields.imageSize') }}: 2000*500</span>
+          <span v-if="isDY(imageForm.siteId)">{{ t('fields.imageSize') }}: 1920*500</span>
+          <span v-if="isLH(imageForm.siteId)">{{ t('fields.imageSize') }}: 1920*568</span>
         </div>
         <div v-if="imageForm.promoType === 'MOBILE_BANNER'">
           <el-row>
             <span style="width: 350px" disabled>{{ t('fields.mobileBanner') }}</span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1080*534</span>
-          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 1080*675</span>
-          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1080*534</span>
-          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1000*400</span>
+          <span v-if="isXF(imageForm.siteId)">{{ t('fields.imageSize') }}: 1080*534</span>
+          <span v-if="isThai(imageForm.siteId)">{{ t('fields.imageSize') }}: 1080*675</span>
+          <span v-if="isDY(imageForm.siteId)">{{ t('fields.imageSize') }}: 1080*534</span>
+          <span v-if="isLH(imageForm.siteId)">{{ t('fields.imageSize') }}: 1000*400</span>
         </div>
       </el-form-item>
       <el-form-item :label="t('fields.remark')" prop="remark">
@@ -545,6 +545,7 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import { isXF, isThai, isDY, isLH } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()

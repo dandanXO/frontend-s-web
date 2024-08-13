@@ -144,7 +144,7 @@
         <el-form-item
           :label="t('fields.sequence')"
           prop="sequence"
-          v-if="request.siteId === 11"
+          v-if="isPak(request.siteId)"
         >
           <el-input-number
             v-model="form.sequence"
@@ -216,7 +216,7 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-table :data="props.row.withdrawalChannelOrderVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId === 11">
+            <el-table :data="props.row.withdrawalChannelOrderVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="isPak(request.siteId)">
               <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
               <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
                 <template #default="scope">
@@ -240,13 +240,13 @@
                     size="mini"
                     type="success"
                     @click="batchSave(props.row.withdrawalChannelOrderVO)"
-                    v-if="request.siteId === 11 && hasPermission(['sys:systemautowithdraw:update'])"
+                    v-if="isPak(request.siteId) && hasPermission(['sys:systemautowithdraw:update'])"
                   >{{ t('fields.update') }}
                   </el-button>
                 </template>
               </el-table-column>
             </el-table>
-            <el-table :data="props.row.withdrawalChannelOrderTest" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId === 11">
+            <el-table :data="props.row.withdrawalChannelOrderTest" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="isPak(request.siteId)">
               <el-table-column :label="t('types.TEST') + ' ' + t('fields.withdrawPlatformName')" prop="withdrawPlatformName">
                 <template #default="scope">
                   <el-select
@@ -342,6 +342,7 @@ import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
+import { isPak } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -448,7 +449,7 @@ async function loadSiteWithdrawPlatform(siteId) {
 }
 
 async function loadWithdrawPlatform() {
-  const { data: ret } = await getWithdrawPlatforms();
+  const { data: ret } = await getWithdrawPlatforms(request);
   list.withdrawPlatform = ret.records
 }
 

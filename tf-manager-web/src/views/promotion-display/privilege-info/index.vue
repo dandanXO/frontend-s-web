@@ -151,13 +151,17 @@
         <el-form-item
           :label="t('fields.bonusDays')"
           prop="bonusDays"
-          v-if="form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES'"
+          v-if="
+            form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES'
+          "
         >
           <el-checkbox
             v-model="checkboxes.bonusDays.checkAll"
             :indeterminate="checkboxes.bonusDays.isIndeterminate"
             @change="handleBonusDaysCheckAllChange"
-          >{{ t('fields.checkall') }}</el-checkbox>
+          >
+            {{ t('fields.checkall') }}
+          </el-checkbox>
           <el-checkbox-group
             v-model="selectedBonusDays.bonusDaysChecked"
             @change="handleCheckedChange('BONUSDAYS')"
@@ -216,7 +220,10 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item :label="t('fields.gameTypeRollover')" prop="gameTypeRollover">
+          <el-form-item
+            :label="t('fields.gameTypeRollover')"
+            prop="gameTypeRollover"
+          >
             <div v-for="(item, index) in rollover" :key="index">
               <el-select
                 v-model="item.key"
@@ -231,14 +238,30 @@
                   :label="t(`gameType.${gameType.displayName}`)"
                   :value="gameType.value"
                 />
-              </el-select> : <el-input style="width: 170px " v-model="item.value" />
-              <el-button v-if="index === rollover.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
-                         @click="addRollover()" plain
-              >{{ t('fields.add') }}
+              </el-select>
+              :
+              <el-input style="width: 170px " v-model="item.value" />
+              <el-button
+                v-if="index === rollover.length - 1"
+                icon="el-icon-plus"
+                size="mini"
+                type="primary"
+                style="margin-left: 20px"
+                @click="addRollover()"
+                plain
+              >
+                {{ t('fields.add') }}
               </el-button>
-              <el-button v-else icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
-                         @click="delRollover(index)" plain
-              >{{ t('fields.delete') }}
+              <el-button
+                v-else
+                icon="el-icon-remove"
+                size="mini"
+                type="danger"
+                style="margin-left: 20px"
+                @click="delRollover(index)"
+                plain
+              >
+                {{ t('fields.delete') }}
               </el-button>
             </div>
           </el-form-item>
@@ -297,7 +320,9 @@
             v-model="checkboxes.vip.checkAll"
             :indeterminate="checkboxes.vip.isIndeterminate"
             @change="handleVIPCheckAllChange"
-          >{{ t('fields.checkall') }}</el-checkbox>
+          >
+            {{ t('fields.checkall') }}
+          </el-checkbox>
           <el-checkbox-group
             v-model="selectedVIPs.vipChecked"
             @change="handleCheckedChange('VIP')"
@@ -313,7 +338,9 @@
             v-model="checkboxes.paymentType.checkAll"
             :indeterminate="checkboxes.paymentType.isIndeterminate"
             @change="handlePaymentTypeCheckAllChange"
-          >{{ t('fields.checkall') }}</el-checkbox>
+          >
+            {{ t('fields.checkall') }}
+          </el-checkbox>
           <el-checkbox-group
             v-model="selectedPayTypes.payTypeChecked"
             @change="handleCheckedChange('PAYTYPE')"
@@ -343,17 +370,42 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.pgroup')" prop="pgroup" v-if="uiControl.pgroup">
-          <el-input v-model="form.pgroup" style="width: 450px" maxlength="100" />
+        <el-form-item
+          :label="t('fields.pgroup')"
+          prop="pgroup"
+          v-if="uiControl.pgroup"
+        >
+          <el-input
+            v-model="form.pgroup"
+            style="width: 450px"
+            maxlength="100"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.param')" prop="param">
+          <JsonEditor
+            class="editor"
+            v-model="editorValue"
+            currentMode="code"
+            :modeList="[]"
+            @update:modelValue="updataModel"
+          />
+          <div v-if="editorValueError">
+            {{ editorValueError }}
+          </div>
           <el-input
+            v-if="editorValueError"
             type="textarea"
             v-model="form.param"
             :rows="20"
-            style="width: 350px; white-space: pre-line"
+            style="width: 450px; white-space: pre-line"
             placeholder="{'abc':'xyz'}"
             @change="json"
+          />
+          <el-input
+            v-else
+            type="hidden"
+            v-model="form.param"
+            style="width: 450px; white-space: pre-line"
           />
         </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
@@ -367,8 +419,12 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -383,7 +439,11 @@
     >
       <el-table-column prop="name" :label="t('fields.name')" width="200" />
       <el-table-column prop="alias" :label="t('fields.alias')" width="200" />
-      <el-table-column prop="bonusType" :label="t('fields.bonusType')" width="150">
+      <el-table-column
+        prop="bonusType"
+        :label="t('fields.bonusType')"
+        width="150"
+      >
         <template #default="scope">
           <span v-for="b in uiControl.bonusType" :key="b.key">
             <span v-if="scope.row.bonusType === b.value">
@@ -392,7 +452,11 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="bonusAmount" :label="t('fields.bonusAmount')" width="150">
+      <el-table-column
+        prop="bonusAmount"
+        :label="t('fields.bonusAmount')"
+        width="150"
+      >
         <template #default="scope">
           <span v-if="scope.row.bonusType === 'FIXED'">
             $
@@ -406,7 +470,11 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="frequency" :label="t('fields.frequency')" width="150">
+      <el-table-column
+        prop="frequency"
+        :label="t('fields.frequency')"
+        width="150"
+      >
         <template #default="scope">
           <span v-for="f in uiControl.frequency" :key="f.key">
             <span v-if="scope.row.frequency === f.value">
@@ -435,7 +503,11 @@
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
           />
         </template>
       </el-table-column>
@@ -481,13 +553,15 @@ import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n'
+import JsonEditor from 'json-editor-vue3'
+import { isXF, isThai } from '@/utils/site'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
-const rollover = ref([]);
+const rollover = ref([])
 const privilegeInfoForm = ref(null)
 const siteList = reactive({
   list: [],
@@ -519,7 +593,7 @@ const uiControl = reactive({
     { key: 5, displayName: 'Time', value: 'TIME' },
     { key: 6, displayName: 'Multiple', value: 'MULTIPLE' },
     { key: 7, displayName: 'PGroup', value: 'PGROUP' },
-    { key: 8, displayName: 'Sequence', value: 'SEQUENCE' }
+    { key: 8, displayName: 'Sequence', value: 'SEQUENCE' },
   ],
   status: [
     { key: 1, displayName: 'Open', value: 'OPEN' },
@@ -542,7 +616,7 @@ const uiControl = reactive({
     { key: 4, displayName: 'SPORT', value: 'sport' },
     { key: 5, displayName: 'ESPORT', value: 'esport' },
     { key: 6, displayName: 'POKER', value: 'poker' },
-    { key: 7, displayName: 'LOTTERY', value: 'lottery' }
+    { key: 7, displayName: 'LOTTERY', value: 'lottery' },
   ],
   bonusAmountRatioMax: 15,
   pgroup: false,
@@ -668,12 +742,14 @@ function handleCheckedChange(type) {
   } else if (type === 'PAYTYPE') {
     form.payTypes = JSON.stringify(selectedPayTypes.payTypeChecked.join(','))
   } else if (type === 'BONUSDAYS') {
-    form.bonusDays = JSON.stringify(selectedBonusDays.bonusDaysChecked.join(','))
+    form.bonusDays = JSON.stringify(
+      selectedBonusDays.bonusDaysChecked.join(',')
+    )
   }
   handleIndividualCheckChange()
 }
 
-const handleVIPCheckAllChange = (val) => {
+const handleVIPCheckAllChange = val => {
   selectedVIPs.vipChecked = []
   if (val) {
     vipList.list.forEach(vip => {
@@ -683,7 +759,7 @@ const handleVIPCheckAllChange = (val) => {
   handleCheckedChange('VIP')
 }
 
-const handlePaymentTypeCheckAllChange = (val) => {
+const handlePaymentTypeCheckAllChange = val => {
   selectedPayTypes.payTypeChecked = []
   if (val) {
     paymentTypeList.list.forEach(paymentType => {
@@ -693,7 +769,7 @@ const handlePaymentTypeCheckAllChange = (val) => {
   handleCheckedChange('PAYTYPE')
 }
 
-const handleBonusDaysCheckAllChange = (val) => {
+const handleBonusDaysCheckAllChange = val => {
   selectedBonusDays.bonusDaysChecked = []
   if (val) {
     uiControl.day.forEach(day => {
@@ -704,9 +780,9 @@ const handleBonusDaysCheckAllChange = (val) => {
 }
 
 function changeSite(siteId) {
-  if (siteId === 1) {
+  if (isXF(siteId)) {
     form.minBalance = 5
-  } else if (siteId === 3) {
+  } else if (isThai(siteId)) {
     form.minBalance = 20
   } else {
     form.minBalance = 0
@@ -724,10 +800,11 @@ async function loadPrivilegeInfo() {
   const { data: ret } = await getPrivilegeInfo(request)
   page.pages = ret.pages
   ret.records.forEach(data => {
-    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
-      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
-      : null
-  });
+    data.timeZone =
+      store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+        ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+        : null
+  })
   page.records = ret.records
   page.loading = false
 }
@@ -766,15 +843,20 @@ function showDialog(type) {
     form.triggerType = uiControl.triggerType[0].value
     form.siteId = siteList.list[0].id
     changeSite(form.siteId)
-    rollover.value = [];
-    addRollover();
-    uiControl.pgroup = false;
+    rollover.value = []
+    addRollover()
+    uiControl.pgroup = false
     uiControl.dialogTitle = t('fields.addPrivilegeInfo')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editPrivilegeInfo')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+  editorValue = ''
+  editorValueError = ''
+  nextTick(() => {
+    removeJsonEditorElement()
+  })
 }
 
 async function showEdit(privilegeInfo) {
@@ -786,10 +868,7 @@ async function showEdit(privilegeInfo) {
   await nextTick(() => {
     for (const key in privilegeInfo) {
       if (Object.keys(form).find(k => k === key)) {
-        if (
-          privilegeInfo.bonusType === 'RATIO' &&
-          key === 'bonusAmount'
-        ) {
+        if (privilegeInfo.bonusType === 'RATIO' && key === 'bonusAmount') {
           form.bonusAmountRatio = privilegeInfo[key] * 100
           form.bonusAmount = 1
         } else if (
@@ -800,14 +879,23 @@ async function showEdit(privilegeInfo) {
           form.bonusAmountRatio = 1
         } else {
           form[key] = privilegeInfo[key]
+
+          if (key === 'param') {
+            try {
+              editorValue = JSON.parse(form[key])
+            } catch (error) {
+              editorValueError =
+                error.length > 30 ? error.substr(0, 30) + '..' : error
+            }
+          }
         }
       }
     }
 
     if (privilegeInfo.triggerType === 'PGROUP') {
-      uiControl.pgroup = true;
+      uiControl.pgroup = true
     } else {
-      uiControl.pgroup = false;
+      uiControl.pgroup = false
     }
 
     const vipArr = JSON.parse(JSON.stringify(form.vips)).split(',')
@@ -826,17 +914,19 @@ async function showEdit(privilegeInfo) {
       })
     }
     handleIndividualCheckChange()
-    rollover.value = [];
+    rollover.value = []
     if (form.gameTypeRollover) {
-      Object.entries(JSON.parse(form.gameTypeRollover)).forEach(([key, value]) => {
-        const json = {};
-        json.key = key;
-        json.value = value;
-        rollover.value.push(json);
-      })
-      addRollover();
+      Object.entries(JSON.parse(form.gameTypeRollover)).forEach(
+        ([key, value]) => {
+          const json = {}
+          json.key = key
+          json.value = value
+          rollover.value.push(json)
+        }
+      )
+      addRollover()
     } else {
-      addRollover();
+      addRollover()
     }
   })
 }
@@ -849,12 +939,20 @@ function handleCategoryChange(selectedList, checkboxData, dataList) {
 }
 
 function handleIndividualCheckChange() {
-  const vipIds = [...new Set(vipList.list.map(el => el.id))];
+  const vipIds = [...new Set(vipList.list.map(el => el.id))]
   handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
-  const paymentCodes = [...new Set(paymentTypeList.list.map(el => el.code))];
-  handleCategoryChange(selectedPayTypes.payTypeChecked, checkboxes.paymentType, paymentCodes)
-  const bonusDays = [...new Set(uiControl.day.map(el => el.value))];
-  handleCategoryChange(selectedBonusDays.bonusDaysChecked, checkboxes.bonusDays, bonusDays)
+  const paymentCodes = [...new Set(paymentTypeList.list.map(el => el.code))]
+  handleCategoryChange(
+    selectedPayTypes.payTypeChecked,
+    checkboxes.paymentType,
+    paymentCodes
+  )
+  const bonusDays = [...new Set(uiControl.day.map(el => el.value))]
+  handleCategoryChange(
+    selectedBonusDays.bonusDaysChecked,
+    checkboxes.bonusDays,
+    bonusDays
+  )
 }
 
 function clearCheckAll() {
@@ -877,12 +975,16 @@ function create() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
-      if (form.bonusDays && form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES') {
+      if (
+        form.bonusDays &&
+        form.frequency === 'DAILY' &&
+        form.triggerType === 'DEPOSITBONUSES'
+      ) {
         form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
       } else {
         form.bonusDays = ''
       }
-      form.gameTypeRollover = constructRollover();
+      form.gameTypeRollover = constructRollover()
       await createPrivilegeInfo(form)
       uiControl.dialogVisible = false
       await loadPrivilegeInfo()
@@ -902,12 +1004,16 @@ function edit() {
       }
       form.vips = form.vips.replace(/['"]+/g, '')
       form.payTypes = form.payTypes.replace(/['"]+/g, '')
-      if (form.bonusDays && form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES') {
+      if (
+        form.bonusDays &&
+        form.frequency === 'DAILY' &&
+        form.triggerType === 'DEPOSITBONUSES'
+      ) {
         form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
       } else {
         form.bonusDays = ''
       }
-      form.gameTypeRollover = constructRollover();
+      form.gameTypeRollover = constructRollover()
       await updatePrivilegeInfo(form)
       uiControl.dialogVisible = false
       await loadPrivilegeInfo()
@@ -964,31 +1070,58 @@ function json() {
 
 function onChange(e) {
   if (e === 'PGROUP') {
-    uiControl.pgroup = true;
+    uiControl.pgroup = true
   } else {
-    uiControl.pgroup = false;
+    uiControl.pgroup = false
   }
 }
 
 function addRollover() {
   rollover.value.push({
-    key: "",
-    value: ""
+    key: '',
+    value: '',
   })
 }
 
 function delRollover(index) {
-  rollover.value.splice(index, 1);
+  rollover.value.splice(index, 1)
 }
 
 function constructRollover() {
-  const json = {};
-  Object.values(rollover.value).forEach((item) => {
+  const json = {}
+  Object.values(rollover.value).forEach(item => {
     if (item.key) {
-      json[item.key] = item.value;
+      json[item.key] = item.value
     }
-  });
-  return JSON.stringify(json);
+  })
+  return JSON.stringify(json)
+}
+
+let editorValue = ref({})
+let editorValueError = ref(null)
+
+const updataModel = val => {
+  form.param = JSON.stringify(val, null, '\t')
+  editorValue = val
+}
+
+function removeJsonEditorElement() {
+  const classesToRemove = [
+    'jsoneditor-poweredBy',
+    'jsoneditor-sort',
+    'jsoneditor-transform',
+    'jsoneditor-undo',
+    'jsoneditor-redo',
+    'jsoneditor-repair',
+  ]
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className)
+    Array.from(elements).forEach(element => {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  })
 }
 
 onMounted(async () => {
@@ -1004,7 +1137,7 @@ onMounted(async () => {
 })
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
 .header-container {
   margin-bottom: 10px;
 }
@@ -1029,5 +1162,9 @@ onMounted(async () => {
 
 .el-input-number:deep .el-input__inner {
   text-align: left;
+}
+
+.full-screen {
+  right: 20px !important;
 }
 </style>

@@ -112,6 +112,9 @@ import { userStore } from "@/store";
 
 export default defineComponent({
   name: "ShareView",
+  components: {
+    VueQRCodeComponent
+  },
   setup() {
     const notify = useNotify();
     const store= userStore();

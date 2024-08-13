@@ -14,67 +14,68 @@
     <NbaGamePromo v-if="list.redirectUrl === 'nba-game'" />
     <MeiZhouBeiPromoPage v-if="list.redirectUrl === 'dy2meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
-    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg' && store.token" />
+    <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
 
-    <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser' && store.token" />
+    <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
-    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery' && store.token"></LotteryPromo>
-    <GiftPromo v-if="list.redirectUrl === 'dy2-gift' && store.token"></GiftPromo>
-    <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A' && store.token"></AsianCup2024>
-    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && store.token"></BasketballHot>
-    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && store.token" />
-    <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match' && store.token" />
-    <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && store.token"></LPLSummer>
-    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && store.token"></Cny2024Promo>
-    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && store.token"></BbDacha2024Promo>
+    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
+    <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
+    <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A'"></AsianCup2024>
+    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball'"></BasketballHot>
+    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
+    <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match'" />
+    <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B'"></LPLSummer>
+    <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
+    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
+    <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode"/>
     <PrivilegeInvite
       v-if="
-        (list.redirectUrl === 'Dongying-refer' ||
-          list.redirectUrl === 'dy2-refer-bonus' ||
-          list.redirectUrl === 'dy2-refer-bonus') &&
-        store.token
+        list.redirectUrl === 'Dongying-refer' ||
+        list.redirectUrl === 'dy2-refer-bonus' ||
+        list.redirectUrl === 'dy2-refer-bonus'
       "
     />
-    <CnyStepGame2024Promo v-if="list.redirectUrl === 'dy2-cny-step-game' && store.token"></CnyStepGame2024Promo>
+    <CnyStepGame2024Promo v-if="list.redirectUrl === 'dy2-cny-step-game'"></CnyStepGame2024Promo>
 
-    <Dy2StepGamePromo
-      v-if="list.redirectUrl === 'dy2-game-steps' && store.token"
-      :pageContent="list.pageContent"
-    ></Dy2StepGamePromo>
+    <Dy2StepGamePromo v-if="list.redirectUrl === 'dy2-game-steps'" :pageContent="list.pageContent"></Dy2StepGamePromo>
 
-    <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024' && store.token" :promo-code="list.promoCode" />
-    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && store.token" />
-    <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && store.token" />
+    <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
+    <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel'" />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo'" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="list.redirectUrl === 'dy2-eurocup-hongbao' && store.token"
+      v-if="list.redirectUrl === 'dy2-eurocup-hongbao'"
     />
 
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="listParam.type === 'hongbaoyu' && store.token"
+      v-if="listParam.type === 'hongbaoyu'"
     />
-    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && store.token" />
-    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && store.token" />
-    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && store.token" />
-    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && store.token" :promo-code="list.promoCode" />
-    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && store.token" />
-    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && store.token" />
-    <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund' && store.token" />
-    <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot' && store.token" :promo-code="list.promoCode" />
-    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && store.token">
+    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24'" />
+    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24'" />
+    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
+    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
+    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
+    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
+    <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
+    <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
+    <NewplayerGuide v-if="list.redirectUrl === 'dy2-newplayer-guide'" />
+    <intelEsl2024 v-if="list.redirectUrl === 'dy2-intel-esl'" />
+
+    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/webfeedback.png"
       />
     </div>
 
-    <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei' && store.token">
+    <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei'">
       <div class="cs-btn" @click="store.openLiveChat()">联系客服</div>
     </div>
 
@@ -125,18 +126,22 @@ import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
+import intelEsl2024 from "../components/hotpromo/intel-esl-2024/intel-esl-2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
+import NewplayerGuide from "../components/hotpromo/newplayerguide/NewPlayerGuide.vue";
 
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
 
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -144,6 +149,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
     fishHongbao,
@@ -179,9 +185,12 @@ export default defineComponent({
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
     LPLSummer24,
+    intelEsl2024,
     DragonBoat,
     EurocupManual,
-    OuZuLianPromo
+    OuZuLianPromo,
+    NewplayerGuide,
+    LPLLCK
   },
   props: {
     list: {
@@ -287,6 +296,20 @@ export default defineComponent({
   },
   methods: {
     handleSlot() {
+      const store = userStore();
+      if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
 

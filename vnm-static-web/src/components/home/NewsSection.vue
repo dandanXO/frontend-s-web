@@ -1,13 +1,13 @@
 <template>
   <div class="news-section">
     <el-card>
-      <img src="../../assets/logo.svg" />
+      <img src="../../assets/logo.svg" alt="TF88 logo">
       <el-tabs v-model="activeName" class="demo-tabs" >
         <el-tab-pane :label="t('home.footballNews')" name="first">
           <div class="news-listing">
             <div class="news" v-for="news in footballNewsList.slice(0,5)" @click="open(news.url)">
               <div class="news-image">
-                <img :src="news.pictureurl" />
+                <img :src="news.pictureurl" :alt="news.title">
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
@@ -23,7 +23,7 @@
           <div class="news-listing">
             <div class="news" v-for="news in esportNewsList.slice(0,5)">
               <div class="news-image">
-                <img :src="news.pictureurl" />
+                <img :src="news.pictureurl" :alt="news.title"/>
               </div>
               <div class="news-contents" @click="open(news.url)">
                 <div class="news-title">{{ news.title }}</div>
@@ -39,7 +39,7 @@
           <div class="news-listing">
             <div class="news" v-for="news in soccerBettingList.slice(0,5)">
               <div class="news-image">
-                <img :src="news.pictureurl" />
+                <img :src="news.pictureurl" :alt="news.title"/>
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
@@ -55,7 +55,7 @@
           <div class="news-listing">
             <div class="news" v-for="news in bettingGuideList.slice(0,5)">
               <div class="news-image">
-                <img :src="news.pictureurl" />
+                <img :src="news.pictureurl" :alt="news.title"/>
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
@@ -159,6 +159,9 @@ onMounted(() => {
         height: 165px;
         overflow: hidden;
         border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img {
           height: 100%;
         }

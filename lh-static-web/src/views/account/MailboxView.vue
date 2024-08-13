@@ -279,7 +279,7 @@ const readAllMsg = (m) => {
     .then((res) => {
       if (res.code === 0) {
         notify({
-          message: "已全读部消息",
+          message: "已全部已读",
           type: "success"
         });
 
@@ -539,6 +539,9 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+:deep(.el-tabs__content) {
+  overflow: unset;
+}
 .mail-content {
   overflow-wrap: break-word;
   .mailbox-checkbox {
@@ -590,6 +593,11 @@ onMounted(() => {
       display: flex;
       align-items: center;
       gap: 15px;
+    }
+    .right {
+      position: absolute;
+      right: 0;
+      top: -50px;
     }
 
     .left,
@@ -685,7 +693,7 @@ onMounted(() => {
   line-height: 18px;
   margin-right: 10px;
 
-  img{
+  img {
     width: 100%;
   }
 }

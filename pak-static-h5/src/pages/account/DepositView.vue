@@ -91,9 +91,10 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
-          <div class="lil-title flex-div">
-            {{ $t("form.depositAmount") }}
-            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+          <div class="lil-title flex-div" style="justify-content: flex-end">
+            <!--            {{ $t("form.depositAmount") }}-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
@@ -148,9 +149,16 @@
           }}
         </div> -->
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
           <span style="color: #fff">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">
+              {{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}
+            </template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
             {{ store.currency.value }}
           </span>
         </div>
@@ -216,22 +224,41 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>
-        1. Recharge tutorial:
-        <span class="tutorial-link" @click="openDepositPage">Picture</span>
-        /
-        <span class="tutorial-link" @click="openDepositVideo">Video</span>
-      </p>
-      <p>2. Fill in the correct wallet account number</p>
-      <p>3. Fill in the correct CNIC number</p>
-      <p>
-        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-        credited.
-      </p>
+    <div class="q-mt-lg step-desc-div q-mb-lg">
+      <template v-if="isUSDT">
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
+        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>
+          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+        </p>
+        <p>
+          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+        </p>
+        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+      </template>
+      <template v-else>
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Fill in the correct wallet account number</p>
+        <p>3. Fill in the correct CNIC number</p>
+        <p>
+          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+          credited.
+        </p>
+      </template>
     </div>
-
-    <div class="bottom-content" style="height: 110px"></div>
+    <!-- <MediaSettingsComponent /> -->
+    <div class="bottom-content" style="height: 60px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -303,6 +330,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
+// import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -333,6 +361,8 @@ const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
 const amountList = ref([]);
+const amountDepositMin = ref();
+const amountDepositMax = ref();
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
@@ -487,8 +517,15 @@ function selectPayType(value) {
     if (value.extra && value.extra.amountArr) {
       amountList.value = value.extra.amountArr;
     }
+
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
+    }
+    if (value.depositMin) {
+      amountDepositMin.value = value.depositMin;
+    }
+    if (value.depositMax) {
+      amountDepositMax.value = value.depositMax;
     } else {
       bankCardList.value = [];
       form.bankId = null;
@@ -527,20 +564,20 @@ const onSelect = (value) => {
       }));
       checkPrivilege(value);
     }
-    checkMinDepositAmt();
   }
 };
 
-function checkMinDepositAmt() {
+function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 300;
-  calculatedMaxDeposit.value = 50000;
+  calculatedMinDeposit.value = val.depositMin;
+  calculatedMaxDeposit.value = val.depositMax;
 }
 
 function checkPrivilege(v) {
   selectPayType(v);
   if (v.paymentId !== null && v.paymentId !== undefined) {
     loadPrivilege(v);
+    checkMinDepositAmt(v);
     // unselectedPrivileges.value = [];
   }
 }
@@ -581,7 +618,7 @@ function clearInfo() {
   if (depositForm.value) {
     depositForm.value.reset();
   }
-  checkMinDepositAmt();
+  // checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
@@ -790,7 +827,7 @@ const refreshNode = () => {
 
 const isDepositTutorial = ref(false);
 
-const langSelect= localStorage.getItem("languageLocale") ?? "";
+const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
@@ -805,9 +842,9 @@ const openDepositPage = () => {
 };
 
 const openDepositVideo = () => {
-  if(langSelect==='ur'){
+  if (langSelect === "ur") {
     window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
-  }else{
+  } else {
     window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
   }
   // if (selectedPayType.value === "EASYPAISA") {
@@ -817,6 +854,11 @@ const openDepositVideo = () => {
   // } else {
   //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   // }
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 onActivated(() => {
@@ -1116,7 +1158,7 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0;
+  padding: 20px 0 40px;
   position: fixed;
   bottom: 0;
   width: calc(100% - 32px);

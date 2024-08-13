@@ -49,6 +49,7 @@
               fill-input
               hide-selected
               @filter="filterBank"
+              behavior="menu"
             />
           </div>
 
@@ -387,4 +388,8 @@ defineExpose({
     overflow: hidden;
   }
 }
+
+//.q-select__dialog{
+//  max-height: 200px !important;
+//}
 </style>

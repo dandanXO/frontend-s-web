@@ -11,12 +11,20 @@ import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { ElConfigProvider } from "element-plus";
+import { submitMemberStats } from "@/api/index/site";
 
 import kr from "element-plus/dist/locale/ko.mjs";
 import en from "element-plus/dist/locale/en.mjs";
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
+
+import dayjs from 'dayjs';
+
+require('dayjs/locale/ko');
+var localizedFormat = require("dayjs/plugin/localizedFormat");
+dayjs.extend(localizedFormat);
+
 export default defineComponent({
   components: {
     ElConfigProvider
@@ -54,13 +62,13 @@ export default defineComponent({
       store.visitorId = sidParam;
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
-            way: "web",
-            sid: sidParam,
-            siteCode: "vnm"
-          }
-        });
+        const params = {
+          way: "web",
+          sid: sidParam,
+          siteCode: "krw"
+        };
+
+        submitMemberStats(params);
       }
     };
 

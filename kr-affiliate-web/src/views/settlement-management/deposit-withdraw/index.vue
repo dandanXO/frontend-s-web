@@ -131,7 +131,8 @@ function formatDate(date) {
   if (date === null || date.length === 0) {
     return "-"
   } else {
-    return date[0] + "-" + zeroPad(date[1]) + "-" + zeroPad(date[2]) + " " + zeroPad(date[3]) + ":" + zeroPad(date[4]) + ":" + zeroPad(date[5])
+    let formatDate = moment(date[0] + "-" + zeroPad(date[1]) + "-" + zeroPad(date[2]) + " " + zeroPad(date[3]) + ":" + zeroPad(date[4]) + ":" + zeroPad(date[5]))
+    return moment(formatDate).add(1, 'hours').locale('ko').format('LLL')
   }
 }
 

@@ -272,7 +272,6 @@ const uiControl = reactive({
     { key: 7, displayName: t('gameType.LOTTERY'), value: "LOTTERY" }
   ],
   status: [
-    { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },
     { key: 2, displayName: t('betStatus.SETTLED'), value: "SETTLED" },
     { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
   ]
@@ -357,7 +356,7 @@ const request = reactive({
   loginName: null,
   platform: null,
   gameType: [],
-  status: ["UNSETTLED", "SETTLED", "CANCEL"]
+  status: ["SETTLED", "CANCEL"]
 });
 
 const page = reactive({
@@ -387,7 +386,7 @@ function resetQuery() {
   request.loginName = null;
   request.platform = null;
   request.gameType = null;
-  request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
+  request.status = ["SETTLED", "CANCEL"];
   populateGameType();
 }
 
@@ -438,7 +437,9 @@ async function loadBetRecords() {
     query.gameType = 'SPORT,ESPORT';
   } else if (query.gameType === 'FISH') {
     query.gameType = 'FISH,CASUAL';
-  } 
+  } else if (query.gameType === 'LIVE') {
+    query.gameType = 'LIVE,POKER';
+  }
   const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
   page.pages = ret.pages;
   page.records = ret.records;

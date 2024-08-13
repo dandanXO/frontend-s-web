@@ -6,24 +6,24 @@
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.myMoney') }}
         </div>
-        <div class="stat-value green">{{ parseInt(records.myMoney) }}</div>
+        <div class="stat-value green">{{ Math.floor(records.myMoney) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.myPoint') }}
         </div>
-        <div class="stat-value green">{{ records.myPoint }}</div>
+        <div class="stat-value green">{{ Math.floor(records.myPoint) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.memberMoney') }}
         </div>
-        <div class="stat-value green">{{ records.memberMoney }}</div>
+        <div class="stat-value green">{{ Math.floor(records.memberMoney) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.memberPoint') }}</div>
-        <div class="stat-value green">{{ records.memberPoint }}</div>
+        <div class="stat-value green">{{ Math.floor(records.memberPoint) }}</div>
       </div>
 
 
@@ -74,22 +74,22 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.todayDepositAmount') }}</div>
-        <div class="stat-value grey">{{ records.todayDepositAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.todayDepositAmount) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.todayWithdrawAmount') }}</div>
-        <div class="stat-value grey">{{ records.todayWithdrawAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.todayWithdrawAmount) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.refundProfitAndLoss') }}</div>
-        <div class="stat-value grey">{{ records.todayDepositAmount - records.todayWithdrawAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.todayDepositAmount - records.todayWithdrawAmount) }}</div>
       </div>
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.manualMoney') }}</div>
-        <div class="stat-value blue">{{ records.manualMoney }}</div>
+        <div class="stat-value blue">{{ Math.floor(records.manualMoney) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -117,7 +117,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.casinoRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.casinoRollingAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.casinoRollingAmount) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -138,7 +138,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.slotRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.slotRollingAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.slotRollingAmount) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -158,7 +158,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.sportRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.sportRollingAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.sportRollingAmount) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -179,7 +179,7 @@
 
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.miniGameRollingAmount') }}</div>
-        <div class="stat-value grey">{{ records.miniGameRollingAmount }}</div>
+        <div class="stat-value grey">{{ Math.floor(records.miniGameRollingAmount) }}</div>
       </div>
 
       <!-- <div class="stats">
@@ -190,10 +190,10 @@
       </div> -->
       <div class="stats">
         <div class="stat-label">{{ t('statsHeader.totalProfitLoss') }}</div>
-        <div class="stat-value grey">{{ (records.casinoProfit - records.casinoBetAmount)
-          + (records.slotProfit - records.slotBetAmount)
-          + (records.sportProfit - records.sportBetAmount)
-          + (records.miniGameProfit - records.miniGameBetAmount) }}</div>
+        <div class="stat-value grey">{{ Math.floor((records.casinoBetAmount - records.casinoProfit - records.casinoRollingAmount)
+          + (records.slotBetAmount - records.slotProfit - records.slotRollingAmount)
+          + (records.sportBetAmount - records.sportProfit - records.sportRollingAmount)
+          + (records.miniGameBetAmount - records.miniGameProfit - records.miniGameRollingAmount)) }}</div>
       </div>
     </div>
   </div>
@@ -218,6 +218,7 @@ const toggleExpansion = () => {
 const records = ref({
   memberMoney: 0,
   memberPoint: 0,
+  myPoint: 0,
   eggs: 0,
   memberInquiry: 0,
   depositApplication: 0,

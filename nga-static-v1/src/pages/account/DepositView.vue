@@ -2,6 +2,17 @@
   <div class="deposit-wrapper">
     <div class="deposit-options">
       <div class="lil-title">Payment Channel</div>
+      <div class="deposit-option-container q-mt-md" v-if="isLoadingInitPay">
+        <div class="deposit-option-btn-wrapper" style="width: 100%">
+          <q-skeleton class="skeleton-deposit-option" />
+        </div>
+        <div class="deposit-option-btn-wrapper" style="width: 100%">
+          <q-skeleton class="skeleton-deposit-option" />
+        </div>
+        <div class="deposit-option-btn-wrapper" style="width: 100%">
+          <q-skeleton class="skeleton-deposit-option" />
+        </div>
+      </div>
       <div class="deposit-option-container">
         <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
           <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
@@ -28,8 +39,12 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(amount, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
-          <!-- <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>+{{ item.hotLabel }}</q-badge> -->
-          <div :class="['deposit-amt', form.localAmount === amount && 'active']">{{ convertToCommaAmount(amount) }}</div>
+          <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>
+            +{{ convertToCommaAmount(amount * 0.05) }}
+          </q-badge>
+          <div :class="['deposit-amt', form.localAmount === amount && 'active']">
+            {{ convertToCommaAmount(amount) }}
+          </div>
           <div :class="['deposit-svg', form.localAmount === amount && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
@@ -80,6 +95,7 @@
         <div class="deposit-enter-amt" v-if="amountList.length === 0">
           <div class="lil-title">Amount</div>
           <q-input
+            type="number"
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
             name="localAmount"
@@ -89,6 +105,7 @@
             :rules="verifyDepositAmount"
             dense
             clearable
+            @keyup.enter="confirmDeposit"
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="currency">
@@ -301,9 +318,9 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
 const depositItems = computed(() => {
-  if (!activeMethod.value.amountArr) return []
-  return activeMethod.value.amountArr.map(amount => Number(amount))
-})
+  if (!activeMethod.value.amountArr) return [];
+  return activeMethod.value.amountArr.map((amount) => Number(amount));
+});
 
 const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
@@ -312,7 +329,7 @@ const handleDepositItemClick = (amount) => {
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
   form.localAmount = null;
-  nextTick(() => depositAmtRef.value.resetValidation())
+  nextTick(() => depositAmtRef.value.resetValidation());
 };
 
 const isLoadingInitPay = ref(true);
@@ -535,6 +552,17 @@ async function pDepo(deposit) {
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
               }
@@ -547,6 +575,17 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
@@ -919,5 +958,11 @@ onMounted(() => {
 .deposit-wrapper {
   width: 95%;
   margin: auto;
+}
+
+.skeleton-deposit-option {
+  width: 100%;
+  aspect-ratio: 519 / 303;
+  min-height: 50px;
 }
 </style>

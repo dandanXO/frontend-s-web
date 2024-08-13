@@ -364,7 +364,7 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row v-if="form.siteId === 8">
+    <el-row>
       <el-form-item label="VIP" prop="vips">
         <el-checkbox
           v-model="checkboxes.vip.checkAll"
@@ -384,7 +384,7 @@
         </el-checkbox-group>
       </el-form-item>
     </el-row>
-    <el-row v-if="form.siteId === 8">
+    <el-row v-if="isVnm(form.siteId)">
       <el-form-item :label="t('fields.affiliateCode')" prop="affiliates">
         <el-checkbox @change="onCheckAllAffiliate" v-model="checkAllAff">
           {{ t('fields.all') }}
@@ -463,6 +463,22 @@
           {{ t('fields.delete') }}
         </el-button>
       </div>
+    </el-form-item>
+    <el-form-item :label="t('fields.startTime')" prop="startTime">
+      <el-date-picker
+        type="datetime"
+        value-format="YYYY-MM-DD HH:mm:ss"
+        v-model="form.startTime"
+        :disabled-date="disabledStartDate"
+      />
+    </el-form-item>
+    <el-form-item :label="t('fields.endTime')" prop="endTime">
+      <el-date-picker
+        type="datetime"
+        value-format="YYYY-MM-DD HH:mm:ss"
+        v-model="form.endTime"
+        :disabled-date="disabledEndDate"
+      />
     </el-form-item>
     <el-form-item :label="t('fields.content')" prop="pageContent">
       <!-- editor here -->
@@ -660,16 +676,16 @@
               {{ t('fields.desktopImage') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 355*180
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 800*188
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 355*180
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*600
           </span>
         </div>
@@ -686,16 +702,16 @@
               {{ t('fields.mobileImage') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1004*252
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1000*454
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1004*252
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*512
           </span>
         </div>
@@ -712,16 +728,16 @@
               {{ t('fields.desktopBanner') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*500
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 2000*500
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*500
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1920*568
           </span>
         </div>
@@ -731,16 +747,16 @@
               {{ t('fields.mobileBanner') }}
             </span>
           </el-row>
-          <span v-if="imageForm.siteId === 1">
+          <span v-if="isXF(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*534
           </span>
-          <span v-if="imageForm.siteId === 3">
+          <span v-if="isThai(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*675
           </span>
-          <span v-if="imageForm.siteId === 6">
+          <span v-if="isDY(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1080*534
           </span>
-          <span v-if="imageForm.siteId === 7">
+          <span v-if="isLH(imageForm.siteId)">
             {{ t('fields.imageSize') }}: 1000*400
           </span>
         </div>
@@ -783,6 +799,8 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
+import moment from 'moment'
+import { isVnm, isXF, isThai, isDY, isLH, isPak } from '@/utils/site'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -831,6 +849,8 @@ const form = reactive({
   param: null,
   vips: null,
   affiliates: null,
+  startTime: null,
+  endTime: null,
 })
 
 const imageForm = reactive({
@@ -891,7 +911,7 @@ const formRules = reactive({
   promoCode: [required(t('message.validatePromoCodeRequired'))],
   pageContent: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
-  vips: [required(t('message.validateVIPRequired'))],
+  // vips: [required(t('message.validateVIPRequired'))],
   affiliates: [required(t('message.validateAffiliateCodeRequired'))],
 })
 
@@ -935,7 +955,7 @@ const promoTypes = ref([])
 const selectedVIPs = reactive({ vipChecked: [] })
 
 function loadPromoTypes() {
-  if (LOGIN_SITE_ID === 11 || form.siteId === 11) {
+  if (isPak(LOGIN_SITE_ID) || isPak(form.siteId)) {
     promoTypes.value = [
       { typeName: 'EARN', value: 12, displayName: 'EARN' },
       { typeName: 'HOT', value: 13, displayName: 'HOT' },
@@ -971,6 +991,18 @@ function loadPromoTypes() {
       { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
       { typeName: 'VIP', value: 15, displayName: 'VIP' },
     ]
+  } else if (LOGIN_SITE_ID === 6) {
+    // Dongying 东赢
+    promoTypes.value = [
+      { typeName: 'WELCOME', value: 1, displayName: '新人优惠' },
+      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+      { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
+      { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
+      { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
+      { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
+      { typeName: 'FTD', value: 9, displayName: '充提优惠' },
+    ]
   } else {
     promoTypes.value = [
       { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
@@ -989,9 +1021,30 @@ function loadPromoTypes() {
       { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
       { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
       { typeName: 'VIP', value: 15, displayName: 'VIP' },
-      { typeName: 'LIMITED', value: 15, displayName: t('promoType.LIMITED') },
+      { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
     ]
   }
+}
+
+function disabledStartDate(time) {
+  if (form.endTime !== null) {
+    const changedDate = form.endTime.replace(/(..)\/(..)\/(....)/, '$3-$2-$1')
+    var date = new Date(changedDate)
+    return (
+      time.getTime() <= moment(Date.now()).subtract(1, 'days') ||
+      time.getTime() >= moment(date)
+    )
+  }
+  return time.getTime() <= moment(Date.now()).subtract(1, 'days')
+}
+
+function disabledEndDate(time) {
+  if (form.startTime !== null) {
+    const changedDate = form.startTime.replace(/(..)\/(..)\/(....)/, '$3-$2-$1')
+    var date = new Date(changedDate)
+    return time.getTime() <= date.getTime()
+  }
+  return time.getTime() <= Date.now()
 }
 
 function handleCheckedChangePromoType() {
@@ -1103,6 +1156,12 @@ function constructParam() {
   } else {
     form.affiliates = uiControl.affList.join(',')
   }
+  if (form.vips === '') {
+    form.vips = null
+  }
+  if (form.affiliates === '') {
+    form.affiliates = null
+  }
   return JSON.stringify(json)
 }
 
@@ -1127,8 +1186,8 @@ function back() {
   })
 }
 
-async function loadForm(id, siteId) {
-  const { data: ret } = await getPromoPageById(id, siteId)
+async function loadForm(id) {
+  const { data: ret } = await getPromoPageById(id)
 
   nextTick(() => {
     for (const key in ret) {
@@ -1139,9 +1198,9 @@ async function loadForm(id, siteId) {
 
     form.siteId = ret.siteId
     loadPromoTypes()
-    if (form.siteId === 8) {
-      loadVips()
-    }
+
+    loadVips()
+
     // checked promoType checkboxes
     // const promoArr = form.promoType.split(",").map(Number)
     const promoArr = form.promoType.split(',')
@@ -1153,6 +1212,7 @@ async function loadForm(id, siteId) {
       selectedVIPs.vipChecked.push(parseInt(element))
     })
     if (vipArr.length === 0) {
+      form.vips = 'test'
       checkboxes.vip.checkAll = true
     }
     const affArr = form.affiliates ? form.affiliates.split(',') : []
@@ -1348,9 +1408,9 @@ function submitImageUpload() {
 }
 
 function onChangeSite() {
-  if (parseInt(form.siteId) === 8) {
-    loadVips()
-  }
+  // if (parseInt(form.siteId) === 8) {
+  loadVips()
+  // }
 }
 
 async function loadVips() {
@@ -1388,9 +1448,9 @@ const showInput = () => {
 function onCheckAllAffiliate(value) {
   checkAllAff.value = value
   if (value) {
-    form.affiliates = "test"
+    form.affiliates = 'test'
   } else {
-    form.affiliates = uiControl.affList.join(",")
+    form.affiliates = uiControl.affList.join(',')
   }
 }
 
@@ -1410,7 +1470,7 @@ const handleInputConfirm = () => {
         }
       })
     }
-    form.affiliates = uiControl.affList.join(",")
+    form.affiliates = uiControl.affList.join(',')
   }
   uiControl.inputVisible = false
   inputValue.value = ''
@@ -1423,7 +1483,7 @@ onMounted(() => {
   }
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
-    loadForm(route.params.id, route.params.siteId)
+    loadForm(route.params.id)
   } else {
     addParam()
     loadPromoTypes()

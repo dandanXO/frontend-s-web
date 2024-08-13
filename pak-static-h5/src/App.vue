@@ -242,13 +242,14 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: store.visitorId,
             siteCode: "pak"
-          }
-        });
+          })
+        );
       }
     };
 
@@ -264,6 +265,7 @@ export default defineComponent({
           ui.instagramUrl = data.instagram;
           ui.tiktokUrl = data.tiktok;
           ui.whatsappUrl = data.whatsapp;
+          ui.youtubeUrl = data.youtube;
         });
     };
 

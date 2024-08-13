@@ -27,7 +27,6 @@ export default defineComponent({
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
 
-
     let csclient;
     let CSAUrl;
 
@@ -127,7 +126,7 @@ export default defineComponent({
       //   affiliateCode = "3B1BFB";
       // }
 
-      if(affiliateCode) {
+      if (affiliateCode) {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
         api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
           if (res.code === 0) {
@@ -229,7 +228,7 @@ export default defineComponent({
     const checkSID = async () => {
       const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
       store.visitorId = visitorId;
-    }
+    };
 
     const getOnlineStatApi = async () => {
       const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
@@ -240,13 +239,14 @@ export default defineComponent({
       console.log(theSid);
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: sidParam,
             siteCode: "ka2"
-          }
-        });
+          })
+        );
       }
     };
 
@@ -307,12 +307,40 @@ export default defineComponent({
       );
     };
 
+    const checkFBPixelInit = () => {
+      var windowLocation = window.location.hostname;
+      console.log(windowLocation);
+      const pixelCode = sessionStorage.getItem("FB_PIXEL_CODE");
+      const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
+      if (isNoPixel) {
+        return;
+      } else if (pixelCode) {
+        console.log("Got Fb Id:" + pixelCode);
+        fbq("init", pixelCode);
+        fbq("track", "PageView");
+      } else {
+        // windowLocation = "kakavn.shop";
+        api.get(`/member/fb-request?url=${windowLocation}`).then((res) => {
+          // console.log(res);
+          if (res.code === 0) {
+            const fbId = res.data.fbId;
+            sessionStorage.setItem("FB_PIXEL_CODE", fbId);
+            fbq("init", fbId);
+            fbq("track", "PageView");
+          } else {
+            sessionStorage.setItem("NO_FB_PIXEL_CODE", "1");
+          }
+        });
+      }
+    };
+
     onMounted(() => {
-      console.log("Kaka H5")
       checkSID();
       // initCsWeb();
       getCSA();
       getAppInfo();
+
+      checkFBPixelInit();
 
       // onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       // onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);

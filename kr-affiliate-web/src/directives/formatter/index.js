@@ -12,7 +12,7 @@ export const formatter = {
   beforeMount(el, binding) {
     if (binding.value.type === "date") {
       if (binding.value.data) {
-        el.innerHTML = `<div class="textCenter">${moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL')}</div>`;
+        el.innerHTML = `<div class="textCenter">${moment(binding.value.data).add(1, 'hours').locale('ko').format(binding.value.formatter || 'LLL')}</div>`;
       } else {
         el.innerHTML = "-";
       }
@@ -39,7 +39,7 @@ export const formatter = {
   updated(el, binding) {
     if (binding.value.type === "date") {
       if (binding.value.data) {
-        el.innerHTML = `<div class="textCenter">${moment(binding.value.data).locale('ko').format(binding.value.formatter || 'LLL')}</div>`;
+        el.innerHTML = `<div class="textCenter">${moment(binding.value.data).add(1, 'hours').locale('ko').format(binding.value.formatter || 'LLL')}</div>`;
       } else {
         el.innerHTML = "";
       }

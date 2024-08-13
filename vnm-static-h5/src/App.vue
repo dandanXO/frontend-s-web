@@ -15,7 +15,7 @@ import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "src/stores/ui";
-// import { Adjust, AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { EDITION } from "./constant/edition";
 
 export default defineComponent({
   name: "App",
@@ -27,7 +27,6 @@ export default defineComponent({
     $q.dark.set(false);
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
-
 
     let csclient;
     let CSAUrl;
@@ -128,7 +127,7 @@ export default defineComponent({
       //   affiliateCode = "3B1BFB";
       // }
 
-      if(affiliateCode) {
+      if (affiliateCode) {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
         api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
           if (res.code === 0) {
@@ -230,7 +229,7 @@ export default defineComponent({
     const checkSID = async () => {
       const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
       store.visitorId = visitorId;
-    }
+    };
 
     const getOnlineStatApi = async () => {
       const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
@@ -241,13 +240,14 @@ export default defineComponent({
       console.log(theSid);
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: sidParam,
             siteCode: "vnm"
-          }
-        });
+          })
+        );
       }
     };
 
@@ -308,11 +308,16 @@ export default defineComponent({
       );
     };
 
+    const checkEdition = () => {
+      // TODO: check edition here
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
       getAppInfo();
+      checkEdition();
 
       // onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       // onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);

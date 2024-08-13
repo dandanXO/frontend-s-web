@@ -134,31 +134,31 @@
         </div>
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
-        <q-label>
-          {{ $t("lang.bd_phone_number") }}
-          <em>*</em>
-        </q-label>
-        <q-input
-          standout
-          v-model="bankCardInfo.telephone"
-          class="q-pb-xs"
-          hide-bottom-space
-          :placeholder="$t('lang.bd_please_enter_phone_number')"
-          lazy-rules
-          clearable
-          readonly
-        >
-          <template v-slot:append>
-            <q-btn
-              @click="openPhoneVeriDialog()"
-              type="submit"
-              class="common-sm-btn bottom-btn get-otp-btn"
-              :label="$t('lang.bd_get_otp')"
-              color="brightbtn"
-              rounded
-            />
-          </template>
-        </q-input>
+        <!--        <q-label>-->
+        <!--          {{ $t("lang.bd_phone_number") }}-->
+        <!--          <em>*</em>-->
+        <!--        </q-label>-->
+        <!--        <q-input-->
+        <!--          standout-->
+        <!--          v-model="bankCardInfo.telephone"-->
+        <!--          class="q-pb-xs"-->
+        <!--          hide-bottom-space-->
+        <!--          :placeholder="$t('lang.bd_please_enter_phone_number')"-->
+        <!--          lazy-rules-->
+        <!--          clearable-->
+        <!--          readonly-->
+        <!--        >-->
+        <!--          <template v-slot:append>-->
+        <!--            <q-btn-->
+        <!--              @click="openPhoneVeriDialog()"-->
+        <!--              type="submit"-->
+        <!--              class="common-sm-btn bottom-btn get-otp-btn"-->
+        <!--              :label="$t('lang.bd_get_otp')"-->
+        <!--              color="brightbtn"-->
+        <!--              rounded-->
+        <!--            />-->
+        <!--          </template>-->
+        <!--        </q-input>-->
 
         <template v-if="isOtpSent">
           <q-label>
@@ -201,8 +201,8 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { t } from "src/boot/lang";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -216,13 +216,13 @@ const selectedCategoryToggleIndex = ref(0);
 const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;
 };
-
+const { t } = useI18n();
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 
 const bankCardRef = ref();
 const cardNumberRef = ref();
@@ -365,22 +365,21 @@ const submitBankCard = () => {
     cardNumberRef.value.validate();
   }
 
-  if (!isOtpSent.value) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("lang.bd_click_verification"),
-      icon: "report_problem"
-    });
-  } else if (phoneVerificationRef.value) {
-    phoneVerificationRef.value.validate();
-  }
+  // if (!isOtpSent.value) {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: t("lang.bd_click_verification"),
+  //     icon: "report_problem"
+  //   });
+  // } else if (phoneVerificationRef.value) {
+  //   phoneVerificationRef.value.validate();
+  // }
 
   if (
     !(
-      (bankCardRef.value && bankCardRef.value.hasError) ||
-      (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      ((bankCardRef.value && bankCardRef.value.hasError) || (cardNumberRef.value && cardNumberRef.value.hasError))
+      // (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
     )
   ) {
     // API call
@@ -391,7 +390,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "已添加银行卡",
+            message: t("lang.bd_added_bank_card"),
             icon: "check_circle_outline"
           });
           router.push("/account/withdraw");

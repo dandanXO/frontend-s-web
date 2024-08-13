@@ -93,9 +93,9 @@ export default {
     please_enter_mobile_number: "Vui lòng nhập số điện thoại",
     mobile_number: "Số điện thoại",
     mobile_number_valid: "Vui lòng nhập số điện thoại di động hợp lệ",
-    mobile_number_required: 'Số điện thoại là bắt buộc.',
-    mobile_number_length: 'Số điện thoại phải dài 10 chữ số.',
-    mobile_number_starts_with_0: 'Số điện thoại phải bắt đầu bằng số 0.',
+    mobile_number_required: "Số điện thoại là bắt buộc.",
+    mobile_number_length: "Số điện thoại phải dài 10 chữ số.",
+    mobile_number_starts_with_0: "Số điện thoại phải bắt đầu bằng số 0.",
     please_enter_verification_code: "Vui lòng nhập mã xác minh",
     please_enter: "Vui lòng nhập",
     verification_code: "Mã xác minh",
@@ -254,32 +254,57 @@ export default {
     share_table_header_03: "Cược",
     share_table_header_04: "Trạng thái",
     share_table_content_empty: "Không tìm được lịch sử khớp",
-    share_tnc: "Điều Khoản Và Điều Kiện",
-    share_para_title: "Giới thiệu bạn bè",
-    share_tnc_para_01: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8).",
-    share_tnc_para_02:
-      "Chỉ cần giới thiệu thêm bạn tham gia tại KAKA, bạn sẽ nhận được 300 VNDP trên mỗi một người giới thiệu thành công.",
-    share_tnc_para_03: "Để đủ điều kiện nhận tiền thưởng, thành viên cần đáp ứng các điều kiện sau đây:",
-    share_tnc_para_03_a: "Thành viên giới thiệu (Khách hàng)",
-    share_tnc_para_03_a_i: "Tổng tiền cược hợp lệ tối thiểu từ 10.000 VNDP trở lên",
-    share_tnc_para_03_a_ii: "Đạt cấp độ vip 1 trở lên",
-    share_tnc_para_03_b: "Thành viên được giới thiệu(Bạn của bạn):",
-    share_tnc_para_03_b_i:
-      "Đăng ký tài khoản trong thời gian khuyến mãi thông qua liên kết giới thiệu bạn bè được chỉ định",
-    share_tnc_para_03_b_ii: "Chưa từng đăng ký tại KAKA và không có bất kỳ tài khoản nào khác tại KAKA",
-    share_tnc_para_03_b_iii:
-      "Phải có giao dịch gửi tiền đầu tiên thành công và có tổng số tiền cược hợp lệ tích lũy tối thiểu 4.000VNDP.",
-    share_tnc_para_04:
-      'Thành viên đủ điều kiện có thể giới thiệu bạn bè bằng cách vào mục "Thông tin cá nhân - Mời bạn bè" . Sau đó thành viên có thể gửi liên kết giới thiệu của mình cho bạn bè để đăng ký tài khoản thông qua liên kết này',
-    share_tnc_para_05:
-      "Việc xét duyệt chương trình khuyến mãi sẽ được thực hiện hàng tuần. Sau khi xác minh xong, phần thưởng giới thiệu sẽ tự động cập nhật vào tài khoản của thành viên giới thiệu và thành viên được giới thiệu vào khoảng 6 giờ tối (GMT + 8) vào Thứ Hai hàng tuần",
-    share_tnc_para_06: "Thành viên nhận khuyến mãi cần hoàn thành 5 vòng cược của khuyến mãi trước khi rút tiền.",
-    share_tnc_para_07:
-      "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
-    share_tnc_para_08:
-      "KAKA có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này mà không cần báo trước.",
-    share_tnc_para_09: "Chương trình có thể áp dụng cùng lúc với tất cả các Khuyến mãi tại KAKA.",
-    share_tnc_para_10: "Điều khoản &amp; Điềukiện khuyến mãi chung được áp dụng.",
+    terms: {
+      intro: {
+        title: "MỘT LỜI GIỚI THIỆU - TRĂM TRIỆU VỀ TAY",
+        desc: {
+          desc1: "ĐỐI TƯỢNG THAM GIA: TẤT CẢ THÀNH VIÊN CỦA KAKA.GAME",
+          desc2: "THỜI GIAN DIỄN RA: VÔ THỜI HẠN",
+          desc3: "CHÚ Ý: 1 ĐIỂM = 1000 VND"
+        }
+      },
+      promoDetail: {
+        title: "CHI TIẾT KHUYẾN MÃ",
+        desc: "CHỈ CẦN GIỚI THIỆU THÊM BẠN THAM GIA TẠI KAKA.GAME, BẠN SẼ NHẬN ĐƯỢC 300 ĐIỂM TRÊN MỖI MỘT NGƯỜI GIỚI THIỆU THÀNH CÔNG."
+      },
+      howToJoin: {
+        title: "CÁCH THỨC THAM GIA",
+        desc: `VÀO MỤC "TÀI KHOẢN - GIỚI THIỆU" . SAU ĐÓ THÀNH VIÊN CÓ THỂ GỬI LIÊN KẾT GIỚI THIỆU CỦA MÌNH CHO BẠN BÈ ĐỂ ĐĂNG KÝ TÀI KHOẢN THÔNG QUA LIÊN KẾT NÀY.`
+      },
+      term: {
+        title: "QUY ĐỊNH VÀ ĐIỀU KHOẢN",
+        desc: {
+          desc1: {
+            desc: "THÀNH VIÊN GIỚI THIỆU（BẠN）:",
+            children: {
+              desc1: "TỔNG TIỀN CƯỢC HỢP LỆ TỐI THIỂU TỪ 10,000 ĐIỂM TRỞ LÊN",
+              desc2: "ĐẠT CẤP ĐỘ VIP 1 TRỞ LÊN."
+            }
+          },
+          desc2: {
+            desc: "THÀNH VIÊN ĐƯỢC GIỚI THIỆU（BẠN CỦA BẠN）:",
+            children: {
+              desc1: "ĐĂNG KÝ TÀI KHOẢN TRONG THỜI GIAN KHUYẾN MÃI THÔNG QUA LIÊN KẾT GIỚI THIỆU BẠN BÈ ĐƯỢC CHỈ ĐỊNH.",
+              desc2: "CHƯA TỪNG ĐĂNG KÝ TẠI KAKA.GAME VÀ KHÔNG CÓ BẤT KỲ TÀI KHOẢN NÀO KHÁC TẠI KAKA.GAME.",
+              desc3:
+                "PHẢI CÓ GIAO DỊCH GỬI TIỀN ĐẦU TIÊN THÀNH CÔNG VÀ CÓ TỔNG SỐ TIỀN CƯỢC HỢP LỆ TÍCH LŨY TỐI THIỂU 4.000 ĐIỂM."
+            }
+          },
+          desc3:
+            "VIỆC XÉT DUYỆT CHƯƠNG TRÌNH KHUYẾN MÃI SẼ ĐƯỢC THỰC HIỆN HÀNG TUẦN. SAU KHI XÁC MINH XONG, PHẦN THƯỞNG GIỚI THIỆU SẼ TỰ ĐỘNG CẬP NHẬT VÀO TÀI KHOẢN CỦA THÀNH VIÊN GIỚI THIỆU VÀ THÀNH VIÊN ĐƯỢC GIỚI THIỆU VÀO KHOẢNG 17:00 GIỜ VÀO THỨ HAI HÀNG TUẦN.",
+          desc4: "THÀNH VIÊN NHẬN KHUYẾN MÃI CẦN HOÀN THÀNH 5 VÒNG CƯỢC CỦA KHUYẾN MÃI TRƯỚC KHI RÚT TIỀN.",
+          desc5:
+            "TẤT CẢ CƯỢC HÒA, CƯỢC HỦY, CƯỢC 2 BÊN, KIỂU CƯỢC EUROPE HANDICAP TỶ LỆ DƯỚI 1.75, ASIAN HANDICAP DƯỚI 0.75, THỂ THAO ẢO, ĐUA NGỰA, NUMBER GAME, SẼ KHÔNG ĐƯỢC ÁP DỤNG CHO CHƯƠNG TRÌNH NÀY.",
+          desc6:
+            "MỘT THÀNH VIÊN CHỈ ĐƯỢC ĐĂNG KÝ 1 TÊN ĐĂNG NHẬP, 1 ĐỊA CHỈ 1 EMAIL, 1 SỐ ĐIỆN THOẠI, 1 ĐỊA CHỈ IP VỚI 1 SỐ TÀI KHOẢN NGÂN HÀNG PHẢI ĐÚNG VỚI CHỈ 1 NGƯỜI DUY NHẤT VÀ CHỈ PHÁT THƯỞNG 1 LẦN DUY NHẤT. NẾU THÀNH VIÊN CÓ ĐĂNG KÝ THÊM 1 TÀI KHOẢN NÀO KHÁC, KAKA.GAME CÓ QUYỀN TRÍCH THU LẠI SỐ TIỀN KHUYẾN MÃI CỦA HỘI VIÊN ĐÓ!",
+          desc7:
+            "KHI PHÁT HIỆN CÁC TRƯỜNG HỢP CƯỢC CHUỖI NHÓM, SỬ DỤNG PHẦN MỀM VI PHẠM ĐẶT CƯỢC, VÀ CÁC THÀNH VIÊN LẠM DỤNG KHUYẾN MÃI. KAKA.GAME CÓ QUYỀN ĐÓNG BĂNG TÀI KHOẢN MÀ KHÔNG CẦN THÔNG BÁO, CŨNG NHƯ KHÔNG HOÀN TRẢ TIỀN GỐC VÀ LIỆT VÀO DANH SÁCH ĐEN",
+          desc8: "KHUYẾN MÃI NÀY CÓ THỂ ÁP DỤNG CÙNG LÚC VỚI TẤT CẢ CÁC KHUYẾN MÃI KHÁC CỦA KAKA.GAME.",
+          desc9:
+            "ĐỂ TRÁNH SỰ HIỂU NHẦM TRONG CÁCH HIỂU VĂN BẢN, KAKA.GAME BẢO LƯU QUYỀN GIẢI THÍCH CUỐI CÙNG, THAY ĐỔI, DỪNG, HỦY BỎ HOẶC THU HỒI CHIẾT KHẤU MÀ KHÔNG CẦN BÁO TRƯỚC."
+        }
+      }
+    },
 
     // transfer
     transfer_transfer: "Chuyển khoản",
@@ -399,7 +424,7 @@ export default {
     bd_length_between_34_36: "Chiều dài nên từ 34-36",
     bd_note: "Lưu ý",
     bd_note_para_01:
-      'Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!',
+      "Liên kết tài khoản NH cần sự đồng nhất về Tên Tài khoản và Tên đăng ký NH. Trường hợp điền sai thông tin dẫn đến Rút tiền thất bại hoặc NH xử lý chậm trễ, quý khách vui lòng liên hệ dịch vụ CSKH của chúng tôi để kịp thời xử lý. Chân thành cảm ơn!",
     bd_note_para_02:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!",
 
@@ -516,15 +541,21 @@ export default {
     vip_24_7_cc_team: "Đội ngũ chăm sóc sách hàng VIP 24/7",
     vip_invitation_to_ee: "Thư mời tham gia các sự kiện độc quyền",
     vip_terms_title: "Quy tắc và Điều khoản",
-    vip_terms_para_01: "Thành viên khi đủ điều kiện thăng cấp, hệ thống sẽ cập nhật ngay cấp VIP mới. Không giới hạn số lần thăng cấp VIP và số lần nhận tiền thưởng thăng VIP mỗi ngày.",
-    vip_terms_para_02: "Tiền thưởng thăng cấp: Sau khi được thăng cấp VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP để nhận tiền thưởng thăng cấp.",
-    vip_terms_para_03: "Điều kiện bảo lưu: Thành viên cần duy trì các cược hợp lệ như trên trong vòng 30 ngày sau khi thăng cấp để duy trì cấp độ, nếu các cược hợp lệ không được hoàn thành trong vòng 30 ngày sẽ bị hạ 1 cấp. Hệ thống kết thúc thống kê vào lúc 23:59 ngày của ngày thứ 30.",
-    vip_terms_para_04: "Tiền thưởng hàng tháng: Trong vòng từ lúc 01:00 ngày 01 đến 23:59 ngày 07 hàng tháng, thành viên cần liên hệ CSKH 24/7 để nhận tiền thưởng. Nếu quá hạn xem như từ bỏ.",
-    vip_terms_para_05: "Tiền thưởng sinh nhật: Thành viên sau khi đăng ký tài khoản, có lịch sử nạp tiền từ 15 ngày trở lên, cần liên hệ CSKH 24/7 ngay trong ngày sinh nhật để nhận thưởng.",
+    vip_terms_para_01:
+      "Thành viên khi đủ điều kiện thăng cấp, hệ thống sẽ cập nhật ngay cấp VIP mới. Không giới hạn số lần thăng cấp VIP và số lần nhận tiền thưởng thăng VIP mỗi ngày.",
+    vip_terms_para_02:
+      "Tiền thưởng thăng cấp: Sau khi được thăng cấp VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP để nhận tiền thưởng thăng cấp.",
+    vip_terms_para_03:
+      "Điều kiện bảo lưu: Thành viên cần duy trì các cược hợp lệ như trên trong vòng 30 ngày sau khi thăng cấp để duy trì cấp độ, nếu các cược hợp lệ không được hoàn thành trong vòng 30 ngày sẽ bị hạ 1 cấp. Hệ thống kết thúc thống kê vào lúc 23:59 ngày của ngày thứ 30.",
+    vip_terms_para_04:
+      "Tiền thưởng hàng tháng: Trong vòng từ lúc 01:00 ngày 01 đến 23:59 ngày 07 hàng tháng, thành viên cần liên hệ CSKH 24/7 để nhận tiền thưởng. Nếu quá hạn xem như từ bỏ.",
+    vip_terms_para_05:
+      "Tiền thưởng sinh nhật: Thành viên sau khi đăng ký tài khoản, có lịch sử nạp tiền từ 15 ngày trở lên, cần liên hệ CSKH 24/7 ngay trong ngày sinh nhật để nhận thưởng.",
     vip_terms_para_06: "Mỗi thành viên chỉ có thể nhận được 1 lần thưởng thăng cấp cho mỗi cấp VIP.",
     vip_terms_para_07: "Tiền thưởng chỉ cần 1 vòng cược là có thể rút tiền.",
     vip_terms_para_08: "Chương trình thành viên VIP này có thể áp dụng chung với các khuyến mãi khác của KAKAGAME.",
-    vip_terms_para_09: "Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKAGAME bảo lưu quyền giải thích cuối cùng, cũng như thay đổi, từ chối, hủy bỏ chương trình thành viên VIP này mà không cần báo trước.",
+    vip_terms_para_09:
+      "Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKAGAME bảo lưu quyền giải thích cuối cùng, cũng như thay đổi, từ chối, hủy bỏ chương trình thành viên VIP này mà không cần báo trước.",
     vip_tableHeader1: "Cấp VIP",
     vip_tableHeader2: "Tổng Cược Hợp Lệ",
     vip_tableHeader3: "Nạp Tích Lũy",
@@ -536,11 +567,11 @@ export default {
     vip_tableHeader9: "Hạn Mức Rút Hàng Ngày",
     vip_header1: "THĂNG VIP HOÀNG GIA, THẢ GA NHẬN THƯỞNG",
     vip_target: "ĐỐI TƯỢNG THAM GIA: ",
-    vip_targetdet: 'TẤT CẢ CÁC THÀNH VIÊN CỦA KAKAGAME',
+    vip_targetdet: "TẤT CẢ CÁC THÀNH VIÊN CỦA KAKAGAME",
     vip_duration: "THỜI GIAN DIỄN RA: ",
     vip_durationdet: "BẮT ĐẦU TỪ LÚC ĐĂNG KÝ TÀI KHOẢN ĐẾN KHI CÓ THÔNG BÁO KẾT THÚC",
     vip_note: "Chú ý: ",
-    vip_notedet: '1 điểm = 1000VND',
+    vip_notedet: "1 điểm = 1000VND",
     vip_sport_rebate: "Thể Thao",
     vip_esport_rebate: "E-Sport",
     vip_livecasino_rebate: "Live Casino",
@@ -1290,10 +1321,12 @@ export default {
     str_deposit_serialnumber: "Số Serial Nạp Tiền",
     str_serial_number: "Số Serial",
     str_confirmwithdraw: "Xác Nhận Rút Tiền",
+    str_cancelwithdraw: "Hủy rút tiền",
     str_remark: "Ghi chú",
     strsystem_message: "Thông Báo Hệ Thống",
     str_confirm: "Xác Nhận",
     confirm_withdrawal_sucess: "Xác nhận rút tiền thành công",
+    withdraw_cancelled: "Việc rút tiền đã bị hủy",
     success_copied: "Đã sao chép!",
     already_have_3_reminder: "Bạn đã có 3 yêu cầu",
     please_upload_image: "Vui lòng tải lên hình ảnh",
@@ -1521,6 +1554,7 @@ export default {
     1307: "Vượt quá hạn mức rút hàng ngày",
     1308: "Số dư của bạn không đủ",
     1309: "Tài khoản thẻ không khớp với tên thành viên",
+    1319: "Tài khoản ngân hàng này đã được sử dụng, không thể liên kết trùng lặp, vui lòng liên kết tài khoản ngân hàng khác.",
     1401: "Vượt quá thời gian gửi OTP",
     1402: "Lỗi trong lịch trình gửi OTP, vui lòng gửi lại OTP",
     1403: "Lỗi xác minh OTP",

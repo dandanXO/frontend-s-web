@@ -401,6 +401,9 @@ const openModal = (modal, item, itemIndex) => {
 
 // Reference
 onMounted(() => {
+      if (!store.token) {
+        return;
+      }
   init();
 });
 </script>

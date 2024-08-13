@@ -128,6 +128,13 @@ const reset = () => {
   formRef.value.resetFields();
 };
 onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
   init();
 });
 </script>

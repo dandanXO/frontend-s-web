@@ -30,7 +30,9 @@
 import { ref, onMounted } from "vue";
 import { checkInInfo, signIn } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
+const store = userStore();
 const notify = useNotify();
 
 const dateDetails = ref([]);
@@ -100,6 +102,13 @@ const checkIn = (mth) => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    notify({
+      message: "请登录后操作",
+      type: "error"
+    });
+    return;
+  }
   init();
 });
 </script>

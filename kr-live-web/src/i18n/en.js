@@ -74,6 +74,7 @@ export default {
     game_category_slot: 'Slot Game',
     game_category_sport: 'Sports',
     game_category_minigame: 'Mini Game',
+    game_category_poker: "Poker",
     // game category end
     // game item start
     game_item_entry: "Game Entry",
@@ -243,6 +244,7 @@ export default {
     redeem_point_source: "Source",
     redeem_point_condition: "Condition",
     redeem_point_actions: "Actions",
+    redeem_point_redeemed: "Redeemed points",
     // redeem point end
     file_too_large_or_invalid_file: "File is too large/ invalid file, please upload a new file",
     langVal: "en",

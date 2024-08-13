@@ -255,7 +255,16 @@ const getSlotLucky8Data = async () => {
   tableData.value = res.data;
 };
 
-onMounted(getSlotLucky8Data);
+onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
+  getSlotLucky8Data();
+});
 </script>
 
 <style scoped lang="scss">

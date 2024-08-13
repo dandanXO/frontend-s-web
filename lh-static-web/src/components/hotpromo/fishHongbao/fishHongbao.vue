@@ -132,9 +132,11 @@ import { ref, onMounted } from "vue";
 import { getHongbaoInfo, getHongbaoMoney } from "@/api/promotion/fishHongbao";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 
 const notify = useNotify();
-
+const store = userStore();
 const availableDraw = ref(0);
 const validBet = ref(0);
 const tableRecordDialog = ref(false);
@@ -150,8 +152,30 @@ const getNbaMatchData = async () => {
   }
 };
 
-onMounted(getNbaMatchData);
+onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
+  getNbaMatchData();
+});
 const claimHongBao = async () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   const res = await getHongbaoMoney();
   console.log(res);
   if (res.code === 0) {

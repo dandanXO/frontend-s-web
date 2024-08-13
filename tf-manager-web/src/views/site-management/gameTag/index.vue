@@ -361,6 +361,7 @@ const form = reactive({
   siteId: null,
   gameLabel: null,
   sequence: null,
+  gameId: null,
 })
 
 const formRules = reactive({
@@ -559,6 +560,7 @@ function submit() {
   if (form.gameCode !== null && form.gameCode.length > 0) {
     const selectedGame = platformGame.list.find(game => { return game.code === form.gameCode })
     form.gameName = selectedGame.name
+    form.gameId = selectedGame.id
   }
 
   if (uiControl.dialogType === 'CREATE') {

@@ -33,9 +33,10 @@ export const userStore = defineStore("userStore", {
       vip: "",
       evip: "",
       h5Url: "",
-      currency: { value: "VNDP", label: "VNDP" },
+      currency: { value: "원", label: "원" },
       personalAddress: "",
       unreadInboxMail: 0,
+      repliedQuestion: 0,
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
@@ -45,7 +46,9 @@ export const userStore = defineStore("userStore", {
       googleadid: "",
       aaid: "",
       hasUpdatedOneSignal: false,
-      isAffiliateA: false
+      isAffiliateA: false,
+      name2: "",
+      pendingRebateAmt: 0
     };
   },
   actions: {
@@ -117,8 +120,6 @@ export const userStore = defineStore("userStore", {
           if (isAndroid() && OneSignal !== undefined) {
             OneSignal.logout();
           }
-
-
         } else {
           Notify.create({
             color: "negative",
@@ -207,10 +208,11 @@ export const userStore = defineStore("userStore", {
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
           this.emailVerified = response.data.emailVerified;
+          this.name2 = response.data.name2;
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
-            this.h5Url= exclusive.web;
+            this.h5Url = exclusive.web;
           }
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
@@ -245,6 +247,27 @@ export const userStore = defineStore("userStore", {
           });
       }
     },
+    getPendingRebateAmt() {
+      return new Promise((resolve, reject) => {
+        if (this.token) {
+          api
+            .get("/member-point", {
+              params: {
+                Platform: "MAIN"
+              }
+            })
+            .then((ret) => {
+              const res = ret.data;
+              if (res.code === 0) {
+                this.pendingRebateAmt = Math.floor(res.data);
+              } else {
+                this.pendingRebateAmt = 0;
+              }
+              resolve();
+            });
+        }
+      });
+    },
     getUnreadTotal() {
       if (this.token) {
         return api.get("/session/inbox/getUnreadTotal").then((total) => {
@@ -255,8 +278,23 @@ export const userStore = defineStore("userStore", {
         });
       }
     },
+    getUnrepliedTotal() {
+      if (this.token) {
+        return api.get("/session/feedback/sysReply").then((res) => {
+          if (res.code === 0) {
+            const { records } = res.data;
+            this.repliedQuestion = records.reduce((total, record) => {
+              if (record.replyId !== null && record.replyReadTime === null) {
+                total++;
+              }
+              return total;
+            }, 0);
+          }
+        });
+      }
+    },
     autoLogin(token) {
-      this.token= token;
+      this.token = token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {

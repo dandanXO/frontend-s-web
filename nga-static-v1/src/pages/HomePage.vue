@@ -132,6 +132,8 @@
             <!--              </div>-->
             <!--            </template>-->
 
+            <!-- <pre>hotGameList{{hotGameList}}</pre> -->
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -168,7 +170,7 @@
                         ></div>
                       </div>
 
-                      <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
+                      <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                     </div>
                   </swiper-slide>
                 </template>
@@ -257,110 +259,6 @@
                     </div>
                   </div>
                 </template>
-              </template>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template
-        v-if="(category.title === 'Casino' && category.active) || (category.title === 'Lobby' && category.active)"
-      >
-        <div class="games-selection-wrapper" id="live">
-          <div class="title-game">
-            <span class="txt-style">Live Casino</span>
-          </div>
-
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <!--            <template v-if="isPlatLoading">-->
-            <!--              <div class="skeleton-lists">-->
-            <!--                <q-skeleton class="casino-skeleton" />-->
-            <!--                <q-skeleton class="casino-skeleton" />-->
-            <!--              </div>-->
-            <!--            </template>-->
-
-            <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="0"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container live-casino"
-            >
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                >
-                  <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper>
-          </div>
-
-          <div class="platform-game-wrapper" v-else>
-            <template v-if="isPlatLoading">
-              <div class="skeleton-downs">
-                <q-skeleton class="casino-skeleton" />
-                <q-skeleton class="casino-skeleton" />
-              </div>
-            </template>
-
-            <div class="platform-game-container">
-              <template v-for="(item, index) in livecasino" :key="index">
-                <div
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                >
-                  <div>
-                    <img src="../assets/images/index/live/item-game-maintenance.png" />
-                    <div
-                      class="platform-live-item--img"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    >
-                      <div
-                        v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
-                        "
-                        class="burning-hot"
-                      >
-                        <img src="../assets/images/index/hot.png" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </template>
             </div>
           </div>
@@ -481,6 +379,110 @@
                   </div>
 
                   <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template
+        v-if="(category.title === 'Casino' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="live">
+          <div class="title-game">
+            <span class="txt-style">Live Casino</span>
+          </div>
+
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <!--            <template v-if="isPlatLoading">-->
+            <!--              <div class="skeleton-lists">-->
+            <!--                <q-skeleton class="casino-skeleton" />-->
+            <!--                <q-skeleton class="casino-skeleton" />-->
+            <!--              </div>-->
+            <!--            </template>-->
+
+            <swiper
+              :slidesPerView="1.5"
+              :spaceBetween="0"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container live-casino"
+            >
+              <template v-for="(item, index) in livecasino" :key="index">
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                >
+                  <div>
+                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <div
+                      class="platform-live-item--img"
+                      :style="{
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                      }"
+                    >
+                      <div
+                        v-if="
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                        "
+                        class="burning-hot"
+                      >
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
+                  </div>
+                </swiper-slide>
+              </template>
+            </swiper>
+          </div>
+
+          <div class="platform-game-wrapper" v-else>
+            <template v-if="isPlatLoading">
+              <div class="skeleton-downs">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
+            <div class="platform-game-container">
+              <template v-for="(item, index) in livecasino" :key="index">
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                >
+                  <div>
+                    <img src="../assets/images/index/live/item-game-maintenance.png" />
+                    <div
+                      class="platform-live-item--img"
+                      :style="{
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                      }"
+                    >
+                      <div
+                        v-if="
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                        "
+                        class="burning-hot"
+                      >
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </template>
             </div>
@@ -1700,247 +1702,7 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([
-  {
-    id: 9568,
-    name: "Aviator",
-    code: "aviator",
-    status: "OPEN",
-    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
-    sequence: 900,
-    siteName: null,
-    platformId: 93,
-    platformName: null,
-    platformCode: "Spribe",
-    gameType: "CASUAL",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "Spribe"
-  },
-  {
-    code: "WCEvo",
-    type: "platform",
-    id: 123,
-    name: "Evo",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Evolution",
-    sequence: 0
-  },
-  {
-    code: "WCPT",
-    type: "platform",
-    id: 103,
-    name: "WCPT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "PlayTech",
-    sequence: 901
-  },
-  {
-    id: 14326,
-    name: "Aero",
-    code: "aero",
-    status: "OPEN",
-    icon: "5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
-    sequence: 700,
-    siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "Turbo"
-  },
-  {
-    id: 14327,
-    name: "Crash X",
-    code: "crash",
-    status: "OPEN",
-    icon: "5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
-    sequence: 800,
-    siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "Turbo"
-  },
-  {
-    id: 8996,
-    name: "Teen Patti",
-    code: "72",
-    status: "OPEN",
-    icon: "5/JILI/097df233-0329-427c-a596-9af968062624.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT,NEW",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 8997,
-    name: "Teen Patti Joker",
-    code: "159",
-    status: "OPEN",
-    icon: "5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "LISTHOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 8999,
-    name: "Ludo Quick",
-    code: "163",
-    status: "OPEN",
-    icon: "5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 9000,
-    name: "Andar Bahar",
-    code: "79",
-    status: "OPEN",
-    icon: "5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 9001,
-    name: "TeenPatti 20-20",
-    code: "161",
-    status: "OPEN",
-    icon: "5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 9002,
-    name: "Dragon & Tiger",
-    code: "123",
-    status: "OPEN",
-    icon: "5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 9003,
-    name: "7up7down",
-    code: "124",
-    status: "OPEN",
-    icon: "5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  },
-  {
-    id: 9004,
-    name: "Baccarat",
-    code: "152",
-    status: "OPEN",
-    icon: "5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    type: "game",
-    platform: "JILI"
-  }
-]);
+const hotGameList = ref([{"id":87,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":1,"siteName":null,"platformId":93,"platformName":"Spribe","platformCode":"Spribe","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Spribe"},{"id":69,"name":"Bubbles","code":"bubbles","status":"OPEN","icon":"11/Turbo/cb12bfaf-fada-4619-9ff5-59627f4f54d2.jpg","sequence":2,"siteName":null,"platformId":124,"platformName":"Turbo","platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":83,"name":"OctobeerFortunes","code":"WCPPS_388","status":"OPEN","icon":"14/WCPPS/388.png","sequence":3,"siteName":null,"platformId":148,"platformName":"WCPPS","platformCode":"WCPPS","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"WCPPS"},{"id":80,"name":"WildWestGold","code":"WCPPS_14","status":"OPEN","icon":"14/WCPPS/14.png","sequence":4,"siteName":null,"platformId":148,"platformName":"WCPPS","platformCode":"WCPPS","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"WCPPS"},{"id":81,"name":"SugarRush - SpeedyCandy","code":"WCPPS_380","status":"OPEN","icon":"14/WCPPS/380.png","sequence":5,"siteName":null,"platformId":148,"platformName":"WCPPS","platformCode":"WCPPS","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"WCPPS"},{"id":72,"name":"Mahjong Ways","code":"65","status":"OPEN","icon":"13/PG/65.png","sequence":6,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":73,"name":"Dragon Hatch","code":"57","status":"OPEN","icon":"13/PG/57.png","sequence":7,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":74,"name":"Fortune Tiger","code":"126","status":"OPEN","icon":"13/PG/126.png","sequence":8,"siteName":null,"platformId":21,"platformName":"PG","platformCode":"PG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PG"},{"id":67,"name":"Aero","code":"aero","status":"OPEN","icon":"11/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png","sequence":9,"siteName":null,"platformId":124,"platformName":"Turbo","platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":68,"name":"Crash X","code":"crash","status":"OPEN","icon":"11/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg","sequence":10,"siteName":null,"platformId":124,"platformName":"Turbo","platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"code":"WCEvo","platform":"WCEvo","type":"platform","name":"Evo","id":123,"status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":999},{"code":"WCPP","platform":"WCPP","type":"platform","name":"WCPP","id":143,"status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PP","sequence":99},{"code":"WCPT","platform":"WCPT","type":"platform","name":"WCPT","id":103,"status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":999}]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -1982,7 +1744,7 @@ const loadHotGameList = () => {
       cached
         .get(key, () =>
           api
-            .get("/platformGamesByLabel", {
+            .get("/platformGamesByLabelV1", {
               params: {
                 gameLabel: "HOT",
                 device: regDevice
@@ -2016,8 +1778,9 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          // console.log("End");
-          // console.log(JSON.stringify(hotGameList.value));
+          console.log("End");
+          console.log(JSON.stringify(hotGameList.value));
+          // console.log(hotGameList.value);
           // console.log(livecasino.value);
           isHotGameLoading.value = false;
         });
@@ -2490,7 +2253,7 @@ const getVersionNo = async () => {
     const info = await App.getInfo();
     // console.log("APP Info");
     // console.log(info);
-    var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+    var current_version = parseInt(info.version.replaceAll(".", ""));
     // alert("Cur:" + current_version);
     // info.version && info.build
     const appType = "ALL";

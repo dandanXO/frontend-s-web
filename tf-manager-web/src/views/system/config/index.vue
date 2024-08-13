@@ -344,9 +344,16 @@
           v-for="(item, index) in csAddress"
           :key="index"
         >
+          <JsonEditor
+            class="editor"
+            v-model="editorValue"
+            currentMode="code"
+            :modeList="[]"
+            @update:modelValue="updataModel"
+          />
           <el-input
             v-model="item.value"
-            type="textarea"
+            type="hidden"
             :rows="10"
             style="width: 350px; white-space: pre-line"
             placeholder="{'abc':'xyz'}"
@@ -355,7 +362,12 @@
       </div>
     </el-form-item>
     <el-collapse v-model="uiControl.activeGroups">
-      <el-collapse-item v-for="groupConfig in configs.customGroup" :title="groupConfig.group" :name="groupConfig.group" :key="groupConfig.group">
+      <el-collapse-item
+        v-for="groupConfig in configs.customGroup"
+        :title="groupConfig.group"
+        :name="groupConfig.group"
+        :key="groupConfig.group"
+      >
         <el-form-item
           v-for="item in groupConfig.items"
           border-color="#dcdcdc"
@@ -372,7 +384,7 @@
             size="mini"
             type="success"
             style="margin-left: 20px"
-            @click="showEdit(item)"
+            @click="item.siteId === 0 ? showOverrideDefaultConfig(item) : showEdit(item)"
             plain
           >
             {{ t('fields.edit') }}
@@ -384,6 +396,7 @@
             style="margin-left: 20px"
             @click="delConfig(item.id)"
             plain
+            v-if="item.siteId !== 0"
           >
             {{ t('fields.delete') }}
           </el-button>
@@ -395,6 +408,8 @@
             style="margin-left: 20px"
             plain
             @click="moveUp(item, groupConfig)"
+            v-if="item.siteId !== 0"
+            :disabled="!canClickMoveUpButton(item, groupConfig)"
           />
           <el-button
             circle
@@ -404,6 +419,8 @@
             style="margin-left: 20px"
             plain
             @click="moveDown(item, groupConfig)"
+            v-if="item.siteId !== 0"
+            :disabled="!canClickMoveDownButton(item, groupConfig)"
           />
         </el-form-item>
       </el-collapse-item>
@@ -426,6 +443,7 @@
     :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
+    :before-close="closeDialog"
   >
     <el-form
       ref="configForm"
@@ -439,10 +457,11 @@
         <el-input
           v-model="form.configGroup"
           :placeholder="t('fields.configGroup')"
+          :disabled="dialogMode === 'OVERRIDE_DEFAULT'"
         />
       </el-form-item>
       <el-form-item :label="t('fields.configCode')" prop="code">
-        <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
+        <el-input v-model="form.code" :placeholder="t('fields.configCode')" :disabled="dialogMode === 'OVERRIDE_DEFAULT'" />
       </el-form-item>
       <el-form-item :label="t('fields.configValue')" prop="value">
         <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
@@ -450,7 +469,7 @@
     </el-form>
 
     <div class="dialog-footer">
-      <el-button @click="uiControl.dialogVisible = false">
+      <el-button @click="closeDialog">
         {{ $t('fields.cancel') }}
       </el-button>
       <el-button type="primary" @click="submit()">
@@ -473,12 +492,13 @@ import {
   updateConfig,
   updateBatch,
   createConfig,
-  updateOrderBatch
+  updateOrderBatch,
 } from '../../../api/config'
 import { hasRole } from '../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { required } from '../../../utils/validate'
+import JsonEditor from 'json-editor-vue3'
 
 const { t } = useI18n()
 const siteId = ref()
@@ -506,6 +526,12 @@ const uiControl = reactive({
 })
 
 const configForm = ref(null)
+
+const dialogMode = ref(null)
+const closeDialog = () => {
+  dialogMode.value = null;
+  uiControl.dialogVisible = false
+}
 
 const form = reactive({
   id: null,
@@ -620,6 +646,26 @@ const s3Url = computed({
     (configs.value.find(item => item.code === 's3_url').value = newVla),
 })
 
+const canClickMoveUpButton = (item, groupConfig) => {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index === 0) {
+    return false;
+  }
+
+  if (groupConfig.items[index - 1].siteId === 0) {
+    return false;
+  }
+  return true;
+}
+
+const canClickMoveDownButton = (item, groupConfig) => {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index === groupConfig.items.length - 1) {
+    return false;
+  }
+  return true;
+}
+
 function getter(code, isArray = true) {
   let subArray = configs.value.filter(config => config.code === code)
   if (subArray.length === 0) {
@@ -703,6 +749,13 @@ async function loadRiskLevels() {
 async function loadConfigs() {
   const { data: ret } = await getConfigs({ siteId: siteId.value })
   configs.value = ret
+
+  const csAddressConfig = configs.value.find(item => item.code === 'cs_address')
+
+  if (csAddressConfig) {
+    editorValue = JSON.parse(csAddressConfig.value)
+  }
+
   configs.customList = configs.value.filter(
     config =>
       config.code !== 'adjust_type' &&
@@ -758,20 +811,39 @@ async function loadConfigs() {
     }
   }
 
-  // sort configs.customGroup.items by order index
+  // sort configs.customGroup.items by siteId and order index
   for (let index = 0; index < configs.customGroup.length; index++) {
     configs.customGroup[index].items = configs.customGroup[index].items.sort(
-      (a, b) => a.orderIndex - b.orderIndex
+      (a, b) => {
+        if (a.siteId !== b.siteId) {
+          return a.siteId - b.siteId;
+        } else {
+          return a.orderIndex - b.orderIndex;
+        }
+      }
     )
     // set item.orderIndex = item index
     for (let i = 0; i < configs.customGroup[index].items.length; i++) {
       configs.customGroup[index].items[i].orderIndex = i
     }
   }
+
+  removeJsonEditorElement()
 }
 
 function showEdit(customConfig) {
   showDialog('EDIT')
+  nextTick(() => {
+    for (const key in customConfig) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = customConfig[key]
+      }
+    }
+  })
+}
+
+function showOverrideDefaultConfig(customConfig) {
+  showDialog('OVERRIDE_DEFAULT')
   nextTick(() => {
     for (const key in customConfig) {
       if (Object.keys(form).find(k => k === key)) {
@@ -821,12 +893,19 @@ async function updateConfigs() {
       }
     }
   }
-  await updateBatch(configs.value)
+  const configsWithoutDefaultData = configs.value.filter(item => item.siteId !== 0);
+  await updateBatch(configsWithoutDefaultData)
   const orderUpdate = []
   for (let index = 0; index < configs.customGroup.length; index++) {
     for (let i = 0; i < configs.customGroup[index].items.length; i++) {
+      const item = configs.customGroup[index].items[i];
+
+      if (item.siteId === 0) {
+        continue;
+      }
+
       orderUpdate.push({
-        id: configs.customGroup[index].items[i].id,
+        id: item.id,
         orderIndex: i,
       })
     }
@@ -837,6 +916,8 @@ async function updateConfigs() {
 }
 
 function showDialog(type) {
+  dialogMode.value = type;
+
   if (type === 'CREATE') {
     if (configForm.value) {
       form.id = null
@@ -845,6 +926,8 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.createConfig')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editConfig')
+  } else if (type === 'OVERRIDE_DEFAULT') {
+    uiControl.dialogTitle = t('fields.editConfig')
   }
   uiControl.dialogVisible = true
 }
@@ -852,16 +935,24 @@ function showDialog(type) {
 async function submit() {
   configForm.value.validate(async valid => {
     if (valid) {
-      if (uiControl.dialogTitle === t('fields.createConfig')) {
+      form.configGroup = form.configGroup.trim();
+      form.code = form.code.trim();
+      if (dialogMode.value === 'CREATE') {
         form.siteId = siteId.value
         await createConfig(form)
         ElMessage({ message: t('message.addSuccess'), type: 'success' })
-      } else if (uiControl.dialogTitle === t('fields.editConfig')) {
+      } else if (dialogMode.value === 'EDIT') {
         await updateConfig(form)
         ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+      } else if (dialogMode.value === 'OVERRIDE_DEFAULT') {
+        form.siteId = siteId.value;
+        form.id = null
+        await createConfig(form)
+        ElMessage({ message: t('message.updateSuccess'), type: 'success' })
       }
+
       await loadConfigs()
-      uiControl.dialogVisible = false
+      closeDialog()
     }
   })
 }
@@ -892,6 +983,34 @@ function moveDown(item, groupConfig) {
     groupConfig.items[index + 1].code = temp.code
     groupConfig.items[index + 1].orderIndex = index + 1
   }
+}
+
+let editorValue = ref({})
+
+const updataModel = val => {
+  const config = configs.value.find(item => item.code === 'cs_address')
+  if (config) {
+    config.value = JSON.stringify(val)
+  }
+}
+
+function removeJsonEditorElement() {
+  const classesToRemove = [
+    'jsoneditor-poweredBy',
+    'jsoneditor-sort',
+    'jsoneditor-transform',
+    'jsoneditor-undo',
+    'jsoneditor-redo',
+    'jsoneditor-repair',
+  ]
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className)
+    Array.from(elements).forEach(element => {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  })
 }
 
 onMounted(() => {
@@ -943,5 +1062,16 @@ onMounted(() => {
 
 .disable-input {
   pointer-events: none;
+}
+
+.default-label {
+  font-size: 12px;
+  color: red;
+  margin-left: 10px;
+}
+</style>
+<style rel="stylesheet/scss" lang="scss">
+.full-screen {
+  right: 20px !important;
 }
 </style>

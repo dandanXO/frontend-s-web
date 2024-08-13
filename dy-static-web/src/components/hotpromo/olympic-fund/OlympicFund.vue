@@ -2,8 +2,8 @@
   <div class="olympic-fund-wrapper">
     <div class="switch-wrapper">
       <div class="switch-container">
-        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">新手礼包</div>
-        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">新人指路</div>
+        <div :class="['switch-option', { active: selected === 'gift' }]" @click="selectOption('gift')">助力金</div>
+        <div :class="['switch-option', { active: selected === 'guide' }]" @click="selectOption('guide')">突破奖</div>
       </div>
     </div>
 
@@ -12,6 +12,11 @@
         <img src="@/components/hotpromo/olympic-fund/img/gift.svg" />
         <span v-if="isGiftSelected">助力金</span>
         <span v-else>突破奖</span>
+      </div>
+
+      <div class="description-block-event-content">
+        <div class="description-block-event-content-title">活动日期</div>
+        <span>2024 年 7 月 25 日—2024 年 8 月 11 日</span>
       </div>
 
       <div class="bonus-block-content">
@@ -43,11 +48,11 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
         <span>活动说明</span> -->
-        <img src="@/components/hotpromo/olympic-fund/img/info-title.png">
+        <img src="@/components/hotpromo/olympic-fund/img/info-title.png" />
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
-        <span>VIP1及以上会员</span>
+        <span>VIP1 及以上会员</span>
       </div>
 
       <div class="table-wrapper">
@@ -97,9 +102,9 @@
               <td>≥38,888</td>
               <td>88</td>
               <td>
-                日有效流水达成后每超过1万打码
+                日有效流水达成后每超过 1 万打码
                 <br />
-                将获得28元进阶奖金
+                将获得 28 元进阶奖金
               </td>
               <td>3倍/不限场馆</td>
             </tr>
@@ -112,11 +117,11 @@
       <div class="olympic-fund-block-title-ol">
         <!-- <img src="@/components/hotpromo/olympic-fund/img/exclamation.svg" />
         <span>活动规则</span> -->
-        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png">
+        <img src="@/components/hotpromo/olympic-fund/img/rule-title.png" />
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
-        <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
-        <li>本活动不予其他存款活动共享，每日仅可领取一次，彩金实时到账， 不限场馆，三倍流水即可提款；</li>
+        <li>活动期间，每日的第一笔存款（存款≥500 元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
+        <li>本活动不予其他存款活动共享，每日仅可领取一次，彩金实时到账，不限场馆，三倍流水即可提款；</li>
         <li>
           本活动需完善信息后即可点击参与，同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可使用一个账号参与，若有违规者，将不享受此活动红利；
         </li>
@@ -153,8 +158,10 @@ import {
   getOlympicFirstDeposit
 } from "@/api/index/promo";
 import { computed, onMounted, ref } from "vue";
-import { ElMessage } from "element-plus";
+import { userStore } from "@/store";
+import { ElMessage, ElMessageBox } from "element-plus";
 
+const store = userStore();
 const selected = ref("gift");
 const depositData = ref({
   todayFirstDepositAmount: 0,
@@ -168,6 +175,19 @@ const isGiftSelected = computed(() => selected.value === "gift");
 const selectOption = (value) => (selected.value = value);
 
 const handleClick = () => {
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
   const api = isGiftSelected.value ? claimOlympicFirstDeposit : claimOlympicDailySportBet;
   api().then((res) => {
     if (res.code === 0) {
@@ -182,6 +202,9 @@ const handleClick = () => {
 };
 
 onMounted(() => {
+  if(!store.token) {
+    return
+  }
   getOlympicFirstDeposit().then((res) => {
     if (res.code === 0) {
       const { todayFirstDepositAmount, claimableAmount } = res.data;
@@ -233,8 +256,8 @@ onMounted(() => {
       font-weight: 600;
       line-height: 33.6px;
       &-ol {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
         img {
           width: 80%;
           margin: 0 auto;
@@ -302,27 +325,25 @@ onMounted(() => {
   }
 }
 
-.description-block {
-  .description-block-event-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.description-block-event-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-    .description-block-event-content-title {
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-      padding: 3px 28px;
-      clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 23.33px;
-      color: #fff;
-    }
+  .description-block-event-content-title {
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding: 3px 28px;
+    clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 23.33px;
+    color: #fff;
+  }
 
-    span {
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-    }
+  span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
   }
 }
 

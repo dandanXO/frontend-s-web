@@ -4,11 +4,14 @@
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin'" />
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank'" />
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss'" />
+    <tf88Baohiemvon v-if="list.redirectUrl === 'tf88-baohiemvon'" :promo-code="list.promoCode" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' " :promo-code="list.promoCode" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone'" :promo-code="list.promoCode" />
     <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24'" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' " :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' " :promo-code="list.promoCode" />
+    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" :promo-code="list.promoCode" />
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" :promo-code="list.promoCode" />
+    <olympicClaim v-if="list.redirectUrl === 'CHINHPHUC-OLYMPIC'" :promo-code="list.promoCode" />
+    <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" />
 
     <HongBaoYu2024
       v-if="listParam.type === 'redpacket' && store.token"
@@ -21,7 +24,7 @@
         <span class="img-item">
           <div class="inner-contents">
             <div class="amount">{{ amount }}</div>
-            <div class="bonus">{{ $t('promo.bonus')}}</div>
+            <div class="bonus">{{ $t("promo.bonus") }}</div>
           </div>
         </span>
         <img src="../assets/images/index/bonus.svg" />
@@ -37,20 +40,25 @@ import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.v
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
 import SlotNetloss from "../components/hotpromo/slot-netloss/SlotNetloss.vue";
+import tf88Baohiemvon from "../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
 import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
 import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
-import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
+import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
+import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
+import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    tf88Baohiemvon,
+    olympicClaim,
     DailyLoginPromo,
     LotteryPromo,
     PennyBank,
@@ -59,7 +67,8 @@ export default defineComponent({
     HongBaoYu2024,
     Eurocup2024,
     Eurocup2024bet,
-    EurocupLuckyDraw
+    EurocupLuckyDraw,
+    NewPlayerPromo
     // DailyBonus
   },
   props: {
@@ -297,10 +306,10 @@ export default defineComponent({
   computed: {
     listParam() {
       try {
-        return JSON.parse(this.list.param)
-      } catch(e) {
-        console.log(e)
-        return {}
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
       }
     }
   },

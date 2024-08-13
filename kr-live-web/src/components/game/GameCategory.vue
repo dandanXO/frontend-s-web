@@ -16,7 +16,8 @@ const categoryList = [
     { name: "live", label: "lang.game_category_live", enLabel: "LIVE CASINO" },
     { name: "slots", label: "lang.game_category_slot", enLabel: "SLOT GAME" },
     { name: "sport", label: "lang.game_category_sport", enLabel: "SPORTS" },
-    { name: "casual", label: "lang.game_category_minigame", enLabel: "MINI GAME" }
+    { name: "casual", label: "lang.game_category_minigame", enLabel: "MINI GAME" },
+    { name: "poker", label: "lang.game_category_poker", enLabel: "POKER" }
 ];
 
 const props = defineProps(['onClickGameCategory', 'selectedCategory']);
@@ -130,6 +131,11 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         background-size: 120% 120%;
     }
 
+    &.poker {
+        background: url('../../assets/home/menu/menu-poker.png') no-repeat center center;
+        background-size: 120% 120%;
+    }
+
     @media (max-width: 768px) {
         &.slots {
             background: url('../../assets/home/menu/menu-slots-mobile.png') no-repeat center center;
@@ -153,6 +159,11 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
         &.casual {
             background: url('../../assets/home/menu/menu-casual-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.poker {
+            background: url('../../assets/home/menu/menu-poker-mobile.png') no-repeat center center;
             background-size: 120% 120%;
         }
     }

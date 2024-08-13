@@ -2,82 +2,86 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-      <img src="../assets/logo.svg" style="width: 200px;">
+        <img src="../assets/logo.svg" style="width: 200px" />
         <span v-html="$t('affiliate.englishText')"></span>
       </div>
       <div class="affiliate-desc">
-        <img src="../assets/images/affiliate/professional-team.png" height="55">
-        <img src="../assets/images/affiliate/best-quality-service.png" height="55">
-        <img src="../assets/images/affiliate/official-partner.png" height="55">
+        <img src="../assets/images/affiliate/professional-team.png" height="55" />
+        <img src="../assets/images/affiliate/best-quality-service.png" height="55" />
+        <img src="../assets/images/affiliate/official-partner.png" height="55" />
       </div>
       <div class="buttons">
-        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
-        <a class="outline" :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
+        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' + (affCode ? affCode : '')">{{ $t("affiliate.joinus") }}</a>
+        <a class="outline" :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">
+          {{ $t("affiliate.login") }}
+        </a>
         <a class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
-          {{ $t('affiliate.contactus') }}
+          {{ $t("affiliate.contactus") }}
         </a>
       </div>
       <div class="affiliate-join">
-        <img :src="require(`../assets/images/affiliate/join-${languageVal}.png`)" width="696">
+        <img :src="require(`../assets/images/affiliate/join-${languageVal}.png`)" width="696" />
       </div>
 
       <div class="affiliate-program">
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">{{ $t('affiliate.eSportsCommissionProgram') }}</div>
+            <div class="affiliate-subtitle">{{ $t("affiliate.eSportsCommissionProgram") }}</div>
             <!-- <div class="affiliate-terms">{{ $t('affiliate.bonusTerms') }}</div> -->
             <ul>
-              <li>{{ $t('affiliate.afftnc1') }}</li>
-              <li>{{ $t('affiliate.afftnc2') }}
+              <li>{{ $t("affiliate.afftnc1") }}</li>
+              <li>
+                {{ $t("affiliate.afftnc2") }}
                 <ul v-if="languageVal === 'en'">
-                  <li>{{ $t('affiliate.afftnc2-1') }}</li>
-                  <li>{{ $t('affiliate.afftnc2-2') }}</li>
-                  <li>{{ $t('affiliate.afftnc2-3') }}</li>
-                </ul>  
-              </li>
-              <li>{{ $t('affiliate.afftnc3') }}</li>
-              <li>{{ $t('affiliate.afftnc4') }}</li>
-              <li>{{ $t('affiliate.afftnc5') }}</li>
-              <li>{{ $t('affiliate.afftnc6') }}</li>
-              <li>{{ $t('affiliate.afftnc7') }}
-                <ul v-if="languageVal === 'vi'">
-                  <li>{{ $t('affiliate.afftnc2-1') }}</li>
-                  <li>{{ $t('affiliate.afftnc2-2') }}</li>
-                  <li>{{ $t('affiliate.afftnc2-3') }}</li>
+                  <li>{{ $t("affiliate.afftnc2-1") }}</li>
+                  <li>{{ $t("affiliate.afftnc2-2") }}</li>
+                  <li>{{ $t("affiliate.afftnc2-3") }}</li>
                 </ul>
               </li>
-              <li v-if="languageVal === 'en'">{{ $t('affiliate.afftnc8') }}</li>
-              <li v-if="languageVal === 'en'">{{ $t('affiliate.afftnc9') }}</li>
-              <li v-if="languageVal === 'en'">{{ $t('affiliate.afftnc10') }}</li>
+              <li>{{ $t("affiliate.afftnc3") }}</li>
+              <li>{{ $t("affiliate.afftnc4") }}</li>
+              <li>{{ $t("affiliate.afftnc5") }}</li>
+              <li>{{ $t("affiliate.afftnc6") }}</li>
+              <li>
+                {{ $t("affiliate.afftnc7") }}
+                <ul v-if="languageVal === 'vi'">
+                  <li>{{ $t("affiliate.afftnc2-1") }}</li>
+                  <li>{{ $t("affiliate.afftnc2-2") }}</li>
+                  <li>{{ $t("affiliate.afftnc2-3") }}</li>
+                </ul>
+              </li>
+              <li v-if="languageVal === 'en'">{{ $t("affiliate.afftnc8") }}</li>
+              <li v-if="languageVal === 'en'">{{ $t("affiliate.afftnc9") }}</li>
+              <li v-if="languageVal === 'en'">{{ $t("affiliate.afftnc10") }}</li>
             </ul>
           </div>
           <div class="affiliate-sub sm">
-            <div class="affiliate-subtitle">{{ $t('affiliate.CommissionPlan') }}</div>
+            <div class="affiliate-subtitle">{{ $t("affiliate.CommissionPlan") }}</div>
             <table>
               <tbody>
                 <tr>
-                  <th>{{ $t('affiliate.activeUser') }}</th>
-                  <th>{{ $t('affiliate.realProfit') }}</th>
-                  <th>{{ $t('affiliate.commissionRate') }}</th>
+                  <th>{{ $t("affiliate.activeUser") }}</th>
+                  <th>{{ $t("affiliate.realProfit") }}</th>
+                  <th>{{ $t("affiliate.commissionRate") }}</th>
                 </tr>
                 <tr>
                   <td>5</td>
-                  <td style="font-family: 'Roboto';">{{ $t('affiliate.realProfit1') }}</td>
+                  <td style="font-family: 'Roboto'">{{ $t("affiliate.realProfit1") }}</td>
                   <td>40%</td>
                 </tr>
                 <tr>
                   <td>15</td>
-                  <td style="font-family: 'Roboto';">{{ $t('affiliate.realProfit2') }}</td>
+                  <td style="font-family: 'Roboto'">{{ $t("affiliate.realProfit2") }}</td>
                   <td>45%</td>
                 </tr>
                 <tr>
                   <td>30</td>
-                  <td style="font-family: 'Roboto';">{{ $t('affiliate.realProfit3') }}</td>
+                  <td style="font-family: 'Roboto'">{{ $t("affiliate.realProfit3") }}</td>
                   <td>50%</td>
                 </tr>
                 <tr>
                   <td>50</td>
-                  <td style="font-family: 'Roboto';">{{ $t('affiliate.realProfit4') }}</td>
+                  <td style="font-family: 'Roboto'">{{ $t("affiliate.realProfit4") }}</td>
                   <td>55%</td>
                 </tr>
               </tbody>
@@ -86,159 +90,171 @@
         </div>
         <div class="affiliate-subgroup agent-content-item">
           <div class="affiliate-sub">
-            <div class="affiliate-subtitle">{{ $t('affiliate.CalculationFormula') }}</div>
+            <div class="affiliate-subtitle">{{ $t("affiliate.CalculationFormula") }}</div>
             <div class="agent-stress-tip" v-html="$t('affiliate.profitExplanation')"></div>
             <div class="agent-demo">
               <div class="agent-demo-bg">
-                <div class="agent-demo-example-text">{{ $t('affiliate.example') }} 1: {{ $t('affiliate.deposit1000') }}</div>
-                
-                <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalLossCustomers') }}</div>
-                      <div class="txt-right">10.150.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalAmtDepositMth') }}</div>
-                      <div class="txt-right">19.000.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalAmtWithdrawnInMth') }}</div>
-                      <div class="txt-right">8.000.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalPromoCustomersInMth') }}</div>
-                      <div class="txt-right">850.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-btm">
-                  <div class="agent-demo-table">
-                      <div class="agent-demo-table-tr">
-                        <div class="txt-left">{{ $t('affiliate.bankTransFee') }}</div>
-                        <div class="txt-right">270.000</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-btm">
-                    <div class="agent-demo-table">
-                      <div class="agent-demo-table-tr">
-                        <div class="txt-left">{{ $t('affiliate.profit') }}</div>
-                        <div class="txt-right">(10.150.000*90%)-850.000-270.000=8.015.000</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">{{$t('affiliate.agentCommission')}}</div>
-                  <div class="txt-right">8.015.000*40%=3.206.000</div>
+                <div class="agent-demo-example-text">
+                  {{ $t("affiliate.example") }} 1: {{ $t("affiliate.deposit1000") }}
                 </div>
-              </div>
-            </div>
 
-            
-            <div class="agent-demo-bg">
-                <div class="agent-demo-example-text">{{ $t('affiliate.example') }} 2: {{ $t('affiliate.deposit130000') }}</div>
-                
                 <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalLossCustomers') }}</div>
-                      <div class="txt-right">4.200.000.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalAmtDepositMth') }}</div>
-                      <div class="txt-right">6.300.000.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalAmtWithdrawnInMth') }}</div>
-                      <div class="txt-right">1.850.000.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
-                    <div class="agent-demo-table-tr">
-                      <div class="txt-left">{{ $t('affiliate.totalPromoCustomersInMth') }}</div>
-                      <div class="txt-right">250.000.000</div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-btm">
-                  <div class="agent-demo-table">
-                      <div class="agent-demo-table-tr">
-                        <div class="txt-left">{{ $t('affiliate.bankTransFee') }}</div>
-                        <div class="txt-right">81.500.000</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-btm">
-                    <div class="agent-demo-table">
-                      <div class="agent-demo-table-tr">
-                        <div class="txt-left">{{ $t('affiliate.profit') }}</div>
-                        <div class="txt-right">	(4.200.000.000*90%)-250.000.000-81.500.000=3.448.500.000</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">{{$t('affiliate.agentCommission')}}</div>
-                  <div class="txt-right">3.448.500.000*55%=1.896.675.000</div>
+                    <div class="txt-left">{{ $t("affiliate.totalLossCustomers") }}</div>
+                    <div class="txt-right">10.150.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalAmtDepositMth") }}</div>
+                    <div class="txt-right">19.000.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalAmtWithdrawnInMth") }}</div>
+                    <div class="txt-right">8.000.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalPromoCustomersInMth") }}</div>
+                    <div class="txt-right">850.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-btm">
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">{{ $t("affiliate.bankTransFee") }}</div>
+                      <div class="txt-right">270.000</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="agent-demo-btm">
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">{{ $t("affiliate.profit") }}</div>
+                      <div class="txt-right">(10.150.000*90%)-850.000-270.000=8.015.000</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.agentCommission") }}</div>
+                    <div class="txt-right">8.015.000*40%=3.206.000</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="agent-demo-bg">
+                <div class="agent-demo-example-text">
+                  {{ $t("affiliate.example") }} 2: {{ $t("affiliate.deposit130000") }}
+                </div>
+
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalLossCustomers") }}</div>
+                    <div class="txt-right">4.200.000.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalAmtDepositMth") }}</div>
+                    <div class="txt-right">6.300.000.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalAmtWithdrawnInMth") }}</div>
+                    <div class="txt-right">1.850.000.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.totalPromoCustomersInMth") }}</div>
+                    <div class="txt-right">250.000.000</div>
+                  </div>
+                </div>
+                <div class="agent-demo-btm">
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">{{ $t("affiliate.bankTransFee") }}</div>
+                      <div class="txt-right">81.500.000</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="agent-demo-btm">
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">{{ $t("affiliate.profit") }}</div>
+                      <div class="txt-right">(4.200.000.000*90%)-250.000.000-81.500.000=3.448.500.000</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="agent-demo-table">
+                  <div class="agent-demo-table-tr">
+                    <div class="txt-left">{{ $t("affiliate.agentCommission") }}</div>
+                    <div class="txt-right">3.448.500.000*55%=1.896.675.000</div>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- <div class="agent-stress-tip agent-margintop-normal">{{ $t('affiliate.transactionFeeNote') }}</div> -->
           </div>
-          <!-- <div class="agent-stress-tip agent-margintop-normal">{{ $t('affiliate.transactionFeeNote') }}</div> -->
+        </div>
+        <div class="affiliate-subgroup agent-content-item">
+          <div class="affiliate-sub">
+            <div class="affiliate-subtitle">{{ $t("affiliate.downlineAffiliate") }}</div>
+            {{ $t("affiliate.downlineAffiliatept1") }}
+            <br />
+            {{ $t("affiliate.downlineAffiliatept2") }}
+            <br />
+            {{ $t("affiliate.downlineAffiliate2") }}
+          </div>
+        </div>
+        <div class="affiliate-subgroup agent-content-item">
+          <div class="affiliate-sub">
+            <div class="affiliate-subtitle">{{ $t("affiliate.paymentMethods") }}</div>
+            <ul>
+              <li>{{ $t("affiliate.paymentMethods1") }}</li>
+              <li>{{ $t("affiliate.paymentMethods2") }}</li>
+              <li>{{ $t("affiliate.paymentMethods3") }}</li>
+              <li>{{ $t("affiliate.paymentMethods4") }}</li>
+              <li>{{ $t("affiliate.paymentMethods5") }}</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' + (affCode ? affCode : '')" class="agent-reg-btn">
+            {{ $t("affiliate.applyAgentNow") }}
+          </a>
+
+          <a
+            style="text-align: center; width: 100%; margin: 16px auto 0px; display: block"
+            class="outline"
+            :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')"
+            target="_blank"
+          >
+            {{ $t("affiliate.contactus") }}
+          </a>
         </div>
       </div>
-        <div class="affiliate-subgroup agent-content-item">
-          <div class="affiliate-sub">
-          <div class="affiliate-subtitle">{{ $t('affiliate.downlineAffiliate') }}</div>
-          {{ $t('affiliate.downlineAffiliatept1') }}<br>
-          {{ $t('affiliate.downlineAffiliatept2') }}<br>
-          {{ $t('affiliate.downlineAffiliate2') }}
-        </div></div>
-        <div class="affiliate-subgroup agent-content-item">
-          <div class="affiliate-sub">
-          <div class="affiliate-subtitle">{{ $t('affiliate.paymentMethods') }}</div>
-          <ul>
-            <li>{{ $t('affiliate.paymentMethods1') }}</li>
-            <li>{{ $t('affiliate.paymentMethods2') }}</li>
-            <li>{{ $t('affiliate.paymentMethods3') }}</li>
-            <li>{{ $t('affiliate.paymentMethods4') }}</li>
-            <li>{{ $t('affiliate.paymentMethods5') }}</li>
-          </ul>
-        </div></div>
-      <div>
-        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' +
-          (affCode ? affCode : '')
-          " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
-
-        <a style="text-align: center; width:100%;margin:16px auto 0px;display:block;" class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
-          {{ $t('affiliate.contactus') }}
-        </a>
-      </div>
-    </div>
     </div>
   </div>
 </template>
 <script>
-import { i18nStore } from '@/store/language'
+import { i18nStore } from "@/store/language";
 import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 
-import { storeToRefs } from "pinia";  
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   setup() {
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const affiliateUrl = ref("https://vnm-affiliate.th80to83w1.com/");
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
+    const affiliateUrl = ref("https://krw-affiliate.hiemloelebc.com/");
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -247,14 +263,7 @@ export default defineComponent({
       window.open(
         pageURL,
         pageTitle,
-        "resizable=yes, width=" +
-        popupWinWidth +
-        ", height=" +
-        popupWinHeight +
-        ", top=" +
-        top +
-        ", left=" +
-        left,
+        "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
       );
     };
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
@@ -263,38 +272,38 @@ export default defineComponent({
       {
         title: "Total Member Nett Winloss (MYR)",
         dataIndex: "winLoss",
-        key: "winLoss",
+        key: "winLoss"
       },
       {
         title: "Total Active Player",
         dataIndex: "activePlayer",
-        key: "activePlayer",
+        key: "activePlayer"
       },
       {
         title: "Commission Rate",
         dataIndex: "commsRate",
-        key: "commsRate",
-      },
+        key: "commsRate"
+      }
     ];
     const data = [
       {
         key: "1",
         winLoss: "5 and above",
         activePlayer: "< 5",
-        commsRate: "12%",
+        commsRate: "12%"
       },
       {
         key: "2",
         winLoss: "5-66,825",
         activePlayer: "≥ 5",
-        commsRate: "28%",
+        commsRate: "28%"
       },
       {
         key: "3",
         winLoss: "66,826 and above",
         activePlayer: "≥ 5",
-        commsRate: "40%",
-      },
+        commsRate: "40%"
+      }
     ];
     const affCode = sessionStorage.getItem("AFFILIATE_CODE");
     return {
@@ -307,14 +316,14 @@ export default defineComponent({
       languageVal,
       affiliateUrl
     };
-  },
+  }
 });
 </script>
 
 <style scoped lang="scss">
 .wrapper {
   font-size: 15px;
-  background-color: #F3F7FD;
+  background-color: #f3f7fd;
 
   .affiliate {
     background: url("../assets/images/affiliate/agent_index_top_bg_vg.jpg") no-repeat center top;
@@ -364,15 +373,15 @@ export default defineComponent({
         cursor: pointer;
         width: 100%;
         padding: 0px 50px;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         border-radius: 50px;
-        box-shadow: 0px -2px 5px 0px #B1D7FF inset;
+        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
 
         &.outline {
-          background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-          box-shadow: 0px 2px 5px 0px #BBDCFF inset;
-          box-shadow: 0px -1px 4px 0px #A2BFF4 inset;
-          color: #424F72;
+          background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+          box-shadow: 0px 2px 5px 0px #bbdcff inset;
+          box-shadow: 0px -1px 4px 0px #a2bff4 inset;
+          color: #424f72;
         }
       }
     }
@@ -428,7 +437,7 @@ export default defineComponent({
           background: #fff;
           border-radius: 15px;
           padding: 30px;
-          box-shadow: 0px 0px 10px 0px #0000001A;
+          box-shadow: 0px 0px 10px 0px #0000001a;
           color: $font-5;
           width: 100%;
           .affiliate-subtitle {
@@ -476,10 +485,10 @@ export default defineComponent({
         color: $font-5;
         height: 56px;
         font-weight: 700;
-        background-color: #E7F3FF;
+        background-color: #e7f3ff;
       }
       .agent-stress-tip {
-        color: #A7A5A5;
+        color: #a7a5a5;
       }
       .agent-demo {
         display: grid;
@@ -501,8 +510,7 @@ export default defineComponent({
       .agent-demo-table {
         display: table;
         width: 100%;
-        background: linear-gradient(0deg, #F3F3F3, #F3F3F3),
-          linear-gradient(0deg, #FFFFFF, #FFFFFF);
+        background: linear-gradient(0deg, #f3f3f3, #f3f3f3), linear-gradient(0deg, #ffffff, #ffffff);
         margin: 20px auto;
       }
       .agent-demo-table-tr {
@@ -532,10 +540,10 @@ export default defineComponent({
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         border-radius: 50px;
-        box-shadow: 0px -2px 5px 0px #B1D7FF inset;
-        box-shadow: 0px -1px 4px 0px #5894FF inset;
+        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+        box-shadow: 0px -1px 4px 0px #5894ff inset;
       }
       .agent-contact-bg {
         background-color: #f8f8f8;
