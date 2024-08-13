@@ -2,7 +2,18 @@
   <div class="deposit-wrapper">
     <template v-if="!isSelectedMethod">
       <div class="method-title q-mb-md">Choose a payment method</div>
-      <div class="withdraw-methods-container">
+      <div class="withdraw-methods-container" v-if="isLoadingInitPay">
+        <div>
+          <q-skeleton style="height: 76px" />
+        </div>
+        <div>
+          <q-skeleton style="height: 76px" />
+        </div>
+        <div>
+          <q-skeleton style="height: 76px" />
+        </div>
+      </div>
+      <div class="withdraw-methods-container" v-else>
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
           <div
             class="method-item"
@@ -28,7 +39,7 @@
             </template>
 
             <div class="item-amount" v-if="item.depositMin && item.depositMax">
-              {{ item.depositMin }}~{{ item.depositMax }} NGN
+              {{ item.depositMin }}~{{ item.depositMax }} RS
             </div>
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
@@ -46,12 +57,11 @@
         </div>
       </div>
 
-      <div class="lil-title q-mt-lg">Select Amount</div>
       <div class="deposit-item-container q-mt-sm">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
-            <q-badge v-if="activeMethod.privilegeId" color="orange" floating rounded>
-              +{{ convertToCommaAmount(amount * 0.05) }}
+            <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
+              +{{ convertToCommaAmount(amount * selectedItemPrivilege) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
@@ -106,7 +116,7 @@
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
             <div class="lil-title">
               Amount ({{ convertToCommaAmount(selectedItem.depositMin) }} -
-              {{ convertToCommaAmount(selectedItem.depositMax) }} NGN)
+              {{ convertToCommaAmount(selectedItem.depositMax) }} RS)
             </div>
             <q-input
               type="number"
@@ -135,24 +145,26 @@
             </q-input>
           </div>
 
-          <q-select
-            v-else
-            ref="depositAmtRef"
-            label="Select Amount"
-            name="localAmount"
-            filled
-            :options="amountList"
-            v-model="form.localAmount"
-            color="bright"
-            :rules="verifyDepositAmount"
-            padding="none"
-          >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="currency">
-                {{ store.currency.value }}
-              </span>
-            </template>
-          </q-select>
+          <template v-else>
+            <div class="lil-title q-mt-lg">Select Amount</div>
+            <q-select
+              ref="depositAmtRef"
+              label="Select Amount"
+              name="localAmount"
+              filled
+              :options="amountList"
+              v-model="form.localAmount"
+              color="bright"
+              :rules="verifyDepositAmount"
+              padding="none"
+            >
+              <template v-slot:prepend>
+                <span style="font-size: 26px" class="currency">
+                  {{ store.currency.value }}
+                </span>
+              </template>
+            </q-select>
+          </template>
 
           <!-- <div class="q-mt-md q-mb-md text-grey-7">
           Minimum Amount:
@@ -196,7 +208,7 @@
 
       <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">Eg. Deposit ₦1,000, require ₦10,000 wager</div>
+        <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
       </div>
     </template>
   </div>
@@ -239,7 +251,7 @@ import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
@@ -249,6 +261,7 @@ const imgURL = process.env.IMAGE_CDN;
 var qs = require("qs");
 const store = userStore();
 const router = useRouter();
+const route = useRoute();
 const emits = defineEmits(["closeModal"]);
 
 const checkNewUser = () => {
@@ -357,10 +370,14 @@ const handleDepositNodeClick = (item) => {
 
 const selectedItem = ref();
 const selectedItemAmount = ref();
+const selectedItemPrivilege = ref();
+const selectedItemPrivilegeId = ref();
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   selectedItemAmount.value = item.extra.amountArr;
+  selectedItemPrivilege.value = item.extra.privilegePercent;
+  selectedItemPrivilegeId.value = item.extra.privilegeId;
   isSelectedMethod.value = true;
 };
 
@@ -371,17 +388,22 @@ function initPay() {
     message: "Loading data... Please wait..."
   });
 
+  let promoParam = "";
+
+  if (route.query.from === "/promo") {
+    promoParam = "?promo=1";
+  }
+
   payMethods.value = [];
 
-  // cashier.get("/session/ind/deposit/index/").then((res) => {
-  cashier.get("/session/nga/deposit/index/").then((res) => {
+  cashier.get(`/session/nga/deposit/index/${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
       let bankDeposits = res.data.payments
         .map((payment) => {
-          return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2); // Flattening the array to reach the actual payment methods
+          return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
 
@@ -522,8 +544,8 @@ async function confirmDeposit() {
           }
           form.paymentId = activeMethod.value.paymentId;
 
-          if (activeMethod.value.privilegeId) {
-            form.privilegeId = activeMethod.value.privilegeId;
+          if (selectedItemPrivilegeId.value) {
+            form.privilegeId = selectedItemPrivilegeId.value;
           }
 
           const copy = { ...form };
@@ -1072,7 +1094,7 @@ onMounted(() => {
     .txt-content {
       font-size: 10px;
       color: #576373;
-      white-space: nowrap;
+      // white-space: nowrap;
       margin-top: 4px;
     }
     .txt-maintenance {

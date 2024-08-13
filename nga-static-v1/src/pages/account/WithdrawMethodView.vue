@@ -387,15 +387,25 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  api.get("/session/nga/withdraw/entrance").then((response) => {
-    if (response.code === 0) {
-      let bankWithdraws = response.data.withdraws;
-      paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
+  api.get("/session/nga/withdraw/entrance").then((res) => {
+    if (res.code === 0) {
+      // let bankWithdraws = response.data.withdraws;
+      // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
+
+
+      let bankWithdraws = res.data.withdraws
+        .map((withdraw) => {
+          return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
+        })
+        .flat();
+
+      paymentMethodsItems.value = bankWithdraws.flat();
+
     } else {
       $q.notify({
         color: "negative",
         position: "top",
-        message: response.message,
+        message: res.message,
         icon: "report_problem"
       });
     }
@@ -939,7 +949,7 @@ const toggleAmount = (type) => {
       .txt-content {
         font-size: 10px;
         color: #576373;
-        white-space: nowrap;
+        // white-space: nowrap;
         margin-top: 4px;
       }
       .txt-maintenance {
