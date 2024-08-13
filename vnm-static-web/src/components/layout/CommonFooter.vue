@@ -130,7 +130,7 @@
       </div>
     </div>
     <img
-      v-if="ui.edition === 'SLOT' && route.path === '/home'"
+      v-if="ui.edition === 'SLOT' && route.name === 'homeslot'"
       class="footer-bg"
       src="@/assets/footer/footer-bg-slot-edition.png"
       alt="coin background"
