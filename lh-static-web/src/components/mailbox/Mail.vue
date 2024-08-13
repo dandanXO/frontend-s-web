@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <GameModal ref="modalGame"></GameModal>
+  <GameModal ref="popModalGame"></GameModal>
 </template>
 
 <script setup>
@@ -28,14 +28,14 @@ import GameModal from "@/components/modal/GameModal.vue";
 const props = defineProps(["mail", "closeMail"]);
 const router = useRouter();
 
-const modalGame = ref(null);
+const popModalGame = ref(null);
 const openGame = (gameName, code, gameCode) => {
-  modalGame.value.open(gameName, code, gameCode);
+  popModalGame.value.open(gameName, code, gameCode);
 };
 const handleDetail = (mail) => {
   // debugger;
   if (mail.redirectType === "INNER") {
-    const openPattern = /^\/open\/(.*)/;
+    const openPattern = /^open\/(.*)/;
     if (mail.redirectUrl.match(openPattern)) {
       const extractedUrl = mail.redirectUrl.match(openPattern)[1];
       const [gameName, platformCode, gameCode] = extractedUrl.split("/");
