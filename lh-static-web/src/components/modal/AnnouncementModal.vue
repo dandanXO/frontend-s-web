@@ -62,8 +62,12 @@ import AnnouncementComponent from "./AnnouncementComponent.vue";
 import { RiCloseFill } from "vue-remix-icons";
 import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
+import { useLocalStorage } from "@vueuse/core";
+import moment from "moment";
 
 const store = userStore();
+const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
+
 const visible = ref(false);
 const currentTab = ref("inbox");
 const checked = ref(false);
@@ -71,22 +75,28 @@ const mailData = ref([]);
 const announceData = ref([]);
 
 onMounted(() => {
-  if (store.token) {
-    popupMailBox()
-      .then((res) => {
-        if (res.code === 0) {
-          mailData.value = res.data;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        if (mailData.value.length > 0) {
-          visible.value = true;
-        }
-      });
+  if (!store.token) return;
+
+  if (lastAnnouncementDateStr.value) {
+    const today = moment();
+    const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
+    const diff = today.diff(lastAnnouncementDate, "days");
+    if (!diff) return;
   }
+  popupMailBox()
+    .then((res) => {
+      if (res.code === 0) {
+        mailData.value = res.data;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      if (mailData.value.length > 0) {
+        visible.value = true;
+      }
+    });
 });
 
 watch(
@@ -110,6 +120,13 @@ watch(
     }
   }
 );
+watch(checked, (val) => {
+  if (val) {
+    lastAnnouncementDateStr.value = moment().format("YYYY-MM-DD");
+  } else {
+    lastAnnouncementDateStr.value = null;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
