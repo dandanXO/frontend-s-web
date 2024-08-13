@@ -57,7 +57,7 @@
         </div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">永久</div>
+          <div class="right">8月14日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
@@ -113,8 +113,7 @@
               />
               <span>示例</span>
             </div>
-            8 月 08 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A
-            在次日活动页面可点击领取 58 元彩金；
+            8 月 14 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A 在次日活动页面可点击领取 58 元彩金；
           </div>
         </div>
       </div>

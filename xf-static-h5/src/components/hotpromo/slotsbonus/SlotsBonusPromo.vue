@@ -10,7 +10,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              昨日赛事有效投注：
+              当日有效投注：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
@@ -41,7 +41,7 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>昨日赛事有效投注</th>
+            <th>当日有效投注</th>
             <th>彩金金额</th>
             <th>流水倍数</th>
           </tr>
@@ -73,7 +73,7 @@
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 示例</span>
-          <span>会员A在电子投注,当日有效投注为49000元,次日即可获得128元。</span>
+          <span>会员A在电子场馆投注,当日有效投注为49000元,次日即可获得128元彩金。</span>
         </div>
       </div>
       <div class="match-game-bottom-rule">
@@ -88,7 +88,8 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              <!-- 打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。 -->
+              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。
             </span>
           </div>
           <div class="item">
