@@ -237,16 +237,25 @@
                 :preview-src-list="[gameDir + form.icon]"
               />
             </el-col>
-            <el-col :span="6">
-              <el-button
-                icon="el-icon-search"
-                size="mini"
-                type="success"
-                @click="browseImage()"
-              >
-                {{ t('fields.browse') }}
-              </el-button>
-            </el-col>
+          </el-row>
+          <el-row :gutter="10">
+            <el-button
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              v-permission="['sys:siteimage:add']"
+              @click="showImageDialog()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage()"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
           </el-row>
           <!-- <el-input v-model="form.icon" style="width: 350px;" /> -->
         </el-form-item>
@@ -536,6 +545,117 @@
       </router-link>
       <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
+
+    <el-dialog
+      :title="t('fields.addImage')"
+      v-model="uiControl.imageDialogVisible"
+      append-to-body
+      width="600px"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        ref="imageFormRef"
+        :model="imageForm"
+        :rules="imageFormRules"
+        :inline="true"
+        size="small"
+        label-width="180px"
+      >
+        <div id="preview">
+          <el-image
+            v-if="uploadedImage.url"
+            :src="uploadedImage.url"
+            :fit="contain"
+            :preview-src-list="[uploadedImage.url]"
+          />
+        </div>
+        <el-form-item :label="t('fields.image')" prop="path">
+          <el-row :gutter="10">
+            <el-col :span="2">
+              <!-- eslint-disable -->
+              <input
+                id="uploadFile"
+                type="file"
+                ref="inputImage"
+                style="display: none"
+                accept="image/*"
+                @change="attachImage"
+              />
+              <el-button
+                icon="el-icon-upload"
+                size="mini"
+                type="success"
+                @click="$refs.inputImage.click()"
+              >
+                {{ t('fields.upload') }}
+              </el-button>
+            </el-col>
+            <el-col :span="1" />
+          </el-row>
+        </el-form-item>
+        <el-form-item :label="t('fields.imageName')" prop="name">
+          <el-input v-model="imageForm.name" style="width: 350px" />
+        </el-form-item>
+        <el-form-item :label="t('fields.category')" prop="category">
+          <span style="width: 350px">{{ t('fields.game') }}</span>
+        </el-form-item>
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="imageForm.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px"
+            default-first-option
+            @focus="loadSites"
+            @change="checkGamePlatform()"
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.platform')"
+          prop="platform"
+        >
+          <el-select
+            v-model="imageForm.platform"
+            size="small"
+            :placeholder="t('fields.platform')"
+            class="filter-item"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in platform.list"
+              :key="item.code"
+              :label="item.code"
+              :value="item.code"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input
+            v-model="imageForm.remark"
+            :rows="2"
+            type="textarea"
+            :placeholder="t('fields.pleaseInput')"
+            style="width: 350px"
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submitImageUpload">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -556,7 +676,7 @@ import {
 import {
   getPlatformExcelMapping, getPlatformsBySite,
 } from '../../../api/platform'
-import { getSiteImage } from '../../../api/site-image'
+import { createSiteImage, getSiteImage } from '../../../api/site-image'
 import { getSiteListSimple, getSiteExcelMapping } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
 // import { uploadImage } from '../../../api/image'
@@ -564,6 +684,7 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from 'moment'
+import { uploadImage } from '../../../api/image'
 
 const { t } = useI18n();
 const store = useStore();
@@ -571,6 +692,8 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const gameForm = ref(null)
 const gameDir = process.env.VUE_APP_IMAGE + '/game/'
+const inputImage = ref(null)
+const imageFormRef = ref(null)
 
 const EXPORT_GAME_LIST_HEADER = [
   'Game Name',
@@ -613,6 +736,7 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
+  imageDialogVisible: false,
   editBtn: true,
   removeBtn: true,
   importDialogVisible: false,
@@ -650,6 +774,12 @@ const imageRequest = reactive({
   siteId: null,
   category: 'GAME',
 })
+
+const platform = reactive({
+  list: [],
+  display: false,
+})
+
 const form = reactive({
   id: null,
   name: null,
@@ -666,6 +796,17 @@ const form = reactive({
   sequence: null,
 })
 
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  platform: null
+})
+
 const imageList = reactive({
   dataList: [],
   pages: 0,
@@ -678,6 +819,10 @@ const selectedImage = reactive({
   path: '',
 })
 
+const uploadedImage = reactive({
+  url: null,
+})
+
 const formRules = reactive({
   name: [required(t('message.validateGameNameRequired'))],
   code: [required(t('message.validateGameCodeRequired'))],
@@ -687,6 +832,14 @@ const formRules = reactive({
   platformName: [required(t('message.validatePlatformRequired'))],
   device: [required(t('message.validateDeviceRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
+})
+
+const imageFormRules = reactive({
+  path: [required(t('message.validateImageRequired'))],
+  name: [required(t('message.validateImageNameRequired'))],
+  category: [required(t('message.validateCategoryRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  platform: [required(t('message.validatePlatformRequired'))]
 })
 
 const platforms = reactive({
@@ -1117,6 +1270,71 @@ async function browseImage() {
 //     }
 //   }
 // }
+
+function showImageDialog() {
+  if (imageFormRef.value) {
+    imageFormRef.value.resetFields()
+    uploadedImage.url = null
+    imageForm.id = null
+  }
+  imageForm.category = 'GAME'
+  checkGamePlatform()
+  uiControl.imageDialogVisible = true
+}
+
+async function attachImage(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    imageForm.path = data.data
+    inputImage.value.value = ''
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+
+  // record file dimension
+  var fr = new FileReader()
+  fr.onload = function() {
+    var img = new Image()
+    img.onload = function() {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  const dir = 'temp'
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    uploadedImage.url = URL.createObjectURL(files)
+    return await uploadImage(formData)
+  }
+}
+
+function submitImageUpload() {
+  imageFormRef.value.validate(async valid => {
+    if (valid) {
+      await createSiteImage(imageForm)
+      uiControl.imageDialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
+}
+
+async function checkGamePlatform() {
+  const { data: ret } = await getPlatformsBySite(imageForm.siteId)
+  platform.list = ret
+  platform.display = true
+}
 
 onMounted(async () => {
   await loadSites();

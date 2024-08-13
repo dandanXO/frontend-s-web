@@ -1011,6 +1011,7 @@ export default {
     ftdTime: 'FTD Time',
     ftdTxn: 'FTD Txn',
     fundingInfo: 'Funding Information',
+    game: 'Game',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
     domainEasy: 'Domain Url',

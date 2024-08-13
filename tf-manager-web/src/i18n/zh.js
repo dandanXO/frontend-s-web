@@ -1013,6 +1013,7 @@ export default {
     ftdTime: '首存时间',
     ftdTxn: '首存交易',
     fundingInfo: '资金信息',
+    game: '游戏',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
     domainEasy: 'Domain 易记域名',
