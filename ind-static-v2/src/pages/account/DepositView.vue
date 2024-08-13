@@ -381,6 +381,8 @@ const selectedItemPrivilegeId = ref();
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   selectedItemAmount.value = item.extra.amountArr;
+  selectedItemPrivilege.value = item.extra.privilegePercent;
+  selectedItemPrivilegeId.value = item.extra.privilegeId;
   isSelectedMethod.value = true;
 };
 
@@ -411,10 +413,7 @@ function initPay() {
         .flat();
 
       paymentMethodsItems.value = bankDeposits.flat();
-
       selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
-      selectedItemPrivilege.value = paymentMethodsItems.value[0].extra.privilegePercent;
-      selectedItemPrivilegeId.value = paymentMethodsItems.value[0].extra.privilegeId;
 
       const d = res.data;
       if (!payMethods.value.length) {
