@@ -887,6 +887,7 @@ export default defineComponent({
   .card {
     @include content-block-dark;
     color: $font-3-dark;
+    background-color: #17223e;
   }
 
   .menu-title-container {

@@ -530,10 +530,14 @@ $node-color: #4873f1;
       .payment-method-item {
         box-shadow: none;
         background-color: $background-content-block-lighter-dark;
-        border: unset;
+        border: 2px solid transparent;
 
         &.active {
-          border: unset;
+          border: 2px solid #E9CC94;
+
+          &:before {
+            background-image: url("../../assets/svg/checkmark-dark.svg");
+          }
         }
       }
 

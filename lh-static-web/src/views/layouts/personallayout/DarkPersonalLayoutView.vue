@@ -286,7 +286,8 @@
         .account-menu-container {
           // @include content-block-dark;
           background: url("../../../assets/images/account/menu-container-bg.png") no-repeat top center;
-          background-size: 100% 100%;
+          background-size: 100% auto;
+          border: 1px solid #76634f;
   
           .account-info-wrapper {
             background: transparent;
@@ -317,8 +318,10 @@
   
         .account-content-wrapper {
           background: url("../../../assets/images/account/account-box-bg.png") no-repeat top center;
-          background-size: 100% 100%;
+          background-size: 100% auto;
+          border: 1px solid #76634f;
           padding: 20px;
+          border-radius: 15px;
 
           .account-balance,
           .account-contents {
