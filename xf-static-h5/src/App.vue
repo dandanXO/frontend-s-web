@@ -5,19 +5,21 @@
 <script>
 import { defineComponent, onMounted } from "vue";
 import { useQuasar } from "quasar";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import axios from "axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import { getVisitorId } from "boot/utils";
-import qs from "qs";
+import {useRouter} from "vue-router";
+import {useUI} from "stores/ui";
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
     const store = userStore();
+    const router= useRouter();
+    const ui = useUI();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
     const checkSID = () => {
@@ -104,6 +106,19 @@ export default defineComponent({
       });
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     const getOnlineStatApi = async () => {
       const sidParam = store.visitorId;
       const way = "h5";
@@ -112,12 +127,13 @@ export default defineComponent({
         const res = await api.post("/memberStatistics/submit", qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: "xf1"
+            siteCode: process.env.SITE
         }));
       }
     };
 
     onMounted(() => {
+      checkServerStatus();
       checkSID();
       // initCsWeb();
       getCSA();
