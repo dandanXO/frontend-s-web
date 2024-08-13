@@ -232,6 +232,7 @@ export default {
     usernamereq: "Please enter username",
     passwordreq: "Please enter password",
     username: "Account name is 6-11 characters",
+    only_letter_number_allowed: "Only English letters and numbers are available",
     password: "Password is 6-11 characters",
     passwordDifferent: "Password is different",
     passwordAgain: "Please key in the password again",
