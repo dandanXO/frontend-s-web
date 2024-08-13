@@ -9,9 +9,9 @@
       </div>
       <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
       <div class="maintenance-desc">
-        {{ $t("lang.maintenance_from") }}
+        {{ $t("lang.maintenance_from") }} {{ ui.maintenanceStartTime }}
         <br />
-        {{ $t("lang.maintenance_to") }}
+        {{ $t("lang.maintenance_to") }} {{ ui.maintenanceEndTime }}
         <br />
         {{ $t("lang.maintenance_desc_01") }}
         <br />

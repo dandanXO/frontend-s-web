@@ -16,6 +16,7 @@ import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "src/stores/ui";
 import { EDITION } from "./constant/edition";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -23,6 +24,7 @@ export default defineComponent({
     var qs = require("qs");
     const store = userStore();
     const ui = useUI();
+    const router = useRouter();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
     const onlineStatTimeout = ref();
@@ -245,10 +247,23 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: process.env.SITE
           })
         );
       }
+    };
+
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
     };
 
     const onDeviceReady = () => {
@@ -313,6 +328,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      checkServerStatus();
       checkSID();
       // initCsWeb();
       getCSA();
