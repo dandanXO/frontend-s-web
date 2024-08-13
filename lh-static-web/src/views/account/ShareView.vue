@@ -392,6 +392,7 @@ export default defineComponent({
 .dark {
   .share-container {
     @include content-block-dark;
+    background: #17223E;
 
     .share-info-box {
       background: url(../../assets/images/account/share-info-box.png) no-repeat center center;
