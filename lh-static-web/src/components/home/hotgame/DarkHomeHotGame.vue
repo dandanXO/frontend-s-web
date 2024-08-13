@@ -917,7 +917,7 @@ const tabPosition = ref('left')
 
     .hotgame-tabs-wrapper {
       background: url("../../../assets/home/hotgame/hotgame-bg2.png") no-repeat center center;
-      background-size: 100% 100%;
+      background-size: auto;
       aspect-ratio: 1960 / 1000;
       position: relative;
       display: flex;
@@ -925,13 +925,15 @@ const tabPosition = ref('left')
       justify-content: center;
 
       .hotgame-tabs {
-        height: 400px;
+        height: 600px;
         margin-top: 11%;
 
         :deep(.el-tabs__header) {
           transform: translate(0%, 15%);
           top: 0%;
           left: 0%;
+          height: 60%;
+          margin-top: 7%;
         }
 
         :deep(.el-tabs__item) {
@@ -954,8 +956,8 @@ const tabPosition = ref('left')
 
         .hotgame-content-wrapper {
           display: grid;
-          grid-template-columns: 500px 500px;
-          align-items: center;
+          grid-template-columns: 500px 700px;
+          align-items: flex-start;
           gap: 1rem;
           width: 0;
           height: 0;
@@ -966,7 +968,7 @@ const tabPosition = ref('left')
             width: 100%;
             margin: 0 -10px 0 0px;
             padding-left: 0.75rem;
-            height: 500px;
+            height: 700px;
           }
   
           .left-container {
@@ -975,6 +977,7 @@ const tabPosition = ref('left')
             gap: 0.8rem;
             position: relative;
             align-items: center;
+            margin-top: 25%;
   
             .title-wrapper {
               font-family: "YiHei";
@@ -1168,263 +1171,15 @@ const tabPosition = ref('left')
             display: flex;
             align-items: flex-end;
             position: relative;
-            width: 45%;
-  
-            //&.maintenance {
-            //  filter: grayscale(0.8);
-            //}
-  
-            //.maintenance-box {
-            //  position: absolute;
-            //  top: 10%;
-            //  width: 94%;
-            //  left: 3%;
-            //  right: 3%;
-            //  height: 80%;
-            //  padding:15px 10px;
-            //  color: #ffffff;
-            //  font-size: 24px;
-            //  font-weight: bold;
-            //  z-index: 33;
-            //  display: flex;
-            //  flex-direction: column;
-            //  justify-content: center;
-            //  align-items: center;
-            //  gap: 15px;
-            //
-            //  background: rgba(2, 9, 73, 0.4);
-            //  border-radius: 30px;
-            //
-            //  p {
-            //    font-size: 30px;
-            //    margin-top: 3px;
-            //    margin-bottom: 3px;
-            //  }
-            //
-            //  .small-size {
-            //    font-size: 16px;
-            //  }
-            //}
   
             img {
               position: relative;
-              right: 4rem;
-              bottom: 0px;
-              height: 30rem;
-              margin-top: -80px;
+              width: auto;
+              height: 100%;
   
               &.character-fishing-gps {
                 right: 9rem;
               }
-            }
-  
-            //lottery
-            .character-lottery-tcg {
-              right: 6rem;
-            }
-  
-            .character-lottery-lh {
-              position: relative;
-              right: 3rem;
-              height: 30rem;
-            }
-  
-            // esports
-            .character-esports-lh {
-              position: relative;
-              right: 8rem;
-              height: 29rem;
-            }
-  
-            .character-esports-imes {
-              position: relative;
-              right: 8rem;
-              height: 30rem;
-            }
-  
-            .character-esports-ia {
-              position: relative;
-              right: 10rem;
-              height: 30rem;
-            }
-  
-            .character-esports-rg {
-              position: relative;
-              right: 4rem;
-              height: 30rem;
-            }
-  
-            // sports
-            .character-sports-im {
-              position: relative;
-              right: 8rem;
-              height: 28rem;
-            }
-  
-            .character-sports-saba {
-              position: relative;
-              right: 3rem;
-              height: 28rem;
-            }
-  
-            .character-sports-fb {
-              position: relative;
-              right: 6rem;
-              height: 26rem;
-            }
-  
-            .character-sports-pinnacle,
-            .character-sports-panda {
-              position: relative;
-              right: 1rem;
-              height: 29rem;
-            }
-  
-            .character-sports-pm {
-              position: relative;
-              right: 2.5rem;
-              height: 28rem;
-            }
-  
-            .character-sports-cr {
-              position: relative;
-              right: 1.5rem;
-              height: 28rem;
-            }
-  
-            // casino
-            .character-casino-ag {
-              position: relative;
-              right: 2.5rem;
-              height: 31rem;
-            }
-  
-            .character-casino-pmlive {
-              position: relative;
-              right: 5rem;
-              height: 31rem;
-            }
-  
-            .character-casino-db {
-              position: relative;
-              right: 4rem;
-              height: 30rem;
-            }
-  
-            .character-casino-bg {
-              position: relative;
-              right: 4rem;
-              height: 29rem;
-            }
-  
-            .character-casino-we {
-              position: relative;
-              right: 4rem;
-              height: 30rem;
-            }
-  
-            .character-casino-ob {
-              position: relative;
-              right: 3.25rem;
-              height: 27rem;
-            }
-  
-            .character-casino-bbin {
-              position: relative;
-              right: 3.25rem;
-              height: 29rem;
-            }
-  
-            .character-casino-evo {
-              position: relative;
-              right: 9.5rem;
-              height: 29rem;
-            }
-  
-            .character-casino-allbet {
-              right: 6rem;
-            }
-  
-            .character-casino-we {
-              right: 8rem;
-            }
-  
-            .character-casino-bbindy {
-              right: 6rem;
-            }
-  
-            // board
-            .character-board-dat,
-            .character-board-gd {
-              position: relative;
-              right: 2.25rem;
-              height: 30rem;
-            }
-  
-            .character-board-ky {
-              position: relative;
-              right: 8rem;
-              height: 30rem;
-            }
-  
-            .character-board-leyou,
-            .character-board-leg {
-              position: relative;
-              right: 7rem;
-              height: 30rem;
-            }
-  
-            .character-board-dt {
-              height: 32rem;
-              right: 8rem;
-            }
-  
-            .character-board-gflc {
-              right: 6rem;
-            }
-  
-            // slots
-            .character-slots-pg {
-              position: relative;
-              right: 5.5rem;
-              height: 29rem;
-            }
-  
-            .character-slots-sw {
-              position: relative;
-              right: 5rem;
-              height: 29rem;
-            }
-  
-            .character-slots-pt {
-              position: relative;
-              right: 5rem;
-              height: 29rem;
-            }
-  
-            .character-slots-evo {
-              position: relative;
-              right: 2.75rem;
-              height: 29rem;
-            }
-  
-            .character-slots-ag {
-              position: relative;
-              right: 7rem;
-              height: 29rem;
-            }
-  
-            // fishing
-            .character-fishing-ag {
-              position: relative;
-              right: 4rem;
-              height: 29rem;
-            }
-  
-            .character-fishing-mw {
-              position: relative;
-              right: 5.5rem;
-              height: 29rem;
             }
           }
         }
@@ -1557,7 +1312,7 @@ const tabPosition = ref('left')
             // margin: 0 0 0 0px;
             margin: 0 -10px 0 0px;
             padding-left: 0.75rem;
-            height: 500px;
+            height: 700px;
           }
   
           .left-container {
@@ -1566,6 +1321,7 @@ const tabPosition = ref('left')
             gap: 0.8rem;
             position: relative;
             align-items: center;
+            margin-top: 25%;
   
             //&.maintenance {
             //  filter: grayscale(0.8);
