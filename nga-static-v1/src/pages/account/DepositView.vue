@@ -11,8 +11,6 @@
           >
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
 
-<!--            <pre>{{item}}</pre>-->
-
             <template v-if="item.extra && item.extra.maintenance">
               <div class="item-detail">
                 <div class="txt-maintenance">
@@ -381,31 +379,23 @@ function initPay() {
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
-      // let bankWithdraws = response.data.withdraws;
-      // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
+      let bankDeposits = res.data.payments
+        .map((payment) => {
+          return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2); // Flattening the array to reach the actual payment methods
+        })
+        .flat();
 
-      let bankDeposits = res.data.payments;
-      paymentMethodsItems.value = bankDeposits.map((item) => item.children).flat();
-
+      paymentMethodsItems.value = bankDeposits.flat();
       selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
 
       const d = res.data;
       if (!payMethods.value.length) {
-        // d.payments.forEach((element) => {
-        //   element.promoValue = "";
-        //   element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        //   payMethods.value.push(element);
-        // });
-
-        payMethods.value = d.payments.map((item) => item.children).flat();
+        payMethods.value = bankDeposits;
       }
       if (payMethods.value.length > 0) {
         activeMethod.value = payMethods.value[0];
         depositItems.value = payMethods.value[0].extra.amountArr;
       }
-      // if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
-      //   bankCardList.value = payMethods.value[0].extra.banks;
-      // }
     }
 
     if (
