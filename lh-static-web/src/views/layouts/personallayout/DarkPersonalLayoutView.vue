@@ -254,7 +254,7 @@
               &:hover,
               &.router-link-exact-active {
                 background-color: $lightblue;
-                color: $font-2;
+                color: #fff;
                 position: relative;
                 font-weight: 600;
   

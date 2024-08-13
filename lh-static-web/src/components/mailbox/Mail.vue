@@ -72,7 +72,7 @@ const props = defineProps(["mail", "closeMail"]);
     }
 
     .mail-content {
-      color: $font-3-dark;
+      color: #fff;
     }
   }
 }
