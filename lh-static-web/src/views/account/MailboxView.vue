@@ -94,7 +94,7 @@
             </template>
 
             <template v-else>
-              <div style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
+              <div class="no-record-text" style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
             </template>
           </el-tab-pane>
         </el-tabs>
@@ -719,6 +719,10 @@ onMounted(() => {
 }
 
 .dark {
+  .no-record-text {
+    color: #fff;
+  }
+  
   .menu-title {
     color: $color-white;
   }
