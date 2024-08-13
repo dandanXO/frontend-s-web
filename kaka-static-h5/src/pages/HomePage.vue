@@ -9,6 +9,7 @@
         </span>
         <span class="sm-screen-txt">{{ $t("lang.app_download_desc") }}</span>
       </div>
+      <button class="add-button" @click="handleAddHomeScreen">Add to home screen</button>
       <div class="buttons">
         <div class="buttons">
           <q-btn
@@ -980,6 +981,7 @@ import GameModal from "components/modal/GameModal";
 import LangOptions from "components/LangOptions";
 import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
+import { installApp } from "src/boot/utils";
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -2017,6 +2019,10 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
+    const handleAddHomeScreen = () => {
+      installApp(window.deferredPrompt);
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -2158,7 +2164,8 @@ export default defineComponent({
       currentRocket,
       currentRocketIndex,
       rocketSlide: ref(0),
-      promoSlide: ref(0)
+      promoSlide: ref(0),
+      handleAddHomeScreen
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;

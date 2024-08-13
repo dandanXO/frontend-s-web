@@ -106,3 +106,26 @@ export const getVisitorId = async () => {
     return sidParam;
   }
 };
+
+export const installApp = (deferredPrompt) => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
+      } else {
+        console.log("User dismissed the install prompt");
+      }
+    });
+  }
+}
+
+export const getDeviceType = () => {
+  if (Platform.is.android) {
+    return "ANDROID";
+  } else if (Platform.is.ios) {
+    return "IOS";
+  } else {
+    return "WEB";
+  }
+}
