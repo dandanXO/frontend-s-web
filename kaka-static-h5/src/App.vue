@@ -244,7 +244,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: "ka2"
+            siteCode: process.env.SITE
           })
         );
       }
@@ -334,7 +334,21 @@ export default defineComponent({
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
+      checkServerStatus();
       checkSID();
       // initCsWeb();
       getCSA();

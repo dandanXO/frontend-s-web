@@ -50,6 +50,10 @@
   </div>
 </template>
 
+<script setup>
+import { useUI } from "src/stores/ui";
+const ui = useUI();
+</script>
 <style lang="scss">
 .maintenance-container {
   min-height: 100vh;

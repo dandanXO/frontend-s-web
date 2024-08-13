@@ -9,9 +9,9 @@
       </div>
       <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
       <div class="maintenance-desc">
-        {{ $t("lang.maintenance_from") }}
+        {{ $t("lang.maintenance_from") }} {{ ui.maintenanceStartTime }}
         <br />
-        {{ $t("lang.maintenance_to") }}
+        {{ $t("lang.maintenance_to") }} {{ ui.maintenanceEndTime }}
         <br />
         {{ $t("lang.maintenance_desc_01") }}
         <br />
@@ -31,7 +31,10 @@
           <div>
             <!-- <router-link to="/liveChat">24/7 Customer Service</router-link> -->
             <!-- <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=${regDevice}&lang=vn`" target="_blank"> -->
-              <a :href="`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`" target="_blank">
+            <a
+              :href="`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`"
+              target="_blank"
+            >
               {{ $t("lang.maintenance_contact_02") }}
             </a>
           </div>
@@ -64,10 +67,10 @@
     </div> -->
   </div>
 </template>
+
 <script setup>
-import { userStore } from 'src/stores';
-const store = userStore();
-const regDevice = store.getDeviceType();
+import { useUI } from "src/stores/ui";
+const ui = useUI();
 </script>
 
 <style lang="scss">
