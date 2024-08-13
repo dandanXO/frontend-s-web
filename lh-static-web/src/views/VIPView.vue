@@ -48,7 +48,6 @@
         </div>
         <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">还要<div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
-          <div class="text" v-else-if="vipLevel === 0">需要一笔存款到达 VIP 1</div>
           <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeBetAmt }}</div> 经验值 VIP {{ vipLevel + 1 }}</div>
           <div class="progressBarContainer">
             <div class="progressBarOuterBar">
