@@ -498,6 +498,13 @@ export default {
     ON: '开',
     OFF: '关',
   },
+  valueRulesType: {
+    INPUT: "输入框",
+    RADIO: "单选框",
+    SELECT: "下拉框",
+    SWITCH: "开关",
+    CHECKBOX: "多选框"
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1957,6 +1964,8 @@ export default {
     levelUpBet: '升级流水',
     retainLevelBet: '保级流水',
     retainLevelDays: '保级天数',
+    editSystemValueRules: '编辑系统设置值规则',
+    addSystemValueRules: '新增系统设置值规则'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2370,6 +2379,7 @@ export default {
     validatePosterTypeRequired: '海报类别必填',
     validateConfigCodeRequired: '设置Code必填',
     validateConfigValueRequired: '设置值必填',
+    validateConfigTypeRequired: '设置值类型是必选的',
     resultCalculateSuccess: '结果结算成功',
     buildIsInQueue: '构建等待中',
     roleMustOnlyOne: '请选择一个需要授权的角色',
@@ -2661,6 +2671,7 @@ export default {
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
+    'System Value Rules': '系统设置值规则'
   },
   google: {
     google_auth_menu: '谷歌验证',

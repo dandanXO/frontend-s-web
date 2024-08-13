@@ -446,6 +446,13 @@ export default {
     ON: 'bật',
     OFF: 'tắt',
   },
+  valueRulesType: {
+    INPUT: "Nhập",
+    RADIO: "Radio",
+    SELECT: "Chọn",
+    SWITCH: "Công tắc",
+    CHECKBOX: "Hộp kiểm"
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -2242,7 +2249,8 @@ export default {
     validateImageNameRequired: 'Yêu cầu tên hình ảnh',
     validatePosterTypeRequired: 'Yêu cầu loại poster',
     validateConfigCodeRequired: 'Yêu cầu mã cấu hình',
-    validateConfigValueRequired: 'Yêu cầu giá trị cấu hình',
+    validateConfigValueRequired: 'Loại cấu hình là bắt buộc',
+    validateConfigTypeRequired: 'Config Type is required',
     resultCalculateSuccess: 'Tính toán kết quả thành công',
     buildIsInQueue: 'Đang xếp hàng để xây dựng',
     roleMustOnlyOne: 'Chỉ chọn một vai trò yêu cầu',
@@ -2522,7 +2530,8 @@ export default {
     'Member Invite Limit': 'Giới hạn mời thành viên',
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
     'Media Display Settings': 'Cài đặt hiển thị phương tiện',
-    'Vip Report': 'Báo cáo VIP'
+    'Vip Report': 'Báo cáo VIP',
+    'System Value Rules': 'Quy tắc giá trị hệ thống'
   },
   google: {
     google_auth_menu: 'Google Xác thực',
