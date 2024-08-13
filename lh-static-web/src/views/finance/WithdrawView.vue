@@ -906,6 +906,17 @@ export default defineComponent({
         border: unset;
         box-shadow: unset;
         background-color: $background-content-block-lighter-dark;
+        border: 2px solid transparent;
+
+        &.active {
+          border: 2px solid #a98f7c;
+
+          &:before {
+            width: 25px;
+            height: 25px;
+            background-image: url("../../assets/svg/checkmark-dark.svg");
+          }
+        }
       }
     }
   }

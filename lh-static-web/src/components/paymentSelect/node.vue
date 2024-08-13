@@ -533,7 +533,7 @@ $node-color: #4873f1;
         border: 2px solid transparent;
 
         &.active {
-          border: 2px solid #E9CC94;
+          border: 2px solid #a98f7c;
 
           &:before {
             background-image: url("../../assets/svg/checkmark-dark.svg");
