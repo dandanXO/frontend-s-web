@@ -59,7 +59,6 @@
         </div>
       </div>
 
-      <div class="lil-title q-mt-lg">Select Amount</div>
       <div class="deposit-item-container q-mt-sm">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
@@ -148,24 +147,27 @@
             </q-input>
           </div>
 
-          <q-select
-            v-else
-            ref="depositAmtRef"
-            label="Select Amount"
-            name="localAmount"
-            filled
-            :options="amountList"
-            v-model="form.localAmount"
-            color="bright"
-            :rules="verifyDepositAmount"
-            padding="none"
-          >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="currency">
-                {{ store.currency.value }}
-              </span>
-            </template>
-          </q-select>
+          <template v-else>
+            <div class="lil-title q-mt-lg">Select Amount</div>
+
+            <q-select
+              ref="depositAmtRef"
+              label="Select Amount"
+              name="localAmount"
+              filled
+              :options="amountList"
+              v-model="form.localAmount"
+              color="bright"
+              :rules="verifyDepositAmount"
+              padding="none"
+            >
+              <template v-slot:prepend>
+                <span style="font-size: 26px" class="currency">
+                  {{ store.currency.value }}
+                </span>
+              </template>
+            </q-select>
+          </template>
 
           <!-- <div class="q-mt-md q-mb-md text-grey-7">
           Minimum Amount:
