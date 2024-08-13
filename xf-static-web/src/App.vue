@@ -9,9 +9,14 @@ import { memberAccessLog } from "@/api/index/login";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { submitMemberStats } from "@/api/index/site";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import { uiStore } from "./store/ui";
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
+    const ui = uiStore();
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
     const store = userStore();
@@ -46,15 +51,29 @@ export default defineComponent({
         const params = {
           way: way,
           sid: sidParam,
-          siteCode: "xf1"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.VUE_APP_SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
       checkSID();
+      checkServerStatus();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

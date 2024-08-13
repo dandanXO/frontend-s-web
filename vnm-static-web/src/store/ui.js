@@ -8,7 +8,9 @@ export const uiStore = defineStore("ui-store", {
       footer: true,
       orientation: "landscape",
       downloadUrl: "",
-      edition: EDITION.NORMAL
+      edition: EDITION.NORMAL,
+      maintenanceStartTime: "",
+      maintenanceEndTime: ""
     };
   },
   actions: {
