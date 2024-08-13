@@ -660,6 +660,7 @@ export default {
     gameAccountName: 'ชื่อบัญชีเกม',
     gameCode: 'รหัสเกม',
     domainEasy: 'โดเมน ง่าย',
+    videoShiPin: "Video",
     gameConsolidateReport: 'รายงานเกม',
     gameName: 'ชื่อเกม',
     gameType: 'ประเภทเกม',
