@@ -10,18 +10,52 @@
     </div>
     <el-divider />
     <div class="mail-content" v-html="props.mail?.content.replace(/\n/g, '<br/>')"></div>
+    <div class="button-lists" v-if="props.mail?.redirectType !== 'NONE'">
+      <el-button class="common-btn" size="large" @click="handleDetail(props.mail)">
+        {{ props.mail?.redirectButton ?? "立即前往" }}
+      </el-button>
+    </div>
   </div>
+
+  <GameModal ref="popModalGame"></GameModal>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { ArrowLeft } from "@element-plus/icons-vue";
-
+import { useRouter } from "vue-router";
+import GameModal from "@/components/modal/GameModal.vue";
 const props = defineProps(["mail", "closeMail"]);
+const router = useRouter();
+
+const popModalGame = ref(null);
+const openGame = (gameName, code, gameCode) => {
+  popModalGame.value.open(gameName, code, gameCode);
+};
+const handleDetail = (mail) => {
+  // debugger;
+  if (mail.redirectType === "INNER") {
+    const openPattern = /^open\/(.*)/;
+    if (mail.redirectUrl.match(openPattern)) {
+      const extractedUrl = mail.redirectUrl.match(openPattern)[1];
+      const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+      openGame(gameName, platformCode, gameCode);
+    } else {
+      router.push(mail.redirectUrl);
+    }
+  } else if (mail.redirectType === "OUTER") {
+    window.open(mail.redirectUrl, "_blank");
+  }
+};
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .mail-container {
   padding: 10px;
+}
+
+.button-lists {
+  margin: 20px 0px;
 }
 
 .close-mail {

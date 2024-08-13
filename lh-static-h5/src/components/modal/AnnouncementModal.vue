@@ -1,7 +1,7 @@
 <template>
   <q-scroll-area>
     <q-dialog v-model="visible">
-      <div style="overflow: unset; width: 90%;">
+      <div style="overflow: unset; width: 90%">
         <div class="dialog-wrapper">
           <div class="dialog-header only-inbox">
             <div
@@ -86,19 +86,23 @@ import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
 import { userStore } from "src/stores";
 import { api } from "boot/axios";
+import { useLocalStorage } from "@vueuse/core";
+import moment from "moment";
 
 const store = userStore();
+const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
+
 const visible = ref(false);
 const currentTab = ref("inbox");
 const checked = ref(false);
 const activeDot = ref(0);
 
-const mailData = ref([])
+const mailData = ref([]);
 const announceData = ref([]);
 
 const currentComponentData = computed(() => {
-  return currentTab.value === 'inbox' ? mailData.value : announceData.value
-})
+  return currentTab.value === "inbox" ? mailData.value : announceData.value;
+});
 
 const changeTab = (name) => {
   currentTab.value = name;
@@ -114,23 +118,34 @@ const hChageSlide = (val) => {
 };
 
 const getInbox = () => {
-  return api.get("/session/pm/inbox/popup")
+  return api.get("/session/pm/inbox/popup");
 };
 
 onMounted(() => {
-  if (store.token) {
-    getInbox().then((res) => {
+  if(!store.token) return
+
+  if(lastAnnouncementDateStr.value) {
+    const today = moment()
+    const lastAnnouncementDate = moment(lastAnnouncementDateStr.value)
+    const diff = today.diff(lastAnnouncementDate, 'days')
+    if(!diff) return
+  }
+
+  getInbox()
+    .then((res) => {
       if (res.code === 0) {
         mailData.value = res.data;
       }
-    }).catch((err) => {
-      console.log(err)
-    }).finally(() => {
-      if (mailData.value.length > 0) {
-        visible.value = true
-      }
     })
-  }
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      if (mailData.value.length > 0) {
+        visible.value = true;
+      }
+    });
+
 });
 
 watch(
@@ -145,6 +160,14 @@ watch(
     }
   }
 );
+
+watch(checked, (val) => {
+  if (val) {
+    lastAnnouncementDateStr.value = moment().format("YYYY-MM-DD");
+  } else {
+    lastAnnouncementDateStr.value = null;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

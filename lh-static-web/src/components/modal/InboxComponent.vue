@@ -1,19 +1,22 @@
 <template>
   <div class="announcement-component">
-    <el-carousel height="auto" class="banner-slider"  :autoplay="false" :interval="5000">
+    <el-carousel height="auto" class="banner-slider" :autoplay="false" :interval="5000">
       <el-carousel-item class="banner-container" v-for="item in mailData" :key="item.id">
         <div class="announcement-title" v-html="item.title"></div>
         <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
-          <div class="footer-button" @click="store.openLiveChat()">联系客服
+          <div class="footer-button" @click="store.openLiveChat()">
+            联系客服
             <img src="@/assets/images/home/sticky-sidebar/cs-icon.svg" />
           </div>
-          <div class="footer-button detail" v-show="item.redirectType !== 'NONE'" @click="handleDetail(item)">{{ item.redirectButton ?? '查看详情' }}
+          <!--          v-show="item.redirectType !== 'NONE'"-->
+          <div class="footer-button detail" @click="goToMailDetail(item)">
+            查看详情
             <el-icon :size="20">
               <RiArrowDropRightLine />
             </el-icon>
           </div>
-        </div>  
+        </div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -22,25 +25,22 @@
 <script setup>
 import { userStore } from "@/store";
 import { RiArrowDropRightLine } from "vue-remix-icons";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 const props = defineProps({
   mailData: {
     type: Array,
     default: () => []
   }
-})
+});
 const store = userStore();
 
-const handleDetail = (mail) => {
-  if (mail.redirectType === 'INNER') {
-    router.push({ path: mail.redirectUrl })
-  } else if (mail.redirectType === 'OUTER') {
-    window.open(mail.redirectUrl, '_blank')
-  }
-}
+const goToMailDetail = (mail) => {
+  console.log(mail);
+  router.push(`/center/mailbox?mailid=${mail.id}&type=${mail.type}`);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -93,6 +93,14 @@ const handleDetail = (mail) => {
       background: #2792fd;
       color: white;
       border: none;
+    }
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+    &:active {
+      transform: translate(0px, 1px);
+      opacity: 0.9;
     }
   }
 }

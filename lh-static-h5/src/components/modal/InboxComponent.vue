@@ -17,8 +17,8 @@
             联系客服
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
           </div>
-          <div class="footer-button" v-show="item.redirectType !== 'NONE'" @click="handleDetail(item)">
-            {{ item.redirectButton ?? '查看详情' }}
+          <div class="footer-button" @click="handleDetail(item)">
+            查看详情
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
           </div>
         </div>
@@ -47,12 +47,12 @@ const emits = defineEmits(['chageSlide']);
 const innerSlide = ref(0)
 watch(()=>props.slide,(newV, oldV)=>{
   innerSlide.value = newV
-  
+
   if(newV!=oldV){
-    
-    
+
+
   }
-  
+
 },{immediate: true})
 watch(()=> innerSlide, (newV)=>{
   console.log('inin')
@@ -60,14 +60,18 @@ watch(()=> innerSlide, (newV)=>{
 })
 
 
-const handleService = () => {};
+const handleService = () => {
+  router.push('/liveChat')
+};
 
 const handleDetail = (mail) => {
-  if (mail.redirectType === 'INNER') {
-    router.push({ path: mail.redirectUrl })
-  } else if (mail.redirectType === 'OUTER') {
-    window.open(mail.redirectUrl, '_blank')
-  }
+  router.push({
+    path: '/account/inbox',
+    query: {
+      id: mail.id,
+      type: mail.type
+    }
+  })
 };
 </script>
 
@@ -104,7 +108,7 @@ const handleDetail = (mail) => {
 
   .footer-button {
     cursor: pointer;
-    background: #cfcfcf;
+    background: #2792fd;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -114,6 +118,9 @@ const handleDetail = (mail) => {
     gap: 2px;
     padding: 8px 12px;
     color: white;
+    &:hover {
+      filter: brightness(.9);
+    }
   }
 }
 </style>
