@@ -4,28 +4,29 @@
       <div class="match-game">
         <div class="match-content-warp">
           <div class="daily-prize-title">
-            <img :src="require(`../../../assets/promo/slots-bonus/gift-icon.png`)" />
+            <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/gift-icon.png`)" />
             <span>每日彩金</span>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
-              <img :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              昨日赛事有效投注：
+              <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
+              昨日电子盈利：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
-              <img :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
+              <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
               可领彩金：
             </div>
             <div class="match-game-detail">{{ bonus }} 元</div>
           </div>
-        </div>
-        <div class="match-honbao-content">
-          <div class="hongbao-1" @click="claimHongBao">
-            <img :src="require(`../../../assets/promo/slots-bonus/hongbao.png`)" />
-          </div>
+          <img
+            @click="claimHongBao"
+            class="hongbao-1"
+            style="width: 215px; margin: auto"
+            :src="require(`../../../assets/promo/slots-bonus/hongbao.png`)"
+          />
         </div>
       </div>
       <div class="match-game-info">
@@ -40,8 +41,8 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>昨日赛事有效投注</th>
-            <th>彩金金额</th>
+            <th>昨日电子盈利</th>
+            <th>救援金</th>
             <th>流水倍数</th>
           </tr>
           <tr>
@@ -87,7 +88,7 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
             </span>
           </div>
           <div class="item">
@@ -109,37 +110,31 @@
         </div>
       </div>
 
-      <el-dialog
-        v-model="tableRecordDialog"
-        width="800px"
-        align-center
-        :close-on-click-modal="false"
-        class="match-table-record-dialog"
-      >
-        <template #header>
+      <q-dialog v-model="tableRecordDialog" persistent class="match-table-record-dialog">
+        <q-card class="confirm-vote-card">
           <div class="title">恭喜你抽中</div>
-        </template>
-        <div class="record-dialog-container">
-          <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
-          <div class="record-dialog-content-detail">
-            <span>{{ rewardMoney }}</span>
-            元
+          <div class="close-btn" @click="tableRecordDialog = false"></div>
+          <div class="record-dialog-container">
+            <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
+            <div class="record-dialog-content-detail">
+              <span>{{ rewardMoney }}</span>
+              元
+            </div>
+            <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
           </div>
-          <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
-        </div>
-      </el-dialog>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getMatchAndPrizeInfo, getPrizeMoney } from "@/api/promotion/slotsbonus";
-// import { useNotify } from "@/hooks/notify";
-import { userStore } from "../../../store/index.js";
-import { ElMessageBox, ElMessage } from "element-plus";
+import { getMatchAndPrizeInfo, getPrizeMoney } from "../../../api/promotion/slotsbonus";
+import { userStore } from "../../../stores/index";
+import { useQuasar } from "quasar";
 
-// const notify = useNotify();
+const $q = useQuasar();
 const store = userStore();
 const bonus = ref(0);
 const totalValidBet = ref(0);
@@ -151,7 +146,7 @@ const promoCode = ref(props.promoCode);
 const getMatchData = async () => {
   const res = await getMatchAndPrizeInfo();
   if (res.code === 0) {
-    bonus.value = res.data.betAmount;
+    bonus.value = res.data.profitAmount;
     totalValidBet.value = res.data.expectedBonus;
   }
 };
@@ -167,27 +162,33 @@ onMounted(() => {
   getMatchData();
 });
 const claimHongBao = async () => {
-  if (!store.token) {
-    ElMessageBox.alert("请登录后再操作", "系统提示", {
-      autofocus: false,
-      center: true,
-      confirmButtonText: "确认",
-      showClose: false,
-      buttonSize: "large",
-      closeOnClickModal: true
-    }).then(() => {
-      store.loginPageVisible = true;
+  if (!store.hasToken()) {
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
     });
-    return;
   }
   const res = await getPrizeMoney(promoCode.value);
   console.log(res);
   if (res.code === 0) {
     tableRecordDialog.value = true;
     rewardMoney.value = res.data;
-  } else {
-    // notify.error(res.message);
-    ElMessage.warning(res.message);
   }
 };
 </script>
@@ -199,16 +200,16 @@ const claimHongBao = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "PingFang SC";
+  font-family: "PingFang";
 }
 
 .match-container {
-  width: 1200px;
+  width: 100%;
   height: 100%;
 }
 
 .content-title {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 22.4px;
   color: #000000;
@@ -216,9 +217,8 @@ const claimHongBao = async () => {
 
 .match-game {
   width: 100%;
-  height: 250px;
-  border-radius: 12px;
-  border: 1px solid #acd4f6;
+  // border-radius: 12px;
+  // border: 1px solid #def0ff;
   background-image: url("../../../assets/promo/slots-bonus/bg.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -226,37 +226,48 @@ const claimHongBao = async () => {
   position: relative;
   margin-bottom: 12px;
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+  flex-direction: column;
   padding: 30px;
 
   .match-content-warp {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+    gap: 10px;
 
     .daily-prize-title {
       display: flex;
       align-items: center;
       gap: 5px;
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
+    }
+
+    .hongbao-1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
     }
   }
 
   .match-game-content {
     position: relative;
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 2fr 1fr;
     border: 1px solid rgba(215, 235, 255, 1);
     border-radius: 12px;
     padding: 10px 15px;
     height: auto;
-    gap: 80px;
+    gap: 20px;
   }
 
   .match-game-status {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     display: flex;
     justify-content: flex-start;
@@ -267,7 +278,7 @@ const claimHongBao = async () => {
   }
 
   .match-game-detail {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     display: flex;
     justify-content: center;
@@ -302,7 +313,7 @@ const claimHongBao = async () => {
       }
 
       .match-game-content-team-name {
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 28px;
         margin-top: 12px;
@@ -319,7 +330,7 @@ const claimHongBao = async () => {
     flex: 1;
 
     .match-game-content-center-time {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
       line-height: 33.6px;
       color: #479af7;
@@ -330,7 +341,7 @@ const claimHongBao = async () => {
     }
 
     .match-game-content-center-schedule {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
       line-height: 28px;
       color: #1b1b1b99;
@@ -339,34 +350,14 @@ const claimHongBao = async () => {
   }
 }
 
-.match-honbao-content {
-  max-height: 288px;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-
-  .hongbao-1 {
-    margin-left: -85px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.9);
-    }
-  }
-}
-
 .match-game-info {
   width: 100%;
   height: 100%;
   margin-top: 40px;
-  background: #161824;
+  background: #1f2132;
   border-radius: 12px;
-  padding: 40px;
-  border: 1px solid #acd4f6;
+  padding: 20px;
+  // border: 1px solid #def0ff;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
@@ -375,18 +366,18 @@ const claimHongBao = async () => {
   .title {
     background-image: url("../../../assets/promo/slots-bonus/info-title-2.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 1060px;
-    height: 44px;
-    margin-bottom: 40px;
+    background-size: 100% auto;
+    width: 100%;
+    aspect-ratio: 240 / 20;
+    margin-bottom: 20px;
   }
 
   .subtitle {
     display: flex;
     // flex-direction: column;
+    gap: 12px;
     width: 100%;
     margin-bottom: 10px;
-    gap: 16px;
 
     .subtitle-1 {
       background-image: url("../../../assets/promo/slots-bonus/promo-content-ribbon.png");
@@ -397,13 +388,13 @@ const claimHongBao = async () => {
       padding-left: 10px;
       color: #000000;
       text-align: center;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: bold;
     }
 
     .subtitle-2 {
       color: #ffffff;
-      font-size: 20px;
+      font-size: 16px;
     }
   }
 
@@ -422,7 +413,7 @@ const claimHongBao = async () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
@@ -430,7 +421,7 @@ const claimHongBao = async () => {
     }
 
     .right {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 28px;
       color: #000000;
@@ -448,11 +439,12 @@ const claimHongBao = async () => {
 
   th {
     height: 56px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 28px;
-    color: #000000;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    color: #000;
+    // background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
 
     &:first-child {
       border-top-left-radius: 12px;
@@ -484,15 +476,16 @@ const claimHongBao = async () => {
   td {
     border: 1px solid #acd4f6;
     height: 56px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 28px;
     color: #ffffff;
+    background: #1f2132 !important;
   }
 }
 
 .content-sub-title {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 22.4px;
   color: #fcc939;
@@ -506,10 +499,10 @@ const claimHongBao = async () => {
   width: 100%;
   height: 100%;
   margin-top: 40px;
-  background: #161824;
+  background: #1f2132;
   border-radius: 12px;
-  padding: 40px;
-  border: 1px solid #acd4f6;
+  padding: 20px;
+  // border: 1px solid #def0ff;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
@@ -518,22 +511,22 @@ const claimHongBao = async () => {
   .title {
     background-image: url("../../../assets/promo/slots-bonus/rule-title.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 1060px;
-    height: 44px;
+    background-size: 100% auto;
+    width: 100%;
     margin-bottom: 20px;
+    aspect-ratio: 240 / 20;
   }
 
   .content {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 36px;
+    line-height: 28px;
     color: rgba(255, 255, 255, 0.6);
 
     .item {
       display: grid;
       grid-template-columns: 50px 1fr;
-      font-family: "PingFang SC";
+      font-family: "PingFang";
 
       .rounded-number {
         text-align: center;
@@ -543,9 +536,9 @@ const claimHongBao = async () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #000000;
+        color: #fff;
         background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
-        margin-top: 5px;
+        margin-top: 3px;
       }
     }
   }
@@ -594,7 +587,7 @@ const claimHongBao = async () => {
 
     .record-dialog-content-title {
       color: #ea5046;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 400;
       line-height: 16.63px;
       letter-spacing: 0.2em;
@@ -602,7 +595,7 @@ const claimHongBao = async () => {
     }
 
     .record-dialog-content-detail {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 400;
       line-height: 28.5px;
       letter-spacing: 0.2em;
@@ -624,7 +617,7 @@ const claimHongBao = async () => {
       background-color: #ea574e;
 
       color: #fff;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 400;
       line-height: 19px;
       letter-spacing: 0.2em;
@@ -661,7 +654,7 @@ const claimHongBao = async () => {
 
     th {
       height: 56px;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
       line-height: 28px;
       color: #fff;
@@ -680,7 +673,7 @@ const claimHongBao = async () => {
 
     tr {
       height: 56px;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
       line-height: 28px;
       color: #7a8eb9;
@@ -744,5 +737,208 @@ const claimHongBao = async () => {
   display: flex;
   justify-content: center;
   margin-top: 8px;
+}
+
+.match-table-record-dialog {
+  position: relative;
+  .confirm-vote-card {
+    width: 360px;
+    height: 320px;
+    background-color: #fff3df;
+    position: relative;
+    border-radius: 20px;
+    overflow: unset;
+  }
+  .close-btn {
+    background: url(../../../assets/promo/slots-bonus/close-btn.png);
+    content-visibility: hidden;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    right: 14px;
+    position: absolute;
+  }
+
+  .record-dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 320px;
+    .record-dialog-content-title {
+      color: #ea5046;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 16.63px;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+    .record-dialog-content-detail {
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28.5px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: #ea5046;
+      span {
+        font-size: 72px;
+      }
+    }
+    .hongbao-finish-btn {
+      width: 256px;
+      height: 44px;
+      top: 634px;
+      left: 832px;
+      gap: 0px;
+      border-radius: 100px 0px 0px 0px;
+      background-color: #ea574e;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .title {
+    background-image: url("../../../assets/promo/slots-bonus/info-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 244px;
+    height: 44px;
+    font-size: 18px;
+    color: #fff;
+    font-family: FZHanZhenGuangBiaoS-GB;
+    font-weight: 400;
+    line-height: 44px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    position: absolute;
+    top: -1%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+  }
+
+  .record-table {
+    width: 96%;
+    height: 100%;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    border-collapse: collapse !important;
+    th {
+      height: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      vertical-align: middle;
+      text-align: left;
+
+      &:first-child {
+        border-top-left-radius: 6px;
+      }
+      &:last-child {
+        border-top-right-radius: 6px;
+      }
+    }
+    tr {
+      height: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      color: #7a8eb9;
+      vertical-align: middle;
+      text-align: left;
+      &:nth-child(odd) {
+        background: #f2f8fe;
+      }
+      &:nth-child(even) {
+        background: #fff;
+      }
+      th {
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      td {
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 6px;
+          }
+        }
+      }
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.record-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-close-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 12px;
+}
+
+// confirm vote dialog
+.confirm-vote-card {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+
+  :deep(.q-form) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .h6-div {
+    background: linear-gradient(0deg, #4fb2ff 0, #6daddf 100%), linear-gradient(#d0d1d3, #d0d1d3);
+    width: calc(100%);
+    text-align: center;
+    line-height: 30px;
+    font-size: 13px;
+  }
 }
 </style>

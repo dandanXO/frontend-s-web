@@ -10,7 +10,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              昨日赛事有效投注：
+              昨日电子盈利：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
@@ -40,8 +40,8 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>昨日赛事有效投注</th>
-            <th>彩金金额</th>
+            <th>昨日电子盈利</th>
+            <th>救援金</th>
             <th>流水倍数</th>
           </tr>
           <tr>
@@ -87,7 +87,7 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
             </span>
           </div>
           <div class="item">
@@ -151,7 +151,7 @@ const promoCode = ref(props.promoCode);
 const getMatchData = async () => {
   const res = await getMatchAndPrizeInfo();
   if (res.code === 0) {
-    bonus.value = res.data.betAmount;
+    bonus.value = res.data.profitAmount;
     totalValidBet.value = res.data.expectedBonus;
   }
 };

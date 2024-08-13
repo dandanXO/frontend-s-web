@@ -4,20 +4,20 @@
       <div class="match-game">
         <div class="match-content-warp">
           <div class="daily-prize-title">
-            <img style="width: 25px" :src="require(`../../../assets/promo/lpl-lck/gift-icon.png`)" />
+            <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/gift-icon.png`)" />
             <span>每日彩金</span>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
-              <img style="width: 25px" :src="require(`../../../assets/promo/lpl-lck/piggy-icon.png`)" />
-              当日电子盈利：
+              <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
+              昨日赛事有效投注：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
           <div class="match-game-content">
             <div class="match-game-status">
-              <img style="width: 25px" :src="require(`../../../assets/promo/lpl-lck/money-sack-icon.png`)" />
-              当日可领彩金：
+              <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/money-sack-icon.png`)" />
+              可领彩金：
             </div>
             <div class="match-game-detail">{{ bonus }} 元</div>
           </div>
@@ -25,7 +25,7 @@
             @click="claimHongBao"
             class="hongbao-1"
             style="width: 215px; margin: auto"
-            :src="require(`../../../assets/promo/lpl-lck/hongbao.png`)"
+            :src="require(`../../../assets/promo/slots-bonus/hongbao.png`)"
           />
         </div>
       </div>
@@ -41,8 +41,8 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>当日电子盈利</th>
-            <th>救援金</th>
+            <th>昨日赛事有效投注</th>
+            <th>彩金金额</th>
             <th>流水倍数</th>
           </tr>
           <tr>
@@ -88,7 +88,7 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
             </span>
           </div>
           <div class="item">
@@ -140,12 +140,14 @@ const bonus = ref(0);
 const totalValidBet = ref(0);
 const tableRecordDialog = ref(false);
 const rewardMoney = ref(0);
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
 
 const getMatchData = async () => {
   const res = await getMatchAndPrizeInfo();
   if (res.code === 0) {
     bonus.value = res.data.betAmount;
-    totalValidBet.value = res.data.profitAmount;
+    totalValidBet.value = res.data.expectedBonus;
   }
 };
 
@@ -182,7 +184,7 @@ const claimHongBao = async () => {
       router.push("/login");
     });
   }
-  const res = await getPrizeMoney();
+  const res = await getPrizeMoney(promoCode.value);
   console.log(res);
   if (res.code === 0) {
     tableRecordDialog.value = true;
@@ -217,7 +219,7 @@ const claimHongBao = async () => {
   width: 100%;
   // border-radius: 12px;
   // border: 1px solid #def0ff;
-  background-image: url("../../../assets/promo/lpl-lck/bg.png");
+  background-image: url("../../../assets/promo/slots-bonus/bg.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -362,7 +364,7 @@ const claimHongBao = async () => {
   align-items: center;
 
   .title {
-    background-image: url("../../../assets/promo/lpl-lck/info-title-2.png");
+    background-image: url("../../../assets/promo/slots-bonus/info-title-2.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     width: 100%;
@@ -378,7 +380,7 @@ const claimHongBao = async () => {
     margin-bottom: 10px;
 
     .subtitle-1 {
-      background-image: url("../../../assets/promo/lpl-lck/promo-content-ribbon.png");
+      background-image: url("../../../assets/promo/slots-bonus/promo-content-ribbon.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 95px;
@@ -403,7 +405,7 @@ const claimHongBao = async () => {
     margin-bottom: 20px;
 
     .left {
-      background-image: url("../../../assets/promo/lpl-lck/info-little-title-bg.png");
+      background-image: url("../../../assets/promo/slots-bonus/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 120px;
@@ -478,7 +480,7 @@ const claimHongBao = async () => {
     font-weight: 400;
     line-height: 28px;
     color: #ffffff;
-    background: #1F2132 !important;
+    background: #1f2132 !important;
   }
 }
 
@@ -507,7 +509,7 @@ const claimHongBao = async () => {
   align-items: center;
 
   .title {
-    background-image: url("../../../assets/promo/lpl-lck/rule-title.png");
+    background-image: url("../../../assets/promo/slots-bonus/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     width: 100%;
@@ -566,7 +568,7 @@ const claimHongBao = async () => {
   }
 
   .el-dialog__header .el-dialog__headerbtn {
-    background: url(../../../assets/promo/lpl-lck/close-btn.png);
+    background: url(../../../assets/promo/slots-bonus/close-btn.png);
     content-visibility: hidden;
     background-size: contain;
     width: 24px;
@@ -629,7 +631,7 @@ const claimHongBao = async () => {
 
   .title {
     margin-left: 24px;
-    background-image: url("../../../assets/promo/lpl-lck/info-title.png");
+    background-image: url("../../../assets/promo/slots-bonus/info-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 244px;
@@ -748,7 +750,7 @@ const claimHongBao = async () => {
     overflow: unset;
   }
   .close-btn {
-    background: url(../../../assets/promo/lpl-lck/close-btn.png);
+    background: url(../../../assets/promo/slots-bonus/close-btn.png);
     content-visibility: hidden;
     background-size: contain;
     width: 24px;
@@ -808,7 +810,7 @@ const claimHongBao = async () => {
   }
 
   .title {
-    background-image: url("../../../assets/promo/lpl-lck/info-title.png");
+    background-image: url("../../../assets/promo/slots-bonus/info-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 244px;
