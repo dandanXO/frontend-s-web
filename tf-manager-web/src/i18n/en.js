@@ -1016,6 +1016,7 @@ export default {
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
     domainEasy: 'Domain Url',
+    videoShiPin: 'Video Url',
     gameConsolidateReport: 'Game Consolidate Report',
     gameMatch: 'Game Match',
     gameMatchRecord: 'Game Match Record',

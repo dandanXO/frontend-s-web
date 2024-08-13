@@ -1018,6 +1018,7 @@ export default {
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
     domainEasy: 'Domain 易记域名',
+    videoShiPin: "Video 视频",
     gameConsolidateReport: '游戏报表',
     gameMatch: '保险投注赛事',
     gameMatchRecord: '玩家保险投注记录',

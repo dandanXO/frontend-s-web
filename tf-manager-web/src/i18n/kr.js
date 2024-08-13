@@ -954,6 +954,7 @@ export default {
     gameAccountName: '게임 계정 이름',
     gameCode: '게임 코드',
     domainEasy: 'Domain 쉽다',
+    videoShiPin: 'Video URL',
     gameConsolidateReport: '게임 통합 보고서',
     gameMatch: '게임 경기',
     gameMatchRecord: '게임 경기 기록',
