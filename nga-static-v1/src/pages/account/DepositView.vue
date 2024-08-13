@@ -39,7 +39,7 @@
             </template>
 
             <div class="item-amount" v-if="item.depositMin && item.depositMax">
-              {{ item.depositMin }}~{{ item.depositMax }} RS
+              {{ item.depositMin }}~{{ item.depositMax }} NGN
             </div>
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
@@ -116,7 +116,7 @@
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
             <div class="lil-title">
               Amount ({{ convertToCommaAmount(selectedItem.depositMin) }} -
-              {{ convertToCommaAmount(selectedItem.depositMax) }} RS)
+              {{ convertToCommaAmount(selectedItem.depositMax) }} NGN)
             </div>
             <q-input
               type="number"
@@ -208,7 +208,7 @@
 
       <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
+        <div class="q-mt-sm">Eg. Deposit ₦1,000, require ₦10,000 wager</div>
       </div>
     </template>
   </div>
@@ -390,9 +390,9 @@ function initPay() {
 
   let promoParam = "";
 
-  if (route.query.from === "/promo") {
-    promoParam = "?promo=1";
-  }
+  // if (route.query.from === "/promo") {
+  //   promoParam = "?promo=1";
+  // }
 
   payMethods.value = [];
 
