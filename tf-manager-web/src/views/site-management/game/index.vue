@@ -647,7 +647,7 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">
+          <el-button @click="uiControl.imageDialogVisible = false">
             {{ t('fields.cancel') }}
           </el-button>
           <el-button type="primary" @click="submitImageUpload">
