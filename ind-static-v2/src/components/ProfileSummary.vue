@@ -62,7 +62,8 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
+
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="none" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
@@ -132,6 +133,32 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
+
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="wallet-toggle-dropdown" unelevated>
+          <template v-slot:label>
+            <div class="wallet-toggle">
+              <img :src="walletTypeImg" />
+            </div>
+          </template>
+          <q-list class="wallet-toggle-list">
+            <q-item clickable v-close-popup :class="walletType === 'IND' && 'active'" @click="selectWallet('IND')">
+              <q-item-section avatar>
+                <img src="../assets/images/index/wallet-icon-ind.png" width="30px" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>IND</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup :class="walletType === 'USDT' && 'active'" @click="selectWallet('USDT')">
+              <q-item-section avatar>
+                <img src="../assets/images/index/wallet-icon-usdt.png" width="30px" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>USDT</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps unelevated @click="goLogin" style="color: #98a7b5">Login</q-btn>
@@ -143,7 +170,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
@@ -158,7 +185,14 @@ const router = useRouter();
 const store = userStore();
 const ui = useUI();
 
-// const balance = ref(19999999);
+const walletType = ref(SessionStorage.getItem("WALLET_TYPE") || "IND");
+const walletTypeImg = computed(() => {
+  return require(`../assets/images/index/wallet-icon-${walletType.value.toLowerCase()}.png`);
+});
+const selectWallet = (type) => {
+  walletType.value = type;
+  SessionStorage.setItem("WALLET_TYPE", type);
+};
 
 const profileImg = [
   {
@@ -419,13 +453,15 @@ onMounted(() => {
 
       .profile-pic {
         margin-top: -20px;
-        margin-right: 20px;
+        // margin-right: 20px;
       }
     }
   }
 
   .profile-dropdown {
     margin-top: 15px;
+    width: 50px;
+    max-width: 50px;
   }
   .profile-wrapper {
     display: flex;
@@ -687,5 +723,34 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.wallet-toggle-dropdown {
+  max-width: 60px;
+  border: 1px solid #2c323b;
+  border-radius: 32px;
+  margin-left: -10px;
+
+  .wallet-toggle {
+    margin-left: 8px;
+    margin-right: 12px;
+    img {
+      display: block;
+      width: 30px;
+    }
+  }
+
+  .q-btn-dropdown__arrow {
+    margin-right: 6px;
+    // margin-left: -10px;
+  }
+}
+
+.wallet-toggle-list {
+  background: #1f2228;
+
+  .q-item.active {
+    background: #585e63;
+  }
 }
 </style>
