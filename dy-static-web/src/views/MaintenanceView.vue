@@ -1,53 +1,76 @@
 <template>
   <div class="maintenance-container">
+    <div class="maintenance-details">
+      <div class="maintenance-logo">
+        <img src="../assets/logo.png" />
+      </div>
+      <div class="maintenance-title">目前我们的网站正在维护中...</div>
+      <div class="maintenance-desc">
+        从：{{ ui.maintenanceStartTime }}
+        <br />
+        至：{{ ui.maintenanceEndTime }}
+        <br />
+        期间所有游戏和服务均无法使用。
+        <br />
+        对于给您带来任何的不变，我们深表歉意，并感谢您的耐心等待！
+      </div>
+    </div>
     <div class="maintenance-img">
       <img :src="require('../assets/images/maintenance/maintenance-img.png')" />
     </div>
-    <div class="maintenance-btn">
-      <router-link to="/home" class="maintenance-cta">返回主页</router-link>
-    </div>
   </div>
 </template>
+<script setup>
+import { uiStore } from "@/store/ui";
+
+const ui = uiStore();
+</script>
 
 <style lang="scss">
 .maintenance-container {
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../assets/images/maintenance/maintenance-bg.jpg");
+  background-image: url("../assets/home/main-bg.jpg");
   background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  background-size: 100% auto;
+  background-position: top center;
 
-  .maintenance-img {
-    margin-left: 210px;
+  .maintenance-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .maintenance-logo {
+    margin: 0 auto;
     img {
       display: block;
-      width: 100%;
-      max-width: 800px;
+      width: 168px;
     }
   }
 
-  .maintenance-btn {
-    margin-left: 150px;
-    margin-top: 270px;
-    position: absolute;
+  .maintenance-title {
+    margin-top: 10px;
+    color: #4c88f8;
+    font-size: 40px;
+    font-weight: 800;
+  }
 
-    .maintenance-cta {
-      background: linear-gradient(96deg, #024bff 0%, #7708ff 100%);
-      padding: 12px 60px;
-      border-radius: 8px;
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: 500;
-      text-decoration: none;
+  .maintenance-desc {
+    margin-top: 10px;
+    color: #858585;
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: 600;
+  }
 
-      &:hover {
-        filter: brightness(0.8);
-      }
+  .maintenance-img {
+    margin-left: 30px;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 600px;
     }
   }
 }
