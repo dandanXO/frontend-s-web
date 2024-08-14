@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              昨日体育场馆投注：
+              今日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
