@@ -143,6 +143,8 @@ export default {
     virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
+    virtualWallet_warmReminder_02:
+      "Warm reminder：The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
     virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
