@@ -5,9 +5,9 @@
         <el-tab-pane :label="'공지사항'" name="announcement">
           <AnnouncementList />
         </el-tab-pane>
-        <el-tab-pane :label="'출금현황'" name="withdrawal-records">
-          <WithdrawalRecords />
-        </el-tab-pane>
+<!--        <el-tab-pane :label="'출금현황'" name="withdrawal-records">-->
+<!--          <WithdrawalRecords />-->
+<!--        </el-tab-pane>-->
       </el-tabs>
     </div>
   </div>
@@ -16,7 +16,7 @@
 <script setup>
 import { ref } from 'vue';
 import AnnouncementList from './info-list-section/AnnouncementList';
-import WithdrawalRecords from './info-list-section/WithdrawalRecords';
+// import WithdrawalRecords from './info-list-section/WithdrawalRecords';
 
 const activeTab = ref('announcement');
 </script>
