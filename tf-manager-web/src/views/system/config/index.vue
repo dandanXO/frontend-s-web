@@ -482,44 +482,49 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="t('fields.configValue')" prop="value">
-        <el-radio-group v-if="selectedRule.type === 'RADIO'" size="small" style="width: 300px" v-model="form.value">
-          <el-radio-button :value-key="rule.value" v-for="rule in JSON.parse(selectedRule.value)" :label="rule.value" :key="rule.key">{{ rule.label }}</el-radio-button>
-        </el-radio-group>
-        <el-select
-          v-if="selectedRule.type === 'SELECT'"
-          v-model="form.value"
-          size="small"
-          :placeholder="t('fields.status')"
-          class="filter-item"
-          style="width: 250px;margin-left: 5px"
-        >
-          <el-option
-            v-for="rule in JSON.parse(selectedRule.value)"
-            :key="rule.key"
-            :label="rule.label"
-            :value="rule.value"
+        <div v-if="selectedRule === null">
+          <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
+        </div>
+        <div v-else>
+          <el-radio-group v-if="selectedRule.type === 'RADIO'" size="small" style="width: 300px" v-model="form.value">
+            <el-radio-button :value-key="rule.value" v-for="rule in JSON.parse(selectedRule.value)" :label="rule.value" :key="rule.key">{{ rule.label }}</el-radio-button>
+          </el-radio-group>
+          <el-select
+            v-if="selectedRule.type === 'SELECT'"
+            v-model="form.value"
+            size="small"
+            :placeholder="t('fields.status')"
+            class="filter-item"
+            style="width: 250px;margin-left: 5px"
+          >
+            <el-option
+              v-for="rule in JSON.parse(selectedRule.value)"
+              :key="rule.key"
+              :label="rule.label"
+              :value="rule.value"
+            />
+          </el-select>
+          <el-switch
+            v-if="selectedRule.type === 'SWITCH'"
+            v-model="form.value"
+            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+            size="small"
+            :active-text="switchText(selectedRule.value, 'ACTIVE')"
+            :inactive-text="switchText(selectedRule.value, 'INACTIVE')"
           />
-        </el-select>
-        <el-switch
-          v-if="selectedRule.type === 'SWITCH'"
-          v-model="form.value"
-          style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-          size="small"
-          :active-text="switchText(selectedRule.value, 'ACTIVE')"
-          :inactive-text="switchText(selectedRule.value, 'INACTIVE')"
-        />
-        <el-checkbox
-          v-if="selectedRule.type === 'CHECKBOX'"
-          v-model="checkAll"
-          :indeterminate="isIndeterminate"
-          @change="handleCheckAllChange"
-        >
-          Check all
-        </el-checkbox>
-        <el-checkbox-group v-if="selectedRule.type === 'CHECKBOX'" v-model="checkedSelection" @change="handleCheckedSelectionChange">
-          <el-checkbox v-for="rule in JSON.parse(selectedRule.value)" :label="rule.label" :key="rule.value" :value="rule.value" />
-        </el-checkbox-group>
-        <el-input v-if="selectedRule.type === 'INPUT'" v-model="form.value" :placeholder="t('fields.configValue')" />
+          <el-checkbox
+            v-if="selectedRule.type === 'CHECKBOX'"
+            v-model="checkAll"
+            :indeterminate="isIndeterminate"
+            @change="handleCheckAllChange"
+          >
+            Check all
+          </el-checkbox>
+          <el-checkbox-group v-if="selectedRule.type === 'CHECKBOX'" v-model="checkedSelection" @change="handleCheckedSelectionChange">
+            <el-checkbox v-for="rule in JSON.parse(selectedRule.value)" :label="rule.label" :key="rule.value" :value="rule.value" />
+          </el-checkbox-group>
+          <el-input v-if="selectedRule.type === 'INPUT'" v-model="form.value" :placeholder="t('fields.configValue')" />
+        </div>
       </el-form-item>
     </el-form>
 
@@ -1010,7 +1015,7 @@ function showDialog(type) {
   // 清除多选项数据值
   checkBoxSelections.splice(0, checkBoxSelections.length);
   checkedSelection.value = []
-  selectedRule.value = valueRules.value[0]
+  selectedRule.value = null
   if (type === 'CREATE') {
     if (configForm.value) {
       form.id = null
@@ -1110,8 +1115,7 @@ function removeJsonEditorElement() {
 /* 加载值类型规则列表 */
 async function loadValueRules() {
   const { data: rules } = await getValueRulesList()
-  valueRules.value = rules
-  selectedRule.value = valueRules.value[0];
+  valueRules.value = rules;
 }
 
 /* 值类型-选项处理 */
