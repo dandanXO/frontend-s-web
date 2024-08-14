@@ -215,7 +215,11 @@
               <q-icon color="bright" name="smartphone" />
             </template>
             <template v-slot:append>
-              <q-btn label="获取验证码" color="brightbtn" @click="openPhoneVeriDialog()" />
+              <q-btn 
+              :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+              color="brightbtn"
+              :disable="otpCountdownCount > 0"
+              @click="openPhoneVeriDialog()" />
             </template>
           </q-input>
 
@@ -386,6 +390,18 @@ export default defineComponent({
       memberInfo: {},
       bankCardList: []
     });
+    const otpCountdownCount = ref(0);
+    let otpCountdownSchedule;
+    const countdownOtp = () => {
+      otpCountdownCount.value = 60;
+      otpCountdownSchedule = setInterval(() => {
+        if (otpCountdownCount.value <= 0) {
+          clearInterval(otpCountdownSchedule);
+          return;
+        }
+        otpCountdownCount.value--;
+      }, 1000);
+    };
     onMounted(() => {
       api.get("session/member").then((response) => {
         if (response.code === 0) {
@@ -845,6 +861,7 @@ export default defineComponent({
             if (res.code === 0) {
               isSendOtp.value = true;
               showCaptchaDialog.value = false;
+              countdownOtp();
               bankCardInfo.smsCode = "";
               bankCardInfo.smsCodeId = res.data.codeId;
               console.log(res.data.codeId)
@@ -956,7 +973,8 @@ export default defineComponent({
       unbindCardEnter,
       unbindCardLabel,
       isSendOtp,
-      isSZPAY
+      isSZPAY,
+      otpCountdownCount,
     };
   }
 });

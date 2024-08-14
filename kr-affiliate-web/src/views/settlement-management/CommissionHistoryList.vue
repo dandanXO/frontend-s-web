@@ -74,7 +74,7 @@
               <td class="textRight">
                 {{ formatMoney(item.rebateAmount) }}
               </td>
-              <td v-formatter="{ data: item.recordTime, type: 'date' }">
+              <td v-formatter="{ data: item.recordTime, type: 'date', formatter: 'LL' }">
               </td>
             </tr>
           </tbody>

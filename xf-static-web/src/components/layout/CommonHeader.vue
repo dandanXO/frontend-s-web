@@ -2277,6 +2277,11 @@ export default defineComponent({
 </script>
 <style lang="scss">
 body {
+  .el-button.is-disabled,
+  .el-button.is-disabled:hover {
+    background-color:#5e5e5e;
+  }
+
   .el-dropdown {
     cursor: pointer;
   }

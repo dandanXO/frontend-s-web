@@ -17,7 +17,9 @@
             :value="item.id"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRedirect">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRedirect"
+                   :disabled="!uiControl.isLoaded"
+        >
           {{ t('fields.search') }}
         </el-button>
       </div>
@@ -43,6 +45,7 @@
           <span v-if="scope.row.type === 'GAME'">{{ t('fields.gameCode') }}</span>
           <span v-else-if="scope.row.type === 'PROMO'">{{ t('fields.promo') }}</span>
           <span v-else-if="scope.row.type === 'DOMAIN'">{{ t('fields.domainEasy') }}</span>
+          <span v-else-if="scope.row.type === 'VIDEO'">{{ t('fields.videoShiPin') }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="code" :label="t('fields.code')" min-width="250" />
@@ -385,13 +388,15 @@ const selectedImage = reactive({
 })
 
 const uiControl = reactive({
+  isLoaded: false,
   dialogVisible: false,
   dialogTitle: "",
   dialogType: "CREATE",
   type: [
     { key: 0, displayName: 'gameCode', value: 'GAME' },
     { key: 1, displayName: 'promo', value: 'PROMO' },
-    { key: 2, displayName: 'domainEasy', value: 'DOMAIN' }
+    { key: 2, displayName: 'domainEasy', value: 'DOMAIN' },
+    { key: 3, displayName: 'videoShiPin', value: 'VIDEO' }
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
@@ -592,6 +597,7 @@ async function changeRedirectStatus(id, status) {
 
 onMounted(async () => {
   await loadSites();
+  uiControl.isLoaded = true;
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
   } else {

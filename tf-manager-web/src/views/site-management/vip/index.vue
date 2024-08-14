@@ -55,6 +55,24 @@
           />
         </el-form-item>
 
+        <el-form-item :label="t('fields.category')" prop="category">
+          <el-select
+            v-model="form.category"
+            size="small"
+            :placeholder="t('fields.category')"
+            class="filter-item"
+            style="width: 350px;"
+            clearable
+          >
+            <el-option
+              v-for="item in uiControl.category"
+              :key="item.id"
+              :label="t(`vipCategory.${item.value}`)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
         <el-form-item :label="t('fields.levelUpCredit')" prop="levelUpCredit">
           <el-input-number
             type="number"
@@ -65,6 +83,40 @@
             style="width: 350px;"
           />
         </el-form-item>
+
+        <el-form-item :label="t('fields.levelUpBet')" prop="levelUpBet">
+          <el-input-number
+            type="number"
+            v-model.number="form.levelUpBet"
+            :min="0"
+            :max="99999999999"
+            :controls="false"
+            style="width: 350px;"
+          />
+        </el-form-item>
+
+        <el-form-item :label="t('fields.retainLevelBet')" prop="retainLevelBet">
+          <el-input-number
+            type="number"
+            v-model.number="form.retainLevelBet"
+            :min="0"
+            :max="99999999999"
+            :controls="false"
+            style="width: 350px;"
+          />
+        </el-form-item>
+
+        <el-form-item :label="t('fields.retainLevelDays')" prop="retainLevelDays">
+          <el-input-number
+            type="number"
+            v-model.number="form.retainLevelDays"
+            :min="0"
+            :max="99999999999"
+            :controls="false"
+            style="width: 350px;"
+          />
+        </el-form-item>
+
         <el-form-item :label="t('fields.previousLevel')" prop="previousLevel">
           <el-select
             v-model="form.previousLevel"
@@ -228,6 +280,14 @@ const uiControl = reactive({
   vipState: [
     { key: 1, displayName: "active", value: true },
     { key: 2, displayName: "disable", value: false }
+  ],
+  category: [
+    { key: 1, value: "BRONZE" },
+    { key: 2, value: "SILVER" },
+    { key: 3, value: "GOLD" },
+    { key: 4, value: "PLATINUM" },
+    { key: 5, value: "DIAMOND" },
+    { key: 6, value: "WANGZE" },
   ]
 });
 const page = reactive({
@@ -247,6 +307,10 @@ const form = reactive({
   wap: null,
   app: null,
   cashier: null,
+  levelUpBet: null,
+  retainLevelBet: null,
+  retainLevelDays: null,
+  category: null,
 });
 
 const list = reactive({

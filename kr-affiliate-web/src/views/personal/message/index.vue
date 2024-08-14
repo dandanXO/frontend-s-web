@@ -97,7 +97,11 @@
           :label="t('fields.messageSendTime')"
           align="center"
           min-width="200"
-        />
+        >
+          <template #default="scope">
+            <span v-formatter="{ data: scope.row.sendTime, type: 'date'}" />
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"

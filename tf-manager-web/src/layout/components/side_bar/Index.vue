@@ -5,6 +5,9 @@
     <SidebarLogo
       :collapse="isCollapse"
     />
+    <SidebarSearchInput
+      :isVisible="!isCollapse"
+    />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :collapse="isCollapse"
@@ -35,6 +38,7 @@
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
+import SidebarSearchInput from "./SidebarSearchInput.vue";
 import variables from '@/styles/_variables.scss'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
@@ -43,9 +47,11 @@ import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
 import { getNewRegisterMemberLists } from "../../../api/member";
+import { isKorea } from "@/utils/site"
 
 export default defineComponent({
   components: {
+    SidebarSearchInput,
     SidebarItem,
     SidebarLogo
   },
@@ -158,7 +164,7 @@ export default defineComponent({
 
     const checkGetNewRegisterMember = async() => {
       const siteId = store.state.user.siteId;
-      if (siteId === 10) {
+      if (isKorea(siteId)) {
         const { data: ret } = await getNewRegisterMemberLists(siteId);
         // console.log(ret);
         if (ret === 0) {
@@ -206,7 +212,8 @@ export default defineComponent({
       isCollapse,
       isMounted,
       notificationAudioRef,
-      hasNewUser
+      hasNewUser,
+      isKorea
     }
   }
 })
