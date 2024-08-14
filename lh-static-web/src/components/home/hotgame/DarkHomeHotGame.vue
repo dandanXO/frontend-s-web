@@ -940,6 +940,10 @@ const tabPosition = ref('left')
           margin-left: 15%;
         }
 
+        :deep(.el-tabs__nav-wrap:after) {
+          background-color: #d2d2d25c;
+        }
+
         :deep(.el-tabs__item) {
           font-family: PingFang SC;
         }

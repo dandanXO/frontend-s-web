@@ -100,7 +100,7 @@
   
           <div v-if="!store.token" class="right-contents">
             <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
-            <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
+            <a class="header-btn btn-color-blue" @click="registerDialogVisible = true">注册</a>
           </div>
   
           <div class="profile-info" v-if="store.token">
@@ -2493,8 +2493,14 @@
           .right-contents {
             .header-btn {
               &.btn-color-blue {
-                background: #394a65;
+                // background: #394a65;
+                // box-shadow: none;
+                background: url('../../../assets/images/home/standard-button-bg.svg') no-repeat center center;
+                background-size: cover;
                 box-shadow: none;
+                border-radius: 8px;
+                border: 1px solid #3A93CE;
+                
               }
               &.btn-color-white {
                 background: $active-color-dark-linear;
