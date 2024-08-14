@@ -21,7 +21,7 @@
               />
             </div>
             <div class="reward-info-content">
-              昨日体育场馆投注：
+              今日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>

@@ -21,7 +21,7 @@
               />
             </div>
             <div class="reward-info-content">
-              昨日真人棋牌场馆投注：
+              今日真人棋牌场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
