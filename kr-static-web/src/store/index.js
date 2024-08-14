@@ -126,7 +126,7 @@ export const userStore = defineStore("userStore", {
       return new Promise((resolve, reject) => {
         if (this.token && !this.isOffline) {
           loadPoint(MAIN).then((ret) => {
-            const res = ret.data;
+            const res = ret;
             if (res.code === 0) {
               this.pendingRebateAmt = Math.floor(res.data);
             } else {

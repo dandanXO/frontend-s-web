@@ -91,9 +91,10 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
-          <div class="lil-title flex-div">
-            {{ $t("form.depositAmount") }}
-            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+          <div class="lil-title flex-div" style="justify-content: flex-end">
+            <!--            {{ $t("form.depositAmount") }}-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
@@ -257,7 +258,7 @@
       </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
-    <div class="bottom-content" style="height: 40px"></div>
+    <div class="bottom-content" style="height: 60px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -360,6 +361,8 @@ const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
 const amountList = ref([]);
+const amountDepositMin = ref();
+const amountDepositMax = ref();
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
@@ -514,8 +517,15 @@ function selectPayType(value) {
     if (value.extra && value.extra.amountArr) {
       amountList.value = value.extra.amountArr;
     }
+
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
+    }
+    if (value.depositMin) {
+      amountDepositMin.value = value.depositMin;
+    }
+    if (value.depositMax) {
+      amountDepositMax.value = value.depositMax;
     } else {
       bankCardList.value = [];
       form.bankId = null;
@@ -827,7 +837,7 @@ const openDepositPage = () => {
     // isDepositTutorial.value= true;
     window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
+    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
   }
 };
 
@@ -1148,7 +1158,7 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0;
+  padding: 20px 0 40px;
   position: fixed;
   bottom: 0;
   width: calc(100% - 32px);

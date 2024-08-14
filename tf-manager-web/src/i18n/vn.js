@@ -446,6 +446,13 @@ export default {
     ON: 'bật',
     OFF: 'tắt',
   },
+  valueRulesType: {
+    INPUT: "Nhập",
+    RADIO: "Radio",
+    SELECT: "Chọn",
+    SWITCH: "Công tắc",
+    CHECKBOX: "Hộp kiểm"
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -625,6 +632,7 @@ export default {
     betRecords: 'Hồ sơ cược',
     betStatus: 'Trạng thái cược',
     betTime: 'Thời gian cược',
+    betTotal: 'Tổng tiền cược',
     betWheelSettings: 'Cài đặt bánh xe cược',
     betWheelRecords: 'Hồ sơ bánh xe cược',
     binded: 'Đã kết nối',
@@ -1180,6 +1188,9 @@ export default {
     paymentOnGoing: 'Đang tiến hành thanh toán',
     paymentType: 'Loại thanh toán',
     payout: 'Thanh toán',
+    payoutTotal: 'Tổng tiền trả thưởng',
+    return_ratio: 'Tỷ lệ hoàn trả',
+    return_ratio_total: 'Tổng tỷ lệ hoàn trả',
     pcWay: 'Máy tính',
     pending: 'Đang chờ xử lý',
     pendingTransaction: 'Giao dịch đang chờ xử lý',
@@ -2242,7 +2253,8 @@ export default {
     validateImageNameRequired: 'Yêu cầu tên hình ảnh',
     validatePosterTypeRequired: 'Yêu cầu loại poster',
     validateConfigCodeRequired: 'Yêu cầu mã cấu hình',
-    validateConfigValueRequired: 'Yêu cầu giá trị cấu hình',
+    validateConfigValueRequired: 'Loại cấu hình là bắt buộc',
+    validateConfigTypeRequired: 'Config Type is required',
     resultCalculateSuccess: 'Tính toán kết quả thành công',
     buildIsInQueue: 'Đang xếp hàng để xây dựng',
     roleMustOnlyOne: 'Chỉ chọn một vai trò yêu cầu',
@@ -2522,6 +2534,8 @@ export default {
     'Member Invite Limit': 'Giới hạn mời thành viên',
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
     'Media Display Settings': 'Cài đặt hiển thị phương tiện',
+    'Vip Report': 'Báo cáo VIP',
+    'System Value Rules': 'Quy tắc giá trị hệ thống'
   },
   google: {
     google_auth_menu: 'Google Xác thực',

@@ -155,7 +155,7 @@ body {
   }
 
   .el-dialog {
-    --el-dialog-header-bg-color: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%)
+    --el-dialog-header-bg-color: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   }
 
   .el-dialog__header {
@@ -218,6 +218,21 @@ body {
   }
 }
 
+.game-close-modal {
+  top: 50%;
+  transform: translate(0px, -50%);
+  margin: 0 auto !important;
+  width: 350px !important;
+
+  .el-dialog__body {
+    text-align: center !important;
+  }
+
+  .cancel {
+    color: var(--el-color-primary);
+  }
+}
+
 .dialog-insurance-box {
   .el-dialog__title {
     text-align: center;
@@ -253,17 +268,17 @@ body {
       padding: 20px !important;
       border-radius: 12px;
       text-align: center;
-      display:flex;
+      display: flex;
       align-items: center;
       flex-direction: column;
       justify-content: center;
       height: auto;
 
-      a{
+      a {
         //width: 100%;
-        display:block;
+        display: block;
 
-        img{
+        img {
           //width: 100%;
         }
       }
@@ -495,7 +510,7 @@ button {
 .notification-move,
 .notification-enter-active,
 .notification-leave-active {
-  transition: opacity .5s ease, top .5s ease;
+  transition: opacity 0.5s ease, top 0.5s ease;
 }
 
 .notification-enter-from,
@@ -557,7 +572,7 @@ button {
   }
 
   .el-button {
-    --el-button-bg-color: #1D809A;
+    --el-button-bg-color: #1d809a;
     --el-button-hover-bg-color: #{$active-color-dark};
   }
 
@@ -587,4 +602,15 @@ button {
   .el-input-group__append {
     box-shadow: none;
   }
+
+  //.standard-button {
+  //  background: $active-color-dark-linear;
+  //  box-shadow: 0px -2.28px 5.51px 0px #93f2ff inset;
+  //}
+  //
+  //.common-btn,
+  //.common-btn.el-button {
+  //  background-image: $active-color-dark-linear;
+  //  box-shadow: $active-color-dark-shadow;
+  //}
 }

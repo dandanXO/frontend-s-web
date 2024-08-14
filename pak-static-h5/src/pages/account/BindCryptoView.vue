@@ -32,8 +32,8 @@
                   hide-bottom-space
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.cryptoAccount_rules_01'),
-                    (val) => val.startsWith('T') || $t('form.cryptoAccount_rules_02'), // starts with 'T'
-                    (val) => val.length === 34 || $t('form.cryptoAccount_rules_03') // must be 34 characters
+                    validateCryptoNumber,
+                    validateCryptoLength
                   ]"
                 ></q-input>
               </template>
@@ -83,11 +83,13 @@ import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { useI18n } from "vue-i18n";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const selectedTypeToggleName = ref("EASYPAISA");
+const selectedTypeToggleName = ref("USDTERC");
 const onTypeToggleBtnClick = (index, name) => {
+  // debugger;
   selectedTypeToggleIndex.value = index;
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
@@ -100,6 +102,7 @@ const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;
 };
 
+const { t } = useI18n();
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -122,6 +125,26 @@ const bankCardInfo = reactive({
   // smsCode: "",
   // smsCodeId: ""
 });
+
+const validateCryptoLength = (val) => {
+  if (selectedTypeToggleName.value === "USDTERC") {
+    return val.length === 42 || t("form.cryptoAccount_rules_05");
+  } else if (selectedTypeToggleName.value === "USDTTRC") {
+    return val.length === 34 || t("form.cryptoAccount_rules_03");
+  } else {
+    return true;
+  }
+};
+
+const validateCryptoNumber = (val) => {
+  if (selectedTypeToggleName.value === "USDTERC") {
+    return val.startsWith("0x") || t("form.cryptoAccount_rules_04");
+  } else if (selectedTypeToggleName.value === "USDTTRC") {
+    return val.startsWith("T") || t("form.cryptoAccount_rules_02");
+  } else {
+    return true;
+  }
+};
 
 const validateBankLength = (val) => {
   const bankCode = bankList.value[selectedTypeToggleIndex.value].code;

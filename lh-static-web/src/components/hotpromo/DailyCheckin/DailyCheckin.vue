@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <div class="seciont2">
+    <div class="seciont2">
       <div class="first">
         <div class="title"></div>
         <div class="day-task">
@@ -51,13 +51,13 @@
                     style="width: 20px; height: 20px"
                     :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-cancel.png')"
                   />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥100 元，补签卡 +1</span>
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ reCheckinMinDeposit }} 元，补签卡 +1</span>
                 </div>
               </div>
             </div>
             <div class="task-right">
               <div style="margin-top: -20px">
-                剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
+                剩余补签卡：{{ currentRecheckInChances }} / {{ totalRecheckMinusWeekChances }}
               </div>
               <button v-if="recheckTaskState === 'CLOSE'" class="button-finish">已完成</button>
               <button v-else class="button" @click="handleDeposit">去充值</button>
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
     <div class="seciont1">
       <div class="basic-info">
         <div>
@@ -82,9 +82,16 @@
           v-for="(item, index) in sectionOneItems"
           :key="item.day"
           class="grid-item"
-          :class="[item.claimState === 'CLAIMED' ? `item${index}-finish` : `item${index}`]"
+          :class="[item.claimState === 'CLAIMED' ? `item-finish item${index}-finish` : `item${index}`]"
           @click="handleClickSectionOneItem(item)"
         >
+          <div class="numbers">
+            <div class="bonus-number">
+              {{ item.bonus }}
+              <span class="rmb">¥</span>
+            </div>
+            <div class="active-point" v-if="item.activePoint > 0">+{{ item.activePoint }}活跃</div>
+          </div>
           <div class="day-number">0{{ index + 1 }}</div>
           <div class="status-img">
             <img
@@ -114,6 +121,7 @@
           <div v-for="(box, index) in sectionOneBoxItems" :key="box.requiredActivePoint">
             <template v-if="index === 0">
               <img
+                :class="box.claimState === 'OPEN' ? 'can-claim' : ''"
                 :src="
                   box.claimState === 'OPEN'
                     ? require('../../../assets/images/promotion/hotpromo/dailyCheckin/box-blue.png')
@@ -308,8 +316,9 @@ const countiuneSign = computed(() => {
 const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
-    if (item.claimState === "CLAIMED") {
-      times++;
+    console.log(currentActivePoints.value)
+    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
+      times++
     }
   });
   return times * 25;
@@ -320,6 +329,8 @@ const todayCheckInState = ref("YES");
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
 const todayMinDeposit = ref(0);
+const totalRecheckMinusWeekChances = ref(0);
+const reCheckinMinDeposit = ref(0);
 
 const handleClickSectionOneItem = async (item) => {
   if (item.claimState === "OPEN" || item.claimState === "RECHECKIN") {
@@ -346,6 +357,7 @@ const handleClickBox = async (box) => {
     .then(async (res) => {
       if (res.code === 0) {
         notify.success("领取成功");
+        store.getBalance();
         await fetchData();
       } else {
         notify.error(res.message);
@@ -372,6 +384,11 @@ const fetchData = async () => {
     currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
     currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
     totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+    if (totalRecheckInChances.value !== 0) {
+      totalRecheckMinusWeekChances.value =
+        res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
+    }
+    reCheckinMinDeposit.value = res.data.reCheckInState.minDeposit;
     recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
   } catch (error) {
     notify.error(res.message);
@@ -426,57 +443,48 @@ onMounted(async () => {
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-other.png");
+      &.item-finish {
+        background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-finish.png");
+      }
+      .numbers {
+        position: absolute;
+        left: 58%;
+        top: 36%;
+        text-align: center;
+        .bonus-number {
+          background: linear-gradient(180deg, #ffffff 22.73%, #ffef81 79.55%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          color: transparent;
+          font-size: 45px;
+          line-height: 35px;
+          font-weight: 600;
+          span.rmb {
+            font-size: 25px;
+            margin-left: 2px;
+          }
+        }
+        .active-point {
+          font-size: 14px;
+        }
+      }
     }
     .grid-item:nth-last-child(1) {
       grid-column: span 2;
     }
-    .item0 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item0-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item1 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item1-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item2 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item2-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item3 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item3-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item4 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-2-other.png");
-    }
-    .item4-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-2-finish.png");
-    }
-    .item5 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-3-other.png");
-    }
-    .item5-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-3-finish.png");
-    }
     .item6 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-4-other.png");
+      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-big-other.png");
     }
     .item6-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-4-finish.png");
+      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-big-finish.png");
     }
     .day-number {
       position: absolute;
-    top: 80px;
-    left: 12px;
-    font-size: 20px;
+      top: 80px;
+      left: 12px;
+      font-size: 20px;
     }
     .status-img {
       position: absolute;
@@ -511,6 +519,19 @@ onMounted(async () => {
       flex-direction: row;
       justify-content: space-around;
       width: 100%;
+
+      img {
+        cursor: pointer;
+        &.can-claim {
+          &:hover {
+            filter: brightness(0.9);
+          }
+          &:active {
+            filter: brightness(0.85);
+            transform: translate(0px, 1px);
+          }
+        }
+      }
     }
     .progressBar-area {
       width: 100%;
@@ -532,7 +553,7 @@ onMounted(async () => {
         text-align: center;
         line-height: 30px;
         color: white;
-        border-radius: 5px;
+        border-radius: 5px 30px 30px 5px;
       }
     }
     .number-area {
@@ -589,6 +610,10 @@ onMounted(async () => {
             height: 50px;
             border-radius: 8px;
             font-size: 24px;
+
+            &:hover {
+              opacity: 0.9;
+            }
           }
           .button-finish {
             background: linear-gradient(90deg, #23d2f0 0%, #9a7bff 100%);

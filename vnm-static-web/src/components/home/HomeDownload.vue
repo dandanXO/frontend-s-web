@@ -2,34 +2,38 @@
   <div class="download-section">
     <HomeTitle :title="t('home.appDownload')"></HomeTitle>
     <div class="download-container">
-      <div class="left-container"
-           data-aos="fade-left">
-        <img src="../../assets/home/download/download-bg.png" width="100%" />
+      <div class="left-container" data-aos="fade-left">
+        <img
+          v-if="ui.edition === EDITION.SLOT"
+          src="../../assets/home/download/download-bg-slot-edition.png"
+          width="100%"
+          alt="App screenshot showing task management features"
+        />
+        <img v-else src="../../assets/home/download/download-bg.png" width="100%" alt="App screenshot showing task management features"/>
       </div>
 
-      <div class="right-container"
-           data-aos="fade-right">
+      <div class="right-container" data-aos="fade-right">
         <HomeContentTitle :title="t('home.downloadTheApp')"></HomeContentTitle>
 
         <div class="tab-wrapper">
           <div class="dl-tab">
-            <div class="tab-title"><img src="../../assets/logo.svg"></div>
+            <div class="tab-title"><img src="../../assets/logo.svg" /></div>
             <div class="tab-desc">
-              {{ $t('home.futureGaming') }}
+              {{ $t("home.futureGaming") }}
             </div>
             <div class="download-desc">
-              {{ $t('home.scanToDownload') }}
+              {{ $t("home.scanToDownload") }}
             </div>
             <div class="download">
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
-                <img src="../../assets/home/download/ios.png" >
+                <img src="../../assets/home/download/ios.png" alt="QR code to download the iOS TF88 app"/>
               </div>
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
                 <!-- <div class="link-desc">手机免费下载地址</div>
                 <div class="link"><a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a></div> -->
-                <img src="../../assets/home/download/android.png" >
+                <img src="../../assets/home/download/android.png" alt="QR code to download the Android TF88 app">
               </div>
             </div>
           </div>
@@ -106,6 +110,7 @@ import HomeContentTitle from "@/atoms/HomeContentTitle.vue";
 import { uiStore } from "@/store/ui";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { useI18n } from "vue-i18n";
+import { EDITION } from "@/constant/edition";
 const { t } = useI18n();
 
 const activeKey = ref("1");
@@ -232,10 +237,9 @@ onMounted(() => {});
                 font-family: PingFang SC;
                 font-size: 0.75rem;
                 text-align: center;
-                margin:0 auto;
+                margin: 0 auto;
                 font-weight: 400;
                 line-height: 116.5%; /* 1.165rem */
-
               }
             }
 

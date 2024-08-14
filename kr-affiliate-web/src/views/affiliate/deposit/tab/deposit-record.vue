@@ -59,11 +59,11 @@
           </td>
           <td>
             <span v-if="item.depositDate === null">-</span>
-            <span v-if="item.depositDate !== null">{{ item.depositDate }}</span>
+            <span v-if="item.depositDate !== null" v-formatter="{ data: item.depositDate, type: 'date'}" />
           </td>
           <td>
             <span v-if="item.finishDate === null">-</span>
-            <span v-if="item.finishDate !== null">{{ item.finishDate }}</span>
+            <span v-if="item.finishDate !== null" v-formatter="{ data: item.finishDate, type: 'date'}" />
           </td>
           <td>
             <el-tag v-if="item.status === 'SUCCESS' || item.status === 'SUPPLEMENT_SUCCESS'" type="success" size="normal">{{ t('depositStatus.' + item.status) }}</el-tag>

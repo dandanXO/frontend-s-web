@@ -18,6 +18,8 @@ import en from "element-plus/dist/locale/en.mjs";
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
+import { uiStore } from "@/store/ui";
+import { EDITION } from "@/constant/edition";
 export default defineComponent({
   components: {
     ElConfigProvider
@@ -27,6 +29,7 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
     const store = userStore();
+    const ui = uiStore();
     const onlineStatInterval = ref();
 
     const checkSID = () => {
@@ -58,7 +61,7 @@ export default defineComponent({
         const params = {
           way: "web",
           sid: sidParam,
-          siteCode: "vnm"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);

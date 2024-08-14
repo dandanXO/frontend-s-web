@@ -162,13 +162,14 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps, reactive } from 'vue';
+import { onMounted, defineProps, reactive, computed } from 'vue';
 import { getMemberDetails } from "../../../../../api/member";
 import { getMemberRiskInfo } from '../../../../../api/member-risk';
 import { useStore } from "../../../../../store";
 import { useI18n } from "vue-i18n";
 import { hasPermission } from '../../../../../utils/util'
 import { useRoute } from 'vue-router'
+import { isKorea } from '@/utils/site'
 
 // eslint-disable-next-line
 const { t } = useI18n();
@@ -178,6 +179,7 @@ const route = useRoute()
 const site = reactive({
   id: route.query.site
 });
+const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 
 const props = defineProps({
   mbrId: {
@@ -200,6 +202,14 @@ const queryValueList = reactive({
     { key: 6, name: 'password', value: 'riskInfoPassword' },
     { key: 7, name: 'bankCard', value: 'riskInfoBankCard' },
     { key: 8, name: 'sid', value: 'riskInfoSid' }
+  ],
+  sublist: [
+    { key: 1, name: 'realName', value: 'riskInfoRealName' },
+    { key: 2, name: 'email', value: 'riskInfoEmail' },
+    { key: 3, name: 'telephone', value: 'riskInfoTelephone' },
+    { key: 4, name: 'password', value: 'riskInfoPassword' },
+    { key: 5, name: 'bankCard', value: 'riskInfoBankCard' },
+    { key: 6, name: 'sid', value: 'riskInfoSid' }
   ]
 })
 
@@ -232,7 +242,7 @@ const populateIpColor = () => {
 };
 
 const request = reactive({
-  queryValue: 'riskInfoIpLogin',
+  queryValue: isKorea(LOGIN_USER_SITEID.value) ? 'riskInfoRealName' : 'riskInfoIpLogin',
   current: 1,
   size: 20
 })

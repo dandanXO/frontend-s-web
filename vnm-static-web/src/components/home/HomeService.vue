@@ -82,14 +82,14 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" src="../../assets/home/service/circle-bg.png" />
-                <img class="icon" src="../../assets/home/service/security.png" />
+                <img class="icon" src="../../assets/home/service/security.png" alt="Network security" />
               </div>
             </div>
             <div class="right-container">
-              <div class="title">{{ $t('home.networkSecurity') }}</div>
+              <div class="title">{{ $t("home.networkSecurity") }}</div>
               <div class="desc">
-                <span>{{ $t('home.networkSecurityPt1') }}</span> 
-                <span>{{ $t('home.networkSecurityPt2') }}</span> 
+                <span>{{ $t("home.networkSecurityPt1") }}</span>
+                <span>{{ $t("home.networkSecurityPt2") }}</span>
               </div>
             </div>
           </div>
@@ -99,15 +99,15 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" src="../../assets/home/service/circle-bg.png" />
-                <img class="icon" src="../../assets/home/service/trust.png" />
+                <img class="icon" src="../../assets/home/service/trust.png" alt="Trustworthy" />
               </div>
             </div>
             <div class="right-container">
-              <div class="title">{{ $t('home.trustWorthy') }}</div>
+              <div class="title">{{ $t("home.trustWorthy") }}</div>
               <div class="desc">
-                <span>{{ $t('home.trustWorthyPt1') }}</span> 
-                <span>{{ $t('home.trustWorthyPt2') }}</span>
-                <span>{{ $t('home.trustWorthyPt3') }}</span>
+                <span>{{ $t("home.trustWorthyPt1") }}</span>
+                <span>{{ $t("home.trustWorthyPt2") }}</span>
+                <span>{{ $t("home.trustWorthyPt3") }}</span>
               </div>
             </div>
           </div>
@@ -117,15 +117,15 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" src="../../assets/home/service/circle-bg.png" />
-                <img class="icon" src="../../assets/home/service/service.png" />
+                <img class="icon" src="../../assets/home/service/service.png" alt="Product Service" />
               </div>
             </div>
             <div class="right-container">
-              <div class="title">{{ $t('home.productService' ) }}</div>
+              <div class="title">{{ $t("home.productService") }}</div>
               <div class="desc">
-                <span>{{ $t('home.productServicePt1') }}</span>
-                <span>{{ $t('home.productServicePt2') }}</span>
-                <span>{{ $t('home.productServicePt3') }}</span>
+                <span>{{ $t("home.productServicePt1") }}</span>
+                <span>{{ $t("home.productServicePt2") }}</span>
+                <span>{{ $t("home.productServicePt3") }}</span>
               </div>
             </div>
           </div>
@@ -252,15 +252,18 @@ onMounted(() => {});
         background: #ffffff;
         box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
-        width: calc((100% - 4rem )/ 3);
+        width: calc((100% - 4rem) / 3);
+        height: 210px;
+        flex: 1;
 
         .item {
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-evenly;
           border-radius: 0.8125rem;
           border: 1px solid #5c9fff;
           padding: 2rem;
+          height: 100%;
           gap: 16px;
 
           .left-container {
@@ -281,13 +284,13 @@ onMounted(() => {});
           }
 
           .right-container {
-            .title{
+            .title {
               color: #444444;
               font-size: 20px;
               margin-bottom: 5px;
               font-weight: 600;
             }
-            .desc{
+            .desc {
               color: #444444;
               display: flex;
               flex-direction: column;

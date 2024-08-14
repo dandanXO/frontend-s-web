@@ -696,6 +696,7 @@ import {useI18n} from "vue-i18n";
 import {getVipList} from "@/api/vip";
 import moment from "moment/moment";
 import { useRouter } from 'vue-router'
+import { isXF, isThai } from '@/utils/site'
 
 const router = useRouter()
 const {t} = useI18n();
@@ -976,9 +977,9 @@ function restrictInput(event) {
 }
 
 function changeSite(siteId) {
-  if (siteId === 1) {
+  if (isXF(siteId)) {
     form.minBalance = 5
-  } else if (siteId === 3) {
+  } else if (isThai(siteId)) {
     form.minBalance = 20
   } else {
     form.minBalance = 0

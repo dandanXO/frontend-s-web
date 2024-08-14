@@ -851,7 +851,7 @@
             />
           </el-descriptions-item>
           <el-descriptions-item
-            v-if="memberDetail.siteId === '5' || memberDetail.site === 5"
+            v-if="isInd(memberDetail.siteId)"
             :label="t('fields.withdrawableBalance')"
           >
             <div style="display: inline-block;" v-loading="loading.total">
@@ -883,6 +883,25 @@
               icon="el-icon-refresh"
               size="mini"
               @click="refreshDnW"
+            />
+          </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.claimableRebate')">
+            <div style="display: inline-block;" v-loading="loading.rebate">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{
+                    data: memberDetail.claimableRebate,
+                    type: 'money',
+                  }"
+                />
+              </div>
+            </div>
+            <el-button
+              class="refresh-btn"
+              icon="el-icon-refresh"
+              size="mini"
+              @click="refreshClaimableRebate"
             />
           </el-descriptions-item>
         </el-descriptions>
@@ -1459,7 +1478,7 @@
 </template>
 
 <script>
-import { nextTick, defineComponent, onMounted, reactive, ref } from 'vue'
+import { nextTick, defineComponent, onMounted, reactive, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { required, size, isNumeric } from '../../../../../utils/validate'
@@ -1486,6 +1505,7 @@ import {
   unlockMember,
   refreshBalance,
   getDnW,
+  getClaimableRebate,
   forceLogout,
   syncMemberDetail,
   getShareRatio,
@@ -1503,6 +1523,7 @@ import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
 import { getConfigListByGroup } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
+import { isInd, isKorea } from '@/utils/site'
 
 const store = useStore()
 export default defineComponent({
@@ -1530,6 +1551,7 @@ export default defineComponent({
     const site = reactive({
       id: route.query.site,
     })
+    const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 
     const loading = reactive({
       accountInfo: false,
@@ -1540,6 +1562,7 @@ export default defineComponent({
       total: false,
       dnw: false,
       balance: [],
+      rebate: false
     })
 
     const updatePasswordForm = ref(null)
@@ -1633,6 +1656,7 @@ export default defineComponent({
       memberType: '',
       dupName: '',
       dupIp: '',
+      claimableRebate: 0
     })
 
     const affiliateDetail = reactive({
@@ -2241,6 +2265,13 @@ export default defineComponent({
       loading.dnw = false
     }
 
+    const refreshClaimableRebate = async () => {
+      loading.rebate = true
+      const { data: rebate } = await getClaimableRebate(props.mbrId, site.id)
+      memberDetail.claimableRebate = rebate
+      loading.rebate = false
+    }
+
     const refreshPlatformBalance = async key => {
       loading.balance[key] = true
       const { data: balance } = await getPlatformBalance(
@@ -2390,6 +2421,7 @@ export default defineComponent({
       loading.loginInfo = false
 
       await loadBalance()
+      await refreshClaimableRebate()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true
@@ -2465,6 +2497,7 @@ export default defineComponent({
       loadBalance,
       refreshAllBalance,
       refreshDnW,
+      refreshClaimableRebate,
       refreshPlatformBalance,
       unmaskDetail,
       unmaskedValue,
@@ -2489,6 +2522,9 @@ export default defineComponent({
       updateModelForm,
       modelForm,
       getAffiliateRatio,
+      isInd,
+      isKorea,
+      LOGIN_USER_SITEID
     }
   },
 })

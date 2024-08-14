@@ -21,7 +21,7 @@
             width:100%
         }
         .weixin_tip{
-            /* background: linear-gradient( to right bottom,#077CCE,#01E9FF); 
+            /* background: linear-gradient( to right bottom,#077CCE,#01E9FF);
             padding: 30px 30px; */
             color: white;
             font-size: 14px;
@@ -95,7 +95,7 @@
 </div>
 <script>
     //NEED TO CHANGE THIS VERSION NO.
-    var versionNo= "1.0.6";
+    var versionNo= "1.0.9";
 
     var andList=[
         {imgurl:'/style/images/web/android/1.png'},
@@ -127,7 +127,7 @@
     const fbpid = searchParams.get('fbpid');
     const autoDownload = searchParams.get("autoDownload");
 
-    affidValue = affidValue ?? '';
+    affidValue = affidValue ?? '997F7C';
     console.log(window.location.href)
     // *** Add AffiliateCode By Url Here.
 
@@ -142,53 +142,68 @@
     // }
 
     var apiUrl = '';
+    var adjustUrlCode = '';
+
+    var code = getQueryVariable("code")
+    var pp = new Array(7)
+    for (let i = 0; i < pp.length; i++) {
+        pp[i] = getQueryVariable("p" + i)
+        pp[i] = pp[i].replace(/{|}/g, "")
+    }
 
     async function getApiUrl() {
         var button;
-        var apkUrl = '';
 
-        if (!affidValue) {
-            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=ka2&appType=ALL_SITE`;
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                });
-                const data = await response.json();
-                if (data) {
-                    console.log("data", data);
-                    apkUrl = data.data;
-                    button = document.getElementById("installButton");
-                    // //Android or Browser.
-                    // //Change URL ./download/jb_app.apk when go Live.
-                    button.classList.remove("disabled-btn");
-                    button.onclick = function () {
-                        downloadApk(apkUrl, affidValue)
-                        return false;
-                    }
-                }
-            } catch (error) {
-                console.log(error)
+        let affiliateLists = {
+            "997F7C": {
+                "adCode": "1fd9ev11",
+                "url": "https://files.spskh34qf.com/app/15/affiliate/1820405029389045761/android/apk/1.0.9_20240805184600.apk"
+            },
+            "27A60B": {
+                "adCode": "1f179qkt",
+                "url": "https://files.spskh34qf.com/app/15/affiliate/1811968301672738818/android/apk/1.0.9_20240806173400.apk"
+            },
+            "9F289A": {
+                "adCode": "1f179qkt",
+                "url": "https://files.spskh34qf.com/app/15/affiliate/1813838912263200770/android/apk/1.0.9_20240807134600.apk"
             }
+        }
 
-        } else {
-            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/ka2/${affidValue}`;
-            button = document.getElementById("installButton");
-            // //Android or Browser.
-            // //Change URL ./download/jb_app.apk when go Live.
-            button.classList.remove("disabled-btn");
-            button.onclick = function () {
-                downloadApk(apiUrl, affidValue)
+        adjustUrlCode = affiliateLists[affidValue]["adCode"];
+        apiUrl = affiliateLists[affidValue]["url"];
+
+        button = document.getElementById("installButton");
+        // button.innerText = "Install"
+        // button.classList.remove("disabled-btn");
+        button.onclick = function () {
+            downloadApk(code, pp, fbclid, fbpid)
+            return false;
+        }
+
+
+        let similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+
+        for (let i = 0; i < similarGamesListElements.length; i++) {
+            similarGamesListElements[i].onclick = function () {
+                downloadApk(code, pp, fbclid, fbpid)
                 return false;
             }
         }
+
+        // if (autoDownload == "1") {
+        //     downloadApk(code, pp, fbclid, fbpid)
+        // }
     }
 
-    function downloadApk(apkUrl) {
-        console.log(apkUrl);
 
+    function downloadApk() {
+        console.log(apiUrl)
+        var date = Date.now();
+        var url = `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` + date;
+        // alert(url)
         const link = document.createElement("a");
         link.style.display = "none";
-        link.href = apkUrl;
+        link.href = url;
         link.download = `kaka-app-${versionNo}.apk`
         document.body.appendChild(link);
         link.click();
@@ -229,7 +244,6 @@
             }else {
                 showAndroid();
                 getApiUrl();
-
             };
             // var host = window.location.host;
             // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
@@ -247,7 +261,6 @@
 
     function showIOS()
     {
-
         $("#ver-no").html("(iOS " + versionNo + ")");
 
         $("#installButton").attr("href", "./download/KAKAGame.mobileconfig");
@@ -263,8 +276,6 @@
             if(getIsPath())
             {
                 showIOS();
-                // var path=getTestFlightIosPath();
-                // $('#download').attr('href',path);
             }
             else
             {
@@ -277,6 +288,17 @@
 
     };
 
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return "";
+    }
 
     var mySwiper = new Swiper('.swiper-container',{
         effect : 'slide',

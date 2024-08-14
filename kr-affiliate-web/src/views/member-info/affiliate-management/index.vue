@@ -439,6 +439,9 @@
               :label="t(`affiliate.level.${item.value}`)" :value="item.value" />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.affiliateCode')" prop="codePersonalAffiliate">
+          <el-input v-model="cForm.codePersonalAffiliate" style="width: 350px;" maxlength="6" @input="handleInput"/>
+        </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="cForm.loginName" style="width: 350px;" maxlength="11" />
         </el-form-item>
@@ -707,6 +710,7 @@ const cForm = reactive({
   affiliateCode: null,
   commission: 0,
   shareRatio: null,
+  codePersonalAffiliate: null,
 })
 
 const eForm = reactive({
@@ -783,6 +787,19 @@ const cFormRules = reactive({
     { validator: validateCommission, trigger: 'blur' },
   ],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
+  codePersonalAffiliate: [
+          {
+            min: 6,
+            max: 6,
+            message: t('message.required_6_digits_code'),
+            trigger: 'change',
+          },
+          {
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: t('message.required_only_digits_and_alphabet'),
+            trigger: 'blur',
+          },
+        ]
 })
 
 const eFormRules = reactive({
@@ -889,6 +906,7 @@ function showEdit(affiliate) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
+    eForm.shareRatio = JSON.parse(JSON.stringify(affiliate.shareRatio))
     for (var index = 0; index < eForm.shareRatio.length; index++) {
       eForm.shareRatio[index].value *= 100.00;
       eForm.shareRatio[index].value = parseFloat(eForm.shareRatio[index].value).toFixed(2);
@@ -903,7 +921,7 @@ async function addAffiliate() {
     if (valid) {
       if (parseInt(cForm.siteId) === 10) {
         // join share ratio by comma
-        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + (item.value/100)).join(',');
+        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + (item.value/100).toFixed(4)).join(',');
       }
       await regsterAffiliate(cForm)
       uiControl.dialogVisible = false
@@ -911,6 +929,10 @@ async function addAffiliate() {
       await search()
     }
   })
+}
+
+const handleInput = (event) => {
+  cForm.codePersonalAffiliate = cForm.codePersonalAffiliate.toUpperCase();
 }
 
 async function editAffiliate() {
@@ -921,7 +943,7 @@ async function editAffiliate() {
       form.siteId = store.state.user.siteId
       if (parseInt(form.siteId) === 10) {
         // join share ratio by comma
-        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + (item.value/100)).join(',');
+        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + (item.value/100).toFixed(4)).join(',');
       }
       form.affiliateLevel = eForm.affiliateLevel
       await editAffiliateCommission(eForm.id, form)

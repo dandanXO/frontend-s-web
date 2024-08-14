@@ -26,8 +26,10 @@
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
     <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match'" />
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B'"></LPLSummer>
+    <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
+    <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode"/>
     <PrivilegeInvite
       v-if="
         list.redirectUrl === 'Dongying-refer' ||
@@ -64,6 +66,8 @@
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
     <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
     <NewplayerGuide v-if="list.redirectUrl === 'dy2-newplayer-guide'" />
+    <intelEsl2024 v-if="list.redirectUrl === 'dy2-intel-esl'" />
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -122,6 +126,7 @@ import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
+import intelEsl2024 from "../components/hotpromo/intel-esl-2024/intel-esl-2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import NewplayerGuide from "../components/hotpromo/newplayerguide/NewPlayerGuide.vue";
@@ -131,8 +136,10 @@ import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPre
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
+import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -142,6 +149,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
     fishHongbao,
@@ -177,10 +185,12 @@ export default defineComponent({
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
     LPLSummer24,
+    intelEsl2024,
     DragonBoat,
     EurocupManual,
     OuZuLianPromo,
-    NewplayerGuide
+    NewplayerGuide,
+    LPLLCK
   },
   props: {
     list: {

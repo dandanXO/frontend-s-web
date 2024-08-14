@@ -4,14 +4,20 @@
       <div class="left">
         <div class="avatar" @click="updateProfilePhoto">
           <img v-if="!store.profilePhoto" src="../assets/images/account/avatar.png" />
-          <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../assets/images/profile/${store.profilePhoto}.png`)" />
-          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
+          <img
+            v-if="store.profilePhoto && store.profilePhoto.includes('default')"
+            :src="require(`../assets/images/profile/${store.profilePhoto}.png`)"
+          />
+          <img
+            v-if="store.profilePhoto && !store.profilePhoto.includes('default')"
+            :src="imageDir + store.profilePhoto + '?v=' + timestamp"
+          />
         </div>
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
 
           <!-- <span class="join-span">加入雷火电竞第一天</span> -->
-<!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
+          <!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
         </div>
       </div>
     </div>
@@ -160,7 +166,6 @@
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">功能区</div>
-
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
@@ -198,9 +203,11 @@
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
             <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.png" />
-          <img v-else src="../assets/images/account/account-notice-icon.png" />
+            <img v-else src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">消息提醒</div>
-            <div class="unread" v-if="store.unreadInboxMail > 0">{{store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString()}}</div>
+            <div class="unread" v-if="store.unreadInboxMail > 0">
+              {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+            </div>
           </div>
         </router-link>
 
@@ -212,13 +219,13 @@
           </div>
         </router-link>
 
-      <router-link to="/account/vip?from=account">
-        <div class="acct-nav-item">
-          <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.png" />
-          <img v-else src="../assets/images/account/account-vip-icon.png" />
-          <div class="acct-nav-label">VIP 特权</div>
-        </div>
-      </router-link>
+        <router-link to="/account/vip?from=account">
+          <div class="acct-nav-item">
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-vip-icon.png" />
+            <div class="acct-nav-label">VIP 特权</div>
+          </div>
+        </router-link>
 
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
@@ -265,46 +272,44 @@
       </div>
     </q-item-section>
 
-<q-item-section class="acct-nav">
-  <div class="acct-title">
-    <div class="acct-title-1">热门推荐</div>
-  </div>
-  <div class="acct-menu" id="id-acct-menu">
-    <router-link to="/promo">
-      <div class="acct-nav-item">
-        <img v-if="$q.dark.isActive" src="../assets/images/account/account-promo-icon-dark.png" />
-        <img v-else src="../assets/images/account/account-promo-icon.png" />
-        <div class="acct-nav-label">优惠活动</div>
+    <q-item-section class="acct-nav">
+      <div class="acct-title">
+        <div class="acct-title-1">热门推荐</div>
       </div>
-    </router-link>
+      <div class="acct-menu" id="id-acct-menu">
+        <router-link to="/promo">
+          <div class="acct-nav-item">
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-promo-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-promo-icon.png" />
+            <div class="acct-nav-label">优惠活动</div>
+          </div>
+        </router-link>
 
-    <router-link to="/account/invite">
-      <div class="acct-nav-item">
-        <img v-if="$q.dark.isActive" src="../assets/images/account/account-share-icon-dark.png" />
-        <img v-else src="../assets/images/account/account-share-icon.png" />
-        <div class="acct-nav-label">推广赚钱</div>
+        <router-link to="/account/invite">
+          <div class="acct-nav-item">
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-share-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-share-icon.png" />
+            <div class="acct-nav-label">推广赚钱</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/invite#summon-share">
+          <div class="acct-nav-item">
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-summon-share-icon.png" />
+            <div class="acct-nav-label">召回奖金</div>
+          </div>
+        </router-link>
+
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-affiliate-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">合作加盟</div>
+          </div>
+        </router-link>
       </div>
-    </router-link>
-
-    <router-link to="/account/invite#summon-share">
-      <div class="acct-nav-item">
-        <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
-        <img v-else src="../assets/images/account/account-summon-share-icon.png" />
-        <div class="acct-nav-label">召回奖金</div>
-      </div>
-    </router-link>
-
-
-    <router-link to="/affiliate">
-      <div class="acct-nav-item">
-        <img v-if="$q.dark.isActive" src="../assets/images/account/account-affiliate-icon-dark.png" />
-        <img v-else src="../assets/images/account/account-affiliate-icon.png" />
-        <div class="acct-nav-label">合作加盟</div>
-      </div>
-    </router-link>
-
-  </div>
-</q-item-section>
+    </q-item-section>
 
     <q-card class="card-account-banner">
       <q-card-section>
@@ -380,25 +385,43 @@
       </div>
     </q-card>
   </q-dialog>
-    <q-dialog
-      v-model="profileDialogVisible"
-      persistent
-      class="profile-dialog"
-    >
-      <q-card style="flex-direction: column; display: flex;">
-        <div class="header">
-          修改头像
-      <q-btn dense flat icon="close" v-close-popup>
-        <q-tooltip>Close</q-tooltip>
-      </q-btn>
-        </div>
+  <q-dialog v-model="profileDialogVisible" persistent class="profile-dialog">
+    <q-card style="flex-direction: column; display: flex">
+      <div class="header">
+        修改头像
+        <q-btn dense flat icon="close" v-close-popup>
+          <q-tooltip>Close</q-tooltip>
+        </q-btn>
+      </div>
 
       <div class="grid-container">
-        <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
-          <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)">
+        <div
+          class="grid-item"
+          v-for="(profImg, profIndex) in 13"
+          :key="profIndex"
+          :class="{ selected: selectedImage === 'default-' + (profIndex + 1) }"
+          @click="selectImage('default-' + (profIndex + 1))"
+        >
+          <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)" />
         </div>
         <div class="grid-item">
-          <div @click="updateDialogVisible = true" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
+          <div
+            @click="updateDialogVisible = true"
+            style="
+              border-radius: 50%;
+              width: 100px;
+              height: 100px;
+              background: #e7f3ff;
+              color: #a4aabb;
+              font-size: 80px;
+              cursor: pointer;
+              padding-bottom: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            +
           </div>
         </div>
       </div>
@@ -407,11 +430,8 @@
       </div>
     </q-card>
   </q-dialog>
-  <q-dialog
-    v-model="updateDialogVisible"
-    persistent
-    class="profile-dialog">
-    <q-card style="flex-direction: column; display: flex;">
+  <q-dialog v-model="updateDialogVisible" persistent class="profile-dialog">
+    <q-card style="flex-direction: column; display: flex">
       <div class="header">
         修改头像
         <q-btn dense flat icon="close" v-close-popup>
@@ -421,7 +441,7 @@
 
       <div class="uploader">
         <div class="leftBox">
-          <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0;" prop="path">
+          <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0" prop="path">
             <input
               id="uploadFile"
               type="file"
@@ -432,25 +452,28 @@
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
             上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
-
           </el-form-item>
           <cropper
             v-if="uploadedImage.url"
             background-class="cropper-background"
             ref="cropperRef"
             class="cropper"
-            :src="uploadedImage.url ? uploadedImage.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'"
+            :src="
+              uploadedImage.url
+                ? uploadedImage.url
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'
+            "
             circle-stencil
             :stencil-props="{
-                handlers: {},
-                movable: false,
-                resizable: false,
-                aspectRatio: 1/1
-              }"
+              handlers: {},
+              movable: false,
+              resizable: false,
+              aspectRatio: 1 / 1
+            }"
             :stencil-size="{
-                width:150,
-                height: 150
-              }"
+              width: 150,
+              height: 150
+            }"
             image-restriction="stencil"
             @change="change"
           />
@@ -458,14 +481,13 @@
         <div class="rightBox">
           <div class="cropped_title">头像预览</div>
           <div v-if="!croppedImg" class="croppedImgHolder"></div>
-          <img v-if="croppedImg" style="border-radius: 50%; width: 150px; height: 150px;" :src="croppedImg">
+          <img v-if="croppedImg" style="border-radius: 50%; width: 150px; height: 150px" :src="croppedImg" />
         </div>
       </div>
       <div v-if="croppedImg" class="dialog-footer">
         <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">保存</q-btn>
       </div>
     </q-card>
-
   </q-dialog>
 </template>
 
@@ -473,13 +495,13 @@
 import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-import { Cropper } from 'vue-advanced-cropper'
-import 'vue-advanced-cropper/dist/style.css';
-import 'vue-advanced-cropper/dist/theme.compact.css';
-import moment from 'moment';
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
+import "vue-advanced-cropper/dist/theme.compact.css";
+import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 export default defineComponent({
   name: "AccountPage",
@@ -495,15 +517,14 @@ export default defineComponent({
       if (cropperRef.value) {
         // Access the cropper instance using the value of cropperRef
         const { coordinates, canvas } = cropperRef.value.getResult();
-        croppedImg.value = canvas.toDataURL('image/jpeg', 0.6);
+        croppedImg.value = canvas.toDataURL("image/jpeg", 0.6);
       }
     };
     const change = ({ coordinates, canvas }) => {
-      console.log(coordinates, canvas)
-      getImageFromCropper()
-
-    }
-    const inputImage = ref(null)
+      console.log(coordinates, canvas);
+      getImageFromCropper();
+    };
+    const inputImage = ref(null);
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
@@ -582,12 +603,12 @@ export default defineComponent({
 
       notify({
         type: "success",
-        message: "已复制专属网址",
+        message: "已复制专属网址"
       });
     };
     onActivated(() => {
       store.getUnreadTotal();
-    })
+    });
     onMounted(() => {
       getBalance();
       store.getBalance();
@@ -598,13 +619,13 @@ export default defineComponent({
         btmSwiper.classList.add("shorter-menu");
       }
       getVipProgress();
-      if (store.profilePhoto && store.profilePhoto.includes('default')) {
-        selectedImage.value = store.profilePhoto
+      if (store.profilePhoto && store.profilePhoto.includes("default")) {
+        selectedImage.value = store.profilePhoto;
       }
     });
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
-    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/profile/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
@@ -681,66 +702,66 @@ export default defineComponent({
         vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.levelUpDeposit);
       }
     };
-    const submitPhotoLoading = ref(false)
-    var qs = require('qs')
-    const selectedImage = ref(null)
+    const submitPhotoLoading = ref(false);
+    var qs = require("qs");
+    const selectedImage = ref(null);
     const profileDialogVisible = ref(false);
     const uploadedImage = reactive({
-      url: null,
-    })
+      url: null
+    });
     const imageForm = reactive({
-      path: null,
-    })
-    const isLoadingUpload = ref(false)
+      path: null
+    });
+    const isLoadingUpload = ref(false);
     const updateProfilePhoto = () => {
-      if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST' )){
+      if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
         return;
       }
 
-      profileDialogVisible.value = true
-    }
+      profileDialogVisible.value = true;
+    };
     const selectImage = (item) => {
-      selectedImage.value = item
-    }
+      selectedImage.value = item;
+    };
     const onShowProfile = () => {
-      if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
+      if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
         return;
       }
 
-      imageForm.path = null
-      inputImage.value = null
-      uploadedImage.url = null
-      croppedImg.value = null
-      profileDialogVisible.value = true
+      imageForm.path = null;
+      inputImage.value = null;
+      uploadedImage.url = null;
+      croppedImg.value = null;
+      profileDialogVisible.value = true;
     };
     async function saveCroppedImage() {
-      isLoadingUpload.value = true
+      isLoadingUpload.value = true;
       if (croppedImg.value) {
-        const data = await attachPhoto(croppedImg.value)
+        const data = await attachPhoto(croppedImg.value);
         if (data.code === 0) {
-          selectedImage.value = data.data
-          inputImage.value = ''
-          isLoadingUpload.value = false
+          selectedImage.value = data.data;
+          inputImage.value = "";
+          isLoadingUpload.value = false;
 
           submitPhoto();
         } else {
           // Handle case when croppedImg is not available
-          console.error('No cropped image available');
-          isLoadingUpload.value = false
+          console.error("No cropped image available");
+          isLoadingUpload.value = false;
         }
       }
     }
 
     async function attachImage(event) {
-      console.log(event.target.files[0].size)
+      console.log(event.target.files[0].size);
       // if (event.target.files[0].size > 1000000) {
       //   return notify({
       //     type: "error",
       //      //     message: "图片必须小于1MB,请重新上传",
       //      //   });
       // } else {
-        const file = event.target.files[0];
-        uploadedImage.url = URL.createObjectURL(file);
+      const file = event.target.files[0];
+      uploadedImage.url = URL.createObjectURL(file);
       // }
     }
 
@@ -753,10 +774,10 @@ export default defineComponent({
     }
     async function attachPhoto(fileImg) {
       var file = null;
-      if (typeof fileImg === 'string' && isBase64(fileImg)) {
+      if (typeof fileImg === "string" && isBase64(fileImg)) {
         console.log("Treating input as base64");
         // Extract the MIME type from the base64 string
-        const mimeType = fileImg.split(';')[0].split(':')[1];
+        const mimeType = fileImg.split(";")[0].split(":")[1];
         var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
         // Decode the Base64 string
         const byteCharacters = atob(data);
@@ -772,81 +793,77 @@ export default defineComponent({
         const blob = new Blob([byteArray], { type: mimeType });
 
         // Create a File object from the Blob
-        file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
+        file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
       } else {
         file = fileImg;
       }
       // Use the File object for further processing
-      const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
-      const dir = 'temp';
+      const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+      const dir = "temp";
 
       if (!file || !allowFileTypes.includes(file.type)) {
         notify({
           type: "error",
-          message: "照片格式错误",
+          message: "照片格式错误"
         });
 
         isLoadingUpload.value = false;
         return null; // Exit the function if file is not valid
       }
-      if(file && file.size > 1000000){
+      if (file && file.size > 1000000) {
         notify({
           type: "error",
-          message: "上传的图片已大于1mb，请刷新页面重新上传",
+          message: "上传的图片已大于1mb，请刷新页面重新上传"
         });
         isLoadingUpload.value = false;
         return null; // Exit the function if file is not valid
       }
 
       var formData = new FormData();
-      formData.append('files', file);
-      formData.append('dir', dir);
-      formData.append('overwrite', false);
+      formData.append("files", file);
+      formData.append("dir", dir);
+      formData.append("overwrite", false);
       selectedImage.value = URL.createObjectURL(file); // Set the URL for preview
       var rstUrl = localStorage.getItem("LH_H5_RST_URL");
-      if(!rstUrl){
+      if (!rstUrl) {
         rstUrl = process.env.RST_API.split(",")[0];
       }
       try {
-        const response = await fetch(
-          `${rstUrl}/session/profile-photo/upload`,
-          {
-            method: "POST",
-            body: formData,
-            headers: {
-              token: `${store.token}`
-            }
+        const response = await fetch(`${rstUrl}/session/profile-photo/upload`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            token: `${store.token}`
           }
-        );
+        });
         return await response.json();
       } catch (error) {
         console.error(error);
       }
     }
     const updateDialogVisible = ref(false);
-    const submitPhoto = async() => {
-      submitPhotoLoading.value = true
+    const submitPhoto = async () => {
+      submitPhotoLoading.value = true;
       if (!selectedImage.value) {
         return notify({
           type: "error",
-          message: "请选择图片",
+          message: "请选择图片"
         });
       }
-      await api.post('/session/profile-photo/save', qs.stringify({ 'imageUuid': selectedImage.value }))
-        .then(data => {
-          // Handle response here
-          store.profilePhoto = data.data
-          notify({
-            type: "success",
-            message: "修改成功",
-          });
-          submitPhotoLoading.value = false
-          profileDialogVisible.value = false
-          isLoadingUpload.value = false
-          updateDialogVisible.value = false
-          window.location.reload();
-        })
-    }
+      await api.post("/session/profile-photo/save", qs.stringify({ imageUuid: selectedImage.value })).then((data) => {
+        // Handle response here
+        store.profilePhoto = data.data;
+        notify({
+          type: "success",
+          message: "修改成功"
+        });
+        submitPhotoLoading.value = false;
+        profileDialogVisible.value = false;
+        isLoadingUpload.value = false;
+        updateDialogVisible.value = false;
+        window.location.reload();
+      });
+    };
     return {
       header: "Account",
       logout,
@@ -914,7 +931,7 @@ export default defineComponent({
 
   .avatar {
     width: 50px;
-    height:50px;
+    height: 50px;
     max-width: 60px;
     min-width: 60px;
     max-height: 60px;
@@ -923,7 +940,7 @@ export default defineComponent({
     align-items: center;
 
     img {
-      width:50px;
+      width: 50px;
       height: 50px;
       aspect-ratio: 1/1;
       border-radius: 50%;
@@ -1230,8 +1247,7 @@ export default defineComponent({
     border-radius: 20px 20px 0 0;
     position: relative;
     &:before {
-      background: #458BFF;
-;
+      background: #458bff;
       width: 5px;
       height: 20px;
       left: 0;
@@ -1313,14 +1329,13 @@ export default defineComponent({
         }
         .unread {
           position: absolute;
-
-    border-radius: 50%;
-    background: #ff0000;
-    left: 80%;
-    top: -3px;
-    color: #ffffff;
-    padding: 1px 5px;
-    font-size: 10px;
+          border-radius: 50%;
+          background: #ff0000;
+          left: 70%;
+          top: -3px;
+          color: #ffffff;
+          padding: 1px 5px;
+          font-size: 10px;
         }
 
         img {
@@ -1504,7 +1519,7 @@ export default defineComponent({
 
   .acct-nav {
     .acct-title {
-      background: #FFFFFF1A;
+      background: #ffffff1a;
       &::before {
         background: $primary-dark;
       }
@@ -1518,7 +1533,7 @@ export default defineComponent({
     .q-card {
       box-shadow: none;
     }
-    .submitImgBtn{
+    .submitImgBtn {
       background-image: url("../assets/images/download/active-tab-bg-dark.png");
     }
   }
@@ -1573,9 +1588,8 @@ export default defineComponent({
   }
 }
 .profile-dialog .q-card {
-  box-shadow: 0px -8px 8px 0px #C3D4E6 inset;
+  box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
   border-radius: 10px;
-
 }
 .profile-dialog .header {
   font-size: 20px;
@@ -1621,16 +1635,16 @@ export default defineComponent({
 }
 
 .grid-item.selected {
-  position:relative;
+  position: relative;
   color: #ffffff;
   img {
-    border: 3px solid #33BC03;
+    border: 3px solid #33bc03;
     border-radius: 50%;
   }
   &:after {
     content: "✓";
     position: absolute;
-    background: #33BC03;
+    background: #33bc03;
     font-size: 13px;
     width: 20px;
     height: 20px;
@@ -1665,8 +1679,8 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #A4AABB;
-      background: #E7F3FF;
+      color: #a4aabb;
+      background: #e7f3ff;
       border-radius: 20px;
       flex-direction: column;
       text-align: center;
@@ -1679,14 +1693,12 @@ export default defineComponent({
         gap: 10px;
       }
 
-
       .upload-btn {
         cursor: pointer;
         padding: 8px 20px;
-        background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
+        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
 
-        box-shadow: 0px -0.96px 3.51px 0px #A2BFF4 inset;
-
+        box-shadow: 0px -0.96px 3.51px 0px #a2bff4 inset;
       }
     }
   }
@@ -1697,16 +1709,14 @@ export default defineComponent({
     flex-direction: column;
     gap: 10px;
     .cropped_title {
-      color: #7A80A1;
+      color: #7a80a1;
       font-size: 20px;
       font-weight: 500;
       line-height: 28px;
       text-align: center;
-
-
     }
     .croppedImgHolder {
-      border: 3px dotted #7A80A1;
+      border: 3px dotted #7a80a1;
       width: 150px;
       height: 150px;
       border-radius: 50%;
@@ -1729,6 +1739,5 @@ export default defineComponent({
   background: aliceblue;
 }
 .profile-dialog.update {
-
 }
 </style>
