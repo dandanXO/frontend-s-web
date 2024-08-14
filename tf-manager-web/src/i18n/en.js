@@ -1406,6 +1406,7 @@ export default {
     rewardGroupName: 'Group Name',
     rewardGroupDownlineQuota: 'Downline Quota',
     riskControl: 'Risk Control',
+    riskDepositLimit: 'Risk Deposit Limit',
     riskLevel: 'Risk Level',
     riskPaymentChannel: 'Risk Payment Channel',
     role: 'Role',
