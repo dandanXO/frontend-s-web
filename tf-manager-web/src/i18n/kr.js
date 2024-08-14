@@ -444,6 +444,13 @@ export default {
     ON: '켜짐',
     OFF: '끄기',
   },
+  valueRulesType: {
+    INPUT: "입력",
+    RADIO: "라디오 버튼",
+    SELECT: "선택 상자",
+    SWITCH: "스위치",
+    CHECKBOX: "체크박스"
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -2258,7 +2265,8 @@ export default {
     validateImageNameRequired: '이미지 이름이 필요합니다',
     validatePosterTypeRequired: '포스터 유형이 필요합니다',
     validateConfigCodeRequired: '구성 코드가 필요합니다',
-    validateConfigValueRequired: '구성 값이 필요합니다',
+    validateConfigValueRequired: '구성 유형이 필요합니다',
+    validateConfigTypeRequired: 'Config Type is required',
     resultCalculateSuccess: '결과가 성공적으로 계산되었습니다',
     buildIsInQueue: '빌드가 대기열에 있습니다',
     roleMustOnlyOne: '권한이 필요한 역할을 하나만 선택하세요',
@@ -2528,7 +2536,8 @@ export default {
     'Member Point Record': '회원 포인트 기록',
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
-    'Vip Report': 'VIP 보고서'
+    'Vip Report': 'VIP 보고서',
+    'System Value Rules': '시스템 값 규칙'
   },
   google: {
     google_auth_menu: 'Google 인증자',

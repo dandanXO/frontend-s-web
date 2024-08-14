@@ -495,6 +495,13 @@ export default {
     ON: 'ON',
     OFF: 'OFF',
   },
+  valueRulesType: {
+    INPUT: 'INPUT',
+    RADIO: 'RADIO',
+    SELECT: 'SELECT',
+    SWITCH: 'SWITCH',
+    CHECKBOX: 'CHECKBOX',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1964,6 +1971,8 @@ export default {
     levelUpBet: 'Level Up Bet',
     retainLevelBet: 'Retain Level Bet',
     retainLevelDays: 'Retain Level Days',
+    editSystemValueRules: 'Edit System Value Rule',
+    addSystemValueRules: 'Add System Value Rule'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2423,6 +2432,7 @@ export default {
     validatePosterTypeRequired: 'Poster Type is required',
     validateConfigCodeRequired: 'Config Code is required',
     validateConfigValueRequired: 'Config Value is required',
+    validateConfigTypeRequired: 'Config Type is required',
     resultCalculateSuccess: 'Result is calculated successfully',
     buildIsInQueue: 'Build is in queue',
     roleMustOnlyOne: 'Please select a role that requires authorization',
@@ -2718,7 +2728,8 @@ export default {
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
-    'Vip Report': 'Vip Report'
+    'Vip Report': 'Vip Report',
+    'System Value Rules': 'System Value Rules'
   },
   google: {
     google_auth_menu: 'Google Authenticator',

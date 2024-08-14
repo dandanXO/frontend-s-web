@@ -726,11 +726,11 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
-import { isKorea, isThai } from '@/utils/site'
+// import { isKorea, isThai } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
-const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
+// const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const memberForm = ref(null)
