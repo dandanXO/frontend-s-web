@@ -21,7 +21,7 @@
               />
             </div>
             <div class="reward-info-content">
-              当日真人棋牌场馆投注：
+              今日真人棋牌场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -34,7 +34,7 @@
               />
             </div>
             <div class="reward-info-content">
-              当日可领彩金：
+              可领彩金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">永久</div>
+          <div class="right">8月14日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
@@ -160,9 +160,8 @@ const props = defineProps({
   promoCode: {
     type: String,
     required: true
-  },
+  }
 });
-
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
@@ -174,11 +173,11 @@ const handleClaimBonus = () => {
         fetchData();
       } else {
         $q.notify({
-        color: "negative",
-        position: "top",
-        message: "res.message",
-        icon: "report_problem"
-      });
+          color: "negative",
+          position: "top",
+          message: "res.message",
+          icon: "report_problem"
+        });
       }
     })
     .catch((err) => {

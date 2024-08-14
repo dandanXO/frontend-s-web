@@ -221,7 +221,11 @@
       </q-form>
 
       <div class="note">
-        {{ $t("form.virtualWallet_warmReminder") }}
+        {{
+          selectedTypeToggleName === "JAZZCASH"
+            ? $t("form.virtualWallet_warmReminder_02")
+            : $t("form.virtualWallet_warmReminder")
+        }}
       </div>
 
       <div class="bottom-btn">

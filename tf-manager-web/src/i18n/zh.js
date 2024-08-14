@@ -498,6 +498,13 @@ export default {
     ON: '开',
     OFF: '关',
   },
+  valueRulesType: {
+    INPUT: "输入框",
+    RADIO: "单选框",
+    SELECT: "下拉框",
+    SWITCH: "开关",
+    CHECKBOX: "多选框"
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -679,6 +686,7 @@ export default {
     betRecords: '投注记录',
     betStatus: '投注状态',
     betTime: '投注时间',
+    betTotal: '总下注金额',
     betWheelSettings: '投注转盘配置',
     betWheelRecords: '投注转盘记录',
     binded: '已绑定',
@@ -1013,9 +1021,11 @@ export default {
     ftdTime: '首存时间',
     ftdTxn: '首存交易',
     fundingInfo: '资金信息',
+    game: '游戏',
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
     domainEasy: 'Domain 易记域名',
+    videoShiPin: "Video 视频",
     gameConsolidateReport: '游戏报表',
     gameMatch: '保险投注赛事',
     gameMatchRecord: '玩家保险投注记录',
@@ -1251,7 +1261,9 @@ export default {
     paymentOnGoing: '支付中',
     paymentType: '支付类型',
     payout: '派彩',
+    payoutTotal: '总派彩',
     return_ratio: '返奖率',
+    return_ratio_total: '总返奖率',
     pcWay: 'PC端',
     pending: '中止',
     pendingTransaction: '待处理',
@@ -1394,6 +1406,7 @@ export default {
     rewardGroupDownlineQuota: '最高下线人数',
     rewardGroupName: '奖金组名称',
     riskControl: '风险管理',
+    riskDepositLimit: '风控存款金额限制',
     riskLevel: '风险等级',
     riskPaymentChannel: '风控支付渠道',
     role: '角色',
@@ -1958,6 +1971,8 @@ export default {
     levelUpBet: '升级流水',
     retainLevelBet: '保级流水',
     retainLevelDays: '保级天数',
+    editSystemValueRules: '编辑系统设置值规则',
+    addSystemValueRules: '新增系统设置值规则'
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2371,6 +2386,7 @@ export default {
     validatePosterTypeRequired: '海报类别必填',
     validateConfigCodeRequired: '设置Code必填',
     validateConfigValueRequired: '设置值必填',
+    validateConfigTypeRequired: '设置值类型是必选的',
     resultCalculateSuccess: '结果结算成功',
     buildIsInQueue: '构建等待中',
     roleMustOnlyOne: '请选择一个需要授权的角色',
@@ -2662,6 +2678,8 @@ export default {
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
+    'Vip Report': 'VIP投注汇总报表',
+    'System Value Rules': '系统设置值规则'
   },
   google: {
     google_auth_menu: '谷歌验证',

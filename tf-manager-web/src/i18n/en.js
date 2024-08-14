@@ -495,6 +495,13 @@ export default {
     ON: 'ON',
     OFF: 'OFF',
   },
+  valueRulesType: {
+    INPUT: 'INPUT',
+    RADIO: 'RADIO',
+    SELECT: 'SELECT',
+    SWITCH: 'SWITCH',
+    CHECKBOX: 'CHECKBOX',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -676,6 +683,7 @@ export default {
     betRecords: 'Bet Records',
     betStatus: 'Bet Status',
     betTime: 'Bet Time',
+    betTotal: 'Total Bet',
     betWheelSettings: 'Bet Wheel Settings',
     betWheelRecords: 'Bet Wheel Records',
     binded: 'Binded',
@@ -1011,9 +1019,11 @@ export default {
     ftdTime: 'FTD Time',
     ftdTxn: 'FTD Txn',
     fundingInfo: 'Funding Information',
+    game: 'Game',
     gameAccountName: 'Game Account Name',
     gameCode: 'Game Code',
     domainEasy: 'Domain Url',
+    videoShiPin: 'Video Url',
     gameConsolidateReport: 'Game Consolidate Report',
     gameMatch: 'Game Match',
     gameMatchRecord: 'Game Match Record',
@@ -1251,7 +1261,9 @@ export default {
     paymentOnGoing: 'Payment on going',
     paymentType: 'Payment Type',
     payout: 'Payout',
+    payoutTotal: 'Total Payout',
     return_ratio: 'Ratio Return',
+    return_ratio_total: 'Total Ratio Return',
     pcWay: 'PC',
     pending: 'SUSPEND',
     pendingTransaction: 'Pending',
@@ -1394,6 +1406,7 @@ export default {
     rewardGroupName: 'Group Name',
     rewardGroupDownlineQuota: 'Downline Quota',
     riskControl: 'Risk Control',
+    riskDepositLimit: 'Risk Deposit Limit',
     riskLevel: 'Risk Level',
     riskPaymentChannel: 'Risk Payment Channel',
     role: 'Role',
@@ -1959,6 +1972,8 @@ export default {
     levelUpBet: 'Level Up Bet',
     retainLevelBet: 'Retain Level Bet',
     retainLevelDays: 'Retain Level Days',
+    editSystemValueRules: 'Edit System Value Rule',
+    addSystemValueRules: 'Add System Value Rule'
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2418,6 +2433,7 @@ export default {
     validatePosterTypeRequired: 'Poster Type is required',
     validateConfigCodeRequired: 'Config Code is required',
     validateConfigValueRequired: 'Config Value is required',
+    validateConfigTypeRequired: 'Config Type is required',
     resultCalculateSuccess: 'Result is calculated successfully',
     buildIsInQueue: 'Build is in queue',
     roleMustOnlyOne: 'Please select a role that requires authorization',
@@ -2713,7 +2729,8 @@ export default {
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
-    'Vip Report': 'Vip Report'
+    'Vip Report': 'Vip Report',
+    'System Value Rules': 'System Value Rules'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
