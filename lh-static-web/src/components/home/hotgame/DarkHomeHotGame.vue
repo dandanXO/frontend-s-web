@@ -917,7 +917,7 @@ const tabPosition = ref('left')
 
     .hotgame-tabs-wrapper {
       background: url("../../../assets/home/hotgame/hotgame-bg2.png") no-repeat center center;
-      background-size: auto;
+      background-size: 100% 100%;
       aspect-ratio: 1960 / 1000;
       position: relative;
       display: flex;
@@ -1187,34 +1187,33 @@ const tabPosition = ref('left')
               height: auto;
   
               &.character-fishing-pmfish {
-                margin-bottom: 3%;
-                height: auto;
-                width: 100%;
+                margin-bottom: 7%;
+                width: 90%;
               }
 
               &.character-esports-tfgaming {
-                margin-top: 0%;
-              }
-
-              &.character-sports-im {
-                width: 98%;
-                margin-bottom: 3%;
-              }
-
-              &.character-casino-ag {
-                margin-bottom: 3%;
+                margin-top: -2%;
                 width: 97%;
               }
 
+              &.character-sports-im {
+                margin-bottom: 7%;
+                width: 94%;
+              }
+
+              &.character-casino-ag {
+                margin-bottom: 7%;
+                width: 90%;;
+              }
+
               &.character-slots-pt {
-                margin-bottom: 4%;
-                width: 98%;
+                margin-bottom: 7%;
+                width: 89%;
               }
 
               &.character-board-leg {
-                margin-bottom: 5%;
-                height: 100%;
-                width: auto;
+                margin-bottom: 7%;
+                width: 89%;
               }
             }
           }
