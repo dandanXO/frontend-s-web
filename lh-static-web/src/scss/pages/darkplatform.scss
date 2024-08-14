@@ -208,7 +208,7 @@
             height: 4rem;
             padding: 1.30rem;
             border-radius: 0.3145rem;
-            background: url("../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+            background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
             background-size: 100% 100%;
               display: flex;
               justify-content: center;
@@ -754,6 +754,13 @@
   
           .platform-list-box {
             .platform-list-item {
+              .list-item-txt {
+                color: #fff;
+                font-family: 'Ping Fang SC';
+                font-weight: 400;
+                // color: $active-color-dark;
+              }
+
               &.active,
               &:hover {
                 .list-item-btn {
@@ -763,11 +770,17 @@
                   height: 4rem;
                   padding: 1.30rem;
                   border-radius: 0.3145rem;
-                  background: url("../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                  background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
                   background-size: 100% 100%;
                 }
                 .list-item-txt {
-                  color: $active-color-dark;
+                  // color: $active-color-dark;
+                }
+              }
+              &:hover {
+                .list-item-btn {
+                  background: url("../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                  background-size: 100% 100%;
                 }
               }
               .list-item-btn {
