@@ -727,6 +727,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 // import { isKorea, isThai } from '@/utils/site'
+import { isThai } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
