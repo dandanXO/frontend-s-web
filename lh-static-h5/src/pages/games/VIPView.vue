@@ -19,7 +19,7 @@
               <div class="description">
                 累积存款:
                 <span>
-                  {{ formatNumber(vip.upgrade) }}
+                  {{ vip.upgrade }}
                 </span>
               </div>
               <div class="viplevel">
