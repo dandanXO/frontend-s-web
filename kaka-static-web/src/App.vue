@@ -19,6 +19,7 @@ import en from "element-plus/dist/locale/en.mjs";
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { uiStore } from "@/store/ui";
 export default defineComponent({
   components: {
     ElConfigProvider
@@ -29,6 +30,7 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
     const store = userStore();
+    const ui = uiStore();
     const onlineStatInterval = ref();
 
     const checkSID = () => {

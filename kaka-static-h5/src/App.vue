@@ -7,9 +7,9 @@ import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
-// import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
+import { useRouter } from "vue-router";
 import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
@@ -27,6 +27,7 @@ export default defineComponent({
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
 
+    const router = useRouter();
     let csclient;
     let CSAUrl;
 
@@ -184,46 +185,6 @@ export default defineComponent({
           CSAUrl = "csweb01.c8nhwrqx4.com";
         });
     };
-
-    // const initCsWeb = () => {
-    //   var regDevice = store.getDeviceType();
-    //   // console.log("Footer OnMounted");
-    //
-    //   // 'XFCS' / 2
-    //   // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-    //   csclient = new CsClient(4, regDevice, "vn", "2", "prod", `https://${CSAUrl}`);
-    //
-    //   csclient.set("bottom", "77");
-    //   csclient.set("pageurl", "/liveChat");
-    //   csclient.set("btnid", "cs-web-id");
-    //   csclient.set("openanimation", false);
-    //
-    //   csclient.set("notification-type", {
-    //     type: "none"
-    //   });
-    //
-    //   if (store.token) {
-    //     csclient.set("token", store.token);
-    //   }
-    //
-    //   //客服初始化。
-    //   csclient.init();
-    //
-    //   csclient.receiveListener("message", function (callback) {
-    //     //收到新消息。
-    //     // alert(callback);
-    //   });
-    //
-    //   //CsClient Event Listener.
-    //   window.addEventListener("message", function (event) {
-    //     // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-    //     if (_.isString(event.data)) {
-    //       // if (event.data == 'sess_timeout') {
-    //       //   router.push({ path: "/" });
-    //       // }
-    //     }
-    //   });
-    // };
 
     const checkSID = async () => {
       const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());

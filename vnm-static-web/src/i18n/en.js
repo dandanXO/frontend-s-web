@@ -769,7 +769,12 @@ export default {
     customerService: "24/7 Customer Service",
     currentlyMaintaining: "Maintenance in progress",
     maintainenceTime: "Maintenance Time",
-    otherPlatFirst: "Kindly go to other platforms for entertainment"
+    otherPlatFirst: "Kindly go to other platforms for entertainment",
+    maintenance_title: "The system is maintenance...",
+    maintenance_from: "Starting from ",
+    maintenance_to: "to ",
+    maintenance_desc_01: "All services and games will be suspended during the above period, ",
+    maintenance_desc_02: "sincerely sorry for this inconvenience!"
   },
   welcome: {
     compatibleDevices: "Perfectly Compatible with Secure Devices",

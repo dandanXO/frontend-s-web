@@ -79,7 +79,7 @@ const ui = useUI();
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../assets/images/maintenance/main-bg.jpg");
+  //background-image: url("../assets/images/maintenance/main-bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
@@ -123,7 +123,6 @@ const ui = useUI();
 
   .maintenance-title {
     margin-top: 10px;
-    font-family: PingFang SC;
     color: #4c88f8;
     font-size: 30px;
     font-weight: 600;
@@ -131,8 +130,7 @@ const ui = useUI();
 
   .maintenance-desc {
     margin-top: 10px;
-    font-family: PingFang SC;
-    color: #858585;
+    color: #cdcdcd;
     font-size: 18px;
     line-height: 1.6;
     font-weight: 500;

@@ -762,7 +762,11 @@ export default {
     customerService: "Hỗ trợ trực tuyến 24/7",
     currentlyMaintaining: "Đang bảo trì",
     maintainenceTime: "Thời gian bảo trì",
-    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé"
+    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé",
+    maintenance_from: "Bắt đầu từ ",
+    maintenance_to: "đến ",
+    maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
+    maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!"
   },
   welcome: {
     compatibleDevices: "Hoàn toàn tương thích với các thiết bị an toàn",
