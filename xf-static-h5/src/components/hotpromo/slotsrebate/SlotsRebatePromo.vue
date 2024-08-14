@@ -73,7 +73,7 @@
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 范例</span>
-          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金288元。</span>
+          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金158元。</span>
         </div>
       </div>
       <div class="match-game-bottom-rule">
@@ -147,8 +147,8 @@ const promoCode = ref(props.promoCode);
 const getMatchData = async () => {
   const res = await getMatchAndPrizeInfo('profit');
   if (res.code === 0) {
-    bonus.value = res.data.profitAmount;
-    totalValidBet.value = res.data.expectedBonus;
+    bonus.value = res.data.expectedBonus;
+    totalValidBet.value =  res.data.profitAmount;
   }
 };
 
