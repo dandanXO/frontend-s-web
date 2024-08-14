@@ -206,7 +206,7 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
+      <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">Eg. Deposit ₦1,000, require ₦10,000 wager</div>
       </div>
