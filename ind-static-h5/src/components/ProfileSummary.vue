@@ -47,15 +47,20 @@
           <template v-else>
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  <span style="font-family: 'Times New Roman', Times, serif">
-                    {{ store.currency.value }}
+                <div class="balance-amount-wrapper">
+                  <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                    <span style="font-family: 'Times New Roman', Times, serif">
+                      {{ store.currency.value }}
+                    </span>
+                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                   </span>
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
-                </span>
-                <div class="btn-refresh">
-                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                  <span class="balance-amount-converted">
+                    ≈ {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(store.balance, false)} USDT` }}
+                  </span>
                 </div>
+                <!-- <div class="btn-refresh">
+                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                </div> -->
               </div>
             </div>
           </template>
@@ -68,7 +73,7 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="none" class="profile-dropdown">
           <template v-slot:label>
             <div class="profile-pic">
               <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
@@ -138,6 +143,32 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
+
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="wallet-toggle-dropdown" unelevated>
+          <template v-slot:label>
+            <div class="wallet-toggle">
+              <img :src="walletTypeImg" />
+            </div>
+          </template>
+          <q-list class="wallet-toggle-list">
+            <q-item clickable v-close-popup :class="walletType === 'IND' && 'active'" @click="selectWallet('IND')">
+              <q-item-section avatar>
+                <img src="../assets/images/index/wallet-icon-ind.png" width="30px" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>IND</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup :class="walletType === 'USDT' && 'active'" @click="selectWallet('USDT')">
+              <q-item-section avatar>
+                <img src="../assets/images/index/wallet-icon-usdt.png" width="30px" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>USDT</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps @click="goLogin()">Login</q-btn>
@@ -149,7 +180,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
@@ -161,7 +192,14 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 
-// const balance = ref(19999999);
+const walletType = ref(SessionStorage.getItem("WALLET_TYPE") || "IND");
+const walletTypeImg = computed(() => {
+  return require(`../assets/images/index/wallet-icon-${walletType.value.toLowerCase()}.png`);
+});
+const selectWallet = (type) => {
+  walletType.value = type;
+  SessionStorage.setItem("WALLET_TYPE", type);
+};
 
 const profileImg = [
   {
@@ -408,6 +446,9 @@ onMounted(() => {
 
   .profile-dropdown {
     margin-top: 15px;
+    width: 50px;
+    max-width: 50px;
+    margin-left: 10px;
   }
   .profile-wrapper {
     display: flex;
@@ -497,9 +538,9 @@ onMounted(() => {
       padding-bottom: 2px;
       min-width: 130px;
       width: 100%;
-      height: 28px;
-      padding-left: 12px;
-      padding-right: 8px;
+      height: 35px;
+      padding-left: 6px;
+      padding-right: 6px;
 
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
@@ -509,9 +550,20 @@ onMounted(() => {
         filter: brightness(0.75);
       }
 
+      .balance-amount-wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+
       .balance-amount {
         padding-right: 18px;
         white-space: nowrap;
+        font-size: 12px;
+      }
+
+      .balance-amount-converted {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.5);
       }
     }
 
@@ -668,5 +720,34 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.wallet-toggle-dropdown {
+  max-width: 60px;
+  border: 1px solid #2c323b;
+  border-radius: 32px;
+  margin-left: -10px;
+
+  .wallet-toggle {
+    margin-left: 8px;
+    margin-right: 12px;
+    img {
+      display: block;
+      width: 30px;
+    }
+  }
+
+  .q-btn-dropdown__arrow {
+    margin-right: 6px;
+    // margin-left: -10px;
+  }
+}
+
+.wallet-toggle-list {
+  background: #1f2228;
+
+  .q-item.active {
+    background: #585e63;
+  }
 }
 </style>

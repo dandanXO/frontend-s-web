@@ -41,15 +41,21 @@
           <template v-else>
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  <span style="font-family: 'Times New Roman', Times, serif">
-                    {{ store.currency.value }}
+                <div class="balance-amount-wrapper">
+                  <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                    <span style="font-family: 'Times New Roman', Times, serif">
+                      {{ store.currency.value }}
+                    </span>
+                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                   </span>
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
-                </span>
-                <div class="btn-refresh">
-                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                  <span class="balance-amount-converted">
+                    ≈ {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(store.balance, false)} USDT` }}
+                  </span>
                 </div>
+
+                <!-- <div class="btn-refresh">
+                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                </div> -->
               </div>
             </div>
           </template>
@@ -551,8 +557,8 @@ onMounted(() => {
       min-width: 130px;
       width: 100%;
       height: 35px;
-      padding-left: 12px;
-      padding-right: 8px;
+      padding-left: 6px;
+      padding-right: 6px;
 
       font-size: 14px;
       color: #fff;
@@ -563,9 +569,21 @@ onMounted(() => {
         filter: brightness(0.75);
       }
 
+      .balance-amount-wrapper {
+        display: flex;
+        flex-direction: column;
+        // gap: 8px;
+      }
+
       .balance-amount {
         padding-right: 18px;
         white-space: nowrap;
+        font-size: 12px;
+      }
+
+      .balance-amount-converted {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.5);
       }
     }
 
