@@ -646,6 +646,9 @@ export default {
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",
-    51002: "The reward has already been claimed by another account"
+    51002: "The reward has already been claimed by another account",
+    54000: "The collection time has not yet arrived.",
+    54001: "The user has not bound a withdrawal account.",
+    54002: "The user's bank card is already bound to another account."
   }
 };
