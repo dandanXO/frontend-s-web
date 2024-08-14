@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日真人棋牌场馆投注：
+              今日真人棋牌场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -21,7 +21,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日可领彩金：
+              可领彩金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">永久</div>
+          <div class="right">8月14日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
@@ -92,7 +92,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
               <span>示例</span>
             </div>
-            8 月 08 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A
+            8 月 14 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A
             在次日活动页面可点击领取 58 元彩金；
           </div>
         </div>
@@ -139,7 +139,7 @@ const props = defineProps({
   promoCode: {
     type: String,
     required: true
-  },
+  }
 });
 
 const totalValidBet = ref(0);
@@ -161,7 +161,7 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   try {
-    const res = await getLivePoker()
+    const res = await getLivePoker();
     totalValidBet.value = res.data.totalValidBet;
     bonus.value = res.data.bonus;
   } catch (error) {

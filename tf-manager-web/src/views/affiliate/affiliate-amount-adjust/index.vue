@@ -841,6 +841,15 @@ async function loadAffiliateAmountAdjust() {
   page.numberOfReimbursement = 0
   page.numberOfDeduction = 0
   const query = checkQuery()
+  if (!hasPermission(['sys:affiliate:amount:adjust:search'])) {
+    if (query.loginName === undefined || query.loginName === "") {
+      page.pages = 0
+      page.records = []
+      page.total = 0
+      page.loading = false
+      return;
+    }
+  }
   const { data: ret } = await getAffiliateAmountAdjust(query)
   page.pages = ret.pages
   page.records = ret.records

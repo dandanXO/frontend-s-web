@@ -21,7 +21,7 @@
               />
             </div>
             <div class="reward-info-content">
-              今日真人棋牌场馆投注：
+              今日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -51,55 +51,63 @@
       </div>
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
-        <div class="little-title">
-          <div class="left">活动平台</div>
-          <div class="right">真人场馆、棋牌场馆</div>
-        </div>
-        <div class="little-title">
-          <div class="left">活动时间</div>
-          <div class="right">8月14日起</div>
-        </div>
+        <!--        <div class="little-title">-->
+        <!--          <div class="left">活动平台</div>-->
+        <!--          <div class="right">真人场馆、棋牌场馆</div>-->
+        <!--        </div>-->
+        <!--        <div class="little-title">-->
+        <!--          <div class="left">活动时间</div>-->
+        <!--          <div class="right">永久</div>-->
+        <!--        </div>-->
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，统计当日真人视讯与棋牌场馆游戏总有效投注≥1,500 元或以上，次日 00:00 起，即可在本活动页面点击
-            [点击领取] 按钮领取彩金，彩金秒到账！！
+            活动期间，用户每日在体育场馆投注"五大联赛"累计有效投注≥1,000
+            元，即可在次日24小时内点击活动页面的【点击领取】按钮领取对应彩金。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
-            <th>当日真人与棋牌有效投注</th>
-            <th>彩金上限</th>
-            <th>流水要求</th>
+            <th>当日有效总流水</th>
+            <th>奖金</th>
+            <th>奖金流水</th>
           </tr>
           <tr>
-            <td>≥1,500</td>
+            <td>≥1,000</td>
+            <td>8</td>
+            <td rowspan="9">3倍流水/限体育场馆</td>
+          </tr>
+          <tr>
+            <td>≥3,000</td>
             <td>18</td>
-            <td rowspan="7">12 倍</td>
           </tr>
           <tr>
-            <td>≥6,000</td>
-            <td>58</td>
+            <td>≥5,000</td>
+            <td>38</td>
           </tr>
           <tr>
-            <td>≥15,000</td>
-            <td>88</td>
+            <td>≥10,000</td>
+            <td>68</td>
           </tr>
           <tr>
-            <td>≥60,000</td>
-            <td>288</td>
+            <td>≥20,000</td>
+            <td>168</td>
           </tr>
           <tr>
-            <td>≥150,000</td>
-            <td>588</td>
+            <td>50,000</td>
+            <td>388</td>
           </tr>
           <tr>
-            <td>≥600,000</td>
-            <td>1,188</td>
+            <td>100,000</td>
+            <td>888</td>
           </tr>
           <tr>
-            <td>≥1,500,000</td>
-            <td>2,388</td>
+            <td>200,000</td>
+            <td>1,888</td>
+          </tr>
+          <tr>
+            <td>200,000</td>
+            <td>2,888</td>
           </tr>
         </table>
 
@@ -113,8 +121,7 @@
               />
               <span>示例</span>
             </div>
-            8 月 08 日会员 A 在 AG 真人场馆有效投注 1,000 元，在乐游棋牌有效投注 5,000 元，会员 A
-            在次日活动页面可点击领取 58 元彩金；
+            会员A在8月17日有效投注为1,000，在8月18日00:00-23:59期间，即可在此活动页面点击“领取奖金”；
           </div>
         </div>
       </div>
@@ -124,26 +131,29 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，真人全部场馆与棋牌全部场馆当日总有效投注≥1,500 元或以上即可符合条件，其他场馆有效投注不计算；
+            活动期间，每位会员每日仅限领取一次投注奖金，次日 00:00-23-59 期间领取奖金，逾期视为自动放弃，不予补偿；
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，符合条件的会员需在次日前往本活动活动页面点击【点击领取】按钮即可获得彩金，彩金需 12
-            倍流水即可提款；
+            流水仅计算当日在体育场馆内投注的“五大联赛相关赛事盘口"且结算的注单，注单未结算、取消或走盘皆不及不计算为有效投注；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            真人视讯中产生以下投注不计算，对冲或对打不计，无风险不计；无风险投注包括在百家乐同时投注庄家、闲家；轮盘超过
-            24 个号码以上，或者同时投注大小、单双、红黑，任何取消注单或局数不计；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            同一手机号、姓名、邮箱地址、银行卡号、IP
-            地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理；
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            为避免文字理解差异，本站保留本活动最终解释权；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
+          </div>
+          <div class="item">
+            <div class="item-num">5</div>
+            为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -153,21 +163,23 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { getLivePoker, claimLivePokerBonus } from "../../../api/index/promo";
+import { footballHistroy, claimBonusItem2 } from "../../../api/index/promo";
+// import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
+
 const $q = useQuasar();
-const props = defineProps({
-  promoCode: {
-    type: String,
-    required: true
-  }
-});
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
+
+// const notify = useNotify();
+const store = userStore();
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
 
 const handleClaimBonus = () => {
-  claimLivePokerBonus(props.promoCode)
+  claimBonusItem2(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         fetchData();
@@ -175,7 +187,7 @@ const handleClaimBonus = () => {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "res.message",
+          message: res.message,
           icon: "report_problem"
         });
       }
@@ -187,8 +199,8 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   try {
-    const res = await getLivePoker();
-    totalValidBet.value = res.data.totalValidBet;
+    const res = await footballHistroy();
+    totalValidBet.value = res.data.lastDayBet;
     bonus.value = res.data.bonus;
   } catch (error) {
     console.log(error);
@@ -196,6 +208,9 @@ const fetchData = async () => {
 };
 
 onMounted(() => {
+  if (!store.token) {
+    return;
+  }
   fetchData();
 });
 </script>
@@ -208,6 +223,7 @@ onMounted(() => {
 
 .livepoker-rebate-container {
   width: 100%;
+  height: 100%;
   max-width: 1200px;
   display: flex;
   flex-direction: column;
@@ -312,7 +328,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
-    height: 40px;
+    height: 26px;
     margin: 0 auto 20px;
   }
   .little-title {

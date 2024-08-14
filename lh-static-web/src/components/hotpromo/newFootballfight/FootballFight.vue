@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              昨日体育场馆投注：
+              今日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -46,7 +46,7 @@
           <div class="left">活动内容</div>
           <div class="right">
             活动期间，用户每日在体育场馆投注"五大联赛"累计有效投注≥1,000
-            元，即可在次日点击活动页面【点击领取】按钮领取对应彩金。
+            元，即可在次日24小时内点击活动页面的【点击领取】按钮领取对应彩金。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -100,7 +100,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
               <span>示例</span>
             </div>
-            会员A在17号有效投注为1,000，在18号00:00-23:59期间，即可在此活动页面点击“领取奖金”；
+            会员A在8月17日有效投注为1,000，在8月18日00:00-23:59期间，即可在此活动页面点击“领取奖金”；
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            每位会员每日仅限领取一次投注奖金，次日 00:00-23-59 期间领取奖金，逾期视为自动放弃，不予补偿；
+            活动期间，每位会员每日仅限领取一次投注奖金，次日 00:00-23-59 期间领取奖金，逾期视为自动放弃，不予补偿；
           </div>
           <div class="item">
             <div class="item-num">2</div>
