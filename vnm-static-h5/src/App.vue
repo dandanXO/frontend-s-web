@@ -247,7 +247,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: process.env.SITE
+            siteCode: "vnm"
           })
         );
       }

@@ -14,9 +14,9 @@ import { uiStore } from "./store/ui";
 
 export default defineComponent({
   setup() {
-    const router = useRouter()
+    const router = useRouter();
     const store = userStore();
-    const ui = uiStore()
+    const ui = uiStore();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -49,7 +49,7 @@ export default defineComponent({
         const params = {
           way: way,
           sid: sidParam,
-          siteCode: process.env.VUE_APP_SITE
+          siteCode: "dy2"
         };
 
         submitMemberStats(params);
@@ -71,7 +71,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkSID();
-      checkServerStatus()
+      checkServerStatus();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

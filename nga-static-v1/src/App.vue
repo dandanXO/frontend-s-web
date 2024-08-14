@@ -256,7 +256,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: theSid,
-            siteCode: process.env.SITE
+            siteCode: "NGA"
           }
         });
       }

@@ -255,7 +255,7 @@ export default defineComponent({
         const res = await api.post("/memberStatistics/submit", qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: process.env.SITE
+            siteCode: "ind"
         }));
       }
     };
