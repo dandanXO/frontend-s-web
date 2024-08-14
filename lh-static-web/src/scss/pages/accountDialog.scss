@@ -54,6 +54,8 @@
   .light-bg {
     background-color: $background-content-block-lighter-dark;
     box-shadow: none;
+    border: 1px solid rgba(217, 217, 217, 0.3);
+    font-family: 'PingFang SC';
   }
 
   .font-gray {

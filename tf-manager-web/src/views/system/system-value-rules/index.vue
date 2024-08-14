@@ -98,7 +98,6 @@
             />
           </el-select>
         </el-form-item>
-        {{ uiControl.showParamFormat }}
         <el-form-item :label="t('fields.param')" prop="value">
           <el-switch
             v-if="form.type !== null && form.type !== 'INPUT' && form.type !== 'SWITCH'"
@@ -402,6 +401,7 @@ function showDialog(type) {
       rulesForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.addSystemValueRules')
+    form.id = null
     form.type = "INPUT"
     form.value = ""
     uiControl.showParamFormat = 'input'
@@ -449,6 +449,7 @@ function showEdit(rule) {
         )
       }
     }
+    console.log(form.value)
     handleValueTypeChange()
   })
 }
@@ -535,8 +536,6 @@ function constructParam() {
 function handleValueTypeChange() {
   if (form.type !== "INPUT" && form.type !== "SWITCH" && !switchType.value) {
     uiControl.showParamFormat = 'key-value'
-    param.value = []
-    addParam()
   } else if (form.type !== "INPUT" && form.type !== "SWITCH" && switchType.value) {
     uiControl.showParamFormat = 'json'
   } else {

@@ -887,6 +887,7 @@ export default defineComponent({
   .card {
     @include content-block-dark;
     color: $font-3-dark;
+    background-color: #17223e;
   }
 
   .menu-title-container {
@@ -898,12 +899,24 @@ export default defineComponent({
   .account-container {
     .account-content-wrapper {
       .step-item {
-        background: $active-color-dark-linear;
+        background: linear-gradient(90deg, #344468 0%, #1A2338 100%);
+        border: 1px solid #78abdb;
       }
       .withdraw-type-item {
         border: unset;
         box-shadow: unset;
         background-color: $background-content-block-lighter-dark;
+        border: 2px solid transparent;
+
+        &.active {
+          border: 2px solid #a98f7c;
+
+          &:before {
+            width: 25px;
+            height: 25px;
+            background-image: url("../../assets/svg/checkmark-dark.svg");
+          }
+        }
       }
     }
   }

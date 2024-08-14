@@ -392,8 +392,20 @@ export default defineComponent({
 .dark {
   .share-container {
     @include content-block-dark;
+    background: #17223E;
+
+    .share-info-box {
+      background: url(../../assets/images/account/share-info-box.png) no-repeat center center;
+      background-size: 155px 85px;
+    }
 
     .share-content {
+      .form-field {
+        &.qr-bg {
+          background: url(../../assets/images/account/qrbg-dark.png) no-repeat center center;
+          background-size: 438px 484px;
+        }
+      }
       .desc {
         .form-field {
           .label {
@@ -428,6 +440,14 @@ export default defineComponent({
         }
       }
     }
+  }
+
+  .copy-btn {
+    background: url('../../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background-size: auto;
+    box-shadow: none;
+    border-radius: 8px;
+    padding: 12px 20px;
   }
 }
 </style>

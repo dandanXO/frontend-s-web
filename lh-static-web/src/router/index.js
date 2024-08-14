@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LayoutView from "@/views/layouts/MainLayout.vue";
-import HomeView from "../views/HomeView.vue";
-import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
+import HomeView from "../views/home/index.vue";
+import PersonalLayoutView from "@/views/layouts/personallayout/index.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";
@@ -11,7 +11,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/LoginView.vue")
+    component: () => import(/* webpackChunkName: "Login" */ "../views/layouts/loginview/index")
   },
   {
     path: "/register",
@@ -87,12 +87,12 @@ const routes = [
       {
         path: "/agent",
         name: "agent",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/AgentView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/agentview/index.vue")
       },
       {
         path: "/promotion",
         name: "promotion",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/PromotionView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/promotion/index.vue")
       },
       {
         path: "/app",
@@ -149,7 +149,7 @@ const routes = [
       {
         path: "/affiliate",
         name: "affiliate",
-        component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView.vue")
+        component: () => import(/* webpackChunkName: "affiliate" */ "../views/agentview/index.vue")
       },
       {
         path: "/app-tutorial",
