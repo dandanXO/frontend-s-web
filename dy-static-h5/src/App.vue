@@ -13,12 +13,14 @@ import { useRouter } from "vue-router";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   name: "App",
   setup() {
     var qs = require("qs");
     var router = useRouter();
+    const ui = useUI();
     const store = userStore();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
@@ -132,7 +134,21 @@ export default defineComponent({
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
+      checkServerStatus();
       checkSID();
       // initCsWeb();
       getCSA();

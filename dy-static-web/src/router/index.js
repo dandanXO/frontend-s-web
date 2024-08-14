@@ -89,11 +89,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/VIPView.vue")
       },
       {
-        path: "/maintenance",
-        name: "maintenance",
-        component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
-      },
-      {
         path: "/refer/:referralCode",
         name: "referCode",
         component: () => {}
@@ -131,6 +126,11 @@ const routes = [
       //   component: () => import(/* webpackChunkName: "depositLoading" */ "../components/TestIframe.vue")
       // },
     ]
+  },
+  {
+    path: "/maintenance",
+    name: "maintenance",
+    component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
   },
   {
     path: "/:catchAll(.*)*",
