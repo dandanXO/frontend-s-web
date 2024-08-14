@@ -41,33 +41,43 @@
         </div>
         <table class="match-game-info-table">
           <tr>
+            <th>当日存款</th>
             <th>当日电子负盈利</th>
             <th>救援金</th>
             <th>流水倍数</th>
           </tr>
           <tr>
-            <td>≥3,000</td>
-            <td>38元</td>
+            <td rowspan="8">≥100元</td>
+            <td>≥500</td>
+            <td>8元</td>
             <td rowspan="8">8倍</td>
           </tr>
           <tr>
-            <td>≥8,000</td>
+            <td>≥1,500</td>
+            <td>18元</td>
+          </tr>
+          <tr>
+            <td>≥5,000</td>
+            <td>38元</td>
+          </tr>
+          <tr>
+            <td>≥10,000</td>
             <td>88元</td>
           </tr>
           <tr>
             <td>≥20,000</td>
-            <td>128元</td>
+            <td>108元</td>
           </tr>
           <tr>
             <td>≥50,000</td>
-            <td>158元</td>
+            <td>288元</td>
           </tr>
           <tr>
-            <td>≥200,000</td>
-            <td>388元</td>
+            <td>≥100,000</td>
+            <td>588元</td>
           </tr>
           <tr>
-            <td>≥1,000,000</td>
+            <td>≥500,000</td>
             <td>888元</td>
           </tr>
         </table>
