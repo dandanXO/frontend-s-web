@@ -21,8 +21,6 @@
             <p class="small-size">请先前往其他场馆娱乐</p>
           </div>
   
-          <div class="platform-menu-title" v-html="item.cnname" />
-          <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
           <div class="platform-menu-img">
             <img
               :src="
@@ -38,7 +36,11 @@
               "
             />
           </div>
-          <div class="platform-menu-btn"><a>进入场馆</a></div>
+          <div style="display:flex;flex-direction:column;">
+            <div class="platform-menu-title" v-html="item.cnname" />
+            <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
+            <div class="platform-menu-btn"><a>进入场馆</a></div>
+          </div>
         </div>
         <!--      </router-link>-->
       </template>

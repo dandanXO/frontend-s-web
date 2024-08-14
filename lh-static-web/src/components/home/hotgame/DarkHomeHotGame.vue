@@ -983,7 +983,7 @@ const tabPosition = ref('left')
           .left-container {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.3rem;
             position: relative;
             align-items: center;
             margin-top: 52%;
@@ -1078,12 +1078,12 @@ const tabPosition = ref('left')
                 width: 3.25rem;
   
                 .game-provider-img {
-                  width: 4rem;
-                  height: 4rem;
-                  padding: 1.30rem;
+                  width: 6rem;
+                  height: 5rem;
+                  padding: 0 2rem;
                   border-radius: 0.3145rem;
                   background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
-                  background-size: 100% 100%;
+                  background-size: cover;
                   object-fit: contain;
   
                   &.active {
@@ -1120,7 +1120,7 @@ const tabPosition = ref('left')
                     // background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
                     // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                     background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
-                    background-size: 100% 100%;
+                    background-size: cover;
                   }
                 }
               }
@@ -1357,7 +1357,7 @@ const tabPosition = ref('left')
           .left-container {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.3rem;
             position: relative;
             align-items: center;
             margin-top: 25%;
@@ -1473,9 +1473,8 @@ const tabPosition = ref('left')
                 width: 3.25rem;
   
                 .game-provider-img {
-                  width: 4rem;
-                  height: 4rem;
-                  padding: 0.8rem;
+                  width: 6rem;
+                  height: 5rem;
                   border-radius: 0.3145rem;
                   background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
                   background-size: 100% 100%;

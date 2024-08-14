@@ -1777,7 +1777,7 @@
             width: 100%;
   
             > div {
-              max-width: $maxwidth;
+              max-width: 100%;
               margin: 0 auto;
             }
           }
