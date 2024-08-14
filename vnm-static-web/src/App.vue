@@ -68,16 +68,11 @@ export default defineComponent({
       }
     };
 
-    const checkEdition = () => {
-      // TODO: check edition here
-    };
-
     onMounted(() => {
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
-      checkEdition();
     });
 
     onUnmounted(() => {

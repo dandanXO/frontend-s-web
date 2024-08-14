@@ -861,6 +861,7 @@ import { hasPermission } from '../../../utils/util'
 import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
+import { isPak } from '@/utils/site'
 
 const { t } = useI18n()
 const activeTabName = ref(null)
@@ -1322,7 +1323,7 @@ async function changeToNewUI() {
 }
 
 async function handleChangeSite() {
-  if (request.siteId === 11) {
+  if (isPak(request.siteId)) {
     uiControl.withdraw1Title = t('fields.withdrawChannel') + ' (EASYPAISA)'
     uiControl.withdraw2Title = t('fields.withdrawChannel') + ' (JAZZCASH)'
     form.paymentId1 = 0

@@ -106,7 +106,8 @@
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
               selectedPromo?.promoCode === 'lh1-olympic-checkin' ||
-              selectedPromo?.promoCode === 'lh1-football'
+              selectedPromo?.promoCode === 'lh1-football' ||
+              selectedPromo?.redirectUrl === 'lh1-livepoker-rebate'
                 ? '#E7F1FD'
                 : selectedPromo?.promoCode === 'lh-sport-zhongchao'
                 ? '#F5F6F8'
@@ -122,6 +123,7 @@
                 : ''
           }"
           :class="{
+            'livepoker-rebate-bg': selectedPromo?.redirectUrl === 'lh1-livepoker-rebate',
             fullwidth:
               selectedPromo.promoCode === 'lh1-game-steps' ||
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
@@ -829,6 +831,7 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+        background-color: #e7f1fd;
 
         &.bgautosize {
           background-size: 100% auto;
@@ -924,6 +927,12 @@ export default defineComponent({
             margin: 30px auto 50px;
             text-align: center;
           }
+        }
+
+        &.livepoker-rebate-bg {
+          background-image: url("../assets/promo/lh-livepoker-rebate/content-bg.png");
+          background-size: contain;
+          background-position: bottom center;
         }
       }
     }

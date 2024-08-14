@@ -473,6 +473,9 @@ export default {
     hong_congrats: "Congratulations",
     claim: "Claim",
 
+    //promo -- newPlayer
+    new_player_successfully: "Claimed successfully",
+
     // slot
     slot_search: "Search for games",
 
@@ -1530,6 +1533,7 @@ export default {
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
     14010: "Network IP or SID duplicate",
+    14014: "The phone number format is incorrect.",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",
@@ -1566,6 +1570,7 @@ export default {
     30007: "Member deposit does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
     30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

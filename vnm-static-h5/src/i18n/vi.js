@@ -479,6 +479,10 @@ export default {
     // promo -- upgradeHongbao
     hong_congrats: "Chúc mừng",
     claim: "Nhận",
+
+    //promo -- newPlayer
+    new_player_successfully: "Đã yêu cầu thành công",
+
     // slot
     slot_search: "Tìm kiếm trò chơi",
 
@@ -1530,6 +1534,7 @@ export default {
     1403: "Lỗi xác minh OTP",
     1404: "Gửi mã OTP thất bại",
     14010: "IP hoặc SID trùng lặp",
+    14014: "Định dạng số điện thoại không đúng.",
     10000: "Lỗi trong số dư còn lại của người dùng",
     10001: "Lỗi trong quá trình rút tiền",
     10002: "Lỗi trong quá trình gửi tiền",
@@ -1566,6 +1571,7 @@ export default {
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",

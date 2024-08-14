@@ -109,6 +109,7 @@
       <el-table-column prop="platform" :label="t('fields.platform')" />
       <el-table-column prop="bet" :label="t('fields.bet')" />
       <el-table-column prop="payout" :label="t('fields.payout')" />
+      <el-table-column prop="ratio" :label="t('fields.return_ratio')" />
     </el-table>
     <el-pagination
       class="pagination"
@@ -118,6 +119,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+    <div class="total-info-wrapper">
+      <div class="total-info">
+        {{ $t('fields.betTotal') }} : {{ page.records.length > 0 ? totalBet.toFixed(2) : '--' }}
+      </div>
+      <div class="total-info">
+        {{ $t('fields.payoutTotal') }} : {{ page.records.length > 0 ? totalPayout.toFixed(2) : '--' }}
+      </div>
+      <div class="total-info">
+        {{ $t('fields.return_ratio_total') }} : {{ page.records.length > 0 ? totalRatio : '--' }}
+      </div>
+    </div>
     <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
                :close-on-click-modal="false" :close-on-press-escape="false"
     >
@@ -156,6 +168,8 @@ const defaultEndDate = convertDate(new Date())
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+const totalBet = ref(0)
+const totalPayout = ref(0)
 
 const uiControl = reactive({
   messageVisible: false,
@@ -190,6 +204,14 @@ const request = reactive({
   gameName: null
 })
 
+const totalRatio = computed(() => {
+  if (page.loading) {
+    return 0
+  } else {
+    return (Math.floor((totalPayout.value / totalBet.value) * 100) / 100).toFixed(2)
+  }
+})
+
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.siteId = site.value ? site.value.id : 1
@@ -201,6 +223,9 @@ async function loadVipReport() {
   page.loading = true
   const requestCopy = { ...request }
   const query = {}
+  totalBet.value = 0
+  totalPayout.value = 0
+
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
       query[key] = value
@@ -212,8 +237,18 @@ async function loadVipReport() {
     }
   }
   const { data: ret } = await getVipReport(query)
-  page.records = ret.records
+  page.records = ret.records;
   // page.columns = ret.data
+
+  page.records = page.records.map(record => {
+    totalBet.value += record.bet
+    totalPayout.value += record.payout
+
+    return {
+      ...record,
+      ratio: (Math.floor((record.payout / record.bet) * 100) / 100).toFixed(2)
+    };
+  });
 
   // const { data: ret1 } = await getTotalFinanceReport(query)
   // totalPage.records = ret1.financeReportItemVOS
@@ -336,5 +371,12 @@ onMounted(async () => {
 }
 .warning-row {
   color: #ff0000;
+}
+.total-info-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 12px;
 }
 </style>

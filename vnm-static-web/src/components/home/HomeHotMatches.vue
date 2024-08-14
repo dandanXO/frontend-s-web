@@ -40,7 +40,7 @@
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
-          <img src="../../assets/images/home/icon-hot-matches.png" />
+          <img src="../../assets/images/home/icon-hot-matches.png" alt="hot matches">
         </div>
         {{ $t("home.hotMatches") }}
       </div>
@@ -75,7 +75,7 @@
             <div class="top-match-title">{{ item.competitionName }}</div>
             <div class="team-details team-details__home">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamOneLogo" />
+                <img :src="hotMatchesImgURL + item.teamOneLogo" :alt="item.teamOneName"/>
               </div>
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" :alt="item.teamTwoName"/>
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>

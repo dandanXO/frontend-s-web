@@ -446,6 +446,7 @@ import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import draggable from 'vuedraggable'
+import { isVnm } from '@/utils/site'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -500,7 +501,7 @@ const uiControl = reactive({
 })
 
 const filterTypes = computed(() => {
-  if (form.siteId === 8) {
+  if (isVnm(form.siteId)) {
     return [
       { key: 1, displayName: '文字', value: 'TEXT' },
       { key: 2, displayName: '图片', value: 'IMG' },

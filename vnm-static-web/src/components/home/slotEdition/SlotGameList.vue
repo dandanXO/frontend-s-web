@@ -15,7 +15,7 @@
           <br />
           <span class="slot-game-platform-btn__text-description">{{ $t("home.slotEdition.description") }}</span>
         </div>
-        <img class="slot-game-platform-btn__icon" :src="getPlatformIcon(platform.code)" />
+        <img class="slot-game-platform-btn__icon" :src="getPlatformIcon(platform.code)">
       </button>
     </div>
     <div v-if="isLoading" v-loading="isLoading" class="slot-game-loading-wrapper" />
@@ -23,7 +23,7 @@
       <div class="game-slot animate__animated animate__fadeInRight" v-for="game in gameListData" :key="game.id">
         <a @click="openGame(game, selectedPlat, game.code)">
           <div class="slot-img">
-            <el-image :src="game.icon" lazy>
+            <el-image :src="game.icon" lazy :alt="game.name">
               <template #placeholder>
                 <img :src="game.default" />
               </template>
@@ -53,7 +53,7 @@
       <div class="game-slot more-game">
         <router-link :to="{ path: '/slot', query: { plat: selectedPlat } }">
           <div>
-            <img src="@/assets/images/home/slotEdition/more-game-img.png" />
+            <img src="@/assets/images/home/slotEdition/more-game-img.png" alt="more game">
           </div>
           <button>{{ $t("home.slotEdition.moreGame") }}</button>
         </router-link>

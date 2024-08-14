@@ -16,6 +16,11 @@ export function loadPromoBanner(category) {
     }
   });
 }
+
+export function loadEditionPromo(type) {
+  return server.REST.get("/main/promo/page", { params: { type } });
+}
+
 export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }

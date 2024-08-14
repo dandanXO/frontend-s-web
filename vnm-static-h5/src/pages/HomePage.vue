@@ -7,7 +7,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download TF88" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -31,7 +31,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-web.svg" />
+      <img alt="TF88 logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!isLogined">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
@@ -100,7 +100,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/home/announce-icon.png" />
+          <img src="../assets/images/home/announce-icon.png" alt="announcement" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -198,12 +198,12 @@
             </div>
             <div class="team-details team-details__home">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamOneLogo" />
+                <img :src="hotMatchesImgURL + item.teamOneLogo" :alt="item.teamOneName" />
               </div>
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
             <div class="match-details">
-              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
+              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" alt="matchup" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
                 <q-btn
@@ -222,6 +222,7 @@
                 <img
                   :src="hotMatchesImgURL + item.teamTwoLogo"
                   :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"
+                  :alt="item.teamTwoName"
                 />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
@@ -237,7 +238,7 @@
       @game-click="playGame"
       @platform-click="(code) => router.push({ path: '/slot', query: { platform: code } })"
     />
-    <SlotPromotion :promotions="promotions" />
+    <SlotPromotion />
   </template>
   <!--  <div class="details-bar">-->
   <!--    <div class="message" @click="refreshBalance">-->
@@ -376,17 +377,21 @@
   <div class="float-service" @click="toggleMenuFloat">
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
-      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <router-link to="/liveChat" class="menu-item">
+        <img src="../assets/images/home/float-cs-01.png" alt="customer service" />
+      </router-link>
+      <a href="mailto:vnsupport@tf88.com" class="menu-item">
+        <img src="../assets/images/home/float-cs-02.png" alt="vnsupport@tf88.com" />
+      </a>
       <!-- <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a> -->
       <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
-        <img src="../assets/images/home/float-cs-04.png" />
+        <img src="../assets/images/home/float-cs-04.png" alt="TF88_CS Telegram" />
       </a>
       <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a> -->
       <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
-        <img src="../assets/images/home/float-cs-06.png" />
+        <img src="../assets/images/home/float-cs-06.png" alt="TF88 VNOfficial facebook" />
       </a>
     </div>
   </div>
@@ -574,7 +579,7 @@
         <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
-            <img :src="homePopupImg" class="alert-img" />
+            <img :src="homePopupImg" class="alert-img" alt="popup" />
           </div>
         </router-link>
       </q-card-section>
@@ -1051,8 +1056,17 @@ export default defineComponent({
     };
 
     function loadData() {
+      let params = "";
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          params = "SLOT";
+          break;
+        case EDITION.NORMAL:
+        default:
+          params = "HOME";
+      }
       api
-        .get("/promo/banner?category=HOME")
+        .get("/promo/banner", { params: { category: params } })
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
@@ -1386,10 +1400,12 @@ export default defineComponent({
     };
 
     const checkEdition = () => {
-      switch (ui.edition) {
-        case EDITION.SLOT:
-          tab.value = "slot";
-          break;
+      if (route.name === "homeslot") {
+        sessionStorage.setItem("HOME_EDITION", EDITION.SLOT);
+        ui.edition = EDITION.SLOT;
+      } else if (route.name === "home") {
+        sessionStorage.setItem("HOME_EDITION", EDITION.NORMAL);
+        ui.edition = EDITION.NORMAL;
       }
     };
 
@@ -1404,6 +1420,8 @@ export default defineComponent({
       //   console.log(resp);
       // })
     });
+
+    watch(() => route.name, checkEdition);
 
     onActivated(() => {
       getPlatList();
@@ -1772,13 +1790,6 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
-    // TODO:
-    const promotions = computed(() => [
-      { img: require("../assets/images/home/slotEdition/promotion-1.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" },
-      { img: require("../assets/images/home/slotEdition/promotion-2.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" },
-      { img: require("../assets/images/home/slotEdition/promotion-3.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" }
-    ]);
-
     return {
       imageLoading,
       slide: ref(0),
@@ -1923,8 +1934,7 @@ export default defineComponent({
       promoSlide: ref(0),
       tabs,
       fullGameList,
-      EDITION,
-      promotions
+      EDITION
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2989,7 +2999,7 @@ export default defineComponent({
 
 .hot-matches-wrapper {
   width: calc(100% - 1rem);
-  margin: auto;
+  margin: 0 auto 20px;
   // margin: 20px auto 0px;
 
   .euro-countdown {
@@ -3184,14 +3194,15 @@ export default defineComponent({
   }
 
   .hot-matches-container {
-    width: 100%;
+    width: calc(100% - 2rem);
     height: 125px;
+    margin: auto;
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
       // margin-top: 10px;
       transform: scale(0.75);
-      margin-top: -10px;
+      margin-top: 10px;
     }
   }
 
@@ -3214,7 +3225,6 @@ export default defineComponent({
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 16px;
-    margin: auto;
     max-width: 450px;
     margin-top: 0px;
     padding: 8px 18px 6px;
@@ -3283,7 +3293,7 @@ export default defineComponent({
 
     .team-details {
       display: flex;
-      justify-content: center;
+      justify-content: end;
       flex-direction: column;
       align-items: center;
       gap: 3px;
@@ -3311,7 +3321,7 @@ export default defineComponent({
       .team-name {
         text-align: center;
         color: #444444;
-        min-height: 42px;
+        // min-height: 22px;
       }
     }
   }

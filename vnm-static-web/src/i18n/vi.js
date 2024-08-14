@@ -300,7 +300,9 @@ export default {
     claim: "Nhận",
 
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng"
+    record_win_prize: "Giải thưởng",
+    // vnm-newplayer-welcome
+    new_player_success: "Đã nhận thành công"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -940,6 +942,7 @@ export default {
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
     14010: "IP hoặc SID trùng lặp",
+    14014: "Định dạng số điện thoại không đúng.",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
     15204: "Số điện thoại không đúng.",
@@ -958,6 +961,7 @@ export default {
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

@@ -906,6 +906,7 @@ function showEdit(affiliate) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
+    eForm.shareRatio = JSON.parse(JSON.stringify(affiliate.shareRatio))
     for (var index = 0; index < eForm.shareRatio.length; index++) {
       eForm.shareRatio[index].value *= 100.00;
       eForm.shareRatio[index].value = parseFloat(eForm.shareRatio[index].value).toFixed(2);
@@ -920,7 +921,7 @@ async function addAffiliate() {
     if (valid) {
       if (parseInt(cForm.siteId) === 10) {
         // join share ratio by comma
-        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + (item.value/100)).join(',');
+        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + (item.value/100).toFixed(4)).join(',');
       }
       await regsterAffiliate(cForm)
       uiControl.dialogVisible = false
@@ -942,7 +943,7 @@ async function editAffiliate() {
       form.siteId = store.state.user.siteId
       if (parseInt(form.siteId) === 10) {
         // join share ratio by comma
-        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + (item.value/100)).join(',');
+        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + (item.value/100).toFixed(4)).join(',');
       }
       form.affiliateLevel = eForm.affiliateLevel
       await editAffiliateCommission(eForm.id, form)

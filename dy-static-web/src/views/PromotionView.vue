@@ -71,6 +71,7 @@
             isCSBanner:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
+              selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
@@ -116,7 +117,8 @@
               selectedPromo.promoCode === 'dy2-intel-esl' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
-            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
+            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
+            'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -190,7 +192,7 @@ export default defineComponent({
       // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
       { code: "SLOT GAME", img: "game", label: "电游活动" },
-      { code: "VIP", img: "vip", label: "VIP特权" },
+      { code: "VIP", img: "vip", label: "VIP 特权" },
       { code: "LIMITED", img: "other", label: "限时热门" },
       { code: "FTD", img: "ftd", label: "充提优惠" }
     ]);
