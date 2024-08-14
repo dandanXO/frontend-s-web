@@ -4,6 +4,6 @@ FROM $image_proxy/nginx:1.23-alpine
 WORKDIR /usr/share/nginx/html
 USER root
 
-ADD dist/spa ./
+ADD dist/pwa ./
 ADD nginx.conf /etc/nginx/nginx.conf
 

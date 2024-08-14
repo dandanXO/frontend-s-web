@@ -84,7 +84,10 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.adjustmentReasonType')" prop="reasonType">
+        <el-form-item
+          :label="t('fields.adjustmentReasonType')"
+          prop="reasonType"
+        >
           <el-select
             clearable
             v-model="form.reasonType"
@@ -102,7 +105,11 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="list.detailItems.length > 0" :label="t('fields.details')" prop="reasonItemId">
+        <el-form-item
+          v-if="list.detailItems.length > 0"
+          :label="t('fields.details')"
+          prop="reasonItemId"
+        >
           <el-select
             filterable
             v-model="form.reasonItemId"
@@ -129,9 +136,26 @@
             style="width: 490px; margin-bottom: 10px"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.rollover')" prop="rollover">
+          <el-input-number
+            clearable
+            v-model="form.rollover"
+            size="small"
+            :placeholder="t('fields.rollover')"
+            class="filter-item"
+            :min="0"
+            :max="100"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+        </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -147,7 +171,10 @@
       <el-table-column type="selection" v-if="!hasRole(['SUB_TENANT'])" />
       <el-table-column prop="reasonType" :label="t('fields.reasonType')" />
       <el-table-column prop="reason" :label="t('fields.reason')" />
-      <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:adjustment-reason:update'])">
+      <el-table-column
+        :label="t('fields.action')"
+        v-if="hasPermission(['sys:adjustment-reason:update'])"
+      >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -177,14 +204,14 @@ import { getSimplePrivilegeBySiteId } from '../../../api/privilege-info'
 import { getWithdrawPlatformsSimpleBySiteId } from '../../../api/withdraw-platform'
 import { required } from '../../../utils/validate'
 import { hasRole, hasPermission } from '../../../utils/util'
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const bankForm = ref(null)
 
 const uiControl = reactive({
@@ -205,7 +232,8 @@ const form = reactive({
   siteId: null,
   reasonType: null,
   reasonItemId: null,
-  reason: null
+  reason: null,
+  rollover: 1,
 })
 
 const formRules = reactive({
@@ -283,23 +311,26 @@ async function loadReasonTypes() {
 async function loadReasonItems() {
   switch (form.reasonType) {
     case 'BONUS':
-      await loadPrivileges();
-      break;
+      await loadPrivileges()
+      break
     case 'DEPOSIT':
-      await loadPayments();
-      break;
+      await loadPayments()
+      break
     case 'WITHDRAW':
-      await loadWithdrawPlatforms();
-      break;
+      await loadWithdrawPlatforms()
+      break
     default:
       list.detailItems = []
-      break;
+      break
   }
 }
 
 async function loadPrivileges() {
   const { data: ret } = await getSimplePrivilegeBySiteId(request.siteId)
-  list.detailItems = ret.map(item => ({ id: item.id, name: item.alias ? item.alias : item.name }))
+  list.detailItems = ret.map(item => ({
+    id: item.id,
+    name: item.alias ? item.alias : item.name,
+  }))
 }
 
 async function loadPayments() {
@@ -310,6 +341,13 @@ async function loadPayments() {
 async function loadWithdrawPlatforms() {
   const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId)
   list.detailItems = ret.map(item => ({ id: item.id, name: item.name }))
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
 }
 
 function create() {
@@ -335,14 +373,11 @@ function edit() {
 }
 
 async function removeCard(card) {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     if (card) {
       await deleteReasons([card.id])
     } else {
@@ -366,15 +401,15 @@ async function loadSite() {
   list.site = ret
 }
 
-onMounted(async() => {
+onMounted(async () => {
   await loadSite()
   await loadReasonTypes()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = list.site.find(s => s.siteName === store.state.user.siteName);
+    site.value = list.site.find(s => s.siteName === store.state.user.siteName)
   } else {
-    site.value = list.site[0];
+    site.value = list.site[0]
   }
-  request.siteId = site.value.id;
+  request.siteId = site.value.id
   await loadReasons()
 })
 </script>

@@ -614,3 +614,7 @@ button {
   //  box-shadow: $active-color-dark-shadow;
   //}
 }
+
+body .announcement-modal.el-dialog .el-dialog__body {
+  padding: 0;
+}
