@@ -32,7 +32,13 @@
             :value="item.id"
           />
         </el-select>
-        <el-input v-model="request.loginName" style="width: 200px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
+        <el-input
+          v-model="request.loginName"
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.loginName')"
+        />
         <el-select
           clearable
           v-model="request.cause"
@@ -44,9 +50,9 @@
         >
           <el-option
             v-for="item in adjustTypeList.requestList"
-            :key="item"
-            :label="item"
-            :value="item"
+            :key="item.reason"
+            :label="item.reason"
+            :value="item.reason"
           />
         </el-select>
         <el-select
@@ -70,8 +76,17 @@
           size="mini"
           type="success"
           @click="loadMemberAmountAdjust"
-        >{{ t('fields.search') }}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        >
+          {{ t('fields.search') }}
+        </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="warning"
+          @click="resetQuery()"
+        >
+          {{ t('fields.reset') }}
+        </el-button>
       </div>
       <div class="btn-group">
         <el-button
@@ -80,14 +95,18 @@
           type="primary"
           v-permission="['sys:amount:adjust:add']"
           @click="showDialog('CREATE_ADD')"
-        >{{ t('fields.add') }}</el-button>
+        >
+          {{ t('fields.add') }}
+        </el-button>
         <el-button
           icon="el-icon-minus"
           size="mini"
           type="danger"
           v-permission="['sys:amount:adjust:deduct']"
           @click="showDialog('CREATE_DEDUCT')"
-        >{{ t('fields.deduct') }}</el-button>
+        >
+          {{ t('fields.deduct') }}
+        </el-button>
         <el-button
           icon="el-icon-upload"
           size="mini"
@@ -102,7 +121,8 @@
           type="primary"
           v-permission="['sys:amount:adjust:export']"
           @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -156,12 +176,36 @@
             style="width: 350px;"
             filterable
             default-first-option
+            @change="loadFormImportSelect"
           >
             <el-option
               v-for="item in siteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.currency')"
+          v-if="
+            siteCurrencyConfig.supportMultiWallet !== null &&
+              siteCurrencyConfig.supportMultiWallet === '1'
+          "
+          prop="currency"
+        >
+          <el-select
+            v-model="importForm.currency"
+            :placeholder="t('fields.currency')"
+            style="width: 350px;"
+            filterable
+            default-first-option
+          >
+            <el-option
+              v-for="item in currencyList.currencyGroupList"
+              :key="item"
+              :label="item"
+              :value="item"
             />
           </el-select>
         </el-form-item>
@@ -174,17 +218,36 @@
             default-first-option
             required
             @focus="loadCauseBySiteId"
+            @change="handleImportCauseChange"
           >
             <el-option
               v-for="item in adjustTypeList.importFormList"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.reason"
+              :label="item.reason"
+              :value="item.reason"
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.rollover')" prop="rollover">
+          <el-input-number
+            v-model="adjustRollover.importedSelectedItem"
+            style="width: 350px;"
+            :min="0"
+            :max="100"
+            :controls="false"
+            @keypress="restrictInput($event)"
+            disabled="disabled"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
-          <el-input type="textarea" :rows="6" v-model="importForm.remark" style="width: 350px" maxlength="500" show-word-limit />
+          <el-input
+            type="textarea"
+            :rows="6"
+            v-model="importForm.remark"
+            style="width: 350px"
+            maxlength="500"
+            show-word-limit
+          />
         </el-form-item>
       </el-form>
       <el-table
@@ -200,9 +263,21 @@
         size="small"
         :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="memberId" :label="t('fields.memberId')" width="300" />
-        <el-table-column prop="loginName" :label="t('fields.loginName')" width="330" />
-        <el-table-column prop="amount" :label="t('fields.amount')" width="330" />
+        <el-table-column
+          prop="memberId"
+          :label="t('fields.memberId')"
+          width="300"
+        />
+        <el-table-column
+          prop="loginName"
+          :label="t('fields.loginName')"
+          width="330"
+        />
+        <el-table-column
+          prop="amount"
+          :label="t('fields.amount')"
+          width="330"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -258,19 +333,44 @@
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="form.loginName" style="width: 350px" />
-          <span v-if="uiControl.dialogType === 'CREATE_DEDUCT'" style="display: block">{{ t('fields.balance') }}: $ <span v-formatter="{data: uiControl.balance,type: 'money'}" /></span>
+          <span
+            v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
+            style="display: block"
+          >
+            {{ t('fields.balance') }}: $
+            <span v-formatter="{ data: uiControl.balance, type: 'money' }" />
+          </span>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.currency')"
+          v-if="
+            siteCurrencyConfig.supportMultiWallet !== null &&
+              siteCurrencyConfig.supportMultiWallet === '1'
+          "
+          prop="currency"
+        >
+          <el-select
+            v-model="form.currency"
+            :placeholder="t('fields.currency')"
+            style="width: 350px;"
+            filterable
+            default-first-option
+            @change="handleBalanceType"
+          >
+            <el-option
+              v-for="item in currencyList.currencyGroupList"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.amount')" prop="amount">
-          <el-input v-model="form.amount" style="width: 350px" maxlength="11" @keypress="restrictDecimalInput($event)" />
-        </el-form-item>
-        <el-form-item v-if="uiControl.dialogType === 'CREATE_ADD'" :label="t('fields.rollover')" prop="rollover">
-          <el-input-number
-            v-model="form.rollover"
-            style="width: 145px"
-            :min="0"
-            :max="100"
-            :controls="false"
-            @keypress="restrictInput($event)"
+          <el-input
+            v-model="form.amount"
+            style="width: 350px"
+            maxlength="11"
+            @keypress="restrictDecimalInput($event)"
           />
         </el-form-item>
         <el-form-item :label="t('fields.cause')" prop="cause">
@@ -282,28 +382,66 @@
             default-first-option
             @focus="loadCauseBySiteId"
             :disabled="!form.siteId"
+            @change="handleCauseChange"
           >
             <el-option
               v-for="item in adjustTypeList.formList"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.reason"
+              :label="item.reason"
+              :value="item.reason"
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.rollover')" prop="rollover">
+          <el-input-number
+            v-model="adjustRollover.selectedItem"
+            style="width: 145px"
+            :min="0"
+            :max="100"
+            :controls="false"
+            @keypress="restrictInput($event)"
+            disabled="disabled"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
-          <el-input type="textarea" :rows="6" v-model="form.remark" style="width: 350px" maxlength="500" show-word-limit />
+          <el-input
+            type="textarea"
+            :rows="6"
+            v-model="form.remark"
+            style="width: 350px"
+            maxlength="500"
+            show-word-limit
+          />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button v-if="uiControl.dialogType === 'CREATE_ADD'" type="primary" @click="createAdd">{{ t('fields.confirm') }}</el-button>
-          <el-button v-if="uiControl.dialogType === 'CREATE_DEDUCT'" type="primary" @click="createDeduct">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button
+            v-if="uiControl.dialogType === 'CREATE_ADD'"
+            type="primary"
+            @click="createAdd"
+          >
+            {{ t('fields.confirm') }}
+          </el-button>
+          <el-button
+            v-if="uiControl.dialogType === 'CREATE_DEDUCT'"
+            type="primary"
+            @click="createDeduct"
+          >
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -321,52 +459,85 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="site" :label="t('fields.site')" min-width="100" />
-      <el-table-column prop="loginName" :label="t('fields.loginName')" min-width="120">
-          <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-            <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
-            </router-link>
-          </template>
-        </el-table-column>
+      <el-table-column
+        prop="loginName"
+        :label="t('fields.loginName')"
+        min-width="120"
+      >
+        <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+          <router-link
+            :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`"
+          >
+            <el-link type="primary">{{ scope.row.loginName }}</el-link>
+          </router-link>
+        </template>
+      </el-table-column>
       <el-table-column prop="type" :label="t('fields.type')" min-width="180">
-		<template #default="scope">
-            <span v-if="scope.row.amount < 0">{{ t('fields.deduct') }}</span>
-			<span v-else>{{ t('fields.add') }}</span>
-          </template>
-      </el-table-column>
-      <el-table-column prop="cause" :label="t('fields.cause')" min-width="180" />
-      <el-table-column prop="amount" :label="t('fields.amount')" min-width="120">
         <template #default="scope">
-          $
-          <span
-            v-formatter="{data: scope.row.amount, type: 'money'}"
-          />
+          <span v-if="scope.row.amount < 0">{{ t('fields.deduct') }}</span>
+          <span v-else>{{ t('fields.add') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="beforeAmount" :label="t('fields.beforeAmount')" min-width="120">
+      <el-table-column
+        prop="cause"
+        :label="t('fields.cause')"
+        min-width="180"
+      />
+      <el-table-column
+        prop="currency"
+        :label="t('fields.currency')"
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="amount"
+        :label="t('fields.amount')"
+        min-width="120"
+      >
         <template #default="scope">
           $
-          <span
-            v-formatter="{data: scope.row.beforeAmount, type: 'money'}"
-          />
+          <span v-formatter="{ data: scope.row.amount, type: 'money' }" />
         </template>
       </el-table-column>
-      <el-table-column prop="afterAmount" :label="t('fields.afterAmount')" min-width="120">
+      <el-table-column
+        prop="beforeAmount"
+        :label="t('fields.beforeAmount')"
+        min-width="120"
+      >
         <template #default="scope">
           $
-          <span
-            v-formatter="{data: scope.row.afterAmount, type: 'money'}"
-          />
+          <span v-formatter="{ data: scope.row.beforeAmount, type: 'money' }" />
         </template>
       </el-table-column>
-      <el-table-column prop="remark" :label="t('fields.remark')" min-width="180">
+      <el-table-column
+        prop="afterAmount"
+        :label="t('fields.afterAmount')"
+        min-width="120"
+      >
+        <template #default="scope">
+          $
+          <span v-formatter="{ data: scope.row.afterAmount, type: 'money' }" />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="remark"
+        :label="t('fields.remark')"
+        min-width="180"
+      >
         <template #default="scope">
           <span v-if="scope.row.remark === null">-</span>
           <span v-if="scope.row.remark !== null">{{ scope.row.remark }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" min-width="150" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" min-width="150">
+      <el-table-column
+        prop="createBy"
+        :label="t('fields.createBy')"
+        min-width="150"
+      />
+      <el-table-column
+        prop="createTime"
+        :label="t('fields.createTime')"
+        min-width="150"
+      >
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <!-- eslint-disable -->
@@ -394,92 +565,114 @@
     />
     <div class="table-footer">
       <span>{{ t('fields.totalReimburseAmount') }}</span>
-      <span style="margin-left: 10px">$ </span>
-      <span v-formatter="{data: page.totalReimburse, type: 'money'}" />
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: page.totalReimburse, type: 'money' }" />
       <span style="margin-left: 20px">{{ t('fields.noOfReimbursement') }}</span>
-      <span style="margin-left: 10px"> {{ page.numberOfReimbursement }}</span>
+      <span style="margin-left: 10px">{{ page.numberOfReimbursement }}</span>
       <span style="margin-left: 20px">{{ t('fields.totalDeductAmount') }}</span>
-      <span style="margin-left: 10px">$ </span>
-      <span v-formatter="{data: page.totalDeduct, type: 'money'}" />
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: page.totalDeduct, type: 'money' }" />
       <span style="margin-left: 20px">{{ t('fields.noOfDeduction') }}</span>
-      <span style="margin-left: 10px"> {{ page.numberOfDeduction }}</span>
+      <span style="margin-left: 10px">{{ page.numberOfDeduction }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
-
-import { computed, onMounted, reactive, ref } from "vue";
-import * as XLSX from 'xlsx';
-import { required } from "../../../utils/validate";
-import { ElMessage } from "element-plus";
-import moment from 'moment';
+import { computed, onMounted, reactive, ref } from 'vue'
+import * as XLSX from 'xlsx'
+import { required } from '../../../utils/validate'
+import { ElMessage } from 'element-plus'
+import moment from 'moment'
 import {
-  createAddMemberAmountAdjust, createDeductMemberAmountAdjust, getMemberAmountAdjust, getTotalReimburseAmount,
-  getTotalDeductionAmount, getNumberOfReimburse, getNumberOfDeduct, createBatchAmountAdjust, getExport
-} from "../../../api/member-amount-adjust";
-import { getSiteListSimple } from "../../../api/site";
-import { getReasonsSimple } from "../../../api/site-adjustment-reason";
-import { findIdByLoginName, getMemberBalanceByLoginNameSite } from "../../../api/member";
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
+  createAddMemberAmountAdjust,
+  createDeductMemberAmountAdjust,
+  getMemberAmountAdjust,
+  getTotalReimburseAmount,
+  getTotalDeductionAmount,
+  getNumberOfReimburse,
+  getNumberOfDeduct,
+  createBatchAmountAdjust,
+  getExport,
+} from '../../../api/member-amount-adjust'
+import {
+  getSiteListSimple,
+  getSupportedCurrencyBySiteId,
+} from '../../../api/site'
+import { getReasonsSimple } from '../../../api/site-adjustment-reason'
+import {
+  findIdByLoginName,
+  getMemberBalanceByLoginNameSite,
+  getMemberCryptoBalanceByLoginNameSite,
+} from '../../../api/member'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-import { getShortcuts } from "@/utils/datetime";
-import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { getShortcuts } from '@/utils/datetime'
+import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { getConfigList } from '../../../api/config'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
-const memberAmountAdjustForm = ref(null);
-const importRefForm = ref(null);
+const memberAmountAdjustForm = ref(null)
+const importRefForm = ref(null)
 const siteList = reactive({
-  list: []
-});
+  list: [],
+})
 const adjustTypeList = reactive({
   requestList: [],
   formList: [],
-  importFormList: []
+  importFormList: [],
 })
 
-const shortcuts = getShortcuts(t);
+const siteCurrencyConfig = reactive({
+  supportMultiWallet: null,
+  defaultCurrency: null,
+})
 
-const EXPORT_AMOUNT_ADJUST_LIST_HEADER = [
-  'Login Name',
-  'Amount'
-]
+const currencyList = reactive({
+  currencyGroupList: [],
+})
 
-const IMPORT_AMOUNT_ADJUST_LIST_JSON = [
-  'loginName',
-  'amount'
-]
+const adjustRollover = reactive({
+  selectedItem: null,
+  importedSelectedItem: null,
+})
+
+const shortcuts = getShortcuts(t)
+
+const EXPORT_AMOUNT_ADJUST_LIST_HEADER = ['Login Name', 'Amount']
+
+const IMPORT_AMOUNT_ADJUST_LIST_JSON = ['loginName', 'amount']
 
 const uiControl = reactive({
   messageVisible: false,
   colors: [
     { color: '#f56c6c', percentage: 30 },
     { color: '#e6a23c', percentage: 70 },
-    { color: '#5cb87a', percentage: 100 }
+    { color: '#5cb87a', percentage: 100 },
   ],
   dialogVisible: false,
-  dialogTitle: "",
-  dialogType: "CREATE_ADD",
+  dialogTitle: '',
+  dialogType: 'CREATE_ADD',
   editBtn: true,
   removeBtn: true,
   operationType: [
-    { key: 1, displayName: "ADD", value: "ADD" },
-    { key: 2, displayName: "DEDUCT", value: "DEDUCT" },
+    { key: 1, displayName: 'ADD', value: 'ADD' },
+    { key: 2, displayName: 'DEDUCT', value: 'DEDUCT' },
   ],
   importDialogVisible: false,
-  balance: null
-});
+  balance: null,
+})
 
-const startDate = new Date();
-startDate.setDate(startDate.getDate() - 2);
-const defaultStartDate = convertDate(startDate);
-const defaultEndDate = convertDate(new Date());
-let timeZone = null;
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 2)
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
+let timeZone = null
 
 const page = reactive({
   pages: 0,
@@ -489,8 +682,8 @@ const page = reactive({
   totalReimburse: 0,
   numberOfReimbursement: 0,
   totalDeduct: 0,
-  numberOfDeduction: 0
-});
+  numberOfDeduction: 0,
+})
 
 const importedPage = reactive({
   pages: 0,
@@ -508,8 +701,8 @@ const request = reactive({
   siteId: null,
   loginName: null,
   operationType: null,
-  cause: null
-});
+  cause: null,
+})
 
 const form = reactive({
   id: null,
@@ -519,54 +712,86 @@ const form = reactive({
   amount: null,
   rollover: null,
   cause: null,
-  remark: null
-});
+  remark: null,
+  currency: null,
+})
 
 const importForm = reactive({
   siteId: null,
+  currency: null,
   cause: null,
-  remark: null
-});
+  remark: null,
+  rollover: null,
+})
 
-const loginNameValidator = async(rule, value, callback) => {
+const loginNameValidator = async (rule, value, callback) => {
+  let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
-    const { data: bal } = await getMemberBalanceByLoginNameSite(value, form.siteId);
-    if (bal === null || bal === undefined) {
-      callback(new Error(t('message.memberNotInSite')));
+    if (form.currency !== null && form.currency === 'USDT') {
+      const response = await getMemberCryptoBalanceByLoginNameSite(
+        value,
+        form.siteId
+      )
+      bal = response.data
     } else {
-      uiControl.balance = bal;
-      callback();
+      const response = await getMemberBalanceByLoginNameSite(value, form.siteId)
+      bal = response.data
+    }
+    if (bal === null || bal === undefined) {
+      callback(new Error(t('message.memberNotInSite')))
+    } else {
+      uiControl.balance = bal
+      callback()
     }
   } else {
-    uiControl.balance = null;
-    const { data: bal } = await getMemberBalanceByLoginNameSite(value, form.siteId);
-    if (bal === null || bal === undefined) {
-      callback(new Error(t('message.memberNotInSite')));
+    uiControl.balance = null
+    if (form.currency !== null && form.currency === 'USDT') {
+      const response = await getMemberCryptoBalanceByLoginNameSite(
+        value,
+        form.siteId
+      )
+      bal = response.data
     } else {
-      callback();
+      const response = await getMemberBalanceByLoginNameSite(value, form.siteId)
+      bal = response.data
+    }
+
+    if (bal === null || bal === undefined) {
+      callback(new Error(t('message.memberNotInSite')))
+    } else {
+      callback()
     }
   }
-};
+}
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
-  loginName: [required(t('message.validateLoginNameRequired')), { validator: loginNameValidator, trigger: "blur" }],
+  loginName: [
+    required(t('message.validateLoginNameRequired')),
+    { validator: loginNameValidator, trigger: 'blur' },
+  ],
   amount: [required(t('message.validateAmountRequired'))],
-  rollover: [required(t('message.validateRolloverRequired'))],
-  cause: [required(t('message.validateCauseRequired'))]
-});
+  // rollover: [required(t('message.validateRolloverRequired'))],
+  cause: [required(t('message.validateCauseRequired'))],
+})
 
 const importRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
-  cause: [required(t('message.validateCauseRequired'))]
-});
+  cause: [required(t('message.validateCauseRequired'))],
+})
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD')
 }
 
 function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+  return (
+    time.getTime() <
+      moment(new Date())
+        .subtract(2, 'months')
+        .startOf('month')
+        .format('x') || time.getTime() > new Date().getTime()
+  )
 }
 
 function restrictInput(event) {
@@ -577,163 +802,278 @@ function restrictInput(event) {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
-  request.siteId = siteList.list[0].id;
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+  request.siteId = siteList.list[0].id
   form.siteId = siteList.list[0].id
   importForm.siteId = siteList.list[0].id
-};
+}
 
 async function loadFormSelect() {
-  form.loginName = null;
-  form.cause = null;
-  uiControl.balance = null;
-  await loadCauseBySiteId();
+  form.loginName = null
+  form.cause = null
+  form.currency = null
+  uiControl.balance = null
+  siteCurrencyConfig.supportMultiWallet = null
+  siteCurrencyConfig.defaultCurrency = null
+  await loadCauseBySiteId()
+  await loadSiteConfig()
+}
+
+async function loadFormImportSelect() {
+  siteCurrencyConfig.supportMultiWallet = null
+  siteCurrencyConfig.defaultCurrency = null
+  await loadSiteConfig()
 }
 
 async function loadCauseBySiteId() {
   if (request.siteId) {
-    const { data: adjustType } = await getReasonsSimple(request.siteId);
-    adjustTypeList.requestList = adjustType;
+    const { data: adjustType } = await getReasonsSimple(request.siteId)
+    adjustTypeList.requestList = adjustType
   }
 
   if (form.siteId) {
-    const { data: adjustType } = await getReasonsSimple(form.siteId);
-    adjustTypeList.formList = adjustType;
+    const { data: adjustType } = await getReasonsSimple(form.siteId)
+    adjustTypeList.formList = adjustType
   }
 
   if (importForm.siteId) {
-    const { data: adjustType } = await getReasonsSimple(importForm.siteId);
-    adjustTypeList.importFormList = adjustType;
+    const { data: adjustType } = await getReasonsSimple(importForm.siteId)
+    adjustTypeList.importFormList = adjustType
+  }
+}
+
+async function loadSiteConfig() {
+  let siteId = null
+  let defaultCurrencyConfig = null
+  let multiWalletConfig = null
+
+  if (form.siteId) {
+    siteId = form.siteId
+    importForm.siteId = null
+  }
+
+  if (importForm.siteId) {
+    siteId = importForm.siteId
+    form.siteId = null
+  }
+  if (siteId) {
+    const { data: getDefaultCurrencyConfig } = await getConfigList(
+      'fiat_wallet',
+      siteId
+    )
+    defaultCurrencyConfig = getDefaultCurrencyConfig[0]
+      ? getDefaultCurrencyConfig[0].value
+      : null
+
+    const { data: getMultiWalletConfig } = await getConfigList(
+      'support_multi_wallet',
+      siteId
+    )
+    multiWalletConfig = getMultiWalletConfig[0]
+      ? getMultiWalletConfig[0].value
+      : null
+  }
+
+  if (multiWalletConfig) {
+    siteCurrencyConfig.supportMultiWallet = multiWalletConfig
+    const { data: getSupportedCurrencies } = await getSupportedCurrencyBySiteId(
+      siteId
+    )
+    if (getSupportedCurrencies) {
+      currencyList.currencyGroupList = [
+        ...new Set(
+          getSupportedCurrencies.map(currency => currency.currencyGroup)
+        ),
+      ]
+    }
+  } else {
+    if (defaultCurrencyConfig) {
+      siteCurrencyConfig.defaultCurrency = defaultCurrencyConfig
+      form.currency = siteCurrencyConfig.defaultCurrency
+    }
   }
 }
 
 function resetQuery() {
-  request.createTime = [defaultStartDate, defaultEndDate];
-  request.siteId = siteList.list[0].id;
-  request.loginName = null;
-  request.operationType = null;
-  request.cause = null;
+  request.createTime = [defaultStartDate, defaultEndDate]
+  request.siteId = siteList.list[0].id
+  request.loginName = null
+  request.operationType = null
+  request.cause = null
 }
 
 function checkQuery() {
-  const requestCopy = { ...request };
-  const query = {};
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.createTime !== null) {
     if (request.createTime.length === 2) {
-      query.createTime = JSON.parse(JSON.stringify(request.createTime));
-      query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone, 'start');
-      query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone, 'end');
+      query.createTime = JSON.parse(JSON.stringify(request.createTime))
+      query.createTime[0] = formatInputTimeZone(
+        query.createTime[0],
+        timeZone,
+        'start'
+      )
+      query.createTime[1] = formatInputTimeZone(
+        query.createTime[1],
+        timeZone,
+        'end'
+      )
       query.createTime = query.createTime.join(',')
     }
   }
 
-  return query;
+  return query
 }
 
 async function loadMemberAmountAdjust() {
-  page.loading = true;
-  page.totalReimburse = 0;
-  page.totalDeduct = 0;
-  page.numberOfReimbursement = 0;
-  page.numberOfDeduction = 0;
-  const query = checkQuery();
-  const { data: ret } = await getMemberAmountAdjust(query);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.total = ret.total;
+  page.loading = true
+  page.totalReimburse = 0
+  page.totalDeduct = 0
+  page.numberOfReimbursement = 0
+  page.numberOfDeduction = 0
+  const query = checkQuery()
+  const { data: ret } = await getMemberAmountAdjust(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.total = ret.total
   if (page.records.length !== 0) {
-    const { data: noOfReimburse } = await getNumberOfReimburse(query);
-    const { data: noOfDeduct } = await getNumberOfDeduct(query);
+    const { data: noOfReimburse } = await getNumberOfReimburse(query)
+    const { data: noOfDeduct } = await getNumberOfDeduct(query)
     if (noOfReimburse > 0) {
-      const { data: reimburseAmount } = await getTotalReimburseAmount(query);
-      page.numberOfReimbursement = noOfReimburse;
-      page.totalReimburse = reimburseAmount;
+      const { data: reimburseAmount } = await getTotalReimburseAmount(query)
+      page.numberOfReimbursement = noOfReimburse
+      page.totalReimburse = reimburseAmount
     }
     if (noOfDeduct > 0) {
-      const { data: deductAmount } = await getTotalDeductionAmount(query);
-      page.numberOfDeduction = noOfDeduct;
-      page.totalDeduct = deductAmount;
+      const { data: deductAmount } = await getTotalDeductionAmount(query)
+      page.numberOfDeduction = noOfDeduct
+      page.totalDeduct = deductAmount
     }
   }
-  page.loading = false;
+  page.loading = false
 }
 
 async function showDialog(type) {
-  if (type === "CREATE_ADD") {
+  if (type === 'CREATE_ADD') {
     if (memberAmountAdjustForm.value) {
-      memberAmountAdjustForm.value.resetFields();
+      memberAmountAdjustForm.value.resetFields()
+      adjustRollover.importedSelectedItem = null
+      adjustRollover.selectedItem = null
     }
-    uiControl.dialogTitle = t('fields.addMemberAmountAdjust');
-  } else if (type === "CREATE_DEDUCT") {
+    uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
+  } else if (type === 'CREATE_DEDUCT') {
     if (memberAmountAdjustForm.value) {
-      memberAmountAdjustForm.value.resetFields();
+      memberAmountAdjustForm.value.resetFields()
+      adjustRollover.importedSelectedItem = null
+      adjustRollover.selectedItem = null
     }
-    uiControl.balance = null;
-    uiControl.dialogTitle = t('fields.deductMemberAmountAdjust');
+    uiControl.balance = null
+    uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
   }
-  await loadFormSelect();
-  uiControl.dialogType = type;
-  uiControl.dialogVisible = true;
+  await loadFormSelect()
+  uiControl.dialogType = type
+  uiControl.dialogVisible = true
+}
+
+function handleCauseChange(selectedValue) {
+  const selectedItem = adjustTypeList.formList.find(
+    item => item.reason === selectedValue
+  )
+  if (selectedItem) {
+    adjustRollover.selectedItem = selectedItem.rollover
+  }
+}
+
+function handleImportCauseChange(selectedValue) {
+  const selectedItem = adjustTypeList.formList.find(
+    item => item.reason === selectedValue
+  )
+  if (selectedItem) {
+    adjustRollover.importedSelectedItem = selectedItem.rollover
+  }
+}
+
+async function handleBalanceType(value) {
+  let bal
+  if (uiControl.dialogType === 'CREATE_DEDUCT') {
+    if (form.currency !== null && form.currency === 'USDT') {
+      const response = await getMemberCryptoBalanceByLoginNameSite(
+        form.loginName,
+        form.siteId
+      )
+      bal = response.data
+    } else {
+      const response = await getMemberBalanceByLoginNameSite(
+        form.loginName,
+        form.siteId
+      )
+      bal = response.data
+    }
+    if (bal === null || bal === undefined) {
+      uiControl.balance = null
+    } else {
+      uiControl.balance = bal
+    }
+  }
 }
 
 function createAdd() {
-  memberAmountAdjustForm.value.validate(async (valid) => {
-    form.id = null;
-    form.memberId = null;
-    const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
-    form.memberId = id;
+  memberAmountAdjustForm.value.validate(async valid => {
+    form.id = null
+    form.memberId = null
+    const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
+    form.memberId = id
     if (valid) {
-      await createAddMemberAmountAdjust(form);
-      uiControl.dialogVisible = false;
-      await loadMemberAmountAdjust();
-      ElMessage({ message: t('message.addSuccess'), type: "success" });
+      await createAddMemberAmountAdjust(form)
+      uiControl.dialogVisible = false
+      await loadMemberAmountAdjust()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
-  });
+  })
 }
 
 function createDeduct() {
-  memberAmountAdjustForm.value.validate(async (valid) => {
-    form.id = null;
-    form.memberId = null;
-    const { data: id } = await findIdByLoginName(form.loginName, form.siteId);
-    form.memberId = id;
+  memberAmountAdjustForm.value.validate(async valid => {
+    form.id = null
+    form.memberId = null
+    const { data: id } = await findIdByLoginName(form.loginName, form.siteId)
+    form.memberId = id
     if (valid) {
-      await createDeductMemberAmountAdjust(form);
-      uiControl.dialogVisible = false;
-      await loadMemberAmountAdjust();
-      ElMessage({ message: t('message.addSuccess'), type: "success" });
+      await createDeductMemberAmountAdjust(form)
+      uiControl.dialogVisible = false
+      await loadMemberAmountAdjust()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
-  });
+  })
 }
 
 async function downloadTemplate() {
-  const exportAmountAdjust = [EXPORT_AMOUNT_ADJUST_LIST_HEADER];
-  const maxLengthAdmountAdjust = [];
-  const wsAmountAdjust = XLSX.utils.aoa_to_sheet(exportAmountAdjust);
-  setWidth(exportAmountAdjust, maxLengthAdmountAdjust);
+  const exportAmountAdjust = [EXPORT_AMOUNT_ADJUST_LIST_HEADER]
+  const maxLengthAdmountAdjust = []
+  const wsAmountAdjust = XLSX.utils.aoa_to_sheet(exportAmountAdjust)
+  setWidth(exportAmountAdjust, maxLengthAdmountAdjust)
   const wsAdmountAdjustCols = maxLengthAdmountAdjust.map(w => {
-    return { width: w };
-  });
-  wsAmountAdjust['!cols'] = wsAdmountAdjustCols;
+    return { width: w }
+  })
+  wsAmountAdjust['!cols'] = wsAdmountAdjustCols
 
-  const wb = XLSX.utils.book_new();
-  wb.SheetNames.push('Member_Amount_Adjust');
-  wb.Sheets.Member_Amount_Adjust = wsAmountAdjust;
-  XLSX.writeFile(wb, 'member_amount_adjust.xlsx');
+  const wb = XLSX.utils.book_new()
+  wb.SheetNames.push('Member_Amount_Adjust')
+  wb.Sheets.Member_Amount_Adjust = wsAmountAdjust
+  XLSX.writeFile(wb, 'member_amount_adjust.xlsx')
 }
 
 function setWidth(exportData, maxLength) {
   exportData.map(data => {
     Object.keys(data).map(key => {
-      const value = data[key];
-
+      const value = data[key]
       maxLength[key] =
         typeof value === 'number'
           ? maxLength[key] >= 10
@@ -742,134 +1082,134 @@ function setWidth(exportData, maxLength) {
           : maxLength[key] >= value.length + 2
             ? maxLength[key]
             : value.length + 2
-    });
-  });
+    })
+  })
 }
 
 function chooseFile() {
-  document.getElementById('importFile').click();
+  document.getElementById('importFile').click()
 }
 
 function importToTable(file) {
-  importedPage.loading = true;
-  importedPage.buttonLoading = false;
-  const files = file.target.files[0];
+  importedPage.loading = true
+  importedPage.buttonLoading = false
+  const files = file.target.files[0]
   const allowFileType = [
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/vnd.ms-excel',
-  ];
+  ]
   if (allowFileType.find(ftype => ftype.includes(files.type))) {
-    const fileReader = new FileReader();
+    const fileReader = new FileReader()
 
     fileReader.onload = async event => {
-      const { result } = event.target;
-      const workbook = XLSX.read(result, { type: 'binary' });
-      let data = [];
+      const { result } = event.target
+      const workbook = XLSX.read(result, { type: 'binary' })
+      let data = []
       for (const sheet in workbook.Sheets) {
         data = data.concat(
           XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
             header: IMPORT_AMOUNT_ADJUST_LIST_JSON,
             range: 1,
           })
-        );
+        )
         for (const d of data) {
-          const { data: id } = await findIdByLoginName(d.loginName, importForm.siteId);
-          d.memberId = id;
+          const { data: id } = await findIdByLoginName(
+            d.loginName,
+            importForm.siteId
+          )
+          d.memberId = id
         }
-        break;
+        break
       }
-      importedPage.records = data;
+      importedPage.records = data
       importedPage.pages = Math.ceil(
         importedPage.records.length / importedPage.size
-      );
+      )
     }
-    fileReader.readAsBinaryString(files);
-    document.getElementById('importFile').value = '';
+    fileReader.readAsBinaryString(files)
+    document.getElementById('importFile').value = ''
   } else {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
   }
-  importedPage.loading = false;
+  importedPage.loading = false
 }
 
 function changeImportedPage(page) {
-  importedPage.current = page;
+  importedPage.current = page
 }
 
 function clearImport() {
-  uiControl.importDialogVisible = false;
-  importedPage.buttonLoading = false;
-  importedPage.loading = false;
-  importedPage.records = [];
-  importedPage.pages = 0;
-  importedPage.current = 1;
-  importForm.cause = null;
+  uiControl.importDialogVisible = false
+  importedPage.buttonLoading = false
+  importedPage.loading = false
+  importedPage.records = []
+  importedPage.pages = 0
+  importedPage.current = 1
+  importForm.cause = null
 }
 
 async function confirmImport() {
-  importRefForm.value.validate(async (valid) => {
+  importRefForm.value.validate(async valid => {
     if (valid) {
-      importedPage.buttonLoading = true;
-      const recordCopy = { ...importedPage.records };
-      const data = [];
+      importedPage.buttonLoading = true
+      const recordCopy = { ...importedPage.records }
+      const data = []
       Object.entries(recordCopy).forEach(([key, value]) => {
-        const item = {};
+        const item = {}
         if (value) {
-          item.cause = importForm.cause;
-          item.siteId = importForm.siteId;
-          item.remark = importForm.remark;
+          item.cause = importForm.cause
+          item.currency = importForm.currency
+          item.siteId = importForm.siteId
+          item.remark = importForm.remark
           Object.entries(value).forEach(([k, v]) => {
-            if (k !== "loginName") {
-              item[k] = v;
+            if (k !== 'loginName') {
+              item[k] = v
             }
-          });
+          })
         }
-        data.push(item);
-      });
+        data.push(item)
+      })
 
-      const records = [...data];
+      const records = [...data]
       do {
         if (records.length > 10000) {
-          await createBatchAmountAdjust(records.slice(0, 10000));
-          records.splice(0, 10000);
+          await createBatchAmountAdjust(records.slice(0, 10000))
+          records.splice(0, 10000)
         } else {
-          await createBatchAmountAdjust(records);
-          records.splice(0, records.length);
+          await createBatchAmountAdjust(records)
+          records.splice(0, records.length)
         }
       } while (records.length > 0)
-      importedPage.buttonLoading = false;
-      ElMessage({ message: t('message.importSuccess'), type: 'success' });
-      clearImport();
-      loadMemberAmountAdjust();
-      importForm.cause = null;
+      importedPage.buttonLoading = false
+      ElMessage({ message: t('message.importSuccess'), type: 'success' })
+      clearImport()
+      loadMemberAmountAdjust()
+      importForm.cause = null
+      importForm.currency = null
     }
-  });
+  })
 }
 
 function restrictDecimalInput(event) {
   var charCode = event.which ? event.which : event.keyCode
-  if (
-    (charCode < 48 || charCode > 57) && charCode !== 46
-  ) {
-    event.preventDefault();
+  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+    event.preventDefault()
   }
 
-  if (
-    form.amount !== null &&
-    form.amount.toString().indexOf('.') > -1
-  ) {
+  if (form.amount !== null && form.amount.toString().indexOf('.') > -1) {
     if (charCode === 46) {
-      event.preventDefault();
+      event.preventDefault()
     }
   }
 }
 
 async function requestExportExcel() {
-  const query = checkQuery();
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExport(query);
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getExport(query)
   if (ret) {
-    uiControl.messageVisible = true;
+    uiControl.messageVisible = true
   }
 }
 
@@ -883,15 +1223,17 @@ async function requestExportExcel() {
 // }
 
 onMounted(async () => {
-  await loadSites();
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
-    request.siteId = site.value.id;
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
   }
-  await loadCauseBySiteId();
+  await loadCauseBySiteId()
   await loadMemberAmountAdjust()
-});
-
+  await loadSiteConfig()
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
