@@ -135,8 +135,7 @@
         .platform-list-box {
           margin-top: 1.5rem;
           margin-bottom: 1.5rem;
-          display: grid;
-          grid-template-columns: repeat(6, 5rem);
+          display: flex;
           grid-gap: 1rem;
         }
   
@@ -146,6 +145,7 @@
           align-items: center;
           gap: 0.5rem;
           transition: 0.3s all;
+          width: 5rem;
   
           &:hover {
             filter: brightness(1.05);
@@ -190,8 +190,8 @@
   
           .list-item-btn {
             border: 1px solid #0e7dff;
-            height: 4rem;
-            width: 4rem;
+            height: 6rem;
+            width: 6rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -204,8 +204,8 @@
             cursor: pointer;
   
             & > span {
-            width: 4rem;
-            height: 4rem;
+            width: 6rem;
+            height: 6rem;
             padding: 1.30rem;
             border-radius: 0.3145rem;
             background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
@@ -218,7 +218,7 @@
   
               img {
                 display: block;
-                width: 2rem;
+                width: 2.2rem;
                 padding: 5px;
               }
             }
@@ -743,12 +743,14 @@
     .platform-container {
       .platform-container-inner {
         .platform-item {
+          align-items: center;
           .platform-title-wrap {
             .platform-title,
             .platform-subtitle {
-              font-style: italic;
               background: #fff;
               background-clip: text;
+              filter: none;
+              font-family: 'YouSheBiaoTiHei';
             }
           }
   
@@ -766,8 +768,8 @@
                 .list-item-btn {
                   // background: $active-color-dark-linear;
                   box-shadow: none;
-                  width: 4rem;
-                  height: 4rem;
+                  width: 6rem;
+                  height: 6rem;
                   padding: 1.30rem;
                   border-radius: 0.3145rem;
                   background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
