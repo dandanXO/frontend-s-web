@@ -923,17 +923,21 @@ const tabPosition = ref('left')
       display: flex;
       align-items: center;
       justify-content: center;
+      // background-color:lemonchiffon;
 
       .hotgame-tabs {
-        height: 600px;
-        margin-top: 11%;
+        height: 700px;
+        // background-color: rgba(165, 42, 42, 0.541);
+        width: 100%;
+        margin-top: 4%;
 
         :deep(.el-tabs__header) {
           transform: translate(0%, 15%);
           top: 0%;
           left: 0%;
-          height: 60%;
-          margin-top: 7%;
+          height: 50%;
+          margin-top: 11%;
+          margin-left: 15%;
         }
 
         :deep(.el-tabs__item) {
@@ -956,18 +960,19 @@ const tabPosition = ref('left')
 
         .hotgame-content-wrapper {
           display: grid;
-          grid-template-columns: 500px 700px;
+          grid-template-columns: 500px 1fr;
           align-items: flex-start;
-          gap: 1rem;
+          gap: 0rem;
           width: 0;
           height: 0;
           overflow: hidden;
           transition: $transition_timer;
+          // background-color: rgba(255, 166, 0, 0.589);
   
           &.show {
             width: 100%;
             margin: 0 -10px 0 0px;
-            padding-left: 0.75rem;
+            padding-left: 1rem;
             height: 700px;
           }
   
@@ -977,7 +982,8 @@ const tabPosition = ref('left')
             gap: 0.8rem;
             position: relative;
             align-items: center;
-            margin-top: 25%;
+            margin-top: 52%;
+            // background-color: rgba(255, 192, 203, 0.596);
   
             .title-wrapper {
               font-family: "YiHei";
@@ -1072,13 +1078,13 @@ const tabPosition = ref('left')
                   height: 4rem;
                   padding: 1.30rem;
                   border-radius: 0.3145rem;
-                  background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                  background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
                   background-size: 100% 100%;
                   object-fit: contain;
   
                   &.active {
-                    background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
-                    background-size: 100% 100%;
+                    // background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                    // background-size: 100% 100%;
                     // border: 0px;
                     // background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
                     // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
@@ -1170,15 +1176,45 @@ const tabPosition = ref('left')
           .right-container {
             display: flex;
             align-items: flex-end;
+            justify-content: flex-end;
             position: relative;
+            // background-color: rgba(216, 112, 147, 0.61);
+            height: 100%;
   
             img {
               position: relative;
-              width: auto;
-              height: 100%;
+              width: 100%;
+              height: auto;
   
-              &.character-fishing-gps {
-                right: 9rem;
+              &.character-fishing-pmfish {
+                margin-bottom: 3%;
+                height: auto;
+                width: 100%;
+              }
+
+              &.character-esports-tfgaming {
+                margin-top: 0%;
+              }
+
+              &.character-sports-im {
+                width: 98%;
+                margin-bottom: 3%;
+              }
+
+              &.character-casino-ag {
+                margin-bottom: 3%;
+                width: 97%;
+              }
+
+              &.character-slots-pt {
+                margin-bottom: 4%;
+                width: 98%;
+              }
+
+              &.character-board-leg {
+                margin-bottom: 5%;
+                height: 100%;
+                width: auto;
               }
             }
           }
@@ -1311,7 +1347,7 @@ const tabPosition = ref('left')
             width: 100%;
             // margin: 0 0 0 0px;
             margin: 0 -10px 0 0px;
-            padding-left: 0.75rem;
+            padding-left: 1rem;
             height: 700px;
           }
   
@@ -1322,6 +1358,7 @@ const tabPosition = ref('left')
             position: relative;
             align-items: center;
             margin-top: 25%;
+            height: 100%;
   
             //&.maintenance {
             //  filter: grayscale(0.8);
@@ -1437,7 +1474,7 @@ const tabPosition = ref('left')
                   height: 4rem;
                   padding: 0.8rem;
                   border-radius: 0.3145rem;
-                  background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+                  background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
                   background-size: 100% 100%;
                   object-fit: contain;
   
