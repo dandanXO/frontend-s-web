@@ -744,10 +744,10 @@ onMounted(() => {
 }
 
 .wallet-toggle-list {
-  background: #1f2228;
+  background: #161f2d;
 
   .q-item.active {
-    background: #585e63;
+    background: #281346;
   }
 }
 </style>
