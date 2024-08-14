@@ -353,7 +353,6 @@
             :placeholder="t('fields.paymentChannel')"
             class="filter-item"
             style="width: 350px;"
-            :disabled="uiControl.dialogType === 'ITEM'"
           >
             <el-option
               v-for="item in list.paymentInfo"
@@ -372,7 +371,6 @@
             :placeholder="t('fields.withdrawChannel')"
             class="filter-item"
             style="width: 350px;"
-            :disabled="uiControl.dialogType === 'ITEM'"
           >
             <el-option
               v-for="item in list.siteWithdrawPlatform"
@@ -382,16 +380,19 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.channelName')" prop="channelName" v-if="uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD'">
+        <el-form-item :label="t('fields.channelName')" prop="channelName" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD')">
           <el-input v-model="form.channelName" style="width: 240px" placeholder="Please input" size="small" />
         </el-form-item>
-        <el-form-item :label="t('fields.eta')" prop="eta" v-if="uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD'">
+        <el-form-item :label="t('fields.eta')" prop="eta" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-input v-model="form.eta" style="width: 240px" placeholder="Please input" size="small" />
         </el-form-item>
-        <el-form-item :label="t('fields.sequence')" prop="order" v-if="uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD'">
+        <el-form-item :label="t('fields.sequence')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-input-number v-model="form.order" style="width: 240px" :min="1" size="small" />
         </el-form-item>
-        <el-form-item :label="t('fields.privilegeName')" prop="privilegeId1" v-if="uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD'">
+        <el-form-item :label="t('fields.riskDepositLimit')" prop="riskDepositLimit" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order === 101">
+          <el-input-number v-model="form.riskDepositLimit" style="width: 240px" :min="1" size="small" />
+        </el-form-item>
+        <el-form-item :label="t('fields.privilegeName')" prop="privilegeId1" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-select
             filterable
             clearable
@@ -409,7 +410,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('fields.icon')" prop="icon" v-if="uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD'">
+        <el-form-item :label="$t('fields.icon')" prop="icon" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-row :gutter="24">
             <el-col v-if="form.icon" :span="18" style="width: 250px">
               <el-image
@@ -431,7 +432,7 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item :label="$t('fields.privilege') + $t('fields.icon')" prop="privilegeIcon" v-if="uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD'">
+        <el-form-item :label="$t('fields.privilege') + $t('fields.icon')" prop="privilegeIcon" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-row :gutter="24">
             <el-col v-if="form.privilegeIcon" :span="18" style="width: 250px">
               <el-image
@@ -697,7 +698,13 @@
               <el-collapse-item :title="t('fields.payment')" :name="props.row.affiliateCode + 'payment'">
                 <div class="clearfix">
                   <el-table :data="props.row.affiliateDepositSettingVO" ref="table" size="small" style="width: 90%;">
-                    <el-table-column :label="t('fields.channelName')" prop="channelName" />
+                    <el-table-column :label="t('fields.channelName')" prop="channelName">
+                      <template #default="scope">
+                        <span :style="{color: '#FF0000'}" v-if="scope.row.order === 101 && scope.row.channelName === 'riskPaymentChannel'">{{ t('fields.riskPaymentChannel') }}</span>
+                        <span :style="{color: '#FF0000'}" v-if="scope.row.order === 101 && scope.row.channelName !== 'riskPaymentChannel'">{{ scope.row.channelName }}</span>
+                        <span v-if="scope.row.order !== 101">{{ scope.row.channelName }}</span>
+                      </template>
+                    </el-table-column>
                     <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
@@ -937,6 +944,7 @@ const form = reactive({
   paymentType: null,
   channelId: null,
   order: null,
+  riskDepositLimit: null,
 })
 const settingForm = reactive({
   id: null,
@@ -1134,16 +1142,15 @@ function showSettingEdit(mode) {
 }
 
 function showDialog(type) {
-  if (type === 'CREATE') {
+  if (type === 'CREATE' || type === 'ADD') {
     if (affiliateFinancialDepositDisplayForm.value) {
       affiliateFinancialDepositDisplayForm.value.resetFields()
     }
     form.id = null
+    form.order = null
     uiControl.dialogTitle = t('fields.addAffiliateFinancialConfig')
   } else if (type === 'EDIT' || type === 'ITEM') {
     uiControl.dialogTitle = t('fields.editAffiliateFinancialConfig')
-  } else if (type === 'ADD') {
-    uiControl.dialogTitle = t('fields.addAffiliateFinancialConfig')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true

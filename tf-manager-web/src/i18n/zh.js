@@ -1406,6 +1406,7 @@ export default {
     rewardGroupDownlineQuota: '最高下线人数',
     rewardGroupName: '奖金组名称',
     riskControl: '风险管理',
+    riskDepositLimit: '风控存款金额限制',
     riskLevel: '风险等级',
     riskPaymentChannel: '风控支付渠道',
     role: '角色',
