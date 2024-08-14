@@ -930,7 +930,7 @@ export default defineComponent({
         }
 
         &.livepoker-rebate-bg {
-          background-image: url("../assets/promo/lh-livepoker-rebate/content-bg.png");
+          background-image: url("../../assets/promo/lh-livepoker-rebate/content-bg.png");
           background-size: contain;
           background-position: bottom center;
         }
