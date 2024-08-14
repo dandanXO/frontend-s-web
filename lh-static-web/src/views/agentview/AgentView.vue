@@ -2,15 +2,15 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-        <img :src="require(`../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
+        <img :src="require(`../../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
       </div>
       <div class="affiliate-desc">
-        <img :src="require(`../assets/images/affiliate/professional-team${isDark ? '-dark' : ''}.png`)" width="256" />
+        <img :src="require(`../../assets/images/affiliate/professional-team${isDark ? '-dark' : ''}.png`)" width="256" />
         <img
-          :src="require(`../assets/images/affiliate/best-quality-service${isDark ? '-dark' : ''}.png`)"
+          :src="require(`../../assets/images/affiliate/best-quality-service${isDark ? '-dark' : ''}.png`)"
           width="256"
         />
-        <img :src="require(`../assets/images/affiliate/official-partner${isDark ? '-dark' : ''}.png`)" width="285" />
+        <img :src="require(`../../assets/images/affiliate/official-partner${isDark ? '-dark' : ''}.png`)" width="285" />
       </div>
       <div class="buttons">
         <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
@@ -20,7 +20,7 @@
         </a>
       </div>
       <div class="affiliate-join">
-        <img :src="require(`../assets/images/affiliate/join${isDark ? '-dark' : ''}.png`)" width="696" />
+        <img :src="require(`../../assets/images/affiliate/join${isDark ? '-dark' : ''}.png`)" width="696" />
       </div>
 
       <div class="affiliate-program">
@@ -284,7 +284,7 @@ export default defineComponent({
   background-color: #f3f7fd;
 
   .affiliate {
-    background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
+    background: url("../../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
     background-position: top center;
     background-size: 100%;
     margin: 0 auto;
@@ -536,7 +536,7 @@ export default defineComponent({
 .dark {
   .wrapper {
     .affiliate {
-      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top, $background-dark;
+      background: url("../../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top, $background-dark;
       background-position: top center;
       background-size: 100%;
 

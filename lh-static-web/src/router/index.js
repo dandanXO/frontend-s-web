@@ -11,7 +11,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/LoginView.vue")
+    component: () => import(/* webpackChunkName: "Login" */ "../views/layouts/loginview/index")
   },
   {
     path: "/register",
@@ -87,7 +87,7 @@ const routes = [
       {
         path: "/agent",
         name: "agent",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/AgentView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/agentview/index.vue")
       },
       {
         path: "/promotion",
@@ -149,7 +149,7 @@ const routes = [
       {
         path: "/affiliate",
         name: "affiliate",
-        component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView.vue")
+        component: () => import(/* webpackChunkName: "affiliate" */ "../views/agentview/index.vue")
       },
       {
         path: "/app-tutorial",
