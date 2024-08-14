@@ -139,7 +139,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>（本金+红利）X15真人</td>
+            <td>15倍</td>
           </tr>
         </tbody>
       </table>
@@ -177,7 +177,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>（本金+红利）X15棋牌</td>
+            <td>15倍</td>
           </tr>
         </tbody>
       </table>
@@ -215,7 +215,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>（本金+红利）X15电子</td>
+            <td>15倍</td>
           </tr>
         </tbody>
       </table>
@@ -255,7 +255,7 @@
             <td>≥100 元</td>
             <td>38%</td>
             <td>588 元</td>
-            <td>（本金+红利）X15捕鱼</td>
+            <td>15倍</td>
           </tr>
         </tbody>
       </table>
@@ -274,7 +274,14 @@
       </div>
     </div>
   </div>
-  <div class="promotion-container" v-if="isEligibleState">
+  <div
+    v-if="!store.token"
+    class="promotion-container"
+    style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-weight: 400; color: #00000099"
+  >
+    您还未登录，请登录后参与活动
+  </div>
+  <div class="promotion-container" v-if="isEligibleState && store.token">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -317,7 +324,7 @@
     </div>
   </div>
 
-  <div class="promotion-container" v-if="isEligibleState">
+  <div class="promotion-container" v-if="isEligibleState && store.token">
     <div class="growth-strategy">
       <div class="title-area">
         <div style="display: flex; justify-content: start; align-items: center">
@@ -733,6 +740,10 @@ tbody tr:last-child {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  img {
+    width: 130px !important;
+  }
 
   button {
     &:hover {

@@ -50,6 +50,7 @@
           <img
             class="announcement-img"
             src="../../assets/home/announcement/announcement-img.png"
+            alt="announcement"
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">

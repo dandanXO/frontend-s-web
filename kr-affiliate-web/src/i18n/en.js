@@ -784,6 +784,8 @@ export default {
     requried_password: 'Login password cannot be empty.',
     required_captcha: 'Verification code cannot be empty.',
     required_4_digits: 'Must be composed of 4 digits.',
+    required_6_digits_code: 'Must be composed of 6 digits code.',
+    required_only_digits_and_alphabet: 'Must be composed of digits and alphabet',
     required_confirm_pwd: 'Password confirmation cannot be empty.',
     required_same_with_password: 'Must be consistent with the login password.',
     requiredAmount: 'Amount is required',

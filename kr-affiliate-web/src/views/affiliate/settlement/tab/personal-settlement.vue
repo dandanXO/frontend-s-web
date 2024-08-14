@@ -6,11 +6,11 @@
           <el-form-item :label="t('fields.recordTime') + ' :'">
             <el-date-picker
               v-model="request.recordTime"
-              format="YYYY-MM"
-              value-format="YYYY-MM"
+              format="YYYY-MM-DD"
+              value-format="YYYY-MM-DD"
               size="normal"
               class="input-small"
-              type="month"
+              type="daterange"
               range-separator=":"
               :start-placeholder="t('fields.startDate')"
               :end-placeholder="t('fields.endDate')"
@@ -145,17 +145,24 @@
 import { onMounted, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import moment from 'moment'
-import { getMonthlyCommissionReport } from '../../../../api/affiliate-settlement'
+import { getCommissionReportByDate } from '../../../../api/affiliate-settlement'
 import { useStore } from '@/store'
 
 const store = useStore()
 const { t } = useI18n()
-const startDate = new Date()
 
-const defaultMonth = moment(startDate).format('YYYY-MM')
+function convertStartDate(date) {
+  return moment(date)
+    .startOf('month')
+    .format('YYYY-MM-DD')
+}
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
 
 const request = reactive({
-  recordTime: defaultMonth,
+  recordTime: [convertStartDate(new Date()), convertDate(new Date())],
 })
 
 const data = reactive({
@@ -182,10 +189,15 @@ function resetQuery() {
 }
 
 async function loadCommission() {
-  const { data: ret } = await getMonthlyCommissionReport(
-    store.state.user.id,
-    request.recordTime
-  )
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  query.recordTime = query.recordTime.join(',')
+  const { data: ret } = await getCommissionReportByDate(query)
   if (ret) {
     Object.entries(ret).forEach(([key, value]) => {
       if (value) {

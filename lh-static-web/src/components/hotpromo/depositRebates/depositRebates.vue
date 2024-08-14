@@ -34,7 +34,7 @@
         <tr>
           <td>USDT</td>
           <td>1.5%</td>
-          <td>≥200</td>
+          <td>≥100</td>
           <td>588</td>
         </tr>
         <tr>
@@ -107,7 +107,7 @@ const depositCards = ref([
     code: "usdt",
     title: "USDT",
     content:
-      "充值即送<em>1.5%</em>彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限588元",
+      "充值即送<em>1.5%</em>彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”或“ERC20”充值≥200U，即可享受存款金额的<em>1.5%</em>加码彩金，单日优惠最高上限588元",
     lesson: "https://fi3j96ygol.gwo5mlgx98.com/media/deposit_guide.mp4"
   },
   {
@@ -167,7 +167,7 @@ const depositCards = ref([
           &__details {
             color: #d1ecff;
 
-            em{
+            em {
               font-style: normal;
               color: #ff0000;
             }

@@ -87,11 +87,14 @@
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
+    <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
+    <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" />
+    <NewFootball v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
-      <q-card-section class="row items-center">
+      <q-card-section class="items-center row">
         <div class="bonus-svg-div">
           <span class="bonus-text">恭喜获得奖金</span>
           <span class="claim-amt">{{ claimMsg }}</span>
@@ -187,12 +190,16 @@ const OfficialGiftPromo = defineAsyncComponent(() =>
 );
 const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"));
 const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
+const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpl-lck/LPLLCK.vue"));
+const LivepokerRebate = defineAsyncComponent(() => import("../components/hotpromo/livepoker-rebate/LivepokerRebate.vue"));
+const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    NewFootball,
     DailyCheckin,
     Olympic24Match,
     SlotLacky8,
@@ -243,7 +250,9 @@ export default defineComponent({
     OlympicCheckin,
     ChallengeComebackPromo,
     OfficialGiftPromo,
-    OlympicFund
+    OlympicFund,
+    LPLLCK,
+    LivepokerRebate
   },
   props: {
     list: {

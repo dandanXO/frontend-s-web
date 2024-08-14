@@ -32,6 +32,7 @@
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A'" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball'" />
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game'" />
+    <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
@@ -45,6 +46,7 @@
     <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone'"></BbDacha2024Promo>
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite'" />
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight'" />
+    <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode"/>
 
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
@@ -65,6 +67,7 @@
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
+    <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" :promo-code="list.promoCode"/>
 
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
 
@@ -122,6 +125,7 @@ import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
+import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
 import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
@@ -165,12 +169,15 @@ import ChallengeComeBackPromo from "../components/hotpromo/challengeComeback/Cha
 import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.vue";
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
+import LPLLCK from "@/components/hotpromo/lpllck/LPLLCK.vue";
+import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    newFootballFight,
     Olympic24Match,
     newplayerGuide,
     slotLucky8,
@@ -231,7 +238,9 @@ export default defineComponent({
     OlympicCheckin,
     ChallengeComeBackPromo,
     OfficialGiftPromo,
-    OlympicFund
+    OlympicFund,
+    LPLLCK,
+    LivepokerRebate
   },
   props: {
     list: {

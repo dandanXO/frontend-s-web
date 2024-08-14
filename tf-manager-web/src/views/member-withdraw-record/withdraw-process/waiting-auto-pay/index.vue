@@ -245,7 +245,7 @@
               {{ t('fields.toApplying') }}
             </el-button>
             <el-button
-              v-if="request.siteId === 11"
+              v-if="isPak(request.siteId)"
               size="mini"
               type="danger"
               @click="showDialog('FAIL', scope.row)" @keydown.enter.prevent
@@ -254,7 +254,7 @@
               {{ t('fields.fail') }}
             </el-button>
             <el-button
-              v-if="request.siteId === 11"
+              v-if="isPak(request.siteId)"
               v-permission="['sys:withdraw:simple:fail']"
               size="mini"
               type="success"
@@ -507,6 +507,7 @@ import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { isPak } from '@/utils/site'
 
 const store = useStore();
 const { t } = useI18n();

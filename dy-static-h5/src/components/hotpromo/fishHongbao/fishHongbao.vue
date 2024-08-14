@@ -2,7 +2,8 @@
   <div class="fish-match-box">
     <div class="fish-match-container">
       <div class="fish-match-game-info-sub">
-        活动期间，每日参与捕鱼场馆有效投注≥1,000元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金 1,888 元
+        活动期间，每日参与捕鱼场馆有效投注≥1,000元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金
+        1,888 元
       </div>
 
       <div class="fish-match-game">
@@ -155,36 +156,35 @@ const getHongbao = async () => {
 };
 
 onMounted(() => {
-  
   if (!store.token) {
     return;
   }
-  getHongbao
+  getHongbao();
 });
 
 const claimHongBao = async () => {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'dyblue',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "dyblue",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
   const res = await getHongbaoMoney();
   console.log(res);

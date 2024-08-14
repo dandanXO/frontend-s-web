@@ -376,3 +376,15 @@ export function putCheckInFreeTreasureCheckIn(checkInDay) {
 export function putCheckInFreeTreasureClaim(point) {
   return server.EVENT.put(`/checkInFreeTreasure/claimTreasure?point=${point}`, {});
 }
+
+export function getLivePoker() {
+  return server.EVENT.get("/live-poker");
+}
+
+export function claimLivePokerBonus() {
+  return server.EVENT.put("/bonus/claim/lh1-live-poker-bonus");
+}
+
+export function footballHistroy() {
+  return server.EVENT.get("/lh1-football/history");
+}

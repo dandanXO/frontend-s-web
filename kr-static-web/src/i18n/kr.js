@@ -232,6 +232,7 @@ export default {
     usernamereq: "사용자 이름을 입력해 주세요",
     passwordreq: "비밀번호를 입력해 주세요",
     username: "사용자 이름은 6-11자여야 합니다",
+    only_letter_number_allowed: "영어문자와숫자만가능합니다",
     password: "비밀번호는 6-11자여야 합니다",
     passwordDifferent: "두 번 입력한 비밀번호가 일치하지 않습니다",
     passwordAgain: "비밀번호를 다시 입력해 주세요",
@@ -871,9 +872,9 @@ export default {
   },
   maintenance: {
     title: "시스템 점검 중...",
-    desc: `2024년 4월 17일 06:00 (GMT +8)부터 10:00 (GMT +8)까지<br>
-          모든 서비스와 게임이 위 시간 동안 일시 중지됩니다.<br>불편을 드려 죄송합니다!`,
-    email: "이메일 보내기",
+    desc: `웹 사이트 점검중이오니 모든 게임 및 서비스 사용할수없습니다<br>
+      불편을 끼쳐드려서 죄송합니다<br>
+      정검시간: 2024년 8월 6일 ~ 2024년 8월7일(GMT+8)`,
     customerService: "24/7 온라인 지원",
     currentlyMaintaining: "점검 중",
     maintainenceTime: "점검 시간",

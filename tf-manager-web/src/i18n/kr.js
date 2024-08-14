@@ -444,6 +444,13 @@ export default {
     ON: '켜짐',
     OFF: '끄기',
   },
+  valueRulesType: {
+    INPUT: "입력",
+    RADIO: "라디오 버튼",
+    SELECT: "선택 상자",
+    SWITCH: "스위치",
+    CHECKBOX: "체크박스"
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -623,6 +630,7 @@ export default {
     betRecords: '베팅 기록',
     betStatus: '베팅 상태',
     betTime: '베팅 시간',
+    betTotal: '총 베팅 금액',
     betWheelSettings: '베팅 휠 설정',
     betWheelRecords: '베팅 휠 기록',
     binded: '연결됨',
@@ -953,6 +961,7 @@ export default {
     gameAccountName: '게임 계정 이름',
     gameCode: '게임 코드',
     domainEasy: 'Domain 쉽다',
+    videoShiPin: 'Video URL',
     gameConsolidateReport: '게임 통합 보고서',
     gameMatch: '게임 경기',
     gameMatchRecord: '게임 경기 기록',
@@ -1179,6 +1188,9 @@ export default {
     paymentOnGoing: '결제 진행 중',
     paymentType: '결제 유형',
     payout: '지급',
+    payoutTotal: '총 지급 금액',
+    return_ratio: '환급률',
+    return_ratio_total: '총 수익률',
     pcWay: 'PC',
     pending: '보류',
     pendingTransaction: '보류 중인 거래',
@@ -1808,6 +1820,7 @@ export default {
     activate: '활성화하다',
     withdrawPassword: '비밀번호 철회',
     updateWithdrawPassword: '출금 비밀번호 업데이트',
+    self: '(본인)',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2252,7 +2265,8 @@ export default {
     validateImageNameRequired: '이미지 이름이 필요합니다',
     validatePosterTypeRequired: '포스터 유형이 필요합니다',
     validateConfigCodeRequired: '구성 코드가 필요합니다',
-    validateConfigValueRequired: '구성 값이 필요합니다',
+    validateConfigValueRequired: '구성 유형이 필요합니다',
+    validateConfigTypeRequired: 'Config Type is required',
     resultCalculateSuccess: '결과가 성공적으로 계산되었습니다',
     buildIsInQueue: '빌드가 대기열에 있습니다',
     roleMustOnlyOne: '권한이 필요한 역할을 하나만 선택하세요',
@@ -2286,6 +2300,8 @@ export default {
     validatePlanLimitMinRequired: '필요한 최소 투자 한도',
     validatePlanLimitMaxRequired: '필요한 최대 투자 한도',
     affiliateReactivated: '활성화 성공',
+    required_6_digits_code: '6자리 숫자로 구성',
+    required_only_digits_and_alphabet: '숫자와 알파벳으로 구성되어야 합니다.',
   },
   menu: {
     undefined: '',
@@ -2520,6 +2536,8 @@ export default {
     'Member Point Record': '회원 포인트 기록',
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
+    'Vip Report': 'VIP 보고서',
+    'System Value Rules': '시스템 값 규칙'
   },
   google: {
     google_auth_menu: 'Google 인증자',

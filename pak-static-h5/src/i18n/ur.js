@@ -130,6 +130,8 @@ export default {
     cryptoAccount_placeholder: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
     cryptoAccount_rules_01: "براہ کرم کرپٹو اکاؤنٹ داخل کریں۔",
     cryptoAccount_rules_02: "کرپٹو اکاؤنٹ 'T' سے شروع ہونا چاہیے",
+    cryptoAccount_rules_04: "کرپٹو اکاؤنٹ کو '0x' سے شروع ہونا چاہیے",
+    cryptoAccount_rules_05: "کرپٹو اکاؤنٹ میں 42 حروف ہونے چاہئیں",
     cryptoAccount_rules_03: "کریپٹو اکاؤنٹ میں 34 حروف کا ہونا ضروری ہے۔",
     virtualWalletType: "ورچوئل والٹ کی قسم",
     virtualWallet: "ورچوئل والٹ",
@@ -140,6 +142,8 @@ export default {
     virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
+    virtualWallet_warmReminder_02:
+      "گرم یاددہانی: شناختی ID کا اصل شناختی معلومات (13 ہندسوں کا CNIC) سے مماثل ہونا چاہیے، بصورت دیگر، آپ واپسی کی رقم وصول نہیں کر سکیں گے۔ شکریہ",
     virtualWallet_untie: "براہ کرم ورچوئل والٹ کھولیں",
     bankCard: "بینک کارڈ",
     bankCard_untie: "براہ کرم انٹائی بینک کارڈ درج کریں",
@@ -269,7 +273,9 @@ export default {
     unexpiredEarnings: "غیر ختم شدہ کمائی",
     cumulativeIncome: "مجموعی آمدنی",
     storageTime: "ذخیرہ وقت (دن)",
+    storageTime_required: "ذخیرہ کرنے کا وقت درکار ہے",
     deposit: "جمع",
+    deposit_required: "ڈپازٹ درکار ہے۔",
     trialCalculation: "آزمائشی حساب",
     distributeInterest: "سود تقسیم کریں",
     pending: "زیر التواء",
