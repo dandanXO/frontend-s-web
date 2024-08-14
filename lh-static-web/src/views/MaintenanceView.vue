@@ -6,9 +6,9 @@
       </div>
       <div class="maintenance-title">目前我们的网站正在维护中...</div>
       <div class="maintenance-desc">
-        从：2023年7月1日（GMT+8）
+        从：{{ ui.maintenanceStartTime }}
         <br />
-        至：2023年9月19日（GMT+8）
+        至：{{ ui.maintenanceEndTime }}
         <br />
         期间所有游戏和服务均无法使用。
         <br />
@@ -25,7 +25,9 @@
 </template>
 <script setup>
 import { useDark } from "@vueuse/core";
+import { uiStore } from "@/store/ui";
 
+const ui = uiStore();
 const isDark = useDark();
 </script>
 

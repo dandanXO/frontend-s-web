@@ -14,7 +14,7 @@ import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
 import { useLocalStorage } from "@vueuse/core";
-
+import { useRouter } from "vue-router";
 import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
 
 export default defineComponent({
@@ -25,6 +25,7 @@ export default defineComponent({
   setup() {
     var qs = require("qs");
     const store = userStore();
+    const router = useRouter();
     const ui = useUI();
     const $q = useQuasar(); // calling here; equivalent to when component
 
@@ -150,6 +151,19 @@ export default defineComponent({
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     const getAffiliateByDomain = () => {
       var host = window.location.host;
       // host = "www.lh56917.com";
@@ -166,7 +180,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("TEST 3");
+      checkServerStatus();
       checkSID();
       // initCsWeb();
       getCSA();
