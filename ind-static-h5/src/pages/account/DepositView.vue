@@ -206,7 +206,7 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
+      <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
       </div>
@@ -390,7 +390,7 @@ function initPay() {
 
   let promoParam = "";
 
-  if (route.query.from === "/promo") {
+  if (route.query.extra === "true") {
     promoParam = "?promo=1";
   }
 
