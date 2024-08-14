@@ -176,12 +176,36 @@
             style="width: 350px;"
             filterable
             default-first-option
+            @change="loadFormImportSelect"
           >
             <el-option
               v-for="item in siteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.currency')"
+          v-if="
+            siteCurrencyConfig.supportMultiWallet !== null &&
+              siteCurrencyConfig.supportMultiWallet === '1'
+          "
+          prop="currency"
+        >
+          <el-select
+            v-model="importForm.currency"
+            :placeholder="t('fields.currency')"
+            style="width: 350px;"
+            filterable
+            default-first-option
+          >
+            <el-option
+              v-for="item in currencyList.currencyGroupList"
+              :key="item"
+              :label="item"
+              :value="item"
             />
           </el-select>
         </el-form-item>
@@ -317,6 +341,30 @@
             <span v-formatter="{ data: uiControl.balance, type: 'money' }" />
           </span>
         </el-form-item>
+        <el-form-item
+          :label="t('fields.currency')"
+          v-if="
+            siteCurrencyConfig.supportMultiWallet !== null &&
+              siteCurrencyConfig.supportMultiWallet === '1'
+          "
+          prop="currency"
+        >
+          <el-select
+            v-model="form.currency"
+            :placeholder="t('fields.currency')"
+            style="width: 350px;"
+            filterable
+            default-first-option
+            @change="handleBalanceType"
+          >
+            <el-option
+              v-for="item in currencyList.currencyGroupList"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.amount')" prop="amount">
           <el-input
             v-model="form.amount"
@@ -436,6 +484,11 @@
         min-width="180"
       />
       <el-table-column
+        prop="currency"
+        :label="t('fields.currency')"
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
         prop="amount"
         :label="t('fields.amount')"
         min-width="120"
@@ -542,11 +595,15 @@ import {
   createBatchAmountAdjust,
   getExport,
 } from '../../../api/member-amount-adjust'
-import { getSiteListSimple } from '../../../api/site'
+import {
+  getSiteListSimple,
+  getSupportedCurrencyBySiteId,
+} from '../../../api/site'
 import { getReasonsSimple } from '../../../api/site-adjustment-reason'
 import {
   findIdByLoginName,
   getMemberBalanceByLoginNameSite,
+  getMemberCryptoBalanceByLoginNameSite,
 } from '../../../api/member'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -554,6 +611,7 @@ import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { getConfigList } from '../../../api/config'
 
 const { t } = useI18n()
 const store = useStore()
@@ -568,6 +626,15 @@ const adjustTypeList = reactive({
   requestList: [],
   formList: [],
   importFormList: [],
+})
+
+const siteCurrencyConfig = reactive({
+  supportMultiWallet: null,
+  defaultCurrency: null,
+})
+
+const currencyList = reactive({
+  currencyGroupList: [],
 })
 
 const adjustRollover = reactive({
@@ -646,10 +713,12 @@ const form = reactive({
   rollover: null,
   cause: null,
   remark: null,
+  currency: null,
 })
 
 const importForm = reactive({
   siteId: null,
+  currency: null,
   cause: null,
   remark: null,
   rollover: null,
@@ -729,8 +798,19 @@ async function loadSites() {
 async function loadFormSelect() {
   form.loginName = null
   form.cause = null
+  form.currency = null
   uiControl.balance = null
+  siteCurrencyConfig.supportMultiWallet = null
+  siteCurrencyConfig.defaultCurrency = null
   await loadCauseBySiteId()
+  await loadSiteConfig()
+}
+
+async function loadFormImportSelect() {
+  console.log('loadFormImportSelect : ', importForm.siteId)
+  siteCurrencyConfig.supportMultiWallet = null
+  siteCurrencyConfig.defaultCurrency = null
+  await loadSiteConfig()
 }
 
 async function loadCauseBySiteId() {
@@ -747,6 +827,67 @@ async function loadCauseBySiteId() {
   if (importForm.siteId) {
     const { data: adjustType } = await getReasonsSimple(importForm.siteId)
     adjustTypeList.importFormList = adjustType
+  }
+}
+
+async function loadSiteConfig() {
+  let siteId = null
+  let defaultCurrencyConfig = null
+  let multiWalletConfig = null
+
+  if (form.siteId) {
+    siteId = form.siteId
+    importForm.siteId = null
+  }
+
+  if (importForm.siteId) {
+    siteId = importForm.siteId
+    form.siteId = null
+  }
+  console.log('form.siteId : ', form.siteId)
+  console.log('importForm.siteId : ', importForm.siteId)
+  console.log('siteId : ', siteId)
+  if (siteId) {
+    const { data: getDefaultCurrencyConfig } = await getConfigList(
+      'fiat_wallet',
+      siteId
+    )
+    defaultCurrencyConfig = getDefaultCurrencyConfig[0]
+      ? getDefaultCurrencyConfig[0].value
+      : null
+
+    const { data: getMultiWalletConfig } = await getConfigList(
+      'support_multi_wallet',
+      siteId
+    )
+    multiWalletConfig = getMultiWalletConfig[0]
+      ? getMultiWalletConfig[0].value
+      : null
+  }
+
+  console.log('multiWalletConfig : ', multiWalletConfig)
+  if (multiWalletConfig) {
+    siteCurrencyConfig.supportMultiWallet = multiWalletConfig
+    const { data: getSupportedCurrencies } = await getSupportedCurrencyBySiteId(
+      siteId
+    )
+
+    console.log(
+      'siteCurrencyConfig.supportMultiWallet : ',
+      siteCurrencyConfig.supportMultiWallet
+    )
+    if (getSupportedCurrencies) {
+      currencyList.currencyGroupList = [
+        ...new Set(
+          getSupportedCurrencies.map(currency => currency.currencyGroup)
+        ),
+      ]
+    }
+  } else {
+    if (defaultCurrencyConfig) {
+      siteCurrencyConfig.defaultCurrency = defaultCurrencyConfig
+      form.currency = siteCurrencyConfig.defaultCurrency
+    }
   }
 }
 
@@ -853,6 +994,55 @@ function handleImportCauseChange(selectedValue) {
   if (selectedItem) {
     adjustRollover.importedSelectedItem = selectedItem.rollover
   }
+}
+
+async function handleBalanceType(value) {
+  console.log('change of handleBalanceType')
+  if (uiControl.dialogType === 'CREATE_DEDUCT') {
+    if (form.currency === 'USDT') {
+      const { data: bal } = await getMemberCryptoBalanceByLoginNameSite(
+        form.loginName,
+        form.siteId
+      )
+      if (bal === null || bal === undefined) {
+      } else {
+        uiControl.balance = bal
+      }
+    } else {
+      const { data: bal } = await getMemberBalanceByLoginNameSite(
+        form.loginName,
+        form.siteId
+      )
+      if (bal === null || bal === undefined) {
+      } else {
+        uiControl.balance = bal
+      }
+    }
+  }
+
+  // if (uiControl.dialogType === 'CREATE_DEDUCT') {
+  //   const { data: bal } = await getMemberBalanceByLoginNameSite(
+  //     value,
+  //     form.siteId
+  //   )
+  //   if (bal === null || bal === undefined) {
+  //     callback(new Error(t('message.memberNotInSite')))
+  //   } else {
+  //     uiControl.balance = bal
+  //     callback()
+  //   }
+  // } else {
+  //   uiControl.balance = null
+  //   const { data: bal } = await getMemberBalanceByLoginNameSite(
+  //     value,
+  //     form.siteId
+  //   )
+  //   if (bal === null || bal === undefined) {
+  //     callback(new Error(t('message.memberNotInSite')))
+  //   } else {
+  //     callback()
+  //   }
+  // }
 }
 
 function createAdd() {
@@ -989,6 +1179,7 @@ async function confirmImport() {
         const item = {}
         if (value) {
           item.cause = importForm.cause
+          item.currency = importForm.currency
           item.siteId = importForm.siteId
           item.remark = importForm.remark
           Object.entries(value).forEach(([k, v]) => {
@@ -1015,6 +1206,7 @@ async function confirmImport() {
       clearImport()
       loadMemberAmountAdjust()
       importForm.cause = null
+      importForm.currency = null
     }
   })
 }
@@ -1061,6 +1253,7 @@ onMounted(async () => {
   }
   await loadCauseBySiteId()
   await loadMemberAmountAdjust()
+  await loadSiteConfig()
 })
 </script>
 
