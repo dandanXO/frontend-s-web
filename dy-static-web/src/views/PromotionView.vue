@@ -72,6 +72,7 @@
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
               selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
+              selectedPromo.redirectUrl === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
@@ -840,17 +841,17 @@ export default defineComponent({
           width: 100%;
           background-size: cover;
           position: relative;
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: -10px;
-            background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png) no-repeat center center;
-            width: 180px;
-            height: 340px;
-            background-size: cover;
-            z-index: -1;
-          }
+          //&:after {
+          //  content: "";
+          //  position: absolute;
+          //  bottom: 0;
+          //  left: -10px;
+          //  background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png) no-repeat center center;
+          //  width: 180px;
+          //  height: 340px;
+          //  background-size: cover;
+          //  z-index: -1;
+          //}
         }
 
         .hot-promo {
