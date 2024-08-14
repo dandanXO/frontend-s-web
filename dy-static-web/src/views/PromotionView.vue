@@ -104,6 +104,7 @@
           :class="{
             isCS:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+              selectedPromo?.promoCode === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-olympic-match',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
@@ -118,7 +119,8 @@
               selectedPromo.promoCode === 'dy2-eurocup-manual',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
-            'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate'
+            'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
+            dyfootball: selectedPromo?.promoCode === 'dy2-football'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -138,7 +140,8 @@
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game',
-              isHide: selectedPromo.promoCode === 'dy2-msi-promo'
+              isHide: selectedPromo.promoCode === 'dy2-msi-promo',
+              football1: selectedPromo.promoCode === 'dy2-football'
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
@@ -296,6 +299,11 @@ export default defineComponent({
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             // } else {
+              if (route.query.name === "dy2-football-fight-2" || route.query.name === "dy2-football-fight-3") {
+                if (element.redirectUrl === "dy2-football-fight") {
+                  showPromoDetails(element);
+                }
+              }
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element);
               }
@@ -857,6 +865,14 @@ export default defineComponent({
           text-align: left;
           padding: 20px;
 
+          &.football1 {
+            table {
+              th,
+              td {
+                border: 1px solid #999;
+              }
+            }
+          }
           ol {
             li {
               margin: 20px 0;
