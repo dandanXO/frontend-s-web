@@ -10,7 +10,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              昨日电子盈利：
+              当日电子负盈利：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
@@ -41,7 +41,7 @@
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>昨日电子盈利</th>
+            <th>当日电子负盈利</th>
             <th>救援金</th>
             <th>流水倍数</th>
           </tr>
@@ -72,8 +72,8 @@
           </tr>
         </table>
         <div class="content-sub-title">
-          <span style="font-weight: bold">⮞ 示例</span>
-          <span>会员A在电子投注,当日有效投注为49000元,次日即可获得128元。</span>
+          <span style="font-weight: bold">⮞ 范例</span>
+          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金288元。</span>
         </div>
       </div>
       <div class="match-game-bottom-rule">
@@ -88,7 +88,8 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              <!-- 救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。 -->
+              救援礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。
             </span>
           </div>
           <div class="item">
@@ -144,7 +145,7 @@ const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
 const getMatchData = async () => {
-  const res = await getMatchAndPrizeInfo();
+  const res = await getMatchAndPrizeInfo('profit');
   if (res.code === 0) {
     bonus.value = res.data.profitAmount;
     totalValidBet.value = res.data.expectedBonus;
