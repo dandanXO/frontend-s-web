@@ -403,6 +403,7 @@ onMounted(() => {
 
   .card-bg {
     @include content-block-dark;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
   }
 
   .light-bg {
