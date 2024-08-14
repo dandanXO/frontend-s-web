@@ -725,11 +725,18 @@ const importForm = reactive({
 })
 
 const loginNameValidator = async (rule, value, callback) => {
+  let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
-    const { data: bal } = await getMemberBalanceByLoginNameSite(
-      value,
-      form.siteId
-    )
+    if (form.currency !== null && form.currency === 'USDT') {
+      const response = await getMemberCryptoBalanceByLoginNameSite(
+        value,
+        form.siteId
+      )
+      bal = response.data
+    } else {
+      const response = await getMemberBalanceByLoginNameSite(value, form.siteId)
+      bal = response.data
+    }
     if (bal === null || bal === undefined) {
       callback(new Error(t('message.memberNotInSite')))
     } else {
@@ -738,10 +745,17 @@ const loginNameValidator = async (rule, value, callback) => {
     }
   } else {
     uiControl.balance = null
-    const { data: bal } = await getMemberBalanceByLoginNameSite(
-      value,
-      form.siteId
-    )
+    if (form.currency !== null && form.currency === 'USDT') {
+      const response = await getMemberCryptoBalanceByLoginNameSite(
+        value,
+        form.siteId
+      )
+      bal = response.data
+    } else {
+      const response = await getMemberBalanceByLoginNameSite(value, form.siteId)
+      bal = response.data
+    }
+
     if (bal === null || bal === undefined) {
       callback(new Error(t('message.memberNotInSite')))
     } else {
@@ -807,7 +821,6 @@ async function loadFormSelect() {
 }
 
 async function loadFormImportSelect() {
-  console.log('loadFormImportSelect : ', importForm.siteId)
   siteCurrencyConfig.supportMultiWallet = null
   siteCurrencyConfig.defaultCurrency = null
   await loadSiteConfig()
@@ -844,9 +857,6 @@ async function loadSiteConfig() {
     siteId = importForm.siteId
     form.siteId = null
   }
-  console.log('form.siteId : ', form.siteId)
-  console.log('importForm.siteId : ', importForm.siteId)
-  console.log('siteId : ', siteId)
   if (siteId) {
     const { data: getDefaultCurrencyConfig } = await getConfigList(
       'fiat_wallet',
@@ -865,16 +875,10 @@ async function loadSiteConfig() {
       : null
   }
 
-  console.log('multiWalletConfig : ', multiWalletConfig)
   if (multiWalletConfig) {
     siteCurrencyConfig.supportMultiWallet = multiWalletConfig
     const { data: getSupportedCurrencies } = await getSupportedCurrencyBySiteId(
       siteId
-    )
-
-    console.log(
-      'siteCurrencyConfig.supportMultiWallet : ',
-      siteCurrencyConfig.supportMultiWallet
     )
     if (getSupportedCurrencies) {
       currencyList.currencyGroupList = [
@@ -997,52 +1001,27 @@ function handleImportCauseChange(selectedValue) {
 }
 
 async function handleBalanceType(value) {
-  console.log('change of handleBalanceType')
+  let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
-    if (form.currency === 'USDT') {
-      const { data: bal } = await getMemberCryptoBalanceByLoginNameSite(
+    if (form.currency !== null && form.currency === 'USDT') {
+      const response = await getMemberCryptoBalanceByLoginNameSite(
         form.loginName,
         form.siteId
       )
-      if (bal === null || bal === undefined) {
-      } else {
-        uiControl.balance = bal
-      }
+      bal = response.data
     } else {
-      const { data: bal } = await getMemberBalanceByLoginNameSite(
+      const response = await getMemberBalanceByLoginNameSite(
         form.loginName,
         form.siteId
       )
-      if (bal === null || bal === undefined) {
-      } else {
-        uiControl.balance = bal
-      }
+      bal = response.data
+    }
+    if (bal === null || bal === undefined) {
+      uiControl.balance = null
+    } else {
+      uiControl.balance = bal
     }
   }
-
-  // if (uiControl.dialogType === 'CREATE_DEDUCT') {
-  //   const { data: bal } = await getMemberBalanceByLoginNameSite(
-  //     value,
-  //     form.siteId
-  //   )
-  //   if (bal === null || bal === undefined) {
-  //     callback(new Error(t('message.memberNotInSite')))
-  //   } else {
-  //     uiControl.balance = bal
-  //     callback()
-  //   }
-  // } else {
-  //   uiControl.balance = null
-  //   const { data: bal } = await getMemberBalanceByLoginNameSite(
-  //     value,
-  //     form.siteId
-  //   )
-  //   if (bal === null || bal === undefined) {
-  //     callback(new Error(t('message.memberNotInSite')))
-  //   } else {
-  //     callback()
-  //   }
-  // }
 }
 
 function createAdd() {
