@@ -390,9 +390,9 @@ function initPay() {
 
   let promoParam = "";
 
-  // if (route.query.from === "/promo") {
-  //   promoParam = "?promo=1";
-  // }
+  if (route.query.extra === "true") {
+    promoParam = "?promo=1";
+  }
 
   payMethods.value = [];
 
