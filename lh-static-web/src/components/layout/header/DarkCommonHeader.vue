@@ -337,7 +337,7 @@
   import moment from "moment";
   import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
   import { getUnreadTotal } from "@/api/personal/mailbox";
-  import LoginDialog from "@/views/LoginDialog.vue";
+  import LoginDialog from "@/views/logindialog/index.vue";
   import RegisterAccount from "@/components/auth/RegisterAccount.vue";
   import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
   import { uploadImage, saveImage } from "@/api/personal/common";

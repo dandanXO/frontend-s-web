@@ -109,7 +109,7 @@ import { ref, onMounted, reactive } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
-import AccountLogin from "@/components/auth/AccountLogin.vue";
+import AccountLogin from "@/components/auth/login/index.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRoute, useRouter } from "vue-router";
 const notify = useNotify();

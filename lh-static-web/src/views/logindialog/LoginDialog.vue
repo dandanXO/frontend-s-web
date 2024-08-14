@@ -41,7 +41,7 @@
         </div>
 
         <div class="agreement-and-forget-pass">
-          <div class="font-gray">登录即代表同意并遵守《用户协议》</div>
+          <div class="font-gray">登录即代表同意并遵守《用户协议》1</div>
           <div><a @click="openForgotpwdDialog">忘记密码</a></div>
         </div>
 
@@ -95,7 +95,7 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { userStore } from "@/store/index";
 import { sendSms } from "@/api/personal/personal";
-import AccountLogin from "@/components/auth/AccountLogin.vue";
+import AccountLogin from "@/components/auth/login/index.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRoute, useRouter } from "vue-router";
 const notify = useNotify();
