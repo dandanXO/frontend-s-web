@@ -183,9 +183,9 @@
       <el-dialog
         class="acc-dialog"
         v-model="loginDialogVisible"
-        width="1126px"
+        width="1100px"
         align-center
-        style="max-width: 1126px"
+        style="max-width: 1100"
         @close="store.loginPageVisible = false"
       >
         <div class="acc-dialog-container">
@@ -2230,7 +2230,7 @@
           border-radius: 20px;
           overflow: hidden;
           max-height: 90vh;
-          min-height: 736px;
+          min-height: 60vh;
         }
   
         .acc-dialog-left {
