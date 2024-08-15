@@ -266,6 +266,297 @@
         </div>
       </div>
     </div>
+    <div class="vip-benefit-section-title"><img src="../assets/vip/instruction.png"></div>
+    <div class="tabs">
+      <div class="tab">
+        <img :src="require(`../assets/vip/vip-benefit${tabActive == 1 ? '-active' : ''}.png`)" @click="tabActive = 1">
+      </div>
+      <div class="tab">
+        <img :src="require(`../assets/vip/vip-rebate${tabActive == 2 ? '-active' : ''}.png`)" @click="tabActive = 2">
+      </div>
+    </div>
+    <div v-if="benefitActive" class="instructions">
+      <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th rowspan="4">VIP等级</th>
+            <th rowspan="4">会员等级</th>
+            <th rowspan="4">首次保级彩金</th>
+            <th rowspan="4">年度保级彩金</th>
+            <th rowspan="4">生日彩金</th>
+            <th rowspan="4">节日礼金</th>
+            <th rowspan="4">每日返水红包</th>
+          </tr>
+          <tr>
+            <th>会员日</th>
+            <th>每月15号</th>
+          </tr>
+          <tr>
+            <th>会员加码</th>
+            <th>充值送10%加码券</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VIP1</td>
+            <td rowspan="2">青铜</td>
+            <td rowspan="2">18元</td>
+            <td rowspan="2">208</td>
+            <td rowspan="2">-</td>
+            <td rowspan="2">-</td>
+            <td>0.1%</td>
+            <td>8</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>VIP2</td>
+            <td>0.2%</td>
+            <td>18</td>
+            <td>28</td>
+          </tr>
+          <tr>
+            <td>VIP3</td>
+            <td rowspan="3">白银</td>
+            <td rowspan="3">58元</td>
+            <td rowspan="3">588</td>
+            <td>-</td>
+            <td rowspan="3">-</td>
+            <td>0.3%</td>
+            <td>28</td>
+            <td>58</td>
+          </tr>
+          <tr>
+            <td>VIP4</td>
+            <td>38</td>
+            <td>0.5%</td>
+            <td>38</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>VIP5</td>
+            <td>58</td>
+            <td>0.6%</td>
+            <td>58</td>
+            <td>128</td>
+          </tr>
+          <tr>
+            <td>VIP6</td>
+            <td rowspan="3">黄金</td>
+            <td rowspan="3">288元</td>
+            <td rowspan="3">1088</td>
+            <td>88</td>
+            <td rowspan="2">-</td>
+            <td>0.8%</td>
+            <td>68</td>
+            <td>188</td>
+          </tr>
+          <tr>
+            <td>VIP7</td>
+            <td>188</td>
+            <td>1.0%</td>
+            <td>128</td>
+            <td>258</td>
+          </tr>
+          <tr>
+            <td>VIP8</td>
+            <td>288</td>
+            <td>188</td>
+            <td>1.2%</td>
+            <td>208</td>
+            <td>388</td>
+          </tr>
+          <tr>
+            <td>VIP9</td>
+            <td rowspan="2">铂金</td>
+            <td rowspan="2">588元</td>
+            <td rowspan="2">1888</td>
+            <td>388</td>
+            <td>288</td>
+            <td>1.3%</td>
+            <td>388</td>
+            <td>508</td>
+          </tr>
+          <tr>
+            <td>VIP10</td>
+            <td>588</td>
+            <td>388</td>
+            <td>1.5%</td>
+            <td>588</td>
+            <td>888</td>
+          </tr>
+          <tr>
+            <td>VIP11</td>
+            <td>钻石</td>
+            <td>888元</td>
+            <td>2888</td>
+            <td>888</td>
+            <td>888</td>
+            <td>1.8%</td>
+            <td>888</td>
+            <td>1888</td>
+          </tr>
+          <tr>
+            <td>VIP12</td>
+            <td>王者</td>
+            <td>1,888元</td>
+            <td>8888</td>
+            <td>1888</td>
+            <td>1888</td>
+            <td>2.0%</td>
+            <td>1888</td>
+            <td>2888</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-if="rebateActive" class="instructions">
+      <table border="1" cellspacing="0" cellpadding="5">
+      <thead>
+        <tr>
+          <th>VIP等级</th>
+          <th>电竞</th>
+          <th>体育</th>
+          <th>真人</th>
+          <th>棋牌</th>
+          <th>电子</th>
+          <th>捕鱼</th>
+          <th>返水上限</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>VIP0</td>
+          <td>0.40%</td>
+          <td>0.4%</td>
+          <td>0.4%</td>
+          <td>0.4%</td>
+          <td>0.6%</td>
+          <td>0.15%</td>
+          <td>8,888</td>
+        </tr>
+        <tr>
+          <td>VIP1</td>
+          <td>0.40%</td>
+          <td>0.4%</td>
+          <td>0.4%</td>
+          <td>0.45%</td>
+          <td>0.6%</td>
+          <td>0.2%</td>
+          <td>8,888</td>
+        </tr>
+        <tr>
+          <td>VIP2</td>
+          <td>0.40%</td>
+          <td>0.4%</td>
+          <td>0.4%</td>
+          <td>0.45%</td>
+          <td>0.6%</td>
+          <td>0.2%</td>
+          <td>8,888</td>
+        </tr>
+        <tr>
+          <td>VIP3</td>
+          <td>0.50%</td>
+          <td>0.45%</td>
+          <td>0.45%</td>
+          <td>0.45%</td>
+          <td>0.6%</td>
+          <td>0.25%</td>
+          <td>12,888</td>
+        </tr>
+        <tr>
+          <td>VIP4</td>
+          <td>0.50%</td>
+          <td>0.50%</td>
+          <td>0.45%</td>
+          <td>0.50%</td>
+          <td>0.8%</td>
+          <td>0.30%</td>
+          <td>18,888</td>
+        </tr>
+        <tr>
+          <td>VIP5</td>
+          <td>0.58%</td>
+          <td>0.55%</td>
+          <td>0.50%</td>
+          <td>0.55%</td>
+          <td>0.8%</td>
+          <td>0.30%</td>
+          <td>18,888</td>
+        </tr>
+        <tr>
+          <td>VIP6</td>
+          <td>0.58%</td>
+          <td>0.60%</td>
+          <td>0.55%</td>
+          <td>0.60%</td>
+          <td>0.8%</td>
+          <td>0.35%</td>
+          <td>28,888</td>
+        </tr>
+        <tr>
+          <td>VIP7</td>
+          <td>0.58%</td>
+          <td>0.65%</td>
+          <td>0.60%</td>
+          <td>0.70%</td>
+          <td>0.85%</td>
+          <td>0.35%</td>
+          <td>28,888</td>
+        </tr>
+        <tr>
+          <td>VIP8</td>
+          <td>0.65%</td>
+          <td>0.70%</td>
+          <td>0.68%</td>
+          <td>0.80%</td>
+          <td>0.90%</td>
+          <td>0.35%</td>
+          <td>38,888</td>
+        </tr>
+        <tr>
+          <td>VIP9</td>
+          <td>0.75%</td>
+          <td>0.80%</td>
+          <td>0.75%</td>
+          <td>0.90%</td>
+          <td>1.0%</td>
+          <td>0.40%</td>
+          <td>58,888</td>
+        </tr>
+        <tr>
+          <td>VIP10</td>
+          <td>0.85%</td>
+          <td>0.90%</td>
+          <td>0.80%</td>
+          <td>1.0%</td>
+          <td>1.05%</td>
+          <td>0.40%</td>
+          <td>88,888</td>
+        </tr>
+        <tr>
+          <td>VIP11</td>
+          <td>0.95%</td>
+          <td>1.0%</td>
+          <td>0.85%</td>
+          <td>1.1%</td>
+          <td>1.1%</td>
+              <td>0.40%</td>
+              <td>88,888</td>
+            </tr>
+            <tr>
+              <td>VIP12</td>
+              <td>1.1%</td>
+              <td>1.0%</td>
+              <td>1.0%</td>
+              <td>1.2%</td>
+              <td>1.2%</td>
+              <td>0.50%</td>
+              <td>128,888</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
     <div class="terms-conditions">
       <div class="section-title">规则与条款</div>
       <!-- <img
@@ -282,7 +573,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, defineComponent, computed, onMounted, watch } from "vue";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
@@ -585,6 +876,11 @@ import { useNotify } from "@/hooks/notify";
         return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       }
     }
+    const tabActive = ref(1); // Bind this to the active tab
+
+    // Conditional logic for active states
+    const benefitActive = computed(() => tabActive.value === 1);
+    const rebateActive = computed(() => tabActive.value === 2);
     watch(() => store.token, () => {
       initVIPTable(); 
     }, { immediate: true }); 
@@ -1213,7 +1509,51 @@ $border-settings: 1px solid #e5e7eb;
       margin: 20px 0;
     }
   }
-
+  .tabs {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    gap: 10px;
+    .tab {
+      max-width: 200px;
+      img { 
+        width: 100%;
+      }
+    }
+  }
+  .vip-benefit-section-title {
+      max-width: 800px;
+      margin: 10px auto;
+      img {
+        width: 100%;
+      }
+    }
+  .instructions {
+    border-radius: 10px;
+    overflow: auto;
+    width: 95%;
+    max-width: 1200px;
+    margin: 0px auto 20px;
+    table {
+      font-size: 20px;
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+      thead {
+          background: linear-gradient(180deg, #4D6ABE 0%, #354D93 24.31%, #16234E 100%);
+          color: #ffffff;
+      }
+      tbody {
+        background: #202946;
+        color: #ffffff;
+      }
+      th, td {
+        white-space: pre;
+        padding: 10px;
+          border: 0.5px solid #799DF8;
+        }
+    }
+  }
   .terms-conditions {
     max-width: 1200px;
     margin: 0 auto;
