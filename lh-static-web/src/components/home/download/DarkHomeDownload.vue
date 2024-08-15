@@ -25,11 +25,11 @@
   .download-section {
     width: 100%;
     // max-width: 1040px;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
 
     .app-download-wrapper {
-        background: url('../../../assets/home/download/app-download.png') no-repeat center center;
+        background: url('../../../assets/home/download/app-download-dark.png') no-repeat center center;
         background-size: 100% 100%;
         aspect-ratio: 1920 / 1561;
         position: relative;
