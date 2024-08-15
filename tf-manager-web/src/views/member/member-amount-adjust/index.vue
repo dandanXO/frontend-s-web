@@ -190,7 +190,7 @@
           :label="t('fields.currency')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
-              siteCurrencyConfig.supportMultiWallet === '1'
+              siteCurrencyConfig.supportMultiWallet === 'OPEN'
           "
           prop="currency"
         >
@@ -345,7 +345,7 @@
           :label="t('fields.currency')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
-              siteCurrencyConfig.supportMultiWallet === '1'
+              siteCurrencyConfig.supportMultiWallet === 'OPEN'
           "
           prop="currency"
         >
@@ -867,7 +867,7 @@ async function getSiteConfig(siteId) {
     ? multiWalletResponse[0].value
     : null
 
-  if (multiWalletConfig === '1') {
+  if (multiWalletConfig === 'OPEN') {
     siteCurrencyConfig.supportMultiWallet = multiWalletConfig
     const { data: currencyResponse } = await getSupportedCurrencyBySiteId(
       siteId
@@ -1062,6 +1062,7 @@ async function downloadTemplate() {
   XLSX.writeFile(wb, 'member_amount_adjust.xlsx')
 }
 
+/* eslint-disable */
 function setWidth(exportData, maxLength) {
   exportData.map(data => {
     Object.keys(data).map(key => {
@@ -1072,8 +1073,8 @@ function setWidth(exportData, maxLength) {
             ? maxLength[key]
             : 10
           : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
+          ? maxLength[key]
+          : value.length + 2
     })
   })
 }

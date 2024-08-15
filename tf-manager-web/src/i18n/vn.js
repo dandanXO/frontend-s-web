@@ -447,11 +447,11 @@ export default {
     OFF: 'tắt',
   },
   valueRulesType: {
-    INPUT: "Nhập",
-    RADIO: "Radio",
-    SELECT: "Chọn",
-    SWITCH: "Công tắc",
-    CHECKBOX: "Hộp kiểm"
+    INPUT: 'Nhập',
+    RADIO: 'Radio',
+    SELECT: 'Chọn',
+    SWITCH: 'Công tắc',
+    CHECKBOX: 'Hộp kiểm',
   },
   fields: {
     account: 'Tài khoản',
@@ -742,6 +742,7 @@ export default {
     currencyCode: 'Mã tiền tệ',
     currencyName: 'Tên tiền tệ',
     currencyRate: 'Tỷ giá tiền tệ',
+    currencyWallet: 'ví tiền tệ',
     currentPassword: 'Mật khẩu hiện tại',
     currentPlace: 'Vị trí hiện tại',
     customerSupportAddress: 'Địa chỉ hỗ trợ khách hàng',
@@ -2535,7 +2536,7 @@ export default {
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
     'Media Display Settings': 'Cài đặt hiển thị phương tiện',
     'Vip Report': 'Báo cáo VIP',
-    'System Value Rules': 'Quy tắc giá trị hệ thống'
+    'System Value Rules': 'Quy tắc giá trị hệ thống',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
