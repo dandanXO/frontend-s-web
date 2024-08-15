@@ -2729,7 +2729,8 @@ export default {
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
     'Vip Report': 'Vip Report',
-    'System Value Rules': 'System Value Rules'
+    'System Value Rules': 'System Value Rules',
+    'Sites Config': 'Site Config'
   },
   google: {
     google_auth_menu: 'Google Authenticator',

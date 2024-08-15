@@ -161,11 +161,11 @@ import {
   deleteById,
   getDefaultConfigs,
   updateConfig,
-} from '../../../api/config'
+} from '../../../../api/config'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
-import { required } from '../../../utils/validate'
-import { getValueRulesList } from '../../../api/value-rules'
+import { required } from '../../../../utils/validate'
+import { getValueRulesList } from '../../../../api/value-rules'
 
 const { t } = useI18n()
 
