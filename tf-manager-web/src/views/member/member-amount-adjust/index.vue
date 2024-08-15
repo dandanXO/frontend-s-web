@@ -187,7 +187,7 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          :label="t('fields.currency')"
+          :label="t('fields.currencyWallet')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
               siteCurrencyConfig.supportMultiWallet === 'OPEN'
@@ -342,7 +342,7 @@
           </span>
         </el-form-item>
         <el-form-item
-          :label="t('fields.currency')"
+          :label="t('fields.currencyWallet')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
               siteCurrencyConfig.supportMultiWallet === 'OPEN'
@@ -485,7 +485,7 @@
       />
       <el-table-column
         prop="currency"
-        :label="t('fields.currency')"
+        :label="t('fields.currencyWallet')"
         min-width="120"
       ></el-table-column>
       <el-table-column
