@@ -499,11 +499,11 @@ export default {
     OFF: '关',
   },
   valueRulesType: {
-    INPUT: "输入框",
-    RADIO: "单选框",
-    SELECT: "下拉框",
-    SWITCH: "开关",
-    CHECKBOX: "多选框"
+    INPUT: '输入框',
+    RADIO: '单选框',
+    SELECT: '下拉框',
+    SWITCH: '开关',
+    CHECKBOX: '多选框',
   },
   fields: {
     account: '账号',
@@ -797,6 +797,7 @@ export default {
     currencyCode: '货币代码',
     currencyName: '货币名称',
     currencyRate: '汇率',
+    currencyWallet: '钱包',
     currentPassword: '当前密码',
     currentPlace: '当前位置',
     customerSupportAddress: '客服地址',
@@ -1026,7 +1027,7 @@ export default {
     gameAccountName: '游戏帐户名',
     gameCode: '游戏代码',
     domainEasy: 'Domain 易记域名',
-    videoShiPin: "Video 视频",
+    videoShiPin: 'Video 视频',
     gameConsolidateReport: '游戏报表',
     gameMatch: '保险投注赛事',
     gameMatchRecord: '玩家保险投注记录',
@@ -1974,7 +1975,7 @@ export default {
     retainLevelBet: '保级流水',
     retainLevelDays: '保级天数',
     editSystemValueRules: '编辑系统设置值规则',
-    addSystemValueRules: '新增系统设置值规则'
+    addSystemValueRules: '新增系统设置值规则',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2681,7 +2682,7 @@ export default {
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
     'Vip Report': 'VIP投注汇总报表',
-    'System Value Rules': '设置规则',
+    'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
   },
   google: {

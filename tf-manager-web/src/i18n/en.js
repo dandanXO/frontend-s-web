@@ -795,6 +795,7 @@ export default {
     currencyCode: 'Currency Code',
     currencyName: 'Currency Name',
     currencyRate: 'Currency Rate',
+    currencyWallet: 'Currency Wallet',
     currentPassword: 'Current Password',
     currentPlace: 'Current Place',
     customerSupportAddress: 'Customer Support Address',
@@ -1975,7 +1976,7 @@ export default {
     retainLevelBet: 'Retain Level Bet',
     retainLevelDays: 'Retain Level Days',
     editSystemValueRules: 'Edit System Value Rule',
-    addSystemValueRules: 'Add System Value Rule'
+    addSystemValueRules: 'Add System Value Rule',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2472,7 +2473,8 @@ export default {
     validatePlanLimitMaxRequired: 'Maximum investment limit required',
     affiliateReactivated: 'Affiliate Reactivated',
     required_6_digits_code: 'Must be composed of 6 digits code.',
-    required_only_digits_and_alphabet: 'Must be composed of digits and alphabet',
+    required_only_digits_and_alphabet:
+      'Must be composed of digits and alphabet',
   },
   menu: {
     undefined: '',

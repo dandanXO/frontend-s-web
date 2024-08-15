@@ -445,11 +445,11 @@ export default {
     OFF: '끄기',
   },
   valueRulesType: {
-    INPUT: "입력",
-    RADIO: "라디오 버튼",
-    SELECT: "선택 상자",
-    SWITCH: "스위치",
-    CHECKBOX: "체크박스"
+    INPUT: '입력',
+    RADIO: '라디오 버튼',
+    SELECT: '선택 상자',
+    SWITCH: '스위치',
+    CHECKBOX: '체크박스',
   },
   fields: {
     account: '계정',
@@ -740,6 +740,7 @@ export default {
     currencyCode: '통화 코드',
     currencyName: '통화 이름',
     currencyRate: '환율',
+    currencyWallet: '화폐 지갑',
     currentPassword: '현재 비밀번호',
     currentPlace: '현재 위치',
     customerSupportAddress: '고객 지원 주소',
