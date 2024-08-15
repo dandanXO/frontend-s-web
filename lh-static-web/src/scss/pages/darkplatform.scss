@@ -59,6 +59,7 @@
         padding-bottom: 0px;
         position: relative;
         min-height: 675px;
+        gap: 20px;
   
         &--img {
           justify-content: center;
@@ -112,28 +113,21 @@
           }
         }
   
-        .platform-title-img {
-          margin-top: 1rem;
-        }
-  
         .platform-txt-box {
-          color: $font-3;
-          margin-top: 1rem;
+          color: #fff;
           max-width: 32rem;
           min-width: 45px;
-          height: 50px;
+          min-height: 50px;
+          text-align: center;
         }
   
         .platform-pattern-row {
-          margin-top: 1rem;
-  
           img {
             height: 50px;
           }
         }
   
         .platform-list-box {
-          margin-top: 1.5rem;
           margin-bottom: 1.5rem;
           display: flex;
           flex-wrap: wrap;
@@ -742,7 +736,14 @@
           }
   
           .platform-txt-box {
-            color: $font-0;
+            color: #fff;
+            font-family: 'PingFang SC';
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 27px;
+            letter-spacing: 0.04em;
+            text-align: center;
+
           }
         }
       }
