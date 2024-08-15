@@ -126,7 +126,7 @@
       <div v-if="isShowTable" class="absolute-box">
         <div class="arrow_box">
           <div class="overflow-table">
-            <table border="1">
+            <!-- <table border="1">
               <thead>
                 <tr>
                   <th style="background: #AD9870;">等级</th>
@@ -189,6 +189,90 @@
                   <td>12,500,000</td>
                   <td>21,000,000</td>
                   <td>50,000,000</td>
+                </tr>
+              </tbody>
+            </table> -->
+            <table border="1" cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th style="background: #F1DDA0; color:#766442;">VIP等级</th>
+                  <th style="background: #F1DDA0; color:#766442;">升级条件（流水）</th>
+                  <th style="background: #F1DDA0; color:#766442;">保级条件（90天）</th>
+                  <th style="background: #F1DDA0; color:#766442;">晋级彩金</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>VIP 1</td>
+                  <td>3,000</td>
+                  <td>1,500</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>VIP 2</td>
+                  <td>17,500</td>
+                  <td>7,500</td>
+                  <td>18</td>
+                </tr>
+                <tr>
+                  <td>VIP 3</td>
+                  <td>50,000</td>
+                  <td>19,000</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>VIP 4</td>
+                  <td>150,000</td>
+                  <td>32,500</td>
+                  <td>38</td>
+                </tr>
+                <tr>
+                  <td>VIP 5</td>
+                  <td>600,000</td>
+                  <td>75,000</td>
+                  <td>58</td>
+                </tr>
+                <tr>
+                  <td>VIP 6</td>
+                  <td>1,200,000</td>
+                  <td>200,000</td>
+                  <td>88</td>
+                </tr>
+                <tr>
+                  <td>VIP 7</td>
+                  <td>2,400,000</td>
+                  <td>620,000</td>
+                  <td>188</td>
+                </tr>
+                <tr>
+                  <td>VIP 8</td>
+                  <td>6,400,000</td>
+                  <td>1,900,000</td>
+                  <td>288</td>
+                </tr>
+                <tr>
+                  <td>VIP 9</td>
+                  <td>24,000,000</td>
+                  <td>6,250,000</td>
+                  <td>388</td>
+                </tr>
+                <tr>
+                  <td>VIP 10</td>
+                  <td>64,000,000</td>
+                  <td>12,500,000</td>
+                  <td>588</td>
+                </tr>
+                <tr>
+                  <td>VIP 11</td>
+                  <td>150,000,000</td>
+                  <td>21,000,000</td>
+                  <td>888</td>
+                </tr>
+                <tr>
+                  <td>VIP 12</td>
+                  <td>250,000,000</td>
+                  <td>50,000,000</td>
+                  <td>1,888</td>
                 </tr>
               </tbody>
             </table>
