@@ -736,9 +736,14 @@
     .platform-section {
       // background-image: none;
       // background: $background-dark;
-      background-image: url("../../assets/slot/slot-page-bg.jpg");
-      background-size: 100% auto;
+      background-image: url("../../assets/images/home/game-page-bg-dark.jpg");
+      background-size: 100% 100%;
       background-color: #151f38;
+
+      &:has(.slot-container) {
+        background-image: url("../../assets/slot/slot-page-bg.jpg");
+        background-size: 100% auto;
+      }
     }
 
     .platform-container-slot {
