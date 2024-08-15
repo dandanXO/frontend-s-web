@@ -164,13 +164,15 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { footballHistroy, claimBonusItem2 } from "../../../api/index/promo";
-import { useNotify } from "src/hooks/notify";
+// import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
-const notify = useNotify();
+// const notify = useNotify();
 const store = userStore();
 
 const totalValidBet = ref(0);
@@ -182,7 +184,12 @@ const handleClaimBonus = () => {
       if (res.code === 0) {
         fetchData();
       } else {
-        notify.error(res.message);
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
       }
     })
     .catch((err) => {

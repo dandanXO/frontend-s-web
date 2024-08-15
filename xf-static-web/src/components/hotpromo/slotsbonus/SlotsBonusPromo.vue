@@ -150,7 +150,7 @@ const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
 const getMatchData = async () => {
-  const res = await getMatchAndPrizeInfo('bet');
+  const res = await getMatchAndPrizeInfo("bet");
   if (res.code === 0) {
     bonus.value = res.data.expectedBonus;
     totalValidBet.value = res.data.betAmount;
@@ -200,7 +200,6 @@ const claimHongBao = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "PingFang SC";
 }
 
 .match-container {

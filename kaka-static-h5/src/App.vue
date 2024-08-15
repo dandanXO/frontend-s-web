@@ -244,7 +244,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: "ka2"
+            siteCode: process.env.SITE
           })
         );
       }
