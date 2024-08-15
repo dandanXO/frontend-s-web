@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              今日真人棋牌场馆投注：
+              当日真人棋牌场馆有效投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
