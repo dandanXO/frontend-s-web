@@ -15,7 +15,10 @@
           <el-tab-pane :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
             <template #label>
               <div class="mail-category-label">
-                <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+                <!-- <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" /> -->
+                <div class="red-dot-icon" v-if="unreadCount[item.type]" color="red">
+                  {{ unreadCount[item.type] }}
+                </div>
                 <span>
                   {{ item.name }}
                 </span>
@@ -106,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, reactive, onMounted, watch, computed } from "vue";
 import {
   mailInbox,
   mailOutbox,
@@ -248,6 +251,17 @@ const loadNotifyMailbox = () => {
       console.log(error);
     });
 };
+
+const unreadCount = computed(() => {
+  return Object.keys(mailboxNotifyState).reduce((result, key) => {
+    if (key === "ALL") {
+      result[key] = mailboxNotifyState[key].filter((item) => item.readTime === null).length;
+    } else {
+      result[key] = mailboxNotifyState[key].filter((item) => item.type === key && item.readTime === null).length;
+    }
+    return result;
+  }, {});
+});
 
 const hasUnreadMessages = (type) => {
   if (type === "ALL") {
@@ -732,11 +746,14 @@ onMounted(() => {
     align-items: center;
 
     .red-dot-icon {
-      height: 10px;
-      width: 10px;
+      // height: 10px;
+      // width: 10px;
+      padding: 1px 6px;
       background: #db0011;
-      border-radius: 50%;
+      border-radius: 25px;
       margin-right: 5px;
+      font-size: 10px;
+      color: #fff;
     }
   }
 }

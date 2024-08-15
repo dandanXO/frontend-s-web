@@ -1,12 +1,13 @@
 <template>
   <q-page>
-    <MailDetail v-if="route.query.id && selectedMail" :mail="selectedMail"/>
+    <MailDetail v-if="route.query.id && selectedMail" :mail="selectedMail" />
 
     <template v-else>
       <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in MAILBOX_TYPES">
           <div class="tab-flex">
-            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+            <!-- <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" /> -->
+            <q-badge class="red-dot-icon" v-if="unreadCount[item.type]">{{ unreadCount[item.type] }}</q-badge>
             <div>{{ item.name }}</div>
           </div>
         </q-tab>
@@ -25,7 +26,12 @@
               <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
                 全部删除
               </q-btn>
-              <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
+              <q-toggle
+                v-if="truncatedListByType.length"
+                v-model="allowSelectMultiple"
+                :label="'选择多个'"
+                left-label
+              />
               <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="readMails(item.type)">
                 已读
               </q-btn>
@@ -33,7 +39,7 @@
                 删除
               </q-btn>
             </div>
-            <q-infinite-scroll  @load="onLoad" :offset="150">
+            <q-infinite-scroll @load="onLoad" :offset="150">
               <q-card
                 v-for="(det, n) in truncatedListByType"
                 :key="n"
@@ -167,8 +173,8 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
-    const route = useRoute()
-    const router = useRouter()
+    const route = useRoute();
+    const router = useRouter();
     const notify = useNotify();
 
     const mailboxMessageTab = ref(MAILBOX_TYPES[0].type);
@@ -192,13 +198,24 @@ export default defineComponent({
     const selectedMailIds = ref({});
     const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
 
-    const selectedMail = ref(null)
+    const selectedMail = ref(null);
 
+    const unreadCount = computed(() => {
+      const result = {};
+      MAILBOX_TYPES.forEach(({ type }) => {
+        if (type === "ALL") {
+          result[type] = truncatedList.value.filter((item) => item.readTime === null).length;
+        } else {
+          result[type] = truncatedList.value.filter((item) => item.type === type && item.readTime === null).length;
+        }
+      });
+      return result;
+    });
 
     const onLoad = (index, done) => {
       comList.value = props.list;
-      if(route.query.id && !selectedMail.value) {
-        selectedMail.value = props.list.find(mail => mail.id === Number(route.query.id))
+      if (route.query.id && !selectedMail.value) {
+        selectedMail.value = props.list.find((mail) => mail.id === Number(route.query.id));
       }
       setTimeout(() => {
         if (comList.value.length) {
@@ -212,9 +229,9 @@ export default defineComponent({
     };
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
-      selectedMail.value = mail
+      selectedMail.value = mail;
       openMsg(mail);
-      router.push({query:{id:mail.id,type:mailboxMessageTab.value}})
+      router.push({ query: { id: mail.id, type: mailboxMessageTab.value } });
       // if (isSelectedMail.value !== mail.id) {
       //   isSelectedMail.value = mail.id;
       // } else {
@@ -323,7 +340,7 @@ export default defineComponent({
       const { id, readTime } = mail;
       showMailId.value = id;
       mail.readTime = moment().format("YYYY-MM-DD");
-      selectedMail.value = mail
+      selectedMail.value = mail;
 
       // console.log(mail);
       // mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
@@ -466,9 +483,9 @@ export default defineComponent({
 
     const hasUnreadMessages = (type) => {
       if (type === "ALL") {
-        return truncatedList.value.some((item) => item.readTime === null);
+        return truncatedList.value.filter((item) => item.readTime === null).length;
       }
-      return truncatedList.value.some((item) => item.type === type && item.readTime === null);
+      return truncatedList.value.filter((item) => item.type === type && item.readTime === null).length;
     };
 
     onMounted(() => {
@@ -502,7 +519,8 @@ export default defineComponent({
       openMsg,
       hasUnreadMessages,
       selectedMail,
-      route
+      route,
+      unreadCount
     };
   }
 });
@@ -627,11 +645,12 @@ export default defineComponent({
   align-items: center;
 }
 .red-dot-icon {
-  height: 10px;
-  width: 10px;
+  justify-content: center;
+  padding: 2px 5px;
   background: #db0011;
-  border-radius: 50%;
+  border-radius: 25px;
   margin-right: 5px;
+  font-size: 10px;
 }
 
 .q-tab {
