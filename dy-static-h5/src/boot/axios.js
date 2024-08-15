@@ -6,7 +6,8 @@ import LocalStorage from "boot/local-storage";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 
-const isGlobalDY = window.location.hostname.indexOf("dy988") > -1;
+console.log(window.location.hostname);
+const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
 
 const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;

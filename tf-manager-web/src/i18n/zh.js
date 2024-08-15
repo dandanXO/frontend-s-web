@@ -2683,6 +2683,7 @@ export default {
     'Media Display Settings': '媒体显示设置',
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
+    'Sites Config': '站点设置',
   },
   google: {
     google_auth_menu: '谷歌验证',

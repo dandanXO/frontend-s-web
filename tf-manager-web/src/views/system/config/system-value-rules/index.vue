@@ -282,11 +282,11 @@
 <script setup>
 
 import { onMounted, reactive, ref, nextTick } from "vue";
-import { getValueRulesRecords, deleteValueRules, createValueRules, updateValueRules } from "../../../api/value-rules";
-import { required } from '../../../utils/validate'
+import { getValueRulesRecords, deleteValueRules, createValueRules, updateValueRules } from "../../../../api/value-rules";
+import { required } from '../../../../utils/validate'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { hasRole, hasPermission } from '../../../utils/util'
+import { hasRole, hasPermission } from '../../../../utils/util'
 const { t } = useI18n()
 const rulesForm = ref(null)
 const param = ref([])
