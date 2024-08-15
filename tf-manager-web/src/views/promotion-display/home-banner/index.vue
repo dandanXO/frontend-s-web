@@ -81,7 +81,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="600px"
+      width="800px"
       :close-on-press-escape="false"
     >
       <el-form
@@ -92,6 +92,25 @@
         size="small"
         label-width="180px"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px"
+            default-first-option
+            @focus="loadSites"
+            @change="loadDarkMode"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.title')" prop="title">
           <el-input
             :disabled="uiControl.dialogType !== 'CREATE'"
@@ -99,70 +118,140 @@
             style="width: 350px"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.desktopBanner')" prop="desktopImageUrl">
-          <el-row :gutter="10">
-            <el-col v-if="form.desktopImageUrl" style="width: 250px">
-              <el-image
-                v-if="form.desktopImageUrl"
-                :src="promoDir + form.desktopImageUrl"
-                fit="contain"
-                class="preview"
-                :preview-src-list="[promoDir + form.desktopImageUrl]"
-              />
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-button
-              icon="el-icon-plus"
-              size="mini"
-              type="primary"
-              v-permission="['sys:siteimage:add']"
-              @click="showImageDialog('DESKTOP_BANNER')"
-            >
-              {{ t('fields.upload') }}
-            </el-button>
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('DESKTOP')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-row>
-        </el-form-item>
-        <el-form-item :label="t('fields.mobileBanner')" prop="mobileImageUrl">
-          <el-row :gutter="10">
-            <el-col v-if="form.mobileImageUrl" style="width: 250px; max-height: 250px">
-              <el-image
-                v-if="form.mobileImageUrl"
-                :src="promoDir + form.mobileImageUrl"
-                fit="contain"
-                class="preview"
-                :preview-src-list="[promoDir + form.mobileImageUrl]"
-              />
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-button
-              icon="el-icon-plus"
-              size="mini"
-              type="primary"
-              v-permission="['sys:siteimage:add']"
-              @click="showImageDialog('MOBILE_BANNER')"
-            >
-              {{ t('fields.upload') }}
-            </el-button>
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('MOBILE')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-row>
-        </el-form-item>
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <div style="display: flex">>
+            <el-form-item :label="t('fields.desktopBanner')" prop="desktopImageUrl" style="flex: 1">
+              <el-row :gutter="10">
+                <el-col v-if="form.desktopImageUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopImageUrl"
+                    :src="promoDir + form.desktopImageUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopImageUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="10">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showImageDialog('DESKTOP_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopBannerDark')" prop="desktopImageUrlDark" style="flex: 1">
+              <el-row :gutter="10">
+                <el-col v-if="form.desktopImageUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopImageUrlDark"
+                    :src="promoDir + form.desktopImageUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopImageUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="10">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showImageDialog('DESKTOP_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </div>
+          <div style="display: flex">
+            <el-form-item :label="t('fields.mobileBanner')" prop="mobileImageUrl" style="flex: 1">
+              <el-row :gutter="10">
+                <el-col v-if="form.mobileImageUrlDark || form.mobileImageUrl" style="width: 200px; max-height: 200px">
+                  <el-image
+                    v-if="form.mobileImageUrl"
+                    :src="promoDir + form.mobileImageUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileImageUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="10">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showImageDialog('MOBILE_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.mobileBannerDark')" prop="mobileImageUrlDark" style="flex: 1">
+              <el-row :gutter="10">
+                <el-col v-if="form.mobileImageUrlDark || form.mobileImageUrl" style="width: 200px">
+                  <el-image
+                    v-if="form.mobileImageUrlDark"
+                    :src="promoDir + form.mobileImageUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileImageUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="10">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showImageDialog('MOBILE_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </div>
+        </div>
         <el-form-item :label="t('fields.redirect')" prop="redirectUrl">
           <el-input v-model="form.redirectUrl" style="width: 350px" />
         </el-form-item>
@@ -186,24 +275,6 @@
               :key="item.key"
               :label="t('homeBannerType.' + item.displayName)"
               :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="form.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 350px"
-            default-first-option
-            @focus="loadSites"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
             />
           </el-select>
         </el-form-item>
@@ -434,6 +505,24 @@
           :preview-src-list="[uploadedImage.url]"
         />
       </div>
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="imageForm.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 350px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item :label="t('fields.image')" prop="path">
         <el-row :gutter="10">
           <el-col :span="2">
@@ -463,24 +552,6 @@
       </el-form-item>
       <el-form-item :label="t('fields.category')" prop="category">
         <span style="width: 350px">{{ t('fields.promo') }}</span>
-      </el-form-item>
-      <el-form-item :label="t('fields.site')" prop="siteId">
-        <el-select
-          v-model="imageForm.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 350px"
-          default-first-option
-          @focus="loadSites"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
       </el-form-item>
       <el-form-item
         :label="t('fields.promoType')"
@@ -545,6 +616,7 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import { getSupportDarkMode } from "@/api/config";
 
 const { t } = useI18n()
 const store = useStore()
@@ -603,6 +675,8 @@ const uiControl = reactive({
   imageSelectionTitle: '',
   imageSelectionType: '',
   imageSelectionVisible: false,
+  supportDarkMode: false,
+  selectDarkImage: false,
 })
 
 let chooseBanner = []
@@ -627,7 +701,9 @@ const form = reactive({
   id: null,
   title: null,
   desktopImageUrl: null,
+  desktopImageUrlDark: null,
   mobileImageUrl: null,
+  mobileImageUrlDark: null,
   redirectUrl: null,
   sequence: null,
   category: null,
@@ -700,6 +776,7 @@ function showDialog(type) {
       bannerForm.value.resetFields()
       form.id = null
     }
+    form.siteId = request.siteId
     uiControl.dialogTitle = t('fields.addBanner')
   } else {
     uiControl.dialogTitle = t('fields.editBanner')
@@ -748,12 +825,17 @@ function selectImage(item) {
   selectedImage.remark = item.remark
 }
 
-async function browseImage(type) {
+async function browseImage(type, isDark) {
   loadSiteImage(type)
   if (type === 'DESKTOP') {
     uiControl.imageSelectionTitle = t('fields.desktopBanner')
   } else {
     uiControl.imageSelectionTitle = t('fields.mobileBanner')
+  }
+  if (uiControl.supportDarkMode && isDark) {
+    uiControl.selectDarkImage = true
+  } else {
+    uiControl.selectDarkImage = false
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
@@ -877,9 +959,17 @@ function submit() {
 
 function submitImage() {
   if (uiControl.imageSelectionType === 'DESKTOP') {
-    form.desktopImageUrl = selectedImage.path
+    if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+      form.desktopImageUrlDark = selectedImage.path
+    } else {
+      form.desktopImageUrl = selectedImage.path
+    }
   } else {
-    form.mobileImageUrl = selectedImage.path
+    if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+      form.mobileImageUrlDark = selectedImage.path
+    } else {
+      form.mobileImageUrl = selectedImage.path
+    }
   }
   uiControl.imageSelectionVisible = false
 }
@@ -951,6 +1041,13 @@ function submitImageUpload() {
   })
 }
 
+async function loadDarkMode() {
+  if (request.siteId) {
+    const { data: darkMode } = await getSupportDarkMode(request.siteId)
+    uiControl.supportDarkMode = darkMode;
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -958,7 +1055,10 @@ onMounted(async () => {
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
+  } else {
+    request.siteId = siteList.list[0].id
   }
+  await loadDarkMode()
   await loadHomebanner()
 })
 </script>
