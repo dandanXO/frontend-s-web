@@ -8,7 +8,7 @@ import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { memberAccessLog } from "@/api/index/login";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
-import axios from "axios";
+import { submitMemberStats } from "@/api/index/site";
 
 export default defineComponent({
   setup() {
@@ -40,15 +40,16 @@ export default defineComponent({
     const getOnlineStatApi = async () => {
       const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
       store.visitorId = sidParam;
+      const way = "web";
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
-          params: {
-            way: "web",
-            sid: sidParam,
-            siteCode: "xf1"
-          }
-        });
+        const params = {
+          way: way,
+          sid: sidParam,
+          siteCode: process.env.VUE_APP_SITE
+        };
+
+        submitMemberStats(params);
       }
     };
 
@@ -62,7 +63,7 @@ export default defineComponent({
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
+    });
   }
 });
 </script>

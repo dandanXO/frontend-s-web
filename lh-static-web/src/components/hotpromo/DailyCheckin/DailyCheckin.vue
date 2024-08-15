@@ -1,5 +1,71 @@
 <template>
   <div class="container">
+    <div class="seciont2">
+      <div class="first">
+        <div class="title"></div>
+        <div class="day-task">
+          <div class="task-content">
+            <div class="task-left">
+              <div style="margin-right: 20px">
+                <img :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-task-1.png')" />
+              </div>
+              <div>
+                <div style="font-size: 24px">今日签到任务</div>
+                <div style="font-size: 20px">
+                  <img
+                    v-if="todayCheckInState === 'YES' || todayCheckInState === 'CLAIMED'"
+                    style="width: 20px; height: 20px"
+                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-done.png')"
+                  />
+                  <img
+                    v-else
+                    style="width: 20px; height: 20px"
+                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-cancel.png')"
+                  />
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ todayMinDeposit }} 元</span>
+                </div>
+              </div>
+            </div>
+            <div class="task-right">
+              <button v-if="todayCheckInState === 'YES' || todayCheckInState === 'CLAIMED'" class="button-finish">
+                已完成
+              </button>
+              <button v-else class="button" @click="handleDeposit">去充值</button>
+            </div>
+          </div>
+          <div class="task-content">
+            <div class="task-left">
+              <div style="margin-right: 20px">
+                <img :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-task-2.png')" />
+              </div>
+              <div>
+                <div style="font-size: 24px">获得补签卡</div>
+                <div style="font-size: 20px">
+                  <img
+                    v-if="recheckTaskState === 'CLOSE'"
+                    style="width: 20px; height: 20px"
+                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-done.png')"
+                  />
+                  <img
+                    v-else
+                    style="width: 20px; height: 20px"
+                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-cancel.png')"
+                  />
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ reCheckinMinDeposit }} 元，补签卡 +1</span>
+                </div>
+              </div>
+            </div>
+            <div class="task-right">
+              <div style="margin-top: -20px">
+                剩余补签卡：{{ currentRecheckInChances }} / {{ totalRecheckMinusWeekChances }}
+              </div>
+              <button v-if="recheckTaskState === 'CLOSE'" class="button-finish">已完成</button>
+              <button v-else class="button" @click="handleDeposit">去充值</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="seciont1">
       <div class="basic-info">
         <div>
@@ -16,9 +82,16 @@
           v-for="(item, index) in sectionOneItems"
           :key="item.day"
           class="grid-item"
-          :class="[item.claimState === 'CLAIMED' ? `item${index}-finish` : `item${index}`]"
+          :class="[item.claimState === 'CLAIMED' ? `item-finish item${index}-finish` : `item${index}`]"
           @click="handleClickSectionOneItem(item)"
         >
+          <div class="numbers">
+            <div class="bonus-number">
+              {{ item.bonus }}
+              <span class="rmb">¥</span>
+            </div>
+            <div class="active-point" v-if="item.activePoint > 0">+{{ item.activePoint }}活跃</div>
+          </div>
           <div class="day-number">0{{ index + 1 }}</div>
           <div class="status-img">
             <img
@@ -48,6 +121,7 @@
           <div v-for="(box, index) in sectionOneBoxItems" :key="box.requiredActivePoint">
             <template v-if="index === 0">
               <img
+                :class="box.claimState === 'OPEN' ? 'can-claim' : ''"
                 :src="
                   box.claimState === 'OPEN'
                     ? require('../../../assets/images/promotion/hotpromo/dailyCheckin/box-blue.png')
@@ -109,70 +183,6 @@
       </div>
     </div>
     <div class="seciont2">
-      <div class="first">
-        <div class="title"></div>
-        <div class="day-task">
-          <div class="task-content">
-            <div class="task-left">
-              <div style="margin-right: 20px">
-                <img :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-task-1.png')" />
-              </div>
-              <div>
-                <div style="font-size: 24px">今日签到任务</div>
-                <div style="font-size: 20px">
-                  <img
-                    v-if="todayCheckInState === 'YES' || todayCheckInState === 'CLAIMED'"
-                    style="width: 20px; height: 20px"
-                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-done.png')"
-                  />
-                  <img
-                    v-else
-                    style="width: 20px; height: 20px"
-                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-cancel.png')"
-                  />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ todayMinDeposit }} 元</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-right">
-              <button v-if="todayCheckInState === 'YES' || todayCheckInState === 'CLAIMED'" class="button-finish">
-                已完成
-              </button>
-              <button v-else class="button" @click="handleDeposit">去充值</button>
-            </div>
-          </div>
-          <div class="task-content">
-            <div class="task-left">
-              <div style="margin-right: 20px">
-                <img :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-task-2.png')" />
-              </div>
-              <div>
-                <div style="font-size: 24px">获得补签卡</div>
-                <div style="font-size: 20px">
-                  <img
-                    v-if="recheckTaskState === 'CLOSE'"
-                    style="width: 20px; height: 20px"
-                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-done.png')"
-                  />
-                  <img
-                    v-else
-                    style="width: 20px; height: 20px"
-                    :src="require('../../../assets/images/promotion/hotpromo/dailyCheckin/icon-cancel.png')"
-                  />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥100 元，补签卡 +1</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-right">
-              <div style="margin-top: -20px">
-                剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
-              </div>
-              <button v-if="recheckTaskState === 'CLOSE'" class="button-finish">已完成</button>
-              <button v-else class="button" @click="handleDeposit">去充值</button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="secend">
         <div class="title"></div>
         <div style="width: 100%">
@@ -306,8 +316,9 @@ const countiuneSign = computed(() => {
 const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
-    if (item.claimState === "CLAIMED") {
-      times++;
+    console.log(currentActivePoints.value)
+    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
+      times++
     }
   });
   return times * 25;
@@ -318,6 +329,8 @@ const todayCheckInState = ref("YES");
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
 const todayMinDeposit = ref(0);
+const totalRecheckMinusWeekChances = ref(0);
+const reCheckinMinDeposit = ref(0);
 
 const handleClickSectionOneItem = async (item) => {
   if (item.claimState === "OPEN" || item.claimState === "RECHECKIN") {
@@ -344,6 +357,7 @@ const handleClickBox = async (box) => {
     .then(async (res) => {
       if (res.code === 0) {
         notify.success("领取成功");
+        store.getBalance();
         await fetchData();
       } else {
         notify.error(res.message);
@@ -370,6 +384,11 @@ const fetchData = async () => {
     currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
     currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
     totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+    if (totalRecheckInChances.value !== 0) {
+      totalRecheckMinusWeekChances.value =
+        res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
+    }
+    reCheckinMinDeposit.value = res.data.reCheckInState.minDeposit;
     recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
   } catch (error) {
     notify.error(res.message);
@@ -403,17 +422,18 @@ onMounted(async () => {
     padding-top: 30px;
     background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/bg-1.png");
     background-repeat: no-repeat;
+    background-size: contain;
     width: 1336px;
-    height: 860px;
+    height: 400px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 四個等寬的列 */
-    grid-gap: 10px; /* 格子間的間隙 */
-    background-color: transparent; /* 背景顏色 */
-    padding-top: 60px;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 10px;
+    background-color: transparent;
+    padding: 50px 20px 20px;
     .grid-item {
       position: relative;
       padding: 20px;
-      font-size: 30px;
+      font-size: 20px;
       text-align: center;
       color: white;
       display: flex;
@@ -421,73 +441,64 @@ onMounted(async () => {
       justify-content: center;
       align-items: center;
       background-repeat: no-repeat;
-      background-size: auto;
+      background-size: contain;
       background-position: center;
+      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-other.png");
+      &.item-finish {
+        background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-finish.png");
+      }
+      .numbers {
+        position: absolute;
+        left: 58%;
+        top: 36%;
+        text-align: center;
+        .bonus-number {
+          background: linear-gradient(180deg, #ffffff 22.73%, #ffef81 79.55%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          color: transparent;
+          font-size: 45px;
+          line-height: 35px;
+          font-weight: 600;
+          span.rmb {
+            font-size: 25px;
+            margin-left: 2px;
+          }
+        }
+        .active-point {
+          font-size: 14px;
+        }
+      }
     }
     .grid-item:nth-last-child(1) {
       grid-column: span 2;
     }
-    .item0 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item0-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item1 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item1-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item2 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item2-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item3 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-other.png");
-    }
-    .item3-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-1-finish.png");
-    }
-    .item4 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-2-other.png");
-    }
-    .item4-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-2-finish.png");
-    }
-    .item5 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-3-other.png");
-    }
-    .item5-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-3-finish.png");
-    }
     .item6 {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-4-other.png");
+      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-big-other.png");
     }
     .item6-finish {
-      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-4-finish.png");
+      background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/card-big-finish.png");
     }
     .day-number {
       position: absolute;
-      top: 44px;
-      left: 52px;
-      font-size: 35px;
+      top: 80px;
+      left: 12px;
+      font-size: 20px;
     }
     .status-img {
       position: absolute;
-      bottom: 80px;
+      bottom: 90px;
       img {
-        width: 190px;
-        height: 90px;
+        width: 120px;
+        height: 40px;
         border-radius: 0px !important;
       }
       cursor: pointer;
     }
     .status-text {
       position: absolute;
-      bottom: 20px;
+      bottom: 5px;
       left: 50%; /* 将元素的左边界设置在父元素宽度的 50% 的位置 */
       transform: translateX(-50%); /* 然后通过 transform 向左偏移自身宽度的 50% */
     }
@@ -508,6 +519,19 @@ onMounted(async () => {
       flex-direction: row;
       justify-content: space-around;
       width: 100%;
+
+      img {
+        cursor: pointer;
+        &.can-claim {
+          &:hover {
+            filter: brightness(0.9);
+          }
+          &:active {
+            filter: brightness(0.85);
+            transform: translate(0px, 1px);
+          }
+        }
+      }
     }
     .progressBar-area {
       width: 100%;
@@ -519,6 +543,7 @@ onMounted(async () => {
         border-radius: 30px;
         overflow: hidden;
         margin: 20px 0;
+        border: 1px solid #065092;
       }
 
       .progress-bar {
@@ -528,7 +553,7 @@ onMounted(async () => {
         text-align: center;
         line-height: 30px;
         color: white;
-        border-radius: 5px;
+        border-radius: 5px 30px 30px 5px;
       }
     }
     .number-area {
@@ -549,6 +574,7 @@ onMounted(async () => {
   flex-direction: column;
   .first {
     width: 1336px;
+    margin-bottom: 20px;
     .title {
       background-image: url("@/assets/images/promotion/hotpromo/dailyCheckin/title1.png");
       width: 1060px;
@@ -584,6 +610,10 @@ onMounted(async () => {
             height: 50px;
             border-radius: 8px;
             font-size: 24px;
+
+            &:hover {
+              opacity: 0.9;
+            }
           }
           .button-finish {
             background: linear-gradient(90deg, #23d2f0 0%, #9a7bff 100%);

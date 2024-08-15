@@ -42,7 +42,7 @@
             <tr>
               <th scope="col">{{ t('fields.loginName') }}</th>
               <th scope="col">{{ t('fields.type') }}</th>
-              <th scope="col">{{ t('fields.amount') }}</th>
+              <th scope="col">{{ t('fields.pointAmount') }}</th>
               <th scope="col">{{ t('fields.status') }}</th>
               <th scope="col">{{ t('fields.afterBalance') }}</th>
               <th scope="col">{{ t('fields.recordTime') }}</th>

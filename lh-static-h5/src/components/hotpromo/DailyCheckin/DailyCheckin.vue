@@ -17,10 +17,13 @@
           v-for="(item, index) in sectionOneItems"
           :key="item.day"
           class="grid-item"
-          :class="[item.claimState === 'CLAIMED' ? `item${index}-finish` : `item${index}`]"
+          :class="[item.claimState === 'CLAIMED' ? `item-finish item${index}-finish` : `item${index}`]"
           @click="handleClickSectionOneItem(item)"
         >
-          <div class="day-number">0{{ index + 1 }}</div>
+          <div class="numbers">
+            <div class="bonus-number">{{ item.bonus }}<span class="rmb">¥</span></div>
+            <div class="active-point" v-if="item.activePoint > 0">+{{ item.activePoint }}活跃</div>
+          </div>
           <div class="status-img">
             <img v-if="item.claimState === 'CLAIMED'" :src="require('./images/button-green.png')" />
             <img v-if="item.claimState === 'OPEN'" :src="require('./images/button-blue.png')" />
@@ -144,13 +147,13 @@
                     :src="require('./images/icon-done.png')"
                   />
                   <img v-else style="width: 20px; height: 20px" :src="require('./images/icon-cancel.png')" />
-                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥100 元，补签卡 +1</span>
+                  <span style="color: rgba(153, 153, 153, 1)">充值金额≥{{ reCheckinMinDeposit }} 元，补签卡 +1</span>
                 </div>
               </div>
             </div>
             <div class="task-right">
               <div style="margin-top: -20px">
-                剩余补签卡：{{ currentRecheckInChances }}/ {{ totalRecheckInChances }}
+                剩余补签卡：{{ currentRecheckInChances }}/{{ totalRecheckMinusWeekChances }}
               </div>
               <button v-if="recheckTaskState === 'CLOSE'" class="button-finish">已完成</button>
               <button v-else class="button" @click="handleDeposit">去充值</button>
@@ -269,6 +272,8 @@ const currentRecheckInChances = ref(0);
 const totalRecheckInChances = ref(0);
 const recheckTaskState = ref("CLOSE");
 const todayMinDeposit = ref(0);
+const totalRecheckMinusWeekChances = ref(0);
+const reCheckinMinDeposit = ref(0);
 
 const sectionOneItems = ref([]);
 const sectionOneBoxItems = ref([]);
@@ -281,11 +286,24 @@ const countiuneSign = computed(() => {
   });
   return times;
 });
+// const countPercent = computed(() => {
+//   // let times = 0;
+//   // sectionOneBoxItems.value.forEach((item) => {
+//   //   if (item.claimState === "CLAIMED") {
+//   //     times++;
+//   //   }
+//   // });
+//   // return times * 25;
+  
+//   return currentActivePoints.value
+// });
+
 const countPercent = computed(() => {
   let times = 0;
   sectionOneBoxItems.value.forEach((item) => {
-    if (item.claimState === "CLAIMED") {
-      times++;
+    console.log(currentActivePoints.value)
+    if ((currentActivePoints.value >= +item.requiredActivePoint)) {
+      times++
     }
   });
   return times * 25;
@@ -318,6 +336,7 @@ const handleClickBox = async (box) => {
       console.log(res);
       if (res.code === 0) {
         notify.success("领取成功");
+        store.getBalance();
         await fetchData();
       } else {
         notify.error(res.message);
@@ -348,6 +367,10 @@ const fetchData = async () => {
       currentActivePoints.value = res.data.lhFreeTreasureState.currentActivePoints;
       currentRecheckInChances.value = res.data.reCheckInState.currentRecheckInChances;
       totalRecheckInChances.value = res.data.reCheckInState.totalRecheckInChances;
+      if (totalRecheckInChances.value !== 0) {
+        totalRecheckMinusWeekChances.value = res.data.reCheckInState.totalRecheckInChances - res.data.reCheckInState.thisWeekUsedChances;
+      }
+      reCheckinMinDeposit.value = res.data.reCheckInState.minDeposit;
       recheckTaskState.value = res.data.reCheckInState.recheckTaskState;
     });
   } catch (error) {
@@ -409,6 +432,34 @@ onMounted(async () => {
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
+      background-image: url("./images/card-other.png");
+      &.item-finish {
+        background-image: url("./images/card-finish.png");
+      }
+      .numbers {
+        position: absolute;
+        left: 55%;
+        top: 30%;
+        text-align: center;
+        .bonus-number {
+          background: linear-gradient(180deg, #FFFFFF 22.73%, #FFEF81 79.55%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          color: transparent;
+          font-size: 15px;
+          line-height: 12px;
+          font-weight: 600;
+          span.rmb {
+            font-size: 10px;
+            margin-left: 2px;
+          }
+        }
+        .active-point {
+          font-size:7px;
+        }
+
+      }
 
       @media (max-width: 375px) {
         width: 64px;
@@ -425,47 +476,53 @@ onMounted(async () => {
         height: 76px;
       }
     }
-    .item0 {
-      background-image: url("./images/card-1-other.png");
-    }
-    .item0-finish {
-      background-image: url("./images/card-1-finish.png");
-    }
-    .item1 {
-      background-image: url("./images/card-1-other.png");
-    }
-    .item1-finish {
-      background-image: url("./images/card-1-finish.png");
-    }
-    .item2 {
-      background-image: url("./images/card-1-other.png");
-    }
-    .item2-finish {
-      background-image: url("./images/card-1-finish.png");
-    }
-    .item3 {
-      background-image: url("./images/card-1-other.png");
-    }
-    .item3-finish {
-      background-image: url("./images/card-1-finish.png");
-    }
-    .item4 {
-      background-image: url("./images/card-2-other.png");
-    }
-    .item4-finish {
-      background-image: url("./images/card-2-finish.png");
-    }
-    .item5 {
-      background-image: url("./images/card-3-other.png");
-    }
-    .item5-finish {
-      background-image: url("./images/card-3-finish.png");
-    }
+    // .item0 {
+    //   background-image: url("./images/card-1-other.png");
+    // }
+    // .item0-finish {
+    //   background-image: url("./images/card-1-finish.png");
+    // }
+    // .item1 {
+    //   background-image: url("./images/card-1-other.png");
+    // }
+    // .item1-finish {
+    //   background-image: url("./images/card-1-finish.png");
+    // }
+    // .item2 {
+    //   background-image: url("./images/card-1-other.png");
+    // }
+    // .item2-finish {
+    //   background-image: url("./images/card-1-finish.png");
+    // }
+    // .item3 {
+    //   background-image: url("./images/card-1-other.png");
+    // }
+    // .item3-finish {
+    //   background-image: url("./images/card-1-finish.png");
+    // }
+    // .item4 {
+    //   background-image: url("./images/card-2-other.png");
+    // }
+    // .item4-finish {
+    //   background-image: url("./images/card-2-finish.png");
+    // }
+    // .item5 {
+    //   background-image: url("./images/card-3-other.png");
+    // }
+    // .item5-finish {
+    //   background-image: url("./images/card-3-finish.png");
+    // }
     .item6 {
-      background-image: url("./images/card-4-other.png");
+      background-image: url("./images/card-big-other.png");
+      .numbers {
+        left: 63%;
+      }
     }
     .item6-finish {
-      background-image: url("./images/card-4-finish.png");
+      background-image: url("./images/card-big-finish.png");
+      .numbers {
+        left: 63%;
+      }
     }
     .day-number {
       position: absolute;
@@ -533,6 +590,7 @@ onMounted(async () => {
         border-radius: 30px;
         overflow: hidden;
         margin: 5px 0;
+        border: 1px solid #065092;
       }
 
       .progress-bar {

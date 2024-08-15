@@ -230,7 +230,6 @@
               <th scope="col">{{ t('statsHeader.memberPoint') }}</th>
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
-              <th scope="col">{{ t('fields.netProfit') }}</th>
               <!-- <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th> -->
@@ -301,11 +300,6 @@
                 <td :data-label="t('fields.totalWithdraw')" rowspan="4">
                   <div
                     v-formatter="{ data: item.totalWithdraw, type: 'money' }"
-                  />
-                </td>
-                <td :data-label="t('fields.netProfit')" rowspan="4">
-                  <div
-                    v-formatter="{ data: item.revenueShare, type: 'money' }"
                   />
                 </td>
                 <td :data-label="t('fields.gameType')">
@@ -742,7 +736,7 @@
             style=" width:100px; margin-left: auto;"
           />
           <span style="color:red">
-            &emsp; (0 - {{ getAffiliateRatio(item.code) }})
+            &emsp; (0% - {{ (getAffiliateRatio(item.code)*100).toFixed(2) }}%)
           </span>
         </div>
       </el-form-item>
@@ -999,7 +993,7 @@
             style=" width:100px; margin-left: auto;"
           />
           <span style="color:red">
-            &emsp; (0 - {{ getAffiliateRatio(item.code) }})
+            &emsp; (0% - {{ (getAffiliateRatio(item.code)*100).toFixed(2) }}%)
           </span>
         </div>
       </el-form-item>
@@ -1358,7 +1352,7 @@ const validateReEnterPassword = (rule, value, callback) => {
 
 const validateMemberShareRatio = (rule, value, callback) => {
   memberShareRatioList.list.forEach(item => {
-    if (item.value === '' || item.value < 0 || item.value > 1) {
+    if (item.value === '' || item.value < 0 || item.value > 100) {
       callback(new Error(t('message.validateShareRatioFormat')))
     }
   })
@@ -1660,7 +1654,7 @@ function showEditRemark(member) {
 
 function showEditShareRatio(member) {
   selectedMember.id = member.id
-  selectedMember.shareRatio = member.shareRatio
+  selectedMember.shareRatio = JSON.parse(JSON.stringify(member.shareRatio))
   if (
     selectedMember.shareRatio === null ||
     selectedMember.shareRatio === undefined
@@ -1679,6 +1673,10 @@ function showEditShareRatio(member) {
       })
     }
   }
+  for (var index = 0; index < selectedMember.shareRatio.length; index++) {
+    selectedMember.shareRatio[index].value *= 100;
+    selectedMember.shareRatio[index].value = parseFloat(selectedMember.shareRatio[index].value).toFixed(2);
+  }
   uiControl.shareRatioDialogVisible = true
 }
 
@@ -1695,7 +1693,7 @@ async function submitRemark() {
 
 async function submitShareRatio() {
   const editedRatio = selectedMember.shareRatio
-    .map(item => item.code + ':' + item.value)
+    .map(item => item.code + ':' + (item.value / 100))
     .join(',')
   await editMemberRatio(selectedMember.id, editedRatio)
   ElMessage({ message: t('message.editSuccess'), type: 'success' })
@@ -1720,7 +1718,7 @@ async function createMember() {
     if (valid) {
       if (parseInt(createMemberForm.siteId) === 10) {
         createMemberForm.memberShareRatio = memberShareRatioList.list
-          .map(item => item.code + ':' + item.value)
+          .map(item => item.code + ':' + (item.value/100))
           .join(',')
       }
       await registerMember(createMemberForm)

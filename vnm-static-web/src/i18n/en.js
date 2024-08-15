@@ -164,7 +164,13 @@ export default {
     hotMatches: "Hot Matches",
     euroCountdown01: "ROAD TO ",
     euroCountdown01a: "EURO 2024 - ",
-    euroCountdown02: " DAYS LEFT"
+    euroCountdown02: " DAYS LEFT",
+    slotEdition: {
+      allPlatform: "ALL",
+      description: "Slot Games",
+      promotion: "Promotions",
+      moreGame: "MORE GAMES"
+    }
   },
   personal: {
     url: "URL",
@@ -295,7 +301,9 @@ export default {
     claim: "Claim",
 
     record_win_status: "Win status",
-    record_win_prize: "Winner Prize"
+    record_win_prize: "Winner Prize",
+    // vnm-newplayer-welcome
+    new_player_success: "Claimed successfully"
   },
   mail: {
     inbox: "Inbox",
@@ -645,6 +653,7 @@ export default {
       doubleBetAmount: "Double the bet amount for each consecutive bet",
       betOnBothSides: "Bet on both sides",
       doubleBet: "Double bet",
+      allin: "All in",
       affiliateAbuse: "Affiliate agent CPA or revenue sharing abuse"
     },
     excludedBets:
@@ -694,7 +703,7 @@ export default {
   vip: {
     vipTerms: "Terms & Conditions",
     tnc1: "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
-    tnc2: "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
+    tnc2: "The system will automatically upgrade the VIP level of all members after 00:00:00 (GMT +7) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     tnc3: "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
     tnc4: "The Upgrade Bonus cannot be claimed at the same time as the Monthly Bonus. If member is promoted to VIP this month, member will receive Upgrade Bonus. The system will review the Monthly Bonus for accounts that have not been promoted to VIP this month and have met the requirements to maintain the VIP level.",
     tnc5: "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 VNDP total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
@@ -940,6 +949,7 @@ export default {
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
     14010: "Network IP or SID duplicate",
+    14014: "The phone number format is incorrect.",
     15202: "The new password cannot be the same as the old password.",
     15201: "Old password is incorrect.",
     15204: "Phone number is incorrect.",
@@ -958,6 +968,7 @@ export default {
     30007: "The user's deposit history does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
     30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

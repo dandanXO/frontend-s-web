@@ -164,7 +164,13 @@ export default {
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "EURO 2024 - CÒN ",
-    euroCountdown02: " NGÀY"
+    euroCountdown02: " NGÀY",
+    slotEdition: {
+      allPlatform: "tất cả",
+      description: "Trò chơi xèng",
+      promotion: "Khuyến mãi",
+      moreGame: "Nhiều trò chơi hơn"
+    }
   },
   personal: {
     url: "Truy Cập",
@@ -294,7 +300,9 @@ export default {
     claim: "Nhận",
 
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng"
+    record_win_prize: "Giải thưởng",
+    // vnm-newplayer-welcome
+    new_player_success: "Đã nhận thành công"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -637,6 +645,7 @@ export default {
       doubleBetAmount: "Gấp đôi số tiền cược cho mỗi lượt cược liên tiếp",
       betOnBothSides: "Cược hai bên",
       doubleBet: "Cược kép",
+      allin: "Cược tất tay",
       affiliateAbuse: "Lạm dụng đại lý liên kết CPA hoặc chia sẻ doanh thu"
     },
     excludedBets:
@@ -688,7 +697,7 @@ export default {
   vip: {
     vipTerms: "ĐIỀU KHOẢN VÀ ĐIỀU KIỆN",
     tnc1: "Chương trình áp dụng cho tất cả thành viên có tài khoản VNDP hợp lệ tại TF88. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của thành viên tính từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
-    tnc2: "Hệ thống sẽ tự động nâng cấp độ VIP của tất cả thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, điều kiện là tổng tiền cược hợp lệ của thành viên phải đủ điều kiện để thăng cấp VIP tương ứng. Việc thăng hạng sẽ không cần tuân thủ theo từng cấp bậc VIP.",
+    tnc2: "Hệ thống sẽ tự động nâng cấp độ VIP của tất cả thành viên sau 00:00:00 (GMT +7) vào ngày đầu tiên của tháng mới, điều kiện là tổng tiền cược hợp lệ của thành viên phải đủ điều kiện để thăng cấp VIP tương ứng. Việc thăng hạng sẽ không cần tuân thủ theo từng cấp bậc VIP.",
     tnc3: "Tiền Thưởng Nâng Cấp: sau khi thành viên được nâng cấp độ VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP. Số tiền thưởng sẽ được dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 1 vòng cược trước khi rút.",
     tnc4: "Tiền Thưởng Nâng Cấp sẽ không thể nhận đồng thời với Tiền Thưởng Hàng Tháng. Nếu thành viên được thăng hạng VIP trong tháng này, thì thành viên sẽ được nhận Tiền Thưởng Nâng Cấp. Hệ thống sẽ xét duyệt Tiền Thưởng Hàng Tháng cho các tài khoản chưa được thăng hạng VIP trong tháng này và có đạt đủ yêu cầu duy trì cấp độ VIP.",
     tnc5: "Tiền Thưởng Hàng Tháng: Thành viên cần đạt được các yêu cầu duy trì của cấp độ VIP hiện tại trước khi nhận thưởng. (VD: Nếu thành viên đang ở VIP3, thì trong tháng cần đạt tối thiểu 600,000 VNDP tổng cược trong tháng). Sau khi đủ điều kiện thành viên có thể bấm nút NHẬN trên trang VIP vào ngày đầu tháng. Số tiền thưởng dựa vào cấp độ VIP tương ứng và tiền thưởng cần trải qua 3 vòng cược trước khi rút.",
@@ -933,6 +942,7 @@ export default {
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
     14010: "IP hoặc SID trùng lặp",
+    14014: "Định dạng số điện thoại không đúng.",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
     15204: "Số điện thoại không đúng.",
@@ -951,6 +961,7 @@ export default {
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

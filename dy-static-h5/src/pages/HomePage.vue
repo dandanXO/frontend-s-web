@@ -1661,7 +1661,7 @@ export default defineComponent({
       },
       {
         name: "slot",
-        icon: "slide-slot-svg.svg",
+        icon: "slide-slot-svg.png",
         label: "电子",
         labelact: "电子",
         mb: 0,
@@ -1685,7 +1685,7 @@ export default defineComponent({
       },
       {
         name: "fish",
-        icon: "slide-fish-svg.svg",
+        icon: "slide-fish-svg.png",
         label: "捕鱼",
         labelact: "捕鱼",
         mb: 2,

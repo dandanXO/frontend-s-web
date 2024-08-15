@@ -1,6 +1,6 @@
 <template>
   <router-view />
-  <notification-wrapper/>
+  <notification-wrapper />
 </template>
 
 <script>
@@ -139,13 +139,14 @@ export default defineComponent({
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam && store.isNotAppPromo()) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: "lh1"
-          }
-        });
+            siteCode: process.env.SITE
+          })
+        );
       }
     };
 

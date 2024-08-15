@@ -10,30 +10,11 @@
     </a>
   </el-dialog>
 
-  <el-carousel
-    class="banner-slider"
-    indicator-position="outside"
-    :autoplay="true"
-    :interval=5000
-  >
-    <el-carousel-item
-      class="banner-container"
-      v-for="banner in banners"
-      :key="banner"
-    >
+  <el-carousel class="banner-slider" indicator-position="outside" :autoplay="true" :interval="5000">
+    <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goToUrl(banner.redirectUrl)">
-        <div
-          class="promo-bg isDesktop"
-          :style="
-            'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-          "
-        ></div>
-        <div
-          class="promo-bg isMobile"
-          :style="
-            'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
-          "
-        ></div>
+        <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div>
+        <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
       </a>
     </el-carousel-item>
   </el-carousel>
@@ -44,37 +25,39 @@ import { ref, onMounted } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage } from "@vueuse/core";
 
-const router= useRouter();
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const router = useRouter();
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 
 const goToUrl = (redirectUrl) => {
-  const urlSplit= redirectUrl.split("|");
-  if(urlSplit.length >= 2){
-    const type= urlSplit[0];
-    if(type==='page'){
+  if (!redirectUrl.trim()) return;
+  const urlSplit = redirectUrl.split("|");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "page") {
       router.push(`/${urlSplit[1]}`);
-    }else{
+    } else {
       router.push(`/promotion?name=${redirectUrl}`);
     }
-  }else{
-    if(redirectUrl.includes("https://")){
-      window.open(redirectUrl,"_blank");
-    }else{
+  } else {
+    if (redirectUrl.includes("https://")) {
+      window.open(redirectUrl, "_blank");
+    } else {
       router.push(`/promotion?name=${redirectUrl}`);
     }
   }
-}
+};
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
     if (res.code === 0) banners.value = res.data;
-    else ElMessage.error({
-      type: "error",
-      message: res.message
-    });
+    else
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
   });
 };
 
@@ -145,7 +128,7 @@ const checkShowImgTop = () => {
             } else {
               homePopupPath.value = "/promotion?name=" + data["path"];
             }
-            homePopupImg.value = imgURL  + data["desktopImgUrl"];
+            homePopupImg.value = imgURL + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
             homePopupId.value = data["id"];
@@ -202,14 +185,13 @@ onMounted(() => {
 
   .el-dialog__body {
     padding: 20px !important;
-    border-radius:12px;
+    border-radius: 12px;
   }
 
   .alert-img {
     display: block;
     width: 100%;
-    border-radius:12px;
+    border-radius: 12px;
   }
-
 }
 </style>

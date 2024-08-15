@@ -10,6 +10,7 @@ import { memberAccessLog, getFbPixelCode } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
+import { submitMemberStats } from "@/api/index/site";
 import { ElConfigProvider } from "element-plus";
 
 import vi from "element-plus/dist/locale/vi.mjs";
@@ -54,13 +55,13 @@ export default defineComponent({
       store.visitorId = sidParam;
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
-            way: "web",
-            sid: sidParam,
-            siteCode: "ka2"
-          }
-        });
+        const params = {
+          way: "web",
+          sid: sidParam,
+          siteCode: process.env.VUE_APP_SITE
+        };
+
+        submitMemberStats(params);
       }
     };
 

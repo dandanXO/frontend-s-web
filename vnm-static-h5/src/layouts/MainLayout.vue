@@ -16,7 +16,7 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <a @click="goToPrevPage(prevPage)" class="back-btn-top">
-          <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
+          <img class="back-icon" src="../assets/images/common/left-back-icon.svg" alt="back to previous page" />
         </a>
         {{ pageName }}
         <q-btn
@@ -60,28 +60,28 @@
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/home-icon.svg" />
-          <img class="hover" src="../assets/images/footer/home-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/home-icon.svg" alt="home" />
+          <img class="hover" src="../assets/images/footer/home-icon-active.svg" alt="home" />
           {{ $t("lang.home") }}
         </q-route-tab>
         <q-route-tab to="/promo" name="promo" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
-          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/promo-icon.svg" alt="promotion" />
+          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" alt="promotion" />
           {{ $t("lang.promo") }}
         </q-route-tab>
         <q-route-tab to="/finance/deposit" name="deposit" class="sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
-          <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" alt="deposit and withdraw" />
+          <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" alt="deposit and withdraw" />
           {{ $t("lang.deposit_btm") }}
         </q-route-tab>
         <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="vip" class="cs-web-id sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/vip-icon.svg" />
-          <img class="hover" src="../assets/images/footer/vip-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/vip-icon.svg" alt="customer service" />
+          <img class="hover" src="../assets/images/footer/vip-icon-active.svg" alt="customer service" />
           {{ $t("lang.vip") }}
         </q-route-tab>
         <q-route-tab to="/account" name="account" class="sm-screen-txt has-badge">
-          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
-          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
+          <img class="inactive" src="../assets/images/footer/account-icon.svg" alt="account" />
+          <img class="hover" src="../assets/images/footer/account-icon-active.svg" alt="account" />
           {{ $t("lang.mine") }}
           <q-badge v-if="store.unreadInboxMail" color="red" class="unread-count" rounded>
             {{ store.unreadInboxMail }}
@@ -406,7 +406,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("lang.page_register");
         } else if (route.path === "/about") {
-          prevPage.value = "";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("lang.page_about");
         }

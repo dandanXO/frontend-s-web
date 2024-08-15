@@ -91,9 +91,10 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
-          <div class="lil-title flex-div">
-            {{ $t("form.depositAmount") }}
-            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+          <div class="lil-title flex-div" style="justify-content: flex-end">
+            <!--            {{ $t("form.depositAmount") }}-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
@@ -153,7 +154,9 @@
             <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
             <template v-else>1.00</template>
             USDT ≈
-            <template v-if="form.localAmount > 0">{{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}</template>
+            <template v-if="form.localAmount > 0">
+              {{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}
+            </template>
             <template v-else>{{ activeMethod.currencyRate }}</template>
 
             {{ store.currency.value }}
@@ -222,21 +225,40 @@
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
-      <p>
-        1. Recharge tutorial:
-        <span class="tutorial-link" @click="openDepositPage">Picture</span>
-        /
-        <span class="tutorial-link" @click="openDepositVideo">Video</span>
-      </p>
-      <p>2. Fill in the correct wallet account number</p>
-      <p>3. Fill in the correct CNIC number</p>
-      <p>
-        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-        credited.
-      </p>
+      <template v-if="isUSDT">
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
+        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>
+          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+        </p>
+        <p>
+          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+        </p>
+        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+      </template>
+      <template v-else>
+        <p>
+          1. Recharge tutorial:
+          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+        </p>
+        <p>2. Fill in the correct wallet account number</p>
+        <p>3. Fill in the correct CNIC number</p>
+        <p>
+          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+          credited.
+        </p>
+      </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
-    <div class="bottom-content" style="height: 40px"></div>
+    <div class="bottom-content" style="height: 60px"></div>
 
     <div class="bottom-btn">
       <q-btn
@@ -339,6 +361,8 @@ const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
 const amountList = ref([]);
+const amountDepositMin = ref();
+const amountDepositMax = ref();
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
@@ -493,8 +517,15 @@ function selectPayType(value) {
     if (value.extra && value.extra.amountArr) {
       amountList.value = value.extra.amountArr;
     }
+
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
+    }
+    if (value.depositMin) {
+      amountDepositMin.value = value.depositMin;
+    }
+    if (value.depositMax) {
+      amountDepositMax.value = value.depositMax;
     } else {
       bankCardList.value = [];
       form.bankId = null;
@@ -540,9 +571,6 @@ function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
   calculatedMinDeposit.value = val.depositMin;
   calculatedMaxDeposit.value = val.depositMax;
-
-  console.log(val.depositMin);
-  console.log(val.depositMax);
 }
 
 function checkPrivilege(v) {
@@ -809,7 +837,7 @@ const openDepositPage = () => {
     // isDepositTutorial.value= true;
     window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
+    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
   }
 };
 
@@ -832,7 +860,6 @@ const convertToTwoDecimalAmount = (amount) => {
   let formattedAmount = parseFloat(amount).toFixed(2);
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
-
 
 onActivated(() => {
   // checkNewUser();
@@ -1131,7 +1158,7 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0;
+  padding: 20px 0 40px;
   position: fixed;
   bottom: 0;
   width: calc(100% - 32px);

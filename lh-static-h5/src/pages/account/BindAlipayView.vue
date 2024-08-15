@@ -29,7 +29,7 @@
       </div>
 
       <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
-        <q-btn style="width: 100%" class="common-md-btn" flat label="发送验证码" @click="onCaptchaSubmit()" />
+        <q-btn style="width: 100%" class="common-md-btn" flat :disable="otpCountdownCount > 0" :label="otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`" @click="onCaptchaSubmit()" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -262,6 +262,19 @@ const isOtpSent = ref(false);
 const showCaptchaSuccessDialog = ref(false);
 const showCaptchaFailedDialog = ref(false);
 const captchaFailedMessage = ref("");
+const otpCountdownCount = ref(0);
+let otpCountdownSchedule;
+const countdownOtp = () => {
+  otpCountdownCount.value = 60;
+  otpCountdownSchedule = setInterval(() => {
+    if (otpCountdownCount.value <= 0) {
+      clearInterval(otpCountdownSchedule);
+      return;
+    }
+    otpCountdownCount.value--;
+  }, 1000);
+};
+
 const onCaptchaSubmit = () => {
   innerCaptchaRef.value.validate();
   if (innerCaptchaRef.value.hasError) return;
@@ -280,6 +293,7 @@ const onCaptchaSubmit = () => {
 
         bankCardInfo.smsCode = "";
         bankCardInfo.smsCodeId = res.data.codeId;
+        countdownOtp();
 
         showCaptchaSuccessDialog.value = true;
       } else {

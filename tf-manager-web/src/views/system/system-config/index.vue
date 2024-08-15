@@ -21,34 +21,37 @@
         {{ t('fields.createConfig') }}
       </el-button>
     </div>
-    <el-table :data="filteredData" style="width: 100%">
-      <el-table-column prop="configGroup" :label="t('fields.configGroup')" />
-      <el-table-column prop="code" :label="t('fields.configCode')" />
-      <el-table-column prop="value" :label="t('fields.configValue')" />
-      <el-table-column prop="describes" :label="t('fields.configDescribes')" width="200" />
-      <el-table-column>
-        <template #default="{row}">
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            @click="showEdit(row)"
-            plain
-          >
-            {{ t('fields.edit') }}
-          </el-button>
-          <el-button
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="delConfig(row.id)"
-            plain
-          >
-            {{ t('fields.delete') }}
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-collapse v-model="activeCollapse" accordion>
+      <el-collapse-item v-for="(group, index) in groupedData" :key="index" :title="group[0].configGroup">
+        <el-table :data="group" style="width: 100%" :show-header="false">
+          <el-table-column prop="code" :label="t('fields.configCode')" />
+          <el-table-column prop="value" :label="t('fields.configValue')" />
+          <el-table-column prop="describes" :label="t('fields.configDescribes')" width="200" />
+          <el-table-column>
+            <template #default="{row}">
+              <el-button
+                icon="el-icon-edit"
+                size="mini"
+                type="success"
+                @click="showEdit(row)"
+                plain
+              >
+                {{ t('fields.edit') }}
+              </el-button>
+              <el-button
+                icon="el-icon-remove"
+                size="mini"
+                type="danger"
+                @click="delConfig(row.id)"
+                plain
+              >
+                {{ t('fields.delete') }}
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
+    </el-collapse>
   </el-form>
   <el-dialog
     :title="uiControl.dialogTitle"
@@ -72,11 +75,71 @@
       <el-form-item :label="t('fields.configCode')" prop="code">
         <el-input v-model="form.code" :placeholder="t('fields.configCode')" />
       </el-form-item>
+      <el-form-item :label="t('fields.valueType')" prop="rulesId">
+        <el-select
+          v-model="form.rulesId"
+          size="small"
+          :placeholder="t('fields.type')"
+          class="filter-item"
+          style="width: 300px;"
+          default-first-option
+          @change="handleValueTypeChange"
+        >
+          <el-option
+            v-for="item in valueRules"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item :label="t('fields.configValue')" prop="value">
-        <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
+        <div v-if="selectedRule === null">
+          <el-input v-model="form.value" :placeholder="t('fields.configValue')" />
+        </div>
+        <div v-else>
+          <el-radio-group v-if="selectedRule.type === 'RADIO'" size="small" style="width: 300px" v-model="form.value">
+            <el-radio-button :value-key="rule.value" v-for="rule in JSON.parse(selectedRule.value)" :label="rule.value" :key="rule.key">{{ rule.label }}</el-radio-button>
+          </el-radio-group>
+          <el-select
+            v-if="selectedRule.type === 'SELECT'"
+            v-model="form.value"
+            size="small"
+            :placeholder="t('fields.status')"
+            class="filter-item"
+            style="width: 250px;margin-left: 5px"
+          >
+            <el-option
+              v-for="rule in JSON.parse(selectedRule.value)"
+              :key="rule.key"
+              :label="rule.label"
+              :value="rule.value"
+            />
+          </el-select>
+          <el-switch
+            v-if="selectedRule.type === 'SWITCH'"
+            v-model="form.value"
+            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+            size="small"
+            :active-text="switchText(selectedRule.value, 'ACTIVE')"
+            :inactive-text="switchText(selectedRule.value, 'INACTIVE')"
+          />
+          <el-checkbox
+            v-if="selectedRule.type === 'CHECKBOX'"
+            v-model="checkAll"
+            :indeterminate="isIndeterminate"
+            @change="handleCheckAllChange"
+          >
+            Check all
+          </el-checkbox>
+          <el-checkbox-group v-if="selectedRule.type === 'CHECKBOX'" v-model="checkedSelection" @change="handleCheckedSelectionChange">
+            <el-checkbox v-for="rule in JSON.parse(selectedRule.value)" :label="rule.label" :key="rule.value" :value="rule.value" />
+          </el-checkbox-group>
+          <el-input v-if="selectedRule.type === 'INPUT'" v-model="form.value" :placeholder="t('fields.configValue')" />
+        </div>
       </el-form-item>
       <el-form-item :label="t('fields.configDescribes')" prop="describes">
-        <el-input v-model="form.describes" :placeholder="t('fields.configDescribes')" />
+        <el-input v-model="form.describes" :placeholder="t('fields.configDescribes')" type="textarea" :rows="5" />
       </el-form-item>
     </el-form>
 
@@ -102,6 +165,7 @@ import {
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { required } from '../../../utils/validate'
+import { getValueRulesList } from '../../../api/value-rules'
 
 const { t } = useI18n()
 
@@ -124,11 +188,21 @@ const form = reactive({
   siteId: '',
   configGroup: null,
   code: null,
+  rulesId: null,
   value: null,
   describes: "",
 })
 
 const searchTerm = ref('');
+/* 值类型规则 */
+const valueRules = ref([]);
+const selectedRule = ref(null)
+/* 多选框 */
+const checkedSelection = ref([])
+const checkBoxSelections = reactive([])
+const checkAll = ref(false)
+const isIndeterminate = ref(true)
+const activeCollapse = ref([]);
 
 const filteredData = computed(() => {
   const term = searchTerm.value.toLowerCase();
@@ -137,10 +211,38 @@ const filteredData = computed(() => {
   );
 });
 
+const groupedData = computed(() => {
+  // Group the data by configGroup
+  return filteredData.value.reduce((acc, item) => {
+    const group = acc.find(g => g[0].configGroup === item.configGroup);
+    if (group) {
+      group.push(item);
+    } else {
+      acc.push([item]);
+    }
+    return acc;
+  }, []);
+});
+
+// const arraySpanMethod = ({ row, column, rowIndex, columnIndex }) => {
+//   if (columnIndex === 0) {
+//     const prevRow = filteredData.value[rowIndex - 1];
+//     const nextRow = filteredData.value[rowIndex + 1];
+
+//     if (prevRow && row.configGroup === prevRow.configGroup) {
+//       return [0, 0];
+//     }
+//     if (nextRow && row.configGroup === nextRow.configGroup) {
+//       return [1, 1];
+//     }
+//   }
+// };
+
 const formRules = reactive({
   configGroup: [required(t('message.validateConfigGroupRequired'))],
   code: [required(t('message.validateConfigCodeRequired'))],
   value: [required(t('message.validateConfigValueRequired'))],
+  rulesId: [required(t('message.validateConfigTypeRequired'))],
 })
 
 async function delConfig(id) {
@@ -213,19 +315,48 @@ async function loadDefaultConfigs() {
 
 function showEdit(customConfig) {
   showDialog('EDIT')
+  selectedRule.value = valueRules.value[0];
   nextTick(() => {
     for (const key in customConfig) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = customConfig[key]
       }
     }
+    if (form.rulesId !== null) {
+      const valueType = valueRules.value.find(r => r.id === form.rulesId);
+      selectedRule.value = valueType;
+      if (selectedRule.value.type === 'CHECKBOX') {
+        const selectionArr = JSON.parse(selectedRule.value.value);
+        selectionArr.forEach(element => {
+          checkBoxSelections.push(element)
+        });
+        const selectedValue = form.value.split(",")
+        const selectedOption = selectedValue.map(value => {
+          return checkBoxSelections.find(select => select.value === value)
+        }
+        );
+        const mergedLabels = selectedOption.map(rule => rule.label);
+        checkedSelection.value = mergedLabels;
+        const checkedCount = checkedSelection.value.length
+        checkAll.value = checkedCount === checkBoxSelections.length
+        isIndeterminate.value = checkedCount > 0 && checkedCount < checkBoxSelections.length
+      } else if (selectedRule.value.type === 'SWITCH') {
+        form.value = form.value.toLowerCase() === 'true';
+      }
+    }
   })
 }
 
 function showDialog(type) {
+  // 清除多选项数据值
+  checkBoxSelections.splice(0, checkBoxSelections.length);
+  checkedSelection.value = []
   if (type === 'CREATE') {
     if (configForm.value) {
       form.id = null
+      form.rulesId = null
+      form.value = null
+      selectedRule.value = valueRules.value[0]
       configForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.createConfig')
@@ -240,6 +371,7 @@ async function submit() {
     if (valid) {
       form.configGroup = form.configGroup.trim();
       form.code = form.code.trim();
+      form.value = form.value + "".trim();
       if (uiControl.dialogTitle === t('fields.createConfig')) {
         form.siteId = 0; // siteId=0为默认资料
         await createConfig(form)
@@ -254,8 +386,75 @@ async function submit() {
   })
 }
 
+/* 加载值类型规则列表 */
+async function loadValueRules() {
+  const { data: rules } = await getValueRulesList()
+  valueRules.value = rules
+  selectedRule.value = valueRules.value[0];
+}
+
+/* 值类型-选项处理 */
+const handleValueTypeChange = () => {
+  const valueType = valueRules.value.find(r => r.id === form.rulesId);
+  selectedRule.value = valueType;
+  form.value = "";
+  if (selectedRule.value.type === 'CHECKBOX') {
+    checkedSelection.value = [];
+    const selectionArr = JSON.parse(selectedRule.value.value);
+    selectionArr.forEach(element => {
+      checkBoxSelections.push(element)
+    });
+  } else if (selectedRule.value.type === 'SWITCH') {
+    form.value = false
+  }
+};
+
+/* 多选框-全选处理 */
+const handleCheckAllChange = (val) => {
+  const mergedLabels = checkBoxSelections.map(rule => rule.label);
+  checkedSelection.value = val ? mergedLabels : []
+  isIndeterminate.value = false
+  if (checkedSelection.value.length > 0) {
+    const selectedSelection = checkedSelection.value.map(value => {
+      return checkBoxSelections.find(select => select.label === value)
+    }
+    );
+    const mergedValues = selectedSelection.map(rule => rule.value).join(',');
+    form.value = mergedValues
+  } else {
+    form.value = ""
+  }
+}
+
+/* 多选框-选项事件处理 */
+const handleCheckedSelectionChange = (val) => {
+  const checkedCount = checkedSelection.value.length
+  checkAll.value = checkedCount === checkBoxSelections.length
+  isIndeterminate.value = checkedCount > 0 && checkedCount < checkBoxSelections.length
+  if (checkedSelection.value.length > 0) {
+    const selectedSelection = checkedSelection.value.map(value => {
+      return checkBoxSelections.find(select => select.label === value)
+    }
+    );
+    const mergedValues = selectedSelection.map(rule => rule.value).join(',');
+    form.value = mergedValues
+  } else {
+    form.value = ""
+  }
+}
+
+function switchText(val, type) {
+  const valueArr = val.split(",");
+  if (type === "INACTIVE") {
+    return valueArr[0];
+  } else {
+    return valueArr[1];
+  }
+}
+
 onMounted(async () => {
   await loadDefaultConfigs()
+  await loadValueRules()
 })
 
 </script>

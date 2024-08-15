@@ -297,3 +297,15 @@ export function getNewUserAccumulateDepositInit() {
 export function putNewUserAccumulateDepositClaim(ruleAmount) {
   return server.EVENT.put(`/new-user-accumulate-deposit/claim?ruleAmount=${ruleAmount}`, {});
 }
+
+export function getLivePoker() {
+  return server.EVENT.get("/live-poker");
+}
+
+export function claimLivePokerBonus() {
+  return server.EVENT.put("/bonus/claim/lh1-live-poker-bonus");
+}
+
+export function footballHistroy() {
+  return server.EVENT.get("/lh1-football/history");
+}

@@ -183,8 +183,9 @@
               placeholder="输入电话号码"
               readonly
               :value="personalState.memberInfo.telephone"
+              :class="`blue-bg ${loginCountdown !== 0 ? 'disabled' : ''}`"
             />
-            <el-button class="common-btn" @click="openCaptchaForm()">获取验证码</el-button>
+            <el-button :disabled="loginCountdown !== 0" class="common-btn" @click="openCaptchaForm()">{{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}</el-button>
           </el-space>
         </el-form-item>
 
@@ -645,6 +646,7 @@ export default defineComponent({
           .then((response) => {
             if (response.code == 0) {
               isSendOtp.value = true;
+              initCountdownTimer();
               captchaForm.smsCodeId = response.data.codeId;
               bankCardInfo.smsCodeId = response.data.codeId;
 
@@ -865,6 +867,21 @@ export default defineComponent({
         return '银行卡号'
       }
     }
+    const loginCountdown = ref(0);
+    const initCountdownTimer = () => {
+      loginCountdown.value = 60;
+      countdownTimer();
+    };
+
+    const countdownTimer = () => {
+      if (loginCountdown.value > 0) {
+        setTimeout(() => {
+          loginCountdown.value -= 1;
+          countdownTimer();
+        }, 1000);
+      }
+    };
+
 
     watch(
       () => bankCardInfo.bankId,
@@ -923,7 +940,10 @@ export default defineComponent({
       checkBankCards,
       chooseCard,
       numAddress,
-      isSZPAY
+      isSZPAY,
+      loginCountdown,
+      initCountdownTimer,
+      countdownTimer
     };
   }
 });

@@ -11,6 +11,7 @@ import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { ElConfigProvider } from "element-plus";
+import { submitMemberStats } from "@/api/index/site";
 
 import kr from "element-plus/dist/locale/ko.mjs";
 import en from "element-plus/dist/locale/en.mjs";
@@ -61,13 +62,13 @@ export default defineComponent({
       store.visitorId = sidParam;
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
-          params: {
-            way: "web",
-            sid: sidParam,
-            siteCode: "krw"
-          }
-        });
+        const params = {
+          way: "web",
+          sid: sidParam,
+          siteCode: process.env.VUE_APP_SITE
+        };
+
+        submitMemberStats(params);
       }
     };
 

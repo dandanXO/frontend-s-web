@@ -44,9 +44,9 @@
             <tr>
               <th scope="col" class="textCenter">{{ t('fields.gameType') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.loginName') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.bet') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.validBet') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.rebatePercentage') }}</th>
-              <th scope="col" class="textCenter">{{ t('fields.rebate') }}</th>
+              <th scope="col" class="textCenter">{{ t('fields.pointAmount') }}</th>
               <th scope="col" class="textCenter">{{ t('fields.recordTime') }}</th>
             </tr>
           </thead>
@@ -74,7 +74,7 @@
               <td class="textRight">
                 {{ formatMoney(item.rebateAmount) }}
               </td>
-              <td v-formatter="{ data: item.recordTime, type: 'date' }">
+              <td v-formatter="{ data: item.recordTime, type: 'date', formatter: 'LL' }">
               </td>
             </tr>
           </tbody>

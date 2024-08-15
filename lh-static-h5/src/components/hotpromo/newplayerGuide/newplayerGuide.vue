@@ -16,15 +16,20 @@
           <img class="big-icon" src="../../../assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
           <div class="title">
             新手礼包
-            <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
+            <span v-if="store.token" style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
           </div>
         </div>
-        <span v-if="isValidUser" style="font-size: 13px; font-weight: bold; color: #15c201">
-          (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
-        </span>
-        <span v-else style="font-size: 13px; font-weight: bold; color: #ff0000">
-          (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
-        </span>
+        <div v-if="store.token">
+          <span v-if="isValidUser" style="font-size: 13px; font-weight: bold; color: #15c201">
+            (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
+          </span>
+          <span v-else style="font-size: 13px; font-weight: bold; color: #ff0000">
+            (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
+          </span>
+        </div>
+        <div v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+          您还未登录，请登录后参与活动
+        </div>
         <div class="section">
           <div style="display: flex">
             <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -65,7 +70,7 @@
               <q-btn
                 class="status"
                 :class="getStatus(bankCardBindState).class"
-                @click="handleClickStatusButton('NO', 'new-user-setup-bonus-bankcard')"
+                @click="handleClickStatusButton(bankCardBindState, 'new-user-setup-bonus-bankcard')"
               >
                 <img
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 0px"
@@ -108,7 +113,12 @@
             />
             <div class="title">首次提款</div>
           </div>
-          <q-btn v-if="isValidUser" class="go-btn" :class="{ complete: firstWithdrawalState === 'CLAIMED' }" @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')">
+          <q-btn
+            v-if="isValidUser"
+            class="go-btn"
+            :class="{ complete: firstWithdrawalState === 'CLAIMED' }"
+            @click="handleClickStatusButton(firstWithdrawalState, 'new-user-setup-bonus-first-withdrawal')"
+          >
             <img
               v-if="firstWithdrawalState === 'CLAIMED'"
               style="width: 16px; height: 16px; vertical-align: sub; margin: 0px auto 4px"
@@ -153,7 +163,7 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算30天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+              自注册日起算7天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
             </div>
           </li>
           <li>
@@ -195,7 +205,7 @@
           <li>
             <span class="step-number">1</span>
             <div class="content">
-              自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+              自注册日起算7天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
             </div>
           </li>
           <li>
@@ -328,7 +338,7 @@ const handleClickStatusButton = (status, promoCode) => {
       }
     } else {
       if (window.location.pathname === "/promotion") {
-        document.location.href = `app://deposit`;
+        document.location.href = `app://bindcard`;
       } else {
         router.push("/account/withdraw?redirect=promo?name=lh1-newplayer-guide");
       }
@@ -446,8 +456,8 @@ onMounted(async () => {
     img {
       margin-bottom: 0 !important;
     }
-    span{
-      flex-shrink: 0
+    span {
+      flex-shrink: 0;
     }
   }
 }
@@ -601,8 +611,8 @@ h1 {
     img {
       margin-bottom: 0 !important;
     }
-    span{
-      flex-shrink: 0
+    span {
+      flex-shrink: 0;
     }
   }
 }

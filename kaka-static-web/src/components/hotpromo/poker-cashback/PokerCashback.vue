@@ -3,7 +3,7 @@
         <img src="../../../assets/images/promotion/hotpromo/poker-cashback/poker-cashback-cards.png" />
         <div class="col">
             <div class="row">
-                <div>{{ t('promo.net_work_bonus') }}</div>
+                <div style="color: #ffffff;">{{ t('promo.net_work_bonus') }}</div>
                 <el-input style="text-align:center;" v-model="claimAmt" :readonly="true" />
             </div>
             <div class="btn-color-blue standard-button action-btn" @click="onClickClaimNow">{{ t('promo.btn_claim_now') }}</div>
@@ -14,23 +14,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
-import { bonusClaimPokerRefund, getBonusPokerCashback } from '../../../api/index/promo';
+import { claimBonusItem, getBonusPokerCashback } from '../../../api/index/promo';
 import { useI18n } from "vue-i18n";
 
-
 const { t } = useI18n();
-const claimAmt = ref(0)
+const claimAmt = ref(0);
 const getAmount = () => {
-    getBonusPokerCashback().then((res) => {
-        if (res.code === 0) {
-            claimAmt.value = res.data;
-        } else {
-            ElMessage.error(res.message)
-        }
-    })
-}
+  getBonusPokerCashback().then((res) => {
+    if (res.code === 0) {
+      claimAmt.value = res.data;
+    } else {
+      ElMessage.error(res.message);
+    }
+  });
+};
 const onClickClaimNow = () => {
-    bonusClaimPokerRefund().then((res) => {
+    claimBonusItem('ka2-poker-refund').then((res) => {
         if (res.code === 0) {
           ElMessage.success(t('common.claimedSuccess'))
         } else {
@@ -39,29 +38,29 @@ const onClickClaimNow = () => {
     })
 }
 onMounted(() => {
-    getAmount();
-})
+  getAmount();
+});
 </script>
 
 <style lang="scss" scoped>
 .el-input__inner {
-    text-align: center;
+  text-align: center;
 }
 .row {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .col {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .action-btn {
-    width: 250px;
-    height: 45px;
+  width: 250px;
+  height: 45px;
 }
 </style>

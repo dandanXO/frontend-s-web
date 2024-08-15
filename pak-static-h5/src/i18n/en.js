@@ -95,7 +95,7 @@ export default {
     confirmNewPassword_rules_02: "Confirm password does not match",
     depositAmount: "Amount",
     depositAmount_placeholder: "Please enter the amount",
-    depositAmount_rules_01: "Deposit should be more than ",
+    depositAmount_rules_01: "Deposit should be between ",
     withdrawChoose_placeholder: "Choose account",
     withdrawChoose_rules_01: "Please Select A Virtual Account",
     withdrawalAmount: "Withdrawal Amount",
@@ -132,6 +132,8 @@ export default {
     cryptoAccount_rules_01: "Please insert crypto account",
     cryptoAccount_rules_02: "Crypto account must start with 'T'",
     cryptoAccount_rules_03: "Crypto account must have 34 characters",
+    cryptoAccount_rules_04: "Crypto account must start with '0x'",
+    cryptoAccount_rules_05: "Crypto account must have 42 characters",
     virtualWalletType: "Virtual Wallet Type",
     virtualWallet: "Virtual Wallet",
     virtualWallet_placeholder: "Please insert virtual wallet",
@@ -141,6 +143,8 @@ export default {
     virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
+    virtualWallet_warmReminder_02:
+      "Warm reminder：The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
     virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
@@ -270,7 +274,9 @@ export default {
     unexpiredEarnings: "Unexpired earnings",
     cumulativeIncome: "Cumulative income",
     storageTime: "Storage time (Days)",
+    storageTime_required: "Storage time is required",
     deposit: "Deposit",
+    deposit_required: "Deposit is required",
     trialCalculation: "Trial calculation",
     annualInterestRate: "Annual interest rate",
     distributeInterest: "Distribute interest",
@@ -615,6 +621,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",
@@ -640,6 +647,9 @@ export default {
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",
-    51002: "The reward has already been claimed by another account"
+    51002: "The reward has already been claimed by another account",
+    54000: "The collection time has not yet arrived.",
+    54001: "The user has not bound a withdrawal account.",
+    54002: "The user's bank card is already bound to another account."
   }
 };

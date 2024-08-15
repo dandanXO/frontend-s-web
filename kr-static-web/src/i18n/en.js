@@ -232,6 +232,7 @@ export default {
     usernamereq: "Please enter username",
     passwordreq: "Please enter password",
     username: "Account name is 6-11 characters",
+    only_letter_number_allowed: "Only English letters and numbers are available",
     password: "Password is 6-11 characters",
     passwordDifferent: "Password is different",
     passwordAgain: "Please key in the password again",
@@ -898,10 +899,9 @@ export default {
   },
   maintenance: {
     title: "System under maintenance...",
-    desc: `Starting from 17/04/2024 06:00 until 10:00 (GMT +8).<br>
-    All services and games will be temporarily suspended during this period.<br>
-     We sincerely apologize for any inconvenience caused!`,
-    email: "Email us",
+    desc: `We are currently under maintenance on our website, so all games and services will be unavailable.<br>
+      We apologize for any inconvenience.<br>
+      Maintenance time: August 6, 2024 ~ August 7, 2024 (GMT+8)`,
     customerService: "24/7 Customer Service",
     currentlyMaintaining: "Maintenance in progress",
     maintainenceTime: "Maintenance Time",
@@ -1092,6 +1092,7 @@ export default {
     15201: "Old password is incorrect.",
     15204: "Phone number is incorrect.",
     15205: "Login Password is incorrect",
+    15206: "Duplicate nickname/name",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

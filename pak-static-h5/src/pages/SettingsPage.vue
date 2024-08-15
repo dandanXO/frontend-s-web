@@ -26,10 +26,7 @@
           </div>
           <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
-        <router-link
-          v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')"
-          to="/interest-profit"
-        >
+        <router-link to="/interest-profit">
           <div class="acct-nav-item">
             <img src="../assets/images/account/interest-svg.svg" />
           </div>
@@ -283,9 +280,12 @@ const logout = () => {
 
       .acct-nav-label {
         color: #fff;
-
         font-size: 14px;
         white-space: normal;
+
+        @media (max-width: 400px) {
+          font-size: 12px;
+        }
       }
 
       .acct-nav-item {
@@ -301,6 +301,11 @@ const logout = () => {
         justify-content: center;
         color: #000;
         text-decoration: none;
+
+        @media (max-width: 400px) {
+          width: auto;
+          padding: 0;
+        }
 
         img {
           width: 70%;

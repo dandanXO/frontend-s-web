@@ -1,5 +1,13 @@
 <template>
-  <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame">
+  <el-dialog
+    v-model="visible"
+    width="100%"
+    class="full-modal"
+    :title="title"
+    destroyOnClose
+    :afterClose="destroyGame"
+    :before-close="handleBeforeClose"
+  >
     <TFLoading v-if="logoShow"></TFLoading>
 
     <template v-if="!logoShow && transferInfo.platform === 'TFGaming' && UI.innerWidth > 1440">
@@ -122,6 +130,18 @@
   >
     <ComingSoon></ComingSoon>
   </el-dialog>
+
+  <el-dialog v-model="closeGameConfirmModalVisible" title="温馨提示" width="500" center class="game-close-modal">
+    <span>您当前操作将会离开游戏，是否继续</span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="handleCancelCloseGame" plain>
+          <span class="cancel">取消</span>
+        </el-button>
+        <el-button type="primary" @click="handleConfirmCloseGame">确定</el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 <script setup id="GameModal">
 import { userStore } from "@/store";
@@ -149,6 +169,8 @@ const bannerWidth = computed(() => {
 const quickTransferTab = ref(true);
 
 const drawerVisible = ref(false);
+const closeGameConfirmModalVisible = ref(false);
+const closeGameDoneFnRef = ref(null);
 
 const showDrawer = () => {
   quickTransferTab.value = false;
@@ -176,6 +198,20 @@ const copyTo = () => {
     clearInterval(intervalId);
     intervalId = null;
   }, 2000); // 5000 milliseconds = 5 seconds
+};
+
+const handleBeforeClose = (done) => {
+  closeGameConfirmModalVisible.value = true;
+  closeGameDoneFnRef.value = done;
+};
+
+const handleConfirmCloseGame = (done) => {
+  closeGameConfirmModalVisible.value = false;
+  closeGameDoneFnRef.value();
+};
+
+const handleCancelCloseGame = () => {
+  closeGameConfirmModalVisible.value = false;
 };
 
 const onClose = () => {
@@ -429,16 +465,7 @@ defineExpose({
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size:
-        10% 10%,
-        20% 20%,
-        15% 15%,
-        20% 20%,
-        18% 18%,
-        10% 10%,
-        15% 15%,
-        10% 10%,
-        18% 18%;
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
@@ -448,14 +475,7 @@ defineExpose({
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size:
-        15% 15%,
-        20% 20%,
-        18% 18%,
-        20% 20%,
-        15% 15%,
-        10% 10%,
-        20% 20%;
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 
     &.animate {
@@ -478,86 +498,26 @@ defineExpose({
 
     @keyframes topBubbles {
       0% {
-        background-position:
-          5% 90%,
-          10% 90%,
-          10% 90%,
-          15% 90%,
-          25% 90%,
-          25% 90%,
-          40% 90%,
-          55% 90%,
-          70% 90%;
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
       }
       50% {
-        background-position:
-          0% 80%,
-          0% 20%,
-          10% 40%,
-          20% 0%,
-          30% 30%,
-          22% 50%,
-          50% 50%,
-          65% 20%,
-          90% 30%;
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
       }
       100% {
-        background-position:
-          0% 70%,
-          0% 10%,
-          10% 30%,
-          20% -10%,
-          30% 20%,
-          22% 40%,
-          50% 40%,
-          65% 10%,
-          90% 20%;
-        background-size:
-          0% 0%,
-          0% 0%,
-          0% 0%,
-          0% 0%,
-          0% 0%,
-          0% 0%;
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position:
-          10% -10%,
-          30% 10%,
-          55% -10%,
-          70% -10%,
-          85% -10%,
-          70% -10%,
-          70% 0%;
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
       }
       50% {
-        background-position:
-          0% 80%,
-          20% 80%,
-          45% 60%,
-          60% 100%,
-          75% 70%,
-          95% 60%,
-          105% 0%;
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
       }
       100% {
-        background-position:
-          0% 90%,
-          20% 90%,
-          45% 70%,
-          60% 110%,
-          75% 80%,
-          95% 70%,
-          110% 10%;
-        background-size:
-          0% 0%,
-          0% 0%,
-          0% 0%,
-          0% 0%,
-          0% 0%,
-          0% 0%;
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
   }

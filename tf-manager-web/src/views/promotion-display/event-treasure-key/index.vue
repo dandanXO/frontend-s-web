@@ -270,6 +270,7 @@ import { getShortcuts } from '@/utils/datetime'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
+import { isDY } from '@/utils/site'
 
 const { t } = useI18n()
 const priviTreasureKeyForm = ref(null)
@@ -333,7 +334,7 @@ const form = reactive({
 })
 
 const loginNameValidator = async (rule, value, callback) => {
-  if (form.siteId === 6) {
+  if (isDY(form.siteId)) {
     form.privilegeCode = 'dy2-cs2-copenhagen-major-2024'
   } else {
     form.privilegeCode = 'lh-cs2-copenhagen-major-2024'

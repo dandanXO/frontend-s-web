@@ -77,9 +77,7 @@
         <td data-label="ID">{{ row.id }}</td>
         <td data-label="Date">
           <span v-if="row.date === null">-</span>
-          <span v-if="row.date !== null">
-            {{ moment(row.date).format('YYYY/MM/DD HH:mm:ss') }}
-          </span>
+          <span v-if="row.date !== null" v-formatter="{ data: row.date, type: 'date'}" />
         </td>
         <td date-label="Serial Number">{{ row.serialNumber }}</td>
         <td date-label="Credit Flow Type">

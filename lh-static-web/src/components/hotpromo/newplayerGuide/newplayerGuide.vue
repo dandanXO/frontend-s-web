@@ -17,15 +17,20 @@
             <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
             <div class="title">
               新手礼包
-              <span style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
+              <span v-if="store.token" style="font-size: 16px; font-weight: 400">({{ isValidUser ? "进行中" : "已结束" }})</span>
             </div>
           </div>
-          <span v-if="isValidUser" style="font-size: 14px; font-weight: bold; color: #15c201">
-            (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
-          </span>
-          <span v-else style="font-size: 14px; font-weight: bold; color: #ff0000">
-            (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
-          </span>
+          <div v-if="store.token">
+            <span v-if="isValidUser" style="font-size: 14px; font-weight: bold; color: #15c201">
+              (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是新用户，可参与新手活动)
+            </span>
+            <span v-else style="font-size: 14px; font-weight: bold; color: #ff0000">
+              (注册时间：{{ moment(memberRegTime).format("YYYY-MM-DD HH:mm:ss") }} 您是老用户，不符合新手活动要求)
+            </span>
+          </div>
+          <div v-else style="font-size: 12px; font-weight: 400; color: #00000099">
+            您还未登录，请登录后参与活动
+          </div>
           <div class="section">
             <div style="display: flex">
               <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
@@ -162,7 +167,7 @@
             <li>
               <span class="step-number">1</span>
               <div class="content">
-                自注册日起算30天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
+                自注册日起算7天内的新会员可以领取新手礼包，此活动第一阶段包括绑定有礼和首次提款，让新手会员进行注册体验。
               </div>
             </li>
             <li>
@@ -204,7 +209,7 @@
             <li>
               <span class="step-number">1</span>
               <div class="content">
-                自注册日起算30天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
+                自注册日起算7天内的新会员可以参加新手指路活动，此活动包括新人首存、成长攻略和钱包冲刺3个优惠，让新手会员进行游戏体验。
               </div>
             </li>
             <li>
@@ -353,6 +358,11 @@ const getBonus = async (promoCode) => {
         type: "success",
         message: `成功领取 ￥${apiRes.data}`
       });
+    } else {
+      notify({
+        type: "error",
+        message: apiRes.message
+      });
     }
   } catch (err) {
     console.error(err);
@@ -380,7 +390,10 @@ const getData = async () => {
   }
 };
 
-onMounted(async () => {
+onMounted(async() => {
+  if (!store.token) {
+    return;
+  }
   await getData();
 });
 </script>
@@ -426,6 +439,10 @@ onMounted(async () => {
   padding: 5px 28px;
   font-size: 16px;
   border-radius: 8px;
+
+  &.status {
+    color: #fff;
+  }
 
   &.complete {
     border: 1px solid rgba(0, 133, 232, 1);
@@ -569,10 +586,16 @@ h1 {
   padding: 5px 10px;
   border-radius: 6px;
   font-size: 14px;
-
+  text-align: center;
+  width: 80px;
   border: 1px solid rgba(0, 133, 232, 1);
 
+  cursor: pointer;
   color: rgba(0, 133, 232, 1);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 }
 
 .complete {

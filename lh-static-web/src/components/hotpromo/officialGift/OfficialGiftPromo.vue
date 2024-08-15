@@ -24,7 +24,7 @@
         <span>认准雷火电竞官方VIP客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：领取彩金、投资计划、赛事推荐</span>
+        <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐</span>
         <div class="detail-block-content-voxis">
           <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
@@ -35,7 +35,8 @@
     </div>
 
     <div class="official-gift-block reason-block">
-      <div class="official-gift-block-title">为什么要加入官方福利群</div>
+      <!-- <div class="official-gift-block-title">为什么要加入官方福利群</div> -->
+      <img class="official-gift-block-title" src="./img/web-title.png" />
       <div class="reason-block-content">
         <div v-for="(reason, index) in reasons" :key="index" class="reason-block-content-reason">
           <div class="reason-block-content-reason__inner">
@@ -71,13 +72,13 @@ const { vip } = storeToRefs(store);
 
 const reasons = ref([
   { icon: BeautySvg, description: "美女专属客服1对1优质服务" },
-  { icon: Clock24Svg, description: "客服全天7*24小时在线" },
+  // { icon: Clock24Svg, description: "客服全天7*24小时在线" },
   { icon: QuestionSvg, description: "优先解答您游戏中各种问题" },
   { icon: StackSvg, description: "提供各种优惠活动信息资料" },
   { icon: ClockSvg, description: "每日活动领取提醒专业引导" },
   { icon: DateSvg, description: "各种游戏类型专业投资计划" },
-  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" },
-  { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
+  { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" }
+  // { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
 ]);
 
 const paramsObj = computed(() => {
@@ -116,15 +117,17 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
   box-shadow: 0px 0px 4px 0px #01497b0f;
 
   .official-gift-block-title {
-    background: url(@/components/hotpromo/officialGift/img/block-title-bg.png) no-repeat;
-    background-size: contain;
-    aspect-ratio: 966 / 44;
+    max-width: 966px;
     margin: 0 auto;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 44px;
-    text-align: center;
-    color: #4c4c6c;
+    // background: url(@/components/hotpromo/officialGift/img/block-title-bg.png) no-repeat;
+    // background-size: contain;
+    // aspect-ratio: 966 / 44;
+    // margin: 0 auto;
+    // font-size: 32px;
+    // font-weight: 400;
+    // line-height: 44px;
+    // text-align: center;
+    // color: #4c4c6c;
   }
 }
 
@@ -210,7 +213,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
   .reason-block-content {
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     .reason-block-content-reason {
       border-radius: 10px;
       background-color: $color-white;

@@ -49,6 +49,11 @@ export default {
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
     helloUsername: "Hi,",
+    slotEdition: {
+      allPlatform: "ALL",
+      promotion: "Promotions",
+      moreGame: "MORE GAMES"
+    },
 
     // side menu
     menu_sports: "Sports",
@@ -468,6 +473,9 @@ export default {
     hong_congrats: "Congratulations",
     claim: "Claim",
 
+    //promo -- newPlayer
+    new_player_successfully: "Claimed successfully",
+
     // slot
     slot_search: "Search for games",
 
@@ -512,7 +520,7 @@ export default {
     vip_terms_para_01:
       "The program applies to all members who have a valid VNDP account at TF88. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
     vip_terms_para_02:
-      "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
+      "The system will automatically upgrade the VIP level of all members after 00:00:00 (GMT +7) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
     vip_terms_para_03:
       "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
     vip_terms_para_04:
@@ -1180,7 +1188,7 @@ export default {
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",
     page_lobby: "Lobby",
-    page_about: "About TFgaming",
+    page_about: "General Information",
 
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",
@@ -1413,6 +1421,7 @@ export default {
         doubleBetAmount: "Double the bet amount for each consecutive bet",
         betOnBothSides: "Bet on both sides",
         doubleBet: "Double bet",
+        allin: "All in",
         affiliateAbuse: "Affiliate agent CPA or revenue sharing abuse"
       },
       excludedBets:
@@ -1524,6 +1533,7 @@ export default {
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
     14010: "Network IP or SID duplicate",
+    14014: "The phone number format is incorrect.",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",
@@ -1560,6 +1570,7 @@ export default {
     30007: "Member deposit does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
     30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

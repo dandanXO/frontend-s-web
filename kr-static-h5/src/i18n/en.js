@@ -148,6 +148,9 @@ export default {
     reg_bank_acc_holder_placeholder:
       "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
     reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
+    card_account_cannot_empty: "Please enter the depositor's name",
+    reg_withdraw_password_placeholder: "Withdrawal Password",
+    reg_withdraw_password_4_digits: "Please enter your 4-digit withdrawal password",
 
     // forgot password
     sms_retrieval: "SMS retrieval",
@@ -215,7 +218,9 @@ export default {
     maintenance_to: "to 10:00 (GMT +8)",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
-    maintenance_contact_01: "Email Us:",
+    maintenance_desc: `We are currently under maintenance on our website, so all games and services will be unavailable.<br>
+We apologize for any inconvenience.<br>
+Maintenance time: August 6, 2024 ~ August 7, 2024 (GMT+8)`,
     maintenance_contact_02: "24/7 Customer Service",
     maintenance_contact_03: "Telegram:",
     currently_maintaining: "Maintenance in progress",
@@ -1588,6 +1593,7 @@ We sincerely congratulate you on your exchange and wish you only the best days a
     15202: "The new password cannot be the same as the old password",
     15204: "Phone number is incorrect.",
     15205: "Login Password is incorrect",
+    15206: "Duplicate nickname/name",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",
