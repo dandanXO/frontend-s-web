@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -132,6 +131,7 @@ import { getMemberMoneyChangeList } from '../../../../../api/affiliate';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -171,6 +171,11 @@ const page = reactive({
   pagingState: ''
 });
 
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
+
 const sort = (column) => {
   request.orderBy = column.prop;
   if (column.order === "descending") {
@@ -183,10 +188,6 @@ const sort = (column) => {
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
-}
-
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
 }
 
 async function loadMemberMoneyChange(frombutton) {
@@ -211,6 +212,7 @@ async function loadMemberMoneyChange(frombutton) {
       query.recordTime = query.recordTime.join(',')
     }
   }
+  query.siteId = site.id
   query.memberId = props.affId;
   query.pagingState = page.pagingState
   const { data: ret } = await getMemberMoneyChangeList(props.affId, query);
