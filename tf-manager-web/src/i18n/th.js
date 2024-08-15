@@ -1745,7 +1745,9 @@ export default {
     'Promotion Coupon': 'คูปอง',
     'Affiliate Change Log': 'บันทึกการเปลี่ยนแปลงผู้ปกครองของ Affiliate',
     'Media Display Settings': 'การตั้งค่าการแสดงสื่อ',
-    'Vip Report': 'รายงานวีไอพี'
+    'Vip Report': 'รายงานวีไอพี',
+    'System Value Rules': 'กฎการตั้งค่า',
+    'Sites Config': 'การตั้งค่าเว็บไซต์',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
