@@ -10,7 +10,8 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-const isGlobalDY = window.location.hostname.indexOf("dy988") > -1;
+console.log(window.location.hostname);
+const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
 
 if (isGlobalDY) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
