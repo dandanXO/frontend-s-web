@@ -738,6 +738,16 @@
       // background: $background-dark;
       background-image: url("../../assets/images/home/game-page-bg-dark.jpg");
       background-size: 100% 100%;
+      background-color: #151f38;
+
+      &:has(.slot-container) {
+        background-image: url("../../assets/slot/slot-page-bg.jpg");
+        background-size: 100% auto;
+      }
+    }
+
+    .platform-container-slot {
+      visibility: hidden;
     }
   
     .platform-container {
@@ -817,6 +827,7 @@
         &::after {
           @include gradient-border($active-color-dark-linear);
           border-radius: 1.5rem;
+          background: rgba(121, 134, 255, 1);
         }
   
         .plat-options-container {
@@ -827,7 +838,10 @@
               color: $font-1;
             }
             &.active {
-              background: $active-color-dark-linear;
+              // background: $active-color-dark-linear;
+              // box-shadow: $active-color-dark-shadow;
+              background: url("../../assets/slot/button-bg.svg");
+              background-size: 100% 100%;
               box-shadow: $active-color-dark-shadow;
   
               .text {

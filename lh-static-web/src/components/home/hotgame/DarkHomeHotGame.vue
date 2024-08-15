@@ -681,7 +681,7 @@ const tabPosition = ref('left')
       section: "poker",
       type: "poker",
       content: {
-        isShowSportsIcon: [require("../../../assets/poker/poker-pattern.png")],
+        isShowSportsIcon: [require("../../../assets/poker/poker-pattern-dark.png")],
         providerList: [
           // {
           //   key: "dat",

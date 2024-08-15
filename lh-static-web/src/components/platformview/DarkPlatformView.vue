@@ -28,7 +28,7 @@
                 <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
   
                 <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
-                  <img :src="require('../../assets/' + platformType + '/' + platformType + '-pattern.png')" />
+                  <img :src="require('../../assets/' + platformType + '/' + platformType + '-pattern-dark.png')" />
                 </div>
   
                 <div class="platform-list-box">
