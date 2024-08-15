@@ -183,15 +183,15 @@
       <el-dialog
         class="acc-dialog"
         v-model="loginDialogVisible"
-        width="1280px"
+        width="1126px"
         align-center
-        style="max-width: 1280px"
+        style="max-width: 1126px"
         @close="store.loginPageVisible = false"
       >
         <div class="acc-dialog-container">
           <div class="acc-dialog-left">
             <div class="acc-dialog-img">
-              <img :src="accDialogImg" />
+              <!-- <img :src="accDialogImg" /> -->
             </div>
           </div>
           <div class="acc-dialog-right">
@@ -2225,10 +2225,12 @@
   
         .acc-dialog-container {
           display: flex;
-          background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
-          border: 1px solid #997B54;
+          background: linear-gradient(178.46deg, #2D4065 0%, #1A2439 100%);
+          border: 1px solid #ffc37494;
           border-radius: 20px;
           overflow: hidden;
+          max-height: 90vh;
+          min-height: 736px;
         }
   
         .acc-dialog-left {
@@ -2237,26 +2239,29 @@
           background-size: 100% 100%;
           background-position: center center;
           background-color: transparent;
-          background-color: #ffffff;
           border-radius: 0px;
   
           .acc-dialog-img {
             max-width: 963px;
             max-height: 896px;
             border-radius: 20px;
-  
-            img {
-              display: block;
-              width: 100%;
-              object-fit: contain;
-            }
+            background: url("@/assets/home/auth/test-login-banner.png") no-repeat center center;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+            border-radius: 0px;
           }
         }
   
         .acc-dialog-right {
           width: 460px;
-          padding: 24px 24px 24px 24px;
-  
+          padding: 24px 30px 24px 30px;
+
+          .acc-dialog-homelogo {
+            margin: auto;
+            text-align: center;
+          }  
+
           .acc-dialog-content {
             padding-top: 26px;
           }

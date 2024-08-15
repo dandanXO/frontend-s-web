@@ -81,6 +81,7 @@
           line-height: 1.1;
           text-align: left;
           padding-top: 30px;
+          text-align: center;
   
           //background: linear-gradient(180deg, #3AACFF 30.46%, #FF53F8 71.84%);
           // background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
@@ -144,13 +145,15 @@
           .list-item-txt {
             text-align: center;
             white-space: nowrap;
-            color: #a5c0e4;
+            color: #b7c1ff;
             font-size: 16px;
+            margin-top: -20px;
           }
 
-          &:hover {
+          &:hover, &:active {
             .list-item-txt {
               font-weight: bold;
+              color: #fff;
             }
           }
 
@@ -713,16 +716,6 @@
               background-clip: text;
               filter: none;
               font-family: 'YouSheBiaoTiHei';
-            }
-          }
-  
-          .platform-list-box {
-            .platform-list-item {
-              .list-item-txt {
-                color: #fff;
-                margin-top: -20px;
-                // color: $active-color-dark;
-              }
             }
           }
   

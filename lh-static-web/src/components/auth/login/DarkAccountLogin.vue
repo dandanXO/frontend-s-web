@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="70" size="large">
+    <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="70" size="large" class="login-form">
       <div class="light-bg form-field">
         <img style="width:25px;" class="form-field-icon" src="@/assets/home/auth/username-icon-dark.png" />
         <el-form-item label="用户名" prop="loginName">
@@ -37,21 +37,21 @@
       </div>
   
       <div class="agreement-and-forget-pass">
-        <div class="font-gray">登录即代表同意并遵守《用户协议》</div>
+        <div>登录即代表同意并遵守《用户协议》</div>
         <div><a @click="openForgotpwdDialog">忘记密码</a></div>
       </div>
   
-      <el-button :loading="loadingBtn" size="large" class="standard-button" style="width:100%;" @click="submitLogin">登录</el-button>
-    </el-form>
-  
-    <div class="flex-div">
-      <div style="visibility: hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
-  
-      <div style="text-align: left" class="font-gray">
-        没有账号？
-        <a @click="openRegDialog">去注册</a>
+      <el-button :loading="loadingBtn" size="large" class="login-button" style="width:100%;" @click="submitLogin">登录</el-button>
+
+      <div class="register-or-sightsee">
+        <div style="display: none;"><a @click="closeLoginDialog">先去逛逛</a></div>
+    
+        <div style="text-align: left">
+          没有账号？
+          <a @click="openRegDialog">去注册</a>
+        </div>
       </div>
-    </div>
+    </el-form>
   </template>
   
   <script setup>
@@ -217,8 +217,15 @@
   
   <style lang="scss">
   .dark {
+    .el-overlay {
+      background: url("@/assets/home/auth/login-page-bg-dark.png");
+      background-size: 100% auto;
+    }
     .form-field {
-      margin: 15px 0px;
+      margin: 0px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      gap: 0px;
     
       .el-form-item {
         margin-bottom: 0px;
@@ -236,6 +243,59 @@
     
       .el-form-item.is-error {
         margin-bottom: 15px;
+      }
+    }
+
+    .el-tabs__item {
+      font-family: "PingFang SC";
+      color: #a98f7c;
+    }
+
+    .el-tabs__item.is-active {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .el-tabs__active-bar {
+      background: #fff;
+    }
+
+    .el-tabs__nav-wrap:after {
+      background: transparent;
+    }
+
+    .login-button {
+      background: url('../../../assets/home/auth/login-btn-bg.svg') no-repeat center center;
+      background-size: cover;
+      box-shadow: none;
+      border-radius: 6px;
+      border: 1px solid #3A93CE;
+      margin-top: 20px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .agreement-and-forget-pass {
+      font-family: "PingFang SC";
+      color: #a98f7c;
+
+      a {
+        color: #a98f7c;
+      }
+    }
+
+    .register-or-sightsee {
+      font-family: "PingFang SC";
+      display: flex;
+      justify-content: center;
+      color: #a98f7c;
+
+      a {
+        color: #4A99E9;
       }
     }
   }
