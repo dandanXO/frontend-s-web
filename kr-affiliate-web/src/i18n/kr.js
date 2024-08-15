@@ -553,7 +553,7 @@ export default {
     remark: '회원 메모',
     bonusRecord: '보너스 기록',
     ftdTime: '첫 입금 시간',
-    validBet: '유효 베팅',
+    validBet: '유효베팅 금액',
     unAssigned: '미할당',
     batchEditTag: '일괄 태그 편집',
     personalReport: '개인 보고서',
