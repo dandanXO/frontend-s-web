@@ -220,7 +220,7 @@
         <div class="acc-dialog-container">
           <div class="acc-dialog-left">
             <div class="acc-dialog-img">
-              <img :src="accDialogImg" />
+              <!-- <img :src="accDialogImg" /> -->
             </div>
           </div>
           <div class="acc-dialog-right">
@@ -2235,10 +2235,7 @@
   
         .acc-dialog-left {
           width: calc(100% - 450px);
-          background-image: url(../../../assets/home/acc-dialog-bg-paris.png);
-          background-size: 100% 100%;
-          background-position: center center;
-          background-color: transparent;
+          background: transparent;
           border-radius: 0px;
   
           .acc-dialog-img {
@@ -2414,9 +2411,7 @@
   
       .el-dialog__body {
         .acc-dialog-left {
-          background-image: url(../../../assets/home/acc-dialog-bg-dark-eurocup.png);
-          background-size: 100% 100%;
-          background-position: center center;
+          background: transparent;
         }
       }
     }

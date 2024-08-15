@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="80" size="large">
+    <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="80" size="large" class="register-form">
       <div class="light-bg form-field">
         <img style="width:25px;" class="form-field-icon" src="@/assets/home/auth/username-icon-dark.png" />
         <el-form-item label="姓名" prop="realName">
@@ -100,24 +100,26 @@
           </div>
         </el-form-item>
       </div>
+
+      <div>
+        <el-button class="standard-button primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
+      </div>
+
+      <div class="login-or-sightsee">
+        <div style="display: none">
+          <a @click="closeRegDialog">先去逛逛</a>
+        </div>
+        
+        <div>
+          已有账号？
+          <a @click="openLoginDialog">去登录</a>
+        </div>
+      </div>
     </el-form>
     <!-- <div>
         <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
     </div> -->
-    <div>
-      <el-button class="standard-button primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
-    </div>
-  
-    <div class="flex-div">
-      <div style="visibility: hidden">
-        <a @click="closeRegDialog">先去逛逛</a>
-      </div>
-  
-      <div style="text-align: center" class="font-gray">
-        已有账号？
-        <a @click="openLoginDialog">去登录</a>
-      </div>
-    </div>
+    
   </template>
   
   <script setup>
@@ -493,25 +495,49 @@
   <style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
   
   <style lang="scss">
-  .form-field {
-    margin: 15px 0px;
-  
-    .el-form-item {
-      margin-bottom: 0px;
+  .dark {
+    .form-field {
+      margin: 0px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      gap: 0px;
+    
+    
+      .el-form-item {
+        margin-bottom: 0px;
+      }
+    
+      .el-form-item__label {
+        justify-content: flex-start;
+      }
+    
+      .el-input__wrapper {
+        box-shadow: none;
+        background: none;
+      }
+    
+      .el-form-item.is-error {
+        margin-bottom: 15px;
+      }
     }
-  
-    .el-form-item__label {
-      justify-content: flex-start;
-    }
-  
-    .el-input__wrapper {
-      box-shadow: none;
-      background: none;
-    }
-  
-    .el-form-item.is-error {
-      margin-bottom: 15px;
-    }
+
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding-top: 26px;
+      }
+
+      .login-or-sightsee {
+        font-family: "PingFang SC";
+        display: flex;
+        justify-content: center;
+        color: #a98f7c;
+
+        a {
+          color: #4A99E9;
+        }
+      }
   }
   </style>
   
