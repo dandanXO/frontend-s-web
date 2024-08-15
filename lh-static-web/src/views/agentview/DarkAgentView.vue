@@ -194,33 +194,32 @@
             <div class="contact-buttons mail-buttons">
                 <span style="font-size: 0px;" ref="contact0">mailto:affiliate@e8007.com</span>
                 <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
-                <button class="download-btn">下载</button>
             </div>
             <div class="contact-buttons qq-buttons">
               <span style="font-size: 0px;" ref="contact1">1903687863</span>
                 <button class="copy-btn"  @click="copyMessage('1')">{{ copybtntxt1 }}</button>
-                <button class="download-btn">下载</button>
+                <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
             </div>
             <div class="contact-buttons skype-buttons">
               <span style="font-size: 0px;" ref="contact2">live:.cid.1b8d9a018a52a8f5</span>
                 <button class="copy-btn"  @click="copyMessage('2')">{{ copybtntxt2 }}</button>
-                <button class="download-btn">下载</button>
+                <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
             </div>
             <div class="contact-buttons telegram-buttons">
               <span style="font-size: 0px;" ref="contact3">@LH18668</span>
                 <button class="copy-btn"  @click="copyMessage('3')">{{ copybtntxt3 }}</button>
-                <button class="download-btn">下载</button>
+                <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
             </div>
             <div class="contact-buttons bubble-buttons">
               <span style="font-size: 0px;" ref="contact4">LH100866</span>
                 <button class="copy-btn"  @click="copyMessage('4')">{{ copybtntxt4 }}</button>
-                <button class="download-btn">下载</button>
+                <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
             </div>
           </div>
 
-          <div>
+          <!-- <div>
             <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" class="agent-reg-btn">立即申请代理</a>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -695,7 +694,7 @@
     .mail-buttons {
         position: absolute;
         top: 37%;
-        left: 38%;
+        left: 41.5%;
     }
 
     .qq-buttons {
@@ -740,6 +739,9 @@
         width: 100px;
         height: 33px;
         font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
   }
   </style>
