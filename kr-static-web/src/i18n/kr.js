@@ -877,7 +877,11 @@ export default {
     customerService: "24/7 온라인 지원",
     currentlyMaintaining: "점검 중",
     maintainenceTime: "점검 시간",
-    otherPlatFirst: "다른 홀에서 베팅해 주시기 바랍니다."
+    otherPlatFirst: "다른 홀에서 베팅해 주시기 바랍니다.",
+    maintenance_from: "시작일 ",
+    maintenance_to: "까지 ",
+    maintenance_desc_01: "위 기간 동안 모든 서비스와 게임이 중단됩니다, ",
+    maintenance_desc_02: "이 불편에 진심으로 사과드립니다!"
   },
   welcome: {
     compatibleDevices: "안전한 장치와 완벽하게 호환됩니다.",

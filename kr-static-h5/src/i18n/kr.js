@@ -217,10 +217,10 @@ export default {
 
     // maintenance
     maintenance_title: "시스템 유지 보수 중...",
-    maintenance_from: "2024년 4월 17일 06:00 (GMT +8)부터",
-    maintenance_to: "10:00 (GMT +8)까지",
-    maintenance_desc_01: "위 시간 동안 모든 서비스와 게임이 일시 중지됩니다.",
-    maintenance_desc_02: "불편을 드려 죄송합니다!",
+    maintenance_from: "시작일 ",
+    maintenance_to: "까지 ",
+    maintenance_desc_01: "위 기간 동안 모든 서비스와 게임이 중단됩니다, ",
+    maintenance_desc_02: "이 불편에 진심으로 사과드립니다!",
     maintenance_desc: `웹 사이트 점검중이오니 모든 게임 및 서비스 사용할수없습니다<br>
  불편을 끼쳐드려서 죄송합니다<br>
 정검시간: 2024년 8월 6일 ~ 2024년 8월7일(GMT+8)`,

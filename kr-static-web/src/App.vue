@@ -21,6 +21,7 @@ import { storeToRefs } from "pinia";
 
 import dayjs from "dayjs";
 import { useRouter } from "vue-router";
+import { uiStore } from "@/store/ui";
 
 require("dayjs/locale/ko");
 var localizedFormat = require("dayjs/plugin/localizedFormat");
@@ -36,6 +37,7 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
     const store = userStore();
+    const ui= uiStore();
     const onlineStatInterval = ref();
 
     const checkSID = () => {
