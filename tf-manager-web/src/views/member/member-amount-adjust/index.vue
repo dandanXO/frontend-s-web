@@ -823,7 +823,7 @@ async function loadFormSelect() {
 async function loadFormImportSelect() {
   siteCurrencyConfig.supportMultiWallet = null
   siteCurrencyConfig.defaultCurrency = null
-  await loadSiteConfig()
+  await loadImportSiteConfig()
 }
 
 async function loadCauseBySiteId() {
@@ -844,15 +844,11 @@ async function loadCauseBySiteId() {
 }
 
 async function loadSiteConfig() {
-  if (form.siteId) {
-    importForm.siteId = null
-    getSiteConfig(form.siteId)
-  }
+  getSiteConfig(form.siteId)
+}
 
-  if (importForm.siteId) {
-    form.siteId = null
-    getSiteConfig(importForm.siteId)
-  }
+async function loadImportSiteConfig() {
+  getSiteConfig(importForm.siteId)
 }
 
 async function getSiteConfig(siteId) {
