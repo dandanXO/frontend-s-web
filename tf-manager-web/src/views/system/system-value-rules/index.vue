@@ -449,7 +449,6 @@ function showEdit(rule) {
         )
       }
     }
-    console.log(form.value)
     handleValueTypeChange()
   })
 }
@@ -465,6 +464,7 @@ function submit() {
 function create() {
   rulesForm.value.validate(async valid => {
     if (valid) {
+      form.name = form.name.trim();
       if (uiControl.showParamFormat === 'key-value') {
         form.value = constructParam()
       } else if (uiControl.showParamFormat === 'json') {
@@ -472,6 +472,7 @@ function create() {
           JSON.parse(form.value)
         )
       }
+      form.value = form.value.trim();
       const rulesFormCopy = { ...form }
       // delete rulesFormCopy.
       await createValueRules(rulesFormCopy)
@@ -485,6 +486,7 @@ function create() {
 function edit() {
   rulesForm.value.validate(async valid => {
     if (valid) {
+      form.name = form.name.trim();
       if (uiControl.showParamFormat === 'key-value') {
         form.value = constructParam()
       } else if (uiControl.showParamFormat === 'json') {
@@ -495,6 +497,7 @@ function edit() {
       if (form.type === 'SWITCH') {
         form.value = switchInactiveText.value + "," + switchActiveText.value + ","
       }
+      form.value = form.value.trim();
       const rulesFormCopy = { ...form }
       delete rulesFormCopy.jsonParams
       await updateValueRules(rulesFormCopy)
@@ -536,6 +539,11 @@ function constructParam() {
 function handleValueTypeChange() {
   if (form.type !== "INPUT" && form.type !== "SWITCH" && !switchType.value) {
     uiControl.showParamFormat = 'key-value'
+    if (uiControl.dialogType === 'EDIT') {
+      if (param.value.length === 0) {
+        addParam()
+      }
+    }
   } else if (form.type !== "INPUT" && form.type !== "SWITCH" && switchType.value) {
     uiControl.showParamFormat = 'json'
   } else {

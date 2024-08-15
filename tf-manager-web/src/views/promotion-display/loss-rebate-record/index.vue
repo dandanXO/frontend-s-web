@@ -465,10 +465,9 @@ function distributeRebate() {
       cancelButtonText: t('fields.cancel'),
       type: "warning"
     }
-  ).then(async () => {
+  ).then(() => {
     const query = checkQuery();
-    await distribute(query);
-    await loadLossRebateRecords();
+    distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
   });
 }
