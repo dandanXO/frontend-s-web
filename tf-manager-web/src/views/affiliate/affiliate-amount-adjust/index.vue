@@ -842,12 +842,12 @@ async function loadAffiliateAmountAdjust() {
   page.numberOfDeduction = 0
   const query = checkQuery()
   if (!hasPermission(['sys:affiliate:amount:adjust:search'])) {
-    if (query.loginName === undefined || query.loginName === "") {
+    if (query.loginName === undefined || query.loginName === '') {
       page.pages = 0
       page.records = []
       page.total = 0
       page.loading = false
-      return;
+      return
     }
   }
   const { data: ret } = await getAffiliateAmountAdjust(query)
@@ -900,6 +900,7 @@ function handleCauseChange(selectedValue) {
   )
   if (selectedItem) {
     adjustRollover.selectedItem = selectedItem.rollover
+    form.rollover = selectedItem.rollover
   }
 }
 
@@ -909,6 +910,7 @@ function handleImportCauseChange(selectedValue) {
   )
   if (selectedItem) {
     adjustRollover.importedSelectedItem = selectedItem.rollover
+    importForm.rollover = selectedItem.rollover
   }
 }
 
@@ -958,6 +960,7 @@ async function downloadTemplate() {
   XLSX.writeFile(wb, 'affiliate_amount_adjust.xlsx')
 }
 
+/* eslint-disable */
 function setWidth(exportData, maxLength) {
   exportData.map(data => {
     Object.keys(data).map(key => {
@@ -969,8 +972,8 @@ function setWidth(exportData, maxLength) {
             ? maxLength[key]
             : 10
           : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
+          ? maxLength[key]
+          : value.length + 2
     })
   })
 }
