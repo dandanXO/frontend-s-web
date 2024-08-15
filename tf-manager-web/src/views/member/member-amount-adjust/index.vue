@@ -190,7 +190,7 @@
           :label="t('fields.currencyWallet')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
-              siteCurrencyConfig.supportMultiWallet === '1'
+              siteCurrencyConfig.supportMultiWallet === 'OPEN'
           "
           prop="currency"
         >
@@ -345,7 +345,7 @@
           :label="t('fields.currencyWallet')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
-              siteCurrencyConfig.supportMultiWallet === '1'
+              siteCurrencyConfig.supportMultiWallet === 'OPEN'
           "
           prop="currency"
         >
@@ -867,7 +867,7 @@ async function getSiteConfig(siteId) {
     ? multiWalletResponse[0].value
     : null
 
-  if (multiWalletConfig === '1') {
+  if (multiWalletConfig === 'OPEN') {
     siteCurrencyConfig.supportMultiWallet = multiWalletConfig
     const { data: currencyResponse } = await getSupportedCurrencyBySiteId(
       siteId
