@@ -173,11 +173,23 @@ function getApiDomainPrefix(urlLsName) {
 }
 
 function getErrorType(errorUrl) {
-  errorUrl = errorUrl.replace("https://", "");
-  const firstStr = errorUrl.substr(0, 5);
-  console.log(firstStr);
+  const apiLinks = isGlobalAndCN ? [...rstGlobalArray,...evtGlobalArray,...crGlobalArray] : [...rstArray,...evtArray,...crtArray]
+  const isOriginalUrl = apiLinks.find(link => link === errorUrl)
+  let result = ''
 
-  return firstStr;
+  errorUrl = errorUrl.replace("https://", "");
+
+  if(isOriginalUrl) {
+    result = errorUrl.substr(0, 5);
+  } else {
+    const domains = errorUrl.split('.')
+    const subDomainFormErrorUrl = domains[1]
+    const prefix = domains[0].substr(0,2)
+    result = `${prefix}${subDomainFormErrorUrl.substr(0,5)}`
+  }
+
+
+  return result;
 }
 
 function isInApp() {
