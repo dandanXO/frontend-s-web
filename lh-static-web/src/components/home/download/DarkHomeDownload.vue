@@ -37,7 +37,7 @@
 
         .dl-frame {
             position: absolute;
-            bottom: 15%;
+            bottom: 16%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;

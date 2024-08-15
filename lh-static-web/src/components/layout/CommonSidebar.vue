@@ -16,7 +16,7 @@
     </div>
     <div class="sticky-sidebar-items">
       <div
-        v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
+        v-if="showDarkModeToggle"
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >
@@ -157,7 +157,7 @@ export default defineComponent({
     const store = userStore();
     const ui = uiStore();
     const isDark = useDark();
-
+    const showDarkModeToggle = ref(location.host.startsWith('localhost'));
     const handleDarkModeClick = () => (isDark.value = !isDark.value);
 
     const gameMenu = ref(null);
@@ -317,6 +317,8 @@ export default defineComponent({
         initFloating();
       }
       document.addEventListener("mouseup", stopDragging);
+
+      isDark.value = false;
     });
 
     watch(
@@ -360,7 +362,8 @@ export default defineComponent({
       currentPromoIndex,
       gotoPromo,
       clickAllowed,
-      isDragging
+      isDragging,
+      showDarkModeToggle
     };
   }
 });
