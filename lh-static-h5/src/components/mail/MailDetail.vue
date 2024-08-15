@@ -9,40 +9,40 @@
     </div>
     <div class="mail-detail-action-wrapper">
       <q-btn v-if="mail.redirectType !== 'NONE'" class="common-large-btn" @click="handleRedirectClick">
-        {{ mail?.redirectButton ?? '立即前往' }}
+        {{ mail?.redirectButton ?? "立即前往" }}
       </q-btn>
     </div>
-    <GameModal ref="gameRef"/>
+    <GameModal ref="gameRef" />
   </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router';
-import GameModal from '../modal/GameModal.vue';
-import { ref } from 'vue';
-
-
+import { useRouter } from "vue-router";
+import GameModal from "../modal/GameModal.vue";
+import { ref } from "vue";
 
 const props = defineProps({
   mail: Object
 });
 
-const router = useRouter()
+const router = useRouter();
 
-const gameRef = ref()
+const gameRef = ref();
 
-const openGame = (gameName,code,gameCode) => {
-  gameRef.value.open(gameName,code,gameCode)
-}
+const openGame = (gameName, code, gameCode) => {
+  gameRef.value.open(gameName, code, gameCode);
+};
 
 const handleRedirectClick = () => {
   if (props.mail.redirectType === "INNER") {
-    const openPattern = /^\/open\/(.*)/;
-    if(props.mail.redirectUrl.match(openPattern) && gameRef.value) {
+    const openPattern = /^open\/(.*)/;
+    if (props.mail.redirectUrl.match(openPattern) && gameRef.value) {
       const extractedUrl = props.mail.redirectUrl.match(openPattern)[1];
       const [gameName, platformCode, gameCode] = extractedUrl.split("/");
       openGame(gameName, platformCode, gameCode);
+    } else if (props.mail.redirectUrl.startsWith("/")) {
+      router.push(props.mail.redirectUrl);
     } else {
-      router.push(props.mail.redirectUrl)
+      router.push({ path: "/promo", query: { name: props.mail.redirectUrl } });
     }
   } else if (props.mail.redirectType === "OUTER") {
     window.open(props.mail.redirectUrl, "_blank");
