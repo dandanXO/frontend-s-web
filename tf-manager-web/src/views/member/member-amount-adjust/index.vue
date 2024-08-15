@@ -187,10 +187,10 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          :label="t('fields.currency')"
+          :label="t('fields.currencyWallet')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
-              siteCurrencyConfig.supportMultiWallet === '1'
+              siteCurrencyConfig.supportMultiWallet === 'OPEN'
           "
           prop="currency"
         >
@@ -342,10 +342,10 @@
           </span>
         </el-form-item>
         <el-form-item
-          :label="t('fields.currency')"
+          :label="t('fields.currencyWallet')"
           v-if="
             siteCurrencyConfig.supportMultiWallet !== null &&
-              siteCurrencyConfig.supportMultiWallet === '1'
+              siteCurrencyConfig.supportMultiWallet === 'OPEN'
           "
           prop="currency"
         >
@@ -485,7 +485,7 @@
       />
       <el-table-column
         prop="currency"
-        :label="t('fields.currency')"
+        :label="t('fields.currencyWallet')"
         min-width="120"
       ></el-table-column>
       <el-table-column
@@ -844,54 +844,46 @@ async function loadCauseBySiteId() {
 }
 
 async function loadSiteConfig() {
-  let siteId = null
-  let defaultCurrencyConfig = null
-  let multiWalletConfig = null
-
   if (form.siteId) {
-    siteId = form.siteId
     importForm.siteId = null
+    getSiteConfig(form.siteId)
   }
 
   if (importForm.siteId) {
-    siteId = importForm.siteId
     form.siteId = null
+    getSiteConfig(importForm.siteId)
   }
-  if (siteId) {
-    const { data: getDefaultCurrencyConfig } = await getConfigList(
-      'fiat_wallet',
-      siteId
-    )
-    defaultCurrencyConfig = getDefaultCurrencyConfig[0]
-      ? getDefaultCurrencyConfig[0].value
-      : null
+}
 
-    const { data: getMultiWalletConfig } = await getConfigList(
-      'support_multi_wallet',
-      siteId
-    )
-    multiWalletConfig = getMultiWalletConfig[0]
-      ? getMultiWalletConfig[0].value
-      : null
-  }
+async function getSiteConfig(siteId) {
+  const { data: fiatResponse } = await getConfigList('fiat_wallet', siteId)
+  const fiatConfig = fiatResponse[0] ? fiatResponse[0].value : null
 
-  if (multiWalletConfig) {
+  const { data: multiWalletResponse } = await getConfigList(
+    'support_multi_wallet',
+    siteId
+  )
+  const multiWalletConfig = multiWalletResponse[0]
+    ? multiWalletResponse[0].value
+    : null
+
+  if (multiWalletConfig === 'OPEN') {
     siteCurrencyConfig.supportMultiWallet = multiWalletConfig
-    const { data: getSupportedCurrencies } = await getSupportedCurrencyBySiteId(
+    const { data: currencyResponse } = await getSupportedCurrencyBySiteId(
       siteId
     )
-    if (getSupportedCurrencies) {
+    if (currencyResponse) {
       currencyList.currencyGroupList = [
         ...new Set(
-          getSupportedCurrencies.map(currency => currency.currencyGroup)
+          currencyResponse
+            .filter(currency => currency && currency.currencyGroup)
+            .map(currency => currency.currencyGroup)
         ),
       ]
     }
   } else {
-    if (defaultCurrencyConfig) {
-      siteCurrencyConfig.defaultCurrency = defaultCurrencyConfig
-      form.currency = siteCurrencyConfig.defaultCurrency
-    }
+    siteCurrencyConfig.defaultCurrency = fiatConfig
+    form.currency = siteCurrencyConfig.defaultCurrency
   }
 }
 
@@ -1070,6 +1062,7 @@ async function downloadTemplate() {
   XLSX.writeFile(wb, 'member_amount_adjust.xlsx')
 }
 
+/* eslint-disable */
 function setWidth(exportData, maxLength) {
   exportData.map(data => {
     Object.keys(data).map(key => {
@@ -1080,8 +1073,8 @@ function setWidth(exportData, maxLength) {
             ? maxLength[key]
             : 10
           : maxLength[key] >= value.length + 2
-            ? maxLength[key]
-            : value.length + 2
+          ? maxLength[key]
+          : value.length + 2
     })
   })
 }
@@ -1232,7 +1225,7 @@ onMounted(async () => {
   }
   await loadCauseBySiteId()
   await loadMemberAmountAdjust()
-  await loadSiteConfig()
+  // await loadSiteConfig()
 })
 </script>
 
