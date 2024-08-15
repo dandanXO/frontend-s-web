@@ -371,6 +371,8 @@
         justify-content: center;
         align-items: center;
         width: 800px;
+        font-family: 'PingFang SC';
+
         a {
           text-decoration: none;
           display: block;
@@ -385,6 +387,10 @@
           background: url("../../assets/images/affiliate/standard-button.svg") no-repeat center top;
           background-size: 100% 100%;
           box-shadow: none;
+
+          &:hover {
+            filter: brightness(0.9);
+          }
   
           &.outline {
             background: url("../../assets/images/affiliate/standard-button-outline.svg") no-repeat center top;
