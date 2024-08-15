@@ -212,9 +212,9 @@
       <el-dialog
         class="acc-dialog"
         v-model="registerDialogVisible"
-        width="1280px"
+        width="1100px"
         align-center
-        style="max-width: 1280px"
+        style="max-width: 1100px"
         @close="store.regPageVisible = false"
       >
         <div class="acc-dialog-container">
