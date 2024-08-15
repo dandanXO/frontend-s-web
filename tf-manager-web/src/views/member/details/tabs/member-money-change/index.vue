@@ -120,6 +120,19 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="currency"
+          :label="t('fields.currency')"
+          align="center"
+          min-width="180"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.currency === null">-</span>
+            <span v-else>
+              {{ scope.row.currency }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="amount"
           :label="t('fields.amount')"
           align="center"
@@ -314,6 +327,7 @@ async function loadMemberMoneyChange(frombutton) {
       query.recordTime = query.recordTime.join(',')
     }
   }
+  query.siteId = site.id
   query.memberId = props.mbrId
   query.pagingState = page.pagingState
   const { data: ret } = await getMemberMoneyChangeList(props.mbrId, query)
