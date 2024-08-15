@@ -976,6 +976,7 @@ function handleCauseChange(selectedValue) {
   )
   if (selectedItem) {
     adjustRollover.selectedItem = selectedItem.rollover
+    form.rollover = selectedItem.rollover
   }
 }
 
@@ -985,6 +986,7 @@ function handleImportCauseChange(selectedValue) {
   )
   if (selectedItem) {
     adjustRollover.importedSelectedItem = selectedItem.rollover
+    importForm.rollover = selectedItem.rollover
   }
 }
 

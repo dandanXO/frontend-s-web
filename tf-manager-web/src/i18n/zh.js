@@ -797,7 +797,7 @@ export default {
     currencyCode: '货币代码',
     currencyName: '货币名称',
     currencyRate: '汇率',
-    currencyWallet: '货币钱包',
+    currencyWallet: '钱包',
     currentPassword: '当前密码',
     currentPlace: '当前位置',
     customerSupportAddress: '客服地址',
