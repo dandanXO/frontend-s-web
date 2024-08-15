@@ -9,9 +9,9 @@
         :space-between="20"
       >
         <swiper-slide v-for="(promotion, index) in promotions" :key="index">
-          <a class="promotion">
-            <img :src="promotion.img" />
-            <span>{{ promotion.text }}</span>
+          <a class="promotion" :title="promotion.title" @click="goToUrl(promotion.redirectUrl)">
+            <img :src="imgURL + promotion.mobileImgUrl" />
+            <span>{{ promotion.title }}</span>
           </a>
         </swiper-slide>
       </swiper>
@@ -20,22 +20,52 @@
 </template>
 <script setup>
 import HomeTitle from "@/atoms/HomeTitle.vue";
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
+import { onMounted, ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import Promotion1 from "@/assets/images/home/slotEdition/promotion-1.png";
-import Promotion2 from "@/assets/images/home/slotEdition/promotion-2.png";
-import Promotion3 from "@/assets/images/home/slotEdition/promotion-3.png";
+import { loadEditionPromo } from "@/api/index/promo";
+import { useLocalStorage } from "@vueuse/core";
+import { useRouter } from "vue-router";
 
-const { t } = useI18n();
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const router = useRouter();
 
-const promotions = computed(() => [
-  { img: Promotion1, text: "Quỹ cứu hộ điện tử siêu cao 20%" },
-  { img: Promotion2, text: "Quỹ cứu hộ điện tử siêu cao 20%" },
-  { img: Promotion3, text: "Quỹ cứu hộ điện tử siêu cao 20%" }
-]);
+const promotions = ref([]);
+
+const getPromo = () => {
+  loadEditionPromo("SLOT").then((res) => {
+    if (res.code === 0) {
+      promotions.value = res.data.slice(0, 3);
+    }
+  });
+};
+
+const goToUrl = (redirectUrl) => {
+  const urlSplit = redirectUrl.split("|");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promotion?name=${redirectUrl}`);
+    }
+  } else {
+    const openPattern = /^\/open\/(.*)/;
+    if (redirectUrl.match(openPattern)) {
+      const extractedUrl = redirectUrl.match(openPattern)[1];
+      const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+      allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+    } else if (redirectUrl.includes("https://")) {
+      window.open(redirectUrl, "_blank");
+    } else {
+      router.push(`/promotion?name=${redirectUrl}`);
+    }
+  }
+};
+
+onMounted(getPromo);
 </script>
 <style lang="scss" scoped>
 .promotion-section {
@@ -51,11 +81,16 @@ const promotions = computed(() => [
       box-shadow: 0px 0px 10px 0px #0000001a;
       border-radius: 15px;
       img {
+        display: block;
         max-width: 100%;
-        margin-bottom: 12px;
+        margin: 0 auto 12px;
         border-radius: 12px;
       }
       span {
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         font-size: 28px;
         font-weight: 700;
         line-height: 40px;

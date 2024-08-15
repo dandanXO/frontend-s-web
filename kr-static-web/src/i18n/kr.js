@@ -232,6 +232,7 @@ export default {
     usernamereq: "사용자 이름을 입력해 주세요",
     passwordreq: "비밀번호를 입력해 주세요",
     username: "사용자 이름은 6-11자여야 합니다",
+    only_letter_number_allowed: "영어문자와숫자만가능합니다",
     password: "비밀번호는 6-11자여야 합니다",
     passwordDifferent: "두 번 입력한 비밀번호가 일치하지 않습니다",
     passwordAgain: "비밀번호를 다시 입력해 주세요",

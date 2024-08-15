@@ -183,7 +183,7 @@
                   lhworldcup:
                     selectedPromo.promoCode === 'lh1worldcup' ||
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
-                    selectedPromo.promoCode === 'lh1-football',
+                    selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu:
                     selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
@@ -247,7 +247,7 @@
   <q-dialog class="modal-common-div" width="100%" v-model="store.isDisplayLogin">
     <q-card
       style="width: 100%; padding: 10px 12px 20px"
-      class="text-black text-center"
+      class="text-center text-black"
       :class="$q.dark.isActive ? '' : 'bg-white'"
     >
       <div class="headers">
@@ -267,7 +267,7 @@
   <q-dialog class="modal-common-div danaaa" v-model="showRuleDialog">
     <!-- <q-card
       style="width: 100%; padding: 10px 12px 20px"
-      class="text-black text-center"
+      class="text-center text-black"
       :class="$q.dark.isActive ? '' : 'bg-white'"
     >
       <div class="headers">
@@ -282,8 +282,8 @@
         <q-btn class="common-md-btn" label="确认" />
       </router-link>
     </q-card> -->
-    <q-card class="text-black text-center" style="background: transparent">
-      <q-card-section class="row items-center justify-center">
+    <q-card class="text-center text-black" style="background: transparent">
+      <q-card-section class="items-center justify-center row">
         <div class="dialog-header-2">
           <img
             class="closeX"
@@ -381,6 +381,7 @@ export default defineComponent({
       "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
       "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin',
       'livepoker-rebate': selectedPromo.value.promoCode === 'lh1-livepoker-rebate',
+      'lh1-football': selectedPromo.value.promoCode === 'lh1-football',
     }))
 
     // const routeQuery  = computed(() => route.query || {});
@@ -1188,6 +1189,9 @@ export default defineComponent({
       }
 
       &.livepoker-rebate {
+        background: #E7F1FD;
+      }
+      &.lh1-football{
         background: #E7F1FD;
       }
     }

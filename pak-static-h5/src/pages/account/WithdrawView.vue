@@ -772,11 +772,12 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialVideo = () => {
-  if (langSelect === "ur") {
-    window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
-  } else {
-    window.open("https://drive.google.com/file/d/1u796pIy2tqdLtRIqfGRDAQgKWa1guIG2/view?usp=sharing", "_blank");
-  }
+  window.open("https://drive.google.com/file/d/1yOJgpa4C9y7XFDacL52f4MoQ1lLw3Pm-/view?usp=drivesdk", "_blank");
+  // if (langSelect === "ur") {
+  //   window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1u796pIy2tqdLtRIqfGRDAQgKWa1guIG2/view?usp=sharing", "_blank");
+  // }
 };
 </script>
 

@@ -7,6 +7,10 @@ export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
 }
 
+export function claimBonusItem2(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
+}
+
 export function getSportMatchQuizInfo() {
   return eventapi.get(`/quiz/upcoming`, {});
 }
@@ -194,4 +198,16 @@ export function getEurocupManualSchedule() {
 
 export function getSportMatch() {
   return eventapi.get('/sport-match/today')
+}
+
+export function getLivePoker() {
+  return eventapi.get("/live-poker");
+}
+
+export function claimLivePokerBonus(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
+}
+
+export function footballHistroy() {
+  return eventapi.get("/lh1-football/history");
 }

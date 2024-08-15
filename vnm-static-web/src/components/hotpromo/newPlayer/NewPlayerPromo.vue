@@ -55,7 +55,7 @@
             <button
               class="mission-block-mission-btn"
               :disabled="mission.status !== 'Claim'"
-              @click="handleClaimClick(mission)"
+              @click="handleClaimClick(mission, index)"
             >
               <span v-if="mission.status === 'Claimed'">Đã Nhận</span>
               <span v-else-if="mission.status === 'Incomplete'">Không Hợp Lệ</span>
@@ -140,11 +140,12 @@ const missions = ref([
   }
 ]);
 
-const handleClaimClick = (mission) => {
+const handleClaimClick = (mission, index) => {
   if (mission.status !== "Claim") return;
   submitNewPlayerMission(mission.code).then((res) => {
     if (res.code === 0) {
       ElMessage.success(t("promo.new_player_success"));
+      missions.value[index].status = "Claimed";
     } else {
       ElMessage.error(res.message);
     }

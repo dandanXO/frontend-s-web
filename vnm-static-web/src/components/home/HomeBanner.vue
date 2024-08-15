@@ -29,6 +29,7 @@ import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { uiStore } from "@/store/ui";
+import { EDITION } from "@/constant/edition";
 
 const router = useRouter();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -61,7 +62,17 @@ const goToUrl = (redirectUrl) => {
 };
 
 const loadBanners = () => {
-  loadPromoBanner("HOME").then((res) => {
+  let params = "";
+  switch (ui.edition) {
+    case EDITION.SLOT:
+      params = "SLOT";
+      break;
+    case EDITION.NORMAL:
+    default:
+      params = "HOME";
+  }
+
+  loadPromoBanner(params).then((res) => {
     if (res.code === 0) banners.value = res.data;
     else
       ElMessage.error({

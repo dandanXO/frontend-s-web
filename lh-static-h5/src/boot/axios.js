@@ -11,6 +11,7 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 const imgCDN = process.env.IMAGE_CDN;
+let apiLinks = []
 
 console.log(window.location.hostname);
 const globalLinks = [
@@ -79,10 +80,12 @@ if (isGlobalLH) {
   var rstApi = getInitApi(rstGlobalArray, "LH_H5_RST_URL");
   var evtApi = getInitApi(evtGlobalArray, "LH_H5_EVT_URL");
   var crtApi = getInitApi(crGlobalArray, "LH_H5_CRT_URL");
+  apiLinks = apiLinks.concat(rstGlobalArray,evtGlobalArray,crGlobalArray)
 } else {
   var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
   var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
   var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
+  apiLinks = apiLinks.concat(rstArray,evtArray,crtArray)
 }
 
 const api = axios.create({ baseURL: rstApi });
@@ -173,11 +176,18 @@ function getApiDomainPrefix(urlLsName) {
 }
 
 function getErrorType(errorUrl) {
-  errorUrl = errorUrl.replace("https://", "");
-  const firstStr = errorUrl.substr(0, 5);
-  console.log(firstStr);
+  const isOriginalUrl = apiLinks.find(link => link === errorUrl)
 
-  return firstStr;
+  errorUrl = errorUrl.replace("https://", "");
+
+  if(isOriginalUrl) {
+    return errorUrl.substr(0, 5);
+  } else {
+    const domains = errorUrl.split('.')
+    const subDomainFormErrorUrl = domains[1]
+    const prefix = domains[0].substr(0,2)
+    return `${prefix}${subDomainFormErrorUrl.substr(0,5)}`
+  }
 }
 
 function isInApp() {

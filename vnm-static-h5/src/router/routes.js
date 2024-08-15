@@ -4,7 +4,10 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/HomePage.vue") }]
+    children: [
+      { path: "", name: "home", component: () => import("pages/HomePage.vue") },
+      { path: "/homeslot", name: "homeslot", component: () => import("pages/HomePage.vue") }
+    ]
   },
   {
     path: "/welcome",
@@ -372,6 +375,10 @@ const routes = [
     path: "/landing",
     name: "landing",
     component: () => import("pages/LandingPage.vue")
+  },
+  {
+    path: "/home",
+    redirect: "/"
   },
   // Always leave this as last one,
   // but you can also remove it

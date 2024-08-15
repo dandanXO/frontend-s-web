@@ -6,9 +6,9 @@
     </div>
     <swiper :space-between="12" :slides-per-view="1.5" class="promotion-list">
       <swiper-slide v-for="(promotion, index) in promotions" :key="index">
-        <a class="promotion-item">
-          <img :src="promotion.img" />
-          {{ promotion.text }}
+        <a class="promotion-item" @click="gotoPromo(promotion)">
+          <img :src="imgURL + promotion.mobileImgUrl" />
+          <span>{{ promotion.title }}</span>
         </a>
       </swiper-slide>
     </swiper>
@@ -18,10 +18,49 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
+import { useLocalStorage } from "@vueuse/core";
+import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import { api } from "src/boot/axios";
 
-defineProps({
-  promotions: Array
-});
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+const router = useRouter();
+
+const promotions = ref([]);
+
+const getPromo = () => {
+  api.get("/main/promo/page?type=SLOT").then((res) => {
+    if (res.code === 0) {
+      promotions.value = res.data.slice(0, 3);
+    }
+  });
+};
+
+const gotoPromo = (banner) => {
+  const urlSplit = banner.redirectUrl.split("|");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
+    }
+  } else {
+    const openPattern = /^\/open\/(.*)/;
+    if (banner.redirectUrl.match(openPattern)) {
+      const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+      const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+      allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+    } else if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
+    }
+  }
+};
+
+onMounted(getPromo);
 </script>
 <style lang="scss" scoped>
 .promotion-wrapper {
@@ -52,6 +91,12 @@ defineProps({
       img {
         max-width: 100%;
         border-radius: 4px;
+      }
+      span {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }

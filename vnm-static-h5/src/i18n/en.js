@@ -1533,6 +1533,7 @@ export default {
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
     14010: "Network IP or SID duplicate",
+    14014: "The phone number format is incorrect.",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",

@@ -71,6 +71,8 @@
             isCSBanner:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
+              selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
+              selectedPromo.redirectUrl === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
@@ -103,6 +105,7 @@
           :class="{
             isCS:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+              selectedPromo?.promoCode === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-olympic-match',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
@@ -116,7 +119,9 @@
               selectedPromo.promoCode === 'dy2-intel-esl' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual',
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
-            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2'
+            dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
+            'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
+            dyfootball: selectedPromo?.promoCode === 'dy2-football'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -136,7 +141,8 @@
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType.toLowerCase() === 'slot game',
-              isHide: selectedPromo.promoCode === 'dy2-msi-promo'
+              isHide: selectedPromo.promoCode === 'dy2-msi-promo',
+              football1: selectedPromo.promoCode === 'dy2-football'
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
@@ -190,7 +196,7 @@ export default defineComponent({
       // { code: "POKER", img: 'poker', label: '棋牌'},
       { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
       { code: "SLOT GAME", img: "game", label: "电游活动" },
-      { code: "VIP", img: "vip", label: "VIP特权" },
+      { code: "VIP", img: "vip", label: "VIP 特权" },
       { code: "LIMITED", img: "other", label: "限时热门" },
       { code: "FTD", img: "ftd", label: "充提优惠" }
     ]);
@@ -294,6 +300,11 @@ export default defineComponent({
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             // } else {
+              if (route.query.name === "dy2-football-fight-2" || route.query.name === "dy2-football-fight-3") {
+                if (element.redirectUrl === "dy2-football-fight") {
+                  showPromoDetails(element);
+                }
+              }
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element);
               }
@@ -830,17 +841,17 @@ export default defineComponent({
           width: 100%;
           background-size: cover;
           position: relative;
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: -10px;
-            background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png) no-repeat center center;
-            width: 180px;
-            height: 340px;
-            background-size: cover;
-            z-index: -1;
-          }
+          //&:after {
+          //  content: "";
+          //  position: absolute;
+          //  bottom: 0;
+          //  left: -10px;
+          //  background: url(../assets/images/promotion/hotpromo/cs2/bottombg.png) no-repeat center center;
+          //  width: 180px;
+          //  height: 340px;
+          //  background-size: cover;
+          //  z-index: -1;
+          //}
         }
 
         .hot-promo {
@@ -855,6 +866,14 @@ export default defineComponent({
           text-align: left;
           padding: 20px;
 
+          &.football1 {
+            table {
+              th,
+              td {
+                border: 1px solid #999;
+              }
+            }
+          }
           ol {
             li {
               margin: 20px 0;

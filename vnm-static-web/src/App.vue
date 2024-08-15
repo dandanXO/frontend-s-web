@@ -61,15 +61,11 @@ export default defineComponent({
         const params = {
           way: "web",
           sid: sidParam,
-          siteCode: "vnm"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);
       }
-    };
-
-    const checkEdition = () => {
-      // TODO: check edition here
     };
 
     onMounted(() => {
@@ -77,7 +73,6 @@ export default defineComponent({
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
-      checkEdition();
     });
 
     onUnmounted(() => {

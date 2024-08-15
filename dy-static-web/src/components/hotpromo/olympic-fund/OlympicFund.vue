@@ -16,7 +16,7 @@
 
       <div class="description-block-event-content">
         <div class="description-block-event-content-title">活动日期</div>
-        <span>2024年7月25日—2024年8月11日</span>
+        <span>2024 年 7 月 25 日—2024 年 8 月 11 日</span>
       </div>
 
       <div class="bonus-block-content">
@@ -52,7 +52,7 @@
       </div>
       <div class="description-block-event-content" v-if="isGiftSelected">
         <div class="description-block-event-content-title">活动会员</div>
-        <span>VIP1及以上会员</span>
+        <span>VIP1 及以上会员</span>
       </div>
 
       <div class="table-wrapper">
@@ -102,9 +102,9 @@
               <td>≥38,888</td>
               <td>88</td>
               <td>
-                日有效流水达成后每超过1万打码
+                日有效流水达成后每超过 1 万打码
                 <br />
-                将获得28元进阶奖金
+                将获得 28 元进阶奖金
               </td>
               <td>3倍/不限场馆</td>
             </tr>
@@ -120,8 +120,8 @@
         <img src="@/components/hotpromo/olympic-fund/img/rule-title.png" />
       </div>
       <ol v-if="isGiftSelected" class="rules-content">
-        <li>活动期间，每日的第一笔存款（存款≥500元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
-        <li>本活动不予其他存款活动共享，每日仅可领取一次，彩金实时到账， 不限场馆，三倍流水即可提款；</li>
+        <li>活动期间，每日的第一笔存款（存款≥500 元）即可前往活动页面领取日首存助力金，首次存款金额越高助力金越高；</li>
+        <li>本活动不予其他存款活动共享，每日仅可领取一次，彩金实时到账，不限场馆，三倍流水即可提款；</li>
         <li>
           本活动需完善信息后即可点击参与，同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可使用一个账号参与，若有违规者，将不享受此活动红利；
         </li>

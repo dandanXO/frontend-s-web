@@ -942,6 +942,7 @@ export default {
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
     14010: "IP hoặc SID trùng lặp",
+    14014: "Định dạng số điện thoại không đúng.",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
     15204: "Số điện thoại không đúng.",
