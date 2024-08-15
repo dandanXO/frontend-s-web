@@ -41,7 +41,7 @@
           </div>
   
           <div class="agreement-and-forget-pass">
-            <div>登录即代表同意并遵守《用户协议》</div>
+            <div>登录即代表同意并遵守<u>《用户协议》</u></div>
             <div><a @click="openForgotpwdDialog">忘记密码</a></div>
           </div>
   

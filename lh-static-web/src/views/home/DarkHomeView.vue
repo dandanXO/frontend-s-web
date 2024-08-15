@@ -3,6 +3,7 @@
       <HomeBanner></HomeBanner>
       <div class="home-mid-section">
         <HomeAnnouncement></HomeAnnouncement>
+        <img style="display:flex;margin:auto;" src="@/assets/home/hotmatch/hot-matches.png" />
         <HomeHotGame></HomeHotGame>
         <HomeDownload></HomeDownload>
         <HomeService></HomeService>
