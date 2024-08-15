@@ -57,7 +57,7 @@
           </tr>
           <tr>
             <td>≥1,000</td>
-            <td>8</td>
+            <td>12</td>
             <td rowspan="9">3倍流水/限体育场馆</td>
           </tr>
           <tr>

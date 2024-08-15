@@ -309,7 +309,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: "iw2"
+            siteCode: process.env.SITE
           })
         );
       }
