@@ -844,54 +844,46 @@ async function loadCauseBySiteId() {
 }
 
 async function loadSiteConfig() {
-  let siteId = null
-  let defaultCurrencyConfig = null
-  let multiWalletConfig = null
-
   if (form.siteId) {
-    siteId = form.siteId
     importForm.siteId = null
+    getSiteConfig(form.siteId)
   }
 
   if (importForm.siteId) {
-    siteId = importForm.siteId
     form.siteId = null
+    getSiteConfig(importForm.siteId)
   }
-  if (siteId) {
-    const { data: getDefaultCurrencyConfig } = await getConfigList(
-      'fiat_wallet',
-      siteId
-    )
-    defaultCurrencyConfig = getDefaultCurrencyConfig[0]
-      ? getDefaultCurrencyConfig[0].value
-      : null
+}
 
-    const { data: getMultiWalletConfig } = await getConfigList(
-      'support_multi_wallet',
-      siteId
-    )
-    multiWalletConfig = getMultiWalletConfig[0]
-      ? getMultiWalletConfig[0].value
-      : null
-  }
+async function getSiteConfig(siteId) {
+  const { data: fiatResponse } = await getConfigList('fiat_wallet', siteId)
+  const fiatConfig = fiatResponse[0] ? fiatResponse[0].value : null
 
-  if (multiWalletConfig) {
+  const { data: multiWalletResponse } = await getConfigList(
+    'support_multi_wallet',
+    siteId
+  )
+  const multiWalletConfig = multiWalletResponse[0]
+    ? multiWalletResponse[0].value
+    : null
+
+  if (multiWalletConfig === '1') {
     siteCurrencyConfig.supportMultiWallet = multiWalletConfig
-    const { data: getSupportedCurrencies } = await getSupportedCurrencyBySiteId(
+    const { data: currencyResponse } = await getSupportedCurrencyBySiteId(
       siteId
     )
-    if (getSupportedCurrencies) {
+    if (currencyResponse) {
       currencyList.currencyGroupList = [
         ...new Set(
-          getSupportedCurrencies.map(currency => currency.currencyGroup)
+          currencyResponse
+            .filter(currency => currency && currency.currencyGroup)
+            .map(currency => currency.currencyGroup)
         ),
       ]
     }
   } else {
-    if (defaultCurrencyConfig) {
-      siteCurrencyConfig.defaultCurrency = defaultCurrencyConfig
-      form.currency = siteCurrencyConfig.defaultCurrency
-    }
+    siteCurrencyConfig.defaultCurrency = fiatConfig
+    form.currency = siteCurrencyConfig.defaultCurrency
   }
 }
 
@@ -1232,7 +1224,7 @@ onMounted(async () => {
   }
   await loadCauseBySiteId()
   await loadMemberAmountAdjust()
-  await loadSiteConfig()
+  // await loadSiteConfig()
 })
 </script>
 
