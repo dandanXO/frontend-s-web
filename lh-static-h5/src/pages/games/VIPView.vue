@@ -6,7 +6,7 @@
     <!--    <div class="banner-container" />-->
     <div class="vip-cards">
     <Carousel v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
-      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+      <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="vipcontents">
@@ -887,7 +887,11 @@ import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
     const currentSlide = ref(11);
     const currentCarousel = ref(0);
     const currentBoxes = ref(0);
-    const slideTo = () => {
+    const slideTo = (vipIndex) => {
+      if (vipIndex) {
+        currentSlide.value = vipIndex;
+        return
+      }
       const vipLevel = +store.vip.replace("VIP", "");
       if (vipLevel === 0) {
         currentSlide.value = 0;

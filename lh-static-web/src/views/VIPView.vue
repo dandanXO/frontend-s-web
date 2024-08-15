@@ -6,7 +6,7 @@
     <!--    <div class="banner-container" />-->
 
     <Carousel v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
-      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+      <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="vipcontents">
@@ -855,7 +855,11 @@ import { useNotify } from "@/hooks/notify";
       }
     };
     const currentSlide = ref(11);
-    const slideTo = () => {
+    const slideTo = (vipIndex) => {
+      if (vipIndex) {
+        currentSlide.value = vipIndex;
+        return
+      }
       const vipLevel = +store.vip.replace("VIP", "");
       if (vipLevel === 0 || !vipLevel) {
         currentSlide.value = 0;
