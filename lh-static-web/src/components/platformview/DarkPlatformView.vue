@@ -47,21 +47,12 @@
                     :class="{ active: selectedPlat === plat.code }"
                   >
                     <div class="list-item-btn">
-                      <span>
                         <img
+                          class="game-img"
                           :src="
-                            require(
-                              '../../assets/' +
-                                platformType +
-                                '/' +
-                                platformType +
-                                '-logo-' +
-                                plat.code.toLowerCase() +
-                                '.png'
-                            )
+                            require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}.png`)
                           "
                         />
-                      </span>
                     </div>
                     <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
                   </span>

@@ -136,98 +136,56 @@
           margin-top: 1.5rem;
           margin-bottom: 1.5rem;
           display: flex;
-          grid-gap: 1rem;
+          flex-wrap: wrap;
         }
   
         .platform-list-item {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.5rem;
           transition: 0.3s all;
-          width: 5rem;
-  
-          &:hover {
-            filter: brightness(1.05);
-            font-weight: bold;
-  
-            .list-item-btn {
-              border: 0px;
-              background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-              padding: 0.35rem;
-  
-              animation: scaleUpAbit 0.5s ease-in-out forwards;
-              transition-duration: 500ms;
-  
-              & > span {
-                background: none;
-              }
-            }
-  
-            .list-item-txt {
-              color: $font-3;
-            }
-          }
-  
-          &.active {
-            font-weight: bold;
-  
-            .list-item-btn {
-              border: 0px;
-              background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-              padding: 0.35rem;
-              box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
-  
-              & > span {
-                background: none;
-              }
-            }
-  
-            .list-item-txt {
-              color: $font-3;
-            }
-          }
-  
-          .list-item-btn {
-            border: 1px solid #0e7dff;
-            height: 6rem;
-            width: 6rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20%;
-            padding: 0.2rem;
-            position: relative;
-            box-sizing: border-box;
-            box-shadow: 0px 10px 10px 0px transparent;
-            transition: 0.3s all;
-            cursor: pointer;
-  
-            & > span {
-            width: 6rem;
-            height: 6rem;
-            padding: 1.30rem;
-            border-radius: 0.3145rem;
-            background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
-            background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border-radius: 15%;
-              transition: 0.3s all;
-  
-              img {
-                display: block;
-                width: 2.2rem;
-                padding: 5px;
-              }
-            }
-          }
-  
+          width: 120px;
+          font-family: 'PingFang SC';
+
           .list-item-txt {
             text-align: center;
             white-space: nowrap;
             color: #a5c0e4;
+            font-size: 16px;
+          }
+
+          &:hover {
+            .list-item-txt {
+              font-weight: bold;
+            }
+          }
+
+          .list-item-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: 0.3s all;
+            cursor: pointer;
+            background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
+            background-size: 100% 100%;
+            aspect-ratio: 249 / 231;
+            width: 150px;
+            height: auto;
+
+            .game-img {
+              max-height: 50px;
+              filter: grayscale(1);
+            }
+
+            &:hover {
+              background: url("../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
+              background-size: 100% 100%;
+
+              .game-img {
+                filter: grayscale(0);
+              }
+            }
           }
         }
   
@@ -768,35 +726,8 @@
             .platform-list-item {
               .list-item-txt {
                 color: #fff;
-                font-family: 'Ping Fang SC';
-                font-weight: 400;
+                margin-top: -20px;
                 // color: $active-color-dark;
-              }
-
-              &.active,
-              &:hover {
-                .list-item-btn {
-                  // background: $active-color-dark-linear;
-                  box-shadow: none;
-                  width: 6rem;
-                  height: 6rem;
-                  padding: 1.30rem;
-                  border-radius: 0.3145rem;
-                  background: url("../../assets/home/hotgame/game-bg.png") no-repeat center center;
-                  background-size: 100% 100%;
-                }
-                .list-item-txt {
-                  // color: $active-color-dark;
-                }
-              }
-              &:hover {
-                .list-item-btn {
-                  background: url("../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
-                  background-size: 100% 100%;
-                }
-              }
-              .list-item-btn {
-                border: none;
               }
             }
           }
