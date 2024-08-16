@@ -372,12 +372,14 @@ const selectedItem = ref();
 const selectedItemAmount = ref();
 const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
+const selectedItemPaymentId = ref();
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
   selectedItemAmount.value = item.extra.amountArr;
   selectedItemPrivilege.value = item.extra.privilegePercent;
   selectedItemPrivilegeId.value = item.extra.privilegeId;
+  selectedItemPaymentId.value = item.paymentId;
   isSelectedMethod.value = true;
 };
 
@@ -514,7 +516,7 @@ async function confirmDeposit() {
     btnLoading.value = false;
   } else {
     await cashier
-      .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+      .get(`/session/payment/${selectedItemPaymentId.value}/amount/${form.localAmount}/verify`)
       .then((d) => {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
@@ -542,7 +544,7 @@ async function confirmDeposit() {
               form.privilegeId = null;
             }
           }
-          form.paymentId = activeMethod.value.paymentId;
+          form.paymentId = selectedItemPaymentId.value;
 
           if (selectedItemPrivilegeId.value) {
             form.privilegeId = selectedItemPrivilegeId.value;
