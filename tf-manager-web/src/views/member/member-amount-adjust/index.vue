@@ -986,9 +986,9 @@ async function handleBalanceType(value) {
   let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
     const response = await getMemberBalanceByLoginNameSite(
-      value,
+      form.loginName,
       form.siteId,
-      form.currency
+      value
     )
     bal = response.data
 
