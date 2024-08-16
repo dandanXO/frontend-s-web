@@ -37,47 +37,6 @@
       </template>
       <el-descriptions
         size="small"
-        v-for="(item, index) in platform.sitePlatform"
-        :key="index"
-        :title="item.gameType"
-        :column="2"
-        class="margin-top"
-        style="margin-bottom: 20px;"
-        border
-      >
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context-report"
-          v-for="(list, i) in item.list[0]"
-          :key="i"
-        >
-          <template #label>
-            <div>
-              {{ list.platformName }}
-            </div>
-          </template>
-          <span v-formatter="{data: list.bet, type: 'money'}" />
-          /
-          <span v-formatter="{data: list.payout, type: 'money'}" />
-        </el-descriptions-item>
-        <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
-        <el-descriptions-item
-          v-if="item.list[0].length % 2 !== 0"
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context-report"
-        >
-          <template #label>
-            <div>
-              <!-- Placeholder label for the additional empty el-descriptions-item -->
-            </div>
-          </template>
-          <span />
-        </el-descriptions-item>
-      </el-descriptions>
-      <el-descriptions
-        size="small"
         :title="t('fields.total')"
         :column="2"
         class="margin-top"
@@ -127,6 +86,47 @@
         >
           <template #label>
             <div />
+          </template>
+          <span />
+        </el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions
+        size="small"
+        v-for="(item, index) in platform.sitePlatform"
+        :key="index"
+        :title="item.gameType"
+        :column="2"
+        class="margin-top"
+        style="margin-bottom: 20px;"
+        border
+      >
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context-report"
+          v-for="(list, i) in item.list[0]"
+          :key="i"
+        >
+          <template #label>
+            <div>
+              {{ list.platformName }}
+            </div>
+          </template>
+          <span v-formatter="{data: list.bet, type: 'money'}" />
+          /
+          <span v-formatter="{data: list.payout, type: 'money'}" />
+        </el-descriptions-item>
+        <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
+        <el-descriptions-item
+          v-if="item.list[0].length % 2 !== 0"
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context-report"
+        >
+          <template #label>
+            <div>
+              <!-- Placeholder label for the additional empty el-descriptions-item -->
+            </div>
           </template>
           <span />
         </el-descriptions-item>
