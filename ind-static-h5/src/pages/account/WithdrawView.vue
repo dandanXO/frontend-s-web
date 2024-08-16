@@ -279,10 +279,11 @@ const getWithdrawalMethods = () => {
     api
       .get("/session/withdraw/card")
       .then((res) => {
-        if (res.code === 0) {
-          res.data.forEach((e) => {
-            bankCardField.bankId = e.id;
-          });
+        if (res.code === 0 && res.data.length > 0) {
+          bankCardField.bankId = res.data[0].id;
+          // res.data.forEach((e) => {
+          //   bankCardField.bankId = e.id;
+          // });
         }
       })
       .catch((e) => {
