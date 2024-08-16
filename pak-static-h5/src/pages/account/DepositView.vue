@@ -184,10 +184,9 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
-          v-if="hasPrivilege && !isUSDT"
+          v-if="hasPrivilege && unselectedPrivileges.length > 0"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
-          @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
@@ -200,19 +199,19 @@
           </template>
         </q-select>
 
-        <div
-          class="rollover-info"
-          v-if="
-            selectedPrivilege &&
-            selectedPrivilege.name &&
-            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
-          "
-        >
-          <p v-if="selectedPrivilege.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
-            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
-          </p>
-          <p v-else>Wagering Requirements (Deposit + Bonus): {{ selectedPrivilege.rollover }}x</p>
-        </div>
+        <!--        <div-->
+        <!--          class="rollover-info"-->
+        <!--          v-if="-->
+        <!--            selectedPrivilege &&-->
+        <!--            selectedPrivilege.name &&-->
+        <!--            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)-->
+        <!--          "-->
+        <!--        >-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          </p>-->
+        <!--          <p v-else>Wagering Requirements (Deposit + Bonus): {{ selectedPrivilege.rollover }}x</p>-->
+        <!--        </div>-->
       </q-form>
     </div>
 
@@ -663,7 +662,7 @@ async function confirmDeposit() {
               message: t("deposit.incorrectPrivilege"),
               icon: "report_problem"
             });
-            throw Error()
+            throw Error();
           }
 
           if (freePrivilege.value.length) {
