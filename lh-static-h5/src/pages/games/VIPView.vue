@@ -1249,21 +1249,19 @@ $border-settings: 1px solid #e5e7eb;
     .absolute-box {
       position: absolute;
       width: 100%;
-      right: -45px;
+      right: -30px;
       z-index: 2;
     }
     .arrow_box {
-      width: 80%;
-      top: 40px;
+      width: 85%;
+      top: 30px;
       position: relative;
       background: #1f2231;
       border: 2px solid #799df8; /*set border colour here*/
-      border-radius: 3px;
       -webkit-filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8)); /*set shadow colour  and size here*/
       -moz-box-shadow: 0 1px 10px rgba(113, 158, 206, 0.8);
       filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8));
-
-      padding: 30px;
+      padding: 20px 12px;
       border-radius: 10px;
       .overflow-table {
         overflow-x: auto;
@@ -1290,13 +1288,14 @@ $border-settings: 1px solid #e5e7eb;
         }
       }
       table {
-        width: 1500px;
+        width: auto;
         tr {
           th {
             border: 2px solid #f1dda0;
             padding: 20px 10px;
           }
           td {
+            white-space: nowrap;
             padding: 20px 10px;
             border: 2px solid #799df8;
           }
