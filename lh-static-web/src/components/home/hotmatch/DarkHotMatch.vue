@@ -32,7 +32,7 @@
                     <div class="competition-item-img-wrapper">
                         <img class="competition-item-img" :src="require(`@/assets/home/hotmatch/${competitionType.toLowerCase()}.png`)"/>
                     </div>
-                    <div class=competition-item-name>{{ competitionType }}</div>
+                    <div class=competition-item-name>{{ getCompetitionTypeCnLabel(competitionType) }}</div>
                 </div>
             </div>
     </div>
@@ -47,6 +47,19 @@ const hotMatches = ref([]);
 const competitionTypes = ref([]);
 const selectedCompetitionType = ref();
 const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value;
+
+const getCompetitionTypeCnLabel = (enLabel) => {
+    switch(enLabel) {
+        case 'Basketball':
+            return '篮球';
+        case 'Football':
+            return '足球';
+        case 'ESport':
+            return '电竞';
+        default:
+            return '';
+    }
+}
 
 const getChunk = (list, size) => [...Array(Math.ceil(list.length / size))].map((_, i) => list.slice(i * size, i * size + size));
 
@@ -79,6 +92,19 @@ onMounted(() => {
     background-size: 100% auto;
     aspect-ratio: 2255 / 1227;
 
+    :deep(.el-carousel__arrow--left) {
+        background: url("@/assets/home/hotmatch/arrow-left.png") no-repeat center center;
+    }
+
+    :deep(.el-carousel__arrow--right) {
+        background: url("@/assets/home/hotmatch/arrow-right.png") no-repeat center center;
+    }
+
+    :deep(.el-carousel) {
+        width: 75%;
+        margin: auto;
+    }
+
     :deep(.el-carousel__container) {
         height: 250px;
         width: 100%;
@@ -88,7 +114,7 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 30px;
+        gap: 10px;
         height: 100%;
 
         .hot-match-item {
@@ -172,12 +198,12 @@ onMounted(() => {
 
         .competition-item-img-wrapper {
             background: url("@/assets/home/hotmatch/competition-type-bg.png") no-repeat center center;
-            background-size: 100% auto;
+            background-size: 100% 100%;
             aspect-ratio: 381 / 366;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 260px;
+            width: 230px;
 
             .competition-item-img {
                 width: 60%;
