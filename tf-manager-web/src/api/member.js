@@ -324,20 +324,15 @@ export const getAffiliateInfo = (id, siteId) => {
   return https().request(`/member/${id}/affiliate?siteId=${siteId}`, Method.GET)
 }
 
-export const getMemberBalanceByLoginNameSite = (loginName, siteId) => {
+export const getMemberBalanceByLoginNameSite = (
+  loginName,
+  siteId,
+  currency
+) => {
   return https().request(
     `/member/getMemberBalanceByLoginNameSite`,
     Method.GET,
-    { loginName: loginName, siteId: siteId },
-    ContentType.form
-  )
-}
-
-export const getMemberCryptoBalanceByLoginNameSite = (loginName, siteId) => {
-  return https().request(
-    `/member/getMemberCryptoBalanceByLoginNameSite`,
-    Method.GET,
-    { loginName: loginName, siteId: siteId },
+    { loginName: loginName, siteId: siteId, currency: currency },
     ContentType.form
   )
 }
