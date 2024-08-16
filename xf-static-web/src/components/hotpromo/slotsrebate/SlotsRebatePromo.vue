@@ -36,7 +36,11 @@
         </div>
         <div class="subtitle">
           <span class="subtitle-1">活动对象</span>
-          <span class="subtitle-2">下注电子场馆会员</span>
+          <span class="subtitle-2">投注电子场馆的会员</span>
+        </div>
+        <div class="subtitle">
+          <span class="subtitle-1">活动内容</span>
+          <span class="subtitle-2">活动期间，会员在电子场馆当日总负盈利金额≥500元即可在次日24小时内领取对应档位彩金，每日最高可获888元。</span>
         </div>
         <table class="match-game-info-table">
           <tr>
@@ -82,7 +86,7 @@
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 范例</span>
-          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金158元。</span>
+          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金288元。</span>
         </div>
       </div>
       <div class="match-game-bottom-rule">
@@ -406,6 +410,7 @@ const claimHongBao = async () => {
       text-align: center;
       font-size: 16px;
       font-weight: bold;
+      height: 22px;
     }
 
     .subtitle-2 {
