@@ -91,7 +91,7 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
+              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。
             </span>
           </div>
           <div class="item">
