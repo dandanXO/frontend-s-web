@@ -207,7 +207,7 @@ onMounted(() => {
 
             .competition-item-img {
                 width: 60%;
-                filter: grayscale(1);
+                filter: brightness(0.5);
             }
         }
 
@@ -218,7 +218,7 @@ onMounted(() => {
             }
 
             .competition-item-img {
-                filter: grayscale(0);
+                filter: brightness(1);
             }
 
             .competition-item-name {

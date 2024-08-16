@@ -449,5 +449,9 @@ export default defineComponent({
     border-radius: 8px;
     padding: 12px 20px;
   }
+
+  .qrtitle {
+    font-weight: bold;
+  }
 }
 </style>

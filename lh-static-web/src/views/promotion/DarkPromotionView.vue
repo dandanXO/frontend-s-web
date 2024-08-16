@@ -667,7 +667,7 @@
                   background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
                   color: #ffffff;
                   position: relative;
-                  min-width: 85px;
+                  width: 100px;
                   font-weight: bold;
   
                   &:after {
