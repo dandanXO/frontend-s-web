@@ -16,7 +16,7 @@
           <span v-else>￥{{ mainWallet }}</span>
           <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon>
-              <Refresh style="color: #000" />
+              <Refresh />
             </el-icon>
           </div>
         </div>
