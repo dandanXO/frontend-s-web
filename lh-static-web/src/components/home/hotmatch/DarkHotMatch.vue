@@ -1,5 +1,5 @@
 <template>
-    <div class="hot-match-container">
+    <div class="hot-match-container" v-if="hotMatchesByChunk.length > 0">
         <img src="@/assets/home/hotmatch/hot-match-title.png" style="display:flex;
     margin:auto;width: 55%;"  />
             <el-carousel arrow="always">
@@ -51,7 +51,11 @@ const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
 const getChunk = (list, size) => [...Array(Math.ceil(list.length / size))].map((_, i) => list.slice(i * size, i * size + size));
 
 const hotMatchesByChunk = computed(() => {
-    return getChunk(hotMatches.value.filter(({competitionType}) => competitionType === selectedCompetitionType.value), 4);
+    if(hotMatches.value.length > 0 && selectedCompetitionType.value) {
+        return getChunk(hotMatches.value.filter(({competitionType}) => competitionType === selectedCompetitionType.value), 4);
+    }
+
+    return [];
 })
 
 onMounted(() => {
@@ -59,9 +63,11 @@ onMounted(() => {
         if(res.code === 0) {
             const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
             competitionTypes.value = uniqueCompetitionTypes;
-            selectedCompetitionType.value = uniqueCompetitionTypes[0];
-            hotMatches.value = res.data;
-            
+
+            if(uniqueCompetitionTypes.length > 0) {
+                selectedCompetitionType.value = uniqueCompetitionTypes[0];
+                hotMatches.value = res.data;
+            }           
         }
     })
 })
