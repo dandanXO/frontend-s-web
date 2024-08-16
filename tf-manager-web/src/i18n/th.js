@@ -481,6 +481,7 @@ export default {
     currencyCode: 'รหัสสกุลเงิน',
     currencyName: 'ชื่อสกุลเงิน',
     currencyRate: 'อัตราสกุลเงิน',
+    currencyWallet: 'กระเป๋าเงินสกุลเงิน',
     currentPassword: 'รหัสผ่านปัจจุบัน',
     customerSupportAddress: 'ที่อยู่ฝ่ายสนับสนุนลูกค้า',
     dailyDeposit: 'ฝากรายวัน',
@@ -660,7 +661,7 @@ export default {
     gameAccountName: 'ชื่อบัญชีเกม',
     gameCode: 'รหัสเกม',
     domainEasy: 'โดเมน ง่าย',
-    videoShiPin: "Video",
+    videoShiPin: 'Video',
     gameConsolidateReport: 'รายงานเกม',
     gameName: 'ชื่อเกม',
     gameType: 'ประเภทเกม',
@@ -1745,7 +1746,7 @@ export default {
     'Promotion Coupon': 'คูปอง',
     'Affiliate Change Log': 'บันทึกการเปลี่ยนแปลงผู้ปกครองของ Affiliate',
     'Media Display Settings': 'การตั้งค่าการแสดงสื่อ',
-    'Vip Report': 'รายงานวีไอพี'
+    'Vip Report': 'รายงานวีไอพี',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

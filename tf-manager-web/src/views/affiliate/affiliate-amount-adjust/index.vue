@@ -50,9 +50,9 @@
         >
           <el-option
             v-for="item in adjustTypeList.requestList"
-            :key="item"
-            :label="item"
-            :value="item"
+            :key="item.reason"
+            :label="item.reason"
+            :value="item.reason"
           />
         </el-select>
         <el-select
@@ -194,22 +194,41 @@
             default-first-option
             required
             @focus="loadCauseBySiteId"
+            @change="handleImportCauseChange"
           >
             <el-option
               v-for="item in adjustTypeList.importFormList"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.reason"
+              :label="item.reason"
+              :value="item.reason"
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          :label="t('fields.adjust')"
-          prop="mainWallet"
-        >
-          <el-radio v-model="importForm.mainWallet" label="true" style="width: 175px;">{{ t('fields.fromWallet') }}</el-radio>
-          <el-radio v-model="importForm.mainWallet" label="false" style="width: 175px;">{{ t('fields.fromCommission') }}</el-radio>
-
+        <el-form-item :label="t('fields.rollover')" prop="rollover">
+          <el-input-number
+            v-model="adjustRollover.importedSelectedItem"
+            style="width: 350px;"
+            :min="0"
+            :max="100"
+            :controls="false"
+            disabled="disabled"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.adjust')" prop="mainWallet">
+          <el-radio
+            v-model="importForm.mainWallet"
+            label="true"
+            style="width: 175px;"
+          >
+            {{ t('fields.fromWallet') }}
+          </el-radio>
+          <el-radio
+            v-model="importForm.mainWallet"
+            label="false"
+            style="width: 175px;"
+          >
+            {{ t('fields.fromCommission') }}
+          </el-radio>
         </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input
@@ -303,12 +322,13 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          :label="t('fields.adjust')"
-          prop="mainWallet"
-        >
-          <el-radio v-model="form.mainWallet" label="true">{{ t('fields.fromWallet') }}</el-radio>
-          <el-radio v-model="form.mainWallet" label="false">{{ t('fields.fromCommission') }}</el-radio>
+        <el-form-item :label="t('fields.adjust')" prop="mainWallet">
+          <el-radio v-model="form.mainWallet" label="true">
+            {{ t('fields.fromWallet') }}
+          </el-radio>
+          <el-radio v-model="form.mainWallet" label="false">
+            {{ t('fields.fromCommission') }}
+          </el-radio>
         </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input v-model="form.loginName" style="width: 350px" />
@@ -337,14 +357,25 @@
             default-first-option
             @focus="loadCauseBySiteId"
             :disabled="!form.siteId"
+            @change="handleCauseChange"
           >
             <el-option
               v-for="item in adjustTypeList.formList"
-              :key="item"
-              :label="item"
-              :value="item"
+              :key="item.reason"
+              :label="item.reason"
+              :value="item.reason"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.rollover')" prop="rollover">
+          <el-input-number
+            v-model="adjustRollover.selectedItem"
+            style="width: 350px;"
+            :min="0"
+            :max="100"
+            :controls="false"
+            disabled="disabled"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input
@@ -430,12 +461,29 @@
           <span v-else>{{ t('fields.add') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="adjustFrom" :label="t('fields.adjust')" align="center" min-width="140">
-          <template #default="scope">
-            <el-tag v-if="scope.row.adjustFrom === 'Commission'" size="mini" type="success">{{ t('fields.fromCommission') }}</el-tag>
-            <el-tag v-else-if="scope.row.adjustFrom === 'Main Wallet'" size="mini" type="warning">{{ t('fields.fromWallet') }}</el-tag>
-            <el-tag v-else size="mini" type="warning">-</el-tag>
-          </template>
+      <el-table-column
+        prop="adjustFrom"
+        :label="t('fields.adjust')"
+        align="center"
+        min-width="140"
+      >
+        <template #default="scope">
+          <el-tag
+            v-if="scope.row.adjustFrom === 'Commission'"
+            size="mini"
+            type="success"
+          >
+            {{ t('fields.fromCommission') }}
+          </el-tag>
+          <el-tag
+            v-else-if="scope.row.adjustFrom === 'Main Wallet'"
+            size="mini"
+            type="warning"
+          >
+            {{ t('fields.fromWallet') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="warning">-</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
         prop="cause"
@@ -575,6 +623,11 @@ const adjustTypeList = reactive({
   importFormList: [],
 })
 
+const adjustRollover = reactive({
+  selectedItem: null,
+  importedSelectedItem: null,
+})
+
 const shortcuts = getShortcuts(t)
 
 const EXPORT_AMOUNT_ADJUST_LIST_HEADER = ['Login Name', 'Amount']
@@ -652,7 +705,7 @@ const importForm = reactive({
   siteId: null,
   cause: null,
   remark: null,
-  mainWallet: "true",
+  mainWallet: 'true',
 })
 
 const loginNameValidator = async (rule, value, callback) => {
@@ -822,11 +875,15 @@ async function showDialog(type) {
   if (type === 'CREATE_ADD') {
     if (affiliateAmountAdjustForm.value) {
       affiliateAmountAdjustForm.value.resetFields()
+      adjustRollover.importedSelectedItem = null
+      adjustRollover.selectedItem = null
     }
     uiControl.dialogTitle = t('fields.addMemberAmountAdjust')
   } else if (type === 'CREATE_DEDUCT') {
     if (affiliateAmountAdjustForm.value) {
       affiliateAmountAdjustForm.value.resetFields()
+      adjustRollover.importedSelectedItem = null
+      adjustRollover.selectedItem = null
     }
     uiControl.balance = null
     uiControl.dialogTitle = t('fields.deductMemberAmountAdjust')
@@ -834,7 +891,25 @@ async function showDialog(type) {
   await loadFormSelect()
   uiControl.dialogType = type
   uiControl.dialogVisible = true
-  form.mainWallet = "true"
+  form.mainWallet = 'true'
+}
+
+function handleCauseChange(selectedValue) {
+  const selectedItem = adjustTypeList.formList.find(
+    item => item.reason === selectedValue
+  )
+  if (selectedItem) {
+    adjustRollover.selectedItem = selectedItem.rollover
+  }
+}
+
+function handleImportCauseChange(selectedValue) {
+  const selectedItem = adjustTypeList.formList.find(
+    item => item.reason === selectedValue
+  )
+  if (selectedItem) {
+    adjustRollover.importedSelectedItem = selectedItem.rollover
+  }
 }
 
 function createAdd() {

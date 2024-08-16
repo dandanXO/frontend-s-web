@@ -445,11 +445,11 @@ export default {
     OFF: '끄기',
   },
   valueRulesType: {
-    INPUT: "입력",
-    RADIO: "라디오 버튼",
-    SELECT: "선택 상자",
-    SWITCH: "스위치",
-    CHECKBOX: "체크박스"
+    INPUT: '입력',
+    RADIO: '라디오 버튼',
+    SELECT: '선택 상자',
+    SWITCH: '스위치',
+    CHECKBOX: '체크박스',
   },
   fields: {
     account: '계정',
@@ -740,6 +740,7 @@ export default {
     currencyCode: '통화 코드',
     currencyName: '통화 이름',
     currencyRate: '환율',
+    currencyWallet: '화폐 지갑',
     currentPassword: '현재 비밀번호',
     currentPlace: '현재 위치',
     customerSupportAddress: '고객 지원 주소',
@@ -2537,7 +2538,7 @@ export default {
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
     'Vip Report': 'VIP 보고서',
-    'System Value Rules': '시스템 값 규칙'
+    'System Value Rules': '시스템 값 규칙',
   },
   google: {
     google_auth_menu: 'Google 인증자',

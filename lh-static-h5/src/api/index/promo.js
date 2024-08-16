@@ -207,6 +207,24 @@ export function claimUefaCheckin() {
   return eventapi.put("/lh-uefa-check-in/claim");
 }
 
+export function claimItems(status, level) {
+  if (status === 'upgrade') {return eventapi.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", qs.stringify({ vipLevel: level }));}
+  if (status === 'birthday') {return eventapi.put("/vip-bonus/claim-birthday-bonus");}
+  if (status === 'retain') {return eventapi.post("/vip-bonus/claim-first-retain?_method=PUT", qs.stringify({ vipLevel: level }))}
+  if (status === 'monthly') {return eventapi.put("/vip-bonus/claim-monthly-bonus");}
+  if (status === 'yearlyRetain') {return eventapi.post("/vip-bonus/claim-yearly-retain?_method=PUT", qs.stringify({ vipLevel: level }))}
+  if (status === 'coupon') {return eventapi.put("/vip-bonus/claim-coupon");}
+  if (status === 'all') {return eventapi.post("/vip-bonus/claim-all?_method=PUT", qs.stringify({ vipLevel: level }))}
+}
+
+export function getVIPDetails() {
+  return eventapi.get("/vip-bonus/get-detail");
+}
+
+export function getVIPDetailsNotLoggedIn() {
+  return eventapi.get(`/get-vip-bonus-detail?siteId=7`);
+}
+
 export function getLivePoker() {
   return eventapi.get("/live-poker");
 }
