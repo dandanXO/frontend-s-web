@@ -603,7 +603,6 @@ import { getReasonsSimple } from '../../../api/site-adjustment-reason'
 import {
   findIdByLoginName,
   getMemberBalanceByLoginNameSite,
-  getMemberCryptoBalanceByLoginNameSite,
 } from '../../../api/member'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -727,16 +726,13 @@ const importForm = reactive({
 const loginNameValidator = async (rule, value, callback) => {
   let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
-    if (form.currency !== null && form.currency === 'USDT') {
-      const response = await getMemberCryptoBalanceByLoginNameSite(
-        value,
-        form.siteId
-      )
-      bal = response.data
-    } else {
-      const response = await getMemberBalanceByLoginNameSite(value, form.siteId)
-      bal = response.data
-    }
+    const response = await getMemberBalanceByLoginNameSite(
+      value,
+      form.siteId,
+      form.currency
+    )
+    bal = response.data
+
     if (bal === null || bal === undefined) {
       callback(new Error(t('message.memberNotInSite')))
     } else {
@@ -745,16 +741,12 @@ const loginNameValidator = async (rule, value, callback) => {
     }
   } else {
     uiControl.balance = null
-    if (form.currency !== null && form.currency === 'USDT') {
-      const response = await getMemberCryptoBalanceByLoginNameSite(
-        value,
-        form.siteId
-      )
-      bal = response.data
-    } else {
-      const response = await getMemberBalanceByLoginNameSite(value, form.siteId)
-      bal = response.data
-    }
+    const response = await getMemberBalanceByLoginNameSite(
+      value,
+      form.siteId,
+      form.currency
+    )
+    bal = response.data
 
     if (bal === null || bal === undefined) {
       callback(new Error(t('message.memberNotInSite')))
@@ -991,19 +983,12 @@ function handleImportCauseChange(selectedValue) {
 async function handleBalanceType(value) {
   let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
-    if (form.currency !== null && form.currency === 'USDT') {
-      const response = await getMemberCryptoBalanceByLoginNameSite(
-        form.loginName,
-        form.siteId
-      )
-      bal = response.data
-    } else {
-      const response = await getMemberBalanceByLoginNameSite(
-        form.loginName,
-        form.siteId
-      )
-      bal = response.data
-    }
+    const response = await getMemberBalanceByLoginNameSite(
+      form.loginName,
+      form.siteId,
+      form.currency
+    )
+    bal = response.data
     if (bal === null || bal === undefined) {
       uiControl.balance = null
     } else {
