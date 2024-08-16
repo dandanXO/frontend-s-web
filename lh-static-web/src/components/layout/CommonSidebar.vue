@@ -16,7 +16,7 @@
     </div>
     <div class="sticky-sidebar-items">
       <div
-        v-if="showDarkModeToggle"
+        v-if="memberType === 'TEST' || memberType === 'PROMO_TEST'"
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >
@@ -142,6 +142,7 @@ import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
     GameModal
@@ -157,7 +158,7 @@ export default defineComponent({
     const store = userStore();
     const ui = uiStore();
     const isDark = useDark();
-    const showDarkModeToggle = ref(location.host.startsWith('localhost'));
+    const { memberType } = storeToRefs(store);
     const handleDarkModeClick = () => (isDark.value = !isDark.value);
 
     const gameMenu = ref(null);
@@ -317,8 +318,6 @@ export default defineComponent({
         initFloating();
       }
       document.addEventListener("mouseup", stopDragging);
-
-      isDark.value = false;
     });
 
     watch(
@@ -363,7 +362,7 @@ export default defineComponent({
       gotoPromo,
       clickAllowed,
       isDragging,
-      showDarkModeToggle
+      memberType
     };
   }
 });

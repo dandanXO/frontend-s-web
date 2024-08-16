@@ -3,6 +3,7 @@
       <HomeBanner></HomeBanner>
       <div class="home-mid-section">
         <HomeAnnouncement></HomeAnnouncement>
+        <HotMatch></HotMatch>
         <HomeHotGame></HomeHotGame>
         <HomeDownload></HomeDownload>
         <HomeService></HomeService>
@@ -19,6 +20,7 @@
   import HomeDownload from "@/components/home/download/index.vue";
   import HomeHotGame from "@/components/home/hotgame/index.vue";
   import HomeService from "@/components/home/service/index.vue";
+  import HotMatch from "@/components/home/hotmatch/DarkHotMatch.vue";
   
   const gameMenu = ref(null);
   const openGame = (gameName, platType, gameCode, scrollingState) => {

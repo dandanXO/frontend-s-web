@@ -4,7 +4,7 @@
       <!-- <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/> -->
       <div class="service-container">
         <div  data-aos="fade-down">
-          <img style="display:flex;margin:auto;width:55%;" src="../../../assets//home/service/excellent-service-title.png" />
+          <img style="display:flex;margin:auto;width:75%;" src="../../../assets//home/service/excellent-service-title.png" />
           <div class="top-container">
             <div class="counter">
               <div class="circle">
@@ -174,7 +174,7 @@
   <style scoped lang="scss">
   .service-section {
     width: 100%;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
   
     .service-container {
@@ -188,31 +188,25 @@
   
         .counter {
           .circle {
-            width: 15rem;
-            height: 15rem;
+            width: 19rem;
+            height: 17rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            //border: 3px solid #94baf8;
-            //background: linear-gradient(180deg, #93f2ff 3.39%, #3a69f7 100%);
             background-image: url("../../../assets/home/blue-circle.png");
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
-            //box-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.88) inset;
             margin: 0 0 2rem 0;
   
             .inner-circle {
               margin-top: 20px;
-              width: 15rem;
-              height: 15rem;
+              width: 19rem;
+              height: 17rem;
               display: flex;
               flex-direction: column;
               align-items: center;
               justify-content: center;
-              border-radius: 50%;
-              border: 3px solid #fff;
               background: linear-gradient(180deg, #fafcff 31.57%, #e3eaf8 54.21%, rgba(202, 211, 239, 0) 100%);
               box-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.94) inset;
   
@@ -231,6 +225,9 @@
                 line-height: normal;
                 letter-spacing: 0.14144rem;
                 color: #fff;
+                line-height: 72.66px;
+                letter-spacing: 0.04em;
+
                 // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
                 // background-clip: text;
                 // -webkit-background-clip: text;
@@ -240,32 +237,36 @@
               }
   
               .unit {
-                color: #333;
-                text-align: center;
-                font-family: PingFang SC;
-                font-size: 1rem;
+                font-family: 'PingFang SC';
+                font-size: 18px;
                 font-weight: 400;
-                line-height: normal;
+                line-height: 25.2px;
+                letter-spacing: 0.04em;
+                text-align: center;
+
               }
             }
           }
   
           .title {
-            color: #44484b;
-            text-align: center;
-            font-family: PingFang SC;
-            font-size: 1.125rem;
+            color: #fff;
+            font-family: 'PingFang SC';
+            font-size: 22px;
             font-weight: 400;
-            line-height: normal;
+            line-height: 30.8px;
+            letter-spacing: 0.04em;
+            text-align: center;
+
           }
   
           .title-en {
-            color: #44484b;
-            text-align: center;
-            font-family: PingFang SC;
-            font-size: 0.75rem;
+            color: #fff;
+            font-family: 'PingFang SC';
+            font-size: 16px;
             font-weight: 400;
-            line-height: normal;
+            line-height: 22.4px;
+            text-align: center;
+
           }
         }
       }
@@ -308,13 +309,24 @@
   
             .right-container {
               .title {
-                color: #7a80a1;
-                font-size: 20px;
+                color: #fff;
                 margin-bottom: 15px;
-                font-weight: 600;
+                font-family: "PingFang SC";
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 33.6px;
+                text-align: center;
+
               }
               .desc {
-                color: #a4aabb;
+                color: #fff;
+                font-family: PingFang SC;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 28px;
+                letter-spacing: 0.03em;
+                text-align: left;
+
               }
             }
           }
@@ -364,21 +376,7 @@
             background: url("../../../assets/home/service/bg.png") no-repeat center center;
             background-size: 100% 100%;
             width: 325px;
-            height: 480px;
-  
-            .item {
-              .right-container {
-                .title {
-                  color: #fff;
-                  text-align: center;
-                  font-family: PingFang SC;
-                }
-                .desc {
-                  color: #fff;
-                  font-family: PingFang SC;
-                }
-              }
-            }
+            height: 530px;
           }
         }
       }

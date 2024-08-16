@@ -8,7 +8,7 @@
         />
       </el-tab-pane>
       <el-tab-pane label="手机登录">
-        <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large">
+        <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large" class="login-form">
           <div class="light-bg form-field">
             <img style="width:25px;" class="form-field-icon" src="@/assets/home/auth/phone-icon-dark.png" />
             <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
@@ -41,20 +41,20 @@
           </div>
   
           <div class="agreement-and-forget-pass">
-            <div class="font-gray">登录即代表同意并遵守《用户协议》</div>
+            <div>登录即代表同意并遵守<u>《用户协议》</u></div>
             <div><a @click="openForgotpwdDialog">忘记密码</a></div>
           </div>
   
-          <el-button :loading="loadingBtn" size="large" class="standard-button primary-btn" @click="phoneLogin">登录</el-button>
-        </el-form>
-  
-        <div class="flex-div">
-          <div style="visibility: hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
-          <div style="text-align: left" class="font-gray">
-            没有账号？
-            <a @click="openRegDialog">去注册</a>
+          <el-button :loading="loadingBtn" size="large" class="login-button" @click="phoneLogin">登录</el-button>
+
+          <div class="register-or-sightsee">
+            <div style="display: none"><a @click="closeLoginDialog">先去逛逛</a></div>
+            <div>
+              没有账号？
+              <a @click="openRegDialog">去注册</a>
+            </div>
           </div>
-        </div>
+        </el-form>
       </el-tab-pane>
     </el-tabs>
   
@@ -306,6 +306,13 @@
     background-size: cover;
     display: flex;
   }
+
+  .form-field {
+    margin: 0px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    gap: 0px;
+  }
   
   .center {
     display: flex;
@@ -328,21 +335,49 @@
     padding: 50px;
     border-radius: 10px;
   }
-  
-  .agreement-and-forget-pass {
-    margin-top: 55px;
+
+  .login-button {
+    background: url('@/assets/home/auth/login-btn-bg.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 6px;
+    border: 1px solid #3A93CE;
+    margin-top: 20px;
+  }
+
+  .login-form {
     display: flex;
-    justify-content: space-between;
-  
-    .highlight {
-      color: #5e8aee;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .agreement-and-forget-pass {
+    font-family: "PingFang SC";
+    color: #a98f7c;
+
+    a {
+      color: #a98f7c;
+    }
+  }
+
+  .register-or-sightsee {
+    font-family: "PingFang SC";
+    display: flex;
+    justify-content: center;
+    color: #a98f7c;
+
+    a {
+      color: #4A99E9;
     }
   }
   </style>
   <style lang="scss">
   .login-page-container {
     .form-field {
-      margin: 15px 0px;
+      margin: 0px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      gap: 0px;
   
       .el-form-item {
         margin-bottom: 0px;
@@ -400,6 +435,24 @@
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
       color: #fff;
+    }
+
+    .el-tabs__item {
+      font-family: "PingFang SC";
+      color: #a98f7c;
+    }
+
+    .el-tabs__item.is-active {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .el-tabs__active-bar {
+      background: #fff;
+    }
+
+    .el-tabs__nav-wrap:after {
+      background: transparent;
     }
   }
   </style>

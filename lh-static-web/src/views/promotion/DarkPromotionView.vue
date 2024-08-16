@@ -101,14 +101,14 @@
             class="inner"
             :style="{
               backgroundColor:
-                selectedPromo?.promoCode === 'lh1worldcup' ||
+                ((selectedPromo?.promoCode === 'lh1worldcup' ||
                 selectedPromo?.promoCode === 'lh1worldcupdota2' ||
                 selectedPromo?.promoCode === 'lh1-challenge-comeback' ||
                 selectedPromo?.promoCode === 'lh-official-gift' ||
                 selectedPromo?.promoCode === 'lh1-newplayer-guide' ||
                 selectedPromo?.promoCode === 'lh-nba24-match' ||
                 selectedPromo?.promoCode === 'lh1-slot-lucky8' ||
-                selectedPromo?.promoCode === 'lh1-olympic-checkin'
+                selectedPromo?.promoCode === 'lh1-olympic-checkin') && !isDark)
                   ? '#E7F1FD'
                   : selectedPromo?.promoCode === 'lh-sport-zhongchao'
                     ? '#F5F6F8'
