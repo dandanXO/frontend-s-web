@@ -6,6 +6,22 @@
           <span class="role-span">{{ t('fields.accountInfo') }}</span>
         </div>
       </template>
+      <el-button
+        type="info"
+        size="mini"
+        style="float: right;"
+        @click="toggleWallet"
+      >Toggle Wallet</el-button>
+      <el-row>
+        <span>
+          Wallet Type : {{ memberDetail.walletType }}
+        </span>
+      </el-row>
+      <el-row>
+        <span>
+          Fiat Balance : {{ memberDetail.fiatBalance }}, USDT Balance : {{ memberDetail.usdtBalance }}
+        </span>
+      </el-row>
       <el-descriptions
         size="small"
         class="margin-top"
@@ -1510,6 +1526,8 @@ import {
   syncMemberDetail,
   getShareRatio,
   editShareRatio,
+  toggleMemberWallet,
+  walletBalance,
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1656,7 +1674,10 @@ export default defineComponent({
       memberType: '',
       dupName: '',
       dupIp: '',
-      claimableRebate: 0
+      claimableRebate: 0,
+      fiatBalance: '',
+      usdtBalance: '',
+      walletType: '',
     })
 
     const affiliateDetail = reactive({
@@ -2392,6 +2413,19 @@ export default defineComponent({
       ElMessage({ message: t('message.success'), type: 'success' })
     }
 
+    const loadWallet = async () => {
+      const { data: balance } = await walletBalance(props.mbrId, site.id)
+      memberDetail.fiatBalance = balance.fiat
+      memberDetail.usdtBalance = balance.usdt
+      memberDetail.walletType = balance.walletType
+    }
+
+    async function toggleWallet() {
+      await toggleMemberWallet(props.mbrId, site.id)
+      await loadWallet()
+      ElMessage({ message: t('message.success'), type: 'success' })
+    }
+
     onMounted(async () => {
       loading.accountInfo = true
       loading.affiliateInfo = true
@@ -2422,6 +2456,7 @@ export default defineComponent({
 
       await loadBalance()
       await refreshClaimableRebate()
+      await loadWallet()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true
@@ -2524,7 +2559,8 @@ export default defineComponent({
       getAffiliateRatio,
       isInd,
       isKorea,
-      LOGIN_USER_SITEID
+      LOGIN_USER_SITEID,
+      toggleWallet,
     }
   },
 })

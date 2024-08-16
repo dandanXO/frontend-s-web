@@ -232,3 +232,11 @@ export const getMemberVipFin = (siteId, names) => {
 export const getMemberVipFinById = (siteId, ids, loginName) => {
   return https().request(`/member/memberVipFinById`, Method.GET, { siteId: siteId, memberIds: ids, loginName: loginName }, ContentType.form);
 };
+
+export const toggleMemberWallet = (id, siteId) => {
+  return https().request(`/member/toggleWallet/${id}/${siteId}`, Method.GET);
+}
+
+export const walletBalance = (id, siteId) => {
+  return https().request(`/member/all-wallet/${id}/${siteId}`, Method.GET);
+}
