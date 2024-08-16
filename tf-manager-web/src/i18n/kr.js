@@ -2538,7 +2538,8 @@ export default {
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
     'Vip Report': 'VIP 보고서',
-    'System Value Rules': '시스템 값 규칙',
+    'System Value Rules': '설정 규칙',
+    'Sites Config': '사이트 설정',
   },
   google: {
     google_auth_menu: 'Google 인증자',
