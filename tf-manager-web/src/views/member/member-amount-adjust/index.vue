@@ -998,20 +998,6 @@ async function handleBalanceType(value) {
     }
   }
 }
-    const response = await getMemberBalanceByLoginNameSite(
-      form.loginName,
-      form.siteId,
-      value
-    )
-    bal = response.data
-
-    if (bal === null || bal === undefined) {
-      uiControl.balance = null
-    } else {
-      uiControl.balance = bal
-    }
-  }
-}
 
 function createAdd() {
   memberAmountAdjustForm.value.validate(async valid => {
