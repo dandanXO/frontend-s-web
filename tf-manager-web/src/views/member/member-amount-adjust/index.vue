@@ -968,6 +968,7 @@ function handleCauseChange(selectedValue) {
   )
   if (selectedItem) {
     adjustRollover.selectedItem = selectedItem.rollover
+    form.rollover = selectedItem.rollover
   }
 }
 
@@ -977,6 +978,7 @@ function handleImportCauseChange(selectedValue) {
   )
   if (selectedItem) {
     adjustRollover.importedSelectedItem = selectedItem.rollover
+    importForm.rollover = selectedItem.rollover
   }
 }
 
@@ -989,6 +991,20 @@ async function handleBalanceType(value) {
       form.currency
     )
     bal = response.data
+    if (bal === null || bal === undefined) {
+      uiControl.balance = null
+    } else {
+      uiControl.balance = bal
+    }
+  }
+}
+    const response = await getMemberBalanceByLoginNameSite(
+      form.loginName,
+      form.siteId,
+      value
+    )
+    bal = response.data
+
     if (bal === null || bal === undefined) {
       uiControl.balance = null
     } else {

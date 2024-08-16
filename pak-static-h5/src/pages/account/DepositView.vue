@@ -367,7 +367,7 @@ const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
-const freePrivilege = ref(null);
+const freePrivilege = ref([]);
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
@@ -590,11 +590,11 @@ async function loadPrivilege(val) {
       privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
-      freePrivilege.value = null;
+      freePrivilege.value = [];
       privilegeList.value.map((p) => {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
+            freePrivilege.value.push(p);
           } else {
             unselectedPrivileges.value.push(p);
           }
@@ -644,11 +644,29 @@ async function confirmDeposit() {
 
           btnLoading.value = false;
         } else {
-          if (freePrivilege.value) {
+          const currentPayType = activeMethod.value.payType;
+          const allSelectedPrivilege = [selectedPrivilege.value, ...freePrivilege.value];
+          const hasIncorrectPrivilege = allSelectedPrivilege.some((privilege) => {
+            if (!privilege || typeof privilege !== "object") return false;
+            return privilege.payTypes.indexOf(currentPayType) === -1;
+          });
+
+          if (hasIncorrectPrivilege) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: t("deposit.incorrectPrivilege"),
+              icon: "report_problem"
+            });
+            throw Error()
+          }
+
+          if (freePrivilege.value.length) {
+            const freePrivilegeIdStr = freePrivilege.value.map((privilege) => privilege.id).join(",");
             if (selectedPrivilege.value) {
-              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilegeIdStr;
             } else {
-              form.privilegeId = "," + freePrivilege.value.id;
+              form.privilegeId = "," + freePrivilegeIdStr;
             }
           } else {
             if (selectedPrivilege.value) {

@@ -250,7 +250,8 @@ export default {
   deposit: {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
-    select_privilege: "Select Privilege"
+    select_privilege: "Select Privilege",
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
   },
   withdraw: {
     cashBalance: "Cash Balance",

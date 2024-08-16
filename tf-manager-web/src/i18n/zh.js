@@ -797,7 +797,7 @@ export default {
     currencyCode: '货币代码',
     currencyName: '货币名称',
     currencyRate: '汇率',
-    currencyWallet: '货币钱包',
+    currencyWallet: '钱包',
     currentPassword: '当前密码',
     currentPlace: '当前位置',
     customerSupportAddress: '客服地址',
@@ -2682,7 +2682,7 @@ export default {
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
     'Vip Report': 'VIP投注汇总报表',
-    'System Value Rules': '设置规则',
+    'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
   },
   google: {
