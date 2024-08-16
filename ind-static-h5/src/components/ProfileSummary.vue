@@ -48,15 +48,26 @@
             <div class="flex-c-start">
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <div class="balance-amount-wrapper">
-                  <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                    <span style="font-family: 'Times New Roman', Times, serif">
-                      {{ store.currency.value }}
+                  <template v-if="walletType === 'INR'">
+                    <span class="balance-amount" :style="`${realBalance > 9999999 && 'font-size: 10px'}`">
+                      <span style="font-family: 'Times New Roman', Times, serif">
+                        {{ store.currency.value }}
+                      </span>
+                      {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance, false) }}
                     </span>
-                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
-                  </span>
-                  <span class="balance-amount-converted">
-                    ≈ {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(store.balance, false)} USDT` }}
-                  </span>
+                  </template>
+
+                  <template v-else>
+                    <span class="balance-amount" :style="`${realBalance > 9999999 && 'font-size: 10px'}`">
+                      ≈ {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(realBalance, false)} USDT` }}
+                    </span>
+                    <span class="balance-amount-converted">
+                      <span style="font-family: 'Times New Roman', Times, serif">
+                        {{ store.currency.value }}
+                      </span>
+                      {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance * realRate, false) }}
+                    </span>
+                  </template>
                 </div>
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
@@ -151,22 +162,24 @@
             </div>
           </template>
           <q-list class="wallet-toggle-list">
-            <q-item clickable v-close-popup :class="walletType === 'IND' && 'active'" @click="selectWallet('IND')">
-              <q-item-section avatar>
-                <img src="../assets/images/index/wallet-icon-ind.png" width="30px" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>IND</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup :class="walletType === 'USDT' && 'active'" @click="selectWallet('USDT')">
-              <q-item-section avatar>
-                <img src="../assets/images/index/wallet-icon-usdt.png" width="30px" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>USDT</q-item-label>
-              </q-item-section>
-            </q-item>
+            <template v-for="(item, index) in multiWallet" :key="index">
+              <q-item
+                clickable
+                v-close-popup
+                :class="walletType === item.currency && 'active'"
+                @click="selectWallet(item.currency)"
+              >
+                <q-item-section avatar>
+                  <img
+                    :src="require(`../assets/images/index/wallet-icon-${item.currency.toLowerCase()}.png`)"
+                    width="30px"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ item.currency }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
           </q-list>
         </q-btn-dropdown>
       </div>
@@ -191,14 +204,71 @@ const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const qs = require("qs");
+const $q = useQuasar();
 
-const walletType = ref(SessionStorage.getItem("WALLET_TYPE") || "IND");
+const multiWallet = ref();
+const getMultiWallet = () => {
+  api.get("/session/memberMultiWallet").then((res) => {
+    if (res.code === 0) {
+      const data = JSON.parse(res.data);
+      multiWallet.value = Object.entries(data).map(([key, value]) => ({
+        currency: key,
+        selectedWallet: value.SelectedWallet,
+        rate: value.Rate,
+        balance: value.Balance
+      }));
+
+      const selectedWallet = multiWallet.value.find((wallet) => wallet.selectedWallet);
+
+      if (selectedWallet) {
+        walletType.value = selectedWallet.currency;
+      } else {
+        walletType.value = null; // Or a default value if no wallet is selected
+      }
+    }
+  });
+};
+
+const walletType = ref("INR");
 const walletTypeImg = computed(() => {
   return require(`../assets/images/index/wallet-icon-${walletType.value.toLowerCase()}.png`);
 });
 const selectWallet = (type) => {
+  isLoadingBalance.value = true;
   walletType.value = type;
   SessionStorage.setItem("WALLET_TYPE", type);
+
+  const obj = {
+    currency: type
+  };
+
+  api
+    .post("/session/updateWallet", qs.stringify(obj))
+    .then((response) => {
+      if (response.code === 0) {
+        // $q.notify({
+        //   color: "positive",
+        //   position: "top",
+        //   message: "Wallet updated successfully",
+        //   icon: "check_circle_outline"
+        // });
+
+        store
+          .getBalance()
+          .then((balance) => {
+            isLoadingBalance.value = false;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            isLoadingBalance.value = false;
+          });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      isLoadingBalance.value = false;
+    });
 };
 
 const profileImg = [
@@ -240,6 +310,16 @@ const refreshBalance = () => {
     });
   }
 };
+
+const realBalance = computed(() => {
+  const realWallet = store.multipleBalance.find((wallet) => wallet.currency === walletType.value);
+  return realWallet ? realWallet.balance : 0;
+});
+
+const realRate = computed(() => {
+  const realWallet = store.multipleBalance.find((wallet) => wallet.currency === walletType.value);
+  return realWallet ? realWallet.rate : 0;
+});
 
 const onClickLogo = () => {
   if (isAndroid()) {
@@ -324,6 +404,7 @@ onMounted(() => {
 
   getTopDownloadUrl();
   checkTopDownloadAppear();
+  getMultiWallet();
 });
 </script>
 
