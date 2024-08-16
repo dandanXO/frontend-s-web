@@ -184,11 +184,6 @@ const page = reactive({
   pagingState: ''
 });
 
-const route = useRoute()
-const site = reactive({
-  id: route.query.site
-});
-
 const sort = (column) => {
   request.orderBy = column.prop;
   if (column.order === "descending") {
