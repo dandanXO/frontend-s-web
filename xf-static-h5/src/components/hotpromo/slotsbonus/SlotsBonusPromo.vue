@@ -37,7 +37,11 @@
         </div>
         <div class="subtitle">
           <span class="subtitle-1">活动对象</span>
-          <span class="subtitle-2">下注电子场馆会员</span>
+          <span class="subtitle-2">下注电子场馆的会员</span>
+        </div>
+        <div class="subtitle">
+          <span class="subtitle-1">活动内容</span>
+          <span class="subtitle-2">活动期间，会员在电子场馆当日总有效投注≥3000元即可在次日24小时内点击领取对应档位彩金，每日最高可领取888元。</span>
         </div>
         <table class="match-game-info-table">
           <tr>
@@ -88,8 +92,7 @@
           <div class="item">
             <span class="rounded-number">2</span>
             <span>
-              <!-- 打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。 -->
-              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。
+              打码礼金仅限投注电子游戏，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
             </span>
           </div>
           <div class="item">
@@ -391,6 +394,8 @@ const claimHongBao = async () => {
       text-align: center;
       font-size: 13px;
       font-weight: bold;
+      min-width: 95px;
+      max-height: 30px;
     }
 
     .subtitle-2 {

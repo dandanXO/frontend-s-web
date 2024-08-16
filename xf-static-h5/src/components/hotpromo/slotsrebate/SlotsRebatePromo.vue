@@ -37,7 +37,11 @@
         </div>
         <div class="subtitle">
           <span class="subtitle-1">活动对象</span>
-          <span class="subtitle-2">下注电子场馆会员</span>
+          <span class="subtitle-2">投注电子场馆的会员</span>
+        </div>
+        <div class="subtitle">
+          <span class="subtitle-1">活动内容</span>
+          <span class="subtitle-2">活动期间，会员在电子场馆当日总负盈利金额≥500元即可在次日24小时内领取对应档位彩金，每日最高可获888元。</span>
         </div>
         <table class="match-game-info-table">
           <tr>
@@ -83,7 +87,7 @@
         </table>
         <div class="content-sub-title">
           <span style="font-weight: bold">⮞ 范例</span>
-          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金158元。</span>
+          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金288元。</span>
         </div>
       </div>
       <div class="match-game-bottom-rule">
@@ -92,12 +96,12 @@
           <div class="item">
             <span class="rounded-number">1</span>
             <span>
-              申请方式:账户余额≤5元，次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
+              申请方式:次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
             </span>
           </div>
           <div class="item">
             <span class="rounded-number">2</span>
-            <span>救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。</span>
+            <span>救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。</span>
           </div>
           <div class="item">
             <span class="rounded-number">3</span>
@@ -398,6 +402,8 @@ const claimHongBao = async () => {
       text-align: center;
       font-size: 13px;
       font-weight: bold;
+      min-width: 95px;
+      max-height: 30px;
     }
 
     .subtitle-2 {
