@@ -5,7 +5,7 @@
       <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">雷火电竞 app 下载</span>
-        <span>APP专享礼包888元</span>
+        <span>APP 专享礼包 888 元</span>
       </div>
       <div class="buttons">
         <div class="buttons">
@@ -234,7 +234,11 @@
         <div class="platform-item">
           <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
           <div class="platform-icon--active" :class="tab === 'lottery' ? 'show' : ''">
-            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
+            <img
+              loading="lazy"
+              v-if="$q.dark.isActive"
+              src="../assets/images/home/games/lottery-icon-active-dark.png"
+            />
             <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
           </div>
           <div class="platform-icon">
@@ -518,6 +522,7 @@
   </div>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
   <q-page-sticky v-if="showDomain" position="bottom-right" :offset="domainPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingDomainFab" v-touch-pan.prevent.mouse="moveDomainFab">
@@ -533,12 +538,7 @@
         infinite
         size="xs"
       >
-        <q-carousel-slide
-          v-for="(game, i) in floatDomain"
-          :key="i"
-          :name="i"
-          @click="openLink(game.code)"
-        >
+        <q-carousel-slide v-for="(game, i) in floatDomain" :key="i" :name="i" @click="openLink(game.code)">
           <div class="rocket-wrapper">
             <div class="rocket">
               <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${game.icon}`" />
@@ -695,6 +695,7 @@ import { cached } from "boot/cache";
 import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -725,8 +726,9 @@ export default defineComponent({
     MarqueeText,
     UserProfile,
     LinkGroup,
-    SystemConfig
+    SystemConfig,
     // PlatformBlock
+    AnnouncementModal
   },
   setup() {
     const isFirstView = ref(false);
@@ -1243,7 +1245,7 @@ export default defineComponent({
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
-                spObj.title = "IM体育";
+                spObj.title = "IM 体育";
               }
               if (spObj.code === "IA") {
                 spObj.title = "小艾体育";
@@ -1252,16 +1254,16 @@ export default defineComponent({
                 spObj.title = "熊猫体育";
               }
               if (spObj.code === "CR") {
-                spObj.title = "CR体育";
+                spObj.title = "CR 体育";
               }
               if (spObj.code === "SABA") {
                 spObj.title = "沙巴体育";
               }
               if (spObj.code === "FB") {
-                spObj.title = "FB体育";
+                spObj.title = "FB 体育";
               }
               if (spObj.code === "PINNACLE") {
-                spObj.title = "AP体育";
+                spObj.title = "AP 体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -1277,11 +1279,11 @@ export default defineComponent({
               // }
 
               if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB真人";
+                liveObj.title = "DB 真人";
               } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE真人";
+                liveObj.title = "WE 真人";
               } else if (liveObj.code === "BBINDY") {
-                liveObj.title = "BBIN真人";
+                liveObj.title = "BBIN 真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }
@@ -1299,7 +1301,7 @@ export default defineComponent({
               var slotObj = Object.assign({}, element);
 
               if (slotObj.code === "AG") {
-                slotObj.title = "XIN电子";
+                slotObj.title = "XIN 电子";
               } else if (slotObj.alias) {
                 slotObj.title = translateRecord(slotObj.alias);
               } else {
@@ -1610,7 +1612,7 @@ export default defineComponent({
     const unreadInboxMail = ref(0);
     const getUnreadTotal = () => {
       if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((res) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
           // console.log(res);
           if (res.code === 0) {
             unreadInboxMail.value = res.data;
@@ -1624,8 +1626,8 @@ export default defineComponent({
     const floatPromo = [];
     const gamePromo = [];
     const floatDomain = [];
-    const openLink= (link) => {
-      if(link) {
+    const openLink = (link) => {
+      if (link) {
         if (link.indexOf(",") > -1) {
           const splitLink = link.split(",");
           const randomIndex = Math.floor(Math.random() * splitLink.length);
@@ -1634,11 +1636,11 @@ export default defineComponent({
           window.open(link, "_blank");
         }
       }
-    }
+    };
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
-      floatDomain.value= [];
+      floatDomain.value = [];
       api
         .get("/redirect")
         .then((res) => {
@@ -1691,7 +1693,7 @@ export default defineComponent({
     const selectedLiveTab = ref();
 
     const showRocket = ref(false);
-    const showDomain= ref(false);
+    const showDomain = ref(false);
     const checkShowRocket = () => {
       // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
       //   showRocket.value = true;
@@ -1723,14 +1725,14 @@ export default defineComponent({
 
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
-      
+
       domainPos.value = [18, 18];
     };
-    const domainPos= ref([18,258]);
+    const domainPos = ref([18, 258]);
     const fabPos = ref([18, 18]);
     const promoPos = ref([18, 128]);
     const draggingRocketFab = ref(false);
-    const draggingDomainFab= ref(false);
+    const draggingDomainFab = ref(false);
     const draggingPromoFab = ref(false);
 
     const currentElement = ref(null);
@@ -2363,7 +2365,7 @@ export default defineComponent({
         left: 0;
       }
 
-      .platform-icon--active{
+      .platform-icon--active {
         position: absolute;
         top: 0;
         left: 0;
