@@ -3,12 +3,24 @@
     <div class="header-container">
       <div class="search">
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          style="width: 120px"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           v-model="request.targetType"
           size="small"
           :placeholder="t('fields.targetType')"
           class="filter-item"
-          style="width: 200px;"
-          @focus="loadSites"
+          style="width: 200px;margin-left:20px"
         >
           <el-option
             v-for="item in uiControl.targetType"
@@ -69,7 +81,19 @@
       <el-table-column prop="dataBefore" :label="t('fields.dataBefore')" />
       <el-table-column prop="dataAfter" :label="t('fields.dataAfter')" />
       <el-table-column prop="loginName" :label="t('fields.doneBy')" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.updateTime === null">-</span>
+          <span
+            v-if="scope.row.updateTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       class="pagination"
@@ -107,7 +131,7 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
-
+let timeZone = null;
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -172,7 +196,6 @@ function resetQuery() {
     convertDateToStart(new Date()),
     convertDateToEnd(new Date()),
   ]
-  request.siteId = null
   request.targetName = null
   request.dataBefore = null
   request.dataAfter = null
@@ -183,6 +206,7 @@ function resetQuery() {
 async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
+  request.siteId = sites.list[0].id;
 }
 
 async function loadUserActionLog() {
@@ -206,7 +230,7 @@ async function loadUserActionLog() {
   const { data: ret } = await getUserActionLog(query)
   page.pages = ret.pages
   page.records = ret.records
-
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone;
   page.loading = false
 }
 
@@ -215,9 +239,9 @@ function changePage(page) {
   loadUserActionLog()
 }
 
-onMounted(() => {
-  loadSites()
-  loadUserActionLog()
+onMounted(async () => {
+  await loadSites()
+  await loadUserActionLog()
 })
 </script>
 
