@@ -82,29 +82,46 @@
 
     <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
       <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
-        <q-route-tab to="/home" name="home" exact :ripple="false">
+        <q-route-tab v-if="!isDepositTab" to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
           Home
         </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
+        <q-route-tab v-else>&nbsp;</q-route-tab>
+
+        <q-route-tab v-if="!isDepositTab" class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           Promo
         </q-route-tab>
-        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
+        <q-route-tab v-else to="/withdraw" class="second-icon" name="live" :ripple="false">
+          <img class="inactive" src="../assets/images/index/menu/withdraw-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/withdraw-icon.png" />
+          Withdraw
+        </q-route-tab>
+
+        <q-route-tab v-if="!isDepositTab" @click="goDepositTab" name="deposit" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
         </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
+        <q-route-tab v-else>&nbsp;</q-route-tab>
+
+        <q-route-tab v-if="!isDepositTab" to="/earn-money" name="earn-money" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
           Earn Money
         </q-route-tab>
-        <q-route-tab to="/account" name="account" :ripple="false">
+        <q-route-tab v-else to="/deposit" name="earn-money" class="second-icon" :ripple="false">
+          <img class="inactive" src="../assets/images/index/menu/deposit-page-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/deposit-page-icon.png" />
+          Deposit
+        </q-route-tab>
+
+        <q-route-tab v-if="!isDepositTab" to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
           Me
         </q-route-tab>
+        <q-route-tab v-else>&nbsp;</q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -135,6 +152,8 @@ export default defineComponent({
     //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
     //   }
     // });
+
+    const isDepositTab = ref(false);
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
@@ -144,6 +163,11 @@ export default defineComponent({
     watch(
       () => route.path,
       async () => {
+        if (route.path == "/deposit") {
+          isDepositTab.value = true;
+        } else {
+          isDepositTab.value = false;
+        }
         checkRoute();
       }
     );
@@ -496,7 +520,12 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+
+    const goDepositTab = () => {
+      isDepositTab.value = true;
+
+      router.push(`/deposit?from=${route.path}`);
+    };
 
     onMounted(() => {
       checkRoute();
@@ -518,7 +547,9 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      goDepositTab,
+      changePlatform,
+      isDepositTab
     };
   }
 });
@@ -556,6 +587,14 @@ svg path {
   stroke-width: 2;
   stroke-dasharray: 1000;
   stroke-dashoffset: 0;
+}
+
+.second-icon {
+  img {
+    margin-top: 5px;
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .logo {
