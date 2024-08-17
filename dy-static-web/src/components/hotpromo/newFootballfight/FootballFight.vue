@@ -38,10 +38,10 @@
         <!--          <div class="left">活动平台</div>-->
         <!--          <div class="right">真人场馆、棋牌场馆</div>-->
         <!--        </div>-->
-        <!--        <div class="little-title">-->
-        <!--          <div class="left">活动时间</div>-->
-        <!--          <div class="right">永久</div>-->
-        <!--        </div>-->
+        <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">2024年8月16日起</div>
+        </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">

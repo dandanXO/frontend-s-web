@@ -216,18 +216,18 @@
             </div>
           </div>
         </div>
-        <div class="contact-wrapper">
+        <!-- <div class="contact-wrapper">
           <div class="contact-method">合营部电邮</div>
           <div class="contact-id">affiliate@e8007.com</div>
-        </div>
+        </div> -->
         <div class="contact-wrapper">
           <div class="contact-method">合营部skype</div>
           <div class="contact-id">live:.cd.ff6111f0549375a8 (点击图标以联系，联系时请提供用户名)</div>
         </div>
-        <div class="contact-wrapper">
+        <!-- <div class="contact-wrapper">
           <div class="contact-method">合营部letstalk</div>
           <div class="contact-id">t403523198</div>
-        </div>
+        </div> -->
         <div class="contact-wrapper">
           <div class="contact-method">合营部Telegram</div>
           <div class="contact-id">LH18668</div>
