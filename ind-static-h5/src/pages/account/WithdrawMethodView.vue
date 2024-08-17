@@ -479,7 +479,7 @@ const getWithdrawalMethods = () => {
 
             const option = {
               label: method.nodeName,
-              value: method.paymentId
+              value: method.withdrawId
             };
             if (method.code === currencyType.value) {
               networkOptions.value.push(option);
@@ -551,7 +551,7 @@ const changeNetworkOptions = () => {
   paymentMethodsItems.value.forEach((method) => {
     const option = {
       label: method.nodeName,
-      value: method.paymentId
+      value: method.withdrawId
     };
     if (method.code === currencyType.value) {
       networkOptions.value.push(option);
@@ -567,8 +567,9 @@ const changeNetworkOptions = () => {
 const changeUSDTPaymentId = (val) => {
   console.log(val);
   const changeVal = val.value;
+  debugger;
   if (changeVal) {
-    const item = paymentMethodsItems.value.find((item) => item.paymentId === changeVal);
+    const item = paymentMethodsItems.value.find((item) => item.withdrawId === changeVal);
     goSelectedMethod(item);
   }
 };
