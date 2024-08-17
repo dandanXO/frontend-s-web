@@ -1,7 +1,7 @@
 <template>
   <div class="deposit-wrapper">
-    <template v-if="!isSelectedMethod && depositType !== 'usdt'">
-      <div class="method-title q-mb-md">Choose a payment method</div>
+    <template v-if="!isSelectedMethod">
+      <div class="method-title q-mb-md" v-if="depositType !== 'usdt'">Choose a payment method</div>
       <div class="withdraw-methods-container" v-if="isLoadingInitPay">
         <div>
           <q-skeleton style="height: 76px" />

@@ -19,12 +19,7 @@
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span
-            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/depositusdt'"
-            class="header-back"
-          >
-            Back
-          </span>
+          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
         </router-link>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -36,11 +31,7 @@
 
         <div
           class="header-right"
-          :class="
-            route.path === '/deposit' || route.path === '/withdraw' || route.path === '/depositusdt'
-              ? 'header-right-long'
-              : ''
-          "
+          :class="route.path === '/deposit' || route.path === '/withdraw' ? 'header-right-long' : ''"
         >
           <q-btn v-if="hasDrawer" flat @click="ui.drawerRight = !ui.drawerRight" round dense icon="menu" />
         </div>
@@ -91,31 +82,25 @@
 
     <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
       <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
-        <q-route-tab to="/home" name="home" exact :ripple="false">
+        <q-route-tab v-if="!isDepositTab" to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
           Home
         </q-route-tab>
+        <q-route-tab v-else>&nbsp;</q-route-tab>
 
         <q-route-tab v-if="!isDepositTab" class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           Promo
         </q-route-tab>
-        <q-route-tab v-else class="" to="/withdraw" id="cs-web-id" name="live" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
+        <q-route-tab v-else to="/withdraw" class="second-icon" name="live" :ripple="false">
+          <img class="inactive" src="../assets/images/index/menu/withdraw-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/withdraw-icon.png" />
           Withdraw
         </q-route-tab>
 
-        <q-route-tab
-          v-if="!isDepositTab"
-          @click="goDepositTab"
-          :to="`/deposit?from=${route.path}`"
-          name="deposit"
-          class="center-menu"
-          :ripple="false"
-        >
+        <q-route-tab v-if="!isDepositTab" @click="goDepositTab" name="deposit" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
         </q-route-tab>
         <q-route-tab v-else>&nbsp;</q-route-tab>
@@ -125,17 +110,18 @@
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
           Earn Money
         </q-route-tab>
-        <q-route-tab v-else to="/deposit" name="earn-money" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
+        <q-route-tab v-else to="/deposit" name="earn-money" class="second-icon" :ripple="false">
+          <img class="inactive" src="../assets/images/index/menu/deposit-page-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/deposit-page-icon.png" />
           Deposit
         </q-route-tab>
 
-        <q-route-tab to="/account" name="account" :ripple="false">
+        <q-route-tab v-if="!isDepositTab" to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
           Me
         </q-route-tab>
+        <q-route-tab v-else>&nbsp;</q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -459,13 +445,6 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
-        } else if (route.path === "/depositusdt") {
-          prevPage.value = "/account";
-          hasPage.value = true;
-          pageName.value = "";
-          if (route.query.from) {
-            prevPage.value = route.query.from;
-          }
         } else if (route.path === "/withdraw") {
           prevPage.value = "/account";
           hasPage.value = true;
@@ -544,6 +523,8 @@ export default defineComponent({
 
     const goDepositTab = () => {
       isDepositTab.value = true;
+
+      router.push(`/deposit?from=${route.path}`);
     };
 
     onMounted(() => {
@@ -606,6 +587,14 @@ svg path {
   stroke-width: 2;
   stroke-dasharray: 1000;
   stroke-dashoffset: 0;
+}
+
+.second-icon {
+  img {
+    margin-top: 5px;
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .logo {

@@ -1,5 +1,16 @@
 <template>
   <q-page class="account-message-page">
+    <div class="bank-add-lists">
+      <div class="bank-card-add" @click="onAddCardClick()">
+        <img src="../../assets/images/account/icon-add.png" />
+        <div class="card-label">Add Bank</div>
+      </div>
+      <div class="bank-card-add" @click="onAddUSDTClick()">
+        <img src="../../assets/images/account/icon-add.png" />
+        <div class="card-label">Add Crypto</div>
+      </div>
+    </div>
+
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
       <q-card>
@@ -49,12 +60,7 @@
         @click="handleBankCardClick(bcIndex)"
       >
         <div class="bank-card-add">
-          <!--
-            <div class="card-icon">
-              <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
-            </div>
-          -->
-          <div class="card-label">{{ bc.bankName }}</div>
+          <div class="card-label">{{ bc.bankName }} ({{ bc.bankCode }})</div>
           <!--          <div class="card-label">{{ bc.bankName }}</div>-->
           <div class="card-num-wrapper">
             <div class="card-num">{{ bc.cardNumber }}</div>
@@ -69,16 +75,6 @@
           <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
             <q-icon size="sm" name="link_off" />
           </div>
-        </div>
-      </div>
-
-      <div class="bank-card-item bank-addcard" @click="onAddCardClick()">
-        <div class="bank-card-add">
-          <div><img src="../../assets/images/account/icon-add.png" /></div>
-          <!-- <div class="card-icon addcard-icon-div"> -->
-          <!-- <q-icon class="add-card-icon" key="md" size="md" name="add" /> -->
-          <!-- </div> -->
-          <div class="card-label" style="margin-top: 10px">Add Bank Account</div>
         </div>
       </div>
     </div>
@@ -181,9 +177,15 @@ const selectedBankIndex = ref();
 const addBankCardModalRef = ref();
 const updateBankCardModalRef = ref();
 const onAddCardClick = () => {
-  addBankCardModalRef.value.onAddCardClick();
+  addBankCardModalRef.value.onAddCardClick("Bank");
+};
+const onAddUSDTClick = () => {
+  addBankCardModalRef.value.onAddCardClick("Crypto");
 };
 const onUpdateCardClick = (bcIndex) => {
+  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
+};
+const onUpdateUSDTClick = (bcIndex) => {
   updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
 };
 
@@ -196,6 +198,10 @@ const loadCards = () => {
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
+
+        if (bankCardList.value.length > 0) {
+          isCardShown.value[bankCardList.value.length - 1] = true;
+        }
       }
     })
     .catch((error) => {
@@ -249,6 +255,12 @@ onActivated(() => {
           }
         }
       }
+
+      &:last-child {
+        .bank-card-add {
+          padding: 1rem 0 1.5rem;
+        }
+      }
     }
 
     &.card-show {
@@ -289,16 +301,6 @@ onActivated(() => {
       }
     }
 
-    &.bank-addcard {
-      border: 1px solid #a73dff;
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-
-      &:active {
-        opacity: 0.9;
-        filter: brightness(0.9);
-      }
-    }
-
     .bank-card-add {
       padding: 10px;
       width: 100%;
@@ -336,6 +338,50 @@ onActivated(() => {
         font-weight: bold;
         color: #a735ff;
       }
+    }
+  }
+}
+
+.bank-add-lists {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  width: calc(100% - 20px);
+  margin: 0 auto 12px;
+
+  .bank-card-add {
+    flex: 1;
+    color: #fff;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 0.5rem;
+    gap: 6px;
+    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 8px;
+    height: 64px;
+
+    .card-update,
+    .card-unlink {
+      display: none;
+    }
+
+    .card-num-wrapper {
+      display: none;
+    }
+
+    .card-label {
+      font-size: 20px;
+    }
+
+    img {
+      width: 28px;
+    }
+    &:active {
+      opacity: 0.9;
+      filter: brightness(0.9);
     }
   }
 }
