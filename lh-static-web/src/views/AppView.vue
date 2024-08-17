@@ -370,11 +370,11 @@ export default defineComponent({
       // position: absolute;
       background-image: url("./../assets/app/blue-bg.png");
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: 100% 100%;
       bottom: 0px;
       margin: auto;
       width: 138px;
-      height: 131px;
+      height: 135px;
       box-shadow: 0px 4px 34px 0px #00000033;
       border-radius: 8px;
       display: flex;
@@ -1173,11 +1173,17 @@ export default defineComponent({
     .buttons {
       .platform-qr-code {
         background: url(@/assets/home/download/qr-frame-dark.png) no-repeat;
+        background-size: 100% 100%;
         color: $font-3-dark;
       }
       .platform-button {
-        background: $active-color-dark-linear;
-        box-shadow: $active-color-dark-shadow;
+        // background: $active-color-dark-linear;
+        // box-shadow: $active-color-dark-shadow;
+        background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
+        background-size: cover;
+        box-shadow: none;
+        border-radius: 8px;
+        border: 1px solid #3A93CE;
 
         &:hover {
           filter: brightness(1.2);

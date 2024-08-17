@@ -457,6 +457,7 @@ export default defineComponent({
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;
+    width: 200px;
 
     &:hover {
       background-color: #e5f5ff;

@@ -2536,7 +2536,7 @@ export default {
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
     'Media Display Settings': 'Cài đặt hiển thị phương tiện',
     'Vip Report': 'Báo cáo VIP',
-    'System Value Rules': 'Quy tắc cài đặt',
+    'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
   },
   google: {

@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -67,6 +66,14 @@
           <template #default="scope">
             <span v-if="scope.row.platformCode === null">-</span>
             <span v-if="scope.row.platformCode !== null">{{ scope.row.platformCode }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.currency === null">-</span>
+            <span v-else>
+              {{ scope.row.currency }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable>
@@ -132,6 +139,7 @@ import { getMemberMoneyChangeList } from '../../../../../api/affiliate';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -157,6 +165,11 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   orderBy: "recordTime",
   sortType: "DESC"
+});
+
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
 });
 
 function resetQuery() {
@@ -185,10 +198,6 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
 }
 
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
-}
-
 async function loadMemberMoneyChange(frombutton) {
   if (frombutton === true) {
     request.current = 1
@@ -211,6 +220,7 @@ async function loadMemberMoneyChange(frombutton) {
       query.recordTime = query.recordTime.join(',')
     }
   }
+  query.siteId = site.id
   query.memberId = props.affId;
   query.pagingState = page.pagingState
   const { data: ret } = await getMemberMoneyChangeList(props.affId, query);
