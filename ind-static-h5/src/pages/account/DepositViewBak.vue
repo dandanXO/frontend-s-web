@@ -1,6 +1,6 @@
 <template>
   <div class="deposit-wrapper">
-    <template v-if="!isSelectedMethod && depositType !== 'usdt'">
+    <template v-if="!isSelectedMethod">
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container" v-if="isLoadingInitPay">
         <div>
@@ -49,49 +49,13 @@
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-options" v-if="depositType === 'flat'">
+      <div class="method-options">
         <div class="method-title">Payment Method</div>
         <div class="options-picker" @click="resetSelectedMethod()">
           <div class="pick-title">{{ selectedItem.nodeName }}</div>
           <q-icon name="arrow_drop_down" size="20px" />
         </div>
       </div>
-      <div class="usdt-method-div" v-else>
-        <div class="method-type">
-          <img src="../../assets/images/account/usdt-select.png" />
-        </div>
-        <div class="method-options">
-          <div class="method-select-div">
-            <div class="method-usdt-title">Payment Method</div>
-            <q-select
-              class="selection-bar"
-              standout
-              v-model="currencyType"
-              :options="currencyOptions"
-              dense="false"
-              options-dense="false"
-              @update:model-value="changeNetworkOptions()"
-            >
-              <template v-slot:prepend>
-                <img src="../../assets/images/account/usdt-logo.png" />
-              </template>
-            </q-select>
-          </div>
-          <div class="method-select-div">
-            <div class="method-usdt-title">Choose Network</div>
-            <q-select
-              class="selection-bar"
-              standout
-              v-model="networkType"
-              :options="networkOptions"
-              dense="false"
-              options-dense="false"
-              @update:model-value="changeUSDTPaymentId"
-            ></q-select>
-          </div>
-        </div>
-      </div>
-      <p class="method-desc" v-if="depositType === 'usdt'">Get extra 240% bonus on minimum of 50.00 USDT deposit</p>
 
       <div class="deposit-item-container q-mt-sm">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
@@ -195,17 +159,29 @@
               padding="none"
             >
               <template v-slot:prepend>
-                <span style="font-size: 26px" v-if="!isUSDT" class="currency">
+                <span style="font-size: 26px" class="currency">
                   {{ store.currency.value }}
                 </span>
-                <span style="font-size: 26px" v-else class="currency">U</span>
               </template>
             </q-select>
           </template>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-md" label="Exchange rate">
-            <span style="color: #698fd0; font-size: 18px; font-weight: 600">
-              ≈{{ store.currency.value }} {{ calculateEstimateAmt }}
+          <!-- <div class="q-mt-md q-mb-md text-grey-7">
+          Minimum Amount:
+          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
+          <br />
+          Maximum Amount:
+          {{
+            activeMethod.depositMax
+              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
+              : "No Limit"
+          }}
+        </div> -->
+
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
+            <span style="color: #fff">
+              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{ store.currency.value }}
             </span>
           </div>
 
@@ -287,14 +263,6 @@ const store = userStore();
 const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
-const props = defineProps(["type"]);
-
-const depositType = ref(props.type ? props.type : "flat");
-
-const currencyType = ref("");
-const networkType = ref("");
-const currencyOptions = ref(["USDTERC", "USDTUUS"]);
-const networkOptions = ref(["ERC20", "ERC10"]);
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
@@ -415,13 +383,6 @@ const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
 };
 
-const calculateEstimateAmt = computed(() => {
-  if (activeMethod.value && activeMethod.value.currencyRate) {
-    return Math.floor(activeMethod.value.currencyRate * form.localAmount * 100) / 100;
-  }
-  return 0;
-});
-
 const isLoadingInitPay = ref(true);
 function initPay() {
   isLoadingInitPay.value = true;
@@ -441,76 +402,23 @@ function initPay() {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
-    // console.log(res.data.payments);
-
     if (res.code === 0) {
-      // console.log(bankDeposits);
-      if (depositType.value === "usdt") {
-        isUSDT.value = true;
-        var itemDeposits = res.data.payments.filter((bank) => bank.code === "CRYPTO");
-        // console.log(itemDeposits);
+      let bankDeposits = res.data.payments
+        .map((payment) => {
+          return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
+        })
+        .flat();
 
-        let usdtDeposits = itemDeposits
-          .map((payment) => {
-            return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
-          })
-          .flat();
+      paymentMethodsItems.value = bankDeposits.flat();
+      selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
 
-        paymentMethodsItems.value = usdtDeposits.flat();
-        selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
-
-        if (!payMethods.value.length) {
-          payMethods.value = usdtDeposits;
-        }
-        if (payMethods.value.length > 0) {
-          activeMethod.value = payMethods.value[0];
-          depositItems.value = payMethods.value[0].extra.amountArr;
-        }
-
-        if (paymentMethodsItems.value.length > 0) {
-          goSelectedMethod(paymentMethodsItems.value[0]);
-
-          currencyType.value = paymentMethodsItems.value[0].payType;
-
-          currencyOptions.value = [];
-          networkOptions.value = [];
-          paymentMethodsItems.value.forEach((method) => {
-            if (currencyOptions.value.indexOf(method.payType) === -1) {
-              currencyOptions.value.push(method.payType);
-            }
-
-            const option = {
-              label: method.nodeName,
-              value: method.paymentId
-            };
-            if (method.payType === currencyType.value) {
-              networkOptions.value.push(option);
-            }
-          });
-
-          networkType.value = networkOptions.value[0].label;
-        }
-
-        console.log(paymentMethodsItems.value);
-      } else {
-        let itemDeposits = res.data.payments
-          .map((payment) => {
-            return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
-          })
-          .flat();
-
-        var bankDeposits = itemDeposits.filter((bank) => bank.payType === "BANK");
-
-        paymentMethodsItems.value = bankDeposits.flat();
-        selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
-
-        if (!payMethods.value.length) {
-          payMethods.value = bankDeposits;
-        }
-        if (payMethods.value.length > 0) {
-          activeMethod.value = payMethods.value[0];
-          depositItems.value = payMethods.value[0].extra.amountArr;
-        }
+      const d = res.data;
+      if (!payMethods.value.length) {
+        payMethods.value = bankDeposits;
+      }
+      if (payMethods.value.length > 0) {
+        activeMethod.value = payMethods.value[0];
+        depositItems.value = payMethods.value[0].extra.amountArr;
       }
     }
 
@@ -531,33 +439,6 @@ function initPay() {
     localStorage.removeItem("isBacked");
   });
 }
-
-const changeNetworkOptions = () => {
-  console.log(currencyType.value);
-
-  networkOptions.value = [];
-  paymentMethodsItems.value.forEach((method) => {
-    const option = {
-      label: method.nodeName,
-      value: method.paymentId
-    };
-    if (method.payType === currencyType.value) {
-      networkOptions.value.push(option);
-    }
-  });
-  networkType.value = networkOptions.value[0].label;
-
-  changeUSDTPaymentId(networkOptions.value[0]);
-};
-
-const changeUSDTPaymentId = (val) => {
-  console.log(val);
-  const changeVal = val.value;
-  if (changeVal) {
-    const item = paymentMethodsItems.value.find((item) => item.paymentId === changeVal);
-    goSelectedMethod(item);
-  }
-};
 
 function selectPayType(value) {
   if (value) {
@@ -1167,47 +1048,11 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  flex-wrap: nowrap;
-  gap: 12px;
 
   .options-picker {
     display: flex;
     gap: 6px;
   }
-
-  .selection-bar {
-    width: 100%;
-    border-radius: 20px;
-
-    :deep(.q-field__control) {
-      border-radius: 8px;
-      background: #263349;
-    }
-    :deep(.q-field__native) {
-      color: #ffffffb2;
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-
-  .method-usdt-title {
-    color: #637387;
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-
-  .method-select-div {
-    width: 100%;
-  }
-}
-
-.method-desc {
-  margin-bottom: 8px;
-}
-
-.method-type {
-  margin-bottom: 8px;
 }
 
 .method-title {

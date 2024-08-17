@@ -1,17 +1,21 @@
 <template>
   <div class="transaction-landing">
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab to="/deposit" name="deposit" label="Deposit"></q-route-tab>
-      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>
+      <q-route-tab to="/depositusdt" name="crypto" label="Crypto"></q-route-tab>
+      <q-route-tab to="/deposit" name="flat" label="Flat"></q-route-tab>
+<!--      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>-->
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
-      <q-tab-panel name="deposit">
-        <DepositView></DepositView>
+      <q-tab-panel name="crypto">
+        <DepositView type="usdt"></DepositView>
       </q-tab-panel>
-      <q-tab-panel name="withdraw">
-        <WithdrawView ref="withdrawViewRef"></WithdrawView>
+      <q-tab-panel name="flat">
+        <DepositView type="flat"></DepositView>
       </q-tab-panel>
+<!--      <q-tab-panel name="withdraw">-->
+<!--        <WithdrawView ref="withdrawViewRef"></WithdrawView>-->
+<!--      </q-tab-panel>-->
     </q-tab-panels>
   </div>
 </template>
@@ -23,21 +27,21 @@ import DepositView from "../account/DepositView.vue";
 import WithdrawView from "../account/WithdrawView.vue";
 
 const route = useRoute();
-const activeKey = ref("");
+const activeKey = ref("flat");
 const withdrawViewRef = ref(null);
 
-watch(
-  () => route.path,
-  () => {
-    if (route.path === "/deposit") activeKey.value = "deposit";
-    else if (route.path === "/withdraw") {
-      activeKey.value = "withdraw";
-      if (withdrawViewRef.value && typeof withdrawViewRef.value.onActivated === "function") {
-        withdrawViewRef.value.onActivated();
-      }
-    }
-  }
-);
+// watch(
+//   () => route.path,
+//   () => {
+//     if (route.path === "/deposit") activeKey.value = "deposit";
+//     else if (route.path === "/withdraw") {
+//       activeKey.value = "withdraw";
+//       if (withdrawViewRef.value && typeof withdrawViewRef.value.onActivated === "function") {
+//         withdrawViewRef.value.onActivated();
+//       }
+//     }
+//   }
+// );
 </script>
 
 <style scoped lang="scss">
