@@ -54,8 +54,6 @@
         <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="250" />
         <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="250" />
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
-        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="120" />
-        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="150" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />
@@ -81,6 +79,24 @@
             $ <span v-formatter="{data: scope.row.afterBalance,type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.betTime === null">-</span>
+            <span
+              v-if="scope.row.betTime !== null"
+              v-formatter="{data: scope.row.betTime, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column prop="settleTime" :label="t('fields.settleTime')" align="center" min-width="180">
+          <template #default="scope">
+            <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
+            <span
+              v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
+              v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="result" :label="t('fields.result')" align="center" min-width="140">
           <template #default="scope">
             <el-tag v-if="scope.row.result === 'WIN'" size="mini" type="success">{{ t('result.win') }}</el-tag>
@@ -102,24 +118,8 @@
             {{ t('gameType.' + scope.row.gameType) }}
           </template>
         </el-table-column>
-        <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
-          <template #default="scope">
-            <span v-if="scope.row.betTime === null">-</span>
-            <span
-              v-if="scope.row.betTime !== null"
-              v-formatter="{data: scope.row.betTime, timeZone: timeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="settleTime" :label="t('fields.settleTime')" align="center" min-width="180">
-          <template #default="scope">
-            <span v-if="scope.row.settleTime === null || scope.row.betStatus === 'UNSETTLED'">-</span>
-            <span
-              v-if="scope.row.settleTime !== null && scope.row.betStatus !== 'UNSETTLED'"
-              v-formatter="{data: scope.row.settleTime, timeZone: timeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
+        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="120" />
+        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="150" />
       </el-table>
       <div class="table-footer" v-if="site.id === '3'">
         <!-- <span>{{ t('fields.totalBetRecords') }}</span>
