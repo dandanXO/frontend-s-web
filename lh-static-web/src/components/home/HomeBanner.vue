@@ -251,7 +251,7 @@ watch(
 
   .banner-container {
     .banner-background {
-      background-image: url(@/assets/images/home/banner/banner-background.png);
+      // background-image: url(@/assets/images/home/banner/banner-background.png);
       background-size: contain;
       width: 100%;
       height: 100%;
@@ -279,9 +279,10 @@ watch(
 
 .dark {
   .banner-slider {
+    padding-top: 70px;
     .banner-container {
       .banner-background {
-        background-image: url(@/assets/images/home/banner/banner-background-dark.png);
+        // background-image: url(@/assets/images/home/banner/banner-background-dark.png);
       }
     }
   }

@@ -214,11 +214,14 @@
         </el-table-column>
       </el-table>
       <div class="table-footer">
-        <!-- <span>{{ t('fields.totalBetRecords') }}</span>
-        <span style="margin-left: 10px">{{ total.totalRecord }}</span> -->
-        <span> {{ t('fields.totalBet') }}</span>
+        <span> {{ t('fields.totalValidBet') }}</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: total.totalValidBet, type: 'money'}" />
+
+        <span style="margin-left: 30px"> {{ t('fields.totalBet') }}</span>
         <span style="margin-left: 10px">$ </span>
         <span v-formatter="{data: total.totalBet, type: 'money'}" />
+
         <span style="margin-left: 30px"> {{ t('fields.totalPayout') }}</span>
         <span style="margin-left: 10px">$ </span>
         <span v-formatter="{data: total.totalPayout, type: 'money'}" />
@@ -326,7 +329,7 @@ const request = reactive({
 });
 
 const total = reactive({
-  // totalRecord: 0,
+  totalValidBet: 0,
   totalBet: 0,
   totalPayout: 0
 });
@@ -420,6 +423,7 @@ async function loadMemberBetRecords() {
   page.total = ret.total;
 
   total.totalBet = ret.sums.totalBet;
+  total.totalValidBet = ret.sums.totalValidBet;
   total.totalPayout = ret.sums.totalPayout;
 
   page.loading = false;

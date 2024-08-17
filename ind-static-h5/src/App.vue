@@ -255,9 +255,8 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: "ind"
-          })
-        );
+            siteCode: process.env.SITE
+        }));
       }
     };
 

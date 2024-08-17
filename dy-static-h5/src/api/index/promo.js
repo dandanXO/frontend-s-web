@@ -7,6 +7,10 @@ export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
 }
 
+export function claimBonusItem2(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
+}
+
 export function getSportMatchQuizInfo() {
   return eventapi.get(`/quiz/upcoming`, {});
 }
@@ -202,4 +206,8 @@ export function getLivePoker() {
 
 export function claimLivePokerBonus(item) {
   return eventapi.put(`/bonus/claim/${item}`);
+}
+
+export function footballHistroy() {
+  return eventapi.get("/lh1-football/history");
 }

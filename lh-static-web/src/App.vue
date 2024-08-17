@@ -75,6 +75,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("TEStigger");
       checkSID();
 
       getAffiliateByDomain();
