@@ -53,12 +53,10 @@
 
                   <template v-else>
                     <span class="balance-amount" :style="`${realBalance > 9999999 && 'font-size: 10px'}`">
-                      ≈ {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(realBalance, false)} USDT` }}
+                      {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(realBalance, false)} USDT` }}
                     </span>
                     <span class="balance-amount-converted">
-                      <span style="font-family: 'Times New Roman', Times, serif">
-                        {{ store.currency.value }}
-                      </span>
+                      <span style="font-family: 'Times New Roman', Times, serif">≈ {{ store.currency.value }}</span>
                       {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance * realRate, false) }}
                     </span>
                   </template>
@@ -210,25 +208,27 @@ const $q = useQuasar();
 
 const multiWallet = ref();
 const getMultiWallet = () => {
-  api.get("/session/memberMultiWallet").then((res) => {
-    if (res.code === 0) {
-      const data = JSON.parse(res.data);
-      multiWallet.value = Object.entries(data).map(([key, value]) => ({
-        currency: key,
-        selectedWallet: value.SelectedWallet,
-        rate: value.Rate,
-        balance: value.Balance
-      }));
+  if (store.token) {
+    api.get("/session/memberMultiWallet").then((res) => {
+      if (res.code === 0) {
+        const data = JSON.parse(res.data);
+        multiWallet.value = Object.entries(data).map(([key, value]) => ({
+          currency: key,
+          selectedWallet: value.SelectedWallet,
+          rate: value.Rate,
+          balance: value.Balance
+        }));
 
-      const selectedWallet = multiWallet.value.find((wallet) => wallet.selectedWallet);
+        const selectedWallet = multiWallet.value.find((wallet) => wallet.selectedWallet);
 
-      if (selectedWallet) {
-        walletType.value = selectedWallet.currency;
-      } else {
-        walletType.value = null; // Or a default value if no wallet is selected
+        if (selectedWallet) {
+          walletType.value = selectedWallet.currency;
+        } else {
+          walletType.value = null;
+        }
       }
-    }
-  });
+    });
+  }
 };
 
 const walletType = ref("INR");
@@ -238,7 +238,6 @@ const walletTypeImg = computed(() => {
 const selectWallet = (type) => {
   isLoadingBalance.value = true;
   walletType.value = type;
-  SessionStorage.setItem("WALLET_TYPE", type);
 
   const obj = {
     currency: type

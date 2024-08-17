@@ -271,6 +271,8 @@ export const userStore = defineStore("userStore", {
               if (selectedWallet) {
                 this.balance = selectedWallet.balance;
                 this.walletCurrency = selectedWallet.currency;
+
+                sessionStorage.setItem("WALLET_TYPE", selectedWallet.currency);
               } else {
                 this.balance = 0;
               }
