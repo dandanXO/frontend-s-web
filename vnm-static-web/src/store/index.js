@@ -47,6 +47,7 @@ export const userStore = defineStore("userStore", {
             this.token = ret.data;
             this.getBalance();
             this.getMemberInfo();
+            this.getUnreadMail();
           } else {
             ElMessage.error(ret.message);
             // throw new Error(ret.message);
