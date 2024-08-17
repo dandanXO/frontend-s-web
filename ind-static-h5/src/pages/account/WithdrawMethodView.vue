@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <!--      <div class="bank-account-container">-->
+      <!--      <div class="bank-account-container" v-if="isAddNewAccount && withdrawType === 'flat'">-->
       <!--        <div class="w-form-item w-form-item&#45;&#45;bankcard">-->
       <!--          <div class="top-wrapper">-->
       <!--            <div class="title">Bank Name</div>-->
@@ -100,7 +100,7 @@
       <!--      </div>-->
 
       <!-- bank options -->
-      <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
+      <div class="bank-account-container" v-if="filterBankCardLists.length > 0 && !isAddNewAccount">
         <div class="method-title q-mt-sm">Choose Bank Account</div>
         <div class="mid-wrapper">
           <div class="w-form-item w-form-item--bankcard">
@@ -163,7 +163,7 @@
       </div>
 
       <div class="withdrawal-amount-container">
-        <template v-if="bankCardList.length === 0 || isAddNewAccount">
+        <template v-if="filterBankCardLists.length === 0 || isAddNewAccount">
           <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
               <div class="title">Account Number</div>
@@ -181,7 +181,7 @@
               ></q-input>
             </div>
           </div>
-          <!-- <div class="w-form-item w-form-item--bankcard">
+          <div class="w-form-item w-form-item--bankcard" v-if="withdrawType === 'flat'">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -197,7 +197,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div> -->
+          </div>
         </template>
 
         <div class="top-wrapper">
@@ -295,7 +295,7 @@
         </div>
       </div>
 
-      <template v-if="bankCardList.length > 0 && !isAddNewAccount">
+      <template v-if="filterBankCardLists.length > 0 && !isAddNewAccount">
         <div :class="`btn-submit`" @click="submitWithdraw">
           <q-spinner
             v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
@@ -509,39 +509,37 @@ const getWithdrawalMethods = () => {
 
     loadCards();
 
+    if (bankCardList.value.length === 0) {
+      api
+        .get("/session/withdraw/card")
+        .then((res) => {
+          if (res.code === 0) {
+            res.data.forEach((e) => {
+              const bankType = e.bankType;
+              // debugger;
+              if (bankType === "BANK") bankList.push(e);
+              else if (bankType === "CRYPTO") cryptoList.push(e);
+              else if (bankType === "EWALLET") ewalletList.push(e);
+            });
+
+            selectBankType();
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
+        })
+        .then(() => {
+          cbCount++;
+          checkCb();
+        });
+    } else {
+      cbCount++;
+      checkCb();
+    }
+
     cbCount++;
     checkCb();
   });
-
-  if (bankCardList.value.length === 0) {
-    api
-      .get("/session/withdraw/card")
-      .then((res) => {
-        if (res.code === 0) {
-          res.data.forEach((e) => {
-            bankCardField.bankId = e.id;
-            bankCardField.withdrawPlatformId = e.code;
-
-            const bankType = e.bankType;
-            if (bankType === "BANK") bankList.push(e);
-            else if (bankType === "CRYPTO") cryptoList.push(e);
-            else if (bankType === "EWALLET") ewalletList.push(e);
-          });
-
-          selectBankType();
-        }
-      })
-      .catch((e) => {
-        console.log("error", e);
-      })
-      .then(() => {
-        cbCount++;
-        checkCb();
-      });
-  } else {
-    cbCount++;
-    checkCb();
-  }
 };
 
 const changeNetworkOptions = () => {
@@ -567,7 +565,6 @@ const changeNetworkOptions = () => {
 const changeUSDTPaymentId = (val) => {
   console.log(val);
   const changeVal = val.value;
-  debugger;
   if (changeVal) {
     const item = paymentMethodsItems.value.find((item) => item.withdrawId === changeVal);
     goSelectedMethod(item);
@@ -680,17 +677,17 @@ const bankCardField = reactive({
   amount: ""
 });
 
-watch(
-  () => bankCardField.bankId,
-  (newValue) => {
-    // console.log('..',newValue)
-    const selectedBank = filteredBankList.value.find((bank) => bank.id === newValue);
-    filterCards(selectedBank);
-
-    // console.log('newValue',newValue);
-    // console.log('selectedBank',selectedBank)
-  }
-);
+// watch(
+//   () => bankCardField.bankId,
+//   (newValue) => {
+//     // console.log('..',newValue)
+//     const selectedBank = filteredBankList.value.find((bank) => bank.id === newValue);
+//     filterCards(selectedBank);
+//
+//     // console.log('newValue',newValue);
+//     // console.log('selectedBank',selectedBank)
+//   }
+// );
 
 watch(withdrawalDialogTab, () => {
   withdrawInfo.cardId = null;
@@ -884,7 +881,7 @@ const goSelectedMethod = (item) => {
   filteredBankList.value = item.bankList;
   // bankCardField.bankId = item.bankList[0].id;
 
-  bankCardField.cardAccount = "";
+  // bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
 
@@ -987,15 +984,25 @@ const filterBank = (val, update) => {
 
 const selectBankType = () => {
   currBankList.value = [];
-  bankCardField.bankId = undefined;
 
-  if (withdrawType.value === "flat") {
+  if (withdrawType.value === "flat" && bankList.length > 0) {
     currBankList.value = bankList;
     filteredBankList.value = currBankList.value;
-  } else if (currentCardType.value === "usdt") {
+
+    let bankItem = currBankList.value.find((item) => item.bankType === "BANK");
+    bankCardField.bankId = bankItem.id;
+    bankCardField.withdrawPlatformId = bankItem.code;
+  } else if (withdrawType.value === "usdt" && cryptoList.length > 0) {
     currBankList.value = cryptoList;
     filteredBankList.value = currBankList.value;
+
+    let bankItem = currBankList.value.find((item) => item.code === currencyType.value && item.bankType === "CRYPTO");
+    bankCardField.bankId = bankItem.id;
+    bankCardField.withdrawPlatformId = bankItem.code;
   }
+
+  console.log("Bank Id");
+  console.log(bankCardField.bankId);
 };
 
 const isAddNewAccount = ref(false);
