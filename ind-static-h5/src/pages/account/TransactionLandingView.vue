@@ -32,7 +32,9 @@ const withdrawViewRef = ref(null);
 
 onActivated(() => {
   const isUsdt = sessionStorage.getItem("WALLET_TYPE");
+  console.log(isUsdt);
   if (isUsdt === "USDT") {
+    console.log("HEre");
     activeKey.value = "crypto";
   } else {
     activeKey.value = "flat";

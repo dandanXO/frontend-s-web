@@ -113,7 +113,7 @@
                 class="withdraw-bank-select"
                 v-model="withdrawInfo.cardId"
                 @update:model-value="onCardChanged"
-                :options="bankCardList"
+                :options="filterBankCardLists"
                 option-value="id"
                 emit-value
                 map-options
@@ -409,6 +409,7 @@ const props = defineProps(["type"]);
 const withdrawType = ref(props.type ? props.type : "flat");
 const imgURL = process.env.IMAGE_CDN;
 
+const isMounted = ref(false);
 const currencyType = ref("");
 const networkType = ref("");
 const currencyOptions = ref([]);
@@ -506,6 +507,8 @@ const getWithdrawalMethods = () => {
       });
     }
 
+    loadCards();
+
     cbCount++;
     checkCb();
   });
@@ -557,6 +560,8 @@ const changeNetworkOptions = () => {
   networkType.value = networkOptions.value[0].label;
 
   changeUSDTPaymentId(networkOptions.value[0]);
+  selectBankType();
+  changeBankLists();
 };
 
 const changeUSDTPaymentId = (val) => {
@@ -572,6 +577,7 @@ const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
 
 const isNoBankCard = ref(false);
+const filterBankCardLists = ref([]);
 
 const filterCards = (type) => {
   let typeCode = "BANK";
@@ -585,6 +591,9 @@ const filterCards = (type) => {
       if (res.code === 0) {
         // let typeCode = type.code;
         let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+
+        console.log("HERE");
+        console.log(filteredData);
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -602,18 +611,37 @@ const filterCards = (type) => {
     });
 };
 
+const changeBankLists = () => {
+  filterBankCardLists.value = bankCardList.value.filter((item) => item.bankCode === currencyType.value);
+  withdrawInfo.cardId = filterBankCardLists.value[0].id;
+};
+
 const loadCards = () => {
   isLoadingBankCard.value = true;
+
+  let typeCode = "BANK";
+  if (withdrawType.value === "usdt") {
+    typeCode = "CRYPTO";
+  }
 
   api
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
+        let filteredData = res.data.filter((item) => item.bankType === typeCode);
+
         bankCardList.value = [];
-        bankCardList.value.push(...res.data);
+        bankCardList.value.push(...filteredData);
 
         if (bankCardList.value.length > 0) {
-          withdrawInfo.cardId = bankCardList.value[0].id;
+          filterBankCardLists.value = [];
+          if (typeCode === "BANK") {
+            filterBankCardLists.value = bankCardList.value;
+            withdrawInfo.cardId = filterBankCardLists.value[0].id;
+          } else {
+            filterBankCardLists.value = bankCardList.value.filter((item) => item.bankCode === currencyType.value);
+            withdrawInfo.cardId = filterBankCardLists.value[0].id;
+          }
         }
       }
     })
@@ -662,15 +690,6 @@ watch(
     // console.log('selectedBank',selectedBank)
   }
 );
-
-// watch(
-//   () => bankCardField.withdrawPlatformId,
-//   (newValue) => {
-//     const selectedBank = filteredBankList.value.find((bank) => bank.bankCode === newValue);
-//     console.log("selectedBank", selectedBank);
-//     filterCards(selectedBank);
-//   }
-// );
 
 watch(withdrawalDialogTab, () => {
   withdrawInfo.cardId = null;
@@ -747,7 +766,7 @@ const submitWithdrawBank = () => {
           message: "Withdrawal Submit Succeed",
           icon: "check_circle_outline"
         });
-        // props.loadCards();
+
         refreshBalance();
         getWithdrawalMethods();
 
@@ -869,18 +888,18 @@ const goSelectedMethod = (item) => {
   bankCardField.cardAddress = "";
 
   withdrawInfo.amount = "";
+
+  selectBankType();
 };
 
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
-  loadCards();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
-  loadCards();
 });
 
 const isValidCardNumber = () => {
@@ -969,14 +988,11 @@ const selectBankType = () => {
   currBankList.value = [];
   bankCardField.bankId = undefined;
 
-  if (currentCardType.value === "Bank") {
+  if (withdrawType.value === "flat") {
     currBankList.value = bankList;
     filteredBankList.value = currBankList.value;
-  } else if (currentCardType.value === "Crypto") {
+  } else if (currentCardType.value === "usdt") {
     currBankList.value = cryptoList;
-    filteredBankList.value = currBankList.value;
-  } else if (currentCardType.value === "EWallet") {
-    currBankList.value = ewalletList;
     filteredBankList.value = currBankList.value;
   }
 };

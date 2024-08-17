@@ -199,7 +199,7 @@ const onAddCardClick = (type) => {
           });
       } else {
         clearField();
-
+        selectBankType();
         bankCardField.bankId = currBankList.value[0].id;
       }
     }
