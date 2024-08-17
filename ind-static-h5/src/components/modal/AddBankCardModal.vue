@@ -160,6 +160,7 @@ const isAddCardDialogOpen = ref(false);
 const onAddCardClick = (type) => {
   // debugger;
   currentCardType.value = type;
+  // alert(currentCardType.value);
   selectBankStr();
 
   store.getMemberInfo().then(() => {
@@ -175,7 +176,10 @@ const onAddCardClick = (type) => {
       isAddCardDialogOpen.value = true;
 
       // NOTE: fire once
-      if (bankList.length === 0 && cryptoList.length === 0 && ewalletList.length === 0) {
+      if (
+        (currentCardType.value === "Bank" && bankList.length === 0) ||
+        (currentCardType.value === "Crypto" && cryptoList.length === 0)
+      ) {
         api
           .get("/session/withdraw/card")
           .then((res) => {

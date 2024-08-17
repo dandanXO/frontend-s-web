@@ -7,10 +7,10 @@
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
       <q-tab-panel name="crypto">
-        <WithdrawView type="usdt"></WithdrawView>
+        <WithdrawMethodView type="usdt"></WithdrawMethodView>
       </q-tab-panel>
       <q-tab-panel name="flat">
-        <WithdrawView type="flat"></WithdrawView>
+        <WithdrawMethodView type="flat"></WithdrawMethodView>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -19,7 +19,7 @@
 <script setup>
 import { onActivated, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import WithdrawView from "../account/WithdrawView.vue";
+import WithdrawMethodView from "../account/WithdrawMethodView.vue";
 
 const route = useRoute();
 const activeKey = ref("");

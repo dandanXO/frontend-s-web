@@ -293,8 +293,8 @@ const depositType = ref(props.type ? props.type : "flat");
 
 const currencyType = ref("");
 const networkType = ref("");
-const currencyOptions = ref(["USDTERC", "USDTUUS"]);
-const networkOptions = ref(["ERC20", "ERC10"]);
+const currencyOptions = ref([]);
+const networkOptions = ref([]);
 
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
