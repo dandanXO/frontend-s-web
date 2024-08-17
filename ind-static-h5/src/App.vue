@@ -250,17 +250,20 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await api.post("/memberStatistics/submit", qs.stringify({
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: theSid,
             siteCode: "ind"
-        }));
+          })
+        );
       }
     };
 
     onMounted(async () => {
       // const info = await App.getInfo();
-      // console.log("APP Info");
+      console.log("APP Info");
       // console.log(info);
       // checkSID();
       // getCSA();
