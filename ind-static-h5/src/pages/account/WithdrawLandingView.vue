@@ -1,8 +1,8 @@
 <template>
   <div class="transaction-landing">
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab to="/withdraw?usdt=1" name="crypto" label="Crypto"></q-route-tab>
-      <q-route-tab to="/withdraw" name="flat" label="Flat"></q-route-tab>
+      <q-tab name="crypto" label="Crypto"></q-tab>
+      <q-tab name="flat" label="Flat"></q-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
@@ -17,16 +17,17 @@
 </template>
 
 <script setup>
-import { onActivated, ref, watch } from "vue";
+import { onActivated, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import WithdrawMethodView from "../account/WithdrawMethodView.vue";
+import { userStore } from "src/stores";
 
+const store = userStore();
 const route = useRoute();
 const activeKey = ref("");
-const withdrawViewRef = ref(null);
 
 onActivated(() => {
-  const isUsdt = sessionStorage.getItem("WALLET_TYPE");
+  const isUsdt = store.walletCurrency;
   if (isUsdt === "USDT") {
     activeKey.value = "crypto";
   } else {
