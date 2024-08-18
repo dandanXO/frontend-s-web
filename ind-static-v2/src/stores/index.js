@@ -46,14 +46,13 @@ export const userStore = defineStore("userStore", {
       googleadid: "",
       h5Url: "https://m.indwin7.com/",
       hasUpdatedOneSignal: false,
-      walletCurrency: "INR",
+      walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
       multipleBalance: []
     };
   },
   actions: {
     hasToken() {
       if (isAndroid()) {
-        // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {
@@ -195,6 +194,7 @@ export const userStore = defineStore("userStore", {
         req.headers.TOKEN = token;
         return req;
       });
+
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -271,6 +271,8 @@ export const userStore = defineStore("userStore", {
               if (selectedWallet) {
                 this.balance = selectedWallet.balance;
                 this.walletCurrency = selectedWallet.currency;
+
+                sessionStorage.setItem("WALLET_TYPE", selectedWallet.currency);
               } else {
                 this.balance = 0;
               }

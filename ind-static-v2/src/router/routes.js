@@ -283,11 +283,22 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/account/TransactionLandingView.vue")
+        component: () => import("pages/account/WithdrawLandingView.vue")
       }
     ],
     meta: { requiresAuth: true }
   },
+  // {
+  //   path: "/withdraw",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/account/WithdrawView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   // {
   //   path: "/account/changePwd",
   //   component: () => import("layouts/MainLayout.vue"),
