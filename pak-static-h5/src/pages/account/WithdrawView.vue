@@ -303,12 +303,25 @@
         >
           {{ $t("btn.submit") }}
         </q-btn>
-
+<!-- 
         <div class="q-mt-sm">
           {{ $t("withdraw.withdrawTutorial") }}
           <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
           /
           <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+        </div>
+         -->
+        <div class="q-mt-lg step-desc-div q-mb-lg">
+          <p>
+            {{ $t("withdraw.withdrawTutorial") }}
+          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+          /
+          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+          </p>
+          <p>1.Bind your wallet/bank card using the correct format.</p>
+          <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
+          <p>3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.</p>
+          <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
         </div>
       </div>
     </template>
