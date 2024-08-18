@@ -57,20 +57,19 @@
         </div>
       </div>
       <div class="usdt-method-div" v-else>
-        <div class="method-type">
-          <img src="../../assets/images/account/usdt-select.png" />
-        </div>
+        <!--        <div class="method-type">-->
+        <!--          <img src="../../assets/images/account/usdt-select.png" />-->
+        <!--        </div>-->
         <div class="method-options">
           <div class="method-select-div">
-            <div class="method-usdt-title">Payment Method</div>
+            <div class="method-usdt-title">Deposit Currency</div>
             <q-select
               class="selection-bar"
               standout
-              v-model="currencyType"
-              :options="currencyOptions"
+              v-model="methodType"
+              :options="methodOptions"
               dense="false"
               options-dense="false"
-              @update:model-value="changeNetworkOptions()"
             >
               <template v-slot:prepend>
                 <img src="../../assets/images/account/usdt-logo.png" />
@@ -82,12 +81,26 @@
             <q-select
               class="selection-bar"
               standout
-              v-model="networkType"
-              :options="networkOptions"
+              v-model="currencyType"
+              :options="currencyOptions"
               dense="false"
               options-dense="false"
-              @update:model-value="changeUSDTPaymentId"
-            ></q-select>
+              @update:model-value="changeNetworkOptions()"
+            >
+              <!--              <template v-slot:prepend>-->
+              <!--                <img src="../../assets/images/account/usdt-logo.png" />-->
+              <!--              </template>-->
+            </q-select>
+
+            <!--            <q-select-->
+            <!--              class="selection-bar"-->
+            <!--              standout-->
+            <!--              v-model="networkType"-->
+            <!--              :options="networkOptions"-->
+            <!--              dense="false"-->
+            <!--              options-dense="false"-->
+            <!--              @update:model-value="changeUSDTPaymentId"-->
+            <!--            ></q-select>-->
           </div>
         </div>
       </div>
@@ -230,6 +243,10 @@
         </div>
       </div>
 
+      <div class="q-mt-lg">
+        <span class="tutorial-span" @click="openTutorial">Deposit Tutorial</span>
+      </div>
+
       <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
@@ -291,6 +308,8 @@ const props = defineProps(["type"]);
 
 const depositType = ref(props.type ? props.type : "flat");
 
+const methodType = ref("USDT");
+const methodOptions = ref(["USDT"]);
 const currencyType = ref("");
 const networkType = ref("");
 const currencyOptions = ref([]);
@@ -414,6 +433,8 @@ const goSelectedMethod = (item) => {
   selectedItemPaymentId.value = item.paymentId;
   isSelectedMethod.value = true;
 };
+
+const openTutorial = () => {};
 
 const calculateEstimateAmt = computed(() => {
   if (activeMethod.value && activeMethod.value.currencyRate) {
@@ -1327,6 +1348,16 @@ onMounted(() => {
     width: 30px;
     min-width: 30px;
     max-width: 30px;
+  }
+}
+
+.tutorial-span {
+  text-decoration: underline;
+  font-size: 16px;
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 </style>

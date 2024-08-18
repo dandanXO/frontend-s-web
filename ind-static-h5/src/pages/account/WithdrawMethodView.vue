@@ -9,20 +9,19 @@
         </div>
       </div>
       <div class="usdt-method-div" v-else>
-        <div class="method-type">
-          <img src="../../assets/images/account/usdt-select.png" />
-        </div>
+        <!--        <div class="method-type">-->
+        <!--          <img src="../../assets/images/account/usdt-select.png" />-->
+        <!--        </div>-->
         <div class="method-options">
           <div class="method-select-div">
-            <div class="method-usdt-title">Payment Method</div>
+            <div class="method-usdt-title">Withdraw Currency</div>
             <q-select
               class="selection-bar"
               standout
-              v-model="currencyType"
-              :options="currencyOptions"
+              v-model="methodType"
+              :options="methodOptions"
               dense="false"
               options-dense="false"
-              @update:model-value="changeNetworkOptions()"
             >
               <template v-slot:prepend>
                 <img src="../../assets/images/account/usdt-logo.png" />
@@ -34,12 +33,27 @@
             <q-select
               class="selection-bar"
               standout
-              v-model="networkType"
-              :options="networkOptions"
+              v-model="currencyType"
+              :options="currencyOptions"
               dense="false"
               options-dense="false"
-              @update:model-value="changeUSDTPaymentId"
-            ></q-select>
+              @update:model-value="changeNetworkOptions()"
+            >
+              <!--              <template v-slot:prepend>-->
+              <!--                <img src="../../assets/images/account/usdt-logo.png" />-->
+              <!--              </template>-->
+            </q-select>
+
+            <!--            <q-select-->
+            <!--              class="selection-bar"-->
+            <!--              standout-->
+            <!--              v-model="networkType"-->
+            <!--              :options="networkOptions"-->
+            <!--              dense="false"-->
+            <!--              options-dense="false"-->
+            <!--              @update:model-value="changeUSDTPaymentId"-->
+            <!--            >-->
+            <!--            </q-select>-->
           </div>
         </div>
       </div>
@@ -260,7 +274,7 @@
         <div class="fund-container q-mt-sm q-mb-md">
           <div>
             <span class="fund-title">Available:</span>
-            NGN {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
           </div>
         </div>
 
@@ -269,28 +283,19 @@
             <div class="desc-wrapper">
               <div class="desc">Withdrew Amount</div>
             </div>
-            <div class="desc desc_white">
-              <!-- NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
-              NGN: {{ selectedMethodItem.withdrawAmount }}
-            </div>
+            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawAmount }}</div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">{{ store.vip }} Daily Limit</div>
             </div>
-            <div class="desc desc_white">
-              <!-- NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
-              NGN: {{ selectedMethodItem.withdrawMaxAmount }}
-            </div>
+            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawMaxAmount }}</div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">Remain Wagers</div>
             </div>
-            <div class="desc desc_white">
-              <!-- NGN:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-              NGN: {{ selectedMethodItem.remainWagers }}
-            </div>
+            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.remainWagers }}</div>
           </div>
         </div>
       </div>
@@ -364,7 +369,7 @@
             </template>
 
             <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
-              {{ item.withdrawMin }}~{{ item.withdrawMax }} NGN
+              {{ item.withdrawMin }}~{{ item.withdrawMax }} {{ store.currency.value }}
             </div>
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
@@ -378,10 +383,10 @@
             <div class="txt-content">
               EAT: 4min
               <br />
-              Fee: 2.25%+50.00NGN
+              Fee: 2.25%+50.00{{ store.currency.value }}
             </div>
           </div>
-          <div class="item-amount">257～1,000,000 NGN</div>
+          <div class="item-amount">257～1,000,000 {{ store.currency.value }}</div>
           <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
         </div> -->
       </div>
@@ -410,6 +415,9 @@ const withdrawType = ref(props.type ? props.type : "flat");
 const imgURL = process.env.IMAGE_CDN;
 
 const isMounted = ref(false);
+
+const methodType = ref("USDT");
+const methodOptions = ref(["USDT"]);
 const currencyType = ref("");
 const networkType = ref("");
 const currencyOptions = ref([]);
