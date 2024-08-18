@@ -80,7 +80,7 @@
       </router-view>
     </q-page-container>
 
-    <FooterSection />
+    <FooterSection :isDepositTab="isDepositTab" />
   </q-layout>
 </template>
 
@@ -123,7 +123,7 @@ export default defineComponent({
     watch(
       () => route.path,
       async () => {
-        if (route.path === "/deposit" || route.path === "/withdraw") {
+        if (route.path === "/deposit" || route.path === "/withdraw" || route.path === "/tutorial") {
           isDepositTab.value = true;
         } else {
           isDepositTab.value = false;
