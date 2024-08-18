@@ -203,11 +203,11 @@
         <div class="top-wrapper">
           <!-- <div class="title">
             Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-            {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} NGN)
+            {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.value }})
           </div> -->
           <div class="title">
             Withdrawal Amount ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
-            {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} NGN)
+            {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.value }})
           </div>
         </div>
 
@@ -448,7 +448,12 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  api.get(`/session/nga/withdraw/entrance`).then((res) => {
+  var usdtStr = "";
+  if (withdrawType.value === "usdt") {
+    usdtStr = "?currency=USDT";
+  }
+
+  api.get(`/session/nga/withdraw/entrance${usdtStr}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
@@ -1275,7 +1280,7 @@ const toggleAmount = (type) => {
   .withdrawal-amount-container {
     border-radius: 0.5rem;
     // background: rgba(21, 0, 37, 0.2);
-    padding: 1rem 0;
+    padding: 8px 0 1rem;
     margin-top: 0;
 
     .top-wrapper {

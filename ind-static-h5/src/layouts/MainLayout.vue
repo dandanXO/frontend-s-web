@@ -95,8 +95,8 @@
           Promo
         </q-route-tab>
         <q-route-tab v-else to="/withdraw" class="second-icon" name="live" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/withdraw-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/withdraw-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/withdraw-active-icon.png" />
+          <img class="inactive" src="../assets/images/index/menu/withdraw-icon2.png" />
           Withdraw
         </q-route-tab>
 
@@ -111,8 +111,8 @@
           Earn Money
         </q-route-tab>
         <q-route-tab v-else to="/deposit" name="earn-money" class="second-icon" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/deposit-page-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/deposit-page-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/deposit-active-icon.png" />
+          <img class="inactive" src="../assets/images/index/menu/deposit-icon2.png" />
           Deposit
         </q-route-tab>
 
@@ -163,7 +163,7 @@ export default defineComponent({
     watch(
       () => route.path,
       async () => {
-        if (route.path == "/deposit") {
+        if (route.path === "/deposit" || route.path === "/withdraw") {
           isDepositTab.value = true;
         } else {
           isDepositTab.value = false;

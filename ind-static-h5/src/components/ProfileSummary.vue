@@ -59,11 +59,17 @@
 
                   <template v-else>
                     <span class="balance-amount" :style="`${realBalance > 9999999 && 'font-size: 10px'}`">
-                      {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(realBalance, false)} USDT` }}
+                      {{
+                        isLoadingBalance
+                          ? "Loading..."
+                          : realRate === 0
+                          ? `0 USDT`
+                          : `${convertToCommaAmount(realBalance / realRate, false)} USDT`
+                      }}
                     </span>
                     <span class="balance-amount-converted">
                       <span style="font-family: 'Times New Roman', Times, serif">≈ {{ store.currency.value }}</span>
-                      {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance * realRate, false) }}
+                      {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance, false) }}
                     </span>
                   </template>
                 </div>
@@ -230,7 +236,8 @@ const getMultiWallet = () => {
   }
 };
 
-const walletType = ref("INR");
+const sessionWallet = sessionStorage.getItem("WALLET_TYPE");
+const walletType = ref(sessionWallet === "USDT" ? "USDT" : "INR");
 const walletTypeImg = computed(() => {
   return require(`../assets/images/index/wallet-icon-${walletType.value.toLowerCase()}.png`);
 });

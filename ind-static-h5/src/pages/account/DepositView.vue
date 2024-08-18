@@ -91,7 +91,7 @@
           </div>
         </div>
       </div>
-      <p class="method-desc" v-if="depositType === 'usdt'">Get extra 240% bonus on minimum of 50.00 USDT deposit</p>
+      <!--      <p class="method-desc" v-if="depositType === 'usdt'">Get extra 240% bonus on minimum of 50.00 USDT deposit</p>-->
 
       <div class="deposit-item-container q-mt-sm">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">

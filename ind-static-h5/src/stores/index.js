@@ -46,7 +46,7 @@ export const userStore = defineStore("userStore", {
       googleadid: "",
       h5Url: "https://www.55ace.com/",
       hasUpdatedOneSignal: false,
-      walletCurrency: "INR",
+      walletCurrency: sessionStorage.getItem("WALLET_TYPE"),
       multipleBalance: []
     };
   },
