@@ -68,6 +68,7 @@
     <NewplayerGuide v-if="list.redirectUrl === 'dy2-newplayer-guide'" />
     <intelEsl2024 v-if="list.redirectUrl === 'dy2-intel-esl'" />
 
+    <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -140,6 +141,7 @@ import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerReb
 
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
+import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -190,7 +192,8 @@ export default defineComponent({
     EurocupManual,
     OuZuLianPromo,
     NewplayerGuide,
-    LPLLCK
+    LPLLCK,
+    newFootballFight
   },
   props: {
     list: {

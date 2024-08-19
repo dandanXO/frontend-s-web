@@ -371,6 +371,7 @@ async function submit() {
     if (valid) {
       form.configGroup = form.configGroup.trim();
       form.code = form.code.trim();
+      form.value = form.value + "".trim();
       if (uiControl.dialogTitle === t('fields.createConfig')) {
         form.siteId = 0; // siteId=0为默认资料
         await createConfig(form)

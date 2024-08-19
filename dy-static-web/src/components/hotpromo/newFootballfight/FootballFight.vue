@@ -132,7 +132,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -143,12 +143,11 @@
 <script setup>
 import { footballHistroy, claimBonusItem } from "@/api/index/promo";
 import { onMounted, ref, defineProps } from "vue";
-import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 const props = defineProps(["promoCode"]);
 
-const notify = useNotify();
+// const notify = useNotify();
 
 const store = userStore();
 const totalValidBet = ref(0);
@@ -160,7 +159,8 @@ const handleClaimBonus = () => {
       if (res.code === 0) {
         fetchData();
       } else {
-        notify.error(res.message);
+        // notify.error(res.message);
+        ElMessage.error(res.message);
       }
     })
     .catch((err) => {
