@@ -1036,6 +1036,7 @@ async function submit() {
     if (valid) {
       form.configGroup = form.configGroup.trim();
       form.code = form.code.trim();
+      form.value = form.value + "".trim();
       if (dialogMode.value === 'CREATE') {
         form.siteId = siteId.value
         await createConfig(form)
