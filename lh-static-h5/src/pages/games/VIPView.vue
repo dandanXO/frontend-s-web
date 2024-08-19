@@ -931,14 +931,21 @@ const claimVIPLevelItem = async (type, item) => {
     if (type !== "all") {
       item[`${type}ClaimStatus`] = "CLAIMED";
     } else {
-      // Get item that has same level
       const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
-      vipInfo.upgradeClaimStatus = "CLAIMED";
-      vipInfo.monthlyClaimStatus = "CLAIMED";
-      vipInfo.couponClaimStatus = "CLAIMED";
-      vipInfo.rebateClaimStatus = "CLAIMED";
-      vipInfo.retainClaimStatus = "CLAIMED";
-      vipInfo.yearlyRetainClaimStatus = "CLAIMED";
+      const statuses = [
+        'upgradeClaimStatus',
+        'monthlyClaimStatus',
+        'couponClaimStatus',
+        'rebateClaimStatus',
+        'retainClaimStatus',
+        'yearlyRetainClaimStatus'
+      ];
+
+      statuses.forEach(status => {
+        if (vipInfo[status] === "CAN_CLAIM") {
+          vipInfo[status] = "CLAIMED";
+        }
+      });
     }
     notify({
       type: "success",
