@@ -288,6 +288,17 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/tutorial",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/WithdrawLandingView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/withdraw",
   //   component: () => import("layouts/MainLayout.vue"),

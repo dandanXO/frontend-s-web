@@ -69,7 +69,7 @@
           <div class="card-num-wrapper" v-if="bc.bankCode === 'INR'">
             <div class="">IFSC: {{ bc.cardAddress }}</div>
           </div>
-          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
+          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex, bc.bankType)">
             <q-icon size="sm" name="settings" />
           </div>
           <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
@@ -182,11 +182,8 @@ const onAddCardClick = () => {
 const onAddUSDTClick = () => {
   addBankCardModalRef.value.onAddCardClick("Crypto");
 };
-const onUpdateCardClick = (bcIndex) => {
-  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
-};
-const onUpdateUSDTClick = (bcIndex) => {
-  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
+const onUpdateCardClick = (bcIndex, bankType) => {
+  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex], bankType);
 };
 
 // init

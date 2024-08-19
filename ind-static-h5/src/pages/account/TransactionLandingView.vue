@@ -1,8 +1,9 @@
 <template>
   <div class="transaction-landing">
+    <!--    {{ activeKey }}-->
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab to="/deposit?usdt=1" name="crypto" label="Crypto"></q-route-tab>
-      <q-route-tab to="/deposit" name="flat" label="Flat"></q-route-tab>
+      <q-tab name="crypto" label="Crypto"></q-tab>
+      <q-tab name="flat" label="Flat"></q-tab>
       <!--      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>-->
     </q-tabs>
 
@@ -13,28 +14,24 @@
       <q-tab-panel name="flat">
         <DepositView type="flat"></DepositView>
       </q-tab-panel>
-      <!--      <q-tab-panel name="withdraw">-->
-      <!--        <WithdrawView ref="withdrawViewRef"></WithdrawView>-->
-      <!--      </q-tab-panel>-->
     </q-tab-panels>
   </div>
 </template>
 
 <script setup>
-import { onActivated, ref, watch } from "vue";
+import { onActivated, ref } from "vue";
 import { useRoute } from "vue-router";
 import DepositView from "../account/DepositView.vue";
-import WithdrawView from "../account/WithdrawView.vue";
+import { userStore } from "src/stores";
 
 const route = useRoute();
+const store = userStore();
+
 const activeKey = ref("");
-const withdrawViewRef = ref(null);
 
 onActivated(() => {
-  const isUsdt = sessionStorage.getItem("WALLET_TYPE");
-  console.log(isUsdt);
+  const isUsdt = store.walletCurrency;
   if (isUsdt === "USDT") {
-    console.log("HEre");
     activeKey.value = "crypto";
   } else {
     activeKey.value = "flat";
