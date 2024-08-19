@@ -55,11 +55,11 @@
             <el-col :span="12">
               <span v-if="selectedWithdrawalMethod">
                 {{
-                  `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                  `单笔限额：${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
                 }}
                 <br />
                 {{
-                  `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                  `今日提款：${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
                 }}
               </span>
             </el-col>
@@ -85,7 +85,7 @@
               v-html="selectedWithdrawalMethod.tips"
             ></div>
             <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
+              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！
             </div>
           </el-col>
         </el-row>
@@ -138,7 +138,7 @@
           *提币手续费：1.00 USDT
         </div>
 
-        <!-- K豆教程视频 -->
+        <!-- K 豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <div
             style="margin: 15px 0px; color: #ff7f10"
@@ -170,6 +170,24 @@
         </div>
       </el-form>
     </div>
+
+    <el-dialog v-model="isShowSubmitDialog" title="完成以下认证才可以取款" center>
+      <div class="submit-alert-message-wrapper">
+        <div class="submit-alert-message-item" v-if="!store.realName">
+          <p>取款需要绑定真实姓名</p>
+          <el-button type="primary" @click="handleBindRealName">去绑定</el-button>
+        </div>
+        <div class="submit-alert-message-item" v-if="!store.phone">
+          <p>取款需要绑定手机号</p>
+          <el-button type="primary" @click="handleBindPhoneNumber">去绑定</el-button>
+        </div>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" style="width: 100%" @click="isShowSubmitDialog = false">暂不认证</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -198,6 +216,7 @@ export default defineComponent({
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
+    const isShowSubmitDialog = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -223,9 +242,22 @@ export default defineComponent({
       // }
     ])
     onMounted(() => {
+      checkBeforeSubmit();
       getWithdrawalMethods();
     });
+
+    const checkBeforeSubmit = () => {
+      if (!store.phone || !store.realName) {
+        isShowSubmitDialog.value = true;
+        return false;
+      }
+
+      return true;
+    }
+
     const submitWithraw = () => {
+      if (!checkBeforeSubmit()) return
+
       loadingBtn.value = true;
       formRef.value
         .validate()
@@ -276,15 +308,15 @@ export default defineComponent({
     const tutorialLabel = computed(() => {
       switch(selectedWithdrawalMethod.value.code) {
         case "KDPAY":
-          return "K豆教程视频";
+          return "K 豆教程视频";
         case "EBPAY":
-          return "EB使用教程";
+          return "EB 使用教程";
         case "OKPAY":
-          return "OK教程视频";
+          return "OK 教程视频";
         case "BLBPAY":
-          return "808钱包教程视频";
+          return "808 钱包教程视频";
         case "JDPAY":
-          return "JDPAY教程视频";
+          return "JDPAY 教程视频";
         default:
           return "";
       }
@@ -424,6 +456,13 @@ export default defineComponent({
       }
     }
 
+    const handleBindRealName = () => {
+      router.push("/center/personal");
+    };
+
+    const handleBindPhoneNumber = () => {
+      router.push("/center/personal");
+    };
 
     const openEWalletTutorial = () => {
       if(!selectedWithdrawalMethod.value.url) return
@@ -450,7 +489,10 @@ export default defineComponent({
       checkBankCards,
       cardLabel,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      isShowSubmitDialog,
+      handleBindRealName,
+      handleBindPhoneNumber
     };
   },
 });

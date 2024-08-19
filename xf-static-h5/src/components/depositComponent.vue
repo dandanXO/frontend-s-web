@@ -218,15 +218,22 @@
   <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 20px" class="text-white">
       <q-card-section class="q-mb-md">
-        <strong>温馨提示</strong>
-        <br/>
-        <br/>
-        为保证资金安全，存款前需先验证手机号
+        <strong>完成以下认证才可以存款</strong>
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0;">
+          <p style="margin: 0;">存款需要绑定真实姓名</p>
+          <router-link to="/account/personal">
+            <q-btn color="brightbtn" label="去绑定" />
+          </router-link>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between;">
+          <p style="margin: 0;">存款需要绑定手机号</p>
+          <router-link to="/account/personal">
+            <q-btn color="brightbtn" label="去绑定" />
+          </router-link>
+        </div>
       </q-card-section>
       <q-card-actions align="right">
-        <router-link to="/account/personal">
-          <q-btn label="前往验证" color="brightbtn"/>
-        </router-link>
+        <q-btn label="暂不认证" color="brightbtn" @click="isNewUser = false"/>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -268,8 +275,9 @@ const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const checkNewUser = () => {
-  if (store.phone == "") {
+  if (!store.phone || !store.realName) {
     isNewUser.value = true;
+    return false;
   } else {
     api.get("/session/bankCard").then((response) => {
       if (response.code === 0) {
@@ -278,6 +286,8 @@ const checkNewUser = () => {
         }
       }
     });
+
+    return true;
   }
 };
 const isDeposited = ref(false);
@@ -527,6 +537,8 @@ function clearInfo() {
 const depositAmtRef = ref("");
 
 async function confirmDeposit() {
+  if (!checkNewUser()) return
+
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
