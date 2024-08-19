@@ -53,15 +53,20 @@
 
                   <template v-else>
                     <span class="balance-amount" :style="`${realBalance > 9999999 && 'font-size: 10px'}`">
-                      {{ isLoadingBalance ? "Loading..." : `${convertToCommaAmount(realBalance, false)} USDT` }}
+                      {{
+                        isLoadingBalance
+                          ? "Loading..."
+                          : realRate === 0
+                          ? `0 USDT`
+                          : `${convertToCommaAmount(realBalance / realRate, false)} USDT`
+                      }}
                     </span>
                     <span class="balance-amount-converted">
                       <span style="font-family: 'Times New Roman', Times, serif">≈ {{ store.currency.value }}</span>
-                      {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance * realRate, false) }}
+                      {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(realBalance, false) }}
                     </span>
                   </template>
                 </div>
-
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -231,13 +236,16 @@ const getMultiWallet = () => {
   }
 };
 
-const walletType = ref("INR");
+const sessionWallet = sessionStorage.getItem("WALLET_TYPE");
+const walletType = ref(sessionWallet === "USDT" ? "USDT" : "INR");
 const walletTypeImg = computed(() => {
   return require(`../assets/images/index/wallet-icon-${walletType.value.toLowerCase()}.png`);
 });
 const selectWallet = (type) => {
   isLoadingBalance.value = true;
   walletType.value = type;
+  sessionStorage.setItem("WALLET_TYPE", type);
+  store.walletCurrency = type;
 
   const obj = {
     currency: type
@@ -551,6 +559,7 @@ onMounted(() => {
     width: 50px;
     max-width: 50px;
   }
+
   .profile-wrapper {
     display: flex;
     align-items: center;
@@ -833,6 +842,7 @@ onMounted(() => {
   .wallet-toggle {
     margin-left: 8px;
     margin-right: 12px;
+
     img {
       display: block;
       width: 30px;

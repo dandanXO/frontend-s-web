@@ -79,7 +79,6 @@
         </KeepAlive>
       </router-view>
     </q-page-container>
-
     <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
       <q-tabs v-if="!isDepositTab" v-model="tab" no-caps :breakpoint="0" align="justify">
         <q-route-tab to="/home" name="home" exact :ripple="false">
@@ -109,7 +108,7 @@
       <q-tabs v-else v-model="tab" no-caps :breakpoint="0" align="justify">
         <q-route-tab to="/withdraw" name="withdraw" class="second-icon" :ripple="false">
           <img class="hover" src="../assets/images/index/menu/withdraw-active-icon.png" />
-          <img class="inactive" src="../assets/images/index/menu/withdraw-icon2.png" />
+          <img class="inactive" src="../assets/images/index/menu/withdraw-icon.png" />
           Withdraw
         </q-route-tab>
         <q-route-tab to="/deposit" name="deposit" class="second-icon" :ripple="false">

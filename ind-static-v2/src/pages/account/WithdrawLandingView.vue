@@ -1,18 +1,16 @@
 <template>
   <div class="transaction-landing">
-    <!--    {{ activeKey }}-->
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
       <q-tab name="crypto" label="Crypto"></q-tab>
       <q-tab name="flat" label="Flat"></q-tab>
-      <!--      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>-->
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
       <q-tab-panel name="crypto">
-        <DepositView type="usdt"></DepositView>
+        <WithdrawMethodView type="usdt"></WithdrawMethodView>
       </q-tab-panel>
       <q-tab-panel name="flat">
-        <DepositView type="flat"></DepositView>
+        <WithdrawMethodView type="flat"></WithdrawMethodView>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -21,16 +19,16 @@
 <script setup>
 import { onActivated, ref } from "vue";
 import { useRoute } from "vue-router";
-import DepositView from "../account/DepositView.vue";
+import WithdrawMethodView from "../account/WithdrawMethodView.vue";
 import { userStore } from "src/stores";
 
-const route = useRoute();
 const store = userStore();
-
+const route = useRoute();
 const activeKey = ref("");
 
 onActivated(() => {
   const isUsdt = store.walletCurrency;
+
   if (isUsdt === "USDT") {
     activeKey.value = "crypto";
   } else {
@@ -54,7 +52,7 @@ onActivated(() => {
 
 <style scoped lang="scss">
 .transaction-landing {
-  // background: #101114;
+  //background: #101114;
   .deposit-tabs {
     font-family: "Manrope", sans-serif;
     width: 90%;
