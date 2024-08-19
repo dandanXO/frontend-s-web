@@ -309,6 +309,7 @@ export default {
     CENTERPROMO: 'Center Promo',
     LOGIN: 'Login',
     REGISTER: 'Register',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: 'Pending',

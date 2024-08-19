@@ -314,6 +314,7 @@ export default {
     CENTERPROMO: '中心优惠',
     LOGIN: '登录',
     REGISTER: '注册',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: '未派发',

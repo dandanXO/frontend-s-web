@@ -297,6 +297,7 @@ export default {
     CENTERPROMO: 'Khuyến mãi trung tâm',
     LOGIN: 'Đăng nhập',
     REGISTER: 'Đăng ký',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: 'Đang chờ',

@@ -296,6 +296,7 @@ export default {
     CENTERPROMO: '센터 프로모션',
     LOGIN: '로그인',
     REGISTER: '등록',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: '대기 중',
