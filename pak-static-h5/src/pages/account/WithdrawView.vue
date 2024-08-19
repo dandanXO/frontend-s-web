@@ -427,6 +427,10 @@
 
   <q-dialog width="100%" v-model="displayMaintenanceDialog">
     <q-card class="q-pa-md">
+      <q-card-section class="row items-center q-pb-none">
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
       <q-card-section>
         <i18n-t keypath="withdraw.withdrawalMethodInMaintenance" tag="span">
           <template #startTime>
