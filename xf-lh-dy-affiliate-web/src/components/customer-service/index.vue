@@ -222,6 +222,9 @@ const initContactList = () => {
       }
     ]
   }
+  if (props.siteId === '7' || props.siteId === '6') {
+    contactlist.value.shift()
+  }
 }
 const copyMessage = (position, text, btnPosition) => {
   console.log(position);

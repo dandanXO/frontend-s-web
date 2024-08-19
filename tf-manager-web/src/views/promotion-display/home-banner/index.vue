@@ -672,6 +672,7 @@ const uiControl = reactive({
     { key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO' },
     { key: 10, displayName: 'LOGIN', value: 'LOGIN' },
     { key: 11, displayName: 'REGISTER', value: 'REGISTER' },
+    { key: 12, displayName: 'VIP', value: 'VIP' },
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',

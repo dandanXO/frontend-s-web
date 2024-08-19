@@ -309,6 +309,7 @@ export default {
     CENTERPROMO: 'Center Promo',
     LOGIN: 'Login',
     REGISTER: 'Register',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: 'Pending',
@@ -795,6 +796,7 @@ export default {
     currencyCode: 'Currency Code',
     currencyName: 'Currency Name',
     currencyRate: 'Currency Rate',
+    currencyWallet: 'Currency Wallet',
     currentPassword: 'Current Password',
     currentPlace: 'Current Place',
     customerSupportAddress: 'Customer Support Address',
@@ -1455,6 +1457,7 @@ export default {
     settleAmount: 'Settle Amount',
     settleAllPending: 'Settle All Pending',
     settleGameMatch: 'Settle Game Match',
+    settleLastDayGameMatch: 'Settle Last Day Game Match',
     settlement: 'Settlement',
     settleTime: 'Settle Time',
     settleView: 'View',
@@ -1980,7 +1983,7 @@ export default {
     retainLevelBet: 'Retain Level Bet',
     retainLevelDays: 'Retain Level Days',
     editSystemValueRules: 'Edit System Value Rule',
-    addSystemValueRules: 'Add System Value Rule'
+    addSystemValueRules: 'Add System Value Rule',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2156,6 +2159,7 @@ export default {
     validateAdjustAmountRequired: 'Adjust Amount is required',
     validateAdjustReasonRequired: 'Adjust Reason is required',
     validateAdjustTypeRequired: 'Adjust Type is required',
+    validateAdjustmentRequired: 'Adjustment is required',
     validateAffiliateFbIdRequired: 'Facebook pixel ID is required',
     validateAffiliateFbTokenRequired: 'Facebook pixel token is required',
     validateAffiliateFbUrlRequired: 'Facebook pixel url is required',
@@ -2228,6 +2232,7 @@ export default {
     validateDateRequired: 'Date is required',
     validateDayWithdrawCountRequired: 'Daily Withdraw Count is required',
     validateDefaultBonusRequired: 'Default Bonus is required',
+    validateDepositAmountRequired: 'Deposit Amount is required',
     validateDepositExchangeRateRequired: 'Deposit Exchange Rate is required',
     validateDepositPerSpinRequired: 'Deposit Per Spin is required',
     validateDesktopImageRequired: 'Desktop Image is required',
@@ -2328,6 +2333,7 @@ export default {
     validatePayTypeNameRequired: 'Pay Type Name is required',
     validatePayTypeNameCodeDifferent:
       'Pay Type Name and Pay Type Code can not be same value',
+    validatePayoutRequired: 'Payout is required',
     validatePlatformRequired: 'Platform is required',
     validatePlatformAccountRequired: 'Platform Account is required',
     validatePlatformCodeRequired: 'Platform Code is required',
@@ -2347,6 +2353,7 @@ export default {
     validateRealNameRequired: 'Real Name is required',
     validateReasonRequired: 'Reason is required',
     validateReasonTypeRequired: 'Reason Type is required',
+    validateRebateAmountRequired: 'Rebate Amount is required',
     validateRebatePercentageRequired: 'Rebate Percentage is required',
     validateMaxRebateRequired: 'Max rebate is required',
     validateRecipientRequired: 'Recipient is required',
@@ -2409,6 +2416,7 @@ export default {
     validateUsernameRequired: 'Username is required',
     validateUsernameSize: 'Username has to be 6-12 characters',
     validateUserTypeRequired: 'User Type is required',
+    validateValidBetRequired: 'Valid Bet is required',
     validateValidBetPerSpinRequired: 'Valid Bet Per Spin is required',
     validateValueRequired: 'Value is required',
     validateVIPRequired: 'VIP is required',
@@ -2417,6 +2425,7 @@ export default {
     validateWebMessageRequired: 'Web Message is required',
     validateWholeNumberOnly: 'Please enter whole number only',
     validateWinnerRequired: 'Winner is required',
+    validateWithdrawAmountRequired: 'Withdraw Amount is required',
     validateWithdrawChannel: 'Sequence cannot be repeated',
     validateWithdrawExchangeRateRequired: 'Withdraw Exchange Rate is required',
     validateWithdrawPlatformNameRequired: 'Withdraw Platform Name is required',
@@ -2477,7 +2486,8 @@ export default {
     validatePlanLimitMaxRequired: 'Maximum investment limit required',
     affiliateReactivated: 'Affiliate Reactivated',
     required_6_digits_code: 'Must be composed of 6 digits code.',
-    required_only_digits_and_alphabet: 'Must be composed of digits and alphabet',
+    required_only_digits_and_alphabet:
+      'Must be composed of digits and alphabet',
   },
   menu: {
     undefined: '',
@@ -2525,6 +2535,7 @@ export default {
     'Aff Announcement Management': 'Affiliate Announcement Management',
     'Affiliate Announcement': 'Affiliate Announcement',
     'Affiliate Announcement Type': 'Affiliate Announcement Type',
+    'Affiliate Member Dummy Record': 'Affiliate Member Dummy Record',
     'App Version': 'App Version Control',
     'Auto Withdraw Setting': 'Auto Withdraw Setting',
     'Deposit Management': 'Deposit Management',
@@ -2737,7 +2748,8 @@ export default {
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
     'Vip Report': 'Vip Report',
-    'System Value Rules': 'System Value Rules'
+    'System Value Rules': 'System Value Rules',
+    'Sites Config': 'Site Config'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
