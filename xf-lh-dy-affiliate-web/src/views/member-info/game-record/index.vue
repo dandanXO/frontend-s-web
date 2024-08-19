@@ -33,6 +33,22 @@
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
             <el-select
+              style="width: 100%;"
+              size="normal"
+              v-model="request.downlineAffiliate"
+              @focus="getAllAffiliateDownlines"
+              :clearable="true"
+            >
+              <el-option
+                v-for="item in list.affiliate"
+                :key="item.affiliateId"
+                :label="item.loginName"
+                :value="item.affiliateId"
+              />
+            </el-select>
+          </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-select
               v-model="request.platform"
               size="normal"
               :placeholder="t('fields.platform')"
@@ -280,6 +296,7 @@
 import { onMounted, reactive } from 'vue';
 import { useStore } from "@/store";
 import moment from 'moment';
+import { getDownlineAffiliates } from '../../../api/affiliate';
 import { getMemberBetRecords, getPlatformsBySite, getVipName } from '../../../api/affiliate-bet-record';
 import { useI18n } from "vue-i18n";
 import { useRoute } from 'vue-router'
@@ -290,7 +307,8 @@ const { t } = useI18n();
 const route = useRoute();
 const list = reactive({
   platform: [],
-  gameType: []
+  gameType: [],
+  affiliate: []
 });
 const details = reactive({
   loginName: null,
@@ -400,7 +418,8 @@ const request = reactive({
   loginName: null,
   platform: null,
   gameType: [],
-  status: ["UNSETTLED", "SETTLED", "CANCEL"]
+  status: ["UNSETTLED", "SETTLED", "CANCEL"],
+  downlineAffiliate: null
 });
 
 const page = reactive({
@@ -477,7 +496,11 @@ async function loadBetRecords() {
     }
   }
   query.siteId = store.state.user.siteId;
-  const { data: ret } = await getMemberBetRecords(store.state.user.id, query);
+  let userId = store.state.user.id;
+  if (request.downlineAffiliate !== null && request.downlineAffiliate.trim() !== '') {
+    userId = request.downlineAffiliate
+  }
+  const { data: ret } = await getMemberBetRecords(userId, query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
@@ -513,6 +536,11 @@ function viewDetails(betRecord) {
 async function getVip(memberId) {
   const { data: vip } = await getVipName(memberId, store.state.user.siteId);
   details.vipName = vip;
+}
+
+async function getAllAffiliateDownlines() {
+  const { data: downlines } = await getDownlineAffiliates();
+  list.affiliate = downlines;
 }
 
 onMounted(() => {
