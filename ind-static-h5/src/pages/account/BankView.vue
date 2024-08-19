@@ -55,7 +55,7 @@
     <div class="bank-card-container">
       <!-- Bank Section -->
       <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'BANK')">
-        <q-expansion-item expand-separator label="Bank">
+        <q-expansion-item expand-separator label="Bank" default-opened>
           <div
             v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'BANK')"
             :key="index"
@@ -66,7 +66,11 @@
                 <img :src="imgURL + item.bankIcon" alt="Bank Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">Unbind</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
             </div>
             <div class="item-content">
               <div class="item-acc">
@@ -87,7 +91,7 @@
 
       <!-- Crypto Section -->
       <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'CRYPTO')">
-        <q-expansion-item expand-separator label="Crypto">
+        <q-expansion-item expand-separator label="Crypto" default-opened>
           <div
             v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'CRYPTO')"
             :key="index"
@@ -98,7 +102,11 @@
                 <img :src="imgURL + item.bankIcon" alt="Crypto Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">Unbind</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
             </div>
             <div class="item-content">
               <div class="item-acc">Account: {{ item.cardNumber }}</div>
