@@ -218,14 +218,14 @@
   <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
     <q-card style="width: 100%; padding: 20px" class="text-white">
       <q-card-section class="q-mb-md">
-        <strong>完成以下认证才可以存款</strong>
-        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0;">
+        <strong style="display:inline-block;padding-bottom:12px;font-size:20px;">完成以下认证才可以存款</strong>
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0;"  v-if="!store.realName">
           <p style="margin: 0;">存款需要绑定真实姓名</p>
           <router-link to="/account/personal">
             <q-btn color="brightbtn" label="去绑定" />
           </router-link>
         </div>
-        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between;">
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between;" v-if="!store.phone">
           <p style="margin: 0;">存款需要绑定手机号</p>
           <router-link to="/account/personal">
             <q-btn color="brightbtn" label="去绑定" />
@@ -233,7 +233,7 @@
         </div>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="暂不认证" color="brightbtn" @click="isNewUser = false"/>
+        <q-btn style="width:100%;" label="暂不认证" color="brightbtn" @click="isNewUser = false"/>
       </q-card-actions>
     </q-card>
   </q-dialog>

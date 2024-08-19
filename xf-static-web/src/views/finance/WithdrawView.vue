@@ -171,7 +171,13 @@
       </el-form>
     </div>
 
-    <el-dialog v-model="isShowSubmitDialog" title="完成以下认证才可以取款" center>
+    <el-dialog
+      width="500"
+      v-model="isShowSubmitDialog"
+      title="完成以下认证才可以取款"
+      :close-on-click-modal="false"
+      center
+    >
       <div class="submit-alert-message-wrapper">
         <div class="submit-alert-message-item" v-if="!store.realName">
           <p>取款需要绑定真实姓名</p>
