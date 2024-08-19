@@ -259,7 +259,8 @@ export default {
     withdrawMaxTimes: "باقی نکالنے کی کوششیں",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں",
-    withdrawTutorial: "نکالنے کا ٹیوٹوریل"
+    withdrawTutorial: "نکالنے کا ٹیوٹوریل",
+    withdrawalMethodInMaintenance: "یہ چینل فی الحال {startTime} سے {endTime} تک دیکھ بھال کے تحت ہے۔ براہ کرم رقم نکلوانے کے لیے دیگر چینلز کا استعمال کریں۔ شکریہ!"
   },
   bank: {
     virtualWallet: "ورچوئل والٹ",
