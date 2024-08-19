@@ -244,6 +244,8 @@ const walletTypeImg = computed(() => {
 const selectWallet = (type) => {
   isLoadingBalance.value = true;
   walletType.value = type;
+  sessionStorage.setItem("WALLET_TYPE", type);
+  store.walletCurrency = type;
 
   const obj = {
     currency: type
