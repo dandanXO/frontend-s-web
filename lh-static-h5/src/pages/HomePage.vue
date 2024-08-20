@@ -146,7 +146,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/esport-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'esport'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/esport-icon.png" />
           </div>
@@ -159,7 +159,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/sport-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'sport'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/sport-icon.png" />
           </div>
@@ -172,7 +172,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/live-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'live'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/live-icon.png" />
           </div>
@@ -186,7 +186,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/poker-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'poker'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/poker-icon.png" />
           </div>
@@ -199,7 +199,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/slot-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'slot'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/slot-icon.png" />
           </div>
@@ -213,7 +213,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/casual-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'casual'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/casual-icon.png" />
           </div>
@@ -237,7 +237,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'lottery'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon.png" />
           </div>
@@ -250,7 +250,7 @@
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/fish-icon-active.png" />
           </div>
-          <div class="platform-icon">
+          <div class="platform-icon" v-show="tab !== 'fishing'">
             <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
             <img loading="lazy" v-else src="../assets/images/home/games/fish-icon.png" />
           </div>
@@ -2351,10 +2351,11 @@ export default defineComponent({
     .game-platform {
       padding: 0;
       margin: 0;
-      margin-bottom: 8px;
+      margin-bottom: 20px;
 
       .platform-item {
         position: relative;
+        height: 82px;
       }
 
       .platform-icon {
