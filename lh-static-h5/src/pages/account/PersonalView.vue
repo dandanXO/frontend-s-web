@@ -247,7 +247,7 @@ export default defineComponent({
     const store = userStore();
     const router = useRouter();
 
-    const options = [ { label: '男', value: 'MALE' }, { label: '女', value: 'FEMALE' } ]
+    const options = [ { label: '男', value: 'Male' }, { label: '女', value: 'Female' } ]
 
     const isEditEmail = ref(false);
     const isEditPhone = ref(false);
