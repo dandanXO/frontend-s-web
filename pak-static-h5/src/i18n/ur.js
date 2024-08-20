@@ -249,7 +249,8 @@ export default {
   deposit: {
     selectAmount: "رقم منتخب کریں",
     depositTutorial: "جمع کرنے کا ٹیوٹوریل",
-    select_privilege: "خصوصی اختیار منتخب کریں"
+    select_privilege: "خصوصی اختیار منتخب کریں",
+    incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
@@ -258,7 +259,8 @@ export default {
     withdrawMaxTimes: "باقی نکالنے کی کوششیں",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں",
-    withdrawTutorial: "نکالنے کا ٹیوٹوریل"
+    withdrawTutorial: "نکالنے کا ٹیوٹوریل",
+    withdrawalMethodInMaintenance: "یہ چینل فی الحال {startTime} سے {endTime} تک دیکھ بھال کے تحت ہے۔ براہ کرم رقم نکلوانے کے لیے دیگر چینلز کا استعمال کریں۔ شکریہ!"
   },
   bank: {
     virtualWallet: "ورچوئل والٹ",

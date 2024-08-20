@@ -714,7 +714,7 @@ onMounted(() => {
 .account-tip-warning {
   border: 1px solid #F8DD9A;
   background: #FEF7E6;
-  color: #FFC024;
+  color: #000000;
   padding: 10px;
   display: flex;
   justify-content: flex-start;
@@ -727,7 +727,8 @@ onMounted(() => {
   }
   svg {
     height: 15px;
-    fill: #FFC024;
+    // fill: #FFC024;
+    fill: #000000;
     margin-right: 10px;
   }
 }

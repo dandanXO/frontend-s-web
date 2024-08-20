@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref } from "vue";
-import PlatformView from "@/components/PlatformView";
+import PlatformView from "@/components/platformview/index";
 import { slotPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("slot");

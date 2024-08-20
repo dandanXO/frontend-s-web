@@ -118,8 +118,8 @@
             style="width: 350px"
           />
         </el-form-item>
-        <div style="display: flex; flex-direction: column; align-items: center">
-          <div style="display: flex">>
+        <div style="display: flex; flex-direction: column; align-items: start">
+          <div style="display: flex">
             <el-form-item :label="t('fields.desktopBanner')" prop="desktopImageUrl" style="flex: 1">
               <el-row :gutter="10">
                 <el-col v-if="form.desktopImageUrl" style="width: 250px">
@@ -672,6 +672,7 @@ const uiControl = reactive({
     { key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO' },
     { key: 10, displayName: 'LOGIN', value: 'LOGIN' },
     { key: 11, displayName: 'REGISTER', value: 'REGISTER' },
+    { key: 12, displayName: 'VIP', value: 'VIP' },
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',

@@ -43,7 +43,7 @@
                   </template>
                 </InputField>
 
-                <InputField :label="'IFSC Code'">
+                <InputField :label="'IFSC Code'" v-if="currentCardType !== 'CRYPTO'">
                   <template #input>
                     <q-input
                       class="q-pb-xs dialog-input"
@@ -66,8 +66,11 @@
           label="Update"
           :confirmFunc="updateCard"
           :isDisabled="
-            !(isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true) ||
-            isDisableBtn
+            !(
+              isValidCardAccount() === true &&
+              isValidCardNumber() === true &&
+              ((currentCardType === 'BANK' && isValidCardAddress() === true) || currentCardType === 'CRYPTO')
+            ) || isDisableBtn
           "
         ></ConfirmButton>
       </q-card>
@@ -92,6 +95,14 @@ const $q = useQuasar();
 const store = userStore();
 
 const refBankCardModal = ref();
+const currentCardType = ref("Bank");
+
+const accountTypeStr = ref("");
+const currBankList = ref([]);
+// cache
+const bankList = [];
+const cryptoList = [];
+const ewalletList = [];
 
 const bankCardField = reactive({
   cardId: "",
@@ -102,7 +113,13 @@ const bankCardField = reactive({
 const router = useRouter();
 
 const isUpdateCardDialogOpen = ref(false);
-const onUpdateCardClick = (bankCardDetails) => {
+const onUpdateCardClick = (bankCardDetails, type) => {
+  currentCardType.value = type;
+
+  if (currentCardType.value === "CRYPTO") {
+    dialogDisplays.accountNum = "Crypto Card Number";
+  }
+
   bankCardField.cardAccount = bankCardDetails.cardAccount;
   bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
@@ -124,7 +141,8 @@ const onUpdateCardClick = (bankCardDetails) => {
 };
 
 const dialogDisplays = reactive({
-  title: "Update Bank Card"
+  title: "Update Bank Card",
+  accountNum: "Account Number"
 });
 
 // validation
@@ -235,7 +253,7 @@ defineExpose({
   .q-card {
     padding: 1.5rem;
     border-radius: 8px;
-    background: #19202D;
+    background: #19202d;
     width: calc(100% - 16px);
   }
 

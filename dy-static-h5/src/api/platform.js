@@ -6,6 +6,7 @@ export const loadGameList = (type) => {
     const code = selectedPlatId.value;
     const gameType = type;
     const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
+    const imgUrl = localStorage.getItem("IMAGE_CDN") || process.env.IMAGE_CDN
 
     return cached
             .get(key, () =>
@@ -27,7 +28,7 @@ export const loadGameList = (type) => {
             .then(res => {
                 res.forEach((element) => {
                     element.default = require("../assets/images/games/aviator/default.png");
-                    element.icon = `${process.env.IMAGE_CDN}/slot/${selectedPlat.value.code}/${element.icon}.png`;
+                    element.icon = `${imgUrl}/slot/${selectedPlat.value.code}/${element.icon}.png`;
                 });
 
                 return res

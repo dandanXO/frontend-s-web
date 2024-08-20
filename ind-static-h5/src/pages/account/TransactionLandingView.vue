@@ -1,43 +1,55 @@
 <template>
   <div class="transaction-landing">
+    <!--    {{ activeKey }}-->
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab to="/deposit" name="deposit" label="Deposit"></q-route-tab>
-      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>
+      <q-tab name="crypto" label="Crypto"></q-tab>
+      <q-tab name="flat" label="Flat"></q-tab>
+      <!--      <q-route-tab to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>-->
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">
-      <q-tab-panel name="deposit">
-        <DepositView></DepositView>
+      <q-tab-panel name="crypto">
+        <DepositView type="usdt"></DepositView>
       </q-tab-panel>
-      <q-tab-panel name="withdraw">
-        <WithdrawView ref="withdrawViewRef"></WithdrawView>
+      <q-tab-panel name="flat">
+        <DepositView type="flat"></DepositView>
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { onActivated, ref } from "vue";
 import { useRoute } from "vue-router";
 import DepositView from "../account/DepositView.vue";
-import WithdrawView from "../account/WithdrawView.vue";
+import { userStore } from "src/stores";
 
 const route = useRoute();
-const activeKey = ref("");
-const withdrawViewRef = ref(null);
+const store = userStore();
 
-watch(
-  () => route.path,
-  () => {
-    if (route.path === "/deposit") activeKey.value = "deposit";
-    else if (route.path === "/withdraw") {
-      activeKey.value = "withdraw";
-      if (withdrawViewRef.value && typeof withdrawViewRef.value.onActivated === "function") {
-        withdrawViewRef.value.onActivated();
-      }
-    }
+const activeKey = ref("");
+
+onActivated(() => {
+  const isUsdt = store.walletCurrency;
+  if (isUsdt === "USDT") {
+    activeKey.value = "crypto";
+  } else {
+    activeKey.value = "flat";
   }
-);
+});
+
+// watch(
+//   () => route.path,
+//   () => {
+//     if (route.path === "/deposit") activeKey.value = "deposit";
+//     else if (route.path === "/withdraw") {
+//       activeKey.value = "withdraw";
+//       if (withdrawViewRef.value && typeof withdrawViewRef.value.onActivated === "function") {
+//         withdrawViewRef.value.onActivated();
+//       }
+//     }
+//   }
+// );
 </script>
 
 <style scoped lang="scss">

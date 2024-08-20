@@ -324,11 +324,15 @@ export const getAffiliateInfo = (id, siteId) => {
   return https().request(`/member/${id}/affiliate?siteId=${siteId}`, Method.GET)
 }
 
-export const getMemberBalanceByLoginNameSite = (loginName, siteId) => {
+export const getMemberBalanceByLoginNameSite = (
+  loginName,
+  siteId,
+  currency
+) => {
   return https().request(
     `/member/getMemberBalanceByLoginNameSite`,
     Method.GET,
-    { loginName: loginName, siteId: siteId },
+    { loginName: loginName, siteId: siteId, currency: currency },
     ContentType.form
   )
 }
@@ -477,4 +481,12 @@ export const getMemberVipFinById = (siteId, ids, loginName) => {
     { siteId: siteId, memberIds: ids, loginName: loginName },
     ContentType.form
   )
+};
+
+export const toggleMemberWallet = (id, siteId) => {
+  return https().request(`/member/toggleWallet/${id}/${siteId}`, Method.GET);
+}
+
+export const walletBalance = (id, siteId) => {
+  return https().request(`/member/all-wallet/${id}/${siteId}`, Method.GET);
 }
