@@ -390,7 +390,7 @@
           <el-input-number v-model="form.order" style="width: 240px" :min="1" size="small" />
         </el-form-item>
         <el-form-item :label="t('fields.riskDepositLimit')" prop="riskDepositLimit" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order === 101">
-          <el-input-number v-model="form.riskDepositLimit" style="width: 240px" :min="1" size="small" />
+          <el-input-number v-model="form.riskDepositLimit" style="width: 240px" :min="0" size="small" />
         </el-form-item>
         <el-form-item :label="t('fields.privilegeName')" prop="privilegeId1" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-select
@@ -705,6 +705,9 @@
                         <span v-if="scope.row.order !== 101">{{ scope.row.channelName }}</span>
                       </template>
                     </el-table-column>
+                    <el-table-column :label="t('fields.eta')" prop="eta" />
+                    <el-table-column :label="t('fields.minDeposit')" prop="min" />
+                    <el-table-column :label="t('fields.maxDeposit')" prop="max" />
                     <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch

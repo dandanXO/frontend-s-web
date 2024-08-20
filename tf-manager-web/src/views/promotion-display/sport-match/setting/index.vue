@@ -75,6 +75,15 @@
           @click="settleMatch"
           style="cursor: pointer"
         >
+          {{ t('fields.settleLastDayGameMatch') }}
+        </el-button>
+        <el-button
+          size="small"
+          type="success"
+          v-permission="['sys:sport-match:settle']"
+          @click="showDialog('SETTLE')"
+          style="cursor: pointer"
+        >
           {{ t('fields.settleGameMatch') }}
         </el-button>
       </div>
@@ -179,6 +188,47 @@
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+      <el-form
+        v-else-if="uiControl.dialogType === 'SETTLE'"
+        ref="settleSportMatchForm"
+        :model="settleForm"
+        :rules="settleFormRules"
+        :inline="true"
+        size="small"
+        label-width="200px"
+      >
+        <el-form-item :label="t('fields.site')" prop="siteId" v-if="!hasRole(['TENANT'])">
+          <el-select
+            v-model="settleForm.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            @focus="loadSites"
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.matchTime')" prop="matchTime">
+          <el-date-picker
+            type="date"
+            format="YYYY-MM-DD"
+            value-format="YYYY-MM-DD"
+            v-model="settleForm.matchTime"
+            style="width: 350px;"
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="settleMatchByDate">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
       <el-form
@@ -448,6 +498,7 @@ const request = reactive({
 
 const sportMatchForm = ref(null);
 const endSportMatchForm = ref(null);
+const settleSportMatchForm = ref(null);
 const sites = reactive({
   list: []
 });
@@ -520,6 +571,11 @@ const endForm = reactive({
   awayTeamResult: null
 });
 
+const settleForm = reactive({
+  siteId: null,
+  matchTime: null
+});
+
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   title: [required(t('message.validateTitleRequired'))],
@@ -534,6 +590,11 @@ const endFormRules = reactive({
   points: [required(t('message.validatePointsRequired'))],
   homeTeamResult: [required(t('message.validateHomeTeamResultRequired'))],
   awayTeamResult: [required(t('message.validateAwayTeamResultRequired'))]
+});
+
+const settleFormRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
+  matchTime: [required(t('message.validateMatchTimeRequired'))]
 });
 
 async function loadSportMatch() {
@@ -572,6 +633,12 @@ function showDialog(type) {
       endSportMatchForm.value.resetFields();
     }
     uiControl.dialogTitle = t('fields.endMatch')
+  } else if (type === 'SETTLE') {
+    if (settleSportMatchForm.value) {
+      settleSportMatchForm.value.resetFields();
+    }
+    settleForm.siteId = request.siteId;
+    uiControl.dialogTitle = t('fields.settleGameMatch')
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -653,6 +720,17 @@ async function settleMatch() {
     await loadSportMatch()
     ElMessage({ message: t('message.settled'), type: 'success' })
   })
+}
+
+async function settleMatchByDate() {
+  settleSportMatchForm.value.validate(async (valid) => {
+    if (valid) {
+      await settleSportMatch(settleForm);
+      uiControl.dialogVisible = false;
+      await loadSportMatch();
+      ElMessage({ message: t('message.settled'), type: "success" });
+    }
+  });
 }
 
 function submit() {

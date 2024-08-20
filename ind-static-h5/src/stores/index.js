@@ -45,7 +45,9 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       h5Url: "https://www.55ace.com/",
-      hasUpdatedOneSignal: false
+      hasUpdatedOneSignal: false,
+      walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
+      multipleBalance: []
     };
   },
   actions: {
@@ -192,6 +194,7 @@ export const userStore = defineStore("userStore", {
         req.headers.TOKEN = token;
         return req;
       });
+
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -252,18 +255,37 @@ export const userStore = defineStore("userStore", {
     getBalance() {
       if (this.token) {
         return api
-          .get("/session/balance?v=123", {
-            params: {
-              platform: "MAIN"
-            }
-          })
+          .get("/session/memberMultiWallet")
           .then((res) => {
             if (res.code === 0) {
-              this.balance = res.data;
-            } else {
-              this.balance = 0;
+              const data = JSON.parse(res.data);
+              this.multipleBalance = Object.entries(data).map(([key, value]) => ({
+                currency: key,
+                selectedWallet: value.SelectedWallet,
+                rate: value.Rate,
+                balance: value.Balance
+              }));
+
+              const selectedWallet = this.multipleBalance.find((wallet) => wallet.selectedWallet);
+
+              if (selectedWallet) {
+                this.balance = selectedWallet.balance;
+                this.walletCurrency = selectedWallet.currency;
+
+                sessionStorage.setItem("WALLET_TYPE", selectedWallet.currency);
+              } else {
+                this.balance = 0;
+              }
             }
+            return this.balance; // Ensure balance is returned for chaining
+          })
+          .catch((error) => {
+            console.error("Error fetching balance:", error);
+            this.balance = 0; // Default value on error
+            return this.balance;
           });
+      } else {
+        return Promise.resolve(0); // Default value if no token
       }
     },
     getUnreadTotal() {
@@ -276,7 +298,7 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
-      this.token= token;
+      this.token = token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {
