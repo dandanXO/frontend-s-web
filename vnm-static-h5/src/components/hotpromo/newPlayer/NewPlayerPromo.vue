@@ -115,7 +115,7 @@ const missions = ref([
   {
     code: "newbie-mission-t1",
     description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
-    reward: 35,
+    reward: 18,
     icon: AccountSvg,
     missionProgress: "0/0",
     status: "Incomplete"
