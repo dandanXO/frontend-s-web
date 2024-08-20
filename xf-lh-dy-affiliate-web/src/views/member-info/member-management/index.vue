@@ -140,6 +140,26 @@
         </div>
         <div class="inputs-wrap">
           <el-row :gutter="20" style="gap: 10px;">
+            <el-form-item :label="t('fields.downlineAffiliate') + ' :'">
+              <el-select
+                style="width: 100%;"
+                size="normal"
+                v-model="request.downlineAffiliate"
+                @focus="getAllAffiliateDownlines"
+                :clearable="true"
+              >
+                <el-option
+                  v-for="item in affiliate.list"
+                  :key="item.affiliateId"
+                  :label="item.loginName"
+                  :value="item.affiliateId"
+                />
+              </el-select>
+            </el-form-item>
+          </el-row>
+        </div>
+        <div class="inputs-wrap">
+          <el-row :gutter="20" style="gap: 10px;">
             <el-col :xl="7" :lg="7" :md="7" :sm="7">
               <el-form-item :label="t('fields.orderBy') + ' :'">
                 <el-select
@@ -786,7 +806,8 @@ import {
   assignRemark,
   registerMember,
   editMemberRatio,
-  getAffiliateInfo
+  getAffiliateInfo,
+  getDownlineAffiliates
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
@@ -821,6 +842,9 @@ const selected = reactive({
 })
 const memberShareRatioList = reactive({
   list: [],
+})
+const affiliate = reactive({
+  list: []
 })
 
 const uiControl = reactive({
@@ -1047,6 +1071,7 @@ const request = reactive({
   memberTags: [],
   orderBy: uiControl.orderBy[0].value,
   sortType: uiControl.sortType[0].value,
+  downlineAffiliate: null
 })
 
 const memberRequest = reactive({
@@ -1157,6 +1182,7 @@ function resetQuery() {
   request.isBet = '-1'
   request.depositMinAmount = null
   request.depositMaxAmount = null
+  request.downlineAffiliate = null
   selected.tags = []
   checkAll.value = false
 }
@@ -1207,7 +1233,12 @@ async function loadAffiliateMembers() {
       return obj.id
     })
     .join(',')
-  const { data: ret } = await loadMemberSummary(store.state.user.id, query)
+
+  let userId = store.state.user.id;
+  if (request.downlineAffiliate !== null && request.downlineAffiliate.trim() !== '') {
+    userId = request.downlineAffiliate
+  }
+  const { data: ret } = await loadMemberSummary(userId, query)
 
   page.pages = ret.pages
   page.records = ret.records
@@ -1481,9 +1512,15 @@ function getAffiliateRatio(code) {
   return shareRatio === null || shareRatio === undefined || shareRatio.length === 0 ? 0 : shareRatio[0].value;
 }
 
+async function getAllAffiliateDownlines() {
+  const { data: downlines } = await getDownlineAffiliates();
+  affiliate.list = downlines;
+}
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
+  await getAllAffiliateDownlines()
   const { data: aff } = await getAffiliateInfo(store.state.user.id)
   Object.keys({ ...aff }).forEach(field => {
     affInfo[field] = aff[field]

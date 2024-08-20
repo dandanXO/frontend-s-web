@@ -681,9 +681,10 @@ import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
 import Vue3autocounter from "vue3-autocounter";
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
+import { useLocalStorage } from "@vueuse/core";
 
 const store = userStore();
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const gameMenu = ref(null);
 const router = useRouter();
 const banners = ref([

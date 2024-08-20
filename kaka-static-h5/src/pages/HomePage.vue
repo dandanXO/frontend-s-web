@@ -2593,7 +2593,7 @@ export default defineComponent({
           }
         }
         &__title {
-          color: #ffffff;
+          color: #ff4f57;
           font-size: 20px;
           font-weight: 900;
           line-height: 24.2px;
@@ -2655,7 +2655,7 @@ export default defineComponent({
             filter: hue-rotate(145deg);
           }
           .lastline {
-            color: #ffffff;
+            color: #ff4f57;
             font-size: 12px;
             font-weight: 900;
             line-height: 16px;

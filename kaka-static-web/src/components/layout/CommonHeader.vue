@@ -1,7 +1,7 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
-      <div class="side left"><img src="../../assets/home/header_side.png"></div>
+      <div class="side left"><img src="../../assets/home/header_side.png" /></div>
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
@@ -125,6 +125,7 @@
               <div class="profile-img-wrapper">
                 <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
             </span>
             <template #dropdown>
@@ -156,8 +157,22 @@
                     <span>{{ $t("menu.promotion") }}</span>
                   </div>
                 </el-dropdown-item>
+
+                <el-dropdown-item command="mailbox">
+                  <div
+                    class="mailbox-dropdown"
+                    style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%"
+                  >
+                    <img src="../../assets/images/home/header-dropdown-inbox-icon.png" />
+                    <span>{{ $t("menu.mailbox") }}</span>
+                    <div v-if="store.unreadTotal > 0" class="unread-total">
+                      <span>{{ store.unreadTotal }}</span>
+                    </div>
+                  </div>
+                </el-dropdown-item>
+
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #FD3C31">
+                  <button class="standard-button btn-color-white" style="color: #fd3c31">
                     {{ $t("menu.logout") }}
                   </button>
                 </el-dropdown-item>
@@ -205,7 +220,7 @@
         </div> -->
       </div>
 
-      <div class="side right"><img src="../../assets/home/header_side.png"></div>
+      <div class="side right"><img src="../../assets/home/header_side.png" /></div>
     </div>
 
     <!-- <el-dialog
@@ -316,11 +331,14 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container login-container" :class="isLandingClub == 'kakaclub' ? 'acc-dialog-landing' : '' ">
-        <div class="acc-dialog-left" >
+      <div
+        class="acc-dialog-container login-container"
+        :class="isLandingClub == 'kakaclub' ? 'acc-dialog-landing' : ''"
+      >
+        <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
           <img v-if="isLandingClub !== 'kakaclub'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
-          <img v-else  src="../../assets/home/kakaclub-img.png">
+          <img v-else src="../../assets/home/kakaclub-img.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -448,7 +466,7 @@
       <div class="noticedialog">
         <div class="title" style="flex-direction: column; display: flex">
           {{ $t("vip.rebateBonus") }}
-          <span style="font-size: 30px; color: #FD3126;">{{ rebateAmt ? rebateAmt : 0 }}</span>
+          <span style="font-size: 30px; color: #fd3126">{{ rebateAmt ? rebateAmt : 0 }}</span>
         </div>
         <div class="standard-button-container">
           <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">
@@ -463,7 +481,6 @@
 </template>
 
 <script lang="js">
-
 import "vue3-carousel/dist/carousel.css";
 
 import LocaleChanger from "@/components/LocaleChanger.vue";
@@ -475,10 +492,8 @@ import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms, dailyRebateAmt, claimRebate } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
-import {displayBalance} from "@/utils/utils"
-import {
-  RiRefreshLine
-} from "vue-remix-icons";
+import { displayBalance } from "@/utils/utils";
+import { RiRefreshLine } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
@@ -503,7 +518,7 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import HomeWelcome from "@/components/home/HomeWelcome.vue";
 
-import { i18nStore } from '@/store/language'
+import { i18nStore } from "@/store/language";
 export default defineComponent({
   name: "CommonHeader",
   components: {
@@ -528,59 +543,59 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n();
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const navigations = computed(() => {
-      if (store && store.token && store.memberType === 'TEST') {
+      if (store && store.token && store.memberType === "TEST") {
         return [
-          { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
-          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
-          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
-          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          { code: "home", name: t("menu.home"), enName: "Home", path: "/home" },
+          { code: "sports", name: t("menu.sports"), enName: "Sports", path: "/sports", submenu: true },
+          { code: "live", name: t("menu.liveCasino"), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "slot", name: t("menu.slot"), enName: "Slots", path: "/slot", submenu: true },
+          { code: "poker", name: t("menu.poker"), enName: "Poker", path: "/poker", submenu: true },
+          { code: "esports", name: t("menu.esports"), enName: "Esports", path: "/esports", submenu: true },
+          { code: "lottery", name: t("menu.lottery"), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
-          { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
-          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          { code: "minigame", name: t("menu.hashgame"), enName: "Hash Game", path: "/minigame", submenu: true },
+          { code: "others", name: t("menu.others"), enName: "Others", path: "/others", submenu: true },
           {
             code: "Promotion",
-            name: t('menu.promotion'),
+            name: t("menu.promotion"),
             enName: "Promotion",
             path: "/promotion",
             submenu: false,
             hasicon: true
           },
-          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
-          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
-          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
-        ]
+          { code: "Agent", name: t("menu.agent"), enName: "Agent", path: "/affiliate", hasicon: true },
+          { code: "App", name: t("menu.app"), enName: "App", path: "/app", submenu: false, hasicon: true },
+          { code: "VIP", name: t("menu.vip"), enName: "VIP", path: "/vip", hasicon: true }
+        ];
       } else {
         return [
-          { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
-          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
-          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
-          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          { code: "home", name: t("menu.home"), enName: "Home", path: "/home" },
+          { code: "sports", name: t("menu.sports"), enName: "Sports", path: "/sports", submenu: true },
+          { code: "live", name: t("menu.liveCasino"), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "slot", name: t("menu.slot"), enName: "Slots", path: "/slot", submenu: true },
+          { code: "poker", name: t("menu.poker"), enName: "Poker", path: "/poker", submenu: true },
+          { code: "esports", name: t("menu.esports"), enName: "Esports", path: "/esports", submenu: true },
+          { code: "lottery", name: t("menu.lottery"), enName: "Lottery", path: "/lottery", submenu: true },
           // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           // { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
-          { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
-          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          { code: "minigame", name: t("menu.hashgame"), enName: "Hash Game", path: "/minigame", submenu: true },
+          { code: "others", name: t("menu.others"), enName: "Others", path: "/others", submenu: true },
           {
             code: "Promotion",
-            name: t('menu.promotion'),
+            name: t("menu.promotion"),
             enName: "Promotion",
             path: "/promotion",
             submenu: false,
             hasicon: true
           },
-          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
-          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
-          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
-        ]
+          { code: "Agent", name: t("menu.agent"), enName: "Agent", path: "/affiliate", hasicon: true },
+          { code: "App", name: t("menu.app"), enName: "App", path: "/app", submenu: false, hasicon: true },
+          { code: "VIP", name: t("menu.vip"), enName: "VIP", path: "/vip", hasicon: true }
+        ];
       }
     });
 
@@ -603,7 +618,6 @@ export default defineComponent({
     }
 
     const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
-
 
     const loadingBtn = ref(false);
     const store = userStore();
@@ -644,6 +658,9 @@ export default defineComponent({
       }
       if (command === "promotion") {
         router.push("/promotion");
+      }
+      if (command === "mailbox") {
+        router.push("/center/mailbox");
       }
       if (command === "logout") {
         onLogout();
@@ -735,9 +752,9 @@ export default defineComponent({
     };
     let validatePass2 = async (r, v) => {
       if (v === "") {
-        return Promise.reject(t('placeholder.passwordAgain'));
+        return Promise.reject(t("placeholder.passwordAgain"));
       } else if (v !== regForm.password) {
-        return Promise.reject(t('placeholder.passwordDifferent'));
+        return Promise.reject(t("placeholder.passwordDifferent"));
       } else {
         return Promise.resolve();
       }
@@ -745,9 +762,9 @@ export default defineComponent({
     let validatePhoneNumber = async (r, v) => {
       var reg = /^\d+$/;
       if (v === "") {
-        return Promise.reject(t('placeholder.verifyPhone'));
+        return Promise.reject(t("placeholder.verifyPhone"));
       } else if (!reg.test(v)) {
-        return Promise.reject(t('placeholder.onlyNumber'));
+        return Promise.reject(t("placeholder.onlyNumber"));
       } else {
         return Promise.resolve();
       }
@@ -857,7 +874,6 @@ export default defineComponent({
     });
 
     const regRules = {
-
       realName: [
         {
           required: false,
@@ -982,7 +998,6 @@ export default defineComponent({
 
     const passRef = ref([]);
     const forgetPassRules = {
-
       email: [
         {
           required: true,
@@ -1000,7 +1015,6 @@ export default defineComponent({
           trigger: "blur"
         }
       ]
-
     };
     const passRules = {
       loginName: [
@@ -1058,63 +1072,60 @@ export default defineComponent({
     };
 
     const sendOtp = async () => {
-
       if (captchaForm.type === "REGISTER") {
         const smsDetail = {
           telephone: regForm.telephone,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
         };
-        sendSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              disableSendVerificationButton.value = true;
+        sendSms(smsDetail).then((response) => {
+          if (response.code == 0) {
+            disableSendVerificationButton.value = true;
 
-              regForm.smsCodeId = response.data.codeId;
+            regForm.smsCodeId = response.data.codeId;
 
-              ElMessage({
-                type: "success",
-                message: t('common.sendPhoneVerificationSuccess')
-              });
+            ElMessage({
+              type: "success",
+              message: t("common.sendPhoneVerificationSuccess")
+            });
 
-              captchaDialogVisible.value = false;
+            captchaDialogVisible.value = false;
 
-              regCountdown.value = registerSendOtpDisabledTimeout;
+            regCountdown.value = registerSendOtpDisabledTimeout;
 
-              const now = new Date();
+            const now = new Date();
 
-              now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
+            now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
 
-              lsStore(registerSendOtpDisabledKey, now.getTime());
-              lsStore(registerTelephoneKey, regForm.telephone);
+            lsStore(registerSendOtpDisabledKey, now.getTime());
+            lsStore(registerTelephoneKey, regForm.telephone);
 
-              countdownTimer("REGISTER");
-            } else {
-              getCode();
-            }
-          });
+            countdownTimer("REGISTER");
+          } else {
+            getCode();
+          }
+        });
       } else if (captchaForm.type === "LOGIN") {
         const smsDetail = {
           telephone: loginForm.phoneNumber,
           captchaCode: captchaForm.captchaCode,
           codeId: captchaForm.codeId
         };
-        sendSms(smsDetail)
-          .then((response) => {
-            if (response.code == 0) {
-              loginForm.smsCodeId = response.data.codeId;
-              ElMessage({
-                type: "success",
-                message: t('common.sendPhoneVerificationSuccess')
-              });
-              captchaDialogVisible.value = false;
-              getCode();
-              loginCountdown.value = 30;
-              countdownTimer("LOGIN");
-            } else {
-              getCode();
-            }
-          });
+        sendSms(smsDetail).then((response) => {
+          if (response.code == 0) {
+            loginForm.smsCodeId = response.data.codeId;
+            ElMessage({
+              type: "success",
+              message: t("common.sendPhoneVerificationSuccess")
+            });
+            captchaDialogVisible.value = false;
+            getCode();
+            loginCountdown.value = 30;
+            countdownTimer("LOGIN");
+          } else {
+            getCode();
+          }
+        });
       }
     };
 
@@ -1155,26 +1166,25 @@ export default defineComponent({
           (async () => {
             const sidParam = store.visitorId;
             regForm.sid = sidParam;
-            register(regForm)
-              .then((response) => {
-                const regResult = response.code;
-                if (regResult === 0) {
-                  ElMessage({
-                    type: "success",
-                    message: t('login.registerSuccess')
-                  });
-                  store.autoLogin(response.data);
-                  registerDialogVisible.value = false;
-                  store.regPageVisible = false;
-                  // loginDialogVisible.value = true;
+            register(regForm).then((response) => {
+              const regResult = response.code;
+              if (regResult === 0) {
+                ElMessage({
+                  type: "success",
+                  message: t("login.registerSuccess")
+                });
+                store.autoLogin(response.data);
+                registerDialogVisible.value = false;
+                store.regPageVisible = false;
+                // loginDialogVisible.value = true;
 
-                  sessionStorage.removeItem("REFERRAL_CODE");
-                  // getCode();
-                } else {
-                  getCode();
-                  // message.error(response.message);
-                }
-              });
+                sessionStorage.removeItem("REFERRAL_CODE");
+                // getCode();
+              } else {
+                getCode();
+                // message.error(response.message);
+              }
+            });
           })();
         } else {
           getCode();
@@ -1188,40 +1198,36 @@ export default defineComponent({
     };
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
-    const isLandingClub= ref(route.query.landing);
+    const isLandingClub = ref(route.query.landing);
 
     const showRebateValue = () => {
       dailyRebateAmt().then((res) => {
         if (res.code === 0) {
-          isRebateDialogVisible.value = true
-          rebateAmt.value = res.data
+          isRebateDialogVisible.value = true;
+          rebateAmt.value = res.data;
         } else {
-          ElMessage.error(res.message)
+          ElMessage.error(res.message);
         }
-      })
-    }
+      });
+    };
     const claimNow = () => {
-      claimRebate().then((res) =>{
-
-        if(res.code === 0) {
-
+      claimRebate().then((res) => {
+        if (res.code === 0) {
           isRebateDialogVisible.value = false;
-          ElMessage.success($t('common.claimedSuccess'))
+          ElMessage.success($t("common.claimedSuccess"));
         } else {
-          ElMessage.error(res.message)
+          ElMessage.error(res.message);
         }
-      })
-    }
+      });
+    };
     onMounted(() => {
-
       const isGetWelcome = sessionStorage.getItem("IS_GET_WELCOME");
-      if(isGetWelcome){
-        welcomeDialogVisible.value= true;
+      if (isGetWelcome) {
+        welcomeDialogVisible.value = true;
         sessionStorage.removeItem("IS_GET_WELCOME");
       }
 
-      if (regCountdown.value > 0)
-        countdownTimer("REGISTER");
+      if (regCountdown.value > 0) countdownTimer("REGISTER");
       getAffiliateCode();
       getCode();
       getReferalCode();
@@ -1244,37 +1250,40 @@ export default defineComponent({
         loginDialogVisible.value = false;
       }
 
-
       // alert(isLanding);
-      if(isLandingClub.value === "kakaclub"){
+      if (isLandingClub.value === "kakaclub") {
         loginDialogVisible.value = true;
       }
-
-
     });
 
-    watch(() => store.loginPageVisible, () => {
-      if (store.loginPageVisible) {
-        loginDialogVisible.value = true;
-        // router.push('/login');
-        return;
-      } else {
-        loginDialogVisible.value = false;
+    watch(
+      () => store.loginPageVisible,
+      () => {
+        if (store.loginPageVisible) {
+          loginDialogVisible.value = true;
+          // router.push('/login');
+          return;
+        } else {
+          loginDialogVisible.value = false;
+        }
+        // Optionally you can set immediate: true config for the watcher to run on init
+        // }, { immediate: true });
       }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
-    watch(() => store.regPageVisible, () => {
-      if (store.regPageVisible) {
-        // registerDialogVisible.value = true
-        router.push("/register");
-        return;
-      } else {
-        registerDialogVisible.value = false;
+    );
+    watch(
+      () => store.regPageVisible,
+      () => {
+        if (store.regPageVisible) {
+          // registerDialogVisible.value = true
+          router.push("/register");
+          return;
+        } else {
+          registerDialogVisible.value = false;
+        }
+        // Optionally you can set immediate: true config for the watcher to run on init
+        // }, { immediate: true });
       }
-      // Optionally you can set immediate: true config for the watcher to run on init
-      // }, { immediate: true });
-    });
+    );
 
     const getReferalCode = () => {
       const referCode = sessionStorage.getItem("REFERRAL_CODE");
@@ -1285,7 +1294,6 @@ export default defineComponent({
         regForm.referrer = referCode;
       }
     };
-
 
     const isLoadingBalance = ref(false);
     const refreshBalance = () => {
@@ -1310,7 +1318,7 @@ export default defineComponent({
       passRef.value.validate().then(() => {
         findAccount(passForm).then((res) => {
           if (res.code === 0) {
-            ElMessage.success(t('account.you_account_has_been_sent_email'));
+            ElMessage.success(t("account.you_account_has_been_sent_email"));
           }
         });
       });
@@ -1346,11 +1354,12 @@ export default defineComponent({
                 // loginForm.captchaCode = null
                 getCode();
               }
-            }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-            getCode();
-          });
+            })
+            .catch((error) => {
+              // message.error(error.message);
+              console.log(error.message);
+              getCode();
+            });
         });
         loadingBtn.value = false;
       })();
@@ -1381,10 +1390,11 @@ export default defineComponent({
                 loginForm.phoneNumber = null;
                 loginForm.code = null;
               }
-            }).catch((error) => {
-            // message.error(error.message);
-            console.log(error.message);
-          });
+            })
+            .catch((error) => {
+              // message.error(error.message);
+              console.log(error.message);
+            });
         });
       })();
       loadingBtn.value = false;
@@ -1461,17 +1471,23 @@ export default defineComponent({
     // },
     // );
     const todayDate = () => {
-      return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
+      return (
+        "GTM+8 " +
+        moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") +
+        moment(new Date()).locale("zh-cn").format("dddd")
+      );
     };
 
     const getUnreadMail = () => {
-      getUnreadTotal().then((response) => {
-        if (response.code === 0) {
-          store.unreadTotal = response.data;
-        }
-      }).catch((error) => {
-        // console.log("error===", error)
-      });
+      getUnreadTotal()
+        .then((response) => {
+          if (response.code === 0) {
+            store.unreadTotal = response.data;
+          }
+        })
+        .catch((error) => {
+          // console.log("error===", error)
+        });
     };
 
     const openLoginDialog = () => {
@@ -1504,7 +1520,7 @@ export default defineComponent({
       router.push(path);
     };
 
-    const welcomeDialogVisible = ref(false)
+    const welcomeDialogVisible = ref(false);
 
     return {
       token,
@@ -1661,6 +1677,15 @@ body {
       width: 12px;
       height: 12px;
     }
+
+    .unread-count {
+      position: absolute;
+      bottom: 2px;
+      right: 5px;
+      width: 12px;
+      height: 12px;
+      opacity: 1;
+    }
   }
 
   .profile-details {
@@ -1697,7 +1722,7 @@ body {
     .details-balance {
       display: flex;
       align-items: center;
-      color: #FD3C31;
+      color: #fd3c31;
 
       .assets-text {
         white-space: nowrap;
@@ -1733,7 +1758,7 @@ body {
       color: $link-active;
 
       .icon-rounded {
-        box-shadow: 0px 2px 5px 0px #FFA09A inset;
+        box-shadow: 0px 2px 5px 0px #ffa09a inset;
       }
     }
 
@@ -1744,7 +1769,7 @@ body {
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #FFA09A inset;
+      box-shadow: 0px 2px 5px 0px #ffa09a inset;
     }
 
     img {
@@ -1865,17 +1890,16 @@ body {
       }
       &.right {
         // right: 0px;
-    margin-left: -70px;
-    transform: rotateY(180deg);
-    overflow: hidden;
-    padding-right: 60px;
+        margin-left: -70px;
+        transform: rotateY(180deg);
+        overflow: hidden;
+        padding-right: 60px;
       }
     }
-    padding: 10px;    
+    padding: 10px;
     position: relative;
-    background: #1E212C;
-    box-shadow: 0px -4px 4px 0px #FFFFFF1A inset;
-
+    background: #1e212c;
+    box-shadow: 0px -4px 4px 0px #ffffff1a inset;
 
     .top-nav-inner {
       max-width: 1350px;
@@ -1935,8 +1959,7 @@ body {
           flex-direction: column;
           text-decoration: none;
           gap: 2px;
-          color: #7A80A1;
-
+          color: #7a80a1;
 
           &.icon {
             gap: 0;
@@ -1980,15 +2003,15 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(-26deg) brightness(90%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
 
         .sub-menu {
           transition: $page-trans;
-          background: #1E212C;
-          box-shadow: 0px -8px 8px 0px #FFFFFF1A inset;
+          background: #1e212c;
+          box-shadow: 0px -8px 8px 0px #ffffff1a inset;
 
           backdrop-filter: blur(24.5px);
           overflow: hidden;
@@ -2124,6 +2147,21 @@ body {
     //background: linear-gradient(to right, #de4545, #db7e42) !important;
     background: #21ba45;
     font-weight: 600;
+  }
+}
+
+.mailbox-dropdown {
+  > span {
+    flex-grow: 1;
+  }
+  .unread-total {
+    min-width: 30px;
+    border-radius: 25px;
+    text-align: center;
+    color: #fff;
+    background: red;
+    padding: 0 10px;
+    width: max-content;
   }
 }
 </style>
@@ -2565,7 +2603,6 @@ body {
       }
 
       .login-container {
-
         .acc-dialog-left {
           display: flex;
           align-items: flex-end;
@@ -2574,33 +2611,28 @@ body {
           background-position: center center;
           min-height: 500px;
 
-
           img {
             display: block;
             // width: 100%;
             width: calc(100% + 6px);
             margin: -110px 0px -10px -9px;
+          }
         }
 
-
-
-        }
-
-        &.acc-dialog-landing{
-          .acc-dialog-left{
+        &.acc-dialog-landing {
+          .acc-dialog-left {
             background-image: url(../../assets/home/kakaclub.png);
-            max-height:95vh;
+            max-height: 95vh;
 
-            img{
+            img {
               width: calc(100% + 20px);
               margin: -50px -10px 0px -10px;
             }
           }
 
-          .acc-dialog-right{
+          .acc-dialog-right {
             padding-left: 20px;
           }
-
         }
       }
 
@@ -2706,7 +2738,9 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
+  box-shadow:
+    0px 2px 4.58px 0px #ffa09a inset,
+    0px -1px 3.664px 0px #ffa09a inset;
   cursor: pointer;
   transition: 0.3s all;
 
@@ -2717,15 +2751,17 @@ body {
   &.btn-color-blue {
     text-transform: uppercase;
     color: $color-white;
-    background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
-    box-shadow: 0px 0px 4px 1px #FD3C31;
+    background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+    box-shadow: 0px 0px 4px 1px #fd3c31;
     border: 2px solid #000000;
   }
 
   &.btn-color-white {
     text-transform: uppercase;
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
+    box-shadow:
+      0px 2px 4.58px 0px #ffa09a inset,
+      0px -1px 3.664px 0px #ffa09a inset;
     color: #000000;
     position: relative;
     img {
@@ -2758,7 +2794,7 @@ body {
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #7A80A1;
+    color: #7a80a1;
     letter-spacing: 1px;
     text-align: center;
     font-weight: bold;
