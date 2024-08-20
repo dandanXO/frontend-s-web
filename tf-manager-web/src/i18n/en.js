@@ -422,6 +422,9 @@ export default {
     LOTTERY: 'LOTTERY',
     OTHER: 'OTHER',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: 'Normal',
@@ -506,6 +509,10 @@ export default {
   withdrawType: {
     Manual: 'Manual',
     AUTO_WITHDRAW: 'Auto Withdraw',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: 'Account',
@@ -1475,6 +1482,7 @@ export default {
     siteCode: 'Site Code',
     siteList: 'Site List',
     siteName: 'Site Name',
+    siteType: 'Site Type',
     sn: 'S/N',
     smsPhone: 'Phone',
     smsContent: 'Content',

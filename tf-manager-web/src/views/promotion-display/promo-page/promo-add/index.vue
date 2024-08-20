@@ -62,6 +62,25 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.siteType')" prop="siteType">
+            <el-select
+              v-model="form.siteType"
+              size="small"
+              class="filter-item"
+              :placeholder="t('fields.siteType')"
+              style="width: 240px;margin-bottom:10px"
+              @change="loadPromoTypes"
+            >
+              <el-option
+                v-for="item in siteType.list"
+                :key="item.value"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.promoType')" prop="promoType">
             <el-col :span="12">
               <el-checkbox-group
@@ -158,7 +177,10 @@
         <el-row>
           <el-form-item :label="t('fields.sequence')" prop="sequence">
             <el-col :span="7">
-              <el-input-number v-model="form.sequence" controls-position="right" />
+              <el-input-number
+                v-model="form.sequence"
+                controls-position="right"
+              />
             </el-col>
           </el-form-item>
 
@@ -175,7 +197,10 @@
         </el-row>
         <el-form-item :label="t('fields.param')" prop="param">
           <div v-for="(item, index) in param" :key="index">
-            <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" />
+            <el-input
+              style="width: 170px; margin-top: 5px;"
+              v-model="item.key"
+            />
             :
             <el-input style="width: 170px " v-model="item.value" />
             <el-button
@@ -241,7 +266,10 @@
       >
         <el-col :span="10">
           <el-row>
-            <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
+            <el-form-item
+              :label="t('fields.desktopImage')"
+              prop="desktopImgUrl"
+            >
               <el-row :gutter="5">
                 <el-col v-if="form.desktopImgUrl" style="width: 250px">
                   <el-image
@@ -289,13 +317,18 @@
               prop="desktopImgBackgroundUrl"
             >
               <el-row :gutter="5">
-                <el-col v-if="form.desktopImgBackgroundUrl" style="width: 250px">
+                <el-col
+                  v-if="form.desktopImgBackgroundUrl"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.desktopImgBackgroundUrl"
                     :src="promoDir + form.desktopImgBackgroundUrl"
                     fit="contain"
                     class="preview"
-                    :preview-src-list="[promoDir + form.desktopImgBackgroundUrl]"
+                    :preview-src-list="[
+                      promoDir + form.desktopImgBackgroundUrl,
+                    ]"
                   />
                 </el-col>
               </el-row>
@@ -419,9 +452,16 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item :label="t('fields.desktopBanner')" prop="desktopBannerUrl">
+            <el-form-item
+              :label="t('fields.desktopBanner')"
+              prop="desktopBannerUrl"
+            >
               <el-row :gutter="5">
-                <el-col v-if="form.desktopBannerUrl" :span="18" style="width: 250px">
+                <el-col
+                  v-if="form.desktopBannerUrl"
+                  :span="18"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.desktopBannerUrl"
                     :src="promoDir + form.desktopBannerUrl"
@@ -462,9 +502,16 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item :label="t('fields.mobileBanner')" prop="mobileBannerUrl">
+            <el-form-item
+              :label="t('fields.mobileBanner')"
+              prop="mobileBannerUrl"
+            >
               <el-row :gutter="5">
-                <el-col v-if="form.mobileBannerUrl" :span="18" style="width: 250px">
+                <el-col
+                  v-if="form.mobileBannerUrl"
+                  :span="18"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.mobileBannerUrl"
                     :src="promoDir + form.mobileBannerUrl"
@@ -507,7 +554,12 @@
         </el-col>
         <el-col :span="20" :offset="50">
           <el-row>
-            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopImageDark')" prop="desktopImgUrlDark" label-width="200px">
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.desktopImageDark')"
+              prop="desktopImgUrlDark"
+              label-width="200px"
+            >
               <el-row :gutter="5">
                 <el-col v-if="form.desktopImgUrlDark" style="width: 250px">
                   <el-image
@@ -557,13 +609,18 @@
               label-width="200px"
             >
               <el-row :gutter="5">
-                <el-col v-if="form.desktopImgBackgroundUrlDark" style="width: 250px">
+                <el-col
+                  v-if="form.desktopImgBackgroundUrlDark"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.desktopImgBackgroundUrlDark"
                     :src="promoDir + form.desktopImgBackgroundUrlDark"
                     fit="contain"
                     class="preview"
-                    :preview-src-list="[promoDir + form.desktopImgBackgroundUrlDark]"
+                    :preview-src-list="[
+                      promoDir + form.desktopImgBackgroundUrlDark,
+                    ]"
                   />
                 </el-col>
               </el-row>
@@ -598,7 +655,12 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.mobileImageDark')" prop="mobileImgUrlDark" label-width="200px">
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.mobileImageDark')"
+              prop="mobileImgUrlDark"
+              label-width="200px"
+            >
               <el-row :gutter="5">
                 <el-col v-if="form.mobileImgUrlDark" style="width: 250px">
                   <el-image
@@ -648,13 +710,18 @@
               label-width="200px"
             >
               <el-row :gutter="5">
-                <el-col v-if="form.mobileImgBackgroundUrlDark" style="width: 250px">
+                <el-col
+                  v-if="form.mobileImgBackgroundUrlDark"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.mobileImgBackgroundUrlDark"
                     :src="promoDir + form.mobileImgBackgroundUrlDark"
                     fit="contain"
                     class="preview"
-                    :preview-src-list="[promoDir + form.mobileImgBackgroundUrlDark]"
+                    :preview-src-list="[
+                      promoDir + form.mobileImgBackgroundUrlDark,
+                    ]"
                   />
                 </el-col>
               </el-row>
@@ -689,9 +756,18 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopBannerDark')" prop="desktopBannerUrlDark" label-width="200px">
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.desktopBannerDark')"
+              prop="desktopBannerUrlDark"
+              label-width="200px"
+            >
               <el-row :gutter="5">
-                <el-col v-if="form.desktopBannerUrlDark" :span="18" style="width: 250px">
+                <el-col
+                  v-if="form.desktopBannerUrlDark"
+                  :span="18"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.desktopBannerUrlDark"
                     :src="promoDir + form.desktopBannerUrlDark"
@@ -732,9 +808,18 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.mobileBannerDark')" prop="mobileBannerUrlDark" label-width="200px">
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.mobileBannerDark')"
+              prop="mobileBannerUrlDark"
+              label-width="200px"
+            >
               <el-row :gutter="5">
-                <el-col v-if="form.mobileBannerUrlDark" :span="18" style="width: 250px">
+                <el-col
+                  v-if="form.mobileBannerUrlDark"
+                  :span="18"
+                  style="width: 250px"
+                >
                   <el-image
                     v-if="form.mobileBannerUrlDark"
                     :src="promoDir + form.mobileBannerUrlDark"
@@ -1088,7 +1173,7 @@ import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
 import { isVnm, isXF, isThai, isDY, isLH, isPak } from '@/utils/site'
-import { getSupportDarkMode } from "@/api/config";
+import { getSupportDarkMode } from '@/api/config'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -1105,6 +1190,13 @@ const inputValue = ref('')
 const InputRef = ref(null)
 const checkAllAff = ref(false)
 const activeName = ref('config')
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
 
 const vipList = reactive({
   list: [],
@@ -1135,6 +1227,7 @@ const form = reactive({
   siteId: null,
   labelType: null,
   promoType: null,
+  siteType: null,
   sequence: 0,
   promoCode: null,
   pageContent: null,
@@ -1253,74 +1346,104 @@ const promoTypes = ref([])
 const selectedVIPs = reactive({ vipChecked: [] })
 
 function loadPromoTypes() {
-  if (isPak(LOGIN_SITE_ID) || isPak(form.siteId)) {
-    promoTypes.value = [
-      { typeName: 'EARN', value: 12, displayName: 'EARN' },
-      { typeName: 'HOT', value: 13, displayName: 'HOT' },
-      { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
-      { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
-      { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
-      { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
-      { typeName: 'VIP', value: 15, displayName: 'VIP' },
-    ]
-  } else if (LOGIN_SITE_ID === 0) {
-    promoTypes.value = [
-      { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-      { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-      {
-        typeName: 'LIVE CASINO',
-        value: 5,
-        displayName: t('promoType.LIVECASINO'),
-      },
-      { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
-      { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-      { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-      { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-      { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-      { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+  if (form.siteType === 'main') {
+    if (isPak(LOGIN_SITE_ID) || isPak(form.siteId)) {
+      promoTypes.value = [
+        { typeName: 'EARN', value: 12, displayName: 'EARN' },
+        { typeName: 'HOT', value: 13, displayName: 'HOT' },
+        { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
+        { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
+        { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
+        { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
+        { typeName: 'VIP', value: 15, displayName: 'VIP' },
+      ]
+    } else if (LOGIN_SITE_ID === 0) {
+      promoTypes.value = [
+        { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+        { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+        { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+        { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+        {
+          typeName: 'LIVE CASINO',
+          value: 5,
+          displayName: t('promoType.LIVECASINO'),
+        },
+        {
+          typeName: 'SLOT GAME',
+          value: 6,
+          displayName: t('promoType.SLOTGAME'),
+        },
+        { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+        { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+        { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+        { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+        { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
 
-      { typeName: 'EARN', value: 12, displayName: 'EARN' },
-      { typeName: 'HOT', value: 13, displayName: 'HOT' },
-      { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
-      { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
-      { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
-      { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
-      { typeName: 'VIP', value: 15, displayName: 'VIP' },
-    ]
-  } else if (LOGIN_SITE_ID === 6) {
-    // Dongying 东赢
+        { typeName: 'EARN', value: 12, displayName: 'EARN' },
+        { typeName: 'HOT', value: 13, displayName: 'HOT' },
+        { typeName: 'NEW USER', value: 14, displayName: 'NEW' },
+        { typeName: 'SPORTS', value: 17, displayName: 'SPORTS' },
+        { typeName: 'LIVE', value: 18, displayName: 'LIVE' },
+        { typeName: 'SLOT', value: 16, displayName: 'SLOT' },
+        { typeName: 'VIP', value: 15, displayName: 'VIP' },
+      ]
+    } else if (LOGIN_SITE_ID === 6) {
+      // Dongying 东赢
+      promoTypes.value = [
+        { typeName: 'WELCOME', value: 1, displayName: '新人优惠' },
+        { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+        { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+        { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
+        { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
+        { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
+        { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
+        { typeName: 'FTD', value: 9, displayName: '充提优惠' },
+      ]
+    } else {
+      promoTypes.value = [
+        { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+        { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+        { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+        { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+        {
+          typeName: 'LIVE CASINO',
+          value: 5,
+          displayName: t('promoType.LIVECASINO'),
+        },
+        {
+          typeName: 'SLOT GAME',
+          value: 6,
+          displayName: t('promoType.SLOTGAME'),
+        },
+        { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+        { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+        { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+        { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+        { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+        { typeName: 'VIP', value: 15, displayName: 'VIP' },
+        { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
+      ]
+    }
+  } else if (form.siteType === 'slot') {
     promoTypes.value = [
-      { typeName: 'WELCOME', value: 1, displayName: '新人优惠' },
-      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-      { typeName: 'LIVE CASINO', value: 5, displayName: '真人棋牌' },
-      { typeName: 'SLOT GAME', value: 6, displayName: '电游活动' },
-      { typeName: 'VIP', value: 15, displayName: 'VIP特权' },
-      { typeName: 'LIMITED', value: 16, displayName: '限时热门' },
-      { typeName: 'FTD', value: 9, displayName: '充提优惠' },
+      {
+        typeName: 'SLOT WELCOME',
+        value: 1,
+        displayName: t('promoType.SLOTWELCOME'),
+      },
+      {
+        typeName: 'SLOT DAILY',
+        value: 2,
+        displayName: t('promoType.SLOTDAILY'),
+      },
+      {
+        typeName: 'SLOT OTHER',
+        value: 3,
+        displayName: t('promoType.SLOTOTHER'),
+      },
     ]
   } else {
-    promoTypes.value = [
-      { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-      { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-      {
-        typeName: 'LIVE CASINO',
-        value: 5,
-        displayName: t('promoType.LIVECASINO'),
-      },
-      { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
-      { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-      { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-      { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-      { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-      { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
-      { typeName: 'VIP', value: 15, displayName: 'VIP' },
-      { typeName: 'LIMITED', value: 16, displayName: t('promoType.LIMITED') },
-    ]
+    promoTypes.value = []
   }
 }
 
@@ -1372,7 +1495,7 @@ function selectImage(item) {
 async function loadDarkMode() {
   if (form.siteId) {
     const { data: darkMode } = await getSupportDarkMode(form.siteId)
-    uiControl.supportDarkMode = darkMode;
+    uiControl.supportDarkMode = darkMode
   }
 }
 
@@ -1405,7 +1528,7 @@ function browseImage(type, isDark) {
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
-  console.log("uiControl.selectDarkImage", uiControl.selectDarkImage)
+  console.log('uiControl.selectDarkImage', uiControl.selectDarkImage)
 }
 
 // function handleRadioChangeLabel() {
@@ -1817,6 +1940,7 @@ onMounted(async () => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }
+  form.siteType = "main";
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     await loadForm(route.params.id)
