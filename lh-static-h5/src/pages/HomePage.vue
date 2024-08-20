@@ -86,7 +86,8 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img loading="lazy" src="../assets/images/home/announce-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/announce-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -115,22 +116,22 @@
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.svg" />
         <img loading="lazy" v-else src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
@@ -2351,11 +2352,10 @@ export default defineComponent({
     .game-platform {
       padding: 0;
       margin: 0;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
 
       .platform-item {
         position: relative;
-        height: 82px;
       }
 
       .platform-icon {
@@ -2604,17 +2604,31 @@ export default defineComponent({
       color: $font-1-dark;
     }
     .menulist {
+      img {
+        width: 3rem;
+      }
+
       .men {
-        color: $font-4-dark;
+        color: #a98f7c;
       }
     }
   }
 
   .home-game-section {
+    .game-left-list {
+      .game-platform {
+        margin-bottom: 20px;
+
+        .platform-item {
+          height: 82px;
+        }
+      }
+    }
     .game-right-platform {
       .platform-block {
         .platform-img-frame {
-          border-radius: 20px;
+          // border-radius: 20px;
+          background-color: transparent;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
           }
