@@ -34,25 +34,9 @@
         </div>
       </div>
 
-      <!-- <pre> depositOverview~~{{ depositOverview }}</pre> -->
-
       <div class="do-input-container">
         <InputRowGrid>
           <template #fields>
-            <!-- <InputField :label="'Storage time'">
-              <template #input>
-                <q-input
-                  type="number"
-                  class="q-pb-xs dialog-input"
-                  hide-bottom-space
-                  outlined
-                  v-model="interestProfitField.storageTime"
-                  lazy-rules
-                  label-color="secondary"
-                ></q-input>
-              </template>
-            </InputField> -->
-
             <div class="select-label">{{ $t("interestProfit.storageTime") }}</div>
             <q-select
               class="do-select"
@@ -128,13 +112,6 @@
           </div>
         </template>
       </div>
-
-      <!-- <div class="do-record-selection-wrapper">
-        <div class="selection-item">
-          <div class="item-title active">Pending</div>
-          <div class="item-title">Ended</div>
-        </div>
-      </div> -->
 
       <q-tabs
         v-model="recordTabs"
@@ -496,13 +473,8 @@ const getDayList = async () => {
 };
 
 const onDayChange = (selectedDay) => {
-  // Find the selected day's odds
-  // console.log(selectedDay);
-  // console.log(allData.value);
   interestProfitField.odds = "";
   const selectedData = allData.value.find((item) => item.day === selectedDay.val);
-  // console.log(selectedData);
-  // Populate odds based on selected day
   if (selectedData) {
     oddList.value = selectedData.odds.map((odd, index) => ({
       label: `${(odd * 100).toFixed(2)}%`,
@@ -579,17 +551,6 @@ onMounted(() => {
     align-items: center;
     gap: 12px;
   }
-
-  // .do-side-title {
-  //   color: #13a89e;
-  //   font-weight: bold;
-  //   background-image: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
-  //   background-size: 100%;
-  //   -webkit-background-clip: text;
-  //   -moz-background-clip: text;
-  //   -webkit-text-fill-color: transparent;
-  //   -moz-text-fill-color: transparent;
-  // }
 }
 
 .do-amount {
