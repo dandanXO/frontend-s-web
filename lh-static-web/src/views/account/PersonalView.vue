@@ -180,19 +180,20 @@
                   </div>
                 </div>
 
-                <div
-                  class="info-tbl-col"
-                  v-if="personalState.memberInfo.gender || (!personalState.memberInfo.gender && isEdit)"
-                >
+                <div class="info-tbl-col">
                   <div class="tbl-row">
                     <div class="basic-info-cell title">性别：</div>
                     <div v-if="personalState.memberInfo.gender" class="basic-info-cell content">
                       {{ personalState.memberInfo.gender === "MALE" ? "男" : "女" }}
                     </div>
-                    <div v-else class="basic-info-cell content">
-                      <el-select v-model="updateFormDetails.gender" placeholder="Select" style="min-width: 150px">
-                        <el-option label="男" value="MALE" />
-                        <el-option label="女" value="FEMALE" />
+                    <div
+                      v-else
+                      class="basic-info-cell content"
+                      v-if="personalState.memberInfo.gender || (!personalState.memberInfo.gender && isEdit)"
+                    >
+                      <el-select v-model="updateFormDetails.gender" placeholder="选择性别" style="min-width: 150px">
+                        <el-option label="男" value="Male" />
+                        <el-option label="女" value="Female" />
                       </el-select>
                     </div>
                   </div>
