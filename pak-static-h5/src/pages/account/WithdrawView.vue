@@ -36,7 +36,7 @@
             <div class="type-name">{{ method.name }}</div>
           </div>
         </div>
-        <q-form ref="withdrawFormRef" class="q-mt-md">
+        <q-form v-if="!isSelectedWithdrawalMethodInMaintenance" ref="withdrawFormRef" class="q-mt-md">
           <q-select
             v-show="isLoaded"
             hide-bottom-space
@@ -292,54 +292,56 @@
       </div>
     </div>
 
-    <template v-if="withdrawState.bankCardList.length > 0">
-      <div class="bottom-btn">
-        <q-btn
-          no-caps
-          unelevated
-          class="btn-primary btn-primary__full"
-          :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-          @click="submitWithdraw"
-        >
-          {{ $t("btn.submit") }}
-        </q-btn>
-<!-- 
-        <div class="q-mt-sm">
-          {{ $t("withdraw.withdrawTutorial") }}
-          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
-          /
-          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+    <template v-if="!isSelectedWithdrawalMethodInMaintenance">
+      <template v-if="withdrawState.bankCardList.length > 0">
+        <div class="bottom-btn">
+          <q-btn
+            no-caps
+            unelevated
+            class="btn-primary btn-primary__full"
+            :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+            @click="submitWithdraw"
+          >
+            {{ $t("btn.submit") }}
+          </q-btn>
+          <!--
+          <div class="q-mt-sm">
+            {{ $t("withdraw.withdrawTutorial") }}
+            <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+            /
+            <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+          </div>
+          -->
         </div>
-         -->
+      </template>
+      <template v-else>
+        <div class="bottom-btn">
+          <q-btn
+            no-caps
+            unelevated
+            class="btn-primary btn-primary__full"
+            :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+            @click="submitWithdraw"
+          >
+            {{ $t("btn.submit") }}
+          </q-btn>
+
+        </div>
+      </template>
+
+      <div class="q-mt-sm step-desc-div q-mb-lg">
+        <p>
+          {{ $t("withdraw.withdrawTutorial") }}
+        <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+        /
+        <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+        </p>
+        <p>1.Bind your wallet/bank card using the correct format.</p>
+        <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
+        <p>3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.</p>
+        <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
       </div>
     </template>
-    <template v-else>
-      <div class="bottom-btn">
-        <q-btn
-          no-caps
-          unelevated
-          class="btn-primary btn-primary__full"
-          :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-          @click="submitWithdraw"
-        >
-          {{ $t("btn.submit") }}
-        </q-btn>
-        
-      </div>
-    </template>
-    
-    <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>
-        {{ $t("withdraw.withdrawTutorial") }}
-      <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
-      /
-      <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
-      </p>
-      <p>1.Bind your wallet/bank card using the correct format.</p>
-      <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
-      <p>3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.</p>
-      <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
-    </div>
 
     <!-- <MediaSettingsComponent /> -->
 
@@ -419,6 +421,28 @@
         <q-btn no-caps unelevated class="q-mt-md btn-primary btn-primary__full" v-close-popup>
           {{ $t("btn.confirm") }}
         </q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="displayMaintenanceDialog">
+    <q-card class="q-pa-md">
+      <q-card-section class="row items-center q-pb-none">
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-card-section>
+        <i18n-t keypath="withdraw.withdrawalMethodInMaintenance" tag="span">
+          <template #startTime>
+            {{ selectedWithdrawalMethodMaintenanceDateRange[0] }}
+          </template>
+          <template #endTime>
+            {{ selectedWithdrawalMethodMaintenanceDateRange[1] }}
+          </template>
+        </i18n-t>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn no-caps unelevated v-close-popup>{{ $t('btn.confirm') }}</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -639,6 +663,7 @@ const selectMethod = (method, index) => {
   withdrawInfo.cardId = null;
   selectedWithdrawalMethod.value = method;
   withdrawInfo.withdrawCode = method.code;
+  displayMaintenanceDialog.value = method.status === false
   isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
   isEWALLET.value =
     withdrawInfo.withdrawCode.includes("KDPAY") ||
@@ -694,6 +719,15 @@ const loadCards = () => {
       console.log("error", error);
     });
 };
+
+const isSelectedWithdrawalMethodInMaintenance = computed(() => selectedWithdrawalMethod.value.status === false)
+const displayMaintenanceDialog = ref(false)
+const selectedWithdrawalMethodMaintenanceDateRange = computed(() =>
+  isSelectedWithdrawalMethodInMaintenance.value ?
+  selectedWithdrawalMethod.value.remark.split(' | ') :
+  []
+)
+
 const getWithdrawalMethods = () => {
   api.get("/session/withdraw/entrance").then((response) => {
     if (response.code === 0) {

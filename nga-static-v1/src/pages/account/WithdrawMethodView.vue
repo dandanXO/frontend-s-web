@@ -145,7 +145,7 @@
               ></q-input>
             </div>
           </div>
-          <div class="w-form-item w-form-item--bankcard">
+          <!-- <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -161,7 +161,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div>
+          </div> -->
         </template>
 
         <div class="top-wrapper">
@@ -387,15 +387,25 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  api.get("/session/nga/withdraw/entrance").then((response) => {
-    if (response.code === 0) {
-      let bankWithdraws = response.data.withdraws;
-      paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
+  api.get("/session/nga/withdraw/entrance").then((res) => {
+    if (res.code === 0) {
+      // let bankWithdraws = response.data.withdraws;
+      // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
+
+
+      let bankWithdraws = res.data.withdraws
+        .map((withdraw) => {
+          return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
+        })
+        .flat();
+
+      paymentMethodsItems.value = bankWithdraws.flat();
+
     } else {
       $q.notify({
         color: "negative",
         position: "top",
-        message: response.message,
+        message: res.message,
         icon: "report_problem"
       });
     }
@@ -489,7 +499,7 @@ const loadCards = () => {
 
 const cardRef = ref();
 const amountRef = ref();
-const bankAddressRef = ref();
+// const bankAddressRef = ref();
 const bankNumberRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
@@ -500,14 +510,14 @@ const withdrawInfo = reactive({
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: ""
+  // cardAddress: ""
 });
 
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: "",
+  // cardAddress: "",
   withdrawCode: "",
   withdrawPlatformId: "",
   amount: ""
@@ -584,10 +594,10 @@ const submitWithdrawBank = () => {
   // isSubmitDisable.value = true;
   // if (bankCardList.value.length === 0) {
   amountRef.value.validate();
-  bankAddressRef.value.validate();
+  // bankAddressRef.value.validate();
   bankNumberRef.value.validate();
 
-  if (amountRef.value.hasError || bankAddressRef.value.hasError || bankNumberRef.value.hasError) {
+  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;
@@ -613,15 +623,15 @@ const submitWithdrawBank = () => {
         refreshBalance();
         getWithdrawalMethods();
 
-        emits("closeWithdraw");
+        // emits("closeWithdraw");
 
         resetSelectedMethod();
 
-        // bankCardField.cardNumber = "";
+        bankCardField.cardNumber = "";
         // bankCardField.cardAddress = "";
         // bankCardField.withdrawCode = "";
         // bankCardField.withdrawPlatformId = "";
-        // bankCardField.amount = "";
+        bankCardField.amount = "";
 
         // bankCardField.cardAddress = "";
         // bankCardField.cardNumber = "";
@@ -939,7 +949,7 @@ const toggleAmount = (type) => {
       .txt-content {
         font-size: 10px;
         color: #576373;
-        white-space: nowrap;
+        // white-space: nowrap;
         margin-top: 4px;
       }
       .txt-maintenance {

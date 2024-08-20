@@ -1,496 +1,783 @@
 <template>
-  <el-form
-    ref="promoForm"
-    :model="form"
-    :rules="formRules"
-    :inline="true"
-    size="small"
-    label-width="120px"
-  >
-    <el-row>
-      <el-form-item :label="t('fields.title')" prop="title">
-        <el-col :span="24">
-          <el-input v-model="form.title" class="form-input" />
-        </el-col>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
-        <el-row :gutter="5">
-          <el-col v-if="form.desktopImgUrl" style="width: 250px">
-            <el-image
-              v-if="form.desktopImgUrl"
-              :src="promoDir + form.desktopImgUrl"
-              fit="contain"
-              class="preview"
-              :preview-src-list="[promoDir + form.desktopImgUrl]"
-            />
-          </el-col>
-        </el-row>
-        <el-row :gutter="5">
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            v-permission="['sys:siteimage:add']"
-            @click="showDialog('DESKTOP_IMAGE')"
-          >
-            {{ t('fields.upload') }}
-          </el-button>
-          <el-button
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="browseImage('DESKTOP_IMAGE')"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <el-button
-            v-if="form.desktopImgUrl"
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="form.desktopImgUrl = ''"
-          >
-            {{ t('fields.remove') }}
-          </el-button>
-        </el-row>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item
-        :label="t('fields.desktopBackgroundImage')"
-        prop="desktopImgBackgroundUrl"
+  <el-tabs v-model="activeName">
+    <el-tab-pane :label="t('fields.config')" name="config">
+      <el-form
+        ref="promoForm"
+        :model="form"
+        :rules="formRules"
+        :inline="true"
+        size="small"
+        label-width="120px"
       >
-        <el-row :gutter="5">
-          <el-col v-if="form.desktopImgBackgroundUrl" style="width: 250px">
-            <el-image
-              v-if="form.desktopImgBackgroundUrl"
-              :src="promoDir + form.desktopImgBackgroundUrl"
-              fit="contain"
-              class="preview"
-              :preview-src-list="[promoDir + form.desktopImgBackgroundUrl]"
-            />
-          </el-col>
-        </el-row>
-        <el-row :gutter="5">
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            v-permission="['sys:siteimage:add']"
-            @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
-          >
-            {{ t('fields.upload') }}
-          </el-button>
-          <el-button
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="browseImage('DESKTOP_BACKGROUND_IMAGE')"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <el-button
-            v-if="form.desktopImgBackgroundUrl"
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="form.desktopImgBackgroundUrl = ''"
-          >
-            {{ t('fields.remove') }}
-          </el-button>
-        </el-row>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
-        <el-row :gutter="5">
-          <el-col v-if="form.mobileImgUrl" style="width: 250px">
-            <el-image
-              v-if="form.mobileImgUrl"
-              :src="promoDir + form.mobileImgUrl"
-              fit="contain"
-              class="preview"
-              :preview-src-list="[promoDir + form.mobileImgUrl]"
-            />
-          </el-col>
-        </el-row>
-        <el-row :gutter="5">
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            v-permission="['sys:siteimage:add']"
-            @click="showDialog('MOBILE_IMAGE')"
-          >
-            {{ t('fields.upload') }}
-          </el-button>
-          <el-button
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="browseImage('MOBILE_IMAGE')"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <el-button
-            v-if="form.mobileImgUrl"
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="form.mobileImgUrl = ''"
-          >
-            {{ t('fields.remove') }}
-          </el-button>
-        </el-row>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item
-        :label="t('fields.mobileBackgroundImage')"
-        prop="mobileImgBackgroundUrl"
-      >
-        <el-row :gutter="5">
-          <el-col v-if="form.mobileImgBackgroundUrl" style="width: 250px">
-            <el-image
-              v-if="form.mobileImgBackgroundUrl"
-              :src="promoDir + form.mobileImgBackgroundUrl"
-              fit="contain"
-              class="preview"
-              :preview-src-list="[promoDir + form.mobileImgBackgroundUrl]"
-            />
-          </el-col>
-        </el-row>
-        <el-row :gutter="5">
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            v-permission="['sys:siteimage:add']"
-            @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
-          >
-            {{ t('fields.upload') }}
-          </el-button>
-          <el-button
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="browseImage('MOBILE_BACKGROUND_IMAGE')"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <el-button
-            v-if="form.mobileImgBackgroundUrl"
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="form.mobileImgBackgroundUrl = ''"
-          >
-            {{ t('fields.remove') }}
-          </el-button>
-        </el-row>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.desktopBanner')" prop="desktopBannerUrl">
-        <el-row :gutter="5">
-          <el-col v-if="form.desktopBannerUrl" :span="18" style="width: 250px">
-            <el-image
-              v-if="form.desktopBannerUrl"
-              :src="promoDir + form.desktopBannerUrl"
-              fit="contain"
-              class="preview"
-              :preview-src-list="[promoDir + form.desktopBannerUrl]"
-            />
-          </el-col>
-        </el-row>
-        <el-row :gutter="5">
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            v-permission="['sys:siteimage:add']"
-            @click="showDialog('DESKTOP_BANNER')"
-          >
-            {{ t('fields.upload') }}
-          </el-button>
-          <el-button
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="browseImage('DESKTOP_BANNER')"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <el-button
-            v-if="form.desktopBannerUrl"
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="form.desktopBannerUrl = ''"
-          >
-            {{ t('fields.remove') }}
-          </el-button>
-        </el-row>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.mobileBanner')" prop="mobileBannerUrl">
-        <el-row :gutter="5">
-          <el-col v-if="form.mobileBannerUrl" :span="18" style="width: 250px">
-            <el-image
-              v-if="form.mobileBannerUrl"
-              :src="promoDir + form.mobileBannerUrl"
-              fit="contain"
-              class="preview"
-              :preview-src-list="[promoDir + form.mobileBannerUrl]"
-            />
-          </el-col>
-        </el-row>
-        <el-row :gutter="5">
-          <el-button
-            icon="el-icon-plus"
-            size="mini"
-            type="primary"
-            v-permission="['sys:siteimage:add']"
-            @click="showDialog('MOBILE_BANNER')"
-          >
-            {{ t('fields.upload') }}
-          </el-button>
-          <el-button
-            icon="el-icon-search"
-            size="mini"
-            type="success"
-            @click="browseImage('MOBILE_BANNER')"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <el-button
-            v-if="form.mobileBannerUrl"
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            @click="form.mobileBannerUrl = ''"
-          >
-            {{ t('fields.remove') }}
-          </el-button>
-        </el-row>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.redirect')" prop="redirectUrl">
-        <el-input v-model="form.redirectUrl" class="form-input" />
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.site')" prop="siteId">
-        <el-select
-          v-model="form.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 260px"
-          default-first-option
-          @focus="loadSites"
-          @change="onChangeSite"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.label')" prop="labelType">
-        <el-radio-group v-model="form.labelType">
-          <el-radio
-            v-for="c in labelType.list"
-            :label="c.value"
-            :key="c.key"
-            v-model="form.labelType"
-          >
-            {{ c.displayName }}
-          </el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item v-if="form.labelType !== null" class="label-cancel">
-        <el-button type="danger" @click="handleCancelClick">
-          {{ t('fields.labelCancel') }}
-        </el-button>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.promoType')" prop="promoType">
-        <el-col :span="12">
-          <el-checkbox-group
-            v-model="selected.promoTypeChecked"
-            @change="handleCheckedChangePromoType"
-            class="form-input"
-          >
-            <el-checkbox
-              v-for="p in promoTypes"
-              :label="p.typeName"
-              :key="p.value"
+        <el-row>
+          <el-form-item :label="t('fields.site')" prop="siteId">
+            <el-select
+              v-model="form.siteId"
+              size="small"
+              :placeholder="t('fields.site')"
+              class="filter-item"
+              style="width: 260px"
+              default-first-option
+              @focus="loadSites"
+              @change="onChangeSite"
             >
-              {{ p.displayName }}
+              <el-option
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.title')" prop="title">
+            <el-col :span="24">
+              <el-input v-model="form.title" class="form-input" />
+            </el-col>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.redirect')" prop="redirectUrl">
+            <el-input v-model="form.redirectUrl" class="form-input" />
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.label')" prop="labelType">
+            <el-radio-group v-model="form.labelType">
+              <el-radio
+                v-for="c in labelType.list"
+                :label="c.value"
+                :key="c.key"
+                v-model="form.labelType"
+              >
+                {{ c.displayName }}
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item v-if="form.labelType !== null" class="label-cancel">
+            <el-button type="danger" @click="handleCancelClick">
+              {{ t('fields.labelCancel') }}
+            </el-button>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.promoType')" prop="promoType">
+            <el-col :span="12">
+              <el-checkbox-group
+                v-model="selected.promoTypeChecked"
+                @change="handleCheckedChangePromoType"
+                class="form-input"
+              >
+                <el-checkbox
+                  v-for="p in promoTypes"
+                  :label="p.typeName"
+                  :key="p.value"
+                >
+                  {{ p.displayName }}
+                </el-checkbox>
+              </el-checkbox-group>
+            </el-col>
+          </el-form-item>
+
+          <el-col :span="12">
+            <el-form-item :label="t('fields.hasPromo')" prop="hasPromo">
+              <el-switch
+                v-model="form.hasPromo"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+              />
+            </el-form-item>
+
+            <el-form-item :label="t('fields.status')" prop="status">
+              <el-radio-group
+                v-model="form.status"
+                size="mini"
+                style="width: 300px"
+              >
+                <el-radio-button label="0">Open</el-radio-button>
+                <el-radio-button label="1">Close</el-radio-button>
+                <el-radio-button label="2">Test</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item label="VIP" prop="vips">
+            <el-checkbox
+              v-model="checkboxes.vip.checkAll"
+              :indeterminate="checkboxes.vip.isIndeterminate"
+              @change="handleVIPCheckAllChange"
+            >
+              {{ t('fields.checkall') }}
             </el-checkbox>
-          </el-checkbox-group>
-        </el-col>
-      </el-form-item>
+            <el-checkbox-group
+              v-model="selectedVIPs.vipChecked"
+              @change="handleCheckedChange"
+              style="width: 300px"
+            >
+              <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
+                {{ v.name }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </el-row>
+        <el-row v-if="isVnm(form.siteId)">
+          <el-form-item :label="t('fields.affiliateCode')" prop="affiliates">
+            <el-checkbox @change="onCheckAllAffiliate" v-model="checkAllAff">
+              {{ t('fields.all') }}
+            </el-checkbox>
+            <div class="flex gap-2 mt-4">
+              <el-tag
+                v-for="aff in uiControl.affList"
+                :key="aff"
+                closable
+                :disable-transitions="false"
+                @close="removeAff(aff)"
+                style="margin-right: 5px;"
+              >
+                {{ aff }}
+              </el-tag>
+            </div>
+            <el-input
+              v-if="uiControl.inputVisible"
+              ref="InputRef"
+              v-model="inputValue"
+              class="w-20"
+              size="small"
+              @keyup.enter="handleInputConfirm"
+              @blur="handleInputConfirm"
+            />
+            <div v-else>
+              <el-button class="button-new-tag" size="small" @click="showInput">
+                + {{ t('fields.affiliateCode') }}
+              </el-button>
+            </div>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.sequence')" prop="sequence">
+            <el-col :span="7">
+              <el-input-number v-model="form.sequence" controls-position="right" />
+            </el-col>
+          </el-form-item>
 
-      <el-col :span="12">
-        <el-form-item :label="t('fields.hasPromo')" prop="hasPromo">
-          <el-switch
-            v-model="form.hasPromo"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
+          <el-col :span="17">
+            <el-form-item :label="t('fields.promoCode')" prop="promoCode">
+              <el-input
+                v-model="form.promoCode"
+                size="small"
+                style="width: 260px"
+                :placeholder="t('fields.promoCode')"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item :label="t('fields.param')" prop="param">
+          <div v-for="(item, index) in param" :key="index">
+            <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" />
+            :
+            <el-input style="width: 170px " v-model="item.value" />
+            <el-button
+              v-if="index === param.length - 1"
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              style="margin-left: 20px"
+              @click="addParam()"
+              plain
+            >
+              {{ t('fields.add') }}
+            </el-button>
+            <el-button
+              v-else
+              icon="el-icon-remove"
+              size="mini"
+              type="danger"
+              style="margin-left: 20px"
+              @click="delParam(index)"
+              plain
+            >
+              {{ t('fields.delete') }}
+            </el-button>
+          </div>
+        </el-form-item>
+        <el-form-item :label="t('fields.startTime')" prop="startTime">
+          <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.startTime"
+            :disabled-date="disabledStartDate"
           />
         </el-form-item>
-
-        <el-form-item :label="t('fields.status')" prop="status">
-          <el-radio-group
-            v-model="form.status"
-            size="mini"
-            style="width: 300px"
-          >
-            <el-radio-button label="0">Open</el-radio-button>
-            <el-radio-button label="1">Close</el-radio-button>
-            <el-radio-button label="2">Test</el-radio-button>
-          </el-radio-group>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.endTime"
+            :disabled-date="disabledEndDate"
+          />
         </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-form-item label="VIP" prop="vips">
-        <el-checkbox
-          v-model="checkboxes.vip.checkAll"
-          :indeterminate="checkboxes.vip.isIndeterminate"
-          @change="handleVIPCheckAllChange"
-        >
-          {{ t('fields.checkall') }}
-        </el-checkbox>
-        <el-checkbox-group
-          v-model="selectedVIPs.vipChecked"
-          @change="handleCheckedChange"
-          style="width: 300px"
-        >
-          <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
-            {{ v.name }}
-          </el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-    </el-row>
-    <el-row v-if="isVnm(form.siteId)">
-      <el-form-item :label="t('fields.affiliateCode')" prop="affiliates">
-        <el-checkbox @change="onCheckAllAffiliate" v-model="checkAllAff">
-          {{ t('fields.all') }}
-        </el-checkbox>
-        <div class="flex gap-2 mt-4">
-          <el-tag
-            v-for="aff in uiControl.affList"
-            :key="aff"
-            closable
-            :disable-transitions="false"
-            @close="removeAff(aff)"
-            style="margin-right: 5px;"
-          >
-            {{ aff }}
-          </el-tag>
-        </div>
-        <el-input
-          v-if="uiControl.inputVisible"
-          ref="InputRef"
-          v-model="inputValue"
-          class="w-20"
-          size="small"
-          @keyup.enter="handleInputConfirm"
-          @blur="handleInputConfirm"
-        />
-        <div v-else>
-          <el-button class="button-new-tag" size="small" @click="showInput">
-            + {{ t('fields.affiliateCode') }}
+        <el-form-item :label="t('fields.content')" prop="pageContent">
+          <!-- editor here -->
+          <Editor v-model:value="form.pageContent" @input="getInput" />
+        </el-form-item>
+        <div class="form-footer">
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
           </el-button>
+          <el-button @click="back">{{ t('fields.cancel') }}</el-button>
         </div>
-      </el-form-item>
-    </el-row>
-    <el-row>
-      <el-form-item :label="t('fields.sequence')" prop="sequence">
-        <el-col :span="7">
-          <el-input-number v-model="form.sequence" controls-position="right" />
+      </el-form>
+    </el-tab-pane>
+    <el-tab-pane :label="t('fields.image')" name="image">
+      <el-form
+        ref="promoForm"
+        :model="form"
+        :rules="formRules"
+        :inline="true"
+        size="small"
+        label-width="120px"
+      >
+        <el-col :span="10">
+          <el-row>
+            <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopImgUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopImgUrl"
+                    :src="promoDir + form.desktopImgUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopImgUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_IMAGE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopImgUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopImgUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              :label="t('fields.desktopBackgroundImage')"
+              prop="desktopImgBackgroundUrl"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopImgBackgroundUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopImgBackgroundUrl"
+                    :src="promoDir + form.desktopImgBackgroundUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopImgBackgroundUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_BACKGROUND_IMAGE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopImgBackgroundUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopImgBackgroundUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileImgUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileImgUrl"
+                    :src="promoDir + form.mobileImgUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileImgUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_IMAGE', false)"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_IMAGE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileImgUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileImgUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              :label="t('fields.mobileBackgroundImage')"
+              prop="mobileImgBackgroundUrl"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileImgBackgroundUrl" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileImgBackgroundUrl"
+                    :src="promoDir + form.mobileImgBackgroundUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileImgBackgroundUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_BACKGROUND_IMAGE', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileImgBackgroundUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileImgBackgroundUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item :label="t('fields.desktopBanner')" prop="desktopBannerUrl">
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopBannerUrl" :span="18" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopBannerUrl"
+                    :src="promoDir + form.desktopBannerUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopBannerUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_BANNER', false)"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_BANNER')"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopBannerUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopBannerUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item :label="t('fields.mobileBanner')" prop="mobileBannerUrl">
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileBannerUrl" :span="18" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileBannerUrl"
+                    :src="promoDir + form.mobileBannerUrl"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileBannerUrl]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_BANNER', false)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileBannerUrl"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileBannerUrl = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
         </el-col>
-      </el-form-item>
-
-      <el-col :span="17">
-        <el-form-item :label="t('fields.promoCode')" prop="promoCode">
-          <el-input
-            v-model="form.promoCode"
-            size="small"
-            style="width: 260px"
-            :placeholder="t('fields.promoCode')"
-          />
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-form-item :label="t('fields.param')" prop="param">
-      <div v-for="(item, index) in param" :key="index">
-        <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" />
-        :
-        <el-input style="width: 170px " v-model="item.value" />
-        <el-button
-          v-if="index === param.length - 1"
-          icon="el-icon-plus"
-          size="mini"
-          type="primary"
-          style="margin-left: 20px"
-          @click="addParam()"
-          plain
-        >
-          {{ t('fields.add') }}
-        </el-button>
-        <el-button
-          v-else
-          icon="el-icon-remove"
-          size="mini"
-          type="danger"
-          style="margin-left: 20px"
-          @click="delParam(index)"
-          plain
-        >
-          {{ t('fields.delete') }}
-        </el-button>
-      </div>
-    </el-form-item>
-    <el-form-item :label="t('fields.startTime')" prop="startTime">
-      <el-date-picker
-        type="datetime"
-        value-format="YYYY-MM-DD HH:mm:ss"
-        v-model="form.startTime"
-        :disabled-date="disabledStartDate"
-      />
-    </el-form-item>
-    <el-form-item :label="t('fields.endTime')" prop="endTime">
-      <el-date-picker
-        type="datetime"
-        value-format="YYYY-MM-DD HH:mm:ss"
-        v-model="form.endTime"
-        :disabled-date="disabledEndDate"
-      />
-    </el-form-item>
-    <el-form-item :label="t('fields.content')" prop="pageContent">
-      <!-- editor here -->
-      <Editor v-model:value="form.pageContent" @input="getInput" />
-    </el-form-item>
-    <div class="form-footer">
-      <el-button type="primary" @click="submit">
-        {{ t('fields.confirm') }}
-      </el-button>
-      <el-button @click="back">{{ t('fields.cancel') }}</el-button>
-    </div>
-  </el-form>
+        <el-col :span="20" :offset="50">
+          <el-row>
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopImageDark')" prop="desktopImgUrlDark" label-width="200px">
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopImgUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopImgUrlDark"
+                    :src="promoDir + form.desktopImgUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopImgUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_IMAGE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopImgUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopImgUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.desktopBackgroundImageDark')"
+              prop="desktopImgBackgroundUrlDark"
+              label-width="200px"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopImgBackgroundUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopImgBackgroundUrlDark"
+                    :src="promoDir + form.desktopImgBackgroundUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopImgBackgroundUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_BACKGROUND_IMAGE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopImgBackgroundUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopImgBackgroundUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.mobileImageDark')" prop="mobileImgUrlDark" label-width="200px">
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileImgUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileImgUrlDark"
+                    :src="promoDir + form.mobileImgUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileImgUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_IMAGE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileImgUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileImgUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              v-if="uiControl.supportDarkMode"
+              :label="t('fields.mobileBackgroundImageDark')"
+              prop="mobileImgBackgroundUrDark"
+              label-width="200px"
+            >
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileImgBackgroundUrlDark" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileImgBackgroundUrlDark"
+                    :src="promoDir + form.mobileImgBackgroundUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileImgBackgroundUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_BACKGROUND_IMAGE', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileImgBackgroundUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileImgBackgroundUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopBannerDark')" prop="desktopBannerUrlDark" label-width="200px">
+              <el-row :gutter="5">
+                <el-col v-if="form.desktopBannerUrlDark" :span="18" style="width: 250px">
+                  <el-image
+                    v-if="form.desktopBannerUrlDark"
+                    :src="promoDir + form.desktopBannerUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.desktopBannerUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('DESKTOP_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('DESKTOP_BANNER', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.desktopBannerUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.desktopBannerUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.mobileBannerDark')" prop="mobileBannerUrlDark" label-width="200px">
+              <el-row :gutter="5">
+                <el-col v-if="form.mobileBannerUrlDark" :span="18" style="width: 250px">
+                  <el-image
+                    v-if="form.mobileBannerUrlDark"
+                    :src="promoDir + form.mobileBannerUrlDark"
+                    fit="contain"
+                    class="preview"
+                    :preview-src-list="[promoDir + form.mobileBannerUrlDark]"
+                  />
+                </el-col>
+              </el-row>
+              <el-row :gutter="5">
+                <el-button
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  v-permission="['sys:siteimage:add']"
+                  @click="showDialog('MOBILE_BANNER')"
+                >
+                  {{ t('fields.upload') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-search"
+                  size="mini"
+                  type="success"
+                  @click="browseImage('MOBILE_BANNER', true)"
+                >
+                  {{ t('fields.browse') }}
+                </el-button>
+                <el-button
+                  v-if="form.mobileBannerUrlDark"
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="form.mobileBannerUrlDark = ''"
+                >
+                  {{ t('fields.remove') }}
+                </el-button>
+              </el-row>
+            </el-form-item>
+          </el-row>
+        </el-col>
+      </el-form>
+    </el-tab-pane>
+  </el-tabs>
   <el-dialog
     :title="uiControl.imageSelectionTitle"
     v-model="uiControl.imageSelectionVisible"
@@ -801,6 +1088,7 @@ import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
 import { isVnm, isXF, isThai, isDY, isLH, isPak } from '@/utils/site'
+import { getSupportDarkMode } from "@/api/config";
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -816,6 +1104,7 @@ const param = ref([])
 const inputValue = ref('')
 const InputRef = ref(null)
 const checkAllAff = ref(false)
+const activeName = ref('config')
 
 const vipList = reactive({
   list: [],
@@ -829,12 +1118,19 @@ const form = reactive({
   title: null,
   imgUrl: null,
   desktopImgUrl: null,
+  desktopImgUrlDark: null,
   desktopImgBackgroundUrl: null,
+  desktopImgBackgroundUrlDark: null,
   mobileImgUrl: null,
+  mobileImgUrlDark: null,
   mobileImgBackgroundUrl: null,
+  mobileImgBackgroundUrlDark: null,
   desktopBannerUrl: null,
+  desktopBannerUrlDark: null,
   mobileBannerUrl: null,
+  mobileBannerUrlDark: null,
   backgroundImgUrl: null,
+  backgroundImgUrlDark: null,
   redirectUrl: null,
   siteId: null,
   labelType: null,
@@ -878,6 +1174,8 @@ const uiControl = reactive({
   imageSelectionVisible: false,
   inputVisible: false,
   affList: [],
+  supportDarkMode: false,
+  selectDarkImage: false,
 })
 
 const checkboxes = reactive({
@@ -1071,7 +1369,14 @@ function selectImage(item) {
   selectedImage.remark = item.remark
 }
 
-function browseImage(type) {
+async function loadDarkMode() {
+  if (form.siteId) {
+    const { data: darkMode } = await getSupportDarkMode(form.siteId)
+    uiControl.supportDarkMode = darkMode;
+  }
+}
+
+function browseImage(type, isDark) {
   loadSiteImage(type)
   switch (type) {
     case 'DESKTOP_IMAGE':
@@ -1093,8 +1398,14 @@ function browseImage(type) {
       uiControl.imageSelectionTitle = t('fields.mobileBanner')
       break
   }
+  if (uiControl.supportDarkMode && isDark) {
+    uiControl.selectDarkImage = true
+  } else {
+    uiControl.selectDarkImage = false
+  }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
+  console.log("uiControl.selectDarkImage", uiControl.selectDarkImage)
 }
 
 // function handleRadioChangeLabel() {
@@ -1303,22 +1614,46 @@ async function loadSites() {
 function submitImage() {
   switch (uiControl.imageSelectionType) {
     case 'DESKTOP_IMAGE':
-      form.desktopImgUrl = selectedImage.path
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.desktopImgUrlDark = selectedImage.path
+      } else {
+        form.desktopImgUrl = selectedImage.path
+      }
       break
     case 'DESKTOP_BACKGROUND_IMAGE':
-      form.desktopImgBackgroundUrl = selectedImage.path
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.desktopImgBackgroundUrlDark = selectedImage.path
+      } else {
+        form.desktopImgBackgroundUrl = selectedImage.path
+      }
       break
     case 'MOBILE_IMAGE':
-      form.mobileImgUrl = selectedImage.path
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.mobileImgUrlDark = selectedImage.path
+      } else {
+        form.mobileImgUrl = selectedImage.path
+      }
       break
     case 'MOBILE_BACKGROUND_IMAGE':
-      form.mobileImgBackgroundUrl = selectedImage.path
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.mobileImgBackgroundUrlDark = selectedImage.path
+      } else {
+        form.mobileImgBackgroundUrl = selectedImage.path
+      }
       break
     case 'DESKTOP_BANNER':
-      form.desktopBannerUrl = selectedImage.path
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.desktopBannerUrlDark = selectedImage.path
+      } else {
+        form.desktopBannerUrl = selectedImage.path
+      }
       break
     case 'MOBILE_BANNER':
-      form.mobileBannerUrl = selectedImage.path
+      if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+        form.mobileBannerUrlDark = selectedImage.path
+      } else {
+        form.mobileBannerUrl = selectedImage.path
+      }
       break
   }
   uiControl.imageSelectionVisible = false
@@ -1410,6 +1745,7 @@ function submitImageUpload() {
 function onChangeSite() {
   // if (parseInt(form.siteId) === 8) {
   loadVips()
+  loadDarkMode()
   // }
 }
 
@@ -1476,17 +1812,18 @@ const handleInputConfirm = () => {
   inputValue.value = ''
 }
 
-onMounted(() => {
-  loadSites()
+onMounted(async () => {
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
-    loadForm(route.params.id)
+    await loadForm(route.params.id)
+    await loadDarkMode()
   } else {
-    addParam()
-    loadPromoTypes()
+    await addParam()
+    await loadPromoTypes()
   }
 })
 </script>

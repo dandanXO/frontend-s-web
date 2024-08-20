@@ -260,7 +260,8 @@ export default {
     withdrawMaxTimes: "Remaining Withdrawal Attempts",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
-    withdrawTutorial: "Withdraw Tutorial"
+    withdrawTutorial: "Withdraw Tutorial",
+    withdrawalMethodInMaintenance: 'This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!'
   },
   bank: {
     virtualWallet: "eWallet",
