@@ -2155,6 +2155,7 @@ export default {
     updateToUnderReviewSuccess: 'Update to Under Review Success',
     updateUserTypeSuccess: 'Update UserType Success',
     updateVIPLevelSuccess: 'Update VIP Level Success',
+    updateWithdrawTypeSuccess: 'Update Withdraw Type Success',
     updateShareRatioSuccess: 'Update Share Ratio Success',
     useCommaToSeparateDomain:
       'Please use "," to separate domain name if insert multiple domain',
@@ -2434,6 +2435,7 @@ export default {
     validateWithdrawChannel: 'Sequence cannot be repeated',
     validateWithdrawExchangeRateRequired: 'Withdraw Exchange Rate is required',
     validateWithdrawPlatformNameRequired: 'Withdraw Platform Name is required',
+    validateWithdrawTypeRequired: 'Withdraw Type is required',
     validateTigerCardPeriodRequired: 'Period required',
     validateTigerCardTimeRequired: 'Lottery Time required',
     validateTigerCardBonusTimeRequired: 'Receive Time required',
