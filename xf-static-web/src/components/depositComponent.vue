@@ -168,6 +168,30 @@
         <br />
         <el-button class="common-btn" @click="clearInfo">理解</el-button>
       </el-dialog>
+
+      <el-dialog
+        width="500"
+        v-model="isShowSubmitDialog"
+        title="完成以下认证才可以存款"
+        :close-on-click-modal="false"
+        center
+      >
+        <div class="submit-alert-message-wrapper">
+          <div class="submit-alert-message-item" v-if="!store.realName">
+            <p>存款需要绑定真实姓名</p>
+            <el-button type="primary" @click="handleBindRealName">去绑定</el-button>
+          </div>
+          <div class="submit-alert-message-item" v-if="!store.phone">
+            <p>存款需要绑定手机号</p>
+            <el-button type="primary" @click="handleBindPhoneNumber">去绑定</el-button>
+          </div>
+        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button type="primary" style="width: 100%" @click="isShowSubmitDialog = false">暂不认证</el-button>
+          </div>
+        </template>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -261,6 +285,7 @@ const checkAmount = reactive({
 });
 
 const calculatedMinDeposit = ref("");
+const isShowSubmitDialog = ref(false);
 const rules = {
   localAmount: [
     {
@@ -437,24 +462,20 @@ function clearInfo() {
   checkMinDepositAmt();
 }
 
+const checkBeforeSubmit = () => {
+  if (!store.phone || !store.realName) {
+    isShowSubmitDialog.value = true;
+    return false;
+  }
+
+  return true;
+};
+
 function confirmDeposit() {
   if (store.token) {
-    if (!store.phone) {
-      ElMessageBox.alert("为保证资金安全，存款前请先验证手机号", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
-        draggable: true,
-        buttonSize: "small"
-      })
-        .then(() => {
-          router.push("/center/personal");
-        })
-        .catch(() => {});
-      return;
-    } else if (withdrawState.bankCardList.length === 0) {
+    if (!checkBeforeSubmit()) return;
+
+    if (withdrawState.bankCardList.length === 0) {
       if (isUSDT.value == true) {
         ElMessageBox.alert("请先绑定虚拟币钱包", "系统提示", {
           showClose: false,
@@ -615,7 +636,16 @@ async function verifyBank(r, v) {
   }
 }
 
+const handleBindRealName = () => {
+  router.push("/center/personal");
+};
+
+const handleBindPhoneNumber = () => {
+  router.push("/center/personal");
+};
+
 onMounted(() => {
+  checkBeforeSubmit();
   initPay();
   loadCards();
 });
@@ -850,6 +880,22 @@ onMounted(() => {
     }
     button {
       width: 80px;
+    }
+  }
+}
+
+.submit-alert-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .submit-alert-message-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    p {
+      flex: 1;
     }
   }
 }
