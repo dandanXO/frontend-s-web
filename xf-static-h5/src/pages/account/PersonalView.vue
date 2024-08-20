@@ -54,7 +54,9 @@
         :rules="[(val) => (val && val.length > 0) || '请输入生日']"
       >
         <template v-slot:append>
-          <q-icon name="event" color="white" class="cursor-pointer">
+          <q-icon
+            :class="personalState.memberInfo.birthday ? 'disabled' : ''"
+            name="event" color="white" class="cursor-pointer">
             <q-popup-proxy
               cover
               transition-show="scale"
@@ -69,21 +71,6 @@
           </q-icon>
         </template>
       </q-input>
-
-      <!-- <q-input
-        type="date"
-        class="q-pb-xs"
-        hide-bottom-space
-        filled
-        v-model="formDetail.birthday"
-        label="生日"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入生日']"
-
-        label-color="secondary"
-        color="secondary"
-        :readonly="personalState.memberInfo.birthday ? true : false"
-      /> -->
 
       <div class="flex items-center no-wrap">
         <q-input
@@ -140,32 +127,6 @@
           </div>
         </template>
       </div>
-
-      <!-- <q-input
-        v-if="!formDetail.phoneVerified"
-        standout
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.phone"
-        type="tel"
-        label="手机验证码"
-        lazy-rules
-        :rules="[(_) => isValidPhone()]"
-        label-color=""
-        color=""
-        :readonly="personalState.memberInfo.phone ? true : false"
-      >
-        <template v-slot:append v-if="!formDetail.phoneVerified">
-          <q-btn
-            size="sm"
-            color="brightbtn"
-            label="验证"
-            :disable="!formDetail.phone"
-            @click="openVerificationDialog"
-          />
-        </template>
-      </q-input> -->
 
       <div class="text-center q-mt-md" v-if="canEdit">
         <q-btn
@@ -409,13 +370,13 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
-      if (!personalState.memberInfo.birthday) {
+      if (!personalState.memberInfo.birthday && formDetail.birthday) {
         birthdayRef.value.validate();
         if (birthdayRef.value.hasError) {
           return;
         }
       }
-      if (!personalState.memberInfo.realName) {
+      if (!personalState.memberInfo.realName && formDetail.realName) {
         realNameRef.value.validate();
         if (realNameRef.value.hasError) {
           return;
@@ -595,5 +556,10 @@ export default defineComponent({
       border-radius: 4px;
     }
   }
+}
+
+.disabled{
+  pointer-events: none;
+  opacity: 0;
 }
 </style>
