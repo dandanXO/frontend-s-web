@@ -2621,10 +2621,14 @@ export default defineComponent({
     .game-right-platform {
       .platform-block {
         .platform-img-frame {
-          // border-radius: 20px;
+          border-radius: unset;
           background-color: transparent;
+          aspect-ratio: 592/212;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
+            top:1px;
+            left:1px;
+            border-top-left-radius:8px;
           }
           .platform-subtitle {
             color: $font-1-dark;
