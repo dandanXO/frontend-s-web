@@ -17,8 +17,8 @@
                 <img :src="require(`../assets/vip/badge/${vip.vipTitle}.png`)" />
               </div>
               <div class="description">
-                累积存款:
-                <span>{{ vip.upgrade }}</span>
+                晋级所需有效流水:
+                <span>{{ formatNumber(vip.upgradeBetAmount) }}</span>
               </div>
               <div class="viplevel">VIP {{ vip.vipLevel }}</div>
             </div>
@@ -34,7 +34,7 @@
         <img :src="badgeSrc" />
       </div>
       <div class="vip-progress">
-        <div class="amount">
+        <!-- <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">
             还要
             <div class="required-amount">{{ formatNumber(currentUpgradeDepAmt - currentDepAmt) }}</div>
@@ -51,18 +51,18 @@
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'deposit') + '%' }" />
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">
             还要
             <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>
-            经验值升级到 VIP {{ vipLevel + 1 }}
+            有效流水升级到 VIP {{ vipLevel + 1 }}
           </div>
           <div class="text" v-else-if="vipLevel === 0"></div>
           <div class="text" v-else>
             已到达
             <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-            经验值 VIP {{ vipLevel + 1 }}
+            有效流水 VIP {{ vipLevel + 1 }}
           </div>
           <div class="progressBarContainer" v-if="vipLevel != 0">
             <div class="progressBarOuterBar">
@@ -81,11 +81,11 @@
     </div>
     <div class="month-birthday-bonus">
       <div class="left">
-        <img src="../assets/vip/img-border.png" />
+        <img src="../assets/vip/img-border.png" style="z-index: 0;" />
         <div class="inner-slide">
           <el-carousel height="350px">
-            <el-carousel-item v-for="item in 4" :key="item">
-              <h3 class="small justify-center" text="2xl"><img src="../assets/vip/slide-img.png" /></h3>
+            <el-carousel-item v-for="item in banners" :key="item">
+              <h3 :href="redirectUrl" class="small justify-center" text="2xl"><a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a></h3>
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -141,7 +141,7 @@
       <div v-if="isShowTable" class="absolute-box">
         <div class="arrow_box">
           <div class="overflow-table">
-            <!-- <table border="1">
+            <table border="0" cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
                   <th style="background: #AD9870;">等级</th>
@@ -177,120 +177,117 @@
                 </tr>
                 <tr>
                   <td>升级条件<br>（流水）</td>
-                  <td>6,000</td>
+                  <td>3,000</td>
                   <td>17,500</td>
                   <td>50,000</td>
-                  <td>130,000</td>
+                  <td>150,000</td>
                   <td>600,000</td>
                   <td>1,200,000</td>
                   <td>2,400,000</td>
                   <td>6,400,000</td>
-                  <td>2,400,000</td>
-                  <td>6,400,000</td>
-                  <td>15,000,000</td>
-                  <td>25,000,000</td>
+                  <td>24,000,000</td>
+                  <td>64,000,000</td>
+                  <td>150,000,000</td>
+                  <td>250,000,000</td>
                 </tr>
                 <tr>
                   <td>保级条件<br>（90天）</td>
-                  <td>3,500</td>
-                  <td>7,500</td>
-                  <td>19,000</td>
-                  <td>32,500</td>
-                  <td>75,000</td>
-                  <td>200,000</td>
-                  <td>620,000</td>
-                  <td>1,900,000</td>
-                  <td>6,250,000</td>
-                  <td>12,500,000</td>
-                  <td>21,000,000</td>
-                  <td>50,000,000</td>
-                </tr>
-              </tbody>
-            </table> -->
-            <table border="1" cellspacing="0" cellpadding="0">
-              <thead>
-                <tr>
-                  <th style="background: #f1dda0; color: #766442">VIP等级</th>
-                  <th style="background: #f1dda0; color: #766442">升级条件（流水）</th>
-                  <th style="background: #f1dda0; color: #766442">保级条件（90天）</th>
-                  <th style="background: #f1dda0; color: #766442">晋级彩金</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>VIP 1</td>
-                  <td>3,000</td>
                   <td>1,500</td>
-                  <td>8</td>
-                </tr>
-                <tr>
-                  <td>VIP 2</td>
-                  <td>17,500</td>
                   <td>7,500</td>
-                  <td>18</td>
-                </tr>
-                <tr>
-                  <td>VIP 3</td>
-                  <td>50,000</td>
                   <td>19,000</td>
-                  <td>28</td>
-                </tr>
-                <tr>
-                  <td>VIP 4</td>
-                  <td>150,000</td>
                   <td>32,500</td>
-                  <td>38</td>
-                </tr>
-                <tr>
-                  <td>VIP 5</td>
-                  <td>600,000</td>
                   <td>75,000</td>
-                  <td>58</td>
-                </tr>
-                <tr>
-                  <td>VIP 6</td>
-                  <td>1,200,000</td>
                   <td>200,000</td>
-                  <td>88</td>
-                </tr>
-                <tr>
-                  <td>VIP 7</td>
-                  <td>2,400,000</td>
                   <td>620,000</td>
-                  <td>188</td>
-                </tr>
-                <tr>
-                  <td>VIP 8</td>
-                  <td>6,400,000</td>
                   <td>1,900,000</td>
-                  <td>288</td>
-                </tr>
-                <tr>
-                  <td>VIP 9</td>
-                  <td>24,000,000</td>
                   <td>6,250,000</td>
-                  <td>388</td>
-                </tr>
-                <tr>
-                  <td>VIP 10</td>
-                  <td>64,000,000</td>
                   <td>12,500,000</td>
-                  <td>588</td>
-                </tr>
-                <tr>
-                  <td>VIP 11</td>
-                  <td>150,000,000</td>
                   <td>21,000,000</td>
-                  <td>888</td>
+                  <td>50,000,000</td>
                 </tr>
                 <tr>
-                  <td>VIP 12</td>
-                  <td>250,000,000</td>
-                  <td>50,000,000</td>
+                  <td>晋级彩金</td>
+                  <td>8</td>
+                  <td>18</td>
+                  <td>28</td>
+                  <td>38</td>
+                  <td>58</td>
+                  <td>88</td>
+                  <td>188</td>
+                  <td>288</td>
+                  <td>388</td>
+                  <td>588</td>
+                  <td>888</td>
                   <td>1,888</td>
                 </tr>
               </tbody>
             </table>
+            <!-- <table border="1" cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th style="background: #f1dda0; color: #766442;">VIP等级</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 1</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 2</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 3</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 4</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 5</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 6</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 7</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 8</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 9</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 10</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 11</th>
+                  <th style="background: #f1dda0; color: #766442;">VIP 12</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>升级条件（流水）</th>
+                  <td>3,000</td>
+                  <td>17,500</td>
+                  <td>50,000</td>
+                  <td>150,000</td>
+                  <td>600,000</td>
+                  <td>1,200,000</td>
+                  <td>2,400,000</td>
+                  <td>6,400,000</td>
+                  <td>24,000,000</td>
+                  <td>64,000,000</td>
+                  <td>150,000,000</td>
+                  <td>250,000,000</td>
+                </tr>
+                <tr>
+                  <th>保级条件（90天）</th>
+                  <td>1,500</td>
+                  <td>7,500</td>
+                  <td>19,000</td>
+                  <td>32,500</td>
+                  <td>75,000</td>
+                  <td>200,000</td>
+                  <td>620,000</td>
+                  <td>1,900,000</td>
+                  <td>6,250,000</td>
+                  <td>12,500,000</td>
+                  <td>21,000,000</td>
+                  <td>50,000,000</td>
+                </tr>
+                <tr>
+                  <th>晋级彩金</th>
+                  <td>8</td>
+                  <td>18</td>
+                  <td>28</td>
+                  <td>38</td>
+                  <td>58</td>
+                  <td>88</td>
+                  <td>188</td>
+                  <td>288</td>
+                  <td>388</td>
+                  <td>588</td>
+                  <td>888</td>
+                  <td>1,888</td>
+                </tr>
+              </tbody>
+            </table> -->
           </div>
         </div>
       </div>
@@ -603,12 +600,14 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, watch } from "vue";
-import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems } from "@/api/index/promo";
+import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 // import { message } from "ant-design-vue";
+import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
 const notify = useNotify();
 const store = userStore();
@@ -630,7 +629,7 @@ const getVipLevelProgress = (lvl, status) => {
     return 0;
   }
   const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
-  console.log(vipInfo);
+  // console.log(vipInfo);
   const vipLevel = +store.vip.replace("VIP", "");
   const currentDeposit = +store.getCurrentDeposit();
   currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
@@ -755,8 +754,9 @@ const currentDisplayTerms = ref(terms);
 //   else currentDisplayTerms.value = vipTerms;
 // };
 const badgeSrc = computed(() => {
-  const vip = vipItems.find((vip) => vip.vipLevel === vipLevel && vipLevel);
-  return require(`../assets/vip/level/vip${vip ? vip.vipLevel : "1"}.png`);
+  const currentVIP = +store.vip.replace("VIP", "");
+  const matchedVIP = vipItems.find((vip) => +vip.vipLevel === currentVIP);
+  return require(`../assets/vip/level/vip${matchedVIP ? currentVIP : "1"}.png`);
 });
 
 const vipItems = reactive([
@@ -828,14 +828,28 @@ const formatPercentageRange = (range) => {
   );
   return formattedPercentages.join("% - ") + "%"; // Join the formatted percentages
 };
+const banners = ref([]);
+const getImages = () => {
+  loadPromoBanner('VIP').then((res) => {
+    if (res.code === 0) {
+      banners.value = res.data;
+    }
+  })
+}
 const initVIPTable = async () => {
+  getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
 
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
     vipBonusVOList.forEach((vipBonusItem) => {
-      vipBonusItem.holidayClaimStatus = "NO_STATUS";
-      vipBonusItem.rebateClaimStatus = "NO_STATUS";
+      if (vipLevel.value === vipBonusItem.vipLevel) {
+        vipBonusItem.holidayClaimStatus = "NO_STATUS";
+        vipBonusItem.rebateClaimStatus = "NO_STATUS";
+      } else {
+        vipBonusItem.holidayClaimStatus = "CANT_CLAIM";
+        vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
+      }
       vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
       const index = vipItems.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
 
@@ -868,6 +882,23 @@ const claimVIPLevelItem = async (type, item) => {
   if (res.code === 0) {
     if (type !== "all") {
       item[`${type}ClaimStatus`] = "CLAIMED";
+    } else {
+      // Get item that has same level
+      const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
+      const statuses = [
+        'upgradeClaimStatus',
+        'monthlyClaimStatus',
+        'couponClaimStatus',
+        'rebateClaimStatus',
+        'retainClaimStatus',
+        'yearlyRetainClaimStatus'
+      ];
+
+      statuses.forEach(status => {
+        if (vipInfo[status] === "CAN_CLAIM") {
+          vipInfo[status] = "CLAIMED";
+        }
+      });
     }
     notify.success("领取成功！");
     store.getBalance();
@@ -987,6 +1018,7 @@ $border-settings: 1px solid #e5e7eb;
     padding-right: 20px;
     .badge {
       width: 250px;
+      padding: 20px;
       img {
         width: 100%;
       }
@@ -1541,8 +1573,10 @@ $border-settings: 1px solid #e5e7eb;
     max-width: 1200px;
     margin: 0 auto 20px;
     gap: 10px;
+    justify-content: center;
     .tab {
       max-width: 200px;
+      cursor: pointer;
       img {
         width: 100%;
       }

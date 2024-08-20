@@ -17,9 +17,9 @@
                   <img :src="require(`../../assets/images/vip/badge/${vip.vipTitle}.png`)" />
                 </div>
                 <div class="description">
-                  累积存款:
+                  晋级所需有效流水:
                   <span>
-                    {{ vip.upgrade }}
+                    {{ formatNumber(vip.upgradeBetAmount) }}
                   </span>
                 </div>
                 <div class="viplevel">VIP {{ vip.vipLevel }}</div>
@@ -37,7 +37,7 @@
         <img :src="badgeSrc" />
       </div>
       <div class="vip-progress">
-        <div class="amount">
+        <!-- <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">
             还要
             <div class="required-amount">{{ formatNumber(currentUpgradeDepAmt - currentDepAmt) }}</div>
@@ -54,18 +54,18 @@
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'deposit') + '%' }" />
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">
             还要
             <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>
-            经验值升级到 VIP {{ vipLevel + 1 }}
+            有效流水升级到 VIP {{ vipLevel + 1 }}
           </div>
           <div class="text" v-else-if="vipLevel === 0"></div>
           <div class="text" v-else>
             已到达
             <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-            经验值 VIP {{ vipLevel + 1 }}
+            有效流水 VIP {{ vipLevel + 1 }}
           </div>
           <div class="progressBarContainer" v-if="vipLevel != 0">
             <div class="progressBarOuterBar">
@@ -84,11 +84,11 @@
     </div>
     <div class="month-birthday-bonus">
       <div class="left">
-        <img src="../../assets/images/vip/img-border.png" />
+        <img class="abs" src="../../assets/images/vip/img-border.png" style="z-index: 0;" />
         <div class="inner-slide">
-          <Carousel v-model="currentCarousel" :items-to-show="1" :wrapAround="true">
-            <Slide v-for="i in 4" :key="i">
-              <img class="card-img" :src="require(`../../assets/images/vip/slide-img.png`)" alt="" />
+          <Carousel v-model="currentCarousel" :items-to-show="1">
+            <Slide v-for="(item, i) in banners" :key="i">
+              <a style="display:block;" :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.mobileImageUrl" /></a>
             </Slide>
             <template #addons>
               <Pagination />
@@ -154,7 +154,8 @@
       <div v-if="isShowTable" class="absolute-box">
         <div class="arrow_box">
           <div class="overflow-table">
-            <!-- <table border="1">
+            
+            <table border="0" cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
                   <th style="background: #AD9870;">等级</th>
@@ -190,22 +191,22 @@
                 </tr>
                 <tr>
                   <td>升级条件<br>（流水）</td>
-                  <td>6,000</td>
+                  <td>3,000</td>
                   <td>17,500</td>
                   <td>50,000</td>
-                  <td>130,000</td>
+                  <td>150,000</td>
                   <td>600,000</td>
                   <td>1,200,000</td>
                   <td>2,400,000</td>
                   <td>6,400,000</td>
-                  <td>2,400,000</td>
-                  <td>6,400,000</td>
-                  <td>15,000,000</td>
-                  <td>25,000,000</td>
+                  <td>24,000,000</td>
+                  <td>64,000,000</td>
+                  <td>150,000,000</td>
+                  <td>250,000,000</td>
                 </tr>
                 <tr>
                   <td>保级条件<br>（90天）</td>
-                  <td>3,500</td>
+                  <td>1,500</td>
                   <td>7,500</td>
                   <td>19,000</td>
                   <td>32,500</td>
@@ -218,9 +219,24 @@
                   <td>21,000,000</td>
                   <td>50,000,000</td>
                 </tr>
+                <tr>
+                  <td>晋级彩金</td>
+                  <td>8</td>
+                  <td>18</td>
+                  <td>28</td>
+                  <td>38</td>
+                  <td>58</td>
+                  <td>88</td>
+                  <td>188</td>
+                  <td>288</td>
+                  <td>388</td>
+                  <td>588</td>
+                  <td>888</td>
+                  <td>1,888</td>
+                </tr>
               </tbody>
-            </table> -->
-            <table border="1" cellspacing="0" cellpadding="0">
+            </table>
+            <!-- <table border="1" cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
                   <th style="background: #f1dda0; color: #766442">VIP等级</th>
@@ -303,7 +319,7 @@
                   <td>1,888</td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
         </div>
       </div>
@@ -626,10 +642,12 @@ import { ref, onActivated, computed, reactive, watch } from "vue";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems } from "src/api/index/promo";
+import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "src/api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
+import { useLocalStorage } from "@vueuse/core"
 
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
 const notify = useNotify();
 const store = userStore();
@@ -773,9 +791,11 @@ const onShowRebateClick = (flag) => {
   if (showRebate.value) currentDisplayTerms.value = terms;
   else currentDisplayTerms.value = vipTerms;
 };
+
 const badgeSrc = computed(() => {
-  const vip = vipItems.find((vip) => vip.vipLevel === vipLevel.value && vipLevel.value);
-  return require(`../../assets/images/vip/level/vip${vip ? vip.vipLevel : "1"}.png`);
+  const currentVIP = +store.vip.replace("VIP", "");
+  const matchedVIP = vipItems.find((vip) => +vip.vipLevel === currentVIP);
+  return require(`../../assets/images/vip/level/vip${matchedVIP ? currentVIP : "1"}.png`);
 });
 
 const vipItems = reactive([
@@ -847,14 +867,28 @@ const formatPercentageRange = (range) => {
   );
   return formattedPercentages.join("% - ") + "%"; // Join the formatted percentages
 };
+const banners = ref([]);
+const getImages = () => {
+  loadPromoBanner('VIP').then((res) => {
+    if (res.code === 0) {
+      banners.value = res.data;
+    }
+  })
+}
 const initVIPTable = async () => {
+  getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
 
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
     vipBonusVOList.forEach((vipBonusItem) => {
-      vipBonusItem.holidayClaimStatus = "NO_STATUS";
-      vipBonusItem.rebateClaimStatus = "NO_STATUS";
+      if (vipLevel.value === vipBonusItem.vipLevel) {
+        vipBonusItem.holidayClaimStatus = "NO_STATUS";
+        vipBonusItem.rebateClaimStatus = "NO_STATUS";
+      } else {
+        vipBonusItem.holidayClaimStatus = "CANT_CLAIM";
+        vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
+      }
       vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
       const index = vipItems.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
 
@@ -896,6 +930,22 @@ const claimVIPLevelItem = async (type, item) => {
   if (res.code === 0) {
     if (type !== "all") {
       item[`${type}ClaimStatus`] = "CLAIMED";
+    } else {
+      const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
+      const statuses = [
+        'upgradeClaimStatus',
+        'monthlyClaimStatus',
+        'couponClaimStatus',
+        'rebateClaimStatus',
+        'retainClaimStatus',
+        'yearlyRetainClaimStatus'
+      ];
+
+      statuses.forEach(status => {
+        if (vipInfo[status] === "CAN_CLAIM") {
+          vipInfo[status] = "CLAIMED";
+        }
+      });
     }
     notify({
       type: "success",
@@ -1033,13 +1083,14 @@ $border-settings: 1px solid #e5e7eb;
       left: 15px;
       img {
         width: 100%;
+        padding: 10px;
       }
     }
     .vip-progress {
       display: flex;
       flex-direction: column;
       width: calc(100% - 120px);
-      margin-left: 70px;
+      margin-left: 80px;
       gap: 20px;
       .amount {
         display: flex;
@@ -1091,21 +1142,21 @@ $border-settings: 1px solid #e5e7eb;
     .claim-btn {
       border: 2px solid #799df8;
       background: #405471;
-      padding: 8px 15px;
       color: #ffffff;
-      width: 180px;
+      width: 150px;
       text-align: center;
       display: block;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 12px;
       padding: 8px 0px;
       text-align: center;
-      width: 180px;
+      margin-left: 70px;
     }
   }
   .month-birthday-bonus {
     border: 2px solid #799df8;
     max-width: 480px;
+    width: 95%;
     margin: 50px auto 0;
     background: #010101e0;
     border-radius: 30px;
@@ -1114,12 +1165,16 @@ $border-settings: 1px solid #e5e7eb;
     align-items: flex-start;
     padding: 10px;
     gap: 10px;
+    ol {
+      margin: 0;
+      padding: 0;
+    }
     .left {
       // flex: 1;
       position: relative;
       width: 100%;
-      height: 280px;
-      img {
+      // height: 280px;
+      img.abs {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -1148,7 +1203,7 @@ $border-settings: 1px solid #e5e7eb;
     }
     .right {
       // flex: 1;
-      width: 220px;
+      // width: 220px;
       .vip-boxes {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -1233,7 +1288,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .tips {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 22.8px;
     text-align: center;
@@ -1249,11 +1304,14 @@ $border-settings: 1px solid #e5e7eb;
     .absolute-box {
       position: absolute;
       width: 100%;
-      right: -30px;
+      // right: -30px;
       z-index: 2;
+      // overflow: hidden;
     }
     .arrow_box {
-      width: 85%;
+      // width: 85%;
+      width: 90%;
+      left: 5%;
       top: 30px;
       position: relative;
       background: #1f2231;
@@ -1585,6 +1643,7 @@ $border-settings: 1px solid #e5e7eb;
     width: 95%;
     margin: 0 auto 20px;
     gap: 10px;
+    justify-content: center;
     .tab {
       max-width: 120px;
       img {
@@ -1732,11 +1791,25 @@ $border-settings: 1px solid #e5e7eb;
       }
 
       .vipcontents {
-        padding-bottom: 10px;
+        padding-bottom: 13px;
       }
     }
   }
 }
+
+// @media (max-width: 380px) {
+  
+//   .vip-container .month-birthday-bonus {
+//     flex-direction: column;
+//   }
+//   .vip-container .month-birthday-bonus .right .vip-boxes {
+//     justify-content: center;
+//     align-items: center;
+//   }
+//   .vip-boxes .carousel {
+//     max-width: unset !important;
+//   }
+// }
 </style>
 
 <style scoped>
@@ -1748,7 +1821,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide {
     overflow: hidden;
-    gap: 10px;
+    gap: 5px;
   }
   .carousel__pagination {
     padding: 0;
@@ -1758,6 +1831,12 @@ $border-settings: 1px solid #e5e7eb;
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  :deep(.carousel__viewport) {
+    height: 100%;
+  }
+  :deep(.carousel__track) {
+    height: 100%;
   }
   :deep(.carousel__pagination-button) {
     background: #ffffff80;
