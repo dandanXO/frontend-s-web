@@ -15,6 +15,7 @@
           :rules="[(val) => (val && val.length > 0) || $t('lang.personal_mobilenumber_val'), isValidPhone]"
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
+          disable
         ></q-input>
         <div class="q-ml-md">
           <q-btn
@@ -119,8 +120,26 @@ export default defineComponent({
       formDetails.realName = store.realName;
       formDetails.birthday = store.birthday;
       formDetails.email = store.email;
-      formDetails.phone = "";
       formDetails.phoneVerified = store.phoneVerified;
+      api.get('/session/member/telephone').then(res => {
+        if(res.code === 0) {
+          formDetails.phone = res.data
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          })
+        }
+      }).catch(e => {
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          })
+      })
     };
 
     const canEdit = ref(false);

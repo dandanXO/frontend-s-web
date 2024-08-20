@@ -4,8 +4,8 @@ import { userStore } from "@/store";
 export function loadBalance(platform) {
   return server.REST.get("/session/balance?v=" + new Date().getTime(), {
     params: {
-      platform,
-    },
+      platform
+    }
   });
 }
 export function getAnnouncement() {
@@ -28,7 +28,6 @@ export function changeWithdrawPwd(oldPassword, password) {
   return server.REST.post("/session/withdrawPassword", { oldPassword, password });
 }
 
-
 export function updateAccount(updateInfo) {
   return server.REST.post("/session/account", updateInfo);
 }
@@ -40,7 +39,7 @@ const recordUrl = {
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",
   betRecord: "/session/member/betRecord",
-  gameBetRecord: "/session/member/gameBetRecord",
+  gameBetRecord: "/session/member/gameBetRecord"
 };
 
 export function loadRecords(type, p) {
@@ -130,15 +129,13 @@ export function sendSessionSms(telephoneInfo) {
 }
 
 export function verifyEmail(emailInfo) {
-
-  var apiUrl= "session/verifyEmailForVNM";
+  var apiUrl = "session/verifyEmailForVNM";
 
   return server.REST.post(apiUrl, emailInfo);
 }
 
 export function verifySms(telephoneInfo) {
-
-  var apiUrl="session/verifyPhoneForVNM";
+  var apiUrl = "session/verifyPhoneForVNM";
 
   return server.REST.post(apiUrl, telephoneInfo);
 }
@@ -148,3 +145,7 @@ export function dailyRebateAmt() {
 export function claimRebate() {
   return server.EVENT.put("/bonus/claim/vnm-daily-rebate");
 }
+
+export const getMemberTelephone = () => {
+  return server.REST.get("/session/member/telephone");
+};
