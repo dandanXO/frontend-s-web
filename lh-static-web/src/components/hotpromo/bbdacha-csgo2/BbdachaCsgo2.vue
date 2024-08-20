@@ -84,7 +84,7 @@
             <td>1,088元</td>
           </tr>
           <tr>
-            <td>≥1000,000</td>
+            <td>≥1,000,000</td>
             <td>1,888元</td>
           </tr>
         </table>
@@ -105,10 +105,8 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            <div style="display: flex; flex-direction: column;">
-              <div>
-                活动期间，BB别墅杯赛事有效投注≥2,000的会员在活动页面可领取8元投注建奖金；
-              </div>
+            <div style="display: flex; flex-direction: column">
+              <div>活动期间，BB别墅杯赛事有效投注≥2,000的会员在活动页面可领取8元投注建奖金；</div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
