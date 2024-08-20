@@ -58,7 +58,8 @@
             <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>
             有效流水升级到 VIP {{ vipLevel + 1 }}
           </div>
-          <div class="text" v-else-if="vipLevel === 0">需要存款及流水升级到 VIP 1</div>
+          <div class="text" v-else-if="vipLevel === 0">还要 {{currentUpgradeBetAmt}} 有效流水升级到 VIP 1</div>
+          <div class="text" v-else-if="vipLevel === 12">您已是最高VIP等级</div>
           <div class="text" v-else>
             已到达
             <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
@@ -67,6 +68,12 @@
           <div class="progressBarContainer" v-if="vipLevel != 0">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }" />
+            </div>
+          </div>
+          
+          <div class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: vipLevel === 12 ? '100%' : '0%' }" />
             </div>
           </div>
         </div>
@@ -852,7 +859,20 @@ const initVIPTable = async () => {
 
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
-    vipBonusVOList.forEach((vipBonusItem) => {
+    // Step 1: Extract original upgradeBetAmount values into an array.
+    const originalUpgradeBetAmounts = vipBonusVOList.map(item => item.upgradeBetAmount);
+
+    // Step 2: Shift values backward by one position.
+    const shiftedUpgradeBetAmounts = [];
+    for (let i = 0; i < originalUpgradeBetAmounts.length; i++) {
+      if (i === 0) {
+        shiftedUpgradeBetAmounts[i] = 0;  // The first value should be 0 or a base value
+      } else {
+        shiftedUpgradeBetAmounts[i] = originalUpgradeBetAmounts[i - 1]; // Shift backward
+      }
+    }
+    vipBonusVOList.forEach((vipBonusItem, i) => {
+      vipBonusItem.upgradeBetAmount = shiftedUpgradeBetAmounts[i];
       if (vipLevel.value === vipBonusItem.vipLevel) {
         vipBonusItem.holidayClaimStatus = "NO_STATUS";
         vipBonusItem.rebateClaimStatus = "NO_STATUS";
@@ -870,6 +890,7 @@ const initVIPTable = async () => {
         };
       }
     });
+    
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
   } else {
