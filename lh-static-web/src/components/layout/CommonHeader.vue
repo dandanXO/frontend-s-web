@@ -1156,7 +1156,7 @@ export default defineComponent({
 
     const loadBanners = () => {
       loadPromoBanner("LOGIN").then((res) => {
-        if (res.code === 0) {
+        if (res.code === 0 && res.data.length > 0) {
           const promoImageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
           accDialogImg.value = promoImageDir + res.data[0].desktopImageUrl
         }

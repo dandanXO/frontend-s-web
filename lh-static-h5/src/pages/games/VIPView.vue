@@ -84,11 +84,13 @@
     </div>
     <div class="month-birthday-bonus">
       <div class="left">
-        <img class="abs" src="../../assets/images/vip/img-border.png" style="z-index: 0;" />
+        <img class="abs" src="../../assets/images/vip/img-border.png" style="z-index: 0" />
         <div class="inner-slide">
           <Carousel v-model="currentCarousel" :items-to-show="1">
             <Slide v-for="(item, i) in banners" :key="i">
-              <a style="display:block;" :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.mobileImageUrl" /></a>
+              <a style="display: block" :href="item.redirectUrl" target="_blank">
+                <img :src="imgURL + item.mobileImageUrl" />
+              </a>
             </Slide>
             <template #addons>
               <Pagination />
@@ -154,23 +156,22 @@
       <div v-if="isShowTable" class="absolute-box">
         <div class="arrow_box">
           <div class="overflow-table">
-            
             <table border="0" cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
-                  <th style="background: #AD9870;">等级</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 1</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 2</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 3</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 4</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 5</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 6</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 7</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 8</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 9</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 10</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 11</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 12</th>
+                  <th style="background: #ad9870">等级</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 1</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 2</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 3</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 4</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 5</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 6</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 7</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 8</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 9</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 10</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 11</th>
+                  <th style="background: #f1dda0; color: #766442">VIP 12</th>
                 </tr>
               </thead>
               <tbody>
@@ -190,7 +191,11 @@
                   <td>王者</td>
                 </tr>
                 <tr>
-                  <td>升级条件<br>（流水）</td>
+                  <td>
+                    升级条件
+                    <br />
+                    （流水）
+                  </td>
                   <td>3,000</td>
                   <td>17,500</td>
                   <td>50,000</td>
@@ -205,7 +210,11 @@
                   <td>250,000,000</td>
                 </tr>
                 <tr>
-                  <td>保级条件<br>（90天）</td>
+                  <td>
+                    保级条件
+                    <br />
+                    （90天）
+                  </td>
                   <td>1,500</td>
                   <td>7,500</td>
                   <td>19,000</td>
@@ -645,9 +654,9 @@ import { useRouter } from "vue-router";
 import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "src/api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
-import { useLocalStorage } from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
 const notify = useNotify();
 const store = userStore();
@@ -869,12 +878,12 @@ const formatPercentageRange = (range) => {
 };
 const banners = ref([]);
 const getImages = () => {
-  loadPromoBanner('VIP').then((res) => {
+  loadPromoBanner("VIP").then((res) => {
     if (res.code === 0) {
       banners.value = res.data;
     }
-  })
-}
+  });
+};
 const initVIPTable = async () => {
   getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
@@ -933,15 +942,15 @@ const claimVIPLevelItem = async (type, item) => {
     } else {
       const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
       const statuses = [
-        'upgradeClaimStatus',
-        'monthlyClaimStatus',
-        'couponClaimStatus',
-        'rebateClaimStatus',
-        'retainClaimStatus',
-        'yearlyRetainClaimStatus'
+        "upgradeClaimStatus",
+        "monthlyClaimStatus",
+        "couponClaimStatus",
+        "rebateClaimStatus",
+        "retainClaimStatus",
+        "yearlyRetainClaimStatus"
       ];
 
-      statuses.forEach(status => {
+      statuses.forEach((status) => {
         if (vipInfo[status] === "CAN_CLAIM") {
           vipInfo[status] = "CLAIMED";
         }
@@ -975,6 +984,9 @@ const slideTo = (vipIndex) => {
   currentSlide.value = vipLevel - 1;
 };
 function formatNumber(value) {
+  if (value === undefined) {
+    return "-";
+  }
   // Convert the string to a float
   const number = parseFloat(value);
 
@@ -1798,7 +1810,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 
 // @media (max-width: 380px) {
-  
+
 //   .vip-container .month-birthday-bonus {
 //     flex-direction: column;
 //   }
