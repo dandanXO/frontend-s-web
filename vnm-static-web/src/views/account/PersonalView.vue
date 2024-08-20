@@ -492,7 +492,7 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('personal.mobileNo')" />
+          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('personal.mobileNo')" disabled />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
@@ -564,7 +564,8 @@ import {
   verifyEmail,
   sendSms,
   verifySms,
-  verifyOtpAndChangePassword, withdrawPasswordWithPassNTel, forgetWithdrawSendEmail
+  verifyOtpAndChangePassword, withdrawPasswordWithPassNTel, forgetWithdrawSendEmail,
+  getMemberTelephone
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
@@ -794,9 +795,15 @@ const openPhoneVerificationModal = () => {
 const updatePhoneModalVisible = ref(false)
 const updatePhoneFormRef = ref();
 const updatePhoneModal = () => {
-  updatePhoneVerified.phone = cachedTelephone;
-  updatePhoneVerified.phoneCode = "";
-  updatePhoneModalVisible.value = true;
+  getMemberTelephone().then(res => {
+    if(res.code === 0) {
+      updatePhoneVerified.phone = res.data;
+      updatePhoneVerified.phoneCode = "";
+      updatePhoneModalVisible.value = true;
+    } else {
+      ElMessage.error(res.message)
+    }
+  })
 };
 const verifyPhoneVerificationCode = () => {
   captchaUpdateRef.value
@@ -1355,7 +1362,7 @@ const evipWeb = computed(() => {
       }
       return ''; // Return empty string if evipString is undefined
     });
-    
+
 
 onMounted(() => {
   if(sendOtpDisabledTimeoutLeft)
@@ -1379,7 +1386,7 @@ watch(
   { immediate: true, deep: true }
 );
 watch (
-  () => selectedTab.value, 
+  () => selectedTab.value,
   (newTab) => {
     if (newTab) {
       router.push({query: {name: selectedTab.value}})
