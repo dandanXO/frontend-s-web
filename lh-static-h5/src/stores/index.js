@@ -32,6 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
+      gender: "",
       currency: { value: "￥", label: "RMB" },
       personalAddress: "",
       unreadInboxMail: 0,
@@ -204,6 +205,7 @@ export const userStore = defineStore("userStore", {
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
           this.emailVerified = response.data.emailVerified;
+          this.gender = response.data.gender;
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;

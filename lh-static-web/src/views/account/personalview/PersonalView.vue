@@ -145,35 +145,58 @@
                 </div>
               </div> -->
 
-              <div class="tbl-row">
-                <div class="basic-info-cell title">邮箱：</div>
-                <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
-                  {{ personalState.memberInfo.email }}
+              <div class="info-tbl-row">
+                <div class="info-tbl-col">
+                  <div class="tbl-row">
+                    <div class="basic-info-cell title">邮箱：</div>
+                    <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
+                      {{ personalState.memberInfo.email }}
+                    </div>
+                    <div v-else class="basic-info-cell content">
+                      <!-- <div class="datewsend" v-if="isEdit">
+                        <el-form-item
+                          name="email"
+                          prop="email"
+                          :rules="[
+                            { required: true, message: '请输入邮箱' },
+                            { type: 'email', message: '邮箱信息错误' },
+                          ]"
+                        >
+                          <el-input
+                            v-model="updateFormDetails.email"
+                            placeholder="邮箱"
+                          />
+                        </el-form-item>
+                      </div> -->
+                      <button
+                        class="standard-button btn-color-blue sm-btn"
+                        v-if="!personalState.memberInfo.emailVerified"
+                        type="button"
+                        @click="updateSecurityModal"
+                      >
+                        验证
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div v-else class="basic-info-cell content">
-                  <!-- <div class="datewsend" v-if="isEdit">
-                    <el-form-item
-                      name="email"
-                      prop="email"
-                      :rules="[
-                        { required: true, message: '请输入邮箱' },
-                        { type: 'email', message: '邮箱信息错误' },
-                      ]"
+
+                <div class="info-tbl-col">
+                  <div class="tbl-row">
+                    <div class="basic-info-cell title">性别：</div>
+                    <div v-if="personalState.memberInfo.gender" class="basic-info-cell content">
+                      {{ personalState.memberInfo.gender === "MALE" ? "男" : "女" }}
+                    </div>
+                    <div
+                      v-else
+                      class="basic-info-cell content"
+                      v-if="personalState.memberInfo.gender || (!personalState.memberInfo.gender && isEdit)"
                     >
-                      <el-input
-                        v-model="updateFormDetails.email"
-                        placeholder="邮箱"
-                      />
-                    </el-form-item>
-                  </div> -->
-                  <button
-                    class="standard-button btn-color-blue sm-btn"
-                    v-if="!personalState.memberInfo.emailVerified"
-                    type="button"
-                    @click="updateSecurityModal"
-                  >
-                    验证
-                  </button>
+                      <el-select v-model="updateFormDetails.gender" placeholder="选择性别" style="min-width: 150px">
+                        <el-option label="男" value="Male" />
+                        <el-option label="女" value="Female" />
+                      </el-select>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -189,7 +212,12 @@
 
               <button
                 class="standard-button btn-color-blue"
-                v-if="!isEdit && (!personalState.memberInfo.birthday || !personalState.memberInfo.realName)"
+                v-if="
+                  !isEdit &&
+                  (!personalState.memberInfo.birthday ||
+                    !personalState.memberInfo.realName ||
+                    !personalState.memberInfo.gender)
+                "
                 @click="isEdit = !isEdit"
               >
                 编辑
