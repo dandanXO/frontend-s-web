@@ -1,6 +1,6 @@
 # NGA App (ind-h5-project)
 
-Nigeria H5 APP
+Philippines H5 APP
 - Node Version >= 16.17.0
 - H5 + Android APP
 
