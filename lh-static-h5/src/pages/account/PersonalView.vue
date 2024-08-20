@@ -160,16 +160,20 @@
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.gender"
-          placeholder="性别"
+          placeholder="选择性别"
           lazy-rules
           :options="options"
-          label="性别"
           label-color="#7a80a1"
           color="#7a80a1"
           :disabled="personalState.memberInfo.gender ? true : false"
           :readonly="personalState.memberInfo.gender ? true : false"
           style="width: 100%"
-        />
+          :dense="dense"
+        >
+          <template v-slot:prepend>
+            <span>性别</span>
+          </template>
+        </q-select>
       </div>
 
       <div class="text-center q-mt-lg" v-if="isEditBirthday || isEditRealName || isEditGender">
