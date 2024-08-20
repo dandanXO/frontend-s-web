@@ -24,6 +24,21 @@
           />
         </el-select>
         <el-select
+          v-model="request.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 120px;margin-left:5px"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+
+        <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -201,12 +216,21 @@ const uiControl = reactive({
     { key: 2, displayName: 'disable', value: true },
   ],
 })
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
+
 const request = reactive({
   size: 30,
   current: 1,
   title: null,
   status: null,
   siteId: null,
+  siteType: null,
 })
 
 const page = reactive({
@@ -217,6 +241,7 @@ const page = reactive({
 function resetQuery() {
   request.title = null
   request.status = null
+  request.siteType = "main"
   request.siteId = site.value ? site.value.id : null
 }
 
@@ -306,6 +331,7 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   }
+  request.siteType = "main";
   await loadPromoPages()
 })
 </script>

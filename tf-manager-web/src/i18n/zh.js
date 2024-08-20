@@ -427,6 +427,9 @@ export default {
     LOTTERY: '彩票',
     OTHER: '其他',
     LIMITED: '限时热门',
+    SLOTWELCOME: '电游 - 欢迎',
+    SLOTDAILY: '电游 - 日常',
+    SLOTOTHER: '电游 - 其他',
   },
   scheduleType: {
     NORMAL: '普通',
@@ -509,6 +512,10 @@ export default {
   withdrawType: {
     Manual: '手动审核',
     AUTO_WITHDRAW: '自动审核',
+  },
+  siteType: {
+    main: '主站',
+    slot: '电游',
   },
   fields: {
     account: '账号',
@@ -1475,6 +1482,7 @@ export default {
     siteCode: '站点代码',
     siteList: '站点列表',
     siteName: '站点名称',
+    siteType: '站点类型',
     sn: '序',
     smsPhone: '电话号码',
     smsContent: '内容',
