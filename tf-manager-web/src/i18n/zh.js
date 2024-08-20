@@ -506,6 +506,10 @@ export default {
     SWITCH: '开关',
     CHECKBOX: '多选框',
   },
+  withdrawType: {
+    Manual: '手动审核',
+    AUTO_WITHDRAW: '自动审核',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1725,6 +1729,7 @@ export default {
     withdrawPlatformList: '提款平台列表',
     withdrawPlatformName: '提款平台名称',
     withdrawStatus: '提款状态',
+    withdrawType: '提款类型',
     yes: '是',
     yesterday: '昨日',
     tigerCardType: '卡片类型',

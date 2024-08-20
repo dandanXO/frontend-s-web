@@ -503,6 +503,10 @@ export default {
     SWITCH: 'SWITCH',
     CHECKBOX: 'CHECKBOX',
   },
+  withdrawType: {
+    Manual: 'Manual',
+    AUTO_WITHDRAW: 'Auto Withdraw',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1725,6 +1729,7 @@ export default {
     withdrawPlatformList: 'Withdraw Platform List',
     withdrawPlatformName: 'Withdraw Platform Name',
     withdrawStatus: 'Withdraw Status',
+    withdrawType: 'Withdraw Type',
     yes: 'Yes',
     yesterday: 'Yesterday',
     tigerCardType: 'Card Type',
