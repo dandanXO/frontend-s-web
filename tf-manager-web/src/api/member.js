@@ -473,3 +473,12 @@ export const getMemberVipFinById = (siteId, ids, loginName) => {
     ContentType.form
   )
 }
+
+export const updateWithdrawType = (id, withdrawType, siteId) => {
+  return https().request(
+    `/member/${id}/withdrawType?_method=PUT`,
+    Method.POST,
+    { withdrawType: withdrawType, siteId: siteId },
+    ContentType.form
+  )
+}
