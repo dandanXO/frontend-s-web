@@ -47,13 +47,13 @@
               :rules="[(val) => !!val || $t('interestProfit.storageTime_required')]"
             />
 
-            <div class="select-label">{{ $t("interestProfit.odds") }}</div>
+            <div class="select-label">{{ $t("interestProfit.rates") }}</div>
             <q-select
               class="do-select"
               outlined
               v-model="interestProfitField.odds"
               :options="oddList"
-              :rules="[(val) => !!val || $t('interestProfit.odds_required')]"
+              :rules="[(val) => !!val || $t('interestProfit.rates_required')]"
             />
             <InputField :label="$t('interestProfit.deposit')">
               <template #input>
@@ -343,7 +343,7 @@ const showValidationErrors = () => {
     $q.notify({
       type: "negative",
       position: "top",
-      message: t("interestProfit.odds_required"),
+      message: t("interestProfit.rates_required"),
       icon: "report_problem"
     });
   }
