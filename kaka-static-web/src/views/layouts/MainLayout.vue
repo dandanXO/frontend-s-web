@@ -16,7 +16,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent,computed} from "vue";
+import { defineComponent, computed } from "vue";
 import CommonHeader from "@/components/layout/CommonHeader.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
 import CommonSidebar from "@/components/layout/CommonSidebar.vue";
@@ -30,20 +30,19 @@ export default defineComponent({
     CommonSidebar
   },
   mounted() {
-    //TODO:: Change LH One.
-    this.loadTrackingScript();
+    // this.loadTrackingScript();
   },
   methods: {
     loadTrackingScript() {
-      const currentDomain = window.location.hostname;
-
-      // Determine the tracking script URL based on the current domain
-      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
-
-      const script = document.createElement("script");
-      script.src = trackingScriptUrl;
-      script.type = "text/javascript";
-      document.body.appendChild(script);
+      // const currentDomain = window.location.hostname;
+      //
+      // // Determine the tracking script URL based on the current domain
+      // let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+      //
+      // const script = document.createElement("script");
+      // script.src = trackingScriptUrl;
+      // script.type = "text/javascript";
+      // document.body.appendChild(script);
     }
   },
   setup() {
@@ -51,8 +50,8 @@ export default defineComponent({
     return {
       shouldHideHeaderAndFooter: computed(() => {
         return route.path === "/maintenance";
-      }),
+      })
     };
-  },
+  }
 });
 </script>
