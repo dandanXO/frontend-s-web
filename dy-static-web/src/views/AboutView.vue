@@ -411,6 +411,7 @@
   </div>
 </template>
 <script lang="js">
+import { useLocalStorage } from "@vueuse/core";
 import { ref, onMounted, onUnmounted, defineComponent, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -418,7 +419,7 @@ export default defineComponent({
   name: "AboutView",
 
   setup() {
-	const imgURL = process.env.VUE_APP_IMAGE_CDN;
+	const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN);
 
     const activeTab = ref("aboutus")
     const route = useRoute();

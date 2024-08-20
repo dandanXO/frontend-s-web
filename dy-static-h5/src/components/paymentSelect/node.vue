@@ -51,9 +51,10 @@
 </template>
 
 <script>
+import { useLocalStorage } from "@vueuse/core";
 import { defineComponent, reactive } from "vue";
 
-const imgURL = process.env.IMAGE_CDN + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 console.log(process.env.IMAGE_CDN);
 export default defineComponent({
   name: "NodeComp",

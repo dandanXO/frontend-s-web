@@ -2242,7 +2242,7 @@ export default defineComponent({
       );
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const homePopupImg = ref("");
     const isImportantAnnouncementModal = ref(false);
     const homePopupContent = ref("");
@@ -2284,8 +2284,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnouncementModal.value = true;
-                homePopupImg.value =
-                  useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value = imgURL + "/promo/" + res.data["mobileImgUrl"];
                 console.log(homePopupImg.value);
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
