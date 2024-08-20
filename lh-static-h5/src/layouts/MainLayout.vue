@@ -73,7 +73,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/home-icon-dark.png"
+          src="../assets/images/footer/home-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -83,7 +83,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/home-icon-active-dark.png"
+          src="../assets/images/footer/home-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -121,7 +121,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-dark.png"
+          src="../assets/images/footer/promo-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -131,7 +131,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-active-dark.png"
+          src="../assets/images/footer/promo-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -145,7 +145,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/chat-icon-dark.png"
+          src="../assets/images/footer/chat-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -155,7 +155,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/chat-icon-active-dark.png"
+          src="../assets/images/footer/chat-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -169,7 +169,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/account-icon-dark.png"
+          src="../assets/images/footer/account-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -179,7 +179,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/account-icon-active-dark.png"
+          src="../assets/images/footer/account-icon-active-dark.svg"
         />
         <img
           class="hover"

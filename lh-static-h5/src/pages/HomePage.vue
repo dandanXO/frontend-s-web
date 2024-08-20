@@ -2616,13 +2616,7 @@ export default defineComponent({
 
   .home-game-section {
     .game-left-list {
-      .game-platform {
-        margin-bottom: 20px;
-
-        .platform-item {
-          height: 82px;
-        }
-      }
+      gap: 10px;
     }
     .game-right-platform {
       .platform-block {
