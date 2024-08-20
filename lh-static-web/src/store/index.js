@@ -29,10 +29,10 @@ export const userStore = defineStore("userStore", {
       regPageVisible: false,
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
-      siteId: 7,
+      siteId: process.env.VUE_APP_SITEID,
       unreadTotal: 0,
       visitorId: "",
-      profilePhoto: "",
+      profilePhoto: ""
     };
   },
   actions: {
@@ -49,7 +49,7 @@ export const userStore = defineStore("userStore", {
             this.getUnreadMail();
           } else {
             uiStore().notify({
-              type: 'error',
+              type: "error",
               message: ret.message
             });
             // throw new Error(ret.message);
@@ -76,7 +76,7 @@ export const userStore = defineStore("userStore", {
             this.getUnreadMail();
           } else {
             uiStore().notify({
-              type: 'error',
+              type: "error",
               message: ret.message
             });
             // throw new Error(ret.message);
@@ -88,12 +88,13 @@ export const userStore = defineStore("userStore", {
         });
     },
     getUnreadMail() {
-      getUnreadTotal().then((response) => {
-        if (response.code === 0) {
-          this.unreadTotal = response.data;
-        }
-      }).catch((error) => {
-      });
+      getUnreadTotal()
+        .then((response) => {
+          if (response.code === 0) {
+            this.unreadTotal = response.data;
+          }
+        })
+        .catch((error) => {});
     },
     getMemberInfo() {
       if (this.token) {
@@ -113,7 +114,7 @@ export const userStore = defineStore("userStore", {
             this.profilePhoto = ret.data.profilePhoto;
           } else {
             uiStore().notify({
-              type: 'error',
+              type: "error",
               message: ret.message
             });
           }
