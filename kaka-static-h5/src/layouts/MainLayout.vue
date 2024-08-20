@@ -505,8 +505,7 @@ export default defineComponent({
       ],
       LangOptions,
       isH5,
-      checkPlatform,
-      loadTrackingScript
+      checkPlatform
     };
   }
 });
