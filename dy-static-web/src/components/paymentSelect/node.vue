@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { useLocalStorage } from "@vueuse/core";
 import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
@@ -94,7 +95,7 @@ export default defineComponent({
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
-      imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment/",
+      imgURL: useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/payment/",
       nodeKey: 0
     };
   },

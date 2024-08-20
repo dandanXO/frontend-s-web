@@ -73,12 +73,14 @@ import { defineComponent, ref, reactive, onMounted, defineExpose } from "vue";
 import aos from "aos";
 import GameModal from "@/components/modal/GameModal";
 import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const imgUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const lotteryGame = ref(null);
 
     const selections = ref([
@@ -209,7 +211,7 @@ export default defineComponent({
           data.forEach((element) => {
             element.default = require("../../assets/images/games/aviator/default.png");
             element.icon = `${
-              process.env.VUE_APP_IMAGE_CDN
+              imgUrl
             }/game/${transferInfo.value.platform.toLowerCase()}/lottery/${
               element.icon
             }.png`;
