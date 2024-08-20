@@ -61,7 +61,7 @@
             <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>
             有效流水升级到 VIP {{ vipLevel + 1 }}
           </div>
-          <div class="text" v-else-if="vipLevel === 0">还要 {{currentUpgradeBetAmt}} 有效流水升级到 VIP 1</div>
+          <div class="text" v-else-if="vipLevel === 0">还要 {{vipItems[0].upgradeBetAmount}} 有效流水升级到 VIP 1</div>
           <div class="text" v-else-if="vipLevel === 12">您已是最高VIP等级</div>
           <div class="text" v-else>
             已到达
