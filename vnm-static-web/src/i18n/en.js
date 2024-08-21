@@ -268,6 +268,9 @@ export default {
     slot: "Slot",
     fish: "Fishing",
     lottery: "Lottery",
+    slotWelcome: "WELCOME",
+    slotDaily: "DAILY",
+    slotOther: "OTHER",
     // vi-win-iphone start
     choose_lucky_number: "Choose lucky number",
     lucky_number_record: "Lucky number record",
