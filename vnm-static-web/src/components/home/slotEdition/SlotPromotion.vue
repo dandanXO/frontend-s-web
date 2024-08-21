@@ -24,7 +24,7 @@ import { onMounted, ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { loadEditionPromo } from "@/api/index/promo";
+import { loadPromo } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 
@@ -34,7 +34,7 @@ const router = useRouter();
 const promotions = ref([]);
 
 const getPromo = () => {
-  loadEditionPromo("SLOT").then((res) => {
+  loadPromo("SLOT").then((res) => {
     if (res.code === 0) {
       promotions.value = res.data.slice(0, 3);
     }
