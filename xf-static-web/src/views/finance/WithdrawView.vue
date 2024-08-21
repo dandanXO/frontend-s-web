@@ -461,6 +461,10 @@ export default defineComponent({
       loadingBtn.value = true
       upgradeToAutoWithdrawal().then(async (res) => {
         if(res.code === 0) {
+          ElMessage.success({
+            type: "success",
+            message: "成功升级为快速提款！"
+          });
           await store.getMemberInfo()
         } else {
           ElMessage.error(res.message)
