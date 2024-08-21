@@ -480,6 +480,7 @@ function payTypeByExistingPayType() {
 }
 
 async function handleChangeSite() {
+  await loadWithdrawPlatform()
   await loadAutoPaymentType()
   await loadSiteWithdrawPlatform(request.siteId)
   filterPayTypeByCurrency()
