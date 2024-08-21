@@ -146,7 +146,7 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">*提币手续费：1.00 USDT</div>
+            <div class="q-mt-sm text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
