@@ -1338,15 +1338,16 @@ export default defineComponent({
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
             border-radius: unset;
             aspect-ratio: 702/208;
+            border-radius: 8px;
+            overflow: hidden;
             .promo-label {
-              top:3px;
-              left:1px;
+              top:0px;
+              left:0px;
               font-family: 'YouSheBiaoTiHei';
             }
             .promo-ribbon {
               background: #1475e1;
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
-              border-top-left-radius: 12px;
               &::after {
                 display: none;
               }
