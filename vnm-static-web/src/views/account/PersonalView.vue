@@ -492,7 +492,7 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('personal.mobileNo')" disabled />
+          <el-input v-model="hidedUpdatePhoneVerifiedNumber" :placeholder="$t('personal.mobileNo')" disabled />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
@@ -794,6 +794,15 @@ const openPhoneVerificationModal = () => {
 
 const updatePhoneModalVisible = ref(false)
 const updatePhoneFormRef = ref();
+const hidedUpdatePhoneVerifiedNumber = computed(() => {
+  if(!updatePhoneVerified.phone) return ""
+  if(updatePhoneVerified.phone.length < 6) return updatePhoneVerified.phone.slice(-4)
+  let result = ''
+  for(const c in updatePhoneVerified.phone) {
+    result += (c < 2 || c >= updatePhoneVerified.phone.length - 4) ? updatePhoneVerified.phone[c] : '*'
+  }
+  return result
+})
 const updatePhoneModal = () => {
   getMemberTelephone().then(res => {
     if(res.code === 0) {
