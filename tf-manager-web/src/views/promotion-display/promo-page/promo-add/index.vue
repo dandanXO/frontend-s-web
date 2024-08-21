@@ -61,7 +61,7 @@
             </el-button>
           </el-form-item>
         </el-row>
-        <el-row>
+        <el-row v-if="uiControl.showSiteType === true">
           <el-form-item :label="t('fields.siteType')" prop="siteType">
             <el-select
               v-model="form.siteType"
@@ -1269,6 +1269,7 @@ const uiControl = reactive({
   affList: [],
   supportDarkMode: false,
   selectDarkImage: false,
+  showSiteType: false,
 })
 
 const checkboxes = reactive({
@@ -1870,6 +1871,12 @@ function onChangeSite() {
   loadVips()
   loadDarkMode()
   // }
+
+  if (isVnm(form.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
 }
 
 async function loadVips() {
