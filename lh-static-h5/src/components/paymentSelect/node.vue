@@ -488,7 +488,7 @@ $node-color: #468cff;
         &.active {
           .node-text {
             border-color: #d0a383;
-            border-width: 2px;
+            border-width: 1px;
             
             .node-txt-img {
             }

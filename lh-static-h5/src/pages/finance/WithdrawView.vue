@@ -2,22 +2,28 @@
   <q-page>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="account-content last">
-        <div class="withdrawalmethod">
-          <div
-            v-for="(method, i) in withdrawalMethods"
-            :key="i"
-            class="withdraw-type-item"
-            @click="selectMethod(method, i)"
-            :class="{ active: i === activeItem }"
-          >
-            <span class="promo" v-if="method.recommended">Recommended</span>
-            <div class="withdraw-img">
-              <img :src="imgURL + '/withdraw/' + method.icon" />
-            </div>
-            <div class="type-name">{{ method.name }}</div>
+        <div class="payment-method-section">
+          <div class="section-title" v-if="$q.dark.isActive">
+            <div class="section-title-decor" />
+            <div class="section-title-text">提款方式</div>
+          </div>
+          <div class="withdrawalmethod">
+            <div
+              v-for="(method, i) in withdrawalMethods"
+              :key="i"
+              class="withdraw-type-item"
+              @click="selectMethod(method, i)"
+              :class="{ active: i === activeItem }"
+            >
+              <span class="promo" v-if="method.recommended">Recommended</span>
+              <div class="withdraw-img">
+                <img :src="imgURL + '/withdraw/' + method.icon" />
+              </div>
+              <div class="type-name">{{ method.name }}</div>
 
-            <div class="promo-label">
-              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+              <div class="promo-label">
+                <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+              </div>
             </div>
           </div>
         </div>
@@ -677,6 +683,87 @@ export default defineComponent({
 .body--dark {
   .withdraw-section {
     @include content-block-dark;
+    background: transparent;
+    padding: 0;
+
+    .account-content {
+      .payment-method-section {
+        background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+        padding: 10px;
+        border-radius: 6px;
+        width: 100%;
+        .section-title {
+          display:flex;
+          gap:5px;
+          padding-bottom:5px;
+
+          .section-title-decor {
+            width: 2px;
+            background-color: #fff;
+            margin: 5px 0;
+            border-radius: 10px;
+          }
+          
+          .section-title-text {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .withdrawalmethod {
+      .withdraw-type-item {
+        border-radius: 4px;
+        border: 1px solid #d9d9d94d;
+        width: 100%;
+        background: #273354;
+        padding: 5px;
+
+        .promo-label {
+          top: -15%;
+          left: 85%;
+        }
+
+        .withdraw-img {
+          max-width: unset;
+          width: 54px;
+          height: 54px;
+          border: none;
+          
+          img {
+            padding: 5px;
+          }
+        }
+
+        &.active {
+          border-color: #d0a383;
+          border-width: 1px;
+
+          .withdraw-img {
+            img {
+              border: none;
+            }
+          }
+          .type-name {
+            font-weight: 400;
+          }
+
+          &:before {
+            display: block;
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 18px;
+            width: 18px;
+            z-index: 3;
+            background-image: url("../../assets/images/finance/deposit/checkmark-dark.svg");
+            background-size: 100%;
+            background-position: center center;
+          }
+        }
+      }
+    }
     .withdraw-selection.q-field,
     .withdraw-field.q-field {
       box-shadow: none;
