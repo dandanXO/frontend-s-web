@@ -309,6 +309,7 @@ import LocalStorage from "boot/local-storage";
 import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -317,7 +318,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },

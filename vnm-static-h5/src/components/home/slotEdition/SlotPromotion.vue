@@ -22,14 +22,17 @@ import { useLocalStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { api } from "src/boot/axios";
+import { userStore } from "src/stores";
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const router = useRouter();
+const store = userStore();
 
 const promotions = ref([]);
 
 const getPromo = () => {
-  api.get("/main/promo/page?type=SLOT").then((res) => {
+  const platformApiUrl = store.hasToken() ? "/session/loggedInPromoPages" : "/promo/page";
+  api.get(`${platformApiUrl}?type=SLOT`).then((res) => {
     if (res.code === 0) {
       promotions.value = res.data.slice(0, 3);
     }

@@ -8,10 +8,14 @@ import { getRndInteger } from "boot/utils";
 
 console.log(window.location.hostname);
 const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
+const imgCDN = process.env.IMAGE_CDN;
+let apiLinks = []
 
 const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;
 const evtArray = process.env.EVT_API;
+
+const REPLACEMENT_DOMAIN = "random";
 
 if (isGlobalDY) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
@@ -26,6 +30,15 @@ if (isGlobalDY) {
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
+
+if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+  const successImgCdn = localStorage.getItem("IMAGE_CDN");
+  if (!successImgCdn) {
+    const newDomain = replaceRndDomain("IMAGE_CDN");
+    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+    localStorage.setItem("IMAGE_CDN", newImgCDN);
+  }
+}
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
@@ -50,6 +63,10 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
+      if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+        const newDomain = replaceRndDomain(urlLsName);
+        initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+      }
     }
 
     if (isInApp()) {
@@ -66,6 +83,51 @@ function getInitApi(apiLinks, urlLsName) {
       }
     });
     return initApi;
+  }
+}
+
+function replaceRndDomain(urlLsName) {
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
+  const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${domainPrefix}${rndSecondLevelDomain}`;
+}
+
+function generateRndSecondLevelDomain(unit) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < unit; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+function getApiDomainPrefix(urlLsName) {
+  if (urlLsName.indexOf("RST") > -1) {
+    return "ap";
+  } else if (urlLsName.indexOf("CR") > -1) {
+    return "ca";
+  } else if (urlLsName.indexOf("EVT") > -1) {
+    return "pr";
+  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+    return "fi";
+  } else {
+    return "";
+  }
+}
+
+function getErrorType(errorUrl) {
+  const isOriginalUrl = apiLinks.find(link => link === errorUrl)
+
+  errorUrl = errorUrl.replace("https://", "");
+
+  if(isOriginalUrl) {
+    return errorUrl.substr(0, 5);
+  } else {
+    const domains = errorUrl.split('.')
+    const subDomainFormErrorUrl = domains[1]
+    const prefix = domains[0].substr(0,2)
+    return `${prefix}${subDomainFormErrorUrl.substr(0,5)}`
   }
 }
 
@@ -122,6 +184,7 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
+      const errorType = getErrorType(response.config.baseURL);
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
@@ -173,10 +236,10 @@ export default boot(({ app, router }) => {
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: res.message || "错误"
+          message: res.message + ` (${errorType} ${res.code})` || "错误"
         });
       }
-      throw new Error(res.message || "错误");
+      throw new Error(res.message + ` (${errorType} ${res.code})` || "错误");
     } else {
       Loading.hide();
       return res;

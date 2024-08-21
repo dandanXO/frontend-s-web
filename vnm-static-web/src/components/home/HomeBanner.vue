@@ -199,10 +199,12 @@ onMounted(() => {
 .imptann-modal {
   background: transparent;
   max-width: 1300px;
+  position: fixed !important;
+  left: 50%;
   width: max-content;
   height: auto;
   margin-top: 25% !important;
-  transform: translate(0px, -50%);
+  transform: translate(-50%, -50%);
 
   .el-dialog__body {
     padding: 20px !important;

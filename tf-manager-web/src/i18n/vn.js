@@ -297,6 +297,7 @@ export default {
     CENTERPROMO: 'Khuyến mãi trung tâm',
     LOGIN: 'Đăng nhập',
     REGISTER: 'Đăng ký',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: 'Đang chờ',
@@ -407,6 +408,9 @@ export default {
     LOTTERY: 'Xổ số',
     OTHER: 'Khác',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: 'Bình thường',
@@ -452,6 +456,10 @@ export default {
     SELECT: 'Chọn',
     SWITCH: 'Công tắc',
     CHECKBOX: 'Hộp kiểm',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: 'Tài khoản',
@@ -1380,6 +1388,7 @@ export default {
     siteCode: 'Mã Trang Web',
     siteList: 'Danh Sách Trang Web',
     siteName: 'Tên Trang Web',
+    siteType: 'Site Type',
     sn: 'Số Seri',
     smsPhone: 'Số Điện Thoại SMS',
     smsContent: 'Nội Dung SMS',

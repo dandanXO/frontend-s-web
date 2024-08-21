@@ -113,6 +113,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
 import { useScriptTag } from '@vueuse/core'
 import { userStore } from "@/store";
+import { useLocalStorage } from "@vueuse/core";
 // import { message } from "ant-design-vue";
 
 export default defineComponent({
@@ -122,7 +123,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const numBox = ref(275417746)
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + '/game/'
     const banner = ref([]);
     const route = useRoute();
     const router = useRouter();
@@ -213,7 +214,7 @@ export default defineComponent({
       getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
         data.forEach(element => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+          element.icon = `${imgURL}${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
