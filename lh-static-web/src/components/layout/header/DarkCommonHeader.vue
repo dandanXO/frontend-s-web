@@ -5,7 +5,7 @@
           <router-link class="logospon" to="/home">
             <img class="logo" src="../../../assets/logo-1.png" />
           </router-link>
-  
+
           <div class="navigations">
             <template v-for="nav in navigations" :key="nav.name">
               <template v-if="!nav.hasicon && !nav.isTest">
@@ -36,7 +36,7 @@
               </template>
             </template>
           </div>
-  
+
           <div class="navigations second-nav">
             <template v-for="nav in navigations" :key="nav.name">
               <template v-if="nav.hasicon">
@@ -84,7 +84,7 @@
                 </div>
               </template>
             </template>
-  
+
             <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
               <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
               <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
@@ -97,12 +97,12 @@
               <AppMenu ref="el" v-if="selectedMenu === 'App'" />
             </div>
           </div>
-  
+
           <div v-if="!store.token" class="right-contents">
             <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
             <a class="header-btn btn-color-blue" @click="registerDialogVisible = true">注册</a>
           </div>
-  
+
           <div class="profile-info" v-if="store.token">
             <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
               <span class="el-dropdown-link">
@@ -179,7 +179,7 @@
           </div>
         </div>
       </div>
-  
+
       <el-dialog
         class="acc-dialog"
         v-model="loginDialogVisible"
@@ -208,7 +208,7 @@
           </div>
         </div>
       </el-dialog>
-  
+
       <el-dialog
         class="acc-dialog"
         v-model="registerDialogVisible"
@@ -231,7 +231,7 @@
           </div>
         </div>
       </el-dialog>
-  
+
       <el-dialog
         v-model="captchaDialogVisible"
         title="验证码"
@@ -257,7 +257,7 @@
           </el-button>
         </el-form>
       </el-dialog>
-  
+
       <el-dialog
         class="acc-dialog"
         v-model="forgetPassDialogVisible"
@@ -282,7 +282,7 @@
           </div>
         </div>
       </el-dialog>
-  
+
       <el-dialog class="noPadding" v-model="noticeDialogVisible" width="1280px" align-center style="max-width: 600px">
         <div class="noticedialog">
           <div class="title">系统提示</div>
@@ -296,7 +296,7 @@
           <el-button class="common-btn" @click="noticeDialogVisible = false">确认</el-button>
         </div>
       </el-dialog>
-  
+
       <el-dialog class="" v-model="logoutDialogVisible" width="600px" align-center>
         <div class="noticedialog">
           <div class="title">您确定要退出吗？</div>
@@ -306,11 +306,11 @@
           </div>
         </div>
       </el-dialog>
-  
+
       <GameModal ref="modalGame"></GameModal>
     </header>
   </template>
-  
+
   <script lang="js">
   import "vue3-carousel/dist/carousel.css";
   import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
@@ -344,7 +344,7 @@
   import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
   import floor from "lodash/floor";
   import { loadPromoBanner } from "@/api/index/promo";
-  
+
   export default defineComponent({
     name: "CommonHeader",
     components: {
@@ -365,33 +365,33 @@
     },
     setup() {
       const notify = useNotify();
-  
+
       const registerTelephoneKey = `registerTelephoneKey`;
       const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
       const imageDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
-  
+
       const registerSendOtpDisabledTimeout = 60;
       const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
-  
+
       const timestamp = moment().unix();
-  
+
       let cachedTelephone = lsGet(registerTelephoneKey);
       let initialRegisterSendOtpDisabledTimeout = false;
-  
+
       if (registerSendOtpDisabledTimeoutLeft) {
         initialRegisterSendOtpDisabledTimeout = true;
       } else {
         lsRemove(registerSendOtpDisabledKey);
         lsRemove(registerTelephoneKey);
-  
+
         cachedTelephone = "";
       }
-  
+
       const disableSendVerificationButton = ref(initialRegisterSendOtpDisabledTimeout);
-  
+
       const loadingBtn = ref(false);
       const store = userStore();
-  
+
       const checkToken = () => {
         if (store.token) {
           if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
@@ -442,18 +442,18 @@
       const selectedMenu = ref(false);
       const { height } = useElementSize(el);
       const isDark = useDark();
-  
+
       const vipLevel = computed(() => {
         if (store.vip.toUpperCase() === "NORMAL") {
           return 1;
         }
         return store.vip;
       });
-  
+
       const vip = computed(() => {
         return vipLevel.value;
       });
-  
+
       const handleCommand = (command) => {
         if (command === "personal") {
           router.push("/center/personal");
@@ -471,7 +471,7 @@
           onLogout();
         }
       };
-  
+
       const showSubMenu = (nav) => {
         if (nav.submenu === true) {
           selectedMenu.value = nav.code;
@@ -486,7 +486,7 @@
           return validatePassStrength(r, v);
         }
       };
-  
+
       let validatePassStrength = (r, v) => {
         // var strength = "";
         var pwd = v;
@@ -494,7 +494,7 @@
         for (var i = 0, len = pwd.length; i < len; ++i) {
           result |= charType(pwd.charCodeAt(i));
         }
-  
+
         var level = 0;
         for (i = 0; i <= 4; i++) {
           if (result & 1) {
@@ -502,9 +502,9 @@
           }
           result = result >>> 1;
         }
-  
+
         // console.log(level);
-  
+
         if (pwd.length >= 6) {
           // switch (level) {
           //   case 1:
@@ -527,7 +527,7 @@
           return Promise.resolve();
         }
       };
-  
+
       let validateName = async (r, v) => {
         if (v === "") {
           return Promise.reject("请输入登录名");
@@ -639,7 +639,7 @@
           }
         ]
       };
-  
+
       const captchaForm = reactive({
         type: "",
         captchaCode: "",
@@ -660,7 +660,7 @@
           }
         ]
       };
-  
+
       const regForm = reactive({
         realName: "",
         loginName: "",
@@ -675,7 +675,7 @@
         smsCode: "",
         smsCodeId: ""
       });
-  
+
       const regRules = {
         realName: [
           {
@@ -798,7 +798,7 @@
       const passForm = reactive({
         email: ""
       });
-  
+
       const passRef = ref([]);
       const forgetPassRules = {
         email: [
@@ -854,7 +854,7 @@
           }
         ]
       };
-  
+
       const getAffiliateCode = () => {
         const affCode = sessionStorage.getItem("AFFILIATE_CODE");
         if (affCode) {
@@ -862,7 +862,7 @@
           regForm.codeAffiliate = affCode;
         }
       };
-  
+
       const onLogout = () => {
         store.memberLogout().then(() => {
           location.reload();
@@ -873,7 +873,7 @@
         if (!formEl) return;
         formEl.resetFields();
       };
-  
+
       const sendOtp = async () => {
         if (captchaForm.type === "REGISTER") {
           const smsDetail = {
@@ -884,25 +884,25 @@
           sendSms(smsDetail).then((response) => {
             if (response.code == 0) {
               disableSendVerificationButton.value = true;
-  
+
               regForm.smsCodeId = response.data.codeId;
-  
+
               notify({
                 type: "success",
                 message: "发送手机验证码成功"
               });
-  
+
               captchaDialogVisible.value = false;
-  
+
               regCountdown.value = registerSendOtpDisabledTimeout;
-  
+
               const now = new Date();
-  
+
               now.setSeconds(now.getSeconds() + registerSendOtpDisabledTimeout);
-  
+
               lsStore(registerSendOtpDisabledKey, now.getTime());
               lsStore(registerTelephoneKey, regForm.telephone);
-  
+
               countdownTimer("REGISTER");
             } else {
               getCode();
@@ -931,7 +931,7 @@
           });
         }
       };
-  
+
       const countdownTimer = (type) => {
         if (type === "REGISTER") {
           if (regCountdown.value > 0) {
@@ -942,7 +942,7 @@
           } else {
             lsRemove(registerSendOtpDisabledKey);
             lsRemove(registerTelephoneKey);
-  
+
             disableSendVerificationButton.value = false;
           }
         } else if (type === "LOGIN") {
@@ -954,14 +954,14 @@
           }
         }
       };
-  
+
       const openCaptchaForm = (type) => {
         captchaForm.captchaCode = "";
         captchaForm.type = type;
         captchaDialogVisible.value = true;
         getCode();
       };
-  
+
       const submitRegisterForm = async (elForm) => {
         if (!elForm) return;
         await elForm.validate((valid) => {
@@ -980,7 +980,7 @@
                   registerDialogVisible.value = false;
                   store.regPageVisible = false;
                   // loginDialogVisible.value = true;
-  
+
                   sessionStorage.removeItem("REFERRAL_CODE");
                   // getCode();
                 } else {
@@ -994,25 +994,25 @@
           }
         });
       };
-  
+
       const modalGame = ref(null);
       const openGame = (gameName, code, gameCode) => {
         modalGame.value.open(gameName, code, gameCode);
       };
-  
+
       const getPlatformListAndGoImSport = () => {
         selectedMenu.value = "";
-  
+
         const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
-  
+
         fetchFunction().then((res) => {
           const imSport = res.filter((item) => item.code === "IM");
           openGame(imSport[0].name, imSport[0].code, imSport[0].gameType);
         });
       };
-  
+
       const accDialogImg = ref('')
-  
+
       const loadBanners = () => {
         loadPromoBanner("LOGIN").then((res) => {
           if (res.code === 0) {
@@ -1021,36 +1021,36 @@
           }
         })
       }
-  
+
       onMounted(() => {
         if (regCountdown.value > 0) countdownTimer("REGISTER");
         getAffiliateCode();
         getCode();
         getReferalCode();
         loadBanners();
-  
+
         if (store.token) {
           store.getBalance();
           store.getMemberInfo();
-  
+
           getUnreadMail();
         }
-  
+
         // if(store.loginPageVisible) {
         //   router.push('/login');
         //   return;
         // }
-  
+
         if (store.loginPageVisible) {
           loginDialogVisible.value = true;
         } else {
           loginDialogVisible.value = false;
         }
-  
+
         // console.log(route);
         // alert(route.name)
       });
-  
+
       watch(
         () => store.loginPageVisible,
         () => {
@@ -1079,7 +1079,7 @@
           // }, { immediate: true });
         }
       );
-  
+
       const getReferalCode = () => {
         const referCode = sessionStorage.getItem("REFERRAL_CODE");
         // console.log("got Code");
@@ -1089,7 +1089,7 @@
           regForm.referrer = referCode;
         }
       };
-  
+
       const isLoadingBalance = ref(false);
       const refreshBalance = () => {
         isLoadingBalance.value = true;
@@ -1122,7 +1122,7 @@
         loadingBtn.value = true;
         (async () => {
           const sidParam = store.visitorId;
-  
+
           loginRef.value.validate().then(() => {
             store
               .memberLogin({
@@ -1138,7 +1138,7 @@
                   // router.push(jumpUrl);
                   loginDialogVisible.value = false;
                   store.loginPageVisible = false;
-  
+
                   sessionStorage.removeItem("REFERRAL_CODE");
                   loginForm.loginName = null;
                   loginForm.password = null;
@@ -1159,7 +1159,7 @@
           loadingBtn.value = false;
         })();
       };
-  
+
       const phoneLogin = () => {
         loadingBtn.value = true;
         const sidParam = store.visitorId;
@@ -1178,7 +1178,7 @@
                   // router.push(jumpUrl);
                   loginDialogVisible.value = false;
                   store.loginPageVisible = false;
-  
+
                   sessionStorage.removeItem("REFERRAL_CODE");
                 } else {
                   loginForm.phoneNumber = null;
@@ -1224,18 +1224,18 @@
         }
         return 8;
       }
-  
+
       watch(
         () => regForm.password
         // () => {
         //   pwdStrength.value = "";
-  
+
         //   var pwd = regForm.password;
         //   var result = 0;
         //   for (var i = 0, len = pwd.length; i < len; ++i) {
         //     result |= charType(pwd.charCodeAt(i));
         //   }
-  
+
         //   var level = 0;
         //   for (i = 0; i <= 4; i++) {
         //     if (result & 1) {
@@ -1243,9 +1243,9 @@
         //     }
         //     result = result >>> 1;
         //   }
-  
+
         //   // console.log(level);
-  
+
         //   if (pwd.length >= 6) {
         //     switch (level) {
         //       case 1:
@@ -1262,7 +1262,7 @@
         //   } else {
         //     pwdStrength.value = "weak";
         //   }
-  
+
         //   // console.log(pwdStrength.value);
         // },
       );
@@ -1273,7 +1273,7 @@
           moment(new Date()).locale("zh-cn").format("dddd")
         );
       };
-  
+
       const getUnreadMail = () => {
         getUnreadTotal()
           .then((response) => {
@@ -1285,23 +1285,23 @@
             // console.log("error===", error)
           });
       };
-  
+
       const openLoginDialog = () => {
         registerDialogVisible.value = false;
         forgetPassDialogVisible.value = false;
         loginDialogVisible.value = true;
       };
-  
+
       const openRegDialog = () => {
         loginDialogVisible.value = false;
         registerDialogVisible.value = true;
       };
-  
+
       const openForgotpwdDialog = () => {
         loginDialogVisible.value = false;
         forgetPassDialogVisible.value = true;
       };
-  
+
       const goPath = (path, element) => {
         const parentElement = element.target.parentNode;
         setTimeout(() => {
@@ -1312,10 +1312,10 @@
           });
           parentElement.dispatchEvent(mouseUpEvent);
         }, 50);
-  
+
         router.push(path);
       };
-  
+
       const loadIcon = (name) => {
         if (isDark.value) {
           try {
@@ -1327,7 +1327,7 @@
           return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
         }
       };
-  
+
       return {
         floor,
         token,
@@ -1414,7 +1414,7 @@
     .el-button.is-disabled:hover {
       background-color: #a8b5c3;
     }
-  
+
     .el-input.wTip .el-input-group__append {
       background: none;
       border: 0;
@@ -1422,26 +1422,26 @@
       font-size: 12px;
       box-shadow: none;
     }
-  
+
     // .el-dropdown {
     //   cursor: pointer;
     // }
-  
+
     // .el-popper__arrow::before {
     //   display: none;
     // }
-  
+
     // .el-dropdown-menu {
     //   background: #3d4145;
     //   border: 0;
     // }
-  
+
     // .el-dropdown-menu__item {
     //   min-width: 130px;
     //   color: #a8b5c3;
     //   gap: 8px;
     // }
-  
+
     // .el-dropdown-menu__item:not(.is-disabled):focus {
     //   background: #3a4550;
     //   color: #e1e9ee;
@@ -1452,17 +1452,17 @@
   .el-icon {
     height: 1.5em;
     width: 1.5em;
-  
+
     svg {
       height: 1.5em;
       width: 1.5em;
     }
   }
-  
+
   .profile-info {
     display: flex;
     align-items: center;
-  
+
     .profile-img-wrapper {
       cursor: pointer;
       width: 65px;
@@ -1470,7 +1470,7 @@
       position: relative;
       background: url('../../../assets/images/home/profile-pic-wrapper.svg') no-repeat center center;
       background-size: 100% 100%;
-  
+
       .profile-img {
         display: block;
         width: 100%;
@@ -1478,7 +1478,7 @@
         aspect-ratio: 1/1;
         padding: 10px;
       }
-  
+
       .dropdown-icon {
         position: absolute;
         bottom: 2px;
@@ -1487,7 +1487,7 @@
         height: 12px;
         opacity: 0;
       }
-  
+
       .unread-count {
         position: absolute;
         bottom: 2px;
@@ -1497,23 +1497,23 @@
         opacity: 1;
       }
     }
-  
+
     .profile-details {
       display: flex;
       flex-direction: column;
       width: 160px;
       font-size: 14px;
-  
+
       .name-and-vip-wrapper {
         display: flex;
         align-items: center;
       }
-  
+
       .details-name {
         color: $font-1;
         font-weight: bold;
       }
-  
+
       .account-vip-label {
         background-image: url(../../../assets/images/account/vip-label.png);
         background-repeat: no-repeat;
@@ -1528,27 +1528,27 @@
         justify-content: center;
         align-items: center;
       }
-  
+
       .details-balance {
         display: flex;
         align-items: center;
-  
+
         .assets-text {
           white-space: nowrap;
         }
-  
+
         .amount {
           margin-right: 0.5rem;
           white-space: nowrap;
         }
-  
+
         .reload-btn {
           fill: #468cff;
         }
       }
     }
   }
-  
+
   .profile-info-dropdown-content {
     .profile-info-dropdown-content-item {
       display: flex;
@@ -1556,59 +1556,59 @@
       gap: 10px;
       color: #a8b5c3;
       margin: auto;
-  
+
       img {
         max-width: 33px;
       }
-  
+
       &.standard-button {
         color: #468cff;
       }
     }
   }
-  
+
   .details {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 30px;
-  
+
     .balance-amt {
       display: flex;
       justify-content: center;
       align-items: center;
-  
+
       span {
         min-width: 40px;
         text-align: right;
         white-space: nowrap;
       }
-  
+
       .amount {
         color: #faea81;
         font-weight: bold;
       }
-  
+
       .el-icon {
         height: 2em;
         width: 2em;
         line-height: 2em;
         cursor: pointer;
-  
+
         svg {
           width: 1.3em;
           height: 1.3em;
         }
       }
     }
-  
+
     .top-deposit {
       a {
         text-decoration: none;
       }
     }
   }
-  
+
   .el-dropdown-link {
     display: flex;
     justify-content: center;
@@ -1616,28 +1616,28 @@
     font-size: 12px;
     color: silver;
   }
-  
+
   .hamburger {
     display: none;
   }
-  
+
   .header-container {
     &.on-scrolled {
     }
-    
+
     width: 100%;
   position: sticky;
   top: 0;
   z-index: 999;
   transition: all 0.3s ease;
-  
+
     .top-nav-wrapper {
       background: $color-white;
-  
+
       position: relative;
       box-shadow: $shadow-header;
       backdrop-filter: blur(2px);
-  
+
       .top-nav-inner {
         margin: 0 auto;
         width: 100%;
@@ -1646,7 +1646,7 @@
         align-items: center;
         gap: 12px;
         padding: 0px 10%;
-        overflow-y: scroll;
+        // overflow-y: scroll;
 
         &::-webkit-scrollbar {
           width: 5px;
@@ -1657,25 +1657,25 @@
         &::-webkit-scrollbar-thumb {
           background: #A98F7C;
         }
-  
+
         .logospon {
           display: flex;
           justify-content: center;
           align-items: center;
           gap: 10px;
-  
+
           .seperator {
             background: #8f99a3;
             width: 1px;
             height: 60px;
           }
         }
-  
+
         .logo {
           height: 70px;
           padding: 10px;
           //width: 102px;
-  
+
           img {
             width: 100%;
             display: block;
@@ -1687,7 +1687,7 @@
           align-items: center;
           text-align: center;
           padding: 0px 12px;
-  
+
           &.second-nav {
             margin-left: auto;
             margin-right: auto;
@@ -1696,7 +1696,7 @@
             cursor: pointer;
             width: 58px;
             height: 58px;
-  
+
             &:hover {
               filter: brightness(0.9);
             }
@@ -1712,14 +1712,14 @@
             text-decoration: none;
             gap: 2px;
             color: $font-1;
-  
+
             &.icon {
               gap: 0;
             }
-  
+
             &:hover {
               //filter: brightness(0.85);
-  
+
               .nav-title {
                 color: #333;
                 font-weight: bold;
@@ -1728,7 +1728,7 @@
             .menu-icon {
               width: 50px;
             }
-  
+
             span:first-child {
               color: #000000;
               font-size: 1rem;
@@ -1737,7 +1737,7 @@
               justify-content: center;
               align-items: center;
             }
-  
+
             span:last-child {
               text-transform: uppercase;
               font-size: 0.75rem;
@@ -1745,25 +1745,25 @@
               flex-direction: column;
               white-space: nowrap;
             }
-  
+
             &:hover,
             &.router-link-active {
               span:first-child {
                 color: $link-active;
               }
-  
+
               span:last-child {
                 color: $link-active;
                 color: #fff;
               }
-  
+
               img.hover-icon {
                 filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
                   contrast(102%);
               }
             }
           }
-  
+
           .sub-menu {
             transition: $page-trans;
             background: rgba(239, 242, 245, 0.95);
@@ -1775,7 +1775,7 @@
             left: 0;
             top: 100%;
             width: 100%;
-  
+
             > div {
               max-width: 100%;
               margin: 0 auto;
@@ -1785,11 +1785,11 @@
       }
     }
   }
-  
+
   .register-container {
     display: flex;
     min-height: 90vh;
-  
+
     .registered-left {
       background-image: url(../../../assets/home/zc.jpg);
       background-size: cover;
@@ -1797,19 +1797,19 @@
       background-repeat: no-repeat;
       flex: 1;
       padding: 80px 30px;
-  
+
       ul {
         text-align: left;
         padding-left: 15px;
         font-size: 14px;
         line-height: 30px;
         color: #ffffff;
-  
+
         li {
           list-style-type: decimal;
         }
       }
-  
+
       .title {
         background-image: url(../../../assets/home/download.png);
         background-position: 100% 100%;
@@ -1817,17 +1817,17 @@
         height: 35px;
       }
     }
-  
+
     .registered-right {
       flex: 2;
       padding: 73px 44px;
       background: url(../../../assets/images/index/reg-bg.jpg) no-repeat center center;
       background-size: cover;
-  
+
       .el-row {
         width: 100%;
       }
-  
+
       form .title {
         height: 18px;
         font-size: 18px;
@@ -1838,34 +1838,34 @@
         width: 100%;
         text-align: left;
         display: block;
-  
+
         &.account {
           margin-top: 52px;
         }
       }
     }
   }
-  
+
   .noticedialog {
     padding: 0 0 5px;
-  
+
     .title {
       font-size: 20px;
       font-weight: bold;
       padding: 10px 0;
       text-align: center;
     }
-  
+
     .contents {
       padding: 20px;
     }
-  
+
     .el-button {
       display: block;
       margin: 15px auto;
     }
   }
-  
+
   .password-str-div {
     display: flex;
     align-items: center;
@@ -1876,7 +1876,7 @@
     height: 50px;
     width: 215px;
     color: #ffffff;
-  
+
     span {
       padding: 8px 3px;
       //border: 1px solid #fff;
@@ -1886,16 +1886,16 @@
       text-align: center;
       font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
-  
+
     span.weak-pwd {
       background: #ff3131;
     }
-  
+
     span.normal-pwd {
       background: #f2c037;
       color: #000000;
     }
-  
+
     span.strong-pwd {
       //background: linear-gradient(to right, #de4545, #db7e42) !important;
       background: #21ba45;
@@ -1903,41 +1903,41 @@
     }
   }
   </style>
-  
+
   <!-- Menu Styles -->
   <style lang="scss" scoped>
   .platform-menu {
     a {
       text-decoration: none;
     }
-  
+
     display: flex;
     margin: 0 auto;
     // max-width: 1280px;
     justify-content: space-evenly;
     align-items: center;
-  
+
     .platform-title {
       font-size: 40px;
       color: #343434;
       font-weight: 500;
       margin: 0;
     }
-  
+
     .platform-box {
       flex: 1;
       cursor: pointer;
       padding: 25px 10px;
-  
+
       &:hover {
         background: $primary;
-  
+
         .platform-img {
           transform: scale(1.05);
         }
       }
     }
-  
+
     .platform-img {
       transition: $page-trans;
       width: 145px;
@@ -1946,37 +1946,37 @@
       background-repeat: no-repeat;
       background-position: center center;
     }
-  
+
     &.games,
     &.live {
       justify-content: center;
-  
+
       .platform-box {
         max-width: 160px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         display: flex;
-  
+
         .plat-icon {
           height: 40px;
           width: unset;
         }
       }
     }
-  
+
     &.games,
     &.live,
     &.lottery {
       justify-content: center;
-  
+
       .platform-box {
         max-width: 160px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         display: flex;
-  
+
         .plat-icon {
           height: 40px;
           width: unset;
@@ -1984,7 +1984,7 @@
         }
       }
     }
-  
+
     &.games {
       .platform-box {
         .plat-icon {
@@ -1993,30 +1993,30 @@
         }
       }
     }
-  
+
     .header-fs-box {
       text-align: left;
       margin-left: 10px;
       cursor: pointer;
-  
+
       .fs-title {
         margin: 0;
         font-size: 30px;
         color: #3370d0;
       }
-  
+
       .fs-name {
         font-size: 20px;
         color: #343434;
         margin: 0;
       }
-  
+
       .fs-desc {
         font-size: 18px;
         color: #666;
         margin-top: 3px;
       }
-  
+
       .fs-percentage {
         background-image: url("../../../assets/game/percentage.png");
         background-size: 1008px 71px;
@@ -2024,21 +2024,21 @@
         width: 168px;
         height: 71px;
         margin-top: 12px;
-  
+
         &.p128 {
           background-position-x: -672px;
         }
-  
+
         &.p120 {
           background-position-x: -840px;
         }
-  
+
         &.p200 {
           background-position-x: -504px;
         }
       }
     }
-  
+
     &.live,
     &.games,
     &.fish,
@@ -2049,7 +2049,7 @@
         margin: 9px 0 15px;
       }
     }
-  
+
     &.sports,
     &.poker,
     &.promo {
@@ -2062,7 +2062,7 @@
         margin: 15px 0 12px;
       }
     }
-  
+
     &.esports {
       .platform-box {
         display: flex;
@@ -2070,7 +2070,7 @@
         max-width: 340px;
         padding: 30px 40px 0;
         gap: 9px;
-  
+
         .imgbox {
           width: 310px;
           height: 180px;
@@ -2080,14 +2080,14 @@
           -webkit-transition: all 0.5s ease-out;
           transition: all 0.5s ease-out;
         }
-  
+
         &:hover {
           .imgbox {
             -webkit-transform: scale(1.03);
             transform: scale(1.03);
           }
         }
-  
+
         .platform-slogan {
           height: 21px;
           margin: 0 auto;
@@ -2096,7 +2096,7 @@
         }
       }
     }
-  
+
     &.sports,
     &.poker {
       .platform-box {
@@ -2105,7 +2105,7 @@
         align-items: center;
         justify-content: space-evenly;
         gap: 15px;
-  
+
         .imgbox {
           width: 340px;
           height: 300px;
@@ -2114,18 +2114,18 @@
           -webkit-transition: all 0.5s ease-out;
           transition: all 0.5s ease-out;
         }
-  
+
         &:hover {
           .imgbox {
             -webkit-transform: scale(1.03);
             transform: scale(1.03);
           }
         }
-  
+
         .contents {
           padding-right: 0px;
           text-align: left;
-  
+
           .platform {
             font-size: 24px;
             color: #4080ff;
@@ -2133,11 +2133,11 @@
         }
       }
     }
-  
+
     &.sports {
       .platform-box {
         padding: 0;
-  
+
         .imgbox {
           background-image: url(../../../assets/home/header_sport_new_2.png);
           background-size: 410%;
@@ -2145,20 +2145,20 @@
           transition: all 0.5s ease-out;
           background-repeat: no-repeat;
           background-position: center center;
-  
+
           flex: 6;
         }
-  
+
         .contents {
           flex: 4;
         }
       }
     }
-  
+
     &.poker {
       .platform-box {
         max-width: 500px;
-  
+
         .imgbox {
           width: 225px;
           height: 250px;
@@ -2166,44 +2166,44 @@
         }
       }
     }
-  
+
     &.app {
       gap: 30px;
-  
+
       .platform-box {
         flex: unset;
       }
     }
-  
+
     &.promo {
       .platform-box {
         flex: unset;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-  
+
         .contents {
           text-align: left;
-  
+
           .platform {
             color: #333;
             font-size: 2em;
           }
-  
+
           .platform-slogan {
             width: 150px;
           }
         }
       }
-  
+
       img {
         width: 300px;
       }
     }
-  
+
     &.fish {
       justify-content: center;
-  
+
       .platform-box {
         padding: 25px 10px;
         max-width: 160px;
@@ -2213,16 +2213,16 @@
       }
     }
   }
-  
+
   .acc-dialog {
     &.el-dialog {
       box-shadow: none;
       border-radius: 20px;
       // overflow: hidden;
-  
+
       .el-dialog__body {
         padding: 0;
-  
+
         .acc-dialog-container {
           display: flex;
           background: linear-gradient(178.46deg, #2D4065 0%, #1A2439 100%);
@@ -2232,12 +2232,12 @@
           max-height: 90vh;
           min-height: 60vh;
         }
-  
+
         .acc-dialog-left {
           width: calc(100% - 450px);
           background: transparent;
           border-radius: 0px;
-  
+
           .acc-dialog-img {
             max-width: 963px;
             max-height: 896px;
@@ -2249,7 +2249,7 @@
             border-radius: 0px;
           }
         }
-  
+
         .acc-dialog-right {
           width: 460px;
           padding: 24px 30px 24px 30px;
@@ -2257,7 +2257,7 @@
           .acc-dialog-homelogo {
             margin: auto;
             text-align: center;
-          }  
+          }
 
           .acc-dialog-content {
             padding-top: 26px;
@@ -2265,16 +2265,16 @@
         }
       }
     }
-  
+
     .el-dialog__header .el-dialog__headerbtn {
       top: 10px;
       right: 10px;
-  
+
       .el-dialog {
         &__close {
           color: #000000 !important;
           opacity: 0.5;
-  
+
           &:hover {
             opacity: 1;
             color: #000000 !important;
@@ -2283,14 +2283,14 @@
       }
     }
   }
-  
+
   // .register-dialog {
   //   .el-dialog__header .el-dialog__headerbtn {
   //     .el-dialog {
   //       &__close {
   //         color: #000000;
   //         opacity: 0.5;
-  
+
   //         &:hover {
   //           opacity: 1;
   //           color: #000000;
@@ -2299,12 +2299,12 @@
   //     }
   //   }
   // }
-  
+
   .mailbox-notify {
     position: relative;
     margin-right: 20px;
   }
-  
+
   .header-btn {
     display: flex;
     min-width: 70px;
@@ -2317,30 +2317,30 @@
     box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
     cursor: pointer;
     transition: 0.3s all;
-  
+
     &:hover {
       filter: brightness(0.9);
     }
-  
+
     &.btn-color-blue {
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
       color: $color-white;
     }
-  
+
     &.btn-color-white {
       background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
       box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
       color: $font-1;
     }
   }
-  
+
   .right-contents {
     // margin-left: 2rem;
     display: flex;
     gap: 1rem;
   }
-  
+
   .header-menu-item {
     min-width: 40px;
     position: relative;
@@ -2392,43 +2392,45 @@
         font-weight: 600;
         font-size: 16px;
       }
-  
+
       &.active {
         color: #468cff;
       }
     }
   }
-  
+
   .dark {
     .acc-dialog.el-dialog {
       --el-dialog-bg-color: linear-gradient(180deg, #191b27 0%, #0a0c16 100%);
-  
+
       .el-dialog__header {
         .el-dialog__close {
           color: $color-white !important;
         }
       }
-  
+
       .el-dialog__body {
         .acc-dialog-left {
           background: transparent;
         }
       }
     }
-  
+
     .header-container {
       .top-nav-wrapper {
         background: rgba(21, 33, 62, 0.8);
         box-shadow: none;
+        border-bottom: 1px solid #BE9457;
         .top-nav-inner {
-            border-bottom: 1px solid #BE9457;
+          padding: 10px 0 9px;
+          max-width: 1400px;
           .navigations {
             .header-menu-item {
               color: $font-4-dark;
               font-family: PingFang SC;
                 font-weight: 600;
                 font-size: 12px;
-                
+
                 &.active, &:hover {
                     background: linear-gradient(180deg, rgb(255 255 255 / 10%), rgb(102, 102, 102));
                     color: #fff;
@@ -2451,7 +2453,7 @@
                     color: #fff;
                   }
                   // .hover-icon {
-  
+
                   // }
                   // :last-child {
                   //   color: $active-color-dark;
@@ -2459,13 +2461,13 @@
                 }
               }
             }
-  
+
             .sub-menu {
               // background: $background-content-block-dark;
               background-color: rgba(15, 24, 45, 0.77);
               box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
             }
-  
+
             &.second-nav {
               .header-menu-item {
                 > a {
@@ -2475,7 +2477,7 @@
                       brightness(60%) contrast(70%);
                       filter: none;
                   }
-  
+
                   &:hover {
                     .hover-icon {
                       filter: brightness(0) saturate(100%) invert(96%) sepia(99%) saturate(1288%) hue-rotate(138deg) brightness(104%) contrast;
@@ -2489,7 +2491,7 @@
               }
             }
           }
-  
+
           .right-contents {
             .header-btn {
               &.btn-color-blue {
@@ -2500,14 +2502,14 @@
                 box-shadow: none;
                 border-radius: 8px;
                 border: 1px solid #3A93CE;
-                
+
               }
               &.btn-color-white {
                 background: $active-color-dark-linear;
                 position: relative;
                 box-shadow: 0px 0px 16.4px 0px #00d1ffcc;
                 color: $color-white;
-  
+
                 &::before {
                   @include gradient-border(linear-gradient(180deg, #2ec0ff 0%, #f6ffff 50%, #2ec0ff 100%));
                   border-radius: 2rem;
@@ -2518,11 +2520,11 @@
         }
       }
     }
-  
+
     .profile-actions {
       .action-btn {
         color: $font-3-dark;
-  
+
         .icon-rounded {
           box-shadow: none;
           background-color: $background-content-block-lighter-dark;
@@ -2535,7 +2537,7 @@
         }
       }
     }
-  
+
     .profile-info {
       .profile-details {
         .details-name {
@@ -2546,7 +2548,7 @@
             font-family: 'FZHanZhenGuangBiaoS-GB';
             font-weight: 400;
           }
-          
+
           .reload-btn {
             fill: #A98F7C;
           }
@@ -2561,14 +2563,14 @@
     .profile-info-dropdown-content {
       .profile-info-dropdown-content-item {
         color: $font-3-dark;
-  
+
         &.standard-button {
           color: $color-white;
         }
       }
     }
   }
-  
+
   .grid-container {
     margin: 20px auto;
     display: flex;
@@ -2576,7 +2578,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
   }
-  
+
   .grid-item {
     display: flex;
     justify-content: center;
@@ -2589,11 +2591,11 @@
       border-radius: 50%;
     }
   }
-  
+
   .grid-item .el-image:hover {
     cursor: pointer;
   }
-  
+
   .grid-item.selected {
     position: relative;
     color: #ffffff;
@@ -2616,15 +2618,15 @@
       border-radius: 50%;
     }
   }
-  
+
   .profile-dialog {
     max-width: 660px;
   }
-  
+
   .profile-dialog .header {
     font-size: 20px;
   }
-  
+
   .profile-dialog .standard-button {
     width: 400px;
     display: block;
@@ -2638,4 +2640,3 @@
     top: 8px;
   }
   </style>
-  

@@ -6,7 +6,7 @@
           <img v-else src="../../assets/promo/promo-banner-dark.png" />
         </div>
       </div>
-  
+
       <div class="all-promotions" v-if="!isPromoDetail">
         <div class="promo-main-container">
           <div class="promo-type-wrapper">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                   </div>
-  
+
                   <div class="promo-details">
                     <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                     <div class="front-title">{{ promo.title }}</div>
@@ -55,8 +55,8 @@
                     <div class="front-btn">查看详情</div>
                   </div>
                   <div class="promo-bg">
-                    <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
-                    <img class="promo-content isMobile" :src="imgURL + promo.mobileImgUrl" />
+                    <img class="promo-content isDesktop" :src="imgURL + promo.displayDesktopImgUrl" />
+                    <img class="promo-content isMobile" :src="imgURL + promo.displayMobileImgUrl" />
                   </div>
                 </div>
                 <!-- <div class="promo-info">
@@ -72,7 +72,7 @@
           <div
             class="banner-container"
             v-if="
-              (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
+              (selectedPromo?.displayDesktopBannerUrl || selectedPromo?.displayMobileBannerUrl) &&
               selectedPromo.promoCode !== 'lh1-game-steps' &&
               selectedPromo.promoCode !== 'lh1-ftd-promo' &&
               selectedPromo.promoCode !== 'lh1-aijiasu' &&
@@ -82,7 +82,7 @@
             <div class="promo-bg isDesktop">
               <img
                 :src="
-                  imgURL + (selectedPromo.desktopBannerUrl ? selectedPromo.desktopBannerUrl : selectedPromo.desktopImgUrl)
+                  imgURL + (selectedPromo.displayDesktopBannerUrl ? selectedPromo.displayDesktopBannerUrl : selectedPromo.displayDesktopImgUrl)
                 "
               />
             </div>
@@ -91,7 +91,7 @@
               :style="
                 'background-image: url(' +
                 imgURL +
-                (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
+                (selectedPromo.displayMobileBannerUrl ? selectedPromo.displayMobileBannerUrl : selectedPromo.displayMobileImgUrl) +
                 ''
               "
             ></div>
@@ -116,11 +116,11 @@
                       ? '#1D1D1E'
                       : '',
               backgroundImage:
-                selectedPromo?.desktopImgBackgroundUrl ||
+                selectedPromo?.displayDesktopImgBackgroundUrl ||
                 selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
                 selectedPromo?.promoCode === 'lh-nba24-match' ||
                 selectedPromo?.promoCode === 'lh-lpl-summer24'
-                  ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                  ? `url(${imgURL + selectedPromo.displayDesktopImgBackgroundUrl})`
                   : ''
             }"
             :class="{
@@ -175,7 +175,7 @@
       </div>
     </div>
   </template>
-  
+
   <script lang="js">
   import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
   import { useRoute, useRouter } from "vue-router";
@@ -184,11 +184,11 @@
   import { ElMessageBox } from "element-plus";
   import moment from "moment";
   import { useDark } from "@vueuse/core";
-  
+
   import HotPromotion from "@/components/HotPromotion";
   import { useLocalStorage } from "@vueuse/core";
   import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
-  
+
   export default defineComponent({
     name: "PromoView",
     components: {
@@ -197,7 +197,7 @@
     },
     setup() {
       const isDark = useDark();
-  
+
       const store = userStore();
       const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
       const banner = ref([]);
@@ -227,14 +227,14 @@
       const selectedPromo = ref({});
       const route = useRoute();
       const router = useRouter();
-  
+
       const countDay = ref(5);
       const euroCupStartDate = moment("2024-06-15");
       countDay.value = euroCupStartDate.diff(moment(), "days");
       if (countDay.value <= 0) {
         countDay.value = 0;
       }
-  
+
       // watch(() => route.query, () => {
       //   if (route.query === null) {
       //    isPromoDetail.value = false
@@ -279,19 +279,19 @@
             //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
             // }
             // isPromoDetail.value = true;
-  
+
             console.log(promo, "promo");
             selectedPromo.value = promo;
           }
       };
-  
+
       const scrollToTop = () => {
         window.scroll({ behavior: "smooth", left: 0, top: 0 });
       };
-  
+
       const switchPromoType = (type) => {
         scrollToTop();
-  
+
         promoTabActive.value = type;
         if (type !== "ALL") {
           filteredArray.value = promoState.promoList.filter(function (promo) {
@@ -301,16 +301,26 @@
           filteredArray.value = promoState.promoList;
         }
       };
-  
+
       const loadAll = () => {
         loadPromo()
           .then((res) => {
             if (res.code === 0) {
+              const processedData = res.data.map(promo => ({
+                ...promo,
+                displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
+                displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
+                displayDesktopImgUrl: promo.desktopImgUrlDark ?? promo.desktopImgUrl,
+                displayMobileBannerUrl: promo.mobileBannerUrlDark ?? promo.mobileBannerUrl,
+                displayMobileImgBackgroundUrl: promo.mobileImgBackgroundUrlDark ?? promo.mobileImgBackgroundUrl,
+                displayMobileImgUrl: promo.mobileImgUrlDark ?? promo.mobileImgUrl,
+              }))
+
               if (promoState.promoList.length === 0) {
-                promoState.promoList.push(...res.data);
+                promoState.promoList.push(...processedData);
               }
-  
-              res.data.forEach((element) => {
+
+              processedData.forEach((element) => {
                 // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
                 //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
                 // } else {
@@ -336,7 +346,7 @@
           });
         switchPromoType(promoState.active);
       };
-  
+
       const getPromoLabel = (labelType) => {
         switch (labelType) {
           case 0:
@@ -360,7 +370,7 @@
         // loadBanner();
         loadAll();
       });
-  
+
       watch(
         () => route.query.name,
         () => {
@@ -369,7 +379,7 @@
           }
         }
       );
-  
+
       return {
         promoState,
         promoTypes,
@@ -388,24 +398,24 @@
     }
   });
   </script>
-  
+
   <style lang="scss">
   .promo-container {
     //overflow-x: hidden;
     min-height: 600px;
-  
+
     .promo-banner {
       //background: #f3f7fd;
       width: 100%;
       display: flex;
       justify-content: center;
-  
+
       .promo-banner-image {
         position: relative;
         overflow: hidden;
       }
     }
-  
+
     .all-promotions {
       // background: url(../../assets/promo/top-promo-banner.jpg) no-repeat center top;
       // background-size: 100% auto;
@@ -420,7 +430,7 @@
       ol {
         padding: 0 15px;
       }
-  
+
       img {
         display: flex;
         justify-content: center;
@@ -434,7 +444,7 @@
         margin: 10px auto;
         min-width: 80%;
         text-align: center;
-  
+
         tr:first-child td {
           background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
           color: #ffffff;
@@ -446,7 +456,7 @@
         tr:first-child td:last-child {
           border-top-right-radius: 10px;
         }
-  
+
         border-collapse: collapse;
         th,
         td {
@@ -489,7 +499,7 @@
   <style scoped lang="scss">
   .promo-container {
     // padding-bottom: 80px;
-  
+
     // min-height: 70vh;
     // color: #ffffff;
     .banner-container {
@@ -501,7 +511,7 @@
           opacity: 1;
         }
       }
-  
+
       .promo-bg {
         background-size: cover;
         background-repeat: no-repeat;
@@ -571,18 +581,18 @@
               width: 100%;
               border-radius: 30px;
               box-shadow: 0px -1.6610169410705566px 6.085966110229492px 0px #a2bff4 inset;
-  
+
               .active-arrow {
                 position: absolute;
                 left: -4px;
               }
-  
+
               .label {
                 z-index: 0;
                 color: #468cff;
                 font-size: 23px;
               }
-  
+
               &:before {
                 // content: "";
                 // position: absolute;
@@ -596,14 +606,14 @@
               &.active {
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
-  
+
                 // background: #4b4e66;
                 // box-shadow: 0 0 5px #ffffff;
                 // background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#5243bd,#5243bd);
                 .label {
                   color: #ffffff;
                 }
-  
+
                 &:before {
                   background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#3077f6, #3077f6);
                 }
@@ -624,7 +634,7 @@
             background: url(../../assets/promo/front-bg.png) no-repeat center center;
             background-size: cover;
             box-shadow: 0px 4px 26px 0px #00000026;
-  
+
             border-radius: 20px;
             a {
               display: block;
@@ -641,7 +651,7 @@
             img {
             }
             cursor: pointer;
-  
+
             .promo-img-wrapper {
               position: relative;
               overflow: hidden;
@@ -651,7 +661,7 @@
               padding: 0 50px;
               // border-radius: 10px 10px 0 0;
               position: relative;
-  
+
               .promo-label {
                 position: absolute;
                 left: 0;
@@ -662,14 +672,14 @@
                 gap: 60px;
                 padding: 20px;
                 font-family: 'PingFang SC';
-  
+
                 .label-type {
                   background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
                   color: #ffffff;
                   position: relative;
                   width: 100px;
                   font-weight: bold;
-  
+
                   &:after {
                     content: "";
                     border-left: 0 solid transparent;
@@ -681,7 +691,7 @@
                     top: 0;
                   }
                 }
-  
+
                 .label-date {
                   color: #606479;
                   font-size: 18px;
@@ -734,9 +744,9 @@
                   color: #ffffff;
                   padding: 5px 30px;
                   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  
+
                   box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
-  
+
                   box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
                   display: inline-flex;
                   justify-content: center;
@@ -771,7 +781,7 @@
               // position: absolute;
               text-align: right;
               // border-radius: 0 0 10px 10px;
-  
+
               left: 0;
               bottom: 0;
               width: 100%;
@@ -832,35 +842,35 @@
           background-position: top center;
           gap: 20px;
           background-repeat: no-repeat;
-  
+
           &.bgautosize {
             background-size: 100% auto;
           }
-  
+
           &.fullwidth {
             width: 100%;
             max-width: 100%;
             margin: 0;
             padding: 0;
-  
+
             .hot-promo {
               border-radius: 0px;
             }
-  
+
             .promo-view-container {
               display: none;
             }
           }
-  
+
           &:has(.corner-decor) {
             position: relative;
           }
-  
+
           &.europe-first-shoot {
             background-color: #0d3173;
             background-image: none !important;
           }
-  
+
           .hot-promo {
             // background: #201f29;
             border-radius: 10px;
@@ -1005,49 +1015,49 @@
       }
     }
   }
-  
+
   .dark {
     .promo-container {
       background: url("../../assets/promo/promo-page-bg-dark.jpg") no-repeat top center;
       background-size: 100vw 100vh;
       background-attachment: fixed;
-  
+
       .all-promotions {
         background: transparent;
-  
+
         .promo-main-container {
           .promo-type-wrapper {
             // @include content-block-dark;
             border: 1px solid rgba(120, 171, 219, 1);
             overflow: hidden;
-  
+
             .type-list {
               padding: 0px;
               gap: 5px;
-  
+
               .type-item {
                 background: linear-gradient(90deg, #2A3755 0%, #1A2338 100%);
                 box-shadow: none;
                 border-radius: 0px;
                 font-family: 'PingFang SC';
-  
+
                 &.header {
                   background: linear-gradient(180deg, #18437C 0%, #182537 100%);
                   border-bottom: 1px solid rgba(120, 171, 219, 1);
                 }
-  
+
                 &.active {
                   background: linear-gradient(90deg, #455884 0%, #1A2338 100%);
                   box-shadow: none;
                 }
-  
+
                 .label {
                   color: $color-white;
                 }
               }
             }
           }
-  
+
           .promo-list-wrapper {
             .promo-item {
               background: url("../../assets/promo/promo-item-bg-dark.png") no-repeat top center;
@@ -1055,7 +1065,7 @@
               border-radius: 0px;
               // background: url(../../assets/promo/front-bg-dark.png) no-repeat center center;
               // background-size: cover;
-  
+
               .promo-img-wrapper {
                 .promo-label {
                   .label-type {
@@ -1070,25 +1080,25 @@
                       clip-path: polygon(0 0, 0% 110%, 100% 0);
                     }
                   }
-  
+
                   .label-date {
                     color: rgba($color-white, 20%);
                   }
                 }
-  
+
                 .promo-details {
                   .front-title {
                     color: #fff;
                   }
-  
+
                   .front-sub {
                     color: $color-white;
                   }
-  
+
                   .front-btn {
                     background: url('../../assets/promo/promo-check-info-btn.png');
                     background-size: 100% 100%;
-  
+
                     &:hover {
                       filter: brightness(1.2);
                     }
@@ -1102,4 +1112,3 @@
     }
   }
   </style>
-  
