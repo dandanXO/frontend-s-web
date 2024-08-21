@@ -124,7 +124,7 @@ const routes = [
     children: [{ path: "", name: "affiliate", component: () => import("pages/AffiliateView.vue") }]
   },
   {
-    path: "/agent/:affiliateCode",
+    path: "/:homeName?/agent/:affiliateCode",
     name: "agentCode",
     component: () => {}
     // component: () => {},

@@ -9,17 +9,17 @@
           <div class="rebatebtn">{{$t('rebate.claimNow')}}</div>
         </div> -->
         <div class="promo-type-wrapper">
-          <div style="position:sticky; top: 0;">
+          <div style="position: sticky; top: 0">
             <div class="type-list">
               <!-- <img src="../assets/promo/menu-title.png" /> -->
               <div class="promo-title">
                 <div class="linebefore"></div>
-                {{ $t('promo.promo') }}
+                {{ $t("promo.promo") }}
                 <div class="lineafter"></div>
               </div>
               <div
                 class="type-item"
-                v-for="p in promoTypes"
+                v-for="p in currentPromoTypes"
                 :class="{ active: p.code === promoTabActive }"
                 :key="p.code"
                 @click="switchPromoType(p.code)"
@@ -42,28 +42,37 @@
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
-
                 <div class="promo-label">
-                  <div class="label-type"
-                       :class="{
-                          labelhot: promo.labelType === 1,
-                          labelrecommend: promo.labelType === 3 || promo.labelType === 5,
-                          labellimit: promo.labelType === 6,
-                          labelnew: promo.labelType === 0,
-                        labelother: promo.labelType !== 6 && promo.labelType !== 1 && promo.labelType !== 0 && promo.labelType !== 3 && promo.labelType !== 5,
-                       }"
-                       v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div
+                    class="label-type"
+                    :class="{
+                      labelhot: promo.labelType === 1,
+                      labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                      labellimit: promo.labelType === 6,
+                      labelnew: promo.labelType === 0,
+                      labelother:
+                        promo.labelType !== 6 &&
+                        promo.labelType !== 1 &&
+                        promo.labelType !== 0 &&
+                        promo.labelType !== 3 &&
+                        promo.labelType !== 5
+                    }"
+                    v-if="promo.labelType !== 2"
+                  >
+                    {{ getPromoLabel(promo.labelType) }}
+                  </div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
-                <div class="promo-details"
+                <div
+                  class="promo-details"
                   :class="{
-                    nopaddingtop : promo.labelType === 2
+                    nopaddingtop: promo.labelType === 2
                   }"
                 >
                   <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
-                  <div class="front-btn">{{ $t('home.moreDetails')}}</div>
+                  <div class="front-btn">{{ $t("home.moreDetails") }}</div>
                 </div>
                 <div class="promo-bg">
                   <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
@@ -80,9 +89,7 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
-        <div class="banner-container"
-             v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl"
-        >
+        <div class="banner-container" v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl">
           <div class="promo-bg isDesktop">
             <img
               :src="
@@ -104,8 +111,8 @@
         <div
           class="inner"
           :class="{
-            'isEurocup24': selectedPromo.redirectUrl === 'vnm-eurocup24',
-            'isEurocupLucky': selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
+            isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24',
+            isEurocupLucky: selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
           }"
           :style="
             selectedPromo?.desktopImgBackgroundUrl
@@ -151,12 +158,15 @@ const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 import HotPromotion from '@/components/HotPromotion'
 import { useLocalStorage } from "@vueuse/core";
+import { uiStore } from "@/store/ui";
+import { EDITION } from "@/constant/edition";
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion
   },
   setup() {
+    const ui = uiStore()
     const { t } = useI18n();
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
@@ -165,7 +175,7 @@ export default defineComponent({
       active: "ALL",
       promoList: [],
     });
-    const promoTypes = ref([
+    const promoTypes = computed(() => [
       { code:"ALL", img: 'all', label: t('promo.all') },
       { code: "SPORT", img: 'sport', label:  t('promo.sports')},
       { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
@@ -174,7 +184,22 @@ export default defineComponent({
       { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
       { code: "FISH", img: 'fish', label: t('promo.fish')},
     ]);
-    const promoTabActive = ref(promoTypes.value[0].code);
+    const promoTypesSlot = computed(() => [
+    { code:"ALL", img: 'all', label: t('promo.all') },
+    { code: "SLOT WELCOME", img: 'sport', label:  t('promo.slotWelcome')},
+    { code: "SLOT DAILY", img: 'live', label: t('promo.slotDaily')},
+    { code: "SLOT OTHER", img: 'slot', label: t('promo.slotOther')},
+    ])
+    const currentPromoTypes = computed(() => {
+      switch(ui.edition) {
+        case EDITION.SLOT:
+          return promoTypesSlot.value
+        case EDITION.NORMAL:
+        default:
+          return promoTypes.value
+      }
+    })
+    const promoTabActive = ref(currentPromoTypes.value[0].code);
     const filteredArray = ref([]);
     const isPromoDetail = computed(() => {
       if(route.query && route.query?.name ){
@@ -259,8 +284,13 @@ export default defineComponent({
       }
     };
     const loadAll = () => {
-      loadPromo().then((res) => {
-        console.log(res,'dan')
+      let siteType
+      switch(ui.edition) {
+        case EDITION.SLOT:
+          siteType = "SLOT";
+          break
+      }
+      loadPromo(siteType).then((res) => {
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
@@ -310,17 +340,17 @@ export default defineComponent({
       loadAll();
     });
 
-    watch(languageVal, (newValue, oldValue) => {
-      promoTypes.value = [
-        { code:"ALL", img: 'all', label: t('promo.all') },
-        { code: "SPORT", img: 'sport', label:  t('promo.sports')},
-        { code: "POKER", img: 'poker', label: t('promo.poker')},
-        { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
-        { code: "SLOT GAME", img: 'slot', label: t('promo.slot')},
-        { code: "FISH", img: 'fish', label: t('promo.fish')},
-        { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
-      ];
-    });
+    // watch(languageVal, (newValue, oldValue) => {
+    //   promoTypes.value = [
+    //     { code:"ALL", img: 'all', label: t('promo.all') },
+    //     { code: "SPORT", img: 'sport', label:  t('promo.sports')},
+    //     { code: "POKER", img: 'poker', label: t('promo.poker')},
+    //     { code: "LIVE CASINO", img: 'live', label: t('promo.casino')},
+    //     { code: "SLOT GAME", img: 'slot', label: t('promo.slot')},
+    //     { code: "FISH", img: 'fish', label: t('promo.fish')},
+    //     { code: "LOTTERY", img: 'lottery', label: t('promo.lottery')},
+    //   ];
+    // });
 
     // watch(() => route.query.name, () => {
     //   if (!route.query.name) {
@@ -340,7 +370,8 @@ export default defineComponent({
       banner,
       imgURL,
       getPromoLabel,
-      languageVal
+      languageVal,
+      currentPromoTypes
     }
   },
 });
@@ -467,11 +498,10 @@ export default defineComponent({
       .rebates-container {
         position: absolute;
         top: -80px;
-        background: url(../assets/promo/rebate/rebatebg.png)no-repeat center center;
+        background: url(../assets/promo/rebate/rebatebg.png) no-repeat center center;
         background-size: contain;
         width: 100%;
         height: 65px;
-
       }
       .promo-type-wrapper {
         display: flex;
@@ -497,9 +527,9 @@ export default defineComponent({
           position: sticky;
           top: 100px;
           .promo-title {
-            color: #4C88F8;
+            color: #4c88f8;
             font-size: 20px;
-            color: #4C88F8;
+            color: #4c88f8;
             font-size: 20px;
             display: flex;
             gap: 10px;
@@ -511,16 +541,16 @@ export default defineComponent({
               flex-direction: column;
               align-items: flex-end;
               &:before {
-                content: '';
+                content: "";
                 width: 13px;
                 height: 2px;
-                background: #4C88F8;
+                background: #4c88f8;
               }
               &:after {
-                content: '';
+                content: "";
                 width: 55px;
                 height: 2px;
-                background: #4C88F8;
+                background: #4c88f8;
               }
             }
             .lineafter {
@@ -530,18 +560,17 @@ export default defineComponent({
               flex-direction: column;
               align-items: flex-start;
               &:before {
-                content: '';
+                content: "";
                 width: 13px;
-                background: #4C88F8;
+                background: #4c88f8;
                 height: 2px;
               }
               &:after {
-                content: '';
+                content: "";
                 width: 55px;
                 height: 2px;
-                background: #4C88F8;
+                background: #4c88f8;
               }
-
             }
           }
           .type-item {
@@ -665,52 +694,51 @@ export default defineComponent({
                   top: 0;
                 }
 
-                &.labelhot{
-                  background: linear-gradient(89.92deg, #D7353F 0.06%, #FEA4A4 106.89%, #A4CEFF 106.9%);
+                &.labelhot {
+                  background: linear-gradient(89.92deg, #d7353f 0.06%, #fea4a4 106.89%, #a4ceff 106.9%);
 
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
-                    border-top: 42px solid  #FEA4A4;
+                    border-top: 42px solid #fea4a4;
                   }
                 }
 
-                &.labellimit{
-                  background: linear-gradient(89.92deg, #454BC2 0.06%, #B1A5F0 106.9%);
+                &.labellimit {
+                  background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
-                    border-top: 42px solid #B1A5F0;
+                    border-top: 42px solid #b1a5f0;
                   }
                 }
 
-                &.labelnew{
-                  background: linear-gradient(89.92deg, #EAA318 0.06%, #F0DBA5 106.9%);
+                &.labelnew {
+                  background: linear-gradient(89.92deg, #eaa318 0.06%, #f0dba5 106.9%);
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
-                    border-top: 42px solid #F0DBA5;
+                    border-top: 42px solid #f0dba5;
                   }
                 }
 
-                &.labelrecommend{
-                  background: linear-gradient(89.92deg, #6DB73F 0.06%, #A5F0B6 106.9%);
+                &.labelrecommend {
+                  background: linear-gradient(89.92deg, #6db73f 0.06%, #a5f0b6 106.9%);
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
-                    border-top: 42px solid #A5F0B6;
+                    border-top: 42px solid #a5f0b6;
                   }
                 }
 
-                &.labelother{
-                  background: linear-gradient(89.92deg, #4DA9FF 0.06%, #A4CEFF 106.9%);
+                &.labelother {
+                  background: linear-gradient(89.92deg, #4da9ff 0.06%, #a4ceff 106.9%);
                   &:after {
                     border-left: 0 solid transparent;
                     border-right: 20px solid transparent;
-                    border-top: 42px solid #A4CEFF;
+                    border-top: 42px solid #a4ceff;
                   }
                 }
-
               }
 
               .label-date {
@@ -748,7 +776,7 @@ export default defineComponent({
               justify-content: flex-start;
               align-items: flex-start;
 
-              &.nopaddingtop{
+              &.nopaddingtop {
                 padding-top: 10px;
               }
               .front-date {
@@ -866,7 +894,7 @@ export default defineComponent({
           padding: 0px;
         }
         &.isEurocupLucky {
-          background: #E7F1FD;
+          background: #e7f1fd;
         }
 
         .hot-promo {

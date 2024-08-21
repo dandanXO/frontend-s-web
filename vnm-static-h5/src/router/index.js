@@ -91,6 +91,13 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      const { homeName } = to.params;
+      if (homeName) {
+        if (homeName === "homeslot") {
+          sessionStorage.setItem("HOME_EDITION", EDITION.SLOT);
+          ui.edition = EDITION.SLOT;
+        }
+      }
       // if (to.query.reg) {
       //   next(`/register`);
       // } else {

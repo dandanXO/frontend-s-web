@@ -296,6 +296,7 @@ export default {
     CENTERPROMO: '센터 프로모션',
     LOGIN: '로그인',
     REGISTER: '등록',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: '대기 중',
@@ -406,6 +407,9 @@ export default {
     LOTTERY: '복권',
     OTHER: '기타',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: '일반',
@@ -445,11 +449,15 @@ export default {
     OFF: '끄기',
   },
   valueRulesType: {
-    INPUT: "입력",
-    RADIO: "라디오 버튼",
-    SELECT: "선택 상자",
-    SWITCH: "스위치",
-    CHECKBOX: "체크박스"
+    INPUT: '입력',
+    RADIO: '라디오 버튼',
+    SELECT: '선택 상자',
+    SWITCH: '스위치',
+    CHECKBOX: '체크박스',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: '계정',
@@ -740,6 +748,7 @@ export default {
     currencyCode: '통화 코드',
     currencyName: '통화 이름',
     currencyRate: '환율',
+    currencyWallet: '화폐 지갑',
     currentPassword: '현재 비밀번호',
     currentPlace: '현재 위치',
     customerSupportAddress: '고객 지원 주소',
@@ -1379,6 +1388,7 @@ export default {
     siteCode: '사이트 코드',
     siteList: '사이트 목록',
     siteName: '사이트 이름',
+    siteType: 'Site Type',
     sn: '일련 번호',
     smsPhone: '전화번호',
     smsContent: '내용',
@@ -2537,7 +2547,8 @@ export default {
     'Affiliate Change Log': '제휴 부모 변경 로그',
     'Media Display Settings': '미디어 디스플레이 설정',
     'Vip Report': 'VIP 보고서',
-    'System Value Rules': '시스템 값 규칙'
+    'System Value Rules': '설정 규칙',
+    'Sites Config': '사이트 설정',
   },
   google: {
     google_auth_menu: 'Google 인증자',

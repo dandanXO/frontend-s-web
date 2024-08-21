@@ -224,7 +224,7 @@
               <q-icon color="dark" name="smartphone" />
             </template>
             <template v-slot:append>
-              <q-btn 
+              <q-btn
               :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
               color="brightbtn" @click="openPhoneVeriDialog()"
               :disable="otpCountdownCount > 0" />
@@ -361,6 +361,7 @@ import {useQuasar} from "quasar";
 import {userStore} from "stores/index";
 
 import {useRouter} from "vue-router";
+import { useLocalStorage } from "@vueuse/core";
 
 var qs = require("qs");
 export default defineComponent({
@@ -379,7 +380,7 @@ export default defineComponent({
       start: "",
       end: ""
     });
-    const imgURL = process.env.IMAGE_CDN + '/payment/'
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + '/payment/'
     const columns = [
       {
         title: "Bank Name",
