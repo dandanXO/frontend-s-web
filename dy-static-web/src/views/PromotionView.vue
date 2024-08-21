@@ -173,6 +173,7 @@ import { ElMessageBox } from "element-plus";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 
 import HotPromotion from "@/components/HotPromotion";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "PromoView",
@@ -182,7 +183,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",

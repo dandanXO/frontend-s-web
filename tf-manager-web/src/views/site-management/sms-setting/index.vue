@@ -112,6 +112,35 @@
         <el-form-item :label="t('fields.templateId')" prop="templateId">
           <el-input v-model="form.templateId" style="width: 350px" />
         </el-form-item>
+        <el-form-item
+          :label="t('fields.country')"
+          prop="country"
+        >
+          <el-select
+            v-model="form.country"
+            multiple
+            :placeholder="t('fields.country')"
+            style="width: 350px"
+            @focus="loadCountries()"
+          >
+            <el-option
+              v-for="item in countries.list"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.priority')" prop="priority">
+          <el-input-number
+            v-model="form.priority"
+            style="width: 350px;"
+            :min="1"
+            :max="100"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.param')" prop="param">
           <JsonEditor
             class="editor"
@@ -155,7 +184,7 @@
         width="55"
         v-if="!hasRole(['SUB_TENANT'])"
       />
-      <el-table-column prop="siteName" :label="t('fields.site')" width="150" />
+      <el-table-column prop="siteName" :label="t('fields.site')" width="120" />
       <el-table-column
         prop="signName"
         :label="t('fields.signName')"
@@ -172,6 +201,33 @@
         :label="t('fields.templateId')"
         width="150"
       />
+      <el-table-column
+        prop="country"
+        :label="t('fields.country')"
+        width="150"
+      />
+      <el-table-column
+        prop="priority"
+        :label="t('fields.priority')"
+        width="120"
+      />
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+        width="150"
+      >
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            style="width: 300px"
+            @change="updateState(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">OPEN</el-radio-button>
+            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
+          </el-radio-group>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="updateTime"
         :label="t('fields.updateTime')"
@@ -196,6 +252,7 @@
       />
       <el-table-column
         :label="t('fields.operate')"
+        width="120"
         align="right"
         v-if="
           !hasRole(['SUB_TENANT']) &&
@@ -241,6 +298,8 @@ import {
   deleteSmsSetting,
   getSmsSetting,
   updateSmsSetting,
+  updateStatus,
+  getCountryCode
 } from '../../../api/sms-setting'
 import { getSiteListSimple } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
@@ -261,6 +320,10 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   importDialogVisible: false,
+  status: [
+    { key: 1, displayName: 'OPEN', value: 'OPEN' },
+    { key: 2, displayName: 'CLOSE', value: 'CLOSE' },
+  ]
 })
 
 const page = reactive({
@@ -286,6 +349,8 @@ const form = reactive({
   templateId: null,
   param: null,
   siteName: null,
+  country: null,
+  priority: null
 })
 
 const formRules = reactive({
@@ -298,9 +363,15 @@ const formRules = reactive({
     required(t('message.validateParamRequired')),
     { validator: checkJson, trigger: 'blur' },
   ],
+  country: [required(t('message.validateCountryRequired'))],
+  priority: [required(t('message.validatePriorityRequired'))]
 })
 
 const sites = reactive({
+  list: [],
+})
+
+const countries = reactive({
   list: [],
 })
 
@@ -389,6 +460,10 @@ function showEdit(setting) {
       if (key === 'param') {
         editorValue = JSON.parse(form[key])
       }
+
+      if (form[key] && key === 'country') {
+        form[key] = setting[key].split(',')
+      }
     }
   })
 }
@@ -396,6 +471,13 @@ function showEdit(setting) {
 function create() {
   settingForm.value.validate(async valid => {
     if (valid) {
+      if (form.country !== null && form.country.length > 0) {
+        if (form.country.length === 1) {
+          form.country = form.country[0]
+        } else {
+          form.country = form.country.join(",")
+        }
+      }
       await createSmsSetting(form)
       uiControl.dialogVisible = false
       await loadSetting()
@@ -407,6 +489,13 @@ function create() {
 function edit() {
   settingForm.value.validate(async valid => {
     if (valid) {
+      if (form.country !== null && form.country.length > 0) {
+        if (form.country.length === 1) {
+          form.country = form.country[0]
+        } else {
+          form.country = form.country.join(",")
+        }
+      }
       await updateSmsSetting(form)
       uiControl.dialogVisible = false
       await loadSetting()
@@ -469,8 +558,26 @@ function removeJsonEditorElement() {
   })
 }
 
+async function loadCountries() {
+  const { data: ret } = await getCountryCode()
+  countries.list = ret
+}
+
+function restrictInput(event) {
+  var charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
+async function updateState(id, status) {
+  await updateStatus(id, status);
+  await loadSetting();
+}
+
 onMounted(async () => {
   await loadSites()
+  await loadCountries()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
     request.siteId = site.value.id

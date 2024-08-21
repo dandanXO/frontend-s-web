@@ -297,6 +297,7 @@ export default {
     CENTERPROMO: 'Khuyến mãi trung tâm',
     LOGIN: 'Đăng nhập',
     REGISTER: 'Đăng ký',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: 'Đang chờ',
@@ -407,6 +408,9 @@ export default {
     LOTTERY: 'Xổ số',
     OTHER: 'Khác',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: 'Bình thường',
@@ -447,11 +451,15 @@ export default {
     OFF: 'tắt',
   },
   valueRulesType: {
-    INPUT: "Nhập",
-    RADIO: "Radio",
-    SELECT: "Chọn",
-    SWITCH: "Công tắc",
-    CHECKBOX: "Hộp kiểm"
+    INPUT: 'Nhập',
+    RADIO: 'Radio',
+    SELECT: 'Chọn',
+    SWITCH: 'Công tắc',
+    CHECKBOX: 'Hộp kiểm',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: 'Tài khoản',
@@ -742,6 +750,7 @@ export default {
     currencyCode: 'Mã tiền tệ',
     currencyName: 'Tên tiền tệ',
     currencyRate: 'Tỷ giá tiền tệ',
+    currencyWallet: 'ví tiền tệ',
     currentPassword: 'Mật khẩu hiện tại',
     currentPlace: 'Vị trí hiện tại',
     customerSupportAddress: 'Địa chỉ hỗ trợ khách hàng',
@@ -1379,6 +1388,7 @@ export default {
     siteCode: 'Mã Trang Web',
     siteList: 'Danh Sách Trang Web',
     siteName: 'Tên Trang Web',
+    siteType: 'Site Type',
     sn: 'Số Seri',
     smsPhone: 'Số Điện Thoại SMS',
     smsContent: 'Nội Dung SMS',
@@ -2535,7 +2545,8 @@ export default {
     'Affiliate Change Log': 'Nhật ký thay đổi phụ huynh liên kết',
     'Media Display Settings': 'Cài đặt hiển thị phương tiện',
     'Vip Report': 'Báo cáo VIP',
-    'System Value Rules': 'Quy tắc giá trị hệ thống'
+    'System Value Rules': 'Quy tắc giá trị hệ thống',
+    'Sites Config': 'Cấu hình trang web',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

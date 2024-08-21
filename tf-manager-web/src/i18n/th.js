@@ -256,6 +256,9 @@ export default {
     LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: 'โดยปกติ',
@@ -265,6 +268,10 @@ export default {
     template1: 'Welcome New Member',
     template2: 'Deposit Promotion',
     template3: 'Welcome Back',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: 'บัญชี',
@@ -481,6 +488,7 @@ export default {
     currencyCode: 'รหัสสกุลเงิน',
     currencyName: 'ชื่อสกุลเงิน',
     currencyRate: 'อัตราสกุลเงิน',
+    currencyWallet: 'กระเป๋าเงินสกุลเงิน',
     currentPassword: 'รหัสผ่านปัจจุบัน',
     customerSupportAddress: 'ที่อยู่ฝ่ายสนับสนุนลูกค้า',
     dailyDeposit: 'ฝากรายวัน',
@@ -660,7 +668,7 @@ export default {
     gameAccountName: 'ชื่อบัญชีเกม',
     gameCode: 'รหัสเกม',
     domainEasy: 'โดเมน ง่าย',
-    videoShiPin: "Video",
+    videoShiPin: 'Video',
     gameConsolidateReport: 'รายงานเกม',
     gameName: 'ชื่อเกม',
     gameType: 'ประเภทเกม',
@@ -982,6 +990,7 @@ export default {
     siteCode: 'รหัสไซต์',
     siteList: 'รายการไซต์',
     siteName: 'ชื่อไซต์',
+    siteType: 'Site Type',
     sn: 'S/N',
     smsPhone: 'โทรศัพท์',
     smsContent: 'เนื้อหา',
@@ -1745,7 +1754,9 @@ export default {
     'Promotion Coupon': 'คูปอง',
     'Affiliate Change Log': 'บันทึกการเปลี่ยนแปลงผู้ปกครองของ Affiliate',
     'Media Display Settings': 'การตั้งค่าการแสดงสื่อ',
-    'Vip Report': 'รายงานวีไอพี'
+    'Vip Report': 'รายงานวีไอพี',
+    'System Value Rules': 'กฎการตั้งค่า',
+    'Sites Config': 'การตั้งค่าเว็บไซต์',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

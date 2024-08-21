@@ -617,6 +617,7 @@ import {getPlatformList} from "@/api/platform/platform";
 import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
+import { useLocalStorage } from "@vueuse/core";
 
 const copy = (text) => {
   const el = document.createElement('textarea');
@@ -1258,7 +1259,7 @@ export default defineComponent({
       })
     }
 
-    const imgURL = process.env.VUE_APP_IMAGE_CDN
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const getImageLink = (linkId) => {
       reminderForm.photos = linkId
     }

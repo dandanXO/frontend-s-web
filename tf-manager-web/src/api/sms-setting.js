@@ -16,3 +16,11 @@ export const updateSmsSetting = (setting) => {
 export const deleteSmsSetting = async (ids) => {
   await https().request(`/smsSetting?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
+
+export const updateStatus = (id, state) => {
+  return https().request(`/smsSetting/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};
+
+export const getCountryCode = () => {
+  return https().request("/smsSetting/countryCode", Method.GET);
+};
