@@ -645,7 +645,7 @@ onMounted(() => {
       // margin-bottom: 10px;
       padding-top: 2px;
       padding-bottom: 2px;
-      min-width: 130px;
+      min-width: 110px;
       width: 100%;
       height: 35px;
       padding-left: 6px;
