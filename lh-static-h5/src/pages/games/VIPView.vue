@@ -93,7 +93,7 @@
     </div>
     <div class="month-birthday-bonus">
       <div class="left">
-        <img class="abs" src="../../assets/images/vip/img-border.png" style="z-index: 0" />
+        <img class="abs" src="../../assets/images/vip/img-border.png" style="pointer-events: none" />
         <div class="inner-slide">
           <Carousel v-model="currentCarousel" :items-to-show="1">
             <Slide v-for="(item, i) in banners" :key="i">
@@ -1194,10 +1194,10 @@ $border-settings: 1px solid #e5e7eb;
     max-width: 480px;
     width: 95%;
     margin: 20px auto 0;
-    background: #010101e0;
+    background: #212B4AE0;
     border-radius: 30px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: stretch;
     align-items: flex-start;
     padding: 10px;
     gap: 10px;
@@ -1206,10 +1206,19 @@ $border-settings: 1px solid #e5e7eb;
       padding: 0;
     }
     .left {
-      // flex: 1;
+      flex: 1;
       position: relative;
       width: 100%;
       // height: 280px;
+      height: 280px;
+      a {
+        height: 100%;
+        width: 100%;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
       img.abs {
         position: absolute;
         width: 100%;
@@ -1221,7 +1230,7 @@ $border-settings: 1px solid #e5e7eb;
         margin: auto;
         overflow: hidden;
         height: 96%;
-        margin-top: 2.3%;
+        margin-top: 5%;
         .card-img {
           position: relative;
           width: unset;
@@ -1238,11 +1247,11 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
     .right {
-      // flex: 1;
+      flex: 1;
       // width: 220px;
       .vip-boxes {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        // display: grid;
+        // grid-template-columns: repeat(2, 1fr);
         width: 100%;
         height: 100%;
         gap: 15px;
@@ -1254,16 +1263,16 @@ $border-settings: 1px solid #e5e7eb;
           font-size: 10px;
           min-height: 120px;
           .vip-inner {
-            border: 2px solid #799df8;
+            border: 1px solid #799df8;
             background: #1f2231;
             padding: 5px;
-            border-radius: 10px;
+            border-radius: 20px;
             width: 100%;
             text-align: center;
           }
           &.inactive {
             .vip-inner {
-              border: 2px solid #596589;
+              border: 1px solid #596589;
               background: #2f3547;
             }
             .icon {
@@ -1852,7 +1861,7 @@ $border-settings: 1px solid #e5e7eb;
 .left {
   .carousel {
     height: 100%;
-    max-width: 120px;
+    max-width: 140px;
     margin: 0 auto;
   }
   .carousel__slide {
@@ -1876,9 +1885,9 @@ $border-settings: 1px solid #e5e7eb;
   }
   :deep(.carousel__pagination-button) {
     background: #ffffff80;
-    width: 10px;
     padding: 0;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   :deep(.carousel__pagination-button--active) {
     background: #799df8;
@@ -1886,7 +1895,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-boxes {
   .carousel {
-    max-width: 220px;
+    max-width: 180px;
     margin: 0 auto;
   }
   .carousel__slide {
@@ -1902,9 +1911,9 @@ $border-settings: 1px solid #e5e7eb;
   }
   :deep(.carousel__pagination-button) {
     background: #ffffff80;
-    width: 10px;
     padding: 0;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   :deep(.carousel__pagination-button--active) {
     background: #f1dda0;
