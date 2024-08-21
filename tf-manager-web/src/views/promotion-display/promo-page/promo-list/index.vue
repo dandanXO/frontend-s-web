@@ -24,6 +24,7 @@
           />
         </el-select>
         <el-select
+          v-if="uiControl.showSiteType === true"
           v-model="request.siteType"
           size="small"
           class="filter-item"
@@ -44,6 +45,7 @@
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -199,6 +201,7 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import { isVnm } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -215,6 +218,7 @@ const uiControl = reactive({
     { key: 1, displayName: 'active', value: false },
     { key: 2, displayName: 'disable', value: true },
   ],
+  showSiteType: false,
 })
 
 const siteType = reactive({
@@ -243,6 +247,7 @@ function resetQuery() {
   request.status = null
   request.siteType = "main"
   request.siteId = site.value ? site.value.id : null
+  uiControl.showSiteType = false;
 }
 
 function changePage(page) {
@@ -316,6 +321,14 @@ async function changePromoPagesState(id, status) {
   await updatePromoPagesState(id, status)
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   await loadPromoPages()
+}
+
+async function changeSite() {
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
 }
 
 const route = useRoute()
