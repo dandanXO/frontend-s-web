@@ -90,7 +90,7 @@
     </div>
     <div class="month-birthday-bonus">
       <div class="left">
-        <img src="../assets/vip/img-border.png" style="z-index: 0" />
+        <img src="../assets/vip/img-border.png" style="pointer-events: none;" />
         <div class="inner-slide">
           <el-carousel height="350px">
             <el-carousel-item v-for="item in banners" :key="item">
@@ -1160,7 +1160,7 @@ $border-settings: 1px solid #e5e7eb;
         margin: auto;
         overflow: hidden;
         height: 96%;
-        margin-top: 2.3%;
+        margin: 1%;
       }
     }
     .right {

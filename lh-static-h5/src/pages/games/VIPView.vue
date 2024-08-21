@@ -1229,8 +1229,8 @@ $border-settings: 1px solid #e5e7eb;
         width: 98%;
         margin: auto;
         overflow: hidden;
-        height: 96%;
-        margin-top: 5%;
+        height: 98%;
+        margin: 1.5%;
         .card-img {
           position: relative;
           width: unset;
