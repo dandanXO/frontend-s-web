@@ -813,7 +813,12 @@ export default defineComponent({
 }
 .auto-withdraw-amount-wrapper {
   display: flex;
-  gap: 16px;
+  gap: 28px;
+  justify-content: space-between;
+  width: 244px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13.58px;
   color: #00a478;
 }
 .has-helper-text {

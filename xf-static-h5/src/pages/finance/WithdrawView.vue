@@ -708,7 +708,8 @@ export default defineComponent({
 
 .upgraded-helper-text {
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 5px;
   color: #00A478;
 }
 </style>
