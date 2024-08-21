@@ -109,7 +109,7 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="currency-info q-mb-xs">
-          <div style="display: flex; justify-content: center; align-items: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>实时汇率：</span>
             <span>
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
@@ -1154,7 +1154,8 @@ onMounted(() => {
     .currency-info {
       display:flex;
       justify-content: space-between;
-      color: rgba(152, 167, 181, 1);
+      color: #98a7b5;
+      gap: 10px;
     }
   }
 
