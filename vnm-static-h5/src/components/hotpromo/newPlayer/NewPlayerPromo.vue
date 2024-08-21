@@ -47,7 +47,7 @@
           </div>
           <div class="mission-block-mission-third-block">
             <span class="mission-block-mission-third-block-description-progress">
-              Tiến độ hoàn thành（{{ mission.missionProgress }}）
+              Tiến độ hoàn thành ({{ mission.missionProgress }})
             </span>
             <button
               class="mission-block-mission-btn"
@@ -175,6 +175,7 @@ onMounted(() => {
       missions.value.forEach((mission, index) => {
         mission.missionProgress = data[`task${index + 1}`];
         mission.status = data[`available${index + 1}`];
+        mission.reward = data[`task${index + 1}amount`];
       });
     }
   });
