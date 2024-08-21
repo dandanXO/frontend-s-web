@@ -175,6 +175,7 @@ onMounted(() => {
       missions.value.forEach((mission, index) => {
         mission.missionProgress = data[`task${index + 1}`];
         mission.status = data[`available${index + 1}`];
+        mission.reward = data[`task${index + 1}amount`];
       });
     }
   });
