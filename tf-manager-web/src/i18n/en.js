@@ -422,6 +422,9 @@ export default {
     LOTTERY: 'LOTTERY',
     OTHER: 'OTHER',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: 'Normal',
@@ -506,6 +509,10 @@ export default {
   withdrawType: {
     Manual: 'Manual',
     AUTO_WITHDRAW: 'Auto Withdraw',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: 'Account',
@@ -1309,6 +1316,7 @@ export default {
     previousLevel: 'Previous Level',
     previousLevelName: 'Previous Level Name',
     previousPlace: 'Previous Place',
+    priority: 'Priority',
     privilege: 'Privilege',
     privilegeCode: 'Privilege Code',
     privilegeId: 'Privilege ID',
@@ -1475,6 +1483,7 @@ export default {
     siteCode: 'Site Code',
     siteList: 'Site List',
     siteName: 'Site Name',
+    siteType: 'Site Type',
     sn: 'S/N',
     smsPhone: 'Phone',
     smsContent: 'Content',
@@ -2226,6 +2235,7 @@ export default {
     validateContentRequired: 'Content is required',
     validateCopyFinancialLevel: 'Please select at least 1 level to copy',
     validateCountryImageRequired: 'Country Image is required',
+    validateCountryRequired: 'Country is required',
     validateCronExpressionFormat: 'Cron Expression invalid format',
     validateCronExpressionRequired: 'Cron Expression is required',
     validateCurrencyRequired: 'Currency is required',
@@ -2346,6 +2356,7 @@ export default {
     validatePlatformFeeFormat: 'Platform Fee must be between 0 to 1',
     validatePlatformNameRequired: 'Platform Name is required',
     validatePointsRequired: 'Points is required',
+    validatePriorityRequired: 'Priority is required',
     validatePrivilegeRequired: 'Privilege Name is required',
     validatePromoCodeRequired: 'Promo Code is required',
     validatePromoTypeRequired: 'Promo Type is required',

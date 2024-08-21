@@ -34,32 +34,26 @@
         </div>
       </div>
 
-      <!-- <pre> depositOverview~~{{ depositOverview }}</pre> -->
-
       <div class="do-input-container">
         <InputRowGrid>
           <template #fields>
-            <!-- <InputField :label="'Storage time'">
-              <template #input>
-                <q-input
-                  type="number"
-                  class="q-pb-xs dialog-input"
-                  hide-bottom-space
-                  outlined
-                  v-model="interestProfitField.storageTime"
-                  lazy-rules
-                  label-color="secondary"
-                ></q-input>
-              </template>
-            </InputField> -->
-
             <div class="select-label">{{ $t("interestProfit.storageTime") }}</div>
             <q-select
               class="do-select"
               outlined
               v-model="interestProfitField.storageTime"
               :options="dayList"
+              @update:model-value="onDayChange"
               :rules="[(val) => !!val || $t('interestProfit.storageTime_required')]"
+            />
+
+            <div class="select-label">{{ $t("interestProfit.rates") }}</div>
+            <q-select
+              class="do-select"
+              outlined
+              v-model="interestProfitField.odds"
+              :options="oddList"
+              :rules="[(val) => !!val || $t('interestProfit.rates_required')]"
             />
             <InputField :label="$t('interestProfit.deposit')">
               <template #input>
@@ -104,22 +98,20 @@
       </div>
 
       <div class="do-results-container">
-        <div class="do-result-item">
-          <div class="item-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-          <div class="item-rates">{{ estimatePlan.odds }}%</div>
-        </div>
-        <div class="do-result-item">
-          <div class="item-title">{{ $t("interestProfit.distributeInterest") }}</div>
-          <div class="item-rates">{{ convertToTwoDecimalAmount(estimatePlan.profitAmount) }}</div>
-        </div>
+        <template v-if="isLoading">
+          <div class="row justify-center"><q-spinner color="primary" size="3em" /></div>
+        </template>
+        <template v-else>
+          <div class="do-result-item">
+            <div class="item-title">{{ $t("interestProfit.annualInterestRate") }}</div>
+            <div class="item-rates">{{ estimatePlan.odds }}%</div>
+          </div>
+          <div class="do-result-item">
+            <div class="item-title">{{ $t("interestProfit.distributeInterest") }}</div>
+            <div class="item-rates">{{ convertToTwoDecimalAmount(estimatePlan.profitAmount) }}</div>
+          </div>
+        </template>
       </div>
-
-      <!-- <div class="do-record-selection-wrapper">
-        <div class="selection-item">
-          <div class="item-title active">Pending</div>
-          <div class="item-title">Ended</div>
-        </div>
-      </div> -->
 
       <q-tabs
         v-model="recordTabs"
@@ -259,7 +251,7 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useQuasar } from "quasar";
 
-const interestProfitField = reactive({ storageTime: "", deposits: "" });
+const interestProfitField = reactive({ storageTime: "", odds: "", deposits: "" });
 const $q = useQuasar();
 const qs = require("qs");
 const isLoading = ref(false);
@@ -332,7 +324,6 @@ const estimatePlan = reactive({
 
 const showValidationErrors = () => {
   if (!interestProfitField.storageTime) {
-    // interestProfit.storageTime_required
     $q.notify({
       type: "negative",
       position: "top",
@@ -341,7 +332,6 @@ const showValidationErrors = () => {
     });
   }
   if (!interestProfitField.deposits) {
-    // interestProfit.deposit_required
     $q.notify({
       type: "negative",
       position: "top",
@@ -349,10 +339,18 @@ const showValidationErrors = () => {
       icon: "report_problem"
     });
   }
+  if (!interestProfitField.odds) {
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("interestProfit.rates_required"),
+      icon: "report_problem"
+    });
+  }
 };
 
 const submitTrialCalculation = () => {
-  if (!interestProfitField.storageTime || !interestProfitField.deposits) {
+  if (!interestProfitField.storageTime || !interestProfitField.deposits || !interestProfitField.odds) {
     showValidationErrors();
     return;
   }
@@ -360,15 +358,15 @@ const submitTrialCalculation = () => {
   isLoading.value = true;
 
   const putData = {
-    days: interestProfitField.storageTime,
-    placeAmount: interestProfitField.deposits
+    days: interestProfitField.storageTime.val,
+    placeAmount: interestProfitField.deposits,
+    selectedOdds: interestProfitField.odds.val
   };
 
   eventapi
-    .put(`/interestPlan/calcEstimatePlan?days=${putData.days}&placeAmount=${putData.placeAmount}`)
-    // .put(`/interestPlan/calcEstimatePlan`, {
-    //   params: { days: putData.days, placeAmount: putData.placeAmount }
-    // })
+    .put(
+      `/interestPlan/calcEstimatePlan?days=${putData.days}&placeAmount=${putData.placeAmount}&selectedOdds=${putData.selectedOdds}`
+    )
     .then((res) => {
       if (res.code === 0) {
         estimatePlan.odds = res.data.odds;
@@ -386,7 +384,7 @@ const submitTrialCalculation = () => {
 };
 
 const submitDeposit = () => {
-  if (!interestProfitField.storageTime || !interestProfitField.deposits) {
+  if (!interestProfitField.storageTime || !interestProfitField.deposits || !interestProfitField.odds) {
     showValidationErrors();
     return;
   }
@@ -394,15 +392,15 @@ const submitDeposit = () => {
   isLoading.value = true;
 
   const putData = {
-    days: interestProfitField.storageTime,
-    placeAmount: interestProfitField.deposits
+    days: interestProfitField.storageTime.val,
+    placeAmount: interestProfitField.deposits,
+    selectedOdds: interestProfitField.odds.val
   };
 
   eventapi
-    .put(`/interestPlan/submitPlanOrder?days=${putData.days}&placeAmount=${putData.placeAmount}`)
-    // .put(`/interestPlan/submitPlanOrder`, {
-    //   params: { days: putData.days, placeAmount: putData.placeAmount }
-    // })
+    .put(
+      `/interestPlan/submitPlanOrder?days=${putData.days}&placeAmount=${putData.placeAmount}&selectedOdds=${putData.selectedOdds}`
+    )
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -414,6 +412,10 @@ const submitDeposit = () => {
         isLoading.value = false;
         searchDepositRecord();
         getDepositOverview();
+
+        interestProfitField.storageTime = "";
+        interestProfitField.odds = "";
+        interestProfitField.deposits = "";
       }
     })
     .catch((err) => {
@@ -454,15 +456,33 @@ const convertToTwoDecimalAmount = (amount) => {
 };
 
 const dayList = ref([]);
-const getDayList = () => {
-  eventapi
-    .get(`interestPlan/form`)
-    .then((res) => {
-      dayList.value = res.data;
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+const oddList = ref([]);
+const allData = ref([]);
+
+const getDayList = async () => {
+  try {
+    const res = await eventapi.get("interestPlan/form");
+    allData.value = res.data;
+
+    dayList.value = allData.value.map((item) => ({ label: `${item.day}`, val: item.day }));
+
+    oddList.value = [];
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+const onDayChange = (selectedDay) => {
+  interestProfitField.odds = "";
+  const selectedData = allData.value.find((item) => item.day === selectedDay.val);
+  if (selectedData) {
+    oddList.value = selectedData.odds.map((odd, index) => ({
+      label: `${(odd * 100).toFixed(2)}%`,
+      val: odd
+    }));
+  } else {
+    oddList.value = [];
+  }
 };
 
 const collectDeposit = (planOrderId) => {
@@ -531,17 +551,6 @@ onMounted(() => {
     align-items: center;
     gap: 12px;
   }
-
-  // .do-side-title {
-  //   color: #13a89e;
-  //   font-weight: bold;
-  //   background-image: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
-  //   background-size: 100%;
-  //   -webkit-background-clip: text;
-  //   -moz-background-clip: text;
-  //   -webkit-text-fill-color: transparent;
-  //   -moz-text-fill-color: transparent;
-  // }
 }
 
 .do-amount {

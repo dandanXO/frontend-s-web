@@ -256,6 +256,9 @@ export default {
     LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: 'โดยปกติ',
@@ -265,6 +268,10 @@ export default {
     template1: 'Welcome New Member',
     template2: 'Deposit Promotion',
     template3: 'Welcome Back',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: 'บัญชี',
@@ -983,6 +990,7 @@ export default {
     siteCode: 'รหัสไซต์',
     siteList: 'รายการไซต์',
     siteName: 'ชื่อไซต์',
+    siteType: 'Site Type',
     sn: 'S/N',
     smsPhone: 'โทรศัพท์',
     smsContent: 'เนื้อหา',

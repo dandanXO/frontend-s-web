@@ -429,6 +429,9 @@ export default {
     type_fish: "Fish",
     type_livecasino: "Live Casino",
     type_others: "Others",
+    type_slot_welcome: "WELCOME",
+    type_slot_daily: "DAILY",
+    type_slot_other: "OTHER",
 
     // promo -- daily-login
     daily_login_title: "Check-in details for this month",

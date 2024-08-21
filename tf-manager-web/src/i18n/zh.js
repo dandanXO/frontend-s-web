@@ -427,6 +427,9 @@ export default {
     LOTTERY: '彩票',
     OTHER: '其他',
     LIMITED: '限时热门',
+    SLOTWELCOME: '电游 - 欢迎',
+    SLOTDAILY: '电游 - 日常',
+    SLOTOTHER: '电游 - 其他',
   },
   scheduleType: {
     NORMAL: '普通',
@@ -509,6 +512,10 @@ export default {
   withdrawType: {
     Manual: '手动审核',
     AUTO_WITHDRAW: '自动审核',
+  },
+  siteType: {
+    main: '主站',
+    slot: '电游',
   },
   fields: {
     account: '账号',
@@ -1309,6 +1316,7 @@ export default {
     previousLevel: '上级',
     previousLevelName: '上级名称',
     previousPlace: '之前位置',
+    priority: '优先值',
     privilege: '优惠',
     privilegeCode: '优惠代码',
     privilegeId: '优惠 ID',
@@ -1475,6 +1483,7 @@ export default {
     siteCode: '站点代码',
     siteList: '站点列表',
     siteName: '站点名称',
+    siteType: '站点类型',
     sn: '序',
     smsPhone: '电话号码',
     smsContent: '内容',
@@ -2192,6 +2201,7 @@ export default {
     validateContentRequired: '内容必填',
     validateCopyFinancialLevel: '请选择至少一个会员组别来复制',
     validateCountryImageRequired: '国家图像必填',
+    validateCountryRequired: '国家必填',
     validateCronExpressionFormat: 'Cron表达式格式错误',
     validateCronExpressionRequired: 'Cron表达式必填',
     validateCurrencyRequired: '货币必填',
@@ -2300,6 +2310,7 @@ export default {
     validatePlatformFeeFormat: '场馆费必须介于 0 至 1 之间',
     validatePlatformNameRequired: '平台名称必填',
     validatePointsRequired: '总积分必填',
+    validatePriorityRequired: '优先值必填',
     validatePrivilegeRequired: '优惠名必填',
     validatePromoCodeRequired: '优惠代码必填',
     validatePromoTypeRequired: '优惠类型必填',
