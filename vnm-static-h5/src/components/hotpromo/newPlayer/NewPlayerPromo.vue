@@ -47,7 +47,7 @@
           </div>
           <div class="mission-block-mission-third-block">
             <span class="mission-block-mission-third-block-description-progress">
-              Tiến độ hoàn thành（{{ mission.missionProgress }}）
+              Tiến độ hoàn thành ({{ mission.missionProgress }})
             </span>
             <button
               class="mission-block-mission-btn"
@@ -115,7 +115,7 @@ const missions = ref([
   {
     code: "newbie-mission-t1",
     description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
-    reward: 35,
+    reward: 18,
     icon: AccountSvg,
     missionProgress: "0/0",
     status: "Incomplete"
@@ -175,6 +175,7 @@ onMounted(() => {
       missions.value.forEach((mission, index) => {
         mission.missionProgress = data[`task${index + 1}`];
         mission.status = data[`available${index + 1}`];
+        mission.reward = data[`task${index + 1}amount`];
       });
     }
   });

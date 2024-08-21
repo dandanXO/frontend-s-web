@@ -8,7 +8,7 @@
           standout
           class="q-pb-xs"
           hide-bottom-space
-          v-model="formDetails.phone"
+          v-model="hidedFormDetailsPhoneNumber"
           type="tel"
           :label="$t('lang.personal_mobilenumber')"
           lazy-rules
@@ -111,6 +111,16 @@ export default defineComponent({
     const profileFormRef = ref();
 
     const store = userStore();
+
+    const hidedFormDetailsPhoneNumber = computed(() => {
+      if(!formDetails.phone) return ""
+      if(formDetails.phone.length < 6) return formDetails.phone.slice(-4)
+      let result = ''
+      for(const c in formDetails.phone) {
+        result += (c < 2 || c >= formDetails.phone.length - 4) ? formDetails.phone[c] : '*'
+      }
+      return result
+    })
 
     const loadInfo = () => {
       if (store.birthday > 0) {
@@ -363,7 +373,8 @@ export default defineComponent({
       onCaptchaSubmit,
       showVerifyBtn,
       phoneCodeId,
-      otpCountdownCount
+      otpCountdownCount,
+      hidedFormDetailsPhoneNumber
     };
   }
 });
