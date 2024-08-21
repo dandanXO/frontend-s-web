@@ -61,7 +61,7 @@
             <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>
             有效流水升级到 VIP {{ vipLevel + 1 }}
           </div>
-          <div class="text" v-else-if="vipLevel === 0">还要 {{vipItems[0].upgradeBetAmount}} 有效流水升级到 VIP 1</div>
+          <div class="text" v-else-if="vipLevel === 0">还要 {{vipItems[0].upgradeBetAmount - currentBetAmt}} 有效流水升级到 VIP 1</div>
           <div class="text" v-else-if="vipLevel === 12">您已是最高VIP等级</div>
           <div class="text" v-else>
             已到达
@@ -72,12 +72,14 @@
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }" />
             </div>
+            <div class="progressBarDescription">{{ currentBetAmt + '/' + currentUpgradeBetAmt }}</div>
           </div>
           
           <div class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: vipLevel === 12 ? '100%' : '0%' }" />
             </div>
+            <div class="progressBarDescription">{{ currentBetAmt + '/' + vipItems[0].upgradeBetAmount }}</div>
           </div>
         </div>
       </div>
@@ -114,7 +116,7 @@
                   <template v-if="+item.vipLevel === currentSlide + 1">
                     <div
                       class="box"
-                      :class="{ inactive: store.token && item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' }"
+                      :class="{ inactive: store.token  && item[`${category.key}Prize`] === '0' || item[`${category.key}Prize`] === 0 ||item[`${category.key}Prize`] === 'null'  }"
                     >
                       <div class="vip-inner">
                         <div class="box-det">
@@ -122,7 +124,7 @@
                             <img
                               :src="
                                 require(`../../assets/images/vip/${category.image}${
-                                  store.token && item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' ? '-inactive' : ''
+                                  store.token  && item[`${category.key}Prize`] === '0' || item[`${category.key}Prize`] === 0 ||item[`${category.key}Prize`] === 'null'  ? '-inactive' : ''
                                 }.png`)
                               "
                             />
@@ -1158,7 +1160,7 @@ $border-settings: 1px solid #e5e7eb;
           color: #fff;
           border-radius: 16px;
           background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
-          height: 10px;
+          height: 20px;
         }
 
         .progressBarDescription {
@@ -1169,6 +1171,7 @@ $border-settings: 1px solid #e5e7eb;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
+          margin: -32px auto 0;
         }
       }
     }
@@ -1190,7 +1193,7 @@ $border-settings: 1px solid #e5e7eb;
     border: 2px solid #799df8;
     max-width: 480px;
     width: 95%;
-    margin: 50px auto 0;
+    margin: 20px auto 0;
     background: #010101e0;
     border-radius: 30px;
     display: flex;
@@ -1845,7 +1848,7 @@ $border-settings: 1px solid #e5e7eb;
 // }
 </style>
 
-<style scoped>
+<style scoped lang="scss">
 .left {
   .carousel {
     height: 100%;
@@ -1936,6 +1939,7 @@ $border-settings: 1px solid #e5e7eb;
 
   .carousel__slide--active ~ .carousel__slide {
     z-index: -1;
+    transform: scale(0.8);
     filter: grayscale(0.8) brightness(0.9);
     .vipcontents {
       &:before {
@@ -2054,7 +2058,7 @@ $border-settings: 1px solid #e5e7eb;
     background-size: contain;
     padding: 5px;
     margin: 0px;
-    transform: translate3d(0px, -20px, 10px);
+    transform: translate3d(-20px, -20px, 10px);
   }
   :deep(.carousel__next) {
     background: url("../../assets/images/vip/nextprev.png");
@@ -2068,7 +2072,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--active {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(.8);
     filter: grayscale(0);
     z-index: 1;
     .vipcontents {
