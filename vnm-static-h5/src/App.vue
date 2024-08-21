@@ -247,7 +247,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: process.env.SITE
           })
         );
       }
@@ -323,17 +323,12 @@ export default defineComponent({
       );
     };
 
-    const checkEdition = () => {
-      // TODO: check edition here
-    };
-
     onMounted(() => {
       checkServerStatus();
       checkSID();
       // initCsWeb();
       getCSA();
       getAppInfo();
-      checkEdition();
 
       // onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       // onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);

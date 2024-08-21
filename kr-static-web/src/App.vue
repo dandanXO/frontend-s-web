@@ -69,7 +69,7 @@ export default defineComponent({
         const params = {
           way: "web",
           sid: sidParam,
-          siteCode: "krw"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);

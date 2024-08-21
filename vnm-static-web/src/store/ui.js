@@ -11,6 +11,7 @@ export const uiStore = defineStore("ui-store", {
       edition: EDITION.NORMAL,
       maintenanceStartTime: "",
       maintenanceEndTime: ""
+      edition: sessionStorage.getItem("HOME_EDITION") || EDITION.NORMAL
     };
   },
   actions: {

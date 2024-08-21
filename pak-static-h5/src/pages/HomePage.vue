@@ -3441,6 +3441,9 @@ const gotoFloatPromo = (val) => {
   }
 
   if (val.type === "DOMAIN") {
+    window.open(val.code, "_blank");
+  }
+  if (val.type === "VIDEO") {
     isMediaSettingsModal.value = true;
     mediaCode.value = val.code;
   }

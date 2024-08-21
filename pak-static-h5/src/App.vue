@@ -249,7 +249,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: store.visitorId,
-            siteCode: "pak"
+            siteCode: process.env.SITE
           })
         );
       }

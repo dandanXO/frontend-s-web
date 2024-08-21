@@ -175,38 +175,42 @@
 
         <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
 
-        <!--        <q-select-->
-        <!--          style="width:100%;"-->
-        <!--          ref="offerRef"-->
-        <!--          class="deposit-selection q-mt-xs"-->
-        <!--          :label="$t('deposit.select_privilege')"-->
-        <!--          filled-->
-        <!--          :options="unselectedPrivileges"-->
-        <!--          v-model="selectedPrivilege"-->
-        <!--          emit-value-->
-        <!--          v-if="hasPrivilege && !isUSDT"-->
-        <!--          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"-->
-        <!--          clearable-->
-        <!--          @update:model-value="checkMinDepositAmt"-->
-        <!--        >-->
-        <!--          <template v-slot:option="scope">-->
-        <!--            <q-item v-bind="scope.itemProps">-->
-        <!--              <q-item-section>-->
-        <!--                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">-->
-        <!--                  {{ scope.opt.name }}-->
-        <!--                </q-item-label>-->
-        <!--              </q-item-section>-->
-        <!--            </q-item>-->
-        <!--          </template>-->
-        <!--        </q-select>-->
+        <q-select
+          style="width: 100%"
+          ref="offerRef"
+          class="deposit-selection q-mt-xs"
+          :label="$t('deposit.select_privilege')"
+          filled
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && unselectedPrivileges.length > 0"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+        >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                  {{ scope.opt.name }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
 
-        <!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
-        <!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
-        <!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--        <div-->
+        <!--          class="rollover-info"-->
+        <!--          v-if="-->
+        <!--            selectedPrivilege &&-->
+        <!--            selectedPrivilege.name &&-->
+        <!--            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)-->
+        <!--          "-->
+        <!--        >-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
         <!--          </p>-->
-        <!--          <p v-else>-->
-        <!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
-        <!--          </p>-->
+        <!--          <p v-else>Wagering Requirements (Deposit + Bonus): {{ selectedPrivilege.rollover }}x</p>-->
         <!--        </div>-->
       </q-form>
     </div>
@@ -367,7 +371,7 @@ const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
-const freePrivilege = ref(null);
+const freePrivilege = ref([]);
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
@@ -590,11 +594,11 @@ async function loadPrivilege(val) {
       privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
-      freePrivilege.value = null;
+      freePrivilege.value = [];
       privilegeList.value.map((p) => {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
+            freePrivilege.value.push(p);
           } else {
             unselectedPrivileges.value.push(p);
           }
@@ -644,11 +648,29 @@ async function confirmDeposit() {
 
           btnLoading.value = false;
         } else {
-          if (freePrivilege.value) {
+          const currentPayType = activeMethod.value.payType;
+          const allSelectedPrivilege = [selectedPrivilege.value, ...freePrivilege.value];
+          const hasIncorrectPrivilege = allSelectedPrivilege.some((privilege) => {
+            if (!privilege || typeof privilege !== "object") return false;
+            return privilege.payTypes.indexOf(currentPayType) === -1;
+          });
+
+          if (hasIncorrectPrivilege) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: t("deposit.incorrectPrivilege"),
+              icon: "report_problem"
+            });
+            throw Error();
+          }
+
+          if (freePrivilege.value.length) {
+            const freePrivilegeIdStr = freePrivilege.value.map((privilege) => privilege.id).join(",");
             if (selectedPrivilege.value) {
-              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilegeIdStr;
             } else {
-              form.privilegeId = "," + freePrivilege.value.id;
+              form.privilegeId = "," + freePrivilegeIdStr;
             }
           } else {
             if (selectedPrivilege.value) {
@@ -837,7 +859,7 @@ const openDepositPage = () => {
     // isDepositTutorial.value= true;
     window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
+    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
   }
 };
 

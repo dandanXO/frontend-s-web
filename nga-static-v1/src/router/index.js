@@ -40,12 +40,7 @@ export default route(function (/* { store, ssrContext } */) {
       user.getBalance();
     }
 
-    if (
-      to.path === "/login" ||
-      to.path === "/register" ||
-      to.path === "/forgot-password" ||
-      to.path === "/maintenance"
-    ) {
+    if (to.path === "/login" || to.path === "/register" || to.path === "/forgot-password" || to.path === "/withdraw" || to.path === "/deposit" ||  to.path === "/maintenance") {
       ui.hiddenFooter();
     } else {
       ui.showFooter();

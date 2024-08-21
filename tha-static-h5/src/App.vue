@@ -311,7 +311,7 @@ export default defineComponent({
           qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: "th1"
+            siteCode: process.env.SITE
           })
         );
       }

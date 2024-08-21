@@ -252,13 +252,14 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await api.post("/memberStatistics/submit", {
-          params: {
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: theSid,
-            siteCode: "NGA"
-          }
-        });
+            siteCode: process.env.SITE
+          })
+        );
       }
     };
 

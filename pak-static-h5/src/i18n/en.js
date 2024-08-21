@@ -143,6 +143,8 @@ export default {
     virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
+    virtualWallet_warmReminder_02:
+      "Warm reminder：The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
     virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
@@ -248,7 +250,8 @@ export default {
   deposit: {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
-    select_privilege: "Select Privilege"
+    select_privilege: "Select Privilege",
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -257,7 +260,9 @@ export default {
     withdrawMaxTimes: "Remaining Withdrawal Attempts",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
-    withdrawTutorial: "Withdraw Tutorial"
+    withdrawTutorial: "Withdraw Tutorial",
+    withdrawalMethodInMaintenance:
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -275,8 +280,10 @@ export default {
     storageTime_required: "Storage time is required",
     deposit: "Deposit",
     deposit_required: "Deposit is required",
+    rates: "Rates",
+    rates_required: "Rates is required",
     trialCalculation: "Trial calculation",
-    annualInterestRate: "Annual interest rate",
+    annualInterestRate: "Interest rate",
     distributeInterest: "Distribute interest",
     pending: "Pending",
     ended: "Ended",
@@ -627,6 +634,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",
@@ -652,6 +660,13 @@ export default {
     50001: "The number of available transfers has been reached, please continue betting before transferring again",
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",
-    51002: "The reward has already been claimed by another account"
+    51002: "The reward has already been claimed by another account",
+    53008: "Unable to submit, the daily deposit limit has been reached today",
+    53009: "Unable to submit, the same IP address has already been saved",
+    53010: "Unable to submit, the same device has already been stored",
+    53011: "Unable to submit, insufficient cash flow",
+    54000: "The collection time has not yet arrived.",
+    54001: "The user has not bound a withdrawal account.",
+    54002: "The user's bank card is already bound to another account."
   }
 };

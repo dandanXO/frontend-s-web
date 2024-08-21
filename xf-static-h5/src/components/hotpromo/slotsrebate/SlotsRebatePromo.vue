@@ -10,7 +10,7 @@
           <div class="match-game-content">
             <div class="match-game-status">
               <img style="width: 25px" :src="require(`../../../assets/promo/slots-bonus/piggy-icon.png`)" />
-              昨日电子盈利：
+              当日电子负盈利：
             </div>
             <div class="match-game-detail">{{ totalValidBet }} 元</div>
           </div>
@@ -37,43 +37,57 @@
         </div>
         <div class="subtitle">
           <span class="subtitle-1">活动对象</span>
-          <span class="subtitle-2">下注电子场馆会员</span>
+          <span class="subtitle-2">投注电子场馆的会员</span>
+        </div>
+        <div class="subtitle">
+          <span class="subtitle-1">活动内容</span>
+          <span class="subtitle-2">活动期间，会员在电子场馆当日总负盈利金额≥500元即可在次日24小时内领取对应档位彩金，每日最高可获888元。</span>
         </div>
         <table class="match-game-info-table">
           <tr>
-            <th>昨日电子盈利</th>
+            <th>当日存款</th>
+            <th>当日电子负盈利</th>
             <th>救援金</th>
             <th>流水倍数</th>
           </tr>
           <tr>
-            <td>≥3,000</td>
-            <td>38元</td>
+            <td rowspan="8">≥100元</td>
+            <td>≥500</td>
+            <td>8元</td>
             <td rowspan="8">8倍</td>
           </tr>
           <tr>
-            <td>≥8,000</td>
+            <td>≥1,500</td>
+            <td>18元</td>
+          </tr>
+          <tr>
+            <td>≥5,000</td>
+            <td>38元</td>
+          </tr>
+          <tr>
+            <td>≥10,000</td>
             <td>88元</td>
           </tr>
           <tr>
             <td>≥20,000</td>
-            <td>128元</td>
+            <td>108元</td>
           </tr>
           <tr>
             <td>≥50,000</td>
-            <td>158元</td>
+            <td>288元</td>
           </tr>
           <tr>
-            <td>≥200,000</td>
-            <td>388元</td>
+            <td>≥100,000</td>
+            <td>588元</td>
           </tr>
           <tr>
-            <td>≥1,000,000</td>
+            <td>≥500,000</td>
             <td>888元</td>
           </tr>
         </table>
         <div class="content-sub-title">
-          <span style="font-weight: bold">⮞ 示例</span>
-          <span>会员A在电子投注,当日有效投注为49000元,次日即可获得128元。</span>
+          <span style="font-weight: bold">⮞ 范例</span>
+          <span>会员A在当日存款100元投注电子场馆,当日产生负盈利为68888元,次日即可获得救援金288元。</span>
         </div>
       </div>
       <div class="match-game-bottom-rule">
@@ -82,14 +96,12 @@
           <div class="item">
             <span class="rounded-number">1</span>
             <span>
-              申请方式:次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
+              申请方式:账户余额≤5元，次日在优惠页面点击【领取】按钮进行领取(路径：优惠界面->点击领取)，一键领取秒到账，彩金保留24小时，彩金只需八倍流水即可出款，逾期未领视为主动放弃，不予补发。
             </span>
           </div>
           <div class="item">
             <span class="rounded-number">2</span>
-            <span>
-              救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算，奖金8倍流水即可提款。
-            </span>
+            <span>救援礼金仅限投注电子游戏损益，电子桌面类，街机类游戏，街机捕鱼，不参与此活动计算。</span>
           </div>
           <div class="item">
             <span class="rounded-number">3</span>
@@ -144,10 +156,10 @@ const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
 
 const getMatchData = async () => {
-  const res = await getMatchAndPrizeInfo();
+  const res = await getMatchAndPrizeInfo('profit');
   if (res.code === 0) {
-    bonus.value = res.data.profitAmount;
-    totalValidBet.value = res.data.expectedBonus;
+    bonus.value = res.data.expectedBonus;
+    totalValidBet.value =  res.data.profitAmount;
   }
 };
 
@@ -390,6 +402,8 @@ const claimHongBao = async () => {
       text-align: center;
       font-size: 13px;
       font-weight: bold;
+      min-width: 95px;
+      max-height: 30px;
     }
 
     .subtitle-2 {

@@ -63,7 +63,7 @@ export default defineComponent({
         const params = {
           way: "web",
           sid: sidParam,
-          siteCode: "vnm"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);

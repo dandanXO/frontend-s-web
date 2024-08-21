@@ -19,7 +19,7 @@
     />
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
-
+    <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -199,6 +199,7 @@ import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysProm
 import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
+import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -215,7 +216,8 @@ export default defineComponent({
     SignIn7DaysPromo,
     NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
-    InterestProfitPromo
+    InterestProfitPromo,
+    NewPlayersPromo
   },
   props: {
     list: {
@@ -277,6 +279,7 @@ export default defineComponent({
       this.list.redirectUrl === "pak-newplayer-welcome-spin" ||
       this.list.redirectUrl === "pak-redpacketrain" ||
       this.list.redirectUrl === "interest-profit" ||
+      this.list.redirectUrl === "pak-new-players" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

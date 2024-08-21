@@ -238,7 +238,7 @@
       @game-click="playGame"
       @platform-click="(code) => router.push({ path: '/slot', query: { platform: code } })"
     />
-    <SlotPromotion :promotions="promotions" />
+    <SlotPromotion />
   </template>
   <!--  <div class="details-bar">-->
   <!--    <div class="message" @click="refreshBalance">-->
@@ -1056,8 +1056,17 @@ export default defineComponent({
     };
 
     function loadData() {
+      let params = "";
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          params = "SLOT";
+          break;
+        case EDITION.NORMAL:
+        default:
+          params = "HOME";
+      }
       api
-        .get("/promo/banner?category=HOME")
+        .get("/promo/banner", { params: { category: params } })
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
@@ -1391,10 +1400,12 @@ export default defineComponent({
     };
 
     const checkEdition = () => {
-      switch (ui.edition) {
-        case EDITION.SLOT:
-          tab.value = "slot";
-          break;
+      if (route.name === "homeslot") {
+        sessionStorage.setItem("HOME_EDITION", EDITION.SLOT);
+        ui.edition = EDITION.SLOT;
+      } else if (route.name === "home") {
+        sessionStorage.setItem("HOME_EDITION", EDITION.NORMAL);
+        ui.edition = EDITION.NORMAL;
       }
     };
 
@@ -1409,6 +1420,8 @@ export default defineComponent({
       //   console.log(resp);
       // })
     });
+
+    watch(() => route.name, checkEdition);
 
     onActivated(() => {
       getPlatList();
@@ -1777,13 +1790,6 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
-    // TODO:
-    const promotions = computed(() => [
-      { img: require("../assets/images/home/slotEdition/promotion-1.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" },
-      { img: require("../assets/images/home/slotEdition/promotion-2.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" },
-      { img: require("../assets/images/home/slotEdition/promotion-3.png"), text: "Quỹ cứu hộ điện tử siêu cao 20%" }
-    ]);
-
     return {
       imageLoading,
       slide: ref(0),
@@ -1928,8 +1934,7 @@ export default defineComponent({
       promoSlide: ref(0),
       tabs,
       fullGameList,
-      EDITION,
-      promotions
+      EDITION
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;

@@ -85,6 +85,7 @@
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
+    <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -172,6 +173,7 @@ const LivepokerRebate = defineAsyncComponent(() => import("../components/hotprom
 
 const IntelEsl24 = defineAsyncComponent(() => import("../components/hotpromo/intel-esl-24/intel-esl-24.vue"));
 const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpllck/LPLLCK.vue"));
+const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -216,7 +218,8 @@ export default defineComponent({
     OuZuLianPromo,
     IntelEsl24,
     NewplayerGuide,
-    LPLLCK
+    LPLLCK,
+    NewFootball
   },
   props: {
     list: {
