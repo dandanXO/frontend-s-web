@@ -36,7 +36,7 @@
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "csweb-client": "^1.4.5",
+    "csweb-client": "^1.4.6",
     "es6-promise-plugin": "^4.2.2",
     "moment": "^2.29.4",
     "pinia": "^2.0.17",
