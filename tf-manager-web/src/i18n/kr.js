@@ -296,6 +296,7 @@ export default {
     CENTERPROMO: '센터 프로모션',
     LOGIN: '로그인',
     REGISTER: '등록',
+    VIP: "VIP"
   },
   distributeStatus: {
     PENDING: '대기 중',
@@ -406,6 +407,9 @@ export default {
     LOTTERY: '복권',
     OTHER: '기타',
     LIMITED: 'LIMITED',
+    SLOTWELCOME: 'Slot - Welcome',
+    SLOTDAILY: 'Slot - Daily Weekly',
+    SLOTOTHER: 'Slot - Rebate & Other',
   },
   scheduleType: {
     NORMAL: '일반',
@@ -450,6 +454,10 @@ export default {
     SELECT: '선택 상자',
     SWITCH: '스위치',
     CHECKBOX: '체크박스',
+  },
+  siteType: {
+    main: 'MAIN',
+    slot: 'SLOT',
   },
   fields: {
     account: '계정',
@@ -1380,6 +1388,7 @@ export default {
     siteCode: '사이트 코드',
     siteList: '사이트 목록',
     siteName: '사이트 이름',
+    siteType: 'Site Type',
     sn: '일련 번호',
     smsPhone: '전화번호',
     smsContent: '내용',

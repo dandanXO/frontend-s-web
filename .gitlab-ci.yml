@@ -753,3 +753,17 @@ build-image-nga-static-v1:
     PROJECT: nga-static-v1
   needs:
     - build-nga-static-v1
+
+#===============================================================================================
+
+build-ph1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: ph1-static-v1
+
+build-image-ph1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: ph1-static-v1
+  needs:
+    - build-ph1-static-v1

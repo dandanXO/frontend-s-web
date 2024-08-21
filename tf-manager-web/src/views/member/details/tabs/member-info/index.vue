@@ -497,6 +497,33 @@
         </el-descriptions-item>
         <el-descriptions-item v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10" />
         <el-descriptions-item v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10" />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.withdrawType') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.withdrawType !== null">
+            {{ t('withdrawType.' + memberDetail.withdrawType) }}
+          </span>
+          <span v-if="memberDetail.withdrawType === null">-</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:member:update:withdrawType']"
+            @click="showDialog('UPDATE_WITHDRAWTYPE')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item />
+        <el-descriptions-item />
       </el-descriptions>
     </el-card>
 
@@ -1473,6 +1500,40 @@
           </el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'UPDATE_WITHDRAWTYPE'"
+        ref="updateWithdrawTypeForm"
+        :model="withdrawTypeForm"
+        :rules="withdrawTypeFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.withdrawType')" prop="withdrawType">
+          <el-select
+            v-model="withdrawTypeForm.withdrawType"
+            size="small"
+            :placeholder="t('fields.withdrawType')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in withdrawType.list"
+              :key="item.key"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="editWithdrawType">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -1510,6 +1571,7 @@ import {
   syncMemberDetail,
   getShareRatio,
   editShareRatio,
+  updateWithdrawType,
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1580,6 +1642,7 @@ export default defineComponent({
     const changeAffForm = ref(null)
     const updateModelForm = ref(null)
     const sendSmsForm = ref(null)
+    const updateWithdrawTypeForm = ref(null)
 
     const freezeType = reactive({
       list: [
@@ -1602,6 +1665,13 @@ export default defineComponent({
         { key: 1, name: t('types.NORMAL'), value: 'NORMAL' },
         { key: 2, name: t('types.TEST'), value: 'TEST' },
         { key: 3, name: t('types.PROMO_TEST'), value: 'PROMO_TEST' },
+      ],
+    })
+
+    const withdrawType = reactive({
+      list: [
+        { key: 1, name: t('withdrawType.Manual'), value: 'Manual' },
+        { key: 2, name: t('withdrawType.AUTO_WITHDRAW'), value: 'AUTO_WITHDRAW' },
       ],
     })
 
@@ -1746,6 +1816,10 @@ export default defineComponent({
       siteId: null
     })
 
+    const withdrawTypeForm = reactive({
+      withdrawType: null,
+    })
+
     const validateShareRatio = (rule, value, callback) => {
       if (memberDetail.commissionModel === 'DETAILS') {
         shareRatioList.list.forEach((item) => {
@@ -1832,6 +1906,10 @@ export default defineComponent({
 
     const affFormRules = reactive({
       affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
+    })
+
+    const withdrawTypeFormRules = reactive({
+      memberType: [required(t('message.validateWithdrawTypeRequired'))],
     })
 
     const loadMemberRemark = async () => {
@@ -1988,6 +2066,12 @@ export default defineComponent({
         uiControl.dialogTitle = t('fields.updateShareRatio')
       } else if (type === 'SEND_SMS') {
         uiControl.dialogTitle = t('fields.send')
+      } else if (type === 'UPDATE_WITHDRAWTYPE') {
+        if (updateWithdrawTypeForm.value) {
+          updateWithdrawTypeForm.value.resetFields()
+        }
+        withdrawTypeForm.withdrawType = withdrawType.list[0].value
+        uiControl.dialogTitle = t('fields.withdrawType')
       }
       uiControl.dialogVisible = true
     }
@@ -2217,6 +2301,23 @@ export default defineComponent({
           uiControl.dialogVisible = false
           ElMessage({
             message: t('message.updateUserTypeSuccess'),
+            type: 'success',
+          })
+        }
+      })
+    }
+
+    const editWithdrawType = () => {
+      updateWithdrawTypeForm.value.validate(async valid => {
+        if (valid) {
+          await updateWithdrawType(props.mbrId, withdrawTypeForm.withdrawType, site.id)
+          const data = await getMemberDetails(props.mbrId, site.id)
+          Object.keys({ ...data.data }).forEach(detailField => {
+            memberDetail[detailField] = data.data[detailField]
+          })
+          uiControl.dialogVisible = false
+          ElMessage({
+            message: t('message.updateWithdrawTypeSuccess'),
             type: 'success',
           })
         }
@@ -2524,7 +2625,12 @@ export default defineComponent({
       getAffiliateRatio,
       isInd,
       isKorea,
-      LOGIN_USER_SITEID
+      LOGIN_USER_SITEID,
+      editWithdrawType,
+      withdrawTypeFormRules,
+      withdrawTypeForm,
+      withdrawType,
+      updateWithdrawTypeForm
     }
   },
 })

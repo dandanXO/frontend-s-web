@@ -5,7 +5,7 @@
     <div class="rule-block">
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Thời gian</div>
-        <span class="rule-block-rule__description">Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 06.08.2024</span>
+        <span class="rule-block-rule__description">Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 16.08.2024</span>
       </div>
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Áp dụng</div>
@@ -47,7 +47,7 @@
           </div>
           <div class="mission-block-mission-third-block">
             <span class="mission-block-mission-third-block-description-progress">
-              Tiến độ hoàn thành（{{ mission.missionProgress }}）
+              Tiến độ hoàn thành ({{ mission.missionProgress }})
             </span>
             <button
               class="mission-block-mission-btn"
@@ -71,8 +71,16 @@
       <div class="detail-description">
         <ol>
           <li>Số tiền nạp có tham gia khuyến mãi nạp tiền sẽ không được tích lũy trong khuyến mãi này.</li>
+          <li>
+            Thành Viên cần hoàn thành nhiệm vụ để nhận thưởng trong vòng 30 ngày kể từ ngày đăng ký tài khoản , sau 30
+            ngày khuyến mãi sẽ vô hiệu hóa.
+          </li>
           <li>Thành viên vào trang khuyến mãi để bấm nhận thưởng</li>
-          <li>Thành viên cần hoàn thành vòng cược yêu cầu trước khi thực hiện rút tiền.</li>
+          <li>Thành viên cần hoàn thành 5 vòng cược yêu cầu trước khi thực hiện rút tiền.</li>
+          <li>
+            Với các Thành Viên chưa tham gia nạp tiền , để rút tiền khuyến mãi Thành Viên cần nạp bằng với số tiền yêu
+            cầu rút.
+          </li>
           <li>
             Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC &lt; 1.75, MY -0.6 đến 0.75, Thể thao
             ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này. Các tài khoản có cùng IP hoặc thông
@@ -107,7 +115,7 @@ const missions = ref([
   {
     code: "newbie-mission-t1",
     description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
-    reward: 35,
+    reward: 18,
     icon: AccountSvg,
     missionProgress: "0/0",
     status: "Incomplete"
@@ -167,6 +175,7 @@ onMounted(() => {
       missions.value.forEach((mission, index) => {
         mission.missionProgress = data[`task${index + 1}`];
         mission.status = data[`available${index + 1}`];
+        mission.reward = data[`task${index + 1}amount`];
       });
     }
   });

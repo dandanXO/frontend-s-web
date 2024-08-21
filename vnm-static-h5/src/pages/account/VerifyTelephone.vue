@@ -8,13 +8,14 @@
           standout
           class="q-pb-xs"
           hide-bottom-space
-          v-model="formDetails.phone"
+          v-model="hidedFormDetailsPhoneNumber"
           type="tel"
           :label="$t('lang.personal_mobilenumber')"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('lang.personal_mobilenumber_val'), isValidPhone]"
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
+          disable
         ></q-input>
         <div class="q-ml-md">
           <q-btn
@@ -111,6 +112,16 @@ export default defineComponent({
 
     const store = userStore();
 
+    const hidedFormDetailsPhoneNumber = computed(() => {
+      if(!formDetails.phone) return ""
+      if(formDetails.phone.length < 6) return formDetails.phone.slice(-4)
+      let result = ''
+      for(const c in formDetails.phone) {
+        result += (c < 2 || c >= formDetails.phone.length - 4) ? formDetails.phone[c] : '*'
+      }
+      return result
+    })
+
     const loadInfo = () => {
       if (store.birthday > 0) {
         store.birthday = moment(store.birthday).format("YYYY-MM-DD");
@@ -119,8 +130,26 @@ export default defineComponent({
       formDetails.realName = store.realName;
       formDetails.birthday = store.birthday;
       formDetails.email = store.email;
-      formDetails.phone = "";
       formDetails.phoneVerified = store.phoneVerified;
+      api.get('/session/member/telephone').then(res => {
+        if(res.code === 0) {
+          formDetails.phone = res.data
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          })
+        }
+      }).catch(e => {
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          })
+      })
     };
 
     const canEdit = ref(false);
@@ -344,7 +373,8 @@ export default defineComponent({
       onCaptchaSubmit,
       showVerifyBtn,
       phoneCodeId,
-      otpCountdownCount
+      otpCountdownCount,
+      hidedFormDetailsPhoneNumber
     };
   }
 });
