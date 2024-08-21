@@ -1160,18 +1160,18 @@ $border-settings: 1px solid #e5e7eb;
           color: #fff;
           border-radius: 16px;
           background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
-          height: 20px;
+          height: 16px;
         }
 
         .progressBarDescription {
           display: flex;
           justify-content: space-between;
           color: #333;
-          font-size: 17.987px;
+          font-size: 13.987px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
-          margin: -32px auto 0;
+          margin: -28px auto 0;
         }
       }
     }
