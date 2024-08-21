@@ -233,15 +233,11 @@
           <strong style="display:inline-block;padding-bottom:16px;font-size:20px;">完成以下认证才可以提款</strong>
           <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0" v-if="!store.realName">
             <p style="margin: 0">提款需要绑定真实姓名</p>
-            <router-link to="/account/personal">
-              <q-btn color="brightbtn" label="去绑定" />
-            </router-link>
+            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
           </div>
           <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between" v-if="!store.phone">
             <p style="margin: 0">提款需要绑定手机号</p>
-            <router-link to="/account/personal">
-              <q-btn color="brightbtn" label="去绑定" />
-            </router-link>
+            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
           </div>
         </q-card-section>
         <q-card-actions align="right">

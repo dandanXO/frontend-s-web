@@ -179,16 +179,16 @@
         <div class="submit-alert-message-wrapper">
           <div class="submit-alert-message-item" v-if="!store.realName">
             <p>存款需要绑定真实姓名</p>
-            <el-button type="primary" @click="handleBindRealName">去绑定</el-button>
+            <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
           </div>
           <div class="submit-alert-message-item" v-if="!store.phone">
             <p>存款需要绑定手机号</p>
-            <el-button type="primary" @click="handleBindPhoneNumber">去绑定</el-button>
+            <button type="primary" class="common-btn"  @click="handleBindPhoneNumber">去绑定</button>
           </div>
         </div>
         <template #footer>
           <div class="dialog-footer">
-            <el-button type="primary" style="width: 100%" @click="isShowSubmitDialog = false">暂不认证</el-button>
+            <button type="primary" class="common-btn" style="width: 100%" @click="isShowSubmitDialog = false">暂不认证</button>
           </div>
         </template>
       </el-dialog>

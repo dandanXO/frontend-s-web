@@ -105,16 +105,16 @@
                 </div>
                 <div v-else class="basic-info-cell content">
                   <div class="datewsend" v-if="isEdit">
-                    <el-form-item
-                      name="email"
-                      prop="email"
-                      :rules="[
-                        { required: true, message: '请输入邮箱' },
-                        { type: 'email', message: '邮箱信息错误' }
-                      ]"
-                    >
-                      <el-input v-model="updateFormDetails.email" placeholder="邮箱" />
-                    </el-form-item>
+                    <!--                    <el-form-item-->
+                    <!--                      name="email"-->
+                    <!--                      prop="email"-->
+                    <!--                      :rules="[-->
+                    <!--                        { required: true, message: '请输入邮箱' },-->
+                    <!--                        { type: 'email', message: '邮箱信息错误' }-->
+                    <!--                      ]"-->
+                    <!--                    >-->
+                    <!--                      <el-input v-model="updateFormDetails.email" placeholder="邮箱" />-->
+                    <!--                    </el-form-item>-->
                   </div>
                   <el-button
                     class="common-btn"
@@ -139,13 +139,7 @@
 
               <el-button
                 class="common-btn"
-                v-if="
-                  !isEdit &&
-                  (!personalState.memberInfo.realName ||
-                    !personalState.memberInfo.email ||
-                    !personalState.memberInfo.birthday ||
-                    !personalState.memberInfo.telephone)
-                "
+                v-if="!isEdit && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)"
                 @click="isEdit = !isEdit"
               >
                 编辑
