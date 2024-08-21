@@ -57,7 +57,7 @@
     </div>
     <div class="deposit-container" v-else-if="$q.dark.isActive">
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-container-form">
-        <div v-if="amountList.length === 0" class="input-money">
+        <div v-if="amountList.length === 0" class="input-money q-mb-xs">
           <div class="input-currency">
             {{ isUSDT ? 'USDT' : store.currency.value }}
           </div>
@@ -78,28 +78,29 @@
           >
           </q-input>
         </div>
-        <div v-else class="flex-c-center">
+        <div v-else class="flex-c-center q-mb-md">
+          <div class="input-currency">
+            {{ store.currency.value }}
+          </div>
+
           <q-select
             ref="depositAmtRef"
             label="选择金额"
             name="localAmount"
             class="deposit-selection"
-            filled
+            flat
+            outlined
             color="accent"
             :options="amountList"
             v-model="form.localAmount"
             :rules="verifyDepositAmount"
             padding="none"
+            dense
           >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                {{ store.currency.value }}
-              </span>
-            </template>
           </q-select>
         </div>
 
-        <div class="q-mb-xs text-grey">
+        <div class="q-mb-xs" style="color:#98a7b5;">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -128,13 +129,6 @@
           </div>
         </div>
 
-        <q-btn
-          class="deposit-btn"
-          :loading="btnLoading"
-          @click="confirmDeposit"
-          label="确认"
-        />
-
         <BankComponent
           v-show="selectedPayType && bankCardList.length"
           ref="payTypeClass"
@@ -147,9 +141,10 @@
         <q-select
           style="width: 100%"
           ref="offerRef"
-          class="deposit-selection q-mt-xs"
+          class="deposit-selection q-mb-md"
           label="选择优惠"
-          filled
+          flat
+          outlined
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
@@ -157,6 +152,7 @@
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
           @update:model-value="checkMinDepositAmt"
+          dense
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
@@ -185,6 +181,13 @@
           </span>
           <span v-else>流水倍数要求（本金+彩金）：{{ selectedPrivilege.rollover }}倍</span>
         </div>
+
+        <q-btn
+          class="deposit-btn"
+          :loading="btnLoading"
+          @click="confirmDeposit"
+          label="确认"
+        />
       </q-form>
       
       <div class="q-mt-sm active-method-msg" v-html="activeMethod.msg"></div>
@@ -1055,6 +1058,12 @@ onMounted(() => {
       padding: 0;
       box-shadow: none;
       background: none;
+      height: unset;
+    }
+    
+    .q-field__control {
+      min-height: unset;
+      height: unset;
     }
     
     .q-field__control, .q-field__marginal {
@@ -1062,7 +1071,27 @@ onMounted(() => {
     }
 
     &.q-field--dark .q-field__control:before {
-      border-color: #d0a383 !important;
+      border-color: #d0a383;
+    }
+
+    .q-field__bottom {
+      padding: 4px;
+    }
+  }
+
+  .deposit-selection {
+    &.q-field {
+      width: 100%;
+      box-shadow: none;
+      background: none;
+    }
+    
+    .q-field__control, .q-field__marginal {
+      background: #273354;
+    }
+
+    &.q-field--dark .q-field__control:before {
+      border-color: #d0a383;
     }
 
     .q-field__bottom {
@@ -1100,7 +1129,6 @@ onMounted(() => {
       grid-template-columns: auto 1fr;
       gap: 10px;
       align-items: center;
-      padding: 5px 0;
     }
 
     .input-currency, .deposit-btn {
