@@ -6,6 +6,7 @@ import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";
 import { EDITION } from "@/constant/edition";
+import { uiStore } from "@/store/ui";
 
 const routes = [
   {
@@ -142,7 +143,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "depositLoading" */ "../components/depositLoading.vue")
       },
       {
-        path: "/agent/:affiliateCode",
+        path: "/:homeName?/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
       },
@@ -175,8 +176,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = userStore();
+  const ui = uiStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+    const { homeName } = to.params;
+    if (homeName) {
+      if (homeName === "homeslot") {
+        sessionStorage.setItem("HOME_EDITION", EDITION.SLOT);
+        ui.edition = EDITION.SLOT;
+      }
+    }
     next(`/register`);
   }
   if (to.name === "referCode") {

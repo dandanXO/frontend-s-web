@@ -318,13 +318,14 @@ import { ref, onMounted, computed } from "vue";
 import { getEurocupManualSchedule } from "../../../api/index/promo";
 import GameModal from "components/modal/GameModal.vue";
 import moment from "moment";
+import { useLocalStorage } from "@vueuse/core";
 const tab = ref("groupStage");
 
 const groupStageTeamsList = ref([]);
 const roundOf16TeamsList = ref([]);
 const quarterFinalTeamsList = ref([]);
 const semiFinalAndFinalTeamsList = ref([]);
-const imgUrl = process.env.IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
 const matchType = computed(() => {
   if (tab.value === "roundOf16") {

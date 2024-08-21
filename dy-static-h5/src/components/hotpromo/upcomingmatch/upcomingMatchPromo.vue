@@ -49,6 +49,7 @@ import "swiper/css/navigation";
 
 import { eventapi } from "src/boot/axios";
 import { useUI } from "stores/ui";
+import { useLocalStorage } from "@vueuse/core";
 
 const props = defineProps({
   platformType: String
@@ -56,7 +57,7 @@ const props = defineProps({
 
 const ui = useUI();
 const upcomingMatchDetails = ref([]);
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
 const getupcomingMatchDetails = () => {
   eventapi

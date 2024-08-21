@@ -282,11 +282,12 @@ import { getLplSummer24Match } from "../../../api/index/promo.js";
 import moment from "moment";
 
 import { userStore } from "../../../stores/index";
+import { useLocalStorage } from "@vueuse/core";
 
 const store = userStore();
 const activeTab = ref("first");
 const matchList = ref([]);
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 onMounted(async () => {
   if (!store.token) {
     return;

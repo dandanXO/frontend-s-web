@@ -779,10 +779,11 @@ function convertDate(date) {
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
+      moment(new Date(Date.now() + 3600 * 1000 * 24))
         .subtract(2, 'months')
         .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+        .format('x') ||
+    time.getTime() > new Date(Date.now() + 3600 * 1000 * 24).getTime()
   )
 }
 
@@ -869,9 +870,13 @@ async function getSiteConfig(siteId) {
         ),
       ]
     }
+    siteCurrencyConfig.defaultCurrency = fiatConfig
+    if (form.currency === null) {
+      form.currency = fiatConfig
+    }
   } else {
     siteCurrencyConfig.defaultCurrency = fiatConfig
-    form.currency = siteCurrencyConfig.defaultCurrency
+    form.currency = fiatConfig
   }
 }
 
