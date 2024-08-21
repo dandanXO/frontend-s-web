@@ -407,7 +407,7 @@
     <a @click="isLogoutModal = true">
       <div class="acct-logout btn-pointer">
         <div class="acct-nav-label">退出登录</div>
-        <img v-if="$q.dark.isActive" src="../assets/images/account/account-logout-icon-dark.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-logout-icon-dark.svg" />
         <img v-else src="../assets/images/account/account-logout-icon.png" />
       </div>
     </a>
@@ -1559,6 +1559,15 @@ export default defineComponent({
 
   .acct-logout {
     @include content-block-dark;
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3A93CE;
+
+    .acct-nav-label {
+      color: #fff;
+    }
   }
 
   .vipcard {
@@ -1569,7 +1578,7 @@ export default defineComponent({
     }
     .btn-main {
       // background-image: url("../assets/images/account/account-btn-dark.png");
-      background: url('../assets/images/promo/promo-info-btn-bg.svg') no-repeat center center;
+      background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
       background-size: cover;
       box-shadow: none;
       border-radius: 4px;
