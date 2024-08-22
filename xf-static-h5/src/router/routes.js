@@ -52,14 +52,7 @@ const routes = [
   },
   {
     path: "/maintenance",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "maintenance",
-        component: () => import("pages/MaintenancePage.vue")
-      }
-    ]
+    component: () => import("pages/MaintenancePage.vue")
   },
   {
     path: "/aviator",

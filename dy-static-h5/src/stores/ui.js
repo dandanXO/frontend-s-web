@@ -10,7 +10,9 @@ export const useUI = defineStore("ui-store", {
       pageName: "优惠详细信息",
       slotLists: [],
       siteId: 6,
-      matchInsuranceLists: []
+      matchInsuranceLists: [],
+      maintenanceStartTime: "",
+      maintenanceEndTime: ""
     };
   },
   actions: {
