@@ -112,6 +112,11 @@
         一键领取
       </div>
     </div>
+
+<div class="tips">
+  等级晋升后开启90天保级期，保级期内完成存款和流水要求则保级成功，未完成则降一级。
+  <div @click="isShowTable = !isShowTable" class="linktotable">查看升保级明细</div>
+</div>
     <div class="month-birthday-bonus">
       <div class="left">
         <img class="abs" src="../../assets/images/vip/img-border.png" style="pointer-events: none" />
@@ -176,190 +181,6 @@
               <Pagination />
             </template>
           </Carousel>
-        </div>
-      </div>
-    </div>
-
-    <div class="tips">
-      等级晋升后开启90天保级期，保级期内完成存款和流水要求则保级成功，未完成则降一级。
-      <div @click="isShowTable = !isShowTable" class="linktotable"> 查看升保级明细</div>
-      <div v-if="isShowTable" class="absolute-box">
-        <div class="arrow_box">
-          <div class="overflow-table">
-            <table border="0" cellspacing="0" cellpadding="0">
-              <thead>
-                <tr>
-                  <th style="background: #ad9870">等级</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 1</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 2</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 3</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 4</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 5</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 6</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 7</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 8</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 9</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 10</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 11</th>
-                  <th style="background: #f1dda0; color: #766442">VIP 12</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>会员勋章</td>
-                  <td>青铜 I</td>
-                  <td>青铜 II</td>
-                  <td>白银 I</td>
-                  <td>白银 II</td>
-                  <td>白银 III</td>
-                  <td>黄金 I</td>
-                  <td>黄金 II</td>
-                  <td>黄金 III</td>
-                  <td>铂金 I</td>
-                  <td>铂金 II</td>
-                  <td>钻石</td>
-                  <td>王者</td>
-                </tr>
-                <tr>
-                  <td>
-                    升级条件
-                    <br />
-                    （流水）
-                  </td>
-                  <td>3,000</td>
-                  <td>17,500</td>
-                  <td>50,000</td>
-                  <td>150,000</td>
-                  <td>600,000</td>
-                  <td>1,200,000</td>
-                  <td>2,400,000</td>
-                  <td>6,400,000</td>
-                  <td>24,000,000</td>
-                  <td>64,000,000</td>
-                  <td>150,000,000</td>
-                  <td>250,000,000</td>
-                </tr>
-                <tr>
-                  <td>
-                    保级条件
-                    <br />
-                    （90天）
-                  </td>
-                  <td>1,500</td>
-                  <td>7,500</td>
-                  <td>19,000</td>
-                  <td>32,500</td>
-                  <td>75,000</td>
-                  <td>200,000</td>
-                  <td>620,000</td>
-                  <td>1,900,000</td>
-                  <td>6,250,000</td>
-                  <td>12,500,000</td>
-                  <td>21,000,000</td>
-                  <td>50,000,000</td>
-                </tr>
-                <tr>
-                  <td>晋级彩金</td>
-                  <td>8</td>
-                  <td>18</td>
-                  <td>28</td>
-                  <td>38</td>
-                  <td>58</td>
-                  <td>88</td>
-                  <td>188</td>
-                  <td>288</td>
-                  <td>388</td>
-                  <td>588</td>
-                  <td>888</td>
-                  <td>1,888</td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- <table border="1" cellspacing="0" cellpadding="0">
-              <thead>
-                <tr>
-                  <th style="background: #f1dda0; color: #766442">VIP等级</th>
-                  <th style="background: #f1dda0; color: #766442">升级条件（流水）</th>
-                  <th style="background: #f1dda0; color: #766442">保级条件（90天）</th>
-                  <th style="background: #f1dda0; color: #766442">晋级彩金</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>VIP 1</td>
-                  <td>3,000</td>
-                  <td>1,500</td>
-                  <td>8</td>
-                </tr>
-                <tr>
-                  <td>VIP 2</td>
-                  <td>17,500</td>
-                  <td>7,500</td>
-                  <td>18</td>
-                </tr>
-                <tr>
-                  <td>VIP 3</td>
-                  <td>50,000</td>
-                  <td>19,000</td>
-                  <td>28</td>
-                </tr>
-                <tr>
-                  <td>VIP 4</td>
-                  <td>150,000</td>
-                  <td>32,500</td>
-                  <td>38</td>
-                </tr>
-                <tr>
-                  <td>VIP 5</td>
-                  <td>600,000</td>
-                  <td>75,000</td>
-                  <td>58</td>
-                </tr>
-                <tr>
-                  <td>VIP 6</td>
-                  <td>1,200,000</td>
-                  <td>200,000</td>
-                  <td>88</td>
-                </tr>
-                <tr>
-                  <td>VIP 7</td>
-                  <td>2,400,000</td>
-                  <td>620,000</td>
-                  <td>188</td>
-                </tr>
-                <tr>
-                  <td>VIP 8</td>
-                  <td>6,400,000</td>
-                  <td>1,900,000</td>
-                  <td>288</td>
-                </tr>
-                <tr>
-                  <td>VIP 9</td>
-                  <td>24,000,000</td>
-                  <td>6,250,000</td>
-                  <td>388</td>
-                </tr>
-                <tr>
-                  <td>VIP 10</td>
-                  <td>64,000,000</td>
-                  <td>12,500,000</td>
-                  <td>588</td>
-                </tr>
-                <tr>
-                  <td>VIP 11</td>
-                  <td>150,000,000</td>
-                  <td>21,000,000</td>
-                  <td>888</td>
-                </tr>
-                <tr>
-                  <td>VIP 12</td>
-                  <td>250,000,000</td>
-                  <td>50,000,000</td>
-                  <td>1,888</td>
-                </tr>
-              </tbody>
-            </table> -->
-          </div>
         </div>
       </div>
     </div>
@@ -673,6 +494,181 @@
       </ol>
     </div>
   </div>
+  <q-dialog class="newTable" v-model="isShowTable" >
+        <!-- <table border="0" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th style="background: #ad9870">等级</th>
+              <th style="background: #f1dda0; color: #766442">VIP 1</th>
+              <th style="background: #f1dda0; color: #766442">VIP 2</th>
+              <th style="background: #f1dda0; color: #766442">VIP 3</th>
+              <th style="background: #f1dda0; color: #766442">VIP 4</th>
+              <th style="background: #f1dda0; color: #766442">VIP 5</th>
+              <th style="background: #f1dda0; color: #766442">VIP 6</th>
+              <th style="background: #f1dda0; color: #766442">VIP 7</th>
+              <th style="background: #f1dda0; color: #766442">VIP 8</th>
+              <th style="background: #f1dda0; color: #766442">VIP 9</th>
+              <th style="background: #f1dda0; color: #766442">VIP 10</th>
+              <th style="background: #f1dda0; color: #766442">VIP 11</th>
+              <th style="background: #f1dda0; color: #766442">VIP 12</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>会员勋章</td>
+              <td>青铜 I</td>
+              <td>青铜 II</td>
+              <td>白银 I</td>
+              <td>白银 II</td>
+              <td>白银 III</td>
+              <td>黄金 I</td>
+              <td>黄金 II</td>
+              <td>黄金 III</td>
+              <td>铂金 I</td>
+              <td>铂金 II</td>
+              <td>钻石</td>
+              <td>王者</td>
+            </tr>
+            <tr>
+              <td>
+                升级条件
+                <br />
+                （流水）
+              </td>
+              <td>3,000</td>
+              <td>17,500</td>
+              <td>50,000</td>
+              <td>150,000</td>
+              <td>600,000</td>
+              <td>1,200,000</td>
+              <td>2,400,000</td>
+              <td>6,400,000</td>
+              <td>24,000,000</td>
+              <td>64,000,000</td>
+              <td>150,000,000</td>
+              <td>250,000,000</td>
+            </tr>
+            <tr>
+              <td>
+                保级条件
+                <br />
+                （90天）
+              </td>
+              <td>1,500</td>
+              <td>7,500</td>
+              <td>19,000</td>
+              <td>32,500</td>
+              <td>75,000</td>
+              <td>200,000</td>
+              <td>620,000</td>
+              <td>1,900,000</td>
+              <td>6,250,000</td>
+              <td>12,500,000</td>
+              <td>21,000,000</td>
+              <td>50,000,000</td>
+            </tr>
+            <tr>
+              <td>晋级彩金</td>
+              <td>8</td>
+              <td>18</td>
+              <td>28</td>
+              <td>38</td>
+              <td>58</td>
+              <td>88</td>
+              <td>188</td>
+              <td>288</td>
+              <td>388</td>
+              <td>588</td>
+              <td>888</td>
+              <td>1,888</td>
+            </tr>
+          </tbody>
+        </table> -->
+        <table border="0" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th style="background: #f1dda0; color: #766442">VIP等级</th>
+              <th style="background: #f1dda0; color: #766442">升级条件（流水）</th>
+              <th style="background: #f1dda0; color: #766442">保级条件（90天）</th>
+              <th style="background: #f1dda0; color: #766442">晋级彩金</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>VIP 1</td>
+              <td>3,000</td>
+              <td>1,500</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>VIP 2</td>
+              <td>17,500</td>
+              <td>7,500</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td>VIP 3</td>
+              <td>50,000</td>
+              <td>19,000</td>
+              <td>28</td>
+            </tr>
+            <tr>
+              <td>VIP 4</td>
+              <td>150,000</td>
+              <td>32,500</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>VIP 5</td>
+              <td>600,000</td>
+              <td>75,000</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>VIP 6</td>
+              <td>1,200,000</td>
+              <td>200,000</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>VIP 7</td>
+              <td>2,400,000</td>
+              <td>620,000</td>
+              <td>188</td>
+            </tr>
+            <tr>
+              <td>VIP 8</td>
+              <td>6,400,000</td>
+              <td>1,900,000</td>
+              <td>288</td>
+            </tr>
+            <tr>
+              <td>VIP 9</td>
+              <td>24,000,000</td>
+              <td>6,250,000</td>
+              <td>388</td>
+            </tr>
+            <tr>
+              <td>VIP 10</td>
+              <td>64,000,000</td>
+              <td>12,500,000</td>
+              <td>588</td>
+            </tr>
+            <tr>
+              <td>VIP 11</td>
+              <td>150,000,000</td>
+              <td>21,000,000</td>
+              <td>888</td>
+            </tr>
+            <tr>
+              <td>VIP 12</td>
+              <td>250,000,000</td>
+              <td>50,000,000</td>
+              <td>1,888</td>
+            </tr>
+          </tbody>
+        </table>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1127,19 +1123,17 @@ $border-settings: 1px solid #e5e7eb;
     border: 2px solid #799df8;
     max-width: 480px;
     padding: 10px;
-    flex-direction: column;
     width: 95%;
-
-    margin: 50px auto;
+    margin: 0 auto;
     background: #212b4ae0;
     border-radius: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     padding: 10px;
     .badge {
-      width: 100px;
+      width: 80px;
       position: absolute;
       left: 15px;
       img {
@@ -1150,7 +1144,7 @@ $border-settings: 1px solid #e5e7eb;
     .vip-progress {
       display: flex;
       flex-direction: column;
-      width: calc(100% - 120px);
+      // width: calc(100% - 120px);
       margin-left: 80px;
       gap: 20px;
       .amount {
@@ -1212,7 +1206,7 @@ $border-settings: 1px solid #e5e7eb;
       font-size: 12px;
       padding: 8px 0px;
       text-align: center;
-      margin-left: 70px;
+      // margin-left: 70px;
     }
   }
   .month-birthday-bonus {
@@ -1232,7 +1226,7 @@ $border-settings: 1px solid #e5e7eb;
       padding: 0;
     }
     .left {
-      flex: 1;
+      flex: 2;
       position: relative;
       width: 100%;
       // height: 280px;
@@ -1252,11 +1246,11 @@ $border-settings: 1px solid #e5e7eb;
         z-index: 1;
       }
       .inner-slide {
-        width: 98%;
+        width: 96%;
         margin: auto;
         overflow: hidden;
-        height: 98%;
-        margin: 1.5%;
+        height: 96%;
+        margin: 3%;
         .card-img {
           position: relative;
           width: unset;
@@ -1273,13 +1267,14 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
     .right {
-      flex: 1;
+      flex: 2;
       // width: 220px;
       .vip-boxes {
         // display: grid;
         // grid-template-columns: repeat(2, 1fr);
         width: 100%;
         height: 100%;
+        max-width: 200px;
         gap: 15px;
         .box {
           display: flex;
@@ -1287,7 +1282,7 @@ $border-settings: 1px solid #e5e7eb;
           align-items: center;
           flex-direction: column;
           font-size: 10px;
-          min-height: 120px;
+          min-height: 125px;
           .vip-inner {
             border: 1px solid #799df8;
             background: #1f2231;
@@ -1359,18 +1354,21 @@ $border-settings: 1px solid #e5e7eb;
   }
   .tips {
     color: #ffffff;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 22.8px;
     text-align: center;
-    margin: 30px auto;
+    margin: 10px auto;
     max-width: 500px;
-    width: 100%;
+    width: 95%;
     position: relative;
     .linktotable {
       border-bottom: 1px solid #f1dda0;
       color: #f1dda0;
       display: inline-block;
+    display: block;
+    margin: 0 auto;
+    width: 98px;
     }
     .absolute-box {
       position: absolute;
@@ -1732,13 +1730,16 @@ $border-settings: 1px solid #e5e7eb;
   .instructions {
     overflow: auto;
     border-radius: 15px;
-    width: 95%;
+    width: 100%;
     margin: 0px auto 20px;
     table {
       width: 95%;
       text-align: center;
       margin: 0 auto;
       border-radius: 10px;
+      word-break: break-word;
+      table-layout: fixed;
+      font-size: 12px;
       thead {
         background: linear-gradient(180deg, #4d6abe 0%, #354d93 24.31%, #16234e 100%);
         color: #ffffff;
@@ -1749,8 +1750,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       th,
       td {
-        white-space: pre;
-        padding: 10px;
+        padding: 5px;
         border: 0.5px solid #799df8;
       }
     }
@@ -1887,13 +1887,13 @@ $border-settings: 1px solid #e5e7eb;
 .left {
   .carousel {
     height: 100%;
-    max-width: 140px;
+    // max-width: 140px;
     margin: 0 auto;
   }
-  .carousel__slide {
-    overflow: hidden;
-    gap: 5px;
-  }
+  // .carousel__slide {
+  //   overflow: hidden;
+  //   gap: 5px;
+  // }
   .carousel__pagination {
     padding: 0;
     margin: 10px;
@@ -1902,27 +1902,30 @@ $border-settings: 1px solid #e5e7eb;
     left: 0;
     right: 0;
     bottom: 0;
+    gap: 5px;
   }
   :deep(.carousel__viewport) {
     height: 100%;
   }
   :deep(.carousel__track) {
+    margin: 0;
     height: 100%;
   }
-  :deep(.carousel__pagination-button) {
+  :deep(.carousel__pagination-button:after) {
     background: #ffffff80;
+    border-radius: 10px;
     padding: 0;
     width: 8px;
     height: 8px;
   }
-  :deep(.carousel__pagination-button--active) {
+  :deep(.carousel__pagination-button--active:after) {
     background: #799df8;
   }
 }
 .vip-boxes {
   .carousel {
-    max-width: 180px;
-    margin: 0 auto;
+    // max-width: 200px;
+    // margin: 0 auto;
   }
   .carousel__slide {
     display: grid;
@@ -1931,24 +1934,30 @@ $border-settings: 1px solid #e5e7eb;
     justify-content: center;
     align-items: flex-start;
   }
+  :deep(.carousel__track) {
+    transform-style: preserve-3d;
+    margin: 0;
+  }
   .carousel__pagination {
     padding: 0;
     margin: 10px;
+    gap: 5px;
   }
-  :deep(.carousel__pagination-button) {
+  :deep(.carousel__pagination-button:after) {
     background: #ffffff80;
+    border-radius: 10px;
     padding: 0;
     width: 8px;
     height: 8px;
   }
-  :deep(.carousel__pagination-button--active) {
+  :deep(.carousel__pagination-button--active:after) {
     background: #f1dda0;
   }
 }
 .vip-cards {
   .carousel {
     max-width: 80%;
-    margin: 0 auto;
+    margin: -40px auto -20px;
   }
   .carousel__slide {
     padding: 5px;
@@ -1958,7 +1967,7 @@ $border-settings: 1px solid #e5e7eb;
     perspective: 2000px;
   }
 
-  .carousel__track {
+  :deep(.carousel__track) {
     transform-style: preserve-3d;
   }
 
@@ -2122,5 +2131,27 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
   }
+}
+.newTable {
+  table {
+      table-layout: fixed;
+      font-size: 14px;
+      width: 95%;
+      text-align: center;
+      margin: 0 auto;
+      thead {
+        background: linear-gradient(180deg, #4d6abe 0%, #354d93 24.31%, #16234e 100%);
+        color: #ffffff;
+      }
+      tbody {
+        background: #2f3547;
+        color: #ffffff;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 0.5px solid #f1dda0;
+      }
+    }
 }
 </style>
