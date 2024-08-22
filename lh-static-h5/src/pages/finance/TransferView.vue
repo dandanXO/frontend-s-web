@@ -1,20 +1,6 @@
 <template>
   <q-page class="transfer-container">
-    <div class="account-tabs-div">
-      <div class="account-item is-active">
-        <span>转账</span>
-      </div>
-      <router-link to="/finance/deposit?redirect=account/transfer">
-        <div class="account-item">
-          <span>存款</span>
-        </div>
-      </router-link>
-      <router-link to="/finance/withdraw?redirect=account/transfer">
-        <div class="account-item">
-          <span>提款</span>
-        </div>
-      </router-link>
-    </div>
+      <DepositWithdrawTransferTabs activeTab="transfer" redirect="account/transfer" style="padding: 15px 15px 5px 15px;"/>
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
@@ -218,9 +204,11 @@ import { useQuasar } from "quasar";
 import { translateRecord } from "src/directives/translate";
 import MarqueeText from "vue-marquee-text-component";
 import { useNotify } from "src/hooks/notify";
+import DepositWithdrawTransferTabs from 'components/finance/DepositWithdrawTransferTabs.vue';
 
 components: {
-  AcctBal;
+  AcctBal,
+  DepositWithdrawTransferTabs
 }
 const notify = useNotify();
 const store = userStore();

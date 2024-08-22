@@ -110,7 +110,7 @@ onMounted(() => {
     align-items: center;
     gap: 10px;
     height: 100%;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
 
     .hot-match-item {
       background: url("../assets/images/hotmatch/hotmatch-item-bg-dark.png") no-repeat center center;
