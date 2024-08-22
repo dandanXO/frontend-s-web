@@ -465,7 +465,7 @@ export default defineComponent({
     //   }
     // };
     const handleLiveClick = () => {
-      window.open("https://kakavn.live/", "_blank");
+      window.open("https://gamerecords.vnkaka.live/#/roomLive?language=vi", "_blank");
     };
 
     watch(tab, (val, oldVal) => {
