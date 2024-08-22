@@ -142,7 +142,11 @@
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
+                {{
+                  selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                    ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                }}
                 USDT
               </span>
             </div>

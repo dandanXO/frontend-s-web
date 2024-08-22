@@ -20,7 +20,6 @@
             <div class="promo-label">
               <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
             </div>
-
           </div>
         </div>
         <q-form ref="withdrawFormRef">
@@ -43,11 +42,7 @@
                 <q-item-section class="text-grey">
                   {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{
-                      isUSDT || isEWALLET
-                        ? "加" + chooseCard()
-                        : "绑定" + chooseCard()
-                    }}
+                    {{ isUSDT || isEWALLET ? "加" + chooseCard() : "绑定" + chooseCard() }}
                   </router-link>
                 </q-item-section>
               </q-item>
@@ -55,18 +50,12 @@
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img
-                    style="width: 30px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                  />
+                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
                     {{ scope.opt.bankName }} - ****{{
-                      scope.opt.cardNumber.slice(
-                        scope.opt.cardNumber.length - 4,
-                        scope.opt.cardNumber.length
-                      )
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                     }}
                   </q-item-label>
                 </q-item-section>
@@ -80,13 +69,7 @@
                 />
               </q-item-section>
               <q-item-section>
-                <q-item-label
-                  style="
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                  "
-                >
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                   {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
                 </q-item-label>
               </q-item-section>
@@ -107,19 +90,10 @@
             color="white"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
-              (val) =>
-                val >= selectedWithdrawalMethod.withdrawMin ||
-                '请输入正确的提款金额',
-              (val) =>
-                val <= selectedWithdrawalMethod.withdrawMax ||
-                '请输入正确的提款金额',
-              (val) =>
-                (val && /^\d+$/.test(val))  ||
-                '提款金额不能有小数',
-              !isUSDT
-                ? (val) =>
-                    (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数'
-                : true,
+              (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
+              (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
+              (val) => (val && /^\d+$/.test(val)) || '提款金额不能有小数',
+              !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
             ]"
             clearable
           >
@@ -130,11 +104,7 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn
-                  @click="updateWithdrawAmt"
-                  label="全额提款"
-                  color="brightbtn"
-                />
+                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" />
               </span>
             </template>
           </q-input>
@@ -143,12 +113,7 @@
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
-            <template
-              v-if="
-                selectedWithdrawalMethod.withdrawMin &&
-                selectedWithdrawalMethod.withdrawMin
-              "
-            >
+            <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
@@ -159,54 +124,32 @@
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{
-                "今日提款: " +
-                selectedWithdrawalMethod.withdrawMaxAmount +
-                "RMB"
-              }}
+              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{
-                " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次"
-              }}
+              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div
-              class="q-my-md"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
+            <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">实施汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
-            <div
-              class="q-mt-md"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
+            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
-                  (selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin) ? '0.00' : (
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate) - 1
-                  ).toFixed(2)
+                  selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                    ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
                 }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">
-              *提币手续费：2.00 USDT
-            </div>
+            <div class="q-mt-md text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
@@ -216,7 +159,10 @@
                 :label="tutorialLabel()"
               />
             </div>
-            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)">
+            <div
+              class="q-mt-md text-orange"
+              v-if="['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
+            >
               <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             </div>
           </div>
@@ -576,14 +522,14 @@ export default defineComponent({
     position: relative;
     cursor: pointer;
 
-    .promo-label{
-      position:absolute;
-      bottom:8px;
-      left:50%;
+    .promo-label {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
       transform: translate(-50%);
       width: 50px;
 
-      img{
+      img {
         width: 100%;
         height: auto;
         padding: 4px 6px;
@@ -610,9 +556,9 @@ export default defineComponent({
         border: 1px solid #33bcd4;
       }
 
-      .promo-img{
-        border:none;
-        border-radius:0px;
+      .promo-img {
+        border: none;
+        border-radius: 0px;
       }
 
       // img {

@@ -135,7 +135,7 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
             }}
             USDT
           </span>
@@ -147,11 +147,7 @@
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-          <el-button
-            class="common-btn"
-            v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
-            @click="openEWalletTutorial"
-          >
+          <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
         </div>
