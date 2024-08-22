@@ -166,7 +166,9 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  if (ui.edition !== EDITION.SLOT) {
+    checkShowImgTop();
+  }
 });
 </script>
 
