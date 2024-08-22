@@ -177,20 +177,29 @@
       title="完成以下认证才可以取款"
       :close-on-click-modal="false"
       center
+      class="dialog-wrapper"
     >
       <div class="submit-alert-message-wrapper">
-        <div class="submit-alert-message-item" v-if="!store.realName">
-          <p>取款需要绑定真实姓名</p>
-          <button class="common-btn" type="primary" @click="handleBindRealName">去绑定</button>
+        <div v-if="!store.realName">
+          <div class="submit-alert-message-item">
+            <p>取款需要绑定真实姓名</p>
+            <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
+          </div>
+          <div style="font-size: 12px; color: red">为了您的资金安全，银行卡姓名需一致</div>
         </div>
-        <div class="submit-alert-message-item" v-if="!store.phone">
-          <p>取款需要绑定手机号</p>
-          <button class="common-btn" type="primary" @click="handleBindPhoneNumber">去绑定</button>
+        <div v-if="!store.phone">
+          <div class="submit-alert-message-item">
+            <p>取款需要绑定手机号</p>
+            <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
+          </div>
+          <div style="font-size: 12px; color: red">为了您的资金安全，请绑定手机号</div>
         </div>
       </div>
       <template #footer>
         <div class="dialog-footer">
-          <button class="common-btn" type="primary" style="width: 100%" @click="isShowSubmitDialog = false">暂不认证</button>
+          <button class="common-btn" type="primary" style="width: 100%" @click="isShowSubmitDialog = false">
+            暂不认证
+          </button>
         </div>
       </template>
     </el-dialog>
@@ -805,5 +814,10 @@ export default defineComponent({
 
 .selected-tip {
   margin-left: 150px;
+}
+
+.dialog-wrapper {
+  overflow: hidden;
+  border-radius: 8px !important;
 }
 </style>
