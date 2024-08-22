@@ -64,7 +64,7 @@
                           ? "Loading..."
                           : realRate === 0
                           ? `0 USDT`
-                          : `${convertToCommaAmount(realBalance / realRate, true)} USDT`
+                          : `${convertToTwoDecimalAmount(realBalance / realRate)} USDT`
                       }}
                     </span>
                     <span class="balance-amount-converted">
@@ -400,6 +400,11 @@ const handleBackBtn = () => {
     emits("closeslot");
   }
   router.push("/deposit?from=" + route.path);
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 onMounted(() => {
