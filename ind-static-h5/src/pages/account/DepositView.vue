@@ -454,12 +454,12 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    promoParam = "?promo=1";
+    promoParam = "&promo=1";
   }
 
   payMethods.value = [];
 
-  cashier.get(`/session/nga/deposit/index/${promoParam}`).then((res) => {
+  cashier.get(`/session/nga/deposit/index/?usdt=true${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
