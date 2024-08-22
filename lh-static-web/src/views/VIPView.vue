@@ -1341,6 +1341,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       table {
         width: 1500px;
+        // table-layout:fixed;
         tr {
           th {
             border: 2px solid #f1dda0;
@@ -1659,6 +1660,7 @@ $border-settings: 1px solid #e5e7eb;
     max-width: 1200px;
     margin: 0px auto 20px;
     table {
+      // table-layout: fixed;
       font-size: 20px;
       width: 100%;
       text-align: center;
