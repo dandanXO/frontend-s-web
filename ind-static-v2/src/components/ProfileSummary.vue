@@ -58,7 +58,7 @@
                           ? "Loading..."
                           : realRate === 0
                           ? `0 USDT`
-                          : `${convertToCommaAmount(realBalance / realRate, false)} USDT`
+                          : `${convertToCommaAmount(realBalance / realRate, true)} USDT`
                       }}
                     </span>
                     <span class="balance-amount-converted">
