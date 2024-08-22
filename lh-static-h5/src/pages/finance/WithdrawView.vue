@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
-      <DepositWithdrawTransferTabs activeTab="withdraw" redirect="finance/withdraw" style="padding:5px 0px 5px 0px;" />
+      <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="withdraw" redirect="finance/withdraw" style="padding:5px 0px 5px 0px;" />
       <div class="account-content last">
         <div class="payment-method-section">
           <div class="section-title" v-if="$q.dark.isActive">

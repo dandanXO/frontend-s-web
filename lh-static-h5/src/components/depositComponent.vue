@@ -1,7 +1,7 @@
 <template>
   <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
-    <DepositWithdrawTransferTabs activeTab="deposit" redirect="finance/deposit" style="padding:10px 0px 10px;" />
+    <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="deposit" redirect="finance/deposit" style="padding:10px 0px 10px;" />
     <div class="q-mb-sm">
       <!--      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>-->
     </div>

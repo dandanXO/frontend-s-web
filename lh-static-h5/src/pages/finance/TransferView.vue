@@ -1,6 +1,21 @@
 <template>
   <q-page class="transfer-container">
-      <DepositWithdrawTransferTabs activeTab="transfer" redirect="account/transfer" style="padding: 15px 15px 5px 15px;"/>
+    <DepositWithdrawTransferTabs v-if="$q.dark.isActive" activeTab="transfer" redirect="account/transfer" style="padding: 15px 15px 5px 15px;"/>
+    <div class="account-tabs-div" v-else>
+      <div class="account-item is-active">
+        <span>转账</span>
+      </div>
+      <router-link to="/finance/deposit?redirect=account/transfer">
+        <div class="account-item">
+          <span>存款</span>
+        </div>
+      </router-link>
+      <router-link to="/finance/withdraw?redirect=account/transfer">
+        <div class="account-item">
+          <span>提款</span>
+        </div>
+      </router-link>
+    </div>
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">

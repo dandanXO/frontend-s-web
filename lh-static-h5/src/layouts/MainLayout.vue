@@ -93,7 +93,18 @@
         <span>首页</span>
       </q-route-tab>
 
-      <q-route-tab to="/account/transfer" name="transfer">
+      <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
+        <img
+          class="inactive"
+          src="../assets/images/footer/hotmatch-icon-dark.svg"
+        />
+        <img
+          class="hover"
+          src="../assets/images/footer/hotmatch-icon-active-dark.svg"
+        />
+        <span>赛程</span>
+      </q-route-tab>
+      <q-route-tab v-else to="/account/transfer" name="transfer">
         <img
           class="inactive"
           v-if="$q.dark.isActive"
