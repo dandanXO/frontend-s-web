@@ -460,24 +460,24 @@ export default defineComponent({
       isH5.value = store.getDeviceType() === "H5";
     };
 
-    const loadTrackingScript = () => {
-      const currentDomain = window.location.hostname;
-
-      // Determine the tracking script URL based on the current domain
-      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
-
-      if (isH5.value === true) {
-        const script = document.createElement("script");
-        script.src = trackingScriptUrl;
-        script.type = "text/javascript";
-        document.body.appendChild(script);
-      }
-    };
+    // const loadTrackingScript = () => {
+      // const currentDomain = window.location.hostname;
+      //
+      // // Determine the tracking script URL based on the current domain
+      // let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+      //
+      // if (isH5.value === true) {
+      //   const script = document.createElement("script");
+      //   script.src = trackingScriptUrl;
+      //   script.type = "text/javascript";
+      //   document.body.appendChild(script);
+      // }
+    // };
 
     onMounted(() => {
       checkRoute();
       checkPlatform();
-      loadTrackingScript();
+      // loadTrackingScript();
     });
     return {
       languageVal,
@@ -515,8 +515,7 @@ export default defineComponent({
       ],
       LangOptions,
       isH5,
-      checkPlatform,
-      loadTrackingScript
+      checkPlatform
     };
   }
 });

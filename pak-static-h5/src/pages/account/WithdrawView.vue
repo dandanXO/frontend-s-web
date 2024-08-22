@@ -953,9 +953,14 @@ const openWithdrawTutorialVideo = () => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
+  padding: 20px 0 40px;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 32px);
+  max-width: 468px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0e1412;
 }
 
 .tutorial-link {

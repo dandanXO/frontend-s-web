@@ -39,15 +39,15 @@ export default defineComponent({
   },
   methods: {
     loadTrackingScript() {
-      const currentDomain = window.location.hostname;
-
-      // Determine the tracking script URL based on the current domain
-      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
-
-      const script = document.createElement("script");
-      script.src = trackingScriptUrl;
-      script.type = "text/javascript";
-      document.body.appendChild(script);
+      // const currentDomain = window.location.hostname;
+      //
+      // // Determine the tracking script URL based on the current domain
+      // let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+      //
+      // const script = document.createElement("script");
+      // script.src = trackingScriptUrl;
+      // script.type = "text/javascript";
+      // document.body.appendChild(script);
     }
   },
   setup() {

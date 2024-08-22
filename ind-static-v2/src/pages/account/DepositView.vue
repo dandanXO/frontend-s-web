@@ -426,6 +426,7 @@ const selectedItemPrivilegeId = ref();
 const selectedItemPaymentId = ref();
 
 const goSelectedMethod = (item) => {
+  activeMethod.value = item;
   selectedItem.value = item;
   selectedItemAmount.value = item.extra.amountArr;
   selectedItemPrivilege.value = item.extra.privilegePercent;
@@ -453,12 +454,12 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    promoParam = "?promo=1";
+    promoParam = "&promo=1";
   }
 
   payMethods.value = [];
 
-  cashier.get(`/session/nga/deposit/index/${promoParam}`).then((res) => {
+  cashier.get(`/session/nga/deposit/index/?usdt=1${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 

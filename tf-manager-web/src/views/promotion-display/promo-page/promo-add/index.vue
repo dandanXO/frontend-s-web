@@ -61,6 +61,25 @@
             </el-button>
           </el-form-item>
         </el-row>
+        <el-row v-if="uiControl.showSiteType === true">
+          <el-form-item :label="t('fields.siteType')" prop="siteType">
+            <el-select
+              v-model="form.siteType"
+              size="small"
+              class="filter-item"
+              :placeholder="t('fields.siteType')"
+              style="width: 240px;margin-bottom:10px"
+              @change="loadPromoTypes"
+            >
+              <el-option
+                v-for="item in siteType.list"
+                :key="item.value"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
         <el-row>
           <el-form-item :label="t('fields.siteType')" prop="siteType">
             <el-select
@@ -1269,6 +1288,7 @@ const uiControl = reactive({
   affList: [],
   supportDarkMode: false,
   selectDarkImage: false,
+  showSiteType: false,
 })
 
 const checkboxes = reactive({
@@ -1666,6 +1686,12 @@ async function loadForm(id) {
       })
     }
     addParam()
+
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
   })
 }
 
@@ -1870,6 +1896,12 @@ function onChangeSite() {
   loadVips()
   loadDarkMode()
   // }
+
+  if (isVnm(form.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
 }
 
 async function loadVips() {

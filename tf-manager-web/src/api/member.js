@@ -490,3 +490,12 @@ export const toggleMemberWallet = (id, siteId) => {
 export const walletBalance = (id, siteId) => {
   return https().request(`/member/all-wallet/${id}/${siteId}`, Method.GET);
 }
+
+export const updateWithdrawType = (id, withdrawType, siteId) => {
+  return https().request(
+    `/member/${id}/withdrawType?_method=PUT`,
+    Method.POST,
+    { withdrawType: withdrawType, siteId: siteId },
+    ContentType.form
+  )
+}
