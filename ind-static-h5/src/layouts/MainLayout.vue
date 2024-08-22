@@ -19,7 +19,12 @@
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
+          <span
+            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/tutorial'"
+            class="header-back"
+          >
+            Back
+          </span>
         </router-link>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -441,6 +446,7 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "";
+          isDepositTab.value = true;
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
@@ -448,6 +454,12 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "";
+          isDepositTab.value = true;
+        } else if (route.path === "/tutorial") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "";
+          isDepositTab.value = true;
         }
       }
     };

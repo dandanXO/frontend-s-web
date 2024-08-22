@@ -294,7 +294,7 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/account/WithdrawLandingView.vue")
+        component: () => import("pages/account/TutorialLandingView.vue")
       }
     ],
     meta: { requiresAuth: true }
