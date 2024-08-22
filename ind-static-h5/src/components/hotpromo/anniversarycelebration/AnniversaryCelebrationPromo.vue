@@ -6,6 +6,14 @@
         giveaway. A total of 2888rs can be obtained! What are you waiting for? Just go online and you can get a huge
         bonus!
       </p>
+
+      <div class="q-mt-md">
+        <div :class="`btn-submit`" @click="receiveCheckinReward">
+          <q-spinner v-if="isLoading" color="white" size="2em" :thickness="2"></q-spinner>
+          <template v-else>Receive</template>
+        </div>
+      </div>
+
       <div class="q-my-md">
         <img src="../../../assets/images/promotion/anniversary-celebration/title-img-dailyrewards.png" />
       </div>
@@ -23,13 +31,6 @@
             <div class="item-free">Free {{ item.freeAmount }}rs</div>
           </div>
         </template>
-      </div>
-
-      <div class="q-mt-md">
-        <div :class="`btn-submit`" @click="receiveCheckinReward">
-          <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
-          <template v-else>Receive</template>
-        </div>
       </div>
     </template>
     <template v-else>
