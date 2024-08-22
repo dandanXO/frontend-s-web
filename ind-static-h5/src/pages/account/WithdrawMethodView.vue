@@ -324,10 +324,9 @@
         </div>
       </template>
 
-      <!-- <div class="bottom-tnc q-mt-md">
-        Note: 2% + 50NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
-        information, if withdrawal failed or you have any other questions, please contact CS 24/7
-      </div> -->
+      <div class="note-tips" v-if="isUSDT">
+        <div class="info">*Withdrawal fee: 2.00 USDT</div>
+      </div>
     </template>
 
     <template v-else>
@@ -1413,5 +1412,16 @@ const toggleAmount = (type) => {
 .dialog-input {
   background-color: #263349;
   border-radius: 6px;
+}
+
+.note-tips {
+  display: flex;
+  margin: 1rem 0 0.5rem 0;
+  background-color: rgba(74, 56, 185, 0.4);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.825rem;
+  font-weight: 400;
+  color: #a9a6bb;
 }
 </style>
