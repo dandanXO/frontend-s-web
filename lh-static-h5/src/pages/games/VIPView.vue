@@ -5,7 +5,7 @@
     </div>
     <!--    <div class="banner-container" />-->
     <div class="vip-cards">
-      <Carousel v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
+      <Carousel v-model="currentSlide" :items-to-show="3" :wrap-around="true">
         <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
           <div class="carousel__item">
             <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -1956,7 +1956,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-cards {
   .carousel {
-    max-width: 80%;
+    max-width: 85%;
     margin: -40px auto -20px;
   }
   .carousel__slide {
@@ -1999,6 +1999,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--active ~ .carousel__slide.carousel__slide--next {
     transform: scale(0.6);
+    margin-left: -25px;
     filter: grayscale(1) brightness(0.7);
     z-index: -3;
 
@@ -2017,6 +2018,7 @@ $border-settings: 1px solid #e5e7eb;
   .carousel__slide.carousel__slide--prev {
     transform: scale(0.6);
     filter: grayscale(1) brightness(0.7);
+    margin-left: 15px;
     .vipcontents {
       &:before {
         content: "";
@@ -2118,6 +2120,7 @@ $border-settings: 1px solid #e5e7eb;
     opacity: 1;
     transform: scale(.8);
     filter: grayscale(0);
+    margin-left: -5px;
     z-index: 1;
     .vipcontents {
       &:before {
