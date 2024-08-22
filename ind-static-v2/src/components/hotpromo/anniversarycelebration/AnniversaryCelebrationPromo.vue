@@ -32,6 +32,7 @@
         </div>
       </div>
     </template>
+
     <template v-else>
       <div class="not-available">
         <div>
@@ -61,7 +62,7 @@ const receiveCheckinReward = () => {
   isLoading.value = true;
 
   eventapi
-    .put(`/bonus/claim/indwin-check-in`)
+    .put(`/bonus/claim/indwin2-check-in`)
     .then((res) => {
       const resp = res.data;
 
@@ -130,7 +131,7 @@ onMounted(() => {
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
-  background: #5c46e7;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
   width: 100%;
   max-width: 120px;
   aspect-ratio: 335/46;
@@ -150,11 +151,11 @@ onMounted(() => {
   grid-template-rows: auto auto auto;
   gap: 10px;
   .content-item {
-    background: linear-gradient(325.86deg, #1e1236 5.38%, #2f1661 98.11%);
+    background: linear-gradient(325.86deg, #0e1e08 5.38%, #1b6026 98.11%);
     padding: 12px;
     box-shadow: 0px 0px 20px 0px #b479ff40 inset;
     border-radius: 8px;
-    border: 1px solid #7753c2;
+    border: 1px solid #55c253;
     position: relative;
 
     &.full-wide {
@@ -192,9 +193,9 @@ onMounted(() => {
       padding-left: 3px;
       padding-right: 3px;
       padding-bottom: 3px;
-      background: #a88bc4;
+      background: #acffaf;
       font-weight: bold;
-      color: #251446;
+      color: #14461f;
       text-align: center;
       position: absolute;
       top: 0;

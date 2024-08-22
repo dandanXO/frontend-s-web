@@ -10,10 +10,10 @@
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
+    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <AnniversaryCelebrationPromo
       v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
     />
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -151,6 +151,7 @@ export default defineComponent({
     InviteFriendPromo,
     AnniversaryCelebrationPromo
   },
+
   props: {
     list: {
       type: Object,
