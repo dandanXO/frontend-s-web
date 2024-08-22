@@ -12,7 +12,7 @@
         <!--        <div class="method-type">-->
         <!--          <img src="../../assets/images/account/usdt-select.png" />-->
         <!--        </div>-->
-        <div class="method-options">
+        <div class="method-options lower-opt">
           <div class="method-select-div">
             <div class="method-usdt-title">Withdraw Currency</div>
             <q-select
@@ -1075,6 +1075,10 @@ const toggleAmount = (type) => {
     margin-bottom: 16px;
     flex-wrap: nowrap;
     gap: 12px;
+
+    &.lower-opt {
+      align-items: flex-end;
+    }
 
     .options-picker {
       display: flex;
