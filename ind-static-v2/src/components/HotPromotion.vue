@@ -11,6 +11,9 @@
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
+    <AnniversaryCelebrationPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
+    />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -186,6 +189,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
+import AnniversaryCelebrationPromo from "../components/hotpromo/anniversarycelebration/AnniversaryCelebrationPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -197,7 +201,8 @@ export default defineComponent({
     GoldenEggPromo,
     HongBaoYuPromo,
     WelcomeTaskPromo,
-    InviteFriendPromo
+    InviteFriendPromo,
+    AnniversaryCelebrationPromo
   },
   props: {
     list: {
@@ -254,6 +259,7 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
+      this.list.redirectUrl === "anniversary-celebration" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
@@ -527,7 +533,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .hot-promo {
-  border-radius: 10px;
+  // border-radius: 10px;
   overflow: hidden;
   position: relative;
 
