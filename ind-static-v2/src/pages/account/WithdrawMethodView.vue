@@ -455,12 +455,14 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  var usdtStr = "";
+  var currencyStr = "";
   if (withdrawType.value === "usdt") {
-    usdtStr = "?currency=USDT";
+    currencyStr = "?currency=USDT";
+  } else {
+    currencyStr = "?currency=INR";
   }
 
-  api.get(`/session/nga/withdraw/entrance${usdtStr}`).then((res) => {
+  api.get(`/session/nga/withdraw/entrance${currencyStr}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
