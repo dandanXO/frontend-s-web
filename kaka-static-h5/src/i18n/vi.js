@@ -11,6 +11,7 @@ export default {
     withdraw: "Rút tiền",
     transfer: "Chuyển điểm",
     vip: "VIP",
+    live: "LIVE",
     home: "Trang chủ",
     account: "Nạp tiền",
     promo: "Khuyến Mãi",
@@ -447,6 +448,7 @@ export default {
     mine_account_info: "Thông tin tài khoản",
     mine_apply_for_partnership: "Đối tác",
     mine_logout: "Đăng xuất",
+    mine_vip: "VIP",
 
     // promo
     type_all: "Tất cả",

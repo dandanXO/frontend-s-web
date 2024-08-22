@@ -11,6 +11,7 @@ export default {
     withdraw: "Withdraw",
     transfer: "Transfer",
     vip: "VIP",
+    live: "LIVE",
     home: "Home",
     account: "Account",
     promo: "Promo",
@@ -442,6 +443,7 @@ export default {
     mine_account_info: "Account info",
     mine_apply_for_partnership: "Partnership",
     mine_logout: "Logout",
+    mine_vip: "VIP",
 
     // promo
     type_all: "All",
