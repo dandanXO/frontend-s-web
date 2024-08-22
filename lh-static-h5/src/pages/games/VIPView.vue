@@ -32,7 +32,8 @@
         </template>
       </Carousel>
     </div>
-    <div class="current-vip-status" v-if="store.token">
+    
+    <div class="current-vip-status" v-if="store.token && isDataLoaded">
       <div class="badge">
         <img :src="badgeSrc" />
       </div>
@@ -55,31 +56,51 @@
             </div>
           </div>
         </div> -->
+        <!-- <template v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+          <div class="amount" v-if="vipLevel === vip.vipLevel">
+            {{ vip }}
+            {{ currentBetAmt }}
+            <div class="text">
+
+            </div>
+          </div>
+        </template> -->
+          
         <div class="amount">
-          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 0 && vipLevel != 12">
             还要
-            <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>
+            <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
             有效流水升级到 VIP {{ vipLevel + 1 }}
           </div>
-          <div class="text" v-else-if="vipLevel === 0">还要 {{vipItems[0].upgradeBetAmount - currentBetAmt}} 有效流水升级到 VIP 1</div>
-          <div class="text" v-else-if="vipLevel === 12">您已是最高VIP等级</div>
+
+          <div class="text" v-else-if="vipLevel === 0">
+            还要 {{ formatNumber(vipItems[0].upgradeBetAmount - currentBetAmt) || 0 }} 有效流水升级到 VIP 1
+          </div>
+
+          <div class="text" v-else-if="vipLevel === 12">
+              您已达到或超越最高 VIP 等级所需的有效流水
+          </div>
+
           <div class="text" v-else>
             已到达
             <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
             有效流水 VIP {{ vipLevel + 1 }}
           </div>
-          <div class="progressBarContainer" v-if="vipLevel != 0">
+
+          <div class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }" />
+              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
             </div>
             <div class="progressBarDescription">{{ currentBetAmt + '/' + currentUpgradeBetAmt }}</div>
           </div>
-          
+
           <div class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
             <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: vipLevel === 12 ? '100%' : '0%' }" />
+              <div class="progressBarInnerBar" :style="{ width: vipLevel === 12 ? '100%' : (vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null) }"></div>
             </div>
-            <div class="progressBarDescription">{{ currentBetAmt + '/' + vipItems[0].upgradeBetAmount }}</div>
+            <div class="progressBarDescription">
+              {{ vipLevel === 0 ? currentBetAmt + '/' + vipItems[0].upgradeBetAmount : vipItems[11].upgradeBetAmount + '/' + vipItems[11].upgradeBetAmount }}
+            </div>
           </div>
         </div>
       </div>
@@ -685,6 +706,9 @@ const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
+    if (currentBetAmt.value > 0) {
+      return (currentBetAmt.value / vipItems[0].upgradeBetAmount) * 100;
+    }
     return 0;
   }
   const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
@@ -893,6 +917,7 @@ const getImages = () => {
     }
   });
 };
+const isDataLoaded = ref(false);
 const initVIPTable = async () => {
   getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
@@ -933,6 +958,7 @@ const initVIPTable = async () => {
     });
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    isDataLoaded.value = true;
   } else {
     notify({ type: "error", message: res.message });
   }
@@ -1136,7 +1162,7 @@ $border-settings: 1px solid #e5e7eb;
           gap: 2px;
           font-size: 14px;
           color: #ffffff;
-          white-space: nowrap;
+          // white-space: nowrap;
           .required-amount {
             color: #799df8;
             font-weight: 600;
