@@ -375,6 +375,7 @@ const selectedItemPrivilegeId = ref();
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
+  activeMethod.value= item;
   selectedItemAmount.value = item.extra.amountArr;
   selectedItemPrivilege.value = item.extra.privilegePercent;
   selectedItemPrivilegeId.value = item.extra.privilegeId;

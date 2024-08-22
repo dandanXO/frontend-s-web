@@ -1667,6 +1667,12 @@ async function loadForm(id) {
       })
     }
     addParam()
+
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
   })
 }
 
