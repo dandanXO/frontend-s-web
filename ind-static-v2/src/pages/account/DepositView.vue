@@ -459,7 +459,7 @@ function initPay() {
 
   payMethods.value = [];
 
-  cashier.get(`/session/nga/deposit/index/?usdt=true${promoParam}`).then((res) => {
+  cashier.get(`/session/nga/deposit/index/?usdt=1${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
