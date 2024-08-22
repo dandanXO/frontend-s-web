@@ -602,7 +602,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center top;
+  background: url(../assets/images/login/login-bg.png) no-repeat center 20%;
   background-size: cover;
   // height: 100%;
   // min-height: 100vh;
@@ -658,7 +658,7 @@ export default defineComponent({
     // display: flex;
     // justify-content: center;
     // position: relative;
-    // height: 20vh;
+    height: 20vh;
     min-height: 140px;
     img {
       // display: block;
