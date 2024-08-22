@@ -5,7 +5,7 @@
     </div>
     <!--    <div class="banner-container" />-->
     <div class="vip-cards">
-      <Carousel v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
+      <Carousel v-model="currentSlide" :items-to-show="3" :wrap-around="true">
         <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
           <div class="carousel__item">
             <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -223,7 +223,7 @@
         <tbody>
           <tr>
             <td>VIP1</td>
-            <td rowspan="2">青铜</td>
+            <td>青铜 II</td>
             <td rowspan="2">18元</td>
             <td rowspan="2">208</td>
             <td rowspan="2">-</td>
@@ -234,13 +234,14 @@
           </tr>
           <tr>
             <td>VIP2</td>
+            <td>青铜 I</td>
             <td>0.2%</td>
             <td>18</td>
             <td>28</td>
           </tr>
           <tr>
             <td>VIP3</td>
-            <td rowspan="3">白银</td>
+            <td>白银 III</td>
             <td rowspan="3">58元</td>
             <td rowspan="3">588</td>
             <td>-</td>
@@ -251,6 +252,7 @@
           </tr>
           <tr>
             <td>VIP4</td>
+            <td>白银 II</td>
             <td>38</td>
             <td>0.5%</td>
             <td>38</td>
@@ -258,6 +260,7 @@
           </tr>
           <tr>
             <td>VIP5</td>
+            <td>白银 I</td>
             <td>58</td>
             <td>0.6%</td>
             <td>58</td>
@@ -265,7 +268,7 @@
           </tr>
           <tr>
             <td>VIP6</td>
-            <td rowspan="3">黄金</td>
+            <td>黄金 III</td>
             <td rowspan="3">288元</td>
             <td rowspan="3">1088</td>
             <td>88</td>
@@ -276,6 +279,7 @@
           </tr>
           <tr>
             <td>VIP7</td>
+            <td>黄金 II</td>
             <td>188</td>
             <td>1.0%</td>
             <td>128</td>
@@ -283,6 +287,7 @@
           </tr>
           <tr>
             <td>VIP8</td>
+            <td>黄金 I</td>
             <td>288</td>
             <td>188</td>
             <td>1.2%</td>
@@ -291,7 +296,7 @@
           </tr>
           <tr>
             <td>VIP9</td>
-            <td rowspan="2">铂金</td>
+            <td>铂金 II</td>
             <td rowspan="2">588元</td>
             <td rowspan="2">1888</td>
             <td>388</td>
@@ -302,6 +307,7 @@
           </tr>
           <tr>
             <td>VIP10</td>
+            <td>铂金 I</td>
             <td>588</td>
             <td>388</td>
             <td>1.5%</td>
@@ -769,27 +775,22 @@ const getVipLevelProgress = (lvl, status) => {
 // };
 
 const terms = [
-  {
-    text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
-  },
-  {
-    text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
-  },
-  {
-    text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
-  },
-  {
-    text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
-  },
-  {
-    text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
-  },
-  {
-    text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
-  },
-  {
-    text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
-  }
+{ text: "会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；" },
+  { text: "VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；" },
+  { text: "会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；" },
+  { text: "如果会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；" },
+  { text: "每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；" },
+  { text: "会员在注册90天内过生日，本年度内将不能领取生日礼金。另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次（生日彩金1倍流水即可提款）；" },
+  { text: "当月晋级后未晋级且达到保级要求，次月1日可领取保级彩金；" },
+  { text: "首次保级成功后计算会员12个月内未降级（可晋级），彩金与第13个月首日进行派发；" },
+  { text: "统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日反水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；" },
+  { text: "从每月会员日15号00:00:00起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至24号23:59:59，仅需完成一倍流水，过期未领取视为放弃；" },
+  { text: "非0级玩家从会员日18号00:00:00起均可在活动页面领取一张“10%充值加码券”，领取时间截至21号23:59:59，且领取后需在7日内使用充值加码券，成功使用后需在15日内完成相应流水要求；" },
+  { text: "本加码券单日内不可与其他活动加码券同时使用；" },
+  { text: "有效流水仅计算在游戏中产生输赢结果的注单，香港盘<0.75（中国盘<0.75）、欧洲盘<1.75、美洲盘<-133、马来盘<0.75且>0，负赔率>-0.75且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；" },
+  { text: "根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；" },
+  { text: "此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；" },
+  { text: "为避免文字理解差异，雷火电竞保留此活动最终解释权；" }
 ];
 
 const vipTerms = [
@@ -964,7 +965,7 @@ const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
   { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
-  { key: "rebate", image: "rebate", displayName: "日返水" },
+  { key: "rebate", image: "rebate", displayName: "每日返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
   { key: "birthday", image: "birthday", displayName: "生日礼金" },
@@ -1023,7 +1024,7 @@ const slideTo = (vipIndex) => {
   }
   const vipLevel = +store.vip.replace("VIP", "");
   if (vipLevel === 0) {
-    currentSlide.value = 0;
+    currentSlide.value = 11;
     return;
   }
   currentSlide.value = vipLevel - 1;
@@ -1454,7 +1455,7 @@ $border-settings: 1px solid #e5e7eb;
       border-color: rgba(255, 255, 255, 0);
       border-bottom-color: #1f2231;
       border-width: 19px;
-      left: 75%;
+      left: 85%;
       margin-left: -19px;
     }
 
@@ -1462,7 +1463,7 @@ $border-settings: 1px solid #e5e7eb;
       border-color: rgba(113, 158, 206, 0);
       border-bottom-color: #799df8;
       border-width: 20px;
-      left: 75%;
+      left: 85%;
       margin-left: -20px;
     }
   }
@@ -1956,7 +1957,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-cards {
   .carousel {
-    max-width: 80%;
+    max-width: 85%;
     margin: -40px auto -20px;
   }
   .carousel__slide {
@@ -1999,6 +2000,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--active ~ .carousel__slide.carousel__slide--next {
     transform: scale(0.6);
+    margin-left: -25px;
     filter: grayscale(1) brightness(0.7);
     z-index: -3;
 
@@ -2017,6 +2019,7 @@ $border-settings: 1px solid #e5e7eb;
   .carousel__slide.carousel__slide--prev {
     transform: scale(0.6);
     filter: grayscale(1) brightness(0.7);
+    margin-left: 15px;
     .vipcontents {
       &:before {
         content: "";
@@ -2118,6 +2121,7 @@ $border-settings: 1px solid #e5e7eb;
     opacity: 1;
     transform: scale(.8);
     filter: grayscale(0);
+    margin-left: -5px;
     z-index: 1;
     .vipcontents {
       &:before {
