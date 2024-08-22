@@ -16,9 +16,8 @@ export const useUI = defineStore("ui-store", {
       adjust_open_app_event: "",
       adjust_register_fail_event: "",
       adjust_register_event: "",
-      edition: EDITION.NORMAL,
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
       edition: sessionStorage.getItem("HOME_EDITION") || EDITION.NORMAL
     };
   },

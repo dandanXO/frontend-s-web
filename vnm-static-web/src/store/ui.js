@@ -8,9 +8,8 @@ export const uiStore = defineStore("ui-store", {
       footer: true,
       orientation: "landscape",
       downloadUrl: "",
-      edition: EDITION.NORMAL,
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
       edition: sessionStorage.getItem("HOME_EDITION") || EDITION.NORMAL
     };
   },
