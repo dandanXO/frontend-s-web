@@ -74,11 +74,11 @@
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.deposit_btm") }}
         </q-route-tab>
-        <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="vip" class="cs-web-id sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/vip-icon.svg" />
-          <img class="hover" src="../assets/images/footer/vip-icon-active.svg" />
-          {{ $t("lang.vip") }}
-        </q-route-tab>
+        <q-tab id="cs-web-id" name="live" class="cs-web-id sm-screen-txt" @click="handleLiveClick">
+          <img class="inactive" src="../assets/images/footer/live-icon.svg" />
+          <img class="hover" src="../assets/images/footer/live-icon-active.svg" />
+          {{ $t("lang.live") }}
+        </q-tab>
         <q-route-tab to="/account" name="account" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/account-icon.svg" />
           <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
@@ -116,6 +116,7 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
+    const tab = ref("home");
 
     const pageName = ref("");
     const hasPage = ref(false);
@@ -463,6 +464,15 @@ export default defineComponent({
     //     document.body.appendChild(script);
     //   }
     // };
+    const handleLiveClick = () => {
+      window.open("https://gamerecords.vnkaka.live/#/roomLive?language=vi", "_blank");
+    };
+
+    watch(tab, (val, oldVal) => {
+      if (val === "live") {
+        tab.value = oldVal;
+      }
+    });
 
     onMounted(() => {
       checkRoute();
@@ -471,7 +481,7 @@ export default defineComponent({
     });
     return {
       languageVal,
-      tab: ref("home"),
+      tab,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -505,7 +515,8 @@ export default defineComponent({
       ],
       LangOptions,
       isH5,
-      checkPlatform
+      checkPlatform,
+      handleLiveClick
     };
   }
 });
