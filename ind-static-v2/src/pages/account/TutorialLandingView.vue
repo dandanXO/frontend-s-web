@@ -3,7 +3,7 @@
     <div class="tutorial-title q-mb-md"><img src="../../assets/images/account/tutorial-title.png" /></div>
 
     <video controls class="q-my-md" width="100%">
-      <source src="https://p8s1-files.psnaback.com/media/ind-deposit_guide.mp4" type="video/mp4" />
+      <source :src="tutorialVideoUrl" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
 
@@ -143,7 +143,11 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const tutorialVideoUrl = ref(process.env.IMAGE_CDN + `/media/ind-deposit_guide.mp4`);
+</script>
 
 <style lang="scss" scoped>
 .tutorial-container {

@@ -115,7 +115,7 @@
 
       <!-- bank options -->
       <div class="bank-account-container" v-if="filterBankCardLists.length > 0 && !isAddNewAccount">
-        <div class="method-title q-mt-sm">Choose Bank Account</div>
+        <div class="method-title q-mt-sm">Choose {{ withdrawWayText }}</div>
         <div class="mid-wrapper">
           <div class="w-form-item w-form-item--bankcard">
             <div class="w-form-input">
@@ -131,7 +131,7 @@
                 option-value="id"
                 emit-value
                 map-options
-                :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                :rules="[(val) => !!val || `Please Select ${withdrawWayText}`]"
                 hide-bottom-space
               >
                 <template v-slot:option="scope">
@@ -188,7 +188,7 @@
                 dense
                 clearable
                 ref="bankNumberRef"
-                placeholder="Enter Account Number"
+                :placeholder="accountNumberPlaceHolder"
                 v-model="bankCardField.cardNumber"
                 :rules="[(_) => isValidCardNumber()]"
                 hide-bottom-space
@@ -325,7 +325,7 @@
       </template>
 
       <div class="note-tips" v-if="isUSDT">
-        <div class="info">*Withdrawal fee: 2.00 USDT</div>
+        <div class="info">*Withdrawal fee: 0.50 USDT</div>
       </div>
     </template>
 
@@ -414,6 +414,30 @@ const withdrawType = ref(props.type ? props.type : "flat");
 const imgURL = process.env.IMAGE_CDN;
 
 const isMounted = ref(false);
+const accountNumberPlaceHolder = computed(() => {
+  var returnCode = "Enter Account Number";
+  if (withdrawType.value === "usdt") {
+    if (selectedMethodItem.value.code) {
+      if (selectedMethodItem.value.code === "USDTERC") {
+        returnCode = "Enter ERC Address";
+      } else if (selectedMethodItem.value.code === "USDTTRC") {
+        returnCode = "Enter TRC Address";
+      } else {
+        returnCode = "Enter Address";
+      }
+    } else {
+      returnCode = "Enter Address";
+    }
+  }
+  return returnCode;
+});
+const withdrawWayText = computed(() => {
+  var returnText = "Bank Account";
+  if (withdrawType.value === "usdt") {
+    returnText = "Crypto Address";
+  }
+  return returnText;
+});
 
 const methodType = ref("USDT");
 const methodOptions = ref(["USDT"]);
