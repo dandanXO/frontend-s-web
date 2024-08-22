@@ -205,7 +205,7 @@
               </span>
             </div>
             <div class="q-mt-md text-neontb">
-              *提币手续费：1.00 USDT
+              *提币手续费：2.00 USDT
             </div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
