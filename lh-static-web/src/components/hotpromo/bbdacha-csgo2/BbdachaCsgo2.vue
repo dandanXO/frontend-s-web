@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              赛事有效投注：
+              昨日赛事有效投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -40,11 +40,11 @@
         <!--        </div>-->
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年8月25日起</div>
+          <div class="right">2024年8月24日起</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">活动期间，投注BB别墅杯赛事有效投注≥2,000元即可获得领取彩金条件，最高可领1,888元</div>
+          <div class="right">用户每日在电竞场馆投注BB别墅杯赛事有效投注≥2,000元即可获得领取彩金，最高可领1,888元。</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
@@ -95,7 +95,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
               <span>示例</span>
             </div>
-            会员A投注BB别墅杯赛事有效投注6,000元，会员可在次日领取18元彩金
+            示例：会员A当日投注BB别墅杯赛事有效投注6,000元，会员可在次日领取18元彩金
           </div>
         </div>
       </div>
@@ -106,30 +106,33 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              <div>活动期间，BB别墅杯赛事有效投注≥2,000的会员在活动页面可领取8元投注建奖金；</div>
+              <div>活动期间，会员当日BB别墅杯赛事有效投注≥2,000的会员即可符合获得彩金资格；</div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间， 符合领取条件的会员，请在次日24小时内在活动页面点击【点击领取】按钮领取彩金。彩金5倍流水即可提款；
+            符合领取条件的会员，请在次日24小时内在活动页面点击【点击领取】按钮领取彩金。彩金5倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
+            本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注；
+          </div>
+          <div class="item">
+            <div class="item-num">4</div>
             任何低于欧洲盘 1.7 或亚洲盘 0.7
             水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
-            <div class="item-num">4</div>
+            <div class="item-num">5</div>
             根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
-            <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利；
+            <div class="item-num">6</div>
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
-            <div class="item-num">6</div>
+            <div class="item-num">7</div>
             为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
