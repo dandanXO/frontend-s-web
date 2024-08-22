@@ -175,20 +175,34 @@
         title="完成以下认证才可以存款"
         :close-on-click-modal="false"
         center
+        class="dialog-wrapper"
       >
         <div class="submit-alert-message-wrapper">
-          <div class="submit-alert-message-item" v-if="!store.realName">
-            <p>存款需要绑定真实姓名</p>
-            <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
+          <div v-if="!store.realName">
+            <div class="submit-alert-message-item">
+              <div class="">
+                <p style="color: #fff; margin-top: 0px">存款需要绑定真实姓名</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              </div>
+
+              <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
+            </div>
           </div>
-          <div class="submit-alert-message-item" v-if="!store.phone">
-            <p>存款需要绑定手机号</p>
-            <button type="primary" class="common-btn"  @click="handleBindPhoneNumber">去绑定</button>
+          <div v-if="!store.phone">
+            <div class="submit-alert-message-item">
+              <div class="">
+                <p style="color: #fff; margin-top: 0px">存款需要绑定手机号</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+              </div>
+              <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
+            </div>
           </div>
         </div>
         <template #footer>
           <div class="dialog-footer">
-            <button type="primary" class="common-btn" style="width: 100%" @click="isShowSubmitDialog = false">暂不认证</button>
+            <button type="primary" class="common-btn" style="width: 100%" @click="isShowSubmitDialog = false">
+              暂不认证
+            </button>
           </div>
         </template>
       </el-dialog>
@@ -890,13 +904,20 @@ onMounted(() => {
   gap: 12px;
 
   .submit-alert-message-item {
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
 
     p {
       flex: 1;
     }
   }
+}
+
+.dialog-wrapper {
+  overflow: hidden;
+  border-radius: 8px !important;
 }
 </style>

@@ -230,18 +230,30 @@
     <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; padding: 20px" class="text-white">
         <q-card-section class="q-mb-md">
-          <strong style="display:inline-block;padding-bottom:16px;font-size:20px;">完成以下认证才可以提款</strong>
-          <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0" v-if="!store.realName">
-            <p style="margin: 0">提款需要绑定真实姓名</p>
-            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+          <strong style="display: inline-block; padding-bottom: 16px; font-size: 20px">完成以下认证才可以提款</strong>
+          <div v-if="!store.realName" style="margin: 16px 0">
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+              <div class="">
+                <p style="margin: 0; color: #fff; font-size: 16px">提款需要绑定真实姓名</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              </div>
+
+              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+            </div>
           </div>
-          <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between" v-if="!store.phone">
-            <p style="margin: 0">提款需要绑定手机号</p>
-            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+
+          <div v-if="!store.phone">
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+              <div class="">
+                <p style="margin: 0; color: #fff; font-size: 16px">提款需要绑定手机号</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+              </div>
+              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+            </div>
           </div>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn style="width:100%;" label="暂不认证" color="brightbtn" @click="isNewUser = false" />
+          <q-btn style="width: 100%" label="暂不认证" color="brightbtn" @click="isNewUser = false" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -256,6 +268,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import {useLocalStorage} from "@vueuse/core";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -265,7 +278,7 @@ export default defineComponent({
     const $q = useQuasar();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
     const imgWithdrawURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/withdraw/";
-
+    const router = useRouter();
 
     const amountRef = ref();
     const cardRef = ref();
@@ -531,7 +544,8 @@ export default defineComponent({
       openEWalletTutorial,
       tutorialLabel,
       withdrawLoading,
-      isNewUser
+      isNewUser,
+      router
     };
   }
 });
