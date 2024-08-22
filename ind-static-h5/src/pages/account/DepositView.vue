@@ -60,7 +60,7 @@
         <!--        <div class="method-type">-->
         <!--          <img src="../../assets/images/account/usdt-select.png" />-->
         <!--        </div>-->
-        <div class="method-options">
+        <div class="method-options lower-opt">
           <div class="method-select-div">
             <div class="method-usdt-title">Deposit Currency</div>
             <q-select
@@ -241,10 +241,6 @@
           <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
           <template v-else>Submit</template>
         </div>
-      </div>
-
-      <div class="q-mt-lg">
-        <span class="tutorial-span" @click="openTutorial">Deposit Tutorial</span>
       </div>
 
       <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
@@ -1299,6 +1295,10 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+
+  &.lower-opt {
+    align-items: flex-end;
+  }
 
   .options-picker {
     display: flex;

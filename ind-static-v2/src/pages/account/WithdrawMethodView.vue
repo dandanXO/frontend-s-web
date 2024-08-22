@@ -12,7 +12,7 @@
         <!--        <div class="method-type">-->
         <!--          <img src="../../assets/images/account/usdt-select.png" />-->
         <!--        </div>-->
-        <div class="method-options">
+        <div class="method-options lower-opt">
           <div class="method-select-div">
             <div class="method-usdt-title">Withdraw Currency</div>
             <q-select
@@ -324,10 +324,9 @@
         </div>
       </template>
 
-      <!-- <div class="bottom-tnc q-mt-md">
-        Note: 2% + 50NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
-        information, if withdrawal failed or you have any other questions, please contact CS 24/7
-      </div> -->
+      <div class="note-tips" v-if="isUSDT">
+        <div class="info">*Withdrawal fee: 2.00 USDT</div>
+      </div>
     </template>
 
     <template v-else>
@@ -456,12 +455,14 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  var usdtStr = "";
+  var currencyStr = "";
   if (withdrawType.value === "usdt") {
-    usdtStr = "?currency=USDT";
+    currencyStr = "?currency=USDT";
+  } else {
+    currencyStr = "?currency=INR";
   }
 
-  api.get(`/session/nga/withdraw/entrance${usdtStr}`).then((res) => {
+  api.get(`/session/nga/withdraw/entrance${currencyStr}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
@@ -1077,6 +1078,10 @@ const toggleAmount = (type) => {
     flex-wrap: nowrap;
     gap: 12px;
 
+    &.lower-opt {
+      align-items: flex-end;
+    }
+
     .options-picker {
       display: flex;
       gap: 6px;
@@ -1260,8 +1265,7 @@ const toggleAmount = (type) => {
         padding: 3px;
         // border-radius: 1.25rem;
         border-radius: 6px;
-        // background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
-        background-color: #5c46e7;
+        background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
         position: relative;
         transition: 0.3s all;
         width: 100%;
@@ -1345,7 +1349,7 @@ const toggleAmount = (type) => {
       justify-content: space-between;
       // gap: 10px;
       margin: 1rem 0 0.5rem 0;
-      background-color: rgba(74, 56, 185, 0.4);
+      background-color: rgba(21, 127, 66, 0.2);
       border-radius: 6px;
       padding: 6px;
 
@@ -1413,5 +1417,16 @@ const toggleAmount = (type) => {
 .dialog-input {
   background-color: #263349;
   border-radius: 6px;
+}
+
+.note-tips {
+  display: flex;
+  margin: 1rem 0 0.5rem 0;
+  background-color: rgba(21, 127, 66, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.825rem;
+  font-weight: 400;
+  color: #a9a6bb;
 }
 </style>

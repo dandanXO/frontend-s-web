@@ -16,6 +16,8 @@ import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "src/stores/ui";
+import { EDITION } from "./constant/edition";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -23,6 +25,7 @@ export default defineComponent({
     var qs = require("qs");
     const store = userStore();
     const ui = useUI();
+    const router = useRouter();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
     const onlineStatTimeout = ref();
@@ -251,6 +254,19 @@ export default defineComponent({
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     const onDeviceReady = () => {
       // Get the file system
       window.resolveLocalFileSystemURL(
@@ -323,11 +339,12 @@ export default defineComponent({
       }
     }
     onMounted(() => {
+      checkServerStatus();
       console.log('in on mounted dan')
       window.addEventListener('beforeinstallprompt', (e) => {
         console.log(e,'dan')
         e.preventDefault();
-        
+
         deferredPrompt.value = e;
         // 这里你可以显示一个按钮或其他 UI 元素来提示用户安装
       });
