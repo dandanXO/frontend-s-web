@@ -344,6 +344,10 @@ export default defineComponent({
           prevPage.value = "account/personal";
           hasPage.value = true;
           pageName.value = "手机号码";
+        } else if (route.path === "/hotmatch") {
+          prevPage.value = false;
+          hasPage.value = true;
+          pageName.value = "赛程";
         } else if (route.path === "/account/verifyEmail") {
           prevPage.value = "account/personal";
           hasPage.value = true;

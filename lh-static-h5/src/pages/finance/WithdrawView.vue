@@ -154,7 +154,7 @@
               <div v-if="selectedWithdrawalMethod.withdrawMaxTimes">
                 <span>{{`今日提款剩余: `}}</span><span style="color:#fff;">{{selectedWithdrawalMethod.withdrawMaxTimes}}</span><span>{{` 次`}}</span>
               </div>
-              <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
+              <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY' && tutorialLabel()">
                 <span
                   style="text-decoration: underline;color: #fff;"
                   @click="openEWalletTutorial"
