@@ -357,11 +357,7 @@
       >
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img
-            class="paris"
-            v-if="isLandingClub !== 'tf88club'"
-            src="../../assets/home/acc-dialog-img-login-paris.png"
-          />
+          <img class="paris" v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login.png" />
           <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
         <div class="acc-dialog-right">
@@ -379,15 +375,14 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1080px"
+      width="1320px"
       align-center
-      style="max-width: 1080px"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
-          <img class="paris" src="../../assets/home/acc-dialog-img-signup-paris.png" />
+          <img class="paris" src="../../assets/home/acc-dialog-img-signup.png" />
         </div>
         <div class="acc-dialog-right">
           <RegisterAccount
@@ -451,7 +446,7 @@
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img class="paris" src="../../assets/home/acc-dialog-img-login-paris.png" />
+          <img class="paris" src="../../assets/home/acc-dialog-img-login.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -2656,6 +2651,7 @@ body {
             // width: 100%;
             width: calc(100% + 90px);
             margin: -50px 0px -45px -90px;
+            max-width: 100%;
             &.paris {
               margin: 0;
             }
