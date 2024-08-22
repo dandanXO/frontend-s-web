@@ -182,17 +182,22 @@
       <div class="submit-alert-message-wrapper">
         <div v-if="!store.realName">
           <div class="submit-alert-message-item">
-            <p>取款需要绑定真实姓名</p>
+            <div class="">
+              <p style="color: #fff; margin-top: 0px">取款需要绑定真实姓名</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+            </div>
+
             <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
           </div>
-          <div style="font-size: 12px; color: red">为了您的资金安全，银行卡姓名需一致</div>
         </div>
         <div v-if="!store.phone">
           <div class="submit-alert-message-item">
-            <p>取款需要绑定手机号</p>
+            <div class="">
+              <p style="color: #fff; margin-top: 0px">取款需要绑定手机号</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+            </div>
             <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
           </div>
-          <div style="font-size: 12px; color: red">为了您的资金安全，请绑定手机号</div>
         </div>
       </div>
       <template #footer>

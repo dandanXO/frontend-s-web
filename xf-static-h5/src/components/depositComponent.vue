@@ -196,23 +196,24 @@
       <q-card-section class="q-mb-md">
         <strong style="display: inline-block; padding-bottom: 12px; font-size: 20px">完成以下认证才可以存款</strong>
         <div v-if="!store.realName" style="margin: 16px 0">
-          <div
-            style="display: flex; gap: 12px; align-items: center; justify-content: space-between;"
-          >
-            <p style="margin: 0">存款需要绑定真实姓名</p>
-            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定?" />
+          <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+            <div class="">
+              <p style="margin: 0; color: #fff; font-size: 16px">存款需要绑定真实姓名</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+            </div>
+            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
           </div>
-          <div style="font-size: 12px; color: red">为了您的资金安全，银行卡姓名需一致</div>
         </div>
 
         <div v-if="!store.phone">
-          <div
-            style="display: flex; gap: 12px; align-items: center; justify-content: space-between"
-          >
-            <p style="margin: 0">存款需要绑定手机号</p>
-            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定!" />
+          <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+            <div class="">
+              <p style="margin: 0; color: #fff; font-size: 16px">存款需要绑定手机号</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+            </div>
+
+            <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
           </div>
-          <div style="font-size: 12px; color: red">为了您的资金安全，请绑定手机号</div>
         </div>
       </q-card-section>
       <q-card-actions align="right">
