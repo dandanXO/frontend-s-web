@@ -658,7 +658,7 @@ export default defineComponent({
     // display: flex;
     // justify-content: center;
     // position: relative;
-    height: 20vh;
+    // height: 20vh;
     min-height: 140px;
     img {
       // display: block;
