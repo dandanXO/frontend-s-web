@@ -368,7 +368,7 @@ export default {
     withdraw_realtimeexchangerates: "Real Time Exchange Rates",
     withdraw_estimatedarrival: "Estimated arrival",
     withdraw_usdtspecialnote:
-      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
     withdraw_ewalletspecialnote:
       "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
     withdraw_choose: "Choose",
@@ -1095,7 +1095,7 @@ export default {
     update_app_title: "Update App",
     detected_new_version: "New Update Available. Do you wish to download it now?",
     update_now: "Update Now",
-    usdt_will_be_charged: "1.00 USDT will be charged for each transaction!",
+    usdt_will_be_charged: "2.00 USDT will be charged for each transaction!",
     phone_verification_code: "Phone Verification Code",
     please_enter_phone_code: "Please enter the phone verification code",
     get_code: "Get Code",
