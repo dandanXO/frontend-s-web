@@ -1552,7 +1552,7 @@ export default defineComponent({
   .acct-nav {
     .acct-menu {
       @include content-block-dark;
-      background-color: #1A2338;
+      background: transparent;
       max-height: 280px;
     }
   }
