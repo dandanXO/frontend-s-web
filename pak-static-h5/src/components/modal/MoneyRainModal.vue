@@ -86,7 +86,8 @@
             <br />
             Each round freely distributes cashback.
             <br />
-            Historical deposits of 1000 PKR can be claimed for free over the long term.
+            Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for
+            free.
             <br />
             The received money can be directly used for playing games or withdrawing.
             <br />
