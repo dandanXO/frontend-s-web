@@ -3,24 +3,24 @@
       <!-- <img style="display:flex;margin:auto;width:55%;" src="../../../assets//home/download/app-download-title.png" /> -->
       <div class="app-download-wrapper">
         <div class="dl-frame">
-            <VueQRCodeComponent :size="140" :text="ui.downloadUrl" class="qr-code" />
+            <VueQRCodeComponent :size="77" :text="ui.downloadUrl" class="qr-code" />
             <!-- <span class="dl-text">免费下载地址</span> -->
         </div>
       </div>
     </div>
   </template>
-  
+
   <script setup>
   import { onMounted, ref } from "vue";
   import { uiStore } from "@/store/ui";
   import VueQRCodeComponent from "vue-qrcode-component";
-  
+
   const activeKey = ref("1");
   const ui = uiStore();
-  
+
   onMounted(() => {});
   </script>
-  
+
   <style lang="scss" scoped>
   .download-section {
     width: 100%;
@@ -32,6 +32,7 @@
         aspect-ratio: 2880 / 2688;
         position: relative;
         margin: 50px auto;
+        max-width: 55%;
 
         .dl-frame {
             position: absolute;
@@ -57,37 +58,37 @@
             }
         }
     }
-  
+
     .download-container {
       display: flex;
       align-items: center;
       justify-content: center;
-  
+
       .left-container {
         width: 50%;
-  
+
         img {
           // width: 35rem;
           position: relative;
           // right: 2.5rem;
         }
       }
-  
+
       .right-container {
         width: 50%;
-  
+
         .tab-wrapper {
           border-radius: 1.25rem;
           background: #fff;
           box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
           padding: 0.5rem;
-  
+
           .dl-tab {
             margin: 6px;
             border: 1px solid #5c9fff;
             border-radius: 0.8125rem;
             padding: 1rem;
-  
+
             .tab-title {
               color: #7a80a1;
               font-family: Microsoft YaHei;
@@ -97,7 +98,7 @@
               margin-bottom: 1rem;
               text-align: center;
             }
-  
+
             .tab-desc {
               color: #a4aabb;
               font-family: Microsoft YaHei;
@@ -106,22 +107,22 @@
               line-height: 1.375rem; /* 157.143% */
               margin: 1rem;
             }
-  
+
             .download {
               display: flex;
               align-items: center;
               justify-content: center;
               gap: 25px;
               margin: 1rem 0 0.5rem 0;
-  
+
               .dl-mobile-img {
                 width: 60%;
               }
-  
+
               .dl-wrapper {
                 width: 40%;
               }
-  
+
               .dl-frame {
                 background-image: url(../../../assets/home/download/qr-frame.png);
                 background-position: center center;
@@ -132,7 +133,7 @@
                 justify-content: center;
                 margin-bottom: 6px;
               }
-  
+
               .qr-wrapper,
               .dl-wrapper {
                 // border-radius: 0.875rem;
@@ -143,15 +144,15 @@
                 // flex-direction: column;
                 // align-items: center;
                 // gap: 3px;
-  
+
                 div {
                   text-align: center;
                 }
-  
+
                 canvas {
                   text-align: center;
                 }
-  
+
                 .link-desc {
                   color: #7a80a1;
                   font-family: PingFang SC;
@@ -160,7 +161,7 @@
                   line-height: 116.5%; /* 1.165rem */
                   margin: 0.25rem 0;
                 }
-  
+
                 .link {
                   color: #468cff;
                   font-family: PingFang SC;
@@ -171,18 +172,18 @@
                   line-height: 116.5%; /* 1.165rem */
                 }
               }
-  
+
               .qr-wrapper {
               }
               .dl-wrapper {
               }
             }
-  
+
             .tab {
               border-radius: 0.8125rem;
               border: 1px solid #5c9fff;
               padding: 1rem;
-  
+
               .el-tabs__header {
                 border-bottom: unset;
                 display: flex;
@@ -204,7 +205,7 @@
       }
     }
   }
-  
+
   .dark {
     .download-section {
       .download-container {
@@ -235,4 +236,3 @@
     }
   }
   </style>
-  

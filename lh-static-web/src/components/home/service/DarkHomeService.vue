@@ -152,43 +152,43 @@
       </div>
     </div>
   </template>
-  
+
   <script setup>
   import { onMounted } from "vue";
   import HomeTitle from "@/atoms/HomeTitle.vue";
   import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
   import Vue3Autocounter  from "vue3-autocounter";
   import { useDark } from "@vueuse/core";
-  
+
   const isDark = useDark();
-  
+
   const loadCircleBg = () => {
     return isDark.value
       ? require("../../../assets/home/service/circle-bg-dark.png")
       : require("../../../assets/home/service/circle-bg.png");
   };
-  
+
   onMounted(() => {});
   </script>
-  
+
   <style scoped lang="scss">
   .service-section {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-  
+
     .service-container {
       margin: 0;
-  
+
       .top-container {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         padding: 0 5rem;
         margin: 0;
-  
+
         .counter {
           .circle {
-            width: 19rem;
+            width: 17rem;
             height: 17rem;
             display: flex;
             align-items: center;
@@ -197,8 +197,8 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
-            margin: 0 0 2rem 0;
-  
+            margin: 0 0 .5rem 0;
+
             .inner-circle {
               margin-top: 20px;
               width: 19rem;
@@ -209,14 +209,14 @@
               justify-content: center;
               background: linear-gradient(180deg, #fafcff 31.57%, #e3eaf8 54.21%, rgba(202, 211, 239, 0) 100%);
               box-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.94) inset;
-  
+
               .type {
                 color: #333;
                 text-align: center;
                 font-family: "PingFang SC";
                 font-size: 0.71319rem;
               }
-  
+
               .auto-counter {
                 // filter: drop-shadow(0px 2px #c4effa);
                 font-family: serif;
@@ -235,7 +235,7 @@
                 // -webkit-text-stroke-width: 0.1px;
                 // -webkit-text-stroke-color: white;
               }
-  
+
               .unit {
                 font-family: 'PingFang SC';
                 font-size: 18px;
@@ -247,7 +247,7 @@
               }
             }
           }
-  
+
           .title {
             color: #fff;
             font-family: 'PingFang SC';
@@ -258,7 +258,7 @@
             text-align: center;
 
           }
-  
+
           .title-en {
             color: #fff;
             font-family: 'PingFang SC';
@@ -270,12 +270,12 @@
           }
         }
       }
-  
+
       .bot-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
-  
+        justify-content: center;
+
         .item-wrapper {
           background: #eef8ff;
           padding: 0.5rem;
@@ -288,25 +288,25 @@
             justify-content: center;
             padding: 4rem;
             gap: 10px;
-  
+
             .left-container {
               .circle-wrapper {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 position: relative;
-  
+
                 .circle {
                   width: 7.5rem;
                   visibility: hidden;
                 }
-  
+
                 .icon {
                   position: absolute;
                 }
               }
             }
-  
+
             .right-container {
               .title {
                 color: #fff;
@@ -334,7 +334,7 @@
       }
     }
   }
-  
+
   .dark {
     .service-section {
       .service-container {
@@ -342,12 +342,12 @@
           .counter {
             .circle {
               background-image: url("@/assets/home/blue-circle-dark.png");
-  
+
               .inner-circle {
                 background: none;
                 box-shadow: none;
                 border: none;
-  
+
                 .type {
                   color: #dce6f1;
                 }
@@ -361,14 +361,14 @@
                 }
               }
             }
-  
+
             .title,
             .title-en {
               color: #fff;
             }
           }
         }
-  
+
         .bot-container {
           padding: 30px 0;
           .item-wrapper {
@@ -383,4 +383,3 @@
     }
   }
   </style>
-  

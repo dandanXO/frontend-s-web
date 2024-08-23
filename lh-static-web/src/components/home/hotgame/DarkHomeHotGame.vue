@@ -88,7 +88,7 @@
                   {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
                 </el-button> -->
               </template>
-  
+
               <div style="height: 50px">
                 <p
                   v-if="
@@ -126,7 +126,7 @@
           </el-tab-pane>
         </el-tabs>
       </div>
-    
+
       <div class="hotgame-container" style="display:none;">
         <div class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
           <div class="hotgame-banner-wrapper">
@@ -241,7 +241,7 @@
                   {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
                 </el-button>
               </template>
-  
+
               <div style="height: 50px">
                 <p
                   v-if="
@@ -283,7 +283,7 @@
     </div>
     <GameModal ref="platformGame"></GameModal>
   </template>
-  
+
   <script setup>
   import { onMounted, ref, Transition } from "vue";
   import { useRouter } from "vue-router";
@@ -293,7 +293,7 @@
   import { userStore } from "@/store";
   import GameModal from "@/components/modal/GameModal";
   import * as _ from "lodash";
-  
+
   import {
     eSportsPlatforms,
     fishingPlatforms,
@@ -311,9 +311,9 @@ const tabPosition = ref('left')
   const store = userStore();
   const router = useRouter();
   const platformGame = ref();
-  
+
   const isDark = useDark();
-  
+
   const hotgameData = ref([
     {
       number: "01",
@@ -571,7 +571,7 @@ const tabPosition = ref('left')
       title: "彩票投注",
       subtitle: "LOTTERY",
       charImgPath: require("../../../assets/home/hotgame/banner/lottery/character.png"),
-  
+
       isShow: false,
       path: "/lottery",
       currentProvider: "lh",
@@ -771,17 +771,17 @@ const tabPosition = ref('left')
       }
     }
   ]);
-  
+
   const transitionKey = ref(0);
   const transitionDesc = ref(0);
   const setCurrentProvider = (element, value) => {
     element.currentPlat = value;
     element.currentProvider = value.code.toLowerCase();
-  
+
     transitionKey.value++;
     transitionDesc.value++;
   };
-  
+
   let currentBannerIndex = ref(0);
   const setBannerPosition = (index) => {
     hotgameData.value.forEach((e, i) => {
@@ -789,14 +789,14 @@ const tabPosition = ref('left')
       else e.isShow = false;
     });
   };
-  
+
   const onBannerClick = (index) => {
     if (index === currentBannerIndex.value) return;
-  
+
     setBannerPosition(index);
     currentBannerIndex = index;
   };
-  
+
   const onEnterGameClick = (plat, platType) => {
     if (platType === "slot") {
       router.push({ path: plat.path, query: { plat: plat.currentPlat.code } });
@@ -807,16 +807,16 @@ const tabPosition = ref('left')
       } else if (currentPlat.code === "GPS") {
         currentPlat.gameCode = 7202;
       }
-  
+
       const platItem = plat.content[currentPlat.code.toLowerCase()];
       // console.log(platItem);
-  
+
       const platformName = currentPlat.alias ?? (platItem && platItem.title) ? platItem.title : currentPlat.name;
       platformGame.value.open(platformName, currentPlat.code, currentPlat.gameCode);
     }
   };
   const platformsListDisplay = ref([]);
-  
+
   const setHotGame = () => {
     if (store.token) {
       getLoggedInPlatformList().then((res) => {
@@ -835,7 +835,7 @@ const tabPosition = ref('left')
       const gameTypeArray = plat.gameType.split(",").map((type) => type.trim());
       hotgameData.value.forEach((item) => {
         const containingItem = gameTypeArray.some((type) => item.type.toLowerCase() === type.toLowerCase());
-  
+
         if (containingItem) {
           const additem = _.clone(plat);
           if (item.type === "slot" && additem.code === "AG") {
@@ -844,7 +844,7 @@ const tabPosition = ref('left')
           }
           item.content.providerList.push(additem);
         }
-  
+
         if (gameTypeArray.some((type) => type.toLowerCase() === "esport") && item.type === "esport") {
           updatePlatforms(eSportsPlatforms, item, "");
         }
@@ -891,10 +891,10 @@ const tabPosition = ref('left')
     setHotGame();
   });
   </script>
-  
+
   <style lang="scss" scoped>
   $transition_timer: 0.5s;
-  
+
   .hotgame-section {
     width: 100%;
     // max-width: 1100px;
@@ -956,7 +956,7 @@ const tabPosition = ref('left')
           background: linear-gradient(270deg, rgb(119 119 119 / 64%), rgb(67 67 67 / 0%));
           border-right: 2px solid rgba(255, 255, 255, 0);
         }
-        
+
         :deep(.el-tabs__active-bar) {
           background-color: #f6aa37;
           box-shadow: #FF9800 1px 0px 7px 1px;
@@ -972,14 +972,14 @@ const tabPosition = ref('left')
           overflow: hidden;
           transition: $transition_timer;
           // background-color: rgba(255, 166, 0, 0.589);
-  
+
           &.show {
             width: 100%;
             margin: 0 -10px 0 0px;
             padding-left: 1rem;
             height: 700px;
           }
-  
+
           .left-container {
             display: flex;
             flex-direction: column;
@@ -988,14 +988,14 @@ const tabPosition = ref('left')
             align-items: center;
             margin-top: 52%;
             // background-color: rgba(255, 192, 203, 0.596);
-  
+
             .title-wrapper {
               font-family: "YiHei";
               font-style: normal;
               font-weight: 400;
               text-align: center;
               line-height: normal;
-  
+
               .title {
                 // font-size: 4.24106rem;
                 font-size: 2.7106rem;
@@ -1003,14 +1003,14 @@ const tabPosition = ref('left')
                 color: #fff;
                 font-style: italic;
               }
-  
+
               .subtitle {
                 font-size: 2.70775rem;
                 color: #fff;
                 font-style: italic;
               }
             }
-  
+
             .description {
               min-height: 100px;
               display: flex;
@@ -1018,30 +1018,30 @@ const tabPosition = ref('left')
               justify-content: center;
               align-items: center;
             }
-  
+
             .desc {
               color: #fff;
               font-family: PingFang SC;
-              font-size: 0.83838rem;
-              font-weight: 400;
+              font-size: 1rem;
+              font-weight: 600;
               line-height: 1.46719rem;
               width: 20rem;
               text-align: center;
             }
-  
+
             .game-icon-wrapper {
               display: flex;
               gap: 10px;
-  
+
               &.esports {
                 gap: 25px;
               }
-  
+
               img {
                 width: 1.5rem;
                 height: 1.5rem;
               }
-  
+
               &.sports,
               &.casino,
               &.lottery,
@@ -1052,7 +1052,7 @@ const tabPosition = ref('left')
                   width: auto;
                 }
               }
-  
+
               &.lottery,
               &.fishing,
               &.slots {
@@ -1061,14 +1061,14 @@ const tabPosition = ref('left')
                 }
               }
             }
-  
+
             .game-provider-wrapper {
               display: flex;
               // flex-wrap: wrap;
               gap: 7.5px;
               // width: 20rem;
               z-index: 2;
-  
+
               .game-provider {
                 display: flex;
                 flex-direction: column;
@@ -1076,7 +1076,7 @@ const tabPosition = ref('left')
                 justify-content: center;
                 cursor: pointer;
                 width: 3.25rem;
-  
+
                 .game-provider-img {
                   width: 6rem;
                   height: 5rem;
@@ -1085,7 +1085,7 @@ const tabPosition = ref('left')
                   background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
                   background-size: cover;
                   object-fit: contain;
-  
+
                   &.active {
                     // background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
                     // background-size: 100% 100%;
@@ -1094,7 +1094,7 @@ const tabPosition = ref('left')
                     // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                   }
                 }
-  
+
                 .game-provider-text {
                   color: #fff;
                   text-align: center;
@@ -1103,13 +1103,13 @@ const tabPosition = ref('left')
                   font-weight: 700;
                   line-height: 1.46719rem;
                   white-space: nowrap;
-  
+
                   &.active {
                     color: #fff;
                     font-weight: 700;
                   }
                 }
-  
+
                 &:hover {
                   .game-provider-text {
                     color: #fff;
@@ -1125,18 +1125,18 @@ const tabPosition = ref('left')
                 }
               }
             }
-  
+
             .maintenance-p {
               margin: 0px 3px 0px;
               font-size: 16px;
               color: $font-1;
-  
+
               em {
                 font-weight: bold;
                 font-style: initial;
               }
             }
-  
+
             .game-start-btn {
               width: 10rem;
               height: 2.5rem;
@@ -1147,36 +1147,36 @@ const tabPosition = ref('left')
               font-size: 1.15281rem;
               font-weight: 400;
               line-height: 2.5rem;
-  
+
               &.btn-maintenance {
                 background: rgba(0, 0, 0, 0.3);
                 pointer-events: none;
                 border: none;
                 box-shadow: none;
-  
+
                 .maintenance-state {
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
                   gap: 8px;
-  
+
                   img {
                     width: 22px;
                   }
                 }
               }
-  
+
               &:hover {
                 filter: brightness(1.2);
               }
-  
+
               &:active {
                 filter: brightness(1.1);
                 transform: translate(0px, 1px);
               }
             }
           }
-  
+
           .right-container {
             display: flex;
             align-items: flex-end;
@@ -1184,12 +1184,12 @@ const tabPosition = ref('left')
             position: relative;
             // background-color: rgba(216, 112, 147, 0.61);
             height: 100%;
-  
+
             img {
               position: relative;
               width: 100%;
               height: auto;
-  
+
               &.character-fishing-pmfish {
                 margin-bottom: 7%;
                 width: 90%;
@@ -1224,7 +1224,7 @@ const tabPosition = ref('left')
         }
       }
     }
-  
+
     .hotgame-container {
       position: relative;
       display: flex;
@@ -1232,16 +1232,16 @@ const tabPosition = ref('left')
       justify-content: center;
       gap: 0.3rem;
       margin: 2.5rem 0 0 0;
-  
+
       .hotgame-wrapper {
         display: flex;
         align-items: center;
         // overflow: hidden;
         height: 600px;
-  
+
         .hotgame-banner-wrapper {
           display: flex;
-  
+
           .hotgame-banner {
             width: 65px;
             height: 36.5rem;
@@ -1258,19 +1258,19 @@ const tabPosition = ref('left')
             z-index: 1;
             transition: $transition_timer;
             cursor: pointer;
-  
+
             &.highlight {
               color: white;
               background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
               box-shadow: 0px -2px 4.58px 0px #93c7ff inset, 0px -1px 3.664px 0px #275ec1 inset;
             }
-  
+
             .hotgame-icon {
               height: 2rem;
               margin: 0 0 1rem 0;
               transform: translate(0px, 1px);
             }
-  
+
             .hotgame-number {
               text-align: center;
               font-family: Impact;
@@ -1280,22 +1280,22 @@ const tabPosition = ref('left')
               letter-spacing: 0.2595rem;
               border-bottom: 0.1rem solid #3981ff;
               margin: 0 0 0.5rem 0;
-  
+
               &.highlight {
                 border-bottom: 0.1rem solid white;
-  
+
                 & ~ .hotgame-text {
                   color: #fff;
                 }
               }
             }
-  
+
             .hotgame-text {
               color: #000;
               display: flex;
               gap: 7px;
               margin: 0 0.25rem 3rem 0;
-  
+
               .title {
                 width: 1rem;
                 word-break: break-all;
@@ -1305,7 +1305,7 @@ const tabPosition = ref('left')
                 font-weight: 600;
                 line-height: 1.5rem;
               }
-  
+
               .subtitle {
                 width: 0.2rem;
                 word-break: break-all;
@@ -1317,7 +1317,7 @@ const tabPosition = ref('left')
                 margin: 0.075rem 0 0 0;
               }
             }
-  
+
             .character-wrapper {
               .character-casino,
               .character-board,
@@ -1325,7 +1325,7 @@ const tabPosition = ref('left')
                 position: relative;
                 bottom: 1rem;
               }
-  
+
               //         img {
               // height: 60%;
               // opacity: 0.6;
@@ -1334,7 +1334,7 @@ const tabPosition = ref('left')
             }
           }
         }
-  
+
         .hotgame-content-wrapper {
           display: grid;
           grid-template-columns: 400px 650px;
@@ -1345,7 +1345,7 @@ const tabPosition = ref('left')
           overflow: hidden;
           background: #edf8fe;
           transition: $transition_timer;
-  
+
           &.show {
             width: 100%;
             // margin: 0 0 0 0px;
@@ -1353,7 +1353,7 @@ const tabPosition = ref('left')
             padding-left: 1rem;
             height: 700px;
           }
-  
+
           .left-container {
             display: flex;
             flex-direction: column;
@@ -1362,7 +1362,7 @@ const tabPosition = ref('left')
             align-items: center;
             margin-top: 25%;
             height: 100%;
-  
+
             //&.maintenance {
             //  filter: grayscale(0.8);
             //
@@ -1370,14 +1370,14 @@ const tabPosition = ref('left')
             //    pointer-events: none;
             //  }
             //}
-  
+
             .title-wrapper {
               font-family: "YiHei";
               font-style: normal;
               font-weight: 400;
-  
+
               line-height: normal;
-  
+
               .title {
                 // font-size: 4.24106rem;
                 font-size: 2.7106rem;
@@ -1385,20 +1385,20 @@ const tabPosition = ref('left')
                 font-style: italic;
                 // word-break: keep-all;
                 // background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
-  
+
                 // -webkit-background-clip: text;
                 // -webkit-text-fill-color: transparent;
                 // background-clip: text;
                 // text-fill-color: transparent;
                 // filter: drop-shadow(2px 1px #5799e3);
               }
-  
+
               .subtitle {
                 font-size: 2.70775rem;
                 color: #fff;
-                font-style: italic;                
+                font-style: italic;
                 // background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
-  
+
                 // -webkit-background-clip: text;
                 // -webkit-text-fill-color: transparent;
                 // background-clip: text;
@@ -1406,7 +1406,7 @@ const tabPosition = ref('left')
                 // filter: drop-shadow(2px 1px #5799e3);
               }
             }
-  
+
             .description {
               min-height: 100px;
               display: flex;
@@ -1414,7 +1414,7 @@ const tabPosition = ref('left')
               justify-content: center;
               align-items: center;
             }
-  
+
             .desc {
               color: #3063ab;
               font-family: Microsoft YaHei;
@@ -1423,20 +1423,20 @@ const tabPosition = ref('left')
               line-height: 1.46719rem;
               width: 20rem;
             }
-  
+
             .game-icon-wrapper {
               display: flex;
               gap: 10px;
-  
+
               &.esports {
                 gap: 25px;
               }
-  
+
               img {
                 width: 1.5rem;
                 height: 1.5rem;
               }
-  
+
               &.sports,
               &.casino,
               &.lottery,
@@ -1447,7 +1447,7 @@ const tabPosition = ref('left')
                   width: auto;
                 }
               }
-  
+
               &.lottery,
               &.fishing,
               &.slots {
@@ -1456,14 +1456,14 @@ const tabPosition = ref('left')
                 }
               }
             }
-  
+
             .game-provider-wrapper {
               display: flex;
               // flex-wrap: wrap;
               gap: 7.5px;
               width: 20rem;
               z-index: 2;
-  
+
               .game-provider {
                 display: flex;
                 flex-direction: column;
@@ -1471,7 +1471,7 @@ const tabPosition = ref('left')
                 justify-content: center;
                 cursor: pointer;
                 width: 3.25rem;
-  
+
                 .game-provider-img {
                   width: 6rem;
                   height: 5rem;
@@ -1479,7 +1479,7 @@ const tabPosition = ref('left')
                   background: url("../../../assets/home/hotgame/game-bg.png") no-repeat center center;
                   background-size: 100% 100%;
                   object-fit: contain;
-  
+
                   &.active {
                     border: 0px;
                     background: url("../../../assets/home/hotgame/game-bg-active.png") no-repeat center center;
@@ -1487,7 +1487,7 @@ const tabPosition = ref('left')
                     // box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                   }
                 }
-  
+
                 .game-provider-text {
                   color: #fff;
                   text-align: center;
@@ -1496,13 +1496,13 @@ const tabPosition = ref('left')
                   font-weight: 700;
                   line-height: 1.46719rem;
                   white-space: nowrap;
-  
+
                   &.active {
                     color: #3063ab;
                     font-weight: 700;
                   }
                 }
-  
+
                 &:hover {
                   .game-provider-text {
                     color: #3063ab;
@@ -1518,18 +1518,18 @@ const tabPosition = ref('left')
                 }
               }
             }
-  
+
             .maintenance-p {
               margin: 0px 3px 0px;
               font-size: 16px;
               color: $font-1;
-  
+
               em {
                 font-weight: bold;
                 font-style: initial;
               }
             }
-  
+
             .game-start-btn {
               width: 10rem;
               height: 2.5rem;
@@ -1540,46 +1540,46 @@ const tabPosition = ref('left')
               font-size: 1.15281rem;
               font-weight: 400;
               line-height: 2.5rem;
-  
+
               &.btn-maintenance {
                 background: rgba(0, 0, 0, 0.3);
                 pointer-events: none;
                 border: none;
                 box-shadow: none;
-  
+
                 .maintenance-state {
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
                   gap: 8px;
-  
+
                   img {
                     width: 22px;
                   }
                 }
               }
-  
+
               &:hover {
                 filter: brightness(1.2);
               }
-  
+
               &:active {
                 filter: brightness(1.1);
                 transform: translate(0px, 1px);
               }
             }
           }
-  
+
           .right-container {
             display: flex;
             align-items: flex-end;
             position: relative;
             width: 45%;
-  
+
             //&.maintenance {
             //  filter: grayscale(0.8);
             //}
-  
+
             //.maintenance-box {
             //  position: absolute;
             //  top: 10%;
@@ -1611,153 +1611,153 @@ const tabPosition = ref('left')
             //    font-size: 16px;
             //  }
             //}
-  
+
             img {
               position: relative;
               right: 4rem;
               bottom: 0px;
               height: 30rem;
-  
+
               &.character-fishing-gps {
                 right: 9rem;
               }
             }
-  
+
             //lottery
             .character-lottery-tcg {
               right: 6rem;
             }
-  
+
             .character-lottery-lh {
               position: relative;
               right: 3rem;
               height: 30rem;
             }
-  
+
             // esports
             .character-esports-lh {
               position: relative;
               right: 8rem;
               height: 29rem;
             }
-  
+
             .character-esports-imes {
               position: relative;
               right: 8rem;
               height: 30rem;
             }
-  
+
             .character-esports-ia {
               position: relative;
               right: 10rem;
               height: 30rem;
             }
-  
+
             .character-esports-rg {
               position: relative;
               right: 4rem;
               height: 30rem;
             }
-  
+
             // sports
             .character-sports-im {
               position: relative;
               right: 8rem;
               height: 28rem;
             }
-  
+
             .character-sports-saba {
               position: relative;
               right: 3rem;
               height: 28rem;
             }
-  
+
             .character-sports-fb {
               position: relative;
               right: 6rem;
               height: 26rem;
             }
-  
+
             .character-sports-pinnacle,
             .character-sports-panda {
               position: relative;
               right: 1rem;
               height: 29rem;
             }
-  
+
             .character-sports-pm {
               position: relative;
               right: 2.5rem;
               height: 28rem;
             }
-  
+
             .character-sports-cr {
               position: relative;
               right: 1.5rem;
               height: 28rem;
             }
-  
+
             // casino
             .character-casino-ag {
               position: relative;
               right: 2.5rem;
               height: 31rem;
             }
-  
+
             .character-casino-pmlive {
               position: relative;
               right: 5rem;
               height: 31rem;
             }
-  
+
             .character-casino-db {
               position: relative;
               right: 4rem;
               height: 30rem;
             }
-  
+
             .character-casino-bg {
               position: relative;
               right: 4rem;
               height: 29rem;
             }
-  
+
             .character-casino-we {
               position: relative;
               right: 4rem;
               height: 30rem;
             }
-  
+
             .character-casino-ob {
               position: relative;
               right: 3.25rem;
               height: 27rem;
             }
-  
+
             .character-casino-bbin {
               position: relative;
               right: 3.25rem;
               height: 29rem;
             }
-  
+
             .character-casino-evo {
               position: relative;
               right: 9.5rem;
               height: 29rem;
             }
-  
+
             .character-casino-allbet {
               right: 6rem;
             }
-  
+
             .character-casino-we {
               right: 8rem;
             }
-  
+
             .character-casino-bbindy {
               right: 6rem;
             }
-  
+
             // board
             .character-board-dat,
             .character-board-gd {
@@ -1765,67 +1765,67 @@ const tabPosition = ref('left')
               right: 2.25rem;
               height: 30rem;
             }
-  
+
             .character-board-ky {
               position: relative;
               right: 8rem;
               height: 30rem;
             }
-  
+
             .character-board-leyou,
             .character-board-leg {
               position: relative;
               right: 7rem;
               height: 30rem;
             }
-  
+
             .character-board-dt {
               height: 32rem;
               right: 8rem;
             }
-  
+
             .character-board-gflc {
               right: 6rem;
             }
-  
+
             // slots
             .character-slots-pg {
               position: relative;
               right: 5.5rem;
               height: 29rem;
             }
-  
+
             .character-slots-sw {
               position: relative;
               right: 5rem;
               height: 29rem;
             }
-  
+
             .character-slots-pt {
               position: relative;
               right: 5rem;
               height: 29rem;
             }
-  
+
             .character-slots-evo {
               position: relative;
               right: 2.75rem;
               height: 29rem;
             }
-  
+
             .character-slots-ag {
               position: relative;
               right: 7rem;
               height: 29rem;
             }
-  
+
             // fishing
             .character-fishing-ag {
               position: relative;
               right: 4rem;
               height: 29rem;
             }
-  
+
             .character-fishing-mw {
               position: relative;
               right: 5.5rem;
@@ -1836,41 +1836,41 @@ const tabPosition = ref('left')
       }
     }
   }
-  
+
   .v-enter-active,
   .v-leave-active {
     transition: opacity 1s ease, transform 0.5s ease-in-out;
     transform: translateY(0px);
   }
-  
+
   .v-enter-from,
   .v-leave-to {
     opacity: 0;
     transform: translateY(60px);
   }
-  
+
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity 0.5s ease;
   }
-  
+
   .fade-enter-from,
   .fade-leave-to {
     opacity: 0;
   }
-  
+
   .fade-slide-enter-active,
   .fade-slide-leave-active {
     transition: opacity 2s ease, transform 1s ease-in-out;
     transform: translateY(0px);
   }
-  
+
   .fade-slide-enter-from,
   .fade-slide-leave-to {
     opacity: 0;
     transform: translateY(100px);
   }
-  
+
   .dark {
     .hotgame-section {
       .hotgame-container {
@@ -1880,23 +1880,23 @@ const tabPosition = ref('left')
               background: linear-gradient(180deg, #00273D 0%, #02132C 100%);
               box-shadow: 0px -1px 3.66px 0px #11131E inset;
               color: $font-5-dark;
-  
+
               &.highlight {
                 background: $active-color-dark-linear;
                 box-shadow: 0px -2px 4.58px 0px #FFDCBB inset;
                 color: $color-white;
               }
-  
+
               .hotgame-text {
                 color: unset;
               }
             }
           }
-  
+
           .hotgame-content-wrapper {
             @include content-block-dark;
             background: linear-gradient(180deg, #1B202D 0%, #00010B 100%);
-  
+
             .left-container {
               .title-wrapper {
                 .title,
@@ -1905,13 +1905,13 @@ const tabPosition = ref('left')
                   background-clip: text;
                 }
               }
-  
+
               .description {
                   .desc {
                     color: $font-3-dark;
                   }
                 }
-  
+
               .game-provider-wrapper {
                 .game-provider {
                   .game-provider-img {
@@ -1928,7 +1928,7 @@ const tabPosition = ref('left')
                   }
                 }
               }
-  
+
               .game-start-btn {
                 background: linear-gradient(180deg, #3BDCE2 0%, #18708E 100%);
                 box-shadow: none;
@@ -1940,4 +1940,3 @@ const tabPosition = ref('left')
     }
   }
   </style>
-  
