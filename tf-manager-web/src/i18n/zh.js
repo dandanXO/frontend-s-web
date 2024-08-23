@@ -1997,6 +1997,12 @@ export default {
     retainLevelDays: '保级天数',
     editSystemValueRules: '编辑系统设置值规则',
     addSystemValueRules: '新增系统设置值规则',
+    walletInfo: '钱包信息',
+    fiat: '法币',
+    usdt: 'USDT',
+    fiatBalance: '法币余额',
+    usdtBalance: 'USDT余额',
+    toggleWallet: '切换钱包',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

@@ -247,9 +247,9 @@
                 {{
                   selectedWithdrawalMethod &&
                   (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
                 }}
                 USDT
               </span>
@@ -325,20 +325,22 @@
           >
             {{ $t("btn.submit") }}
           </q-btn>
-
         </div>
       </template>
 
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
-        <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
-        /
-        <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+          /
+          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
         </p>
         <p>1.Bind your wallet/bank card using the correct format.</p>
         <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
-        <p>3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.</p>
+        <p>
+          3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for
+          withdrawals.
+        </p>
         <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
       </div>
     </template>
@@ -442,7 +444,7 @@
         </i18n-t>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn no-caps unelevated v-close-popup>{{ $t('btn.confirm') }}</q-btn>
+        <q-btn no-caps unelevated v-close-popup>{{ $t("btn.confirm") }}</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -663,7 +665,7 @@ const selectMethod = (method, index) => {
   withdrawInfo.cardId = null;
   selectedWithdrawalMethod.value = method;
   withdrawInfo.withdrawCode = method.code;
-  displayMaintenanceDialog.value = method.status === false
+  displayMaintenanceDialog.value = method.status === false;
   isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
   isEWALLET.value =
     withdrawInfo.withdrawCode.includes("KDPAY") ||
@@ -720,13 +722,11 @@ const loadCards = () => {
     });
 };
 
-const isSelectedWithdrawalMethodInMaintenance = computed(() => selectedWithdrawalMethod.value.status === false)
-const displayMaintenanceDialog = ref(false)
+const isSelectedWithdrawalMethodInMaintenance = computed(() => selectedWithdrawalMethod.value.status === false);
+const displayMaintenanceDialog = ref(false);
 const selectedWithdrawalMethodMaintenanceDateRange = computed(() =>
-  isSelectedWithdrawalMethodInMaintenance.value ?
-  selectedWithdrawalMethod.value.remark.split(' | ') :
-  []
-)
+  isSelectedWithdrawalMethodInMaintenance.value ? selectedWithdrawalMethod.value.remark.split(" | ") : []
+);
 
 const getWithdrawalMethods = () => {
   api.get("/session/withdraw/entrance").then((response) => {

@@ -1,7 +1,20 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">快速提款</span>
+      <span class="menu-title">
+        {{ isAutoWithdrawal ? "快速提款" : "提款" }}
+      </span>
+      <el-button
+        v-if="!isAutoWithdrawal"
+        :loading="loadingBtn"
+        :disable="loadingBtn"
+        size="large"
+        class="common-btn upgrade-btn"
+        @click="handleUpgradeClick"
+      >
+        <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
+        <span>升级快速提款</span>
+      </el-button>
     </div>
 
     <div class="menu-title-container">
@@ -45,7 +58,13 @@
           </div>
         </el-form-item>
 
-        <el-form-item class="helptxt" prop="amount" label="提款金额" name="amount">
+        <el-form-item
+          class="helptxt"
+          :class="{ 'has-helper-text': isAutoWithdrawal }"
+          prop="amount"
+          label="提款金额"
+          name="amount"
+        >
           <el-row :gutter="10">
             <el-col :span="12">
               <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
@@ -76,6 +95,12 @@
               })
             "
           ></div> -->
+        </el-form-item>
+        <el-form-item v-if="isAutoWithdrawal" class="helptxt">
+          <div class="auto-withdraw-amount-wrapper">
+            <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+            <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+          </div>
         </el-form-item>
         <el-row>
           <el-col>
@@ -129,13 +154,13 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
             }}
             USDT
           </div>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #9bffd1">
-          *提币手续费：1.00 USDT
+          *提币手续费：2.00 USDT
         </div>
 
         <!-- K豆教程视频 -->
@@ -175,7 +200,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
-import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
+import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -429,6 +454,24 @@ export default defineComponent({
       if(!selectedWithdrawalMethod.value.url) return
       window.open(selectedWithdrawalMethod.value.url);
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === "AUTO_WITHDRAW")
+
+    const handleUpgradeClick = () => {
+      loadingBtn.value = true
+      upgradeToAutoWithdrawal().then(async (res) => {
+        if(res.code === 0) {
+          ElMessage.success({
+            type: "success",
+            message: "成功升级为快速提款！"
+          });
+          await store.getMemberInfo()
+        } else {
+          ElMessage.error(res.message)
+        }
+      }).finally(() => loadingBtn.value = false)
+    }
+
     return {
       formRef,
       withdrawInfo,
@@ -450,7 +493,9 @@ export default defineComponent({
       checkBankCards,
       cardLabel,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      handleUpgradeClick,
+      isAutoWithdrawal
     };
   },
 });
@@ -757,5 +802,30 @@ export default defineComponent({
 
 .selected-tip {
   margin-left: 150px;
+}
+
+.upgrade-btn {
+  padding: 1px 7px;
+  height: 27px;
+  align-self: center;
+  img {
+    height: 25px;
+  }
+  span {
+    line-height: 25px;
+  }
+}
+.auto-withdraw-amount-wrapper {
+  display: flex;
+  gap: 28px;
+  justify-content: space-between;
+  width: 244px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13.58px;
+  color: #00a478;
+}
+.has-helper-text {
+  margin-bottom: 0;
 }
 </style>

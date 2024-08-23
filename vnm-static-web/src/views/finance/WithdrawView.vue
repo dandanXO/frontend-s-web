@@ -46,7 +46,9 @@
       <img class="bank-card-img" :src="imgURL + selectedWithdrawalMethod.icon" />
     </el-card>
     <el-card v-else>
-      {{ $t('account.no_card_avail') }} <router-link to="/center/personal?name=Bank">{{ $t('account.add_a_bank_card') }}</router-link>.
+      {{ $t("account.no_card_avail") }}
+      <router-link to="/center/personal?name=Bank">{{ $t("account.add_a_bank_card") }}</router-link>
+      .
     </el-card>
     <div class="withdraw-form">
       <el-form
@@ -83,9 +85,7 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${
-                    selectedWithdrawalMethod.withdrawMax.toLocaleString()
-                  } ${store.currency.label}`
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax.toLocaleString()} ${store.currency.label}`
                 }}
                 <br />
                 {{
@@ -188,9 +188,11 @@
         >
           <span style="color: #17cd27">
             {{
-              selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+              selectedWithdrawalMethod &&
+              (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
             }}
             {{ $t("withdraw.usdt") }}
           </span>
@@ -245,7 +247,7 @@ export default defineComponent({
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/withdraw/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/withdraw/";
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
@@ -276,70 +278,70 @@ export default defineComponent({
       //   recommended: false
       // }
     ]);
-    const amounts = reactive([
-      50,
-      100, 200, 500, 1000, 5000, 10000, 50000, 1000000
-    ])
+    const amounts = reactive([50, 100, 200, 500, 1000, 5000, 10000, 50000, 1000000]);
     onMounted(() => {
       getWithdrawalMethods();
     });
     const submitWithdraw = () => {
       loadingBtn.value = true;
       if (withdrawInfo.cardId === null) {
-      loadingBtn.value = false;
+        loadingBtn.value = false;
         ElMessage({
-          message: t('placeholder.selectBankCard'),
+          message: t("placeholder.selectBankCard"),
           type: "warning"
         });
-        return
+        return;
       }
       formRef.value
         .validate()
         .then(() => {
-          confirmWithdraw(withdrawInfo).then((response) => {
-            if (response.code === 0) {
-              store.getBalance();
-              ElMessage({
-                message: t('common.success'),
-                type: "success"
-              });
+          confirmWithdraw(withdrawInfo)
+            .then((response) => {
+              if (response.code === 0) {
+                store.getBalance();
+                ElMessage({
+                  message: t("common.success"),
+                  type: "success"
+                });
 
-              // FB tracking :: apply-withdrawal
-              if (store.isAffiliateA) {
+                // FB tracking :: apply-withdrawal
+                if (store.isAffiliateA) {
                   fbq("track", "apply-withdrawal");
                 }
 
-              getWithdrawalMethods();
-              loadCards();
-            } else {
-              if (response.code === 12100) {
-                response.message = t('common.withdrawDoesNotMatch')
+                getWithdrawalMethods();
+                loadCards();
+              } else {
+                if (response.code === 12100) {
+                  response.message = t("common.withdrawDoesNotMatch");
+                }
+                ElMessage.error({
+                  type: "error",
+                  message: response.message
+                });
+                // message.error(response.message);
               }
-              ElMessage.error({
-                type: "error",
-                message: response.message
-              });
-              // message.error(response.message);
-            }
-          }).catch((error) => {
-            console.log(error.message);
-            // message.error(error.message, 4)
-          });
-        }).catch((error) => {
-        console.log("error", error);
-      });
+            })
+            .catch((error) => {
+              console.log(error.message);
+              // message.error(error.message, 4)
+            });
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
       loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
         {
           required: true,
-          message: t('placeholder.amount'),
+          message: t("placeholder.amount"),
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: t('placeholder.wholeNumber'),
+          message: t("placeholder.wholeNumber"),
           trigger: "change"
         },
         {
@@ -349,105 +351,94 @@ export default defineComponent({
       ]
     };
     const checkBankCards = () => {
-
       if (isUSDT.value) {
-        ElMessageBox.alert(
-          t('bankError.bindUSDT'), t('common.systemError'),
-          {
-            showClose: false,
-            showCancelButton: false,
-            confirmButtonText: t('common.confirm'),
-            draggable: false,
-            buttonSize: "small",
-            closeOnClickModal: false,
-            center: true
-          }
-        )
+        ElMessageBox.alert(t("bankError.bindUSDT"), t("common.systemError"), {
+          showClose: false,
+          showCancelButton: false,
+          confirmButtonText: t("common.confirm"),
+          draggable: false,
+          buttonSize: "small",
+          closeOnClickModal: false,
+          center: true
+        })
           .then(() => {
             router.push("/center/personal");
           })
-          .catch(() => {
-          });
+          .catch(() => {});
       } else if (isEWALLET.value) {
-        ElMessageBox.alert(
-          t('bankError.bindEWallet'), t('common.systemError'),
-          {
-            showClose: false,
-            showCancelButton: false,
-            confirmButtonText: t('common.confirm'),
-            draggable: false,
-            buttonSize: "small",
-            closeOnClickModal: false,
-            center: true
-          }
-        )
+        ElMessageBox.alert(t("bankError.bindEWallet"), t("common.systemError"), {
+          showClose: false,
+          showCancelButton: false,
+          confirmButtonText: t("common.confirm"),
+          draggable: false,
+          buttonSize: "small",
+          closeOnClickModal: false,
+          center: true
+        })
           .then(() => {
             router.push("/center/personal");
           })
-          .catch(() => {
-          });
+          .catch(() => {});
       } else {
-        ElMessageBox.alert(
-          t('bankError.bankCardFirst'), t('common.systemError'),
-          {
-            showClose: false,
-            showCancelButton: false,
-            confirmButtonText: t('common.confirm'),
-            draggable: false,
-            buttonSize: "small",
-            closeOnClickModal: false,
-            center: true
-          }
-        )
+        ElMessageBox.alert(t("bankError.bankCardFirst"), t("common.systemError"), {
+          showClose: false,
+          showCancelButton: false,
+          confirmButtonText: t("common.confirm"),
+          draggable: false,
+          buttonSize: "small",
+          closeOnClickModal: false,
+          center: true
+        })
           .then(() => {
             router.push("/center/personal");
           })
-          .catch(() => {
-          });
+          .catch(() => {});
       }
-
     };
     const loadCards = () => {
       isLoaded.value = false;
-      loadBankCards().then((response) => {
-        isLoaded.value = true;
-        withdrawState.bankCardList = [];
-        if (response.code === 0) {
-          response.data.forEach(element => {
-            if (element.bankType === "BANK") {
-              if (element.bankCode !== "alipay" && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element);
+      loadBankCards()
+        .then((response) => {
+          isLoaded.value = true;
+          withdrawState.bankCardList = [];
+          if (response.code === 0) {
+            response.data.forEach((element) => {
+              if (element.bankType === "BANK") {
+                if (element.bankCode !== "alipay" && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element);
+                }
+                if (element.bankCode === "alipay" && selectedWithdrawalMethod.value.code === "ALIPAY") {
+                  withdrawState.bankCardList.push(element);
+                }
+              } else {
+                // console.log(selectedWithdrawalMethod.value.code)
+                if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element);
+                }
               }
-              if (element.bankCode === "alipay" && selectedWithdrawalMethod.value.code === "ALIPAY") {
-                withdrawState.bankCardList.push(element);
-              }
-            } else {
-              // console.log(selectedWithdrawalMethod.value.code)
-              if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element);
-              }
-            }
-          });
-        } else {
-          ElMessage.error({
-            type: "error",
-            message: response.message
-          });
-        }
-      }).catch((error) => {
-        console.log(error.message);
-        isLoaded.value = true;
-      });
+            });
+          } else {
+            ElMessage.error({
+              type: "error",
+              message: response.message
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+          isLoaded.value = true;
+        });
     };
 
     async function verifyWithdrawAmount(r, v) {
       if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
-            t('withdraw.depositAmountRange') + " " +
-            selectedWithdrawalMethod.value.withdrawMin.toLocaleString() +
-            " - " +
-            selectedWithdrawalMethod.value.withdrawMax.toLocaleString()
+            t("withdraw.depositAmountRange") +
+              " " +
+              selectedWithdrawalMethod.value.withdrawMin.toLocaleString() +
+              " - " +
+              selectedWithdrawalMethod.value.withdrawMax.toLocaleString()
           );
         } else {
           return Promise.resolve();
@@ -464,7 +455,10 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
-      isEWALLET.value = withdrawInfo.withdrawCode.includes("KDPAY") || withdrawInfo.withdrawCode.includes("EBPAY") || withdrawInfo.withdrawCode.includes("OKPAY");
+      isEWALLET.value =
+        withdrawInfo.withdrawCode.includes("KDPAY") ||
+        withdrawInfo.withdrawCode.includes("EBPAY") ||
+        withdrawInfo.withdrawCode.includes("OKPAY");
       isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
       loadCards();
     };
@@ -495,9 +489,9 @@ export default defineComponent({
     };
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        "KDPAY": "http://jiaocheng.kdpay123.com",
-        "EBPAY": "https://www.ebpay009.com/syjc",
-        "OKPAY": "https://me-qr.com/l/okpay"
+        KDPAY: "http://jiaocheng.kdpay123.com",
+        EBPAY: "https://www.ebpay009.com/syjc",
+        OKPAY: "https://me-qr.com/l/okpay"
       };
 
       const url = urlMap[code];
