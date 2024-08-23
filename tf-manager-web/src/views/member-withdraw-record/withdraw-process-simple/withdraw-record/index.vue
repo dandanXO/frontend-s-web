@@ -318,6 +318,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
