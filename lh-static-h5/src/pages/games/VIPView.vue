@@ -18,9 +18,10 @@
                 </div>
                 <div class="description">
                   晋级所需有效流水:
-                  <span>
+                  <!-- <span>
                     {{ formatNumber(vip.upgradeBetAmount) }}
-                  </span>
+                  </span> -->              
+                  <span>{{originalUpgradeBetAmounts[vipIndex]}}</span>
                 </div>
                 <div class="viplevel">VIP {{ vip.vipLevel }}</div>
               </div>
@@ -67,47 +68,55 @@
         </template> -->
           
         <div class="amount">
-          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 0 && vipLevel != 12">
-            还要
-            <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
-            有效流水升级到 VIP {{ vipLevel + 1 }}
-          </div>
+            <div v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+              <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 0 && vipLevel != 12">
+                还要
+                <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
+                有效流水升级到 VIP {{ vipLevel + 1 }}
+              </div>
 
-          <div class="text" v-else-if="vipLevel === 0">
-            还要 {{ formatNumber(vipItems[0].upgradeBetAmount - currentBetAmt) || 0 }} 有效流水升级到 VIP 1
-          </div>
+              <div class="text" v-else-if="vipLevel === 0">
+                还要 {{ currentBetAmt > originalUpgradeBetAmounts[0] ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt) : formatNumber(originalUpgradeBetAmounts[0]) }} 有效流水升级到 VIP 1
+              </div>
 
-          <div class="text" v-else-if="vipLevel === 12">
-              您已达到或超越最高 VIP 等级所需的有效流水
+            <div class="text" v-else-if="vipLevel === 12">
+                您已达到或超越最高 VIP 等级所需的有效流水
+            </div>
+            <div class="text" v-else>
+              已到达
+              <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
+              有效流水 VIP {{ vipLevel + 1 }}
+            </div>
           </div>
 
           <div class="text" v-else>
-            已到达
-            <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-            有效流水 VIP {{ vipLevel + 1 }}
+            已到达有效流水 VIP {{ vipLevel + 1 }}
           </div>
 
           <div class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
             </div>
-            <div class="progressBarDescription">{{ currentBetAmt + '/' + currentUpgradeBetAmt }}</div>
+            <div class="progressBarDescription">{{ currentBetAmt <= currentUpgradeBetAmt ? `${currentBetAmt}/${currentUpgradeBetAmt}`  :  `${currentUpgradeBetAmt}/${currentUpgradeBetAmt}` }}</div>
           </div>
 
           <div class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: vipLevel === 12 ? '100%' : (vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null) }"></div>
             </div>
-            <div class="progressBarDescription">
-              {{ vipLevel === 0 ? currentBetAmt + '/' + vipItems[0].upgradeBetAmount : vipItems[11].upgradeBetAmount + '/' + vipItems[11].upgradeBetAmount }}
+            <div class="progressBarDescription" v-if="vipLevel == 0">
+              {{ currentBetAmt <= originalUpgradeBetAmounts[0] ? `${currentBetAmt}/${originalUpgradeBetAmounts[0]}`  :  `${originalUpgradeBetAmounts[0]}/${originalUpgradeBetAmounts[0]}` }}
+            </div>
+            <div class="progressBarDescription" v-if="vipLevel == 12">
+              {{ originalUpgradeBetAmounts[11] + '/' + originalUpgradeBetAmounts[11] }}
             </div>
           </div>
         </div>
       </div>
       <div
         class="claim-btn"
-        :class="{ disabled: currentClaimAllStatus === 'CANT_CLAIM' }"
-        @click="claimVIPLevelItem('all', vipLevel)"
+        :class="{ disabled: currentClaimAllStatus !== 'CAN_CLAIM' || isLoading['all'] }"
+        @click="handleClick('all', vipLevel)"
       >
         一键领取
       </div>
@@ -164,7 +173,13 @@
                         </div>
                       </div>
                       <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
-                        <div class="claim-now" @click="claimVIPLevelItem(category.key, item)">立即领取</div>
+                        <div 
+                          class="claim-now" 
+                          :class="{ disabled: isLoading[category.key] }" 
+                          @click="handleClick(category.key, item)"
+                        >
+                          {{ !isLoading[category.key] ? '立即领取' : '领取中' }} 
+                        </div>
                       </template>
                       <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
                         <div class="claimed">已领取</div>
@@ -914,6 +929,7 @@ const getImages = () => {
     }
   });
 };
+const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
 const initVIPTable = async () => {
   getImages();
@@ -923,19 +939,19 @@ const initVIPTable = async () => {
     const { vipBonusVOList } = res.data;
     
     // Step 1: Extract original upgradeBetAmount values into an array.
-    const originalUpgradeBetAmounts = vipBonusVOList.map(item => item.upgradeBetAmount);
+    originalUpgradeBetAmounts.value = vipBonusVOList.map(item => item.upgradeBetAmount);
 
     // Step 2: Shift values backward by one position.
-    const shiftedUpgradeBetAmounts = [];
-    for (let i = 0; i < originalUpgradeBetAmounts.length; i++) {
-      if (i === 0) {
-        shiftedUpgradeBetAmounts[i] = 0;  // The first value should be 0 or a base value
-      } else {
-        shiftedUpgradeBetAmounts[i] = originalUpgradeBetAmounts[i - 1]; // Shift backward
-      }
-    }
+    // const shiftedUpgradeBetAmounts = [];
+    // for (let i = 0; i < originalUpgradeBetAmounts.length; i++) {
+    //   if (i === 0) {
+    //     shiftedUpgradeBetAmounts[i] = 0;  // The first value should be 0 or a base value
+    //   } else {
+    //     shiftedUpgradeBetAmounts[i] = originalUpgradeBetAmounts[i - 1]; // Shift backward
+    //   }
+    // }
     vipBonusVOList.forEach((vipBonusItem, i) => {
-      vipBonusItem.upgradeBetAmount = shiftedUpgradeBetAmounts[i];
+      // vipBonusItem.upgradeBetAmount = shiftedUpgradeBetAmounts[i];
       if (vipLevel.value === vipBonusItem.vipLevel) {
         vipBonusItem.holidayClaimStatus = "NO_STATUS";
         vipBonusItem.rebateClaimStatus = "NO_STATUS";
@@ -955,6 +971,7 @@ const initVIPTable = async () => {
     });
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    getVipLevelProgress(vipLevel.value, 'bet');
     isDataLoaded.value = true;
   } else {
     notify({ type: "error", message: res.message });
@@ -979,39 +996,45 @@ const categoryPairs = computed(() => {
   }
   return pairs;
 });
+const isLoading = reactive({});
+const handleClick = async (key, item) => {
+  if (!isLoading[key]) {
+    isLoading[key] = true; // Set loading state for this specific key
+    const res = await claimItems(key, key === "all" ? item : item.vipLevel);
 
-const claimVIPLevelItem = async (type, item) => {
-  const res = await claimItems(type, type === "all" ? item : item.vipLevel);
-  if (res.code === 0) {
-    if (type !== "all") {
-      item[`${type}ClaimStatus`] = "CLAIMED";
+    if (res.code === 0) {
+      if (key !== "all") {
+        item[`${key}ClaimStatus`] = "CLAIMED";
+      } else {
+        // Get item that has the same level
+        const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
+
+        const statuses = [
+          "upgradeClaimStatus",
+          "monthlyClaimStatus",
+          "couponClaimStatus",
+          "rebateClaimStatus",
+          "retainClaimStatus",
+          "yearlyRetainClaimStatus",
+        ];
+
+        statuses.forEach((status) => {
+          if (vipInfo[status] === "CAN_CLAIM") {
+            vipInfo[status] = "CLAIMED";
+          }
+        });
+      }
+
+      notify.success("领取成功！");
+      store.getBalance();
+      initVIPTable();
+      isLoading[key] = false; 
     } else {
-      const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
-      const statuses = [
-        "upgradeClaimStatus",
-        "monthlyClaimStatus",
-        "couponClaimStatus",
-        "rebateClaimStatus",
-        "retainClaimStatus",
-        "yearlyRetainClaimStatus"
-      ];
-
-      statuses.forEach((status) => {
-        if (vipInfo[status] === "CAN_CLAIM") {
-          vipInfo[status] = "CLAIMED";
-        }
-      });
+      notify.error(res.message);
+      isLoading[key] = false; 
     }
-    notify({
-      type: "success",
-      message: `领取成功！`
-    });
-
-    store.getBalance();
-    initVIPTable();
-    getVipLevelProgress();
-  } else {
-    notify({ type: "error", message: res.message });
+    
+    isLoading[key] = false; // Reset loading state after operation completes
   }
 };
 const currentSlide = ref(11);
@@ -1153,13 +1176,12 @@ $border-settings: 1px solid #e5e7eb;
         flex-direction: column;
         gap: 10px;
         .text {
-          display: flex;
-          gap: 2px;
           font-size: 14px;
           color: #ffffff;
           // white-space: nowrap;
           .required-amount {
             color: #799df8;
+            display: inline-block;
             font-weight: 600;
           }
         }
@@ -1336,6 +1358,11 @@ $border-settings: 1px solid #e5e7eb;
             border-radius: 10px;
             margin: 10px auto;
             cursor: pointer;
+            &.disabled {
+              pointer-events: none;
+              background: linear-gradient(90deg, #6e6e6e 0%, #858585 100%);
+              color: #434343;
+            }
           }
           .claimed,
           .expired {
