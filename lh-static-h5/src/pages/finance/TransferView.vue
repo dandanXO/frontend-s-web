@@ -95,7 +95,7 @@
             <img
               :src="
                 $q.dark.isActive
-                  ? require('../../assets/images/account/transfer-arrow-dark.png')
+                  ? require('../../assets/images/account/transfer-arrow-dark.svg')
                   : require('../../assets/images/account/transfer-arrow.png')
               "
             />
