@@ -86,6 +86,20 @@
         </q-route-tab>
       </q-tabs>
     </q-footer>
+
+    <q-dialog v-model="displayLiveDialog" full-height full-width>
+      <div class="live-frame-wrapper">
+        <div class="live-frame-toolbar">
+          <q-btn flat icon="close" color="white" @click="handleClose"></q-btn>
+        </div>
+        <iframe
+          class="live-frame"
+          @load="handleLoaded"
+          src="https://gamerecords.vnkaka.live/#/roomLive?language=vi"
+          frameborder="0"
+        />
+      </div>
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -100,6 +114,7 @@ import LangOptions from "components/LangOptions";
 
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
@@ -109,6 +124,7 @@ export default defineComponent({
   },
 
   setup() {
+    const $q = useQuasar();
     const { t } = useI18n();
     const route = useRoute();
     const router = useRouter();
@@ -123,6 +139,7 @@ export default defineComponent({
     const hasDrawer = ref(false);
     const hasShadow = ref(false);
     const leftDrawerOpen = ref(false);
+    const displayLiveDialog = ref(false);
 
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
@@ -465,7 +482,17 @@ export default defineComponent({
     //   }
     // };
     const handleLiveClick = () => {
-      window.open("https://gamerecords.vnkaka.live/#/roomLive?language=vi", "_blank");
+      // window.open("https://gamerecords.vnkaka.live/#/roomLive?language=vi", "_blank");
+      displayLiveDialog.value = true;
+      $q.loading.show();
+    };
+
+    const handleLoaded = () => {
+      $q.loading.hide();
+    };
+
+    const handleClose = () => {
+      displayLiveDialog.value = false;
     };
 
     watch(tab, (val, oldVal) => {
@@ -516,7 +543,10 @@ export default defineComponent({
       LangOptions,
       isH5,
       checkPlatform,
-      handleLiveClick
+      handleLiveClick,
+      displayLiveDialog,
+      handleLoaded,
+      handleClose
     };
   }
 });
@@ -568,5 +598,16 @@ svg path {
   position: absolute;
   top: 8px;
   right: 12px;
+}
+
+.live-frame-wrapper {
+  .live-frame-toolbar {
+    background: linear-gradient(225.97deg, #fd3a2f 3.59%, #fd7267 52.04%, #ff1104 108.97%);
+    text-align: right;
+  }
+  .live-frame {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>
