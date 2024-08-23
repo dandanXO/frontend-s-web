@@ -631,7 +631,9 @@ export default defineComponent({
 
   .q-tab {
     &--active {
-      color: $primary-dark;
+      color: #fff;
+      font-weight: bold;
+      // color: $primary-dark;
     }
   }
 }
