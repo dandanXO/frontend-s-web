@@ -15,6 +15,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 import AOS from "aos";
+import {useRouter} from "vue-router"
 import "aos/dist/aos.css";
 
 export default defineComponent({
@@ -211,6 +212,20 @@ export default defineComponent({
       }
     };
 
+    const router= useRouter();
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/IND`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     // const getInsetHeight = async () => {
     //   const ua = navigator.userAgent.toLowerCase();
     //   console.log(ua);
@@ -267,6 +282,7 @@ export default defineComponent({
       // console.log(info);
       // checkSID();
       // getCSA();
+      checkServerStatus();
       getAppInfo();
       initOrientation();
       AOS.init();
