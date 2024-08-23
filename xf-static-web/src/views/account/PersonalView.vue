@@ -777,6 +777,7 @@ const verificationPhoneModalVisible = ref(false)
                 type: 'success',
               })
               loadInfo();
+              store.getMemberInfo();
               isEdit.value = false
             }
           }).catch((err) => {
