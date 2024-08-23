@@ -131,7 +131,8 @@
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
-                  lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus'
+                  lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -943,6 +944,13 @@ export default defineComponent({
           .hot-promo {
             border-radius: 0px;
           }
+        }
+
+        &.bbdacha-cs2 {
+          width: 100%;
+          margin: 0;
+          padding: 20px 5%;
+          background-color: #e7f1fd;
         }
 
         &.lhworldcup {
