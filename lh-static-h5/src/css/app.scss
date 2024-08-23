@@ -757,7 +757,11 @@ svg {
   }
 
   .common-sm-btn {
-    background-image: url("../assets/images/common/common-sm-btn-dark.png");
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3A93CE;
     color: $white;
   }
 
@@ -772,7 +776,11 @@ svg {
   }
 
   .common-md-white-btn {
-    background-image: url("../assets/images/common/common-md-white-btn-dark.png");
+    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3A93CE;
     color: $white;
   }
 
@@ -786,7 +794,12 @@ svg {
   }
 
   .bg-brightbtn {
-    background: $linear-bg-dark;
+    background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #ffffff4d;
+    color: $white;
   }
 }
 
