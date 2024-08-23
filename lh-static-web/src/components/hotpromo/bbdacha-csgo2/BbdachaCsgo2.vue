@@ -160,10 +160,16 @@ const handleClaimBonus = () => {
     .then((res) => {
       if (res.code === 0) {
         const winAmount = res.data;
-        notify.success(`成功领取 ${winAmount} 元`);
+        notify({
+          type: "success",
+          message: `成功领取 ${winAmount} 元`
+        });
         fetchData();
       } else {
-        notify.error(res.message);
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch((err) => {
