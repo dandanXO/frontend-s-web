@@ -168,6 +168,44 @@
         <br />
         <el-button class="common-btn" @click="clearInfo">理解</el-button>
       </el-dialog>
+
+      <el-dialog
+        width="500"
+        v-model="isShowSubmitDialog"
+        title="完成以下认证才可以存款"
+        :close-on-click-modal="false"
+        center
+        class="dialog-wrapper"
+      >
+        <div class="submit-alert-message-wrapper">
+          <div v-if="!store.realName">
+            <div class="submit-alert-message-item">
+              <div class="">
+                <p style="color: #fff; margin-top: 0px">存款需要绑定真实姓名</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              </div>
+
+              <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
+            </div>
+          </div>
+          <div v-if="!store.phone">
+            <div class="submit-alert-message-item">
+              <div class="">
+                <p style="color: #fff; margin-top: 0px">存款需要绑定手机号</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+              </div>
+              <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
+            </div>
+          </div>
+        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <button type="primary" class="common-btn" style="width: 100%" @click="isShowSubmitDialog = false">
+              暂不认证
+            </button>
+          </div>
+        </template>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -261,6 +299,7 @@ const checkAmount = reactive({
 });
 
 const calculatedMinDeposit = ref("");
+const isShowSubmitDialog = ref(false);
 const rules = {
   localAmount: [
     {
@@ -437,24 +476,20 @@ function clearInfo() {
   checkMinDepositAmt();
 }
 
+const checkBeforeSubmit = () => {
+  if (!store.phone || !store.realName) {
+    isShowSubmitDialog.value = true;
+    return false;
+  }
+
+  return true;
+};
+
 function confirmDeposit() {
   if (store.token) {
-    if (!store.phone) {
-      ElMessageBox.alert("为保证资金安全，存款前请先验证手机号", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
-        draggable: true,
-        buttonSize: "small"
-      })
-        .then(() => {
-          router.push("/center/personal");
-        })
-        .catch(() => {});
-      return;
-    } else if (withdrawState.bankCardList.length === 0) {
+    if (!checkBeforeSubmit()) return;
+
+    if (withdrawState.bankCardList.length === 0) {
       if (isUSDT.value == true) {
         ElMessageBox.alert("请先绑定虚拟币钱包", "系统提示", {
           showClose: false,
@@ -615,7 +650,16 @@ async function verifyBank(r, v) {
   }
 }
 
+const handleBindRealName = () => {
+  router.push("/center/personal");
+};
+
+const handleBindPhoneNumber = () => {
+  router.push("/center/personal");
+};
+
 onMounted(() => {
+  checkBeforeSubmit();
   initPay();
   loadCards();
 });
@@ -852,5 +896,28 @@ onMounted(() => {
       width: 80px;
     }
   }
+}
+
+.submit-alert-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .submit-alert-message-item {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    p {
+      flex: 1;
+    }
+  }
+}
+
+.dialog-wrapper {
+  overflow: hidden;
+  border-radius: 8px !important;
 }
 </style>

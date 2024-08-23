@@ -5,72 +5,127 @@
     </div>
     <!--    <div class="banner-container" />-->
     <div class="vip-cards">
-    <Carousel v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
-      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
-        <div class="carousel__item">
-          <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div class="vipcontents">
-              <div class="title">
-                <span class="type">{{ vip.vipTitle }}</span>
-              </div>
-              <div class="badge">
-                <img :src="require(`../../assets/images/vip/badge/${vip.vipTitle}.png`)">
-              </div>
-              <div class="description">
-                累积存款:
-                <span>
-                  {{ formatNumber(vip.upgradeDepositAmount) }}
-                </span>
-              </div>
-              <div class="viplevel">
-                VIP {{ vip.vipLevel }}
+      <Carousel v-model="currentSlide" :items-to-show="3" :wrap-around="true">
+        <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+          <div class="carousel__item">
+            <div :class="`vipitem vipitem${vip.vipLevel}`">
+              <div class="vipcontents">
+                <div class="title">
+                  <span class="type">{{ vip.vipTitle }}</span>
+                </div>
+                <div class="badge">
+                  <img :src="require(`../../assets/images/vip/badge/${vip.vipTitle}.png`)" />
+                </div>
+                <div class="description">
+                  晋级所需有效流水:
+                  <span>
+                    {{ formatNumber(vip.upgradeBetAmount) }}
+                  </span>
+                </div>
+                <div class="viplevel">VIP {{ vip.vipLevel }}</div>
               </div>
             </div>
           </div>
-        </div>
-      </Slide>
-      <template #addons>
-        <Navigation />
-      </template>
-    </Carousel>
-  </div>
-    <div class="current-vip-status" v-if="store.token">
+        </Slide>
+        <template #addons>
+          <Navigation />
+        </template>
+      </Carousel>
+    </div>
+    
+    <div class="current-vip-status" v-if="store.token && isDataLoaded">
       <div class="badge">
-        <img :src="badgeSrc">
+        <img :src="badgeSrc" />
       </div>
       <div class="vip-progress">
-        <div class="amount">
-          <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">还要<div class="required-amount">{{ formatNumber(currentUpgradeDepAmt - currentDepAmt) }}</div>存款升级到 VIP {{vipLevel + 1}}</div>
+        <!-- <div class="amount">
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">
+            还要
+            <div class="required-amount">{{ formatNumber(currentUpgradeDepAmt - currentDepAmt) }}</div>
+            存款升级到 VIP {{ vipLevel + 1 }}
+          </div>
           <div class="text" v-else-if="vipLevel === 0">需要一笔存款到达 VIP 1</div>
-          <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeDepAmt }}</div> 存款 VIP {{ vipLevel + 1 }}</div>
+          <div class="text" v-else>
+            已到达
+            <div class="required-amount">{{ currentUpgradeDepAmt }}</div>
+            存款 VIP {{ vipLevel + 1 }}
+          </div>
           <div class="progressBarContainer">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'deposit') + '%' }" />
             </div>
           </div>
-        </div>
+        </div> -->
+        <!-- <template v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+          <div class="amount" v-if="vipLevel === vip.vipLevel">
+            {{ vip }}
+            {{ currentBetAmt }}
+            <div class="text">
+
+            </div>
+          </div>
+        </template> -->
+          
         <div class="amount">
-          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt">还要<div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) }}</div>经验值升级到 VIP {{vipLevel + 1}}</div>
-          <div class="text" v-else-if="vipLevel === 0"></div>
-          <div class="text" v-else>已到达 <div class="required-amount">{{ currentUpgradeBetAmt }}</div> 经验值 VIP {{ vipLevel + 1 }}</div>
-          <div class="progressBarContainer" v-if="vipLevel != 0">
+          <div class="text" v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 0 && vipLevel != 12">
+            还要
+            <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
+            有效流水升级到 VIP {{ vipLevel + 1 }}
+          </div>
+
+          <div class="text" v-else-if="vipLevel === 0">
+            还要 {{ formatNumber(vipItems[0].upgradeBetAmount - currentBetAmt) || 0 }} 有效流水升级到 VIP 1
+          </div>
+
+          <div class="text" v-else-if="vipLevel === 12">
+              您已达到或超越最高 VIP 等级所需的有效流水
+          </div>
+
+          <div class="text" v-else>
+            已到达
+            <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
+            有效流水 VIP {{ vipLevel + 1 }}
+          </div>
+
+          <div class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
-              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }" />
+              <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
+            </div>
+            <div class="progressBarDescription">{{ currentBetAmt + '/' + currentUpgradeBetAmt }}</div>
+          </div>
+
+          <div class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
+            <div class="progressBarOuterBar">
+              <div class="progressBarInnerBar" :style="{ width: vipLevel === 12 ? '100%' : (vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null) }"></div>
+            </div>
+            <div class="progressBarDescription">
+              {{ vipLevel === 0 ? currentBetAmt + '/' + vipItems[0].upgradeBetAmount : vipItems[11].upgradeBetAmount + '/' + vipItems[11].upgradeBetAmount }}
             </div>
           </div>
         </div>
       </div>
-      <div class="claim-btn" :class="{disabled: currentClaimAllStatus === 'CANT_CLAIM'}" @click="claimVIPLevelItem('all', vipLevel)">
+      <div
+        class="claim-btn"
+        :class="{ disabled: currentClaimAllStatus === 'CANT_CLAIM' }"
+        @click="claimVIPLevelItem('all', vipLevel)"
+      >
         一键领取
       </div>
     </div>
+
+<div class="tips">
+  等级晋升后开启90天保级期，保级期内完成存款和流水要求则保级成功，未完成则降一级。
+  <div @click="isShowTable = !isShowTable" class="linktotable">查看升保级明细</div>
+</div>
     <div class="month-birthday-bonus">
       <div class="left">
-        <img src="../../assets/images/vip/img-border.png">
+        <img class="abs" src="../../assets/images/vip/img-border.png" style="pointer-events: none" />
         <div class="inner-slide">
-          <Carousel v-model="currentCarousel" :items-to-show="1" :wrapAround="true">
-            <Slide v-for="i in 4" :key="i">
-              <img class="card-img" :src="require(`../../assets/images/vip/slide-img.png`)" alt="" />
+          <Carousel v-model="currentCarousel" :items-to-show="1">
+            <Slide v-for="(item, i) in banners" :key="i">
+              <a style="display: block" :href="item.redirectUrl" target="_blank">
+                <img :src="imgURL + item.mobileImageUrl" />
+              </a>
             </Slide>
             <template #addons>
               <Pagination />
@@ -85,17 +140,26 @@
               <template v-for="category in categoryPair" :key="category.key">
                 <template v-for="item in vipItems" :key="item">
                   <template v-if="+item.vipLevel === currentSlide + 1">
-                    <div class="box" :class="{ inactive: store.token && item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' }">
+                    <div
+                      class="box"
+                      :class="{ inactive: store.token  && item[`${category.key}Prize`] === '0' || item[`${category.key}Prize`] === 0 ||item[`${category.key}Prize`] === 'null'  }"
+                    >
                       <div class="vip-inner">
                         <div class="box-det">
                           <div class="icon">
                             <img
-                              :src="require(`../../assets/images/vip/${category.image}${store.token && item[`${category.key}ClaimStatus`] === 'CANT_CLAIM' ? '-inactive' : ''}.png`)"
+                              :src="
+                                require(`../../assets/images/vip/${category.image}${
+                                  store.token  && item[`${category.key}Prize`] === '0' || item[`${category.key}Prize`] === 0 ||item[`${category.key}Prize`] === 'null'  ? '-inactive' : ''
+                                }.png`)
+                              "
                             />
                           </div>
                           <div>
                             <div class="item-name">{{ category.displayName }}</div>
-                            <div class="item-amt">{{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}</div>
+                            <div class="item-amt">
+                              {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -117,84 +181,311 @@
               <Pagination />
             </template>
           </Carousel>
-      </div>
-      </div>
-    </div>
-
-    <div class="tips">
-      等级晋升后开启90天保级期，保级期内完成存款和流水要求则保级成功，未完成则降一级。<div @click="isShowTable = !isShowTable" class="linktotable"> 查看升保级明细</div>
-      <div v-if="isShowTable" class="absolute-box">
-        <div class="arrow_box">
-          <div class="overflow-table">
-            <table border="1">
-              <thead>
-                <tr>
-                  <th style="background: #AD9870;">等级</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 1</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 2</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 3</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 4</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 5</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 6</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 7</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 8</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 9</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 10</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 11</th>
-                  <th style="background: #F1DDA0; color:#766442;">VIP 12</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>会员勋章</td>
-                  <td>青铜 I</td>
-                  <td>青铜 II</td>
-                  <td>白银 I</td>
-                  <td>白银 II</td>
-                  <td>白银 III</td>
-                  <td>黄金 I</td>
-                  <td>黄金 II</td>
-                  <td>黄金 III</td>
-                  <td>铂金 I</td>
-                  <td>铂金 II</td>
-                  <td>钻石</td>
-                  <td>王者</td>
-                </tr>
-                <tr>
-                  <td>升级条件<br>（流水）</td>
-                  <td>6,000</td>
-                  <td>17,500</td>
-                  <td>50,000</td>
-                  <td>130,000</td>
-                  <td>600,000</td>
-                  <td>1,200,000</td>
-                  <td>2,400,000</td>
-                  <td>6,400,000</td>
-                  <td>2,400,000</td>
-                  <td>6,400,000</td>
-                  <td>15,000,000</td>
-                  <td>25,000,000</td>
-                </tr>
-                <tr>
-                  <td>保级条件<br>（90天）</td>
-                  <td>3,500</td>
-                  <td>7,500</td>
-                  <td>19,000</td>
-                  <td>32,500</td>
-                  <td>75,000</td>
-                  <td>200,000</td>
-                  <td>620,000</td>
-                  <td>1,900,000</td>
-                  <td>6,250,000</td>
-                  <td>12,500,000</td>
-                  <td>21,000,000</td>
-                  <td>50,000,000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
+    </div>
+    <div class="vip-benefit-section-title"><img src="../../assets/images/vip/instruction.png" /></div>
+    <div class="tabs">
+      <div class="tab">
+        <img
+          :src="require(`../../assets/images/vip/vip-benefit${tabActive == 1 ? '-active' : ''}.png`)"
+          @click="tabActive = 1"
+        />
+      </div>
+      <div class="tab">
+        <img
+          :src="require(`../../assets/images/vip/vip-rebate${tabActive == 2 ? '-active' : ''}.png`)"
+          @click="tabActive = 2"
+        />
+      </div>
+    </div>
+    <div v-if="benefitActive" class="instructions">
+      <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th rowspan="4">VIP等级</th>
+            <th rowspan="4">会员等级</th>
+            <th rowspan="4">首次保级彩金</th>
+            <th rowspan="4">年度保级彩金</th>
+            <th rowspan="4">生日彩金</th>
+            <th rowspan="4">节日礼金</th>
+            <th rowspan="4">每日返水红包</th>
+          </tr>
+          <tr>
+            <th>会员日</th>
+            <th>每月15号</th>
+          </tr>
+          <tr>
+            <th>会员加码</th>
+            <th>充值送10%加码券</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VIP1</td>
+            <td>青铜 II</td>
+            <td rowspan="2">18元</td>
+            <td rowspan="2">208</td>
+            <td rowspan="2">-</td>
+            <td rowspan="2">-</td>
+            <td>0.1%</td>
+            <td>8</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>VIP2</td>
+            <td>青铜 I</td>
+            <td>0.2%</td>
+            <td>18</td>
+            <td>28</td>
+          </tr>
+          <tr>
+            <td>VIP3</td>
+            <td>白银 III</td>
+            <td rowspan="3">58元</td>
+            <td rowspan="3">588</td>
+            <td>-</td>
+            <td rowspan="3">-</td>
+            <td>0.3%</td>
+            <td>28</td>
+            <td>58</td>
+          </tr>
+          <tr>
+            <td>VIP4</td>
+            <td>白银 II</td>
+            <td>38</td>
+            <td>0.5%</td>
+            <td>38</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>VIP5</td>
+            <td>白银 I</td>
+            <td>58</td>
+            <td>0.6%</td>
+            <td>58</td>
+            <td>128</td>
+          </tr>
+          <tr>
+            <td>VIP6</td>
+            <td>黄金 III</td>
+            <td rowspan="3">288元</td>
+            <td rowspan="3">1088</td>
+            <td>88</td>
+            <td rowspan="2">-</td>
+            <td>0.8%</td>
+            <td>68</td>
+            <td>188</td>
+          </tr>
+          <tr>
+            <td>VIP7</td>
+            <td>黄金 II</td>
+            <td>188</td>
+            <td>1.0%</td>
+            <td>128</td>
+            <td>258</td>
+          </tr>
+          <tr>
+            <td>VIP8</td>
+            <td>黄金 I</td>
+            <td>288</td>
+            <td>188</td>
+            <td>1.2%</td>
+            <td>208</td>
+            <td>388</td>
+          </tr>
+          <tr>
+            <td>VIP9</td>
+            <td>铂金 II</td>
+            <td rowspan="2">588元</td>
+            <td rowspan="2">1888</td>
+            <td>388</td>
+            <td>288</td>
+            <td>1.3%</td>
+            <td>388</td>
+            <td>508</td>
+          </tr>
+          <tr>
+            <td>VIP10</td>
+            <td>铂金 I</td>
+            <td>588</td>
+            <td>388</td>
+            <td>1.5%</td>
+            <td>588</td>
+            <td>888</td>
+          </tr>
+          <tr>
+            <td>VIP11</td>
+            <td>钻石</td>
+            <td>888元</td>
+            <td>2888</td>
+            <td>888</td>
+            <td>888</td>
+            <td>1.8%</td>
+            <td>888</td>
+            <td>1888</td>
+          </tr>
+          <tr>
+            <td>VIP12</td>
+            <td>王者</td>
+            <td>1,888元</td>
+            <td>8888</td>
+            <td>1888</td>
+            <td>1888</td>
+            <td>2.0%</td>
+            <td>1888</td>
+            <td>2888</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-if="rebateActive" class="instructions">
+      <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th>VIP等级</th>
+            <th>电竞</th>
+            <th>体育</th>
+            <th>真人</th>
+            <th>棋牌</th>
+            <th>电子</th>
+            <th>捕鱼</th>
+            <th>返水上限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VIP0</td>
+            <td>0.40%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.6%</td>
+            <td>0.15%</td>
+            <td>8,888</td>
+          </tr>
+          <tr>
+            <td>VIP1</td>
+            <td>0.40%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.45%</td>
+            <td>0.6%</td>
+            <td>0.2%</td>
+            <td>8,888</td>
+          </tr>
+          <tr>
+            <td>VIP2</td>
+            <td>0.40%</td>
+            <td>0.4%</td>
+            <td>0.4%</td>
+            <td>0.45%</td>
+            <td>0.6%</td>
+            <td>0.2%</td>
+            <td>8,888</td>
+          </tr>
+          <tr>
+            <td>VIP3</td>
+            <td>0.50%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.45%</td>
+            <td>0.6%</td>
+            <td>0.25%</td>
+            <td>12,888</td>
+          </tr>
+          <tr>
+            <td>VIP4</td>
+            <td>0.50%</td>
+            <td>0.50%</td>
+            <td>0.45%</td>
+            <td>0.50%</td>
+            <td>0.8%</td>
+            <td>0.30%</td>
+            <td>18,888</td>
+          </tr>
+          <tr>
+            <td>VIP5</td>
+            <td>0.58%</td>
+            <td>0.55%</td>
+            <td>0.50%</td>
+            <td>0.55%</td>
+            <td>0.8%</td>
+            <td>0.30%</td>
+            <td>18,888</td>
+          </tr>
+          <tr>
+            <td>VIP6</td>
+            <td>0.58%</td>
+            <td>0.60%</td>
+            <td>0.55%</td>
+            <td>0.60%</td>
+            <td>0.8%</td>
+            <td>0.35%</td>
+            <td>28,888</td>
+          </tr>
+          <tr>
+            <td>VIP7</td>
+            <td>0.58%</td>
+            <td>0.65%</td>
+            <td>0.60%</td>
+            <td>0.70%</td>
+            <td>0.85%</td>
+            <td>0.35%</td>
+            <td>28,888</td>
+          </tr>
+          <tr>
+            <td>VIP8</td>
+            <td>0.65%</td>
+            <td>0.70%</td>
+            <td>0.68%</td>
+            <td>0.80%</td>
+            <td>0.90%</td>
+            <td>0.35%</td>
+            <td>38,888</td>
+          </tr>
+          <tr>
+            <td>VIP9</td>
+            <td>0.75%</td>
+            <td>0.80%</td>
+            <td>0.75%</td>
+            <td>0.90%</td>
+            <td>1.0%</td>
+            <td>0.40%</td>
+            <td>58,888</td>
+          </tr>
+          <tr>
+            <td>VIP10</td>
+            <td>0.85%</td>
+            <td>0.90%</td>
+            <td>0.80%</td>
+            <td>1.0%</td>
+            <td>1.05%</td>
+            <td>0.40%</td>
+            <td>88,888</td>
+          </tr>
+          <tr>
+            <td>VIP11</td>
+            <td>0.95%</td>
+            <td>1.0%</td>
+            <td>0.85%</td>
+            <td>1.1%</td>
+            <td>1.1%</td>
+            <td>0.40%</td>
+            <td>88,888</td>
+          </tr>
+          <tr>
+            <td>VIP12</td>
+            <td>1.1%</td>
+            <td>1.0%</td>
+            <td>1.0%</td>
+            <td>1.2%</td>
+            <td>1.2%</td>
+            <td>0.50%</td>
+            <td>128,888</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="terms-conditions">
       <div class="section-title">规则与条款</div>
@@ -209,6 +500,181 @@
       </ol>
     </div>
   </div>
+  <q-dialog class="newTable" v-model="isShowTable" >
+        <!-- <table border="0" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th style="background: #ad9870">等级</th>
+              <th style="background: #f1dda0; color: #766442">VIP 1</th>
+              <th style="background: #f1dda0; color: #766442">VIP 2</th>
+              <th style="background: #f1dda0; color: #766442">VIP 3</th>
+              <th style="background: #f1dda0; color: #766442">VIP 4</th>
+              <th style="background: #f1dda0; color: #766442">VIP 5</th>
+              <th style="background: #f1dda0; color: #766442">VIP 6</th>
+              <th style="background: #f1dda0; color: #766442">VIP 7</th>
+              <th style="background: #f1dda0; color: #766442">VIP 8</th>
+              <th style="background: #f1dda0; color: #766442">VIP 9</th>
+              <th style="background: #f1dda0; color: #766442">VIP 10</th>
+              <th style="background: #f1dda0; color: #766442">VIP 11</th>
+              <th style="background: #f1dda0; color: #766442">VIP 12</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>会员勋章</td>
+              <td>青铜 I</td>
+              <td>青铜 II</td>
+              <td>白银 I</td>
+              <td>白银 II</td>
+              <td>白银 III</td>
+              <td>黄金 I</td>
+              <td>黄金 II</td>
+              <td>黄金 III</td>
+              <td>铂金 I</td>
+              <td>铂金 II</td>
+              <td>钻石</td>
+              <td>王者</td>
+            </tr>
+            <tr>
+              <td>
+                升级条件
+                <br />
+                （流水）
+              </td>
+              <td>3,000</td>
+              <td>17,500</td>
+              <td>50,000</td>
+              <td>150,000</td>
+              <td>600,000</td>
+              <td>1,200,000</td>
+              <td>2,400,000</td>
+              <td>6,400,000</td>
+              <td>24,000,000</td>
+              <td>64,000,000</td>
+              <td>150,000,000</td>
+              <td>250,000,000</td>
+            </tr>
+            <tr>
+              <td>
+                保级条件
+                <br />
+                （90天）
+              </td>
+              <td>1,500</td>
+              <td>7,500</td>
+              <td>19,000</td>
+              <td>32,500</td>
+              <td>75,000</td>
+              <td>200,000</td>
+              <td>620,000</td>
+              <td>1,900,000</td>
+              <td>6,250,000</td>
+              <td>12,500,000</td>
+              <td>21,000,000</td>
+              <td>50,000,000</td>
+            </tr>
+            <tr>
+              <td>晋级彩金</td>
+              <td>8</td>
+              <td>18</td>
+              <td>28</td>
+              <td>38</td>
+              <td>58</td>
+              <td>88</td>
+              <td>188</td>
+              <td>288</td>
+              <td>388</td>
+              <td>588</td>
+              <td>888</td>
+              <td>1,888</td>
+            </tr>
+          </tbody>
+        </table> -->
+        <table border="0" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th style="background: #f1dda0; color: #766442">VIP等级</th>
+              <th style="background: #f1dda0; color: #766442">升级条件（流水）</th>
+              <th style="background: #f1dda0; color: #766442">保级条件（90天）</th>
+              <th style="background: #f1dda0; color: #766442">晋级彩金</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>VIP 1</td>
+              <td>3,000</td>
+              <td>1,500</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>VIP 2</td>
+              <td>17,500</td>
+              <td>7,500</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td>VIP 3</td>
+              <td>50,000</td>
+              <td>19,000</td>
+              <td>28</td>
+            </tr>
+            <tr>
+              <td>VIP 4</td>
+              <td>150,000</td>
+              <td>32,500</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>VIP 5</td>
+              <td>600,000</td>
+              <td>75,000</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>VIP 6</td>
+              <td>1,200,000</td>
+              <td>200,000</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>VIP 7</td>
+              <td>2,400,000</td>
+              <td>620,000</td>
+              <td>188</td>
+            </tr>
+            <tr>
+              <td>VIP 8</td>
+              <td>6,400,000</td>
+              <td>1,900,000</td>
+              <td>288</td>
+            </tr>
+            <tr>
+              <td>VIP 9</td>
+              <td>24,000,000</td>
+              <td>6,250,000</td>
+              <td>388</td>
+            </tr>
+            <tr>
+              <td>VIP 10</td>
+              <td>64,000,000</td>
+              <td>12,500,000</td>
+              <td>588</td>
+            </tr>
+            <tr>
+              <td>VIP 11</td>
+              <td>150,000,000</td>
+              <td>21,000,000</td>
+              <td>888</td>
+            </tr>
+            <tr>
+              <td>VIP 12</td>
+              <td>250,000,000</td>
+              <td>50,000,000</td>
+              <td>1,888</td>
+            </tr>
+          </tbody>
+        </table>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -217,332 +683,387 @@ import { ref, onActivated, computed, reactive, watch } from "vue";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems } from "src/api/index/promo";
+import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "src/api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
-    components: {
-      Carousel,
-      Slide,
-      Navigation,
-      Pagination
+import { useLocalStorage } from "@vueuse/core";
+
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+const isShowTable = ref(false);
+const notify = useNotify();
+const store = userStore();
+const amount = ref("$0");
+const privilegeClaimedModalVisible = ref(false);
+const vipLevel = computed(() => {
+  return +store.vip.replace("VIP", "");
+});
+const currentDepositAmt = computed(() => {
+  return store.getCurrentDeposit();
+});
+
+const currentDepAmt = ref(0);
+const currentBetAmt = ref(0);
+const currentUpgradeDepAmt = ref(0);
+const currentUpgradeBetAmt = ref(0);
+const currentClaimAllStatus = ref("CANT_CLAIM");
+const getVipLevelProgress = (lvl, status) => {
+  if (lvl === 0 || !lvl) {
+    if (currentBetAmt.value > 0) {
+      return (currentBetAmt.value / vipItems[0].upgradeBetAmount) * 100;
     }
-    const isShowTable = ref(false);
-    const notify = useNotify();
-    const store = userStore();
-    const amount = ref("$0");
-    const privilegeClaimedModalVisible = ref(false);
-    const vipLevel = computed(() => {
-      return +store.vip.replace("VIP", "");
-    });
-    const currentDepositAmt = computed(() => {
-      return store.getCurrentDeposit();
-    });
+    return 0;
+  }
+  const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
+  console.log(vipInfo);
+  const vipLevel = +store.vip.replace("VIP", "");
+  const currentDeposit = +store.getCurrentDeposit();
+  currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
+  currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
+  currentClaimAllStatus.value = vipInfo.claimAllStatus;
+  if (status === "bet") {
+    if (currentBetAmt.value > currentUpgradeBetAmt.value) {
+      return 100;
+    }
+    if (currentUpgradeBetAmt.value === 0) {
+      return 0; // Avoid division by zero
+    }
+    return (currentBetAmt.value / currentUpgradeBetAmt.value) * 100;
+  }
+
+  if (status === "deposit") {
+    // Ensure that currentDepAmt equals currentUpgradeDepAmt.value for 100%
+    if (currentDepAmt.value > currentUpgradeDepAmt.value) {
+      return 100;
+    }
+    if (currentUpgradeDepAmt.value === 0) {
+      return 0; // Avoid division by zero
+    }
+    return (currentDepAmt.value / currentUpgradeDepAmt.value) * 100;
+  }
+
+  return 0; // Default return value if status doesn't match
+};
+// const loadingClaim = ref(false);
+// const loadingMClaim = ref(false);
+// const loadingBClaim = ref(false);
+// const dailySlot = (bonusItem, vipType) => {
+//   loadingClaim.value = true;
+//   if (vipType === "monthly") {
+//     loadingMClaim.value = true;
+//   } else if (vipType === "birthday") {
+//     loadingBClaim.value = true;
+//   }
+//   claimBonusItem(bonusItem)
+//     .then((res) => {
+//       if (res.code === 0) {
+//         amount.value = "$" + res.data;
+//         privilegeClaimedModalVisible.value = true;
+//         loadingClaim.value = false;
+//         loadingMClaim.value = false;
+//         loadingBClaim.value = false;
+//         store.getBalance();
+//       } else {
+//         notify.error(res.message);
+//         loadingClaim.value = false;
+//         loadingMClaim.value = false;
+//         loadingBClaim.value = false;
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// };
+
+const terms = [
+{ text: "会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；" },
+  { text: "VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；" },
+  { text: "会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；" },
+  { text: "如果会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；" },
+  { text: "每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；" },
+  { text: "会员在注册90天内过生日，本年度内将不能领取生日礼金。另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次（生日彩金1倍流水即可提款）；" },
+  { text: "当月晋级后未晋级且达到保级要求，次月1日可领取保级彩金；" },
+  { text: "首次保级成功后计算会员12个月内未降级（可晋级），彩金与第13个月首日进行派发；" },
+  { text: "统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日反水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；" },
+  { text: "从每月会员日15号00:00:00起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至24号23:59:59，仅需完成一倍流水，过期未领取视为放弃；" },
+  { text: "非0级玩家从会员日18号00:00:00起均可在活动页面领取一张“10%充值加码券”，领取时间截至21号23:59:59，且领取后需在7日内使用充值加码券，成功使用后需在15日内完成相应流水要求；" },
+  { text: "本加码券单日内不可与其他活动加码券同时使用；" },
+  { text: "有效流水仅计算在游戏中产生输赢结果的注单，香港盘<0.75（中国盘<0.75）、欧洲盘<1.75、美洲盘<-133、马来盘<0.75且>0，负赔率>-0.75且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；" },
+  { text: "根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；" },
+  { text: "此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；" },
+  { text: "为避免文字理解差异，雷火电竞保留此活动最终解释权；" }
+];
+
+const vipTerms = [
+  {
+    text: `返水奖金根据北京时间每天00:00:00-23:59:59之间的有效投注额进行计算，所有游戏场馆投注额都是按照北京时间计算，返水彩金无需申请，系统会在次日下午14:00派发到您的主账户；`
+  },
+  {
+    text: `雷火电竞夺宝、捕鱼和彩票 不参与返水优惠；`
+  },
+  {
+    text: `电竞/体育中的连串过关投注额返水将以注单结算时间为准。`
+  },
+  {
+    text: `返水根据有效投注进行计算，在所有产品中，任何注单取消或本金退还，任何低于欧洲盘1.7或亚洲盘0.7水位的投注以及在同一游戏中同时投注对等盘口，将不计算在有效投注额内，赢半和输半只计算一半流水，体育提前注单按照实际输赢金额的绝对值作为有效投注；`
+  },
+  {
+    text: `返水奖金可投注于任何平台游戏，奖金只需1倍投注额即可申请提款，最低返水1元，低于1元不予派发。`
+  },
+  {
+    text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址, 电话号码, 支付方式(相同借记卡/信用卡/银行账户号码) IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。`
+  },
+  {
+    text: `对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+  },
+  {
+    text: `在某些未知因素超出可控范围的情况下，雷火保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+  },
+  {
+    text: `雷火保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火将不承担任何责任。`
+  }
+];
+
+const showRebate = ref(true);
+const currentDisplayTerms = ref(terms);
+const onShowRebateClick = (flag) => {
+  showRebate.value = flag;
+  if (showRebate.value) currentDisplayTerms.value = terms;
+  else currentDisplayTerms.value = vipTerms;
+};
+
+const badgeSrc = computed(() => {
+  const currentVIP = +store.vip.replace("VIP", "");
+  const matchedVIP = vipItems.find((vip) => +vip.vipLevel === currentVIP);
+  return require(`../../assets/images/vip/level/vip${matchedVIP ? currentVIP : "1"}.png`);
+});
+
+const vipItems = reactive([
+  {
+    vipLevel: "1",
+    upgrade: "一笔存款",
+    vipTitle: "青铜 II"
+  },
+  {
+    vipLevel: "2",
+    upgrade: "3,000",
+    vipTitle: "青铜 I"
+  },
+  {
+    vipLevel: "3",
+    upgrade: "30,000",
+    vipTitle: "白银 III"
+  },
+  {
+    vipLevel: "4",
+    upgrade: "80,000",
+    vipTitle: "白银 II"
+  },
+  {
+    vipLevel: "5",
+    upgrade: "200,000",
+    vipTitle: "白银 I"
+  },
+  {
+    vipLevel: "6",
+    upgrade: "400,000",
+    vipTitle: "黄金 III"
+  },
+  {
+    vipLevel: "7",
+    upgrade: "600,000",
+    vipTitle: "黄金 II"
+  },
+  {
+    vipLevel: "8",
+    upgrade: "1,000,000",
+    vipTitle: "黄金 I"
+  },
+  {
+    vipLevel: "9",
+    upgrade: "2,000,000",
+    vipTitle: "铂金 II"
+  },
+  {
+    vipLevel: "10",
+    upgrade: "4,000,000",
+    vipTitle: "铂金 I"
+  },
+  {
+    vipLevel: "11",
+    upgrade: "8,000,000",
+    vipTitle: "钻石"
+  },
+  {
+    vipLevel: "12",
+    upgrade: "12,000,000",
+    vipTitle: "最强王者"
+  }
+]);
+const formatPercentageRange = (range) => {
+  const percentages = range.split(" - "); // Split the range into two percentages
+  const formattedPercentages = percentages.map(
+    (percentage) => parseFloat(percentage).toFixed(2) // Convert to float and fix to two decimal places
+  );
+  return formattedPercentages.join("% - ") + "%"; // Join the formatted percentages
+};
+const banners = ref([]);
+const getImages = () => {
+  loadPromoBanner("VIP").then((res) => {
+    if (res.code === 0) {
+      banners.value = res.data;
+    }
+  });
+};
+const isDataLoaded = ref(false);
+const initVIPTable = async () => {
+  getImages();
+  var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
+
+  if (res.code === 0) {
+    const { vipBonusVOList } = res.data;
     
-    const currentDepAmt = ref(0)
-    const currentBetAmt = ref(0)
-    const currentUpgradeDepAmt = ref(0)
-    const currentUpgradeBetAmt = ref(0)
-    const currentClaimAllStatus = ref('CANT_CLAIM')
-    const getVipLevelProgress = (lvl, status) => {
-      if (lvl === 0 || !lvl) {
-        return 0;
-      }
-      const vipInfo = vipItems.find(item => +item.vipLevel === lvl);
-      console.log(vipInfo)
-      const vipLevel = +store.vip.replace("VIP", "");
-      const currentDeposit = +store.getCurrentDeposit();
-      currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
-      currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
-      currentClaimAllStatus.value = vipInfo.claimAllStatus
-      if (status === 'bet') {
-      if (currentBetAmt.value > currentUpgradeBetAmt.value) {
-        return 100;
-      }
-      if (currentUpgradeBetAmt.value === 0) {
-        return 0; // Avoid division by zero
-      }
-        return (currentBetAmt.value / currentUpgradeBetAmt.value) * 100;
-      }
+    // Step 1: Extract original upgradeBetAmount values into an array.
+    const originalUpgradeBetAmounts = vipBonusVOList.map(item => item.upgradeBetAmount);
 
-      if (status === 'deposit') {
-        // Ensure that currentDepAmt equals currentUpgradeDepAmt.value for 100%
-        if (currentDepAmt.value > currentUpgradeDepAmt.value) {
-          return 100;
-        }
-        if (currentUpgradeDepAmt.value === 0) {
-          return 0; // Avoid division by zero
-        }
-        return (currentDepAmt.value / currentUpgradeDepAmt.value) * 100;
-      }
-
-      return 0; // Default return value if status doesn't match
-    };
-    // const loadingClaim = ref(false);
-    // const loadingMClaim = ref(false);
-    // const loadingBClaim = ref(false);
-    // const dailySlot = (bonusItem, vipType) => {
-    //   loadingClaim.value = true;
-    //   if (vipType === "monthly") {
-    //     loadingMClaim.value = true;
-    //   } else if (vipType === "birthday") {
-    //     loadingBClaim.value = true;
-    //   }
-    //   claimBonusItem(bonusItem)
-    //     .then((res) => {
-    //       if (res.code === 0) {
-    //         amount.value = "$" + res.data;
-    //         privilegeClaimedModalVisible.value = true;
-    //         loadingClaim.value = false;
-    //         loadingMClaim.value = false;
-    //         loadingBClaim.value = false;
-    //         store.getBalance();
-    //       } else {
-    //         notify.error(res.message);
-    //         loadingClaim.value = false;
-    //         loadingMClaim.value = false;
-    //         loadingBClaim.value = false;
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.message);
-    //     });
-    // };
-
-    const terms = [
-      {
-        text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
-      },
-      {
-        text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
-      },
-      {
-        text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
-      },
-      {
-        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
-      },
-      {
-        text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
-      },
-      {
-        text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
-      },
-      {
-        text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
-      }
-    ];
-
-    const vipTerms = [
-      {
-        text: `返水奖金根据北京时间每天00:00:00-23:59:59之间的有效投注额进行计算，所有游戏场馆投注额都是按照北京时间计算，返水彩金无需申请，系统会在次日下午14:00派发到您的主账户；`
-      },
-      {
-        text: `雷火电竞夺宝、捕鱼和彩票 不参与返水优惠；`
-      },
-      {
-        text: `电竞/体育中的连串过关投注额返水将以注单结算时间为准。`
-      },
-      {
-        text: `返水根据有效投注进行计算，在所有产品中，任何注单取消或本金退还，任何低于欧洲盘1.7或亚洲盘0.7水位的投注以及在同一游戏中同时投注对等盘口，将不计算在有效投注额内，赢半和输半只计算一半流水，体育提前注单按照实际输赢金额的绝对值作为有效投注；`
-      },
-      {
-        text: `返水奖金可投注于任何平台游戏，奖金只需1倍投注额即可申请提款，最低返水1元，低于1元不予派发。`
-      },
-      {
-        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址, 电话号码, 支付方式(相同借记卡/信用卡/银行账户号码) IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。`
-      },
-      {
-        text: `对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
-      },
-      {
-        text: `在某些未知因素超出可控范围的情况下，雷火保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
-      },
-      {
-        text: `雷火保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火将不承担任何责任。`
-      }
-    ];
-
-    const showRebate = ref(true);
-    const currentDisplayTerms = ref(terms);
-    const onShowRebateClick = (flag) => {
-      showRebate.value = flag;
-      if (showRebate.value) currentDisplayTerms.value = terms;
-      else currentDisplayTerms.value = vipTerms;
-    };
-    const badgeSrc = computed(() => {
-      const vip = vipItems.find(vip => vip.vipLevel === vipLevel.value && vipLevel.value);
-      return require(`../../assets/images/vip/level/vip${vip ? vip.vipLevel : '1'}.png`);
-    });
-
-    
-    const vipItems = reactive([
-      {
-        vipLevel: "1",
-        upgrade: "一笔存款",
-        vipTitle: "青铜 II"
-      },
-      {
-        vipLevel: "2",
-        upgrade: "3,000",
-        vipTitle: "青铜 I"
-      },
-      {
-        vipLevel: "3",
-        upgrade: "30,000",
-        vipTitle: "白银 III"
-      },
-      {
-        vipLevel: "4",
-        upgrade: "80,000",
-        vipTitle: "白银 II"
-      },
-      {
-        vipLevel: "5",
-        upgrade: "200,000",
-        vipTitle: "白银 I"
-      },
-      {
-        vipLevel: "6",
-        upgrade: "400,000",
-        vipTitle: "黄金 III"
-      },
-      {
-        vipLevel: "7",
-        upgrade: "600,000",
-        vipTitle: "黄金 II"
-      },
-      {
-        vipLevel: "8",
-        upgrade: "1,000,000",
-        vipTitle: "黄金 I"
-      },
-      {
-        vipLevel: "9",
-        upgrade: "2,000,000",
-        vipTitle: "铂金 II"
-      },
-      {
-        vipLevel: "10",
-        upgrade: "4,000,000",
-        vipTitle: "铂金 I"
-      },
-      {
-        vipLevel: "11",
-        upgrade: "8,000,000",
-        vipTitle: "钻石"
-      },
-      {
-        vipLevel: "12",
-        upgrade: "12,000,000",
-        vipTitle: "最强王者"
-      }
-    ]);
-    const formatPercentageRange = (range) => {
-      const percentages = range.split(' - '); // Split the range into two percentages
-      const formattedPercentages = percentages.map((percentage) =>
-        parseFloat(percentage).toFixed(2) // Convert to float and fix to two decimal places
-      );
-      return formattedPercentages.join('% - ') + '%'; // Join the formatted percentages
-    }
-    const initVIPTable = async () => {
-      
-      var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
-      
-      if (res.code === 0) {
-        const { vipBonusVOList } = res.data;
-        vipBonusVOList.forEach(vipBonusItem => {
-          vipBonusItem.holidayClaimStatus = 'NO_STATUS'
-          vipBonusItem.rebateClaimStatus = 'NO_STATUS'
-          vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange)
-          const index = vipItems.findIndex(
-            item => item.vipLevel === vipBonusItem.vipLevel.toString()
-          );
-
-          if (index !== -1) {
-            vipItems[index] = {
-              ...vipItems[index],
-              ...vipBonusItem
-            };
-          } 
-        })
-        currentDepAmt.value = res.data.currentDepositAmount
-        currentBetAmt.value = res.data.currentBetAmount
-        } else {
-          notify({ type: 'error', message: res.message });
-        }
-        slideTo();
-    };
-    const categories = [
-      { key: 'upgrade', image: 'upgrade', displayName: '晋级彩金' },
-      { key: 'monthly', image: 'monthly',  displayName: '会员日红包' },
-      { key: 'coupon', image: 'coupon',  displayName: '会员专属加码卷' },
-      { key: 'rebate', image: 'rebate',  displayName: '日返水' },
-      { key: 'retain', image: 'retain',  displayName: '保级彩金' },
-      { key: 'yearlyRetain', image: 'yearly',  displayName: '年度保级彩金' },
-      { key: 'birthday', image: 'birthday',  displayName: '生日礼金' },
-      { key: 'holiday', image: 'holiday',  displayName: '节日礼金' },
-    ];
-    // Group categories into pairs
-    const categoryPairs = computed(() => {
-      const pairs = [];
-      for (let i = 0; i < categories.length; i += 4) {
-        pairs.push(categories.slice(i, i + 4));
-      }
-      return pairs;
-    });
-
-    const claimVIPLevelItem = async (type, item) => {
-      const res = await claimItems(type, type === 'all' ? item : item.vipLevel);
-      if (res.code === 0) {
-        if (type !== 'all') {
-          item[`${type}ClaimStatus`] = 'CLAIMED';
-        }
-        notify({
-          type: "success",
-          message: `领取成功！`,
-        });
-        
-        store.getBalance();
-        initVIPTable();
-        getVipLevelProgress();
+    // Step 2: Shift values backward by one position.
+    const shiftedUpgradeBetAmounts = [];
+    for (let i = 0; i < originalUpgradeBetAmounts.length; i++) {
+      if (i === 0) {
+        shiftedUpgradeBetAmounts[i] = 0;  // The first value should be 0 or a base value
       } else {
-        notify({ type: 'error', message: res.message });
-      }
-    };
-    const currentSlide = ref(11);
-    const currentCarousel = ref(0);
-    const currentBoxes = ref(0);
-    const slideTo = () => {
-      const vipLevel = +store.vip.replace("VIP", "");
-      if (vipLevel === 0) {
-        currentSlide.value = 0;
-        return;
-      }
-      currentSlide.value = vipLevel - 1;
-    };
-    function formatNumber(value) {
-      // Convert the string to a float
-      const number = parseFloat(value);
-
-      // Check if there are any decimal places
-      if (number % 1 !== 0) {
-        // Return with two decimal places
-        return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      } else {
-        // Return without decimal places
-        return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        shiftedUpgradeBetAmounts[i] = originalUpgradeBetAmounts[i - 1]; // Shift backward
       }
     }
-    watch(() => store.token, () => {
-      initVIPTable(); 
-    }, { immediate: true }); 
-    // onActivated(() => {
-    //   initVIPTable();
-    //   slideTo();
-    // });
+    vipBonusVOList.forEach((vipBonusItem, i) => {
+      vipBonusItem.upgradeBetAmount = shiftedUpgradeBetAmounts[i];
+      if (vipLevel.value === vipBonusItem.vipLevel) {
+        vipBonusItem.holidayClaimStatus = "NO_STATUS";
+        vipBonusItem.rebateClaimStatus = "NO_STATUS";
+      } else {
+        vipBonusItem.holidayClaimStatus = "CANT_CLAIM";
+        vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
+      }
+      vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
+      const index = vipItems.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
+
+      if (index !== -1) {
+        vipItems[index] = {
+          ...vipItems[index],
+          ...vipBonusItem
+        };
+      }
+    });
+    currentDepAmt.value = res.data.currentDepositAmount;
+    currentBetAmt.value = res.data.currentBetAmount;
+    isDataLoaded.value = true;
+  } else {
+    notify({ type: "error", message: res.message });
+  }
+  slideTo();
+};
+const categories = [
+  { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
+  { key: "monthly", image: "monthly", displayName: "会员日红包" },
+  { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
+  { key: "rebate", image: "rebate", displayName: "每日返水红包" },
+  { key: "retain", image: "retain", displayName: "保级彩金" },
+  { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
+  { key: "birthday", image: "birthday", displayName: "生日礼金" },
+  { key: "holiday", image: "holiday", displayName: "节日礼金" }
+];
+// Group categories into pairs
+const categoryPairs = computed(() => {
+  const pairs = [];
+  for (let i = 0; i < categories.length; i += 4) {
+    pairs.push(categories.slice(i, i + 4));
+  }
+  return pairs;
+});
+
+const claimVIPLevelItem = async (type, item) => {
+  const res = await claimItems(type, type === "all" ? item : item.vipLevel);
+  if (res.code === 0) {
+    if (type !== "all") {
+      item[`${type}ClaimStatus`] = "CLAIMED";
+    } else {
+      const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
+      const statuses = [
+        "upgradeClaimStatus",
+        "monthlyClaimStatus",
+        "couponClaimStatus",
+        "rebateClaimStatus",
+        "retainClaimStatus",
+        "yearlyRetainClaimStatus"
+      ];
+
+      statuses.forEach((status) => {
+        if (vipInfo[status] === "CAN_CLAIM") {
+          vipInfo[status] = "CLAIMED";
+        }
+      });
+    }
+    notify({
+      type: "success",
+      message: `领取成功！`
+    });
+
+    store.getBalance();
+    initVIPTable();
+    getVipLevelProgress();
+  } else {
+    notify({ type: "error", message: res.message });
+  }
+};
+const currentSlide = ref(11);
+const currentCarousel = ref(0);
+const currentBoxes = ref(0);
+const slideTo = (vipIndex) => {
+  if (vipIndex) {
+    currentSlide.value = vipIndex;
+    return;
+  }
+  const vipLevel = +store.vip.replace("VIP", "");
+  if (vipLevel === 0) {
+    currentSlide.value = 11;
+    return;
+  }
+  currentSlide.value = vipLevel - 1;
+};
+function formatNumber(value) {
+  if (value === undefined) {
+    return "-";
+  }
+  // Convert the string to a float
+  const number = parseFloat(value);
+
+  // Check if there are any decimal places
+  if (number % 1 !== 0) {
+    // Return with two decimal places
+    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else {
+    // Return without decimal places
+    return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+}
+const tabActive = ref(1); // Bind this to the active tab
+
+// Conditional logic for active states
+const benefitActive = computed(() => tabActive.value === 1);
+const rebateActive = computed(() => tabActive.value === 2);
+watch(
+  () => store.token,
+  () => {
+    initVIPTable();
+  },
+  { immediate: true }
+);
+// onActivated(() => {
+//   initVIPTable();
+//   slideTo();
+// });
 </script>
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap');
+//@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap");
 $border-settings: 1px solid #e5e7eb;
 .carousel__slide {
   .vipLevelButton {
@@ -600,33 +1121,32 @@ $border-settings: 1px solid #e5e7eb;
     min-height: 600px;
   }
   .current-vip-status {
-    border: 2px solid #799DF8;
+    border: 2px solid #799df8;
     max-width: 480px;
     padding: 10px;
-    flex-direction: column;
     width: 95%;
-
-    margin: 50px auto;
-    background: #212B4AE0;
+    margin: 0 auto;
+    background: #212b4ae0;
     border-radius: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     padding: 10px;
     .badge {
-      width: 100px;
+      width: 80px;
       position: absolute;
       left: 15px;
       img {
         width: 100%;
+        padding: 10px;
       }
     }
     .vip-progress {
       display: flex;
       flex-direction: column;
-      width: calc(100% - 120px);
-      margin-left: 70px;
+      // width: calc(100% - 120px);
+      margin-left: 80px;
       gap: 20px;
       .amount {
         display: flex;
@@ -637,10 +1157,10 @@ $border-settings: 1px solid #e5e7eb;
           gap: 2px;
           font-size: 14px;
           color: #ffffff;
-          white-space: nowrap;
+          // white-space: nowrap;
           .required-amount {
-            color: #799DF8;
-            font-weight:600;
+            color: #799df8;
+            font-weight: 600;
           }
         }
       }
@@ -661,64 +1181,77 @@ $border-settings: 1px solid #e5e7eb;
           color: #fff;
           border-radius: 16px;
           background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
-          height: 10px;
+          height: 16px;
         }
 
         .progressBarDescription {
           display: flex;
           justify-content: space-between;
           color: #333;
-          font-size: 17.987px;
+          font-size: 13.987px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
+          margin: -28px auto 0;
         }
       }
     }
     .claim-btn {
-      border: 2px solid #799DF8;
+      border: 2px solid #799df8;
       background: #405471;
-      padding: 8px 15px;
       color: #ffffff;
-      width: 180px;
+      width: 150px;
       text-align: center;
       display: block;
       border-radius: 8px;
-        font-size: 14px;
-        padding: 8px 0px;
-        text-align: center;
-        width: 180px;
-
+      font-size: 12px;
+      padding: 8px 0px;
+      text-align: center;
+      // margin-left: 70px;
     }
   }
   .month-birthday-bonus {
-    border: 2px solid #799DF8;
+    border: 2px solid #799df8;
     max-width: 480px;
-    margin: 50px auto 0;
-    background: #010101e0;
+    width: 95%;
+    margin: 20px auto 0;
+    background: #212B4AE0;
     border-radius: 30px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: stretch;
     align-items: flex-start;
     padding: 10px;
     gap: 10px;
+    ol {
+      margin: 0;
+      padding: 0;
+    }
     .left {
-      // flex: 1;
+      flex: 2;
       position: relative;
       width: 100%;
+      // height: 280px;
       height: 280px;
-      img {
+      a {
+        height: 100%;
+        width: 100%;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+      img.abs {
         position: absolute;
         width: 100%;
         height: 100%;
         z-index: 1;
       }
       .inner-slide {
-        width: 98%;
+        width: 96%;
         margin: auto;
         overflow: hidden;
         height: 96%;
-        margin-top: 2.3%;
+        margin: 3%;
         .card-img {
           position: relative;
           width: unset;
@@ -732,17 +1265,17 @@ $border-settings: 1px solid #e5e7eb;
             min-height: 210px;
           }
         }
-
       }
     }
     .right {
-      // flex: 1;
-      width: 220px;
+      flex: 2;
+      // width: 220px;
       .vip-boxes {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        // display: grid;
+        // grid-template-columns: repeat(2, 1fr);
         width: 100%;
         height: 100%;
+        max-width: 200px;
         gap: 15px;
         .box {
           display: flex;
@@ -750,30 +1283,30 @@ $border-settings: 1px solid #e5e7eb;
           align-items: center;
           flex-direction: column;
           font-size: 10px;
-          min-height: 120px;
+          min-height: 125px;
           .vip-inner {
-            border: 2px solid #799DF8;
-            background: #1F2231;
+            border: 1px solid #799df8;
+            background: #1f2231;
             padding: 5px;
-            border-radius: 10px;
+            border-radius: 20px;
             width: 100%;
             text-align: center;
           }
           &.inactive {
             .vip-inner {
-              border: 2px solid #596589;
-              background: #2F3547;
+              border: 1px solid #596589;
+              background: #2f3547;
             }
             .icon {
-            background: url(../../assets/images/vip/bg-circle-inactive.png)no-repeat center center;
-            background-size: contain;
+              background: url(../../assets/images/vip/bg-circle-inactive.png) no-repeat center center;
+              background-size: contain;
             }
             .item-amt {
               color: #596589;
             }
           }
           .icon {
-            background: url(../../assets/images/vip/bg-circle.png)no-repeat center center;
+            background: url(../../assets/images/vip/bg-circle.png) no-repeat center center;
             background-size: contain;
             padding: 0 10px;
             display: flex;
@@ -782,7 +1315,7 @@ $border-settings: 1px solid #e5e7eb;
             width: 60px;
             height: 60px;
             margin: 0 auto 5px;
-            img { 
+            img {
               height: 50%;
             }
           }
@@ -790,12 +1323,11 @@ $border-settings: 1px solid #e5e7eb;
             color: #ffffff;
           }
           .item-amt {
-            color: #799DF8;
+            color: #799df8;
           }
           .claim-now {
-            background: linear-gradient(90deg, #F1DDA0 0%, #FFCC80 100%);
+            background: linear-gradient(90deg, #f1dda0 0%, #ffcc80 100%);
             color: #000000;
-            font-family: PingFang SC;
             font-size: 12px;
             font-weight: 400;
             line-height: 28px;
@@ -805,10 +1337,10 @@ $border-settings: 1px solid #e5e7eb;
             margin: 10px auto;
             cursor: pointer;
           }
-          .claimed, .expired {
+          .claimed,
+          .expired {
             // background: linear-gradient(90deg, #F1DDA0 0%, #FFCC80 100%);
             color: #ffffff;
-            font-family: PingFang SC;
             font-size: 12px;
             font-weight: 400;
             line-height: 28px;
@@ -822,45 +1354,48 @@ $border-settings: 1px solid #e5e7eb;
     }
   }
   .tips {
-    color: #FFFFFF;
-    font-size: 20px;
+    color: #ffffff;
+    font-size: 13px;
     font-weight: 400;
     line-height: 22.8px;
     text-align: center;
-    margin: 30px auto;
+    margin: 10px auto;
     max-width: 500px;
-    width: 100%;
+    width: 95%;
     position: relative;
     .linktotable {
-      border-bottom: 1px solid #F1DDA0;
-      color: #F1DDA0;
+      border-bottom: 1px solid #f1dda0;
+      color: #f1dda0;
       display: inline-block;
+    display: block;
+    margin: 0 auto;
+    width: 98px;
     }
     .absolute-box {
       position: absolute;
-    width: 100%;
-    right: -45px;
+      width: 100%;
+      // right: -30px;
       z-index: 2;
+      // overflow: hidden;
     }
     .arrow_box {
-      font-family: PingFang SC;
-      width: 80%;
-      top: 40px;
+      // width: 85%;
+      width: 90%;
+      left: 5%;
+      top: 30px;
       position: relative;
-      background: #1F2231;
-      border: 2px solid #799DF8;  /*set border colour here*/
-      border-radius: 3px;
+      background: #1f2231;
+      border: 2px solid #799df8; /*set border colour here*/
       -webkit-filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8)); /*set shadow colour  and size here*/
       -moz-box-shadow: 0 1px 10px rgba(113, 158, 206, 0.8);
       filter: drop-shadow(0 1px 10px rgba(113, 158, 206, 0.8));
-      
-      padding: 30px;
+      padding: 20px 12px;
       border-radius: 10px;
       .overflow-table {
         overflow-x: auto;
         width: 100%;
         &::-webkit-scrollbar {
-          width: 8px;  /* Change this value to your desired width */
+          width: 8px; /* Change this value to your desired width */
           height: 8px; /* Change this value for horizontal scrollbars */
         }
 
@@ -871,34 +1406,35 @@ $border-settings: 1px solid #e5e7eb;
 
         /* Customize the scrollbar handle */
         &::-webkit-scrollbar-thumb {
-          background: #799DF8; /* You can change this to the color you prefer */
+          background: #799df8; /* You can change this to the color you prefer */
           border-radius: 10px; /* Makes the scrollbar handle rounded */
         }
 
         /* Handle on hover */
         &::-webkit-scrollbar-thumb:hover {
-          background: #2F3547; /* Darker color on hover */
+          background: #2f3547; /* Darker color on hover */
         }
       }
       table {
-        width: 1500px;
+        width: auto;
         tr {
           th {
-            border: 2px solid #F1DDA0;
+            border: 2px solid #f1dda0;
             padding: 20px 10px;
           }
           td {
+            white-space: nowrap;
             padding: 20px 10px;
-            border: 2px solid #799DF8;
-          } 
+            border: 2px solid #799df8;
+          }
           &:first-child {
-            background: #2F3547;
+            background: #2f3547;
           }
           &:nth-child(2) {
-            background: #2F3547;
+            background: #2f3547;
           }
           &:nth-child(3) {
-            background: #282C3E;
+            background: #282c3e;
           }
         }
       }
@@ -917,17 +1453,17 @@ $border-settings: 1px solid #e5e7eb;
 
     .arrow_box:after {
       border-color: rgba(255, 255, 255, 0);
-      border-bottom-color: #1F2231;
+      border-bottom-color: #1f2231;
       border-width: 19px;
-      left: 75%;
+      left: 85%;
       margin-left: -19px;
     }
 
     .arrow_box:before {
       border-color: rgba(113, 158, 206, 0);
-      border-bottom-color: #799DF8;
+      border-bottom-color: #799df8;
       border-width: 20px;
-      left: 75%;
+      left: 85%;
       margin-left: -20px;
     }
   }
@@ -941,10 +1477,12 @@ $border-settings: 1px solid #e5e7eb;
     height: 520px;
     background: url("../../assets/images/vip/cardbg.png") no-repeat top center;
     background-size: contain;
-    &9, &10, &11, &12 {
+    &9,
+    &10,
+    &11,
+    &12 {
       background: url("../../assets/images/vip/cardbg-shiny.png") no-repeat top center;
       background-size: contain;
-
     }
 
     // &2 {
@@ -1043,7 +1581,7 @@ $border-settings: 1px solid #e5e7eb;
         top: 50px;
         position: absolute;
         .type {
-          color: #799DF8;
+          color: #799df8;
           font-weight: 400;
           font-size: 24.319px;
           display: inline-block;
@@ -1052,7 +1590,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       .badge {
         width: 75%;
-        img { 
+        img {
           width: 100%;
         }
       }
@@ -1066,22 +1604,20 @@ $border-settings: 1px solid #e5e7eb;
         display: flex;
         flex-direction: column;
         span {
-          color: #F1DDA0;
+          color: #f1dda0;
           font-size: 20px;
           font-weight: 600;
           line-height: 26.4px;
           text-align: center;
-
         }
       }
       .viplevel {
         color: #ffffff;
-        font-family: "Purple Purse", serif;
+        font-family: "Purple Purse", sans-serif;
         font-size: 30px;
         font-weight: 400;
         line-height: 33px;
         text-align: center;
-
       }
 
       .inner-vip {
@@ -1171,21 +1707,69 @@ $border-settings: 1px solid #e5e7eb;
       margin: 20px 0;
     }
   }
-
+  .tabs {
+    display: flex;
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto 20px;
+    gap: 10px;
+    justify-content: center;
+    .tab {
+      max-width: 120px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .vip-benefit-section-title {
+    max-width: 800px;
+    margin: 10px auto;
+    img {
+      width: 100%;
+    }
+  }
+  .instructions {
+    overflow: auto;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0px auto 20px;
+    table {
+      width: 95%;
+      text-align: center;
+      margin: 0 auto;
+      border-radius: 10px;
+      word-break: break-word;
+      table-layout: fixed;
+      font-size: 12px;
+      thead {
+        background: linear-gradient(180deg, #4d6abe 0%, #354d93 24.31%, #16234e 100%);
+        color: #ffffff;
+      }
+      tbody {
+        background: #202946;
+        color: #ffffff;
+      }
+      th,
+      td {
+        padding: 5px;
+        border: 0.5px solid #799df8;
+      }
+    }
+  }
   .terms-conditions {
     max-width: 480px;
     margin: 0 auto;
     width: 95%;
     position: relative;
-    border: 2px solid #799DF8;
+    border: 2px solid #799df8;
     padding: 10px;
-    background: linear-gradient(0deg, #2F3547, #2F3547);
+    background: linear-gradient(0deg, #2f3547, #2f3547);
     border-radius: 15px;
     .section-title {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(180deg, #FFFFFF 18.57%, #B3D7F0 85%);
+      background: linear-gradient(180deg, #ffffff 18.57%, #b3d7f0 85%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
       &:before {
@@ -1222,7 +1806,7 @@ $border-settings: 1px solid #e5e7eb;
       font-size: 16px;
       font-weight: 400;
       line-height: 30px;
-      background: linear-gradient(0deg, #2F3547, #2f3547ad);
+      background: linear-gradient(0deg, #2f3547, #2f3547ad);
       counter-reset: item;
       padding: 0;
       li {
@@ -1235,7 +1819,7 @@ $border-settings: 1px solid #e5e7eb;
         &::before {
           content: counter(item);
           counter-increment: item;
-          background: url("../../assets/images/vip/tnc-no-bg.png")no-repeat center center;
+          background: url("../../assets/images/vip/tnc-no-bg.png") no-repeat center center;
           font-weight: 600;
           padding: 10px;
           margin-top: -8px;
@@ -1279,25 +1863,38 @@ $border-settings: 1px solid #e5e7eb;
       }
 
       .vipcontents {
-        padding-bottom: 10px;
+        padding-bottom: 13px;
       }
     }
   }
 }
 
+// @media (max-width: 380px) {
+
+//   .vip-container .month-birthday-bonus {
+//     flex-direction: column;
+//   }
+//   .vip-container .month-birthday-bonus .right .vip-boxes {
+//     justify-content: center;
+//     align-items: center;
+//   }
+//   .vip-boxes .carousel {
+//     max-width: unset !important;
+//   }
+// }
 </style>
 
-<style scoped>
+<style scoped lang="scss">
 .left {
   .carousel {
     height: 100%;
-    max-width: 120px;
+    // max-width: 140px;
     margin: 0 auto;
   }
-  .carousel__slide {
-    overflow: hidden;
-    gap: 10px;
-  }
+  // .carousel__slide {
+  //   overflow: hidden;
+  //   gap: 5px;
+  // }
   .carousel__pagination {
     padding: 0;
     margin: 10px;
@@ -1306,21 +1903,30 @@ $border-settings: 1px solid #e5e7eb;
     left: 0;
     right: 0;
     bottom: 0;
+    gap: 5px;
   }
-  :deep(.carousel__pagination-button) {
-    background: #FFFFFF80;
-    width: 10px;
+  :deep(.carousel__viewport) {
+    height: 100%;
+  }
+  :deep(.carousel__track) {
+    margin: 0;
+    height: 100%;
+  }
+  :deep(.carousel__pagination-button:after) {
+    background: #ffffff80;
+    border-radius: 10px;
     padding: 0;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
-  :deep(.carousel__pagination-button--active) {
-    background: #799DF8;
+  :deep(.carousel__pagination-button--active:after) {
+    background: #799df8;
   }
 }
 .vip-boxes {
   .carousel {
-    max-width: 220px;
-    margin: 0 auto;
+    // max-width: 200px;
+    // margin: 0 auto;
   }
   .carousel__slide {
     display: grid;
@@ -1329,190 +1935,227 @@ $border-settings: 1px solid #e5e7eb;
     justify-content: center;
     align-items: flex-start;
   }
+  :deep(.carousel__track) {
+    transform-style: preserve-3d;
+    margin: 0;
+  }
   .carousel__pagination {
     padding: 0;
     margin: 10px;
+    gap: 5px;
   }
-  :deep(.carousel__pagination-button) {
-    background: #FFFFFF80;
-    width: 10px;
+  :deep(.carousel__pagination-button:after) {
+    background: #ffffff80;
+    border-radius: 10px;
     padding: 0;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
-  :deep(.carousel__pagination-button--active) {
-    background: #F1DDA0;
+  :deep(.carousel__pagination-button--active:after) {
+    background: #f1dda0;
   }
 }
 .vip-cards {
-
   .carousel {
-  max-width: 320px;
-  margin: 0 auto;
-}
-.carousel__slide {
-  padding: 5px;
-}
+    max-width: 85%;
+    margin: -40px auto -20px;
+  }
+  .carousel__slide {
+    padding: 5px;
+  }
 
-.carousel__viewport {
-  perspective: 2000px;
-}
+  .carousel__viewport {
+    perspective: 2000px;
+  }
 
-.carousel__track {
-  transform-style: preserve-3d;
-}
+  :deep(.carousel__track) {
+    transform-style: preserve-3d;
+  }
 
-.carousel__slide--sliding {
-  transition: 0.5s;
-}
+  .carousel__slide--sliding {
+    transition: 0.5s;
+  }
 
-.carousel__slide {
-  opacity: 0;
-  transform: scale(0.5);
-  filter: grayscale(.5) brightness(.9);
-}
+  .carousel__slide {
+    opacity: 0;
+    transform: scale(0.5);
+    filter: grayscale(0.5) brightness(0.9);
+  }
 
-.carousel__slide--active ~ .carousel__slide {
-  z-index: -1;
-  filter: grayscale(.8) brightness(.9);
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: 200px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
+  .carousel__slide--active ~ .carousel__slide {
+    z-index: -1;
+    transform: scale(0.8);
+    filter: grayscale(0.8) brightness(0.9);
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: 200px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
     }
   }
-}
-.carousel__slide--active ~ .carousel__slide.carousel__slide--next {
-  transform: scale(0.6);
-  filter: grayscale(1) brightness(.7);
-  z-index: -3;
-  
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: 110px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
-    }
-  }
-}
-.carousel__slide--active ~ .carousel__slide.carousel__slide--prev {
-  transform: scale(0.6);
-  filter: grayscale(1) brightness(.7);
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: -110px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
-    }
-  }
-}
-.carousel__slide--prev {
-  opacity: 1;
-  transform: scale(0.6);
-  z-index: -2;
-  filter: grayscale(1) brightness(.5);
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: -110px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
-    }
-  }
-}
+  .carousel__slide--active ~ .carousel__slide.carousel__slide--next {
+    transform: scale(0.6);
+    margin-left: -25px;
+    filter: grayscale(1) brightness(0.7);
+    z-index: -3;
 
-.carousel__slide--next {
-  transform: scale(0.6);
-  opacity: 1;
-  z-index: -2;
-  filter: grayscale(1) brightness(.5);
-  
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: 110px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: 110px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
     }
   }
-}
-.carousel__slide--prev + .carousel__slide.carousel__slide--visible {
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: -200px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
+  .carousel__slide.carousel__slide--prev {
+    transform: scale(0.6);
+    filter: grayscale(1) brightness(0.7);
+    margin-left: 15px;
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: -110px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
     }
   }
-}
-.carousel__slide--next + .carousel__slide.carousel__slide--visible {
-  .vipcontents {
-    &:before {
-      content: "";            
-      box-shadow: 200px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
+  .carousel__slide--prev {
+    opacity: 1;
+    transform: scale(0.6);
+    z-index: -2;
+    filter: grayscale(1) brightness(0.5);
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: -110px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
     }
   }
-}
-.carousel__slide--visible {
-  transform: scale(0.8);
-  opacity: 0.9;
-  z-index: -1;
-}
 
-:deep(.carousel__prev) {
-  background: url('../../assets/images/vip/nextprev.png');
-  background-size: contain;
-  padding: 25px;
-}
-:deep(.carousel__next) {
-  background: url('../../assets/images/vip/nextprev.png');
-  background-size: contain;
-  padding: 25px;
-  transform: translate3d(20px, -20px, 10px) rotateY(180deg);
-}
-.carousel__slide--active {
-  opacity: 1;
-  transform: scale(1);
-  filter: grayscale(0);
-  z-index: 1;
-  .vipcontents {
-    &:before {
-      content: unset !important;            
-      box-shadow: 200px 0 30px -10px black inset;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      z-index: 2;
+  .carousel__slide--next {
+    transform: scale(0.6);
+    opacity: 1;
+    z-index: -2;
+    filter: grayscale(1) brightness(0.5);
+
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: 110px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
+    }
+  }
+  .carousel__slide--prev + .carousel__slide.carousel__slide--visible {
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: -200px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
+    }
+  }
+  .carousel__slide--next + .carousel__slide.carousel__slide--visible {
+    .vipcontents {
+      &:before {
+        content: "";
+        //box-shadow: 200px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
+    }
+  }
+  .carousel__slide--visible {
+    transform: scale(0.8);
+    opacity: 0.9;
+    z-index: -1;
+  }
+
+  :deep(.carousel__prev) {
+    background: url("../../assets/images/vip/nextprev.png");
+    background-size: contain;
+    padding: 5px;
+    margin: 0px;
+    transform: translate3d(-20px, -20px, 10px);
+  }
+  :deep(.carousel__next) {
+    background: url("../../assets/images/vip/nextprev.png");
+    background-size: contain;
+    padding: 5px;
+    margin: 0px;
+    transform: translate3d(20px, -20px, 10px) rotateY(180deg);
+  }
+  :deep(.carousel__icon) {
+    opacity: 0;
+  }
+  .carousel__slide--active {
+    opacity: 1;
+    transform: scale(.8);
+    filter: grayscale(0);
+    margin-left: -5px;
+    z-index: 1;
+    .vipcontents {
+      &:before {
+        content: unset !important;
+        //box-shadow: 200px 0 30px -10px black inset;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
     }
   }
 }
+.newTable {
+  table {
+      table-layout: fixed;
+      font-size: 14px;
+      width: 95%;
+      text-align: center;
+      margin: 0 auto;
+      thead {
+        background: linear-gradient(180deg, #4d6abe 0%, #354d93 24.31%, #16234e 100%);
+        color: #ffffff;
+      }
+      tbody {
+        background: #2f3547;
+        color: #ffffff;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 0.5px solid #f1dda0;
+      }
+    }
 }
 </style>

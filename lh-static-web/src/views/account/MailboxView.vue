@@ -3,7 +3,7 @@
     <Mail
       v-if="showMailId || showMailId === 0"
       :mail="showMailId ? mailboxState.mailboxList.inbox.list[showMailId] : mailboxState.mailboxList.inbox.list[0]"
-      :closeMail="() => (showMailId = undefined)"
+      :closeMail="closeTheMail"
     />
     <template v-else>
       <div class="menu-title-container">
@@ -15,7 +15,10 @@
           <el-tab-pane :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
             <template #label>
               <div class="mail-category-label">
-                <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+                <!-- <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" /> -->
+                <div class="red-dot-icon" v-if="unreadCount[item.type]" color="red">
+                  {{ unreadCount[item.type] }}
+                </div>
                 <span>
                   {{ item.name }}
                 </span>
@@ -63,9 +66,11 @@
                       <img src="../../assets/images/mail/unread-mail.png" />
                     </div>
                     <div class="title-wrapper">
-                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">
-                        {{ item.title }}
-                      </div>
+                      <div
+                        :class="`title-text ${item.readTime ? '' : 'unread'}`"
+                        :title="item.title"
+                        v-html="item.title"
+                      ></div>
                       <div
                         v-if="item.sendTime"
                         class="send-time"
@@ -104,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch, computed } from "vue";
 import {
   mailInbox,
   mailOutbox,
@@ -120,6 +125,8 @@ import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
 import Mail from "@/components/mailbox/Mail.vue";
+import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const notify = useNotify();
 
@@ -130,15 +137,18 @@ const isShowSelect = ref(false);
 const selectedIds = ref({});
 const store = userStore();
 const showMailId = ref();
+const router = useRouter();
 
 const activeNames = ref();
 
 const mailboxMessageTypeData = ref([
+  { num: 1, type: "NOTIFICATION", name: "通知" },
+  { num: 5, type: "MATCH", name: "赛事" },
   { num: 2, type: "ACTIVITY", name: "活动" },
   { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-  { num: 4, type: "PAYMENT", name: "充提" },
-  { num: 1, type: "NOTIFICATION", name: "通知" },
-  { num: 5, type: "ALL", name: "全部" }
+  { num: 4, type: "PAYMENT", name: "充提" }
+  // { num: 6, type: "ALL", name: "全部" }
+  // { num: 5, type: "ALL", name: "全部" }
 ]);
 const mailboxMessageType = ref(mailboxMessageTypeData.value[0].type);
 const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
@@ -155,6 +165,21 @@ const changeMailboxType = (nk) => {
   changePage(1);
 };
 
+const closeTheMail = () => {
+  showMailId.value = undefined;
+
+  removeQueryParam();
+};
+
+const removeQueryParam = (queryParam) => {
+  const { params, name } = router.currentRoute.value;
+
+  // Create a new query object without the query parameter you want to remove
+  const newQuery = {};
+
+  router.replace({ name, params, query: newQuery });
+};
+
 const handleChange = () => {};
 
 const mailboxNotifyState = reactive({
@@ -162,6 +187,7 @@ const mailboxNotifyState = reactive({
   ACTIVITY: [],
   ANNOUNCEMENT: [],
   PAYMENT: [],
+  MATCH: [],
   ALL: []
 });
 const mailboxState = reactive({
@@ -170,13 +196,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 5,
+      pageSize: 10,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 5,
+      pageSize: 10,
       total: 0
     },
     write: {
@@ -185,6 +211,8 @@ const mailboxState = reactive({
     }
   }
 });
+
+const route = useRoute();
 
 const loadNotifyMailbox = () => {
   mailboxNotifyData.value = {
@@ -204,11 +232,36 @@ const loadNotifyMailbox = () => {
         mailboxNotifyState[type].push(record);
         mailboxNotifyState["ALL"].push(record);
       });
+
+      if (isMailDetail.value) {
+        // debugger;
+        const mailIndex = mailboxNotifyState[mailboxMessageTab.value].findIndex(
+          (mail) => mail.id === parseInt(route.query.mailid)
+        );
+        if (mailIndex > -1) {
+          console.log(mailIndex);
+          const mailItem = mailboxNotifyState[mailboxMessageTab.value].find(
+            (mail) => mail.id === parseInt(route.query.mailid)
+          );
+          openMsg(mailItem, mailIndex);
+        }
+      }
     })
     .catch((error) => {
       console.log(error);
     });
 };
+
+const unreadCount = computed(() => {
+  return Object.keys(mailboxNotifyState).reduce((result, key) => {
+    if (key === "ALL") {
+      result[key] = mailboxNotifyState[key].filter((item) => item.readTime === null).length;
+    } else {
+      result[key] = mailboxNotifyState[key].filter((item) => item.type === key && item.readTime === null).length;
+    }
+    return result;
+  }, {});
+});
 
 const hasUnreadMessages = (type) => {
   if (type === "ALL") {
@@ -222,6 +275,7 @@ const isAnyReadTimeNull = (mailboxList) => {
 };
 
 const loadPersonalMailbox = () => {
+  // debugger;
   mailboxState.mailboxList[mailboxState.active].list = [];
   if (mailboxState.active === "inbox") {
     mailboxData.value = {
@@ -293,6 +347,21 @@ const readAllMsg = (m) => {
       console.log(error);
     });
 };
+
+const isMailDetail = ref(false);
+watch(
+  () => route.query,
+  () => {
+    if (route.query && route.query.mailid) {
+      isMailDetail.value = true;
+    }
+    if (route.query && route.query.type) {
+      mailboxMessageType.value = route.query.type;
+      mailboxMessageTab.value = route.query.type;
+    }
+  },
+  { immediate: true }
+);
 
 const readMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
@@ -553,6 +622,10 @@ onMounted(() => {
   .title-text {
     font-weight: normal;
 
+    p {
+      margin: 0px;
+    }
+
     &.unread {
       font-weight: bold;
     }
@@ -673,11 +746,14 @@ onMounted(() => {
     align-items: center;
 
     .red-dot-icon {
-      height: 10px;
-      width: 10px;
+      // height: 10px;
+      // width: 10px;
+      padding: 1px 6px;
       background: #db0011;
-      border-radius: 50%;
+      border-radius: 25px;
       margin-right: 5px;
+      font-size: 10px;
+      color: #fff;
     }
   }
 }
@@ -709,6 +785,11 @@ onMounted(() => {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    p {
+      margin: 0px;
+      margin-bottom: 0 !important;
+    }
   }
 
   .send-time {
@@ -734,6 +815,13 @@ onMounted(() => {
         color: $font-0;
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.title-text {
+  p {
+    margin-bottom: 0;
   }
 }
 </style>

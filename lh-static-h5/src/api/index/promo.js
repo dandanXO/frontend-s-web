@@ -1,10 +1,13 @@
 import { cached } from "boot/cache";
-import { eventapi } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 
 const qs = require("qs");
 
 export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
+}
+export function loadPromoBanner(category) {
+  return api.get(`/promo/banner?category=${category}`);
 }
 
 export function claimBonusItem2(item) {
