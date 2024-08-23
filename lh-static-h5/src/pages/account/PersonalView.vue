@@ -1,7 +1,7 @@
 <template>
   <div class="personal-account">
     <div class="web">专属网址：{{ personalState.memberInfo.evip }}</div>
-    <q-form ref="profileFormRef">
+    <q-form ref="profileFormRef" class="profile-form">
       <q-input
         standout
         class="q-pb-xs"
@@ -70,7 +70,73 @@
         </template>
       </q-input>
 
-      <div class="flex items-baseline no-wrap">
+      <template v-if="$q.dark.isActive">
+        <q-input
+        standout
+        filled
+        class="q-pb-xs"
+        hide-bottom-space
+        v-model="formDetail.phone"
+        type="tel"
+        placeholder="电话"
+        lazy-rules
+        :rules="[(_) => isValidPhone()]"
+        label-color="secondary"
+        color="secondary"
+        readonly
+        style="width: 100%"
+      >
+        <template v-slot:prepend>
+          <span>电话</span>
+        </template>
+        <template v-slot:append>
+          <template v-if="isEditPhone">
+            <div class="q-ml-md">
+              <q-btn
+                class="common-sm-btn"
+                :color="$q.dark.isActive ? '' : 'brightbtn'"
+                label="验证"
+                @click="goToPage('/account/verifyTelephone')"
+                style="white-space: nowrap"
+              />
+            </div>
+          </template>
+        </template>
+      </q-input>
+
+        <q-input
+          standout
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.email"
+          placeholder="邮箱"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
+          label-color="secondary"
+          color="secondary"
+          readonly
+          style="width: 100%"
+        >
+          <template v-slot:prepend>
+            <span>邮箱</span>
+          </template>
+          <template v-slot:append>
+            <template v-if="isEditEmail">
+          <div class="q-ml-md">
+            <q-btn
+              class="common-sm-btn"
+              :color="$q.dark.isActive ? '' : 'brightbtn'"
+              label="验证"
+              @click="goToPage('/account/verifyEmail')"
+              style="white-space: nowrap"
+            />
+          </div>
+        </template>
+          </template>
+        </q-input>
+      </template>
+      <template v-else>
+        <div class="flex items-baseline no-wrap">
         <q-input
           standout
           filled
@@ -94,7 +160,7 @@
           <div class="q-ml-md">
             <q-btn
               class="common-sm-btn"
-              color="brightbtn"
+              :color="$q.dark.isActive ? '' : 'brightbtn'"
               label="验证"
               @click="goToPage('/account/verifyTelephone')"
               style="white-space: nowrap"
@@ -125,7 +191,7 @@
           <div class="q-ml-md">
             <q-btn
               class="common-sm-btn"
-              color="brightbtn"
+              :color="$q.dark.isActive ? '' : 'brightbtn'"
               label="验证"
               @click="goToPage('/account/verifyEmail')"
               style="white-space: nowrap"
@@ -133,6 +199,7 @@
           </div>
         </template>
       </div>
+      </template>
 
       <div class="text-center q-mt-lg" v-if="isEditBirthday || isEditRealName">
         <q-btn class="common-large-btn full-width" color="brightbtn" @click="updateState" label="提交" />
@@ -537,12 +604,24 @@ export default defineComponent({
 
 .body--dark {
   .personal-account {
-    .q-field__control {
+    background: url('../../assets/images/profile/personal-bg-dark.jpg') no-repeat center center;
+    padding: 0;
+    height: calc(100vh - 112px);
+    .q-field__control, .q-field--standout.q-field--dark.q-field--readonly .q-field__control:before {
       box-shadow: none;
-      border: 1px solid $border-dark;
+      border: none;
+      background: none;
+      border-radius: 0;
+    }
+    .q-field {
+      border-bottom: 1px solid #b1bad31a;
     }
     .web {
       color: $primary-dark;
+      padding: 10px;
+    }
+    .web, .profile-form {
+      background: #060d1b5c;
     }
   }
 }
