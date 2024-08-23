@@ -10,14 +10,14 @@
     <div class="maintenance-title">目前我们的网站正在维护中...</div>
     <div class="maintenance-details">
       <div class="maintenance-desc">
-        从：{{ ui.maintenanceStartTime }}
+        开始：{{ ui.maintenanceStartTime }}
         <br />
-        至：{{ ui.maintenanceEndTime }}
+        结束：{{ ui.maintenanceEndTime }}
         <br />
         <br />
         期间所有游戏和服务均无法使用。
         <br />
-        对于给您带来任何的不变，我们深表歉意，并感谢您的耐心等待！
+        感谢您的耐心等待，给您带来的不便我们深感抱歉！
       </div>
     </div>
     <!-- <div class="maintenance-btn">
