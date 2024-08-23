@@ -854,7 +854,7 @@
       </el-descriptions>
     </el-card>
 
-    <el-card class="info-card">
+    <el-card class="info-card" v-if="uiControl.supportMultiWallet">
       <template #header>
         <div class="clearfix">
           <span class="role-span">{{ t('fields.walletInfo') }}</span>
@@ -1669,7 +1669,7 @@ import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
-import { getConfigListByGroup } from '../../../../../api/config'
+import { getConfigListByGroup, getOpenForMember } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
 import { isInd, isKorea } from '@/utils/site'
 
@@ -1694,6 +1694,7 @@ export default defineComponent({
       showCall: false,
       showCall1: false,
       showSend: false,
+      supportMultiWallet: false,
     })
     const route = useRoute()
     const site = reactive({
@@ -2582,11 +2583,19 @@ export default defineComponent({
       ElMessage({ message: t('message.success'), type: 'success' })
     }
 
+    const loadSupportMultiWallet = async () => {
+      const { data: config } = await getOpenForMember(site.id, 'support_multi_wallet', props.mbrId)
+      uiControl.supportMultiWallet = config
+    }
+
     const loadWallet = async () => {
-      const { data: wallet } = await walletBalance(props.mbrId, site.id)
-      memberDetail.fiatBalance = wallet.fiat
-      memberDetail.usdtBalance = wallet.usdt
-      memberDetail.walletType = wallet.walletType
+      await loadSupportMultiWallet()
+      if (uiControl.supportMultiWallet) {
+        const { data: wallet } = await walletBalance(props.mbrId, site.id)
+        memberDetail.fiatBalance = wallet.fiat
+        memberDetail.usdtBalance = wallet.usdt
+        memberDetail.walletType = wallet.walletType
+      }
     }
 
     async function toggleWallet() {
