@@ -17,8 +17,8 @@
           <img src="img/lh-logo.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
         </div>
 
-        <div class="banner-wrapper">
-          <img src="img/banner.png" alt="2024 欧洲杯" title="2024 欧洲杯" />
+        <div id="image-container" class="banner-wrapper">
+          <img id="banner-img" src="img/01.png" alt="2024 欧洲杯" title="2024 欧洲杯" />
         </div>
 
         <div class="action-wrapper">
@@ -39,7 +39,7 @@
               <div class="action-btn download">
                 <img src="img/download-icon.png" alt="雷火 TFGAMING" title="雷火 TFGAMING"/>
                 <div class="action-btn__text-wrapper">
-                  <span class="action-btn__title">App下载</span>
+                  <span class="action-btn__title">App 下载</span>
                   <span class="action-btn__description">app download</span>
                 </div>
               </div>
@@ -99,7 +99,7 @@
         <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&;lang=zh-CN" target="_blank">
           <div class="main-sticky-btn customer-service">
             <div class="main-sticky-btn__text-wrapper">
-              <span class="main-sticky-btn__title">24小时客服</span>
+              <span class="main-sticky-btn__title">24 小时客服</span>
               <span class="main-sticky-btn__description">立即咨询</span>
             </div>
             <img class="main-sticky-btn__icon" src="img/customer-service-icon.png" alt="首存福利" title="首存福利" />
@@ -148,6 +148,21 @@
           }
         });
       });
+      
+    const images = ["img/01.png", "img/02.png", "img/03.png","img/04.png","img/05.png",];
+    let currentIndex = 0;
+    const imgElement = document.getElementById('banner-img');
+
+    function changeImage() {
+      imgElement.classList.add('fade-out');
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        imgElement.src = images[currentIndex];
+        imgElement.classList.remove('fade-out');
+      }, 1000); // 1 second duration for fade out
+    }
+
+    setInterval(changeImage, 3000);
     </script>
   </body>
 </html>
