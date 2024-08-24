@@ -15,7 +15,7 @@
           </div>
           <div class="reward-table__row">
             <span>≥10,000</span>
-            <span>【黑神话·悟空】游戏激活码</span>
+            <span>【黑神话·悟空】豪华版游戏激活码</span>
           </div>
           <div class="reward-table__row">
             <span>≥100,000</span>
