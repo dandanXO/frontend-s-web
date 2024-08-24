@@ -205,11 +205,14 @@
           <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
           <div class="box-value">{{ recordDetails.amount }}</div>
         </div>
-        <div class="details-box" style="margin-bottom: 0px">
+        <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositDuration") }}</div>
           <div class="box-value">{{ recordDetails.days }} day(s)</div>
         </div>
-        <div class="warn-text" style="margin-bottom: 10px">{{ $t("records.turnover_requi") }}: {{ turnoverAmt }}x</div>
+        <div class="details-box">
+          <div class="box-title">{{ $t("records.turnover_requi") }}</div>
+          <div class="box-value">{{ turnoverAmt }} x</div>
+        </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
           <div class="box-value">{{ convertToGMT55(recordDetails.placeTime) }}</div>
