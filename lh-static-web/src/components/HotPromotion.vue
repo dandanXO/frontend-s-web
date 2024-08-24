@@ -84,6 +84,7 @@
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -173,6 +174,7 @@ import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 import LPLLCK from "@/components/hotpromo/lpllck/LPLLCK.vue";
 import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
+import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -243,7 +245,8 @@ export default defineComponent({
     OlympicFund,
     LPLLCK,
     LivepokerRebate,
-    BbdachaCsgo2
+    BbdachaCsgo2,
+    BlackMythWuKongPromo
   },
   props: {
     list: {
