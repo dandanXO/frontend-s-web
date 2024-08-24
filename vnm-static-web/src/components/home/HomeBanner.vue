@@ -208,6 +208,10 @@ onMounted(() => {
   margin-top: 25% !important;
   transform: translate(-50%, -50%);
 
+  &.el-dialog {
+    --el-dialog-width: 35%;
+  }
+
   .el-dialog__body {
     padding: 20px !important;
     border-radius: 12px;
