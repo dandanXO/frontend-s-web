@@ -275,17 +275,17 @@
         <!--          <a-->
         <!--            class="tutorial-link"-->
         <!--            style="color: #70bc62; text-decoration: underline"-->
-        <!--            href="https://drive.google.com/file/d/1qF5PHYqqBdKEPTqLB3U3IaGswXyxc1Sz/view"-->
+        <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
         <!--            target="_blank"-->
         <!--          >-->
         <!--            Video-->
         <!--          </a>-->
         <!--        </p>-->
         <!--        <p>-->
-        <!--          2. After payment is completed, you need to submit the payment voucher, otherwise it will not be automatically-->
-        <!--          credited-->
+        <!--          2. After payment is completed, you need to submit the last 5 digits of TID, otherwise it will not be-->
+        <!--          automatically credited.-->
         <!--        </p>-->
-        <!--        <p>3. Fill in the correct wallet account</p>-->
+        <!--        <p>3. Fill in the correct wallet account.</p>-->
         <!--        <p>4. The amount submitted must be consistent with the payment amount.</p>-->
       </template>
     </div>
