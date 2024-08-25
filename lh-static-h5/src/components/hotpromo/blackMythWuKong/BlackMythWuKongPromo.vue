@@ -1,6 +1,6 @@
 <template>
   <div class="black-myth-wrapper">
-    <div class="black-myth-content-wrapper">
+    <div class="black-myth-content-wrapper" style="padding-top: 16px">
       <img class="black-myth-content-title" src="./img/event-content-title.png" />
       <div class="black-myth-content-block event-content">
         <span>活动期间，每位会员当日首充达5,000元或以上，即可领取对应档位奖品。</span>
@@ -44,15 +44,15 @@
           </li>
           <li>7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ul>
-        <button class="deposit-btn" @click="handleDepositClick"></button>
+        <!--        <button class="deposit-btn" @click="handleDepositClick"></button>-->
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 const handleDepositClick = () => {
   if (window.location.pathname === "/promotion") {
@@ -60,7 +60,7 @@ const handleDepositClick = () => {
   } else {
     router.push("/finance/deposit");
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .black-myth-wrapper {
@@ -132,7 +132,7 @@ const handleDepositClick = () => {
   width: 100%;
   background-color: #4b3e3a;
   text-align: center;
-  font-size: .75rem;
+  font-size: 0.75rem;
   line-height: 1.5rem;
 
   .reward-table__header,

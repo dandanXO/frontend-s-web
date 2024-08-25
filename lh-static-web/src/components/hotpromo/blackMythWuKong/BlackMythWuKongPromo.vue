@@ -46,9 +46,9 @@
           </li>
           <li>7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ul>
-        <router-link class="deposit-btn" to="/center/deposit">
-          <button></button>
-        </router-link>
+        <!--        <router-link class="deposit-btn" to="/center/deposit">-->
+        <!--          <button></button>-->
+        <!--        </router-link>-->
       </div>
     </div>
   </div>
