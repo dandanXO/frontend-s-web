@@ -131,8 +131,8 @@ export default {
     referral_hints: "Nếu bạn không phải là người chơi cộng tác, bạn không cần điền vào biểu mẫu.",
     already_have_acc: "Đã có tài khoản?",
     login_here: "Đăng nhập tại đây",
-    registration_hints: "Đăng ký tức bạn đã đồng ý và tuân thủ",
-    user_registration_protocol: "Thoản thuận đăng ký tài khoản",
+    registration_hints: "Đăng ký tức là bạn đã đồng ý và tuân thủ",
+    user_registration_protocol: "Thỏa thuận đăng ký tài khoản",
     register_success: "Đăng ký thành công",
     register_in_progress: "Đang đăng ký...",
 

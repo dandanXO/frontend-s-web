@@ -125,6 +125,20 @@
     <button class="primary-btn login-btn" size="large" @click="submitRegisterForm(registerRef)">
       {{ $t("login.register") }}
     </button>
+
+    <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
+      {{ $t("login.registration_hints") }}
+      <a href="/about?id=info" style="white-space: nowrap">
+        {{ $t("login.user_registration_protocol") }}
+      </a>
+    </div>
+
+    <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
+      {{ $t("login.already_have_acc") }}
+      <router-link to="/login">
+        {{ $t("login.login_here") }}
+      </router-link>
+    </div>
   </div>
 
   <div style="width: 100%; margin-top: 5px">
@@ -503,7 +517,7 @@ onMounted(() => {
   width: 100%;
 
   margin: 15px 0px;
-  margin-top: 50px !important;
+  margin-top: 40px !important;
   padding: 5px;
 
   position: relative;
