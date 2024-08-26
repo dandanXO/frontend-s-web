@@ -1,5 +1,5 @@
 <template>
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:10px;">
+    <div style="display:grid;grid-template-columns:85% 1fr;gap:10px;">
         <el-input :readonly="true" v-model.number="ruleForm.icon" autocomplete="off" />
         <!-- eslint-disable -->
         <input id="uploadFile" type="file" ref="input" style="display: none" accept="image/*"
