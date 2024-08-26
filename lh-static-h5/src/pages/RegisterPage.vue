@@ -633,6 +633,11 @@ function charType(num) {
       background: linear-gradient(180deg, #2E4166 0%, #1A263F 100%);
       border: 1px solid #BE9457;
       border-radius: 8px;
+
+      .input-label {
+        font-weight: 400;
+        font-size: 14px;
+      }
     }
   }
   .common-large-btn {

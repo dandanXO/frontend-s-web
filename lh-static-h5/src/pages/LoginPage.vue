@@ -725,6 +725,7 @@ export default defineComponent({
       }
 
       .input-label {
+        font-size: 14px;
         font-weight: 400;
       }
 
