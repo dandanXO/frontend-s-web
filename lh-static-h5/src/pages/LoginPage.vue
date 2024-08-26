@@ -765,16 +765,16 @@ export default defineComponent({
       }
 
       .login-form {
-        padding: 70px 20px 20px 20px;
+        padding: 65px 20px 20px 20px;
         background: linear-gradient(180deg, #2E4166 0%, #1A263F 100%);
         background: url('../assets/images/login/login-acc-bg-dark.png') no-repeat center center;
         background-size: 100% 100%;
-        aspect-ratio: 1035 / 1368;
+        // aspect-ratio: 1035 / 1368;
 
         &.phone-login {
           background: url('../assets/images/login/login-phone-bg-dark.png') no-repeat center center;
           background-size: 100% 100%;
-          aspect-ratio: 1035 / 1368;
+          // aspect-ratio: 1035 / 1368;
         }
       }
     }

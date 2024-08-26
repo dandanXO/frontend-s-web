@@ -2623,7 +2623,8 @@ export default defineComponent({
         .platform-img-frame {
           border-radius: unset;
           background-color: transparent;
-          aspect-ratio: 592/212;
+          aspect-ratio: 684/244;
+          background-size: 100% 100%;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
             top:1px;
