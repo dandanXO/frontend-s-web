@@ -632,6 +632,13 @@ deploy-nga-download:
 
 #===============================================================================================
 
+deploy-xf-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-download
+
+#===============================================================================================
+
 build-kr-live-web:
   extends: .build-projects
   variables:
@@ -767,3 +774,31 @@ build-image-ph1-static-v1:
     PROJECT: ph1-static-v1
   needs:
     - build-ph1-static-v1
+
+#===============================================================================================
+
+build-br1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: br1-static-v1
+
+build-image-br1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: br1-static-v1
+  needs:
+    - build-br1-static-v1
+
+#===============================================================================================
+
+build-id1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: id1-static-v1
+
+build-image-id1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: id1-static-v1
+  needs:
+    - build-id1-static-v1
