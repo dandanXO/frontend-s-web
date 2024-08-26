@@ -115,7 +115,7 @@
       </div>
       <div
         class="claim-btn"
-        :class="{ disabled: currentClaimAllStatus !== 'CAN_CLAIM' || isLoading['all'] }"
+        :class="{ disabled: isLoading['all'] }"
         @click="handleClick('all', vipLevel)"
       >
         一键领取
@@ -850,7 +850,7 @@ const vipItems = reactive([
   {
     vipLevel: "1",
     upgrade: "一笔存款",
-    vipTitle: "青铜 II"
+    vipTitle: "青铜 II",
   },
   {
     vipLevel: "2",
@@ -923,12 +923,21 @@ const getImages = () => {
     }
   });
 };
-const originalUpgradeBetAmounts = ref([]);
+const originalUpgradeBetAmounts = ref([
+]);
 const isDataLoaded = ref(false);
 const initVIPTable = async () => {
+  const storedData = sessionStorage.getItem('vipData');
+  
+  if (storedData) {
+    var res = JSON.parse(storedData);
+    runVipAPI(res);
+  }
   getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
-
+  runVipAPI(res);
+};
+const runVipAPI = (res) => {
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
     
@@ -971,7 +980,7 @@ const initVIPTable = async () => {
     notify({ type: "error", message: res.message });
   }
   slideTo();
-};
+}
 const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
@@ -992,6 +1001,9 @@ const categoryPairs = computed(() => {
 });
 const isLoading = reactive({});
 const handleClick = async (key, item) => {
+  if (key === "all" && currentClaimAllStatus.value === 'CANT_CLAIM') {
+    return notify({ type: 'error', message: '当前没有可领取的内容'})
+  }
   if (!isLoading[key]) {
     isLoading[key] = true; // Set loading state for this specific key
     const res = await claimItems(key, key === "all" ? item : item.vipLevel);
@@ -1018,13 +1030,12 @@ const handleClick = async (key, item) => {
           }
         });
       }
-
-      notify.success("领取成功！");
+      notify({ type: 'success', message: '领取成功！'})
       store.getBalance();
       initVIPTable();
       isLoading[key] = false; 
     } else {
-      notify.error(res.message);
+      notify({ type: 'error', message: res.message})
       isLoading[key] = false; 
     }
     
@@ -1873,7 +1884,7 @@ $border-settings: 1px solid #e5e7eb;
     }
 
     .vipitem {
-      height: 300px;
+      height: 320px;
       margin: auto;
       width: 300px;
       .vipLevelReachStatus {
@@ -2023,7 +2034,7 @@ $border-settings: 1px solid #e5e7eb;
     filter: grayscale(1) brightness(0.7);
     z-index: -3;
     .vipitem {
-      margin-right: 40px;
+      margin-right: 50px;
     }
 
     .vipcontents {
@@ -2043,7 +2054,7 @@ $border-settings: 1px solid #e5e7eb;
     filter: grayscale(1) brightness(0.7);
     // margin-left: 40px;
     .vipitem {
-      margin-left: 40px;
+      margin-left: 50px;
     }
     .vipcontents {
       &:before {

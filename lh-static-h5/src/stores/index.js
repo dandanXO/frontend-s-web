@@ -4,6 +4,7 @@ import {SessionStorage, Notify, Platform} from "quasar";
 import LocalStorage from "boot/local-storage";
 import {isAndroid} from "boot/utils"
 import { useUI } from "./ui";
+import { getVIPDetails, getVIPDetailsNotLoggedIn } from "../api/index/promo";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -39,6 +40,8 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
+      currentBetAmt: "",
+      currentUpgradeBetAmt: "",
       visitorId: "",
       profilePhoto: "",
       isDisplayLogin: false
@@ -214,10 +217,41 @@ export const userStore = defineStore("userStore", {
           this.unreadInboxMail = 0;
           // this.unreadInboxMail = 16;
           this.getBalance();
+          this.getVIPInfo();
         } else {
           this.memberLogout();
         }
       });
+    },
+    getVIPInfo() {
+      const storedData = sessionStorage.getItem('vipData');
+      if (storedData) {
+        const res = JSON.parse(storedData);
+        this.handleVIPData(res);
+      }
+      if (this.token) {
+        return getVIPDetails().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem('vipData', JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+        })
+      } else {
+        return getVIPDetailsNotLoggedIn().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem('vipData', JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+        })
+
+      }
+    },
+    handleVIPData(res) {
+      this.currentBetAmt = res.data.currentBetAmount;
+      const vipLevel = this.vip.replace("VIP", "");
+      if (res.data.vipBonusVOList && res.data.vipBonusVOList[vipLevel]) {
+        this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
+      }
     },
     getBalance() {
       if (this.token) {
@@ -265,6 +299,7 @@ export const userStore = defineStore("userStore", {
         .then(() => {
           LocalStorage.remove("TOKEN");
           SessionStorage.remove("TOKEN");
+          SessionStorage.remove("vipData");
 
           location.reload();
         });
