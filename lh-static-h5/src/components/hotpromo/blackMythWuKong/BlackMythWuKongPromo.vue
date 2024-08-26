@@ -133,7 +133,7 @@ const handleDepositClick = () => {
   width: 100%;
   background-color: #4b3e3a;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 1.1rem;
   line-height: 1.5rem;
 
   .reward-table__header,
@@ -143,13 +143,18 @@ const handleDepositClick = () => {
     span {
       flex: 1;
     }
+    span:nth-child(2) {
+      flex: 3;
+    }
   }
   .reward-table__header {
     background-color: #443429;
-    padding: 0 20px;
+    padding: 5px 20px;
   }
   .reward-table__row {
-    margin: 0 20px;
+    margin: 0 5px;
+    padding: 5px;
+    align-items: center;
     &:not(:last-child) {
       border-bottom: 1px solid #6a5954;
     }
