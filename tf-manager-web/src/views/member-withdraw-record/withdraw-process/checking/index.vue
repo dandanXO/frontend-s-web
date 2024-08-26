@@ -719,10 +719,16 @@ async function success(memberWithdrawRecord) {
   ElMessageBox.prompt(t('fields.remark'), t('fields.remark'), {
     confirmButtonText: t('fields.confirm'),
     cancelButtonText: t('fields.cancel'),
-    type: "warning"
+    type: "warning",
+    inputValidator: (value) => {
+      if (!value) {
+        return t('message.validateRemarkRequired');
+      }
+      return true;
+    },
+    inputErrorMessage: t('fields.remarkRequired')
   }
   ).then(async ({ value }) => {
-    console.log(value)
     await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId, value)
     await loadRecord()
     ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
