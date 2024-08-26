@@ -70,6 +70,7 @@ export const updateUser = async user => {
       roles: user.roles.join(','),
       userType: user.userType,
       siteId: user.siteId,
+      siteIdArray: user.siteIdArray.join(','),
       queryRestriction: user.queryRestriction,
       queryNumber: user.queryNumber,
       vcallId: user.vcallId,

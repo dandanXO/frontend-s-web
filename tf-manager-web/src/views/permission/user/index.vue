@@ -177,7 +177,7 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="uiControl.siteSelectVisible"
+          v-if="uiControl.siteSelectVisible && form.userType === 'TENANT'"
           :label="t('fields.site')"
           prop="siteId"
         >
@@ -189,6 +189,29 @@
             default-first-option
             :placeholder="t('fields.pleaseChoose')"
             @focus="loadSites"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-if="uiControl.siteSelectVisible && form.userType === 'MANAGER'"
+          :label="t('fields.site')"
+          prop="siteId"
+        >
+          <el-select
+            v-model="form.siteIdArray"
+            size="small"
+            class="filter-item"
+            style="width: 350px"
+            :placeholder="t('fields.pleaseChoose')"
+            multiple
+            filterable
+            @change="setSiteIdArray"
           >
             <el-option
               v-for="item in siteList.list"
@@ -211,7 +234,13 @@
             :placeholder="t('fields.pleaseChoose')"
             style="width: 350px"
             filterable
-            @focus="loadRoles(form.siteId)"
+            @focus="
+              loadRoles(
+                form.siteIdArray && form.siteIdArray !== null
+                  ? form.siteIdArray
+                  : form.siteId
+              )
+            "
             :disabled="uiControl.rolesSelect"
           >
             <el-option
@@ -564,6 +593,7 @@ const form = reactive({
   queryRestriction: null,
   queryNumber: 10,
   vcallId: null,
+  siteIdArray: null,
 })
 
 const validateconfirm = (rule, value, callback) => {
@@ -633,11 +663,20 @@ async function loadUser() {
       store.state.user.sites.find(e => e.id === data.siteId) !== undefined
         ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
         : null
+    if (data.siteIds !== null && data.siteIds !== undefined) {
+      data.siteIdArray = data.siteIds
+        .split(',')
+        .filter(Boolean)
+        .map(str => {
+          return Number(str)
+        })
+    }
   })
   page.records = ret.records
 }
 
 async function loadRoles(siteId) {
+  console.log('siteId : ', siteId)
   const { data: roles } = await getSimpleRoles(siteId)
   options.value = roles
 }
@@ -656,6 +695,7 @@ function showDialog(type) {
     form.password = null
     form.confirm = null
     form.roles = null
+    form.siteIdArray = null
     form.siteId = null
     form.userType =
       LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
@@ -667,6 +707,7 @@ function showDialog(type) {
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = true
   } else if (type === 'EDIT') {
+    form.siteIdArray = null
     uiControl.dialogTitle = t('fields.editUser')
   } else {
     uiControl.dialogTitle = t('fields.updatePassword')
@@ -748,8 +789,10 @@ function create() {
  * 编辑用户
  */
 function edit() {
+  console.log('userForm : ', userForm)
   userForm.value.validate(async valid => {
     if (valid) {
+      console.log('edit : ', form)
       await updateUser(form)
       uiControl.dialogVisible = false
       await loadUser()
@@ -843,20 +886,30 @@ function roleTxt(roleId) {
   }
 }
 
+function setSiteIdArray() {
+  form.siteId = form.siteIdArray[0]
+}
+
 async function siteChange() {
   await loadRoles(request.siteId)
 }
 
 watch(
-  () => form.siteId,
+  () => form.siteIdArray || form.siteId,
   async (value, oldValue) => {
-    await loadRoles(form.siteId)
+    console.log('value')
+    await loadRoles(
+      form.siteIdArray && form.siteIdArray !== null
+        ? form.siteIdArray
+        : form.siteId
+    )
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
       if (value) {
         uiControl.rolesSelect = false
       }
     } else if (uiControl.dialogType === 'EDIT') {
+      console.log('value : ', value)
       if (oldValue && value && value !== oldValue) {
         form.roles = null
       }
@@ -868,8 +921,9 @@ watch(
   () => form.userType,
   async () => {
     if (form.userType && form.userType === 'MANAGER') {
-      uiControl.siteSelectVisible = false
-      uiControl.rolesSelect = false
+      uiControl.userTypeSelect = true
+      uiControl.siteSelectVisible = true
+      uiControl.rolesSelect = true
       form.siteId = 0
     } else if (form.userType && form.userType === 'TENANT') {
       uiControl.userTypeSelect = true

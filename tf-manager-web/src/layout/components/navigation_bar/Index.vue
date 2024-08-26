@@ -8,8 +8,8 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <!-- v-if="hasRole(['ADMIN', 'MANAGER'])" -->
       <el-select
+        v-if="hasRole(['ADMIN', 'MANAGER'])"
         class="right-menu-item"
         placeholder=""
         style="width: 150px;"
@@ -240,7 +240,6 @@ export default {
       setTimeout(() => {
         location.reload()
       }, 200)
-      console.log('store.state at ChangeSite here : ', store.state)
     }
 
     // logout: async () => {
@@ -261,21 +260,18 @@ export default {
       if (hasRole(['ADMIN'])) {
         sites.value = store.state.user.sites
       } else if (hasRole(['MANAGER'])) {
-        // await loadSites()
         sites.value = store.state.user.sites
       } else {
         sites.value = store.state.user.sites
       }
       // 根据情况指定selectedSite , 'MANAGER'
-      if (hasRole(['ADMIN'])) {
-        console.log('admin')
-        selectedSite.value = sites.value[0]?.siteCode || null
-      } else {
-        console.log('not admin')
-        selectedSite.value =
-          sites.value.find(site => site.id === store.state.user.siteId)
-            ?.siteCode || null
-      }
+      // if (hasRole(['ADMIN'])) {
+      //   selectedSite.value = sites.value[0]?.siteCode || null
+      // } else {
+      selectedSite.value =
+        sites.value.find(site => site.id === store.state.user.siteId)
+          ?.siteCode || null
+      // }
       // 根据情况捞取所需的统计资料
       if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
         loadMemberStatistics()
