@@ -1,12 +1,13 @@
 <template>
-    <el-space>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:10px;">
         <el-input :readonly="true" v-model.number="ruleForm.icon" autocomplete="off" />
         <!-- eslint-disable -->
         <input id="uploadFile" type="file" ref="input" style="display: none" accept="image/*"
             @change="attachPhoto($event, 'feedback')" />
-        <el-button size="small" class="common-btn" @click="$refs.input.click()">
+        <el-button style="min-width:100%;" size="small" class="common-btn" @click="$refs.input.click()">
             上传图片
-        </el-button></el-space>
+        </el-button>
+    </div>
 </template>
 
 <script>
