@@ -2027,7 +2027,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--active ~ .carousel__slide.carousel__slide--next {
     transform: scale(0.6);
-    margin-left: -25px;
+    margin-left: -45px;
     filter: grayscale(1) brightness(0.7);
     z-index: -3;
 
@@ -2046,7 +2046,7 @@ $border-settings: 1px solid #e5e7eb;
   .carousel__slide.carousel__slide--prev {
     transform: scale(0.6);
     filter: grayscale(1) brightness(0.7);
-    margin-left: 15px;
+    margin-left: 40px;
     .vipcontents {
       &:before {
         content: "";
@@ -2148,7 +2148,7 @@ $border-settings: 1px solid #e5e7eb;
     opacity: 1;
     transform: scale(.8);
     filter: grayscale(0);
-    margin-left: -5px;
+    margin-left: -40px;
     z-index: 1;
     .vipcontents {
       &:before {
