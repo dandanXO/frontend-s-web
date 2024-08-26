@@ -7,7 +7,11 @@
       Your browser does not support the video tag.
     </video>
 
-    <p>
+    <a href="https://www.binance.com/en/download?pageType=normal" target="_blank" class="btn-submit" @click="goBinance">
+      Download Binance
+    </a>
+
+    <p class="q-mt-md">
       Please make sure you have completed identity verification and enabled at least one two-factor authentication (2FA)
       device, such as Google Authenticator.
     </p>
@@ -187,6 +191,34 @@ const tutorialVideoUrl = ref(process.env.IMAGE_CDN + `/media/ind-deposit_guide.m
     height: 10px;
     right: calc(100% + 6px);
     top: 5px;
+  }
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 600;
+  height: 46px;
+  width: 100%;
+  max-width: 220px;
+  transition: 0.3s all;
+  color: #ffffff;
+  margin: auto;
+  border-radius: 6px;
+  background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+  aspect-ratio: 335/46;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:before {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.7;
   }
 }
 </style>
