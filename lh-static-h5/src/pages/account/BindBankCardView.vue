@@ -538,6 +538,9 @@ onActivated(() => {
     .bind-wrapper {
       .bind-item {
         @include content-block-dark-with-border;
+        q-label {
+          color: white;
+        }
         .q-field__control {
           background: $background-dark;
           box-shadow: none;
