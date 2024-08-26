@@ -5,8 +5,8 @@ export const getAnnouncementType = (announcementType) => {
   return https().request("/announcementType", Method.GET, announcementType, ContentType.form);
 };
 
-export const getActiveAnnouncementType = () => {
-  return https().request("/announcementType/active", Method.GET);
+export const getActiveAnnouncementType = (siteId, siteType) => {
+  return https().request("/announcementType/active?siteType=" + siteType + "&siteId=" + siteId, Method.GET);
 };
 
 export const createAnnouncementType = (announcementType) => {
