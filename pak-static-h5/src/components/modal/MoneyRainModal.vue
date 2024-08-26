@@ -292,7 +292,7 @@ const stopAutoScroll = () => {
 const getListing = () => {
   if (store.hasToken()) {
     eventapi
-      .get("/redPacketVip/list?promoCode=pak-red-envelope-rain")
+      .get("/redPacketVip/list?promoCode=pak-red-packet-rain")
       .then((res) => {
         if (res.code === 0) {
           // listingData.value = res.data;
@@ -323,7 +323,7 @@ const nextRainTime = reactive({
 
 const getNextRainTime = () => {
   eventapi
-    .get("/redPacketVip/nextRainTime?promoCode=pak-red-envelope-rain")
+    .get("/redPacketVip/nextRainTime?promoCode=pak-red-packet-rain")
     .then((res) => {
       if (res.code === 0) {
         nextRainTime.nowIsRain = res.data.nowIsRain;
@@ -364,7 +364,7 @@ const loadingClaim = ref(false);
 const onClaimBonus = () => {
   loadingClaim.value = true;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=pak-red-envelope-rain`)
+    .get(`/redPacketVip/claim?promoCode=pak-red-packet-rain`)
     .then((res) => {
       if (res.code === 0) {
         loadingClaim.value = false;
