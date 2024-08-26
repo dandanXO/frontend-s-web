@@ -418,6 +418,7 @@ $node-color: #468cff;
       background-position: top center;
       width: 100%;
       max-width: 40px;
+      background-color: transparent;
 
       img {
         padding: 0;
