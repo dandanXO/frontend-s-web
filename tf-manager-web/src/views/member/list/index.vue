@@ -543,7 +543,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
+            <!--eslint-disable-->
+            <span v-formatter="{ data: scope.row.balance, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -570,8 +571,9 @@
         >
           <template #default="scope">
             $
+            <!--eslint-disable-->
             <span
-              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
+              v-formatter="{ data: scope.row.totalDeposit, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -582,8 +584,9 @@
         >
           <template #default="scope">
             $
+            <!--eslint-disable-->
             <span
-              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
+              v-formatter="{ data: scope.row.totalWithdraw, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -602,10 +605,11 @@
           <template #default="scope">
             <span v-if="scope.row.riskLevel === null">-</span>
             <span v-if="scope.row.riskLevel !== null">
+              <!--eslint-disable-->
               {{ scope.row.riskLevel }}
               <span
                 class="level-color"
-                :style="{backgroundColor: scope.row.riskLevelColor}"
+                :style="{ backgroundColor: scope.row.riskLevelColor }"
               />
             </span>
           </template>
@@ -723,6 +727,7 @@ import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
 import { selectIpLabelAll } from '../../../api/ip-label'
 import { useStore } from '../../../store'
+/* eslint-disable */
 import { TENANT } from '../../../store/modules/user/action-types'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
@@ -731,7 +736,10 @@ import { isThai } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
+
+console.log('memberList ::: store.state : ', store.state)
 // const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
+
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const memberForm = ref(null)
@@ -1150,6 +1158,7 @@ async function loadPrivilegeInfos() {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+  console.log('site : ', site)
 }
 
 async function changeSite(siteId) {
@@ -1167,13 +1176,14 @@ async function setIpLabels() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
-  if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
-    )
-    request.siteId = site.value.id
-  }
+  console.log('store.state.user : ', store.state.user)
+  // request.siteId = siteList.list[0].id
+  // if (LOGIN_USER_TYPE.value === TENANT.value) {
+  //   site.value = siteList.list.find(
+  //     s => s.siteName === store.state.user.siteName
+  //   )
+  //   request.siteId = site.value.id
+  // }
   await changeSite(request.siteId)
   await loadPrivilegeInfos()
   await setIpLabels()
