@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import RegisterAccount from "@/components/auth/RegisterAccount.vue";
+import RegisterAccount from "@/components/auth/register/index.vue";
 </script>
 
 <style scoped lang="scss">
@@ -58,6 +58,7 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 
   .card-bg {
     @include content-block-dark;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
   }
 }
 </style>

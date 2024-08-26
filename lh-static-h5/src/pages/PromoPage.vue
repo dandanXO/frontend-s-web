@@ -76,10 +76,16 @@
                           </div>
                           <div
                             class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
+                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
                             v-html="parsedParam(promo.param).date"
                           />
                         </div>
+                        <div
+                          style="padding-left:0;font-weight:400;"
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date && $q.dark.isActive"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -1327,13 +1333,23 @@ export default defineComponent({
 .body--dark {
   .promo-container {
     background: $background-dark;
+
     .all-promotions {
       .promo-main-container {
         .promo-list-wrapper {
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
+            border-radius: unset;
+            // aspect-ratio: 702/208;
+            border-radius: 8px;
+            overflow: hidden;
+            .promo-label {
+              top:0px;
+              left:0px;
+              font-family: 'YouSheBiaoTiHei';
+            }
             .promo-ribbon {
-              background: linear-gradient(90deg, #36cbd5 0%, #1d809a 100%);
+              background: #1475e1;
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1344,9 +1360,18 @@ export default defineComponent({
             }
             .promo-item-title {
               color: $font-3-dark;
+              font-family: 'YouSheBiaoTiHei';
+              font-weight: 400;
             }
             .promo-item-deal {
               color: $grey-color;
+            }
+            .promo-item-btn {
+              background: url('../assets/images/promo/promo-info-btn-bg.svg') no-repeat center center;
+              background-size: cover;
+              box-shadow: none;
+              border-radius: 4px;
+              border: 1px solid #3A93CE;
             }
           }
         }
@@ -1398,9 +1423,13 @@ export default defineComponent({
 
   .promo:not(.unfixed) {
     .q-tabs {
-      background: $background-dark-light;
+      background: #1A2338;
       .q-tab--active {
-        color: $primary-dark;
+        color: #fff;
+      }
+      .q-tab--active .q-tab__indicator {
+        width: 60%;
+        margin: auto;
       }
     }
     .q-tab-panels {

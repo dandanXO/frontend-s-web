@@ -2149,7 +2149,7 @@ const getPlatList = () => {
 
       isPlatLoading.value = false;
       console.log("After");
-      // console.log(JSON.stringify(livecasino.value));
+      console.log(sport.value);
       loadHotGameList();
     })
     .catch((err) => {});
