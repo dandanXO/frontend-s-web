@@ -264,11 +264,16 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
+          <el-input autocomplete="off" v-model="updatePhoneVerified.phone" placeholder="手机号码" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input type="password" v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
+            <el-input
+              autocomplete="off"
+              type="password"
+              v-model="updatePhoneVerified.verificationCode"
+              :placeholder="'验证码'"
+            />
             <el-button
               :disabled="disableSendPhoneButton"
               class="common-btn verification-btn"

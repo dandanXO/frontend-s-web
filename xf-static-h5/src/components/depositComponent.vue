@@ -262,17 +262,19 @@ const checkNewUser = () => {
   if (!store.phone || !store.realName) {
     isNewUser.value = true;
     return false;
-  } else {
-    api.get("/session/bankCard").then((response) => {
-      if (response.code === 0) {
-        if (response.data.length === 0) {
-          isNoBankCard.value = true;
-        }
-      }
-    });
-
-    return true;
   }
+  // else {
+  //   api.get("/session/bankCard").then((response) => {
+  //     if (response.code === 0) {
+  //       if (response.data.length === 0) {
+  //         isNoBankCard.value = true;
+  //       }
+  //     }
+  //   });
+  //
+  //
+  // }
+  return true;
 };
 const isDeposited = ref(false);
 const isLoading = ref(true);
