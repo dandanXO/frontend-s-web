@@ -50,7 +50,8 @@
           >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/user-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/user-icon.svg" />
                 <label class="input-label">
                   <em>*</em>
                   用户名
@@ -73,7 +74,8 @@
           >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/password-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/password-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/password-icon.svg" />
                 <label class="input-label">
                   <em>*</em>
                   密码
@@ -110,7 +112,8 @@
             </template>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
                 <label class="input-label">
                   <em>*</em>
                   验证码
@@ -134,7 +137,8 @@
           >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/phone-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/phone-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/phone-icon.svg" />
                 <label class="input-label">电话号码</label>
               </div>
             </template>
@@ -162,7 +166,8 @@
             </template>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
                 <label class="input-label">验证码</label>
               </div>
             </template>
@@ -719,6 +724,10 @@ export default defineComponent({
         color: #b1bad3;
       }
 
+      .input-label {
+        font-weight: 400;
+      }
+
       .tabs-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -734,8 +743,8 @@ export default defineComponent({
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          font-size: 18px;
-          gap: 3px;
+          font-size: 14px;
+          gap: 0px;
           cursor: pointer;
 
           .active-tab-border {
