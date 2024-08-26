@@ -271,11 +271,12 @@
           </q-input>
         </div>
 
-        <div class="fund-container q-mt-sm q-mb-md">
+        <div class="fund-container">
           <div>
             <span class="fund-title">Available:</span>
             {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
           </div>
+          <div v-if="isUSDT">≈ {{ convertToTwoDecimalAmount(withdrawInfo.amount / selectedMethodItem.currencyRate) }} USDT</div>
         </div>
 
         <div class="bot-wrapper">
@@ -1066,6 +1067,11 @@ const toggleAmount = (type) => {
     default:
       break;
   }
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 </script>
 
