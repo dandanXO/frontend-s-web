@@ -853,6 +853,90 @@
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
+
+    <el-card class="info-card" v-if="uiControl.supportMultiWallet">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ t('fields.walletInfo') }}</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:member:change-wallet-type']"
+            @click="toggleWallet"
+          >
+            {{ t('fields.toggleWallet') }}
+          </el-button>
+        </div>
+      </template>
+      <el-descriptions
+        size="small"
+        class="margin-top"
+        :column="3"
+        border
+        v-loading="loading.walletInfo"
+      >
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              {{ t('fields.walletType') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.walletType !== null">
+            {{ t('fields.' + memberDetail.walletType) }}
+          </span>
+          <!-- :style="[{color: affiliateDetail.riskColor}]" -->
+          <span v-if="memberDetail.walletType === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              {{ t('fields.fiatBalance') }}
+            </div>
+          </template>
+          <div class="balance">
+            $
+            <span
+              v-formatter="{
+                data: memberDetail.fiatBalance,
+                type: 'money',
+              }"
+            />
+          </div>
+          <span v-if="memberDetail.fiatBalance === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              {{ t('fields.usdtBalance') }}
+            </div>
+          </template>
+          <div class="balance">
+            $
+            <span
+              v-formatter="{
+                data: memberDetail.usdtBalance,
+                type: 'money',
+              }"
+            />
+          </div>
+          <span v-if="memberDetail.usdtBalance === null">-</span>
+        </el-descriptions-item>
+      </el-descriptions>
+    </el-card>
+
     <el-card class="info-card">
       <template #header>
         <div class="clearfix">
@@ -1572,6 +1656,8 @@ import {
   getShareRatio,
   editShareRatio,
   updateWithdrawType,
+  toggleMemberWallet,
+  walletBalance
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1583,7 +1669,7 @@ import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
-import { getConfigListByGroup } from '../../../../../api/config'
+import { getConfigListByGroup, getOpenForMember } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
 import { isInd, isKorea } from '@/utils/site'
 
@@ -1608,6 +1694,7 @@ export default defineComponent({
       showCall: false,
       showCall1: false,
       showSend: false,
+      supportMultiWallet: false,
     })
     const route = useRoute()
     const site = reactive({
@@ -1726,7 +1813,10 @@ export default defineComponent({
       memberType: '',
       dupName: '',
       dupIp: '',
-      claimableRebate: 0
+      claimableRebate: 0,
+      fiatBalance: null,
+      usdtBalance: null,
+      walletType: null,
     })
 
     const affiliateDetail = reactive({
@@ -2493,6 +2583,27 @@ export default defineComponent({
       ElMessage({ message: t('message.success'), type: 'success' })
     }
 
+    const loadSupportMultiWallet = async () => {
+      const { data: config } = await getOpenForMember(site.id, 'support_multi_wallet', props.mbrId)
+      uiControl.supportMultiWallet = config
+    }
+
+    const loadWallet = async () => {
+      await loadSupportMultiWallet()
+      if (uiControl.supportMultiWallet) {
+        const { data: wallet } = await walletBalance(props.mbrId, site.id)
+        memberDetail.fiatBalance = wallet.fiat
+        memberDetail.usdtBalance = wallet.usdt
+        memberDetail.walletType = wallet.walletType
+      }
+    }
+
+    async function toggleWallet() {
+      await toggleMemberWallet(props.mbrId, site.id)
+      await loadWallet()
+      ElMessage({ message: t('message.success'), type: 'success' })
+    }
+
     onMounted(async () => {
       loading.accountInfo = true
       loading.affiliateInfo = true
@@ -2523,6 +2634,7 @@ export default defineComponent({
 
       await loadBalance()
       await refreshClaimableRebate()
+      await loadWallet()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true
@@ -2626,6 +2738,7 @@ export default defineComponent({
       isInd,
       isKorea,
       LOGIN_USER_SITEID,
+      toggleWallet,
       editWithdrawType,
       withdrawTypeFormRules,
       withdrawTypeForm,

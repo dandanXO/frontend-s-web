@@ -131,8 +131,8 @@ export default {
     referral_hints: "Nếu bạn không phải là người chơi cộng tác, bạn không cần điền vào biểu mẫu.",
     already_have_acc: "Đã có tài khoản?",
     login_here: "Đăng nhập tại đây",
-    registration_hints: "Đăng ký tức bạn đã đồng ý và tuân thủ",
-    user_registration_protocol: "Thoản thuận đăng ký tài khoản",
+    registration_hints: "Đăng ký tức là bạn đã đồng ý và tuân thủ",
+    user_registration_protocol: "Thỏa thuận đăng ký tài khoản",
     register_success: "Đăng ký thành công",
     register_in_progress: "Đang đăng ký...",
 
@@ -200,8 +200,8 @@ export default {
 
     // maintenance
     maintenance_title: "Hệ thống đang bảo trì...",
-    maintenance_from: "Bắt đầu từ 17/04/2024 06:00 (GMT +8)",
-    maintenance_to: "đến 10:00 (GMT +8)",
+    maintenance_from: "Bắt đầu từ ",
+    maintenance_to: "đến ",
     maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
     maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!",
     maintenance_contact_01: "Gửi Email:",
@@ -354,7 +354,7 @@ export default {
     withdraw_times: "Lần",
     withdraw_realtimeexchangerates: "Tỷ giá trực tuyến",
     withdraw_estimatedarrival: "Dự kiến ​​đến",
-    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 1.00 USDT cho việc rút tiền coin!",
+    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 2.00 USDT cho việc rút tiền coin!",
     withdraw_ewalletspecialnote: "*Lưu ý đặc biệt: Tên của ví rút tiền và tài khoản game phải giống nhau.",
     withdraw_choose: "Chọn",
     withdraw_pleasechoose: "Vui lòng chọn",
@@ -437,6 +437,9 @@ export default {
     type_fish: "Cá",
     type_livecasino: "Live Casino",
     type_others: "Khác",
+    type_slot_welcome: "Chào mừng",
+    type_slot_daily: "Hàng Ngày",
+    type_slot_other: "Khác",
 
     // promo -- daily-login
     daily_login_title: "Chi tiết check-in trong tháng này",
@@ -1074,7 +1077,7 @@ export default {
     update_app_title: "Cập nhật thành công",
     detected_new_version: "Có phiên bản mới để tải xuống ngay bây giờ?",
     update_now: "Cập nhật",
-    usdt_will_be_charged: "Lưu ý: Sẽ có phí 1.00 USDT/ giao dịch rút tiền",
+    usdt_will_be_charged: "Lưu ý: Sẽ có phí 2.00 USDT/ giao dịch rút tiền",
     estimate_arrival: "Dự kiến đến:",
     phone_verification_code: "Mã xác minh số điện thoại",
     please_enter_phone_code: "Vui lòng nhập mã xác minh số điện thoại",

@@ -201,6 +201,12 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
+        <el-table-column
+          :label="t('fields.walletType')"
+          prop="walletType"
+          align="center"
+          min-width="180"
+        />
       </el-table>
       <div style="text-align: right;margin-top:10px;">
         <span style="margin-right:20px;">{{ t('fields.totalSuccessDeposit') }}: {{ page.totalSuccess }}</span>

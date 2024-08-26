@@ -76,27 +76,25 @@
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-                <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
               <div class="inner">
+                <div class="top-float">
+                  <div class="top-subtitle">Get unlimited rewards!</div>
+                  <div class="top-title">{{ selectedPromo.title }}</div>
+                </div>
+                <div class="promo-content-inner">
+                  <div class="content-title">{{ selectedPromo.title }}</div>
+                </div>
+
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
+
                 <div
                   v-if="selectedPromo.promoType"
                   :class="{
@@ -108,14 +106,19 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div class="top-float">
-                    <div class="top-subtitle">Get unlimited rewards!</div>
-                    <div class="top-title">{{ selectedPromo.title }}</div>
-                  </div>
-                  <div class="promo-content-inner">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
+
+
+                  <!-- <div class="join-container">
+                    <div class="promo-date">
+                      <div class="date-txt">Promotion Ends</div>
+                      <div class="date-timer">01/01/2024</div>
+                    </div>
+                    <q-btn class="btn-join-now" no-caps label="Join Now" />
+                  </div> -->
+                </div>
+
+                <template v-if="!selectedPromo.hasPromo">
                   <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
@@ -126,15 +129,7 @@
                     </div>
                     <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
                   </div>
-
-                  <!-- <div class="join-container">
-                    <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
-                      <div class="date-timer">01/01/2024</div>
-                    </div>
-                    <q-btn class="btn-join-now" no-caps label="Join Now" />
-                  </div> -->
-                </div>
+                </template>
               </div>
             </div>
           </div>
@@ -174,9 +169,8 @@ import {userStore} from "stores/index";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
-import HotPromotion from 'components/HotPromotion'
+import HotPromotion from 'components/HotPromotion.vue'
 import GameModal from "components/modal/GameModal.vue";
-// import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -939,9 +933,9 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
-          border-radius: 10px;
-          display: none;
+          // background: #272c3d;
+          // border-radius: 10px;
+          // display: none;
         }
 
         .promo-view-container {

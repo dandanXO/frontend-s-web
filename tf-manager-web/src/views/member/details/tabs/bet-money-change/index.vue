@@ -83,6 +83,12 @@
           min-width="120"
         />
         <el-table-column
+          prop="gameName"
+          :label="t('fields.gameName')"
+          align="center"
+          min-width="150"
+        />
+        <el-table-column
           prop="bet"
           :label="t('fields.bet')"
           align="center"
@@ -275,12 +281,6 @@
           :label="t('fields.currency')"
           align="center"
           min-width="120"
-        />
-        <el-table-column
-          prop="gameName"
-          :label="t('fields.gameName')"
-          align="center"
-          min-width="150"
         />
       </el-table>
       <div class="table-footer" v-if="site.id === '3'">

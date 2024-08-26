@@ -11,6 +11,9 @@
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
+    <AnniversaryCelebrationPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'anniversary-celebration' && store.token"
+    />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -98,59 +101,6 @@
                 :rows="dataSource"
               ></q-table>
             </q-tab-panel>
-
-            <!--            <q-tab-panel name="3">-->
-            <!--              <q-form>-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  v-model="formState.resultTime"-->
-            <!--                  label="选择日期"-->
-            <!--                  readonly-->
-            <!--                  color="white"-->
-            <!--                >-->
-            <!--                  <template v-slot:append>-->
-            <!--                    <q-icon name="event" class="cursor-pointer">-->
-            <!--                      <q-popup-proxy-->
-            <!--                        cover-->
-            <!--                        transition-show="scale"-->
-            <!--                        transition-hide="scale"-->
-            <!--                      >-->
-            <!--                        <q-date-->
-            <!--                          v-model="formState.resultTime"-->
-            <!--                          mask="YYYY-MM-DD"-->
-            <!--                        >-->
-            <!--                          <div class="row items-center justify-end">-->
-            <!--                            <q-btn-->
-            <!--                              v-close-popup-->
-            <!--                              label="关闭"-->
-            <!--                              color="white"-->
-            <!--                              flat-->
-            <!--                            />-->
-            <!--                          </div>-->
-            <!--                        </q-date>-->
-            <!--                      </q-popup-proxy>-->
-            <!--                    </q-icon>-->
-            <!--                  </template>-->
-            <!--                </q-input>-->
-            <!--                <q-btn-->
-            <!--                  @click="filterWinnerLists()"-->
-            <!--                  :loading="loading"-->
-            <!--                  class="full-width q-mt-md"-->
-            <!--                  color="brand"-->
-            <!--                  label="搜索"-->
-            <!--                />-->
-            <!--              </q-form>-->
-
-            <!--              <q-table-->
-            <!--                class="q-mt-md"-->
-            <!--                no-data-label="没有数据"-->
-            <!--                loading-label="加载中..."-->
-            <!--                rows-per-page-label=" "-->
-            <!--                :loading="loading"-->
-            <!--                :columns="winnerColumn"-->
-            <!--                :rows="winnerDataSource"-->
-            <!--              />-->
-            <!--            </q-tab-panel>-->
           </q-tab-panels>
         </q-card-section>
       </div>
@@ -186,6 +136,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
+import AnniversaryCelebrationPromo from "../components/hotpromo/anniversarycelebration/AnniversaryCelebrationPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -197,8 +148,10 @@ export default defineComponent({
     GoldenEggPromo,
     HongBaoYuPromo,
     WelcomeTaskPromo,
-    InviteFriendPromo
+    InviteFriendPromo,
+    AnniversaryCelebrationPromo
   },
+
   props: {
     list: {
       type: Object,
@@ -254,6 +207,7 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
+      this.list.redirectUrl === "anniversary-celebration" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
@@ -527,7 +481,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .hot-promo {
-  border-radius: 10px;
+  // border-radius: 10px;
   overflow: hidden;
   position: relative;
 

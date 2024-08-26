@@ -107,7 +107,7 @@ export default {
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
-      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
     fullName: "Full Name",
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
@@ -261,7 +261,8 @@ export default {
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
-    withdrawalMethodInMaintenance: 'This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!'
+    withdrawalMethodInMaintenance:
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -279,8 +280,10 @@ export default {
     storageTime_required: "Storage time is required",
     deposit: "Deposit",
     deposit_required: "Deposit is required",
+    rates: "Rates",
+    rates_required: "Rates is required",
     trialCalculation: "Trial calculation",
-    annualInterestRate: "Annual interest rate",
+    annualInterestRate: "Interest rate",
     distributeInterest: "Distribute interest",
     pending: "Pending",
     ended: "Ended",
@@ -310,7 +313,7 @@ export default {
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
-      "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
+      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -482,7 +485,8 @@ export default {
     noMoreRecord: "No more record",
     bytoday: "By Today",
     byyesterday: "By Yesterday",
-    all: "All"
+    all: "All",
+    turnover_requi: "TurnOver Requirement"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -522,6 +526,14 @@ export default {
       signIn: "Sign in",
       signedIn: "Signed in"
     }
+  },
+  maintenance: {
+    underMaintenance: "Under maintenance",
+    content01: "Our website is currently undergoing maintenance...",
+    from: "From",
+    to: "To",
+    content02: "During this period, all games and services will be unavailable.",
+    content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
   },
   error: {
     101: "Platform not found",
@@ -623,6 +635,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
     32000: "VIP level not found",
@@ -650,6 +663,10 @@ export default {
     51000: "Today's sign-in reward has already been claimed",
     51001: "Requirements not met",
     51002: "The reward has already been claimed by another account",
+    53008: "Unable to submit, the daily deposit limit has been reached today",
+    53009: "Unable to submit, the same IP address has already been saved",
+    53010: "Unable to submit, the same device has already been stored",
+    53011: "Unable to submit, insufficient cash flow",
     54000: "The collection time has not yet arrived.",
     54001: "The user has not bound a withdrawal account.",
     54002: "The user's bank card is already bound to another account."

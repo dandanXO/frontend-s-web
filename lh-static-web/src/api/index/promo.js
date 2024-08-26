@@ -371,7 +371,7 @@ export function footballHistroy() {
 }
 
 export function getCompetitionBetToday(promoCode) {
-  return server.EVENT.get(`/competition-bet/today`, {
+  return server.EVENT.get(`/competition-bet/yesterday`, {
     params: {
       promoCode
     }

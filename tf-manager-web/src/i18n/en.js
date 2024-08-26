@@ -1998,6 +1998,12 @@ export default {
     retainLevelDays: 'Retain Level Days',
     editSystemValueRules: 'Edit System Value Rule',
     addSystemValueRules: 'Add System Value Rule',
+    walletInfo: 'Wallet Info',
+    fiat: 'Fiat',
+    usdt: 'USDT',
+    fiatBalance: 'Fiat Balance',
+    usdtBalance: 'USDT Balance',
+    toggleWallet: 'Toggle Wallet Type',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

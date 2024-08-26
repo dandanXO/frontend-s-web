@@ -238,6 +238,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="200"
@@ -489,7 +495,7 @@ import {
   fromCheckingToBeforePaid,
   fromCheckingToFail,
 } from '../../../../api/member-withdraw-record'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { required } from '../../../../utils/validate'
 import { getConfigList } from '../../../../api/config'
 import { getSiteListSimple } from '../../../../api/site'
@@ -710,9 +716,23 @@ async function toApply() {
 }
 
 async function success(memberWithdrawRecord) {
-  await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-  await loadRecord()
-  ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
+  ElMessageBox.prompt(t('fields.remark'), t('fields.remark'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: "warning",
+    inputValidator: (value) => {
+      if (!value) {
+        return t('message.validateRemarkRequired');
+      }
+      return true;
+    },
+    inputErrorMessage: t('fields.remarkRequired')
+  }
+  ).then(async ({ value }) => {
+    await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId, value)
+    await loadRecord()
+    ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
+  }).catch(() => {});
 }
 
 async function showDialog(type, memberWithdrawRecord) {

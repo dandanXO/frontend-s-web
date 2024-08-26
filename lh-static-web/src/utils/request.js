@@ -32,7 +32,8 @@ const globalLinks = [
   "lh887.",
   "lh970.",
   "lh971.",
-  "lh988."
+  "lh988.",
+  "033lh.vip"
 ];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 

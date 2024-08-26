@@ -86,7 +86,11 @@ export default {
     findPasswordPhone: "Recover password by phone number",
     findPasswordEmail: "Recover password by Email",
     findAccountEmail: "Recover account via Email",
-    registerSuccess: "Register Success"
+    registerSuccess: "Register Success",
+    registration_hints: "Registration means you have agreed and complied",
+    user_registration_protocol: "User Registration protocol",
+    already_have_acc: "Already have account?",
+    login_here: "Login here",
   },
   common: {
     login: "Login",
@@ -268,6 +272,9 @@ export default {
     slot: "Slot",
     fish: "Fishing",
     lottery: "Lottery",
+    slotWelcome: "WELCOME",
+    slotDaily: "DAILY",
+    slotOther: "OTHER",
     // vi-win-iphone start
     choose_lucky_number: "Choose lucky number",
     lucky_number_record: "Lucky number record",
@@ -339,7 +346,7 @@ export default {
     expectedAmount: "Expected amount",
     depositAmountRange: "Deposit amount should be between",
     exchangeRateExample:
-      "*Special Note: A withdrawal fee of 1.00 USDT will be automatically charged by the third party!",
+      "*Special Note: A withdrawal fee of 2.00 USDT will be automatically charged by the third party!",
     startEndDate: "Please enter the start and end date",
     usdtAddress: "USDT address",
     accountNo: "Account number",
@@ -769,7 +776,12 @@ export default {
     customerService: "24/7 Customer Service",
     currentlyMaintaining: "Maintenance in progress",
     maintainenceTime: "Maintenance Time",
-    otherPlatFirst: "Kindly go to other platforms for entertainment"
+    otherPlatFirst: "Kindly go to other platforms for entertainment",
+    maintenance_title: "The system is maintenance...",
+    maintenance_from: "Starting from ",
+    maintenance_to: "to ",
+    maintenance_desc_01: "All services and games will be suspended during the above period, ",
+    maintenance_desc_02: "sincerely sorry for this inconvenience!"
   },
   welcome: {
     compatibleDevices: "Perfectly Compatible with Secure Devices",
