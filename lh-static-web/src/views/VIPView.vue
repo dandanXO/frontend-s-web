@@ -111,7 +111,7 @@
       </div>
       <div
         class="claim-btn"
-        :class="{ disabled: currentClaimAllStatus !== 'CAN_CLAIM' || isLoading['all'] }"
+        :class="{ disabled: isLoading['all'] }"
         @click="handleClick('all', vipLevel)"
       >
         一键领取
@@ -892,8 +892,17 @@ const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
 const initVIPTable = async () => {
   getImages();
+  const storedData = sessionStorage.getItem('vipData');
+  
+  if (storedData) {
+    var res = JSON.parse(storedData);
+    runVipAPI(res);
+  }
+  getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
-
+  runVipAPI(res);
+};
+const runVipAPI = (res) => {
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
     // Step 1: Extract original upgradeBetAmount values into an array.
@@ -936,7 +945,7 @@ const initVIPTable = async () => {
     notify.error(res.message);
   }
   slideTo();
-};
+}
 const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
@@ -949,6 +958,9 @@ const categories = [
 ];
 const isLoading = reactive({});
 const handleClick = async (key, item) => {
+  if (key === "all" && currentClaimAllStatus.value === 'CANT_CLAIM') {
+    return notify.error('当前没有可领取的内容');
+  }
   if (!isLoading[key]) {
     isLoading[key] = true; // Set loading state for this specific key
     const res = await claimItems(key, key === "all" ? item : item.vipLevel);
