@@ -666,7 +666,7 @@ export default {
     53008: "Unable to submit, the daily deposit limit has been reached today",
     53009: "Unable to submit, the same IP address has already been saved",
     53010: "Unable to submit, the same device has already been stored",
-    53011: "Interest withdrawal turnover requirement is not completed, so you cannot deposit again.",
+    53011: "Interest withdrawal turnover requirement is not completed, so you cannot deposit again",
     54000: "The collection time has not yet arrived.",
     54001: "The user has not bound a withdrawal account.",
     54002: "The user's bank card is already bound to another account."
