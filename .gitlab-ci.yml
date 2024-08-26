@@ -632,10 +632,10 @@ deploy-nga-download:
 
 #===============================================================================================
 
-deploy-xf-download:
+deploy-ph1-download:
   extends: .s3-deploy
   variables:
-    PROJECT: xf-download
+    PROJECT: ph1-download
 
 #===============================================================================================
 
