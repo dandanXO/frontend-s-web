@@ -389,6 +389,12 @@
         <el-form-item :label="t('fields.sequence')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-input-number v-model="form.order" style="width: 240px" :min="1" size="small" />
         </el-form-item>
+        <el-form-item :label="t('fields.minDeposit')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101 && form.paymentType === 'Deposit'">
+          <el-input-number v-model="form.min" style="width: 240px" :min="0" size="small" />
+        </el-form-item>
+        <el-form-item :label="t('fields.maxDeposit')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101 && form.paymentType === 'Deposit'">
+          <el-input-number v-model="form.max" style="width: 240px" :min="form.min" size="small" />
+        </el-form-item>
         <el-form-item :label="t('fields.riskDepositLimit')" prop="riskDepositLimit" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order === 101">
           <el-input-number v-model="form.riskDepositLimit" style="width: 240px" :min="0" size="small" />
         </el-form-item>
@@ -948,6 +954,8 @@ const form = reactive({
   channelId: null,
   order: null,
   riskDepositLimit: null,
+  min: null,
+  max: null,
 })
 const settingForm = reactive({
   id: null,

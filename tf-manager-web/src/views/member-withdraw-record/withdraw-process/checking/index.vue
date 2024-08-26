@@ -495,7 +495,7 @@ import {
   fromCheckingToBeforePaid,
   fromCheckingToFail,
 } from '../../../../api/member-withdraw-record'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { required } from '../../../../utils/validate'
 import { getConfigList } from '../../../../api/config'
 import { getSiteListSimple } from '../../../../api/site'
@@ -716,9 +716,17 @@ async function toApply() {
 }
 
 async function success(memberWithdrawRecord) {
-  await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-  await loadRecord()
-  ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
+  ElMessageBox.prompt(t('fields.remark'), t('fields.remark'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: "warning"
+  }
+  ).then(async ({ value }) => {
+    console.log(value)
+    await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId, value)
+    await loadRecord()
+    ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
+  }).catch(() => {});
 }
 
 async function showDialog(type, memberWithdrawRecord) {
