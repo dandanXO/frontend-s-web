@@ -124,14 +124,8 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-      const omitSites = ["bw3.genoortisy.com"];
 
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "E94ED4";
-      } else {
-        affiliateCode = "E94ED4";
-      }
+      var affiliateCode = "1DF0CB";
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
