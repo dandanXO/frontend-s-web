@@ -9,7 +9,7 @@
         <span class="download-block-description">
           请
           <a :href="paramsObj.voxis_url" target="_blank">下载</a>
-          “Voxis”立即添加
+          “Voxis”立即添加可申请专属红包
         </span>
       </div>
       <!-- <div class="download-block-qr-code-wrapper">
