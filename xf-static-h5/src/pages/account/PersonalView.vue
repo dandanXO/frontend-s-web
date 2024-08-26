@@ -3,12 +3,7 @@
     <div class="web">
       推荐链接:
       <span>{{ referralLink }}</span>
-      <q-btn
-        @click="copyReferralLink"
-        color="brightbtn"
-        label="复制"
-        size="sm"
-      />
+      <q-btn @click="copyReferralLink" color="brightbtn" label="复制" size="sm" />
     </div>
 
     <q-form ref="profileFormRef">
@@ -56,12 +51,11 @@
         <template v-slot:append>
           <q-icon
             :class="personalState.memberInfo.birthday ? 'disabled' : ''"
-            name="event" color="white" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
+            name="event"
+            color="white"
+            class="cursor-pointer"
+          >
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="关闭" color="white" flat />
@@ -129,21 +123,13 @@
       </div>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn
-          size="md"
-          color="brightbtn"
-          @click="updateState"
-          label="保存信息"
-        />
+        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
       </div>
     </q-form>
   </div>
 
   <q-dialog width="100%" v-model="showCaptchaDialog">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-dark text-white text-center"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
         <br />
@@ -158,12 +144,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
-      <q-card-section
-        style="padding: 10px 20px"
-        class="q-pa-md bg-dark text-white"
-      >
-        验证码
-      </q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">验证码</q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="captchaRef" label="验证码">
@@ -383,7 +364,9 @@ export default defineComponent({
         }
       }
       console.log(updateInfo);
-      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      if(formDetail.birthday){
+        updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      }
       updateInfo.realName = formDetail.realName;
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
@@ -558,7 +541,7 @@ export default defineComponent({
   }
 }
 
-.disabled{
+.disabled {
   pointer-events: none;
   opacity: 0;
 }
