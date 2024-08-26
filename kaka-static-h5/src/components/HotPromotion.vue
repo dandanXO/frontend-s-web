@@ -27,6 +27,7 @@
 
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo" />
     <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo" />
+    <NewPlayerPromo v-if="list.redirectUrl === 'kaka-newplayer-promo'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -62,6 +63,7 @@ import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHo
 import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
 import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
 import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
+import NewPlayerPromo from "../components/hotpromo/newPlayer/NewPlayerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -77,7 +79,8 @@ export default defineComponent({
     upgradeHongBaoPromo,
     EuroCup2024,
     EuroCup2024BetReward,
-    EurocupLuckyDraw
+    EurocupLuckyDraw,
+    NewPlayerPromo
     // CnyStepGame2024Promo
   },
   props: {
@@ -137,7 +140,8 @@ export default defineComponent({
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
-      this.list.redirectUrl === "vnm-euro-2024-bet-reward"
+      this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
+      this.list.redirectUrl === "kaka-newplayer-promo"
     ) {
       this.isCommonPromo = false;
     } else {
