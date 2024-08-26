@@ -5,7 +5,7 @@
     </div>
     <!--    <div class="banner-container" />-->
     <div class="vip-cards">
-      <Carousel v-model="currentSlide" :items-to-show="3" :wrap-around="true">
+      <Carousel v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
         <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
           <div class="carousel__item">
             <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -218,21 +218,15 @@
       <table border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
-            <th rowspan="4">VIP等级</th>
-            <th rowspan="4">会员等级</th>
-            <th rowspan="4">首次保级彩金</th>
-            <th rowspan="4">年度保级彩金</th>
-            <th rowspan="4">生日彩金</th>
-            <th rowspan="4">节日礼金</th>
-            <th rowspan="4">每日返水红包</th>
-          </tr>
-          <tr>
-            <th>会员日</th>
-            <th>每月15号</th>
-          </tr>
-          <tr>
-            <th>会员加码</th>
-            <th>充值送10%加码券</th>
+            <th>VIP等级</th>
+            <th>会员等级</th>
+            <th>首次保级彩金</th>
+            <th>年度保级彩金</th>
+            <th>生日彩金</th>
+            <th>节日礼金</th>
+            <th>每日返水红包</th>
+            <th>会员日每月15号</th>
+            <th>会员加码充值送10%加码券</th>
           </tr>
         </thead>
         <tbody>
@@ -1879,11 +1873,9 @@ $border-settings: 1px solid #e5e7eb;
     }
 
     .vipitem {
-      height: 320px;
+      height: 300px;
       margin: auto;
       width: 300px;
-      margin: auto;
-
       .vipLevelReachStatus {
         margin-top: 12px;
         margin-left: 3px;
@@ -2027,9 +2019,12 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--active ~ .carousel__slide.carousel__slide--next {
     transform: scale(0.6);
-    margin-left: -45px;
+    // margin-left: -45px;
     filter: grayscale(1) brightness(0.7);
     z-index: -3;
+    .vipitem {
+      margin-right: 40px;
+    }
 
     .vipcontents {
       &:before {
@@ -2046,7 +2041,10 @@ $border-settings: 1px solid #e5e7eb;
   .carousel__slide.carousel__slide--prev {
     transform: scale(0.6);
     filter: grayscale(1) brightness(0.7);
-    margin-left: 40px;
+    // margin-left: 40px;
+    .vipitem {
+      margin-left: 40px;
+    }
     .vipcontents {
       &:before {
         content: "";
@@ -2148,7 +2146,7 @@ $border-settings: 1px solid #e5e7eb;
     opacity: 1;
     transform: scale(.8);
     filter: grayscale(0);
-    margin-left: -40px;
+    // margin-left: -40px;
     z-index: 1;
     .vipcontents {
       &:before {

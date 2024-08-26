@@ -359,21 +359,16 @@
       <table border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
-            <th rowspan="4">VIP等级</th>
-            <th rowspan="4">会员等级</th>
-            <th rowspan="4">首次保级彩金</th>
-            <th rowspan="4">年度保级彩金</th>
-            <th rowspan="4">生日彩金</th>
-            <th rowspan="4">节日礼金</th>
-            <th rowspan="4">每日返水红包</th>
+            <th>VIP等级</th>
+            <th>会员等级</th>
+            <th>首次保级彩金</th>
+            <th>年度保级彩金</th>
+            <th>生日彩金</th>
+            <th>节日礼金</th>
+            <th>每日返水红包</th>
+            <th>会员日每月15号</th>
+            <th>会员加码充值送10%加码券</th>
           </tr>
-          <tr>
-            <th>会员日</th>
-            <th>每月15号</th>
-          </tr>
-          <tr>
-            <th>会员加码</th>
-            <th>充值送10%加码券</th>
           </tr>
         </thead>
         <tbody>
