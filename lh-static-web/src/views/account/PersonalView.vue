@@ -184,7 +184,7 @@
                   <div class="tbl-row">
                     <div class="basic-info-cell title">性别：</div>
                     <div v-if="personalState.memberInfo.gender" class="basic-info-cell content">
-                      {{ personalState.memberInfo.gender === "MALE" ? "男" : "女" }}
+                      {{ personalState.memberInfo.gender === "Male" ? "男" : "女" }}
                     </div>
                     <div
                       v-else
