@@ -186,7 +186,9 @@
                     selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu:
-                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
+                    selectedPromo.promoCode === 'lh-duanwujie24' ||
+                    selectedPromo.promoCode === 'lh1-deposit-rebates' ||
+                    selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
                   lheuromanual:
                     selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
@@ -197,6 +199,7 @@
                 :style="[
                   selectedPromo.promoCode === 'lh-eurocup-manual' ||
                   selectedPromo.promoCode === 'lh1-deposit-rebates' ||
+                  selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
                   selectedPromo.promoCode === 'lh1-daily-checkin'
                     ? 'background-image: url(' +
                       imgURL +
@@ -1189,10 +1192,10 @@ export default defineComponent({
       }
 
       &.livepoker-rebate {
-        background: #E7F1FD;
+        background: #e7f1fd;
       }
-      &.lh1-football{
-        background: #E7F1FD;
+      &.lh1-football {
+        background: #e7f1fd;
       }
     }
   }
@@ -1225,7 +1228,7 @@ export default defineComponent({
 }
 
 .promo {
-  background-color: #E7F1FD;
+  background-color: #e7f1fd;
   .q-tabs {
     background: $secondary;
     width: 100%;

@@ -20,11 +20,13 @@ import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     ElConfigProvider
   },
   setup() {
+    const router = useRouter();
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
@@ -68,11 +70,30 @@ export default defineComponent({
       }
     };
 
+    const checkEdition = () => {
+      // TODO: check edition here
+    };
+
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.VUE_APP_SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
+      checkEdition();
+      checkServerStatus();
     });
 
     onUnmounted(() => {

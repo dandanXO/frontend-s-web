@@ -34,31 +34,6 @@
               @filter="filterBank"
               behavior="menu"
             >
-              <!-- <template v-slot:option="scope">
-                <q-item v-bind="scope.itemProps">
-                  <q-item-section avatar v-if="scope.opt.bankIcon">
-                    <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-                  </q-item-section>
-                  <q-item-section>
-                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    {{ scope.opt.name }}
-                  </q-item-label>
-                </q-item-section>
-                </q-item>
-              </template>
-              <template v-slot:selected-item="scope">
-                <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img
-                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    {{ scope.opt.name }}
-                  </q-item-label>
-                </q-item-section>
-              </template> -->
             </q-select>
           </div>
         </div>
@@ -526,23 +501,11 @@ const bankCardField = reactive({
 watch(
   () => bankCardField.bankId,
   (newValue) => {
-    // console.log('..',newValue)
     const selectedBank = filteredBankList.value.find((bank) => bank.id === newValue);
     filterCards(selectedBank);
 
-    // console.log('newValue',newValue);
-    // console.log('selectedBank',selectedBank)
   }
 );
-
-// watch(
-//   () => bankCardField.withdrawPlatformId,
-//   (newValue) => {
-//     const selectedBank = filteredBankList.value.find((bank) => bank.bankCode === newValue);
-//     console.log("selectedBank", selectedBank);
-//     filterCards(selectedBank);
-//   }
-// );
 
 watch(withdrawalDialogTab, () => {
   withdrawInfo.cardId = null;
@@ -732,22 +695,11 @@ const selectedMethodItem = ref();
 const goSelectedMethod = (item) => {
   isSelectedMethod.value = true;
   selectedMethodItem.value = item;
-  // withdrawInfo.withdrawCode = selectedMethodItem.value.code;
-
-  // bankCardField.withdrawCode = selectedMethodItem.value.code;
-  //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
-
-  // filterCards(item);
-
-  // console.log(item);
   filteredBankList.value = item.bankList;
   bankCardField.bankId = item.bankList[0].id;
-  // filterCards(item.bankList[0]);
-
   bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
-
   withdrawInfo.amount = "";
 };
 
@@ -790,58 +742,25 @@ const ewalletList = [];
 // validation
 const isValidBank = () => {
   const { bankId } = bankCardField;
-
   const result = !bankId ? dialogDisplays.selectionError : true;
   return result;
 };
 
-// const loadFilterBank = () => {
-//   api
-//     .get("/session/withdraw/card")
-//     .then((res) => {
-//       if (res.code === 0) {
-//         res.data.forEach((e) => {
-//           const bankType = e.bankType;
-//           if (bankType === "BANK") bankList.push(e);
-//           else if (bankType === "CRYPTO") cryptoList.push(e);
-//           else if (bankType === "EWALLET") ewalletList.push(e);
-//         });
-//         selectBankType();
-//         bankCardField.bankId = currBankList.value[0].id;
-//       }
-//     })
-//     .catch((e) => {
-//       console.log("error", e);
-//     });
-// };
-
 const filterBank = (val, update) => {
-  // if (currentCardType.value !== "Bank") return;
   if (!val) {
     update(() => {
-      // filteredBankList.value = currBankList.value;
       filteredBankList.value = selectedMethodItem.value.bankList;
-      // bankCardField.bankId = selectedMethodItem.value.bankList[0].id;
-      // filterCards(item.bankList[0]);
-      // filterCards(selectedMethodItem.value.bankList[0]);
-
-      // if (selectedMethodItem.value.bankList.length > 0) {
-      //   bankCardField.bankId = selectedMethodItem.value.bankList[0].id;
-      //   filterCards(selectedMethodItem.value.bankList[0]);
-      // }
     });
     return;
   }
+
   update(() => {
-    const result = currBankList.value.filter((bank) => {
+    const result = selectedMethodItem.value.bankList.filter((bank) => {
       const bankName = bank.name.toLowerCase();
       const lowerCaseVal = val.toLowerCase();
       return bankName.includes(lowerCaseVal);
     });
     filteredBankList.value = result;
-
-    // console.log("result", result);
-    // bankCardField.bankId = selectedMethodItem.value.bankList[0].id;
   });
 };
 
@@ -862,8 +781,6 @@ const selectBankType = () => {
 };
 
 const isAddNewAccount = ref(false);
-
-// withdrawalMethods[withdrawalDialogTab].withdrawMin
 const toggleAmount = (type) => {
   const method = selectedMethodItem.value;
 

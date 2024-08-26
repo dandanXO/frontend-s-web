@@ -14,7 +14,7 @@ import { loadAffiliateByDomain } from "@/api/index/promo";
 import { submitMemberStats } from "@/api/index/site";
 
 import NotificationWrapper from "@/components/notification/NotificationWrapper.vue";
-
+import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     NotificationWrapper
@@ -23,7 +23,8 @@ export default defineComponent({
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
     const store = userStore();
-    const UI = uiStore();
+    const ui = uiStore();
+    const router = useRouter();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -74,7 +75,21 @@ export default defineComponent({
       });
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.VUE_APP_SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
+      checkServerStatus();
       checkSID();
 
       getAffiliateByDomain();
@@ -84,7 +99,7 @@ export default defineComponent({
 
       window.addEventListener("resize", function handleResize(e) {
         // console.log("RESIZE");
-        UI.innerWidth = window.innerWidth;
+        ui.innerWidth = window.innerWidth;
       });
     });
 

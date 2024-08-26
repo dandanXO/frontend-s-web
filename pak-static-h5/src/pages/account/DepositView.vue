@@ -173,8 +173,6 @@
           @successful="isDeposited = true"
         ></BankComponent>
 
-        <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
-
         <q-select
           style="width: 100%"
           ref="offerRef"
@@ -229,7 +227,10 @@
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
-      <template v-if="isUSDT">
+      <template v-if="activeMethod.msg">
+        <div class="description-text" v-html="activeMethod.msg"></div>
+      </template>
+      <template v-else-if="isUSDT">
         <p>
           1. Recharge tutorial:
           <span class="tutorial-link" @click="openDepositPage">Picture</span>
@@ -259,6 +260,33 @@
           4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
           credited.
         </p>
+
+        <!--        <p>-->
+        <!--          1. Recharge tutorial:-->
+        <!--          <a-->
+        <!--            class="tutorial-link"-->
+        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
+        <!--            target="_blank"-->
+        <!--          >-->
+        <!--            Picture-->
+        <!--          </a>-->
+        <!--          /-->
+        <!--          <a-->
+        <!--            class="tutorial-link"-->
+        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
+        <!--            target="_blank"-->
+        <!--          >-->
+        <!--            Video-->
+        <!--          </a>-->
+        <!--        </p>-->
+        <!--        <p>-->
+        <!--          2. After payment is completed, you need to submit the last 5 digits of TID, otherwise it will not be-->
+        <!--          automatically credited.-->
+        <!--        </p>-->
+        <!--        <p>3. Fill in the correct wallet account.</p>-->
+        <!--        <p>4. The amount submitted must be consistent with the payment amount.</p>-->
       </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
@@ -1210,5 +1238,13 @@ onMounted(() => {
   right: 10px;
   cursor: pointer;
   z-index: 1;
+}
+</style>
+<style scoped>
+.description-text {
+  color: #bacef1;
+}
+:deep(.description-text p) {
+  margin: 5px 0px !important;
 }
 </style>
