@@ -249,7 +249,7 @@
               <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th>
-              <th scope="col">{{ t('fields.operate') }}</th>
+              <th scope="col" v-if="showOperation">{{ t('fields.operate') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.records.length > 0">
@@ -286,7 +286,7 @@
               <td :data-label="t('fields.memberTag')">
                 {{ formatmTag(item.tags) }}
               </td>
-              <td class="relativerow" :data-label="t('fields.operate')">
+              <td class="relativerow" :data-label="t('fields.operate')" v-if="showOperation">
                 <el-dropdown>
                   <span class="el-dropdown-link">
                     {{ t('fields.more') }}
@@ -846,6 +846,8 @@ const memberShareRatioList = reactive({
 const affiliate = reactive({
   list: []
 })
+const downlineAffiliate = ref(null);
+const showOperation = ref(true);
 
 const uiControl = reactive({
   infoDialogVisible: false,
@@ -1190,6 +1192,8 @@ function resetQuery() {
 async function loadAffiliateMembers() {
   selectedMemberList.id.length = 0
   selectedMemberList.loginName.length = 0
+  downlineAffiliate.value = null
+  showOperation.value = true
   // table.value.clearSelection()
   uiControl.editBtn = true
   page.loading = true
@@ -1236,7 +1240,9 @@ async function loadAffiliateMembers() {
 
   let userId = store.state.user.id;
   if (request.downlineAffiliate !== null && request.downlineAffiliate.trim() !== '') {
+    downlineAffiliate.value = request.downlineAffiliate
     userId = request.downlineAffiliate
+    showOperation.value = false
   }
   const { data: ret } = await loadMemberSummary(userId, query)
 
@@ -1282,7 +1288,11 @@ function formatTag(tags) {
 }
 
 async function loadAllTags() {
-  const { data: ret } = await getAffiliateTagList(store.state.user.id)
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
+  const { data: ret } = await getAffiliateTagList(userId)
   tagList.list = ret
   assignTaglist = JSON.parse(JSON.stringify(ret))
   tagList.list.push(unAssigned)
@@ -1316,8 +1326,12 @@ function showDepositRecord(member) {
 
 async function loadDepositRecords() {
   memberDepositInfo.page.loading = true
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   const { data: ret } = await getMemberDepositRecords(
-    store.state.user.id,
+    userId,
     depositRequest
   )
   memberDepositInfo.page = ret
@@ -1338,8 +1352,12 @@ function showPrivilegeRecord(member) {
 
 async function loadPrivilegeRecords() {
   memberPrivilegeInfo.page.loading = true
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   const { data: ret } = await getMemberPrivilegeRecords(
-    store.state.user.id,
+    userId,
     privilegeRequest
   )
   memberPrivilegeInfo.page = ret
@@ -1367,8 +1385,12 @@ async function showMemberInfo(row) {
     memberInfo.remark = row.remark
   }
   dialog.loading = true
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   const { data: ret } = await loadMemberInfo(
-    store.state.user.id,
+    userId,
     memberRequest.memberId,
     memberRequest.recordTime.join(',')
   )
@@ -1402,6 +1424,10 @@ function showBatchEditTag() {
 }
 
 async function submitTag() {
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   tagRequest.tags = assignTaglist.filter(function(obj) {
     return tagRequest.tags.includes(obj.description)
   })
@@ -1409,12 +1435,12 @@ async function submitTag() {
     return obj.id
   })
   if (uiControl.editType === 'One') {
-    await assignTag(store.state.user.id, selectedMember.id, tagRequest.tags)
+    await assignTag(userId, selectedMember.id, tagRequest.tags)
     selectedMember.id = null
     selectedMember.loginName = null
   } else {
     await assignTag(
-      store.state.user.id,
+      userId,
       selectedMemberList.id.join(','),
       tagRequest.tags
     )
@@ -1460,8 +1486,12 @@ function showEditShareRatio(member) {
 }
 
 async function submitRemark() {
+  let userId = store.state.user.id
+  if (downlineAffiliate.value) {
+    userId = downlineAffiliate.value
+  }
   await assignRemark(
-    store.state.user.id,
+    userId,
     selectedMember.id,
     selectedMember.remark
   )

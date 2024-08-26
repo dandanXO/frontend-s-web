@@ -37,6 +37,7 @@
               size="normal"
               v-model="request.downlineAffiliate"
               @focus="getAllAffiliateDownlines"
+              :placeholder="t('fields.downlineAffiliate')"
               :clearable="true"
             >
               <el-option

@@ -11,6 +11,7 @@ export default {
     withdraw: "Withdraw",
     transfer: "Transfer",
     vip: "VIP",
+    live: "LIVE",
     home: "Home",
     account: "Account",
     promo: "Promo",
@@ -190,8 +191,8 @@ export default {
 
     // maintenance
     maintenance_title: "The system is maintenance...",
-    maintenance_from: "Starting from 17/04/2024 06:00 (GMT +8)",
-    maintenance_to: "to 10:00 (GMT +8)",
+    maintenance_from: "Starting from ",
+    maintenance_to: "to ",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
     maintenance_contact_01: "Email Us:",
@@ -368,7 +369,7 @@ export default {
     withdraw_realtimeexchangerates: "Real Time Exchange Rates",
     withdraw_estimatedarrival: "Estimated arrival",
     withdraw_usdtspecialnote:
-      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
     withdraw_ewalletspecialnote:
       "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
     withdraw_choose: "Choose",
@@ -442,6 +443,7 @@ export default {
     mine_account_info: "Account info",
     mine_apply_for_partnership: "Partnership",
     mine_logout: "Logout",
+    mine_vip: "VIP",
 
     // promo
     type_all: "All",
@@ -1095,7 +1097,7 @@ export default {
     update_app_title: "Update App",
     detected_new_version: "New Update Available. Do you wish to download it now?",
     update_now: "Update Now",
-    usdt_will_be_charged: "1.00 USDT will be charged for each transaction!",
+    usdt_will_be_charged: "2.00 USDT will be charged for each transaction!",
     phone_verification_code: "Phone Verification Code",
     please_enter_phone_code: "Please enter the phone verification code",
     get_code: "Get Code",

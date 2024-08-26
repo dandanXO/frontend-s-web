@@ -74,11 +74,11 @@
           <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
           {{ $t("lang.deposit_btm") }}
         </q-route-tab>
-        <q-route-tab to="/account/vip?redirect=home" id="cs-web-id" name="vip" class="cs-web-id sm-screen-txt">
-          <img class="inactive" src="../assets/images/footer/vip-icon.svg" />
-          <img class="hover" src="../assets/images/footer/vip-icon-active.svg" />
-          {{ $t("lang.vip") }}
-        </q-route-tab>
+        <q-tab id="cs-web-id" name="live" class="cs-web-id sm-screen-txt" @click="handleLiveClick">
+          <img class="inactive" src="../assets/images/footer/live-icon.svg" />
+          <img class="hover" src="../assets/images/footer/live-icon-active.svg" />
+          {{ $t("lang.live") }}
+        </q-tab>
         <q-route-tab to="/account" name="account" class="sm-screen-txt">
           <img class="inactive" src="../assets/images/footer/account-icon.svg" />
           <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
@@ -86,6 +86,20 @@
         </q-route-tab>
       </q-tabs>
     </q-footer>
+
+    <q-dialog v-model="displayLiveDialog" full-height full-width>
+      <div class="live-frame-wrapper">
+        <div class="live-frame-toolbar">
+          <q-btn flat icon="close" color="white" @click="handleClose"></q-btn>
+        </div>
+        <iframe
+          class="live-frame"
+          @load="handleLoaded"
+          src="https://gamerecords.vnkaka.live/#/roomLive?language=vi"
+          frameborder="0"
+        />
+      </div>
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -100,6 +114,7 @@ import LangOptions from "components/LangOptions";
 
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
@@ -109,6 +124,7 @@ export default defineComponent({
   },
 
   setup() {
+    const $q = useQuasar();
     const { t } = useI18n();
     const route = useRoute();
     const router = useRouter();
@@ -116,12 +132,14 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
+    const tab = ref("home");
 
     const pageName = ref("");
     const hasPage = ref(false);
     const hasDrawer = ref(false);
     const hasShadow = ref(false);
     const leftDrawerOpen = ref(false);
+    const displayLiveDialog = ref(false);
 
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
@@ -463,6 +481,25 @@ export default defineComponent({
     //     document.body.appendChild(script);
     //   }
     // };
+    const handleLiveClick = () => {
+      // window.open("https://gamerecords.vnkaka.live/#/roomLive?language=vi", "_blank");
+      displayLiveDialog.value = true;
+      $q.loading.show();
+    };
+
+    const handleLoaded = () => {
+      $q.loading.hide();
+    };
+
+    const handleClose = () => {
+      displayLiveDialog.value = false;
+    };
+
+    watch(tab, (val, oldVal) => {
+      if (val === "live") {
+        tab.value = oldVal;
+      }
+    });
 
     onMounted(() => {
       checkRoute();
@@ -471,7 +508,7 @@ export default defineComponent({
     });
     return {
       languageVal,
-      tab: ref("home"),
+      tab,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -505,7 +542,11 @@ export default defineComponent({
       ],
       LangOptions,
       isH5,
-      checkPlatform
+      checkPlatform,
+      handleLiveClick,
+      displayLiveDialog,
+      handleLoaded,
+      handleClose
     };
   }
 });
@@ -557,5 +598,16 @@ svg path {
   position: absolute;
   top: 8px;
   right: 12px;
+}
+
+.live-frame-wrapper {
+  .live-frame-toolbar {
+    background: linear-gradient(225.97deg, #fd3a2f 3.59%, #fd7267 52.04%, #ff1104 108.97%);
+    text-align: right;
+  }
+  .live-frame {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

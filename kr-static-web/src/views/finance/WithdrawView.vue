@@ -201,9 +201,9 @@
             {{
               selectedWithdrawalMethod &&
               (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+                (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
             }}
             {{ $t("withdraw.usdt") }}
           </span>

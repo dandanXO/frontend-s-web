@@ -36,7 +36,6 @@ const routes = [
   },
   {
     path: "/maintenance",
-    component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
@@ -518,7 +517,7 @@ const routes = [
   {
     path: "/app-tutorial",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }],
+    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }]
   },
   // Always leave this as last one,
   // but you can also remove it

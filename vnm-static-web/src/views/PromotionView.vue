@@ -186,9 +186,9 @@ export default defineComponent({
     ]);
     const promoTypesSlot = computed(() => [
     { code:"ALL", img: 'all', label: t('promo.all') },
-    { code: "SLOT WELCOME", img: 'sport', label:  t('promo.slotWelcome')},
-    { code: "SLOT DAILY", img: 'live', label: t('promo.slotDaily')},
-    { code: "SLOT OTHER", img: 'slot', label: t('promo.slotOther')},
+    { code: "SLOT WELCOME", img: 'slot-welcome', label:  t('promo.slotWelcome')},
+    { code: "SLOT DAILY", img: 'slot-daily', label: t('promo.slotDaily')},
+    { code: "SLOT OTHER", img: 'slot-other', label: t('promo.slotOther')},
     ])
     const currentPromoTypes = computed(() => {
       switch(ui.edition) {
