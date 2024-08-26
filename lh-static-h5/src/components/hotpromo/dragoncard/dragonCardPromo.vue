@@ -670,6 +670,9 @@ body {
 }
 
 .longka-wrap {
+  background-image: url("../../../assets/images/promo/hotpromo/dragoncard/bg-1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: inline-block;
   padding: 1.5rem;
   width: 100%;
@@ -721,7 +724,7 @@ body {
 .longka-list {
   display: flex;
   flex-direction: row;
-  background: rgba(255, 255, 255, 0.5);
+  background: transparent;
   gap: 0.25rem;
   padding: 1.5rem 1rem;
   flex-wrap: wrap;
