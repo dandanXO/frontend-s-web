@@ -149,7 +149,7 @@ const handleDepositClick = () => {
   }
   .reward-table__header {
     background-color: #443429;
-    padding: 5px 20px;
+    padding: 5px 10px;
   }
   .reward-table__row {
     margin: 0 5px;
