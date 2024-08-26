@@ -56,7 +56,8 @@
       v-else
       class="selected-promo"
       :class="{
-        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo'
+        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo',
+        'bbdacha-cs2': selectedPromo?.promoCode === 'dy2-bb-dacha-cs-bonus'
       }"
     >
       <div class="selected-promo-wrapper">
@@ -76,7 +77,7 @@
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
-            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
           }"
         >
           <div
@@ -121,7 +122,7 @@
             duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
-            dyfootball: selectedPromo?.promoCode === 'dy2-football'
+            dyfootball: selectedPromo?.promoCode === 'dy2-football',
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -702,6 +703,20 @@ export default defineComponent({
     width: 100%;
 
     &.isMSIPromo {
+    }
+
+    &.bbdacha-cs2 {
+      background-color: #e7f1fd;
+
+      .selected-promo-wrapper {
+        .banner-container {
+          .promo-bg.isDesktop {
+            aspect-ratio: 1920 / 568;
+            max-height: 568px;
+            height: unset;
+          }
+        }
+      }
     }
 
     .selected-promo-wrapper {

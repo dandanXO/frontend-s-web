@@ -1429,7 +1429,6 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      checkShowImgTop();
       getAppDownloadUrl();
       // getUnreadTotal();
       getNewsDetails();
@@ -1441,6 +1440,9 @@ export default defineComponent({
         store.getUnreadTotal();
       } else {
         isLogined.value = false;
+      }
+      if (ui.edition !== EDITION.SLOT) {
+        checkShowImgTop();
       }
     });
 

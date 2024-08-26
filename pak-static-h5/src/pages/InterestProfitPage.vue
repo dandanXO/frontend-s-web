@@ -104,7 +104,7 @@
         <template v-else>
           <div class="do-result-item">
             <div class="item-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-            <div class="item-rates">{{ estimatePlan.odds }}%</div>
+            <div class="item-rates">{{ estimatePlan.odds * 100 }}%</div>
           </div>
           <div class="do-result-item">
             <div class="item-title">{{ $t("interestProfit.distributeInterest") }}</div>
@@ -199,7 +199,7 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-          <div class="box-value">{{ recordDetails.odds }}%</div>
+          <div class="box-value">{{ recordDetails.odds * 100 }}%</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
@@ -208,6 +208,10 @@
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositDuration") }}</div>
           <div class="box-value">{{ recordDetails.days }} day(s)</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">{{ $t("records.turnover_requi") }}</div>
+          <div class="box-value">{{ turnoverAmt }} x</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
@@ -509,11 +513,19 @@ const collectDeposit = (planOrderId) => {
     });
 };
 
+const turnoverAmt = ref(1);
 const isRecordDetails = ref(false);
 const recordDetails = ref();
 const viewDetails = (record) => {
   recordDetails.value = record;
   isRecordDetails.value = true;
+  if (recordDetails.value.odds === 0.06) {
+    turnoverAmt.value = 3;
+  } else if (recordDetails.value.odds === 0.04) {
+    turnoverAmt.value = 2;
+  } else {
+    turnoverAmt.value = 1;
+  }
 };
 
 const humanDatetime = (ts) => {
@@ -797,6 +809,11 @@ onMounted(() => {
       font-size: 0.825rem;
     }
   }
+}
+.warn-text {
+  font-size: 0.825rem;
+  padding-left: 8px;
+  color: #00b900;
 }
 .btn--orange {
   color: #ff7a00;

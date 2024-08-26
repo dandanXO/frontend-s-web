@@ -107,7 +107,7 @@ export default {
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
-      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
     fullName: "Full Name",
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
@@ -313,7 +313,7 @@ export default {
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
-      "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
+      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -485,7 +485,8 @@ export default {
     noMoreRecord: "No more record",
     bytoday: "By Today",
     byyesterday: "By Yesterday",
-    all: "All"
+    all: "All",
+    turnover_requi: "TurnOver Requirement"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -634,6 +635,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
     32000: "VIP level not found",

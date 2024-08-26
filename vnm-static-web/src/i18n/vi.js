@@ -86,7 +86,11 @@ export default {
     findPasswordPhone: "Lấy lại mật khẩu bằng số điện thoại ",
     findPasswordEmail: "Lấy lại mật khẩu bằng Email",
     findAccountEmail: "Lấy tài khoản qua Email",
-    registerSuccess: "Đăng ký thành công"
+    registerSuccess: "Đăng ký thành công",
+    registration_hints: "Đăng ký tức là bạn đã đồng ý và tuân thủ",
+    user_registration_protocol: "Thỏa thuận đăng ký tài khoản",
+    already_have_acc: "Đã có tài khoản?",
+    login_here: "Đăng nhập tại đây",
   },
   common: {
     login: "Đăng nhập",
@@ -340,7 +344,7 @@ export default {
     beforeBindVerifyPhone: "Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.",
     expectedAmount: "Số coin sẽ nhận",
     depositAmountRange: "Vui lòng nhập số tiền từ",
-    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 1.00 USDT sẽ tự động thu bởi bên thứ ba!",
+    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 2.00 USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
     accountNo: "Vui lòng nhập số tài khoản ngân hàng",

@@ -241,7 +241,7 @@ export function footballHistroy() {
 }
 
 export function getCompetitionBetToday(promoCode) {
-  return eventapi.get(`/competition-bet/today`, {
+  return eventapi.get(`/competition-bet/yesterday`, {
     params: {
       promoCode
     }

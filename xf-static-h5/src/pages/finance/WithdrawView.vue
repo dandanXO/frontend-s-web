@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="title-wrapper q-pa-md q-mx-sm q-mt-md">
+      <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+      <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+        <span>升级快速提款</span>
+      </q-btn>
+    </div>
     <!--    <AcctBal :platforms="platforms" />-->
     <div class="q-pa-md bg-dark q-mx-sm q-my-md">
       <div class="account-content last">
@@ -113,6 +120,10 @@
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
+            <div v-if="isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
+              <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+              <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+            </div>
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款：" +
@@ -144,12 +155,12 @@
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
                 }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">*提币手续费：1.00 USDT</div>
+            <div class="q-mt-md text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
@@ -507,6 +518,33 @@ export default defineComponent({
       window.open(selectedWithdrawalMethod.value.url);
     };
 
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: "升级中。。。"
+      });
+      api.get("/session/updateAutoWithdraw").then(async (res) => {
+        if(res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "成功升级为快速提款!",
+            icon: "check_circle_outline"
+          });
+          await store.getMemberInfo()
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          })
+        }
+      }).finally(() => $q.loading.hide())
+    }
+
+
     const checkNewUser = () => {
       if (!store.phone || !store.realName) {
         isNewUser.value = true;
@@ -544,6 +582,8 @@ export default defineComponent({
       openEWalletTutorial,
       tutorialLabel,
       withdrawLoading,
+      isAutoWithdrawal,
+      handleUpgradeClick,
       isNewUser,
       router
     };
@@ -646,5 +686,24 @@ export default defineComponent({
       margin-right: 60px;
     }
   }
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  .upgrade-btn {
+    padding: 1px 12px;
+    img {
+      height: 30px;
+    }
+  }
+}
+
+.upgraded-helper-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: #00a478;
 }
 </style>
