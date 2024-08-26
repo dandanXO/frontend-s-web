@@ -42,7 +42,8 @@
           <li>
             6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
           </li>
-          <li>7.为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li>7.本活动不与官网其他活动共享；</li>
+          <li>8.为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ul>
         <!--        <button class="deposit-btn" @click="handleDepositClick"></button>-->
       </div>
@@ -132,7 +133,7 @@ const handleDepositClick = () => {
   width: 100%;
   background-color: #4b3e3a;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 1.1rem;
   line-height: 1.5rem;
 
   .reward-table__header,
@@ -142,13 +143,18 @@ const handleDepositClick = () => {
     span {
       flex: 1;
     }
+    span:nth-child(2) {
+      flex: 3;
+    }
   }
   .reward-table__header {
     background-color: #443429;
-    padding: 0 20px;
+    padding: 5px 20px;
   }
   .reward-table__row {
-    margin: 0 20px;
+    margin: 0 5px;
+    padding: 5px;
+    align-items: center;
     &:not(:last-child) {
       border-bottom: 1px solid #6a5954;
     }
