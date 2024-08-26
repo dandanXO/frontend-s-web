@@ -47,17 +47,21 @@ export const getSiteListSimple = () => {
   return https()
     .request('/site/systemSiteList', Method.GET)
     .then(response => {
-      const site = response.data
+      if (store.state.user.userType !== 'ADMIN') {
+        const site = response.data
 
-      const updateWithUserStoreSiteId = site.filter(
-        e => e.id === store.state.user.siteId
-      )
-      const mockResponse = {
-        code: 0,
-        data: updateWithUserStoreSiteId,
+        const updateWithUserStoreSiteId = site.filter(
+          e => e.id === store.state.user.siteId
+        )
+        const mockResponse = {
+          code: 0,
+          data: updateWithUserStoreSiteId,
+        }
+
+        return mockResponse
+      } else {
+        return response
       }
-
-      return mockResponse
     })
     .catch(error => {
       console.error('Error fetching site list:', error)

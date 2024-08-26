@@ -676,7 +676,6 @@ async function loadUser() {
 }
 
 async function loadRoles(siteId) {
-  console.log('siteId : ', siteId)
   const { data: roles } = await getSimpleRoles(siteId)
   options.value = roles
 }
