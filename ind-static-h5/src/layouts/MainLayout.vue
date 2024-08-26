@@ -19,7 +19,12 @@
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
+          <span
+            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/tutorial'"
+            class="header-back"
+          >
+            Back
+          </span>
         </router-link>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -79,9 +84,8 @@
         </KeepAlive>
       </router-view>
     </q-page-container>
-
     <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
-      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
+      <q-tabs v-if="!isDepositTab" v-model="tab" no-caps :breakpoint="0" align="justify">
         <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
@@ -92,7 +96,7 @@
           <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           Promo
         </q-route-tab>
-        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
+        <q-route-tab @click="goDepositTab" name="deposittab" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
         </q-route-tab>
         <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
@@ -104,6 +108,23 @@
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
           Me
+        </q-route-tab>
+      </q-tabs>
+      <q-tabs v-else v-model="tab" no-caps :breakpoint="0" align="justify">
+        <q-route-tab to="/withdraw" name="withdraw" class="second-icon" :ripple="false">
+          <img class="hover" src="../assets/images/index/menu/withdraw-active-icon.png" />
+          <img class="inactive" src="../assets/images/index/menu/withdraw-icon.png" />
+          Withdraw
+        </q-route-tab>
+        <q-route-tab to="/deposit" name="deposit" class="second-icon" :ripple="false">
+          <img class="hover" src="../assets/images/index/menu/deposit-active-icon.png" />
+          <img class="inactive" src="../assets/images/index/menu/deposit-icon2.png" />
+          Deposit
+        </q-route-tab>
+        <q-route-tab to="/tutorial" name="tutorial" class="second-icon" :ripple="false">
+          <img class="hover" src="../assets/images/index/menu/tutorial-active-icon.png" />
+          <img class="inactive" src="../assets/images/index/menu/tutorial-icon.png" />
+          Tutorial
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -135,6 +156,8 @@ export default defineComponent({
     //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
     //   }
     // });
+
+    const isDepositTab = ref(false);
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
@@ -144,6 +167,11 @@ export default defineComponent({
     watch(
       () => route.path,
       async () => {
+        if (route.path === "/deposit" || route.path === "/withdraw" || route.path === "/tutorial") {
+          isDepositTab.value = true;
+        } else {
+          isDepositTab.value = false;
+        }
         checkRoute();
       }
     );
@@ -418,6 +446,7 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "";
+          isDepositTab.value = true;
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
@@ -425,6 +454,12 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "";
+          isDepositTab.value = true;
+        } else if (route.path === "/tutorial") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "";
+          isDepositTab.value = true;
         }
       }
     };
@@ -496,7 +531,12 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+
+    const goDepositTab = () => {
+      isDepositTab.value = true;
+
+      router.push(`/deposit?from=${route.path}`);
+    };
 
     onMounted(() => {
       checkRoute();
@@ -518,7 +558,9 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      goDepositTab,
+      changePlatform,
+      isDepositTab
     };
   }
 });
@@ -556,6 +598,14 @@ svg path {
   stroke-width: 2;
   stroke-dasharray: 1000;
   stroke-dashoffset: 0;
+}
+
+.second-icon {
+  img {
+    margin-top: 5px;
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .logo {
