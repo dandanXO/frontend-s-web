@@ -344,6 +344,11 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   }
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
   request.siteType = "main";
   await loadPromoPages()
 })

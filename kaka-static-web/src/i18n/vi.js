@@ -333,7 +333,7 @@ export default {
     beforeBindVerifyPhone: "Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.",
     expectedAmount: "Số coin sẽ nhận",
     depositAmountRange: "Vui lòng nhập số tiền từ",
-    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 1.00 USDT sẽ tự động thu bởi bên thứ ba!",
+    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 2.00 USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
     accountNo: "Số thẻ",
@@ -801,7 +801,11 @@ export default {
     customerService: "Hỗ trợ trực tuyến 24/7",
     currentlyMaintaining: "Đang bảo trì",
     maintainenceTime: "Thời gian bảo trì",
-    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé"
+    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé",
+    maintenance_from: "Bắt đầu từ ",
+    maintenance_to: "đến ",
+    maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
+    maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!"
   },
   welcome: {
     compatibleDevices: "Hoàn toàn tương thích với các thiết bị an toàn",

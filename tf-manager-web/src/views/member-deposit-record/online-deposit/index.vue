@@ -155,6 +155,7 @@
         </el-table-column>
         <el-table-column v-if="request.siteId !== 5" prop="currencyRate" :label="t('fields.currencyRate')" align="center" min-width="100" />
         <el-table-column prop="clientType" :label="t('fields.clientType')" align="center" min-width="110" />
+        <el-table-column prop="walletType" :label="t('fields.walletType')" align="center" min-width="110" />
         <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="110">
           <template #default="scope">
             <span v-if="scope.row.updateBy === null">-</span>

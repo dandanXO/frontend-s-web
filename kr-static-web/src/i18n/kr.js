@@ -338,7 +338,7 @@ export default {
     beforeBindVerifyPhone: "은행 카드를 연결하기 전에 전화번호를 확인하세요.",
     expectedAmount: "받을 코인 수",
     depositAmountRange: "금액을 입력하세요",
-    exchangeRateExample: "*특별 안내: 출금 수수료는 1.00 USDT로 제3자에 의해 자동으로 징수됩니다!",
+    exchangeRateExample: "*특별 안내: 출금 수수료는 2.00 USDT로 제3자에 의해 자동으로 징수됩니다!",
     startEndDate: "시작 날짜와 종료 날짜를 입력하세요",
     usdtAddress: "지갑 주소",
     accountNo: "은행 계좌 번호를 입력하세요",
@@ -878,7 +878,11 @@ export default {
     customerService: "24/7 온라인 지원",
     currentlyMaintaining: "점검 중",
     maintainenceTime: "점검 시간",
-    otherPlatFirst: "다른 홀에서 베팅해 주시기 바랍니다."
+    otherPlatFirst: "다른 홀에서 베팅해 주시기 바랍니다.",
+    maintenance_from: "시작일 ",
+    maintenance_to: "까지 ",
+    maintenance_desc_01: "위 기간 동안 모든 서비스와 게임이 중단됩니다, ",
+    maintenance_desc_02: "이 불편에 진심으로 사과드립니다!"
   },
   welcome: {
     compatibleDevices: "안전한 장치와 완벽하게 호환됩니다.",

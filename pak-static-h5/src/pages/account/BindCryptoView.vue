@@ -60,9 +60,9 @@
         </div>
       </q-form>
 
-      <div class="note">
-        {{ $t("form.virtualWallet_warmReminder") }}
-      </div>
+      <!--      <div class="note">-->
+      <!--        {{ $t("form.virtualWallet_warmReminder") }}-->
+      <!--      </div>-->
 
       <div class="bottom-btn">
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitBankCard()">

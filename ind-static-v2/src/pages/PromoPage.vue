@@ -89,6 +89,13 @@
                 <!-- </div> -->
               </div>
               <div class="inner">
+                <div class="top-float">
+                  <div class="top-subtitle">Get unlimited rewards!</div>
+                  <div class="top-title">{{ selectedPromo.title }}</div>
+                </div>
+                <div class="promo-content-inner">
+                  <div class="content-title">{{ selectedPromo.title }}</div>
+                </div>
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -103,24 +110,20 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div class="top-float">
-                    <div class="top-subtitle">Get unlimited rewards!</div>
-                    <div class="top-title">{{ selectedPromo.title }}</div>
-                  </div>
-                  <div class="promo-content-inner">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
-                    <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
-                      <div class="date-timer">
-                        <img src="../assets/images/promotion/timer-icon.svg" alt="" />
-                        <q-icon name="all_inclusive" size="22px"></q-icon>
+
+                  <template v-if="!selectedPromo.hasPromo">
+                    <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                      <div class="promo-date">
+                        <div class="date-txt">Promotion Ends</div>
+                        <div class="date-timer">
+                          <img src="../assets/images/promotion/timer-icon.svg" alt="" />
+                          <q-icon name="all_inclusive" size="22px"></q-icon>
+                        </div>
                       </div>
+                      <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
                     </div>
-                    <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                  </div>
+                  </template>
 
                   <!-- <div class="join-container">
                     <div class="promo-date">
@@ -938,9 +941,9 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
-          border-radius: 10px;
-          display: none;
+          // background: #272c3d;
+          // border-radius: 10px;
+          // display: none;
         }
 
         .promo-view-container {

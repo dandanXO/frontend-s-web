@@ -248,9 +248,9 @@ dense
         <div class="text-center q-mt-md q-pb-xs">
           {{ $t("lang.registration_hints") }}
           <!--          <router-link to="/login" style="white-space: nowrap">-->
-          <div style="white-space: nowrap">
+          <a href="/about?id=info" style="white-space: nowrap">
             {{ $t("lang.user_registration_protocol") }}
-          </div>
+          </a>
 
           <!--          </router-link>-->
         </div>
