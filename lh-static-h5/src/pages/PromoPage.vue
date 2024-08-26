@@ -7,7 +7,7 @@
         isPromoDetail
           ? 'background-image: url(' +
             imgURL +
-            (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+            ($q.dark.isActive && selectedPromo.mobileImgBackgroundUrlDark ? selectedPromo.mobileImgBackgroundUrlDark : selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
             ')'
           : ''
       "
@@ -61,6 +61,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
+                          <img v-if="$q.dark.isActive && promo.mobileImgUrlDark" loading="lazy" :src="imgURL + promo.mobileImgUrlDark" />
                           <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
@@ -97,7 +98,8 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
+                          <img v-if="$q.dark.isActive && promo.mobileImgUrlDark" loading="lazy" :src="imgURL + promo.mobileImgUrlDark" />
+                          <img v-else loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
@@ -163,7 +165,7 @@
                 class="banner-container"
                 v-if="
                   selectedPromo &&
-                  selectedPromo.mobileBannerUrl &&
+                  (selectedPromo.mobileBannerUrl || selectedPromo.mobileBannerUrlDark) &&
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
                   selectedPromo.promoCode !== 'lh1-aijiasu' &&
@@ -173,7 +175,7 @@
                 <img
                   loading="lazy"
                   class="promo-content"
-                  :src="imgURL + selectedPromo.mobileBannerUrl"
+                  :src="imgURL + ($q.dark.isActive ? selectedPromo.mobileBannerUrlDark : selectedPromo.mobileBannerUrl)"
                   style="display: block; width: 100%"
                 />
               </div>
