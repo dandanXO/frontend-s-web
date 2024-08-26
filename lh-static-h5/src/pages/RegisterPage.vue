@@ -11,7 +11,8 @@
           ]" color="white">
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
-              <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+              <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/user-icon-dark.svg" />
+              <img v-else class="input-icon" src="../assets/images/login/user-icon.svg" />
               <label class="input-label">
                 <em>*</em>
                 用户名</label>
@@ -26,7 +27,8 @@
           ]" color="white">
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
-              <img class="input-icon" src="../assets/images/login/password-icon.svg" />
+              <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/password-icon-dark.svg" />
+              <img v-else class="input-icon" src="../assets/images/login/password-icon.svg" />
               <label class="input-label"><em>*</em>密码</label>
             </div>
           </template>
@@ -60,7 +62,8 @@
           ]" color="white">
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
-              <img class="input-icon" src="../assets/images/login/password-icon.svg" />
+              <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/password-icon-dark.svg" />
+              <img v-else class="input-icon" src="../assets/images/login/password-icon.svg" />
               <label class="input-label"><em>*</em>确认密码</label>
             </div>
           </template>
@@ -78,7 +81,8 @@
           ]" color="white">
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
-              <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+              <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/user-icon-dark.svg" />
+              <img v-else class="input-icon" src="../assets/images/login/user-icon.svg" />
               <label class="input-label"><em>*</em>姓名</label>
             </div>
           </template>
@@ -94,7 +98,8 @@
           </template>
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
-              <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+              <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
+              <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
               <label class="input-label"><em>*</em>验证码</label>
             </div>
           </template>
@@ -105,7 +110,8 @@
                    placeholder="如不是合营玩家不用填写">
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
                 <label class="input-label"><em>&nbsp;</em>推荐码</label>
               </div>
             </template>
