@@ -2630,6 +2630,7 @@ export default defineComponent({
             top:1px;
             left:1px;
             border-top-left-radius:8px;
+            display:none;
           }
           .platform-subtitle {
             color: $font-1-dark;
