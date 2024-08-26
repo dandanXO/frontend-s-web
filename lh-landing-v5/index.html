@@ -6,7 +6,7 @@
     <title>雷火电竞体育官网</title>
 
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
   </head>
@@ -82,34 +82,34 @@
         </div>
       </div>
 
-      <div class="main-sticky-wrapper" id="scrolldown-tbn">
-        <a href="#" target="_blank">
-          <div class="main-sticky-btn benefit">
-          </div>
-        </a>
+<!--      <div class="main-sticky-wrapper" id="scrolldown-tbn">-->
+<!--        <a href="#" target="_blank">-->
+<!--          <div class="main-sticky-btn benefit">-->
+<!--          </div>-->
+<!--        </a>-->
 
-        <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&;lang=zh-CN" target="_blank">
-          <div class="main-sticky-btn customer-service">
-          </div>
-        </a>
-      </div>
+<!--        <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&;lang=zh-CN" target="_blank">-->
+<!--          <div class="main-sticky-btn customer-service">-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const overlay = document.querySelector(".overlay");
-        const closeOverlay = document.querySelector(".close-overlay");
+        // const overlay = document.querySelector(".overlay");
+        // const closeOverlay = document.querySelector(".close-overlay");
         const popButtons = document.querySelectorAll(".pop-btn");
         const overlayContents = document.querySelectorAll(".overlay-content > div");
 
-        const scrolLDown = document.getElementById("scrolldown-tbn");
-
-        scrolLDown.addEventListener("click", function (e) {
-          window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth" // This makes the scroll smooth
-          });
-        });
+        // const scrolLDown = document.getElementById("scrolldown-tbn");
+        //
+        // scrolLDown.addEventListener("click", function (e) {
+        //   window.scrollTo({
+        //     top: document.body.scrollHeight,
+        //     behavior: "smooth" // This makes the scroll smooth
+        //   });
+        // });
 
         popButtons.forEach((button) => {
           button.addEventListener("click", function () {
@@ -125,15 +125,15 @@
           });
         });
 
-        closeOverlay.addEventListener("click", function () {
-          overlay.style.display = "none";
-        });
+        // closeOverlay.addEventListener("click", function () {
+        //   overlay.style.display = "none";
+        // });
 
-        overlay.addEventListener("click", function (event) {
-          if (event.target === overlay) {
-            overlay.style.display = "none";
-          }
-        });
+        // overlay.addEventListener("click", function (event) {
+        //   if (event.target === overlay) {
+        //     overlay.style.display = "none";
+        //   }
+        // });
       });
       
     const images = ["img/01.png", "img/02.png", "img/03.png","img/04.png","img/05.png",];
