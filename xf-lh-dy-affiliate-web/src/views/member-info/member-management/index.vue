@@ -249,7 +249,7 @@
               <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th>
-              <th scope="col" v-if="showOperation">{{ t('fields.operate') }}</th>
+              <th scope="col">{{ t('fields.operate') }}</th>
             </tr>
           </thead>
           <tbody v-if="page.records.length > 0">
@@ -286,7 +286,7 @@
               <td :data-label="t('fields.memberTag')">
                 {{ formatmTag(item.tags) }}
               </td>
-              <td class="relativerow" :data-label="t('fields.operate')" v-if="showOperation">
+              <td class="relativerow" :data-label="t('fields.operate')">
                 <el-dropdown>
                   <span class="el-dropdown-link">
                     {{ t('fields.more') }}
@@ -300,23 +300,24 @@
                         {{ t('fields.memberInfo') }}
                       </el-dropdown-item>
                       <el-dropdown-item
+                        v-if="showOperation"
                         @click="transferRedirect(item.loginName)"
                       >
                         {{ t('menu.Transfer') }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showEditTag(item)">
+                      <el-dropdown-item @click="showEditTag(item)" v-if="showOperation">
                         {{ t('fields.editTag') }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showEditRemark(item)">
+                      <el-dropdown-item @click="showEditRemark(item)" v-if="showOperation">
                         {{ t('fields.remark') }}
                       </el-dropdown-item>
-                      <el-dropdown-item v-if="parseInt(store.state.user.siteId) === 10" @click="showEditShareRatio(item)">
+                      <el-dropdown-item v-if="parseInt(store.state.user.siteId) === 10 && showOperation" @click="showEditShareRatio(item)">
                         {{ t('fields.editShareRatio') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showDepositRecord(item)">
                         {{ t('fields.depositRecord') }}
                       </el-dropdown-item>
-                      <el-dropdown-item @click="showGameRecord(item.loginName)">
+                      <el-dropdown-item @click="showGameRecord(item.loginName, downlineAffiliate)">
                         {{ t('fields.betRecord') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showPrivilegeRecord(item)">
@@ -1309,8 +1310,12 @@ function transferRedirect(name) {
   router.push(`/affiliate/transfer?user=${name}`)
 }
 
-function showGameRecord(name) {
-  router.push(`/downline/game-record?user=${name}`)
+function showGameRecord(name, affiliate) {
+  if (affiliate) {
+    router.push(`/downline/game-record?user=${name}&affiliate=${affiliate}`)
+  } else {
+    router.push(`/downline/game-record?user=${name}`)
+  }
 }
 
 function showDepositRecord(member) {
