@@ -11,42 +11,60 @@
         已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
       <div class="text-center">
-        <div class="longka-btn longka-take-btn waves-effect" @click="getNewTigerCard">领取龙卡</div>
+        <div class="longka-btn2 longka-take-btn waves-effect" style="margin-top: 1.5rem" @click="getNewTigerCard">
+          领取龙卡
+        </div>
+        <p style="text-align: center">剩余领取次数：<span style="color: #498FFF">{{ cardInfo.cardDetail.leftCount }}</span> 次</p>
       </div>
 
       <div class="content">
         <div class="longka-wrap">
           <div class="longka-title">
-            <img src="../../../assets/images/promotion/hotpromo/dragoncard/mycard-dragon.png" alt="" />
+            <img
+              src="../../../assets/images/promotion/hotpromo/dragoncard/mycard-dragon2.png"
+              alt=""
+              style="width: 100%"
+            />
           </div>
-          <div class="longka-container">
-            <div class="longka-list">
-              <div
-                v-for="(longka, i) in longkaList"
-                :key="i"
-                :class="{ 'longka-selected': isSelected === longka.code }"
-                class="longka"
-                @click="selectlongka(longka)"
-              >
-                <img :src="require(`../../../assets/images/promotion/hotpromo/dragoncard/${longka.image}.png`)" alt="" />
-                <div class="longka-own-count">{{ cardInfo.cardDetail[longka.code] }}</div>
+          <div class="longka-content">
+            <div class="longka-container">
+              <div class="longka-container-cards">
+                <div
+                  v-for="(longka, i) in longkaList"
+                  :key="i"
+                  :class="{ 'longka-selected': isSelected === longka.code }"
+                  class="longka"
+                  @click="selectlongka(longka)"
+                >
+                  <img
+                    :src="require(`../../../assets/images/promotion/hotpromo/dragoncard/${longka.image}.png`)"
+                    alt=""
+                  />
+                  <div class="longka-own-count">{{ cardInfo.cardDetail[longka.code] }}</div>
+                </div>
+              </div>
+              <div class="longka-btn2 waves-effect give-btn" style="margin-top: 1.5rem" @click="isGiftModal = true">
+                赠送龙卡
               </div>
             </div>
-            <div class="longka-gold">
-              <div class="goldhu" style="position: relative">
-                <img src="../../../assets/images/promotion/hotpromo/dragoncard/bonus.png" alt="" />
-                <div class="longka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.goldhu }}</div>
+            <div class="longka-gold-container">
+              <div class="longka-gold">
+                <div class="goldhu" style="position: relative">
+                  <img src="../../../assets/images/promotion/hotpromo/dragoncard/bonus.png" alt="" />
+                  <div class="longka-own-count" style="right: 4px; top: 8px">{{ cardInfo.cardDetail.goldhu }}</div>
+                </div>
               </div>
+              <div class="longka-btn waves-effect combo-btn" @click="compoundCard">合成龙卡</div>
             </div>
-          </div>
-          <div class="longka-footer">
-            <div class="longka-btn waves-effect give-btn" @click="isGiftModal = true">赠送龙卡</div>
-            <div class="longka-btn waves-effect combo-btn" @click="compoundCard">合成大奖卡</div>
           </div>
         </div>
         <div class="longka-ranking-wrap">
           <div class="longka-ranking-title">
-            <img src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-rank.png" alt="" />
+            <img
+              src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-rank2.png"
+              alt=""
+              style="width: 100%"
+            />
           </div>
 
           <el-table :data="rankingRecord()" :loading="rankingPage.loading">
@@ -67,29 +85,29 @@
             :page-size="rankingPage.pageSize"
           />
         </div>
-      </div>
-    </div>
 
-    <div class="bottom-content">
-      <p>
-        <img src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-time.png" />
-      </p>
-      <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
-        <thead>
-        <tr>
-          <td>期数</td>
-          <td>集卡时间</td>
-          <td>开奖时间</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
-          <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
-          <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
-        </tr>
-        </tbody>
-      </table>
+        <div class="longka-ranking-wrap">
+          <div class="longka-ranking-title">
+            <img src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-time2.png" style="width: 100%" />
+          </div>
+          <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
+            <thead>
+              <tr>
+                <td>期数</td>
+                <td>集卡时间</td>
+                <td>开奖时间</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
+                <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
+                <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <el-dialog align-center v-model="isGiftModal" title="赠送龙卡" width="500">
@@ -311,8 +329,8 @@ onMounted(() => {
     // });
     return;
   }
-    pageInit();
-    loadRanking();
+  pageInit();
+  loadRanking();
 });
 const formLabelWidth = "140px";
 
@@ -353,7 +371,7 @@ const resetRegForm = (formEl) => {
 };
 const submitRegisterForm = async (elForm) => {
   if (!store.hasToken()) {
-    isGiftModal.value = false
+    isGiftModal.value = false;
     ElMessageBox.alert("请登录后再操作", "系统提示", {
       autofocus: false,
       center: true,
@@ -402,13 +420,12 @@ const submitRegisterForm = async (elForm) => {
 .tigercard-container {
   .el-table {
     &__empty-text p {
-      color: #B97A89;
+      color: #7a8eb9;
     }
 
-    max-width: 650px;
     margin: 0 auto;
 
-    background: #FFF3F4;
+    background: #e7f3ff;
     border-radius: 10px;
     border: 0;
 
@@ -417,20 +434,19 @@ const submitRegisterForm = async (elForm) => {
       line-height: 32px;
 
       &.el-table__cell {
-        color: #B97A89;
-        border-bottom: 1px solid #ECEDF0;
-        background-color: #FFF3F4;
+        color: #424f72;
+        border-bottom: 1px solid #ecedf0;
+        background-color: #e7f3ff;
 
         &.is-leaf {
-          border-bottom: 1px solid #ECEDF0
-        ;
+          border-bottom: 1px solid #ecedf0;
         }
       }
     }
 
     td {
       &.el-table__cell {
-        color: #B97A89;
+        color: #7a8eb9;
         text-align: center;
         border: 0;
       }
@@ -446,7 +462,7 @@ const submitRegisterForm = async (elForm) => {
     }
 
     .el-pager li {
-      color: #B97A89;
+      color: #7a8eb9;
       min-width: unset;
 
       &.btn-quicknext {
@@ -463,12 +479,12 @@ const submitRegisterForm = async (elForm) => {
           margin-left: 8px;
         }
 
-        color: #B97A89;
+        color: #7a8eb9;
       }
     }
 
     button:hover {
-      color: #B97A89;
+      color: #7a8eb9;
     }
   }
 }
@@ -577,27 +593,37 @@ body {
 .longka-wrap {
   display: inline-block;
   padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
 }
 
 .longka-wrap .longka-title {
   text-align: center;
 }
 
-.longka-container {
+.longka-wrap .longka-content {
   display: flex;
   margin-top: 1.5rem;
 }
 
-.longka-wrap .longka-footer {
-  margin-top: 1rem;
+.longka-wrap .longka-content .longka-container {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  flex: 1;
+}
+
+.longka-wrap .longka-content .longka-container .longka-container-cards {
+  display: flex;
+  flex: 1;
+  align-items: center;
 }
 
 .card-tips {
   font-size: 15px;
   margin-top: 20px;
-  color: #a19100;
+  color: #498fff;
   text-align: center;
 }
 
@@ -619,10 +645,17 @@ body {
 .longka {
   margin: 0 9px;
   cursor: pointer;
+  width: 186px;
+  position: relative;
+}
+
+.longka img {
+  width: 100%;
 }
 
 .longka-btn {
-  background: transparent url(../../../assets/images/promotion/hotpromo/dragoncard/btn_bg.png) 50% no-repeat;
+  background: linear-gradient(180deg, #FFE373 0%, #FF9239 100%);
+  border-radius: 30px;
   background-size: cover;
   width: 217px;
   height: 55px;
@@ -630,7 +663,20 @@ body {
   line-height: 55px;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #5d450c;
+  color: white;
+  cursor: pointer;
+}
+
+.longka-btn2 {
+  background: transparent url(../../../assets/images/promotion/hotpromo/dragoncard/btn_bg2.png) 50% no-repeat;
+  background-size: cover;
+  width: 217px;
+  height: 55px;
+  text-align: center;
+  line-height: 55px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
   cursor: pointer;
 }
 
@@ -673,14 +719,15 @@ body {
   border-radius: 6px;
 }
 
+.longka-gold-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .longka-gold {
-  width: 29.5%;
-  margin-left: 1.5rem;
-  padding: 0.5rem;
-  border: 1px solid #ffd97f;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+  width: 266px;
 }
 
 .longka-gold img {
@@ -689,19 +736,23 @@ body {
 }
 
 .longka-ranking-wrap {
+  margin-top: 3rem;
   text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  padding: 1.5rem;
 }
 
 .longka-ranking-title {
-  margin: 3rem 0 1rem;
+  margin: 0 0 1rem;
 }
 
 .longka-ranking-table {
   background-color: #fff;
   margin: 0 auto;
-  color: #B97A89;
+  color: #7a8eb9;
   text-align: center;
-  width: 50%;
+  width: 100%;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -711,8 +762,8 @@ body {
 
 .longka-ranking-table thead {
   line-height: 32px;
-  background: #FFF3F4;
-  color: #770202;
+  background: #e7f3ff;
+  color: #424f72;
   font-weight: bold;
 }
 
@@ -726,11 +777,15 @@ body {
   color: #ffd97f;
 }
 
-.bottom-content{
-    p{
-      text-align: center;
-    }
-
+.bottom-content {
+  margin-top: 3rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  padding: 1.5rem;
+  p {
+    text-align: center;
+  }
 }
 
 .longka-ranking-pagination .next-page,
