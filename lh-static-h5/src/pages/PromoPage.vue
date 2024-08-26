@@ -1337,7 +1337,7 @@ export default defineComponent({
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
             border-radius: unset;
-            aspect-ratio: 702/208;
+            // aspect-ratio: 702/208;
             border-radius: 8px;
             overflow: hidden;
             .promo-label {
