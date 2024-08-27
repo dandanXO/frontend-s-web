@@ -1,6 +1,6 @@
 <template>
   <div class="promo-container">
-    <div class="all-promotions" v-if="!isPromoDetail">
+    <div class="all-promotions" v-if="!isPromoDetail" :class="{ slot: ui.edition === EDITION.SLOT }">
       <div class="promo-main-container">
         <!-- <div class="rebates-container">
           <img src="../assets/promo/rebate/coin.png" />
@@ -390,6 +390,9 @@ export default defineComponent({
     position: relative;
     padding-top: max(270px, 15vw);
     background-color: #f3f7fd;
+    &.slot {
+      background-image: url(@/assets/promo/bg-top-slot.png);
+    }
   }
   .promo-view-container {
     line-height: 30px;
