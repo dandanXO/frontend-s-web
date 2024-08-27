@@ -137,9 +137,9 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 function replaceRndDomain(urlLsName) {
-  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
-  const domainPrefix = getApiDomainPrefix(urlLsName);
-  return `${domainPrefix}${rndSecondLevelDomain}`;
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(10);
+  // const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${rndSecondLevelDomain}`;
 }
 
 function generateRndSecondLevelDomain(unit) {
@@ -152,19 +152,19 @@ function generateRndSecondLevelDomain(unit) {
   return result;
 }
 
-function getApiDomainPrefix(urlLsName) {
-  if (urlLsName.indexOf("RST") > -1) {
-    return "ap";
-  } else if (urlLsName.indexOf("CR") > -1) {
-    return "ca";
-  } else if (urlLsName.indexOf("EVT") > -1) {
-    return "pr";
-  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
-    return "fi";
-  } else {
-    return "";
-  }
-}
+// function getApiDomainPrefix(urlLsName) {
+//   if (urlLsName.indexOf("RST") > -1) {
+//     return "ap";
+//   } else if (urlLsName.indexOf("CR") > -1) {
+//     return "ca";
+//   } else if (urlLsName.indexOf("EVT") > -1) {
+//     return "pr";
+//   } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+//     return "fi";
+//   } else {
+//     return "";
+//   }
+// }
 
 const onRequest = (config) => {
   const store = userStore();

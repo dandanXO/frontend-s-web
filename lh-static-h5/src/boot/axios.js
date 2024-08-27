@@ -44,6 +44,10 @@ const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.i
 
 const REPLACEMENT_DOMAIN = "random";
 
+const LH_H5_RST_URL = "LH_H5_RST_URL";
+const LH_H5_EVT_URL = "LH_H5_EVT_URL";
+const LH_H5_CRT_URL = "LH_H5_CRT_URL";
+
 // const specialLinks= ["lh75561","lh77331","lh79669", "lh93371", "lh76390", "lh30553", "lh13179","lh36791", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987", "lh59376", "lh60108", "lh63133", "lh67319", "lh69166"];
 // const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
 
@@ -69,23 +73,23 @@ if (isGlobalLH) {
   var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
   var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
 
-  localStorage.setItem("LH_H5_RST_URL", rstApi);
-  localStorage.setItem("LH_H5_EVT_URL", evtApi);
-  localStorage.setItem("LH_H5_CRT_URL", crtApi);
+  localStorage.setItem(LH_H5_RST_URL, rstApi);
+  localStorage.setItem(LH_H5_EVT_URL, evtApi);
+  localStorage.setItem(LH_H5_CRT_URL, crtApi);
 } else if (isGlobalAndCN) {
   console.log("IS Global + CN");
   var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
   var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
   var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
 
-  var rstApi = getInitApi(rstGlobalArray, "LH_H5_RST_URL");
-  var evtApi = getInitApi(evtGlobalArray, "LH_H5_EVT_URL");
-  var crtApi = getInitApi(crGlobalArray, "LH_H5_CRT_URL");
+  var rstApi = getInitApi(rstGlobalArray, LH_H5_RST_URL);
+  var evtApi = getInitApi(evtGlobalArray, LH_H5_EVT_URL);
+  var crtApi = getInitApi(crGlobalArray, LH_H5_CRT_URL);
   apiLinks = apiLinks.concat(rstGlobalArray, evtGlobalArray, crGlobalArray);
 } else {
-  var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
-  var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
-  var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
+  var rstApi = getInitApi(rstArray, LH_H5_RST_URL);
+  var evtApi = getInitApi(evtArray, LH_H5_EVT_URL);
+  var crtApi = getInitApi(crtArray, LH_H5_CRT_URL);
   apiLinks = apiLinks.concat(rstArray, evtArray, crtArray);
 }
 
@@ -111,7 +115,6 @@ function getInitApi(apiLinks, urlLsName) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
-        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem(urlLsName);
         }
@@ -147,9 +150,9 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 function replaceRndDomain(urlLsName) {
-  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
-  const domainPrefix = getApiDomainPrefix(urlLsName);
-  return `${domainPrefix}${rndSecondLevelDomain}`;
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(10);
+  // const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${rndSecondLevelDomain}`;
 }
 
 function generateRndSecondLevelDomain(unit) {
@@ -162,32 +165,39 @@ function generateRndSecondLevelDomain(unit) {
   return result;
 }
 
-function getApiDomainPrefix(urlLsName) {
-  if (urlLsName.indexOf("RST") > -1) {
-    return "ap";
-  } else if (urlLsName.indexOf("CR") > -1) {
-    return "ca";
-  } else if (urlLsName.indexOf("EVT") > -1) {
-    return "pr";
-  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
-    return "fi";
-  } else {
-    return "";
-  }
-}
+// function getApiDomainPrefix(urlLsName) {
+//   if (urlLsName.indexOf("RST") > -1) {
+//     return "ap";
+//   } else if (urlLsName.indexOf("CR") > -1) {
+//     return "ca";
+//   } else if (urlLsName.indexOf("EVT") > -1) {
+//     return "pr";
+//   } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+//     return "fi";
+//   } else {
+//     return "";
+//   }
+// }
 
 function getErrorType(errorUrl) {
   const isOriginalUrl = apiLinks.find((link) => link === errorUrl);
-
   errorUrl = errorUrl.replace("https://", "");
-
   if (isOriginalUrl) {
-    return errorUrl.substr(0, 5);
+    const domains = errorUrl.split(".");
+    return domains.substr(0, 7);
   } else {
+    var number = 0;
+    if (localStorage.getItem(LH_H5_RST_URL).indexOf(errorUrl) > -1) {
+      number = 1;
+    } else if (localStorage.getItem(LH_H5_CRT_URL).indexOf(errorUrl) > -1) {
+      number = 2;
+    } else if (localStorage.getItem(LH_H5_EVT_URL).indexOf(errorUrl) > -1) {
+      number = 3;
+    }
     const domains = errorUrl.split(".");
     const subDomainFormErrorUrl = domains[1];
-    const prefix = domains[0].substr(0, 2);
-    return `${prefix}${subDomainFormErrorUrl.substr(0, 5)}`;
+    // const prefix = domains[0].substr(0, 2);
+    return `${number}.${subDomainFormErrorUrl.substr(0, 6)}`;
   }
 }
 
