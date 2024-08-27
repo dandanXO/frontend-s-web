@@ -1,14 +1,14 @@
 <template>
   <el-dialog
-  align-center
+    align-center
     v-model="isStationNotice"
     :maskClosable="false"
     :footer="null"
-    style="border-radius: 8px; width: 800px;"
+    style="border-radius: 8px; width: 800px"
     class="notice-modal"
   >
     <div class="notice-header">
-      {{ $t('home.announcementList') }}
+      {{ $t("home.announcementList") }}
       <div @click="isStationNotice = false">
         <img src="../../assets//home/announcement/close-btn.png" />
       </div>
@@ -16,9 +16,13 @@
 
     <div>
       <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
-                     :name="tab.name">
-
+        <el-tab-pane
+          v-for="(tab, ind) in announcementTypes"
+          :key="tab.id"
+          :tab="ind"
+          :label="tab.name"
+          :name="tab.name"
+        >
           <el-collapse accordion v-model="typeActive">
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
@@ -29,18 +33,16 @@
             </template>
           </el-collapse>
 
-<!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
-<!--            <template v-if="ann.typeId === tab.id">-->
-<!--              <div class="announcement-content">-->
-<!--                {{ ann.content }}-->
-<!--              </div>-->
-<!--            </template>-->
-<!--          </template>-->
+          <!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
+          <!--            <template v-if="ann.typeId === tab.id">-->
+          <!--              <div class="announcement-content">-->
+          <!--                {{ ann.content }}-->
+          <!--              </div>-->
+          <!--            </template>-->
+          <!--          </template>-->
         </el-tab-pane>
       </el-tabs>
     </div>
-
-
   </el-dialog>
 
   <div class="top-bar-wrapper">
@@ -54,8 +56,7 @@
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
-            <Vue3Marquee :clone="false"
-                          :duration="calculateMaxContentLength() * 0.55">
+            <Vue3Marquee :clone="false" :duration="calculateMaxContentLength() * 0.55">
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"
@@ -76,13 +77,26 @@ import { ref, onMounted } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 import { ElMessage } from "element-plus";
+import { EDITION } from "@/constant/edition";
+import { uiStore } from "@/store/ui";
+
+const ui = uiStore();
 
 const typeActive = ref("");
 const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
 const loadAnnouncement = () => {
-  getAnnouncement().then((res) => {
+  let params;
+  switch (ui.edition) {
+    case EDITION.SLOT:
+      params = "SLOT";
+      break;
+    case EDITION.NORMAL:
+    default:
+    // params = "HOME";
+  }
+  getAnnouncement(params).then((res) => {
     if (res.code === 0) {
       const d = res.data.announcements;
       announcementTypes.value = res.data.type;
@@ -132,13 +146,11 @@ const calculateMaxContentLength = () => {
 onMounted(() => {
   loadAnnouncement();
 });
-
-
 </script>
 
 <style scoped lang="scss">
 .notice-header {
-  color: #468CFF;
+  color: #468cff;
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
@@ -154,7 +166,7 @@ onMounted(() => {
 }
 
 .announcement-content {
-  color: #7A80A1;
+  color: #7a80a1;
   font-size: 14px;
   font-weight: 500;
   line-height: 30px;
@@ -165,9 +177,8 @@ onMounted(() => {
   margin-top: 20px;
   padding: 0px 10px;
 
-
-  .announcement-p{
-    color: #7A80A1;
+  .announcement-p {
+    color: #7a80a1;
   }
 }
 

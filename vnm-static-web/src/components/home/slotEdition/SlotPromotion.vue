@@ -77,7 +77,9 @@ onMounted(getPromo);
     .promotion {
       display: block;
       padding: 12px;
-      background-color: #fff;
+      margin: 12px 0;
+      background: url(@/assets/images/home/slotEdition/promotion-bg.png) no-repeat;
+      background-size: cover;
       box-shadow: 0px 0px 10px 0px #0000001a;
       border-radius: 15px;
       img {
@@ -91,9 +93,9 @@ onMounted(getPromo);
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        font-size: 28px;
+        font-size: 22px;
         font-weight: 700;
-        line-height: 40px;
+        line-height: 30px;
         color: #424f72;
       }
     }

@@ -437,9 +437,9 @@ export default {
     type_fish: "Cá",
     type_livecasino: "Live Casino",
     type_others: "Khác",
-    type_slot_welcome: "Chào mừng",
-    type_slot_daily: "Hàng Ngày",
-    type_slot_other: "Khác",
+    type_slot_welcome: "Chào Mừng",
+    type_slot_daily: "Hàng Ngày & Hàng Tuần",
+    type_slot_other: "Hoàn Trả & Khác",
 
     // promo -- daily-login
     daily_login_title: "Chi tiết check-in trong tháng này",
