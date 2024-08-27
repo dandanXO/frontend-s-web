@@ -5,11 +5,11 @@
     <div class="rule-block">
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Thời gian</div>
-        <span class="rule-block-rule__description">Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 16.08.2024</span>
+        <span class="rule-block-rule__description">Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 28.08.2024</span>
       </div>
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Áp dụng</div>
-        <span class="rule-block-rule__description">Tất cả thành viên mới tại TF88</span>
+        <span class="rule-block-rule__description">Tất cả thành viên mới của KAKA.GAME</span>
       </div>
       <div class="detail-wrapper">
         <h3 class="detail-title">
@@ -26,7 +26,7 @@
     <div class="mission-block">
       <h3 class="mission-block-title">
         <img class="detail-title__icon" src="../../../assets/images/promo/hotpromo/newPlayer/gift.svg" />
-        NHIỆM VỤ TÂN THỦ
+        NHIỆM VỤ TÂN THỦ - HOAN NGHÊNH THÀNH VIÊN MỚI
       </h3>
       <div class="mission-block-mission-wrapper">
         <div v-for="(mission, index) in missions" class="mission-block-mission" :key="index">
@@ -66,32 +66,20 @@
     <div class="term-block detail-wrapper">
       <h3 class="detail-title">
         <img class="detail-title__icon" src="../../../assets/images/promo/hotpromo/newPlayer/arrow-right.svg" />
-        Điều khoản và điều kiện
+        QUY ĐỊNH VÀ ĐIỀU KHOẢN
       </h3>
       <div class="detail-description">
         <ol>
           <li>Số tiền nạp có tham gia khuyến mãi nạp tiền sẽ không được tích lũy trong khuyến mãi này.</li>
-          <li>
-            Thành Viên cần hoàn thành nhiệm vụ để nhận thưởng trong vòng 30 ngày kể từ ngày đăng ký tài khoản , sau 30
-            ngày khuyến mãi sẽ vô hiệu hóa.
-          </li>
-          <li>Thành viên vào trang khuyến mãi để bấm nhận thưởng</li>
-          <li>Thành viên cần hoàn thành 5 vòng cược yêu cầu trước khi thực hiện rút tiền.</li>
-          <li>
-            Với các Thành Viên chưa tham gia nạp tiền , để rút tiền khuyến mãi Thành Viên cần nạp bằng với số tiền yêu
-            cầu rút.
-          </li>
-          <li>
-            Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC &lt; 1.75, MY -0.6 đến 0.75, Thể thao
-            ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này. Các tài khoản có cùng IP hoặc thông
-            tin dữ liệu tương tự sẽ không được tham gia chương trình khuyến mãi này
-          </li>
+          <li>Thành viên cần hoàn thành nhiệm vụ để nhận thưởng trong vòng 30 ngày kể từ ngày đăng ký tài khoản, sau 30 ngày khuyến mãi sẽ vô hiệu hóa.</li>
+          <li>Thành viên khi đạt điều kiện nhận thưởng cần vào lại trang khuyến mãi này để nhấn nút Nhận thưởng.</li>
+          <li>Cần hoàn thành 5 vòng cược trước khi thực hiện rút tiền</li>
+          <li>Với các thành viên chưa tiến hành nạp tiền, để rút tiền khuyến mãi Thành Viên sẽ cần nạp bằng với số tiền yêu cầu rút.</li>
+          <li>Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC &lt; 1.75, MY -0.6 đến 0.75, Thể thao ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này. Và không áp dụng chung với các khuyến mãi khác!</li>
           <li>Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại TF88.</li>
-          <li>
-            TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần
-            báo trước.
-          </li>
-          <li>Điều khoản & Điều kiện khuyến mãi chung được áp dụng.</li>
+          <li>Một thành viên chỉ được đăng ký 1 tên đăng nhập, 1 địa chỉ 1 email, 1 số điện thoại, 1 địa chỉ IP với 1 số tài khoản ngân hàng phải đúng với chỉ 1 người duy nhất. Nếu thành viên có đăng ký thêm 1 tài khoản nào khác, KAKA.GAME có quyền trích thu lại số tiền khuyến mãi của hội viên đó!</li>
+          <li>Khi phát hiện các trường hợp cược chuỗi nhóm, sử dụng phần mềm vi phạm đặt cược, và các thành viên lạm dụng khuyến mãi. KAKA.GAME có quyền đóng băng tài khoản mà không cần thông báo, cũng như không hoàn trả tiền gốc và liệt vào danh sách đen</li>
+          <li>Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKA.GAME bảo lưu quyền giải thích cuối cùng, thay đổi, dừng, hủy bỏ hoặc thu hồi chiết khấu mà không cần báo trước</li>
         </ol>
       </div>
     </div>
@@ -193,6 +181,7 @@ onMounted(() => {
   background-color: #f2f8fe;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
+  filter: hue-rotate(-200deg);
   color: #000000;
 
   .title {
@@ -307,6 +296,7 @@ onMounted(() => {
             display: flex;
             align-items: center;
             gap: 6px;
+            filter: hue-rotate(-180deg);
             .mission-block-mission-upside-reward-amount {
               font-size: 0.875rem;
               font-weight: 600;
