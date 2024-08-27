@@ -15,9 +15,9 @@
       </div>
       <div class="withdraw-methods-container" v-else>
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div class="title" v-if="index===0">{{item.payType}}</div>
-          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">
-            {{item.payType}}
+          <div class="title" v-if="index===0">{{item.extra.type}}</div>
+          <div class="title" v-else-if="index > 0 && item.extra.type !== paymentMethodsItems[index - 1].extra.type">
+            {{item.extra.type}}
           </div>
 
           <div
@@ -407,16 +407,11 @@ function initPay() {
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
-      console.log(res.data.payments);
-
-
-
       let bankDeposits = res.data.payments
         .map((payment) => {
           return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
-
 
       paymentMethodsItems.value = bankDeposits.flat().sort((a, b) => {
         if (a.payType < b.payType) return 1;
