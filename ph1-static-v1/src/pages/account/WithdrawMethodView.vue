@@ -293,10 +293,10 @@
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
-<!--          <div class="title" v-if="index===0">{{item.payType}}</div>-->
-<!--          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">-->
-<!--            {{item.payType}}-->
-<!--          </div>-->
+          <div class="title" v-if="index===0">{{item.payType}}</div>
+          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">
+            {{item.payType}}
+          </div>
 
           <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
