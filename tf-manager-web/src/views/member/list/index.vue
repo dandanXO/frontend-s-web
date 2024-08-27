@@ -543,7 +543,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.balance, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -570,8 +571,9 @@
         >
           <template #default="scope">
             $
+            <!-- eslint-disable -->
             <span
-              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
+              v-formatter="{ data: scope.row.totalDeposit, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -582,8 +584,9 @@
         >
           <template #default="scope">
             $
+            <!-- eslint-disable -->
             <span
-              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
+              v-formatter="{ data: scope.row.totalWithdraw, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -602,10 +605,11 @@
           <template #default="scope">
             <span v-if="scope.row.riskLevel === null">-</span>
             <span v-if="scope.row.riskLevel !== null">
+              <!-- eslint-disable -->
               {{ scope.row.riskLevel }}
               <span
                 class="level-color"
-                :style="{backgroundColor: scope.row.riskLevelColor}"
+                :style="{ backgroundColor: scope.row.riskLevelColor }"
               />
             </span>
           </template>
