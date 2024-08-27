@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title-wrapper q-pa-md q-mx-sm q-mt-md">
+    <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
       <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
       <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
         <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
@@ -126,7 +126,7 @@
             </div>
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
-                "单笔提款: " +
+                "单笔提款：" +
                 selectedWithdrawalMethod.withdrawMin +
                 "RMB - " +
                 selectedWithdrawalMethod.withdrawMax +
@@ -214,7 +214,7 @@
               v-html="selectedWithdrawalMethod.tips"
             ></div>
             <div v-if="isALIPAY" class="selected-tip">
-              “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
+              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！
             </div>
           </div>
         </q-form>
@@ -237,6 +237,37 @@
         </div>
       </q-card>
     </q-dialog>
+
+    <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px" class="text-white">
+        <q-card-section class="q-mb-md">
+          <strong style="display: inline-block; padding-bottom: 16px; font-size: 20px">完成以下认证才可以提款</strong>
+          <div v-if="!store.realName" style="margin: 16px 0">
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+              <div class="">
+                <p style="margin: 0; color: #fff; font-size: 16px">提款需要绑定真实姓名</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              </div>
+
+              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+            </div>
+          </div>
+
+          <div v-if="!store.phone">
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+              <div class="">
+                <p style="margin: 0; color: #fff; font-size: 16px">提款需要绑定手机号</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+              </div>
+              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn style="width: 100%" label="暂不认证" color="brightbtn" @click="isNewUser = false" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -248,6 +279,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import {useLocalStorage} from "@vueuse/core";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -257,7 +289,7 @@ export default defineComponent({
     const $q = useQuasar();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
     const imgWithdrawURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/withdraw/";
-
+    const router = useRouter();
 
     const amountRef = ref();
     const cardRef = ref();
@@ -271,6 +303,7 @@ export default defineComponent({
       cardId: undefined,
       amount: ""
     });
+    const isNewUser = ref(false);
     const isLoaded = ref(false);
     const hasWithdrawCard = computed(() => {
       return (isLoaded == true) && withdrawState.bankCardList.length === 0;
@@ -278,6 +311,7 @@ export default defineComponent({
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
     onMounted(() => {
+      checkNewUser();
       getWithdrawalMethods();
       store.getBalance();
       // loadPlatform()
@@ -320,6 +354,8 @@ export default defineComponent({
     const withdrawLoading = ref(false);
 
     const submitWithdraw = () => {
+      if (!checkNewUser()) return
+
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
@@ -466,15 +502,15 @@ export default defineComponent({
     }
     const tutorialLabel = () => {
       if (selectedWithdrawalMethod.value.code === 'KDPAY') {
-        return 'K豆教程视频'
+        return 'K 豆教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
-        return 'EB使用教程'
+        return 'EB 使用教程'
       } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
-        return 'OK教程视频'
+        return 'OK 教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'BLBPAY') {
-        return '808钱包教程视频'
+        return '808 钱包教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
-        return 'JDPAY教程视频'
+        return 'JDPAY 教程视频'
       }
     }
     const openEWalletTutorial = () => {
@@ -508,6 +544,15 @@ export default defineComponent({
       }).finally(() => $q.loading.hide())
     }
 
+
+    const checkNewUser = () => {
+      if (!store.phone || !store.realName) {
+        isNewUser.value = true;
+        return false;
+      }
+
+      return true
+    }
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -538,7 +583,9 @@ export default defineComponent({
       tutorialLabel,
       withdrawLoading,
       isAutoWithdrawal,
-      handleUpgradeClick
+      handleUpgradeClick,
+      isNewUser,
+      router
     };
   }
 });
