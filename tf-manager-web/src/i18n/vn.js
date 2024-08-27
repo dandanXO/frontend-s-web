@@ -297,7 +297,7 @@ export default {
     CENTERPROMO: 'Khuyến mãi trung tâm',
     LOGIN: 'Đăng nhập',
     REGISTER: 'Đăng ký',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Đang chờ',
@@ -1590,6 +1590,8 @@ export default {
     upload: 'Tải Lên',
     upperName: 'Tên Upline',
     usdtControl: 'Kiểm Soát Rút USDT',
+    usdtDepositAmount: 'Số tiền gửi tiền kỹ thuật số',
+    usdtDepositCount: 'Số lượng người gửi tiền kỹ thuật số',
     username: 'Tên Người Dùng',
     userType: 'Loại Người Dùng',
     validate: 'Xác Nhận',

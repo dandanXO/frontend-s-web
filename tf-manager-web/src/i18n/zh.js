@@ -314,7 +314,7 @@ export default {
     CENTERPROMO: '中心优惠',
     LOGIN: '登录',
     REGISTER: '注册',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: '未派发',
@@ -1689,6 +1689,8 @@ export default {
     upload: '上传',
     upperName: '所属上级',
     usdtControl: 'USDT提款限制',
+    usdtDepositAmount: '数字货币存款额',
+    usdtDepositCount: '数字货币存款人数',
     username: '用户名',
     userType: '用户类型',
     validate: '验证',
