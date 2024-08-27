@@ -414,8 +414,8 @@ function initPay() {
         .flat();
 
       paymentMethodsItems.value = bankDeposits.flat().sort((a, b) => {
-        if (a.payType < b.payType) return 1;
-        if (a.payType > b.payType) return -1;
+        if (a.payType > b.payType) return 1;
+        if (a.payType < b.payType) return -1;
         return 0;
       });
 
