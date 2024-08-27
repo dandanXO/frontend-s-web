@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="bank-account-container">
+      <div class="bank-account-container" v-if="bankCardList.length === 0 || isAddNewAccount" >
         <div class="w-form-item w-form-item--bankcard">
           <div class="top-wrapper">
             <div class="title">Bank Name</div>
@@ -145,7 +145,7 @@
               ></q-input>
             </div>
           </div>
-          <!-- <div class="w-form-item w-form-item--bankcard">
+          <div class="w-form-item w-form-item--bankcard" v-if="isAddNewAccount">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -161,7 +161,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div> -->
+          </div>
         </template>
 
         <div class="top-wrapper">
@@ -467,8 +467,14 @@ const filterCards = (type) => {
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
+        let bankType = type.bankType;
         let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankType === typeCode || item.bankCode === typeCode);
+
+        if(bankType==="BANK"){
+          var filteredData = res.data.filter((item) => item.bankType === "BANK");
+        }else{
+          var filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -750,7 +756,7 @@ const goSelectedMethod = (item) => {
   //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
   // debugger;
-  filterCards(item);
+  // filterCards(item);
 
   // console.log(item);
   filteredBankList.value = item.bankList;
