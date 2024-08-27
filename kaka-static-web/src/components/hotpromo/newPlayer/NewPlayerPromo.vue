@@ -75,15 +75,35 @@
       <div class="detail-description">
         <ol>
           <li>Số tiền nạp có tham gia khuyến mãi nạp tiền sẽ không được tích lũy trong khuyến mãi này.</li>
-          <li>Thành viên cần hoàn thành nhiệm vụ để nhận thưởng trong vòng 30 ngày kể từ ngày đăng ký tài khoản, sau 30 ngày khuyến mãi sẽ vô hiệu hóa.</li>
+          <li>
+            Thành viên cần hoàn thành nhiệm vụ để nhận thưởng trong vòng 30 ngày kể từ ngày đăng ký tài khoản, sau 30
+            ngày khuyến mãi sẽ vô hiệu hóa.
+          </li>
           <li>Thành viên khi đạt điều kiện nhận thưởng cần vào lại trang khuyến mãi này để nhấn nút Nhận thưởng.</li>
           <li>Cần hoàn thành 5 vòng cược trước khi thực hiện rút tiền</li>
-          <li>Với các thành viên chưa tiến hành nạp tiền, để rút tiền khuyến mãi Thành Viên sẽ cần nạp bằng với số tiền yêu cầu rút.</li>
-          <li>Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC &lt;  1.75, MY -0.6 đến 0.75, Thể thao ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này. Và không áp dụng chung với các khuyến mãi khác!</li>
-          <li>Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại TF88.</li>
-          <li>Một thành viên chỉ được đăng ký 1 tên đăng nhập, 1 địa chỉ 1 email, 1 số điện thoại, 1 địa chỉ IP với 1 số tài khoản ngân hàng phải đúng với chỉ 1 người duy nhất. Nếu thành viên có đăng ký thêm 1 tài khoản nào khác, KAKA.GAME có quyền trích thu lại số tiền khuyến mãi của hội viên đó!</li>
-          <li>Khi phát hiện các trường hợp cược chuỗi nhóm, sử dụng phần mềm vi phạm đặt cược, và các thành viên lạm dụng khuyến mãi. KAKA.GAME có quyền đóng băng tài khoản mà không cần thông báo, cũng như không hoàn trả tiền gốc và liệt vào danh sách đen</li>
-          <li>Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKA.GAME bảo lưu quyền giải thích cuối cùng, thay đổi, dừng, hủy bỏ hoặc thu hồi chiết khấu mà không cần báo trước</li>
+          <li>
+            Với các thành viên chưa tiến hành nạp tiền, để rút tiền khuyến mãi Thành Viên sẽ cần nạp bằng với số tiền
+            yêu cầu rút.
+          </li>
+          <li>
+            Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC &lt; 1.75, MY -0.6 đến 0.75, Thể thao
+            ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này. Và không áp dụng chung với các khuyến
+            mãi nạp khác!
+          </li>
+          <li>
+            Một thành viên chỉ được đăng ký 1 tên đăng nhập, 1 địa chỉ 1 email, 1 số điện thoại, 1 địa chỉ IP với 1 số
+            tài khoản ngân hàng phải đúng với chỉ 1 người duy nhất. Nếu thành viên có đăng ký thêm 1 tài khoản nào khác,
+            KAKA.GAME có quyền trích thu lại số tiền khuyến mãi của hội viên đó!
+          </li>
+          <li>
+            Khi phát hiện các trường hợp cược chuỗi nhóm, sử dụng phần mềm vi phạm đặt cược, và các thành viên lạm dụng
+            khuyến mãi. KAKA.GAME có quyền đóng băng tài khoản mà không cần thông báo, cũng như không hoàn trả tiền gốc
+            và liệt vào danh sách đen
+          </li>
+          <li>
+            Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKA.GAME bảo lưu quyền giải thích cuối cùng, thay đổi, dừng,
+            hủy bỏ hoặc thu hồi chiết khấu mà không cần báo trước
+          </li>
         </ol>
       </div>
     </div>
