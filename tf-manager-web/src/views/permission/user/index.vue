@@ -199,7 +199,10 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="uiControl.siteSelectVisible && form.userType === 'MANAGER'"
+          v-if="
+            uiControl.siteSelectVisible &&
+              (form.userType === 'MANAGER' || form.userType === 'ADMIN')
+          "
           :label="t('fields.site')"
           prop="siteId"
         >
