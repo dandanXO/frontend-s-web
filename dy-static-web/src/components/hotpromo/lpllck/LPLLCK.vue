@@ -37,7 +37,7 @@
         <div class="subtitle">
           <span class="subtitle-1">活动内容</span>
           <span class="subtitle-2">
-            活动期间，投注LPL与LCK赛事当日累计总有效投注≥2,000元即可符合获取活动彩金条件，最高可获1,288元
+            活动期间，投注LPL与LCK赛事当日累计总有效投注≥1,000元即可符合获取活动彩金条件，最高可获1,288元
           </span>
         </div>
         <table class="match-game-info-table">
@@ -91,7 +91,7 @@
           <div class="item">
             <span class="rounded-number">1</span>
             <span>
-              活动期间，会员当日LPL夏季赛季后赛与LCK夏季赛季后赛赛事累计有效投注≥2,000元即可符合获得彩金资格，符合条件的会员需在次日前往活动页面点击领取彩金；
+              活动期间，会员当日LPL夏季赛季后赛与LCK夏季赛季后赛赛事累计有效投注≥1,000元即可符合获得彩金资格，符合条件的会员需在次日前往活动页面点击领取彩金；
             </span>
           </div>
           <div class="item">
