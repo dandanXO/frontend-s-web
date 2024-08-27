@@ -721,6 +721,21 @@ build-image-pak-static-h5:
 
 #===============================================================================================
 
+
+build-pak-static-v2:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-static-v2
+
+build-image-pak-static-v2:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-static-v2
+  needs:
+    - build-pak-static-v2
+
+#===============================================================================================
+
 build-kaka-static-web:
   extends: .build-projects
   variables:
