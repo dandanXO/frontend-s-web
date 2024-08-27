@@ -69,6 +69,7 @@
     <intelEsl2024 v-if="list.redirectUrl === 'dy2-intel-esl'" />
 
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
+    <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -145,6 +146,7 @@ import newFootballFight from "../components/hotpromo/newFootballfight/FootballFi
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
+import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -193,7 +195,8 @@ export default defineComponent({
     OuZuLianPromo,
     NewplayerGuide,
     LPLLCK,
-    newFootballFight
+    newFootballFight,
+    BbdachaCsgo2
   },
   props: {
     list: {

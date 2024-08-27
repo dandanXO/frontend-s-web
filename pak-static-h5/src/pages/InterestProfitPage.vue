@@ -104,7 +104,7 @@
         <template v-else>
           <div class="do-result-item">
             <div class="item-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-            <div class="item-rates">{{ estimatePlan.odds }}%</div>
+            <div class="item-rates">{{ estimatePlan.odds * 100 }}%</div>
           </div>
           <div class="do-result-item">
             <div class="item-title">{{ $t("interestProfit.distributeInterest") }}</div>
@@ -199,7 +199,7 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-          <div class="box-value">{{ recordDetails.odds }}%</div>
+          <div class="box-value">{{ convertToTwoDecimalAmount(recordDetails.odds * 100) }}%</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
@@ -208,6 +208,10 @@
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositDuration") }}</div>
           <div class="box-value">{{ recordDetails.days }} day(s)</div>
+        </div>
+        <div class="details-box">
+          <div class="box-title">{{ $t("records.turnover_requi") }}</div>
+          <div class="box-value">{{ turnoverAmt }} x</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.placeTime") }}</div>
@@ -235,6 +239,21 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="errorDialog">
+    <q-card class="q-pa-md">
+      <q-card-section class="row items-center">
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-card-section class="q-mt-md">
+        <div>{{ errorDialogMsg }}</div>
+      </q-card-section>
+      <q-card-actions align="center" class="q-mt-md">
+        <q-btn no-caps v-close-popup>{{ $t("btn.confirm") }}</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -246,13 +265,14 @@ import { eventapi } from "src/boot/axios";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { t } from "src/boot/lang";
+import { useI18n } from "vue-i18n";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useQuasar } from "quasar";
 
 const interestProfitField = reactive({ storageTime: "", odds: "", deposits: "" });
 const $q = useQuasar();
+const { t } = useI18n();
 const qs = require("qs");
 const isLoading = ref(false);
 const isRecordLoading = ref(false);
@@ -264,7 +284,8 @@ const storageTimeOptions = ref([
   { label: "6 months", val: 180 },
   { label: "1 year", val: 365 }
 ]);
-
+const errorDialog = ref(false);
+const errorDialogMsg = ref("");
 const toggleAmountVisibility = () => {
   isAmountVisible.value = !isAmountVisible.value;
 };
@@ -416,6 +437,16 @@ const submitDeposit = () => {
         interestProfitField.storageTime = "";
         interestProfitField.odds = "";
         interestProfitField.deposits = "";
+      } else {
+        // $q.notify({
+        //   type: "negative",
+        //   position: "center",
+        //   message: t(`error.${res.code}`),
+        //   icon: "report_problem"
+        // });
+
+        errorDialog.value = true;
+        errorDialogMsg.value = t(`error.${res.code}`);
       }
     })
     .catch((err) => {
@@ -509,11 +540,19 @@ const collectDeposit = (planOrderId) => {
     });
 };
 
+const turnoverAmt = ref(1);
 const isRecordDetails = ref(false);
 const recordDetails = ref();
 const viewDetails = (record) => {
   recordDetails.value = record;
   isRecordDetails.value = true;
+  if (recordDetails.value.odds === 0.06) {
+    turnoverAmt.value = 3;
+  } else if (recordDetails.value.odds === 0.04) {
+    turnoverAmt.value = 2;
+  } else {
+    turnoverAmt.value = 1;
+  }
 };
 
 const humanDatetime = (ts) => {
@@ -797,6 +836,11 @@ onMounted(() => {
       font-size: 0.825rem;
     }
   }
+}
+.warn-text {
+  font-size: 0.825rem;
+  padding-left: 8px;
+  color: #00b900;
 }
 .btn--orange {
   color: #ff7a00;

@@ -16,6 +16,8 @@
       v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo"
       :promo-code="list.promoCode"
     />
+    <NewPlayerPromo v-if="list.redirectUrl === 'kaka-newplayer-promo'" />
+
 
     <HongBaoYu2024
       v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
@@ -50,6 +52,7 @@ import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.v
 import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
 import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
 import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
+import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -68,7 +71,8 @@ export default defineComponent({
     HongBaoYu2024,
     Eurocup2024,
     Eurocup2024bet,
-    EurocupLuckyDraw
+    EurocupLuckyDraw,
+    NewPlayerPromo
     // DailyBonus
   },
   props: {
@@ -318,7 +322,8 @@ export default defineComponent({
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
-      this.list.redirectUrl === "vnm-eurocup-luckydraw"
+      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
+      this.list.redirectUrl === "kaka-newplayer-promo"
     ) {
       this.isCommonPromo = false;
     } else {

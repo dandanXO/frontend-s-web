@@ -7,13 +7,13 @@
         </div>
       </div>
       <div class="text-center card-tips">
-        已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐,{{ cardInfo.cardDetail.setting.openStr }}开奖
+        已有{{ cardInfo.cardDetail.setting.cardCount }}人集齐，{{ cardInfo.cardDetail.setting.openStr }}开奖
       </div>
       <div class="text-center">
         <div class="longka-btn longka-take-btn waves-effect" @click="getNewTigerCard">领取龙卡</div>
       </div>
       <div v-if="cardInfo.cardDetail.leftCount > 0" class="redeem-tips">
-        剩下 {{ cardInfo.cardDetail.leftCount }} 次机会领取
+        <p>剩余领取次数：<span style="color: #498FFF">{{ cardInfo.cardDetail.leftCount }}</span> 次</p>
       </div>
 
       <div class="content">
@@ -35,19 +35,19 @@
                   {{ cardInfo.cardDetail[longka.code] }}
                 </div>
               </div>
-            </div>
-            <div class="longka-gold">
-              <div class="goldhu" style="position: relative">
-                <img src="../../../assets/images/promo/hotpromo/dragoncard/bonus.png" alt="" />
-                <div class="longka-own-count" style="right: 4px; top: 8px">
-                  {{ cardInfo.cardDetail.goldhu }}
+              <div class="longka-gold">
+                <div class="goldhu" style="position: relative">
+                  <img src="../../../assets/images/promo/hotpromo/dragoncard/bonus.png" alt="" />
+                  <div class="longka-own-count" style="right: 1%; top: 2%">
+                    {{ cardInfo.cardDetail.goldhu }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="longka-footer">
             <div class="longka-btn waves-effect give-btn" @click="isGiftModal = true">赠送龙卡</div>
-            <div class="longka-btn waves-effect combo-btn" @click="compoundCard">合成大奖卡</div>
+            <div class="longka-btn waves-effect combo-btn" @click="compoundCard">合成龙卡</div>
           </div>
         </div>
         <div class="longka-ranking-wrap">
@@ -86,18 +86,18 @@
       </p>
       <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
         <thead>
-        <tr>
-          <td>期数</td>
-          <td>集卡时间</td>
-          <td>开奖时间</td>
-        </tr>
+          <tr>
+            <td>期数</td>
+            <td>集卡时间</td>
+            <td>开奖时间</td>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
-          <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
-          <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
-        </tr>
+          <tr>
+            <td>{{ cardInfo.cardDetail.setting.periodStr }}</td>
+            <td>{{ cardInfo.cardDetail.setting.lotteryStr }}</td>
+            <td>{{ cardInfo.cardDetail.setting.openStr }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -156,7 +156,7 @@
     <q-dialog align-center class="wonlongkaBox" v-model="isCardModal" :show-close="false">
       <span v-for="(longka, i) in longkaList" :key="i">
         <div v-if="cardWon === longka.code" class="wincontents">
-          <div class="message">恭喜您获得一张: {{ longka.label }}</div>
+          <div class="message">恭喜您获得一张：{{ longka.label }}</div>
           <div class="amount">
             <img :src="require(`../../../assets/images/promo/hotpromo/dragoncard/${longka.image}.png`)" />
           </div>
@@ -240,26 +240,26 @@ const pageLoadingText = ref("");
 const getNewTigerCard = () => {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'primary',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
   isPageLoading.value = true;
   pageLoadingText.value = "正领取龙卡";
@@ -271,13 +271,13 @@ const getNewTigerCard = () => {
       isPageLoading.value = false;
       notify({
         type: "success",
-        message: "已领取龙卡",
+        message: "已领取龙卡"
       });
       pageInit();
     } else {
       notify({
         type: "error",
-        message: res.message,
+        message: res.message
       });
     }
     isPageLoading.value = false;
@@ -287,26 +287,26 @@ const getNewTigerCard = () => {
 const compoundCard = () => {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'primary',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
   isPageLoading.value = true;
   pageLoadingText.value = "正合成大奖卡";
@@ -364,9 +364,9 @@ const isGiftModal = ref(false);
 const isCardModal = ref(false);
 const cardWon = ref("");
 onMounted(() => {
-      if (!store.token) {
-        return;
-      }
+  if (!store.token) {
+    return;
+  }
   pageInit();
   loadRanking();
 });
@@ -419,26 +419,26 @@ const resetRegForm = (formEl) => {
 const submitRegisterForm = async () => {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'primary',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
   typeRef.value.validate();
   friendLoginNameRef.value.validate();
@@ -453,13 +453,13 @@ const submitRegisterForm = async () => {
       if (res.code === 0) {
         notify({
           type: "success",
-          message: "成功",
+          message: "成功"
         });
         isSubmitting.value = false;
       } else {
         notify({
           type: "error",
-          message: res.message,
+          message: res.message
         });
       }
     });
@@ -485,7 +485,7 @@ const columns = [
 .tigercard-container {
   .q-table {
     &__empty-text p {
-      color: #B97A89;
+      color: #7A8EB9;
     }
 
     max-width: 650px;
@@ -494,32 +494,32 @@ const columns = [
     background: white;
     border-radius: 10px;
     border: 0;
-    color: #B97A89;
+    color: #7A8EB9;
 
     th {
       text-align: center;
       line-height: 32px;
-      color: #770202;
+      color: #424F72;
       font-weight: bold;
-      background: #FFF3F4 !important;
-      border: 1px solid #ECEDF0;
+      background: #E7F3FF !important;
+      border: 1px solid #ecedf0;
 
       &.q-table__cell {
-        color: #B97A89;
-        border-bottom: 1px solid #ECEDF0;
+        color: #7A8EB9;
+        border-bottom: 1px solid #ecedf0;
         background-color: white;
 
         &.is-leaf {
-          border-bottom: 1px solid #ECEDF0;
+          border-bottom: 1px solid #ecedf0;
         }
       }
     }
 
     td {
-      border: 1px solid #ECEDF0 !important;
+      border: 1px solid #ecedf0 !important;
 
       &.q-table__cell {
-        color: #B97A89;
+        color: #7A8EB9;
         text-align: center;
         border: 0;
       }
@@ -527,14 +527,14 @@ const columns = [
   }
 
   .q-table__bottom {
-    color: #B97A89;
+    color: #7A8EB9;
 
     .q-field__native {
-      color: #B97A89;
+      color: #7A8EB9;
     }
 
     .q-field__append {
-      color: #B97A89;
+      color: #7A8EB9;
     }
   }
 
@@ -547,7 +547,7 @@ const columns = [
     }
 
     .q-pager li {
-      color: #B97A89;
+      color: #7A8EB9;
       min-width: unset;
 
       &.btn-quicknext {
@@ -564,12 +564,12 @@ const columns = [
           margin-left: 8px;
         }
 
-        color: #B97A89;
+        color: #7A8EB9;
       }
     }
 
     button:hover {
-      color: #B97A89;
+      color: #7A8EB9;
     }
   }
 }
@@ -670,10 +670,14 @@ body {
 }
 
 .longka-wrap {
+  background-image: url("../../../assets/images/promo/hotpromo/dragoncard/bg-1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: inline-block;
   padding: 1.5rem;
   width: 100%;
   background-color: white;
+  border-radius: 16px;
 }
 
 .longka-wrap .longka-title {
@@ -704,7 +708,7 @@ body {
 .card-tips {
   font-size: 15px;
   margin-top: 20px;
-  // color: #fed985;
+  color: #498fff;
 }
 
 .redeem-tips {
@@ -712,46 +716,45 @@ body {
   justify-content: center;
   padding-left: 0px;
   margin-top: -10px;
-  color: #87898a;
   font-size: 12px;
   margin-bottom: 20px;
+  color: black;
 }
 
 .longka-list {
   display: flex;
   flex-direction: row;
-  background: #fffbce;
-  border: 1px solid #e3b457;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  gap: 1rem;
+  background: transparent;
+  gap: 0.25rem;
   padding: 1.5rem 1rem;
   flex-wrap: wrap;
   flex-grow: 1;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex: 2;
 
   .longka {
     position: relative;
-    width: calc(25% - 9px);
-    margin: 0 9px;
+    width: 24%;
     cursor: pointer;
   }
 }
 
 .longka-btn {
-  background: transparent url(../../../assets/images/promo/hotpromo/dragoncard/btn_bg.png) 50% no-repeat;
-  background-size: cover;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  border-radius: 30px;
   width: 140px;
   height: 35px;
   text-align: center;
   line-height: 35px;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #5d450c;
+  color: white;
   cursor: pointer;
+}
+
+.longka-btn.combo-btn {
+  background: linear-gradient(180deg, #FFE373 0%, #FF9239 100%);
 }
 
 .longka-take-btn {
@@ -791,12 +794,10 @@ body {
 
 .longka-gold {
   padding: 0.2rem;
-  flex: 1;
   gap: 20px;
   display: flex;
   flex-direction: column;
-  width: 60%;
-  background: #ffcf6f;
+  width: 33%;
 }
 
 .longka-gold-inner {
@@ -813,10 +814,14 @@ body {
 
 .longka-ranking-wrap {
   text-align: center;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .longka-ranking-title {
-  margin: 3rem 0 1rem;
+  margin: 0rem 0 1rem;
 
   img {
     width: 100%;
@@ -826,7 +831,7 @@ body {
 .longka-ranking-table {
   background-color: #fff;
   margin: 0 auto;
-  color: #B97A89;
+  color: #7A8EB9;
   text-align: center;
   width: 50%;
   -webkit-border-radius: 8px;
@@ -838,13 +843,13 @@ body {
 
 .longka-ranking-table thead {
   line-height: 32px;
-  background: #FFF3F4;
-  color: #770202;
+  background: #E7F3FF;
+  color: #424F72;
   font-weight: bold;
 }
 
-.longka-ranking-table thead td{
-  background-color: #FFF3F4 !important;
+.longka-ranking-table thead td {
+  background-color: #E7F3FF !important;
 }
 
 .longka-ranking-table tr {
@@ -863,6 +868,9 @@ body {
 }
 
 .bottom-content {
-  margin-top: 30px;
+  margin-top: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
 }
 </style>

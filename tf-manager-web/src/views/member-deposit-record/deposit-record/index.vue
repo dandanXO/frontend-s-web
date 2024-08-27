@@ -414,6 +414,12 @@
           min-width="110"
         />
         <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="110"
+        />
+        <el-table-column
           prop="updateBy"
           :label="t('fields.updateBy')"
           align="center"

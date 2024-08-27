@@ -309,7 +309,7 @@ export default {
     CENTERPROMO: 'Center Promo',
     LOGIN: 'Login',
     REGISTER: 'Register',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Pending',
@@ -1689,6 +1689,8 @@ export default {
     upload: 'Upload',
     upperName: 'Upper Name',
     usdtControl: 'USDT Withdrawal Control',
+    usdtDepositAmount: 'USDT Deposit Amount',
+    usdtDepositCount: 'USDT Deposit Count',
     username: 'Username',
     userType: 'User Type',
     validate: 'Validate',
@@ -1998,6 +2000,12 @@ export default {
     retainLevelDays: 'Retain Level Days',
     editSystemValueRules: 'Edit System Value Rule',
     addSystemValueRules: 'Add System Value Rule',
+    walletInfo: 'Wallet Info',
+    fiat: 'Fiat',
+    usdt: 'USDT',
+    fiatBalance: 'Fiat Balance',
+    usdtBalance: 'USDT Balance',
+    toggleWallet: 'Toggle Wallet Type',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2767,7 +2775,7 @@ export default {
     'Media Display Settings': 'Media Display Settings',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
-    'Sites Config': 'Site Config'
+    'Sites Config': 'Site Config',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

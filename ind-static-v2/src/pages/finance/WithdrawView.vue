@@ -197,7 +197,7 @@
               </span>
             </div>
             <div class="q-mt-md text-neontb">
-              *特别说明：三方自动收取提币 1.00 USDT 手续费！
+              *特别说明：三方自动收取提币 2.00 USDT 手续费！
             </div>
           </div>
           <div v-else-if="isEWALLET">

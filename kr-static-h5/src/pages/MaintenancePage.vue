@@ -1,14 +1,24 @@
 <template>
   <div class="maintenance-container">
+    <div class="maintenance-logo">
+      <img src="../assets/logo-web.svg" />
+    </div>
     <div class="maintenance-img">
       <img :src="require('../assets/images/maintenance/maintenance-img.png')" />
     </div>
     <div class="maintenance-details">
-      <div class="maintenance-logo">
-        <img src="../assets/logo-web.svg" />
-      </div>
+
       <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
-      <div class="maintenance-desc" v-html="$t('lang.maintenance_desc')"></div>
+      <div class="maintenance-desc">
+        {{ $t("lang.maintenance_from") }} {{ ui.maintenanceStartTime }}
+        <br />
+        {{ $t("lang.maintenance_to") }} {{ ui.maintenanceEndTime }}
+        <br />
+        {{ $t("lang.maintenance_desc_01") }}
+        <br />
+        {{ $t("lang.maintenance_desc_02") }}
+      </div>
+      <!--      <div class="maintenance-desc" v-html="$t('lang.maintenance_desc')"></div>-->
 
       <div class="maintenance-contact">
         <div class="contact-item">
@@ -34,19 +44,24 @@
     </div> -->
   </div>
 </template>
+<script setup>
+import { useUI } from "src/stores/ui";
+const ui = useUI();
+</script>
 
 <style lang="scss">
 .maintenance-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-image: url("../assets/images/maintenance/main-bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
   flex-direction: column;
   padding: 20px;
+  padding-top: 50px;
 
   .maintenance-contact {
     margin-top: 24px;
@@ -76,7 +91,7 @@
   }
 
   .maintenance-logo {
-    margin: 20px auto 0;
+    margin: 0px auto 0;
     img {
       display: block;
       width: 168px;
@@ -101,11 +116,11 @@
   }
 
   .maintenance-img {
-    margin-left: 30px;
     img {
+      margin: 10px auto;
       display: block;
-      width: 100%;
-      max-width: 600px;
+      width: 65%;
+      max-width: 400px;
     }
   }
 }

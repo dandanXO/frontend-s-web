@@ -166,7 +166,9 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  if (ui.edition !== EDITION.SLOT) {
+    checkShowImgTop();
+  }
 });
 </script>
 
@@ -205,6 +207,10 @@ onMounted(() => {
   height: auto;
   margin-top: 25% !important;
   transform: translate(-50%, -50%);
+
+  &.el-dialog {
+    --el-dialog-width: 35%;
+  }
 
   .el-dialog__body {
     padding: 20px !important;

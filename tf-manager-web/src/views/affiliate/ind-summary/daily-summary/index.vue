@@ -84,8 +84,23 @@
       >
         <template #default="scope">
           $
+          <!-- eslint-disable -->
           <span
-            v-formatter="{data: scope.row.depositAmount, type: 'money'}"
+            v-formatter="{ data: scope.row.depositAmount, type: 'money' }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="usdtDepositAmount"
+        :label="t('fields.usdtDepositAmount')"
+        align="center"
+        width="120"
+      >
+        <template #default="scope">
+          $
+          <!-- eslint-disable -->
+          <span
+            v-formatter="{ data: scope.row.usdtDepositAmount, type: 'money' }"
           />
         </template>
       </el-table-column>
@@ -97,8 +112,9 @@
       >
         <template #default="scope">
           $
+          <!-- eslint-disable -->
           <span
-            v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+            v-formatter="{ data: scope.row.withdrawAmount, type: 'money' }"
           />
         </template>
       </el-table-column>
@@ -143,7 +159,8 @@
       >
         <template #default="scope">
           $
-          <span v-formatter="{data: scope.row.fdAmount, type: 'money'}" />
+          <!-- eslint-disable -->
+          <span v-formatter="{ data: scope.row.fdAmount, type: 'money' }" />
         </template>
       </el-table-column>
       <el-table-column
@@ -154,7 +171,8 @@
       >
         <template #default="scope">
           $
-          <span v-formatter="{data: scope.row.validBet, type: 'money'}" />
+          <!-- eslint-disable -->
+          <span v-formatter="{ data: scope.row.validBet, type: 'money' }" />
         </template>
       </el-table-column>
       <el-table-column
@@ -182,7 +200,7 @@
         <template #default="scope">
           $
           <span
-            v-formatter="{data: scope.row.companyWinLoss, type: 'money'}"
+            v-formatter="{ data: scope.row.companyWinLoss, type: 'money' }"
           />
         </template>
       </el-table-column>
@@ -209,6 +227,12 @@
         width="120"
       />
       <el-table-column
+        prop="usdtDepositCount"
+        :label="t('fields.usdtDepositCount')"
+        align="center"
+        width="120"
+      />
+      <el-table-column
         prop="betCount"
         :label="t('fields.totalBetMemberCount')"
         align="center"
@@ -222,7 +246,8 @@
       >
         <template #default="scope">
           $
-          <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
+          <!-- eslint-disable -->
+          <span v-formatter="{ data: scope.row.bonus, type: 'money' }" />
         </template>
       </el-table-column>
       <el-table-column
@@ -233,7 +258,7 @@
       >
         <template #default="scope">
           $
-          <span v-formatter="{data: scope.row.rebateAmount, type: 'money'}" />
+          <span v-formatter="{ data: scope.row.rebateAmount, type: 'money' }" />
         </template>
       </el-table-column>
       <el-table-column
@@ -244,7 +269,8 @@
       >
         <template #default="scope">
           $
-          <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+          <!-- eslint-disable -->
+          <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
         </template>
       </el-table-column>
       <el-table-column
@@ -335,7 +361,7 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.totalBet, type: 'money'}" />
+            <span v-formatter="{ data: scope.row.totalBet, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -375,7 +401,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.deposit, type: 'money'}" />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.deposit, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -385,7 +412,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.promo, type: 'money'}" />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.promo, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -395,7 +423,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.rebate, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -405,7 +434,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.adjustment, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -604,11 +634,20 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        if (index === 3 || index === 6 || index === 11 || index === 12) {
+        if (
+          index === 4 ||
+          index === 7 ||
+          index === 12 ||
+          index === 13 ||
+          index === 14
+        ) {
+          // WithdrawCount, FtdCount, totalMemberDepositCount, totalMemberUsdtDepositCount, totalMemberBetCount
           sums[index] = totalPage.records[0][prop]
-        } else if (index === 5) {
+        } else if (index === 6) {
+          // registerCount
           sums[index] = totalPage.records[0].registerCount
-        } else if (index === 9) {
+        } else if (index === 10) {
+          // payoutAmount
           sums[index] =
             '$' +
             parseFloat(
@@ -618,7 +657,7 @@ function getSummaries(param) {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })
-        } else if (index === 4) {
+        } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +
@@ -629,7 +668,8 @@ function getSummaries(param) {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })
-        } else if (index === 16) {
+        } else if (index === 18) {
+          // netProfit
           sums[index] =
             '$' +
             parseFloat(

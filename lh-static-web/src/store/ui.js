@@ -18,7 +18,9 @@ export const uiStore = defineStore("ui-store", {
       downloadUrl: "",
       innerWidth: window.innerWidth,
       notificationQueue: [],
-      notificationZIndex: 2000
+      notificationZIndex: 2000,
+      maintenanceStartTime: "",
+      maintenanceEndTime: ""
     };
   },
   actions: {
