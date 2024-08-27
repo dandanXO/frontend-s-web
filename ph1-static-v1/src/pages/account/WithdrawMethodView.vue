@@ -293,6 +293,11 @@
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
+<!--          <div class="title" v-if="index===0">{{item.payType}}</div>-->
+<!--          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">-->
+<!--            {{item.payType}}-->
+<!--          </div>-->
+
           <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
 
@@ -322,6 +327,7 @@
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
+
         </template>
 
         <!-- <div class="method-item">
@@ -392,14 +398,19 @@ const getWithdrawalMethods = () => {
       // let bankWithdraws = response.data.withdraws;
       // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
 
-
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
           return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
 
-      paymentMethodsItems.value = bankWithdraws.flat();
+      paymentMethodsItems.value = bankWithdraws.flat().sort((a, b) => {
+        if (a.payType > b.payType) return 1;
+        if (a.payType < b.payType) return -1;
+        return 0;
+      });
+
+      console.log(paymentMethodsItems.value);
 
     } else {
       $q.notify({
@@ -775,8 +786,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+      ? "Bank IFSC Code Must Be More Than 3 Characters"
+      : true;
   return result;
 };
 

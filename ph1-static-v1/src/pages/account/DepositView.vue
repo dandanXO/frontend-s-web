@@ -15,6 +15,11 @@
       </div>
       <div class="withdraw-methods-container" v-else>
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
+          <div class="title" v-if="index===0">{{item.payType}}</div>
+          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">
+            {{item.payType}}
+          </div>
+
           <div
             class="method-item"
             @click="goSelectedMethod(item)"
@@ -375,6 +380,7 @@ const selectedItemPrivilegeId = ref();
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
+  activeMethod.value= item;
   selectedItemAmount.value = item.extra.amountArr;
   selectedItemPrivilege.value = item.extra.privilegePercent;
   selectedItemPrivilegeId.value = item.extra.privilegeId;
@@ -401,13 +407,25 @@ function initPay() {
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
+      console.log(res.data.payments);
+
+
+
       let bankDeposits = res.data.payments
         .map((payment) => {
           return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
 
-      paymentMethodsItems.value = bankDeposits.flat();
+
+      paymentMethodsItems.value = bankDeposits.flat().sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
+
+      console.log(paymentMethodsItems.value);
+
       selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
 
       const d = res.data;
