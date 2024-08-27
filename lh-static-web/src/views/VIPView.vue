@@ -6,7 +6,7 @@
     <!--    <div class="banner-container" />-->
 
     <Carousel v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
-      <Slide @click="slideTo(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+      <Slide @click="handleSlideClick(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
             <div class="vipcontents">
@@ -1000,6 +1000,13 @@ const handleClick = async (key, item) => {
   }
 };
 const currentSlide = ref(11);
+const handleSlideClick = (vipIndex) => {
+  if (vipIndex === currentSlide.value) {
+    slideTo(vipLevel.value - 1);
+  } else {
+    slideTo(vipIndex); // If you still want to slide to the clicked item
+  }
+}
 const slideTo = (vipIndex) => {
   if (vipIndex) {
     currentSlide.value = vipIndex;
