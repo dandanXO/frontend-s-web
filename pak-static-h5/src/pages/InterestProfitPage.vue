@@ -199,7 +199,7 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-          <div class="box-value">{{ recordDetails.odds * 100 }}%</div>
+          <div class="box-value">{{ convertToTwoDecimalAmount(recordDetails.odds * 100) }}%</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
@@ -242,7 +242,7 @@
 
   <q-dialog width="100%" v-model="errorDialog">
     <q-card class="q-pa-md">
-      <q-card-section class="row items-center ">
+      <q-card-section class="row items-center">
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
@@ -285,7 +285,7 @@ const storageTimeOptions = ref([
   { label: "1 year", val: 365 }
 ]);
 const errorDialog = ref(false);
-const errorDialogMsg = ref('');
+const errorDialogMsg = ref("");
 const toggleAmountVisibility = () => {
   isAmountVisible.value = !isAmountVisible.value;
 };
@@ -446,7 +446,7 @@ const submitDeposit = () => {
         // });
 
         errorDialog.value = true;
-        errorDialogMsg.value = t(`error.${res.code}`)
+        errorDialogMsg.value = t(`error.${res.code}`);
       }
     })
     .catch((err) => {
