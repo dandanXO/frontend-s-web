@@ -129,12 +129,6 @@
         </div>
       </div>
     </div>
-    <img
-      v-if="ui.edition === 'SLOT' && route.name === 'homeslot'"
-      class="footer-bg"
-      src="@/assets/footer/footer-bg-slot-edition.png"
-      alt="coin background"
-    />
   </footer>
   <!--
   <RegisterModal ref="regModal" /> -->
@@ -185,6 +179,7 @@ export default defineComponent({
   // margin: auto;
   font-size: 0.8rem;
   position: relative;
+  background-color: #f3f7fd;
   .top-footer {
     background-color: $footer-black;
     .top-footer-inner {
@@ -359,13 +354,6 @@ export default defineComponent({
       color: $color-white;
       font-size: 0.8rem;
     }
-  }
-
-  .footer-bg {
-    position: absolute;
-    top: -100%;
-    width: 100%;
-    z-index: 0;
   }
 }
 </style>
