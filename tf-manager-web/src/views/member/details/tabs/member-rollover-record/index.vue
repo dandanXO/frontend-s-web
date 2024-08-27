@@ -144,6 +144,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="updateBy"
+          :label="t('fields.updateBy')"
+          align="center"
+          min-width="180"
+        />
+        <el-table-column
           prop="remark"
           :label="t('fields.remark')"
           align="center"
