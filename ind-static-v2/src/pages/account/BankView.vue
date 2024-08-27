@@ -228,7 +228,10 @@ const onAddUSDTClick = () => {
   addBankCardModalRef.value.onAddCardClick("Crypto");
 };
 const onUpdateCardClick = (bcIndex, bankType) => {
-  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex], bankType);
+  const cardItem = bankCardList.value.filter((item) => item.bankType === bankType)[bcIndex];
+  if (cardItem) {
+    updateBankCardModalRef.value.onUpdateCardClick(cardItem, bankType);
+  }
 };
 
 // init
