@@ -27,7 +27,7 @@
             />
           </div>-->
 
-            <div class="q-my-sm" v-if="currentCardType === 'Crypto' || currentCardType === 'EWallet'">
+            <div class="q-my-sm" v-if="currentCardType === 'Bank' || currentCardType === 'EWallet'">
               <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
               <q-select
                 standout
