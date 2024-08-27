@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title-wrapper q-pa-md q-mx-sm q-mt-md">
+    <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
       <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
       <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
         <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
