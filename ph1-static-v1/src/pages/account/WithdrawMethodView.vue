@@ -176,6 +176,7 @@
         </div>
 
         <div class="mid-wrapper">
+
           <q-input
             type="number"
             ref="amountRef"
@@ -189,9 +190,9 @@
               (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
               (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
-                (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
-            ]"
+              (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
+              `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+              ]"
             hide-bottom-space
           >
             <template v-slot:append>
@@ -405,8 +406,8 @@ const getWithdrawalMethods = () => {
         .flat();
 
       paymentMethodsItems.value = bankWithdraws.flat().sort((a, b) => {
-        if (a.payType > b.payType) return 1;
-        if (a.payType < b.payType) return -1;
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
         return 0;
       });
 
@@ -467,7 +468,7 @@ const filterCards = (type) => {
     .then((res) => {
       if (res.code === 0) {
         let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        let filteredData = res.data.filter((item) => item.bankType === typeCode || item.bankCode === typeCode);
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -748,14 +749,15 @@ const goSelectedMethod = (item) => {
   // bankCardField.withdrawCode = selectedMethodItem.value.code;
   //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
-  // filterCards(item);
+  // debugger;
+  filterCards(item);
 
   // console.log(item);
   filteredBankList.value = item.bankList;
   bankCardField.bankId = item.bankList[0].id;
   // filterCards(item.bankList[0]);
 
-  bankCardField.cardAccount = "";
+  // bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
 
