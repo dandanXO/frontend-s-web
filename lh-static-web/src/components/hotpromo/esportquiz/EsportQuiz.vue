@@ -2,7 +2,9 @@
   <el-dialog width="500px" v-model="isFirstQuestionClicked" :close-on-click-modal="false" title="">
     <div class="header">
       <div class="title">提交答案</div>
-      <div class="close-btn" @click="isFirstQuestionClicked = false"><el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon></div>
+      <div class="close-btn" @click="isFirstQuestionClicked = false">
+        <el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon>
+      </div>
     </div>
     <div class="question-select-box">
       <div
@@ -16,14 +18,18 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary standard-button btn-color-blue submit-btn" @click="onChoiceSubmit('first')">提交</el-button>
+      <el-button type="primary standard-button btn-color-blue submit-btn" @click="onChoiceSubmit('first')">
+        提交
+      </el-button>
     </div>
   </el-dialog>
 
   <el-dialog width="500px" v-model="isSecondQuestionClicked" :close-on-click-modal="false" title="">
     <div class="header">
       <div class="title">提交答案</div>
-      <div class="close-btn" @click="isSecondQuestionClicked = false"><el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon></div>
+      <div class="close-btn" @click="isSecondQuestionClicked = false">
+        <el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon>
+      </div>
     </div>
     <div class="question-select-box">
       <div
@@ -37,14 +43,18 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary standard-button btn-color-blue submit-btn" @click="onChoiceSubmit('second')">提交</el-button>
+      <el-button type="primary standard-button btn-color-blue submit-btn" @click="onChoiceSubmit('second')">
+        提交
+      </el-button>
     </div>
   </el-dialog>
 
   <el-dialog width="500px" v-model="isThirdQuestionClicked" :close-on-click-modal="false" title="">
     <div class="header">
       <div class="title">提交答案</div>
-      <div class="close-btn" @click="isThirdQuestionClicked = false"><el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon></div>
+      <div class="close-btn" @click="isThirdQuestionClicked = false">
+        <el-icon size="24" color="#e1e1e1"><CircleCloseFilled /></el-icon>
+      </div>
     </div>
     <div class="question-select-box">
       <div
@@ -58,7 +68,13 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <el-button type="primary standard-button btn-color-blue submit-btn" class="common-btn" @click="onChoiceSubmit('third')">提交</el-button>
+      <el-button
+        type="primary standard-button btn-color-blue submit-btn"
+        class="common-btn"
+        @click="onChoiceSubmit('third')"
+      >
+        提交
+      </el-button>
     </div>
   </el-dialog>
 
@@ -70,11 +86,13 @@
         </div>
         <div class="prize-quiz-jc-txt" id="pool">$ {{ matchInfo.poolAmount }}</div>
       </div>
-      <img v-if="uiIsShowStatus.questionBox"
+      <img
+        v-if="uiIsShowStatus.questionBox"
         src="../../../assets/images/promotion/hotpromo/esportquiz/separator-start-ans.png"
         style="display: flex; align-self: center; width: 60%; margin: 0 auto"
       />
-      <img v-else
+      <img
+        v-else
         src="../../../assets/images/promotion/hotpromo/esportquiz/union.png"
         style="display: flex; align-self: center; width: 60%; margin: 0 auto 30px"
       />
@@ -113,7 +131,7 @@
                 id="secondQuestion"
                 @click="onSecondQuestionClick(true)"
               >
-              {{ secondChoiceRef ? "重新选择" : "选择" }}
+                {{ secondChoiceRef ? "重新选择" : "选择" }}
               </button>
               <div class="ans-row">
                 <div>我的答案：</div>
@@ -153,9 +171,24 @@
           提交答案
         </div>
       </div>
-      <div v-else class="prize-quiz-main">
-        <div class="title" id="title">
+      <div v-else class="prize-quiz-main prize-quiz-record-container" style="margin-top: 80px">
+        <!-- <div class="title" id="title">
           {{ matchInfo.quizTitle || "答题区" }}
+        </div> -->
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+          "
+        >
+          <div class="quiz-flag">
+            <p>{{ matchInfo.quizTitle || "答题区" }}</p>
+          </div>
         </div>
         <div :class="`start-answer-box`">
           <div class="flex-div">
@@ -166,6 +199,7 @@
               <div>{{ matchInfo.homeTeam }}</div>
             </div>
             <div class="book-img">
+              <img src="../../../assets/images/promotion/hotpromo/esportquiz/vs.png" alt="" />
               <div class="match-time">
                 {{ matchInfo.matchTime }}
               </div>
@@ -185,46 +219,49 @@
           </div>
         </div>
       </div>
-      <div class="title-img title-record"></div>
-      <div>
-        <table v-if="isHasRecord" class="record-table" id="record-table">
-          <tr>
-            <th style="width: 25%">日期</th>
-            <th style="width: 35%">答案</th>
-            <th style="width: 20%">中奖记录</th>
-            <!--            <th style="width: 10%">中奖次数</th>-->
-            <!--            <th style="width: 10%">参与次数</th>-->
-          </tr>
-          <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
-            <td>{{ e.time }}</td>
-            <td>{{ e.answer }}</td>
-            <td :class="e.className">{{ e.statusText }}</td>
-            <!--            <template v-if="i === 0">-->
-            <!--              <td :rowspan="recordsLength">{{ quizWonTimesRecord }}</td>-->
-            <!--              <td :rowspan="recordsLength">{{ quizAttendTimesRecord }}</td>-->
-            <!--            </template>-->
-          </tr>
-        </table>
-        <table v-else class="record-table" id="record-table"></table>
 
-        <!-- <pre>isHasRecord: {{ isHasRecord }}</pre> -->
-        <!-- <pre>paginationInfo.pageTotal: {{ paginationInfo.pageTotal }}</pre> -->
-        <!-- <pre>tableInfo: {{ tableInfo }}</pre> -->
-        <!-- <pre>records: {{ records }}</pre> -->
-        <div v-if="isHasRecord" class="page-list">
-          <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
-          <div
-            v-for="(e, i) in recordsPagination.pages"
-            :key="`page-content-${i}`"
-            :id="`page-number-${e}`"
-            :class="`page-number page-item ${recordsPagination.current === e ? 'active' : ''}`"
-            @click="onPaginationClick(e)"
-          >
-            {{ e }}
+      <div class="prize-quiz-record-container">
+        <div class="title-img title-record"></div>
+        <div>
+          <table v-if="isHasRecord" class="record-table" id="record-table">
+            <tr>
+              <th style="width: 25%">日期</th>
+              <th style="width: 35%">答案</th>
+              <th style="width: 20%">中奖记录</th>
+              <!--            <th style="width: 10%">中奖次数</th>-->
+              <!--            <th style="width: 10%">参与次数</th>-->
+            </tr>
+            <tr v-for="(e, i) in tableInfo" :key="`table-info-${i}`">
+              <td>{{ e.time }}</td>
+              <td>{{ e.answer }}</td>
+              <td :class="e.className">{{ e.statusText }}</td>
+              <!--            <template v-if="i === 0">-->
+              <!--              <td :rowspan="recordsLength">{{ quizWonTimesRecord }}</td>-->
+              <!--              <td :rowspan="recordsLength">{{ quizAttendTimesRecord }}</td>-->
+              <!--            </template>-->
+            </tr>
+          </table>
+          <table v-else class="record-table" id="record-table"></table>
+
+          <!-- <pre>isHasRecord: {{ isHasRecord }}</pre> -->
+          <!-- <pre>paginationInfo.pageTotal: {{ paginationInfo.pageTotal }}</pre> -->
+          <!-- <pre>tableInfo: {{ tableInfo }}</pre> -->
+          <!-- <pre>records: {{ records }}</pre> -->
+          <div v-if="isHasRecord" class="page-list">
+            <div class="prev page-item" @click="onPrevPageClick()">&lt;</div>
+            <div
+              v-for="(e, i) in recordsPagination.pages"
+              :key="`page-content-${i}`"
+              :id="`page-number-${e}`"
+              :class="`page-number page-item ${recordsPagination.current === e ? 'active' : ''}`"
+              @click="onPaginationClick(e)"
+            >
+              {{ e }}
+            </div>
+            <div class="next page-item" @click="onNextPageClick()">&gt;</div>
           </div>
-          <div class="next page-item" @click="onNextPageClick()">&gt;</div>
+          <div v-else class="page-list">暂无记录</div>
         </div>
-        <div v-else class="page-list">暂无记录</div>
       </div>
     </div>
   </div>
@@ -240,15 +277,14 @@ import {
   submitMemberSportMatchQuiz
 } from "@/api/index/promo";
 import moment from "moment";
-import { CircleCloseFilled } from '@element-plus/icons-vue'
+import { CircleCloseFilled } from "@element-plus/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 import { ElMessageBox } from "element-plus";
 
 const store = userStore();
 const notify = useNotify();
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/";
-
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/";
 
 onMounted(() => {
   if (!store.token) {
@@ -543,7 +579,7 @@ function onChoiceSubmit(key) {
 }
 
 function onSubmitClick() {
-  if(submittedFormStatus.value) {
+  if (submittedFormStatus.value) {
     return;
   }
 
@@ -567,9 +603,9 @@ function onSubmitClick() {
     if (code == 0) {
       // submittedFormStatus
       // if (res.count == 0) {
-      //   ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款1000 进行提交第二次；");
+      //   ElMessage.success("您好，您已成功提交一次本场竞猜答案，可进行再次单笔存款 1000 进行提交第二次；");
       // } else {
-      //   ElMessage.success("您好，本场竞猜您已成功提交两次，请次日0点参与新一场的竞猜，感谢您的支持!");
+      //   ElMessage.success("您好，本场竞猜您已成功提交两次，请次日 0 点参与新一场的竞猜，感谢您的支持!");
       // }
 
       notify.success("您好，您已成功提交本场竞猜答案");
@@ -587,7 +623,7 @@ const submittedFormStatus = ref(false);
 .prize-quiz-container {
   font-size: 14px;
   color: #87898a;
-  padding: 0 0 20px 0;
+  padding: 0 0 0 0;
 
   .prize-quiz-content-container {
     width: 1154px;
@@ -599,10 +635,10 @@ const submittedFormStatus = ref(false);
       height: 200px;
       // background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
       background: linear-gradient(
-          90.02deg,
-          rgba(5, 210, 255, 0) 0.02%,
-          rgba(0, 117, 255, 0.14) 49.86%,
-          rgba(5, 210, 255, 0) 99.97%
+        90.02deg,
+        rgba(5, 210, 255, 0) 0.02%,
+        rgba(0, 117, 255, 0.14) 49.86%,
+        rgba(5, 210, 255, 0) 99.97%
       );
 
       padding-top: 10px;
@@ -638,8 +674,7 @@ const submittedFormStatus = ref(false);
       box-shadow: 0px 5px 10px 0px rgba(12, 3, 7, 0.2);
       border-radius: 40px;
       // min-height: 315px;
-
-      background: url("../../../assets/images/promotion/hotpromo/esportquiz/answer.png") center no-repeat;
+      position: relative;
 
       display: flex;
       justify-content: center;
@@ -651,10 +686,8 @@ const submittedFormStatus = ref(false);
         justify-content: space-between;
 
         div {
-          margin-top: 10px;
           font-size: 20px;
-          color: #424F72;
-
+          color: #424f72;
         }
 
         .team-div {
@@ -684,20 +717,17 @@ const submittedFormStatus = ref(false);
         .book-img {
           text-align: center;
           margin-bottom: 0px;
-          margin-top: 20px;
 
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: space-between;
-          gap: 20px;
         }
 
-        .match-time{
-          color: #424F72;
+        .match-time {
+          color: #424f72;
           font-size: 26px;
         }
-
 
         .btn-start-answer {
           display: flex;
@@ -712,15 +742,14 @@ const submittedFormStatus = ref(false);
           background-size: 214px;
           width: 400px;
 
-          &:hover{
+          &:hover {
             opacity: 0.9;
           }
 
-          &:active{
+          &:active {
             filter: brightness(0.9);
             transform: translate(0px, 1px);
           }
-
         }
       }
 
@@ -795,15 +824,14 @@ const submittedFormStatus = ref(false);
                 pointer-events: all !important;
               }
 
-              &:hover{
+              &:hover {
                 opacity: 0.9;
               }
 
-              &:active{
+              &:active {
                 filter: brightness(0.9);
                 transform: translate(0px, 1px);
               }
-
             }
           }
         }
@@ -826,7 +854,7 @@ const submittedFormStatus = ref(false);
 
     .title-record {
       background: url("../../../assets/images/promotion/hotpromo/esportquiz/title_record.png") center no-repeat;
-      margin: 69px auto 22px auto;
+      margin: 0 auto;
     }
 
     .record-table {
@@ -882,12 +910,11 @@ const submittedFormStatus = ref(false);
   }
 }
 
-
 .questions-box {
   display: block;
 
   .title {
-    color: #4C4C6C;
+    color: #4c4c6c;
     font-size: 40px;
     text-align: center;
     padding: 30px 0px;
@@ -900,6 +927,7 @@ const submittedFormStatus = ref(false);
     .questions-item-box {
       width: 270px;
       letter-spacing: 0;
+      position: relative;
 
       .item-question {
         height: 42px;
@@ -908,38 +936,49 @@ const submittedFormStatus = ref(false);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(180deg, #2095FF 0%, #7ebdf7 100%);
-        border-bottom: 3px solid #fff;
-        border-radius: 20px 20px 0px 0px;
+        background-image: url("../../../assets/images/promotion/hotpromo/esportquiz/quiz-flag.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         color: #fff;
+        position: absolute;
+        top: -24px;
+        width: fit-content;
+        padding: 12px 32px;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       .question-options-box {
         color: #87898a;
-        background: linear-gradient(0deg, #FFFFFF 0%, #eaf3fced 100%);
-        border-radius: 0px 0px 20px 20px;
+        background: linear-gradient(0deg, #ffffff 0%, #eaf3fced 100%);
+        border-radius: 20px;
 
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 20px;
-        padding: 20px;
+        padding: 50px 20px 20px;
         font-weight: 700;
+        border: 1px solid #4DA9F7;
 
         .question-row {
-          color: #4C4C6C;
+          color: #4c4c6c;
           font-weight: 700;
         }
 
         .ans-row {
-          color: #7A8EB9;
+          color: #7a8eb9;
           width: 100%;
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          padding: 16px;
+          border-radius: 10px;
+          background: #0000000d;
 
           .ans {
-            color: #4C4C6C;
+            color: #3981ff;
           }
         }
 
@@ -973,15 +1012,14 @@ const submittedFormStatus = ref(false);
           pointer-events: all !important;
         }
 
-        &:hover{
+        &:hover {
           opacity: 0.9;
         }
 
-        &:active{
+        &:active {
           filter: brightness(0.9);
           transform: translate(0px, 1px);
         }
-
       }
     }
   }
@@ -1007,7 +1045,7 @@ const submittedFormStatus = ref(false);
   }
 
   .question-select-option {
-    background-color: #E7F3FF;
+    background-color: #e7f3ff;
     border-radius: 15px;
     margin-bottom: 24px;
     display: flex;
@@ -1016,12 +1054,12 @@ const submittedFormStatus = ref(false);
     padding: 15px;
     cursor: pointer;
     width: 170px;
-    color: #424F72;
+    color: #424f72;
     font-size: 12px;
 
     &.active {
       color: #fff;
-      background-color: #3981FF;
+      background-color: #3981ff;
     }
   }
 }
@@ -1047,7 +1085,7 @@ const submittedFormStatus = ref(false);
   border-radius: 100px;
 
   &.submitted-ans {
-    background: #CBDEFE;
+    background: #cbdefe;
     box-shadow: none;
     cursor: not-allowed;
     pointer-events: all !important;
@@ -1055,7 +1093,7 @@ const submittedFormStatus = ref(false);
 }
 
 .header {
-  color: #424F72;
+  color: #424f72;
   font-size: 1.25rem;
   font-weight: 700;
   display: flex;
@@ -1066,6 +1104,34 @@ const submittedFormStatus = ref(false);
     position: absolute;
     right: 10px;
     cursor: pointer;
+  }
+}
+
+.prize-quiz-record-container {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 60px;
+}
+
+.quiz-flag {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../../assets/images/promotion/hotpromo/esportquiz/quiz-flag.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 12px 32px;
+
+  p {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
   }
 }
 </style>
