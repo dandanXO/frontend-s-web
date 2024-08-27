@@ -519,7 +519,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimple } from '../../../api/site'
+import { getSiteListSimpleOri } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -856,7 +856,7 @@ function submit() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
+  const { data: site } = await getSiteListSimpleOri()
   siteList.list = site
 }
 

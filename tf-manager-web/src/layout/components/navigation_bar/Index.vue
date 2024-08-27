@@ -257,13 +257,14 @@ export default {
 
     onMounted(async () => {
       // 根据情况赋值sites
-      if (hasRole(['ADMIN'])) {
-        sites.value = store.state.user.sites
-      } else if (hasRole(['MANAGER'])) {
-        sites.value = store.state.user.sites
-      } else {
-        sites.value = store.state.user.sites
-      }
+      // if (hasRole(['ADMIN'])) {
+      //   sites.value = store.state.user.sites
+      // } else if (hasRole(['MANAGER'])) {
+      //   sites.value = store.state.user.sites
+      // } else {
+      //   sites.value = store.state.user.sites
+      // }
+      sites.value = store.state.user.sites
       // 根据情况指定selectedSite , 'MANAGER'
       // if (hasRole(['ADMIN'])) {
       //   selectedSite.value = sites.value[0]?.siteCode || null

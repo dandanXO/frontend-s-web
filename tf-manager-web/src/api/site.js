@@ -39,29 +39,29 @@ export const updateSiteMenu = async (id, param) => {
   )
 }
 
-// export const getSiteListSimple = () => {
-//   return https().request('/site/systemSiteList', Method.GET)
-// }
+export const getSiteListSimpleOri = () => {
+  return https().request('/site/systemSiteList', Method.GET)
+}
 
 export const getSiteListSimple = () => {
   return https()
     .request('/site/systemSiteList', Method.GET)
     .then(response => {
-      if (store.state.user.userType !== 'ADMIN') {
-        const site = response.data
+      // if (store.state.user.userType === 'MANAGER') {
+      const site = response.data
 
-        const updateWithUserStoreSiteId = site.filter(
-          e => e.id === store.state.user.siteId
-        )
-        const mockResponse = {
-          code: 0,
-          data: updateWithUserStoreSiteId,
-        }
-
-        return mockResponse
-      } else {
-        return response
+      const updateWithUserStoreSiteId = site.filter(
+        e => e.id === store.state.user.siteId
+      )
+      const mockResponse = {
+        code: 0,
+        data: updateWithUserStoreSiteId,
       }
+
+      return mockResponse
+      // } else {
+      //   return response
+      // }
     })
     .catch(error => {
       console.error('Error fetching site list:', error)
