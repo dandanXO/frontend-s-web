@@ -187,11 +187,14 @@ function getErrorType(errorUrl) {
     return domains.substr(0, 7);
   } else {
     var number = 0;
-    if (localStorage.getItem(LH_H5_RST_URL).indexOf(errorUrl) > -1) {
+    const rstLocal = localStorage.getItem(LH_H5_RST_URL);
+    const crtLocal = localStorage.getItem(LH_H5_CRT_URL);
+    const evtLocal = localStorage.getItem(LH_H5_EVT_URL);
+    if (rstLocal && rstLocal.indexOf(errorUrl) > -1) {
       number = 1;
-    } else if (localStorage.getItem(LH_H5_CRT_URL).indexOf(errorUrl) > -1) {
+    } else if (crtLocal && crtLocal.indexOf(errorUrl) > -1) {
       number = 2;
-    } else if (localStorage.getItem(LH_H5_EVT_URL).indexOf(errorUrl) > -1) {
+    } else if (evtLocal && evtLocal.indexOf(errorUrl) > -1) {
       number = 3;
     }
     const domains = errorUrl.split(".");
