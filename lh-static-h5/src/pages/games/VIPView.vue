@@ -718,7 +718,7 @@ const currentClaimAllStatus = ref("CANT_CLAIM");
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
     if (currentBetAmt.value > 0) {
-      return (currentBetAmt.value / vipItems[0].upgradeBetAmount) * 100;
+      return (currentBetAmt.value / originalUpgradeBetAmounts[0]) * 100;
     }
     return 0;
   }
