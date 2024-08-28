@@ -23,8 +23,7 @@
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
-
-            <!-- <div class="item-ribbon"><img src="../../assets/images/account/ribbon-five-percent.png" /></div> -->
+            <div class="item-ribbon" v-if="isPrivilege"><img src="../../assets/images/account/ribbon-five-percent.png" /></div>
           </div>
         </template>
       </div>
@@ -45,8 +44,8 @@
       <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
-            <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
-              +{{ convertToCommaAmount(amount * selectedItemPrivilege) }}
+            <q-badge color="orange" floating rounded v-if="isPrivilege">
+              +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
@@ -353,6 +352,7 @@ const selectedItemPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
 const selectedChannel = ref();
+const isPrivilege = ref(false);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -378,7 +378,10 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    promoParam = "?promo=1";
+    // promoParam = "?promo=1";
+    isPrivilege.value = true;
+  } else {
+    isPrivilege.value = false;
   }
 
   payMethods.value = [];
