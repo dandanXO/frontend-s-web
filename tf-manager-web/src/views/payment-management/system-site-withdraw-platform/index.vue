@@ -145,6 +145,7 @@ async function loadSiteWithdrawPlatform(siteId) {
 
 onMounted(async() => {
   await loadSites();
+  selected.siteName = list.sites[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
     selected.siteName = site.value.id;

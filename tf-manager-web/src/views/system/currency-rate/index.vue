@@ -247,7 +247,7 @@ const formRules = reactive({
 })
 
 function resetQuery() {
-  request.siteId = ''
+  request.siteId = list.site[0].id
   request.currencyId = ''
   list.currencies = []
 }
@@ -367,6 +367,7 @@ async function loadCurrency() {
 onMounted(async () => {
   await loadSite()
 
+  request.siteId = list.site[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     var a = list.site.find(s => s.siteName === store.state.user.siteName)
     request.siteId = a.id

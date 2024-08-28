@@ -268,7 +268,7 @@ function convertDate(date) {
 function resetQuery() {
   request.loginName = null
   request.cardTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value : null
+  request.siteId = site.value ? site.value : siteList.list[0].id
   request.cardNo = null
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value

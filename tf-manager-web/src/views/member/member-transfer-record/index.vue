@@ -384,7 +384,7 @@ function resetQuery() {
   request.platformCode = null
   request.type = null
   request.times = [defaultStartDate, defaultEndDate]
-  request.siteId = null
+  request.siteId = siteList.list[0].id
   loadPlatformNames()
 }
 

@@ -290,7 +290,7 @@ function resetQuery() {
   request.paymentName = null
   request.status = null
   request.payType = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   updatePaymentPlatform();
 }
 
@@ -377,6 +377,7 @@ onMounted(async () => {
 
   await loadSites()
   await loadPaymentType()
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
