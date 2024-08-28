@@ -1010,8 +1010,17 @@ export default defineComponent({
           isFirstView.value = true;
         }
       } else {
+        let siteType;
+        switch (ui.edition) {
+          case EDITION.SLOT:
+            siteType = "SLOT";
+            break;
+          case EDITION.NORMAL:
+          default:
+          // siteType = "HOME";
+        }
         api
-          .get("/member/ads-popout")
+          .get("/member/ads-popout", { params: { siteType } })
           .then((res) => {
             if (res.code === 0) {
               if (isImpt === null) {
@@ -1056,7 +1065,7 @@ export default defineComponent({
     };
 
     function loadData() {
-      let params = "";
+      let params;
       switch (ui.edition) {
         case EDITION.SLOT:
           params = "SLOT";
@@ -1271,7 +1280,16 @@ export default defineComponent({
     const announcementList = ref([]);
     const announcementTypes = ref([]);
     const loadAnnouncement = () => {
-      api.get("/announcement").then((res) => {
+      let siteType;
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          siteType = "SLOT";
+          break;
+        case EDITION.NORMAL:
+        default:
+        // siteType = "HOME";
+      }
+      api.get("/announcement", { params: { siteType } }).then((res) => {
         if (res.code === 0) {
           if (res.data.announcements) {
             const d = res.data.announcements;
@@ -1441,9 +1459,7 @@ export default defineComponent({
       } else {
         isLogined.value = false;
       }
-      if (ui.edition !== EDITION.SLOT) {
-        checkShowImgTop();
-      }
+      checkShowImgTop();
     });
 
     const runMenuFloat = () => {

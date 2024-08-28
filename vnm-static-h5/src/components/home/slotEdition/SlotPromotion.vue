@@ -32,7 +32,7 @@ const promotions = ref([]);
 
 const getPromo = () => {
   const platformApiUrl = store.hasToken() ? "/session/loggedInPromoPages" : "/promo/page";
-  api.get(`${platformApiUrl}?type=SLOT`).then((res) => {
+  api.get(`${platformApiUrl}?siteType=SLOT`).then((res) => {
     if (res.code === 0) {
       promotions.value = res.data.slice(0, 3);
     }
@@ -86,7 +86,9 @@ onMounted(getPromo);
     .promotion-item {
       display: block;
       padding: 6px;
-      background-color: #fff;
+      // background-color: #fff;
+      background: url(../../../assets/images/home/slotEdition/promotion-bg.png) no-repeat;
+      background-size: cover;
       border-radius: 6px;
       font-size: 1rem;
       font-weight: 700;

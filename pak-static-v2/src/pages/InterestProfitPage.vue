@@ -199,7 +199,7 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-          <div class="box-value">{{ recordDetails.odds * 100 }}%</div>
+          <div class="box-value">{{ convertToTwoDecimalAmount(recordDetails.odds * 100) }}%</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
@@ -239,6 +239,22 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="errorDialog">
+    <q-card class="q-pa-md">
+      <q-card-section class="row items-center ">
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-card-section class="q-mt-md">
+        <div>{{ errorDialogMsg }}</div>
+      </q-card-section>
+      <q-card-actions align="center" class="q-mt-md">
+        <q-btn no-caps v-close-popup>{{ $t("btn.confirm") }}</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script setup>
@@ -250,16 +266,19 @@ import { eventapi } from "src/boot/axios";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { t } from "src/boot/lang";
+import { useI18n } from "vue-i18n";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useQuasar } from "quasar";
 
+const { t } = useI18n();
 const interestProfitField = reactive({ storageTime: "", odds: "", deposits: "" });
 const $q = useQuasar();
 const qs = require("qs");
 const isLoading = ref(false);
 const isRecordLoading = ref(false);
+const errorDialog = ref(false);
+const errorDialogMsg = ref('');
 const depositData = ref([]);
 const isAmountVisible = ref(true);
 const storageTimeOptions = ref([
@@ -420,6 +439,9 @@ const submitDeposit = () => {
         interestProfitField.storageTime = "";
         interestProfitField.odds = "";
         interestProfitField.deposits = "";
+      } else {
+        errorDialog.value = true;
+        errorDialogMsg.value = t(`error.${res.code}`)
       }
     })
     .catch((err) => {

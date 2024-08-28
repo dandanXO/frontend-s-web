@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="bank-account-container">
+      <div class="bank-account-container" v-if="bankCardList.length === 0 || isAddNewAccount" >
         <div class="w-form-item w-form-item--bankcard">
           <div class="top-wrapper">
             <div class="title">Bank Name</div>
@@ -145,7 +145,7 @@
               ></q-input>
             </div>
           </div>
-          <!-- <div class="w-form-item w-form-item--bankcard">
+          <div class="w-form-item w-form-item--bankcard" v-if="isAddNewAccount">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -161,7 +161,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div> -->
+          </div>
         </template>
 
         <div class="top-wrapper">
@@ -176,6 +176,7 @@
         </div>
 
         <div class="mid-wrapper">
+
           <q-input
             type="number"
             ref="amountRef"
@@ -189,9 +190,9 @@
               (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
               (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
-                (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
-            ]"
+              (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
+              `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+              ]"
             hide-bottom-space
           >
             <template v-slot:append>
@@ -405,8 +406,8 @@ const getWithdrawalMethods = () => {
         .flat();
 
       paymentMethodsItems.value = bankWithdraws.flat().sort((a, b) => {
-        if (a.payType > b.payType) return 1;
-        if (a.payType < b.payType) return -1;
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
         return 0;
       });
 
@@ -466,8 +467,14 @@ const filterCards = (type) => {
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
+        let bankType = type.bankType;
         let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+
+        if(bankType==="BANK"){
+          var filteredData = res.data.filter((item) => item.bankType === "BANK");
+        }else{
+          var filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -748,6 +755,7 @@ const goSelectedMethod = (item) => {
   // bankCardField.withdrawCode = selectedMethodItem.value.code;
   //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
+  // debugger;
   // filterCards(item);
 
   // console.log(item);
@@ -755,7 +763,7 @@ const goSelectedMethod = (item) => {
   bankCardField.bankId = item.bankList[0].id;
   // filterCards(item.bankList[0]);
 
-  bankCardField.cardAccount = "";
+  // bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
 

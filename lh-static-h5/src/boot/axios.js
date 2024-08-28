@@ -184,7 +184,7 @@ function getErrorType(errorUrl) {
   errorUrl = errorUrl.replace("https://", "");
   if (isOriginalUrl) {
     const domains = errorUrl.split(".");
-    return domains.substr(0, 7);
+    return domains.length > 1 ? domains[1].substr(0, 7) : domains[0].substr(0, 7);
   } else {
     var number = 0;
     const rstLocal = localStorage.getItem(LH_H5_RST_URL);

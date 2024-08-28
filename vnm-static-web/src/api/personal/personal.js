@@ -8,8 +8,8 @@ export function loadBalance(platform) {
     }
   });
 }
-export function getAnnouncement() {
-  return server.REST.get(`/announcement`);
+export function getAnnouncement(siteType) {
+  return server.REST.get(`/announcement`, { params: { siteType } });
 }
 
 export function loadMemberInfo() {

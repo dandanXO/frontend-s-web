@@ -90,7 +90,7 @@ export default {
     registration_hints: "Đăng ký tức là bạn đã đồng ý và tuân thủ",
     user_registration_protocol: "Thỏa thuận đăng ký tài khoản",
     already_have_acc: "Đã có tài khoản?",
-    login_here: "Đăng nhập tại đây",
+    login_here: "Đăng nhập tại đây"
   },
   common: {
     login: "Đăng nhập",
@@ -271,9 +271,9 @@ export default {
     slot: "Nổ Hũ ",
     fish: "Bắn Cá",
     lottery: "Xổ Số",
-    slotWelcome: "Chào mừng",
-    slotDaily: "Hàng Ngày",
-    slotOther: "Khác",
+    slotWelcome: "Chào Mừng",
+    slotDaily: "Hàng Ngày & Hàng Tuần",
+    slotOther: "Hoàn Trả & Khác",
     choose_lucky_number: "Chọn số may mắn",
     lucky_number_record: "Ghi lại số may mắn",
     list_of_winning_members: "Danh sách người chiến thắng",
