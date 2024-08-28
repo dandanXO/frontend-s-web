@@ -55,8 +55,17 @@
             alt="announcement"
             @click="openPopup(announcementList)"
           />
-          <div class="station-notice">
-            <Vue3Marquee :clone="false" :duration="calculateMaxContentLength() * 0.55">
+          <div ref="marqueeWrapperRef" class="station-notice">
+            <div ref="marqueePseudoRef" class="marquee-pseudo">
+              <div
+                v-for="(word, index) in announcementList"
+                :key="index"
+                v-html="word.content"
+                @click="openPopup(word)"
+                class="station-notice-item"
+              ></div>
+            </div>
+            <Vue3Marquee :clone="false" :duration="marqueeDuration">
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"
@@ -73,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { getAnnouncement } from "@/api/personal/personal";
 import { Vue3Marquee } from "vue3-marquee";
 import { ElMessage } from "element-plus";
@@ -83,6 +92,9 @@ import { uiStore } from "@/store/ui";
 const ui = uiStore();
 
 const typeActive = ref("");
+const marqueeWrapperRef = ref();
+const marqueePseudoRef = ref();
+const marqueeDuration = ref(0);
 const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
@@ -133,18 +145,19 @@ const openPopup = (noticeType) => {
   }
 };
 
-const calculateMaxContentLength = () => {
-  let maxLength = 0;
-  for (const announcement of announcementList.value) {
-    if (announcement.content.length > maxLength) {
-      maxLength = announcement.content.length;
-    }
-  }
-  return maxLength;
+const calculateMarqueeDuration = () => {
+  if (!marqueePseudoRef.value || !marqueeWrapperRef.value) return;
+
+  const marqueeWidth = marqueePseudoRef.value.scrollWidth;
+  const wrapperWidth = marqueeWrapperRef.value.clientWidth;
+  marqueeDuration.value = (marqueeWidth / wrapperWidth) * 8;
 };
 
 onMounted(() => {
   loadAnnouncement();
+  if (marqueePseudoRef.value) {
+    new ResizeObserver(calculateMarqueeDuration).observe(marqueePseudoRef.value);
+  }
 });
 </script>
 
@@ -229,6 +242,14 @@ onMounted(() => {
             font-size: 15px;
             line-height: 15px;
             height: 16px;
+          }
+
+          .marquee-pseudo {
+            display: flex;
+            position: absolute;
+            visibility: hidden;
+            width: max-content;
+            z-index: -1;
           }
         }
       }
