@@ -4,14 +4,6 @@
       <div class="affiliate-title">
         <img :src="require(`../../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
       </div>
-      <div class="affiliate-desc">
-        <img :src="require(`../../assets/images/affiliate/professional-team${isDark ? '-dark' : ''}.png`)" width="256" />
-        <img
-          :src="require(`../../assets/images/affiliate/best-quality-service${isDark ? '-dark' : ''}.png`)"
-          width="256"
-        />
-        <img :src="require(`../../assets/images/affiliate/official-partner${isDark ? '-dark' : ''}.png`)" width="285" />
-      </div>
       <div class="buttons">
         <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
         <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
@@ -19,12 +11,14 @@
           联系我们
         </a>
       </div>
-      <div class="affiliate-join">
+      <!-- <div class="affiliate-join">
         <img :src="require(`../../assets/images/affiliate/join${isDark ? '-dark' : ''}.png`)" width="696" />
-      </div>
+      </div> -->
 
       <div class="affiliate-program">
-        <div class="affiliate-subgroup agent-content-item">
+        <img src="@/assets/images/affiliate/rules.png" />
+
+        <div class="affiliate-subgroup agent-content-item" style="display:none">
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">电竞佣金方案</div>
             <div class="affiliate-terms">分红条款</div>
@@ -87,7 +81,9 @@
             <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
           </div>
         </div>
-        <div class="affiliate-subgroup agent-content-item">
+
+        <img src="@/assets/images/affiliate/calc.png" />
+        <div class="affiliate-subgroup agent-content-item" style="display:none">
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">计算公式</div>
             <div class="agent-demo">
@@ -194,8 +190,36 @@
             <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1.6%</div>
           </div>
         </div>
+
         <div>
           <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" class="agent-reg-btn">立即申请代理</a>
+        </div>
+
+        <div class="contact-bg">
+          <div class="contact-buttons mail-buttons">
+              <span style="font-size: 0px;" ref="contact0">mailto:affiliate@e8007.com</span>
+              <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
+          </div>
+          <div class="contact-buttons qq-buttons">
+            <span style="font-size: 0px;" ref="contact1">1903687863</span>
+              <button class="copy-btn"  @click="copyMessage('1')">{{ copybtntxt1 }}</button>
+              <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
+          </div>
+          <div class="contact-buttons skype-buttons">
+            <span style="font-size: 0px;" ref="contact2">live:.cid.1b8d9a018a52a8f5</span>
+              <button class="copy-btn"  @click="copyMessage('2')">{{ copybtntxt2 }}</button>
+              <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
+          </div>
+          <div class="contact-buttons telegram-buttons">
+            <span style="font-size: 0px;" ref="contact3">@LH18668</span>
+              <button class="copy-btn"  @click="copyMessage('3')">{{ copybtntxt3 }}</button>
+              <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
+          </div>
+          <div class="contact-buttons bubble-buttons">
+            <span style="font-size: 0px;" ref="contact4">LH100866</span>
+              <button class="copy-btn"  @click="copyMessage('4')">{{ copybtntxt4 }}</button>
+              <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
+          </div>
         </div>
       </div>
     </div>
@@ -223,6 +247,33 @@ export default defineComponent({
         pageTitle,
         "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
       );
+    };
+    const contact0 = ref();
+    const contact1 = ref();
+    const contact2 = ref();
+    const contact3 = ref();
+    const contact4 = ref();
+    const copybtntxt0 = ref("复制");
+    const copybtntxt1 = ref("复制");
+    const copybtntxt2 = ref("复制");
+    const copybtntxt3 = ref("复制");
+    const copybtntxt4 = ref("复制");
+    const copyMessage = (position) => {
+      let copyText = null;
+      copyText = eval(`contact${position}.value.innerText`);
+      // Create a temporary textarea element
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = copyText;
+      document.body.appendChild(tempTextarea);
+
+      // Select the text and copy it
+      tempTextarea.select();
+      document.execCommand("copy");
+
+      // Remove the temporary textarea element
+      document.body.removeChild(tempTextarea);
+      const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+      copybtntxt[position].value = "已复制";
     };
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
     const store = userStore();
@@ -272,7 +323,18 @@ export default defineComponent({
       store,
       openWindow,
       affiliateUrl,
-      isDark
+      isDark,
+      contact0,
+      contact1,
+      contact2,
+      contact3,
+      contact4,
+      copyMessage,
+      copybtntxt0,
+      copybtntxt1,
+      copybtntxt2,
+      copybtntxt3,
+      copybtntxt4
     };
   }
 });
@@ -281,7 +343,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .wrapper {
   font-size: 15px;
-  background-color: #f3f7fd;
+  background-color: #F3F7FD;
 
   .affiliate {
     background: url("../../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
@@ -295,18 +357,21 @@ export default defineComponent({
     align-items: center;
     gap: 100px;
 
+    .affiliate-title, .affiliate-desc, .buttons {
+      margin-left: 25%;
+    }
+
     .affiliate-desc {
       display: flex;
-      gap: 50px;
+      gap: 10px;
     }
     .buttons {
       display: flex;
-      gap: 50px;
-      margin: 0 auto;
+      gap: 10px;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      width: 300px;
+      width: 800px;
+      font-family: 'PingFang SC';
       a {
         text-decoration: none;
         display: block;
@@ -481,8 +546,8 @@ export default defineComponent({
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        border-radius: 50px;
+        background: rgba(57, 152, 255, 1);
+        border-radius: 4px;
         box-shadow: 0px -2px 5px 0px #b1d7ff inset;
         box-shadow: 0px -1px 4px 0px #5894ff inset;
       }
@@ -529,6 +594,71 @@ export default defineComponent({
       .agent-contact-ewm img {
         width: 100%;
       }
+    }
+  }
+
+  .contact-bg {
+    background: url("@/assets/images/affiliate/contact.png");
+    background-size: 100% 100%;
+    aspect-ratio: 1400 / 560;
+    position: relative;
+
+    .contact-buttons {
+        display: flex;
+        gap: 5px;
+    }
+
+    .mail-buttons {
+        position: absolute;
+        top: 37%;
+        left: 41.5%;
+    }
+
+    .qq-buttons {
+        position: absolute;
+        top: 37%;
+        left: 58.5%;
+    }
+
+    .skype-buttons {
+        position: absolute;
+        top: 37%;
+        left: 79.5%;
+    }
+
+    .telegram-buttons {
+        position: absolute;
+        top: 81%;
+        left: 48.5%;
+    }
+
+    .bubble-buttons {
+        position: absolute;
+        top: 81%;
+        left: 69%;
+    }
+
+    .copy-btn {
+        background-color: #fff;
+        border-radius: 4px;
+        color: #000;
+        font-family: 'PingFang SC';
+        width: 100px;
+        height: 33px;
+        font-weight: bold;
+    }
+
+    .download-btn {
+        background-color: #08b5ff;
+        border-radius: 4px;
+        color: #fff;
+        font-family: 'PingFang SC';
+        width: 100px;
+        height: 33px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
   }
 }

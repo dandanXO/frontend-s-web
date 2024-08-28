@@ -16,7 +16,7 @@
         </div> -->
   
         <div class="affiliate-program">
-        <img src="@/assets/images/affiliate/rules.png" />
+        <img src="@/assets/images/affiliate/rules-dark.png" />
 
           <div class="affiliate-subgroup agent-content-item" style="display:none;">
             <div class="affiliate-sub">
@@ -81,7 +81,7 @@
               <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
             </div>
           </div>
-          <img src="@/assets/images/affiliate/calc.png" />
+          <img src="@/assets/images/affiliate/calc-dark.png" />
           <div class="affiliate-subgroup agent-content-item" style="display:none;">
             <div class="affiliate-sub">
               <div class="affiliate-subtitle">计算公式</div>
@@ -687,7 +687,7 @@
   }
 
   .contact-bg {
-    background: url("@/assets/images/affiliate/contact.png");
+    background: url("@/assets/images/affiliate/contact-dark.png");
     background-size: 100% 100%;
     aspect-ratio: 1400 / 560;
     position: relative;
