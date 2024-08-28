@@ -156,7 +156,7 @@ const updateNewUserState = () => {
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #000;
     }
   }
 
