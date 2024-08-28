@@ -119,7 +119,9 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.EMPTY_PROMO_POPOUT ||
         res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG ||
         res.code === ResponseCode.ERROR_GUEST_LOGGED ||
-        res.code === ResponseCode.ERROR_WITHDRAW_LIMIT_MEMBER
+        res.code === ResponseCode.ERROR_WITHDRAW_LIMIT_MEMBER ||
+        res.code === ResponseCode.ERROR_NO_ELIGIBLE_PLAN_FOUND ||
+        res.code === ResponseCode.ERROR_NO_CASH_FLOW
       ) {
         // debugger;
         res.message =
