@@ -639,6 +639,13 @@ deploy-ph1-download:
 
 #===============================================================================================
 
+deploy-ind-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind-landing
+
+#===============================================================================================
+
 build-kr-live-web:
   extends: .build-projects
   variables:
