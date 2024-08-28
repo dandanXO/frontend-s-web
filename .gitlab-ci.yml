@@ -646,6 +646,13 @@ deploy-ind-landing:
 
 #===============================================================================================
 
+deploy-iw2-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: iw2-landing
+
+#===============================================================================================
+
 build-kr-live-web:
   extends: .build-projects
   variables:
