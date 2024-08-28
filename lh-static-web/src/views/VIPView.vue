@@ -132,7 +132,7 @@
       </div>
       <div class="right">
         <div class="vip-boxes">
-          <template v-for="category in categories" :key="category">
+          <template v-for="category in categories" :key="category.key">
             <template v-for="item in vipItems" :key="item">
               <template v-if="+item.vipLevel === currentSlide + 1">
                 <div
@@ -685,8 +685,7 @@ const getVipLevelProgress = (lvl, status) => {
     }
     return 0;
   }
-  const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
-  console.log(vipInfo)
+  const vipInfo = vipItems.value.find((item) => +item.vipLevel === lvl);
   const vipLevel = +store.vip.replace("VIP", "");
   const currentDeposit = +store.getCurrentDeposit();
   currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
@@ -807,11 +806,11 @@ const currentDisplayTerms = ref(terms);
 // };
 const badgeSrc = computed(() => {
   const currentVIP = +store.vip.replace("VIP", "");
-  const matchedVIP = vipItems.find((vip) => +vip.vipLevel === currentVIP);
+  const matchedVIP = vipItems.value.find((vip) => +vip.vipLevel === currentVIP);
   return require(`../assets/vip/level/vip${matchedVIP ? currentVIP : "1"}.png`);
 });
 
-const vipItems = reactive([
+const vipItems = ref([
   {
     vipLevel: "1",
     upgrade: "一笔存款",
@@ -896,9 +895,20 @@ const initVIPTable = async () => {
   
   if (storedData) {
     var res = JSON.parse(storedData);
+    const statuses = [
+      "upgradeClaimStatus",
+      "monthlyClaimStatus",
+      "couponClaimStatus",
+      "rebateClaimStatus",
+      "retainClaimStatus",
+      "yearlyRetainClaimStatus",
+    ];
+
+    statuses.forEach((status) => {
+      res.data[status] = "CANT_CLAIM";
+    });
     runVipAPI(res);
   }
-  getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
   runVipAPI(res);
 };
@@ -927,26 +937,37 @@ const runVipAPI = (res) => {
         vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
       }
       vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
-      const index = vipItems.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
-
-      if (index !== -1) {
-        vipItems[index] = {
-          ...vipItems[index],
-          ...vipBonusItem
-        };
-      }
+      vipItems.value.forEach((element, index) => {
+        if (element.vipLevel === vipBonusItem.vipLevel.toString()) {
+          vipItems.value.splice(index, 1, {
+            ...vipItems.value[index],
+            ...vipBonusItem,
+          });
+        }
+      });
+      // const index = vipItems.value.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
+      
+      // if (index !== -1) {
+      //   // vipItems[index] = {
+      //   //   ...vipItems[index],
+      //   //   ...vipBonusItem
+      //   // };
+      //   vipItems.value.splice(index, 1, {
+      //     ...vipItems.value[index],
+      //     ...vipBonusItem,
+      //   });
+      // }
     });
     
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
-    getVipLevelProgress(vipLevel.value, 'bet');
     isDataLoaded.value = true;
   } else {
     notify.error(res.message);
   }
   slideTo();
 }
-const categories = [
+const categories = ref([
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
   { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
@@ -955,7 +976,7 @@ const categories = [
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
   { key: "birthday", image: "birthday", displayName: "生日礼金" },
   { key: "holiday", image: "holiday", displayName: "节日礼金" }
-];
+]);
 const isLoading = reactive({});
 const handleClick = async (key, item) => {
   if (key === "all" && currentClaimAllStatus.value === 'CANT_CLAIM') {
@@ -970,7 +991,7 @@ const handleClick = async (key, item) => {
         item[`${key}ClaimStatus`] = "CLAIMED";
       } else {
         // Get item that has the same level
-        const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
+        const vipInfo = vipItems.value.find((vip) => +vip.vipLevel === item);
 
         const statuses = [
           "upgradeClaimStatus",
@@ -1008,13 +1029,13 @@ const handleSlideClick = (vipIndex) => {
   }
 }
 const slideTo = (vipIndex) => {
-  if (vipIndex) {
-    currentSlide.value = vipIndex;
-    return;
-  }
   const vipLevel = +store.vip.replace("VIP", "");
   if (vipLevel === 0 || !vipLevel) {
     currentSlide.value = 11;
+    if (vipIndex) {
+      currentSlide.value = vipIndex;
+      return;
+    }
     return;
   }
   currentSlide.value = vipLevel - 1;
@@ -1045,6 +1066,9 @@ watch(
   },
   { immediate: true }
 );
+watch(vipItems.value, (newValue, oldValue) => {
+  console.log('VIP items updated:', newValue);
+}, { deep: true });
 </script>
 <style scoped lang="scss">
 //@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap");
@@ -1386,8 +1410,8 @@ $border-settings: 1px solid #e5e7eb;
         }
       }
       table {
-        width: 1500px;
-        // table-layout:fixed;
+        width: 100%;
+        table-layout:fixed;
         tr {
           th {
             border: 2px solid #f1dda0;
@@ -1703,7 +1727,7 @@ $border-settings: 1px solid #e5e7eb;
     border-radius: 10px;
     overflow: auto;
     width: 95%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0px auto 20px;
     table {
       // table-layout: fixed;
