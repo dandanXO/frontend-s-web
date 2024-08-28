@@ -9,7 +9,7 @@ import { getRndInteger } from "boot/utils";
 console.log(window.location.hostname);
 const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
 const imgCDN = process.env.IMAGE_CDN;
-let apiLinks = []
+let apiReplacementRecords = [];
 
 const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;
@@ -22,9 +22,9 @@ if (isGlobalDY) {
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
   var crtApi = "https://cad5kegdgl.grsib6dfily.com";
 } else {
-  var rstApi = getInitApi(rstArray, "DY_H5_RST_URL");
-  var crtApi = getInitApi(crArray, "DY_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "DY_H5_EVT_URL");
+  var rstApi = getInitApi(rstArray, "DY_H5_RST_URL", "1");
+  var crtApi = getInitApi(crArray, "DY_H5_CRT_URL", "2");
+  var evtApi = getInitApi(evtArray, "DY_H5_EVT_URL", "3");
 }
 
 const api = axios.create({ baseURL: rstApi });
@@ -40,9 +40,13 @@ if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
   }
 }
 
-function getInitApi(apiLinks, urlLsName) {
+function getInitApi(apiLinks, urlLsName, errorPrefix) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl && !isInApp()) {
+    if (!Object.values(apiLinks).includes(successRstUrl)) {
+      apiReplacementRecords.push({ errorPrefix, url: successRstUrl });
+    }
+
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -66,6 +70,7 @@ function getInitApi(apiLinks, urlLsName) {
       if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
         const newDomain = replaceRndDomain(urlLsName);
         initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+        apiReplacementRecords.push({ errorPrefix, url: initApi });
       }
     }
 
@@ -87,9 +92,9 @@ function getInitApi(apiLinks, urlLsName) {
 }
 
 function replaceRndDomain(urlLsName) {
-  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
-  const domainPrefix = getApiDomainPrefix(urlLsName);
-  return `${domainPrefix}${rndSecondLevelDomain}`;
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(10);
+  // const domainPrefix = getApiDomainPrefix(urlLsName);
+  return rndSecondLevelDomain;
 }
 
 function generateRndSecondLevelDomain(unit) {
@@ -102,32 +107,33 @@ function generateRndSecondLevelDomain(unit) {
   return result;
 }
 
-function getApiDomainPrefix(urlLsName) {
-  if (urlLsName.indexOf("RST") > -1) {
-    return "ap";
-  } else if (urlLsName.indexOf("CR") > -1) {
-    return "ca";
-  } else if (urlLsName.indexOf("EVT") > -1) {
-    return "pr";
-  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
-    return "fi";
-  } else {
-    return "";
-  }
-}
+// function getApiDomainPrefix(urlLsName) {
+//   if (urlLsName.indexOf("RST") > -1) {
+//     return "ap";
+//   } else if (urlLsName.indexOf("CR") > -1) {
+//     return "ca";
+//   } else if (urlLsName.indexOf("EVT") > -1) {
+//     return "pr";
+//   } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+//     return "fi";
+//   } else {
+//     return "";
+//   }
+// }
 
 function getErrorType(errorUrl) {
-  const isOriginalUrl = apiLinks.find(link => link === errorUrl)
+  const replaceRecord = apiReplacementRecords.find((link) => link.url === errorUrl);
 
   errorUrl = errorUrl.replace("https://", "");
 
-  if(isOriginalUrl) {
-    return errorUrl.substr(0, 5);
+  if (!replaceRecord) {
+    const domains = errorUrl.split(".");
+    return domains.length > 1 ? domains[1].substr(0, 7) : domains[0].substr(0, 7);
   } else {
-    const domains = errorUrl.split('.')
-    const subDomainFormErrorUrl = domains[1]
-    const prefix = domains[0].substr(0,2)
-    return `${prefix}${subDomainFormErrorUrl.substr(0,5)}`
+    const domains = errorUrl.split(".");
+    const subDomainFormErrorUrl = domains[1];
+    const prefix = replaceRecord.errorPrefix;
+    return `${prefix}.${subDomainFormErrorUrl.substr(0, 6)}`;
   }
 }
 
