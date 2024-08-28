@@ -670,6 +670,7 @@ function submit() {
 onMounted(async () => {
   await loadSites()
   await loadCountries()
+  request.siteId = sites.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
     request.siteId = site.value.id
