@@ -2596,6 +2596,7 @@ export default {
     'Bet Game Type Rebate Record': '投注游戏类型返水记录',
     'Site Interest Plan': '利息宝投资方案',
     'Interest Plan Order Record': '利息宝投资记录',
+    'Promo Type': '优惠类型管理',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
