@@ -226,3 +226,11 @@ export function getCompetitionBetToday(promoCode) {
     }
   });
 }
+
+export function getDota2CompetitionBet(promoCode) {
+  return eventapi.get(`/dota2-competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
