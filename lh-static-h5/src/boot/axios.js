@@ -11,7 +11,7 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 const imgCDN = process.env.IMAGE_CDN;
-let apiLinks = [];
+let apiReplacementRecords = [];
 
 console.log(window.location.hostname);
 const globalLinks = [
@@ -82,15 +82,13 @@ if (isGlobalLH) {
   var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
   var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
 
-  var rstApi = getInitApi(rstGlobalArray, LH_H5_RST_URL);
-  var evtApi = getInitApi(evtGlobalArray, LH_H5_EVT_URL);
-  var crtApi = getInitApi(crGlobalArray, LH_H5_CRT_URL);
-  apiLinks = apiLinks.concat(rstGlobalArray, evtGlobalArray, crGlobalArray);
+  var rstApi = getInitApi(rstGlobalArray, LH_H5_RST_URL, "1");
+  var evtApi = getInitApi(evtGlobalArray, LH_H5_EVT_URL, "2");
+  var crtApi = getInitApi(crGlobalArray, LH_H5_CRT_URL, "3");
 } else {
-  var rstApi = getInitApi(rstArray, LH_H5_RST_URL);
-  var evtApi = getInitApi(evtArray, LH_H5_EVT_URL);
-  var crtApi = getInitApi(crtArray, LH_H5_CRT_URL);
-  apiLinks = apiLinks.concat(rstArray, evtArray, crtArray);
+  var rstApi = getInitApi(rstArray, LH_H5_RST_URL, "1");
+  var evtApi = getInitApi(evtArray, LH_H5_EVT_URL, "2");
+  var crtApi = getInitApi(crtArray, LH_H5_CRT_URL, "3");
 }
 
 const api = axios.create({ baseURL: rstApi });
@@ -106,12 +104,16 @@ if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
   }
 }
 
-function getInitApi(apiLinks, urlLsName) {
+function getInitApi(apiLinks, urlLsName, errorPrefix) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
     if (isInApp()) {
       return successRstUrl;
     }
+    if (!Object.values(apiLinks).includes(successRstUrl)) {
+      apiReplacementRecords.push({ errorPrefix, url: successRstUrl });
+    }
+
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -134,6 +136,7 @@ function getInitApi(apiLinks, urlLsName) {
       if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
         const newDomain = replaceRndDomain(urlLsName);
         initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+        apiReplacementRecords.push({ errorPrefix, url: initApi });
       }
     }
 
@@ -180,27 +183,16 @@ function generateRndSecondLevelDomain(unit) {
 // }
 
 function getErrorType(errorUrl) {
-  const isOriginalUrl = apiLinks.find((link) => link === errorUrl);
+  const replaceRecord = apiReplacementRecords.find((link) => link.url === errorUrl);
   errorUrl = errorUrl.replace("https://", "");
-  if (isOriginalUrl) {
+  if (!replaceRecord) {
     const domains = errorUrl.split(".");
     return domains.length > 1 ? domains[1].substr(0, 7) : domains[0].substr(0, 7);
   } else {
-    var number = 0;
-    const rstLocal = localStorage.getItem(LH_H5_RST_URL);
-    const crtLocal = localStorage.getItem(LH_H5_CRT_URL);
-    const evtLocal = localStorage.getItem(LH_H5_EVT_URL);
-    if (rstLocal && rstLocal.indexOf(errorUrl) > -1) {
-      number = 1;
-    } else if (crtLocal && crtLocal.indexOf(errorUrl) > -1) {
-      number = 2;
-    } else if (evtLocal && evtLocal.indexOf(errorUrl) > -1) {
-      number = 3;
-    }
     const domains = errorUrl.split(".");
     const subDomainFormErrorUrl = domains[1];
-    // const prefix = domains[0].substr(0, 2);
-    return `${number}.${subDomainFormErrorUrl.substr(0, 6)}`;
+    const prefix = replaceRecord.errorPrefix;
+    return `${prefix}.${subDomainFormErrorUrl.substr(0, 6)}`;
   }
 }
 
