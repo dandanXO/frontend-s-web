@@ -150,7 +150,7 @@ const calculateMarqueeDuration = () => {
 
   const marqueeWidth = marqueePseudoRef.value.scrollWidth;
   const wrapperWidth = marqueeWrapperRef.value.clientWidth;
-  marqueeDuration.value = (marqueeWidth / wrapperWidth) * 8;
+  marqueeDuration.value = (marqueeWidth / wrapperWidth) * 16;
 };
 
 onMounted(() => {
@@ -200,7 +200,9 @@ onMounted(() => {
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
+    0px 4px 10px 0px rgba(0, 0, 0, 0.1);
   width: 80%;
   margin: 0 auto;
   max-width: 1350px;
