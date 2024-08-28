@@ -142,7 +142,7 @@ const initContactList = () => {
     {
       icon: 'bubble-logo',
       type: t('common.paopao'),
-      link: 'LH10086',
+      link: 'LH100866',
       btns: [{
         text: t('common.copy'),
         action: ''
@@ -221,6 +221,9 @@ const initContactList = () => {
         }]
       }
     ]
+  }
+  if (props.siteId === '7' || props.siteId === '6') {
+    contactlist.value.shift()
   }
 }
 const copyMessage = (position, text, btnPosition) => {

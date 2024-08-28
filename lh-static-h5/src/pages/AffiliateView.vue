@@ -216,18 +216,18 @@
             </div>
           </div>
         </div>
-        <div class="contact-wrapper">
+        <!-- <div class="contact-wrapper">
           <div class="contact-method">合营部电邮</div>
           <div class="contact-id">affiliate@e8007.com</div>
-        </div>
+        </div> -->
         <div class="contact-wrapper">
           <div class="contact-method">合营部skype</div>
           <div class="contact-id">live:.cd.ff6111f0549375a8 (点击图标以联系，联系时请提供用户名)</div>
         </div>
-        <div class="contact-wrapper">
+        <!-- <div class="contact-wrapper">
           <div class="contact-method">合营部letstalk</div>
           <div class="contact-id">t403523198</div>
-        </div>
+        </div> -->
         <div class="contact-wrapper">
           <div class="contact-method">合营部Telegram</div>
           <div class="contact-id">LH18668</div>
@@ -620,14 +620,19 @@ const rows = [
       .btn-wrapper {
         .join-btn,
         .login-btn {
-          background: url("../assets/images/common/common-md-btn-dark.png") no-repeat;
-          background-size: 100% 100%;
+          background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+          background-size: cover;
           box-shadow: none;
+          border-radius: 4px;
+          border: 1px solid #3A93CE;
+          color: $white;
         }
         .contact-btn {
-          background: url("../assets/images/common/common-md-white-btn-dark.png") no-repeat;
-          background-size: 100% 100%;
+          background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
+          background-size: cover;
           box-shadow: none;
+          border-radius: 4px;
+          border: 1px solid #ffffff4d;
           color: $white;
         }
         .mask {
@@ -636,13 +641,17 @@ const rows = [
       }
     }
     .section-title {
-      color: $primary-dark;
+      color: $white;
     }
     .contact-us {
       .register-btn-wrapper {
         .register-btn {
-          background: $linear-bg-180-dark;
-          box-shadow: 0px -2.28px 5.21px 0px #93F2FF inset;
+          background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+          background-size: cover;
+          box-shadow: none;
+          border-radius: 4px;
+          border: 1px solid #3A93CE;
+          color: $white;
         }
       }
       .contact-info {

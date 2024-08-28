@@ -339,6 +339,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
+// import { isKorea } from '@/utils/site'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -346,6 +347,7 @@ startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 const store = useStore()
+// const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 

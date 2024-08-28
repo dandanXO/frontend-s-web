@@ -204,7 +204,7 @@
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_changePwd.svg" />
-            <div class="acct-nav-label">密码</div>
+            <div class="acct-nav-label">修改密码</div>
           </div>
         </router-link>
         <router-link to="/account/withdraw">
@@ -314,6 +314,7 @@ import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 // import { App } from "@capacitor/app";
 import { api } from "boot/axios";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "AccountPage",
@@ -391,7 +392,7 @@ export default defineComponent({
       }
     });
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api

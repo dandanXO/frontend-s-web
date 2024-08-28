@@ -17,6 +17,7 @@
 
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" />
     <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" />
+    <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -53,6 +54,7 @@ import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
 import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
 import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
 import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
+import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -69,7 +71,8 @@ export default defineComponent({
     EuroCup2024,
     EuroCup2024BetReward,
     EurocupLuckyDraw,
-    olympicClaim
+    olympicClaim,
+    NewPlayerPromo
     // CnyStepGame2024Promo
   },
   props: {

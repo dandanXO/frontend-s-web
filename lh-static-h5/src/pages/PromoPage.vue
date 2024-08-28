@@ -76,10 +76,16 @@
                           </div>
                           <div
                             class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
+                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
                             v-html="parsedParam(promo.param).date"
                           />
                         </div>
+                        <div
+                          style="padding-left:0;font-weight:400;"
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date && $q.dark.isActive"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -183,10 +189,12 @@
                   lhworldcup:
                     selectedPromo.promoCode === 'lh1worldcup' ||
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
-                    selectedPromo.promoCode === 'lh1-football',
+                    selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu:
-                    selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
+                    selectedPromo.promoCode === 'lh-duanwujie24' ||
+                    selectedPromo.promoCode === 'lh1-deposit-rebates' ||
+                    selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
                   lheuromanual:
                     selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
@@ -197,6 +205,7 @@
                 :style="[
                   selectedPromo.promoCode === 'lh-eurocup-manual' ||
                   selectedPromo.promoCode === 'lh1-deposit-rebates' ||
+                  selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
                   selectedPromo.promoCode === 'lh1-daily-checkin'
                     ? 'background-image: url(' +
                       imgURL +
@@ -247,7 +256,7 @@
   <q-dialog class="modal-common-div" width="100%" v-model="store.isDisplayLogin">
     <q-card
       style="width: 100%; padding: 10px 12px 20px"
-      class="text-black text-center"
+      class="text-center text-black"
       :class="$q.dark.isActive ? '' : 'bg-white'"
     >
       <div class="headers">
@@ -267,7 +276,7 @@
   <q-dialog class="modal-common-div danaaa" v-model="showRuleDialog">
     <!-- <q-card
       style="width: 100%; padding: 10px 12px 20px"
-      class="text-black text-center"
+      class="text-center text-black"
       :class="$q.dark.isActive ? '' : 'bg-white'"
     >
       <div class="headers">
@@ -282,8 +291,8 @@
         <q-btn class="common-md-btn" label="确认" />
       </router-link>
     </q-card> -->
-    <q-card class="text-black text-center" style="background: transparent">
-      <q-card-section class="row items-center justify-center">
+    <q-card class="text-center text-black" style="background: transparent">
+      <q-card-section class="items-center justify-center row">
         <div class="dialog-header-2">
           <img
             class="closeX"
@@ -379,7 +388,9 @@ export default defineComponent({
 
     const selectedPromoWrapperClass = computed(() => ({
       "challenge-comeback": ['lh1-challenge-comeback', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
-      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin'
+      "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin',
+      'livepoker-rebate': selectedPromo.value.promoCode === 'lh1-livepoker-rebate',
+      'lh1-football': selectedPromo.value.promoCode === 'lh1-football',
     }))
 
     // const routeQuery  = computed(() => route.query || {});
@@ -1185,6 +1196,13 @@ export default defineComponent({
       &.challenge-comeback {
         background: #e7f1fd;
       }
+
+      &.livepoker-rebate {
+        background: #e7f1fd;
+      }
+      &.lh1-football {
+        background: #e7f1fd;
+      }
     }
   }
 }
@@ -1216,6 +1234,7 @@ export default defineComponent({
 }
 
 .promo {
+  background-color: #e7f1fd;
   .q-tabs {
     background: $secondary;
     width: 100%;
@@ -1314,13 +1333,23 @@ export default defineComponent({
 .body--dark {
   .promo-container {
     background: $background-dark;
+
     .all-promotions {
       .promo-main-container {
         .promo-list-wrapper {
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
+            border-radius: unset;
+            // aspect-ratio: 702/208;
+            border-radius: 8px;
+            overflow: hidden;
+            .promo-label {
+              top:0px;
+              left:0px;
+              font-family: 'YouSheBiaoTiHei';
+            }
             .promo-ribbon {
-              background: linear-gradient(90deg, #36cbd5 0%, #1d809a 100%);
+              background: #1475e1;
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1331,9 +1360,18 @@ export default defineComponent({
             }
             .promo-item-title {
               color: $font-3-dark;
+              font-family: 'YouSheBiaoTiHei';
+              font-weight: 400;
             }
             .promo-item-deal {
               color: $grey-color;
+            }
+            .promo-item-btn {
+              background: url('../assets/images/promo/promo-info-btn-bg.svg') no-repeat center center;
+              background-size: cover;
+              box-shadow: none;
+              border-radius: 4px;
+              border: 1px solid #3A93CE;
             }
           }
         }
@@ -1385,9 +1423,13 @@ export default defineComponent({
 
   .promo:not(.unfixed) {
     .q-tabs {
-      background: $background-dark-light;
+      background: #1A2338;
       .q-tab--active {
-        color: $primary-dark;
+        color: #fff;
+      }
+      .q-tab--active .q-tab__indicator {
+        width: 60%;
+        margin: auto;
       }
     }
     .q-tab-panels {

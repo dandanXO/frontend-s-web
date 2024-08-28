@@ -333,13 +333,66 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.channelName')" prop="channelName" v-if="uiControl.dialogType === 'ITEM'">
-          <el-input v-model="form.channelName" style="width: 240px" placeholder="Please input" size="small" disabled />
+        <el-form-item :label="t('fields.type')" prop="paymentType" v-if="uiControl.dialogType === 'ADD'">
+          <el-switch
+            v-model="form.paymentType"
+            class="mb-2"
+            :active-text="t('fields.paymentChannel')"
+            :inactive-text="t('fields.withdrawChannel')"
+            active-value="Deposit"
+            inactive-value="Withdraw"
+            v-if="uiControl.dialogType === 'ADD'"
+          />
         </el-form-item>
-        <el-form-item :label="t('fields.eta')" prop="eta" v-if="uiControl.dialogType === 'ITEM'">
+        <el-form-item :label="t('fields.paymentChannel')" prop="channelId" v-if="uiControl.isNGASite && form.paymentType === 'Deposit' && uiControl !== 'CREATE'">
+          <el-select
+            filterable
+            clearable
+            v-model="form.channelId"
+            size="small"
+            :placeholder="t('fields.paymentChannel')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in list.paymentInfo"
+              :key="item.id"
+              :label="item.paymentName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.withdrawChannel')" prop="channelId" v-if="uiControl.isNGASite && form.paymentType === 'Withdraw' && uiControl !== 'CREATE'">
+          <el-select
+            filterable
+            clearable
+            v-model="form.channelId"
+            size="small"
+            :placeholder="t('fields.withdrawChannel')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in list.siteWithdrawPlatform"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.channelName')" prop="channelName" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD')">
+          <el-input v-model="form.channelName" style="width: 240px" placeholder="Please input" size="small" />
+        </el-form-item>
+        <el-form-item :label="t('fields.eta')" prop="eta" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-input v-model="form.eta" style="width: 240px" placeholder="Please input" size="small" />
         </el-form-item>
-        <el-form-item :label="t('fields.privilegeName')" prop="privilegeId1" v-if="uiControl.dialogType === 'ITEM'">
+        <el-form-item :label="t('fields.sequence')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
+          <el-input-number v-model="form.order" style="width: 240px" :min="1" size="small" />
+        </el-form-item>
+        <el-form-item :label="t('fields.riskDepositLimit')" prop="riskDepositLimit" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order === 101">
+          <el-input-number v-model="form.riskDepositLimit" style="width: 240px" :min="0" size="small" />
+        </el-form-item>
+        <el-form-item :label="t('fields.privilegeName')" prop="privilegeId1" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-select
             filterable
             clearable
@@ -357,7 +410,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('fields.icon')" prop="icon" v-if="uiControl.dialogType === 'ITEM'">
+        <el-form-item :label="$t('fields.icon')" prop="icon" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-row :gutter="24">
             <el-col v-if="form.icon" :span="18" style="width: 250px">
               <el-image
@@ -379,7 +432,7 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item :label="$t('fields.privilegeIcon')" prop="privilegeIcon" v-if="uiControl.dialogType === 'ITEM'">
+        <el-form-item :label="$t('fields.privilege') + $t('fields.icon')" prop="privilegeIcon" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-row :gutter="24">
             <el-col v-if="form.privilegeIcon" :span="18" style="width: 250px">
               <el-image
@@ -645,7 +698,16 @@
               <el-collapse-item :title="t('fields.payment')" :name="props.row.affiliateCode + 'payment'">
                 <div class="clearfix">
                   <el-table :data="props.row.affiliateDepositSettingVO" ref="table" size="small" style="width: 90%;">
-                    <el-table-column :label="t('fields.channelName')" prop="channelName" />
+                    <el-table-column :label="t('fields.channelName')" prop="channelName">
+                      <template #default="scope">
+                        <span :style="{color: '#FF0000'}" v-if="scope.row.order === 101 && scope.row.channelName === 'riskPaymentChannel'">{{ t('fields.riskPaymentChannel') }}</span>
+                        <span :style="{color: '#FF0000'}" v-if="scope.row.order === 101 && scope.row.channelName !== 'riskPaymentChannel'">{{ scope.row.channelName }}</span>
+                        <span v-if="scope.row.order !== 101">{{ scope.row.channelName }}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column :label="t('fields.eta')" prop="eta" />
+                    <el-table-column :label="t('fields.minDeposit')" prop="min" />
+                    <el-table-column :label="t('fields.maxDeposit')" prop="max" />
                     <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
@@ -656,13 +718,13 @@
                         />
                       </template>
                     </el-table-column>
-                    <el-table-column prop="recommend" :label="t('fields.recommend')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
+                    <el-table-column prop="recommended" :label="t('fields.recommend')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
                       <template #default="scope">
                         <el-switch
-                          v-model="scope.row.recommend"
+                          v-model="scope.row.recommended"
                           active-color="#409EFF"
                           inactive-color="#F56C6C"
-                          @change="changeChannelRecommend(scope.row, scope.row.recommend)"
+                          @change="changeChannelRecommend(scope.row, scope.row.recommended)"
                         />
                       </template>
                     </el-table-column>
@@ -673,6 +735,13 @@
                           size="mini"
                           type="success"
                           @click="showEdit(scope.row, 'ITEM')"
+                        />
+                        <el-button
+                          icon="el-icon-delete"
+                          size="mini"
+                          type="danger"
+                          v-permission="['sys:affiliate-deposit-display:delete']"
+                          @click="deletItem(scope.row)"
                         />
                       </template>
                     </el-table-column>
@@ -681,7 +750,7 @@
               </el-collapse-item>
               <el-collapse-item :title="t('fields.withdrawPlatform')" :name="props.row.affiliateCode + 'withdraw'">
                 <div class="clearfix">
-                  <el-table :data="props.row.affiliateDepositSettingVO" ref="table" size="small" style="width: 90%;">
+                  <el-table :data="props.row.affiliateWithdrawSettingVO" ref="table" size="small" style="width: 90%;">
                     <el-table-column :label="t('fields.channelName')" prop="channelName" />
                     <el-table-column prop="paymentShow" :label="t('fields.show')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
                       <template #default="scope">
@@ -710,6 +779,13 @@
                           size="mini"
                           type="success"
                           @click="showEdit(scope.row, 'ITEM')"
+                        />
+                        <el-button
+                          icon="el-icon-delete"
+                          size="mini"
+                          type="danger"
+                          v-permission="['sys:affiliate-deposit-display:delete']"
+                          @click="deletItem(scope.row)"
                         />
                       </template>
                     </el-table-column>
@@ -738,10 +814,10 @@
         <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button
-              icon="el-icon-edit"
+              icon="el-icon-plus"
               size="mini"
               type="success"
-              @click="showEdit(scope.row,'EDIT')"
+              @click="showEdit(scope.row,'ADD')"
             />
           </template>
         </el-table-column>
@@ -779,13 +855,15 @@ import {
   getAffiliateRecordBySiteId,
   getAffiliatePaymentSettingList,
   createAffiliatePaymentSetting,
-  updateAffiliatePaymentSetting
+  updateAffiliatePaymentSetting,
+  createAffiliatePaymentSettingItem,
+  deleteAffiliatePaymentSetting
 } from '../../../api/affiliate-deposit-display'
 import { getAffiliateList } from '../../../api/affiliate-record'
 import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
 import { getSiteImage } from '../../../api/site-image'
 import { required } from '../../../utils/validate'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -793,6 +871,7 @@ import { hasPermission } from '../../../utils/util'
 import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
+import { isPak } from '@/utils/site'
 
 const { t } = useI18n()
 const activeTabName = ref(null)
@@ -863,6 +942,12 @@ const form = reactive({
   icon: null,
   privilegeIcon: null,
   privilegeId: null,
+  type: null,
+  code: null,
+  paymentType: null,
+  channelId: null,
+  order: null,
+  riskDepositLimit: null,
 })
 const settingForm = reactive({
   id: null,
@@ -1060,11 +1145,12 @@ function showSettingEdit(mode) {
 }
 
 function showDialog(type) {
-  if (type === 'CREATE') {
+  if (type === 'CREATE' || type === 'ADD') {
     if (affiliateFinancialDepositDisplayForm.value) {
       affiliateFinancialDepositDisplayForm.value.resetFields()
     }
     form.id = null
+    form.order = null
     uiControl.dialogTitle = t('fields.addAffiliateFinancialConfig')
   } else if (type === 'EDIT' || type === 'ITEM') {
     uiControl.dialogTitle = t('fields.editAffiliateFinancialConfig')
@@ -1088,12 +1174,31 @@ function showSettingDialog(type) {
   uiControl.dialogSettingVisible = true
 }
 
+function deletItem(data) {
+  ElMessageBox.confirm(
+    t('message.confirmDelete'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await deleteAffiliatePaymentSetting(data)
+    await loadAffiliateDepositDisplay()
+    ElMessage({ message: t('message.deleteSuccess'), type: "success" });
+  }).catch(() => {});
+}
+
 function create() {
   affiliateFinancialDepositDisplayForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
       if (uiControl.isNGASite) {
-        await createAffiliatePaymentSetting(form)
+        if (uiControl.dialogType === 'ADD') {
+          await createAffiliatePaymentSettingItem(form)
+        } else {
+          await createAffiliatePaymentSetting(form)
+        }
       } else {
         await createAffiliateDepositDisplay(form)
       }
@@ -1133,6 +1238,18 @@ function editItem() {
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
+}
+
+async function changeChannelShow(row, show) {
+  row.show = show
+  await updateAffiliatePaymentSetting(row)
+  await loadAffiliateDepositDisplay()
+}
+
+async function changeChannelRecommend(row, recommended) {
+  row.recommended = recommended
+  await updateAffiliatePaymentSetting(row)
+  await loadAffiliateDepositDisplay()
 }
 
 function createSetting() {
@@ -1179,6 +1296,8 @@ function submit() {
     edit()
   } else if (uiControl.dialogType === 'ITEM') {
     editItem()
+  } else if (uiControl.dialogType === 'ADD') {
+    create()
   }
   uiControl.dialogLoading = false
 }
@@ -1214,7 +1333,7 @@ async function changeToNewUI() {
 }
 
 async function handleChangeSite() {
-  if (request.siteId === 11) {
+  if (isPak(request.siteId)) {
     uiControl.withdraw1Title = t('fields.withdrawChannel') + ' (EASYPAISA)'
     uiControl.withdraw2Title = t('fields.withdrawChannel') + ' (JAZZCASH)'
     form.paymentId1 = 0

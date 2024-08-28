@@ -199,6 +199,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
 import { getConfigList } from "@/api/config";
+import { isCnySite } from '@/utils/site'
 
 const { t } = useI18n()
 const feedbackForm = ref(null)
@@ -290,7 +291,7 @@ async function showReadFeedback(feedback) {
     if (form.replyTitle || form.replyContent) {
       uiControl.formDisabled = true
     } else {
-      if (request.siteId === 1 || request.siteId === 6 || request.siteId === 7) {
+      if (isCnySite(request.siteId)) {
         form.replyTitle = '回复: ' + form.title;
       } else {
         form.replyTitle = "RE: " + form.title

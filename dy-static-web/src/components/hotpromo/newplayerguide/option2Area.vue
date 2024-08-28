@@ -289,7 +289,7 @@
         </div>
       </div>
     </div>
-    <div class="promotion-container" v-if="isEligibleState">
+    <div class="promotion-container" v-if="isEligibleState && store.token">
       <div class="growth-strategy">
         <div class="title-area">
           <div style="display: flex; justify-content: start; align-items: center">
@@ -329,7 +329,7 @@
       </div>
     </div>
   
-    <div class="promotion-container" v-if="isEligibleState">
+    <div class="promotion-container" v-if="isEligibleState && store.token">
       <div class="growth-strategy">
         <div class="title-area">
           <div style="display: flex; justify-content: start; align-items: center">
@@ -375,6 +375,9 @@
   import { useRouter } from "vue-router";
   import { getNewUserAccumulateDepositInit, putNewUserAccumulateDepositClaim } from "@/api/index/promo";
   import { ElMessage } from "element-plus";
+  import { userStore } from "@/store";
+
+  const store = userStore();
   
   const targetRuleAmount1 = [1000, 1988, 3088, 5088, 8888, 28888];
   const targetRuleAmount2 = [188, 888, 3588, 6888, 35888, 88888];
@@ -487,7 +490,10 @@
     }
   };
   
-  onMounted(async () => {
+  onMounted(async() => {
+    if (!store.token) {
+      return;
+    }
     await getData();
   });
   </script>

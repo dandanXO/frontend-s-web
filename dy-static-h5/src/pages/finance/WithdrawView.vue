@@ -147,12 +147,12 @@
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
                 }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">*提币手续费：1.00 USDT</div>
+            <div class="q-mt-md text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
@@ -233,6 +233,7 @@ import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -240,8 +241,8 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN;
-    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
+    const imgWithdrawURL = imgURL + "/withdraw/";
 
     const amountRef = ref();
     const cardRef = ref();

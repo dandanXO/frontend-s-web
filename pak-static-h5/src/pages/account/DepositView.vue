@@ -91,9 +91,10 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt">
-          <div class="lil-title flex-div">
-            {{ $t("form.depositAmount") }}
-            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+          <div class="lil-title flex-div" style="justify-content: flex-end">
+            <!--            {{ $t("form.depositAmount") }}-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
           </div>
@@ -172,40 +173,42 @@
           @successful="isDeposited = true"
         ></BankComponent>
 
-        <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
+        <q-select
+          style="width: 100%"
+          ref="offerRef"
+          class="deposit-selection q-mt-xs"
+          :label="$t('deposit.select_privilege')"
+          filled
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && unselectedPrivileges.length > 0"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+        >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                  {{ scope.opt.name }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
 
-        <!--        <q-select-->
-        <!--          style="width:100%;"-->
-        <!--          ref="offerRef"-->
-        <!--          class="deposit-selection q-mt-xs"-->
-        <!--          :label="$t('deposit.select_privilege')"-->
-        <!--          filled-->
-        <!--          :options="unselectedPrivileges"-->
-        <!--          v-model="selectedPrivilege"-->
-        <!--          emit-value-->
-        <!--          v-if="hasPrivilege && !isUSDT"-->
-        <!--          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"-->
-        <!--          clearable-->
-        <!--          @update:model-value="checkMinDepositAmt"-->
+        <!--        <div-->
+        <!--          class="rollover-info"-->
+        <!--          v-if="-->
+        <!--            selectedPrivilege &&-->
+        <!--            selectedPrivilege.name &&-->
+        <!--            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)-->
+        <!--          "-->
         <!--        >-->
-        <!--          <template v-slot:option="scope">-->
-        <!--            <q-item v-bind="scope.itemProps">-->
-        <!--              <q-item-section>-->
-        <!--                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">-->
-        <!--                  {{ scope.opt.name }}-->
-        <!--                </q-item-label>-->
-        <!--              </q-item-section>-->
-        <!--            </q-item>-->
-        <!--          </template>-->
-        <!--        </q-select>-->
-
-        <!--        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">-->
-        <!--          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">-->
-        <!--            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
         <!--          </p>-->
-        <!--          <p v-else>-->
-        <!--            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍-->
-        <!--          </p>-->
+        <!--          <p v-else>Wagering Requirements (Deposit + Bonus): {{ selectedPrivilege.rollover }}x</p>-->
         <!--        </div>-->
       </q-form>
     </div>
@@ -224,7 +227,10 @@
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
-      <template v-if="isUSDT">
+      <template v-if="activeMethod.msg">
+        <div class="description-text" v-html="activeMethod.msg"></div>
+      </template>
+      <template v-else-if="isUSDT">
         <p>
           1. Recharge tutorial:
           <span class="tutorial-link" @click="openDepositPage">Picture</span>
@@ -254,6 +260,33 @@
           4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
           credited.
         </p>
+
+        <!--        <p>-->
+        <!--          1. Recharge tutorial:-->
+        <!--          <a-->
+        <!--            class="tutorial-link"-->
+        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
+        <!--            target="_blank"-->
+        <!--          >-->
+        <!--            Picture-->
+        <!--          </a>-->
+        <!--          /-->
+        <!--          <a-->
+        <!--            class="tutorial-link"-->
+        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
+        <!--            target="_blank"-->
+        <!--          >-->
+        <!--            Video-->
+        <!--          </a>-->
+        <!--        </p>-->
+        <!--        <p>-->
+        <!--          2. After payment is completed, you need to submit the last 5 digits of TID, otherwise it will not be-->
+        <!--          automatically credited.-->
+        <!--        </p>-->
+        <!--        <p>3. Fill in the correct wallet account.</p>-->
+        <!--        <p>4. The amount submitted must be consistent with the payment amount.</p>-->
       </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
@@ -360,11 +393,13 @@ const paymentNode = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
 const amountList = ref([]);
+const amountDepositMin = ref();
+const amountDepositMax = ref();
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
-const freePrivilege = ref(null);
+const freePrivilege = ref([]);
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
@@ -514,8 +549,15 @@ function selectPayType(value) {
     if (value.extra && value.extra.amountArr) {
       amountList.value = value.extra.amountArr;
     }
+
     if (value.extra && value.extra.banks) {
       bankCardList.value = value.extra.banks;
+    }
+    if (value.depositMin) {
+      amountDepositMin.value = value.depositMin;
+    }
+    if (value.depositMax) {
+      amountDepositMax.value = value.depositMax;
     } else {
       bankCardList.value = [];
       form.bankId = null;
@@ -580,11 +622,11 @@ async function loadPrivilege(val) {
       privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
-      freePrivilege.value = null;
+      freePrivilege.value = [];
       privilegeList.value.map((p) => {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
-            freePrivilege.value = p;
+            freePrivilege.value.push(p);
           } else {
             unselectedPrivileges.value.push(p);
           }
@@ -634,11 +676,29 @@ async function confirmDeposit() {
 
           btnLoading.value = false;
         } else {
-          if (freePrivilege.value) {
+          const currentPayType = activeMethod.value.payType;
+          const allSelectedPrivilege = [selectedPrivilege.value, ...freePrivilege.value];
+          const hasIncorrectPrivilege = allSelectedPrivilege.some((privilege) => {
+            if (!privilege || typeof privilege !== "object") return false;
+            return privilege.payTypes.indexOf(currentPayType) === -1;
+          });
+
+          if (hasIncorrectPrivilege) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: t("deposit.incorrectPrivilege"),
+              icon: "report_problem"
+            });
+            throw Error();
+          }
+
+          if (freePrivilege.value.length) {
+            const freePrivilegeIdStr = freePrivilege.value.map((privilege) => privilege.id).join(",");
             if (selectedPrivilege.value) {
-              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilegeIdStr;
             } else {
-              form.privilegeId = "," + freePrivilege.value.id;
+              form.privilegeId = "," + freePrivilegeIdStr;
             }
           } else {
             if (selectedPrivilege.value) {
@@ -827,7 +887,7 @@ const openDepositPage = () => {
     // isDepositTutorial.value= true;
     window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
+    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
   }
 };
 
@@ -1178,5 +1238,13 @@ onMounted(() => {
   right: 10px;
   cursor: pointer;
   z-index: 1;
+}
+</style>
+<style scoped>
+.description-text {
+  color: #bacef1;
+}
+:deep(.description-text p) {
+  margin: 5px 0px !important;
 }
 </style>

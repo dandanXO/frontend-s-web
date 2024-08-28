@@ -246,6 +246,15 @@
           </div>
         </router-link>
 
+        <router-link to="/account/vip">
+          <div class="acct-nav-item">
+            <img class="disable-filter" src="../assets/images/account/account-vip-icon.png" />
+            <div class="acct-nav-label">
+              {{ $t("lang.mine_vip") }}
+            </div>
+          </div>
+        </router-link>
+
         <!-- <router-link to="/promo?redirect=account"> -->
         <!-- <div class="acct-nav-item"> -->
         <!-- <img src="../assets/images/account/account-promo-icon.png" /> -->
@@ -1057,6 +1066,10 @@ export default defineComponent({
         &:active {
           background: rgba(0, 0, 0, 0.2);
           filter: brightness(0.9);
+        }
+
+        .disable-filter {
+          filter: hue-rotate(-145deg);
         }
       }
     }

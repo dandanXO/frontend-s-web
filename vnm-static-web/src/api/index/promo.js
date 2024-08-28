@@ -1,12 +1,12 @@
 import { server } from "@/utils/request";
 import { userStore } from "@/store";
 
-export function loadPromo() {
+export function loadPromo(siteType) {
   const store = userStore();
 
   const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
 
-  return server.REST.get(platformApiUrl);
+  return server.REST.get(platformApiUrl, { params: { siteType } });
 }
 
 export function loadPromoBanner(category) {
@@ -16,6 +16,7 @@ export function loadPromoBanner(category) {
     }
   });
 }
+
 export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }

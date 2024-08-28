@@ -70,7 +70,7 @@
         <td :data-label="t('fields.creditFlowId')">{{ item.id }}</td>
         <td :data-label="t('fields.creditFlowDate')">
           <span v-if="item.date === null">-</span>
-          <span>{{ moment(item.date).format('YYYY/MM/DD HH:mm:ss') }}</span>
+          <span v-if="item.date !== null" v-formatter="{ data: item.date, type: 'date'}" />
         </td>
         <td :data-label="t('fields.serialNumber')">{{ item.serialNumber }}</td>
         <td :data-label="t('fields.creditFlowType')">{{ $t(`creditFlowType.${item.type}`) }}</td>

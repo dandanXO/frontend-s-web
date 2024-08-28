@@ -9,8 +9,12 @@ import { ResponseCode, SkipErrorCode } from "@/api/response";
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
+const imgCDN = process.env.VUE_APP_IMAGE_CDN;
 
-const isGlobalDY = window.location.hostname.indexOf("dy988") > -1;
+console.log(window.location.hostname);
+const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1;
+
+const REPLACEMENT_DOMAIN = "random";
 
 if (isGlobalDY) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
@@ -24,6 +28,15 @@ if (isGlobalDY) {
   var rstApi = getInitApi(rstArray, "DY_WEB_RST_URL");
   var crtApi = getInitApi(crArray, "DY_WEB_CRT_URL");
   var evtApi = getInitApi(evtArray, "DY_WEB_EVT_URL");
+}
+
+if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+  const successImgCdn = localStorage.getItem("IMAGE_CDN");
+  if (!successImgCdn) {
+    const newDomain = replaceRndDomain("IMAGE_CDN");
+    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+    localStorage.setItem("IMAGE_CDN", newImgCDN);
+  }
 }
 
 function getInitApi(apiLinks, urlLsName) {
@@ -50,6 +63,10 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       initApi = apiLists[getRndInteger(0, apiLists.length)];
+      if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+        const newDomain = replaceRndDomain(urlLsName);
+        initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+      }
     }
 
     axios.get(initApi + "/ping").then((res) => {
@@ -61,6 +78,36 @@ function getInitApi(apiLinks, urlLsName) {
       }
     });
     return initApi;
+  }
+}
+
+function replaceRndDomain(urlLsName) {
+  const rndSecondLevelDomain = generateRndSecondLevelDomain(8);
+  const domainPrefix = getApiDomainPrefix(urlLsName);
+  return `${domainPrefix}${rndSecondLevelDomain}`;
+}
+
+function generateRndSecondLevelDomain(unit) {
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < unit; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+function getApiDomainPrefix(urlLsName) {
+  if (urlLsName.indexOf("RST") > -1) {
+    return "ap";
+  } else if (urlLsName.indexOf("CR") > -1) {
+    return "ca";
+  } else if (urlLsName.indexOf("EVT") > -1) {
+    return "pr";
+  } else if (urlLsName.indexOf("IMAGE_CDN") > -1) {
+    return "fi";
+  } else {
+    return "";
   }
 }
 

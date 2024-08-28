@@ -32,11 +32,11 @@
       <div class="row-item" style="cursor: auto">
         <div class="balance-item">
           <span>{{ t('statsHeader.myMoney') }}</span>
-          <span>{{ affInfo.balance }}</span>
+          <span>{{ Math.floor(affInfo.balance) }}</span>
         </div>
         <div class="balance-item" style="margin-top: 10px; cursor: pointer" @click="redeemDialogVisible = true">
           <span>{{ t('statsHeader.myPoint') }}</span>
-          <span>{{ affInfo.point }}</span>
+          <span>{{ Math.floor(affInfo.point) }}</span>
         </div>
       </div>
       <div class="row-item route-title">

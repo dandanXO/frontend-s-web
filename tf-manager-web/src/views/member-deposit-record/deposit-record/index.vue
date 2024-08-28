@@ -414,6 +414,12 @@
           min-width="110"
         />
         <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="110"
+        />
+        <el-table-column
           prop="updateBy"
           :label="t('fields.updateBy')"
           align="center"
@@ -671,6 +677,8 @@ import { getSiteListSimple } from '../../../api/site'
 import { getAllPaymentTypes } from "../../../api/payment-type";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { isInd } from '@/utils/site'
+
 const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -1012,7 +1020,7 @@ onMounted(async () => {
     )
     request.siteId = site.value.id
   }
-  if (request.siteId === 5) {
+  if (isInd(request.siteId)) {
     request.size = 10
   }
 

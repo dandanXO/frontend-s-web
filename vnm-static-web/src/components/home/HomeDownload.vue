@@ -7,8 +7,9 @@
           v-if="ui.edition === EDITION.SLOT"
           src="../../assets/home/download/download-bg-slot-edition.png"
           width="100%"
+          alt="App screenshot showing task management features"
         />
-        <img v-else src="../../assets/home/download/download-bg.png" width="100%" />
+        <img v-else src="../../assets/home/download/download-bg.png" width="100%" alt="App screenshot showing task management features"/>
       </div>
 
       <div class="right-container" data-aos="fade-right">
@@ -26,13 +27,13 @@
             <div class="download">
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
-                <img src="../../assets/home/download/ios.png" />
+                <img src="../../assets/home/download/ios.png" alt="QR code to download the iOS TF88 app"/>
               </div>
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
                 <!-- <div class="link-desc">手机免费下载地址</div>
                 <div class="link"><a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a></div> -->
-                <img src="../../assets/home/download/android.png" />
+                <img src="../../assets/home/download/android.png" alt="QR code to download the Android TF88 app">
               </div>
             </div>
           </div>

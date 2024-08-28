@@ -25,13 +25,17 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/hotmatch",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/HotMatchPage.vue") }]
+  },
+  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
   },
   {
     path: "/maintenance",
-    component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
@@ -513,7 +517,7 @@ const routes = [
   {
     path: "/app-tutorial",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }],
+    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }]
   },
   // Always leave this as last one,
   // but you can also remove it

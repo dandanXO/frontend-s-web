@@ -162,7 +162,7 @@
               maxlength="11"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.affiliateCode') + ' ' + t('fields.self')" prop="codePersonalAffiliate" v-if="form.siteId === 10">
+          <el-form-item :label="t('fields.affiliateCode') + ' ' + t('fields.self')" prop="codePersonalAffiliate" v-if="isKorea(form.siteId)">
             <el-input
               v-model="form.codePersonalAffiliate"
               style="width: 350px;"
@@ -617,11 +617,11 @@
           prop="recycleMoney"
           :label="t('fields.recycleMoney')"
           width="150"
-          v-if="request.siteId === 10"
+          v-if="isKorea(request.siteId)"
         >
           <template #default="scope">
             <el-switch
-              :disabled="scope.row.siteId !== 10"
+              :disabled="!isKorea(scope.row.siteId)"
               v-model="scope.row.recycleMoney"
               active-color="#409EFF"
               inactive-color="#F56C6C"
@@ -635,11 +635,11 @@
           prop="displayAmount"
           :label="t('fields.displayAmount')"
           width="150"
-          v-if="request.siteId === 10"
+          v-if="isKorea(request.siteId)"
         >
           <template #default="scope">
             <el-switch
-              :disabled="scope.row.siteId !== 10"
+              :disabled="!isKorea(scope.row.siteId)"
               v-model="scope.row.displayAmount"
               active-color="#409EFF"
               inactive-color="#F56C6C"
@@ -724,6 +724,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import moment from 'moment/moment'
+import { isKorea, isIndiaSite } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -1110,7 +1111,7 @@ function addAffiliate() {
       uiControl.dialogVisible = false
       ElMessage({
         message:
-          form.siteId === 5 || form.siteId === 9
+          isIndiaSite(form.siteId)
             ? t('message.registerSuccessInd')
             : t('message.registerSuccess'),
         type: 'success',

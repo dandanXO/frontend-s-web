@@ -11,6 +11,7 @@
     <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward'" :promo-code="list.promoCode" />
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw'" :promo-code="list.promoCode" />
     <olympicClaim v-if="list.redirectUrl === 'CHINHPHUC-OLYMPIC'" :promo-code="list.promoCode" />
+    <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" />
 
     <HongBaoYu2024
       v-if="listParam.type === 'redpacket' && store.token"
@@ -49,6 +50,7 @@ import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue"
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
+import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -65,7 +67,8 @@ export default defineComponent({
     HongBaoYu2024,
     Eurocup2024,
     Eurocup2024bet,
-    EurocupLuckyDraw
+    EurocupLuckyDraw,
+    NewPlayerPromo
     // DailyBonus
   },
   props: {

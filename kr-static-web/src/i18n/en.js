@@ -232,6 +232,7 @@ export default {
     usernamereq: "Please enter username",
     passwordreq: "Please enter password",
     username: "Account name is 6-11 characters",
+    only_letter_number_allowed: "Only English letters and numbers are available",
     password: "Password is 6-11 characters",
     passwordDifferent: "Password is different",
     passwordAgain: "Please key in the password again",
@@ -345,7 +346,7 @@ export default {
     expectedAmount: "Expected amount",
     depositAmountRange: "Deposit amount should be between",
     exchangeRateExample:
-      "*Special Note: A withdrawal fee of 1.00 USDT will be automatically charged by the third party!",
+      "*Special Note: A withdrawal fee of 2.00 USDT will be automatically charged by the third party!",
     startEndDate: "Please enter the start and end date",
     usdtAddress: "USDT address",
     accountNo: "Account number",

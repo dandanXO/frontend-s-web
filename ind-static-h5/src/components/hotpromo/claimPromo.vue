@@ -43,6 +43,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .common-promo {
+  display:none;
   // background: url('../../assets/images/promotion/hotpromo/common/bg.png')no-repeat center center;
     .contents {
       display: flex;

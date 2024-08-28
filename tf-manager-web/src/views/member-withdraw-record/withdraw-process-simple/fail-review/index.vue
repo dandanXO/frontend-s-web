@@ -199,6 +199,12 @@
           min-width="120"
         />
         <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="300"
@@ -610,6 +616,7 @@ import { getConfigList } from '../../../../api/config'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { getMemberWithdrawLog } from '../../../../api/member-withdraw-log'
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../../api/withdraw-platform";
+import { isPak } from '@/utils/site'
 
 const store = useStore();
 const { t } = useI18n();
@@ -848,7 +855,7 @@ async function loadRecord() {
 }
 
 async function toFail(memberWithdrawRecord) {
-  if (request.siteId === 11) {
+  if (isPak(request.siteId)) {
     showDialog('FAIL', memberWithdrawRecord)
   } else {
     await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)

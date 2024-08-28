@@ -47,6 +47,7 @@ import { getFinanceFeedbackCount } from '../../../api/finance-feedback'
 import moment from 'moment'
 import { hasPermission } from '../../../utils/util'
 import { getNewRegisterMemberLists } from "../../../api/member";
+import { isKorea } from "@/utils/site"
 
 export default defineComponent({
   components: {
@@ -163,7 +164,7 @@ export default defineComponent({
 
     const checkGetNewRegisterMember = async() => {
       const siteId = store.state.user.siteId;
-      if (siteId === 10) {
+      if (isKorea(siteId)) {
         const { data: ret } = await getNewRegisterMemberLists(siteId);
         // console.log(ret);
         if (ret === 0) {
@@ -211,7 +212,8 @@ export default defineComponent({
       isCollapse,
       isMounted,
       notificationAudioRef,
-      hasNewUser
+      hasNewUser,
+      isKorea
     }
   }
 })

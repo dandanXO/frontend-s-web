@@ -6,6 +6,22 @@
           <span class="role-span">{{ t('fields.accountInfo') }}</span>
         </div>
       </template>
+      <el-button
+        type="info"
+        size="mini"
+        style="float: right;"
+        @click="toggleWallet"
+      >Toggle Wallet</el-button>
+      <el-row>
+        <span>
+          Wallet Type : {{ memberDetail.walletType }}
+        </span>
+      </el-row>
+      <el-row>
+        <span>
+          Fiat Balance : {{ memberDetail.fiatBalance }}, USDT Balance : {{ memberDetail.usdtBalance }}
+        </span>
+      </el-row>
       <el-descriptions
         size="small"
         class="margin-top"
@@ -497,6 +513,33 @@
         </el-descriptions-item>
         <el-descriptions-item v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10" />
         <el-descriptions-item v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10" />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.withdrawType') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.withdrawType !== null">
+            {{ t('withdrawType.' + memberDetail.withdrawType) }}
+          </span>
+          <span v-if="memberDetail.withdrawType === null">-</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:member:update:withdrawType']"
+            @click="showDialog('UPDATE_WITHDRAWTYPE')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item />
+        <el-descriptions-item />
       </el-descriptions>
     </el-card>
 
@@ -826,6 +869,90 @@
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
+
+    <el-card class="info-card" v-if="uiControl.supportMultiWallet">
+      <template #header>
+        <div class="clearfix">
+          <span class="role-span">{{ t('fields.walletInfo') }}</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:member:change-wallet-type']"
+            @click="toggleWallet"
+          >
+            {{ t('fields.toggleWallet') }}
+          </el-button>
+        </div>
+      </template>
+      <el-descriptions
+        size="small"
+        class="margin-top"
+        :column="3"
+        border
+        v-loading="loading.walletInfo"
+      >
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              {{ t('fields.walletType') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.walletType !== null">
+            {{ t('fields.' + memberDetail.walletType) }}
+          </span>
+          <!-- :style="[{color: affiliateDetail.riskColor}]" -->
+          <span v-if="memberDetail.walletType === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              {{ t('fields.fiatBalance') }}
+            </div>
+          </template>
+          <div class="balance">
+            $
+            <span
+              v-formatter="{
+                data: memberDetail.fiatBalance,
+                type: 'money',
+              }"
+            />
+          </div>
+          <span v-if="memberDetail.fiatBalance === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              {{ t('fields.usdtBalance') }}
+            </div>
+          </template>
+          <div class="balance">
+            $
+            <span
+              v-formatter="{
+                data: memberDetail.usdtBalance,
+                type: 'money',
+              }"
+            />
+          </div>
+          <span v-if="memberDetail.usdtBalance === null">-</span>
+        </el-descriptions-item>
+      </el-descriptions>
+    </el-card>
+
     <el-card class="info-card">
       <template #header>
         <div class="clearfix">
@@ -851,7 +978,7 @@
             />
           </el-descriptions-item>
           <el-descriptions-item
-            v-if="memberDetail.siteId === '5' || memberDetail.site === 5"
+            v-if="isInd(memberDetail.siteId)"
             :label="t('fields.withdrawableBalance')"
           >
             <div style="display: inline-block;" v-loading="loading.total">
@@ -1473,12 +1600,46 @@
           </el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'UPDATE_WITHDRAWTYPE'"
+        ref="updateWithdrawTypeForm"
+        :model="withdrawTypeForm"
+        :rules="withdrawTypeFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.withdrawType')" prop="withdrawType">
+          <el-select
+            v-model="withdrawTypeForm.withdrawType"
+            size="small"
+            :placeholder="t('fields.withdrawType')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in withdrawType.list"
+              :key="item.key"
+              :label="item.name"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="editWithdrawType">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { nextTick, defineComponent, onMounted, reactive, ref } from 'vue'
+import { nextTick, defineComponent, onMounted, reactive, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { required, size, isNumeric } from '../../../../../utils/validate'
@@ -1510,6 +1671,9 @@ import {
   syncMemberDetail,
   getShareRatio,
   editShareRatio,
+  updateWithdrawType,
+  toggleMemberWallet,
+  walletBalance,
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1521,8 +1685,9 @@ import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
-import { getConfigListByGroup } from '../../../../../api/config'
+import { getConfigListByGroup, getOpenForMember } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
+import { isInd, isKorea } from '@/utils/site'
 
 const store = useStore()
 export default defineComponent({
@@ -1545,11 +1710,13 @@ export default defineComponent({
       showCall: false,
       showCall1: false,
       showSend: false,
+      supportMultiWallet: false,
     })
     const route = useRoute()
     const site = reactive({
       id: route.query.site,
     })
+    const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 
     const loading = reactive({
       accountInfo: false,
@@ -1578,6 +1745,7 @@ export default defineComponent({
     const changeAffForm = ref(null)
     const updateModelForm = ref(null)
     const sendSmsForm = ref(null)
+    const updateWithdrawTypeForm = ref(null)
 
     const freezeType = reactive({
       list: [
@@ -1600,6 +1768,13 @@ export default defineComponent({
         { key: 1, name: t('types.NORMAL'), value: 'NORMAL' },
         { key: 2, name: t('types.TEST'), value: 'TEST' },
         { key: 3, name: t('types.PROMO_TEST'), value: 'PROMO_TEST' },
+      ],
+    })
+
+    const withdrawType = reactive({
+      list: [
+        { key: 1, name: t('withdrawType.Manual'), value: 'Manual' },
+        { key: 2, name: t('withdrawType.AUTO_WITHDRAW'), value: 'AUTO_WITHDRAW' },
       ],
     })
 
@@ -1654,7 +1829,10 @@ export default defineComponent({
       memberType: '',
       dupName: '',
       dupIp: '',
-      claimableRebate: 0
+      claimableRebate: 0,
+      fiatBalance: null,
+      usdtBalance: null,
+      walletType: null,
     })
 
     const affiliateDetail = reactive({
@@ -1744,6 +1922,10 @@ export default defineComponent({
       siteId: null
     })
 
+    const withdrawTypeForm = reactive({
+      withdrawType: null,
+    })
+
     const validateShareRatio = (rule, value, callback) => {
       if (memberDetail.commissionModel === 'DETAILS') {
         shareRatioList.list.forEach((item) => {
@@ -1830,6 +2012,10 @@ export default defineComponent({
 
     const affFormRules = reactive({
       affiliateCode: [required(t('message.validateAffiliateCodeRequired'))],
+    })
+
+    const withdrawTypeFormRules = reactive({
+      memberType: [required(t('message.validateWithdrawTypeRequired'))],
     })
 
     const loadMemberRemark = async () => {
@@ -1986,6 +2172,12 @@ export default defineComponent({
         uiControl.dialogTitle = t('fields.updateShareRatio')
       } else if (type === 'SEND_SMS') {
         uiControl.dialogTitle = t('fields.send')
+      } else if (type === 'UPDATE_WITHDRAWTYPE') {
+        if (updateWithdrawTypeForm.value) {
+          updateWithdrawTypeForm.value.resetFields()
+        }
+        withdrawTypeForm.withdrawType = withdrawType.list[0].value
+        uiControl.dialogTitle = t('fields.withdrawType')
       }
       uiControl.dialogVisible = true
     }
@@ -2221,6 +2413,23 @@ export default defineComponent({
       })
     }
 
+    const editWithdrawType = () => {
+      updateWithdrawTypeForm.value.validate(async valid => {
+        if (valid) {
+          await updateWithdrawType(props.mbrId, withdrawTypeForm.withdrawType, site.id)
+          const data = await getMemberDetails(props.mbrId, site.id)
+          Object.keys({ ...data.data }).forEach(detailField => {
+            memberDetail[detailField] = data.data[detailField]
+          })
+          uiControl.dialogVisible = false
+          ElMessage({
+            message: t('message.updateWithdrawTypeSuccess'),
+            type: 'success',
+          })
+        }
+      })
+    }
+
     const loadBalance = async () => {
       const platform = await getPlatformsBySite(memberDetail.siteId)
       for (const item of platform.data) {
@@ -2390,6 +2599,19 @@ export default defineComponent({
       ElMessage({ message: t('message.success'), type: 'success' })
     }
 
+    const loadWallet = async () => {
+      const { data: balance } = await walletBalance(props.mbrId, site.id)
+      memberDetail.fiatBalance = balance.fiat
+      memberDetail.usdtBalance = balance.usdt
+      memberDetail.walletType = balance.walletType
+    }
+
+    async function toggleWallet() {
+      await toggleMemberWallet(props.mbrId, site.id)
+      await loadWallet()
+      ElMessage({ message: t('message.success'), type: 'success' })
+    }
+
     onMounted(async () => {
       loading.accountInfo = true
       loading.affiliateInfo = true
@@ -2420,6 +2642,7 @@ export default defineComponent({
 
       await loadBalance()
       await refreshClaimableRebate()
+      await loadWallet()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true
@@ -2520,6 +2743,16 @@ export default defineComponent({
       updateModelForm,
       modelForm,
       getAffiliateRatio,
+      isInd,
+      isKorea,
+      LOGIN_USER_SITEID,
+      toggleWallet,
+      editWithdrawType,
+      withdrawTypeFormRules,
+      withdrawTypeForm,
+      withdrawType,
+      updateWithdrawTypeForm,
+      toggleWallet,
     }
   },
 })

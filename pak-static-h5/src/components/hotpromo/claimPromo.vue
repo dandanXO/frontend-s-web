@@ -2,19 +2,14 @@
   <div class="common-promo">
     <!-- <img :src="require(`../../assets/images/promotion/hotpromo/common/icon.png`)" /> -->
     <div class="contents">
-<!--      存款成功后，每日充值奖金将自动创建到会员的主钱包中。-->
-      <q-btn
-        class="claim-btn"
-        :loading="loadingClaim"
-        @click="$emit('daily-slot')"
-        >领取</q-btn
-      >
-    <div v-if="promoId === 19" class="orange">
-<!--      *返利红利需要1倍流水后才能提现，30天内未使用将退回。-->
-    </div>
-    <div v-if="promoId === 27" class="extra-img">
-      <!-- <img src="../../assets/images/promotion/hotpromo/common/extra.png" /> -->
-    </div>
+      <!--      存款成功后，每日充值奖金将自动创建到会员的主钱包中。-->
+      <q-btn class="claim-btn" :loading="loadingClaim" @click="$emit('daily-slot')">Claim</q-btn>
+      <div v-if="promoId === 19" class="orange">
+        <!--      *返利红利需要1倍流水后才能提现，30天内未使用将退回。-->
+      </div>
+      <div v-if="promoId === 27" class="extra-img">
+        <!-- <img src="../../assets/images/promotion/hotpromo/common/extra.png" /> -->
+      </div>
     </div>
   </div>
 </template>
@@ -34,31 +29,29 @@ export default defineComponent({
   },
   emits: ["daily-slot"],
   setup() {
-    onMounted(() => {
-    })
-    return {
-    }
-  },
-})
+    onMounted(() => {});
+    return {};
+  }
+});
 </script>
 <style scoped lang="scss">
 .common-promo {
   // background: url('../../assets/images/promotion/hotpromo/common/bg.png')no-repeat center center;
-    .contents {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      padding: 10px;
-      .orange {
-        color: #33bcd4;
-      }
-      .claim-btn {
-        color: #ffffff;
-        background: #33bcd4;
-        border: 0;
-      }
+  .contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    .orange {
+      color: #33bcd4;
     }
+    .claim-btn {
+      color: #ffffff;
+      background: #33bcd4;
+      border: 0;
+    }
+  }
 }
 </style>

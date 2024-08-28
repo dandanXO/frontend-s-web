@@ -27,3 +27,7 @@ export const getTotalSiteMemberReport = (data) => {
 export const getKoreaStatsReport = () => {
   return https().request("/report/krwSiteReport/", Method.GET);
 };
+
+export const getVipReport = (data) => {
+  return https().request("/report/vip-report/", Method.GET, data, ContentType.json);
+};

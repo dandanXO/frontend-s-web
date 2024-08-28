@@ -3,12 +3,7 @@
     <div class="web">
       推荐链接:
       <span>{{ referralLink }}</span>
-      <q-btn
-        @click="copyReferralLink"
-        color="brightbtn"
-        label="复制"
-        size="sm"
-      />
+      <q-btn @click="copyReferralLink" color="brightbtn" label="复制" size="sm" />
     </div>
 
     <q-form ref="profileFormRef">
@@ -54,12 +49,13 @@
         :rules="[(val) => (val && val.length > 0) || '请输入生日']"
       >
         <template v-slot:append>
-          <q-icon name="event" color="white" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
+          <q-icon
+            :class="personalState.memberInfo.birthday ? 'disabled' : ''"
+            name="event"
+            color="white"
+            class="cursor-pointer"
+          >
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="formDetail.birthday" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="关闭" color="white" flat />
@@ -69,21 +65,6 @@
           </q-icon>
         </template>
       </q-input>
-
-      <!-- <q-input
-        type="date"
-        class="q-pb-xs"
-        hide-bottom-space
-        filled
-        v-model="formDetail.birthday"
-        label="生日"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || '请输入生日']"
-
-        label-color="secondary"
-        color="secondary"
-        :readonly="personalState.memberInfo.birthday ? true : false"
-      /> -->
 
       <div class="flex items-center no-wrap">
         <q-input
@@ -141,48 +122,14 @@
         </template>
       </div>
 
-      <!-- <q-input
-        v-if="!formDetail.phoneVerified"
-        standout
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.phone"
-        type="tel"
-        label="手机验证码"
-        lazy-rules
-        :rules="[(_) => isValidPhone()]"
-        label-color=""
-        color=""
-        :readonly="personalState.memberInfo.phone ? true : false"
-      >
-        <template v-slot:append v-if="!formDetail.phoneVerified">
-          <q-btn
-            size="sm"
-            color="brightbtn"
-            label="验证"
-            :disable="!formDetail.phone"
-            @click="openVerificationDialog"
-          />
-        </template>
-      </q-input> -->
-
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn
-          size="md"
-          color="brightbtn"
-          @click="updateState"
-          label="保存信息"
-        />
+        <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
       </div>
     </q-form>
   </div>
 
   <q-dialog width="100%" v-model="showCaptchaDialog">
-    <q-card
-      style="width: 100%; padding: 20px"
-      class="bg-dark text-white text-center"
-    >
+    <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
         <strong>系统提示</strong>
         <br />
@@ -197,12 +144,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
-      <q-card-section
-        style="padding: 10px 20px"
-        class="q-pa-md bg-dark text-white"
-      >
-        验证码
-      </q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">验证码</q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="captchaRef" label="验证码">
@@ -409,20 +351,22 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
-      if (!personalState.memberInfo.birthday) {
+      if (!personalState.memberInfo.birthday && formDetail.birthday) {
         birthdayRef.value.validate();
         if (birthdayRef.value.hasError) {
           return;
         }
       }
-      if (!personalState.memberInfo.realName) {
+      if (!personalState.memberInfo.realName && formDetail.realName) {
         realNameRef.value.validate();
         if (realNameRef.value.hasError) {
           return;
         }
       }
       console.log(updateInfo);
-      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      if(formDetail.birthday){
+        updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      }
       updateInfo.realName = formDetail.realName;
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
@@ -595,5 +539,10 @@ export default defineComponent({
       border-radius: 4px;
     }
   }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0;
 }
 </style>

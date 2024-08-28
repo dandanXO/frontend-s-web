@@ -5,6 +5,8 @@ import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";
+import { EDITION } from "@/constant/edition";
+import { uiStore } from "@/store/ui";
 
 const routes = [
   {
@@ -31,6 +33,11 @@ const routes = [
       {
         path: "home",
         name: "home",
+        component: HomeView
+      },
+      {
+        path: "/homeslot",
+        name: "homeslot",
         component: HomeView
       },
       {
@@ -136,7 +143,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "depositLoading" */ "../components/depositLoading.vue")
       },
       {
-        path: "/agent/:affiliateCode",
+        path: "/:homeName?/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
       },
@@ -169,13 +176,28 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = userStore();
+  const ui = uiStore();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+    const { homeName } = to.params;
+    if (homeName) {
+      if (homeName === "homeslot") {
+        sessionStorage.setItem("HOME_EDITION", EDITION.SLOT);
+        ui.edition = EDITION.SLOT;
+      }
+    }
     next(`/register`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     next(`/register?refer=1`);
+  }
+
+  if (to.name === "home") {
+    const edition = sessionStorage.getItem("HOME_EDITION");
+    if (edition === EDITION.SLOT) {
+      next("/homeslot");
+    }
   }
 
   if (store.token) {
@@ -217,26 +239,30 @@ router.beforeEach((to, from, next) => {
   if (window.location.href.indexOf("tf88king.com") > -1) {
     fbq("init", "888951505918547");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
+    store.isAffiliateA = true;
   } else if (window.location.href.indexOf("tfgame88.com") > -1) {
     fbq("init", "3658633674357920");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
+    store.isAffiliateA = true;
+  } else if (
+    window.location.href.indexOf("5svn88.com") > -1 ||
+    window.location.href.indexOf("tfpromo88.com") > -1 ||
+    window.location.href.indexOf("tf88bof.com") > -1
+  ) {
     // console.log("5svn88.com 2")
     otag("init", "adv10336256983680");
   } else if (window.location.href.indexOf("tf68688.com") > -1) {
     fbq("init", "1123673335564806");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }else if (window.location.href.indexOf("wintf99.com") > -1) {
+    store.isAffiliateA = true;
+  } else if (window.location.href.indexOf("wintf99.com") > -1) {
     fbq("init", "441415921872746");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
-  }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
+    store.isAffiliateA = true;
+  } else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
     fbq("init", "1862869640792398");
     fbq("track", "PageView");
-    store.isAffiliateA= true;
+    store.isAffiliateA = true;
   }
 });
 export default router;

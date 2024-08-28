@@ -26,10 +26,7 @@
           </div>
           <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
-        <router-link
-          v-if="store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')"
-          to="/interest-profit"
-        >
+        <router-link to="/interest-profit">
           <div class="acct-nav-item">
             <img src="../assets/images/account/interest-svg.svg" />
           </div>

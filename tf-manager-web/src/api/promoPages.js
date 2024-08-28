@@ -11,11 +11,11 @@ export const getPromoPagesList = (promoPages) => {
 };
 
 export const createPromoPages = (formData) => {
-  return https().request("/promo-pages/create", Method.POST, formData, ContentType.json);
+  return https().request("/promo-pages/create", Method.POST, formData, ContentType.form);
 };
 
 export const updatePromoPages = (promoPages) => {
-  return https().request(`/promo-pages/update?_method=PUT`, Method.POST, promoPages, ContentType.json);
+  return https().request(`/promo-pages/update?_method=PUT`, Method.POST, promoPages, ContentType.form);
 };
 
 export const updatePromoPagesState = async (id, state) => {
@@ -27,12 +27,8 @@ export const deletePromoPages = async (ids) => {
   await https().request(`/promo-pages?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
 
-export const getPromoPageById = (id, siteId) => {
-  if (siteId) {
-    return https().request(`/promo-pages/${id}/promoPage?siteId=${siteId}`, Method.GET);
-  } else {
-    return https().request(`/promo-pages/${id}/promoPage`, Method.GET);
-  }
+export const getPromoPageById = (id) => {
+  return https().request(`/promo-pages/${id}/promoPage`, Method.GET);
 };
 
 export const getActivePromoPageList = (siteId) => {

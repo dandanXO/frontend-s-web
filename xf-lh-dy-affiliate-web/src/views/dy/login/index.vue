@@ -13,7 +13,7 @@
       <LoginRegisterPage siteId="6" />
     </SwiperSlide>
     <SwiperSlide>
-      <CustomerServicePage />
+      <CustomerServicePage siteId="6" />
     </SwiperSlide>
     <SwiperSlide>
       <SupportPage />

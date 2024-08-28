@@ -136,7 +136,7 @@
           </el-form-item>
           <el-form-item
             :label="
-              request.siteId === 3
+              isThai(request.siteId)
                 ? t('fields.englishName')
                 : t('fields.nickName')
             "
@@ -543,7 +543,8 @@
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
+            <!-- eslint-disable -->
+            <span v-formatter="{ data: scope.row.balance, type: 'money' }" />
           </template>
         </el-table-column>
         <el-table-column
@@ -570,8 +571,9 @@
         >
           <template #default="scope">
             $
+            <!-- eslint-disable -->
             <span
-              v-formatter="{data: scope.row.totalDeposit, type: 'money'}"
+              v-formatter="{ data: scope.row.totalDeposit, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -582,8 +584,9 @@
         >
           <template #default="scope">
             $
+            <!-- eslint-disable -->
             <span
-              v-formatter="{data: scope.row.totalWithdraw, type: 'money'}"
+              v-formatter="{ data: scope.row.totalWithdraw, type: 'money' }"
             />
           </template>
         </el-table-column>
@@ -602,10 +605,11 @@
           <template #default="scope">
             <span v-if="scope.row.riskLevel === null">-</span>
             <span v-if="scope.row.riskLevel !== null">
+              <!-- eslint-disable -->
               {{ scope.row.riskLevel }}
               <span
                 class="level-color"
-                :style="{backgroundColor: scope.row.riskLevelColor}"
+                :style="{ backgroundColor: scope.row.riskLevelColor }"
               />
             </span>
           </template>
@@ -726,9 +730,12 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
+// import { isKorea, isThai } from '@/utils/site'
+import { isThai } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
+// const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const memberForm = ref(null)

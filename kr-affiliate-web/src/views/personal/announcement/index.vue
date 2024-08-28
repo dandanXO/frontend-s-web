@@ -123,7 +123,11 @@
               prop="createTime"
               :label="t('fields.createTime')"
               align="center"
-            />
+            >
+              <template #default="scope">
+                <span v-formatter="{ data: scope.row.createTime, type: 'date'}" />
+              </template>
+            </el-table-column>
 
             <el-table-column :label="t('fields.operate')" align="left">
               <template #default="scope">

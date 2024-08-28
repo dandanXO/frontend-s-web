@@ -86,7 +86,11 @@ export default {
     findPasswordPhone: "Lấy lại mật khẩu bằng số điện thoại ",
     findPasswordEmail: "Lấy lại mật khẩu bằng Email",
     findAccountEmail: "Lấy tài khoản qua Email",
-    registerSuccess: "Đăng ký thành công"
+    registerSuccess: "Đăng ký thành công",
+    registration_hints: "Đăng ký tức là bạn đã đồng ý và tuân thủ",
+    user_registration_protocol: "Thỏa thuận đăng ký tài khoản",
+    already_have_acc: "Đã có tài khoản?",
+    login_here: "Đăng nhập tại đây",
   },
   common: {
     login: "Đăng nhập",
@@ -267,6 +271,9 @@ export default {
     slot: "Nổ Hũ ",
     fish: "Bắn Cá",
     lottery: "Xổ Số",
+    slotWelcome: "Chào mừng",
+    slotDaily: "Hàng Ngày",
+    slotOther: "Khác",
     choose_lucky_number: "Chọn số may mắn",
     lucky_number_record: "Ghi lại số may mắn",
     list_of_winning_members: "Danh sách người chiến thắng",
@@ -300,7 +307,9 @@ export default {
     claim: "Nhận",
 
     record_win_status: "Tình trạng thắng",
-    record_win_prize: "Giải thưởng"
+    record_win_prize: "Giải thưởng",
+    // vnm-newplayer-welcome
+    new_player_success: "Đã nhận thành công"
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -335,7 +344,7 @@ export default {
     beforeBindVerifyPhone: "Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.",
     expectedAmount: "Số coin sẽ nhận",
     depositAmountRange: "Vui lòng nhập số tiền từ",
-    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 1.00 USDT sẽ tự động thu bởi bên thứ ba!",
+    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 2.00 USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
     accountNo: "Vui lòng nhập số tài khoản ngân hàng",
@@ -760,7 +769,11 @@ export default {
     customerService: "Hỗ trợ trực tuyến 24/7",
     currentlyMaintaining: "Đang bảo trì",
     maintainenceTime: "Thời gian bảo trì",
-    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé"
+    otherPlatFirst: " Vui lòng tham gia cược tại các sảnh khác trước nhé",
+    maintenance_from: "Bắt đầu từ ",
+    maintenance_to: "đến ",
+    maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
+    maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!"
   },
   welcome: {
     compatibleDevices: "Hoàn toàn tương thích với các thiết bị an toàn",
@@ -940,6 +953,7 @@ export default {
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
     14010: "IP hoặc SID trùng lặp",
+    14014: "Định dạng số điện thoại không đúng.",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
     15204: "Số điện thoại không đúng.",
@@ -958,6 +972,7 @@ export default {
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

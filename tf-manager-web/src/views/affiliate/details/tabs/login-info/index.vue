@@ -89,12 +89,14 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, toRefs, computed } from "vue";
 import moment from 'moment';
 import { getMemberLoginRecord } from "../../../../../api/affiliate";
 import { useI18n } from "vue-i18n";
+import { useStore } from '@/store'
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { isKorea } from "@/utils/site"
 
 export default defineComponent({
   props: {
@@ -109,6 +111,8 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n();
+    const store = useStore()
+    const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
     const shortcuts = getShortcuts(t);
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 2);
@@ -167,7 +171,9 @@ export default defineComponent({
       convertDate,
       t,
       ...toRefs(formData),
-      ...toRefs(memberData)
+      ...toRefs(memberData),
+      isKorea,
+      LOGIN_USER_SITEID
     };
   }
 });

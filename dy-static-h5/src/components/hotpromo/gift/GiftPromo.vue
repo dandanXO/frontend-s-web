@@ -204,10 +204,11 @@ import { getGiftList, getGiftBet, redeemGift, getGiftRecord } from "../../../api
 import Vue3autocounter from "vue3-autocounter";
 import { TweenMax } from "gsap";
 import { throttle } from "src/boot/utils";
+import { useLocalStorage } from "@vueuse/core";
 
 const $q = useQuasar();
 const store = userStore();
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
 const isGiftRecordLoading = ref(false);
 const isGiftRecordModalOpen = ref(false);

@@ -172,7 +172,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, reactive, toRefs } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, computed } from 'vue'
 import moment from 'moment'
 import { getMemberLoginRecord } from '../../../../../api/member'
 import { useStore } from '../../../../../store'
@@ -180,6 +180,7 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from "element-plus";
+import { isKorea } from "@/utils/site"
 
 const store = useStore()
 export default defineComponent({
@@ -195,6 +196,7 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18n()
+    const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
     const shortcuts = getShortcuts(t);
 
     const startDate = new Date()
@@ -287,6 +289,8 @@ export default defineComponent({
       ...toRefs(formData),
       ...toRefs(memberData),
       resetQuery,
+      isKorea,
+      LOGIN_USER_SITEID
     }
   },
 })

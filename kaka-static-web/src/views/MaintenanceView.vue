@@ -5,11 +5,29 @@
         <img src="../assets/logo.svg" />
       </div>
       <div class="maintenance-title" v-html="$t('maintenance.title')"></div>
-      <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>
+      <!--      <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>-->
+      <div class="maintenance-desc">
+        {{ $t("maintenance.maintenance_from") }} {{ ui.maintenanceStartTime }}
+        <br />
+        {{ $t("maintenance.maintenance_to") }} {{ ui.maintenanceEndTime }}
+        <br />
+        {{ $t("maintenance.maintenance_desc_01") }}
+        <br />
+        {{ $t("maintenance.maintenance_desc_02") }}
+      </div>
+
       <div class="maintenance-contact">
-        <a href="mailto:kakagame1688@gmail.com" class="email" target="_blank">{{$t('maintenance.email')}}: kakagame1688@gmail.com</a>
+        <a href="mailto:kakagame1688@gmail.com" class="email" target="_blank">
+          {{ $t("maintenance.email") }}: kakagame1688@gmail.com
+        </a>
         <!-- <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=4&way=WEB&lang=${languageVal === 'vi' ? 'vn': 'en'}`" class="email" target="_blank">{{$t('maintenance.customerService')}}</a> -->
-        <a :href="`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`" class="email" target="_blank">{{$t('maintenance.customerService')}}</a>
+        <a
+          :href="`https://core.vchat.vn/service/chat?code=18943&jwt=db1eebd6a3ba10007419f70da08cdd11`"
+          class="email"
+          target="_blank"
+        >
+          {{ $t("maintenance.customerService") }}
+        </a>
         <!-- <a href="https://t.me/KAKA_CS" class="email" target="_blank">Telegram: @KAKA_CS</a> -->
         <a href="https://t.me/trangchukakagame1" class="email" target="_blank">Telegram: @trangchukakagame1</a>
         <!-- <a href="https://t.me/trangchukakagame2" class="email" target="_blank">Telegram:  @trangchukakagame2</a> -->
@@ -24,12 +42,13 @@
   </div>
 </template>
 <script setup>
-import { i18nStore } from '@/store/language'
-import { storeToRefs } from 'pinia'
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
+import { uiStore } from "@/store/ui";
 
-const i18nStoreLanguage = i18nStore()
-const { languageVal } = storeToRefs(i18nStoreLanguage)
-
+const ui = uiStore();
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
 </script>
 
 <style lang="scss">
@@ -38,15 +57,16 @@ const { languageVal } = storeToRefs(i18nStoreLanguage)
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../assets/images/home/main-bg.jpg");
+  background-color: #2d2d2d;
+  //background-image: url("../assets/images/home/main-bg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
 
   .maintenance-contact {
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
   }
   .maintenance-details {
     display: flex;
@@ -64,7 +84,7 @@ const { languageVal } = storeToRefs(i18nStoreLanguage)
   .maintenance-title {
     margin-top: 10px;
     font-family: PingFang SC;
-    color: #FD574C;
+    color: #fd574c;
     font-size: 40px;
     font-weight: 800;
   }

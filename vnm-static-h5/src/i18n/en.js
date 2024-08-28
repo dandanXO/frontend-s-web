@@ -195,8 +195,8 @@ export default {
 
     // maintenance
     maintenance_title: "The system is maintenance...",
-    maintenance_from: "Starting from 17/04/2024 06:00 (GMT +8)",
-    maintenance_to: "to 10:00 (GMT +8)",
+    maintenance_from: "Starting from ",
+    maintenance_to: "to ",
     maintenance_desc_01: "All services and games will be suspended during the above period, ",
     maintenance_desc_02: "sincerely sorry for this inconvenience!",
     maintenance_contact_01: "Email Us:",
@@ -345,7 +345,7 @@ export default {
     withdraw_realtimeexchangerates: "Real Time Exchange Rates",
     withdraw_estimatedarrival: "Estimated arrival",
     withdraw_usdtspecialnote:
-      "*Special note: The third party automatically charges a handling fee of 1.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
     withdraw_ewalletspecialnote:
       "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
     withdraw_choose: "Choose",
@@ -429,6 +429,9 @@ export default {
     type_fish: "Fish",
     type_livecasino: "Live Casino",
     type_others: "Others",
+    type_slot_welcome: "WELCOME",
+    type_slot_daily: "DAILY",
+    type_slot_other: "OTHER",
 
     // promo -- daily-login
     daily_login_title: "Check-in details for this month",
@@ -472,6 +475,9 @@ export default {
     // promo -- upgradeHongbao
     hong_congrats: "Congratulations",
     claim: "Claim",
+
+    //promo -- newPlayer
+    new_player_successfully: "Claimed successfully",
 
     // slot
     slot_search: "Search for games",
@@ -1062,7 +1068,7 @@ export default {
     update_app_title: "Update App",
     detected_new_version: "New Update Available. Do you wish to download it now?",
     update_now: "Update Now",
-    usdt_will_be_charged: "1.00 USDT will be charged for each transaction!",
+    usdt_will_be_charged: "2.00 USDT will be charged for each transaction!",
     phone_verification_code: "Phone Verification Code",
     please_enter_phone_code: "Please enter the phone verification code",
     get_code: "Get Code",
@@ -1530,6 +1536,7 @@ export default {
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
     14010: "Network IP or SID duplicate",
+    14014: "The phone number format is incorrect.",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",
@@ -1566,6 +1573,7 @@ export default {
     30007: "Member deposit does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
     30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

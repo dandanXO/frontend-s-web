@@ -40,7 +40,7 @@
           </td>
           <td :data-label="t('fields.transferDate')">
             <span v-if="item.transferDate === null">-</span>
-            <span v-if="item.transferDate !== null">{{ item.transferDate }}</span>
+            <span v-if="item.transferDate !== null" v-formatter="{ data: item.transferDate, type: 'date'}" />
           </td>
           <td :data-label="t('fields.rollover')">{{ item.rollover }}</td>
           <td :data-label="t('fields.transferType')">

@@ -1661,7 +1661,7 @@ export default defineComponent({
       },
       {
         name: "slot",
-        icon: "slide-slot-svg.svg",
+        icon: "slide-slot-svg.png",
         label: "电子",
         labelact: "电子",
         mb: 0,
@@ -1685,7 +1685,7 @@ export default defineComponent({
       },
       {
         name: "fish",
-        icon: "slide-fish-svg.svg",
+        icon: "slide-fish-svg.png",
         label: "捕鱼",
         labelact: "捕鱼",
         mb: 2,
@@ -2242,7 +2242,7 @@ export default defineComponent({
       );
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const homePopupImg = ref("");
     const isImportantAnnouncementModal = ref(false);
     const homePopupContent = ref("");
@@ -2284,8 +2284,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnouncementModal.value = true;
-                homePopupImg.value =
-                  useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value = imgURL + "/promo/" + res.data["mobileImgUrl"];
                 console.log(homePopupImg.value);
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];

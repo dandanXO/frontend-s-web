@@ -318,6 +318,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
@@ -802,6 +808,7 @@ import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from 'element-plus'
+import { isPak } from '@/utils/site'
 
 const { t } = useI18n();
 const store = useStore()
@@ -1106,7 +1113,7 @@ async function advancedSearch() {
 }
 
 async function toFail(memberWithdrawRecord) {
-  if (request.siteId === 11) {
+  if (isPak(request.siteId)) {
     showDialog('FAIL', memberWithdrawRecord)
   } else {
     page.loading = true

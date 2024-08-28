@@ -3432,7 +3432,18 @@ const gotoFloatPromo = (val) => {
     isMoneyRainModal.value = true;
   }
 
+  if (val.type === "PROMO" && val.code === "interest-profit") {
+    if (store.hasToken()) {
+      router.push("/promo?name=interest-profit");
+    } else {
+      router.push("/promo");
+    }
+  }
+
   if (val.type === "DOMAIN") {
+    window.open(val.code, "_blank");
+  }
+  if (val.type === "VIDEO") {
     isMediaSettingsModal.value = true;
     mediaCode.value = val.code;
   }

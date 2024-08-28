@@ -19,9 +19,11 @@ import en from "element-plus/dist/locale/en.mjs";
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import { useRouter } from "vue-router";
+import { uiStore } from "@/store/ui";
 
-require('dayjs/locale/ko');
+require("dayjs/locale/ko");
 var localizedFormat = require("dayjs/plugin/localizedFormat");
 dayjs.extend(localizedFormat);
 
@@ -30,10 +32,12 @@ export default defineComponent({
     ElConfigProvider
   },
   setup() {
+    const router = useRouter();
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
     const store = userStore();
+    const ui= uiStore();
     const onlineStatInterval = ref();
 
     const checkSID = () => {
@@ -65,15 +69,29 @@ export default defineComponent({
         const params = {
           way: "web",
           sid: sidParam,
-          siteCode: "krw"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.VUE_APP_SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
       checkSID();
+      checkServerStatus();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

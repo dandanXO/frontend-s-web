@@ -300,6 +300,16 @@
             controls-position="right"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-switch
+            v-model="ruleForm.status"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input v-model="ruleForm.remark" autocomplete="off" />
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -344,7 +354,9 @@ const ruleForm = reactive({
   privilegeIcon: null,
   sequence: null,
   currencyId: null,
-  selected: []
+  selected: [],
+  status: null,
+  remark: null
 })
 
 const ruleFormRules = reactive({

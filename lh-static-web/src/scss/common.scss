@@ -41,6 +41,15 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "YouSheBiaoTiHei";
+  src: url("@/assets/fonts/YouSheBiaoTiHei Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -146,7 +155,7 @@ body {
   }
 
   .el-dialog {
-    --el-dialog-header-bg-color: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%)
+    --el-dialog-header-bg-color: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   }
 
   .el-dialog__header {
@@ -209,6 +218,21 @@ body {
   }
 }
 
+.game-close-modal {
+  top: 50%;
+  transform: translate(0px, -50%);
+  margin: 0 auto !important;
+  width: 350px !important;
+
+  .el-dialog__body {
+    text-align: center !important;
+  }
+
+  .cancel {
+    color: var(--el-color-primary);
+  }
+}
+
 .dialog-insurance-box {
   .el-dialog__title {
     text-align: center;
@@ -244,17 +268,17 @@ body {
       padding: 20px !important;
       border-radius: 12px;
       text-align: center;
-      display:flex;
+      display: flex;
       align-items: center;
       flex-direction: column;
       justify-content: center;
       height: auto;
 
-      a{
+      a {
         //width: 100%;
-        display:block;
+        display: block;
 
-        img{
+        img {
           //width: 100%;
         }
       }
@@ -486,7 +510,7 @@ button {
 .notification-move,
 .notification-enter-active,
 .notification-leave-active {
-  transition: opacity .5s ease, top .5s ease;
+  transition: opacity 0.5s ease, top 0.5s ease;
 }
 
 .notification-enter-from,
@@ -500,7 +524,7 @@ button {
   }
 
   a {
-    color: $link-color-dark;
+    color: #fff;
   }
 
   .el-dialog {
@@ -516,6 +540,12 @@ button {
   .el-table {
     --el-table-header-bg-color: #{$background-content-block-lighter-dark};
     --el-table-tr-bg-color: #{$background-content-block-lighter-dark};
+
+    th {
+      &.el-table__cell {
+        background-color: #273354;
+      }
+    }
   }
 
   .el-tabs {
@@ -542,7 +572,7 @@ button {
   }
 
   .el-button {
-    --el-button-bg-color: #1D809A;
+    --el-button-bg-color: #1d809a;
     --el-button-hover-bg-color: #{$active-color-dark};
   }
 
@@ -552,13 +582,39 @@ button {
   }
 
   .standard-button {
-    background: $active-color-dark-linear;
-    box-shadow: 0px -2.28px 5.51px 0px #93F2FF inset;
+    // background: $active-color-dark-linear;
+    background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid #3A93CE;
   }
 
   .common-btn,
   .common-btn.el-button {
-    background-image: $active-color-dark-linear ;
-    box-shadow: $active-color-dark-shadow;
+    background: url('../assets/images/home/standard-button-bg.svg') no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 1px solid #3A93CE;
   }
+
+  .el-input-group__append {
+    box-shadow: none;
+  }
+
+  //.standard-button {
+  //  background: $active-color-dark-linear;
+  //  box-shadow: 0px -2.28px 5.51px 0px #93f2ff inset;
+  //}
+  //
+  //.common-btn,
+  //.common-btn.el-button {
+  //  background-image: $active-color-dark-linear;
+  //  box-shadow: $active-color-dark-shadow;
+  //}
+}
+
+body .announcement-modal.el-dialog .el-dialog__body {
+  padding: 0;
 }

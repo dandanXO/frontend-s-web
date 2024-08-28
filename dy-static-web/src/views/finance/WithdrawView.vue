@@ -130,23 +130,19 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
             }}
             USDT
           </span>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          *提币手续费：1.00 USDT
+          *提币手续费：2.00 USDT
         </div>
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-          <el-button
-            class="common-btn"
-            v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
-            @click="openEWalletTutorial"
-          >
+          <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
         </div>
@@ -181,6 +177,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -191,7 +188,7 @@ export default defineComponent({
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + '/withdraw/';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);

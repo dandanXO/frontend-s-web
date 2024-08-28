@@ -68,7 +68,9 @@
         <tr v-for="item in page.records" :key="item.id">
           <td>{{ item.serialNumber }}</td>
           <td>{{ formatMoney(item.withdrawAmount) }} {{ returnCurrency() }}</td>
-          <td>{{ item.withdrawDate }}</td>
+          <td>
+            <span v-formatter="{ data: item.withdrawDate, type: 'date'}" />
+          </td>
           <td>{{ item.bankName }}</td>
           <td>{{ item.cardNumber }}</td>
           <td>

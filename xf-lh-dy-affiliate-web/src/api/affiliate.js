@@ -120,3 +120,7 @@ export const editMemberRatio = (memberId, ratio) => {
 export const getDownlineShareRatio = (affId) => {
   return https().request(`/affiliate/${affId}/getDownlineShareRatio`, Method.GET);
 };
+
+export const getDownlineAffiliates = () => {
+  return https().request('/downline/getAllDownlines', Method.GET);
+};

@@ -18,15 +18,19 @@ import en from "element-plus/dist/locale/en.mjs";
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { uiStore } from "@/store/ui";
 export default defineComponent({
   components: {
     ElConfigProvider
   },
   setup() {
+    const router = useRouter();
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
     const store = userStore();
+    const ui = uiStore();
     const onlineStatInterval = ref();
 
     const checkSID = () => {
@@ -58,7 +62,7 @@ export default defineComponent({
         const params = {
           way: "web",
           sid: sidParam,
-          siteCode: "ka2"
+          siteCode: process.env.VUE_APP_SITE
         };
 
         submitMemberStats(params);
@@ -92,10 +96,24 @@ export default defineComponent({
       }
     };
 
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.VUE_APP_SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(() => {
       console.log("KAKA Web 22");
       checkSID();
       checkFBPixelInit();
+      checkServerStatus();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

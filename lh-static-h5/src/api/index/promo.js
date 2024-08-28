@@ -1,10 +1,17 @@
 import { cached } from "boot/cache";
-import { eventapi } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 
 const qs = require("qs");
 
 export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
+}
+export function loadPromoBanner(category) {
+  return api.get(`/promo/banner?category=${category}`);
+}
+
+export function claimBonusItem2(item) {
+  return eventapi.put(`/bonus/claim/${item}`);
 }
 
 export function getSportMatchQuizInfo() {
@@ -201,4 +208,42 @@ export function initUefaCheckin() {
 }
 export function claimUefaCheckin() {
   return eventapi.put("/lh-uefa-check-in/claim");
+}
+
+export function claimItems(status, level) {
+  if (status === 'upgrade') {return eventapi.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", qs.stringify({ vipLevel: level }));}
+  if (status === 'birthday') {return eventapi.put("/vip-bonus/claim-birthday-bonus");}
+  if (status === 'retain') {return eventapi.post("/vip-bonus/claim-first-retain?_method=PUT", qs.stringify({ vipLevel: level }))}
+  if (status === 'monthly') {return eventapi.put("/vip-bonus/claim-monthly-bonus");}
+  if (status === 'yearlyRetain') {return eventapi.post("/vip-bonus/claim-yearly-retain?_method=PUT", qs.stringify({ vipLevel: level }))}
+  if (status === 'coupon') {return eventapi.put("/vip-bonus/claim-coupon");}
+  if (status === 'all') {return eventapi.post("/vip-bonus/claim-all?_method=PUT", qs.stringify({ vipLevel: level }))}
+}
+
+export function getVIPDetails() {
+  return eventapi.get("/vip-bonus/get-detail");
+}
+
+export function getVIPDetailsNotLoggedIn() {
+  return eventapi.get(`/get-vip-bonus-detail?siteId=7`);
+}
+
+export function getLivePoker() {
+  return eventapi.get("/live-poker");
+}
+
+export function claimLivePokerBonus() {
+  return eventapi.put("/bonus/claim/lh1-live-poker-bonus");
+}
+
+export function footballHistroy() {
+  return eventapi.get("/lh1-football/history");
+}
+
+export function getCompetitionBetToday(promoCode) {
+  return eventapi.get(`/competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
 }

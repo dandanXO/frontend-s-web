@@ -16,11 +16,11 @@
         class="promo-cat-tab"
         :class="extensionState ? 'extension-tab' : ''"
       >
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" no-caps />
+        <q-tab v-for="(tab, i) in currentTabItems" :key="i" :name="tab.name" :label="tab.label" no-caps />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
-        <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
+        <q-tab-panel v-for="(tab, i) in currentTabItems" :key="i" :name="tab.name">
           <div class="all-promotions" v-if="!isPromoDetail">
             <div class="promo-main-container">
               <div class="promo-type-wrapper"></div>
@@ -157,7 +157,8 @@
                 :class="{
                   isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24',
                   isEurocup24Bet: selectedPromo.redirectUrl === 'vnm-euro-2024-bet-reward',
-                  isEurocupLucky: selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
+                  isEurocupLucky: selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw',
+                  'new-player': selectedPromo.redirectUrl === 'vnm-newplayer-welcome'
                 }"
               >
                 <!-- <h2>{{ selectedPromo.title }}</h2> -->
@@ -216,6 +217,7 @@ import LocalStorage from "boot/local-storage";
 import {useLocalStorage} from "@vueuse/core";
 import HotPromotion from "components/HotPromotion";
 import { useI18n } from "vue-i18n";
+import { EDITION } from "src/constant/edition";
 
 export default defineComponent({
   name: "PromoView",
@@ -232,7 +234,7 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
-    const promoTypes = ref([
+    const promoTypes = computed(() => [
       { code: "ALL", img: "all", label: t("lang.type_all") },
       { code: "ESPORTS", img: "esport", label: t("lang.type_esport") },
       { code: "SPORTS", img: "sport", label: t("lang.type_sport") },
@@ -256,8 +258,7 @@ export default defineComponent({
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
-    const tabItems = [
-
+    const tabItems = computed(() => [
       { name: "all", label: t("lang.type_all") },
       { name: "sport", label: t("lang.type_sport") },
       { name: "live casino", label: t("lang.type_livecasino") },
@@ -265,7 +266,22 @@ export default defineComponent({
       // { name: "esport", label: t("lang.type_esport") },
       // {name: "fish", label: '捕鱼'},
       { name: "others", label: t("lang.type_others") }
-    ];
+    ]);
+    const slotTabItems = computed(() => [
+      { name: "all", label: t("lang.type_all") },
+      { name: "slot welcome", label: t("lang.type_slot_welcome") },
+      { name: "slot daily", label: t("lang.type_slot_daily") },
+      { name: "slot other", label: t("lang.type_slot_other") },
+    ])
+    const currentTabItems = computed(() => {
+      switch(ui.edition) {
+        case EDITION.SLOT:
+          return slotTabItems.value
+        case EDITION.NORMAL:
+        default:
+          return tabItems.value
+      }
+    })
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -369,10 +385,16 @@ export default defineComponent({
 
     const loadAll = () => {
       const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promoapp" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+      let siteType
+      switch(ui.edition) {
+        case EDITION.SLOT:
+          siteType = "SLOT"
+          break
+      }
 
       isFetchingPromo.value = window.location.pathname === "/promoapp";
 
-      api.get(platformApiUrl).then((res) => {
+      api.get(platformApiUrl, { params: { siteType } }).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
@@ -483,7 +505,8 @@ export default defineComponent({
       currentPath,
       extensionState,
       extensionToken,
-      isFetchingPromo
+      isFetchingPromo,
+      currentTabItems
     };
   }
 });
@@ -851,6 +874,11 @@ export default defineComponent({
           background: #e7f1fd;
         }
         &.isEurocupLucky {
+          background: #e7f1fd;
+          margin: 0px;
+          width: 100%;
+        }
+        &.new-player {
           background: #e7f1fd;
           margin: 0px;
           width: 100%;

@@ -130,7 +130,9 @@
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
-                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+                  lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -308,6 +310,7 @@ import LocalStorage from "boot/local-storage";
 import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -316,7 +319,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
@@ -933,6 +936,22 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lpllck {
+          width: 100%;
+          margin: 0px;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+
+        &.bbdacha-cs2 {
+          width: 100%;
+          margin: 0;
+          padding: 20px 5%;
+          background-color: #e7f1fd;
+        }
 
         &.lhworldcup {
           background: #e7f1fd;

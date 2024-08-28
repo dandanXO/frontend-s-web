@@ -228,6 +228,22 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="180"
