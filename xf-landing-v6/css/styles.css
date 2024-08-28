@@ -68,6 +68,34 @@ a:hover {
   justify-content: space-between;
 }
 
+.top-logo {
+  flex: 1;
+}
+
+.top-cs {
+  flex: 1;
+}
+
+.top-wrapper .title {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-clip: text;
+  background: linear-gradient(180deg, #fff8bd 0%, #ffbe81 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
+  font-size: 20px;
+  flex: 2;
+}
+
+@media screen and (max-width: 380px) {
+  .top-wrapper .title {
+    font-size: 17px;
+  }
+}
+
 .top-logo img {
   display: block;
   width: 100%;

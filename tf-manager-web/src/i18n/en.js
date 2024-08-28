@@ -309,7 +309,7 @@ export default {
     CENTERPROMO: 'Center Promo',
     LOGIN: 'Login',
     REGISTER: 'Register',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Pending',
@@ -1689,6 +1689,8 @@ export default {
     upload: 'Upload',
     upperName: 'Upper Name',
     usdtControl: 'USDT Withdrawal Control',
+    usdtDepositAmount: 'USDT Deposit Amount',
+    usdtDepositCount: 'USDT Deposit Count',
     username: 'Username',
     userType: 'User Type',
     validate: 'Validate',
@@ -2773,7 +2775,8 @@ export default {
     'Media Display Settings': 'Media Display Settings',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
-    'Sites Config': 'Site Config'
+    'Sites Config': 'Site Config',
+    'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

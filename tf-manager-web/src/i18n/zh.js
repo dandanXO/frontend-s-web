@@ -314,7 +314,7 @@ export default {
     CENTERPROMO: '中心优惠',
     LOGIN: '登录',
     REGISTER: '注册',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: '未派发',
@@ -1602,7 +1602,7 @@ export default {
     totalDeposit: '总存款',
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
-    totalDepositMemberCount: '总充值人数',
+    totalDepositMemberCount: '总充值次数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
@@ -1689,6 +1689,8 @@ export default {
     upload: '上传',
     upperName: '所属上级',
     usdtControl: 'USDT提款限制',
+    usdtDepositAmount: '数字货币存款额',
+    usdtDepositCount: '数字货币存款次数',
     username: '用户名',
     userType: '用户类型',
     validate: '验证',
@@ -2722,6 +2724,7 @@ export default {
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
+    'Mooncake Fest Spin Record': '中秋节转盘2024',
   },
   google: {
     google_auth_menu: '谷歌验证',

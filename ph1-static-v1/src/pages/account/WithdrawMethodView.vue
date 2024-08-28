@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="bank-account-container">
+      <div class="bank-account-container" v-if="bankCardList.length === 0 || isAddNewAccount" >
         <div class="w-form-item w-form-item--bankcard">
           <div class="top-wrapper">
             <div class="title">Bank Name</div>
@@ -145,7 +145,7 @@
               ></q-input>
             </div>
           </div>
-          <!-- <div class="w-form-item w-form-item--bankcard">
+          <div class="w-form-item w-form-item--bankcard" v-if="isAddNewAccount">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -161,7 +161,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div> -->
+          </div>
         </template>
 
         <div class="top-wrapper">
@@ -176,6 +176,7 @@
         </div>
 
         <div class="mid-wrapper">
+
           <q-input
             type="number"
             ref="amountRef"
@@ -189,9 +190,9 @@
               (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
               (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
-                (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
-            ]"
+              (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
+              `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+              ]"
             hide-bottom-space
           >
             <template v-slot:append>
@@ -293,6 +294,11 @@
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
+          <div class="title" v-if="index===0">{{item.payType}}</div>
+          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">
+            {{item.payType}}
+          </div>
+
           <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
 
@@ -322,6 +328,7 @@
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
+
         </template>
 
         <!-- <div class="method-item">
@@ -392,14 +399,19 @@ const getWithdrawalMethods = () => {
       // let bankWithdraws = response.data.withdraws;
       // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
 
-
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
           return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
 
-      paymentMethodsItems.value = bankWithdraws.flat();
+      paymentMethodsItems.value = bankWithdraws.flat().sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
+
+      console.log(paymentMethodsItems.value);
 
     } else {
       $q.notify({
@@ -455,8 +467,14 @@ const filterCards = (type) => {
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
+        let bankType = type.bankType;
         let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+
+        if(bankType==="BANK"){
+          var filteredData = res.data.filter((item) => item.bankType === "BANK");
+        }else{
+          var filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -737,6 +755,7 @@ const goSelectedMethod = (item) => {
   // bankCardField.withdrawCode = selectedMethodItem.value.code;
   //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
+  // debugger;
   // filterCards(item);
 
   // console.log(item);
@@ -744,7 +763,7 @@ const goSelectedMethod = (item) => {
   bankCardField.bankId = item.bankList[0].id;
   // filterCards(item.bankList[0]);
 
-  bankCardField.cardAccount = "";
+  // bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
 
@@ -775,8 +794,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+      ? "Bank IFSC Code Must Be More Than 3 Characters"
+      : true;
   return result;
 };
 

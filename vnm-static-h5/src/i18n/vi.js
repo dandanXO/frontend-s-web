@@ -131,8 +131,8 @@ export default {
     referral_hints: "Nếu bạn không phải là người chơi cộng tác, bạn không cần điền vào biểu mẫu.",
     already_have_acc: "Đã có tài khoản?",
     login_here: "Đăng nhập tại đây",
-    registration_hints: "Đăng ký tức bạn đã đồng ý và tuân thủ",
-    user_registration_protocol: "Thoản thuận đăng ký tài khoản",
+    registration_hints: "Đăng ký tức là bạn đã đồng ý và tuân thủ",
+    user_registration_protocol: "Thỏa thuận đăng ký tài khoản",
     register_success: "Đăng ký thành công",
     register_in_progress: "Đang đăng ký...",
 
@@ -437,9 +437,9 @@ export default {
     type_fish: "Cá",
     type_livecasino: "Live Casino",
     type_others: "Khác",
-    type_slot_welcome: "Chào mừng",
-    type_slot_daily: "Hàng Ngày",
-    type_slot_other: "Khác",
+    type_slot_welcome: "Chào Mừng",
+    type_slot_daily: "Hàng Ngày & Hàng Tuần",
+    type_slot_other: "Hoàn Trả & Khác",
 
     // promo -- daily-login
     daily_login_title: "Chi tiết check-in trong tháng này",

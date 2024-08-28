@@ -1,6 +1,6 @@
 <template>
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
-    <q-input
+    <!-- <q-input
       ref="realNameRef"
       hide-bottom-space
       v-model="regForm.realName"
@@ -16,7 +16,7 @@
       <template v-slot:prepend>
         <q-icon color="bright" name="person_outline" />
       </template>
-    </q-input>
+    </q-input> -->
 
     <q-input
       ref="loginNameRef"
@@ -264,11 +264,11 @@ export default defineComponent({
     });
     const store = userStore();
     const verificationImg = ref("");
-    const isValidName = () => {
-      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
-      // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
-      return namePattern.test(regForm.realName) || "请输入中文字符";
-    };
+    // const isValidName = () => {
+    //   const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
+    //   // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
+    //   return namePattern.test(regForm.realName) || "请输入中文字符";
+    // };
 
     const captchaRef = ref();
     const innerCodeId = ref("");
@@ -561,7 +561,7 @@ export default defineComponent({
       getCode,
       getInnerCode,
       pwdStrength,
-      isValidName,
+      // isValidName,
       showCaptchaDialog,
       onCaptchaSubmit,
       innerCaptchaRef,

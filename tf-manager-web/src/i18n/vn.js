@@ -297,7 +297,7 @@ export default {
     CENTERPROMO: 'Khuyến mãi trung tâm',
     LOGIN: 'Đăng nhập',
     REGISTER: 'Đăng ký',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Đang chờ',
@@ -1590,6 +1590,8 @@ export default {
     upload: 'Tải Lên',
     upperName: 'Tên Upline',
     usdtControl: 'Kiểm Soát Rút USDT',
+    usdtDepositAmount: 'Số tiền gửi tiền kỹ thuật số',
+    usdtDepositCount: 'Số lượng người gửi tiền kỹ thuật số',
     username: 'Tên Người Dùng',
     userType: 'Loại Người Dùng',
     validate: 'Xác Nhận',
@@ -2547,6 +2549,7 @@ export default {
     'Vip Report': 'Báo cáo VIP',
     'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
+    'Mooncake Fest Spin Record': '中秋节转盘2024',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

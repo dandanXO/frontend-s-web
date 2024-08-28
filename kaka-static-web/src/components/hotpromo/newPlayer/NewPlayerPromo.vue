@@ -1,0 +1,397 @@
+<template>
+  <div class="new-player-wrapper">
+    <img class="title" src="@/assets/images/promotion/hotpromo/newPlayer/title.png" />
+
+    <div class="rule-block">
+      <div class="rule-block-rule">
+        <div class="rule-block-rule__title">Thời gian</div>
+        <span class="rule-block-rule__description">Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 28.08.2024</span>
+      </div>
+      <div class="rule-block-rule">
+        <div class="rule-block-rule__title">Áp dụng</div>
+        <span class="rule-block-rule__description">Tất cả thành viên mới của KAKA.GAME</span>
+      </div>
+      <div class="detail-wrapper">
+        <h3 class="detail-title">
+          <img class="detail-title__icon" src="@/assets/images/promotion/hotpromo/newPlayer/arrow-right.svg" />
+          Chi tiết khuyến mãi
+        </h3>
+        <span class="detail-description">
+          Thành viên đăng ký tài khoản thành công và thực hiện các nhiệm vụ theo yêu cầu để nhận thưởng, chi tiết như
+          sau:
+        </span>
+      </div>
+    </div>
+
+    <div class="mission-block">
+      <h3 class="mission-block-title">
+        <img class="detail-title__icon" src="@/assets/images/promotion/hotpromo/newPlayer/gift.svg" />
+        NHIỆM VỤ TÂN THỦ - HOAN NGHÊNH THÀNH VIÊN MỚI
+      </h3>
+      <div class="mission-block-mission-wrapper">
+        <img
+          class="mission-block-mission__bg"
+          src="@/assets/images/promotion/hotpromo/newPlayer/new-player-mission-bg.png"
+        />
+
+        <div v-for="(mission, index) in missions" class="mission-block-mission" :key="index">
+          <div class="mission-block-mission-upside-wrapper">
+            <span class="mission-block-mission-upside-title">Nhiệm vụ {{ index + 1 }}</span>
+            <div class="mission-block-mission-upside-reward-wrapper">
+              <img src="@/assets/images/promotion/hotpromo/newPlayer/coin.svg" />
+              <span class="mission-block-mission-upside-reward-amount">{{ mission.reward }} VNDP</span>
+            </div>
+          </div>
+          <div class="mission-block-mission-downside-wrapper">
+            <div class="mission-block-mission-downside-description-outer-wrapper">
+              <img :src="mission.icon" />
+              <div class="mission-block-mission-downside-description-inner-wrapper">
+                <span class="mission-block-mission-downside-description">{{ mission.description }}</span>
+                <span class="mission-block-mission-downside-description-progress">
+                  Tiến độ hoàn thành ({{ mission.missionProgress }})
+                </span>
+              </div>
+            </div>
+            <button
+              class="mission-block-mission-btn"
+              :disabled="mission.status !== 'Claim'"
+              @click="handleClaimClick(mission, index)"
+            >
+              <span v-if="mission.status === 'Claimed'">Đã Nhận</span>
+              <span v-else-if="mission.status === 'Incomplete'">Không Hợp Lệ</span>
+              <span v-else>Nhận</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="term-block detail-wrapper">
+      <h3 class="detail-title">
+        <img class="detail-title__icon" src="@/assets/images/promotion/hotpromo/newPlayer/arrow-right.svg" />
+        <!-- Điều khoản và điều kiện -->
+        QUY ĐỊNH VÀ ĐIỀU KHOẢN
+      </h3>
+      <div class="detail-description">
+        <ol>
+          <li>Số tiền nạp có tham gia khuyến mãi nạp tiền sẽ không được tích lũy trong khuyến mãi này.</li>
+          <li>
+            Thành viên cần hoàn thành nhiệm vụ để nhận thưởng trong vòng 30 ngày kể từ ngày đăng ký tài khoản, sau 30
+            ngày khuyến mãi sẽ vô hiệu hóa.
+          </li>
+          <li>Thành viên khi đạt điều kiện nhận thưởng cần vào lại trang khuyến mãi này để nhấn nút Nhận thưởng.</li>
+          <li>Cần hoàn thành 5 vòng cược trước khi thực hiện rút tiền</li>
+          <li>
+            Với các thành viên chưa tiến hành nạp tiền, để rút tiền khuyến mãi Thành Viên sẽ cần nạp bằng với số tiền
+            yêu cầu rút.
+          </li>
+          <li>
+            Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC &lt; 1.75, MY -0.6 đến 0.75, Thể thao
+            ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này. Và không áp dụng chung với các khuyến
+            mãi nạp khác!
+          </li>
+          <li>
+            Một thành viên chỉ được đăng ký 1 tên đăng nhập, 1 địa chỉ 1 email, 1 số điện thoại, 1 địa chỉ IP với 1 số
+            tài khoản ngân hàng phải đúng với chỉ 1 người duy nhất. Nếu thành viên có đăng ký thêm 1 tài khoản nào khác,
+            KAKA.GAME có quyền trích thu lại số tiền khuyến mãi của hội viên đó!
+          </li>
+          <li>
+            Khi phát hiện các trường hợp cược chuỗi nhóm, sử dụng phần mềm vi phạm đặt cược, và các thành viên lạm dụng
+            khuyến mãi. KAKA.GAME có quyền đóng băng tài khoản mà không cần thông báo, cũng như không hoàn trả tiền gốc
+            và liệt vào danh sách đen
+          </li>
+          <li>
+            Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKA.GAME bảo lưu quyền giải thích cuối cùng, thay đổi, dừng,
+            hủy bỏ hoặc thu hồi chiết khấu mà không cần báo trước
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { ElMessage } from "element-plus";
+import { getNewPlayerMission, submitNewPlayerMission } from "@/api/promotion/newPlayer";
+
+import AccountSvg from "@/assets/images/promotion/hotpromo/newPlayer/account.svg";
+import transferSvg from "@/assets/images/promotion/hotpromo/newPlayer/transfer.svg";
+import depositSvg from "@/assets/images/promotion/hotpromo/newPlayer/deposit.svg";
+import walletSvg from "@/assets/images/promotion/hotpromo/newPlayer/wallet.svg";
+
+const { t } = useI18n();
+
+const missions = ref([
+  {
+    code: "newbie-mission-t1",
+    description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
+    reward: 18,
+    icon: AccountSvg,
+    missionProgress: "0/0",
+    status: "Incomplete"
+  },
+  {
+    code: "newbie-mission-t2",
+    description: "Thực hiện rút tiền thành công 1 lần.",
+    reward: 28,
+    icon: transferSvg,
+    missionProgress: "0/0",
+    status: "Incomplete"
+  },
+  {
+    code: "newbie-mission-t3",
+    description: "Tích lũy tổng nạp tiền 700 VNDP, có tổng cộng 20 vé cược hợp lệ tại Thể Thao hoặc Live casino.",
+    reward: 70,
+    icon: depositSvg,
+    missionProgress: "0/0",
+    status: "Incomplete"
+  },
+  {
+    code: "newbie-mission-t4",
+    description: "Tích lũy tổng nạp tiền 3,500 VNDP, tích lũy tổng tiền cược hợp lệ 7,000 VNDP.",
+    reward: 175,
+    icon: walletSvg,
+    missionProgress: "0/0",
+    status: "Incomplete"
+  }
+]);
+
+const handleClaimClick = (mission, index) => {
+  if (mission.status !== "Claim") return;
+  submitNewPlayerMission(mission.code).then((res) => {
+    if (res.code === 0) {
+      ElMessage.success(t("promo.new_player_success"));
+      missions.value[index].status = "Claimed";
+    } else {
+      ElMessage.error(res.message);
+    }
+  });
+};
+
+onMounted(() => {
+  getNewPlayerMission().then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      missions.value.forEach((mission, index) => {
+        mission.missionProgress = data[`task${index + 1}`];
+        mission.status = data[`available${index + 1}`];
+        mission.reward = data[`task${index + 1}amount`];
+      });
+    } else {
+      ElMessage.error(res.message);
+    }
+  });
+});
+</script>
+<style lang="scss" scoped>
+.new-player-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px 40px;
+  border-radius: 12px;
+  background-color: #f2f8fe;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  filter: hue-rotate(-200deg);
+
+  .title {
+    max-width: 741px;
+    margin: 0 auto;
+  }
+
+  .detail-wrapper {
+    background-color: #fff;
+    border: 1px solid #acd4f6;
+    padding: 20px;
+    border-radius: 12px;
+    .detail-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 40px;
+      color: #0080ff;
+    }
+  }
+
+  .rule-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .rule-block-rule {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      .rule-block-rule__title {
+        width: 120px;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+        padding: 3px 0;
+        clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 23.33px;
+        color: #fff;
+      }
+      .rule-block-rule__description {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+      }
+    }
+    .detail-description {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+    }
+  }
+
+  .mission-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .mission-block-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 29.05px;
+    }
+    .mission-block-mission-wrapper {
+      position: relative;
+
+      .mission-block-mission__bg {
+        position: absolute;
+        transform: translateY(-100%);
+        top: 30px;
+        right: 13px;
+        z-index: 0;
+      }
+      .mission-block-mission {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #acd4f6;
+        padding: 12px 20px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        .mission-block-mission-upside-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 10px;
+          margin-bottom: 12px;
+          border-bottom: 1px solid #0000001a;
+          .mission-block-mission-upside-title {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 18px;
+          }
+          .mission-block-mission-upside-reward-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            filter: hue-rotate(-180deg);
+            .mission-block-mission-upside-reward-amount {
+              font-size: 24px;
+              font-weight: 600;
+              line-height: 18px;
+              color: #ff8e15;
+              // color: #007eff;
+            }
+          }
+        }
+        .mission-block-mission-downside-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .mission-block-mission-downside-description-outer-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            .mission-block-mission-downside-description-inner-wrapper {
+              display: flex;
+              flex-direction: column;
+              .mission-block-mission-downside-description {
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 21.78px;
+              }
+              .mission-block-mission-downside-description-progress {
+                background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+                background-clip: text;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 18px;
+                color: transparent;
+              }
+            }
+          }
+          .mission-block-mission-btn {
+            background: linear-gradient(90deg, #41b9ff 8.15%, #0085e8 92.42%);
+            min-width: 128px;
+            width: max-content;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 18px;
+            text-align: center;
+            color: #fff;
+            &:not([disabled]) {
+              &:hover {
+                background: linear-gradient(180deg, #41b9ff 8.15%, #0085e8 92.42%);
+              }
+            }
+            &[disabled] {
+              background: #d9d9d9;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .term-block {
+    .detail-description {
+      ol {
+        padding: 0;
+        counter-reset: list-counter;
+        li {
+          display: flex;
+          align-items: baseline;
+          counter-increment: list-counter;
+          margin-bottom: 4px;
+          list-style-type: none;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 32px;
+          &::before {
+            display: flex;
+            flex-shrink: 0;
+            justify-content: center;
+            align-items: center;
+            content: counter(list-counter);
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 24px;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

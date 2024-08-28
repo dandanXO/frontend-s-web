@@ -37,6 +37,7 @@
               size="normal"
               v-model="request.downlineAffiliate"
               @focus="getAllAffiliateDownlines"
+              :placeholder="t('fields.downlineAffiliate')"
               :clearable="true"
             >
               <el-option
@@ -543,13 +544,17 @@ async function getAllAffiliateDownlines() {
   list.affiliate = downlines;
 }
 
-onMounted(() => {
+onMounted(async() => {
+  await getAllAffiliateDownlines()
   if (route.query.user) {
     request.loginName = route.query.user
   }
-  loadPlatform();
-  loadBetRecords();
+  if (route.query.affiliate) {
+    request.downlineAffiliate = route.query.affiliate
+  }
   populateGameType();
+  await loadPlatform();
+  await loadBetRecords();
 });
 </script>
 
