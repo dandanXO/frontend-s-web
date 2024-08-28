@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-        <img :src="require(`../../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
+        <img :src="require(`../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
       </div>
       <div class="buttons">
         <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
@@ -18,7 +18,7 @@
       <div class="affiliate-program">
         <img src="@/assets/images/affiliate/rules.png" />
 
-        <div class="affiliate-subgroup agent-content-item" style="display:none">
+        <div class="affiliate-subgroup agent-content-item" style="display: none">
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">电竞佣金方案</div>
             <div class="affiliate-terms">分红条款</div>
@@ -83,7 +83,7 @@
         </div>
 
         <img src="@/assets/images/affiliate/calc.png" />
-        <div class="affiliate-subgroup agent-content-item" style="display:none">
+        <div class="affiliate-subgroup agent-content-item" style="display: none">
           <div class="affiliate-sub">
             <div class="affiliate-subtitle">计算公式</div>
             <div class="agent-demo">
@@ -197,28 +197,28 @@
 
         <div class="contact-bg">
           <div class="contact-buttons mail-buttons">
-              <span style="font-size: 0px;" ref="contact0">mailto:affiliate@e8007.com</span>
-              <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
+            <span style="font-size: 0px" ref="contact0">mailto:affiliate@e8007.com</span>
+            <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
           </div>
           <div class="contact-buttons qq-buttons">
-            <span style="font-size: 0px;" ref="contact1">1903687863</span>
-              <button class="copy-btn"  @click="copyMessage('1')">{{ copybtntxt1 }}</button>
-              <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
+            <span style="font-size: 0px" ref="contact1">1903687863</span>
+            <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
+            <a target="_blank" href="https://im.qq.com/index/" class="download-btn">下载</a>
           </div>
           <div class="contact-buttons skype-buttons">
-            <span style="font-size: 0px;" ref="contact2">live:.cid.1b8d9a018a52a8f5</span>
-              <button class="copy-btn"  @click="copyMessage('2')">{{ copybtntxt2 }}</button>
-              <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
+            <span style="font-size: 0px" ref="contact2">live:.cid.1b8d9a018a52a8f5</span>
+            <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
+            <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
           </div>
           <div class="contact-buttons telegram-buttons">
-            <span style="font-size: 0px;" ref="contact3">@LH18668</span>
-              <button class="copy-btn"  @click="copyMessage('3')">{{ copybtntxt3 }}</button>
-              <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
+            <span style="font-size: 0px" ref="contact3">@LH18668</span>
+            <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
+            <a target="_blank" class="download-btn" href="https://telegram.org/">下载</a>
           </div>
           <div class="contact-buttons bubble-buttons">
-            <span style="font-size: 0px;" ref="contact4">LH100866</span>
-              <button class="copy-btn"  @click="copyMessage('4')">{{ copybtntxt4 }}</button>
-              <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
+            <span style="font-size: 0px" ref="contact4">LH100866</span>
+            <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
+            <a target="_blank" class="download-btn" href="https://paopaoim.com/index.html">下载</a>
           </div>
         </div>
       </div>
@@ -343,12 +343,13 @@ export default defineComponent({
 <style scoped lang="scss">
 .wrapper {
   font-size: 15px;
-  background-color: #F3F7FD;
+  background-color: #f3f7fd;
 
   .affiliate {
-    background: url("../../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
+    background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
     background-position: top center;
     background-size: 100%;
+    background-color: #f3f7fd;
     margin: 0 auto;
     padding: 200px 20px 160px;
     display: flex;
@@ -357,7 +358,9 @@ export default defineComponent({
     align-items: center;
     gap: 100px;
 
-    .affiliate-title, .affiliate-desc, .buttons {
+    .affiliate-title,
+    .affiliate-desc,
+    .buttons {
       margin-left: 25%;
     }
 
@@ -371,7 +374,7 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       width: 800px;
-      font-family: 'PingFang SC';
+      font-family: "PingFang SC";
       a {
         text-decoration: none;
         display: block;
@@ -604,61 +607,61 @@ export default defineComponent({
     position: relative;
 
     .contact-buttons {
-        display: flex;
-        gap: 5px;
+      display: flex;
+      gap: 5px;
     }
 
     .mail-buttons {
-        position: absolute;
-        top: 37%;
-        left: 41.5%;
+      position: absolute;
+      top: 37%;
+      left: 41.5%;
     }
 
     .qq-buttons {
-        position: absolute;
-        top: 37%;
-        left: 58.5%;
+      position: absolute;
+      top: 37%;
+      left: 58.5%;
     }
 
     .skype-buttons {
-        position: absolute;
-        top: 37%;
-        left: 79.5%;
+      position: absolute;
+      top: 37%;
+      left: 79.5%;
     }
 
     .telegram-buttons {
-        position: absolute;
-        top: 81%;
-        left: 48.5%;
+      position: absolute;
+      top: 81%;
+      left: 48.5%;
     }
 
     .bubble-buttons {
-        position: absolute;
-        top: 81%;
-        left: 69%;
+      position: absolute;
+      top: 81%;
+      left: 69%;
     }
 
     .copy-btn {
-        background-color: #fff;
-        border-radius: 4px;
-        color: #000;
-        font-family: 'PingFang SC';
-        width: 100px;
-        height: 33px;
-        font-weight: bold;
+      background-color: #fff;
+      border-radius: 4px;
+      color: #000;
+      font-family: "PingFang SC";
+      width: 100px;
+      height: 33px;
+      font-weight: bold;
     }
 
     .download-btn {
-        background-color: #08b5ff;
-        border-radius: 4px;
-        color: #fff;
-        font-family: 'PingFang SC';
-        width: 100px;
-        height: 33px;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      background-color: #08b5ff;
+      border-radius: 4px;
+      color: #fff;
+      font-family: "PingFang SC";
+      width: 100px;
+      height: 33px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
@@ -666,7 +669,8 @@ export default defineComponent({
 .dark {
   .wrapper {
     .affiliate {
-      background: url("../../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top, $background-dark;
+      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top,
+        $background-dark;
       background-position: top center;
       background-size: 100%;
 
@@ -678,7 +682,7 @@ export default defineComponent({
 
           &.outline {
             box-shadow: none;
-            background: #394A65;
+            background: #394a65;
           }
         }
       }
@@ -687,7 +691,7 @@ export default defineComponent({
         .affiliate-subgroup {
           .affiliate-sub {
             @include content-block-dark;
-            background: #28313E;
+            background: #28313e;
             color: $font-3-dark;
 
             .affiliate-subtitle,
