@@ -173,6 +173,14 @@ const routes = [
           if (h5RoutingMap[path]) return `/center/${h5RoutingMap[path]}`;
           return "/";
         }
+      },
+      {
+        path: "/promo",
+        redirect: "/promotion"
+      },
+      {
+        path: "vip",
+        redirect: "/center/vip"
       }
     ]
   },
