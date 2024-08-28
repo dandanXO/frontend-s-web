@@ -160,6 +160,19 @@ const routes = [
         path: "/mailnew",
         name: "mail",
         component: () => import(/* webpackChunkName: "appTutorial" */ "../views/Mail.vue")
+      },
+      {
+        path: "/finance/:path",
+        redirect: (to) => `/center/${to.params.path}`
+      },
+      {
+        path: "/account/:path",
+        redirect: (to) => {
+          const path = to.params.path;
+          if (path === "vip") return "/vip";
+          if (h5RoutingMap[path]) return `/center/${h5RoutingMap[path]}`;
+          return "/";
+        }
       }
     ]
   },
@@ -169,6 +182,15 @@ const routes = [
     component: () => {}
   }
 ];
+
+const h5RoutingMap = {
+  transfer: "transfer",
+  personal: "personal",
+  records: "transit-record",
+  inbox: "mailbox",
+  letters: "feedback",
+  invite: "share"
+};
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
