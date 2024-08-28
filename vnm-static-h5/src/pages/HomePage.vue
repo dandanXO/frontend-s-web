@@ -97,12 +97,17 @@
   <PushNotification :pushNotificationData="pushNotificationData" v-if="Platform.is.android && Platform.is.capacitor" />
 
   <div class="mid-announcement-section">
-    <div class="midd">
+    <div ref="marqueeWrapperRef" class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
           <img src="../assets/images/home/announce-icon.png" alt="announcement" />
         </div>
-        <marquee-text :repeat="5" :duration="announcementList.length * 120">
+        <div ref="marqueePseudoRef" class="marquee-pseudo">
+          <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+            {{ a.content }}
+          </span>
+        </div>
+        <marquee-text :repeat="5" :duration="marqueeDuration">
           <div v-if="announcementList">
             <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
@@ -1437,9 +1442,19 @@ export default defineComponent({
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
       // })
+      if (marqueePseudoRef.value) {
+        new ResizeObserver(calculateMarqueeDuration).observe(marqueePseudoRef.value);
+      }
     });
 
     watch(() => route.name, checkEdition);
+    watch(
+      () => ui.edition,
+      () => {
+        loadAnnouncement();
+        loadData();
+      }
+    );
 
     onActivated(() => {
       getPlatList();
@@ -1808,6 +1823,16 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
+    const marqueePseudoRef = ref();
+    const marqueeWrapperRef = ref();
+    const marqueeDuration = ref(0);
+    const calculateMarqueeDuration = () => {
+      if (!marqueePseudoRef.value || !marqueeWrapperRef.value) return;
+      const marqueeWidth = marqueePseudoRef.value.scrollWidth;
+      const wrapperWidth = marqueeWrapperRef.value.clientWidth;
+      marqueeDuration.value = wrapperWidth / (wrapperWidth / 550);
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1952,7 +1977,10 @@ export default defineComponent({
       promoSlide: ref(0),
       tabs,
       fullGameList,
-      EDITION
+      EDITION,
+      marqueeDuration,
+      marqueePseudoRef,
+      marqueeWrapperRef
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2301,6 +2329,14 @@ export default defineComponent({
   .midd {
     position: relative;
     overflow: hidden;
+
+    .marquee-pseudo {
+      display: flex;
+      position: absolute;
+      visibility: hidden;
+      z-index: -1;
+      width: max-content;
+    }
   }
 }
 
