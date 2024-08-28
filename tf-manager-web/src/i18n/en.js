@@ -2648,6 +2648,7 @@ export default {
     'Bet Game Type Rebate Record': 'Bet Game Type Rebate Record',
     'Site Interest Plan': 'Site Interest Plan',
     'Interest Plan Order Record': 'Interest Plan Order Record',
+    'Promo Type': 'Promo Type',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
