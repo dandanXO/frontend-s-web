@@ -642,7 +642,7 @@ const submittedFormStatus = ref(false);
       );
 
       padding-top: 10px;
-      margin: 90px auto 40px;
+      margin: 30px auto 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -960,7 +960,7 @@ const submittedFormStatus = ref(false);
         gap: 20px;
         padding: 50px 20px 20px;
         font-weight: 700;
-        border: 1px solid #4DA9F7;
+        border: 1px solid #4da9f7;
 
         .question-row {
           color: #4c4c6c;
