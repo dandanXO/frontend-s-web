@@ -2661,6 +2661,7 @@ export default {
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
+    'Member Vip Upgrade Record': '会员VIP晋级记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
