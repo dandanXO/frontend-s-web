@@ -102,20 +102,27 @@ a:hover {
     position: relative;
   }
 
-  .app-dl-qr, .website-qr {
+  #app-dl-qr, #website-qr {
     position: absolute;
     aspect-ratio: 112/112;
     width: 20%;
     height: auto;
   }
 
-  .app-dl-qr {
+  #app-dl-qr {
     left: 16.5%;
     top: 8%;
   }
 
-  .website-qr {
+  #website-qr {
     left: 60%;
     top: 8%;
   }
+}
+
+#qrcode {
+  width:20%;
+  height:auto;
+  margin-top:15px;
+  display: none;
 }
