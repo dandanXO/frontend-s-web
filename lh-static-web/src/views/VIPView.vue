@@ -131,7 +131,6 @@
         </div>
       </div>
       <div class="right">
-        {{vipItems}}
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
             <template v-for="(item, index) in vipItems" :key="index">
@@ -946,8 +945,8 @@ const runVipAPI = (res) => {
       //     });
       //   }
       // });
-      const index = vipItems.value.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
-      console.log(index)
+      
+      const index = vipItems.value.findIndex((item) => item.vipLevel.toString() === vipBonusItem.vipLevel.toString());
       if (index !== -1) {
         console.log(vipBonusItem)
         // vipItems[index] = {
@@ -964,6 +963,7 @@ const runVipAPI = (res) => {
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
     isDataLoaded.value = true;
+    getVipLevelProgress(vipLevel.value, 'bet');
   } else {
     notify.error(res.message);
   }
@@ -1388,7 +1388,7 @@ $border-settings: 1px solid #e5e7eb;
       padding: 10px;
       border-radius: 10px;
       .overflow-table {
-        overflow-x: auto;
+        // overflow-x: auto;
         width: 100%; /* Make the scrollbar thin */
         &::-webkit-scrollbar {
           width: 8px; /* Change this value to your desired width */
@@ -1636,7 +1636,7 @@ $border-settings: 1px solid #e5e7eb;
     width: 95%;
 
     table {
-      width: 100%;
+      // width: 100%;
       table-layout: fixed;
       border-collapse: collapse;
       border: $border-settings;
@@ -1729,10 +1729,10 @@ $border-settings: 1px solid #e5e7eb;
     border-radius: 10px;
     overflow: auto;
     width: 95%;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0px auto 20px;
     table {
-      // table-layout: fixed;
+      table-layout: fixed;
       font-size: 20px;
       width: 100%;
       text-align: center;
@@ -1747,7 +1747,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       th,
       td {
-        white-space: pre;
+        // white-space: pre;
         padding: 10px;
         border: 0.5px solid #799df8;
       }

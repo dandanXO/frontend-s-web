@@ -927,13 +927,25 @@ const originalUpgradeBetAmounts = ref([
 ]);
 const isDataLoaded = ref(false);
 const initVIPTable = async () => {
+  getImages();
   const storedData = sessionStorage.getItem('vipData');
   
   if (storedData) {
     var res = JSON.parse(storedData);
+    const statuses = [
+      "upgradeClaimStatus",
+      "monthlyClaimStatus",
+      "couponClaimStatus",
+      "rebateClaimStatus",
+      "retainClaimStatus",
+      "yearlyRetainClaimStatus",
+    ];
+
+    statuses.forEach((status) => {
+      res.data[status] = "CANT_CLAIM";
+    });
     runVipAPI(res);
   }
-  getImages();
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
   runVipAPI(res);
 };
@@ -963,13 +975,18 @@ const runVipAPI = (res) => {
         vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
       }
       vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
-      const index = vipItems.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
+      const index = vipItems.findIndex((item) => item.vipLevel.toString() === vipBonusItem.vipLevel.toString());
 
       if (index !== -1) {
-        vipItems[index] = {
+        // vipItems[index] = {
+        //   ...vipItems[index],
+        //   ...vipBonusItem
+        // };
+        
+        vipItems.splice(index, 1, {
           ...vipItems[index],
           ...vipBonusItem
-        };
+        });
       }
     });
     currentDepAmt.value = res.data.currentDepositAmount;
