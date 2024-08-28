@@ -303,6 +303,7 @@ function retrieveWinnerList() {
       font-size: 23px;
       color: white;
       background: url(../../../assets/images/promotion/hotpromo/lottery/button.png) no-repeat center center;
+      filter: hue-rotate(140deg);
       opacity: 0.6;
       background-size: 100% 100%;
       padding: 0;
@@ -311,6 +312,7 @@ function retrieveWinnerList() {
     :deep(.el-tabs__item.is-active) {
       opacity: 1;
       background: url(../../../assets/images/promotion/hotpromo/lottery/button.png) no-repeat center center;
+      filter: hue-rotate(140deg);
       background-size: 100% 100%;
       padding: 0;
     }
@@ -403,7 +405,7 @@ function retrieveWinnerList() {
           background: white;
         }
         :deep(.el-table th.el-table__cell) {
-          background: #FFE7E7;
+          background: #ffe7e7;
           color: #ffffff;
           text-align: center;
         }
@@ -436,7 +438,7 @@ function retrieveWinnerList() {
     .common-btn {
       font-size: 20px;
       width: 80%;
-      background-image: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+      background-image: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
       border-radius: 30px;
       opacity: 0.8;
 

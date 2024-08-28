@@ -8,7 +8,7 @@
       @daily-slot="handleSlot()"
     />
 
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" />
+    <LotteryPromo v-if="list.redirectUrl === 'ka2-iphone' && !isCommonPromo && store.token" />
 
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
 
@@ -16,7 +16,7 @@
 
     <ViSlotNetLossPromo v-if="list.redirectUrl === 'ka2-slot-netloss' && !isCommonPromo" />
 
-    <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
+    <ViPennyBankPromo v-if="list.redirectUrl === 'kaka-penny-bank' && !isCommonPromo" />
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
 
@@ -132,11 +132,11 @@ export default defineComponent({
       }
     });
     if (
-      this.list.redirectUrl === "vnm-iphone" ||
+      this.list.redirectUrl === "ka2-iphone" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
       this.list.redirectUrl === "ka2-poker-cashback" ||
       this.list.redirectUrl === "ka2-slot-netloss" ||
-      this.list.redirectUrl === "vi-penny-bank" ||
+      this.list.redirectUrl === "kaka-penny-bank" ||
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
