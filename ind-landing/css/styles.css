@@ -63,7 +63,7 @@ a:hover {
   display: none;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
   .showMobile {
     display: none;
   }
@@ -79,8 +79,9 @@ a:hover {
     min-height: 100vh;
     height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.9fr 1.1fr;
     max-width: 100%;
+    gap:0;
   }
 
   .left, .right {
