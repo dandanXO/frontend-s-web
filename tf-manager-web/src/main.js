@@ -27,6 +27,8 @@ let baseWss;
 
 let siteId;
 
+var imageCDNUrl = process.env.VUE_APP_IMAGE;
+
 console.log(currentHost);
 // currentHost = "ka1-manager.wermop342ox.com";
 switch (currentHost) {
@@ -80,12 +82,20 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_NGA_SOCKET;
     siteId = 'nga';
     break;
+  case process.env.VUE_APP_KYQ_HOST:
+    baseApi = process.env.VUE_APP_KYQ_API;
+    baseWss = process.env.VUE_APP_KYQ_SOCKET;
+    imageCDNUrl = process.env.VUE_APP_KYQ_IMAGE;
+    siteId = 'lh';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'xf';
     break;
 }
+
+sessionStorage.setItem("IMAGE_CDN", imageCDNUrl);
 
 var hasUrl = false;
 if (baseApi.indexOf(",") > -1) {

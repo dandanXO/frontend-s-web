@@ -878,6 +878,7 @@ import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 import { isPak } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const activeTabName = ref(null)
@@ -887,8 +888,8 @@ const site = ref(null);
 const affiliateFinancialDepositDisplayForm = ref(null)
 const affiliateFinancialDepositSettingForm = ref(null)
 const setting = ref(null)
-const paymentDir = process.env.VUE_APP_IMAGE + '/payment/'
-const paymethodicon = process.env.VUE_APP_IMAGE
+const paymentDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/payment/'
+const paymethodicon = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const activeName = ref('superior')
 const uiControl = reactive({
   dialogVisible: false,

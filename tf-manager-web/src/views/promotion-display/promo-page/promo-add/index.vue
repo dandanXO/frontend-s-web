@@ -1174,6 +1174,7 @@ import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
 import { isVnm, isXF, isThai, isDY, isLH, isPak } from '@/utils/site'
 import { getSupportDarkMode } from '@/api/config'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -1183,7 +1184,7 @@ const LOGIN_SITE_ID = store.state.user.siteId
 const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const promoForm = ref(null)
 const param = ref([])
 const inputValue = ref('')

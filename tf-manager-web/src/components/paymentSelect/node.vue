@@ -307,6 +307,7 @@ import { getSiteImage } from '../../api/site-image'
 import { getSiteListSimple } from '../../api/site'
 import { useStore } from '../../store'
 import { TENANT } from '../../store/modules/user/action-types'
+import { useSessionStorage } from "@vueuse/core";
 // import { getSystemPaymentShowBySiteIdGroupByNodeName } from '../../api/payment-display'
 // import { addPaymentShow, updatePaymentShow } from '../../api/payment-display'
 
@@ -371,9 +372,11 @@ export default defineComponent({
       })
       callback()
     }
+    const imageUrl = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value;
+
     return {
-      paymethodicon: process.env.VUE_APP_IMAGE,
-      paymentDir: process.env.VUE_APP_IMAGE + '/payment/',
+      paymethodicon: imageUrl,
+      paymentDir: imageUrl + '/payment/',
       ruleForm: {
         name: '',
         icon: '',
