@@ -515,8 +515,8 @@ onMounted(async () => {
     request.siteId = site.value.id
     form.siteId = site.value.id
   } else {
-    request.siteId = 1
-    form.siteId = 1
+    request.siteId = siteList.list[0].id
+    form.siteId = siteList.list[0].id
   }
 
   await loadPlatform(request.siteId)

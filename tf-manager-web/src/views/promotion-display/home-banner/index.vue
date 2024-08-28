@@ -752,7 +752,7 @@ const imageFormRules = reactive({
 function resetQuery() {
   request.title = null
   request.state = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 function resetImageQuery() {

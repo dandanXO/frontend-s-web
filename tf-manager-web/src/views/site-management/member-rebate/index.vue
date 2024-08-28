@@ -270,7 +270,7 @@ async function loadMemberRebateRules() {
 }
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : siteList.list[0].id;
   request.loginName = null;
 }
 

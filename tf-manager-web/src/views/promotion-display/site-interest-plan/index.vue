@@ -313,7 +313,7 @@ let chooseMember = []
 
 function resetQuery() {
   request.title = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : sites.list[0].id;
   request.status = null
 }
 

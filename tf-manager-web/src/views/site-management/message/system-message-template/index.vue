@@ -485,7 +485,7 @@ const request = reactive({
 function resetQuery() {
   request.sendTime = [];
   request.type = null;
-  request.siteId = null;
+  request.siteId = siteList.list[0].id;
 }
 
 const form = reactive({

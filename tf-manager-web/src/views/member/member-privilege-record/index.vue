@@ -791,8 +791,8 @@ onMounted(async () => {
     request.siteId = site.value.id
     importForm.siteId = site.value.id
   } else {
-    request.siteId = 1
-    importForm.siteId = 1
+    request.siteId = siteList.list[0].id
+    importForm.siteId = siteList.list[0].id
   }
   await loadPrivilegeRecord()
 })

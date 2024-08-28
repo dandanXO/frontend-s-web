@@ -409,7 +409,7 @@ let chooseGame = []
 const platformCode = ref('')
 
 function resetQuery() {
-  request.siteId = 1;
+  request.siteId = sites.list[0].id;
   request.platform = null
   request.type = null
 }
