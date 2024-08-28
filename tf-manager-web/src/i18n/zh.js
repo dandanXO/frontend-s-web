@@ -2724,6 +2724,7 @@ export default {
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
+    'Mooncake Fest Spin Record': '中秋节转盘2024',
   },
   google: {
     google_auth_menu: '谷歌验证',

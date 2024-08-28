@@ -2549,6 +2549,7 @@ export default {
     'Vip Report': 'Báo cáo VIP',
     'System Value Rules': 'Quy tắc giá trị hệ thống',
     'Sites Config': 'Cấu hình trang web',
+    'Mooncake Fest Spin Record': '中秋节转盘2024',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

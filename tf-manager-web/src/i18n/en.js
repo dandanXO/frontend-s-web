@@ -2776,6 +2776,7 @@ export default {
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
     'Sites Config': 'Site Config',
+    'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
