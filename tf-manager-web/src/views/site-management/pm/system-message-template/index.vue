@@ -504,7 +504,7 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx';
-import { getMemberNameList, getMemberVipFin, getMemberVipFinById } from '../../../../api/member'
+import { getMemberVipFin, getMemberVipFinById } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
 import {
   createSystemMessageTemplate,
@@ -799,8 +799,12 @@ function submit() {
           form.recipient.push(form.vip)
         }
         if (form.receiveType !== 'ALL' && form.recipient.length === 0) {
-          ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
-          return
+          if (inputValue.value) {
+            form.recipient.push(inputValue.value);
+          } else {
+            ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
+            return
+          }
         }
         form.siteId = selected.site
         await createSystemMessageTemplate(form)
@@ -896,7 +900,7 @@ async function loadVipNameList() {
 
 async function loadMemberNameList() {
   list.members = []
-  const { data: ret } = await getMemberNameList(selected.site)
+  const ret = [];
   ret.forEach(function (entry) {
     var singleObj = {}
     singleObj.id = entry.id
