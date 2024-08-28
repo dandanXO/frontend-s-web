@@ -108,17 +108,6 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  // {
-  //   path: "/account/promotion",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/account/PromotionView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
   {
     path: "/account/changePwd",
     component: () => import("layouts/MainLayout.vue"),
@@ -527,10 +516,10 @@ const routes = [
     path: "/promotion",
     redirect: "/promo"
   },
-  {
-    path: "/vip",
-    redirect: "/account/vip"
-  },
+  // {
+  //   path: "/vip",
+  //   redirect: "/account/vip"
+  // },
   // Always leave this as last one,
   // but you can also remove it
   {

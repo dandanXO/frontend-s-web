@@ -179,8 +179,8 @@ const routes = [
         redirect: "/promotion"
       },
       {
-        path: "vip",
-        redirect: "/center/vip"
+        path: "/account/vip",
+        redirect: "/vip"
       }
     ]
   },
