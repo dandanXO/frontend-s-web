@@ -1,8 +1,5 @@
 <template>
-  <!-- <pre>allItems--{{ allItems.payments }}</pre> -->
-  <!-- <pre>paymentMethodsItems--{{ paymentMethodsItems }}</pre> -->
   <div class="deposit-wrapper">
-    <!-- <template v-if="!isSelectedMethod"> -->
     <div class="method-title q-mb-sm">Deposit method</div>
     <div class="deposit-methods-container" v-if="isLoadingInitPay">
       <div>
@@ -26,41 +23,9 @@
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
+
+            <!-- <div class="item-ribbon"><img src="../../assets/images/account/ribbon-five-percent.png" /></div> -->
           </div>
-
-          <!-- <div class="title" v-if="index === 0">{{ item.extra.type }}</div>
-        <div class="title" v-else-if="index > 0 && item.extra.type !== paymentMethodsItems[index - 1].extra.type">
-          {{ item.extra.type }}
-        </div>
-
-        <div
-          class="method-item"
-          @click="goSelectedMethod(item)"
-          :class="{ active: selectedItem === index, disabled: item.extra && item.extra.maintenance }"
-        >
-          <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-
-          <template v-if="item.extra && item.extra.maintenance">
-            <div class="item-detail">
-              <div class="txt-maintenance">
-                <q-icon name="build" size="16px" />
-                This channel is under maintenance
-              </div>
-            </div>
-          </template>
-
-          <template v-else>
-            <div class="item-detail">
-              <div class="txt-title">{{ item.nodeName }}</div>
-              <div class="txt-content">ETA: {{ item.extra.eta }}</div>
-            </div>
-          </template>
-
-          <div class="item-amount" v-if="item.depositMin && item.depositMax">
-            {{ item.depositMin }}~{{ item.depositMax }} {{ store.currency.label }}
-          </div>
-          <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
-        </div> -->
         </template>
       </div>
 
@@ -72,19 +37,7 @@
           </div>
         </template>
       </div>
-
-      <!-- <div class="deposit-methods-container col-five">
-        <template v-for="(item, index) in selectedItemAmount" :key="index">
-          <div class="content-item" :class="{ active: selectedItem === item }">
-            <div class="item-title">{{ convertToCommaAmount(item) }}</div>
-          </div>
-        </template>
-      </div> -->
     </template>
-
-    <!-- <pre>selectedItemAmount--{{ selectedItemAmount }}</pre> -->
-    <!-- <pre>selectedChannel--{{ selectedChannel }}</pre> -->
-    <!-- <pre>selectedItemChannel--{{ selectedItemChannel }}</pre> -->
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
@@ -436,9 +389,7 @@ function initPay() {
 
     if (res.code === 0) {
       paymentMethodsItems.value = res.data.payments;
-      if (!selectedItem.value) {
-        goSelectedMethod(paymentMethodsItems.value[0]);
-      }
+      goSelectedMethod(res.data.payments[0]);
     }
 
     if (
@@ -1124,6 +1075,13 @@ onMounted(() => {
     padding: 8px;
     display: flex;
     flex-direction: column;
+
+    .item-ribbon {
+      display: block;
+      position: absolute;
+      top: -2px;
+      left: -2px;
+    }
 
     &.active {
       border: 2px solid #5c46e7;
