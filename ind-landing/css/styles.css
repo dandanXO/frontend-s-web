@@ -1,0 +1,121 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  font-size: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #310564;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+a {
+  transition: 0.3s all;
+}
+
+a:hover {
+  filter: brightness(0.7);
+}
+
+.main-wrapper {
+  background-image: url(../img/bg-mobile.jpg);
+  background-position: top center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 3%;
+  max-width: 500px;
+  margin: auto;
+  justify-content: center;
+}
+
+.dl-app-btn {
+  background: url("../img/dl-app-btn-bg.svg");
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  aspect-ratio: 335/46;
+}
+
+.website-btn {
+  background: url("../img/website-btn-bg.svg");
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  aspect-ratio: 335/46;
+}
+
+.dl-app-btn:active, .website-btn:active {
+  transform: translateY(2px);
+}
+
+.showMobile {
+  display: block;
+}
+.showDesktop {
+  display: none;
+}
+
+@media screen and (min-width: 600px) {
+  .showMobile {
+    display: none;
+  }
+  .showDesktop {
+    display: block;
+  }
+
+  .main-wrapper {
+    background-image: url(../img/bg-desktop.jpg);
+    background-position: top center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+  }
+
+  .left, .right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:3%;
+  }
+
+  .qr-code-section {
+    background-image: url(../img/qr-code-bg.svg);
+    background-position: top center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    aspect-ratio: 506/305;
+    width: 506px;
+    height: 305px;
+    position: relative;
+  }
+
+  .app-dl-qr, .website-qr {
+    position: absolute;
+    aspect-ratio: 112/112;
+    width: 20%;
+    height: auto;
+  }
+
+  .app-dl-qr {
+    left: 16.5%;
+    top: 8%;
+  }
+
+  .website-qr {
+    left: 60%;
+    top: 8%;
+  }
+}
