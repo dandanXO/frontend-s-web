@@ -131,9 +131,10 @@
         </div>
       </div>
       <div class="right">
+        {{vipItems}}
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
-            <template v-for="item in vipItems" :key="item">
+            <template v-for="(item, index) in vipItems" :key="index">
               <template v-if="+item.vipLevel === currentSlide + 1">
                 <div
                   class="box"
@@ -937,26 +938,27 @@ const runVipAPI = (res) => {
         vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
       }
       vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
-      vipItems.value.forEach((element, index) => {
-        if (element.vipLevel === vipBonusItem.vipLevel.toString()) {
-          vipItems.value.splice(index, 1, {
-            ...vipItems.value[index],
-            ...vipBonusItem,
-          });
-        }
-      });
-      // const index = vipItems.value.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
-      
-      // if (index !== -1) {
-      //   // vipItems[index] = {
-      //   //   ...vipItems[index],
-      //   //   ...vipBonusItem
-      //   // };
-      //   vipItems.value.splice(index, 1, {
-      //     ...vipItems.value[index],
-      //     ...vipBonusItem,
-      //   });
-      // }
+      // vipItems.value.forEach((element, index) => {
+      //   if (element.vipLevel === vipBonusItem.vipLevel.toString()) {
+      //     vipItems.value.splice(index, 1, {
+      //       ...vipItems.value[index],
+      //       ...vipBonusItem,
+      //     });
+      //   }
+      // });
+      const index = vipItems.value.findIndex((item) => item.vipLevel === vipBonusItem.vipLevel.toString());
+      console.log(index)
+      if (index !== -1) {
+        console.log(vipBonusItem)
+        // vipItems[index] = {
+        //   ...vipItems[index],
+        //   ...vipBonusItem
+        // };
+        vipItems.value.splice(index, 1, {
+          ...vipItems.value[index],
+          ...vipBonusItem,
+        });
+      }
     });
     
     currentDepAmt.value = res.data.currentDepositAmount;
