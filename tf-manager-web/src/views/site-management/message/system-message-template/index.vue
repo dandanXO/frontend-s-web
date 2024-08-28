@@ -388,7 +388,6 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx';
-import { getMemberNameList } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
 import {
   createSystemMessageTemplate,
@@ -696,7 +695,7 @@ async function loadVipNameList() {
 
 async function loadMemberNameList() {
   list.members = []
-  const { data: ret } = await getMemberNameList(selected.site)
+  const ret = [];
   ret.forEach(function (entry) {
     var singleObj = {}
     singleObj.id = entry.id
