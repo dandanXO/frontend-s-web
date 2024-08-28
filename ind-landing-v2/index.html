@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>indwin7</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="showMobile">
+      <div class="main-wrapper">
+        <img style="margin:0 auto;width:30%;padding:0 2%;" class="logo" src="img/indwin7-logo.svg" />
+        <img style="width:90%;margin:0 auto;" src="img/title.svg" />
+        <img src="img/main-img.png" />
+        <div style="width:90%;margin:0 auto;">
+          <a href="https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1776144113453735937/android/apk/1.0.26_20240828162813.apk" target="_blank">
+            <div class="dl-app-btn"></div>
+          </a>
+        </div>
+        <div style="width:90%;margin:0 auto;">
+          <a href="https://www.indwin7.com" target="_blank">
+            <div class="website-btn"></div>
+          </a>
+        </div>
+        <img style="width:70%;margin:0 auto;" src="img/caption.svg" />
+      </div>
+    </div>
+    <div class="showDesktop">
+      <div class="main-wrapper"> 
+        <div class="left">
+          <img style="width:30%;" class="logo" src="img/indwin7-logo.svg" />
+          <img style="width:80%;" src="img/title.svg" />
+          <div class="qr-code-section">
+              <div class="app-dl-qr" id="app-dl-qr"></div>
+              <div class="website-qr" id="website-qr"></div>
+            </div>
+          </div>
+          <div class="right">
+          <img src="img/main-img.png" />
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="./js/qrcode.js"></script>
+
+    <script type="text/javascript">
+      (function() {
+        var appDlQR = new QRCode("app-dl-qr");
+        var websiteQR = new QRCode("website-qr");
+
+        appDlQR.makeCode('https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1776144113453735937/android/apk/1.0.26_20240828162813.apk');
+        websiteQR.makeCode('https://www.indwin7.com');
+      })();
+    </script>
+  </body>
+</html>
