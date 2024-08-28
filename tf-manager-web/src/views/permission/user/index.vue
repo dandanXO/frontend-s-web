@@ -204,7 +204,7 @@
               (form.userType === 'MANAGER' || form.userType === 'ADMIN')
           "
           :label="t('fields.site')"
-          prop="siteId"
+          prop="siteIds"
         >
           <el-select
             v-model="form.siteIdArray"
@@ -240,7 +240,7 @@
             @focus="
               loadRoles(
                 form.siteIdArray && form.siteIdArray !== null
-                  ? form.siteIdArray
+                  ? `0,${form.siteIdArray}`
                   : form.siteId
               )
             "
@@ -679,6 +679,11 @@ async function loadUser() {
 }
 
 async function loadRoles(siteId) {
+  if (siteId !== undefined && siteId !== null) {
+    if (form.userType !== "TENANT" && !siteId.includes('0')) {
+      siteId = `0,${siteId}`
+    }
+  }
   const { data: roles } = await getSimpleRoles(siteId)
   options.value = roles
 }
@@ -709,6 +714,7 @@ function showDialog(type) {
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = true
   } else if (type === 'EDIT') {
+    form.siteId = null
     form.siteIdArray = null
     uiControl.dialogTitle = t('fields.editUser')
   } else {
@@ -717,9 +723,9 @@ function showDialog(type) {
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 
-  if (form.userType && form.userType === 'TENANT') {
-    form.siteId = store.state.user.siteId
-  }
+  // if (form.userType && form.userType === 'TENANT') {
+  //   form.siteId = store.state.user.siteId
+  // }
 }
 
 function showEdit(user) {
@@ -791,10 +797,8 @@ function create() {
  * 编辑用户
  */
 function edit() {
-  console.log('userForm : ', userForm)
   userForm.value.validate(async valid => {
     if (valid) {
-      console.log('edit : ', form)
       await updateUser(form)
       uiControl.dialogVisible = false
       await loadUser()
@@ -899,7 +903,6 @@ async function siteChange() {
 watch(
   () => form.siteIdArray || form.siteId,
   async (value, oldValue) => {
-    console.log('value')
     await loadRoles(
       form.siteIdArray && form.siteIdArray !== null
         ? form.siteIdArray
@@ -911,7 +914,6 @@ watch(
         uiControl.rolesSelect = false
       }
     } else if (uiControl.dialogType === 'EDIT') {
-      console.log('value : ', value)
       if (oldValue && value && value !== oldValue) {
         form.roles = null
       }
@@ -919,6 +921,7 @@ watch(
     }
   }
 )
+
 watch(
   () => form.userType,
   async () => {
