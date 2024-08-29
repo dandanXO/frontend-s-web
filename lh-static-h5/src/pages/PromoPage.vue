@@ -390,7 +390,7 @@ export default defineComponent({
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
-    const tabItems = [
+    const tabItems = ref([
       { name: "all", label: "全部优惠" },
       // { name: "ftd", label: "首存" },
       { name: "ftd", label: "新人" },
@@ -402,7 +402,7 @@ export default defineComponent({
       { name: "poker", label: "棋牌" },
       { name: "daily", label: "日常" },
       { name: "other", label: "其它" }
-    ];
+    ]);
 
     watch(
       () => route.query,
@@ -493,7 +493,22 @@ export default defineComponent({
       }
     };
 
-    const loadAll = () => {
+    const loadAll = async () => {
+      await api.get("/promo/type").then((res) => {
+        if (res.code === 0 && res.data.length > 0) {
+          tabItems.value = []; 
+          res.data.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).H5
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
       const platformApiUrl =
         store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
           ? "/session/loggedInPromoPages"

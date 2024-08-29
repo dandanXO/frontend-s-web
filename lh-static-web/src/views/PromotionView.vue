@@ -6,7 +6,6 @@
         <img v-else src="../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
-
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
@@ -19,9 +18,11 @@
                 :class="{ active: p.code === promoTabActive }"
                 :key="p.code"
                 @click="switchPromoType(p.code)"
-              >
-                <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+              > 
+                <img v-if="p.iconUrl" :src="p.iconUrl" />
+                <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <span v-else></span>
+                <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
             </div>
           </div>
@@ -181,7 +182,7 @@
 <script lang="js">
 import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { loadPromo } from "@/api/index/promo.js";
+import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
@@ -303,8 +304,24 @@ export default defineComponent({
         filteredArray.value = promoState.promoList;
       }
     };
-
-    const loadAll = () => {
+    const loadAll = async () => {
+      await loadPromoTypes().then((res) => {
+        if (res.code === 0 && res.data.length > 0) {
+          promoTypes.value = []; 
+          res.data.forEach(element => {
+            const obj = {
+              code: element.value,
+              img: 'all',
+              iconUrl: imgURL + element.iconUrl, 
+              label: JSON.parse(element.name)
+            };
+            promoTypes.value.push(obj);
+          });
+          switchPromoType(promoTypes.value[0])
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      });
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
