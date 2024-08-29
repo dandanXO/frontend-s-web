@@ -514,6 +514,13 @@ export default {
     main: 'MAIN',
     slot: 'SLOT',
   },
+  language: {
+    en: 'English',
+    zh: 'Chinese',
+    th: 'Thai',
+    kr: 'Korean',
+    vn: 'Vietnamese'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1084,6 +1091,7 @@ export default {
     jobType: 'Job Type',
     label: 'Label',
     labelCancel: 'cancel',
+    language: 'Language',
     lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',
