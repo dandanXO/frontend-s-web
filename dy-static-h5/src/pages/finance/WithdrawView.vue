@@ -152,7 +152,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
@@ -164,6 +163,9 @@
               />
             </div>
           </div>
+
+          
+          <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
           <!-- <a-form-item
             class="select"
             name="cardId"
