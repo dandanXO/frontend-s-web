@@ -580,6 +580,7 @@ async function removeBatchRole() {
 
 onMounted(async () => {
   await loadSites()
+  request.siteId = LOGIN_USER_TYPE.value === ADMIN.value ? siteList.list[1].id : siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     request.siteId = store.state.user.siteId
     form.siteId = store.state.user.siteId
