@@ -542,6 +542,9 @@ const querySearch = async (queryString, callback) => {
   if (!queryString) {
     callback();
     return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
   }
 
   try {
