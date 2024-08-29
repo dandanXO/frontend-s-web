@@ -118,8 +118,9 @@
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual',
-            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-blackmyth-wukong' ,
+            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
             dyfootball: selectedPromo?.promoCode === 'dy2-football',

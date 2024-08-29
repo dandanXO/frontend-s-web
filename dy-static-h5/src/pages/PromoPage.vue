@@ -130,7 +130,7 @@
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
-                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
                 }"
