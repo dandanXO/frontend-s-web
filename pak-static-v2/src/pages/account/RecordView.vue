@@ -47,31 +47,27 @@
     <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
 
     <template v-else>
-      <NoInfoComponent
-        v-if="isNoInfoAtEnd"
-        shortenContainer="true"
-        noInfoTitle="You have reached the end of the page."
-      ></NoInfoComponent>
+      <NoInfoComponent v-if="isNoInfoAtEnd" shortenContainer="true" noInfoTitle="You have reached the end of the page.">
+      </NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+          <BetRefereceWithCopy :betId="e.betId" />
 
-          <q-btn
-            unelevated
-            :class="{
+          <div class="date-status-wrapper">
+            <q-btn unelevated :class="{
               'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
               'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
               'btn--orange': e.betStatus === 'BET',
               'btn--yellow': e.betStatus === 'UNSETTLED',
               'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
-            }"
-            :label="getRecordStatus(e.betStatus)"
-          ></q-btn>
+            }" :label="getRecordStatus(e.betStatus)"></q-btn>
+            <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+          </div>
         </q-card-section>
 
         <q-card-section class="mid-wrapper">
           RS
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
+          <span :class="`${['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus) ? (e.payout <= 0 ? 'loss-amt' : 'win-amt') : 'bet-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -108,6 +104,7 @@ import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount } from "src/boot/utils";
 import { useQuasar } from "quasar";
 import { t } from "src/boot/lang";
+import BetRefereceWithCopy from "../../components/account/BetReferenceWithCopy.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -236,7 +233,7 @@ const searchRecord = (isNewSearch) => {
         }
       }
     })
-    .catch((error) => {})
+    .catch((error) => { })
     .then(() => {
       isLoading.value = false;
     });
@@ -331,9 +328,11 @@ onActivated(() => {
       padding: 4px 3px;
       border-radius: 8px;
       box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+
       .q-field__control {
         background: inherit;
       }
+
       .q-icon {
         color: #4877f6;
       }
@@ -369,6 +368,7 @@ onActivated(() => {
     }
   }
 }
+
 .record-container {
   border-radius: 0;
   // background: rgba(21, 0, 37, 0.2);
@@ -379,10 +379,27 @@ onActivated(() => {
   margin-top: 0;
 
   .top-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: 50% 50%;
     align-items: center;
-    justify-content: space-between;
     margin: 0 0 0.5rem 0;
+
+    .bet-id-wrapper {
+      display: grid;
+      grid-template-columns: 90% 10%;
+    }
+
+    .bet-id {
+      font-size: smaller;
+      word-wrap: break-word;
+    }
+
+    .date-status-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
     .date {
       color: #9a9a9a;
       font-size: 0.825rem;
@@ -467,14 +484,6 @@ onActivated(() => {
     }
   }
 
-  .win-amt {
-    color: $positive;
-  }
-
-  .loss-amt {
-    color: $negative;
-  }
-
   .mid-wrapper {
     font-size: 1rem;
     font-weight: 700;
@@ -483,11 +492,12 @@ onActivated(() => {
     margin: 0 -1rem;
     padding: 0 1rem;
 
-    span {
-      background: #00b900;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .win-amt {
+      color: $positive;
+    }
+
+    .loss-amt {
+      color: $negative;
     }
   }
 
@@ -520,6 +530,7 @@ onActivated(() => {
       align-items: flex-end;
       justify-content: space-between;
       color: #9a9a9a;
+
       .bet-val {
         font-size: 0.825rem;
         font-weight: 700;
