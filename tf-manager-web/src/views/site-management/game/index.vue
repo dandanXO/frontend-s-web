@@ -685,13 +685,14 @@ import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from 'moment'
 import { uploadImage } from '../../../api/image'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const gameForm = ref(null)
-const gameDir = process.env.VUE_APP_IMAGE + '/game/'
+const gameDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/game/'
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 

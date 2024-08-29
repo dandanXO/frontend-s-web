@@ -553,6 +553,7 @@ import { getSiteListSimple } from '../../../../api/site'
 import { store } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { isVnm } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const announcementForm = ref(null)
@@ -560,7 +561,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
-const announcementDir = process.env.VUE_APP_IMAGE + '/announcement/'
+const announcementDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/announcement/'
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
