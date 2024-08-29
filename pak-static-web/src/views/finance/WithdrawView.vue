@@ -104,8 +104,6 @@
           </div> -->
         </a-form-item>
 
-        <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("personalView.finance.withdraw.form.usdtSpecialNote", {fee:selectedWithdrawalMethod.withdrawFee}) }}</div>
-
         <!-- <a-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="Exchange Rate">
           <span style="color: #0b8f1a">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
