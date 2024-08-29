@@ -542,10 +542,13 @@ const querySearch = async (queryString, callback) => {
   if (!queryString) {
     callback();
     return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
   }
 
   try {
-    const { data: ret } = await getMemberLoginNameList(selected.site, queryString, dynamicTags.value.join(","));
+    const { data: ret } = await getMemberLoginNameList(selected.site, queryString);
 
     const results = ret.map(item => ({
       value: item.value,
@@ -564,14 +567,16 @@ const debouncedFetchSuggestions = debounce((queryString, callback) => {
     return;
   }
   querySearch(queryString, callback);
-}, 150); // Adjust debounce time as needed
+}, 1500); // Adjust debounce time as needed
 
 const handleSelect = item => {
   if (item) {
-    dynamicTags.value.push(item.value)
-    const removed = list.members.splice(list.members.indexOf(item), 1)
-    const removedArr = [...removed]
-    selectionList.members.push(removedArr[0])
+    if (dynamicTags.value.indexOf(item.value) === -1) {
+      dynamicTags.value.push(item.value)
+      const removed = list.members.splice(list.members.indexOf(item), 1)
+      const removedArr = [...removed]
+      selectionList.members.push(removedArr[0])
+    }
   }
   inputValue.value = ''
 }

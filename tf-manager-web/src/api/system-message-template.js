@@ -25,6 +25,6 @@ export const createBatchMessageTemplate = (messages) => {
   return https(5 * 60 * 1000).request("/system-message-template/createBatch", Method.POST, { messages: JSON.stringify(messages) }, ContentType.form);
 };
 
-export const getMemberLoginNameList = (siteId, value, filterNameList) => {
-  return https().request(`/system-message-template/loginName-list/${siteId}`, Method.GET, { loginName: value, nameList: filterNameList }, ContentType.form);
+export const getMemberLoginNameList = (siteId, value) => {
+  return https().request(`/system-message-template/loginName-list/${siteId}`, Method.GET, { loginName: value }, ContentType.form);
 };
