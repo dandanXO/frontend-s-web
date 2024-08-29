@@ -331,7 +331,7 @@
       <el-table-column
         :label="t('fields.site')"
         :formatter="toSiteName"
-        width="100"
+        width="200"
       />
       <el-table-column
         prop="loginName"
@@ -873,10 +873,18 @@ async function loadNetPhone() {
 }
 
 function toSiteName(row, column, cellValue, index) {
-  if (row.siteId) {
-    return siteList.list.find(site => site.id === row.siteId).siteName
+  if (row.siteIds !== null) {
+    const siteIdsArray = row.siteIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+    const siteNames = siteIdsArray
+      .map(siteId => siteList.list.find(site => site.id === siteId)?.siteName)
+      .filter(Boolean)
+    return siteNames.join(', ');
   } else {
-    return '-'
+    if (row.siteId) {
+      return siteList.list.find(site => site.id === row.siteId).siteName
+    } else {
+      return '-'
+    }
   }
 }
 
