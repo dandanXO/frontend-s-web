@@ -171,6 +171,9 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
+      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
+        return response.data;
+      }
       // message.error(res.message, 4);
       ElMessage.error(res.message);
     }
