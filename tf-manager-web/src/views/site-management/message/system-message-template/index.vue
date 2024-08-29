@@ -136,7 +136,6 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-
         <div
           v-if="form.receiveType === 'MULTIPLE'"
           class="el-input-tag input-tag-wrapper"
@@ -155,7 +154,7 @@
           </el-tag>
           <el-autocomplete
             v-model="inputValue"
-            :fetch-suggestions="querySearch"
+            :fetch-suggestions="debouncedFetchSuggestions"
             :trigger-on-focus="false"
             class="inline-input"
             :placeholder="t('fields.addRecipient')"
@@ -393,7 +392,8 @@ import {
   createSystemMessageTemplate,
   deleteMessageTemplate,
   getSystemMessageTemplate,
-  createBatchMessageTemplate
+  createBatchMessageTemplate,
+  getMemberLoginNameList
 } from '../../../../api/system-message-template'
 import { findLevelByVipName, getVipList } from '../../../../api/vip'
 import { required } from '../../../../utils/validate'
@@ -401,6 +401,7 @@ import { hasRole } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
+import { debounce } from 'lodash';
 
 const store = useStore();
 const { t } = useI18n();
@@ -537,18 +538,29 @@ const handleClose = tag => {
   inputValue.value = ''
 }
 
-const querySearch = (queryString, cb) => {
-  const results = queryString
-    ? list.members.filter(createFilter(queryString))
-    : list.members
-  // call callback function to return suggestions
-  cb(results)
-}
-const createFilter = queryString => {
-  return item => {
-    return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
   }
-}
+
+  try {
+    const { data: ret } = await getMemberLoginNameList(selected.site, queryString, dynamicTags.value.join(","));
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id
+    }));
+    callback(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    callback();
+  }
+};
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  querySearch(queryString, callback);
+}, 1500); // Adjust debounce time as needed
 
 const handleSelect = item => {
   if (item) {
@@ -583,17 +595,13 @@ function handleRadioChangeLabel() {
   form.recipient = []
   form.title = null
   form.content = null
-
-  if (selected.site !== undefined) {
-    // reset the member name list (recipient input)
-    loadMemberNameList()
-  }
 }
 
 function handleSiteChange() {
-  loadMemberNameList()
   handleVipFilter()
   selected.vip = null
+  selectionList.members = [];
+  dynamicTags.value = [];
 }
 
 function handleVipFilter() {
@@ -696,17 +704,6 @@ async function loadVipNameList() {
   //   list.vips.push(singleObj);
   // });
   list.vips = ret
-}
-
-async function loadMemberNameList() {
-  list.members = []
-  const ret = [];
-  ret.forEach(function (entry) {
-    var singleObj = {}
-    singleObj.id = entry.id
-    singleObj.value = entry.value
-    list.members.push(singleObj)
-  })
 }
 
 async function loadSites() {
