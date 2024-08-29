@@ -380,6 +380,7 @@ const goSelectedMethod = (item) => {
   activeMethod.value = item;
   isSelectedMethod.value = true;
   selectedItemChannel.value = item.children;
+  selectedChanelExtra.value = [];
 
   goSelectedChannel(item.children[0]);
 };
@@ -394,13 +395,6 @@ const goSelectedChannel = (item) => {
     selectedChannelBank.value = item.extra.banks[0].id;
   }
 };
-
-const bankOptions = computed(() => {
-  return selectedChanelExtra.value.map((bank) => ({
-    label: bank.name,
-    value: bank.id
-  }));
-});
 
 const isLoadingInitPay = ref(true);
 function initPay() {
@@ -555,6 +549,8 @@ async function confirmDeposit() {
 
           if (selectedChanelExtra.value.length > 0) {
             form.bankId = selectedChannelBank.value;
+          } else {
+            form.bankId = null;
           }
 
           if (selectedItemPrivilegeId.value) {
