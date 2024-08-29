@@ -150,7 +150,7 @@
         </div>
 
         <div v-if="selectedWithdrawalMethod.withdrawFee" style="color: #17cd27">
-          *提币手续费：2.00 USDT
+          *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
         </div>
 
         <!-- <div
