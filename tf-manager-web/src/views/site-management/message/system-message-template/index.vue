@@ -573,10 +573,10 @@ const handleSelect = item => {
   if (item) {
     if (dynamicTags.value.indexOf(item.value) === -1) {
       dynamicTags.value.push(item.value)
+      const removed = list.members.splice(list.members.indexOf(item), 1)
+      const removedArr = [...removed]
+      selectionList.members.push(removedArr[0])
     }
-    const removed = list.members.splice(list.members.indexOf(item), 1)
-    const removedArr = [...removed]
-    selectionList.members.push(removedArr[0])
   }
   inputValue.value = ''
 }
