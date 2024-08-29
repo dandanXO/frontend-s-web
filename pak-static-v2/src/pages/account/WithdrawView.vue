@@ -254,7 +254,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">{{ $t("form.usdtSpecialNote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -269,6 +268,8 @@
               />
             </div>
           </div>
+
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("form.usdtSpecialNote", {fee: selectedWithdrawalMethod.withdrawFee}) }}</div>
           <!-- <a-form-item
             class="select"
             name="cardId"

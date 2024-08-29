@@ -107,7 +107,7 @@ export default {
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
-      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
     fullName: "Full Name",
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",

@@ -333,7 +333,7 @@ export default {
     beforeBindVerifyPhone: "Trước khi ràng buộc thẻ ngân hàng, vui lòng xác minh số điện thoại của bạn.",
     expectedAmount: "Số coin sẽ nhận",
     depositAmountRange: "Vui lòng nhập số tiền từ",
-    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là 2.00 USDT sẽ tự động thu bởi bên thứ ba!",
+    exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là {fee} USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
     accountNo: "Số thẻ",

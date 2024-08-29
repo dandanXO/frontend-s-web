@@ -106,7 +106,7 @@ export default {
     withdrawalAmount_rules_04: "واپسی کی رقم کے درمیان ہونی چاہئے",
     realTimeExchangeRates: "ریئل ٹائم ایکسچینج ریٹس",
     estimatedArrival: "متوقع آمد",
-    usdtSpecialNote: "*خصوصی نوٹ: تیسرا فریق خود بخود سکے نکالنے کے لیے 2.00 USDT کی ہینڈلنگ فیس وصول کرتا ہے!",
+    usdtSpecialNote: "*خصوصی نوٹ: تیسرا فریق خود بخود سکے نکالنے کے لیے {fee} USDT کی ہینڈلنگ فیس وصول کرتا ہے!",
     fullName: "پورا نام",
     fullName_placeholder: "اپنا پورا نام درج کریں",
     fullName_rules_01: "براہ کرم اپنا پورا نام درج کریں",
