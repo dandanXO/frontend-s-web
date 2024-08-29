@@ -608,7 +608,10 @@ function submit() {
   dialogForm.value.validate(async valid => {
     if (valid) {
       if (form.receiveType === 'MULTIPLE') {
-        form.recipient = dynamicTags.value
+        form.recipient = dynamicTags.value;
+        if (form.recipient.length === 0 && inputValue.value) {
+          form.recipient.push(inputValue.value);
+        }
       } else if (form.receiveType === 'VIP') {
         form.recipient.push(form.vip)
       }
