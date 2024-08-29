@@ -136,6 +136,11 @@
               style="width: 170px; margin-top: 5px"
             >
               <el-option
+                key="H5"
+                label="H5"
+                value="H5"
+              />
+              <el-option
                 v-for="lang in uiControl.language"
                 :key="lang.key"
                 :label="t(`language.${lang.displayName}`)"
