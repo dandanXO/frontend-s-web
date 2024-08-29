@@ -1976,6 +1976,11 @@ onMounted(async () => {
     await loadForm(route.params.id)
     await loadDarkMode()
   } else {
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
     await addParam()
     await loadPromoTypes()
   }
