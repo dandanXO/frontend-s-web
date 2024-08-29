@@ -93,7 +93,7 @@
                   :label="p.value"
                   :key="p.value"
                 >
-                  {{ p.name }}
+                  {{ getName(p.name) }}
                 </el-checkbox>
               </el-checkbox-group>
             </el-col>
@@ -1177,7 +1177,7 @@ import { getSupportDarkMode } from '@/api/config'
 import { getActivePromoType } from "@/api/promo-type";
 import { useSessionStorage } from "@vueuse/core";
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
@@ -1959,6 +1959,15 @@ const handleInputConfirm = () => {
   }
   uiControl.inputVisible = false
   inputValue.value = ''
+}
+
+function getName(nameStr) {
+  const json = JSON.parse(nameStr)
+  if (json[locale.value]) {
+    return json[locale.value]
+  } else {
+    return Object.values(json)[0]
+  }
 }
 
 onMounted(async () => {

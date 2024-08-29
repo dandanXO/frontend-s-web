@@ -517,6 +517,13 @@ export default {
     main: '主站',
     slot: '电游',
   },
+  language: {
+    en: '英语',
+    zh: '汉语',
+    th: '泰语',
+    kr: '韩语',
+    vn: '越南语'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1086,6 +1093,7 @@ export default {
     jobType: '任务类型',
     label: '标签',
     labelCancel: '取消',
+    language: '语言',
     lastDepositTime: '最后存款时间',
     lastDigit: '尾数',
     lastDigitMinDayDeposit: '尾数红包当日最小存款',
