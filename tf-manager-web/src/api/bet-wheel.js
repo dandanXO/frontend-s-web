@@ -1,5 +1,8 @@
 import https from "@/utils/https";
 import { ContentType, Method } from "axios-mapper";
+import { useStore } from '@/store'
+
+const store = useStore()
 
 export const getBetWheelParam = (siteId) => {
   return https().request("/betWheel", Method.GET, { siteId: siteId }, ContentType.form);
@@ -14,5 +17,30 @@ export const getBetWheelRecords = (betWheel) => {
 };
 
 export const getSiteWithPromo = () => {
-  return https().request("/betWheel/sites", Method.GET);
+  return https()
+    .request("/betWheel/sites", Method.GET)
+    .then(response => {
+      // if (store.state.user.userType === 'MANAGER') {
+      const site = response.data
+
+      const updateWithUserStoreSiteId = site.filter(
+        e => e.id === store.state.user.siteId
+      )
+      const mockResponse = {
+        code: 0,
+        data: updateWithUserStoreSiteId,
+      }
+
+      return mockResponse
+      // } else {
+      //   return response
+      // }
+    })
+    .catch(error => {
+      console.error('Error fetching site list:', error)
+      return {
+        code: 1,
+        data: [],
+      }
+    });
 }
