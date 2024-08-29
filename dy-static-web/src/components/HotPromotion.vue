@@ -70,6 +70,8 @@
 
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'"/>
+    
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -143,6 +145,7 @@ import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerReb
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
+import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -196,7 +199,8 @@ export default defineComponent({
     NewplayerGuide,
     LPLLCK,
     newFootballFight,
-    BbdachaCsgo2
+    BbdachaCsgo2,
+    BlackMythWuKongPromo
   },
   props: {
     list: {
