@@ -391,7 +391,7 @@ const goSelectedChannel = (item) => {
 
   selectedChannelBank.value = null;
   if (selectedChanelExtra.value.length > 0) {
-    selectedChannelBank.value = item.extra.banks[0];
+    selectedChannelBank.value = item.extra.banks[0].id;
   }
 };
 
