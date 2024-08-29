@@ -448,6 +448,8 @@ export default {
         method: "Withdrawal Method",
         recommended: "Recommended",
         form: {
+          usdtSpecialNote:
+      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
           cardId: {
             placeholder: {
               bank: "Select bank card",

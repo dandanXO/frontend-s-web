@@ -447,6 +447,7 @@ export default {
         method: "وڈروال طریقہ",
         recommended: "تجویز شدہ",
         form: {
+          usdtSpecialNote: "*خصوصی نوٹ: تیسرا فریق خود بخود سکے نکالنے کے لیے {fee} USDT کی ہینڈلنگ فیس وصول کرتا ہے!",
           cardId: {
             placeholder: {
               bank: "بینک کارڈ منتخب کریں",
