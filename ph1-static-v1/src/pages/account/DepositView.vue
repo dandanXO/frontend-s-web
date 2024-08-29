@@ -23,7 +23,9 @@
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
-            <div class="item-ribbon" v-if="isPrivilege"><img src="../../assets/images/account/ribbon-five-percent.png" /></div>
+            <div class="item-ribbon" v-if="isPrivilege">
+              <img src="../../assets/images/account/ribbon-five-percent.png" />
+            </div>
           </div>
         </template>
       </div>
@@ -36,6 +38,21 @@
           </div>
         </template>
       </div>
+
+      <template v-if="selectedChanelExtra.length > 0">
+        <div class="method-title q-mt-md q-mb-sm">Bank</div>
+        <div>
+          <q-select
+            v-model="selectedChannelBank"
+            :options="selectedChanelExtra"
+            option-label="name"
+            option-value="id"
+            emit-value
+            map-options
+            filled
+          />
+        </div>
+      </template>
     </template>
 
     <!-- select amount -->
@@ -106,7 +123,9 @@
                 verifyDepositAmount,
                 (val) =>
                   (val >= selectedChannel.depositMin && val <= selectedChannel.depositMax) ||
-                  `Deposit Amount Must In Between ${selectedChannel.depositMin} - ${selectedChannel.depositMax}`
+                  `Deposit Amount Must In Between ${convertToCommaAmount(
+                    selectedChannel.depositMin
+                  )} - ${convertToCommaAmount(selectedChannel.depositMax)}`
               ]"
               dense
               clearable
@@ -352,7 +371,9 @@ const selectedItemPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
 const selectedChannel = ref();
+const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
+const selectedChannelBank = ref(null);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -365,8 +386,21 @@ const goSelectedMethod = (item) => {
 
 const goSelectedChannel = (item) => {
   selectedChannel.value = item;
+  selectedChanelExtra.value = item.extra.banks;
   selectedItemAmount.value = item.extra.amountArr;
+
+  selectedChannelBank.value = null;
+  if (selectedChanelExtra.value.length > 0) {
+    selectedChannelBank.value = item.extra.banks[0];
+  }
 };
+
+const bankOptions = computed(() => {
+  return selectedChanelExtra.value.map((bank) => ({
+    label: bank.name,
+    value: bank.id
+  }));
+});
 
 const isLoadingInitPay = ref(true);
 function initPay() {
@@ -518,6 +552,10 @@ async function confirmDeposit() {
             }
           }
           form.paymentId = selectedChannel.value.paymentId;
+
+          if (selectedChanelExtra.value.length > 0) {
+            form.bankId = selectedChannelBank.value;
+          }
 
           if (selectedItemPrivilegeId.value) {
             form.privilegeId = selectedItemPrivilegeId.value;

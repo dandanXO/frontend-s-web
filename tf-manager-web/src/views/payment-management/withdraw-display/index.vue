@@ -339,9 +339,10 @@ import { required } from '../../../utils/validate'
 import { getCurrencyNames } from '../../../api/currency'
 import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
-const paymethodicon = process.env.VUE_APP_IMAGE
+const paymethodicon = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
 

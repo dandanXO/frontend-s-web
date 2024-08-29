@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="bank-account-container" v-if="bankCardList.length === 0 || isAddNewAccount" >
+      <div class="bank-account-container" v-if="bankCardList.length === 0 || isAddNewAccount">
         <div class="w-form-item w-form-item--bankcard">
           <div class="top-wrapper">
             <div class="title">Bank Name</div>
@@ -176,7 +176,6 @@
         </div>
 
         <div class="mid-wrapper">
-
           <q-input
             type="number"
             ref="amountRef"
@@ -190,9 +189,9 @@
               (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
               (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
-              (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-              `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
-              ]"
+                (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
+                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+            ]"
             hide-bottom-space
           >
             <template v-slot:append>
@@ -245,7 +244,7 @@
             </div>
             <div class="desc desc_white">
               <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.withdrawMaxAmount }}
+              {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
             </div>
           </div>
           <div class="info">
@@ -294,9 +293,9 @@
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div class="title" v-if="index===0">{{item.payType}}</div>
+          <div class="title" v-if="index === 0">{{ item.payType }}</div>
           <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">
-            {{item.payType}}
+            {{ item.payType }}
           </div>
 
           <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
@@ -323,12 +322,12 @@
             </template>
 
             <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
-              {{ item.withdrawMin }}~{{ item.withdrawMax }} {{ store.currency.label }}
+              {{ convertToCommaAmount(item.withdrawMin) }}~{{ convertToCommaAmount(item.withdrawMax) }}
+              {{ store.currency.label }}
             </div>
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
-
         </template>
 
         <!-- <div class="method-item">
@@ -412,7 +411,6 @@ const getWithdrawalMethods = () => {
       });
 
       console.log(paymentMethodsItems.value);
-
     } else {
       $q.notify({
         color: "negative",
@@ -470,9 +468,9 @@ const filterCards = (type) => {
         let bankType = type.bankType;
         let typeCode = type.code;
 
-        if(bankType==="BANK"){
+        if (bankType === "BANK") {
           var filteredData = res.data.filter((item) => item.bankType === "BANK");
-        }else{
+        } else {
           var filteredData = res.data.filter((item) => item.bankCode === typeCode);
         }
 
@@ -527,7 +525,7 @@ const withdrawInfo = reactive({
 });
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
-  cardNumber: "",
+  cardNumber: ""
   // cardAddress: ""
 });
 
@@ -794,8 +792,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-      ? "Bank IFSC Code Must Be More Than 3 Characters"
-      : true;
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    : true;
   return result;
 };
 

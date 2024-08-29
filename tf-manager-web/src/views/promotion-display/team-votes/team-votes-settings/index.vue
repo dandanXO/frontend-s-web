@@ -329,11 +329,12 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../../api/site';
 import { TENANT } from '../../../../store/modules/user/action-types';
 import { getSiteImage } from '../../../../api/site-image';
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const site = ref(null);
 const votesForm = ref(null)
 const awardsFormRef = ref(null)

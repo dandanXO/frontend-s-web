@@ -465,13 +465,14 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import draggable from 'vuedraggable'
 import { isVnm } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
 const site = ref(null)
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 
