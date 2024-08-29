@@ -3,7 +3,7 @@
     <div class="black-myth-content-wrapper">
       <img class="black-myth-content-title" src="./img/event-content-title.png" />
       <div class="black-myth-content-block event-content">
-        <span>活动期间，每位会员当日首充达5,000元或以上，即可领取对应档位奖品。</span>
+        <span>活动期间，每位会员当日首存单笔达5,000元或以上，即可领取对应档位奖品。</span>
         <div class="reward-table">
           <div class="reward-table__header">
             <span>单笔充值</span>
@@ -34,7 +34,9 @@
       <img class="black-myth-content-title" src="./img/event-rule-title.png" />
       <div class="black-myth-content-block event-rule">
         <ul>
-          <li>1.活动期间，当日单笔充值≥5,000元以上的会员可前往客服中心领取对应奖品，奖品以及兑换的奖金在次日24小时内派发；</li>
+          <li>
+            1.活动期间，当日首存单笔充值≥5,000元以上的会员可前往客服中心领取对应奖品，奖品以及兑换的奖金在次日24小时内派发；
+          </li>
           <li>2.活动期间，满足领取条件的会员若在当日23:59:59前未进入客服页面申请领取则视为自动放弃奖品，逾期不补；</li>
           <li>3.活动期间，每位会员每日最多可兑换一次奖品，当日已兑换完成的会员无法再领取其他档位奖品；</li>
           <li>
