@@ -12,13 +12,24 @@ export const liveCasinoPlatforms = [
     gameCode: ""
   },
   {
-    code: "PMLIVE",
+    code: "DG",
     name: "DG",
     image: "dg",
     message:
       "Hundreds of professionally trained dealers at DG Casino will give you a better than land-based casino experience when playing here. With high-quality stable equipment and professional technical support to ensure the platform operates smoothly and brings players a great experience as if they were at a real casino.",
     vimessage:
       "Hàng trăm dealer chuyên nghiệp được đào tại bài bản tại Sòng DG sẽ giúp bạn một trải nghiệm hơn cả casino mặt đất khi tham gia chơi tại đây. Với các thiết bị cao cấp ổn định và hỗ trợ kỹ thuật chuyên nghiệp để đảm bảo nền tảng hoạt động ổn định và mang đến cho người chơi trải nghiệm tuyệt vời như thể họ đang ở tại một song Casino đích thực.",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "PMLIVE",
+    name: "DB",
+    image: "db",
+    message:
+      "Hundreds of professionally trained dealers at DB Casino will give you a better than land-based casino experience when playing here. With high-quality stable equipment and professional technical support to ensure the platform operates smoothly and brings players a great experience as if they were at a real casino.",
+    vimessage:
+      "Hàng trăm dealer chuyên nghiệp được đào tại bài bản tại Sòng DB sẽ giúp bạn một trải nghiệm hơn cả casino mặt đất khi tham gia chơi tại đây. Với các thiết bị cao cấp ổn định và hỗ trợ kỹ thuật chuyên nghiệp để đảm bảo nền tảng hoạt động ổn định và mang đến cho người chơi trải nghiệm tuyệt vời như thể họ đang ở tại một song Casino đích thực.",
     caption: "",
     gameCode: ""
   },
