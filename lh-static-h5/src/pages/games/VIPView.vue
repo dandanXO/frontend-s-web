@@ -79,13 +79,13 @@
                 vipLevel != 12
               "
             >
-              还要
+              还需
               <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
               有效投注晋升到 VIP {{ vipLevel + 1 }}
             </div>
 
             <div class="text" v-else-if="vipLevel === 0">
-              还要
+              还需
               {{
                 currentBetAmt > originalUpgradeBetAmounts[0]
                   ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
