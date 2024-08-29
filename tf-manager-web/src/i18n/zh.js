@@ -584,7 +584,7 @@ export default {
     addPrivilegeInfo: '新增优惠信息',
     addPromoType: '新增优惠类型',
     addQuestionnaire: '新增问答',
-    addRecipient: '新增收件人(可用逗号","区分多个会员)',
+    addRecipient: '新增收件人',
     addRedirect: '新增跳转页面',
     addRemark: '新增备注',
     addRiskLevel: '新增风险等级',

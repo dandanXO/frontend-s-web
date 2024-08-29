@@ -571,7 +571,9 @@ const debouncedFetchSuggestions = debounce((queryString, callback) => {
 
 const handleSelect = item => {
   if (item) {
-    dynamicTags.value.push(item.value)
+    if (dynamicTags.value.indexOf(item.value) === -1) {
+      dynamicTags.value.push(item.value)
+    }
     const removed = list.members.splice(list.members.indexOf(item), 1)
     const removedArr = [...removed]
     selectionList.members.push(removedArr[0])
