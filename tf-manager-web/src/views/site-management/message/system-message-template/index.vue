@@ -559,8 +559,12 @@ const querySearch = async (queryString, callback) => {
 };
 
 const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!selected.site) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
   querySearch(queryString, callback);
-}, 1500); // Adjust debounce time as needed
+}, 150); // Adjust debounce time as needed
 
 const handleSelect = item => {
   if (item) {
