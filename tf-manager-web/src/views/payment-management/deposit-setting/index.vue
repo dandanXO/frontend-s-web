@@ -140,7 +140,7 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
-import { isNumericNonRequired } from "../../../utils/validate";
+import { isNumeric } from "../../../utils/validate";
 
 const { t } = useI18n();
 const store = useStore();
@@ -212,7 +212,7 @@ const validateMobileDepositAmount = (rule, value, callback) => {
 };
 
 const validateNumeric = (rule, value, callback) => {
-  if (value && !isNumericNonRequired(value)) {
+  if (value && !isNumeric(value)) {
     callback(new Error(t('message.validateNumberOnly')))
   } else {
     callback()
