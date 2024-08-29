@@ -61,6 +61,7 @@
     <LhStepGamePromo v-if="list.redirectUrl === 'lh1-game-steps'" :pageContent="list.pageContent"></LhStepGamePromo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'lh1-midautumn-spinwheel'" />
     <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match'" />
     <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024'" :promo-code="list.promoCode" />
@@ -157,6 +158,7 @@ const BbDacha2024Promo = defineAsyncComponent(() => import("../components/hotpro
 const LhStepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/lhstepgame/LhStepGamePromo.vue"));
 const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
 const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const MidautumSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue"))
 const SummonerPromo = defineAsyncComponent(() => import("../components/hotpromo/summoner/SummonerPromo.vue"));
 const AppHongBao = defineAsyncComponent(() => import("../components/hotpromo/apphongbao/AppHongBao.vue"));
 const FtdPromo = defineAsyncComponent(() => import("../components/hotpromo/ftd/FtdPromo.vue"));
@@ -232,6 +234,7 @@ export default defineComponent({
     BbDacha2024Promo,
     CS2Sign,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LhStepGamePromo,
     SummonerPromo,
     AppHongBao,
