@@ -10,7 +10,7 @@ body {
 }
 
 .landing-wrapper {
-    background: url(../images/landing-bg.png) no-repeat center center;
+    background: url(../images/landing-bg.jpg) no-repeat center center;
     background-size: cover;
     min-height: 100vh;
     width: 100%;
@@ -24,6 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 70%;
 }
 
 .landing-logo {
@@ -42,11 +43,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 2%;
 }
 
 .action-item {
-    margin-left: -2%;
-    margin-right: -2%;
     transition: 0.3s all;
 }
 
@@ -73,9 +73,14 @@ body {
         display: flex !important;
     }
     .landing-wrapper {
-        background: url(../images/landing-bg-mobile.png) no-repeat center center;
+        background: url(../images/landing-bg-mobile.jpg) no-repeat center center;
+        background-size: 100% 100%;
         align-items: center;
         justify-content: center;
+    }
+
+    .landing-container {
+        width: 80%;
     }
 
     .landing-logo {
@@ -101,6 +106,6 @@ body {
         flex-direction: column;
         gap: 20px;
         padding-bottom: 20px;
-        padding-top: 30px;
+        margin-top: -30px;
     }
 }
