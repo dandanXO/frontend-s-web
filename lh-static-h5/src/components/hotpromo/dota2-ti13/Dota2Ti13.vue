@@ -96,6 +96,7 @@
             <td colspan="4">3倍/电竞流水</td>
           </tr>
         </table>
+        <span style="color: red;">例：会员A的VIP等级为10，当日投注2024 DOTA2 TI13 国际邀请赛 累计有效流水为50,000元，会员可在次日领取288元彩金。</span>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
