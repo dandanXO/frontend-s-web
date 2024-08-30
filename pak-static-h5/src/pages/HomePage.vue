@@ -3498,10 +3498,12 @@ const gotoFloatPromo = (val) => {
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
+  checkShowImgTop();
 
   checkSpinWheel();
 
   // if (store.hasToken()) {
+  checkHbPromo();
   // }
 
   if (route.query.login === "true") {
