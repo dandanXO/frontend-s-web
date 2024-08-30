@@ -9,6 +9,10 @@ export function loadPromo() {
   return server.REST.get(platformApiUrl);
 }
 
+export function loadPromoTypes(category) {
+  return server.REST.get("/promo/type");
+}
+
 export function loadPromoBanner(category) {
   return server.REST.get("/promo/banner", {
     params: {
