@@ -67,8 +67,11 @@
 
             <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
               <div>晋级流水（元）</div>
-              <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">{{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}</div>
-              <div v-else>{{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}</div>
+              <div v-if="store.currentBetAmt !== ''">
+                <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">{{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}</div>
+                <div v-else>{{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}</div>
+              </div>
+              <div v-else>计算中...</div>
             </div>
 
             <router-link to="/account/vip?from=account">

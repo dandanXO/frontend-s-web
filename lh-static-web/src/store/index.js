@@ -113,7 +113,6 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
             this.profilePhoto = ret.data.profilePhoto;
-            this.getVIPInfo();
           } else {
             uiStore().notify({
               type: "error",
@@ -121,26 +120,6 @@ export const userStore = defineStore("userStore", {
             });
           }
         });
-      }
-    },
-    getVIPInfo() {
-      const storedData = sessionStorage.getItem('vipData');
-      if (storedData) {
-        const res = JSON.parse(storedData);
-      }
-
-      if (this.token) {
-        return getVIPDetails().then((res) => {
-          if (res.code === 0) {
-            sessionStorage.setItem('vipData', JSON.stringify(res));
-          }
-        })
-      } else {
-        return getVIPDetailsNotLoggedIn().then((res) => {
-          if (res.code === 0) {
-            sessionStorage.setItem('vipData', JSON.stringify(res)); 
-          }
-        })
       }
     },
     getBalance() {
@@ -193,8 +172,5 @@ export const userStore = defineStore("userStore", {
           console.log(err);
         });
     }
-  },
-  mounted() {
-    this.getVIPInfo();
   }
 });

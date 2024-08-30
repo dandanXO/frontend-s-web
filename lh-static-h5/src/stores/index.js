@@ -224,11 +224,6 @@ export const userStore = defineStore("userStore", {
       });
     },
     getVIPInfo() {
-      const storedData = sessionStorage.getItem('vipData');
-      if (storedData) {
-        const res = JSON.parse(storedData);
-        this.handleVIPData(res);
-      }
       if (this.token) {
         return getVIPDetails().then((res) => {
           if (res.code === 0) {
@@ -243,7 +238,6 @@ export const userStore = defineStore("userStore", {
             this.handleVIPData(res);
           }
         })
-
       }
     },
     handleVIPData(res) {
