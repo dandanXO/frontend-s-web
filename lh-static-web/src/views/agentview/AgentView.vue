@@ -669,7 +669,7 @@ export default defineComponent({
 .dark {
   .wrapper {
     .affiliate {
-      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top,
+      background: url("../../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top,
         $background-dark;
       background-position: top center;
       background-size: 100%;
