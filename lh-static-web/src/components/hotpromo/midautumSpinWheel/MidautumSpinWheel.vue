@@ -33,8 +33,36 @@
         </p>
       </div>
 
-      <div class="promo-info-container">
-        <img src="./../../../assets/images/promotion/hotpromo/midautum-spinWheel/rule.png" alt="" />
+      <div class="livepoker-rebate-game-bottom-rule">
+        <div class="title-container">
+          <div class="title">活动规则</div>
+        </div>
+        <div class="content">
+          <div class="item">
+            <div class="item-num">1</div>
+            <div style="font-weight: 500">活动期间，用户当日每累计有效投注达到3,888元即可获得一次转盘机会；</div>
+          </div>
+          <div class="item">
+            <div class="item-num">2</div>
+            <div style="font-weight: 500">活动期间，用户每日最高可转动5次转盘，超出次数则无法转动转盘，转盘彩金实时派发，彩金3倍流水即可提款；</div>
+          </div>
+          <div class="item">
+            <div class="item-num">3</div>
+            转盘次数达60次后，第61次必中奖品豪华版【黑神话·悟空】，抽取实物奖品者麻烦联系【在线客服】进行兑换，若不想兑换可根据实物价格8折兑换彩金；
+          </div>
+          <div class="item">
+            <div class="item-num">4</div>
+            <div style="font-weight: 500">根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</div>
+          </div>
+          <div class="item">
+            <div class="item-num">5</div>
+            <div style="font-weight: 500">根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</div>
+          </div>
+          <div class="item">
+            <div class="item-num">6</div>
+            为避免文字理解差异，本站保留此活动最终解释权；
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -220,7 +248,7 @@ onMounted(() => {
     },
     {
       degree: 90,
-      prize: '黑神话-悟空'
+      prize: "黑神话-悟空"
     },
     {
       degree: 144,
@@ -444,7 +472,7 @@ onMounted(() => {
 .prizePopupContainer {
   width: 480px;
   height: 500px;
-  background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup.png");
+  background: url("./../../../assets/images/promotion/hotpromo/midautum-spinWheel/prize-popup.png");
   background-size: 100% 100%;
   box-shadow: none;
 
@@ -516,7 +544,7 @@ onMounted(() => {
       margin-right: 30px;
 
       .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-popup-action-btn.png")
+        background: url("./../../../assets/images/promotion/hotpromo/midautum-spinWheel/prize-popup-action-btn.png")
           no-repeat center center;
         background-size: 100% 100%;
         width: 80%;
@@ -636,6 +664,90 @@ onMounted(() => {
       .winner-prize {
         font-weight: 700;
         color: #3f8cff;
+      }
+    }
+  }
+}
+</style>
+
+<style scoped>
+.livepoker-rebate-game-bottom-rule {
+  width: 100%;
+  max-width: 1024px;
+  height: 100%;
+  margin: 40px auto 0;
+  background: #F4DFFF3B;
+  border-radius: 12px;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(180deg, #C5CEFF 0%, #A79EFF 100%);
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .title {
+    background-image: url("../../../assets/images/promotion/hotpromo/midautum-spinWheel/rule-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 290px;
+    color: #9742F8;
+    font-weight: 600;
+    font-size: 26px;
+    text-align: center;
+    height: 46px;
+    line-height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    color: #000000;
+    border: 2px solid #FFFFFF;
+    border-top: none;
+    padding: 40px;
+    border-radius: 0 0 12px 12px;
+    .item {
+      padding-left: 24px;
+      display: flex;
+      gap: 10px;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: url("../../../assets/images/promotion/hotpromo/midautum-spinWheel/rule-item-bg.png");
+        background-size: 100% 100%;
+      }
+
+      .hint {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 22.4px;
+        color: #ff0000;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 4px;
       }
     }
   }
