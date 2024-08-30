@@ -240,7 +240,9 @@
               (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
                 (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+                `Withdraw Amount Must In Between ${convertToCommaAmount(
+                  selectedMethodItem.withdrawMin
+                )} - ${convertToCommaAmount(selectedMethodItem.withdrawMax)}`
             ]"
             hide-bottom-space
           >
@@ -276,7 +278,9 @@
             <span class="fund-title">Available:</span>
             {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
           </div>
-          <div v-if="isUSDT">≈ {{ convertToTwoDecimalAmount(withdrawInfo.amount / selectedMethodItem.currencyRate) }} USDT</div>
+          <div v-if="isUSDT">
+            ≈ {{ convertToTwoDecimalAmount(withdrawInfo.amount / selectedMethodItem.currencyRate) }} USDT
+          </div>
         </div>
 
         <div class="bot-wrapper">
@@ -284,19 +288,25 @@
             <div class="desc-wrapper">
               <div class="desc">Withdrew Amount</div>
             </div>
-            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawAmount }}</div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.withdrawAmount) }}
+            </div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">{{ store.vip }} Daily Limit</div>
             </div>
-            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawMaxAmount }}</div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
+            </div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">Remain Wagers</div>
             </div>
-            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.remainWagers }}</div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+            </div>
           </div>
         </div>
       </div>
@@ -369,7 +379,8 @@
             </template>
 
             <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
-              {{ item.withdrawMin }}~{{ item.withdrawMax }} {{ store.currency.value }}
+              {{ convertToCommaAmount(item.withdrawMin) }}~{{ convertToCommaAmount(item.withdrawMax) }}
+              {{ store.currency.value }}
             </div>
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
