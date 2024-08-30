@@ -166,6 +166,7 @@ import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { api } from "boot/axios";
+import { onInitialized } from "src/hooks/initialized";
 
 const store = userStore();
 const router = useRouter();
@@ -213,6 +214,8 @@ const logout = () => {
     router.push("/home");
   });
 };
+
+onInitialized();
 </script>
 
 <style scoped lang="scss">

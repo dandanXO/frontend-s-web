@@ -207,6 +207,7 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid } from "boot/utils";
 import { App } from "@capacitor/app";
+import { onInitialized } from "src/hooks/initialized";
 
 export default defineComponent({
   name: "LoginPage",
@@ -618,7 +619,7 @@ export default defineComponent({
         });
     };
 
-    onMounted(() => {
+    onInitialized(() => {
       getAppInfo();
       getVersionNo();
       getCode();
@@ -629,6 +630,7 @@ export default defineComponent({
       checkRememberPwd();
       loadCustomerAddress();
     });
+
     return {
       header: "Login",
       loginNameRef,

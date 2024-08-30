@@ -44,6 +44,7 @@ import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+import { onInitialized } from "src/hooks/initialized";
 
 const { t } = useI18n();
 const { languageVal } = storeToRefs(i18nStore());
@@ -62,6 +63,8 @@ watch(group, (newVal) => {
 const handleConfirmClick = (route) => {
   router.push(route);
 };
+
+onInitialized();
 </script>
 
 <style scoped lang="scss">

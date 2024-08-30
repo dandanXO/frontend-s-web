@@ -84,6 +84,7 @@ import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import { useI18n } from "vue-i18n";
+import { onInitialized } from "src/hooks/initialized";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -326,6 +327,8 @@ const handleEnterKey = () => {
 onActivated(() => {
   loadBankCards();
 });
+
+onInitialized();
 </script>
 
 <style lang="scss">

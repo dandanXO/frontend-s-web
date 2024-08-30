@@ -647,6 +647,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import { t } from "src/boot/lang";
+import { onInitialized } from "src/hooks/initialized";
 // import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
@@ -893,7 +894,7 @@ onActivated(() => {
   loadInfo();
 });
 
-onMounted(() => {
+onInitialized(() => {
   loadInfo();
   getCode();
   getVersionNo();

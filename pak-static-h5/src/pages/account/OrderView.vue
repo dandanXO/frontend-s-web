@@ -129,6 +129,7 @@ import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { useQuasar } from "quasar";
 import { convertToCommaAmount } from "src/boot/utils";
 import { t } from "src/boot/lang";
+import { onInitialized } from "src/hooks/initialized";
 
 const $q = useQuasar();
 const router = useRouter();
@@ -278,6 +279,8 @@ onActivated(() => {
   searchWithdrawalRecord();
   searchDepositRecord();
 });
+
+onInitialized();
 </script>
 
 <style lang="scss" scoped>

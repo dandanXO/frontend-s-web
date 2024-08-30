@@ -269,6 +269,7 @@ import { useI18n } from "vue-i18n";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useQuasar } from "quasar";
+import { onInitialized } from "src/hooks/initialized";
 
 const interestProfitField = reactive({ storageTime: "", odds: "", deposits: "" });
 const $q = useQuasar();
@@ -565,7 +566,7 @@ const onRecordTabChange = () => {
   searchDepositRecord();
 };
 
-onMounted(() => {
+onInitialized(() => {
   setTime();
   searchDepositRecord();
   getDepositOverview();

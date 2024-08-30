@@ -210,6 +210,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+import { onInitialized } from "src/hooks/initialized";
 // import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
 export default defineComponent({
@@ -294,6 +295,7 @@ export default defineComponent({
     // onMounted(() => {
     //   loadAll();
     // });
+    onInitialized()
 
     watch(
       () => route.query,

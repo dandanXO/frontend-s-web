@@ -253,6 +253,7 @@ import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid } from "boot/utils";
+import { onInitialized } from "src/hooks/initialized";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -715,6 +716,8 @@ export default defineComponent({
           ui.CSAUrl = url;
         });
     };
+
+    onInitialized(() => {});
 
     watch(
       () => regLoginTab.value,

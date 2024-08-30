@@ -29,6 +29,7 @@ import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount } from "src/boot/utils";
+import { onInitialized } from "src/hooks/initialized";
 
 const router = useRouter();
 
@@ -94,6 +95,8 @@ onActivated(() => {
   setTime();
   searchDiscountRecord();
 });
+
+onInitialized();
 </script>
 
 <style lang="scss" scoped>

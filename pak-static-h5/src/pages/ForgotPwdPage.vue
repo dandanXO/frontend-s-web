@@ -274,6 +274,7 @@ import ConfirmButton from "src/atoms/ConfirmButton.vue";
 import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import { onInitialized } from "src/hooks/initialized";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -530,9 +531,7 @@ watch(
   }
 );
 
-onMounted(() => {
-  getCode();
-});
+onInitialized(getCode);
 </script>
 
 <style scoped lang="scss">

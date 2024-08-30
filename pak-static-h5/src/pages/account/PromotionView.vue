@@ -2,8 +2,13 @@
   <div class="promotionbonus">
     <!-- <span class="menu-title">Mailbox</span> -->
     <div class="promo-items">
-      <router-link :to="`/promo?name=${item.redirectUrl}&fromAccount=true`" v-for="(item, i) in promoList" :key="i" class="promo-item">
-        <img :src="require(`../../assets/images/promotion/${item.icon}.png`)">
+      <router-link
+        :to="`/promo?name=${item.redirectUrl}&fromAccount=true`"
+        v-for="(item, i) in promoList"
+        :key="i"
+        class="promo-item"
+      >
+        <img :src="require(`../../assets/images/promotion/${item.icon}.png`)" />
         {{ item.label }}
       </router-link>
     </div>
@@ -12,6 +17,7 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {api} from "boot/axios";
+import { onInitialized } from "src/hooks/initialized";
 
 export default defineComponent({
   name: "PromotionView",
@@ -153,7 +159,7 @@ export default defineComponent({
       },
     ])
 
-    onMounted(()=>{
+    onInitialized(()=>{
       // api.get( "/rest/api/hotPromotions" ).then((res) => {
       //   // console.log(reminderForm)
       //   const ret = res.data;
@@ -163,12 +169,13 @@ export default defineComponent({
       // });
     })
 
+
+
     return {
       promoList
     }
   }
 });
-
 </script>
 <style scoped lang="scss">
 .promotionbonus {
@@ -177,11 +184,11 @@ export default defineComponent({
   padding: 5px;
   .promo-items {
     width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-      font-size: 11px;
-      color: #bacef1;
-      padding: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 11px;
+    color: #bacef1;
+    padding: 20px 0;
     .promo-item {
       display: flex;
       flex-direction: column;

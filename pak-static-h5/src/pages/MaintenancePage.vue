@@ -23,8 +23,11 @@
 </template>
 
 <script setup>
+import { onInitialized } from "src/hooks/initialized";
 import { useUI } from "src/stores/ui";
 const ui = useUI();
+
+onInitialized();
 </script>
 
 <style lang="scss" scoped>
