@@ -1975,7 +1975,8 @@ const banners = ref([
 ]);
 
 const returnBannerUrl = (banner) => {
-  const displayImgUrl = banner.mobileImageUrlDark ?? banner.mobileImgUrl;
+  const displayImgUrl = banner.mobileImageUrlDark ?? banner.mobileImageUrl;
+  console.log(displayImgUrl, banner);
   try {
     var bannerImg = "";
     const bannerSplit = displayImgUrl.split("/");
