@@ -976,7 +976,7 @@ export default defineComponent({
 
     const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
-      router.push("/promo?name=vi-mualixi-redpacket");
+      router.push("/promo?name=phongbao-lixi2/9");
     };
 
     const getCheckRedPacket = () => {
