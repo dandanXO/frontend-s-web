@@ -662,13 +662,13 @@ const loadCards = () => {
     typeCode = "CRYPTO";
   }
 
+  bankCardList.value = [];
+
   api
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
         let filteredData = res.data.filter((item) => item.bankType === typeCode);
-
-        bankCardList.value = [];
         bankCardList.value.push(...filteredData);
 
         if (bankCardList.value.length > 0) {
