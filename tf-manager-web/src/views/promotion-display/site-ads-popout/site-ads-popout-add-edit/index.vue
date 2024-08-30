@@ -856,6 +856,7 @@ watch(
 )
 onMounted(async () => {
   await loadSites()
+  imageRequest.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }
