@@ -72,6 +72,14 @@
         <el-button size="mini" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
     </div>
+    <div>
+      <el-switch
+        v-model="request.doris"
+        :active-text="t('fields.historyRecord')"
+        :inactive-text="t('fields.nonHistoryRecord')"
+        style="margin-top: 20px"
+      />
+    </div>
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
@@ -234,6 +242,7 @@
 <script setup>
 import { ElMessage } from 'element-plus';
 import { computed, onMounted, reactive, ref } from 'vue';
+
 // import moment from 'moment';
 import { cancelDeposit, getDepositRecord, supplementDeposit, editDeposit } from '../../../api/member-deposit-record';
 import { required } from '../../../utils/validate';
@@ -242,7 +251,7 @@ import { useI18n } from "vue-i18n";
 import { TENANT } from "../../../store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
 import { useStore } from '../../../store';
-import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { convertDateToEnd, convertDateToStart, getShortcuts, isHistoryRecord } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n();
 const supplementForm = ref(null);
@@ -293,7 +302,8 @@ const request = reactive({
   loginName: null,
   siteId: null,
   thirdSerialNumber: null,
-  sort: 1
+  sort: 1,
+  doris: false
 });
 
 const suppForm = reactive({
@@ -365,6 +375,9 @@ async function loadRecord() {
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
+      if (isHistoryRecord(request.depositDate[0])) {
+        request.doris = true;
+      }
       query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
       query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
       query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
