@@ -1975,9 +1975,10 @@ const banners = ref([
 ]);
 
 const returnBannerUrl = (banner) => {
+  const displayImgUrl = banner.mobileImageUrlDark ?? banner.mobileImgUrl;
   try {
     var bannerImg = "";
-    const bannerSplit = banner.mobileImageUrlDark.split("/");
+    const bannerSplit = displayImgUrl.split("/");
     // console.log(bannerSplit);
     if (bannerSplit.length > 1) {
       bannerImg = bannerSplit[1];
@@ -1986,7 +1987,7 @@ const returnBannerUrl = (banner) => {
     }
     return require(`../assets/images/banners/${bannerImg}`);
   } catch (e) {
-    return imgURLPromo + banner.mobileImageUrlDark;
+    return imgURLPromo + displayImgUrl;
   }
 };
 
