@@ -308,9 +308,9 @@ export default defineComponent({
     };
     const loadAll = async () => {
       await loadPromoTypes().then((res) => {
-        if (res.code === 0 && res.data.length > 0) {
+        if (res.length > 0) {
           promoTypes.value = [];
-          res.data.forEach(element => {
+          res.forEach(element => {
             const obj = {
               code: element.value,
               img: 'all',

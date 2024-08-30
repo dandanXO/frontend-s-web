@@ -1,5 +1,7 @@
 import { server } from "@/utils/request";
 import { userStore } from "@/store";
+import cached from "@/utils/cache";
+
 
 export function loadPromo() {
   const store = userStore();
@@ -10,7 +12,7 @@ export function loadPromo() {
 }
 
 export function loadPromoTypes(category) {
-  return server.REST.get("/promo/type");
+  return cached.get("PROMOTION_TYPES", () => server.REST.get("/promo/type"));
 }
 
 export function loadPromoBanner(category) {
