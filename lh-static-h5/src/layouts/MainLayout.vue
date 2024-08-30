@@ -73,7 +73,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/home-icon-dark.png"
+          src="../assets/images/footer/home-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -83,7 +83,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/home-icon-active-dark.png"
+          src="../assets/images/footer/home-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -93,7 +93,18 @@
         <span>首页</span>
       </q-route-tab>
 
-      <q-route-tab to="/account/transfer" name="transfer">
+      <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
+        <img
+          class="inactive"
+          src="../assets/images/footer/hotmatch-icon-dark.svg"
+        />
+        <img
+          class="hover"
+          src="../assets/images/footer/hotmatch-icon-active-dark.svg"
+        />
+        <span>赛程</span>
+      </q-route-tab>
+      <q-route-tab v-else to="/account/transfer" name="transfer">
         <img
           class="inactive"
           v-if="$q.dark.isActive"
@@ -121,7 +132,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-dark.png"
+          src="../assets/images/footer/promo-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -131,7 +142,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/promo-icon-active-dark.png"
+          src="../assets/images/footer/promo-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -145,7 +156,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/chat-icon-dark.png"
+          src="../assets/images/footer/chat-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -155,7 +166,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/chat-icon-active-dark.png"
+          src="../assets/images/footer/chat-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -169,7 +180,7 @@
         <img
           class="inactive"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/account-icon-dark.png"
+          src="../assets/images/footer/account-icon-dark.svg"
         />
         <img
           class="inactive"
@@ -179,7 +190,7 @@
         <img
           class="hover"
           v-if="$q.dark.isActive"
-          src="../assets/images/footer/account-icon-active-dark.png"
+          src="../assets/images/footer/account-icon-active-dark.svg"
         />
         <img
           class="hover"
@@ -200,6 +211,7 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 
 import { translateRecord } from "src/directives/translate";
+import { MAILBOX_TYPES } from "src/constant/mailbox";
 
 export default defineComponent({
   name: "MainLayout",
@@ -344,6 +356,10 @@ export default defineComponent({
           prevPage.value = "account/personal";
           hasPage.value = true;
           pageName.value = "手机号码";
+        } else if (route.path === "/hotmatch") {
+          prevPage.value = false;
+          hasPage.value = true;
+          pageName.value = "赛程";
         } else if (route.path === "/account/verifyEmail") {
           prevPage.value = "account/personal";
           hasPage.value = true;
@@ -376,6 +392,12 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "消息提醒";
+
+          if(route.query.type && route.query.id) {
+            const currentTab = MAILBOX_TYPES.find(type => type.type === route.query.type)
+            prevPage.value = 'account/inbox'
+            if(currentTab) pageName.value = `${currentTab.name}详情`
+          }
         } else if (route.path === "/account/outbox") {
           prevPage.value = "account/letters";
           hasPage.value = true;

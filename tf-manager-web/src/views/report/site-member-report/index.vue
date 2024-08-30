@@ -395,7 +395,7 @@ function resetQuery() {
   request.selectedDateType = uiControl.selectedDateType[0].value
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.regTime = []
-  request.siteId = site.value ? site.value.id : 1
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.loginName = null
   request.affiliateName = null
   request.isDeposit = 1
@@ -667,13 +667,12 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   await loadSiteMemberReport()
 })

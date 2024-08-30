@@ -73,6 +73,7 @@ const handleDepositClick = () => {
 <style lang="scss" scoped>
 .black-myth-wrapper {
   margin: 10px auto 0;
+  padding: 16px 12px 10px;
 
   .black-myth-content-wrapper {
     &:first-child {

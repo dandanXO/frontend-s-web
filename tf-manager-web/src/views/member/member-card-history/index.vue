@@ -80,10 +80,7 @@
         />
       </div>
 
-      <div
-        class="header-container"
-        style="margin-top: 10px;margin-left:20px"
-      />
+      <div class="header-container" style="margin-top: 10px;margin-left:20px" />
 
       <div class="header-container">
         <el-button
@@ -123,7 +120,9 @@
         width="120"
       >
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
-          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
+          <router-link
+            :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`"
+          >
             <el-link type="primary">{{ scope.row.loginName }}</el-link>
           </router-link>
         </template>
@@ -211,8 +210,8 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
-import { ElMessage } from "element-plus";
+import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -269,7 +268,7 @@ function convertDate(date) {
 function resetQuery() {
   request.loginName = null
   request.cardTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value : null
+  request.siteId = site.value ? site.value : siteList.list[0].id
   request.cardNo = null
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value
@@ -278,7 +277,7 @@ function resetQuery() {
 
 async function loadBankCardHistory() {
   if (!(request.loginName || request.realName || request.cardNo)) {
-    ElMessage({ message: t('message.validateSearchCondition'), type: "error" })
+    ElMessage({ message: t('message.validateSearchCondition'), type: 'error' })
     return false
   }
   page.loading = true
@@ -289,12 +288,20 @@ async function loadBankCardHistory() {
       query[key] = value
     }
   })
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.cardTime !== null) {
     if (request.cardTime.length === 2) {
-      query.cardTime = JSON.parse(JSON.stringify(request.cardTime));
-      query.cardTime[0] = formatInputTimeZone(query.cardTime[0], timeZone, 'start');
-      query.cardTime[1] = formatInputTimeZone(query.cardTime[1], timeZone, 'end');
+      query.cardTime = JSON.parse(JSON.stringify(request.cardTime))
+      query.cardTime[0] = formatInputTimeZone(
+        query.cardTime[0],
+        timeZone,
+        'start'
+      )
+      query.cardTime[1] = formatInputTimeZone(
+        query.cardTime[1],
+        timeZone,
+        'end'
+      )
       query.cardTime = query.cardTime.join(',')
     }
   }
@@ -318,13 +325,12 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   request.bindType = bindType.list[0].value
   request.cardType = cardType.list[0].value

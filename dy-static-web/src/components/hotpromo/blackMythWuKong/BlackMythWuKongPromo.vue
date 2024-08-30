@@ -91,6 +91,10 @@
         background: url(./img/deposit-btn.png) no-repeat;
         aspect-ratio: 300 / 64;
         width: 300px;
+
+        button {
+          opacity: 0;
+        }
       }
 
       &.event-content {

@@ -487,6 +487,9 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     form.siteId = site.value.id;
     request.siteId = site.value.id
+  } else {
+    form.siteId = siteList.list[0].id;
+    request.siteId = siteList.list[0].id;
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();

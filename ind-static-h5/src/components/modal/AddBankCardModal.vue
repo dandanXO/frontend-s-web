@@ -25,27 +25,27 @@
               :options="cardType"
               @update:model-value="selectBankType(opt)"
             />
-          </div>
+          </div>-->
 
-          <div class="q-my-sm">
-            <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
-            <q-select
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.bankId"
-              :label="dialogDisplays.selectionPlaceholder"
-              :rules="[(_) => isValidBank()]"
-              label-color="secondary"
-              :options="currBankList"
-              option-value="id"
-              option-label="name"
-              lazy-rules
-              emit-value
-              map-options
-            />
-          </div> -->
+            <div class="q-my-sm" v-if="currentCardType === 'Crypto'">
+              <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
+              <q-select
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.bankId"
+                :label="dialogDisplays.selectionPlaceholder"
+                :rules="[(_) => isValidBank()]"
+                label-color="secondary"
+                :options="currBankList"
+                option-value="id"
+                option-label="name"
+                lazy-rules
+                emit-value
+                map-options
+              />
+            </div>
 
             <div class="q-my-sm">
               <div class="input-title">Holder Name</div>
@@ -63,7 +63,7 @@
             </div>
 
             <div class="q-my-sm">
-              <div class="input-title">Account Number</div>
+              <div class="input-title">{{ accountTypeStr }}</div>
               <q-input
                 type="number"
                 standout
@@ -78,7 +78,7 @@
               />
             </div>
 
-            <div class="q-my-sm">
+            <div class="q-my-sm" v-if="currentCardType !== 'Crypto'">
               <div class="input-title">IFSC Code</div>
               <q-input
                 standout
@@ -101,7 +101,11 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true)
+              (
+                isValidCardAccount() === true &&
+                isValidCardNumber() === true &&
+                ((currentCardType === 'Bank' && isValidCardAddress() === true) || currentCardType === 'Crypto')
+              )
             ) || isDisableBtn
           "
         ></ConfirmButton>
@@ -130,6 +134,8 @@ const refBankCardModal = ref();
 const cardType = ["Bank" /*, "Crypto", "EWallet"*/];
 const currentCardType = ref("Bank");
 
+const accountTypeStr = ref("");
+
 // display
 const currBankList = ref([]);
 
@@ -151,7 +157,12 @@ const closeModal = () => {
 };
 
 const isAddCardDialogOpen = ref(false);
-const onAddCardClick = () => {
+const onAddCardClick = (type) => {
+  // debugger;
+  currentCardType.value = type;
+  // alert(currentCardType.value);
+  selectBankStr();
+
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
       $q.notify({
@@ -165,7 +176,10 @@ const onAddCardClick = () => {
       isAddCardDialogOpen.value = true;
 
       // NOTE: fire once
-      if (bankList.length === 0 && cryptoList.length === 0 && ewalletList.length === 0) {
+      if (
+        (currentCardType.value === "Bank" && bankList.length === 0) ||
+        (currentCardType.value === "Crypto" && cryptoList.length === 0)
+      ) {
         api
           .get("/session/withdraw/card")
           .then((res) => {
@@ -185,6 +199,7 @@ const onAddCardClick = () => {
           });
       } else {
         clearField();
+        selectBankType();
         bankCardField.bankId = currBankList.value[0].id;
       }
     }
@@ -203,22 +218,33 @@ const selectBankType = () => {
 
   if (currentCardType.value === "Bank") {
     currBankList.value = bankList;
+  } else if (currentCardType.value === "Crypto") {
+    currBankList.value = cryptoList;
+  } else if (currentCardType.value === "EWallet") {
+    currBankList.value = ewalletList;
+  }
+  console.log(currBankList.value);
+};
+
+const selectBankStr = () => {
+  if (currentCardType.value === "Bank") {
     dialogDisplays.title = "Add Bank Account";
     dialogDisplays.selectionTitle = "Bank";
     dialogDisplays.selectionPlaceholder = "Select A Bank";
     dialogDisplays.selectionError = "Please Select A Bank";
+    accountTypeStr.value = "Account Number";
   } else if (currentCardType.value === "Crypto") {
-    currBankList.value = cryptoList;
     dialogDisplays.title = "Add Crypto Wallet";
     dialogDisplays.selectionTitle = "Crypto";
     dialogDisplays.selectionPlaceholder = "Select Crypto";
     dialogDisplays.selectionError = "Please Select A Crypto";
+    accountTypeStr.value = "Crypto Card Number";
   } else if (currentCardType.value === "EWallet") {
-    currBankList.value = ewalletList;
     dialogDisplays.title = "Add A Virtual Currency";
     dialogDisplays.selectionTitle = "eWallet";
     dialogDisplays.selectionPlaceholder = "Select eWallet";
     dialogDisplays.selectionError = "Please Select A eWallet";
+    accountTypeStr.value = "eWallet Card Number";
   }
 };
 

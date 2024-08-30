@@ -76,10 +76,16 @@
                           </div>
                           <div
                             class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
+                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
                             v-html="parsedParam(promo.param).date"
                           />
                         </div>
+                        <div
+                          style="padding-left:0;font-weight:400;"
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date && $q.dark.isActive"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -353,6 +359,7 @@ import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import { cached } from "src/boot/cache";
 
 export default defineComponent({
   name: "PromoView",
@@ -390,19 +397,19 @@ export default defineComponent({
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
-    const tabItems = [
+    const tabItems = ref([
       { name: "all", label: "全部优惠" },
-      // { name: "ftd", label: "首存" },
-      { name: "ftd", label: "新人" },
+      { name: "welcome", label: "新人" },
+      { name: "hot", label: "热门" },
       { name: "esport", label: "电竞" },
       { name: "sport", label: "体育" },
       // {name: "slot game", label: '老虎机'},
       // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: "真人" },
-      { name: "poker", label: "棋牌" },
-      { name: "daily", label: "日常" },
-      { name: "other", label: "其它" }
-    ];
+      { name: "slot game", label: "电游" },
+      { name: "ftd", label: "存款" },
+      { name: "vip", label: "VIP" }
+    ]);
 
     watch(
       () => route.query,
@@ -493,7 +500,23 @@ export default defineComponent({
       }
     };
 
-    const loadAll = () => {
+    const loadAll = async () => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).H5
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
       const platformApiUrl =
         store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
           ? "/session/loggedInPromoPages"
@@ -1327,13 +1350,23 @@ export default defineComponent({
 .body--dark {
   .promo-container {
     background: $background-dark;
+
     .all-promotions {
       .promo-main-container {
         .promo-list-wrapper {
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
+            border-radius: unset;
+            // aspect-ratio: 702/208;
+            border-radius: 8px;
+            overflow: hidden;
+            .promo-label {
+              top:0px;
+              left:0px;
+              font-family: 'YouSheBiaoTiHei';
+            }
             .promo-ribbon {
-              background: linear-gradient(90deg, #36cbd5 0%, #1d809a 100%);
+              background: #1475e1;
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1344,9 +1377,18 @@ export default defineComponent({
             }
             .promo-item-title {
               color: $font-3-dark;
+              font-family: 'YouSheBiaoTiHei';
+              font-weight: 400;
             }
             .promo-item-deal {
               color: $grey-color;
+            }
+            .promo-item-btn {
+              background: url('../assets/images/promo/promo-info-btn-bg.svg') no-repeat center center;
+              background-size: cover;
+              box-shadow: none;
+              border-radius: 4px;
+              border: 1px solid #3A93CE;
             }
           }
         }
@@ -1398,9 +1440,13 @@ export default defineComponent({
 
   .promo:not(.unfixed) {
     .q-tabs {
-      background: $background-dark-light;
+      background: #1A2338;
       .q-tab--active {
-        color: $primary-dark;
+        color: #fff;
+      }
+      .q-tab--active .q-tab__indicator {
+        width: 60%;
+        margin: auto;
       }
     }
     .q-tab-panels {
