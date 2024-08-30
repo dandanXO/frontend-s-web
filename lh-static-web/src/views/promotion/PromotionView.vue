@@ -20,7 +20,7 @@
                 @click="switchPromoType(p.code)"
               >
                 <img v-if="p.iconUrl" :src="p.iconUrl" />
-                <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <img v-else-if="p.img" :src="require('../../assets/promo/menu-' + p.img + '.png')" />
                 <span v-else></span>
                 <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
