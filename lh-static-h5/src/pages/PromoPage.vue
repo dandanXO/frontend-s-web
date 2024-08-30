@@ -353,6 +353,7 @@ import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import { cached } from "src/boot/cache";
 
 export default defineComponent({
   name: "PromoView",
@@ -494,10 +495,11 @@ export default defineComponent({
     };
 
     const loadAll = async () => {
-      await api.get("/promo/type").then((res) => {
-        if (res.code === 0 && res.data.length > 0) {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
           tabItems.value = [];
-          res.data.forEach(element => {
+          res.forEach(element => {
             const obj = {
               name: element.value.toLowerCase(),
               label: JSON.parse(element.name).H5
