@@ -1868,11 +1868,16 @@ $border-settings: 1px solid #e5e7eb;
           counter-increment: item;
           background: url("../assets/vip/tnc-no-bg.png") no-repeat center center;
           font-weight: 600;
-          padding: 10px;
           margin-top: -8px;
-          background-size: contain;
+          background-size: 100% 100%;
           color: #000000;
           text-align: center;
+          min-width: 40px;
+          min-height: 50px;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
       .term {

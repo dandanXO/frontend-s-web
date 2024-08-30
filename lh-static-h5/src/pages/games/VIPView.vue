@@ -1928,6 +1928,14 @@ $border-settings: 1px solid #e5e7eb;
           background-size: contain;
           color: #000000;
           text-align: center;
+          min-width: 30px;
+          min-height: 42px;
+          max-width: 30px;
+          max-height: 42px;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
 
