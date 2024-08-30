@@ -2016,6 +2016,7 @@ export default {
     fiatBalance: 'Fiat Balance',
     usdtBalance: 'USDT Balance',
     toggleWallet: 'Toggle Wallet Type',
+    productId: 'Product ID',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

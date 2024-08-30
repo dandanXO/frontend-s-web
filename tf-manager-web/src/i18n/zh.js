@@ -2015,6 +2015,7 @@ export default {
     fiatBalance: '法币余额',
     usdtBalance: 'USDT余额',
     toggleWallet: '切换钱包',
+    productId: '产品ID',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
