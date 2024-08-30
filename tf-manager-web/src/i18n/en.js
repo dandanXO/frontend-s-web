@@ -2018,6 +2018,7 @@ export default {
     toggleWallet: 'Toggle Wallet Type',
     historyRecord: 'History Record',
     nonHistoryRecord: 'Non-History Record',
+    productId: 'Product ID',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2526,6 +2527,7 @@ export default {
     required_6_digits_code: 'Must be composed of 6 digits code.',
     required_only_digits_and_alphabet:
       'Must be composed of digits and alphabet',
+    validateProductIdRequired: 'Product ID is required',
   },
   menu: {
     undefined: '',

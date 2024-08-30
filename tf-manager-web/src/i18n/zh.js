@@ -2017,6 +2017,7 @@ export default {
     toggleWallet: '切换钱包',
     historyRecord: '历史数据',
     nonHistoryRecord: '非历史数据',
+    productId: '产品ID',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2475,6 +2476,7 @@ export default {
     affiliateReactivated: '解禁成功',
     required_6_digits_code: '只能六个字符',
     required_only_digits_and_alphabet: '只许字母或数字',
+    validateProductIdRequired: '产品ID必填',
   },
   menu: {
     undefined: '',
