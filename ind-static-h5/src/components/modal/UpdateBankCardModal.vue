@@ -28,7 +28,7 @@
             <div class="q-my-sm">
               <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
-                type="number"
+                :type="inputType"
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -194,6 +194,8 @@ const updateCard = () => {
       isDisableBtn.value = false;
     });
 };
+
+const inputType = computed(() => (currentCardType.value === "CRYPTO" ? "text" : "number"));
 
 defineExpose({
   onUpdateCardClick
