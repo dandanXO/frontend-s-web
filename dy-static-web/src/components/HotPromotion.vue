@@ -29,6 +29,7 @@
     <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
+    <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode"/>
     <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode"/>
     <PrivilegeInvite
       v-if="
@@ -121,6 +122,7 @@ import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.v
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
+import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue";
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
@@ -183,6 +185,7 @@ export default defineComponent({
     LPLSummer,
     Cny2024Promo,
     BbDacha2024Promo,
+    Dota2Ti13,
     CnyStepGame2024Promo,
     Dy2StepGamePromo,
     CS2Sign,
