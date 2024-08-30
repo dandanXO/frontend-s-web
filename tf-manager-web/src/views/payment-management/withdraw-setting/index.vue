@@ -145,7 +145,7 @@
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
-import { isNumericNonRequired, numericOnlyNonRequired } from '../../../utils/validate'
+import { isNumeric, numericOnlyNonRequired } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { getWithdrawSettingList, insertOrUpdate } from '../../../api/withdraw-setting'
 import { getSiteListSimple } from '../../../api/site'
@@ -203,7 +203,7 @@ const form = reactive({
 
 const validateWebWithdrawMin = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMinWithdrawNumber')));
     } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax > 0) {
       callback(new Error(t('message.validateMinWithdrawLesser')));
@@ -217,7 +217,7 @@ const validateWebWithdrawMin = (rule, value, callback) => {
 
 const validateWebWithdrawMax = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
     } else if (form.web.withdrawMin !== null && value - form.web.withdrawMin < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
@@ -230,7 +230,7 @@ const validateWebWithdrawMax = (rule, value, callback) => {
 };
 
 const validateWithdrawMaxTime = (rule, value, callback) => {
-  if (value && value < 1) {
+  if (value && value < 0) {
     callback(new Error(t('message.validateMaxDailyWithdrawTimesNumber')));
   } else {
     callback();
@@ -239,7 +239,7 @@ const validateWithdrawMaxTime = (rule, value, callback) => {
 
 const validateWebWithdrawMaxAmountDaily = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
     } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
@@ -253,7 +253,7 @@ const validateWebWithdrawMaxAmountDaily = (rule, value, callback) => {
 
 const validateMobileWithdrawMin = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMinWithdrawNumber')));
     } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax > 0) {
       callback(new Error(t('message.validateMinWithdrawLesser')));
@@ -267,7 +267,7 @@ const validateMobileWithdrawMin = (rule, value, callback) => {
 
 const validateMobileWithdrawMax = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
     } else if (form.mobile.withdrawMin !== null && value - form.mobile.withdrawMin < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
@@ -281,7 +281,7 @@ const validateMobileWithdrawMax = (rule, value, callback) => {
 
 const validateMobileWithdrawMaxAmountDaily = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
     } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
@@ -294,7 +294,7 @@ const validateMobileWithdrawMaxAmountDaily = (rule, value, callback) => {
 };
 
 const validateNumeric = (rule, value, callback) => {
-  if (value && !isNumericNonRequired(value)) {
+  if (value && !isNumeric(value)) {
     callback(new Error(t('message.validateNumberOnly')))
   } else {
     callback()

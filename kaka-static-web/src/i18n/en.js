@@ -336,7 +336,7 @@ export default {
     expectedAmount: "Expected amount",
     depositAmountRange: "Deposit amount should be between",
     exchangeRateExample:
-      "*Special Note: A withdrawal fee of 2.00 USDT will be automatically charged by the third party!",
+      "*Special Note: A withdrawal fee of {fee} USDT will be automatically charged by the third party!",
     startEndDate: "Please enter the start and end date",
     usdtAddress: "USDT address",
     accountNo: "Account number",
@@ -1013,6 +1013,8 @@ export default {
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "The user's deposit history does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
+    30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

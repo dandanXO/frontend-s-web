@@ -389,6 +389,12 @@
         <el-form-item :label="t('fields.sequence')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-input-number v-model="form.order" style="width: 240px" :min="1" size="small" />
         </el-form-item>
+        <el-form-item :label="t('fields.minDeposit')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101 && form.paymentType === 'Deposit'">
+          <el-input-number v-model="form.min" style="width: 240px" :min="0" size="small" />
+        </el-form-item>
+        <el-form-item :label="t('fields.maxDeposit')" prop="order" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101 && form.paymentType === 'Deposit'">
+          <el-input-number v-model="form.max" style="width: 240px" :min="form.min" size="small" />
+        </el-form-item>
         <el-form-item :label="t('fields.riskDepositLimit')" prop="riskDepositLimit" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order === 101">
           <el-input-number v-model="form.riskDepositLimit" style="width: 240px" :min="0" size="small" />
         </el-form-item>
@@ -872,6 +878,7 @@ import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 import { isPak } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const activeTabName = ref(null)
@@ -881,8 +888,8 @@ const site = ref(null);
 const affiliateFinancialDepositDisplayForm = ref(null)
 const affiliateFinancialDepositSettingForm = ref(null)
 const setting = ref(null)
-const paymentDir = process.env.VUE_APP_IMAGE + '/payment/'
-const paymethodicon = process.env.VUE_APP_IMAGE
+const paymentDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/payment/'
+const paymethodicon = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const activeName = ref('superior')
 const uiControl = reactive({
   dialogVisible: false,
@@ -948,6 +955,8 @@ const form = reactive({
   channelId: null,
   order: null,
   riskDepositLimit: null,
+  min: null,
+  max: null,
 })
 const settingForm = reactive({
   id: null,

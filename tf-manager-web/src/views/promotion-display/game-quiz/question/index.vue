@@ -894,11 +894,12 @@ import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
 import { createSiteImage, getSiteImage } from "@/api/site-image";
 import { uploadImage } from '../../../../api/image'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const site = ref(null);
 const choiceOne = ref([]);
 const choiceTwo = ref([]);

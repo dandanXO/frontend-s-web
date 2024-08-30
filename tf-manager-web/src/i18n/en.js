@@ -309,7 +309,7 @@ export default {
     CENTERPROMO: 'Center Promo',
     LOGIN: 'Login',
     REGISTER: 'Register',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Pending',
@@ -514,6 +514,13 @@ export default {
     main: 'MAIN',
     slot: 'SLOT',
   },
+  language: {
+    en: 'English',
+    zh: 'Chinese',
+    th: 'Thai',
+    kr: 'Korean',
+    vn: 'Vietnamese'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -572,6 +579,7 @@ export default {
     addPlatform: 'Add Platform',
     addPlatformAccount: 'Add Platform Account',
     addPrivilegeInfo: 'Add Privilege Info',
+    addPromoType: 'Add Promo Type',
     addQuestionnaire: 'Add Questionnaire',
     addRecipient: 'Add Recipient',
     addRedirect: 'Add Redirect',
@@ -951,6 +959,7 @@ export default {
     editPlatform: 'Edit Platform',
     editPlatformAccount: 'Edit Platform Account',
     editPrivilegeInfo: 'Edit Privilege Info',
+    editPromoType: 'Edit Promo Type',
     editQuestionnaire: 'Edit Questionnaire',
     editRedirect: 'Edit Redirect',
     editRemark: 'Edit Remark',
@@ -1082,6 +1091,7 @@ export default {
     jobType: 'Job Type',
     label: 'Label',
     labelCancel: 'cancel',
+    language: 'Language',
     lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',
@@ -1689,6 +1699,8 @@ export default {
     upload: 'Upload',
     upperName: 'Upper Name',
     usdtControl: 'USDT Withdrawal Control',
+    usdtDepositAmount: 'USDT Deposit Amount',
+    usdtDepositCount: 'USDT Deposit Count',
     username: 'Username',
     userType: 'User Type',
     validate: 'Validate',
@@ -2646,6 +2658,7 @@ export default {
     'Bet Game Type Rebate Record': 'Bet Game Type Rebate Record',
     'Site Interest Plan': 'Site Interest Plan',
     'Interest Plan Order Record': 'Interest Plan Order Record',
+    'Promo Type': 'Promo Type',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
@@ -2774,7 +2787,8 @@ export default {
     'Member Vip Upgrade Record': 'Member Vip Upgrade Record',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
-    'Sites Config': 'Site Config'
+    'Sites Config': 'Site Config',
+    'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

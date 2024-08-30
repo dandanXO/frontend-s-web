@@ -199,9 +199,6 @@
             {{ $t("withdraw.usdt") }}
           </span>
         </el-form-item>
-        <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          {{ $t("withdraw.exchangeRateExample") }}
-        </div>
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
@@ -211,6 +208,10 @@
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
           </el-button>
+        </div>
+
+        <div v-if="selectedWithdrawalMethod.withdrawFee" class="" style="color: #17cd27">
+          {{ $t("withdraw.exchangeRateExample", {fee: selectedWithdrawalMethod.withdrawFee}) }}
         </div>
 
         <!-- <div

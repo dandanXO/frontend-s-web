@@ -27,7 +27,8 @@ export const userStore = defineStore("userStore", {
       regPageVisible: false,
       unreadTotal: 0,
       siteId: 6,
-      visitorId: ""
+      visitorId: "",
+      withdrawType: "",
     };
   },
   actions: {
@@ -84,6 +85,7 @@ export const userStore = defineStore("userStore", {
             this.memberType = ret.data.memberType;
             this.vip = ret.data.vip;
             this.evip = ret.data.evip;
+            this.withdrawType = ret.data.withdrawType;
           } else {
             throw new Error(ret.message);
           }

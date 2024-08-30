@@ -1,5 +1,12 @@
 <template>
   <div class="withdraw-section">
+    <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
+      <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+      <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+        <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+        <span>升级快速提款</span>
+      </q-btn>
+    </div>
     <!--    <AcctBal :platforms="platforms" />-->
     <div class="q-pa-md bg-white q-mx-sm q-my-md">
       <div class="account-content last">
@@ -116,6 +123,10 @@
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
+            <div v-if="isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
+              <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+              <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+            </div>
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款: " +
@@ -152,7 +163,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
@@ -164,6 +174,9 @@
               />
             </div>
           </div>
+
+          
+          <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -223,6 +236,37 @@
         </div>
       </q-card>
     </q-dialog>
+
+    <!-- <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
+      <q-card style="width: 100%; padding: 20px">
+        <q-card-section class="q-mb-md flex-direction-column">
+          <strong style="display: inline-block; padding-bottom: 16px; font-size: 20px">完成以下认证才可以提款</strong>
+          <div v-if="!store.realName" style="margin: 16px 0">
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+              <div class="">
+                <p style="margin: 0; color: #fff; font-size: 16px">提款需要绑定真实姓名</p>
+                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              </div>
+
+              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+            </div>
+          </div>
+
+          <div v-if="!store.phone">
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
+              <div class="">
+                <p style="margin: 0; color: #333; font-size: 16px">提款需要绑定手机号</p>
+                <div style="font-size: 12px; color: #333">为了您的资金安全，请绑定手机号</div>
+              </div>
+              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn style="width: 100%" label="暂不认证" color="brightbtn" @click="isNewUser = false" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog> -->
   </div>
 </template>
 
@@ -234,6 +278,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useLocalStorage } from "@vueuse/core";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -243,6 +288,7 @@ export default defineComponent({
     const $q = useQuasar();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     const imgWithdrawURL = imgURL + "/withdraw/";
+    const router = useRouter();
 
     const amountRef = ref();
     const cardRef = ref();
@@ -256,6 +302,7 @@ export default defineComponent({
       cardId: undefined,
       amount: ""
     });
+    const isNewUser = ref(false);
     const isLoaded = ref(false);
     const hasWithdrawCard = computed(() => {
       return (isLoaded == true) && withdrawState.bankCardList.length === 0;
@@ -264,6 +311,7 @@ export default defineComponent({
     const selectedWithdrawalMethod = ref([]);
     onMounted(() => {
       isLoaded.value= false;
+      checkNewUser();
       getWithdrawalMethods();
       store.getBalance();
       // loadPlatform()
@@ -306,6 +354,8 @@ export default defineComponent({
     const withdrawLoading = ref(false);
 
     const submitWithdraw = () => {
+      if (!checkNewUser()) return
+
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
@@ -467,6 +517,41 @@ export default defineComponent({
       window.open(selectedWithdrawalMethod.value.url);
 
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: "升级中。。。"
+      });
+      api.get("/session/updateAutoWithdraw").then(async (res) => {
+        if(res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "成功升级为快速提款!",
+            icon: "check_circle_outline"
+          });
+          await store.getMemberInfo()
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          })
+        }
+      }).finally(() => $q.loading.hide())
+    }
+
+    const checkNewUser = () => {
+      if (!store.phone || !store.realName) {
+        isNewUser.value = true;
+        return false;
+      }
+
+      return true
+    }
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -495,7 +580,11 @@ export default defineComponent({
       chooseCard,
       openEWalletTutorial,
       tutorialLabel,
-      withdrawLoading
+      withdrawLoading,
+      isAutoWithdrawal,
+      handleUpgradeClick,
+      isNewUser,
+      router
     };
   }
 });
@@ -632,5 +721,28 @@ export default defineComponent({
 
 .tip-text {
   color: #ff7f10;
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  .upgrade-btn {
+    padding: 1px 12px;
+    img {
+      height: 30px;
+    }
+  }
+}
+
+.upgraded-helper-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: #00a478;
+}
+
+.flex-direction-column {
+  flex-direction: column;
 }
 </style>

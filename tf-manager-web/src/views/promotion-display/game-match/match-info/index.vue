@@ -533,13 +533,14 @@ import moment from "moment";
 import { getShortcuts } from "@/utils/datetime";
 import { createSiteImage, getSiteImage } from "@/api/site-image";
 import { uploadImage } from '../../../../api/image'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const shortcuts = getShortcuts(t);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const selectedId = ref(null);
 const inputImage = ref(null)
 const imageFormRef = ref(null)

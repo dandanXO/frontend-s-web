@@ -74,10 +74,11 @@
               selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
               selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
               selectedPromo.redirectUrl === 'dy2-football' ||
+              selectedPromo.redirectUrl === 'dy2-blackmyth-wukong' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
-            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
           }"
         >
           <div
@@ -108,7 +109,7 @@
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo?.promoCode === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-olympic-match',
-            isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
+            isMSI: selectedPromo.promoCode === 'dy2-msi-promo' || selectedPromo.promoCode === 'dy2-blackmyth-wukong',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             esl: selectedPromo.promoCode === 'dy2-intel-esl',
             fullwidth:
@@ -119,10 +120,11 @@
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual',
-            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+            duanwujie:
+              selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
-            dyfootball: selectedPromo?.promoCode === 'dy2-football',
+            dyfootball: selectedPromo?.promoCode === 'dy2-football'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl

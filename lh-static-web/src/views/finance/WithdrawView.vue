@@ -140,9 +140,6 @@
             USDT
           </span>
         </el-form-item>
-        <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          *提币手续费：2.00 USDT
-        </div>
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
@@ -150,6 +147,10 @@
           <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
+        </div>
+
+        <div v-if="selectedWithdrawalMethod.withdrawFee" style="color: #17cd27">
+          *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
         </div>
 
         <!-- <div

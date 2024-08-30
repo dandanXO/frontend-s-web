@@ -6,27 +6,29 @@ import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 
-function isInApp(){
-  if( window.location.pathname === "/vip" ||
+function isInApp() {
+  const hasToken = new URLSearchParams(window.location.search).get("token");
+  if (
+    (window.location.pathname === "/vip" && hasToken) ||
     window.location.pathname === "/viptest" ||
-    window.location.pathname === "/promotion" ||
+    (window.location.pathname === "/promotion" && hasToken) ||
     window.location.pathname === "/deposit" ||
     window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||
-    window.location.pathname === "/privilege/invite"){
+    window.location.pathname === "/privilege/invite"
+  ) {
     return true;
   }
   return false;
 }
 
-
 let fullroutes;
-if(isInApp()){
-  console.log("In App")
-  fullroutes= require("./routers-app").default
-}else{
-  console.log("Normal")
-  fullroutes= require("./routes").default
+if (isInApp()) {
+  console.log("In App");
+  fullroutes = require("./routers-app").default;
+} else {
+  console.log("Normal");
+  fullroutes = require("./routes").default;
 }
 console.log(fullroutes);
 
@@ -34,8 +36,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -93,8 +95,8 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-      sessionStorage.removeItem("REFERRAL_CODE")
-      sessionStorage.removeItem("SUMMON_CODE")
+      sessionStorage.removeItem("REFERRAL_CODE");
+      sessionStorage.removeItem("SUMMON_CODE");
       if (to.query.reg) {
         next(`/login?register`);
       } else {
@@ -103,13 +105,13 @@ export default route(function (/* { store, ssrContext } */) {
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      sessionStorage.removeItem("AFFILIATE_CODE")
+      sessionStorage.removeItem("AFFILIATE_CODE");
       next(`/login?register`);
     }
 
     if (to.name === "summonCode") {
       sessionStorage.setItem("SUMMON_CODE", to.params.summonerCode);
-      sessionStorage.removeItem("AFFILIATE_CODE")
+      sessionStorage.removeItem("AFFILIATE_CODE");
       next(`/login`);
     }
     // if (to.name === "RegisterPage") {
