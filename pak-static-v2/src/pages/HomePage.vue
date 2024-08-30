@@ -233,7 +233,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://0vsadwuz3sh.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -1976,7 +1976,6 @@ const banners = ref([
 
 const returnBannerUrl = (banner) => {
   const displayImgUrl = banner.mobileImageUrlDark ?? banner.mobileImageUrl;
-  console.log(displayImgUrl, banner);
   try {
     var bannerImg = "";
     const bannerSplit = displayImgUrl.split("/");
