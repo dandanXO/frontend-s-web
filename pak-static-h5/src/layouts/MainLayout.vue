@@ -639,7 +639,6 @@ svg path {
   }
 }
 
-
 .first-screen-loading {
   position: fixed;
   top: 0;
@@ -650,6 +649,7 @@ svg path {
   max-width: 100%;
   background: url(../assets/images/index/first-screen-loading.png) no-repeat;
   background-size: cover;
+  background-position: center center;
   z-index: 10000;
 }
 </style>
