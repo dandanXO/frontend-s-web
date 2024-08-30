@@ -74,6 +74,7 @@ const handleDepositClick = () => {
 .black-myth-wrapper {
   margin: 10px auto 0;
   padding: 16px 12px 10px;
+  font-family: 'PingFang';
 
   .black-myth-content-wrapper {
     &:first-child {
@@ -95,7 +96,7 @@ const handleDepositClick = () => {
       color: #e8d5b9;
 
       .deposit-btn {
-        margin: 16px auto 0;
+        margin: 10px auto 0;
         background: url(./img/deposit-btn.png) no-repeat;
         background-size: cover;
         aspect-ratio: 300 / 64;
@@ -110,7 +111,7 @@ const handleDepositClick = () => {
       }
 
       &.event-rule {
-        padding: 25px 13px 30px 24px;
+        padding: 0 10px;
         ul {
           font-size: 1rem;
           line-height: 2rem;
@@ -141,7 +142,7 @@ const handleDepositClick = () => {
   width: 100%;
   background-color: #4b3e3a;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.5rem;
 
   .reward-table__header,
@@ -165,6 +166,41 @@ const handleDepositClick = () => {
     align-items: center;
     &:not(:last-child) {
       border-bottom: 1px solid #6a5954;
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  .reward-table {
+    font-size: 0.8rem;
+  }
+
+  .black-myth-wrapper .black-myth-content-wrapper {
+    &:first-child {
+      margin-bottom: 15px;
+    }
+
+    .black-myth-content-block.event-rule ul, .black-myth-content-block.event-content {
+      font-size: 0.8rem;
+      line-height: 1rem;
+      padding: 12px;
+    }
+
+    .black-myth-content-block {
+      gap: 10px;
+
+      &.event-rule {
+        padding: 0;
+      }
+    }
+
+    .black-myth-content-block .deposit-btn {
+      width: 40%;
+      margin: 10px auto 0
+    }
+
+    .black-myth-content-title {
+      margin-bottom: 10px !important;
     }
   }
 }
