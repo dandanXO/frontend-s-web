@@ -68,6 +68,10 @@ body {
     .mobile {
         display: block !important;
     }
+
+    .mobile.flex {
+        display: flex !important;
+    }
     .landing-wrapper {
         background: url(../images/landing-bg-mobile.png) no-repeat center center;
         align-items: center;
