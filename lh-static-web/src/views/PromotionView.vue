@@ -18,7 +18,7 @@
                 :class="{ active: p.code === promoTabActive }"
                 :key="p.code"
                 @click="switchPromoType(p.code)"
-              > 
+              >
                 <img v-if="p.iconUrl" :src="p.iconUrl" />
                 <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
                 <span v-else></span>
@@ -210,14 +210,16 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code: "ALL", img: "all", label: "全站优惠" },
-      { code: "FTD", img: "deposit", label: "新人优惠" },
-      { code: "ESPORT", img: "esport", label: "电竞优惠" },
-      { code: "SPORT", img: "sport", label: "体育优惠" },
-      { code: "LIVE CASINO", img: "live", label: "真人优惠" },
-      { code: "POKER", img: "poker", label: "棋牌优惠" },
+      { code: "WELCOME", img: "welcome", label: "新人优惠" },
+      { code: "HOT", img: "hot", label: "热门活动" },
+      { code: "ESPORT", img: "esport", label: "电竞活动" },
+      { code: "SPORT", img: "sport", label: "体育活动" },
+      { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
+      { code: "SLOT GAME", img: "slot", label: "电游活动" },
+      // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "DAILY", img: "daily", label: "日常优惠" },
-      { code: "OTHER", img: "slot", label: "其他优惠" }
+      { code: "FTD", img: "deposit", label: "存款优惠" },
+      { code: "VIP", img: "vip", label: "VIP特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -307,12 +309,12 @@ export default defineComponent({
     const loadAll = async () => {
       await loadPromoTypes().then((res) => {
         if (res.code === 0 && res.data.length > 0) {
-          promoTypes.value = []; 
+          promoTypes.value = [];
           res.data.forEach(element => {
             const obj = {
               code: element.value,
               img: 'all',
-              iconUrl: imgURL + element.iconUrl, 
+              iconUrl: imgURL + element.iconUrl,
               label: JSON.parse(element.name)
             };
             promoTypes.value.push(obj);

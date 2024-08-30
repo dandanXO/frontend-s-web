@@ -392,16 +392,16 @@ export default defineComponent({
     const tab = ref("all");
     const tabItems = ref([
       { name: "all", label: "全部优惠" },
-      // { name: "ftd", label: "首存" },
-      { name: "ftd", label: "新人" },
+      { name: "welcome", label: "新人" },
+      { name: "hot", label: "热门" },
       { name: "esport", label: "电竞" },
       { name: "sport", label: "体育" },
       // {name: "slot game", label: '老虎机'},
       // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: "真人" },
-      { name: "poker", label: "棋牌" },
-      { name: "daily", label: "日常" },
-      { name: "other", label: "其它" }
+      { name: "slot game", label: "电游" },
+      { name: "ftd", label: "存款" },
+      { name: "vip", label: "VIP" }
     ]);
 
     watch(
@@ -496,7 +496,7 @@ export default defineComponent({
     const loadAll = async () => {
       await api.get("/promo/type").then((res) => {
         if (res.code === 0 && res.data.length > 0) {
-          tabItems.value = []; 
+          tabItems.value = [];
           res.data.forEach(element => {
             const obj = {
               name: element.value.toLowerCase(),
