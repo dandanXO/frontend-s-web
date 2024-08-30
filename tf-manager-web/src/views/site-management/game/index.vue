@@ -886,14 +886,14 @@ const selected = reactive({ gameLabels: [] });
 function resetQuery() {
   request.name = null
   request.platform = null
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : sites.list[0].id;
   request.gameType = null
   request.code = null;
 }
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : sites.list[0].id
 }
 
 function handleSelectionChange(val) {
