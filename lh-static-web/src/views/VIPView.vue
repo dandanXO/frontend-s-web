@@ -19,7 +19,8 @@
               <div class="description">
                 晋级所需有效流水:
                 <!-- <span>{{ formatNumber(vipItems[vipIndex].upgradeBetAmount) }}</span> -->
-                <span>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
+                <span v-show="originalUpgradeBetAmounts.length != 0">{{ originalUpgradeBetAmounts[vipIndex] }}</span>
               </div>
               <div class="viplevel">VIP {{ vip.vipLevel }}</div>
             </div>
@@ -30,9 +31,11 @@
         <Navigation />
       </template>
     </Carousel>
-    <div class="current-vip-status" v-if="store.token && isDataLoaded">
-      <div class="badge">
+    <div class="current-vip-status" v-if="store.token">
+      <div class="badge" v-show="isDataLoaded">
         <img :src="badgeSrc" />
+      </div>
+      <div class="badge" v-show="!isDataLoaded" style="height: 200px;">
       </div>
       <div class="vip-progress">
         <!-- <div class="amount">
@@ -64,7 +67,7 @@
         </template> -->
 
         <div class="amount">
-          <div v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
             <div
               class="text"
               v-if="
@@ -82,11 +85,12 @@
 
             <div class="text" v-else-if="vipLevel === 0">
               还需
+              <div class="required-amount">
               {{
                 currentBetAmt > originalUpgradeBetAmounts[0]
                   ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
                   : formatNumber(originalUpgradeBetAmounts[0])
-              }}
+              }}</div>
               有效投注晋升到 VIP 1
             </div>
 
@@ -98,9 +102,10 @@
             </div>
           </div>
 
-          <div class="text" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
+          <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
 
-          <div class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
+          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注和存款</div>
+          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
             </div>
@@ -113,7 +118,7 @@
             </div>
           </div>
 
-          <div class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
+          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
             <div class="progressBarOuterBar">
               <div
                 class="progressBarInnerBar"
@@ -133,9 +138,20 @@
               {{ originalUpgradeBetAmounts[11] + "/" + originalUpgradeBetAmounts[11] }}
             </div>
           </div>
+          <div class="progressBarContainer" v-show="!isDataLoaded">
+            <div class="progressBarOuterBar">
+              <div
+                class="progressBarInnerBar"
+                style="width: 0%"
+              ></div>
+            </div>
+            <div class="progressBarDescription" style="font-size: 12px;">
+              计算中...
+            </div>
+          </div>
         </div>
       </div>
-      <div class="claim-btn" :class="{ disabled: isLoading['all'] }" @click="handleClick('all', vipLevel)">
+      <div class="claim-btn" :class="{ disabled: isLoading['all'] || !isDataLoaded }" @click="handleClick('all', vipLevel)">
         一键领取
       </div>
     </div>
@@ -183,8 +199,10 @@
                       </div>
                       <div>
                         <div class="item-name">{{ category.displayName }}</div>
-                        <div class="item-amt">
+                        <div class="item-amt" v-show="isDataLoaded">
                           {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
+                        </div>
+                        <div class="loading-blue-icon" v-show="!isDataLoaded">
                         </div>
                       </div>
                     </div>
@@ -938,24 +956,8 @@ const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
 const initVIPTable = async () => {
   getImages();
-  const storedData = sessionStorage.getItem("vipData");
-
-  if (storedData) {
-    var res = JSON.parse(storedData);
-    const statuses = [
-      "upgradeClaimStatus",
-      "monthlyClaimStatus",
-      "couponClaimStatus",
-      "rebateClaimStatus",
-      "retainClaimStatus",
-      "yearlyRetainClaimStatus"
-    ];
-
-    statuses.forEach((status) => {
-      res.data[status] = "CANT_CLAIM";
-    });
-    runVipAPI(res);
-  }
+  isDataLoaded.value = false
+  originalUpgradeBetAmounts.value = [];
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
   runVipAPI(res);
 };
@@ -1013,6 +1015,7 @@ const runVipAPI = (res) => {
     getVipLevelProgress(vipLevel.value, "bet");
   } else {
     notify.error(res.message);
+    isDataLoaded.value = true;
   }
   slideTo();
 };
@@ -1153,6 +1156,32 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
+  .loading-icon {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #f1dda0; /* Light gold color */
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px 0;
+  }
+  .loading-blue-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #799df8; /* Light gold color */
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 4px auto;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   position: relative;
   background-image: url("../assets/vip/vip-bg.jpg");
   background-color: #f3f7fd;
@@ -1424,7 +1453,7 @@ $border-settings: 1px solid #e5e7eb;
       // width: auto;
       z-index: 2;
       right: 2%;
-      width: 75%;
+      width: 98%;
     }
     .arrow_box {
       top: 40px;
@@ -1465,6 +1494,7 @@ $border-settings: 1px solid #e5e7eb;
       table {
         width: 100%;
         table-layout: fixed;
+        word-break: break-all;
         tr {
           th {
             border: 2px solid #f1dda0;
@@ -1651,6 +1681,8 @@ $border-settings: 1px solid #e5e7eb;
         text-align: center;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         span {
           color: #f1dda0;
           font-size: 36px;
