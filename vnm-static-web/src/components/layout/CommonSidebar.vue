@@ -146,7 +146,7 @@ export default defineComponent({
     };
 
     const getRedEnvelope = () => {
-      router.push("/promotion?name=vi-mualixi-redpacket");
+      router.push("/promotion?name=phongbao-lixi2/9");
     };
 
     const isRedPacketShow = ref(false);
