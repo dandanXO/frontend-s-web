@@ -1977,7 +1977,7 @@ const banners = ref([
 const returnBannerUrl = (banner) => {
   try {
     var bannerImg = "";
-    const bannerSplit = banner.mobileImageUrl.split("/");
+    const bannerSplit = banner.mobileImageUrlDark.split("/");
     // console.log(bannerSplit);
     if (bannerSplit.length > 1) {
       bannerImg = bannerSplit[1];
@@ -1986,7 +1986,7 @@ const returnBannerUrl = (banner) => {
     }
     return require(`../assets/images/banners/${bannerImg}`);
   } catch (e) {
-    return imgURLPromo + banner.mobileImageUrl;
+    return imgURLPromo + banner.mobileImageUrlDark;
   }
 };
 

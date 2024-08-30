@@ -127,7 +127,7 @@
               :key="i"
               :name="i"
               class="column no-wrap flex-center"
-              :img-src="imgURL + banner.mobileImageUrl"
+              :img-src="imgURL + banner.mobileImageUrlDark"
               @click="router.push('/earn-money')"
             ></q-carousel-slide>
           </q-carousel>
