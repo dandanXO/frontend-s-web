@@ -2016,6 +2016,8 @@ export default {
     fiatBalance: 'Fiat Balance',
     usdtBalance: 'USDT Balance',
     toggleWallet: 'Toggle Wallet Type',
+    historyRecord: 'History Record',
+    nonHistoryRecord: 'Non-History Record',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
