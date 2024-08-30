@@ -17,8 +17,8 @@ export function loadPromoBanner(category) {
   });
 }
 
-export function loadHomePopup() {
-  return server.REST.get("/member/ads-popout");
+export function loadHomePopup(siteType) {
+  return server.REST.get("/member/ads-popout", { params: { siteType } });
 }
 
 export function claimBonusItem(item) {

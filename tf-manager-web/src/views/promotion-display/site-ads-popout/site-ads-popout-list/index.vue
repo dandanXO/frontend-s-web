@@ -29,12 +29,28 @@
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
             :key="item.id"
             :label="item.siteName"
             :value="item.id"
+          />
+        </el-select>
+        <el-select
+          v-if="uiControl.showSiteType === true"
+          v-model="request.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 120px;margin-left:5px"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
           />
         </el-select>
         <el-button
@@ -303,6 +319,7 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { TENANT } from "../../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
+import { isVnm } from '@/utils/site'
 
 const { t } = useI18n();
 const store = useStore();
@@ -333,7 +350,15 @@ const uiControl = reactive({
     { key: 1, displayName: '每次', value: 'EVERYTIME' },
     { key: 2, displayName: '每天', value: 'EVERYDAY' },
     { key: 3, displayName: '每时域', value: 'SESSION' },
-  ]
+  ],
+  showSiteType: false,
+})
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
 })
 
 let chooseAdsPopout = []
@@ -344,6 +369,7 @@ const request = reactive({
   title: null,
   status: null,
   siteId: null,
+  siteType: null,
 })
 
 const form = reactive({
@@ -379,7 +405,13 @@ const formRules = reactive({
 function resetQuery() {
   request.title = null
   request.status = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id;
+  request.siteId = site.value ? site.value.id : null;
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
+  request.siteType = "main"
 }
 
 function changePage(page) {
@@ -408,6 +440,15 @@ function showDialog(type) {
   // }
   // uiControl.dialogType = type
   // uiControl.dialogVisible = true
+}
+
+async function changeSite() {
+  request.siteType = 'main'
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
 }
 
 // function handleChange() {}
@@ -539,6 +580,12 @@ onMounted(async () => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
+  request.siteType = "main";
   await loadAdsPopoutList();
 })
 </script>

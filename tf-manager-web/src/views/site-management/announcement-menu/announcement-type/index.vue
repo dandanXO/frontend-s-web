@@ -23,6 +23,36 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="changeSiteSearch"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
+          v-if="uiControl.showSiteTypeSearch === true"
+          v-model="request.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 120px;margin-left:5px"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -105,7 +135,7 @@
             class="filter-item"
             style="width: 350px;"
             default-first-option
-            @focus="loadSites"
+            @change="changeSite"
           >
             <el-option
               v-for="item in siteList.list"
@@ -115,6 +145,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.siteType')" prop="siteType" v-if="uiControl.showSiteType === true">
+          <el-select
+            v-model="form.siteType"
+            size="small"
+            class="filter-item"
+            :placeholder="t('fields.siteType')"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in siteType.list"
+              :key="item.value"
+              :label="item.displayName"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -181,7 +228,7 @@
 
 <script setup>
 
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createAnnouncementType, updateAnnouncementType, getAnnouncementType, updateAnnouncementTypeState, deleteAnnouncementType } from "../../../../api/announcement-type";
@@ -189,10 +236,14 @@ import { getSiteListSimple } from "../../../../api/site";
 import { hasRole, hasPermission } from "../../../../utils/util";
 import { useI18n } from "vue-i18n";
 import { useStore } from '../../../../store';
+import { isVnm } from '@/utils/site'
+import { TENANT } from "../../../../store/modules/user/action-types";
 
 const store = useStore();
 const { t } = useI18n();
 const announcementTypeForm = ref(null);
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
 const siteList = reactive({
   list: []
 });
@@ -206,8 +257,18 @@ const uiControl = reactive({
   announcementTypeState: [
     { key: 1, displayName: "active", value: true },
     { key: 2, displayName: "disable", value: false }
-  ]
+  ],
+  showSiteType: false,
+  showSiteTypeSearch: false,
 });
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -218,7 +279,9 @@ const request = reactive({
   size: 30,
   current: 1,
   name: null,
-  status: null
+  status: null,
+  siteType: null,
+  siteId: null,
 });
 
 const form = reactive({
@@ -226,6 +289,7 @@ const form = reactive({
   name: null,
   sequence: null,
   siteId: null,
+  siteType: null,
   status: "true",
 });
 
@@ -240,6 +304,31 @@ let chooseAnnouncementType = [];
 function resetQuery() {
   request.name = null;
   request.status = null;
+  request.siteId = site.value ? site.value.id : null;
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteTypeSearch = true;
+  } else {
+    uiControl.showSiteTypeSearch = false;
+  }
+  request.siteType = "main"
+}
+
+async function changeSiteSearch() {
+  request.siteType = 'main'
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteTypeSearch = true;
+  } else {
+    uiControl.showSiteTypeSearch = false;
+  }
+}
+
+async function changeSite() {
+  form.siteType = 'main'
+  if (isVnm(form.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
 }
 
 function handleSelectionChange(val) {
@@ -282,7 +371,15 @@ function showDialog(type) {
     form.status = "true";
     form.sequence = page.records.length + 1;
     form.siteId = siteList.list[0].id;
+    form.id = null;
+    form.siteType = "main"
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
     uiControl.dialogTitle = t('fields.addAnnouncementType');
+    form.siteType = "main";
   } else if (type === "EDIT") {
     uiControl.dialogTitle = t('fields.editAnnouncementType');
   }
@@ -300,6 +397,11 @@ function showEdit(announcementType) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = announcementType[key];
       }
+    }
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
     }
   });
 }
@@ -391,9 +493,21 @@ async function loadSites() {
   siteList.list = site;
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await loadSites();
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
+
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteTypeSearch = true;
+  } else {
+    uiControl.showSiteTypeSearch = false;
+  }
+
+  request.siteType = "main";
   loadAnnouncementType();
-  loadSites();
 });
 
 </script>

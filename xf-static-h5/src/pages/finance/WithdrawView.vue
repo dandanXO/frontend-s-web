@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title-wrapper q-pa-md q-mx-sm q-mt-md">
+    <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
       <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
       <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
         <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
@@ -135,10 +135,10 @@
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ "今日提款：" + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
+              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{ " 剩余：" + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
+              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
@@ -160,7 +160,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">*提币手续费：2.00 USDT</div>
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
@@ -177,6 +176,8 @@
               <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             </div>
           </div>
+
+          <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
           <!-- <a-form-item
             class="select"
             name="cardId"

@@ -11,27 +11,6 @@
         <q-card-section>
           <q-form>
             <div class="q-my-sm">
-              <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
-              <q-select
-                standout
-                class="q-pb-xs  dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.bankId"
-                :label="dialogDisplays.selectionPlaceholder"
-                :rules="[(_) => isValidBank()]"
-                label-color="secondary"
-                :options="currBankList"
-                option-value="id"
-                option-label="name"
-                lazy-rules
-                emit-value
-                map-options
-                disable
-              />
-            </div>
-
-            <div class="q-my-sm">
               <div class="input-title">Holder Name</div>
               <q-input
                 standout
@@ -47,7 +26,7 @@
             </div>
 
             <div class="q-my-sm">
-              <div class="input-title">Account Number</div>
+              <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
                 type="number"
                 standout
@@ -62,7 +41,7 @@
               />
             </div>
 
-            <!-- <div class="q-my-sm">
+            <div class="q-my-sm" v-if="currentCardType === 'BANK'">
               <div class="input-title">IFSC Code</div>
               <q-input
                 standout
@@ -75,7 +54,7 @@
                 :rules="[(_) => isValidCardAddress()]"
                 label-color="secondary"
               />
-            </div> -->
+            </div>
           </q-form>
         </q-card-section>
 
@@ -83,8 +62,11 @@
           label="Update"
           :confirmFunc="updateCard"
           :isDisabled="
-            !(isValidCardAccount() === true && isValidCardNumber() === true) ||
-            isDisableBtn
+            !(
+              isValidCardAccount() === true &&
+              isValidCardNumber() === true &&
+              ((currentCardType === 'BANK' && isValidCardAddress() === true) || currentCardType !== 'BANK')
+            ) || isDisableBtn
           "
         ></ConfirmButton>
       </q-card>
@@ -107,16 +89,16 @@ const $q = useQuasar();
 const store = userStore();
 
 const refBankCardModal = ref();
-const currBankList = ref([]);
 const currentCardType = ref("Bank");
 
+const accountTypeStr = ref("");
+const currBankList = ref([]);
 // cache
 const bankList = [];
 const cryptoList = [];
 const ewalletList = [];
 
 const bankCardField = reactive({
-  bankId: "",
   cardId: "",
   cardAccount: store.realName,
   cardNumber: "",
@@ -125,7 +107,16 @@ const bankCardField = reactive({
 const router = useRouter();
 
 const isUpdateCardDialogOpen = ref(false);
-const onUpdateCardClick = (bankCardDetails) => {
+const onUpdateCardClick = (bankCardDetails, type) => {
+  currentCardType.value = type;
+
+  if (currentCardType.value === "CRYPTO") {
+    dialogDisplays.accountNum = "Crypto Card Number";
+  } else if(currentCardType.value === "EWALLET"){
+    dialogDisplays.accountNum = "eWallet Number";
+  }
+  // debugger;
+
   bankCardField.cardAccount = bankCardDetails.cardAccount;
   bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
@@ -142,39 +133,13 @@ const onUpdateCardClick = (bankCardDetails) => {
       router.push("/account/profile");
     } else {
       isUpdateCardDialogOpen.value = true;
-
-      // NOTE: fire once
-      if (bankList.length === 0 && cryptoList.length === 0 && ewalletList.length === 0) {
-        api
-          .get("/session/withdraw/card")
-          .then((res) => {
-            if (res.code === 0) {
-              res.data.forEach((e) => {
-                const bankType = e.bankType;
-                if (bankType === "BANK") bankList.push(e);
-                else if (bankType === "CRYPTO") cryptoList.push(e);
-                else if (bankType === "EWALLET") ewalletList.push(e);
-              });
-              selectBankType();
-              // mapping bankId by bankCode
-              const bank = currBankList.value.find(bank => bank.code === bankCardDetails.bankCode);
-              if(!bank) return
-              bankCardField.bankId = bank.id
-            }
-          })
-          .catch((e) => {
-            console.log("error", e);
-          });
-      }
     }
   });
 };
 
 const dialogDisplays = reactive({
   title: "Update Bank Card",
-  selectionTitle: "Bank",
-  selectionPlaceholder: "Select A Bank",
-  selectionError: "Please Select A Bank"
+  accountNum: "Account Number"
 });
 
 // validation
@@ -186,8 +151,8 @@ const isValidCardAccount = () => {
   const result = !cardAccount
     ? "Please Enter Holder Name"
     : cardAccount.length < 2
-    ? "Please Insert 2 or More Characters"
-    : true;
+      ? "Please Insert 2 or More Characters"
+      : true;
 
   return result;
 };
@@ -199,20 +164,13 @@ const isValidCardNumber = () => {
   return result;
 };
 
-const isValidBank = () => {
-  const { bankId } = bankCardField;
-
-  const result = !bankId ? dialogDisplays.selectionError : true;
-  return result;
-};
-
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+      ? "Bank IFSC Code Must Be More Than 3 Characters"
+      : true;
   return result;
 };
 
@@ -238,30 +196,6 @@ const updateCard = () => {
       console.log("error", error);
       isDisableBtn.value = false;
     });
-};
-
-const selectBankType = () => {
-  currBankList.value = [];
-
-  if (currentCardType.value === "Bank") {
-    currBankList.value = bankList;
-    dialogDisplays.title = "Add Bank Account";
-    dialogDisplays.selectionTitle = "Bank";
-    dialogDisplays.selectionPlaceholder = "Select A Bank";
-    dialogDisplays.selectionError = "Please Select A Bank";
-  } else if (currentCardType.value === "Crypto") {
-    currBankList.value = cryptoList;
-    dialogDisplays.title = "Add Crypto Wallet";
-    dialogDisplays.selectionTitle = "Crypto";
-    dialogDisplays.selectionPlaceholder = "Select Crypto";
-    dialogDisplays.selectionError = "Please Select A Crypto";
-  } else if (currentCardType.value === "EWallet") {
-    currBankList.value = ewalletList;
-    dialogDisplays.title = "Add A Virtual Currency";
-    dialogDisplays.selectionTitle = "eWallet";
-    dialogDisplays.selectionPlaceholder = "Select eWallet";
-    dialogDisplays.selectionError = "Please Select A eWallet";
-  }
 };
 
 defineExpose({

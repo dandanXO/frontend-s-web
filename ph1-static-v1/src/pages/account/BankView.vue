@@ -1,5 +1,16 @@
 <template>
   <q-page class="account-message-page">
+    <div class="bank-add-lists">
+      <div class="bank-card-add" @click="onAddCardClick()">
+        <q-icon name="add" size="20px" />
+        <div class="card-label">Add Bank</div>
+      </div>
+      <div class="bank-card-add" @click="onAddUSDTClick()">
+        <q-icon name="add" size="20px" />
+        <div class="card-label">Add eWallet</div>
+      </div>
+    </div>
+
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
       <q-card>
@@ -42,45 +53,105 @@
     <UpdateBankCardModal ref="updateBankCardModalRef" :loadCards="loadCards"></UpdateBankCardModal>
 
     <div class="bank-card-container">
-      <div
-        v-for="(bc, bcIndex) in bankCardList"
-        :key="bc.id"
-        :class="`bank-card-item ${isCardShown[bcIndex] ? 'card-show' : 'card-unshow'}`"
-        @click="handleBankCardClick(bcIndex)"
-      >
-        <div class="bank-card-add">
-          <!--
-            <div class="card-icon">
-              <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
+      <!-- Bank Section -->
+      <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'BANK')">
+        <q-expansion-item expand-separator label="Bank" default-opened>
+          <div
+            v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'BANK')"
+            :key="index"
+            class="list-item"
+          >
+            <div class="item-top">
+              <div class="item-icon">
+                <img :src="imgURL + item.bankIcon" alt="Bank Icon" style="width: 30px" />
+              </div>
+              <div class="item-title">{{ item.bankName }}</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
             </div>
-          -->
-          <div class="card-label">{{ bc.bankName }}</div>
-          <!--          <div class="card-label">{{ bc.bankName }}</div>-->
-          <div class="card-num-wrapper">
-            <div class="card-num">{{ bc.cardNumber }}</div>
-            <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
+            <div class="item-content">
+              <div class="item-acc">
+                Account: {{ item.cardNumber }}
+                <br />
+                IFSC: {{ item.cardAddress }}
+              </div>
+              <div class="item-copy">
+                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
+                  <q-icon size="sm" name="settings" />
+                </div>
+                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+              </div>
+            </div>
           </div>
-          <!-- <div class="card-num-wrapper">
-            <div class="">IFSC: {{ bc.cardAddress }}</div>
-          </div> -->
-          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
-            <q-icon size="sm" name="settings" />
-          </div>
-          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
-            <q-icon size="sm" name="link_off" />
-          </div>
-        </div>
-      </div>
+        </q-expansion-item>
+      </q-list>
 
-      <div class="bank-card-item bank-addcard" @click="onAddCardClick()">
-        <div class="bank-card-add">
-          <div><img src="../../assets/images/account/icon-add.png" /></div>
-          <!-- <div class="card-icon addcard-icon-div"> -->
-          <!-- <q-icon class="add-card-icon" key="md" size="md" name="add" /> -->
-          <!-- </div> -->
-          <div class="card-label" style="margin-top: 10px">Add Bank Account</div>
-        </div>
-      </div>
+      <!-- Crypto Section -->
+      <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'CRYPTO')">
+        <q-expansion-item expand-separator label="Crypto" default-opened>
+          <div
+            v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'CRYPTO')"
+            :key="index"
+            class="list-item"
+          >
+            <div class="item-top">
+              <div class="item-icon">
+                <img :src="imgURL + item.bankIcon" alt="Crypto Icon" style="width: 30px" />
+              </div>
+              <div class="item-title">{{ item.bankName }}</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
+            </div>
+            <div class="item-content">
+              <div class="item-acc">Account: {{ item.cardNumber }}</div>
+              <div class="item-copy">
+                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
+                  <q-icon size="sm" name="settings" />
+                </div>
+                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+              </div>
+            </div>
+          </div>
+        </q-expansion-item>
+      </q-list>
+
+      <!-- EWALLET Section -->
+      <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'EWALLET')">
+        <q-expansion-item expand-separator label="eWallet" default-opened>
+          <div
+            v-for="(item, index) in bankCardList.filter((car) => car.bankType === 'EWALLET')"
+            :key="index"
+            class="list-item"
+          >
+            <div class="item-top">
+              <div class="item-icon">
+                <img :src="imgURL + item.bankIcon" alt="Crypto Icon" style="width: 30px" />
+              </div>
+              <div class="item-title">{{ item.bankName }}</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
+            </div>
+            <div class="item-content">
+              <div class="item-acc">Account: {{ item.cardNumber }}</div>
+              <div class="item-copy">
+                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
+                  <q-icon size="sm" name="settings" />
+                </div>
+                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+              </div>
+            </div>
+          </div>
+        </q-expansion-item>
+      </q-list>
     </div>
   </q-page>
 </template>
@@ -102,6 +173,7 @@ const router = useRouter();
 const store = userStore();
 const $q = useQuasar();
 const qs = require("qs");
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 
 let slideList = ref(["Bank", "Message", "Personal Center", "Discount", "Record", "Order"]);
 let slideListPath = ref([
@@ -181,10 +253,13 @@ const selectedBankIndex = ref();
 const addBankCardModalRef = ref();
 const updateBankCardModalRef = ref();
 const onAddCardClick = () => {
-  addBankCardModalRef.value.onAddCardClick();
+  addBankCardModalRef.value.onAddCardClick("Bank");
 };
-const onUpdateCardClick = (bcIndex) => {
-  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
+const onAddUSDTClick = () => {
+  addBankCardModalRef.value.onAddCardClick("EWallet");
+};
+const onUpdateCardClick = (bankCard, bankType) => {
+  updateBankCardModalRef.value.onUpdateCardClick(bankCard, bankType);
 };
 
 // init
@@ -196,12 +271,45 @@ const loadCards = () => {
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
+
+        if (bankCardList.value.length > 0) {
+          isCardShown.value[bankCardList.value.length - 1] = true;
+        }
       }
     })
     .catch((error) => {
       console.log("error", error);
     });
 };
+
+// let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });
+// const loadCards = () => {
+//   api
+//     .get("/session/allBankCard")
+//     .then((res) => {
+//       if (res.code === 0) {
+//         // Empty each array in bankCardList
+//         Object.keys(bankCardList).forEach((key) => {
+//           bankCardList[key] = [];
+//         });
+
+//         for (let i = 0, l = res.data.length; i < l; i++) {
+//           const data = res.data[i];
+//           const { bankType, bankCode } = data;
+
+//           if (isAlipay(bankCode)) {
+//             const alipayBankType = "ALIPAY";
+//             bankCardList[alipayBankType].push(data);
+//           } else {
+//             bankCardList[bankType].push(data);
+//           }
+//         }
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("error", error);
+//     });
+// };
 
 onActivated(() => {
   loadCards();
@@ -249,6 +357,12 @@ onActivated(() => {
           }
         }
       }
+
+      &:last-child {
+        .bank-card-add {
+          padding: 1rem 0 1.5rem;
+        }
+      }
     }
 
     &.card-show {
@@ -286,16 +400,6 @@ onActivated(() => {
           font-size: 1.1rem;
           word-break: break-all;
         }
-      }
-    }
-
-    &.bank-addcard {
-      border: 1px solid #a73dff;
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-
-      &:active {
-        opacity: 0.9;
-        filter: brightness(0.9);
       }
     }
 
@@ -340,6 +444,51 @@ onActivated(() => {
   }
 }
 
+.bank-add-lists {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  width: calc(100% - 20px);
+  margin: 0 auto 12px;
+
+  .bank-card-add {
+    flex: 1;
+    color: #fff;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 0.5rem;
+    gap: 6px;
+    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 8px;
+    height: 50px;
+    justify-content: center;
+
+    .card-update,
+    .card-unlink {
+      display: none;
+    }
+
+    .card-num-wrapper {
+      display: none;
+    }
+
+    .card-label {
+      font-size: 16px;
+    }
+
+    img {
+      width: 28px;
+    }
+    &:active {
+      opacity: 0.9;
+      filter: brightness(0.9);
+    }
+  }
+}
+
 .modal-container {
   .input-title {
     color: #fff;
@@ -368,6 +517,55 @@ onActivated(() => {
 
   .q-card__section {
     background: transparent;
+  }
+}
+
+.list-cat-item {
+  margin-bottom: 16px;
+
+  .q-item.q-item-type {
+    background-color: #263349;
+    border-radius: 8px;
+  }
+
+  .list-item {
+    background: #161f2d;
+    padding: 12px;
+    margin-top: 16px;
+    border-radius: 8px;
+
+    .item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 36px;
+    }
+    .item-icon {
+    }
+    .item-title {
+      font-weight: bold;
+    }
+    .item-bind {
+      color: #5c46e7;
+      font-weight: bold;
+    }
+
+    .item-content {
+      padding-top: 6px;
+      display: flex;
+      justify-content: space-between;
+
+      .item-acc {
+        font-size: 12px;
+      }
+
+      .item-copy {
+        color: #5c46e7;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+    }
   }
 }
 </style>

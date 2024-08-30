@@ -382,6 +382,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getPlatformsBySite } from '../../../api/platform'
 import { isXF, isThai, isDY, isLH } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const store = useStore()
@@ -389,7 +390,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const inputImage = ref(null)
 const imageForm = ref(null)
-const imageDir = process.env.VUE_APP_IMAGE
+const imageDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const categoryList = ['/promo/', '/game/', '/payment/', '/poster/', '/announcement/']
 const siteList = reactive({
   list: [],

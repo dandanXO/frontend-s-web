@@ -618,6 +618,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getSupportDarkMode } from "@/api/config";
 import { isXF, isThai, isDY, isLH } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const store = useStore()
@@ -628,7 +629,7 @@ const imageFormRef = ref(null)
 // const inputDesktop = ref(null)
 // const inputMobile = ref(null)
 const bannerForm = ref(null)
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const siteList = reactive({
   list: [],
 })

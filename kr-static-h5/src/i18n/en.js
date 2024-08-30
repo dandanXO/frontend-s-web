@@ -367,7 +367,7 @@ Maintenance time: August 6, 2024 ~ August 7, 2024 (GMT+8)`,
     withdraw_realtimeexchangerates: "Real Time Exchange Rates",
     withdraw_estimatedarrival: "Estimated arrival",
     withdraw_usdtspecialnote:
-      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
     withdraw_ewalletspecialnote:
       "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
     withdraw_choose: "Choose",

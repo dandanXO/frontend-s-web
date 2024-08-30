@@ -369,7 +369,7 @@ export default {
     withdraw_realtimeexchangerates: "Real Time Exchange Rates",
     withdraw_estimatedarrival: "Estimated arrival",
     withdraw_usdtspecialnote:
-      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
     withdraw_ewalletspecialnote:
       "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
     withdraw_choose: "Choose",
@@ -1600,6 +1600,8 @@ export default {
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
     30009: "The user's bet amount does not meet the requirement.",
+    30010: "The system is busy, please try again later.",
+    30101: "Existing users are not eligible for this offer.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

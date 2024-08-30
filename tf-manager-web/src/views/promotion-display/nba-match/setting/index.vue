@@ -424,13 +424,14 @@ import { useI18n } from "vue-i18n";
 import moment from "moment";
 import { getShortcuts } from "@/utils/datetime";
 import { getSiteImage } from "@/api/site-image";
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const shortcuts = getShortcuts(t);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const selectedId = ref(null);
 
 function convertDate(date) {

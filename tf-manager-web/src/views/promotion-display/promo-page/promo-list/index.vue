@@ -324,6 +324,7 @@ async function changePromoPagesState(id, status) {
 }
 
 async function changeSite() {
+  request.siteType = 'main'
   if (isVnm(request.siteId)) {
     uiControl.showSiteType = true;
   } else {

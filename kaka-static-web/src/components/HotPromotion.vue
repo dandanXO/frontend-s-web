@@ -3,10 +3,10 @@
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
-    <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
+    <PennyBank v-if="list.redirectUrl === 'kaka-penny-bank' && !isCommonPromo" />
     <SlotNetloss v-if="list.redirectUrl === 'ka2-slot-netloss' && !isCommonPromo" />
     <PokerCashback v-if="list.redirectUrl === 'ka2-poker-cashback' && !isCommonPromo" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo " :promo-code="list.promoCode" />
+    <LotteryPromo v-if="list.redirectUrl === 'ka2-iphone' && !isCommonPromo" :promo-code="list.promoCode" />
     <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" :promo-code="list.promoCode" />
     <Eurocup2024bet
       v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo"
@@ -16,6 +16,7 @@
       v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo"
       :promo-code="list.promoCode"
     />
+    <NewPlayerPromo v-if="list.redirectUrl === 'kaka-newplayer-promo'" />
 
     <HongBaoYu2024
       v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
@@ -50,6 +51,7 @@ import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.v
 import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
 import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
 import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
+import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -68,7 +70,8 @@ export default defineComponent({
     HongBaoYu2024,
     Eurocup2024,
     Eurocup2024bet,
-    EurocupLuckyDraw
+    EurocupLuckyDraw,
+    NewPlayerPromo
     // DailyBonus
   },
   props: {
@@ -307,18 +310,18 @@ export default defineComponent({
   mounted() {
     // console.log("Mount");
     // console.log(this.list);
-
     // List for non common promo
     if (
-      this.list.redirectUrl === "vnm-iphone" ||
+      this.list.redirectUrl === "ka2-iphone" ||
       this.list.redirectUrl === "vi-daily-checkin" ||
-      this.list.redirectUrl === "vi-penny-bank" ||
+      this.list.redirectUrl === "kaka-penny-bank" ||
       this.list.redirectUrl === "ka2-slot-netloss" ||
       this.list.redirectUrl === "ka2-poker-cashback" ||
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24" ||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
-      this.list.redirectUrl === "vnm-eurocup-luckydraw"
+      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
+      this.list.redirectUrl === "kaka-newplayer-promo"
     ) {
       this.isCommonPromo = false;
     } else {
