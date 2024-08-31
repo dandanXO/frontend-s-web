@@ -9,7 +9,8 @@
         </span>
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
-        <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" />
+        <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
+        <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
         <span style="margin-left: 5px">专属客服</span>
       </a>
       <div class="additional-info-item">
