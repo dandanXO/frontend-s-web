@@ -31,7 +31,7 @@ const activeKey = ref("");
 
 onActivated(() => {
   const isUsdt = store.walletCurrency;
-  if (isUsdt === "USDT") {
+  if (isUsdt === "USDT" || route.query.usdt === "true") {
     activeKey.value = "crypto";
   } else {
     activeKey.value = "flat";
