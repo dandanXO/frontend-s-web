@@ -149,6 +149,7 @@ export default {
     footballNews: "Football News",
     esportNews: "E-Sport News",
     bettingGuide: "Betting Guide",
+    weeklyTournament: "Weekly Baccarat Tournament",
     networkSecurity: "Network security",
     networkSecurityPt1: "Information confidential safe without loopholes",
     networkSecurityPt2: "Frequent update for protection",
