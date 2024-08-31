@@ -1592,6 +1592,7 @@ export default {
     35008: "Bạn không có quyền lợi này",
     35009: "Quyền lợi sẽ có hiệu lực ngay",
     35010: "35010 Thành viên không thể nhận quy",
+    37001: "Đã hết thời gian nhận Lì Xì",
     45000: "Không đạt số tiền rút tối thiểu",
     45001: "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay"
   }
