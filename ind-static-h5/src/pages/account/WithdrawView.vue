@@ -238,7 +238,9 @@ const $q = useQuasar();
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+const props = defineProps(["type"]);
 
+const withdrawType = ref(props.type ? props.type : "flat");
 const imgURL = process.env.IMAGE_CDN;
 
 const refreshBalance = () => {
@@ -256,7 +258,12 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  api.get("/session/withdraw/entrance").then((response) => {
+  var curQuery = "";
+  if (withdrawType.value === "usdt") {
+    curQuery = "?currency=USDT";
+  }
+
+  api.get(`/session/withdraw/entrance${curQuery}`).then((response) => {
     if (response.code === 0) {
       for (let i = 0, l = response.data.length; i < l; i++) {
         const currentData = response.data[i];
@@ -279,10 +286,11 @@ const getWithdrawalMethods = () => {
     api
       .get("/session/withdraw/card")
       .then((res) => {
-        if (res.code === 0) {
-          res.data.forEach((e) => {
-            bankCardField.bankId = e.id;
-          });
+        if (res.code === 0 && res.data.length > 0) {
+          bankCardField.bankId = res.data[0].id;
+          // res.data.forEach((e) => {
+          //   bankCardField.bankId = e.id;
+          // });
         }
       })
       .catch((e) => {
