@@ -320,8 +320,16 @@ export default defineComponent({
     };
 
     const goToLiveChatPromo = () => {
+      const currentRoute = router.currentRoute.value;
       if (store.vip !== "" && store.vip !== "VIP0") {
-        router.replace(`/promotion?name=lh-official-gift`);
+        const currentName = currentRoute.query.name;
+        if (currentRoute.path === "/promotion" && currentName !== "lh-official-gift") {
+          router.push(`/promotion?name=lh-official-gift`).then(() => {
+            window.location.reload();
+          });
+        } else {
+          router.push(`/promotion?name=lh-official-gift`);
+        }
       } else {
         ElMessageBox.alert("暂未开放", {
           autofocus: false,
