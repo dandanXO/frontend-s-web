@@ -1,14 +1,14 @@
 <template>
   <div class="sticky-sidebar" @mouseleave="customerHovered = false">
     <div class="additional-info-items" v-if="customerHovered">
-      <div class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
+      <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span style="margin-left: 5px">
           官网客服
           <Ri24HoursLine class="icon-24h" />
         </span>
       </div>
-      <a class="additional-info-item" href="mailto:cs@lh8080.com">
+      <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
         <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" />
         <span style="margin-left: 5px">专属客服</span>
       </a>
