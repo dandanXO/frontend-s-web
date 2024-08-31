@@ -54,11 +54,24 @@ onActivated(() => {
   background: #101114;
   .deposit-tabs {
     font-family: "Manrope", sans-serif;
-
     width: 90%;
     margin: 0 auto;
     border-radius: 0.5rem;
     background: #1b2232;
+
+    &:before {
+      content: "";
+      background-image: url("../../assets/images/account/hot-ribbon.png");
+      height: 40px;
+      width: 41px;
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      display: block;
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
 
     :deep(.q-tab) {
       color: #5c6c86;

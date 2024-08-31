@@ -115,7 +115,7 @@
 
       <!-- bank options -->
       <div class="bank-account-container" v-if="filterBankCardLists.length > 0 && !isAddNewAccount">
-        <div class="method-title q-mt-sm">Choose Bank Account</div>
+        <div class="method-title q-mt-sm">Choose {{ withdrawWayText }}</div>
         <div class="mid-wrapper">
           <div class="w-form-item w-form-item--bankcard">
             <div class="w-form-input">
@@ -131,7 +131,7 @@
                 option-value="id"
                 emit-value
                 map-options
-                :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                :rules="[(val) => !!val || `Please Select A ${withdrawWayText}`]"
                 hide-bottom-space
               >
                 <template v-slot:option="scope">
@@ -188,7 +188,7 @@
                 dense
                 clearable
                 ref="bankNumberRef"
-                placeholder="Enter Account Number"
+                :placeholder="accountNumberPlaceHolder"
                 v-model="bankCardField.cardNumber"
                 :rules="[(_) => isValidCardNumber()]"
                 hide-bottom-space
@@ -240,7 +240,9 @@
               (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
               (val) =>
                 (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+                `Withdraw Amount Must In Between ${convertToCommaAmount(
+                  selectedMethodItem.withdrawMin
+                )} - ${convertToCommaAmount(selectedMethodItem.withdrawMax)}`
             ]"
             hide-bottom-space
           >
@@ -271,10 +273,13 @@
           </q-input>
         </div>
 
-        <div class="fund-container q-mt-sm q-mb-md">
+        <div class="fund-container">
           <div>
             <span class="fund-title">Available:</span>
             {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+          </div>
+          <div v-if="isUSDT">
+            ≈ {{ convertToTwoDecimalAmount(withdrawInfo.amount / selectedMethodItem.currencyRate) }} USDT
           </div>
         </div>
 
@@ -283,19 +288,25 @@
             <div class="desc-wrapper">
               <div class="desc">Withdrew Amount</div>
             </div>
-            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawAmount }}</div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.withdrawAmount) }}
+            </div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">{{ store.vip }} Daily Limit</div>
             </div>
-            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawMaxAmount }}</div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
+            </div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">Remain Wagers</div>
             </div>
-            <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.remainWagers }}</div>
+            <div class="desc desc_white">
+              {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers) }}
+            </div>
           </div>
         </div>
       </div>
@@ -325,7 +336,7 @@
       </template>
 
       <div class="note-tips" v-if="isUSDT">
-        <div class="info">*Withdrawal fee: 2.00 USDT</div>
+        <div class="info">*Withdrawal fee: 0.50 USDT</div>
       </div>
     </template>
 
@@ -368,7 +379,8 @@
             </template>
 
             <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
-              {{ item.withdrawMin }}~{{ item.withdrawMax }} {{ store.currency.value }}
+              {{ convertToCommaAmount(item.withdrawMin) }}~{{ convertToCommaAmount(item.withdrawMax) }}
+              {{ store.currency.value }}
             </div>
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
@@ -591,6 +603,31 @@ const bankCardList = ref([]);
 const isNoBankCard = ref(false);
 const filterBankCardLists = ref([]);
 
+const accountNumberPlaceHolder = computed(() => {
+  var returnCode = "Enter Account Number";
+  if (withdrawType.value === "usdt") {
+    if (selectedMethodItem.value.code) {
+      if (selectedMethodItem.value.code === "USDTERC") {
+        returnCode = "Enter ERC Address";
+      } else if (selectedMethodItem.value.code === "USDTTRC") {
+        returnCode = "Enter TRC Address";
+      } else {
+        returnCode = "Enter Address";
+      }
+    } else {
+      returnCode = "Enter Address";
+    }
+  }
+  return returnCode;
+});
+const withdrawWayText = computed(() => {
+  var returnText = "Bank Account";
+  if (withdrawType.value === "usdt") {
+    returnText = "Crypto Address";
+  }
+  return returnText;
+});
+
 const filterCards = (type) => {
   let typeCode = "BANK";
   if (withdrawType.value === "usdt") {
@@ -636,13 +673,13 @@ const loadCards = () => {
     typeCode = "CRYPTO";
   }
 
+  bankCardList.value = [];
+
   api
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
         let filteredData = res.data.filter((item) => item.bankType === typeCode);
-
-        bankCardList.value = [];
         bankCardList.value.push(...filteredData);
 
         if (bankCardList.value.length > 0) {
@@ -1041,6 +1078,11 @@ const toggleAmount = (type) => {
     default:
       break;
   }
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 </script>
 

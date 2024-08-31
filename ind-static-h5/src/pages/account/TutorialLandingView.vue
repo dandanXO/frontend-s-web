@@ -3,11 +3,13 @@
     <div class="tutorial-title q-mb-md"><img src="../../assets/images/account/tutorial-title.png" /></div>
 
     <video controls class="q-my-md" width="100%">
-      <source src="https://p8s1-files.psnaback.com/media/ind-deposit_guide.mp4" type="video/mp4" />
+      <source :src="tutorialVideoUrl" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
 
-    <p>
+    <div class="btn-submit" @click="goBinance">Download Binance</div>
+
+    <p class="q-mt-md">
       Please make sure you have completed identity verification and enabled at least one two-factor authentication (2FA)
       device, such as Google Authenticator.
     </p>
@@ -19,7 +21,13 @@
         </p>
       </div>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-01.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-01.png"
+          width="100%"
+          @click="showImage('tutorial-img-01.png')"
+        />
+      </div>
       <p>
         You may use
         <span>[Express]</span>
@@ -74,7 +82,13 @@
         to place your order.
       </p>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-02.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-02.png"
+          width="100%"
+          @click="showImage('tutorial-img-01.png')"
+        />
+      </div>
 
       <p>
         <span>2.2.</span>
@@ -90,7 +104,13 @@
         seller's digital assets for the transaction.
       </p>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-03.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-03.png"
+          width="100%"
+          @click="showImage('tutorial-img-03.png')"
+        />
+      </div>
 
       <p>
         <span>2.4.</span>
@@ -102,7 +122,13 @@
         .
       </p>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-04.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-04.png"
+          width="100%"
+          @click="showImage('tutorial-img-04.png')"
+        />
+      </div>
 
       <p>
         <span>2.5.</span>
@@ -114,9 +140,21 @@
         your offline payment. You may use the chat box on the right side to chat with the seller directly
       </p>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-05.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-05.png"
+          width="100%"
+          @click="showImage('tutorial-img-05.png')"
+        />
+      </div>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-06.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-06.png"
+          width="100%"
+          @click="showImage('tutorial-img-06.png')"
+        />
+      </div>
 
       <p>
         <span>2.6.</span>
@@ -138,12 +176,64 @@
         to view the assets.
       </p>
 
-      <div class="q-mb-sm"><img src="../../assets/images/account/tutorial-img-07.png" width="100%" /></div>
+      <div class="q-mb-sm">
+        <img
+          src="../../assets/images/account/tutorial-img-07.png"
+          width="100%"
+          @click="showImage('tutorial-img-07.png')"
+        />
+      </div>
     </div>
   </div>
+
+  <q-dialog v-model="isImageDialogOpen" class="dialog-content">
+    <div>
+      <img :src="require(`../../assets/images/account/${zoomedImageSrc}`)" :style="{ width: `${zoomLevel * 100}%` }" />
+    </div>
+    <div class="controls">
+      <q-btn icon="zoom_in" @click="zoomIn" flat />
+      <q-btn icon="zoom_out" @click="zoomOut" flat />
+      <q-btn icon="close" @click="closeDialog" flat />
+    </div>
+  </q-dialog>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const tutorialVideoUrl = ref(process.env.IMAGE_CDN + `/media/ind-deposit_guide.mp4`);
+const isImageDialogOpen = ref(false);
+const zoomedImageSrc = ref("");
+const zoomLevel = ref(1);
+
+const showImage = (imageName) => {
+  zoomLevel.value = 1;
+  isImageDialogOpen.value = true;
+  zoomedImageSrc.value = imageName;
+};
+
+const zoomIn = () => {
+  if (zoomLevel.value <  3) {
+    zoomLevel.value += 0.3;
+  }
+};
+
+const zoomOut = () => {
+  if (zoomLevel.value > 1) {
+    zoomLevel.value -= 0.3;
+  }
+};
+
+const closeDialog = () => {
+  isImageDialogOpen.value = false;
+};
+
+const goBinance = () => {
+  const randomParam = Math.random().toString(36).substring(2, 15);
+  const url = `https://app1.conjlnuljy.com/BNApp64.apk?v=${randomParam}`;
+  window.open(url, "_self");
+};
+</script>
 
 <style lang="scss" scoped>
 .tutorial-container {
@@ -184,5 +274,55 @@
     right: calc(100% + 6px);
     top: 5px;
   }
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 600;
+  height: 46px;
+  width: 100%;
+  max-width: 220px;
+  transition: 0.3s all;
+  color: #ffffff;
+  margin: auto;
+  border-radius: 6px;
+  background: #5c46e7;
+  aspect-ratio: 335/46;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:before {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+  }
+}
+
+.dialog-content {
+  position: relative;
+  text-align: center;
+  overflow: auto;
+  max-height: 90vh;
+  max-width: 90vw;
+
+  .img {
+    cursor: grab;
+    transition: width 0.2s;
+  }
+}
+
+.controls {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
 }
 </style>

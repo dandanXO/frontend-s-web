@@ -110,7 +110,7 @@
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
             <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
-              +{{ convertToCommaAmount(amount * selectedItemPrivilege) }}
+              +{{ convertToTwoDecimalAmount(amount * selectedItemPrivilege) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
@@ -895,6 +895,17 @@ const loadInfo = () => {
 const resetSelectedMethod = () => {
   isSelectedMethod.value = false;
   // isAddNewAccount.value = false;
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  if (amount < 3) {
+    let formattedAmount = parseFloat(amount).toFixed(2);
+    return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else {
+    return parseFloat(amount)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 };
 
 onActivated(() => {

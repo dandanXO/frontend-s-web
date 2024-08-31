@@ -1,5 +1,5 @@
 <template>
-  <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
+  <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" unelevated>
     <q-tabs
       v-if="!props.isDepositTab"
       v-model="tab"
@@ -48,7 +48,7 @@
       <q-route-tab to="/tutorial" name="tutorial" class="second-icon" :ripple="false">
         <img class="hover" src="../assets/images/index/menu/tutorial-active-icon.png" />
         <img class="inactive" src="../assets/images/index/menu/tutorial-icon.png" />
-        <span class="footer-label">Tutorial</span>
+        <span class="footer-label">Buy USDT</span>
       </q-route-tab>
     </q-tabs>
   </q-footer>
