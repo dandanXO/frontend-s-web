@@ -980,12 +980,13 @@ const runVipAPI = (res) => {
       // vipBonusItem.upgradeBetAmount = shiftedUpgradeBetAmounts[i];
       if (vipLevel.value === vipBonusItem.vipLevel) {
         vipBonusItem.holidayClaimStatus = "NO_STATUS";
-        vipBonusItem.rebateClaimStatus = "NO_STATUS";
+        // vipBonusItem.rebateClaimStatus = "NO_STATUS";
       } else {
         vipBonusItem.holidayClaimStatus = "CANT_CLAIM";
-        vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
+        // vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
       }
-      vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
+      vipBonusItem.redPacketPrize = vipBonusItem.redPacketPrize + '%';
+      // vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
       // vipItems.value.forEach((element, index) => {
       //   if (element.vipLevel === vipBonusItem.vipLevel.toString()) {
       //     vipItems.value.splice(index, 1, {
@@ -1023,7 +1024,7 @@ const categories = ref([
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
   { key: "monthly", image: "monthly", displayName: "会员日红包" },
   { key: "coupon", image: "coupon", displayName: "会员专属加码卷" },
-  { key: "rebate", image: "rebate", displayName: "每日返水红包" },
+  { key: "redPacket", image: "rebate", displayName: "每日返水红包" },
   { key: "retain", image: "retain", displayName: "保级彩金" },
   { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
   { key: "birthday", image: "birthday", displayName: "生日礼金" },
@@ -1047,9 +1048,10 @@ const handleClick = async (key, item) => {
 
         const statuses = [
           "upgradeClaimStatus",
+          "birthdayClaimStatus",
           "monthlyClaimStatus",
           "couponClaimStatus",
-          "rebateClaimStatus",
+          "redPacketClaimStatus",
           "retainClaimStatus",
           "yearlyRetainClaimStatus"
         ];
