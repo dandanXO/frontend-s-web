@@ -150,7 +150,7 @@ export default {
     footballNews: "Tin tức bóng đá",
     esportNews: "Tin Esport",
     bettingGuide: "Hướng dẫn cá cược",
-    weeklyTournament: "Giải đấu Baccarat hàng tuần",
+    weeklyTournament: "Giải Đấu Baccarat hàng tuần",
     networkSecurity: "Bảo mật mạng",
     networkSecurityPt1: "Thông tin được bảo mật an toàn không có lỗ hổng",
     networkSecurityPt2: "Cập nhật thường xuyên để bảo vệ",
