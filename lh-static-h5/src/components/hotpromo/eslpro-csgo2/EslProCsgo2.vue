@@ -61,7 +61,7 @@
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
-          <div class="right">用户每日在电竞场馆投注ESL 职业联赛赛事有效投注≥2,000元即可获得领取彩金，最高可领1,888元。</div>
+          <div class="right">用户每日在电竞场馆投注ESL职业联赛赛事有效投注≥2,000元即可获得领取彩金，最高可领1,888元。</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
@@ -116,7 +116,7 @@
               />
               <span>示例</span>
             </div>
-            示例：会员A当日投注ESL 职业联赛赛事有效投注6,000元，会员可在次日领取18元彩金
+            示例：会员A当日投注ESL职业联赛赛事有效投注6,000元，会员可在次日领取18元彩金
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              <div>活动期间，会员当日ESL 职业联赛赛事有效投注≥2,000的会员即可符合获得彩金资格；</div>
+              <div>活动期间，会员当日ESL职业联赛赛事有效投注≥2,000的会员即可符合获得彩金资格；</div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
