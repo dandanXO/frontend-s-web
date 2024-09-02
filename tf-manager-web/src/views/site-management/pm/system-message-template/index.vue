@@ -160,7 +160,7 @@
           </el-tag>
           <el-autocomplete
             v-model="inputValue"
-            :fetch-suggestions="querySearch"
+            :fetch-suggestions="debouncedFetchSuggestions"
             :trigger-on-focus="false"
             class="inline-input"
             :placeholder="t('fields.addRecipient')"
@@ -519,6 +519,8 @@ import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
 import Editor from "@tinymce/tinymce-vue";
+import { debounce } from "lodash";
+import { getMemberLoginNameList } from "../../../../api/system-message-template";
 
 const store = useStore();
 const { t } = useI18n();
@@ -658,25 +660,50 @@ const handleClose = tag => {
   inputValue.value = ''
 }
 
-const querySearch = (queryString, cb) => {
-  const results = queryString
-    ? list.members.filter(createFilter(queryString))
-    : list.members
-  // call callback function to return suggestions
-  cb(results)
-}
-const createFilter = queryString => {
-  return item => {
-    return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
+  }
+
+  try {
+    const { data: ret } = await getMemberLoginNameList(selected.site, queryString);
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id
+    }));
+    callback(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    callback();
   }
 }
+// const createFilter = queryString => {
+//   return item => {
+//     return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+//   }
+// }
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!selected.site) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+  querySearch(queryString, callback);
+}, 1500); // Adjust debounce time as needed
 
 const handleSelect = item => {
   if (item) {
-    dynamicTags.value.push(item.value)
-    const removed = list.members.splice(list.members.indexOf(item), 1)
-    const removedArr = [...removed]
-    selectionList.members.push(removedArr[0])
+    if (dynamicTags.value.indexOf(item.value) === -1) {
+      dynamicTags.value.push(item.value)
+      const removed = list.members.splice(list.members.indexOf(item), 1)
+      const removedArr = [...removed]
+      selectionList.members.push(removedArr[0])
+    }
   }
   inputValue.value = ''
 }
@@ -794,7 +821,12 @@ function submit() {
     if (valid) {
       if (uiControl.dialogType === 'CREATE') {
         if (form.receiveType === 'MULTIPLE') {
-          form.recipient = dynamicTags.value
+          form.recipient = dynamicTags.value;
+          if (form.recipient.length === 0 && inputValue.value) {
+            const members = inputValue.value.split(",");
+            form.recipient.push(...members);
+            inputValue.value = '';
+          }
         } else if (form.receiveType === 'VIP') {
           form.recipient.push(form.vip)
         }
