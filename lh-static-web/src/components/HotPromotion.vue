@@ -48,6 +48,7 @@
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight'" />
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode"/>
     <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode"/>
 
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
@@ -131,6 +132,7 @@ import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInv
 import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
 import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
+import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
@@ -251,6 +253,7 @@ export default defineComponent({
     LPLLCK,
     LivepokerRebate,
     BbdachaCsgo2,
+    EslProCsgo2,
     Dota2Ti13,
     BlackMythWuKongPromo
   },
