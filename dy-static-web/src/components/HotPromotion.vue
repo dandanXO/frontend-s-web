@@ -72,6 +72,7 @@
 
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode"/>
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'"/>
     
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
@@ -154,6 +155,7 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
+import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -206,6 +208,7 @@ export default defineComponent({
     LPLLCK,
     newFootballFight,
     BbdachaCsgo2,
+    EslProCsgo2,
     BlackMythWuKongPromo
   },
   props: {
