@@ -88,6 +88,11 @@ switch (currentHost) {
     imageCDNUrl = process.env.VUE_APP_KYQ_IMAGE;
     siteId = 'lh';
     break;
+  case process.env.VUE_APP_PH1_HOST:
+    baseApi = process.env.VUE_APP_PH1_API;
+    baseWss = process.env.VUE_APP_PH1_SOCKET;
+    siteId = 'ph1';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
@@ -140,7 +145,7 @@ if (siteId === 'dy') {
 } else if (siteId === 'th') {
   link.href = '/th-favicon.ico';
   title.innerText = 'Jolly88';
-} else if (siteId === 'ind') {
+} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1') {
   link.href = '/ind-favicon.ico';
   title.innerText = '55Ace';
 } else if (siteId === 'lh') {
