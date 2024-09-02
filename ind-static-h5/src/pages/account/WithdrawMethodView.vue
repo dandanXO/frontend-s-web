@@ -336,8 +336,10 @@
       </template>
 
       <div class="note-tips" v-if="isUSDT">
-        <div class="info">*Withdrawal fee: 0.50 USDT</div>
+        <div class="info">*Withdrawal fee: {{ selectedMethodItem.withdrawFee }} USDT</div>
       </div>
+
+      <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips" />
     </template>
 
     <template v-else>
@@ -1470,6 +1472,19 @@ const convertToTwoDecimalAmount = (amount) => {
   padding: 12px;
   font-size: 0.825rem;
   font-weight: 400;
+  color: #a9a6bb;
+}
+
+.withdraw-tip-wrapper {
+  background-color: rgba(21, 127, 66, 0.2);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.2px;
+  letter-spacing: 0.045em;
+  text-align: left;
   color: #a9a6bb;
 }
 </style>

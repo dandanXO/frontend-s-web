@@ -336,7 +336,11 @@
       </template>
 
       <div class="note-tips" v-if="isUSDT">
-        <div class="info">*Withdrawal fee: 0.50 USDT</div>
+        <div class="info">*Withdrawal fee: {{ selectedMethodItem.withdrawFee }} USDT</div>
+      </div>
+
+      <div v-if="selectedMethodItem.tips" class="note-tips">
+        <div class="info" v-html="selectedMethodItem.tips" />
       </div>
     </template>
 

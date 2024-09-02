@@ -283,7 +283,7 @@
         </div>
       </template>
 
-      <div class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
+      <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
 
       <!-- <div class="bottom-tnc q-mt-md">
         Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
@@ -1234,6 +1234,6 @@ const toggleAmount = (type) => {
   line-height: 16.2px;
   letter-spacing: 0.045em;
   text-align: left;
-  color: rgba(255, 255, 255, .6);
+  color: #a9a6bb;
 }
 </style>
