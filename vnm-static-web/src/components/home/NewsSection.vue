@@ -68,7 +68,7 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane :lebel="t('home.weeklyTournament')" name="fifth">
+        <el-tab-pane :label="t('home.weeklyTournament')" name="fifth">
           <div class="news-listing">
             <div class="news" v-for="news in weeklyTournamentList.slice(0, 5)">
               <div class="news-image">
@@ -108,7 +108,7 @@ const loadNews = () => {
         soccerBettingList.value = res.data.filter((news) => news.category.includes("Tin bóng đá"));
         esportNewsList.value = res.data.filter((news) => news.category.includes("Tin Esport"));
         bettingGuideList.value = res.data.filter((news) => news.category.includes("Hướng dẫn cá cược"));
-        weeklyTournamentList.value = res.data.filter((news) => news.category.includes("Giải đấu Baccarat hàng tuần"));
+        weeklyTournamentList.value = res.data.filter((news) => news.category.includes("Giải Đấu Baccarat hàng tuần"));
     } else ElMessage.error({
                 type: "error",
                 message: res.message
