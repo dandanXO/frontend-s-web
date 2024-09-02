@@ -1472,10 +1472,19 @@ const convertToTwoDecimalAmount = (amount) => {
   padding: 12px;
   font-size: 0.825rem;
   font-weight: 400;
-  color: #a9a6bb;
+  color: #cdcbd5;
+
+  :deep(b) {
+    font-weight: bold;
+    color: #fff;
+  }
 
   :deep(em) {
-    color: #FFAE00;
+    color: #ffae00;
+  }
+
+  :deep(p) {
+    margin-bottom: 4px;
   }
 }
 </style>

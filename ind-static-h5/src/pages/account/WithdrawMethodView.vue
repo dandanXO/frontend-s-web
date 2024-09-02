@@ -1485,10 +1485,19 @@ const convertToTwoDecimalAmount = (amount) => {
   line-height: 16.2px;
   letter-spacing: 0.045em;
   text-align: left;
-  color: #a9a6bb;
+  color: #cdcbd5;
+
+  :deep(b) {
+    font-weight: bold;
+    color: #fff;
+  }
 
   :deep(em) {
-    color: #FFAE00;
+    color: #ffae00;
+  }
+
+  :deep(p) {
+    margin-bottom: 4px;
   }
 }
 </style>
