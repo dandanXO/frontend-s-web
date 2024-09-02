@@ -11,3 +11,11 @@ export function getSpinWheelPrize() {
 export function initSpinWheelData() {
     return server.EVENT.get('/betWheel/init');
 }
+
+export function getMidautumSpinWheelData() {
+    return server.EVENT.get('/mooncakeFestSpin/init');
+}
+
+export function getMidautumSpinWheelPrize(times) {
+    return server.EVENT.post(`/mooncakeFestSpin/spin?spinTimes=${times}`);
+}
