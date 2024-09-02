@@ -2740,6 +2740,7 @@ export default {
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
     'Mooncake Fest Spin Record': '中秋节转盘2024',
+    'Platform WC': 'WC平台',
   },
   google: {
     google_auth_menu: '谷歌验证',

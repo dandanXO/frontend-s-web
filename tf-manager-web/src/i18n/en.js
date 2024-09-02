@@ -2792,6 +2792,7 @@ export default {
     'System Value Rules': 'System Value Rules',
     'Sites Config': 'Site Config',
     'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
+    'Platform WC': 'Platform WC',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
