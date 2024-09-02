@@ -7,7 +7,6 @@
 import { ref } from "vue";
 import SwiperNav from "../components/SwiperNav.vue";
 import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
-import { onInitialized } from "src/hooks/initialized";
 
 let slideList = ref(["Agency Policy", "My Member"]);
 let slideListPath = ref(["/agency-policy", "/earn-money"]);
@@ -17,6 +16,4 @@ const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
 };
-
-onInitialized();
 </script>

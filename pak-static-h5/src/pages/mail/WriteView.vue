@@ -155,7 +155,6 @@ import { useRouter } from "vue-router";
 import FileUpload from "components/FileUpload.vue";
 import InputField from "components/auth/InputField.vue";
 import InputRowGrid from "components/auth/InputRowGrid.vue";
-import { onInitialized } from "src/hooks/initialized";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -224,7 +223,9 @@ const closePage = () => {
   mailDetailList.value.content = "";
 };
 
-onInitialized(loadFeedbackType);
+onMounted(() => {
+  loadFeedbackType();
+});
 </script>
 
 <style scoped lang="scss">
@@ -297,7 +298,7 @@ onInitialized(loadFeedbackType);
 }
 
 .btn-confirm {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
   border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;

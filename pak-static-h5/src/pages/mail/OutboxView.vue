@@ -26,7 +26,6 @@ import MailComponent from "../../components/MailComponent.vue";
 import WriteComponent from "../../components/WriteComponent.vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { onInitialized } from "src/hooks/initialized";
 
 components: {
   WriteComponent, MailComponent;
@@ -79,7 +78,10 @@ const closeModal = () => {
   isPostCommentsModal.value = false;
 };
 
-onInitialized(loadOutboxFeedback);
+onMounted(() => {
+  // loadOutbox();
+  loadOutboxFeedback();
+});
 </script>
 
 <style scoped lang="scss">

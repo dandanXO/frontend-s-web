@@ -21,7 +21,6 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import DepositView from "../account/DepositView.vue";
 import WithdrawView from "../account/WithdrawView.vue";
-import { onInitialized } from "src/hooks/initialized";
 
 const route = useRoute();
 const activeKey = ref("");
@@ -39,8 +38,6 @@ watch(
     }
   }
 );
-
-onInitialized();
 </script>
 
 <style scoped lang="scss">
@@ -70,7 +67,7 @@ onInitialized();
     }
 
     :deep(.q-tab) {
-      color: #5f6061;
+      color: #5F6061;
       // background: #101114;
       border-radius: 0.375rem;
       // margin: 2.5px;

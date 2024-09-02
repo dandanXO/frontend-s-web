@@ -16,15 +16,12 @@
 import { defineComponent, ref } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
-import { onInitialized } from "src/hooks/initialized";
 
 export default defineComponent({
   setup() {
     const $q = useQuasar();
     const store = userStore();
     const regDevice = store.getDeviceType();
-    onInitialized();
-
     return {
       regDevice,
       store

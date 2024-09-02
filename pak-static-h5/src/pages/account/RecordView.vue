@@ -73,17 +73,7 @@
 
         <q-card-section class="mid-wrapper">
           RS
-          <span
-            :class="`${
-              ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus)
-                ? e.payout <= 0
-                  ? 'loss-amt'
-                  : 'win-amt'
-                : 'bet-amt'
-            }`"
-          >
-            {{ convertToCommaAmount(e.payout, true) }}
-          </span>
+          <span :class="`${['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus) ? (e.payout <= 0 ? 'loss-amt' : 'win-amt') : 'bet-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
@@ -121,7 +111,6 @@ import { convertToCommaAmount } from "src/boot/utils";
 import { useQuasar } from "quasar";
 import { t } from "src/boot/lang";
 import BetRefereceWithCopy from "../../components/account/BetReferenceWithCopy.vue";
-import { onInitialized } from "src/hooks/initialized";
 
 const router = useRouter();
 const store = userStore();
@@ -315,8 +304,6 @@ onActivated(() => {
 
   searchRecord(true);
 });
-
-onInitialized();
 </script>
 
 <style lang="scss">

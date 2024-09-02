@@ -215,7 +215,6 @@ import * as _ from "lodash";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import { t } from "src/boot/lang";
-import { onInitialized } from "src/hooks/initialized";
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -350,8 +349,6 @@ const formatCardNumber = (cardNumber) => {
 onActivated(() => {
   loadCards();
 });
-
-onInitialized();
 </script>
 
 <style scoped lang="scss">

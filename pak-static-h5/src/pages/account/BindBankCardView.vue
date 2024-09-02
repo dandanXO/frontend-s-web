@@ -242,7 +242,6 @@ import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
-import { onInitialized } from "src/hooks/initialized";
 
 const { t } = useI18n();
 
@@ -465,8 +464,6 @@ const handleEnterKey = () => {
 onActivated(() => {
   loadBankCards();
 });
-
-onInitialized();
 </script>
 
 <style lang="scss">

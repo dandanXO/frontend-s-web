@@ -46,7 +46,6 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar, Platform } from "quasar";
-import { onInitialized } from "src/hooks/initialized";
 
 const router = useRouter();
 const $q = useQuasar();
@@ -90,8 +89,6 @@ const onSubmit = () => {
     });
   }
 };
-
-onInitialized();
 </script>
 
 <style scoped lang="scss">
@@ -102,7 +99,7 @@ onInitialized();
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5f6061;
+    color: #5F6061;
     font-weight: 400;
     width: 50%;
   }

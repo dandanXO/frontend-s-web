@@ -230,7 +230,6 @@ import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import { onInitialized } from "src/hooks/initialized";
 
 const $q = useQuasar();
 
@@ -422,7 +421,9 @@ onActivated(() => {
   });
 });
 
-onInitialized(checkMonthlyVipReceive);
+onMounted(() => {
+  checkMonthlyVipReceive();
+});
 
 watch(
   () => vipCarouselIndex.value,

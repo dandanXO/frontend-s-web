@@ -35,7 +35,6 @@ import { userStore } from "stores/index";
 import { convertToGMT55 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
-import { onInitialized } from "src/hooks/initialized";
 
 const router = useRouter();
 const store = userStore();
@@ -100,8 +99,6 @@ onActivated(() => {
   loadInbox();
   store.setReadMsg();
 });
-
-onInitialized();
 </script>
 
 <style lang="scss" scoped>

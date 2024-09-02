@@ -1401,7 +1401,6 @@ import "swiper/css/effect-coverflow";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
-import { afterInitialized, onInitialized } from "src/hooks/initialized";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -3511,11 +3510,12 @@ onActivated(() => {
   }
 });
 
-onInitialized(() => {
+onMounted(() => {
   getPlatList();
   loadData();
   loadAnnouncement();
   checkPlatform();
+  loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
@@ -3523,12 +3523,6 @@ onInitialized(() => {
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-});
-
-afterInitialized(() => {
-  checkHbPromo();
-  loadCustomerAddress();
-  checkShowImgTop();
 });
 
 watch(

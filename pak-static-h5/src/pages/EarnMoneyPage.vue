@@ -5,7 +5,12 @@
       <div class="earn-money-title">{{ $t("earnMoney.title") }}</div>
     </div>
     <q-tabs v-model="currentTab" no-caps class="children-tab" indicator-color="transparent" align="justify">
-      <q-tab v-for="(tab, index) in childrenTabs" :key="index" :label="tab.label" :name="tab.name" />
+      <q-tab
+        v-for="(tab, index) in childrenTabs"
+        :key="index"
+        :label="tab.label"
+        :name="tab.name"
+      />
     </q-tabs>
     <q-tab-panels
       v-model="currentTab"
@@ -30,7 +35,6 @@ import TeamManagementTab from "components/earn-money/TeamManagementTab.vue";
 import TeamBettingTab from "components/earn-money/TeamBettingTab.vue";
 import ProfitAndLossTab from "components/earn-money/ProfitAndLossTab.vue";
 import { useI18n } from "vue-i18n";
-import { onInitialized } from "src/hooks/initialized";
 
 const { t } = useI18n();
 
@@ -42,8 +46,6 @@ const childrenTabs = computed(() => [
   // { label: t("earnMoney.tabs.teamBetting"), name: "team-betting", component: TeamBettingTab },
   { label: t("earnMoney.tabs.profitAndLoss"), name: "profit-and-loss", component: ProfitAndLossTab }
 ]);
-
-onInitialized();
 </script>
 
 <style scoped lang="scss">

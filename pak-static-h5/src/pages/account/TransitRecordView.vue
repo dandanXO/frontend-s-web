@@ -405,7 +405,6 @@ import { userStore } from "stores/index"
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import moment from "moment"
 import { t } from "src/boot/lang";
-import { onInitialized } from "src/hooks/initialized";
 const store = userStore();
 const recordActive = ref("deposit");
 const totalBetRecord = reactive({
@@ -745,7 +744,7 @@ export default defineComponent({
       searchRecord();
     };
 
-    onInitialized(() => {
+    onMounted(() => {
       getTime();
     });
     const platformsList = ref([])
