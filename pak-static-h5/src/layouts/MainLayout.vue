@@ -83,6 +83,7 @@
 
     <FooterSection />
   </q-layout>
+
   <div class="first-screen-loading" v-show="ui.firstScreenLoading" />
 </template>
 
@@ -535,8 +536,17 @@ export default defineComponent({
     });
     // console.log(platformsList.value);
 
+    const checkFirstScreen = () => {
+      if (ui.firstScreenLoading) {
+        setTimeout(() => {
+          ui.firstScreenLoading = false;
+        }, 500);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
+      checkFirstScreen();
     });
     return {
       tab: ref("home"),
