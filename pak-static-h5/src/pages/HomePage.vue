@@ -1401,6 +1401,7 @@ import "swiper/css/effect-coverflow";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
+import { useCustomerTrigger } from "src/hooks/trigger";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -2503,7 +2504,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          // console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
     });
@@ -3494,28 +3495,33 @@ const gotoFloatPromo = (val) => {
   }
 };
 
+const afterActivated = useCustomerTrigger(() => {
+  checkShowImgTop();
+  checkHbPromo();
+});
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
-  checkShowImgTop();
 
   checkSpinWheel();
 
   // if (store.hasToken()) {
-  checkHbPromo();
   // }
 
   if (route.query.login === "true") {
     isMoneyRainModal.value = true;
   }
+  afterActivated();
 });
+
+const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
 onMounted(() => {
   getPlatList();
   loadData();
   loadAnnouncement();
   checkPlatform();
-  loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
@@ -3523,6 +3529,7 @@ onMounted(() => {
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+  afterMounted();
 });
 
 watch(
