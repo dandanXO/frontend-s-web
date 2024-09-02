@@ -245,6 +245,7 @@ export function claimItems(status, level) {
   if (status === 'monthly') {return server.EVENT.put("/vip-bonus/claim-monthly-bonus");}
   if (status === 'yearlyRetain') {return server.EVENT.post("/vip-bonus/claim-yearly-retain?_method=PUT", { vipLevel: level })}
   if (status === 'coupon') {return server.EVENT.put("/vip-bonus/claim-coupon");}
+  if (status === 'redPacket') {return server.EVENT.put("/vip-bonus/claim-red-packet");}
   if (status === 'all') {return server.EVENT.post("/vip-bonus/claim-all?_method=PUT", { vipLevel: level })}
 }
 

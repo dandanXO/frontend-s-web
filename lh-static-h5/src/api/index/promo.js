@@ -217,6 +217,7 @@ export function claimItems(status, level) {
   if (status === 'monthly') {return eventapi.put("/vip-bonus/claim-monthly-bonus");}
   if (status === 'yearlyRetain') {return eventapi.post("/vip-bonus/claim-yearly-retain?_method=PUT", qs.stringify({ vipLevel: level }))}
   if (status === 'coupon') {return eventapi.put("/vip-bonus/claim-coupon");}
+  if (status === 'redPacket') {return eventapi.put("/vip-bonus/claim-red-packet");}
   if (status === 'all') {return eventapi.post("/vip-bonus/claim-all?_method=PUT", qs.stringify({ vipLevel: level }))}
 }
 
