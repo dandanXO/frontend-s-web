@@ -1043,6 +1043,9 @@ export default defineComponent({
 
 .dark {
   .promo-container {
+    .promo-banner {
+      background: unset;
+    }
     .all-promotions {
       background: $background-dark;
 
