@@ -877,7 +877,6 @@ import { hasPermission } from '../../../utils/util'
 import { getPaymentsSimpleBySiteId } from "../../../api/payment-display";
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
-import { isPak } from '@/utils/site'
 import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
@@ -1329,7 +1328,7 @@ function changePage(page) {
 }
 
 async function changeToNewUI() {
-  uiControl.isNGASite = true
+  uiControl.isNGASite = !uiControl.isNGASite
   uiControl.isPRKSite = false
   await loadAffiliates()
   await loadNewAffiliates()
@@ -1342,27 +1341,8 @@ async function changeToNewUI() {
 }
 
 async function handleChangeSite() {
-  if (isPak(request.siteId)) {
-    uiControl.withdraw1Title = t('fields.withdrawChannel') + ' (EASYPAISA)'
-    uiControl.withdraw2Title = t('fields.withdrawChannel') + ' (JAZZCASH)'
-    form.paymentId1 = 0
-    form.paymentId2 = 0
-    form.paymentId3 = 0
-    form.paymentId4 = 0
-    uiControl.isPRKSite = true
-    uiControl.isNGASite = false
-  // } else if (request.siteId === 14) {
-  //   // uiControl.isNGASite = true
-  //   // uiControl.isPRKSite = false
-  } else {
-    form.paymentId1 = null
-    form.paymentId2 = null
-    form.paymentId3 = null
-    form.paymentId4 = null
-    uiControl.withdraw1Title = t('fields.withdrawChannel')
-    uiControl.isPRKSite = false
-    uiControl.isNGASite = false
-  }
+  uiControl.isNGASite = true
+  uiControl.isPRKSite = false
   await loadAffiliates()
   await loadNewAffiliates()
   await loadPrivilege()
@@ -1371,6 +1351,13 @@ async function handleChangeSite() {
   await loadPayment()
   await loadAffiliateDepositSetting()
   await loadAffiliateDepositDisplay()
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
 }
 
 onMounted(async() => {
