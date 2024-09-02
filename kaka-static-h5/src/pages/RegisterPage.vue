@@ -689,6 +689,10 @@ function charType(num) {
 }
 </script>
 <style lang="scss">
+.q-field__bottom--animated {
+  z-index: 1;
+}
+
 .verification {
   display: flex;
   padding: 10px;
