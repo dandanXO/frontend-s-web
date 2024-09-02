@@ -70,14 +70,14 @@
 
         <el-tab-pane :label="t('home.weeklyTournament')" name="fifth">
           <div class="news-listing">
-            <div class="news" v-for="news in weeklyTournamentList.slice(0, 5)">
+            <div class="news" v-for="news in weeklyTournamentList.slice(0, 5)" @click="open(news.url)">
               <div class="news-image">
                 <img :src="news.pictureurl" :alt="news.title" />
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
                 <div class="news-content" v-html="news.excerpt"></div>
-                <button class="standard-button btn-color-blue" @click="open(news.url)">
+                <button class="standard-button btn-color-blue">
                   {{ $t("home.moreDetails") }}
                 </button>
               </div>
