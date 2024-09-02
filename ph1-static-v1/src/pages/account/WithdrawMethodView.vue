@@ -283,6 +283,8 @@
         </div>
       </template>
 
+      <div class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
+
       <!-- <div class="bottom-tnc q-mt-md">
         Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
         information, if withdrawal failed or you have any other questions, please contact CS 24/7
@@ -1220,5 +1222,18 @@ const toggleAmount = (type) => {
 .dialog-input {
   background-color: #263349;
   border-radius: 6px;
+}
+
+.withdraw-tip-wrapper {
+  background-color: rgba(21, 127, 66, .2);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.2px;
+  letter-spacing: 0.045em;
+  text-align: left;
+  color: rgba(255, 255, 255, .6);
 }
 </style>
