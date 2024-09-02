@@ -78,7 +78,8 @@
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
-            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
           }"
         >
           <div
@@ -119,7 +120,8 @@
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual',
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
@@ -743,9 +745,15 @@ export default defineComponent({
           height: 376px !important;
           min-height: 376px;
 
-          .promo-bg {
+          .promo-bg.isDesktop {
             height: 376px !important;
             min-height: 376px;
+          }
+        }
+
+        &.isMidAutumnWukong {
+          .promo-bg {
+            height: 550px !important;
           }
         }
 
