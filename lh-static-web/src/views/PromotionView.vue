@@ -434,7 +434,7 @@ export default defineComponent({
     width: 100%;
     padding: 30px 50px 50px;
     position: relative;
-    background-color: #f3f7fd;
+    background-color: #E7F1FD;
   }
   .promo-view-container {
     line-height: 30px;
@@ -552,6 +552,7 @@ export default defineComponent({
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
         border-radius: 20px;
+        background-color: #f3f7fd;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         align-self: flex-start;
