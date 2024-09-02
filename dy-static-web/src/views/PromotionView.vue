@@ -113,6 +113,7 @@
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo' || selectedPromo.promoCode === 'dy2-blackmyth-wukong',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             esl: selectedPromo.promoCode === 'dy2-intel-esl',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -807,6 +808,11 @@ export default defineComponent({
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;
+        }
+
+        &.isMidAutumnWukong {
+          background-repeat: no-repeat;
+          background-size: 100% auto;
         }
 
         &.isMSI {
