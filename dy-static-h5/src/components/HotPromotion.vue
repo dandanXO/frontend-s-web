@@ -69,6 +69,7 @@
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <SlotLacky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'dy2-midautumn-spinwheel'" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo'" />
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match'" />
     <Olympic24Match v-if="list.redirectUrl === 'dy2-olympic-match'" />
@@ -155,6 +156,7 @@ const CnyStepGame2024Promo = defineAsyncComponent(() =>
 const Dy2StepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue"));
 const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
 const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const MidautumSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue"))
 const LOLMsi2024Promo = defineAsyncComponent(() => import("../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue"));
 const Nba24Match = defineAsyncComponent(() => import("../components/hotpromo/Nba24Match/Nba24Match.vue"));
 const LPLSummer24 = defineAsyncComponent(() => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue"));
@@ -215,6 +217,7 @@ export default defineComponent({
     Dy2StepGamePromo,
     CS2Sign,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LOLMsi2024Promo,
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
