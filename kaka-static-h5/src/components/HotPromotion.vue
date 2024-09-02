@@ -1,12 +1,12 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
-      :promo-id="list.id"
-      :promo-code="list.promoCode"
-      :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
-    />
+    <!--    <ClaimPromo-->
+    <!--      v-if="isCommonPromo && store.hasToken()"-->
+    <!--      :promo-id="list.id"-->
+    <!--      :promo-code="list.promoCode"-->
+    <!--      :loading-claim="btnLoading"-->
+    <!--      @daily-slot="handleSlot()"-->
+    <!--    />-->
 
     <LotteryPromo v-if="list.redirectUrl === 'ka2-iphone' && !isCommonPromo && store.token" />
 
@@ -20,10 +20,7 @@
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
 
-    <upgradeHongBaoPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'Red_pocket_euro2024'"
-      :promo-code="list.promoCode"
-    />
+    <upgradeHongBaoPromo v-if="listParam.type === 'redpacket'" :promo-code="list.promoCode" />
 
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo" />
     <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo" />
@@ -53,7 +50,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+// import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue";
@@ -70,7 +67,6 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo,
     LotteryPromo,
     DailyLoginPromo,
     ViPokerCashbackPromo,
@@ -123,6 +119,16 @@ export default defineComponent({
         .catch((error) => {
           this.btnLoading = false;
         });
+    }
+  },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
     }
   },
   mounted() {
