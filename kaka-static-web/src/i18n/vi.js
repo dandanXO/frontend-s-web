@@ -204,7 +204,7 @@ export default {
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH, tránh sai sót gây tổn thất của quý khách khi rút tiền! KAKA xin chân thành cảm ơn!"
   },
   placeholder: {
-    realName: "Vui lòng nhập tên thật",
+    realName: "Họ tên phải được viết in hoa không dấu, khớp với tên tài khoản ngân hàng và cách nhau bằng dấu cách",
     birthday: "Vui lòng nhập ngày sinh",
     zalo: "Vui lòng nhập Zalo",
     email: "Vui lòng nhập địa chỉ email",
@@ -336,7 +336,7 @@ export default {
     exchangeRateExample: "*Lưu ý đặc biệt: Phí rút tiền là {fee} USDT sẽ tự động thu bởi bên thứ ba!",
     startEndDate: "Vui lòng nhập ngày bắt đầu và ngày kết thúc",
     usdtAddress: "Địa chỉ ví",
-    accountNo: "Số thẻ",
+    accountNo: "Số tài khoản ngân hàng",
     accountNoUnmatched: "Số thẻ không hợp lệ, vui lòng đăng nhập lại",
     confirmUnbind: "Xác nhận bỏ thẻ",
     confirmCorrectNumber: "Vui lòng nhập chính xác số thẻ",

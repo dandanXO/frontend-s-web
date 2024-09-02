@@ -118,7 +118,7 @@ export default {
     logout_cancel: "Hủy",
 
     // register
-    please_enter_your_real_name: "Vui lòng nhập tên thật của bạn",
+    please_enter_your_real_name: "Họ tên phải được viết in hoa không dấu, khớp với tên tài khoản ngân hàng và cách nhau bằng dấu cách",
     real_name: "Họ và tên",
     real_name_hints: "Tên phải khớp với số tài khoản thẻ ngân hàng rút tiền",
     real_name_validation: "Tên phải có ít nhất hai ký tự",

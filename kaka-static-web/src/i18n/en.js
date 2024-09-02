@@ -339,7 +339,7 @@ export default {
       "*Special Note: A withdrawal fee of {fee} USDT will be automatically charged by the third party!",
     startEndDate: "Please enter the start and end date",
     usdtAddress: "USDT address",
-    accountNo: "Account number",
+    accountNo: "Bank account number",
     accountNoUnmatched: "Account number not matched, please input again",
     confirmUnbind: "Confirm unbind",
     confirmCorrectNumber: "Please confirm correct account number",
