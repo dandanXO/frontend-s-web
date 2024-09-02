@@ -50,7 +50,9 @@
         <div class="item">
           <div class="item-num">3</div>
           <div style="font-weight: 500">
-            转盘次数达 60 次后，第 61 次必中奖品豪华版【黑神话·悟空】，抽取实物奖品者麻烦联系【在线客服】进行兑换，若不想兑换可根据实物价格 8 折兑换彩金；
+            转盘次数达 60 次后，第 61
+            次必中奖品豪华版【黑神话·悟空】，抽取实物奖品者麻烦联系【在线客服】进行兑换，若不想兑换可根据实物价格 8
+            折兑换彩金；
           </div>
         </div>
         <div class="item">
@@ -62,14 +64,12 @@
         <div class="item">
           <div class="item-num">5</div>
           <div style="font-weight: 500">
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
           </div>
         </div>
         <div class="item">
           <div class="item-num">6</div>
-          <div style="font-weight: 500">
-            为避免文字理解差异，本站保留此活动最终解释权；
-          </div>
+          <div style="font-weight: 500">为避免文字理解差异，本站保留此活动最终解释权；</div>
         </div>
       </div>
     </div>
@@ -199,6 +199,12 @@ const reset = () => {
 };
 
 const spinWheel = (times) => {
+  // spin(0, () => {
+  //   showPrizePopup.value = true;
+  //   prizePopupBonusAmt.value = 8;
+  //   remainingDraws.value = 1;
+  // });
+  // return;
   if (!store.token) {
     $q.dialog({
       class: "q-px-md q-pt-md",
@@ -237,7 +243,7 @@ const spinWheel = (times) => {
   eventapi
     .post(`/mooncakeFestSpin/spin?spinTimes=${times}`)
     .then((res) => {
-      if (res.code == 0) {
+      if (res.code === 0) {
         var bonusIndex = res.data.spinBonusVOList.bonus;
         remainingDraws.value = res.data.availableSpin;
         const prizeIndex = degreesToStopAt.value.findIndex((item) => item.prize === bonusIndex);
@@ -256,7 +262,7 @@ const spinWheel = (times) => {
 
 const initSpinWheel = () => {
   eventapi.get("/mooncakeFestSpin/init").then((res) => {
-    if (res.code == 0) {
+    if (res.code === 0) {
       remainingDraws.value = res.data.availableSpin;
     }
   });
@@ -570,8 +576,8 @@ onMounted(() => {
       margin-right: 10px;
 
       .action-btn {
-        background: url("./../../../assets/images/promo/hotpromo/midautum-spinWheel/prize-popup-action-btn.png") no-repeat
-          center center;
+        background: url("./../../../assets/images/promo/hotpromo/midautum-spinWheel/prize-popup-action-btn.png")
+          no-repeat center center;
         background-size: contain;
         width: 100%;
         height: 100%;
@@ -685,7 +691,7 @@ onMounted(() => {
   max-width: 1024px;
   height: 100%;
   margin: 40px auto 0;
-  background: #F4DFFF3B;
+  background: #f4dfff3b;
   border-radius: 12px;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
@@ -698,7 +704,7 @@ onMounted(() => {
     align-items: center;
     gap: 10px;
     border-radius: 12px 12px 0 0;
-    background: linear-gradient(180deg, #C5CEFF 0%, #A79EFF 100%);
+    background: linear-gradient(180deg, #c5ceff 0%, #a79eff 100%);
     width: 100%;
     padding: 10px 0;
   }
@@ -708,7 +714,7 @@ onMounted(() => {
     background-repeat: no-repeat;
     background-size: 100%;
     width: 290px;
-    color: #9742F8;
+    color: #9742f8;
     font-weight: 600;
     font-size: 24px;
     text-align: center;
@@ -723,7 +729,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 36px;
     color: #000000;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #ffffff;
     border-top: none;
     padding: 20px 20px 20px 10px;
     border-radius: 0 0 12px 12px;
