@@ -1235,5 +1235,9 @@ const toggleAmount = (type) => {
   letter-spacing: 0.045em;
   text-align: left;
   color: #a9a6bb;
+
+  :deep(em) {
+    color: #FFAE00;
+  }
 }
 </style>

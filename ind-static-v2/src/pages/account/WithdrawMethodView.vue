@@ -1473,5 +1473,9 @@ const convertToTwoDecimalAmount = (amount) => {
   font-size: 0.825rem;
   font-weight: 400;
   color: #a9a6bb;
+
+  :deep(em) {
+    color: #FFAE00;
+  }
 }
 </style>
