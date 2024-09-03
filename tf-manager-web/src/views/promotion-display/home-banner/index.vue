@@ -899,6 +899,7 @@ async function loadSiteImage(type) {
   } else {
     imageRequest.promoType = 'MOBILE_BANNER'
   }
+  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages

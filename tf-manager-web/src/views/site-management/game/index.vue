@@ -1343,6 +1343,7 @@ onMounted(async () => {
     request.siteId = site.value.id;
   } else {
     request.siteId = sites.list[0].id;
+    imageRequest.siteId = sites.list[0].id;
   }
   form.siteId = request.siteId
   await loadSearchPlatforms()
