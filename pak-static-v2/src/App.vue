@@ -133,7 +133,7 @@ export default defineComponent({
 
       var affiliateCode = "";
       if (omitSites.includes(window.location.host)) {
-        affiliateCode = "4F09FA";
+        affiliateCode = "7508B7";
       } else {
         // affiliateCode = "3B1BFB";
         affiliateCode = "";
