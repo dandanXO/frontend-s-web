@@ -264,9 +264,9 @@ dense
       </router-link>
     </div>
 
-    <!-- <div class="login-bottom-div"> -->
-    <!-- <img src="../assets/images/login/register-banner.png" /> -->
-    <!-- </div> -->
+    <div class="login-bottom-div">
+    <img src="../assets/images/login/register-banner.png" />
+    </div>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
