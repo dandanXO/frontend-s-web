@@ -3,12 +3,16 @@
     <div class="additional-info-items" v-if="customerHovered">
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
-        <span>24小时在线客服</span>
+        <span style="margin-left: 5px">
+          官网客服
+          <Ri24HoursLine class="icon-24h" />
+        </span>
       </div>
-      <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" />
-        <span style="margin-left: 5px">cs@lh8080.com</span>
-      </div>
+      <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
+        <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
+        <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+        <span style="margin-left: 5px">专属客服</span>
+      </a>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />
         <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
@@ -142,10 +146,14 @@ import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
+import { ElMessageBox } from "element-plus";
+import { Ri24HoursLine } from "vue-remix-icons";
+
 import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
-    GameModal
+    GameModal,
+    Ri24HoursLine
   },
   setup() {
     const notify = useNotify();
@@ -312,6 +320,31 @@ export default defineComponent({
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
+
+    const goToLiveChatPromo = () => {
+      const currentRoute = router.currentRoute.value;
+      if (store.vip !== "" && store.vip !== "VIP0") {
+        const currentName = currentRoute.query.name;
+        if (currentRoute.path === "/promotion" && currentName !== "lh-official-gift") {
+          router.push(`/promotion?name=lh-official-gift`).then(() => {
+            window.location.reload();
+          });
+        } else {
+          router.push(`/promotion?name=lh-official-gift`);
+        }
+      } else {
+        ElMessageBox.alert("暂未开放", {
+          autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large",
+          closeOnClickModal: true
+        });
+        return;
+      }
+    };
+
     onMounted(() => {
       getAppDownloadUrl();
       if (store.token) {
@@ -362,6 +395,8 @@ export default defineComponent({
       gotoPromo,
       clickAllowed,
       isDragging,
+      goToLiveChatPromo,
+      ElMessageBox,
       memberType
     };
   }
@@ -457,10 +492,14 @@ export default defineComponent({
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;
-    width: 200px;
+    width: 100%;
 
     &:hover {
       background-color: #e5f5ff;
+    }
+
+    img {
+      width: 23px;
     }
   }
 }
@@ -562,5 +601,13 @@ export default defineComponent({
       color: $font-3-dark;
     }
   }
+}
+
+.icon-24h {
+  width: 16px;
+  margin-top: -2px;
+  margin-left: 3px;
+  position: absolute;
+  // fill: #a3a3a3;
 }
 </style>

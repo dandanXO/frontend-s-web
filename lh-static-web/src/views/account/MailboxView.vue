@@ -668,6 +668,7 @@ onMounted(() => {
       gap: 15px;
     }
     .right {
+      z-index: 101;
       position: absolute;
       right: 0;
       top: -50px;

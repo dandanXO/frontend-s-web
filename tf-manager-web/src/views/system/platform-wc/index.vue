@@ -17,25 +17,26 @@
       </div>
     </div>
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-      <el-form ref="platformForm" v-loading="uiControl.dialogLoading" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
-        <el-form-item :label="t('fields.productId')" prop="name">
+      <el-form ref="platformWCForm" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
+        <el-form-item :label="t('fields.productId')" prop="prdId">
           <el-input v-model="form.prdId" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.platformCode')" prop="code">
+        <el-form-item :label="t('fields.platformCode')" prop="platformCode">
           <el-select
             clearable
-            v-model="form.platformId"
+            v-model="form.platformCode"
             size="small"
             :placeholder="t('fields.platformCode')"
             class="filter-item"
-            style="width: 200px; margin-left: 5px"
+            style="width: 350px"
             @focus="loadPlatforms"
+            filterable
           >
             <el-option
               v-for="item in platforms.list"
-              :key="item.id"
+              :key="item.code"
               :label="item.code"
-              :value="item.id"
+              :value="item.code"
             />
           </el-select>
         </el-form-item>
@@ -66,7 +67,7 @@
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
       <el-table-column prop="prdId" :label="t('fields.productId')" width="200" />
-      <el-table-column prop="platform" :label="t('fields.platformCode')" width="200" />
+      <el-table-column prop="platformCode" :label="t('fields.platformCode')" width="200" />
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="200" />
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="200" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
@@ -89,7 +90,7 @@
 <script setup>
 
 import { nextTick, onMounted, reactive, ref } from "vue";
-import { required } from "../../../utils/validate";
+import { isNumeric, required } from "../../../utils/validate";
 import { ElMessage } from "element-plus";
 import { getPlatformNames } from "../../../api/platform";
 import { getGameTypes } from "../../../api/game";
@@ -97,6 +98,7 @@ import { useI18n } from "vue-i18n";
 import { getPlatformsWc, createPlatformWc, updatePlatformWc } from "../../../api/platform-wc";
 
 const { t } = useI18n();
+const platformWCForm = ref(null);
 const platformForm = ref(null);
 const uiControl = reactive({
   dialogVisible: false,
@@ -126,6 +128,7 @@ const gameTypes = reactive({
 })
 
 const form = reactive({
+  id: null,
   prdId: null,
   platformId: null,
   platformCode: null,
@@ -133,7 +136,7 @@ const form = reactive({
 });
 
 const formRules = reactive({
-  prdId: [required(t('message.validatePlatformNameRequired'))],
+  prdId: [required(t('message.validateProductIdRequired')), isNumeric(t('message.validateNumberFourDecimalOnly'))],
   platformCode: [required(t('message.validatePlatformCodeRequired'))],
   gameType: [required(t('message.validateGameTypeRequired'))]
 });
@@ -162,11 +165,15 @@ function changePage(page) {
 
 function showDialog(type) {
   if (type === "CREATE") {
-    if (platformForm.value) {
-      platformForm.value.resetFields();
+    if (platformWCForm.value) {
+      platformWCForm.value.resetFields();
     }
     uiControl.dialogTitle = t('fields.addPlatform');
     form.id = null;
+    form.prdId = null;
+    form.platformCode = null;
+    form.platformId = null;
+    form.gameType = null;
   } else if (type === "EDIT") {
     uiControl.dialogTitle = t('fields.editPlatform');
   }
@@ -190,14 +197,14 @@ function showEdit(platform) {
 }
 
 function create() {
-  platformForm.value.validate(async (valid) => {
+  platformWCForm.value.validate(async (valid) => {
     if (valid) {
       var arr = form.gameType;
       form.gameType = arr.toString();
 
-      for (const platformItm of platforms) {
-        if (platformItm.id === form.platformId) {
-          form.platformCode = platformItm.code;
+      for (const platformItm of platforms.list) {
+        if (platformItm.code === form.platformCode) {
+          form.platformId = platformItm.id;
           break;
         }
       }
@@ -212,13 +219,13 @@ function create() {
 }
 
 function edit() {
-  platformForm.value.validate(async (valid) => {
+  platformWCForm.value.validate(async (valid) => {
     if (valid) {
       var arr = form.gameType;
       form.gameType = arr.toString();
-      for (const platformItm of platforms) {
-        if (platformItm.id === form.platformId) {
-          form.platformCode = platformItm.code;
+      for (const platformItm of platforms.list) {
+        if (platformItm.code === form.platformCode) {
+          form.platformId = platformItm.id;
           break;
         }
       }

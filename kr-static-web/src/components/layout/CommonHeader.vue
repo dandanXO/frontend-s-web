@@ -1970,7 +1970,7 @@ body {
       }
 
       .logo {
-        height: 64px;
+        height: 56px;
         //width: 102px;
 
         img {

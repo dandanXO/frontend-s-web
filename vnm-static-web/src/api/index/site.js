@@ -6,9 +6,7 @@ export function getSiteParamFromServer() {
 }
 
 export function getAppDownloadUrlFromServer() {
-  return cached.get("APPDOWNLOAD_URL", () =>
-    server.REST.get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
-  );
+  return cached.get("APPDOWNLOAD_URL", () => server.REST.get("/app/getAppData?siteCode=vnm&appType=ALL_SITE"));
 }
 
 export function getCSAFromServer() {
@@ -16,7 +14,7 @@ export function getCSAFromServer() {
 }
 
 export function getRedEnvelopeFromServer() {
-  return server.EVENT.get("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP");
+  return server.EVENT.get("/redPacketVip/nextRainTime?promoCode=OP_SPE_quockhanh2/9_2888VNDP_1VC_082024");
 }
 
 export function getFloatingItems() {

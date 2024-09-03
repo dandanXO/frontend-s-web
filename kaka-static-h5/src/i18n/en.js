@@ -1620,6 +1620,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    37001: "Đã hết thời gian nhận Lì Xì",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today"
   }

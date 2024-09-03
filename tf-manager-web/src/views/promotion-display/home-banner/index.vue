@@ -23,12 +23,30 @@
             :value="item.value"
           />
         </el-select>
+
+        <el-select
+          v-if="uiControl.showSiteType === true"
+          v-model="request.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 120px;margin-left:5px"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+
         <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          @change="changeSite"
         >
           <el-option
             v-for="item in siteList.list"
@@ -617,7 +635,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getSupportDarkMode } from "@/api/config";
-import { isXF, isThai, isDY, isLH } from '@/utils/site'
+import { isXF, isThai, isDY, isLH, isVnm } from '@/utils/site'
 import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
@@ -680,9 +698,17 @@ const uiControl = reactive({
   imageSelectionVisible: false,
   supportDarkMode: false,
   selectDarkImage: false,
+  showSiteType: false,
 })
 
 let chooseBanner = []
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
 
 const request = reactive({
   size: 30,
@@ -690,6 +716,7 @@ const request = reactive({
   title: null,
   state: null,
   siteId: null,
+  siteType: null,
 })
 
 const imageRequest = reactive({
@@ -753,7 +780,9 @@ const imageFormRules = reactive({
 function resetQuery() {
   request.title = null
   request.state = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteType = "main"
+  request.siteId = site.value ? site.value.id : null
+  uiControl.showSiteType = false;
 }
 
 function resetImageQuery() {
@@ -1052,6 +1081,15 @@ async function loadDarkMode() {
   }
 }
 
+async function changeSite() {
+  request.siteType = 'main'
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -1062,6 +1100,12 @@ onMounted(async () => {
   } else {
     request.siteId = siteList.list[0].id
   }
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
+  request.siteType = "main";
   await loadDarkMode()
   await loadHomebanner()
 })

@@ -1153,13 +1153,17 @@ const handleSlideClick = (vipIndex) => {
   }
 };
 const slideTo = (vipIndex) => {
+  if (vipIndex) {
+    currentSlide.value = vipIndex;
+    return;
+  }
   const vipLevel = +store.vip.replace("VIP", "");
-  if (vipLevel === 0 || !vipLevel) {
+  if (!store.vip) {
     currentSlide.value = 11;
-    if (vipIndex) {
-      currentSlide.value = vipIndex;
-      return;
-    }
+    return;
+  }
+  if (vipLevel === 0) {
+    currentSlide.value = 0;
     return;
   }
   currentSlide.value = vipLevel - 1;

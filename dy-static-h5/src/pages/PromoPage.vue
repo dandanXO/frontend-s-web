@@ -130,9 +130,11 @@
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
-                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+                  wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
+                  midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -937,6 +939,13 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.midAutumnWukong {
+          width: 100%;
+          margin: -15px 0 0;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+        }
+
         &.lpllck {
           width: 100%;
           margin: 0px;
@@ -998,6 +1007,15 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           background-size: 100% 100% !important;
+          padding-top: 0px !important;
+        }
+
+        &.wukong {
+          margin: 0px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color: #100a0e;
           padding-top: 0px !important;
         }
 

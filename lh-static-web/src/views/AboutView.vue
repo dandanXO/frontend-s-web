@@ -93,6 +93,10 @@ onMounted(() => {
     line-height: normal;
   }
 
+  :deep(.el-tabs) {
+    flex-grow: 1;
+  }
+
   .about-content,
   :deep(.el-tabs__header) {
     padding: 50px 20px;

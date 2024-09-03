@@ -11,9 +11,6 @@
           联系我们
         </a>
       </div>
-      <!-- <div class="affiliate-join">
-        <img :src="require(`../../assets/images/affiliate/join${isDark ? '-dark' : ''}.png`)" width="696" />
-      </div> -->
 
       <div class="affiliate-program">
         <img src="@/assets/images/affiliate/rules.png" />
@@ -351,7 +348,7 @@ export default defineComponent({
     background-size: 100%;
     background-color: #f3f7fd;
     margin: 0 auto;
-    padding: 200px 20px 160px;
+    padding: 140px 20px 160px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -361,7 +358,11 @@ export default defineComponent({
     .affiliate-title,
     .affiliate-desc,
     .buttons {
-      margin-left: 25%;
+      margin-left: 33.33%;
+
+      @media (min-width: 2800px) {
+        margin-left: 15%;
+      }
     }
 
     .affiliate-desc {

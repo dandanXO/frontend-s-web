@@ -233,7 +233,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://0vsadwuz3sh.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -276,7 +276,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://0vsadwuz3sh.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -317,7 +317,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(https://0vsadwuz3sh.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -359,7 +359,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://0vsadwuz3sh.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -421,7 +421,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://0vsadwuz3sh.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -457,7 +457,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://0vsadwuz3sh.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -530,7 +530,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://0vsadwuz3sh.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -580,7 +580,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://0vsadwuz3sh.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -643,7 +643,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://0vsadwuz3sh.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -690,7 +690,7 @@
                             try {
                               return `url(${imgURLGame}${item.icon})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://0vsadwuz3sh.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           }
                         })()
@@ -756,7 +756,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://0vsadwuz3sh.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -795,7 +795,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://0vsadwuz3sh.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -942,7 +942,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://0vsadwuz3sh.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -973,7 +973,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://0vsadwuz3sh.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -1012,7 +1012,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://0vsadwuz3sh.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1975,9 +1975,10 @@ const banners = ref([
 ]);
 
 const returnBannerUrl = (banner) => {
+  const displayImgUrl = banner.mobileImageUrlDark ?? banner.mobileImageUrl;
   try {
     var bannerImg = "";
-    const bannerSplit = banner.mobileImageUrl.split("/");
+    const bannerSplit = displayImgUrl.split("/");
     // console.log(bannerSplit);
     if (bannerSplit.length > 1) {
       bannerImg = bannerSplit[1];
@@ -1986,7 +1987,7 @@ const returnBannerUrl = (banner) => {
     }
     return require(`../assets/images/banners/${bannerImg}`);
   } catch (e) {
-    return imgURLPromo + banner.mobileImageUrl;
+    return imgURLPromo + displayImgUrl;
   }
 };
 

@@ -587,7 +587,7 @@ h1 {
   border-radius: 6px;
   font-size: 14px;
   text-align: center;
-  width: 80px;
+  width: 100px;
   border: 1px solid rgba(0, 133, 232, 1);
 
   cursor: pointer;
