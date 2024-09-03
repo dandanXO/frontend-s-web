@@ -970,7 +970,7 @@ export default defineComponent({
       .banner-container {
         &:after {
           content: "";
-          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
+          //background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
           position: absolute;
           top: 0;
           left: 0;
