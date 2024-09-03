@@ -39,8 +39,7 @@
       <div class="badge" v-show="isDataLoaded">
         <img :src="badgeSrc" />
       </div>
-      <div class="badge" v-show="!isDataLoaded" style="height: 200px;">
-      </div>
+      <div class="badge" v-show="!isDataLoaded" style="height: 200px"></div>
       <div class="vip-progress">
         <!-- <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">
@@ -89,11 +88,13 @@
 
             <div class="text" v-else-if="vipLevel === 0">
               还需
-              <div class="required-amount">{{
-                currentBetAmt > originalUpgradeBetAmounts[0]
-                  ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
-                  : formatNumber(originalUpgradeBetAmounts[0])
-              }}</div>
+              <div class="required-amount">
+                {{
+                  currentBetAmt > originalUpgradeBetAmounts[0]
+                    ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
+                    : formatNumber(originalUpgradeBetAmounts[0])
+                }}
+              </div>
               有效投注晋升到 VIP 1
             </div>
 
@@ -107,7 +108,7 @@
 
           <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
           <div class="text" v-show="!isDataLoaded">正在为您计算有效投注和存款</div>
- 
+
           <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
@@ -143,18 +144,17 @@
           </div>
           <div class="progressBarContainer" v-show="!isDataLoaded">
             <div class="progressBarOuterBar">
-              <div
-                class="progressBarInnerBar"
-                style="width: 0%"
-              ></div>
+              <div class="progressBarInnerBar" style="width: 0%"></div>
             </div>
-            <div class="progressBarDescription" style="font-size: 12px;">
-              计算中...
-            </div>
+            <div class="progressBarDescription" style="font-size: 12px">计算中...</div>
           </div>
         </div>
       </div>
-      <div class="claim-btn" :class="{ disabled: isLoading['all'] || !isDataLoaded }" @click="handleClick('all', vipLevel)">
+      <div
+        class="claim-btn"
+        :class="{ disabled: isLoading['all'] || !isDataLoaded }"
+        @click="handleClick('all', vipLevel)"
+      >
         一键领取
       </div>
     </div>
@@ -218,8 +218,7 @@
                             <div class="item-amt" v-show="isDataLoaded">
                               {{ item[`${category.key}Prize`] ? item[`${category.key}Prize`] : 0 }}
                             </div>
-                            <div class="loading-blue-icon" v-show="!isDataLoaded">
-                            </div>
+                            <div class="loading-blue-icon" v-show="!isDataLoaded"></div>
                           </div>
                         </div>
                       </div>
@@ -547,7 +546,7 @@
         </tbody>
       </table>
     </div>
-    
+
     <div class="terms-conditions">
       <div class="section-title">规则与条款</div>
       <!-- <img
@@ -564,13 +563,17 @@
         <li>会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；</li>
         <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
         <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
-        <li>假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</li>
+        <li>
+          假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；
+        </li>
         <li>每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</li>
       </ol>
 
       <h2>二. 生日礼金</h2>
       <ol class="terms">
-        <li>会员在注册90天内过生日，本年度内将不能领取生日礼金。另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次（生日彩金1倍流水即可提款）；</li>
+        <li>
+          会员在注册90天内过生日，本年度内将不能领取生日礼金。另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次（生日彩金1倍流水即可提款）；
+        </li>
       </ol>
 
       <h2>三. 首次保级彩金</h2>
@@ -580,33 +583,45 @@
 
       <h2>四. 年度保级彩金</h2>
       <ol class="terms">
-        <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金与第13个月首日进行派发；</li>
+        <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；</li>
       </ol>
 
       <h2>五. 每日返水红包</h2>
       <ol class="terms">
-        <li>统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日反水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；</li>
+        <li>
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日反水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；
+        </li>
       </ol>
 
       <h2>六. 会员日</h2>
       <ol class="terms">
-        <li>从每月会员日15号00:00:00起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至24号23:59:59，仅需完成一倍流水，过期未领取视为放弃；</li>
+        <li>
+          从每月会员日15号00:00:00起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至24号23:59:59，仅需完成一倍流水，过期未领取视为放弃；
+        </li>
       </ol>
 
       <h2>七. 会员加码充值送10%加码券</h2>
       <ol class="terms">
-        <li>非0级玩家从会员日18号00:00:00起均可在活动页面领取一张“10%充值加码券”，领取时间截至21号23:59:59，且领取后需在7日内使用充值加码券，成功使用后需在15日内完成相应流水要求；</li>
+        <li>
+          非0级玩家从会员日18号00:00:00起均可在活动页面领取一张“10%充值加码券”，领取时间截至21号23:59:59，且领取后需在7日内使用充值加码券，成功使用后需在15日内完成相应流水要求；
+        </li>
         <li>本加码券单日内不可与其他活动加码券同时使用；</li>
       </ol>
       <div class="section-title" @click="toggleAccordion">一般规则</div>
       <button class="accordion" @click="toggleAccordion">
-      {{ isOpenTerms ? '收起详细规则' : '查看详细规则' }}
-    </button>
+        {{ isOpenTerms ? "收起详细规则" : "查看详细规则" }}
+      </button>
       <div v-if="isOpenTerms" class="panel">
         <ol class="terms">
-          <li>有效流水仅计算在游戏中产生输赢结果的注单，香港盘&lt;0.75（中国盘&lt;0.75）、欧洲盘&lt;1.75、美洲盘&lt;-133、马来盘&lt;0.75且&gt;0，负赔率&gt;-0.75且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；</li>
-          <li>根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
-          <li>此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；</li>
+          <li>
+            有效流水仅计算在游戏中产生输赢结果的注单，香港盘&lt;0.75（中国盘&lt;0.75）、欧洲盘&lt;1.75、美洲盘&lt;-133、马来盘&lt;0.75且&gt;0，负赔率&gt;-0.75且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；
+          </li>
+          <li>
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+          </li>
+          <li>
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+          </li>
           <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ol>
       </div>
@@ -1098,7 +1113,7 @@ const runVipAPI = (res) => {
         // vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
       }
       // vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
-      vipBonusItem.redPacketPrize = vipBonusItem.redPacketPrize + '%';
+      vipBonusItem.redPacketPrize = vipBonusItem.redPacketPrize + "%";
       const index = vipItems.findIndex((item) => item.vipLevel.toString() === vipBonusItem.vipLevel.toString());
 
       if (index !== -1) {
@@ -2002,27 +2017,27 @@ $border-settings: 1px solid #e5e7eb;
       text-align: center;
       font-size: 30px;
     }
-.accordion {
-  cursor: pointer;
-  text-align: center;
-  border: 0;
-  outline: none;
-  font-size: 13px;
-  transition: 0.4s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #799df8;
-  background: none;
-  border-bottom: 1px solid;
-  margin: 0 auto 20px;
-  box-shadow: none;
-}
+    .accordion {
+      cursor: pointer;
+      text-align: center;
+      border: 0;
+      outline: none;
+      font-size: 13px;
+      transition: 0.4s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #799df8;
+      background: none;
+      border-bottom: 1px solid;
+      margin: 0 auto 20px;
+      box-shadow: none;
+    }
 
     h2 {
-    font-size: 18px;
-    line-height: 22px;
-       color: #Ffffff;
+      font-size: 18px;
+      line-height: 22px;
+      color: #ffffff;
     }
     .terms-conditions-title-separator {
       width: 100%;
