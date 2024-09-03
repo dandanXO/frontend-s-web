@@ -40,11 +40,13 @@
         <!--        </div>-->
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年8月24日起</div>
+          <div class="right">2024年9月3日起</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
-          <div class="right">用户每日在电竞场馆投注ESL职业联赛赛事有效投注≥2,000元即可获得领取彩金，最高可领1,888元。</div>
+          <div class="right">
+            用户每日在电竞场馆投注ESL职业联赛赛事有效投注≥2,000元即可获得领取彩金，最高可领1,888元。
+          </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
