@@ -1,4 +1,4 @@
-# NGA App (ind-h5-project)
+# BR1 App (ind-h5-project)
 
 Brazil H5 APP
 - Node Version >= 16.17.0
