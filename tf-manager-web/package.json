@@ -52,6 +52,7 @@
     "speakeasy": "^2.0.0",
     "vue": "^3.4.31",
     "vue-class-component": "^8.0.0-0",
+    "vue-demi": "^0.14.10",
     "vue-element-loading": "^2.0.2",
     "vue-i18n": "^9.2.2",
     "vue-image-crop-upload": "^2.5.0",
