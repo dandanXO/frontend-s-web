@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="bank-account-container">
+      <div class="bank-account-container" v-if="bankCardList.length === 0 || isAddNewAccount">
         <div class="w-form-item w-form-item--bankcard">
           <div class="top-wrapper">
             <div class="title">Bank Name</div>
@@ -145,7 +145,7 @@
               ></q-input>
             </div>
           </div>
-          <!-- <div class="w-form-item w-form-item--bankcard">
+          <div class="w-form-item w-form-item--bankcard" v-if="isAddNewAccount">
             <div class="top-wrapper">
               <div class="title">Bank IFSC Code</div>
             </div>
@@ -161,7 +161,7 @@
                 hide-bottom-space
               ></q-input>
             </div>
-          </div> -->
+          </div>
         </template>
 
         <div class="top-wrapper">
@@ -244,7 +244,7 @@
             </div>
             <div class="desc desc_white">
               <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.withdrawMaxAmount }}
+              {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
             </div>
           </div>
           <div class="info">
@@ -283,6 +283,8 @@
         </div>
       </template>
 
+      <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
+
       <!-- <div class="bottom-tnc q-mt-md">
         Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
         information, if withdrawal failed or you have any other questions, please contact CS 24/7
@@ -293,6 +295,11 @@
       <div class="method-title q-mb-md">Choose a payment method</div>
       <div class="withdraw-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
+          <div class="title" v-if="index === 0">{{ item.payType }}</div>
+          <div class="title" v-else-if="index > 0 && item.payType !== paymentMethodsItems[index - 1].payType">
+            {{ item.payType }}
+          </div>
+
           <div class="method-item" @click="goSelectedMethod(item)" :class="{ disabled: item.maintenance }">
             <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
 
@@ -317,7 +324,8 @@
             </template>
 
             <div class="item-amount" v-if="item.withdrawMin && item.withdrawMax">
-              {{ item.withdrawMin }}~{{ item.withdrawMax }} {{ store.currency.label }}
+              {{ convertToCommaAmount(item.withdrawMin) }}~{{ convertToCommaAmount(item.withdrawMax) }}
+              {{ store.currency.label }}
             </div>
 
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
@@ -392,15 +400,19 @@ const getWithdrawalMethods = () => {
       // let bankWithdraws = response.data.withdraws;
       // paymentMethodsItems.value = bankWithdraws.map((item) => item.children).flat();
 
-
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
           return withdraw.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
         })
         .flat();
 
-      paymentMethodsItems.value = bankWithdraws.flat();
+      paymentMethodsItems.value = bankWithdraws.flat().sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
 
+      console.log(paymentMethodsItems.value);
     } else {
       $q.notify({
         color: "negative",
@@ -455,8 +467,14 @@ const filterCards = (type) => {
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
+        let bankType = type.bankType;
         let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+
+        if (bankType === "BANK") {
+          var filteredData = res.data.filter((item) => item.bankType === "BANK");
+        } else {
+          var filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -509,7 +527,7 @@ const withdrawInfo = reactive({
 });
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
-  cardNumber: "",
+  cardNumber: ""
   // cardAddress: ""
 });
 
@@ -737,6 +755,7 @@ const goSelectedMethod = (item) => {
   // bankCardField.withdrawCode = selectedMethodItem.value.code;
   //   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
+  // debugger;
   // filterCards(item);
 
   // console.log(item);
@@ -744,7 +763,7 @@ const goSelectedMethod = (item) => {
   bankCardField.bankId = item.bankList[0].id;
   // filterCards(item.bankList[0]);
 
-  bankCardField.cardAccount = "";
+  // bankCardField.cardAccount = "";
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
 
@@ -1203,5 +1222,22 @@ const toggleAmount = (type) => {
 .dialog-input {
   background-color: #263349;
   border-radius: 6px;
+}
+
+.withdraw-tip-wrapper {
+  background-color: rgba(21, 127, 66, .2);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.2px;
+  letter-spacing: 0.045em;
+  text-align: left;
+  color: #a9a6bb;
+
+  :deep(em) {
+    color: #FFAE00;
+  }
 }
 </style>

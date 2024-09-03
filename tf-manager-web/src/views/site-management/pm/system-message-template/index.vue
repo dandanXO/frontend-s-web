@@ -160,7 +160,7 @@
           </el-tag>
           <el-autocomplete
             v-model="inputValue"
-            :fetch-suggestions="querySearch"
+            :fetch-suggestions="debouncedFetchSuggestions"
             :trigger-on-focus="false"
             class="inline-input"
             :placeholder="t('fields.addRecipient')"
@@ -239,7 +239,7 @@
         </el-form-item>
         <el-form-item prop="title">
           <editor
-            api-key="fm4ml3ytoifibaku86uuz7remkgdp5o22s2qv2utxonnkj4m"
+            api-key="arlf5h2wcrqydmiiogww80cfx98khxd8o81s2i93qhq0n7wv"
             :init="{
               placeholder: 'Title',
               height: 150,
@@ -257,7 +257,7 @@
         </el-form-item>
         <el-form-item prop="content">
           <editor
-            api-key="fm4ml3ytoifibaku86uuz7remkgdp5o22s2qv2utxonnkj4m"
+            api-key="arlf5h2wcrqydmiiogww80cfx98khxd8o81s2i93qhq0n7wv"
             :init="{
               placeholder: 'Content',
               height: 500,
@@ -504,7 +504,7 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { computed, onMounted, reactive, ref } from 'vue'
 import * as XLSX from 'xlsx';
-import { getMemberNameList, getMemberVipFin, getMemberVipFinById } from '../../../../api/member'
+import { getMemberVipFin, getMemberVipFinById } from '../../../../api/member'
 import { getSiteListSimple } from '../../../../api/site'
 import {
   createSystemMessageTemplate,
@@ -519,6 +519,8 @@ import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
 import Editor from "@tinymce/tinymce-vue";
+import { debounce } from "lodash";
+import { getMemberLoginNameList } from "../../../../api/system-message-template";
 
 const store = useStore();
 const { t } = useI18n();
@@ -658,25 +660,50 @@ const handleClose = tag => {
   inputValue.value = ''
 }
 
-const querySearch = (queryString, cb) => {
-  const results = queryString
-    ? list.members.filter(createFilter(queryString))
-    : list.members
-  // call callback function to return suggestions
-  cb(results)
-}
-const createFilter = queryString => {
-  return item => {
-    return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+const querySearch = async (queryString, callback) => {
+  if (!queryString) {
+    callback();
+    return;
+  } else if (queryString.length < 3) {
+    callback();
+    return;
+  }
+
+  try {
+    const { data: ret } = await getMemberLoginNameList(selected.site, queryString);
+
+    const results = ret.map(item => ({
+      value: item.value,
+      id: item.id
+    }));
+    callback(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    callback();
   }
 }
+// const createFilter = queryString => {
+//   return item => {
+//     return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+//   }
+// }
+
+const debouncedFetchSuggestions = debounce((queryString, callback) => {
+  if (!selected.site) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+  querySearch(queryString, callback);
+}, 1500); // Adjust debounce time as needed
 
 const handleSelect = item => {
   if (item) {
-    dynamicTags.value.push(item.value)
-    const removed = list.members.splice(list.members.indexOf(item), 1)
-    const removedArr = [...removed]
-    selectionList.members.push(removedArr[0])
+    if (dynamicTags.value.indexOf(item.value) === -1) {
+      dynamicTags.value.push(item.value)
+      const removed = list.members.splice(list.members.indexOf(item), 1)
+      const removedArr = [...removed]
+      selectionList.members.push(removedArr[0])
+    }
   }
   inputValue.value = ''
 }
@@ -794,13 +821,22 @@ function submit() {
     if (valid) {
       if (uiControl.dialogType === 'CREATE') {
         if (form.receiveType === 'MULTIPLE') {
-          form.recipient = dynamicTags.value
+          form.recipient = dynamicTags.value;
+          if (form.recipient.length === 0 && inputValue.value) {
+            const members = inputValue.value.split(",");
+            form.recipient.push(...members);
+            inputValue.value = '';
+          }
         } else if (form.receiveType === 'VIP') {
           form.recipient.push(form.vip)
         }
         if (form.receiveType !== 'ALL' && form.recipient.length === 0) {
-          ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
-          return
+          if (inputValue.value) {
+            form.recipient.push(inputValue.value);
+          } else {
+            ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
+            return
+          }
         }
         form.siteId = selected.site
         await createSystemMessageTemplate(form)
@@ -896,7 +932,7 @@ async function loadVipNameList() {
 
 async function loadMemberNameList() {
   list.members = []
-  const { data: ret } = await getMemberNameList(selected.site)
+  const ret = [];
   ret.forEach(function (entry) {
     var singleObj = {}
     singleObj.id = entry.id

@@ -184,6 +184,7 @@ watch(
       .slot-game-platform-btn__text {
         position: absolute;
         left: 50%;
+        bottom: 10px;
         transform: translateX(-50%);
         font-size: 12px;
         font-weight: 500;

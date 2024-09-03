@@ -27,6 +27,8 @@ let baseWss;
 
 let siteId;
 
+var imageCDNUrl = process.env.VUE_APP_IMAGE;
+
 console.log(currentHost);
 // currentHost = "ka1-manager.wermop342ox.com";
 switch (currentHost) {
@@ -80,12 +82,25 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_NGA_SOCKET;
     siteId = 'nga';
     break;
+  case process.env.VUE_APP_KYQ_HOST:
+    baseApi = process.env.VUE_APP_KYQ_API;
+    baseWss = process.env.VUE_APP_KYQ_SOCKET;
+    imageCDNUrl = process.env.VUE_APP_KYQ_IMAGE;
+    siteId = 'lh';
+    break;
+  case process.env.VUE_APP_PH1_HOST:
+    baseApi = process.env.VUE_APP_PH1_API;
+    baseWss = process.env.VUE_APP_PH1_SOCKET;
+    siteId = 'ph1';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
     siteId = 'xf';
     break;
 }
+
+sessionStorage.setItem("IMAGE_CDN", imageCDNUrl);
 
 var hasUrl = false;
 if (baseApi.indexOf(",") > -1) {
@@ -130,7 +145,7 @@ if (siteId === 'dy') {
 } else if (siteId === 'th') {
   link.href = '/th-favicon.ico';
   title.innerText = 'Jolly88';
-} else if (siteId === 'ind') {
+} else if (siteId === 'ind' || siteId === 'nga' || siteId === 'ph1') {
   link.href = '/ind-favicon.ico';
   title.innerText = '55Ace';
 } else if (siteId === 'lh') {

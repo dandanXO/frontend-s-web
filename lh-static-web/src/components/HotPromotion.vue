@@ -48,12 +48,15 @@
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight'" />
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode"/>
+    <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode"/>
 
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <LhStepGamePromo v-if="list.redirectUrl === 'lh1-game-steps'" :pageContent="list.pageContent"></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'lh1-midautumn-spinwheel'" />
     <Summoner v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
     <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024'" :promo-code="list.promoCode" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match'" />
@@ -129,6 +132,8 @@ import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInv
 import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
 import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
+import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
+import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
 import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
@@ -142,6 +147,7 @@ import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStep
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
+import MidautumSpinWheel from "../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue";
 import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
@@ -215,6 +221,7 @@ export default defineComponent({
     DragonCardPromo,
     CS2Sign,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LhStepGamePromo,
     Summoner,
     AppHongBao,
@@ -246,6 +253,8 @@ export default defineComponent({
     LPLLCK,
     LivepokerRebate,
     BbdachaCsgo2,
+    EslProCsgo2,
+    Dota2Ti13,
     BlackMythWuKongPromo
   },
   props: {

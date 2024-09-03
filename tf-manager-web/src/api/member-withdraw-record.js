@@ -113,8 +113,8 @@ export const fromAffiliateCheckingToApply = async (ids) => {
   await https().httpClient.post('/memberWithdrawRecord/affiliateCheckingToApply?_method=PUT', JSON.stringify(ids), { headers: { "Content-Type": "application/json" } });
 };
 
-export const fromCheckingToBeforePaid = (id, wd, siteId) => {
-  return https().request(`/memberWithdrawRecord/${id}/checkingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
+export const fromCheckingToBeforePaid = (id, wd, siteId, remark) => {
+  return https().request(`/memberWithdrawRecord/${id}/checkingToBeforePaid?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId, remark: remark }, ContentType.form);
 };
 
 export const fromAffiliateCheckingToBeforePaid = (id, wd, siteId) => {

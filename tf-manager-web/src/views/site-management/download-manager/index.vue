@@ -131,12 +131,13 @@ import { useStore } from '../../../store';
 import { TENANT, ADMIN } from '../../../store/modules/user/action-types';
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
-const downloadLinkPrefix = process.env.VUE_APP_IMAGE
+const downloadLinkPrefix = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 let selectedDate = "";
 const siteList = reactive({
   list: []

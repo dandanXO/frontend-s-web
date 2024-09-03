@@ -3,8 +3,8 @@ import { server } from "@/utils/request";
 export function loadBalance(platform) {
   return server.REST.get("/session/balance?v=" + new Date().getTime(), {
     params: {
-      platform,
-    },
+      platform
+    }
   });
 }
 export function getAnnouncement() {
@@ -34,7 +34,7 @@ const recordUrl = {
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",
   betRecord: "/session/member/betRecord",
-  gameBetRecord: "/session/member/gameBetRecord",
+  gameBetRecord: "/session/member/gameBetRecord"
 };
 
 export function loadRecords(type, p) {
@@ -121,4 +121,6 @@ export function sendSessionSms(telephoneInfo) {
 export function verifySms(telephoneInfo) {
   return server.REST.post("/session/verifyAndUpdatePhone", telephoneInfo);
 }
-
+export const upgradeToAutoWithdrawal = () => {
+  return server.REST.get("/session/updateAutoWithdraw");
+};

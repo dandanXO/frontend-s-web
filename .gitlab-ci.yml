@@ -289,6 +289,20 @@ deploy-vnm-landing-v8:
 
 #===============================================================================================
 
+deploy-vnm-landing-v9:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v9
+
+#===============================================================================================
+
+deploy-vnm-landing-v10:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v10
+
+#===============================================================================================
+
 deploy-vnm-maintenance:
   extends: .s3-deploy
   variables:
@@ -632,6 +646,27 @@ deploy-nga-download:
 
 #===============================================================================================
 
+deploy-ph1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ph1-download
+
+#===============================================================================================
+
+deploy-ind-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind-landing
+
+#===============================================================================================
+
+deploy-iw2-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: iw2-landing
+
+#===============================================================================================
+
 build-kr-live-web:
   extends: .build-projects
   variables:
@@ -714,6 +749,21 @@ build-image-pak-static-h5:
 
 #===============================================================================================
 
+
+build-pak-static-v2:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-static-v2
+
+build-image-pak-static-v2:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-static-v2
+  needs:
+    - build-pak-static-v2
+
+#===============================================================================================
+
 build-kaka-static-web:
   extends: .build-projects
   variables:
@@ -767,3 +817,31 @@ build-image-ph1-static-v1:
     PROJECT: ph1-static-v1
   needs:
     - build-ph1-static-v1
+
+#===============================================================================================
+
+build-br1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: br1-static-v1
+
+build-image-br1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: br1-static-v1
+  needs:
+    - build-br1-static-v1
+
+#===============================================================================================
+
+build-id1-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: id1-static-v1
+
+build-image-id1-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: id1-static-v1
+  needs:
+    - build-id1-static-v1

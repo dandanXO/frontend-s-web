@@ -254,7 +254,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">{{ $t("form.usdtSpecialNote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -268,6 +267,10 @@
                 :label="tutorialLabel()"
               />
             </div>
+          </div>
+
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            {{ $t("form.usdtSpecialNote", { fee: selectedWithdrawalMethod.withdrawFee }) }}
           </div>
           <!-- <a-form-item
             class="select"
@@ -660,6 +663,7 @@ const submitWithdraw = async () => {
 const isUSDT = ref(false);
 const isEWALLET = ref(false);
 const isALIPAY = ref(false);
+
 const selectMethod = (method, index) => {
   withdrawInfo.withdrawCode = null;
   withdrawInfo.cardId = null;
@@ -677,11 +681,11 @@ const selectMethod = (method, index) => {
 };
 
 const loadCards = () => {
+  withdrawState.bankCardList = [];
   api
     .get("/session/bankCard")
     .then((response) => {
       isLoaded.value = true;
-      withdrawState.bankCardList = [];
       if (response.code === 0) {
         // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
         response.data.forEach((element) => {

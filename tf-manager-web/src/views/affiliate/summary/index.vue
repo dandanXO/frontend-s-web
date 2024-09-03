@@ -86,6 +86,7 @@
         row-key="affiliateId"
         :load="loadChildren"
         lazy
+        :fit="false"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         :empty-text="t('fields.noData')"
         highlight-current-row
@@ -95,7 +96,7 @@
           prop="loginName"
           :label="t('fields.loginName')"
           align="left"
-          width="160"
+          width="120"
         >
           <template
             #default="scope"
@@ -114,7 +115,7 @@
           prop="depositAmount"
           :label="t('fields.depositAmount')"
           align="center"
-          width="120"
+          width="115"
         >
           <template #default="scope">
             $
@@ -923,16 +924,16 @@ function showDialog(type, affiliateId) {
     uiControl.dialogTitle = t('fields.newMember')
     memberPage.affiliateId = affiliateId
     memberRequest.current = 1
+    popUpRequest.regTime = request.recordTime;
     loadNewMember(affiliateId)
-    popUpRequest.regTime = request.recordTime
   } else if (type === 'ALLMEMBER') {
     currentPageType.value = 'allMembers'
     uiControl.dialogTitle = t('fields.allmembers')
     allMemberPage.affiliateId = affiliateId
     allMemberRequest.current = 1
+    popUpRequest.regTime = null
     loadAllMember(affiliateId)
     // popUpRequest.recordTime = request.recordTime
-    popUpRequest.regTime = null
   }
   currentAffiliateId.value = affiliateId
   uiControl.dialogType = type

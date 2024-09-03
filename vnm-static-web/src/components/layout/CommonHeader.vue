@@ -357,7 +357,7 @@
       >
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img class="paris" v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login.png" />
+          <img class="paris" v-if="isLandingClub !== 'tf88club'" :src="getLoginBg()" />
           <img v-else src="../../assets/home/tf88club-img.png" />
         </div>
         <div class="acc-dialog-right">
@@ -375,14 +375,14 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1320px"
+      width="1440px"
       align-center
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
-          <img class="paris" src="../../assets/home/acc-dialog-img-signup.png" />
+          <img class="paris" :src="getSignUpBg()" />
         </div>
         <div class="acc-dialog-right">
           <RegisterAccount
@@ -446,7 +446,7 @@
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img class="paris" src="../../assets/home/acc-dialog-img-login.png" />
+          <img class="paris" :src="getLoginBg()" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -1550,6 +1550,25 @@ export default defineComponent({
 
     const welcomeDialogVisible = ref(false)
 
+    const getLoginBg = () => {
+      switch(ui.edition){
+        case EDITION.SLOT:
+          return require(`../../assets/home/acc-dialog-img-login-slot.png`)
+        case EDITION.NORMAL:
+        default:
+          return require(`../../assets/home/acc-dialog-img-login.png`)
+      }
+    }
+    const getSignUpBg = () => {
+      switch(ui.edition){
+        case EDITION.SLOT:
+          return require(`../../assets/home/acc-dialog-img-login-slot.png`)
+        case EDITION.NORMAL:
+        default:
+          return require(`../../assets/home/acc-dialog-img-login.png`)
+      }
+    }
+
     return {
       token,
       el,
@@ -1627,7 +1646,9 @@ export default defineComponent({
       welcomeDialogVisible,
       isLandingClub,
       ui,
-      EDITION
+      EDITION,
+      getLoginBg,
+      getSignUpBg
     };
   }
 });

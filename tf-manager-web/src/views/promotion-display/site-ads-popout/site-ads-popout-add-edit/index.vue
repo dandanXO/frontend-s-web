@@ -36,6 +36,24 @@
         </el-select>
       </el-form-item>
     </el-row>
+    <el-row v-if="uiControl.showSiteType === true">
+      <el-form-item :label="t('fields.siteType')" prop="siteType">
+        <el-select
+            v-model="form.siteType"
+            size="small"
+            class="filter-item"
+            :placeholder="t('fields.siteType')"
+            style="width: 240px;margin-bottom:10px"
+        >
+            <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
+            />
+        </el-select>
+      </el-form-item>
+    </el-row>
     <el-row>
       <el-form-item :label="t('fields.type')" prop="type">
         <el-select
@@ -447,17 +465,25 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import draggable from 'vuedraggable'
 import { isVnm } from '@/utils/site'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
 const site = ref(null)
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 
 const adsPopoutForm = ref(null)
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
 
 const inputValue = ref('')
 const form = reactive({
@@ -473,6 +499,7 @@ const form = reactive({
   content: null,
   contentList: null,
   status: false,
+  siteType: null,
 })
 
 const uiControl = reactive({
@@ -498,6 +525,7 @@ const uiControl = reactive({
   inputButtonVisible: false,
   imageDialogVisible: false,
   imageDialogTitle: '',
+  showSiteType: false,
 })
 
 const filterTypes = computed(() => {
@@ -512,6 +540,11 @@ const filterTypes = computed(() => {
 })
 
 function changeSite() {
+  if (isVnm(form.siteId)) {
+    uiControl.showSiteType = true;
+  } else {
+    uiControl.showSiteType = false;
+  }
   if (form.siteId !== 8) {
     form.type = 'IMG'
   }
@@ -714,6 +747,12 @@ async function loadForm(id, siteId) {
         form.siteId = element.id
       }
     })
+
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true;
+    } else {
+      uiControl.showSiteType = false;
+    }
   })
 }
 
@@ -820,6 +859,7 @@ onMounted(async () => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }
+  form.siteType = "main";
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)

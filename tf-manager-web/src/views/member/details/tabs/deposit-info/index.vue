@@ -121,13 +121,13 @@
           :label="t('fields.paymentType')"
           prop="paymentTypeName"
           align="center"
-          min-width="180"
+          min-width="100"
         />
         <el-table-column
           :label="t('fields.updateBy')"
           prop="updateBy"
           align="center"
-          min-width="180"
+          min-width="110"
         >
           <template #default="scope">
             <span v-if="scope.row.updateBy === null">-</span>
@@ -138,7 +138,7 @@
           :label="t('fields.updateTime')"
           prop="updateTime"
           align="center"
-          min-width="180"
+          min-width="135"
         >
           <template #default="scope">
             <span v-if="scope.row.updateTime === null">-</span>
@@ -156,7 +156,7 @@
           :label="t('fields.privilegeName')"
           prop="privilegeName"
           align="center"
-          min-width="180"
+          min-width="170"
         >
           <template #default="scope">
             <span v-if="scope.row.privilegeName === null">-</span>
@@ -167,7 +167,7 @@
           :label="t('fields.depositStatus')"
           prop="status"
           align="center"
-          min-width="180"
+          min-width="150"
         >
           <template #default="scope">
             <el-tag
@@ -205,7 +205,7 @@
           :label="t('fields.walletType')"
           prop="walletType"
           align="center"
-          min-width="180"
+          min-width="130"
         />
       </el-table>
       <div style="text-align: right;margin-top:10px;">

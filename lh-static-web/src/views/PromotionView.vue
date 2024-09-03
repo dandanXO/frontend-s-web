@@ -6,7 +6,6 @@
         <img v-else src="../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
-
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
@@ -20,8 +19,10 @@
                 :key="p.code"
                 @click="switchPromoType(p.code)"
               >
-                <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <img v-if="p.iconUrl" :src="p.iconUrl" />
+                <img v-else-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.png')" />
+                <span v-else></span>
+                <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
             </div>
           </div>
@@ -181,7 +182,7 @@
 <script lang="js">
 import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { loadPromo } from "@/api/index/promo.js";
+import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
@@ -209,14 +210,16 @@ export default defineComponent({
     });
     const promoTypes = ref([
       { code: "ALL", img: "all", label: "全站优惠" },
-      { code: "FTD", img: "deposit", label: "新人优惠" },
-      { code: "ESPORT", img: "esport", label: "电竞优惠" },
-      { code: "SPORT", img: "sport", label: "体育优惠" },
-      { code: "LIVE CASINO", img: "live", label: "真人优惠" },
-      { code: "POKER", img: "poker", label: "棋牌优惠" },
+      { code: "WELCOME", img: "welcome", label: "新人优惠" },
+      { code: "HOT", img: "hot", label: "热门活动" },
+      { code: "ESPORT", img: "esport", label: "电竞活动" },
+      { code: "SPORT", img: "sport", label: "体育活动" },
+      { code: "LIVE CASINO", img: "live", label: "真人棋牌" },
+      { code: "SLOT GAME", img: "slot", label: "电游活动" },
+      // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
-      { code: "DAILY", img: "daily", label: "日常优惠" },
-      { code: "OTHER", img: "slot", label: "其他优惠" }
+      { code: "FTD", img: "deposit", label: "存款优惠" },
+      { code: "VIP", img: "vip", label: "VIP特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -303,8 +306,24 @@ export default defineComponent({
         filteredArray.value = promoState.promoList;
       }
     };
-
-    const loadAll = () => {
+    const loadAll = async () => {
+      await loadPromoTypes().then((res) => {
+        if (res.length > 0) {
+          promoTypes.value = [];
+          res.forEach(element => {
+            const obj = {
+              code: element.value,
+              img: 'all',
+              iconUrl: imgURL + element.iconUrl,
+              label: JSON.parse(element.name)
+            };
+            promoTypes.value.push(obj);
+          });
+          switchPromoType(promoTypes.value[0])
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      });
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
@@ -397,7 +416,7 @@ export default defineComponent({
   min-height: 600px;
 
   .promo-banner {
-    //background: #f3f7fd;
+    background: #e7f1fd;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -415,7 +434,7 @@ export default defineComponent({
     width: 100%;
     padding: 30px 50px 50px;
     position: relative;
-    background-color: #f3f7fd;
+    background-color: #E7F1FD;
   }
   .promo-view-container {
     line-height: 30px;
@@ -533,6 +552,7 @@ export default defineComponent({
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
         border-radius: 20px;
+        background-color: #f3f7fd;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
         align-self: flex-start;
@@ -1023,6 +1043,9 @@ export default defineComponent({
 
 .dark {
   .promo-container {
+    .promo-banner {
+      background: unset;
+    }
     .all-promotions {
       background: $background-dark;
 

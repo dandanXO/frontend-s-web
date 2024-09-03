@@ -105,16 +105,16 @@
                 </div>
                 <div v-else class="basic-info-cell content">
                   <div class="datewsend" v-if="isEdit">
-                    <el-form-item
-                      name="email"
-                      prop="email"
-                      :rules="[
-                        { required: true, message: '请输入邮箱' },
-                        { type: 'email', message: '邮箱信息错误' }
-                      ]"
-                    >
-                      <el-input v-model="updateFormDetails.email" placeholder="邮箱" />
-                    </el-form-item>
+                    <!--                    <el-form-item-->
+                    <!--                      name="email"-->
+                    <!--                      prop="email"-->
+                    <!--                      :rules="[-->
+                    <!--                        { required: true, message: '请输入邮箱' },-->
+                    <!--                        { type: 'email', message: '邮箱信息错误' }-->
+                    <!--                      ]"-->
+                    <!--                    >-->
+                    <!--                      <el-input v-model="updateFormDetails.email" placeholder="邮箱" />-->
+                    <!--                    </el-form-item>-->
                   </div>
                   <el-button
                     class="common-btn"
@@ -139,13 +139,7 @@
 
               <el-button
                 class="common-btn"
-                v-if="
-                  !isEdit &&
-                  (!personalState.memberInfo.realName ||
-                    !personalState.memberInfo.email ||
-                    !personalState.memberInfo.birthday ||
-                    !personalState.memberInfo.telephone)
-                "
+                v-if="!isEdit && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)"
                 @click="isEdit = !isEdit"
               >
                 编辑
@@ -270,11 +264,16 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
+          <el-input autocomplete="off" v-model="updatePhoneVerified.phone" placeholder="手机号码" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input type="password" v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
+            <el-input
+              autocomplete="off"
+              type="password"
+              v-model="updatePhoneVerified.verificationCode"
+              :placeholder="'验证码'"
+            />
             <el-button
               :disabled="disableSendPhoneButton"
               class="common-btn verification-btn"
@@ -783,6 +782,7 @@ const verificationPhoneModalVisible = ref(false)
                 type: 'success',
               })
               loadInfo();
+              store.getMemberInfo();
               isEdit.value = false
             }
           }).catch((err) => {

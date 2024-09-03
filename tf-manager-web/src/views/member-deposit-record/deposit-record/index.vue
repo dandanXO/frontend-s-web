@@ -199,6 +199,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div>
+        <el-switch
+          v-model="request.doris"
+          :active-text="t('fields.historyRecord')"
+          :inactive-text="t('fields.nonHistoryRecord')"
+          style="margin-top: 20px"
+        />
+      </div>
     </div>
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
@@ -675,7 +683,7 @@ import { useI18n } from 'vue-i18n'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../api/site'
 import { getAllPaymentTypes } from "../../../api/payment-type";
-import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { convertDateToEnd, convertDateToStart, getShortcuts, isHistoryRecord } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { isInd } from '@/utils/site'
 
@@ -788,6 +796,7 @@ const request = reactive({
   siteId: null,
   clientType: null,
   sort: 1,
+  doris: false,
 })
 
 const validateDepositAmount = (rule, value, callback) => {
@@ -925,6 +934,12 @@ function checkQuery() {
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
+      if (isHistoryRecord(request.depositDate[0])) {
+        query.doris = true
+        request.doris = true
+      } else {
+        query.doris = request.doris
+      }
       query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
       query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
       query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
@@ -934,6 +949,12 @@ function checkQuery() {
 
   if (request.finishDate !== null) {
     if (request.finishDate.length === 2) {
+      if (isHistoryRecord(request.finishDate[0])) {
+        query.doris = true
+        request.doris = true
+      } else {
+        query.doris = request.doris
+      }
       query.finishDate = JSON.parse(JSON.stringify(request.finishDate));
       query.finishDate[0] = formatInputTimeZone(query.finishDate[0], timeZone);
       query.finishDate[1] = formatInputTimeZone(query.finishDate[1], timeZone);

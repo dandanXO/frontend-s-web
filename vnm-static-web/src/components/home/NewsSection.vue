@@ -1,13 +1,13 @@
 <template>
   <div class="news-section">
     <el-card>
-      <img src="../../assets/logo.svg" alt="TF88 logo">
-      <el-tabs v-model="activeName" class="demo-tabs" >
+      <img src="../../assets/logo.svg" alt="TF88 logo" />
+      <el-tabs v-model="activeName" class="demo-tabs">
         <el-tab-pane :label="t('home.footballNews')" name="first">
           <div class="news-listing">
-            <div class="news" v-for="news in footballNewsList.slice(0,5)" @click="open(news.url)">
+            <div class="news" v-for="news in footballNewsList.slice(0, 5)" @click="open(news.url)">
               <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title">
+                <img :src="news.pictureurl" :alt="news.title" />
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
@@ -21,9 +21,9 @@
         </el-tab-pane>
         <el-tab-pane :label="t('home.esportNews')" name="second">
           <div class="news-listing">
-            <div class="news" v-for="news in esportNewsList.slice(0,5)">
+            <div class="news" v-for="news in esportNewsList.slice(0, 5)">
               <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title"/>
+                <img :src="news.pictureurl" :alt="news.title" />
               </div>
               <div class="news-contents" @click="open(news.url)">
                 <div class="news-title">{{ news.title }}</div>
@@ -37,9 +37,9 @@
         </el-tab-pane>
         <el-tab-pane :label="t('home.soccerBetting')" name="third">
           <div class="news-listing">
-            <div class="news" v-for="news in soccerBettingList.slice(0,5)">
+            <div class="news" v-for="news in soccerBettingList.slice(0, 5)">
               <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title"/>
+                <img :src="news.pictureurl" :alt="news.title" />
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
@@ -53,14 +53,31 @@
         </el-tab-pane>
         <el-tab-pane :label="t('home.bettingGuide')" name="fourth">
           <div class="news-listing">
-            <div class="news" v-for="news in bettingGuideList.slice(0,5)">
+            <div class="news" v-for="news in bettingGuideList.slice(0, 5)">
               <div class="news-image">
-                <img :src="news.pictureurl" :alt="news.title"/>
+                <img :src="news.pictureurl" :alt="news.title" />
               </div>
               <div class="news-contents">
                 <div class="news-title">{{ news.title }}</div>
                 <div class="news-content" v-html="news.excerpt"></div>
                 <button class="standard-button btn-color-blue" @click="open(news.url)">
+                  {{ $t("home.moreDetails") }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane :label="t('home.weeklyTournament')" name="fifth">
+          <div class="news-listing">
+            <div class="news" v-for="news in weeklyTournamentList.slice(0, 5)" @click="open(news.url)">
+              <div class="news-image">
+                <img :src="news.pictureurl" :alt="news.title" />
+              </div>
+              <div class="news-contents">
+                <div class="news-title">{{ news.title }}</div>
+                <div class="news-content" v-html="news.excerpt"></div>
+                <button class="standard-button btn-color-blue">
                   {{ $t("home.moreDetails") }}
                 </button>
               </div>
@@ -82,6 +99,7 @@ const footballNewsList = ref([]);
 const soccerBettingList = ref([]);
 const esportNewsList = ref([]);
 const bettingGuideList = ref([]);
+const weeklyTournamentList = ref([])
 
 const loadNews = () => {
     getNews().then((res) => {
@@ -90,6 +108,7 @@ const loadNews = () => {
         soccerBettingList.value = res.data.filter((news) => news.category.includes("Tin bóng đá"));
         esportNewsList.value = res.data.filter((news) => news.category.includes("Tin Esport"));
         bettingGuideList.value = res.data.filter((news) => news.category.includes("Hướng dẫn cá cược"));
+        weeklyTournamentList.value = res.data.filter((news) => news.category.includes("Giải Đấu Baccarat hàng tuần"));
     } else ElMessage.error({
                 type: "error",
                 message: res.message
@@ -105,25 +124,25 @@ onMounted(() => {
   loadNews();
 });
 </script>
-<style  lang="scss">
+<style lang="scss">
 .news-section {
   max-width: 1350px;
   margin: 30px auto 50px;
 
-  .el-tabs{
+  .el-tabs {
     margin-top: -40px;
   }
 
-  .el-tabs__nav-wrap{
+  .el-tabs__nav-wrap {
     padding-left: 140px;
     padding-bottom: 10px;
   }
 
-  .el-tabs__item{
-   padding: 0 20px !important;
+  .el-tabs__item {
+    padding: 0 20px !important;
   }
 
-  .el-tabs__item.is-active:after{
+  .el-tabs__item.is-active:after {
     width: 100px;
     height: 3px;
   }
@@ -137,7 +156,7 @@ onMounted(() => {
     flex-wrap: wrap;
     gap: 20px;
     .news {
-    width: 48%;
+      width: 48%;
       display: flex;
       gap: 20px;
       &:first-child {
@@ -146,11 +165,11 @@ onMounted(() => {
           width: 556px;
           height: 240px;
         }
-        .news-contents {flex: 4;
-        .news-content {
-        
-        height: 150px;
-        }
+        .news-contents {
+          flex: 4;
+          .news-content {
+            height: 150px;
+          }
         }
       }
       .news-image {
@@ -179,7 +198,7 @@ onMounted(() => {
           overflow: hidden;
         }
         .news-content {
-        height: 60px;
+          height: 60px;
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;

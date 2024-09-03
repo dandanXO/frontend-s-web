@@ -29,6 +29,7 @@
     <LPLLCK v-if="list.redirectUrl === 'dy2-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone'"></BbDacha2024Promo>
+    <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode"/>
     <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode"/>
     <PrivilegeInvite
       v-if="
@@ -43,6 +44,7 @@
 
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'dy2-midautumn-spinwheel'" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo'" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
@@ -70,6 +72,9 @@
 
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode"/>
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'"/>
+    
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -119,11 +124,13 @@ import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.v
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
+import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue";
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
+import MidautumSpinWheel from "../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
@@ -143,10 +150,12 @@ import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerReb
 import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import LPLLCK from "../components/hotpromo/lpllck/LPLLCK.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
+import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
+import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -180,11 +189,13 @@ export default defineComponent({
     LPLSummer,
     Cny2024Promo,
     BbDacha2024Promo,
+    Dota2Ti13,
     CnyStepGame2024Promo,
     Dy2StepGamePromo,
     CS2Sign,
     slotLucky8,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LOLMsi2024Promo,
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
@@ -196,7 +207,9 @@ export default defineComponent({
     NewplayerGuide,
     LPLLCK,
     newFootballFight,
-    BbdachaCsgo2
+    BbdachaCsgo2,
+    EslProCsgo2,
+    BlackMythWuKongPromo
   },
   props: {
     list: {

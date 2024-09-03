@@ -1,78 +1,71 @@
 <template>
   <div class="deposit-wrapper">
-    <template v-if="!isSelectedMethod">
-      <div class="method-title q-mb-md">Choose a payment method</div>
-      <div class="withdraw-methods-container" v-if="isLoadingInitPay">
-        <div>
-          <q-skeleton style="height: 76px" />
-        </div>
-        <div>
-          <q-skeleton style="height: 76px" />
-        </div>
-        <div>
-          <q-skeleton style="height: 76px" />
-        </div>
+    <div class="method-title q-mb-sm">Deposit method</div>
+    <div class="deposit-methods-container" v-if="isLoadingInitPay">
+      <div>
+        <q-skeleton style="height: 96px" />
       </div>
-      <div class="withdraw-methods-container" v-else>
+      <div>
+        <q-skeleton style="height: 96px" />
+      </div>
+      <div>
+        <q-skeleton style="height: 96px" />
+      </div>
+      <div>
+        <q-skeleton style="height: 96px" />
+      </div>
+    </div>
+    <template v-else>
+      <div class="deposit-methods-container">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div
-            class="method-item"
-            @click="goSelectedMethod(item)"
-            :class="{ active: selectedItem === index, disabled: item.extra && item.extra.maintenance }"
-          >
-            <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-
-            <template v-if="item.extra && item.extra.maintenance">
-              <div class="item-detail">
-                <div class="txt-maintenance">
-                  <q-icon name="build" size="16px" />
-                  This channel is under maintenance
-                </div>
-              </div>
-            </template>
-
-            <template v-else>
-              <div class="item-detail">
-                <div class="txt-title">{{ item.nodeName }}</div>
-                <div class="txt-content">ETA: {{ item.extra.eta }}</div>
-              </div>
-            </template>
-
-            <div class="item-amount" v-if="item.depositMin && item.depositMax">
-              {{ item.depositMin }}~{{ item.depositMax }} {{ store.currency.label }}
+          <div class="content-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === item }">
+            <div class="item-img">
+              <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
-            <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
+            <div class="item-title">{{ item.nodeName }}</div>
+            <div class="item-ribbon" v-if="isPrivilege">
+              <img src="../../assets/images/account/ribbon-five-percent.png" />
+            </div>
           </div>
         </template>
       </div>
+
+      <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
+      <div class="deposit-methods-container col-three">
+        <template v-for="(item, index) in selectedItemChannel" :key="index">
+          <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
+            <div class="item-title">{{ item.nodeName }}</div>
+          </div>
+        </template>
+      </div>
+
+      <template v-if="selectedChanelExtra.length > 0">
+        <div class="method-title q-mt-md q-mb-sm">Bank</div>
+        <div>
+          <q-select
+            v-model="selectedChannelBank"
+            :options="selectedChanelExtra"
+            option-label="name"
+            option-value="id"
+            emit-value
+            map-options
+            filled
+          />
+        </div>
+      </template>
     </template>
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-options">
-        <div class="method-title">Payment Method</div>
-        <div class="options-picker" @click="resetSelectedMethod()">
-          <div class="pick-title">{{ selectedItem.nodeName }}</div>
-          <q-icon name="arrow_drop_down" size="20px" />
-        </div>
-      </div>
-
-      <div class="deposit-item-container q-mt-sm">
+      <div class="method-title q-mt-md q-mb-sm">Payment amount</div>
+      <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
-          <div @click="handleDepositItemClick(amount)" :class="'deposit-item'">
-            <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
-              +{{ convertToCommaAmount(amount * selectedItemPrivilege) }}
+          <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
+            <q-badge color="orange" floating rounded v-if="isPrivilege">
+              +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
-            </div>
-            <div :class="['deposit-svg', form.localAmount === amount && 'active']">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path
-                  d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
-                  fill="white"
-                />
-              </svg>
             </div>
           </div>
         </template>
@@ -115,8 +108,8 @@
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
             <div class="lil-title">
-              Amount ({{ convertToCommaAmount(selectedItem.depositMin) }} -
-              {{ convertToCommaAmount(selectedItem.depositMax) }} {{ store.currency.label }})
+              Amount ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
+              {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
             </div>
             <q-input
               type="number"
@@ -129,8 +122,10 @@
               :rules="[
                 verifyDepositAmount,
                 (val) =>
-                  (val >= selectedItem.depositMin && val <= selectedItem.depositMax) ||
-                  `Deposit Amount Must In Between ${selectedItem.depositMin} - ${selectedItem.depositMax}`
+                  (val >= selectedChannel.depositMin && val <= selectedChannel.depositMax) ||
+                  `Deposit Amount Must In Between ${convertToCommaAmount(
+                    selectedChannel.depositMin
+                  )} - ${convertToCommaAmount(selectedChannel.depositMax)}`
               ]"
               dense
               clearable
@@ -208,7 +203,9 @@
 
       <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager</div>
+        <div class="q-mt-sm">
+          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager
+        </div>
       </div>
     </template>
   </div>
@@ -369,16 +366,34 @@ const handleDepositNodeClick = (item) => {
 };
 
 const selectedItem = ref();
-const selectedItemAmount = ref();
 const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
+const selectedItemChannel = ref();
+const selectedItemAmount = ref();
+const selectedChannel = ref();
+const selectedChanelExtra = ref([]);
+const isPrivilege = ref(false);
+const selectedChannelBank = ref(null);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
-  selectedItemAmount.value = item.extra.amountArr;
-  selectedItemPrivilege.value = item.extra.privilegePercent;
-  selectedItemPrivilegeId.value = item.extra.privilegeId;
+  activeMethod.value = item;
   isSelectedMethod.value = true;
+  selectedItemChannel.value = item.children;
+  selectedChanelExtra.value = [];
+
+  goSelectedChannel(item.children[0]);
+};
+
+const goSelectedChannel = (item) => {
+  selectedChannel.value = item;
+  selectedChanelExtra.value = item.extra.banks;
+  selectedItemAmount.value = item.extra.amountArr;
+
+  selectedChannelBank.value = null;
+  if (selectedChanelExtra.value.length > 0) {
+    selectedChannelBank.value = item.extra.banks[0].id;
+  }
 };
 
 const isLoadingInitPay = ref(true);
@@ -391,33 +406,21 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    promoParam = "?promo=1";
+    // promoParam = "?promo=1";
+    isPrivilege.value = true;
+  } else {
+    isPrivilege.value = false;
   }
 
   payMethods.value = [];
 
-  cashier.get(`/session/nga/deposit/index/${promoParam}`).then((res) => {
+  cashier.get(`/session/php/deposit/index/${promoParam}`).then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
-      let bankDeposits = res.data.payments
-        .map((payment) => {
-          return payment.children.map((child) => child.children.map((grandchild) => grandchild.children)).flat(2);
-        })
-        .flat();
-
-      paymentMethodsItems.value = bankDeposits.flat();
-      selectedItemAmount.value = paymentMethodsItems.value[0].extra.amountArr;
-
-      const d = res.data;
-      if (!payMethods.value.length) {
-        payMethods.value = bankDeposits;
-      }
-      if (payMethods.value.length > 0) {
-        activeMethod.value = payMethods.value[0];
-        depositItems.value = payMethods.value[0].extra.amountArr;
-      }
+      paymentMethodsItems.value = res.data.payments;
+      goSelectedMethod(res.data.payments[0]);
     }
 
     if (
@@ -514,7 +517,7 @@ async function confirmDeposit() {
     btnLoading.value = false;
   } else {
     await cashier
-      .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+      .get(`/session/payment/${selectedChannel.value.paymentId}/amount/${form.localAmount}/verify`)
       .then((d) => {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
@@ -542,7 +545,13 @@ async function confirmDeposit() {
               form.privilegeId = null;
             }
           }
-          form.paymentId = activeMethod.value.paymentId;
+          form.paymentId = selectedChannel.value.paymentId;
+
+          if (selectedChanelExtra.value.length > 0) {
+            form.bankId = selectedChannelBank.value;
+          } else {
+            form.bankId = null;
+          }
 
           if (selectedItemPrivilegeId.value) {
             form.privilegeId = selectedItemPrivilegeId.value;
@@ -846,53 +855,6 @@ onMounted(() => {
   font-weight: 600;
 }
 
-.deposit-item-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  row-gap: 10px;
-  column-gap: 10px;
-
-  .deposit-item {
-    margin: auto;
-    position: relative;
-    width: 100%;
-
-    .deposit-amt {
-      border-radius: 4px;
-      background: #1d2635;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      padding: 3px;
-      width: 100%;
-      height: 4.1rem;
-      font-weight: 600;
-      aspect-ratio: 106/64;
-
-      &.active {
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-      }
-    }
-
-    .deposit-svg {
-      position: absolute;
-      right: 0;
-      bottom: -5px;
-      display: none;
-
-      svg {
-        background: #30bb1a;
-        border-radius: 3px;
-      }
-
-      &.active {
-        display: block;
-      }
-    }
-  }
-}
-
 .deposit-container {
   display: flex;
   flex-direction: column;
@@ -1054,7 +1016,8 @@ onMounted(() => {
 }
 
 .method-title {
-  color: #576373;
+  color: #98a6b4;
+  font-size: 14px;
 }
 
 .method-item {
@@ -1127,49 +1090,101 @@ onMounted(() => {
   }
 }
 
-.method-title {
-  color: #576373;
-}
+.deposit-methods-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 12px;
 
-.method-item {
-  border-radius: 6px;
-  background-color: #263349;
-  padding: 6px 8px 6px 12px;
-  display: flex;
-  align-items: center;
+  &.col-three {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-  .item-icon {
-    border-right: 1px solid #4b6185;
-    padding-right: 8px;
+  &.col-five {
+    // grid-template-columns: repeat(5, 1fr);
+  }
 
-    img {
+  .content-item {
+    position: relative;
+    background-color: rgba(38, 51, 73, 1);
+    border: 2px solid rgba(120, 121, 133, 0.5);
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+
+    .item-ribbon {
       display: block;
-      // width: 100%;
-      width: 50px;
+      position: absolute;
+      top: -2px;
+      left: -2px;
+    }
+
+    &.active {
+      border: 2px solid #5c46e7;
+      .item-title {
+        color: rgba(255, 255, 255, 1);
+      }
+      &:before {
+        content: "";
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-image: url(../../assets/images/account/active-tick.png);
+        background-size: cover;
+      }
+    }
+
+    .item-img {
+      margin: auto;
+      padding-bottom: 6px;
+      img {
+        display: block;
+        width: 100%;
+        max-width: max-content;
+        border-radius: 6px;
+      }
+    }
+    .item-title {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      margin-top: auto;
     }
   }
-  .item-detail {
-    padding: 6px 6px 6px 8px;
-    .txt-title {
-      font-size: 11px;
-      color: #ffffff;
+
+  .deposit-item {
+    margin: auto;
+    position: relative;
+    width: 100%;
+
+    .deposit-amt {
+      padding: 8px;
+      background-color: #263349;
+      border: 2px solid rgba(120, 121, 133, 0.5);
+      border-radius: 6px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+
+      &.active {
+        border: 2px solid #5c46e7;
+        color: rgba(255, 255, 255, 1);
+
+        &:before {
+          content: "";
+          height: 20px;
+          width: 20px;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          background-image: url(../../assets/images/account/active-tick.png);
+          background-size: cover;
+        }
+      }
     }
-    .txt-content {
-      font-size: 10px;
-      color: #576373;
-      white-space: nowrap;
-      margin-top: 4px;
-    }
-  }
-  .item-amount {
-    font-size: 10px;
-    padding: 6px;
-  }
-  .item-arrow {
-    margin-left: auto;
-    width: 30px;
-    min-width: 30px;
-    max-width: 30px;
   }
 }
 </style>

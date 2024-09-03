@@ -367,7 +367,7 @@ export default {
     withdraw_times: "회",
     withdraw_realtimeexchangerates: "실시간 환율",
     withdraw_estimatedarrival: "예상 도착",
-    withdraw_usdtspecialnote: "*특별 주의: 제3자가 자동으로 처리 수수료로 2.00 USDT를 인출합니다!",
+    withdraw_usdtspecialnote: "*특별 주의: 제3자가 자동으로 처리 수수료로 {fee} USDT를 인출합니다!",
     withdraw_ewalletspecialnote: "*특별 주의: 인출 지갑 이름과 게임 계정은 동일해야 합니다.",
     withdraw_choose: "선택",
     withdraw_pleasechoose: "선택해 주세요",
