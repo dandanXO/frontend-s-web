@@ -248,23 +248,23 @@ onMounted(() => {
       prize: 188
     },
     {
-      degree: 54,
+      degree: 64,
       prize: 888
     },
     {
-      degree: 90,
+      degree: 110,
       prize: "黑神话 - 悟空"
     },
     {
-      degree: 144,
+      degree: 164,
       prize: 1888
     },
     {
-      degree: 198,
+      degree: 218,
       prize: 88
     },
     {
-      degree: 252,
+      degree: 272,
       prize: 18
     },
     {
@@ -371,8 +371,8 @@ onMounted(() => {
   aspect-ratio: 206/220;
   z-index: 25;
   position: absolute;
-  top: calc(50%);
-  left: 50%;
+  top: 51%;
+  left: 50.5%;
   transform: translate(-50%, -50%);
 
   &.disabled {
