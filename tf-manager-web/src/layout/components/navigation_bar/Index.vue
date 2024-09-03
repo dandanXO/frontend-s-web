@@ -260,7 +260,7 @@ export default {
       const response = await showAlert()
       const { data: alert } = response
       if (alert) {
-        message.value = t('fields.' + alert)
+        message.value = t('fields.' + alert) 
       }
     }
 

@@ -1685,7 +1685,7 @@ import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
-import { getConfigListByGroup, getOpenForMember } from '../../../../../api/config'
+import { getConfigListByGroup } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
 import { isInd, isKorea } from '@/utils/site'
 
@@ -2752,7 +2752,6 @@ export default defineComponent({
       withdrawTypeForm,
       withdrawType,
       updateWithdrawTypeForm,
-      toggleWallet,
     }
   },
 })
