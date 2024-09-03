@@ -389,7 +389,7 @@ onMounted(() => {
   z-index: 25;
 }
 .draw-btn {
-  width: 100px;
+  width: 125px;
   height: auto;
   aspect-ratio: 206/220;
   z-index: 25;

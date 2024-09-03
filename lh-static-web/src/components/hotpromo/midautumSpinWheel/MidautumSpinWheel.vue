@@ -369,7 +369,7 @@ onMounted(() => {
   transform: translate(-50%, -50%);
 }
 .draw-btn {
-  width: 195px;
+  width: 250px;
   height: auto;
   aspect-ratio: 206/220;
   z-index: 25;
