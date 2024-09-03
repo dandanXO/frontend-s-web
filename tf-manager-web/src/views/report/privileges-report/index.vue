@@ -17,7 +17,6 @@
           :editable="false"
           :clearable="false"
         />
-
         <el-input
           v-model="request.name"
           size="small"
@@ -295,7 +294,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = siteList.list[0].id // site.value ? site.value.id : null
 }
 
 async function loadPrivilegeReport(first) {
@@ -381,13 +380,12 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   await loadPrivilegeReport(true)
 })

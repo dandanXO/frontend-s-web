@@ -584,6 +584,8 @@ onMounted(async () => {
     request.siteId = store.state.user.siteId
     form.siteId = store.state.user.siteId
   } else {
+    request.siteId = LOGIN_USER_TYPE.value === ADMIN.value ? siteList.list[1].id : siteList.list[0].id
+    form.siteId = LOGIN_USER_TYPE.value === ADMIN.value ? siteList.list[1].id : siteList.list[0].id
     uiControl.siteVisible = true
   }
   await loadData()

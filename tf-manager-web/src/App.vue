@@ -1,8 +1,17 @@
 <template>
-  <router-view />
+  <router-view v-if="isRouterActive" />
 </template>
 
 <script setup>
+import { ref, provide, nextTick } from 'vue-demi'
+
+const isRouterActive = ref(true)
+provide('reload', () => {
+  isRouterActive.value = false
+  nextTick(() => {
+    isRouterActive.value = true
+  })
+})
 </script>
 <style lang="scss">
 .el-submenu__title:focus, .el-submenu__title:hover, .el-menu-item:hover {
@@ -12,7 +21,4 @@
 .el-menu-item:hover {
   background: #001528 !important;
 }
-//.el-popper {
-//  left: 54px !important; // width of a el-menu-item, to prevent gap
-//}
 </style>

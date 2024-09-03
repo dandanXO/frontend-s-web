@@ -275,13 +275,12 @@ async function loadSites() {
 
 onMounted(async () => {
   await loadSites()
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
 })
 </script>

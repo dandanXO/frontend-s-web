@@ -300,7 +300,7 @@ const sites = reactive({
 let chooseSetting = []
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : sites.list[0].id
 }
 
 function handleSelectionChange(val) {
@@ -464,6 +464,7 @@ function removeJsonEditorElement() {
 
 onMounted(async () => {
   await loadSites()
+  request.siteId = sites.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
     request.siteId = site.value.id
