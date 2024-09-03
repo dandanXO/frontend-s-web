@@ -649,6 +649,7 @@ onMounted(async () => {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
   } else {
     site.value = sites.list[0];
+    imageRequest.siteId = sites.list[0].id
   }
   request.siteId = site.value.id;
   await loadGift();

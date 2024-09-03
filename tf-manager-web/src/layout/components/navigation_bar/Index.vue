@@ -116,6 +116,7 @@ import { computed, reactive, toRefs, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { UserActionTypes } from '@/store/modules/user/action-types'
+import { MenuActionType } from '@/store/modules/menu/action-types'
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
@@ -125,8 +126,9 @@ import { hasPermission, hasRole } from '@/utils/util'
 import { showAlert } from '../../../api/member'
 // import { getSiteListSimple } from '@/api/site'
 /* eslint-disable */
-import { updateDefaultSite } from '../../../api/user'
+import { updateDefaultSite, loadAuthMenu } from '../../../api/user'
 import { ElMessage } from 'element-plus'
+import { inject } from 'vue-demi'
 
 export default {
   methods: { hasPermission, hasRole },
@@ -219,6 +221,7 @@ export default {
       applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0
     }
 
+    const reload = inject('reload')
     const changeSite = async () => {
       const selectedSiteData = sites.value.find(
         site =>
@@ -238,10 +241,16 @@ export default {
         type: 'success',
       })
       setTimeout(() => {
-        location.reload()
+        reload()
+        loadMenu()
+        // location.reload()
       }, 200)
     }
 
+    async function loadMenu(){
+      const { data : menus } = await loadAuthMenu()
+      await store.dispatch(MenuActionType.ACTION_SET_ROUTES, menus);
+    }
     // logout: async () => {
     //     await store.dispatch(UserActionTypes.ACTION_LOGOUT)
     //     location.reload()

@@ -1498,7 +1498,7 @@ function handleCheckedChangePromoType() {
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 async function changeImagePage(page) {
