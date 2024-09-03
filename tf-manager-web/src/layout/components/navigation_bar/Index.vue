@@ -247,9 +247,29 @@ export default {
       }, 200)
     }
 
+    function mapMenuPaths(menus, parentPath = '') {
+      const paths = [];
+      menus.forEach(menu => {
+        const fullPath = parentPath + menu.path;
+        paths.push(fullPath);
+
+        if (menu.children && menu.children.length > 0) {
+            paths.push(...mapMenuPaths(menu.children, fullPath));
+        }
+      });
+      return paths;
+    }
+
     async function loadMenu(){
       const { data : menus } = await loadAuthMenu()
       await store.dispatch(MenuActionType.ACTION_SET_ROUTES, menus);
+        const mappedPaths = mapMenuPaths(menus);
+        const currentRoute = router.currentRoute.value;
+
+        const isRouteMatched = mappedPaths.includes(currentRoute.path);
+        if (!isRouteMatched) {
+            router.push({ path: '/welcome' });
+        }
     }
     // logout: async () => {
     //     await store.dispatch(UserActionTypes.ACTION_LOGOUT)
