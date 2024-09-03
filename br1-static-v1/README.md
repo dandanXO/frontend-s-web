@@ -1,4 +1,4 @@
-# BR1 App (ind-h5-project)
+# BR1 App (br1-h5-project)
 
 Brazil H5 APP
 - Node Version >= 16.17.0
@@ -50,7 +50,7 @@ npx cap run android
 4(b). Build on Android Studio/ Build .apk
 npx cap open android
 
-4(c). Rename - ind-app-1.0.x
+4(c). Rename - br1-app-1.0.x
 
 ```
 
