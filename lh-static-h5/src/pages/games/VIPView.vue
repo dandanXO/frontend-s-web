@@ -1215,8 +1215,12 @@ const slideTo = (vipIndex) => {
     return;
   }
   const vipLevel = +store.vip.replace("VIP", "");
-  if (vipLevel === 0) {
+  if (!store.vip) {
     currentSlide.value = 11;
+    return;
+  }
+  if (vipLevel === 0) {
+    currentSlide.value = 0;
     return;
   }
   currentSlide.value = vipLevel - 1;
