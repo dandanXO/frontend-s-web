@@ -170,6 +170,7 @@ import { getCompetitionBetToday, claimBonusItem2 } from "../../../api/index/prom
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
@@ -177,6 +178,7 @@ const promoCode = ref(props.promoCode);
 const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
+const router = useRouter();
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
