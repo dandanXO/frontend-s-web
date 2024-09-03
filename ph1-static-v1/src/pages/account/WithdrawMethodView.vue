@@ -467,14 +467,8 @@ const filterCards = (type) => {
     .get("/session/bankCard")
     .then((res) => {
       if (res.code === 0) {
-        let bankType = type.bankType;
         let typeCode = type.code;
-
-        if (bankType === "BANK") {
-          var filteredData = res.data.filter((item) => item.bankType === "BANK");
-        } else {
-          var filteredData = res.data.filter((item) => item.bankCode === typeCode);
-        }
+        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
 
         bankCardList.value = [];
         bankCardList.value.push(...filteredData);
@@ -852,7 +846,7 @@ const filterBank = (val, update) => {
     return;
   }
   update(() => {
-    const result = currBankList.value.filter((bank) => {
+    const result = selectedMethodItem.value.bankList.filter((bank) => {
       const bankName = bank.name.toLowerCase();
       const lowerCaseVal = val.toLowerCase();
       return bankName.includes(lowerCaseVal);
