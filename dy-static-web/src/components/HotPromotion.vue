@@ -44,6 +44,7 @@
 
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'dy2-midautumn-spinwheel'" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo'" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
@@ -71,6 +72,7 @@
 
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode"/>
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'"/>
     
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
@@ -128,6 +130,7 @@ import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGameProm
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
+import MidautumSpinWheel from "../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
@@ -152,6 +155,7 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
+import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -191,6 +195,7 @@ export default defineComponent({
     CS2Sign,
     slotLucky8,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LOLMsi2024Promo,
     HongBaoYuEurocupPromo,
     HongBaoPreEurocupPromo,
@@ -203,6 +208,7 @@ export default defineComponent({
     LPLLCK,
     newFootballFight,
     BbdachaCsgo2,
+    EslProCsgo2,
     BlackMythWuKongPromo
   },
   props: {

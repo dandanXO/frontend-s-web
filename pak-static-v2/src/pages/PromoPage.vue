@@ -364,7 +364,7 @@ export default defineComponent({
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
-          if (promo.redirectUrl === 'pak-redpacketrain') {
+          if (promo.redirectUrl === 'pk2-redpacketrain') {
             isMoneyRainModal.value = true;
           } else {
             if (route.query.fromAccount) {

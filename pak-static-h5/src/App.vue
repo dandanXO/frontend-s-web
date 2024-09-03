@@ -290,7 +290,6 @@ export default defineComponent({
       // console.log("APP Info");
       // console.log(info);
       checkServerStatus();
-      checkSID();
       // getCSA();
       getAppInfo();
       initOrientation();
@@ -318,6 +317,11 @@ export default defineComponent({
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
+    );
+
+    watch(
+      () => ui.firstScreenLoading,
+      (val) => !val && checkSID()
     );
   }
 });

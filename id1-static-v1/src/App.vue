@@ -128,9 +128,9 @@ export default defineComponent({
 
       var affiliateCode = "";
       if (omitSites.includes(window.location.host)) {
-        affiliateCode = "E94ED4";
+        affiliateCode = "77A4DF";
       } else {
-        affiliateCode = "E94ED4";
+        affiliateCode = "77A4DF";
       }
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -214,7 +214,7 @@ export default defineComponent({
 
     const router= useRouter();
     const checkServerStatus = () => {
-      axios.get(`https://sumbtf.tebarncale.com/server/status/IND`).then((response) => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
         if (response.data.code === 0) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {

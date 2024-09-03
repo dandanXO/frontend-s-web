@@ -22,7 +22,9 @@ export const useUI = defineStore("ui-store", {
       whatsappUrl: "",
       youtubeUrl: "",
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
+      isPageInitialized: false,
+      firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true
     };
   },
   actions: {

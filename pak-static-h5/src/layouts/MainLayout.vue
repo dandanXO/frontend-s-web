@@ -83,6 +83,8 @@
 
     <FooterSection />
   </q-layout>
+
+  <div class="first-screen-loading" v-show="ui.firstScreenLoading" />
 </template>
 
 <script>
@@ -534,8 +536,17 @@ export default defineComponent({
     });
     // console.log(platformsList.value);
 
+    const checkFirstScreen = () => {
+      if (ui.firstScreenLoading) {
+        setTimeout(() => {
+          ui.firstScreenLoading = false;
+        }, 500);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
+      checkFirstScreen();
     });
     return {
       tab: ref("home"),
@@ -636,5 +647,19 @@ svg path {
   svg {
     width: 250px;
   }
+}
+
+.first-screen-loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-width: 100%;
+  background: url(../assets/images/index/first-screen-loading.png) no-repeat;
+  background-size: cover;
+  background-position: center center;
+  z-index: 10000;
 }
 </style>

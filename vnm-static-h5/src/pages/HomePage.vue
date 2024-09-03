@@ -403,7 +403,7 @@
 
   <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
-      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
+      <img src="../assets/images/home/redpacket.png" class="red-envelope" />
     </div>
   </q-page-sticky>
 
@@ -976,12 +976,12 @@ export default defineComponent({
 
     const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
-      router.push("/promo?name=vi-mualixi-redpacket");
+      router.push("/promo?name=phongbao-lixi2/9");
     };
 
     const getCheckRedPacket = () => {
       if (store && store.token) {
-        eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
+        eventapi("/redPacketVip/nextRainTime?promoCode=OP_SPE_quockhanh2/9_2888VNDP_1VC_082024")
           .then((res) => {
             if (res.code === 0) {
               isRedPacketShow.value = res.data.nowIsRain;
@@ -1799,7 +1799,7 @@ export default defineComponent({
     };
     const fabPos = ref([18, 0]);
     const promoPos = ref([18, 108]);
-    const packetPos = ref([120, 18]);
+    const packetPos = ref([18, 18]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
