@@ -4,14 +4,14 @@ apply plugin: 'cloudwise'
 cloudwise { injectDebug = true }
 
 android {
-    namespace "com.ind.appb9mega1"
+    namespace "com.ind.app97pkr"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.ind.appb9mega1"
+        applicationId "com.ind.app97pkr"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 21
-        versionName "1.0.21"
+        versionCode 1
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

@@ -19,12 +19,14 @@
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage || '/'">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span>
+          <span v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/tutorial'" class="header-back">Back</span>
         </router-link>
         <div class="page-title-wrapper">
+          <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
             <span class="title">{{ pageName }}</span>
           </div>
+          <!--          <img src="../assets/images/index/hot-elephant-right.png" alt="" />-->
         </div>
 
         <div
@@ -78,7 +80,7 @@
       </router-view>
     </q-page-container>
 
-    <FooterSection />
+    <FooterSection :isDepositTab="isDepositTab" />
   </q-layout>
 </template>
 
@@ -110,6 +112,8 @@ export default defineComponent({
     //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
     //   }
     // });
+
+    const isDepositTab = ref(false);
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
@@ -119,6 +123,11 @@ export default defineComponent({
     watch(
       () => route.path,
       async () => {
+        if (route.path === "/deposit" || route.path === "/withdraw" || route.path === "/tutorial") {
+          isDepositTab.value = true;
+        } else {
+          isDepositTab.value = false;
+        }
         checkRoute();
       }
     );
@@ -393,6 +402,7 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "";
+          isDepositTab.value = true;
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
@@ -400,6 +410,12 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "";
+          isDepositTab.value = true;
+        } else if (route.path === "/tutorial") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = "";
+          isDepositTab.value = true;
         }
       }
     };
@@ -471,7 +487,12 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+
+    const goDepositTab = () => {
+      isDepositTab.value = true;
+
+      router.push(`/deposit?from=${route.path}`);
+    };
 
     onMounted(() => {
       checkRoute();
@@ -493,7 +514,9 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      goDepositTab,
+      changePlatform,
+      isDepositTab
     };
   }
 });
@@ -531,6 +554,14 @@ svg path {
   stroke-width: 2;
   stroke-dasharray: 1000;
   stroke-dashoffset: 0;
+}
+
+.second-icon {
+  img {
+    margin-top: 5px;
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .logo {

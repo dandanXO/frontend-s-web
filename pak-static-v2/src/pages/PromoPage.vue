@@ -53,7 +53,7 @@
                       </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
+                          <img class="promo-content" :src="imgURL + promo.displayMobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
@@ -71,7 +71,7 @@
                       </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
+                          <img class="promo-content" :src="imgURL + promo.displayMobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
@@ -81,7 +81,7 @@
                   </div>
                 </div>
               </div>
-              <MediaSettingsComponent />
+              <!-- <MediaSettingsComponent /> -->
             </div>
           </div>
           <div v-else class="selected-promo">
@@ -100,7 +100,7 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
-                  :src="imgURL + selectedPromo.mobileBannerUrl"
+                  :src="imgURL + selectedPromo.displayMobileBannerUrl"
                   style="display: block; width: 100%"
                 />
                 <!-- </div> -->
@@ -364,7 +364,7 @@ export default defineComponent({
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
-          if (promo.redirectUrl === 'pak-redpacketrain') {
+          if (promo.redirectUrl === 'pk2-redpacketrain') {
             isMoneyRainModal.value = true;
           } else {
             if (route.query.fromAccount) {
@@ -402,10 +402,19 @@ export default defineComponent({
             if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             } else {
-              promoState.promoList.push(element);
+              const displayElement = {
+                ...element,
+                displayDesktopBannerUrl: element.desktopBannerUrlDark ?? element.desktopBannerUrl,
+                displayDesktopImgBackgroundUrl: element.desktopImgBackgroundUrlDark ?? element.desktopImgBackgroundUrl,
+                displayDesktopImgUrl: element.desktopImgUrlDark ?? element.desktopImgUrl,
+                displayMobileBannerUrl: element.mobileBannerUrlDark ?? element.mobileBannerUrl,
+                displayMobileImgBackgroundUrl: element.mobileImgBackgroundUrlDark ?? element.mobileImgBackgroundUrl,
+                displayMobileImgUrl: element.mobileImgUrlDark ?? element.mobileImgUrl,
+              }
+              promoState.promoList.push(displayElement);
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element)
+                showPromoDetails(displayElement)
               }
             }
           });

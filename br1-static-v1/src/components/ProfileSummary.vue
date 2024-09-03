@@ -263,7 +263,7 @@ const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
   //TODO:: Need Change PH1 AffiliateCode.
-  api.get("/app/download/affiliate/url?siteCode=PH1&affiliateCode=E94ED4").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=PH1&affiliateCode=A3048D").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }

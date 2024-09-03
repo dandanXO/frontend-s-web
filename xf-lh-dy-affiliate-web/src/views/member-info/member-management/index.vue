@@ -284,7 +284,7 @@
                 <span>{{ formatDateTime(item.lastLoginTime) }}</span>
               </td>
               <td :data-label="t('fields.memberTag')">
-                {{ formatmTag(item.tags) }}
+                {{ formatmTag(item.tagDesc) }}
               </td>
               <td class="relativerow" :data-label="t('fields.operate')">
                 <el-dropdown>

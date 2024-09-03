@@ -1,6 +1,6 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
+    <!--    <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />-->
     <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <DailyLoginPromo v-if="list.redirectUrl === 'vi-daily-checkin' && !isCommonPromo" />
     <PennyBank v-if="list.redirectUrl === 'kaka-penny-bank' && !isCommonPromo" />
@@ -19,7 +19,7 @@
     <NewPlayerPromo v-if="list.redirectUrl === 'kaka-newplayer-promo'" />
 
     <HongBaoYu2024
-      v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
+      v-if="listParam.type === 'redpacket' && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -305,6 +305,16 @@ export default defineComponent({
     },
     humanDatetime(ts) {
       return moment(ts).format("YYYY-MM-DD");
+    }
+  },
+  computed: {
+    listParam() {
+      try {
+        return JSON.parse(this.list.param);
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
     }
   },
   mounted() {

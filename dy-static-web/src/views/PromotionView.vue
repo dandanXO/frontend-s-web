@@ -78,7 +78,8 @@
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
-            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
           }"
         >
           <div
@@ -112,6 +113,7 @@
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo' || selectedPromo.promoCode === 'dy2-blackmyth-wukong',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             esl: selectedPromo.promoCode === 'dy2-intel-esl',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -119,7 +121,8 @@
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual',
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
@@ -743,9 +746,15 @@ export default defineComponent({
           height: 376px !important;
           min-height: 376px;
 
-          .promo-bg {
+          .promo-bg.isDesktop {
             height: 376px !important;
             min-height: 376px;
+          }
+        }
+
+        &.isMidAutumnWukong {
+          .promo-bg {
+            height: 550px !important;
           }
         }
 
@@ -799,6 +808,11 @@ export default defineComponent({
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;
+        }
+
+        &.isMidAutumnWukong {
+          background-repeat: no-repeat;
+          background-size: 100% auto;
         }
 
         &.isMSI {

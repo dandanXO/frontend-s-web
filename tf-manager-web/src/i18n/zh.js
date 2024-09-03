@@ -2015,6 +2015,9 @@ export default {
     fiatBalance: '法币余额',
     usdtBalance: 'USDT余额',
     toggleWallet: '切换钱包',
+    historyRecord: '历史数据',
+    nonHistoryRecord: '非历史数据',
+    productId: '产品ID',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2473,6 +2476,7 @@ export default {
     affiliateReactivated: '解禁成功',
     required_6_digits_code: '只能六个字符',
     required_only_digits_and_alphabet: '只许字母或数字',
+    validateProductIdRequired: '产品ID必填',
   },
   menu: {
     undefined: '',
@@ -2736,6 +2740,7 @@ export default {
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
     'Mooncake Fest Spin Record': '中秋节转盘2024',
+    'Platform WC': 'WC平台',
   },
   google: {
     google_auth_menu: '谷歌验证',

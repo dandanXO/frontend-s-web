@@ -12,14 +12,14 @@
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
-    <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
-    <SignIn7DaysPromo v-if="list.redirectUrl === 'pak-signin-bonus' && !isCommonPromo && store.token" />
+    <BonusSpinWheelPromo v-if="list.redirectUrl === 'pk2-spin-wheel' && !isCommonPromo && store.token" />
+    <SignIn7DaysPromo v-if="list.redirectUrl === 'pk2-signin-bonus' && !isCommonPromo && store.token" />
     <NewPlayerSpinWheelPromo
-      v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'pk2-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
-    <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
-    <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
-    <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
+    <RedPacketRainPromo v-if="list.redirectUrl === 'pk2-redpacketrain' && !isCommonPromo && store.token" />
+    <InterestProfitPromo v-if="list.redirectUrl === 'pk2-interest-profit' && !isCommonPromo && store.token" />
+    <NewPlayersPromo v-if="list.redirectUrl === 'pk2-new-players' && !isCommonPromo && store.token" :list="list" />
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -274,12 +274,12 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
-      this.list.redirectUrl === "pak-spin-wheel" ||
-      this.list.redirectUrl === "pak-signin-bonus" ||
-      this.list.redirectUrl === "pak-newplayer-welcome-spin" ||
-      this.list.redirectUrl === "pak-redpacketrain" ||
-      this.list.redirectUrl === "interest-profit" ||
-      this.list.redirectUrl === "pak-new-players" ||
+      this.list.redirectUrl === "pk2-spin-wheel" ||
+      this.list.redirectUrl === "pk2-signin-bonus" ||
+      this.list.redirectUrl === "pk2-newplayer-welcome-spin" ||
+      this.list.redirectUrl === "pk2-redpacketrain" ||
+      this.list.redirectUrl === "pk2-interest-profit" ||
+      this.list.redirectUrl === "pk2-new-players" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
