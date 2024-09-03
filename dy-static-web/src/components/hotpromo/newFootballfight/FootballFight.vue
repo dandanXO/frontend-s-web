@@ -110,7 +110,7 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            活动期间，每位会员每日仅限领取一次投注奖金，次日 00:00-23-59 期间领取奖金，逾期视为自动放弃，不予补偿；
+            活动期间，每位会员每日仅限领取一次投注奖金，次日 00:00-23:59 期间领取奖金，逾期视为自动放弃，不予补偿；
           </div>
           <div class="item">
             <div class="item-num">2</div>
