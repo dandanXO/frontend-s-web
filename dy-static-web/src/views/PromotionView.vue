@@ -754,7 +754,7 @@ export default defineComponent({
 
         &.isMidAutumnWukong {
           .promo-bg {
-            height: 550px !important;
+            height: 585px !important;
           }
         }
 
