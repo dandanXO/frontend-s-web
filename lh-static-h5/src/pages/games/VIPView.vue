@@ -23,7 +23,7 @@
                   </span> -->
                   <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
                   <span v-show="originalUpgradeBetAmounts.length != 0">
-                    <span v-if="store.token && (vipIndex === +vipLevel - 1 || +vipLevel === 0) && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">已完成</span>
+                    <span v-if="store.token && (vipIndex < +vipLevel) || vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">已完成</span>
                     <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
                   </span>
                 </div>
@@ -1222,7 +1222,7 @@ const currentCarousel = ref(0);
 const currentBoxes = ref(0);
 const handleSlideClick = (vipIndex) => {
   if (vipIndex === currentSlide.value) {
-    slideTo(vipLevel.value - 1);
+    slideTo(vipLevel.value);
   } else {
     slideTo(vipIndex); // If you still want to slide to the clicked item
   }
@@ -1241,7 +1241,7 @@ const slideTo = (vipIndex) => {
     currentSlide.value = 0;
     return;
   }
-  currentSlide.value = vipLevel - 1;
+  currentSlide.value = vipLevel;
 };
 function formatNumber(value, type) {
   if (value === undefined) {
