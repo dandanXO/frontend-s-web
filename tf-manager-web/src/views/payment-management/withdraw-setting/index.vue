@@ -337,7 +337,7 @@ const handleMobileCheckAllChange = (val) => {
 
 const handleMobileCheckedFinancialChange = (value) => {
   const checkedCount = value.length
-  checkAllMobile.value = checkedCount === financialList.list.map(element => element.name).length
+  checkAllMobile.value = checkedCount === financialList.list.length
   mobileIsIndeterminate.value = checkedCount > 0 && checkedCount < financialList.list.length
 }
 
