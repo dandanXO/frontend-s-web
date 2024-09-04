@@ -790,14 +790,7 @@
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
             <div class="q-mt-sm q-mb-md">
-              <q-btn
-                dense
-                rounded
-                icon="chevron_left"
-                class="back-btn text-white"
-                size="16px"
-                v-close-popup
-              />
+              <q-btn dense rounded icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
             </div>
             <div>
               <div class="game-logo-img">
@@ -970,7 +963,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -2602,7 +2595,7 @@ const getAppData = async () => {
 
 const openDownloadPage = () => {
   window.open(download_url.value, "_system");
-  isAppUpdateModal.value = false;
+  // isAppUpdateModal.value = false;
 };
 const cancelUpdate = () => {
   isAppUpdateModal.value = false;
@@ -2735,6 +2728,8 @@ const loadAppTabs = () => {
     });
 };
 
+let intervalId;
+
 onActivated(() => {
   store.getUnreadTotal();
 });
@@ -2754,6 +2749,12 @@ onMounted(() => {
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  intervalId = setInterval(checkPlatform, 300000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
 });
 </script>
 
