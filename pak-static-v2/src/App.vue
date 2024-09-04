@@ -129,17 +129,9 @@ export default defineComponent({
     // };
 
     const trackH5Affiliate = () => {
-      const omitSites = ["bw3.genoortisy.com"];
-
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "7508B7";
-      } else {
-        // affiliateCode = "3B1BFB";
-        affiliateCode = "";
-      }
-
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+      // const omitSites = ["bw3.genoortisy.com"];
+      // var affiliateCode = "";
+      // sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
       // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
       //   if (res.code === 0) {
       //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
