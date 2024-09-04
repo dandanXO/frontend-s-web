@@ -18,17 +18,17 @@
 
         <q-card-section>
           <q-form>
-            <div class="input-title">Bank Account Number</div>
+            <div class="input-title">Account Number</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              label="Bank Account Number"
+              label="Enter Account Number"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Please Enter Bank Account Number',
+                (val) => (val && val.length > 0) || 'Please Enter Account Number',
                 (val) => (val && val === selectedUnbindCardNum) || 'Please Enter The Correct Account Number'
               ]"
               label-color="secondary"

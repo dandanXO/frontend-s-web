@@ -102,6 +102,8 @@
               <div class="w-form-input">
                 <q-select
                   ref="cardRef"
+                  class="bank-select-input"
+                  :loading="isLoadingBankCard"
                   filled
                   dense
                   clearable
@@ -469,6 +471,7 @@ const selectWithdrawCurrency = (item) => {
   if (filteredMethods.length > 0) {
     selectedWithdraw.value = filteredMethods;
   }
+  isAddNewAccount.value = false;
   goSelectedMethod(selectedWithdraw.value[0]);
 };
 
@@ -478,9 +481,11 @@ const bankCardList = ref([]);
 const isNoBankCard = ref(false);
 
 const filterCards = (type) => {
+  isLoadingBankCard.value = true;
   api
     .get("/session/bankCard")
     .then((res) => {
+      isLoadingBankCard.value = false;
       if (res.code === 0) {
         let typeCode = type.code;
         let filteredData = res.data.filter((item) => item.bankCode === typeCode);
@@ -507,6 +512,7 @@ const loadCards = () => {
   api
     .get("/session/bankCard")
     .then((res) => {
+      isLoadingBankCard.value = false;
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
@@ -603,6 +609,7 @@ const submitWithdraw = () => {
 };
 
 const submitWithdrawBank = () => {
+  isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
 
@@ -619,6 +626,7 @@ const submitWithdrawBank = () => {
   api
     .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
     .then((response) => {
+      isSubmitDisable.value = false;
       if (response.code === 0) {
         $q.notify({
           color: "positive",
@@ -1084,6 +1092,12 @@ const toggleAmount = (type) => {
           display: flex;
           justify-content: center;
         }
+      }
+    }
+
+    .bank-select-input {
+      :deep(.q-field__append) {
+        height: 60px;
       }
     }
   }
