@@ -796,7 +796,6 @@
                 icon="chevron_left"
                 class="back-btn text-white"
                 size="16px"
-                @click="clearQueryParams"
                 v-close-popup
               />
             </div>
@@ -2329,6 +2328,7 @@ const gotoPromo = (banner) => {
   const platformPattern = /^\/platform\/(.*)/;
   const gamePattern = /^\/game\/(.*)/;
   const openPattern = /^\/open\/(.*)/;
+  const openGamePattern = /^\/openGame\/(.*)/;
 
   if (banner.redirectUrl.match(urlPattern)) {
     const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
@@ -2359,6 +2359,16 @@ const gotoPromo = (banner) => {
     const extractedUrl = banner.redirectUrl.match(openPattern)[1];
     const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
     playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
+  } else if (banner.redirectUrl.match(openGamePattern)) {
+    const extractedUrl = banner.redirectUrl.match(openGamePattern)[1];
+    const queryString = extractedUrl.replace("/openGame/", "");
+    const params = new URLSearchParams(queryString);
+    const gameName = params.get("gameName");
+    const platformCode = params.get("platformCode");
+    const gameStatus = params.get("gameStatus");
+    const gameType = params.get("gameType");
+    const gameId = params.get("gameId");
+    openGame(gameName, platformCode, "", gameStatus, gameType, gameId);
   } else if (banner.redirectUrl.slice(0, 4) === "http") {
     window.open(banner.redirectUrl, "_blank");
   }
@@ -2575,24 +2585,8 @@ const loadAppTabs = () => {
     });
 };
 
-const clearQueryParams = () => {
-  router.push({ path: router.currentRoute.value.path, query: {} });
-};
-
 onActivated(() => {
   store.getUnreadTotal();
-
-  if (route.query.openGame) {
-    // openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
-    openGame(
-      route.query.gameName,
-      route.query.platformCode,
-      "",
-      route.query.gameStatus,
-      route.query.gameType,
-      route.query.gameId
-    );
-  }
 });
 
 onMounted(() => {
@@ -2611,22 +2605,6 @@ onMounted(() => {
     initOneSignal();
   }
 });
-
-watch(
-  () => route.query.openGame,
-  (newValue) => {
-    if (newValue) {
-      openGame(
-        route.query.gameName,
-        route.query.platformCode,
-        "",
-        route.query.gameStatus,
-        route.query.gameType,
-        route.query.gameId
-      );
-    }
-  }
-);
 </script>
 
 <style scoped lang="scss">
