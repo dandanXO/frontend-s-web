@@ -36,75 +36,75 @@
     <div class="terms-wrapper">
       <div class="menu-title">{{ $t('menu.referFriend') }}</div>
 
-        <div class="terms-subtitle"><b>NHẬN THƯỞNG KHÔNG GIỚI HẠN</b></div>
+      <div class="terms-subtitle"><b>{{ $t('referTerms.receiveReward') }}</b></div>
 
-        <p>
-          <div><b>{{ $t('referTerms.promotionStart') }}</b></div>
-          <div v-html="$t('referTerms.applicableTo')"></div>
-        </p>
+      <p>
+        <div><b>{{ $t('referTerms.promotionStart') }}</b></div>
+        <div v-html="$t('referTerms.applicableTo')"></div>
+      </p>
 
-        <p>
-          <div><b>{{ $t('referTerms.promotionDetailsLabel') }}</b></div>
-          <div>{{ $t('referTerms.promotionDetails') }}</div>
-        </p>
+      <p>
+        <div><b>{{ $t('referTerms.promotionDetailsLabel') }}</b></div>
+        <div>{{ $t('referTerms.promotionDetails') }}</div>
+      </p>
 
-        <p>
-          <div><b>{{ $t('referTerms.howToParticipateLabel') }}</b></div>
-          <div>
-            <ol>
-              <li>{{ $t('referTerms.howToParticipate1') }}</li>
-              <li>{{ $t('referTerms.howToParticipate2') }}</li>
-              <li>{{ $t('referTerms.howToParticipate3') }}</li>
-              <li>{{ $t('referTerms.howToParticipate4') }}</li>
-              <li>{{ $t('referTerms.howToParticipate5') }}</li>
-            </ol>
-          </div>
-        </p>
-
-        <table border class="terms-table">
-          <thead>
-            <th>{{ $t('referTerms.numOfReferredFriends') }}</th>
-            <th>{{ $t('referTerms.bonusPercentage') }}</th>
-            <th>{{ $t('referTerms.minimumBonusAmt') }}</th>
-            <th>{{ $t('referTerms.maximumBonusPerReferredPerson') }}</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>10%</td>
-              <td>100</td>
-              <td>800</td>
-            </tr>
-            <tr>
-              <td rowspan="2">≥2</td>
-              <td>20%</td>
-              <td>200</td>
-              <td>800</td>
-            </tr>
-            <tr>
-              <td colspan="3">{{ $t('referTerms.additionalCommissionHint') }}</td>
-            </tr>
-          </tbody>
-        </table>
-        
-
-        <p>
-          <div><b>{{ $t('referTerms.termsCondition') }}</b></div>
+      <p>
+        <div><b>{{ $t('referTerms.howToParticipateLabel') }}</b></div>
+        <div>
           <ol>
-            <li>{{ $t('referTerms.termsCondition1') }}</li>
-            <li>{{ $t('referTerms.termsCondition2') }}</li>
-            <li>{{ $t('referTerms.termsCondition3') }}</li>
-            <li>{{ $t('referTerms.termsCondition4') }}</li>
-            <li>{{ $t('referTerms.termsCondition5') }}</li>
-            <li>{{ $t('referTerms.termsCondition6') }}</li>
-            <li>{{ $t('referTerms.termsCondition7') }}</li>
-            <li>{{ $t('referTerms.termsCondition8') }}</li>
-            <li>{{ $t('referTerms.termsCondition9') }}</li>
-            <li>{{ $t('referTerms.termsCondition10') }}</li>
+            <li>{{ $t('referTerms.howToParticipate1') }}</li>
+            <li>{{ $t('referTerms.howToParticipate2') }}</li>
+            <li>{{ $t('referTerms.howToParticipate3') }}</li>
+            <li>{{ $t('referTerms.howToParticipate4') }}</li>
+            <li>{{ $t('referTerms.howToParticipate5') }}</li>
           </ol>
-        </p>
-      </div>
+        </div>
+      </p>
+
+      <table border class="terms-table">
+        <thead>
+          <th>{{ $t('referTerms.numOfReferredFriends') }}</th>
+          <th>{{ $t('referTerms.bonusPercentage') }}</th>
+          <th>{{ $t('referTerms.minimumBonusAmt') }}</th>
+          <th>{{ $t('referTerms.maximumBonusPerReferredPerson') }}</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>10%</td>
+            <td>100</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td rowspan="2">≥2</td>
+            <td>20%</td>
+            <td>200</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td colspan="3">{{ $t('referTerms.additionalCommissionHint') }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <p>
+        <div><b>{{ $t('referTerms.termsCondition') }}</b></div>
+        <ol>
+          <li>{{ $t('referTerms.termsCondition1') }}</li>
+          <li>{{ $t('referTerms.termsCondition2') }}</li>
+          <li>{{ $t('referTerms.termsCondition3') }}</li>
+          <li>{{ $t('referTerms.termsCondition4') }}</li>
+          <li>{{ $t('referTerms.termsCondition5') }}</li>
+          <li>{{ $t('referTerms.termsCondition6') }}</li>
+          <li>{{ $t('referTerms.termsCondition7') }}</li>
+          <li>{{ $t('referTerms.termsCondition8') }}</li>
+          <li>{{ $t('referTerms.termsCondition9') }}</li>
+          <li>{{ $t('referTerms.termsCondition10') }}</li>
+        </ol>
+      </p>
     </div>
+  </div>
   
 </template>
 

@@ -372,6 +372,7 @@ export default {
     settleWithdrawPwd: "Please settle withdraw password"
   },
   referTerms: {
+    receiveReward: "RECEIVE UNLIMITED REWARDS",
     promotionStart: "Duration: September 9, 2024 – December 31, 2024",
     applicableTo: "<b>Applicable to:</b> All TF88 Members",
     promotionDetailsLabel: "Promotion Details:",

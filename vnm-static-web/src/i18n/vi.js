@@ -370,6 +370,7 @@ export default {
     settleWithdrawPwd: "Vui lòng thêm mật khẩu rút tiền"
   },
   referTerms: {
+    receiveReward: "NHẬN THƯỞNG KHÔNG GIỚI HẠN",
     promotionStart: "Thời gian: 09/09/2024 – 31/12/2024",
     applicableTo: "<b>Áp dụng:</b> Tất cả Thành Viên TF88",
     promotionDetailsLabel: "Chi tiết khuyến mãi:",
