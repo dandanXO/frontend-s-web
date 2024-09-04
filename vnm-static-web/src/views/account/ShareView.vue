@@ -33,49 +33,77 @@
     </div>
   </div>
   <div class="share-container">
+    <div class="terms-wrapper">
       <div class="menu-title">{{ $t('menu.referFriend') }}</div>
-      
-      <ul class="terms" style="list-style-type:decimal;">
-            <li>
-               {{ $t('referTerms.promotionStart')}}
-            </li>
-            <li> {{ $t('referTerms.referralBonus')}}</li>
-            <li>
-              {{ $t('referTerms.eligibilityConditions') }}
-            <ul style="list-style-type: lower-alpha">
-            <li> {{ $t('referTerms.referrerConditions')}}
-              <ul>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.referrerConditions1')}}
-                </li>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.referrerConditions2')}}
-                </li>
-              </ul>
-            </li>
-            <li> {{ $t('referTerms.presenteeConditions')}}
-              <ul>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions1')}}
-                </li>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions2')}}
-                </li>
-                <li style="list-style:lower-roman;">
-                  {{ $t('referTerms.presenteeConditions3')}}
-                </li>
-              </ul></li>
-            </ul>
-            </li>
-            
-            <li> {{ $t('referTerms.specifiedLink')}}</li>
-            <li> {{ $t('referTerms.promotionReview')}}</li>
-            <li> {{ $t('referTerms.withdrawalConditions')}}</li>
-            <li> {{ $t('referTerms.notApplied')}}</li>
-            <li> {{ $t('referTerms.rightsReserved')}}</li>
-            <li> {{ $t('referTerms.concurrentPromotions')}}</li>
-            <li> {{ $t('referTerms.generalTerms')}}</li>
-        </ul>
+
+        <div class="terms-subtitle"><b>NHẬN THƯỞNG KHÔNG GIỚI HẠN</b></div>
+
+        <p>
+          <div><b>{{ $t('referTerms.promotionStart') }}</b></div>
+          <div v-html="$t('referTerms.applicableTo')"></div>
+        </p>
+
+        <p>
+          <div><b>{{ $t('referTerms.promotionDetailsLabel') }}</b></div>
+          <div>{{ $t('referTerms.promotionDetails') }}</div>
+        </p>
+
+        <p>
+          <div><b>{{ $t('referTerms.howToParticipateLabel') }}</b></div>
+          <div>
+            <ol>
+              <li>{{ $t('referTerms.howToParticipate1') }}</li>
+              <li>{{ $t('referTerms.howToParticipate2') }}</li>
+              <li>{{ $t('referTerms.howToParticipate3') }}</li>
+              <li>{{ $t('referTerms.howToParticipate4') }}</li>
+              <li>{{ $t('referTerms.howToParticipate5') }}</li>
+            </ol>
+          </div>
+        </p>
+
+        <table border class="terms-table">
+          <thead>
+            <th>{{ $t('referTerms.numOfReferredFriends') }}</th>
+            <th>{{ $t('referTerms.bonusPercentage') }}</th>
+            <th>{{ $t('referTerms.minimumBonusAmt') }}</th>
+            <th>{{ $t('referTerms.maximumBonusPerReferredPerson') }}</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>10%</td>
+              <td>100</td>
+              <td>800</td>
+            </tr>
+            <tr>
+              <td rowspan="2">≥2</td>
+              <td>20%</td>
+              <td>200</td>
+              <td>800</td>
+            </tr>
+            <tr>
+              <td colspan="3">{{ $t('referTerms.additionalCommissionHint') }}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+
+        <p>
+          <div><b>{{ $t('referTerms.termsCondition') }}</b></div>
+          <ol>
+            <li>{{ $t('referTerms.termsCondition1') }}</li>
+            <li>{{ $t('referTerms.termsCondition2') }}</li>
+            <li>{{ $t('referTerms.termsCondition3') }}</li>
+            <li>{{ $t('referTerms.termsCondition4') }}</li>
+            <li>{{ $t('referTerms.termsCondition5') }}</li>
+            <li>{{ $t('referTerms.termsCondition6') }}</li>
+            <li>{{ $t('referTerms.termsCondition7') }}</li>
+            <li>{{ $t('referTerms.termsCondition8') }}</li>
+            <li>{{ $t('referTerms.termsCondition9') }}</li>
+            <li>{{ $t('referTerms.termsCondition10') }}</li>
+          </ol>
+        </p>
+      </div>
     </div>
   
 </template>
@@ -202,6 +230,25 @@ export default defineComponent({
   border-radius: 15px;
   padding: 20px 40px;
   height: 100%;
+
+  .terms-wrapper {
+    line-height: 2em;
+    color: #9AA8CB;
+
+    .menu-title,
+    .terms-subtitle {
+      text-align: center;
+    }
+
+    .terms-table {
+      th, td {
+        text-align: center;
+        padding: 2px 5px;
+        border: 1px solid #9AA8CB;
+      }
+    }
+  }
+
   .terms {
     color: #9AA8CB;
     font-size: 16px;
