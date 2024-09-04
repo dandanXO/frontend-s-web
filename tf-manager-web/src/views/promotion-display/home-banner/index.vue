@@ -170,15 +170,15 @@
                 </el-button>
               </el-row>
             </el-form-item>
-            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopBannerDark')" prop="desktopImageUrlDark" style="flex: 1">
+            <el-form-item v-if="uiControl.supportDarkMode" :label="t('fields.desktopBannerDark')" prop="deskTopImageUrlDark" style="flex: 1">
               <el-row :gutter="10">
-                <el-col v-if="form.desktopImageUrlDark" style="width: 250px">
+                <el-col v-if="form.deskTopImageUrlDark" style="width: 250px">
                   <el-image
-                    v-if="form.desktopImageUrlDark"
-                    :src="promoDir + form.desktopImageUrlDark"
+                    v-if="form.deskTopImageUrlDark"
+                    :src="promoDir + form.deskTopImageUrlDark"
                     fit="contain"
                     class="preview"
-                    :preview-src-list="[promoDir + form.desktopImageUrlDark]"
+                    :preview-src-list="[promoDir + form.deskTopImageUrlDark]"
                   />
                 </el-col>
               </el-row>
@@ -731,7 +731,7 @@ const form = reactive({
   id: null,
   title: null,
   desktopImageUrl: null,
-  desktopImageUrlDark: null,
+  deskTopImageUrlDark: null,
   mobileImageUrl: null,
   mobileImageUrlDark: null,
   redirectUrl: null,
@@ -992,6 +992,7 @@ function submit() {
 function submitImage() {
   if (uiControl.imageSelectionType === 'DESKTOP') {
     if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+      form.deskTopImageUrlDark = selectedImage.path
       form.desktopImageUrlDark = selectedImage.path
     } else {
       form.desktopImageUrl = selectedImage.path
