@@ -20,7 +20,10 @@
                 晋级所需有效流水:
                 <!-- <span>{{ formatNumber(vipItems[vipIndex].upgradeBetAmount) }}</span> -->
                 <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
-                <span v-show="originalUpgradeBetAmounts.length != 0">{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                  <span v-show="originalUpgradeBetAmounts.length != 0">
+                    <span v-if="store.token && (vipIndex === +vipLevel - 1 || +vipLevel === 0) && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">已完成</span>
+                    <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                  </span>
               </div>
               <div class="viplevel">VIP {{ vip.vipLevel }}</div>
             </div>
@@ -205,13 +208,26 @@
                       </div>
                     </div>
                   </div>
+                  <template v-if="item.redPacketClaimStatus === 'CANT_CLAIM' && category.key === 'redPacket' && +item.vipLevel === vipLevel">
+                    <div class="claim-now disabled">
+                      {{ formatNumber(currentRedPacketAmount, 'redPacket') }}
+                    </div>
+                  </template>
                   <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
                     <div
                       class="claim-now"
                       :class="{ disabled: isLoading[category.key] }"
                       @click="handleClick(category.key, item)"
                     >
-                      {{ !isLoading[category.key] ? "立即领取" : "领取中" }}
+                          {{
+                            !isLoading[category.key]
+                              ? category.key === 'redPacket'
+                                ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
+                                  ? formatNumber(currentRedPacketAmount, 'redPacket')
+                                  : '立即领取'
+                                : '立即领取'
+                              : '领取中'
+                          }}
                     </div>
                   </template>
                   <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
@@ -794,6 +810,7 @@ const toggleAccordion = () => {
 };
 const currentDepAmt = ref(0);
 const currentBetAmt = ref(0);
+const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
 const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
@@ -1082,6 +1099,7 @@ const runVipAPI = (res) => {
 
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
+    currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     isDataLoaded.value = true;
     getVipLevelProgress(vipLevel.value, "bet");
   } else {
@@ -1168,7 +1186,7 @@ const slideTo = (vipIndex) => {
   }
   currentSlide.value = vipLevel - 1;
 };
-function formatNumber(value) {
+function formatNumber(value, type) {
   if (value === undefined) {
     return "-";
   }
@@ -1176,7 +1194,7 @@ function formatNumber(value) {
 
   const number = parseFloat(value);
 
-  if (number % 1 !== 0) {
+  if (number % 1 !== 0 || type === 'redPacket') {
     return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   } else {
     return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
