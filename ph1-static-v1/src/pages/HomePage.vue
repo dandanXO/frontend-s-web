@@ -790,7 +790,15 @@
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
             <div class="q-mt-sm q-mb-md">
-              <q-btn dense rounded icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
+              <q-btn
+                dense
+                rounded
+                icon="chevron_left"
+                class="back-btn text-white"
+                size="16px"
+                @click="clearQueryParams"
+                v-close-popup
+              />
             </div>
             <div>
               <div class="game-logo-img">
@@ -1005,7 +1013,7 @@ const categoryDefault = useLocalStorage("HOME_CATEGORY", [
   { title: "Fishing", icon: "fishing", active: false },
   { title: "Sport", icon: "sport", active: false }
 ]).value;
-const categoriesList = ref();
+const categoriesList = ref([]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -1918,9 +1926,6 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          // console.log(JSON.stringify(hotGameList.value));
-          // console.log(hotGameList.value);
-          // console.log(livecasino.value);
           isHotGameLoading.value = false;
         });
     });
@@ -2543,29 +2548,55 @@ const loadCustomerAddress = () => {
       })
     )
     .then((data) => {
-      console.log(data);
       var url = data.liveUrl1;
       ui.CSAUrl = url;
     });
 };
 
+const loadAppTabs = () => {
+  cached
+    .get("appTabs", () =>
+      api.get("/getAppTabs").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      categoriesList.value = data;
+
+      if (categoriesList.value.length > 0) {
+        categoriesList.value.forEach(function (category, index) {
+          if (index === 0) {
+            category.active = true;
+          } else {
+            category.active = false;
+          }
+        });
+      }
+    });
+};
+
+const clearQueryParams = () => {
+  router.push({ path: router.currentRoute.value.path, query: {} });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
+
+  if (route.query.openGame) {
+    // openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+    openGame(
+      route.query.gameName,
+      route.query.platformCode,
+      "",
+      route.query.gameStatus,
+      route.query.gameType,
+      route.query.gameId
+    );
+  }
 });
 
 onMounted(() => {
   isPlatLoading.value = true;
-  categoriesList.value = categoryDefault;
-  if (categoriesList.value.length > 0) {
-    categoriesList.value.forEach(function (category, index) {
-      if (index === 0) {
-        category.active = true;
-      } else {
-        category.active = false;
-      }
-    });
-  }
-
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -2573,12 +2604,29 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadCustomerAddress();
+  loadAppTabs();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
 });
+
+watch(
+  () => route.query.openGame,
+  (newValue) => {
+    if (newValue) {
+      openGame(
+        route.query.gameName,
+        route.query.platformCode,
+        "",
+        route.query.gameStatus,
+        route.query.gameType,
+        route.query.gameId
+      );
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">
