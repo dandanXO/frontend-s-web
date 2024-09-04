@@ -2891,6 +2891,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '净盈利佣金-小游戏',
     AGENT_SHARE_PROFIT_RATIO_POKER: '净盈利佣金-棋牌',
   },
+  gameTypeRolloverSetting: {
+    anyTypes: '所有游戏类型',
+    specifyTypes: '指定游戏类型',
+    excludeTypes: '排除游戏类型',
+  },
   domainType: {
     LANDING: '落地页',
     DOWNLOAD: '下载页',
