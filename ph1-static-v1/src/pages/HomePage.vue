@@ -162,7 +162,9 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(${store.h5Url}static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                  return `url(${
+                                    store.h5Url
+                                  }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -188,7 +190,9 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -224,7 +228,9 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -248,7 +254,9 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -297,8 +305,7 @@
                   class="platform-game-item btn-effect"
                   @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
                 >
-                  <div
-                  >
+                  <div>
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -307,7 +314,9 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(${store.h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -362,7 +371,9 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -420,7 +431,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -463,7 +476,9 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -520,7 +535,9 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -550,7 +567,9 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${
+                                  store.h5Url
+                                }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -622,8 +641,6 @@
           </template>
         </div>
       </template>
-
-
 
       <template
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
@@ -972,6 +989,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
+import { useLocalStorage } from "@vueuse/core";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
@@ -979,14 +997,15 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoriesList = ref([
-  { title: "Lobby", icon: "lobby", active: true },
+const categoryDefault = useLocalStorage("HOME_CATEGORY", [
   { title: "Hot", icon: "hot", active: false },
+  { title: "Lobby", icon: "lobby", active: false },
   { title: "Slot", icon: "slot", active: false },
   { title: "Casino", icon: "casino", active: false },
   { title: "Fishing", icon: "fishing", active: false },
   { title: "Sport", icon: "sport", active: false }
-]);
+]).value;
+const categoriesList = ref();
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -1591,7 +1610,238 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([{"id":90,"name":"Aviator","code":"27","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":1,"siteName":null,"platformId":16,"platformName":"TFGaming","platformCode":"TFGaming","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TFGaming"},{"id":103,"name":"Plinko","code":"23","status":"OPEN","icon":"14/Spribe/554f883e-db1d-4328-8fe3-4735f1ad690e.png","sequence":2,"siteName":null,"platformId":16,"platformName":"TFGaming","platformCode":"TFGaming","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TFGaming"},{"id":93,"name":"LUCKY FORTUNES 3x3","code":"22061","status":"OPEN","icon":"16/FC/22061.png","sequence":3,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"FC"},{"id":105,"name":"Fortune Sheep","code":"22062","status":"OPEN","icon":"16/FC/22062.png","sequence":4,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"FC"},{"id":94,"name":"Super Ace","code":"49","status":"OPEN","icon":"5/JILI/49.png","sequence":5,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":106,"name":"Fortune Gems","code":"109","status":"OPEN","icon":"5/JILI/109.png","sequence":6,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":107,"name":"Golden Empire","code":"103","status":"OPEN","icon":"5/JILI/103.png","sequence":7,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":95,"name":"Sugar Rush","code":"vs20sugarrush","status":"OPEN","icon":"14/PP/vs20sugarrush.png","sequence":8,"siteName":null,"platformId":22,"platformName":"PP","platformCode":"PP","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"PP"},{"id":98,"name":"Aero","code":"aero","status":"OPEN","icon":"11/TurboGames/aero.jpg","sequence":9,"siteName":null,"platformId":151,"platformName":"TurboGames","platformCode":"TurboGames","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"TurboGames"},{"id":99,"name":"SUPREME ACE","code":"KYS-H5-99989","status":"OPEN","icon":"11/FiveG/KYS-H5-99989.png","sequence":10,"siteName":null,"platformId":142,"platformName":"FiveG","platformCode":"FiveG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"FiveG"},{"id":108,"name":"Candy Gala","code":"KYS-H5-99988","status":"OPEN","icon":"11/FiveG/KYS-H5-99988.png","sequence":11,"siteName":null,"platformId":142,"platformName":"FiveG","platformCode":"FiveG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"FiveG"},{"id":109,"name":"GEMS MINER","code":"KYS-H5-99982","status":"OPEN","icon":"11/FiveG/KYS-H5-99982.png","sequence":12,"siteName":null,"platformId":142,"platformName":"FiveG","platformCode":"FiveG","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"FiveG"},{"code":"","platform":"WCEvo","type":"platform","name":""},{"code":"","platform":"PP","type":"platform","name":""}]);
+const hotGameList = ref([
+  {
+    id: 90,
+    name: "Aviator",
+    code: "27",
+    status: "OPEN",
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 16,
+    platformName: "TFGaming",
+    platformCode: "TFGaming",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "TFGaming"
+  },
+  {
+    id: 103,
+    name: "Plinko",
+    code: "23",
+    status: "OPEN",
+    icon: "14/Spribe/554f883e-db1d-4328-8fe3-4735f1ad690e.png",
+    sequence: 2,
+    siteName: null,
+    platformId: 16,
+    platformName: "TFGaming",
+    platformCode: "TFGaming",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "TFGaming"
+  },
+  {
+    id: 93,
+    name: "LUCKY FORTUNES 3x3",
+    code: "22061",
+    status: "OPEN",
+    icon: "16/FC/22061.png",
+    sequence: 3,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "FC"
+  },
+  {
+    id: 105,
+    name: "Fortune Sheep",
+    code: "22062",
+    status: "OPEN",
+    icon: "16/FC/22062.png",
+    sequence: 4,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "FC"
+  },
+  {
+    id: 94,
+    name: "Super Ace",
+    code: "49",
+    status: "OPEN",
+    icon: "5/JILI/49.png",
+    sequence: 5,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 106,
+    name: "Fortune Gems",
+    code: "109",
+    status: "OPEN",
+    icon: "5/JILI/109.png",
+    sequence: 6,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 107,
+    name: "Golden Empire",
+    code: "103",
+    status: "OPEN",
+    icon: "5/JILI/103.png",
+    sequence: 7,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "JILI"
+  },
+  {
+    id: 95,
+    name: "Sugar Rush",
+    code: "vs20sugarrush",
+    status: "OPEN",
+    icon: "14/PP/vs20sugarrush.png",
+    sequence: 8,
+    siteName: null,
+    platformId: 22,
+    platformName: "PP",
+    platformCode: "PP",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "PP"
+  },
+  {
+    id: 98,
+    name: "Aero",
+    code: "aero",
+    status: "OPEN",
+    icon: "11/TurboGames/aero.jpg",
+    sequence: 9,
+    siteName: null,
+    platformId: 151,
+    platformName: "TurboGames",
+    platformCode: "TurboGames",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "TurboGames"
+  },
+  {
+    id: 99,
+    name: "SUPREME ACE",
+    code: "KYS-H5-99989",
+    status: "OPEN",
+    icon: "11/FiveG/KYS-H5-99989.png",
+    sequence: 10,
+    siteName: null,
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "FiveG"
+  },
+  {
+    id: 108,
+    name: "Candy Gala",
+    code: "KYS-H5-99988",
+    status: "OPEN",
+    icon: "11/FiveG/KYS-H5-99988.png",
+    sequence: 11,
+    siteName: null,
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "FiveG"
+  },
+  {
+    id: 109,
+    name: "GEMS MINER",
+    code: "KYS-H5-99982",
+    status: "OPEN",
+    icon: "11/FiveG/KYS-H5-99982.png",
+    sequence: 12,
+    siteName: null,
+    platformId: 142,
+    platformName: "FiveG",
+    platformCode: "FiveG",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    platform: "FiveG"
+  },
+  { code: "", platform: "WCEvo", type: "platform", name: "" },
+  { code: "", platform: "PP", type: "platform", name: "" }
+]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -2305,6 +2555,17 @@ onActivated(() => {
 
 onMounted(() => {
   isPlatLoading.value = true;
+  categoriesList.value = categoryDefault;
+  if (categoriesList.value.length > 0) {
+    categoriesList.value.forEach(function (category, index) {
+      if (index === 0) {
+        category.active = true;
+      } else {
+        category.active = false;
+      }
+    });
+  }
+
   getPlatList();
   loadData();
   loadAnnouncement();
