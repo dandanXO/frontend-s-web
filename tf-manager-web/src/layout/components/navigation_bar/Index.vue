@@ -223,26 +223,27 @@ export default {
 
     const reload = inject('reload')
     const changeSite = async () => {
-      const selectedSiteData = sites.value.find(
+      const getSelectedSite = sites.value.find(
         site =>
           site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase()
       )
-      selectedData.value = selectedSiteData || null
+      getSelectedSite.value = getSelectedSite || null
 
-      const { data: token } = await updateDefaultSite(selectedSiteData.id)
+      const { data: token } = await updateDefaultSite(getSelectedSite.id)
 
       await store.dispatch(UserActionTypes.ACTION_UPDATE_TOKEN, token)
       await store.dispatch(
         UserActionTypes.ACTION_CHANGE_SITE_ID,
-        selectedSiteData
+        getSelectedSite
       )
       ElMessage({
-        message: `switch site to ` + selectedSiteData.siteName,
+        message: `switch site to ` + getSelectedSite.siteName,
         type: 'success',
       })
       setTimeout(() => {
         reload()
         loadMenu()
+        updateData()
         // location.reload()
       }, 200)
     }
