@@ -96,7 +96,7 @@
 
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-          <div class="method-title q-mt-sm">Choose Bank Account</div>
+          <div class="method-title">Choose {{ displayCardType }} Account</div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
               <div class="w-form-input">
@@ -113,7 +113,7 @@
                   option-value="id"
                   emit-value
                   map-options
-                  :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                  :rules="[(val) => !!val || validateBankCardError()]"
                   hide-bottom-space
                 >
                   <template v-slot:option="scope">
@@ -477,6 +477,24 @@ const selectWithdrawCurrency = (item) => {
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
+
+const displayCardType = computed(() => {
+  if (selectedMethodItem.value.payType === "EWALLET") {
+    return "eWallet";
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return "Crypto";
+  }
+  return "Bank";
+});
+
+const validateBankCardError = () => {
+  if (selectedMethodItem.value.payType === "EWALLET") {
+    return "Please Select eWallet Card";
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return "Please Select Crypto Card";
+  }
+  return "Please Select Bank Card";
+};
 
 const isNoBankCard = ref(false);
 
