@@ -224,45 +224,61 @@
             :label="t('fields.gameTypeRollover')"
             prop="gameTypeRollover"
           >
-            <div v-for="(item, index) in rollover" :key="index">
-              <el-select
-                v-model="item.key"
-                size="small"
-                :placeholder="t('fields.gameType')"
-                class="filter-item"
-                style="width: 170px; margin-top: 5px"
-              >
-                <el-option
-                  v-for="gameType in uiControl.gameTypeRollover"
-                  :key="gameType.key"
-                  :label="t(`gameType.${gameType.displayName}`)"
-                  :value="gameType.value"
-                />
-              </el-select>
-              :
-              <el-input style="width: 170px " v-model="item.value" />
-              <el-button
-                v-if="index === rollover.length - 1"
-                icon="el-icon-plus"
-                size="mini"
-                type="primary"
-                style="margin-left: 20px"
-                @click="addRollover()"
-                plain
-              >
-                {{ t('fields.add') }}
-              </el-button>
-              <el-button
-                v-else
-                icon="el-icon-remove"
-                size="mini"
-                type="danger"
-                style="margin-left: 20px"
-                @click="delRollover(index)"
-                plain
-              >
-                {{ t('fields.delete') }}
-              </el-button>
+            <el-select
+              v-model="uiControl.selectedGameTypeRolloverType"
+              style="width: 250px"
+              filterable
+            >
+              <el-option
+                v-for="f in uiControl.gameTypeRolloverTypes"
+                :key="f.key"
+                :label="f.displayName"
+                :value="f.value"
+              />
+            </el-select>
+            <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ANY_TYPES'">
+              <div v-for="(item, index) in rollover" :key="index">
+                <el-select
+                  v-model="item.key"
+                  size="small"
+                  :placeholder="t('fields.gameType')"
+                  class="filter-item"
+                  style="width: 170px; margin-top: 5px"
+                >
+                  <el-option
+                    v-for="gameType in uiControl.gameTypeRollover"
+                    :key="gameType.key"
+                    :label="t(`gameType.${gameType.displayName}`)"
+                    :value="gameType.value"
+                  />
+                </el-select>
+                <span v-if="uiControl.selectedGameTypeRolloverType === 'SPECIFY_TYPE'">
+                  :
+                  <el-input style="width: 170px " v-model="item.value" />
+                </span>
+                <el-button
+                  v-if="index === rollover.length - 1"
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  style="margin-left: 20px"
+                  @click="addRollover()"
+                  plain
+                >
+                  {{ t('fields.add') }}
+                </el-button>
+                <el-button
+                  v-else
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  style="margin-left: 20px"
+                  @click="delRollover(index)"
+                  plain
+                >
+                  {{ t('fields.delete') }}
+                </el-button>
+              </div>
             </div>
           </el-form-item>
         </el-row>
@@ -618,8 +634,14 @@ const uiControl = reactive({
     { key: 6, displayName: 'POKER', value: 'poker' },
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
   ],
+  gameTypeRolloverTypes: [
+    { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ANY_TYPES' },
+    { key: 2, displayName: t('gameTypeRolloverSetting.specifyTypes'), value: 'SPECIFY_TYPE' },
+    { key: 3, displayName: t('gameTypeRolloverSetting.excludeTypes'), value: 'EXCLUDE_TYPES' },
+  ],
   bonusAmountRatioMax: 15,
   pgroup: false,
+  selectedGameTypeRolloverType: null,
 })
 const page = reactive({
   pages: 0,
@@ -844,6 +866,7 @@ function showDialog(type) {
     form.siteId = siteList.list[0].id
     changeSite(form.siteId)
     rollover.value = []
+    uiControl.selectedGameTypeRolloverType = null
     addRollover()
     uiControl.pgroup = false
     uiControl.dialogTitle = t('fields.addPrivilegeInfo')
@@ -863,6 +886,7 @@ async function showEdit(privilegeInfo) {
   selectedVIPs.vipChecked = []
   selectedPayTypes.payTypeChecked = []
   selectedBonusDays.bonusDaysChecked = []
+  uiControl.selectedGameTypeRolloverType = null
   showDialog('EDIT')
   await getVipBySiteId(privilegeInfo.siteId)
   await nextTick(() => {
@@ -916,14 +940,26 @@ async function showEdit(privilegeInfo) {
     handleIndividualCheckChange()
     rollover.value = []
     if (form.gameTypeRollover) {
-      Object.entries(JSON.parse(form.gameTypeRollover)).forEach(
-        ([key, value]) => {
-          const json = {}
-          json.key = key
-          json.value = value
-          rollover.value.push(json)
+      const gameTypeRollover = JSON.parse(form.gameTypeRollover)
+      const type = gameTypeRollover.rolloverType
+      let specifyType = false;
+      Object.entries(gameTypeRollover).forEach(([key, value]) => {
+        if (key !== 'rolloverType' && key !== 'excludeTypes') {
+          rollover.value.push({ key, value })
+          specifyType = true;
+        } else if (key === 'excludeTypes') {
+          const excludeTypes = value.split(',')
+          excludeTypes.forEach(excludeType => {
+            rollover.value.push({ key: excludeType, value: '' })
+          })
         }
-      )
+      })
+      if (type) {
+        uiControl.selectedGameTypeRolloverType = type
+      } else if (specifyType) {
+        uiControl.selectedGameTypeRolloverType = 'SPECIFY_TYPE'
+      }
+
       addRollover()
     } else {
       addRollover()
@@ -1089,11 +1125,22 @@ function delRollover(index) {
 
 function constructRollover() {
   const json = {}
-  Object.values(rollover.value).forEach(item => {
-    if (item.key) {
-      json[item.key] = item.value
-    }
-  })
+  json.rolloverType = uiControl.selectedGameTypeRolloverType
+  if (json.rolloverType === 'SPECIFY_TYPE') {
+    Object.values(rollover.value).forEach(item => {
+      if (item.key) {
+        json[item.key] = item.value
+      }
+    })
+  } else if (json.rolloverType === 'EXCLUDE_TYPES') {
+    const excludeTypes = []
+    Object.values(rollover.value).forEach(item => {
+      if (item.key) {
+        excludeTypes.push(item.key)
+      }
+    })
+    json.excludeTypes = excludeTypes.join(',')
+  }
   return JSON.stringify(json)
 }
 

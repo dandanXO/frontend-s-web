@@ -73,11 +73,11 @@
       </div>
     </div>
     <div>
+      <span style="font-size: small;margin-top: 10px;margin-right:10px">
+        {{ t('fields.historyRecord') }}
+      </span>
       <el-switch
         v-model="request.doris"
-        :active-text="t('fields.historyRecord')"
-        :inactive-text="t('fields.nonHistoryRecord')"
-        style="margin-top: 20px"
       />
     </div>
 
@@ -251,7 +251,7 @@ import { useI18n } from "vue-i18n";
 import { TENANT } from "../../../store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
 import { useStore } from '../../../store';
-import { convertDateToEnd, convertDateToStart, getShortcuts, isHistoryRecord } from "@/utils/datetime";
+import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 const { t } = useI18n();
 const supplementForm = ref(null);
@@ -290,7 +290,7 @@ const siteList = reactive({
 let timeZone = null;
 
 const startDate = new Date();
-startDate.setDate(startDate.getDate() - 7);
+startDate.setDate(startDate.getDate() - 3);
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
 const request = reactive({
@@ -375,9 +375,9 @@ async function loadRecord() {
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
-      if (isHistoryRecord(request.depositDate[0])) {
-        request.doris = true;
-      }
+      // if (isHistoryRecord(request.depositDate[0])) {
+      //   request.doris = true;
+      // }
       query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
       query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
       query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);

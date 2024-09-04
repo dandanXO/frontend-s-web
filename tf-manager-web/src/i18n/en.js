@@ -2942,6 +2942,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
   },
+  gameTypeRolloverSetting: {
+    anyTypes: 'All Game Types',
+    specifyTypes: 'Specify Game Types',
+    excludeTypes: 'Exclude Game Types',
+  },
   domainType: {
     LANDING: 'Landing',
     DOWNLOAD: 'Download',
