@@ -527,7 +527,7 @@
               <template v-for="(item, index) in fishGameTADAList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'TADA', item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
                 >
                   <div>
                     <div class="platform-game-img">
@@ -735,7 +735,7 @@
           <template v-for="(item, index) in fishGameTADAList" :key="index">
             <div
               class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'TADA', item.code, item.status, item.gameType, item.id)"
+              @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
             >
               <div class="platform-game-img">
                 <div

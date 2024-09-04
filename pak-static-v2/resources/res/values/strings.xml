@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">B9.GAME</string>
-    <string name="title_activity_main">B9.GAME</string>
-    <string name="package_name">com.ind.appb9mega1</string>
-    <string name="custom_url_scheme">com.ind.appb9mega1</string>
+    <string name="app_name">97.PKR</string>
+    <string name="title_activity_main">97.PKR</string>
+    <string name="package_name">com.ind.app97pkr</string>
+    <string name="custom_url_scheme">com.ind.app97pkr</string>
 </resources>

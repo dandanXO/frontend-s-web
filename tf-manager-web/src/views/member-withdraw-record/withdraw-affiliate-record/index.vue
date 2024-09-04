@@ -110,7 +110,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
-
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
       <div class="btn-group">
         <el-button
           size="mini"
@@ -1043,6 +1050,7 @@ const request = reactive({
   siteId: null,
   sort: 1,
   withdrawType: null,
+  doris: false
 })
 
 const validateWithdrawAmount = (rule, value, callback) => {

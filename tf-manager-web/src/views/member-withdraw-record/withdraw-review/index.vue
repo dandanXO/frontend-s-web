@@ -180,6 +180,14 @@
           {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
     </div>
     <!-- eslint-disable -->
     <el-table
@@ -599,6 +607,7 @@ const request = reactive({
   max: null,
   reviewBy: null,
   source: null,
+  doris: false
 })
 
 const uiControl = reactive({

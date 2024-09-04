@@ -213,13 +213,13 @@ const spinWheel = (times) => {
   getMidautumSpinWheelPrize(times)
     .then((res) => {
       if (res.code === 0) {
-        var bonusIndex = res.data.spinBonusVOList.bonus;
+        var bonusIndex = res.data.spinBonusVOList[0].bonus;
         remainingDraws.value = res.data.availableSpin;
         const prizeIndex = degreesToStopAt.value.findIndex((item) => item.prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.spinBonusVOList.bonus;
+          prizePopupBonusAmt.value = res.data.spinBonusVOList[0].bonus;
           remainingDraws.value = res.data.availableSpin;
         });
       }
@@ -248,23 +248,23 @@ onMounted(() => {
       prize: 188
     },
     {
-      degree: 54,
+      degree: 64,
       prize: 888
     },
     {
-      degree: 90,
+      degree: 110,
       prize: "黑神话 - 悟空"
     },
     {
-      degree: 144,
+      degree: 164,
       prize: 1888
     },
     {
-      degree: 198,
+      degree: 218,
       prize: 88
     },
     {
-      degree: 252,
+      degree: 272,
       prize: 18
     },
     {
@@ -366,13 +366,13 @@ onMounted(() => {
   transform: translate(-50%, -50%);
 }
 .draw-btn {
-  width: 195px;
+  width: 250px;
   height: auto;
   aspect-ratio: 206/220;
   z-index: 25;
   position: absolute;
-  top: calc(50%);
-  left: 50%;
+  top: 51%;
+  left: 50.5%;
   transform: translate(-50%, -50%);
 
   &.disabled {

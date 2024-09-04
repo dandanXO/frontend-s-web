@@ -3421,7 +3421,7 @@ const isImpt = getWithExpiry("isImpt");
 const checkShowImgTop = () => {
   const isImpt = getWithExpiry("isImpt");
   api
-    .get("/member/ads-popout")
+    .get("/member/site-popout")
     .then((res) => {
       if (res.code === 0) {
         if (isImpt === null) {
@@ -3484,13 +3484,13 @@ const processedContent = (content) => {
 const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO" && val.code === "pak-redpacketrain") {
+  if (val.type === "PROMO" && val.code === "pk2-redpacketrain") {
     isMoneyRainModal.value = true;
   }
 
-  if (val.type === "PROMO" && val.code === "interest-profit") {
+  if (val.type === "PROMO" && val.code === "pk2-interest-profit") {
     if (store.hasToken()) {
-      router.push("/promo?name=interest-profit");
+      router.push("/promo?name=pk2-interest-profit");
     } else {
       router.push("/promo");
     }

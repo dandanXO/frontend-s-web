@@ -264,9 +264,9 @@ dense
       </router-link>
     </div>
 
-    <!-- <div class="login-bottom-div"> -->
-    <!-- <img src="../assets/images/login/register-banner.png" /> -->
-    <!-- </div> -->
+    <div class="login-bottom-div">
+    <img src="../assets/images/login/register-banner.png" />
+    </div>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
@@ -783,6 +783,8 @@ function charType(num) {
       font-size: 1rem;
     }
   }
+
+  padding-bottom: 15px;
 }
 
 .cs-web-id {
@@ -791,11 +793,13 @@ function charType(num) {
 }
 
 .login-bottom-div {
-  width: 100%;
-  margin-top: 10px;
+  margin: 0 15px;
+  border-radius: 10px;
+  overflow: hidden;
 
   img {
     width: 100%;
+    display: block;
   }
 }
 </style>
