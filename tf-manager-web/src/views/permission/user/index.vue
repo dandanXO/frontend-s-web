@@ -631,6 +631,19 @@ const formRules = reactive({
     required(t('message.validateQueryNumberRequired')),
     numericOnly(t('message.validateNumberOnly')),
   ],
+  siteIds: [
+    {
+      required: true,
+      validator: (rule, value, callback) => {
+        if (form.userType === 'MANAGER' && (!form.siteIdArray || form.siteIdArray.length === 0)) {
+          callback(new Error(t('message.validateSiteRequired')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'change',
+    }
+  ],
 })
 
 let chooseUser = []
@@ -680,6 +693,7 @@ async function loadUser() {
 
 async function loadRoles(siteId) {
   if (siteId !== undefined && siteId !== null) {
+    siteId = String(siteId)
     if (form.userType !== "TENANT" && !siteId.includes('0')) {
       siteId = `0,${siteId}`
     }
