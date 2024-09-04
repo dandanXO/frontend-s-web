@@ -245,11 +245,6 @@ export default {
       }, 200)
     }
 
-    // logout: async () => {
-    //     await store.dispatch(UserActionTypes.ACTION_LOGOUT)
-    //     location.reload()
-    //   },
-
     function mapMenuPaths(menus, parentPath = '') {
       const paths = [];
       menus.forEach(menu => {
