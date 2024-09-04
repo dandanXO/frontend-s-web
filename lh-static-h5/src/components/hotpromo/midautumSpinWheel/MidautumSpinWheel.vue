@@ -244,13 +244,13 @@ const spinWheel = (times) => {
     .post(`/mooncakeFestSpin/spin?spinTimes=${times}`)
     .then((res) => {
       if (res.code === 0) {
-        var bonusIndex = res.data.spinBonusVOList.bonus;
+        var bonusIndex = res.data.spinBonusVOList[0].bonus;
         remainingDraws.value = res.data.availableSpin;
         const prizeIndex = degreesToStopAt.value.findIndex((item) => item.prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.spinBonusVOList.bonus;
+          prizePopupBonusAmt.value = res.data.spinBonusVOList[0].bonus;
           remainingDraws.value = res.data.availableSpin;
         });
       }
