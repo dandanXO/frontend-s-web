@@ -2,309 +2,332 @@
   <div class="withdrawal-modal-view">
     <div class="method-title q-mb-sm">Withdraw Currency</div>
 
-    <div class="withdraw-methods-currency">
-      <div
-        class="currency-item"
-        v-for="(item, index) in paymentMethodsItems"
-        :key="index"
-        @click="selectWithdrawCurrency(item)"
-        :class="{ active: item.active }"
-      >
-        <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
-        <div>{{ item.code }}</div>
+    <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
+      <div>
+        <q-skeleton style="height: 96px" />
+      </div>
+      <div>
+        <q-skeleton style="height: 96px" />
+      </div>
+      <div>
+        <q-skeleton style="height: 96px" />
+      </div>
+      <div>
+        <q-skeleton style="height: 96px" />
       </div>
     </div>
 
-    <template v-if="selectedWithdraw">
-      <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
-      <div class="withdraw-methods-container">
-        <template v-for="(item, index) in selectedWithdraw" :key="index">
-          <div
-            class="method-item"
-            @click="goSelectedMethod(item)"
-            :class="{ disabled: item.maintenance, active: item.active }"
-          >
-            <template v-if="item.maintenance">
-              <div class="item-detail">
-                <div class="txt-maintenance">
-                  <q-icon name="build" size="16px" />
-                  This channel is under maintenance
+    <template v-else>
+      <div class="withdraw-methods-currency">
+        <div
+          class="currency-item"
+          v-for="(item, index) in paymentMethodsItems"
+          :key="index"
+          @click="selectWithdrawCurrency(item)"
+          :class="{ active: item.code === selectedWithdraw[0].code }"
+        >
+          <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
+          <div>{{ item.code }}</div>
+        </div>
+      </div>
+
+      <template v-if="selectedWithdraw">
+        <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
+        <div class="withdraw-methods-container">
+          <template v-for="(item, index) in selectedWithdraw" :key="index">
+            <div
+              class="method-item"
+              @click="goSelectedMethod(item)"
+              :class="{ disabled: item.maintenance, active: item.active }"
+            >
+              <template v-if="item.maintenance">
+                <div class="item-detail">
+                  <div class="txt-maintenance">
+                    <q-icon name="build" size="16px" />
+                    This channel is under maintenance
+                  </div>
                 </div>
-              </div>
-            </template>
+              </template>
 
-            <template v-else>
-              <div class="item-detail">
-                <div class="txt-title">{{ item.nodeName }}</div>
-              </div>
-            </template>
-          </div>
-        </template>
-      </div>
-    </template>
-
-    <!-- <pre>filteredBankList--{{ filteredBankList }}</pre> -->
-
-    <template v-if="isSelectedMethod">
-      <!-- <div class="method-options">
-        <div class="method-title">Payment Method</div>
-        <div class="options-picker" @click="resetSelectedMethod()">
-          <div class="pick-title">{{ selectedMethodItem.nodeName }}</div>
-          <q-icon name="arrow_drop_down" size="20px" />
+              <template v-else>
+                <div class="item-detail">
+                  <div class="txt-title">{{ item.nodeName }}</div>
+                </div>
+              </template>
+            </div>
+          </template>
         </div>
-      </div> -->
+      </template>
 
-      <div
-        class="bank-account-container"
-        v-if="isBankType === 'BANK' && (bankCardList.length === 0 || isAddNewAccount)"
-      >
-        <div class="w-form-item w-form-item--bankcard">
-          <div class="top-wrapper">
-            <div class="title">Bank Name</div>
-          </div>
-          <div>
-            <q-select
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="bankCardField.bankId"
-              label-color="secondary"
-              :options="filteredBankList"
-              option-value="id"
-              option-label="name"
-              emit-value
-              map-options
-              use-input
-              input-debounce="100"
-              fill-input
-              hide-selected
-              @filter="filterBank"
-              behavior="menu"
-            ></q-select>
-          </div>
-        </div>
-      </div>
-
-      <!-- bank options -->
-      <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-        <div class="method-title q-mt-sm">Choose Bank Account</div>
-        <div class="mid-wrapper">
+      <template v-if="isSelectedMethod">
+        <div
+          class="bank-account-container"
+          v-if="isBankType === 'BANK' && (bankCardList.length === 0 || isAddNewAccount)"
+        >
           <div class="w-form-item w-form-item--bankcard">
-            <div class="w-form-input">
+            <div class="top-wrapper">
+              <div class="title">Bank Name</div>
+            </div>
+            <div>
               <q-select
-                ref="cardRef"
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
                 filled
-                dense
-                clearable
-                v-model="withdrawInfo.cardId"
-                @update:model-value="onCardChanged"
-                :options="bankCardList"
+                v-model="bankCardField.bankId"
+                label-color="secondary"
+                :options="filteredBankList"
                 option-value="id"
+                option-label="name"
                 emit-value
                 map-options
-                :rules="[(val) => !!val || 'Please Select A Bank Card']"
-                hide-bottom-space
-              >
-                <template v-slot:option="scope">
-                  <q-item v-bind="scope.itemProps">
+                use-input
+                input-debounce="100"
+                fill-input
+                hide-selected
+                @filter="filterBank"
+                behavior="menu"
+              ></q-select>
+            </div>
+          </div>
+        </div>
+
+        <!-- bank options -->
+        <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
+          <div class="method-title q-mt-sm">Choose Bank Account</div>
+          <div class="mid-wrapper">
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="w-form-input">
+                <q-select
+                  ref="cardRef"
+                  filled
+                  dense
+                  clearable
+                  v-model="withdrawInfo.cardId"
+                  @update:model-value="onCardChanged"
+                  :options="bankCardList"
+                  option-value="id"
+                  emit-value
+                  map-options
+                  :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                  hide-bottom-space
+                >
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section avatar v-if="scope.opt.bankIcon">
+                        <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>
+                          Acc No. ****{{
+                            scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                          }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-slot:selected-item="scope">
                     <q-item-section avatar v-if="scope.opt.bankIcon">
-                      <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                      <img
+                        style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                        :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                      />
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label>
-                        Acc No. ****{{
-                          scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                        }}
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                        Acc No. {{ scope.opt.cardNumber }}
                       </q-item-label>
                     </q-item-section>
-                  </q-item>
-                </template>
-                <template v-slot:selected-item="scope">
-                  <q-item-section avatar v-if="scope.opt.bankIcon">
-                    <img
-                      style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                      :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                    />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                      Acc No. {{ scope.opt.cardNumber }}
-                    </q-item-label>
-                  </q-item-section>
-                </template>
-              </q-select>
+                  </template>
+                </q-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="bot-wrapper">
+            <div class="bank-card-item" @click="isAddNewAccount = true">
+              <div class="card-icon">
+                <q-icon key="md" size="md" name="add" />
+              </div>
+              <div class="card-label">Add New Account</div>
             </div>
           </div>
         </div>
 
-        <div class="bot-wrapper">
-          <div class="bank-card-item" @click="isAddNewAccount = true">
-            <div class="card-icon">
-              <q-icon key="md" size="md" name="add" />
+        <div class="withdrawal-amount-container">
+          <template v-if="bankCardList.length === 0 || isAddNewAccount">
+            <div class="w-form-item w-form-item--bankcard">
+              <div class="top-wrapper">
+                <div class="title">Account Number</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  ref="bankNumberRef"
+                  placeholder="Enter Account Number"
+                  v-model="bankCardField.cardNumber"
+                  :rules="[(_) => isValidCardNumber()]"
+                  hide-bottom-space
+                ></q-input>
+              </div>
             </div>
-            <div class="card-label">Add New Account</div>
-          </div>
-        </div>
-      </div>
+            <div class="w-form-item w-form-item--bankcard" v-if="isBankType === 'BANK' || isAddNewAccount">
+              <div class="top-wrapper">
+                <div class="title">Bank IFSC Code</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  ref="bankAddressRef"
+                  placeholder="Enter Bank IFSC Code"
+                  v-model="bankCardField.cardAddress"
+                  :rules="[(_) => isValidCardAddress()]"
+                  hide-bottom-space
+                ></q-input>
+              </div>
+            </div>
+          </template>
 
-      <div class="withdrawal-amount-container">
-        <template v-if="bankCardList.length === 0 || isAddNewAccount">
-          <div class="w-form-item w-form-item--bankcard">
-            <div class="top-wrapper">
-              <div class="title">Account Number</div>
-            </div>
-            <div class="mid-wrapper">
-              <q-input
-                filled
-                dense
-                clearable
-                ref="bankNumberRef"
-                placeholder="Enter Account Number"
-                v-model="bankCardField.cardNumber"
-                :rules="[(_) => isValidCardNumber()]"
-                hide-bottom-space
-              ></q-input>
-            </div>
-          </div>
-          <div class="w-form-item w-form-item--bankcard" v-if="isAddNewAccount">
-            <div class="top-wrapper">
-              <div class="title">Bank IFSC Code</div>
-            </div>
-            <div class="mid-wrapper">
-              <q-input
-                filled
-                dense
-                clearable
-                ref="bankAddressRef"
-                placeholder="Enter Bank IFSC Code"
-                v-model="bankCardField.cardAddress"
-                :rules="[(_) => isValidCardAddress()]"
-                hide-bottom-space
-              ></q-input>
-            </div>
-          </div>
-        </template>
-
-        <div class="top-wrapper">
-          <!-- <div class="title">
+          <div class="top-wrapper">
+            <!-- <div class="title">
             Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
             {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
           </div> -->
-          <div class="title">
-            Withdrawal Amount ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
-            {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.label }})
+            <div class="title">
+              Withdrawal Amount ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
+              {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.label }})
+            </div>
+          </div>
+
+          <div class="mid-wrapper">
+            <q-input
+              type="number"
+              ref="amountRef"
+              filled
+              dense
+              clearable
+              placeholder="Withdraw Amount"
+              v-model="withdrawInfo.amount"
+              :rules="[
+                (val) => !!val || 'Please Enter Withdraw Amount',
+                (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
+                (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
+                (val) =>
+                  (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
+                  `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+              ]"
+              hide-bottom-space
+            >
+              <template v-slot:append>
+                <q-btn-group>
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="min"
+                    dense
+                    no-caps
+                    @click="toggleAmount('min')"
+                  />
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="25%"
+                    dense
+                    no-caps
+                    @click="toggleAmount('25')"
+                  />
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="50%"
+                    dense
+                    no-caps
+                    @click="toggleAmount('50')"
+                  />
+                  <q-btn
+                    class="minmax-btn"
+                    rounded
+                    color="black"
+                    label="Max"
+                    dense
+                    no-caps
+                    @click="toggleAmount('max')"
+                  />
+                </q-btn-group>
+              </template>
+            </q-input>
+          </div>
+
+          <div class="fund-container q-mt-sm q-mb-md">
+            <div>
+              <span class="fund-title">Available:</span>
+              {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+            </div>
+          </div>
+
+          <div class="bot-wrapper">
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">Withdrew Amount</div>
+              </div>
+              <div class="desc desc_white">
+                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
+                {{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}
+              </div>
+            </div>
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">{{ store.vip }} Daily Limit</div>
+              </div>
+              <div class="desc desc_white">
+                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
+                {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
+              </div>
+            </div>
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">Remain Wagers</div>
+              </div>
+              <div class="desc desc_white">
+                <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
+                {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="mid-wrapper">
-          <q-input
-            type="number"
-            ref="amountRef"
-            filled
-            dense
-            clearable
-            placeholder="Withdraw Amount"
-            v-model="withdrawInfo.amount"
-            :rules="[
-              (val) => !!val || 'Please Enter Withdraw Amount',
-              (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-              (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
-              (val) =>
-                (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
-            ]"
-            hide-bottom-space
-          >
-            <template v-slot:append>
-              <q-btn-group>
-                <q-btn
-                  class="minmax-btn"
-                  rounded
-                  color="black"
-                  label="min"
-                  dense
-                  no-caps
-                  @click="toggleAmount('min')"
-                />
-                <q-btn class="minmax-btn" rounded color="black" label="25%" dense no-caps @click="toggleAmount('25')" />
-                <q-btn class="minmax-btn" rounded color="black" label="50%" dense no-caps @click="toggleAmount('50')" />
-                <q-btn
-                  class="minmax-btn"
-                  rounded
-                  color="black"
-                  label="Max"
-                  dense
-                  no-caps
-                  @click="toggleAmount('max')"
-                />
-              </q-btn-group>
-            </template>
-          </q-input>
-        </div>
+        <template v-if="bankCardList.length > 0 && !isAddNewAccount">
+          <div :class="`btn-submit`" @click="submitWithdraw">
+            <q-spinner
+              v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+              color="white"
+              size="2em"
+              :thickness="2"
+            ></q-spinner>
+            <template v-else>Submit</template>
+          </div>
+        </template>
 
-        <div class="fund-container q-mt-sm q-mb-md">
-          <div>
-            <span class="fund-title">Available:</span>
-            {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+        <template v-else>
+          <div :class="`btn-submit`" @click="submitWithdrawBank">
+            <q-spinner
+              v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+              color="white"
+              size="2em"
+              :thickness="2"
+            ></q-spinner>
+            <template v-else>Submit</template>
           </div>
-        </div>
-
-        <div class="bot-wrapper">
-          <div class="info">
-            <div class="desc-wrapper">
-              <div class="desc">Withdrew Amount</div>
-            </div>
-            <div class="desc desc_white">
-              <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}
-            </div>
-          </div>
-          <div class="info">
-            <div class="desc-wrapper">
-              <div class="desc">{{ store.vip }} Daily Limit</div>
-            </div>
-            <div class="desc desc_white">
-              <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
-              {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
-            </div>
-          </div>
-          <div class="info">
-            <div class="desc-wrapper">
-              <div class="desc">Remain Wagers</div>
-            </div>
-            <div class="desc desc_white">
-              <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }} -->
-              {{ store.currency.label }}: {{ selectedMethodItem.remainWagers }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <template v-if="bankCardList.length > 0 && !isAddNewAccount">
-        <div :class="`btn-submit`" @click="submitWithdraw">
-          <q-spinner
-            v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-            color="white"
-            size="2em"
-            :thickness="2"
-          ></q-spinner>
-          <template v-else>Submit</template>
-        </div>
+        </template>
+        <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
       </template>
-
-      <template v-else>
-        <div :class="`btn-submit`" @click="submitWithdrawBank">
-          <q-spinner
-            v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-            color="white"
-            size="2em"
-            :thickness="2"
-          ></q-spinner>
-          <template v-else>Submit</template>
-        </div>
-      </template>
-      <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips"></div>
     </template>
   </div>
 </template>
@@ -431,14 +454,6 @@ const selectWithdrawCurrency = (item) => {
   if (filteredMethods.length > 0) {
     selectedWithdraw.value = filteredMethods;
   }
-
-  paymentMethodsItems.value.forEach((method) => {
-    if (method.code !== item.code) {
-      method.active = false;
-    }
-  });
-  item.active = true;
-
   goSelectedMethod(selectedWithdraw.value[0]);
 };
 
