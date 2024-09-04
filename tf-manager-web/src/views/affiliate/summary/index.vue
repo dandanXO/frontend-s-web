@@ -967,6 +967,29 @@ async function loadNewMember(affiliateId) {
     }
   }
 
+  if (popUpRequest.recordTime === null) {
+    popUpRequest.recordTime = request.recordTime
+  }
+
+  if (popUpRequest.recordTime !== null) {
+    if (popUpRequest.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(popUpRequest.recordTime))
+
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
+      )
+
+      query.recordTime = query.recordTime.join(',')
+    } else {
+      query.recordTime = moment(popUpRequest.recordTime[0]).format(
+        'YYYY-MM-DD 00:00:00'
+      )
+    }
+  }
+
   // if (members !== null) {
   //   if (members.length > 1) {
   //     query.memberId = members.join(',')
