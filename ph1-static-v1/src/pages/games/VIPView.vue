@@ -822,6 +822,7 @@ const swipeRight = () => {
 
       .bold {
         font-weight: 800;
+        white-space: nowrap;
       }
 
       .icon {
@@ -835,7 +836,7 @@ const swipeRight = () => {
 
       .title {
         color: #5c46e7;
-        font-size: 11px;
+        font-size: 10px;
         height: 35px;
         line-height: 18px;
       }
