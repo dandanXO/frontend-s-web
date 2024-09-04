@@ -301,6 +301,7 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
+    UCL: '欧洲冠军联赛'
   },
   homeBannerType: {
     HOME: '首页',
