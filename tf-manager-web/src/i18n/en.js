@@ -1613,6 +1613,7 @@ export default {
     totalDepositAmount: 'Total Deposit Amount',
     totalDepositCount: 'Total Deposit Count',
     totalDepositMemberCount: 'Total Member Deposit Count',
+    totalWithdrawMemberCount: 'Total Member Withdraw Count',
     totalDepositedAmount: 'Total deposited amount',
     totalDepositNumber: 'Total Deposit Member',
     totalDownlineAffiliates: 'Total Downline Affiliates',

@@ -1613,6 +1613,7 @@ export default {
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
     totalDepositMemberCount: '总充值人数',
+    totalWithdrawMemberCount: '总提款人数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
