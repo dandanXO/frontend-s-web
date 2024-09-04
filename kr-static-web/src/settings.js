@@ -1,6 +1,4 @@
 module.exports = {
-    title: "CITY8",
-    namePrefix: "KRW",
-  };
-
-  
+  title: "DIAMOND",
+  namePrefix: "KRW"
+};

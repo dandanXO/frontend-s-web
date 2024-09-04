@@ -301,6 +301,7 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
+    UCL: '欧洲冠军联赛'
   },
   homeBannerType: {
     HOME: '首页',
@@ -1613,6 +1614,7 @@ export default {
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
     totalDepositMemberCount: '总充值人数',
+    totalWithdrawMemberCount: '总提款人数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
