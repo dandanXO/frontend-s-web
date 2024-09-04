@@ -347,6 +347,7 @@ const menus = reactive({
 })
 
 function showDialog(type) {
+  form.siteId = null
   if (type === 'CREATE') {
     if (rolesForm.value) {
       rolesForm.value.resetFields()
