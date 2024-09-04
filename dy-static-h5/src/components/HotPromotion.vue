@@ -46,6 +46,7 @@
 
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
+    <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
 
@@ -140,6 +141,7 @@ const InviteFriendPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/invitefriend/inviteFriendPromo.vue")
 );
 const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
+const EsportQuiz2 = defineAsyncComponent(() => import("../components/hotpromo/esportquiz2/EsportQuiz.vue"));
 const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
 const GiftPromo = defineAsyncComponent(() => import("../components/hotpromo/gift/GiftPromo.vue"));
 const PrivilegeInvite = defineAsyncComponent(() =>
@@ -211,6 +213,7 @@ export default defineComponent({
     InsuranceSubmitPromo,
     InviteFriendPromo,
     EsportQuiz,
+    EsportQuiz2,
     LotteryPromo,
     GiftPromo,
     PrivilegeInvite,
