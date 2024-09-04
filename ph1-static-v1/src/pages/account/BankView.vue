@@ -29,9 +29,7 @@
               lazy-rules
               :rules="[
                 (val) => (val && val.length > 0) || 'Please Enter Bank Account Number',
-                (val) =>
-                  (val && val == bankCardList[selectedBankIndex].cardNumber) ||
-                  'Please Enter The Correct Account Number'
+                (val) => (val && val === selectedUnbindCardNum) || 'Please Enter The Correct Account Number'
               ]"
               label-color="secondary"
             />
@@ -41,7 +39,7 @@
         <ConfirmButton
           label="Confirm"
           :confirmFunc="unbind"
-          :isDisabled="unbindField.bankCardNumber !== bankCardList[selectedBankIndex].cardNumber"
+          :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
         ></ConfirmButton>
       </q-card>
     </q-dialog>
@@ -66,7 +64,7 @@
                 <img :src="imgURL + item.bankIcon" alt="Bank Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
                 <div class="card-unlink">
                   <q-icon size="sm" name="link_off" />
                 </div>
@@ -75,8 +73,8 @@
             <div class="item-content">
               <div class="item-acc">
                 Account: {{ item.cardNumber }}
-                <br />
-                IFSC: {{ item.cardAddress }}
+                <!--                <br />-->
+                <!--                IFSC: {{ item.cardAddress }}-->
               </div>
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
@@ -102,7 +100,7 @@
                 <img :src="imgURL + item.bankIcon" alt="Crypto Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
                 <div class="card-unlink">
                   <q-icon size="sm" name="link_off" />
                 </div>
@@ -134,7 +132,7 @@
                 <img :src="imgURL + item.bankIcon" alt="Crypto Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
                 <div class="card-unlink">
                   <q-icon size="sm" name="link_off" />
                 </div>
@@ -224,17 +222,18 @@ const copy = (val) => {
 // unbind dialog
 const unbindField = reactive({ bankCardNumber: "" });
 const isUnbindDialogOpen = ref(false);
-const onUnbindClick = (index) => {
+const onUnbindClick = (cardNumber, cardId) => {
   unbindField.bankCardNumber = "";
   isUnbindDialogOpen.value = true;
 
-  selectedBankIndex.value = index;
+  selectedBankIndex.value = cardId;
+  selectedUnbindCardNum.value = cardNumber;
 };
 
 const unbind = () => {
   isUnbindDialogOpen.value = false;
 
-  const selectedCardID = bankCardList.value[selectedBankIndex.value].id;
+  const selectedCardID = selectedBankIndex.value;
   api.post(`/session/bankCard/${selectedCardID}?_method=delete`).then((response) => {
     if (response.code === 0) {
       $q.notify({
@@ -249,6 +248,7 @@ const unbind = () => {
 };
 
 const selectedBankIndex = ref();
+const selectedUnbindCardNum = ref("");
 
 const addBankCardModalRef = ref();
 const updateBankCardModalRef = ref();

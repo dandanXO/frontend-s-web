@@ -65,7 +65,7 @@
             <div class="q-my-sm">
               <div class="input-title">{{ accountTypeStr }}</div>
               <q-input
-                type="number"
+                :type="currentCardType === 'Bank' ? 'number' : 'text'"
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
@@ -78,20 +78,20 @@
               />
             </div>
 
-            <div class="q-my-sm" v-if="currentCardType === 'Bank'">
-              <div class="input-title">IFSC Code</div>
-              <q-input
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardAddress"
-                label="Enter Bank IFSC Code"
-                lazy-rules
-                :rules="[(_) => isValidCardAddress()]"
-                label-color="secondary"
-              />
-            </div>
+            <!--            <div class="q-my-sm" v-if="currentCardType === 'Bank'">-->
+            <!--              <div class="input-title">IFSC Code</div>-->
+            <!--              <q-input-->
+            <!--                standout-->
+            <!--                class="q-pb-xs dialog-input"-->
+            <!--                hide-bottom-space-->
+            <!--                filled-->
+            <!--                v-model="bankCardField.cardAddress"-->
+            <!--                label="Enter Bank IFSC Code"-->
+            <!--                lazy-rules-->
+            <!--                :rules="[(_) => isValidCardAddress()]"-->
+            <!--                label-color="secondary"-->
+            <!--              />-->
+            <!--            </div>-->
           </q-form>
         </q-card-section>
 
@@ -101,11 +101,7 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (
-                isValidCardAccount() === true &&
-                isValidCardNumber() === true &&
-                ((currentCardType === 'Bank' && isValidCardAddress() === true) || currentCardType !== 'Bank' )
-              )
+              (isValidCardAccount() === true && isValidCardNumber() === true)
             ) || isDisableBtn
           "
         ></ConfirmButton>
@@ -272,8 +268,8 @@ const isValidCardAccount = () => {
   const result = !cardAccount
     ? "Please Enter Holder Name"
     : cardAccount.length < 2
-      ? "Please Insert 2 or More Characters"
-      : true;
+    ? "Please Insert 2 or More Characters"
+    : true;
 
   return result;
 };
@@ -290,8 +286,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-      ? "Bank IFSC Code Must Be More Than 3 Characters"
-      : true;
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    : true;
   return result;
 };
 
