@@ -23,7 +23,7 @@
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
-            <div class="item-ribbon" v-if="isPrivilege">
+            <div class="item-ribbon" v-if="isPrivilege && paytypeWithPrivilege.includes(item.code)">
               <img src="../../assets/images/account/ribbon-five-percent.png" />
             </div>
           </div>
@@ -61,7 +61,12 @@
       <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
-            <q-badge color="orange" floating rounded v-if="isPrivilege">
+            <q-badge
+              color="orange"
+              floating
+              rounded
+              v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
+            >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
@@ -201,7 +206,11 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
+      <div
+        class="q-mt-lg"
+        style="color: #576373"
+        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+      >
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
           Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager
@@ -375,6 +384,7 @@ const selectedChannel = ref();
 const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
+const paytypeWithPrivilege = ref("");
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -785,6 +795,8 @@ const loadAppTabs = () => {
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
+
+        paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
     });
 };
