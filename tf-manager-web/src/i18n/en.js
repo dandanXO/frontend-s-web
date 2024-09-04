@@ -2019,6 +2019,7 @@ export default {
     historyRecord: 'History Record',
     nonHistoryRecord: 'Non-History Record',
     productId: 'Product ID',
+    dayBetRebatePercentage: 'Day Bet Rebate Percentage',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2528,6 +2529,7 @@ export default {
     required_only_digits_and_alphabet:
       'Must be composed of digits and alphabet',
     validateProductIdRequired: 'Product ID is required',
+    validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
   },
   menu: {
     undefined: '',
