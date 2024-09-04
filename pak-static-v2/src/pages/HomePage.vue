@@ -3421,7 +3421,7 @@ const isImpt = getWithExpiry("isImpt");
 const checkShowImgTop = () => {
   const isImpt = getWithExpiry("isImpt");
   api
-    .get("/member/ads-popout")
+    .get("/member/site-popout")
     .then((res) => {
       if (res.code === 0) {
         if (isImpt === null) {
