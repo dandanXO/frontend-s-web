@@ -93,7 +93,7 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div
               class="selected-promo-wrapper"
-              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' || selectedPromo.promoCode === 'dy2-quiz' ? 'background:#E7F1FD;' : '']"
             >
               <div
                 class="banner-container"

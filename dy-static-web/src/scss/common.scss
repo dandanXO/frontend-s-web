@@ -320,3 +320,41 @@ button {
 .swal2-styled.swal2-confirm {
   background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
 }
+
+.standard-button {
+  display: flex;
+  min-width: 70px;
+  height: 36px;
+  padding: 6px 26px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+  cursor: pointer;
+  transition: 0.3s all;
+  line-height: 1;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &.sm-btn {
+    height: 24px;
+    font-size: 0.65rem;
+    min-width: 50px;
+    padding: 6px 16px;
+  }
+
+  &.btn-color-blue {
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    color: $color-white;
+  }
+
+  &.btn-color-white {
+    background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+    color: #7a80a1;
+  }
+}

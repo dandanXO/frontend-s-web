@@ -592,7 +592,8 @@ const uiControl = reactive({
     { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
     { key: 4, displayName: 'MSI', value: 'MSI' },
     { key: 5, displayName: 'COPA', value: 'COPA' },
-    { key: 5, displayName: 'UEFA', value: 'UEFA' }
+    { key: 6, displayName: 'UEFA', value: 'UEFA' },
+    { key: 7, displayName: 'UCL', value: 'UCL' }
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',

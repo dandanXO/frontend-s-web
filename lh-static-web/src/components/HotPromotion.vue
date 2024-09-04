@@ -16,6 +16,7 @@
     <SportSafetyPromo v-if="list.redirectUrl === 'lh1-sport-safety'" />
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
+    <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
     <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote'" />
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign'" />
     <NbaGamePromo v-if="list.redirectUrl === 'lh1-nba-safety'" />
@@ -71,7 +72,7 @@
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
-    <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" :promo-code="list.promoCode"/>
+    <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" :promo-code="list.promoCode" />
 
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
 
@@ -87,7 +88,7 @@
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-challenge-comeback'" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
-    <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'"/>
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -180,13 +181,15 @@ import Olympic24Match from "@/components/hotpromo/Olympic24Match/Olympic24Match.
 import OlympicFund from "@/components/hotpromo/olympic-fund/OlympicFund.vue";
 import LPLLCK from "@/components/hotpromo/lpllck/LPLLCK.vue";
 import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
-import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"
+import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue";
+import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    SubmitClaimPromo,
     newFootballFight,
     Olympic24Match,
     newplayerGuide,

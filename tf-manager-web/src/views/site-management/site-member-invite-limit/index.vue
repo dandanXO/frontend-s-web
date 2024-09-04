@@ -240,6 +240,9 @@
         <el-form-item :label="t('fields.dailyFirstDepositProbability')" prop="dayFirstDepositProbability">
           <el-input-number v-model="form.dayFirstDepositProbability" style="width: 150px;" />
         </el-form-item>
+        <el-form-item :label="t('fields.dayBetRebatePercentage')" prop="dayBetRebatePercentage">
+          <el-input-number v-model="form.dayBetRebatePercentage" style="width: 150px;" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -279,6 +282,16 @@
             v-if="scope.row.dayFirstDepositLimit !== null"
           >
             {{ splitStrAndDisplay(scope.row.dayFirstDepositLimit) }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="dayBetRebatePercentage" :label="t('fields.dayBetRebatePercentage')" width="200">
+        <template #default="scope">
+          <span v-if="scope.row.dayBetRebatePercentage === null">-</span>
+          <span
+            v-if="scope.row.dayBetRebatePercentage !== null"
+          >
+            {{ Number(scope.row.dayBetRebatePercentage).toFixed(2) }} %
           </span>
         </template>
       </el-table-column>
@@ -455,7 +468,8 @@ const form = reactive({
   maxDayFirstDepositLimit: 0,
   dayFirstDepositProbability: 0,
   dayFirstDepositLimit: '',
-  dayRegLimit: ''
+  dayRegLimit: '',
+  dayBetRebatePercentage: 0,
 })
 
 const formRules = reactive({
@@ -467,6 +481,7 @@ const formRules = reactive({
   minDayFirstDepositLimit: [required(t('message.validateMinDayDepositAmountRequired'))],
   maxDayFirstDepositLimit: [required(t('message.validateMaxDayDepositAmountRequired'))],
   dayFirstDepositProbability: [required(t('message.validateDayDepositAmountProbabilityRequired'))],
+  dayBetRebatePercentage: [required(t('message.validateBetRebatePercentageRequired'))],
 })
 
 const sites = reactive({
@@ -535,6 +550,7 @@ function showDialog(type) {
     form.minDayRegLimit = 0
     form.maxDayRegLimit = 0
     form.dayFirstDepositLimit = 0
+    form.dayBetRebatePercentage = 0
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editGame')
     uiControl.editVisible = true

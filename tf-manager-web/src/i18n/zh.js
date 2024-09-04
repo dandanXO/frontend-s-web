@@ -301,6 +301,7 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
+    UCL: '欧洲冠军联赛'
   },
   homeBannerType: {
     HOME: '首页',
@@ -1613,6 +1614,7 @@ export default {
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
     totalDepositMemberCount: '总充值人数',
+    totalWithdrawMemberCount: '总提款人数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
@@ -2018,6 +2020,7 @@ export default {
     historyRecord: '历史数据',
     nonHistoryRecord: '非历史数据',
     productId: '产品ID',
+    dayBetRebatePercentage: '每日投注返水百分比',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2477,6 +2480,7 @@ export default {
     required_6_digits_code: '只能六个字符',
     required_only_digits_and_alphabet: '只许字母或数字',
     validateProductIdRequired: '产品ID必填',
+    validateBetRebatePercentageRequired: '每日投注返水百分比必填',
   },
   menu: {
     undefined: '',
@@ -2888,6 +2892,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '净盈利佣金-小游戏',
     AGENT_SHARE_PROFIT_RATIO_POKER: '净盈利佣金-棋牌',
+  },
+  gameTypeRolloverSetting: {
+    anyTypes: '所有游戏类型',
+    specifyTypes: '指定游戏类型',
+    excludeTypes: '排除游戏类型',
   },
   domainType: {
     LANDING: '落地页',
