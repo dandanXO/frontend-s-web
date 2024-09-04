@@ -5,6 +5,10 @@ body {
     font-family: Inter;
 }
 
+body > a{
+    display:none;
+}
+
 .mobile {
     display: none !important;
 }
