@@ -68,7 +68,7 @@
         <div class="footer-icon-wrapper">
           <img v-for="(icon, index) in footerBoxImgUrl" :key="index" :src="icon.imgUrl" />
         </div>
-        <div class="copyright">ⓒ{{ year }} CITY8 CASINO All right reserved</div>
+        <div class="copyright">ⓒ{{ year }} DIAMOND CASINO All right reserved</div>
       </div>
     </div>
   </footer>

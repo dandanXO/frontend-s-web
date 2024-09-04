@@ -32,7 +32,7 @@
     ></q-table>
 
     <ul>
-      <li class="dot-style">Active users: daily bet amount 20,000</li>
+      <li class="dot-style">Active users: daily bet amount 2,000</li>
       <li class="dot-style">
         Your reward will be calculated based on the total bet amount of your members. The reward gained can either be
         withdrawn or used for further betting.
@@ -95,78 +95,8 @@
           row-key="name"
           dense
         ></q-table>
-        <!--        <table class="rebate-example-table" style="table-layout: fixed; text-align: center">-->
-        <!--          <tbody>-->
-        <!--            <tr>-->
-        <!--              <td>Level Difference</td>-->
-        <!--              <td>Rebate (%)</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>1</td>-->
-        <!--              <td>0.3</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>2</td>-->
-        <!--              <td>0.4</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>3</td>-->
-        <!--              <td>0.5</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>4</td>-->
-        <!--              <td>0.6</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>5</td>-->
-        <!--              <td>0.7</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>6</td>-->
-        <!--              <td>0.8</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>7</td>-->
-        <!--              <td>0.9</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>8</td>-->
-        <!--              <td>1.0</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>9</td>-->
-        <!--              <td>1.1</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>10</td>-->
-        <!--              <td>1.2</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>11</td>-->
-        <!--              <td>1.3</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>12</td>-->
-        <!--              <td>1.4</td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--              <td>13</td>-->
-        <!--              <td>1.5</td>-->
-        <!--            </tr>-->
-        <!--          </tbody>-->
-        <!--        </table>-->
       </ul>
 
-      <!--      <q-table-->
-      <!--        flat-->
-      <!--        :hide-pagination="true"-->
-      <!--        :rows-per-page-options="[0]"-->
-      <!--        class="table-container q-my-md"-->
-      <!--        :columns="columns3"-->
-      <!--        :rows="rows3"-->
-      <!--        row-key="name"-->
-      <!--        dense-->
-      <!--      ></q-table>-->
     </q-expansion-item>
 
     <q-expansion-item label="4. How to upgrade your level?">
@@ -376,79 +306,79 @@ const columns2 = [
 const rows2 = [
   {
     level: "v13",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(1600000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(160000000)}`,
     teamMember: "377",
     rebate: "1.5"
   },
   {
     level: "v12",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(850000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(85000000)}`,
     teamMember: "233",
     rebate: "1.4"
   },
   {
     level: "v11",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(500000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(50000000)}`,
     teamMember: "144",
     rebate: "1.3"
   },
   {
     level: "v10",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(260000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(26000000)}`,
     teamMember: "89",
     rebate: "1.2"
   },
   {
     level: "v9",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(140000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(14000000)}`,
     teamMember: "55",
     rebate: "1.1"
   },
   {
     level: "v8",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(75000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(7500000)}`,
     teamMember: "34",
     rebate: "1.0"
   },
   {
     level: "v7",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(42000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(4200000)}`,
     teamMember: "21",
     rebate: "0.9"
   },
   {
     level: "v6",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(20000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(2000000)}`,
     teamMember: "13",
     rebate: "0.8"
   },
   {
     level: "v5",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(10000000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(1000000)}`,
     teamMember: "8",
     rebate: "0.7"
   },
   {
     level: "v4",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(3500000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(350000)}`,
     teamMember: "5",
     rebate: "0.6"
   },
   {
     level: "v3",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(1400000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(140000)}`,
     teamMember: "3",
     rebate: "0.5"
   },
   {
     level: "v2",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(50000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(5000)}`,
     teamMember: "2",
     rebate: "0.4"
   },
   {
     level: "v1",
-    betAmount: `${ store.currency.value }${convertToCommaAmount(20000)}`,
+    betAmount: `${ store.currency.value }${convertToCommaAmount(2000)}`,
     teamMember: "1",
     rebate: "0.3"
   }

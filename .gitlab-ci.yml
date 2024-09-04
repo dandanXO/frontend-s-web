@@ -212,6 +212,13 @@ deploy-ind-download:
 
 #===============================================================================================
 
+deploy-ind55ace-landing-v1:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind55ace-landing-v1
+
+#===============================================================================================
+
 deploy-ind2-download:
   extends: .s3-deploy
   variables:

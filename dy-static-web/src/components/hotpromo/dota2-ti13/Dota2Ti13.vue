@@ -35,6 +35,10 @@
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
         <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">2024年9月4日起</div>
+        </div>
+        <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
             会员当日任意存款且在【2024 DOTA2 TI13国际邀请赛】中累计有效流水达到指定金额，次日即可领取彩金。
@@ -70,7 +74,7 @@
             <td>188元</td>
           </tr>
           <tr>
-            <td>10-12级</td>
+            <td>10级</td>
             <td>58元</td>
             <td>88元</td>
             <td>168元</td>
@@ -81,7 +85,9 @@
             <td colspan="4">3倍/电竞流水</td>
           </tr>
         </table>
-        <span style="color: red;font-size: 16px;">例：会员A的VIP等级为10，当日投注2024 DOTA2 TI13 国际邀请赛 累计有效流水为50,000元，会员可在次日领取288元彩金。</span>
+        <span style="color: red; font-size: 16px">
+          例：会员A的VIP等级为10，当日投注2024 DOTA2 TI13 国际邀请赛 累计有效流水为50,000元，会员可在次日领取288元彩金。
+        </span>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">

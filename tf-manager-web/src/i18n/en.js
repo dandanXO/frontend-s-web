@@ -296,6 +296,7 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
+    UCL: 'UEFA CHAMPIONS LEAGUE'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1613,6 +1614,7 @@ export default {
     totalDepositAmount: 'Total Deposit Amount',
     totalDepositCount: 'Total Deposit Count',
     totalDepositMemberCount: 'Total Member Deposit Count',
+    totalWithdrawMemberCount: 'Total Member Withdraw Count',
     totalDepositedAmount: 'Total deposited amount',
     totalDepositNumber: 'Total Deposit Member',
     totalDownlineAffiliates: 'Total Downline Affiliates',
@@ -2019,6 +2021,7 @@ export default {
     historyRecord: 'History Record',
     nonHistoryRecord: 'Non-History Record',
     productId: 'Product ID',
+    dayBetRebatePercentage: 'Day Bet Rebate Percentage',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2528,6 +2531,7 @@ export default {
     required_only_digits_and_alphabet:
       'Must be composed of digits and alphabet',
     validateProductIdRequired: 'Product ID is required',
+    validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
   },
   menu: {
     undefined: '',
@@ -2941,6 +2945,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
+  },
+  gameTypeRolloverSetting: {
+    anyTypes: 'All Game Types',
+    specifyTypes: 'Specify Game Types',
+    excludeTypes: 'Exclude Game Types',
   },
   domainType: {
     LANDING: 'Landing',

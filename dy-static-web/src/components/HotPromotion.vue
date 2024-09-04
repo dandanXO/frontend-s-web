@@ -19,6 +19,7 @@
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
+    <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A'"></AsianCup2024>
@@ -72,6 +73,7 @@
 
     <newFootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode"/>
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode"/>
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'"/>
     
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
@@ -115,6 +117,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
@@ -154,6 +157,7 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import BbdachaCsgo2 from "./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
+import EslProCsgo2 from "./hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -179,6 +183,7 @@ export default defineComponent({
     InviteFriendPromo,
     WelcomeTaskPromo,
     EsportQuiz,
+    EsportQuiz2,
     LotteryPromo,
     PrivilegeInvite,
     GiftPromo,
@@ -206,6 +211,7 @@ export default defineComponent({
     LPLLCK,
     newFootballFight,
     BbdachaCsgo2,
+    EslProCsgo2,
     BlackMythWuKongPromo
   },
   props: {

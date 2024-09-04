@@ -1565,7 +1565,7 @@ const openConfirmSignOutDialog = () => {
   // align-items: flex-end;
 }
 .pc-ver {
-  color: rgba(255, 255, 255, 0.5);
+  color: #4877f6;
   margin-top: 8px;
 
   span {

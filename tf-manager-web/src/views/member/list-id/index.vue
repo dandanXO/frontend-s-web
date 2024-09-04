@@ -697,7 +697,7 @@
       <el-pagination
         class="pagination"
         @current-change="changePage"
-        layout="prev, pager, next"
+        layout="prev, next"
         :page-size="request.size"
         :page-count="page.pages"
         :current-page="request.current"
@@ -1110,6 +1110,9 @@ async function loadMembers() {
   const { data: ret } = await getMembers(query)
   page.pages = ret.pages
   page.records = ret.records
+  if (page.records.length / request.size < 1 || page.records.length === 0) {
+    page.pages = request.current
+  }
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false
   table.value.clearSelection()

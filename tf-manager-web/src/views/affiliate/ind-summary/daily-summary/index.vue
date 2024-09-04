@@ -221,6 +221,12 @@
         </template>
       </el-table-column> -->
       <el-table-column
+        prop="depositCount"
+        :label="t('fields.totalDepositCount')"
+        align="center"
+        width="120"
+      />
+      <el-table-column
         prop="totalDepositNumber"
         :label="t('fields.totalDepositMemberCount')"
         align="center"
