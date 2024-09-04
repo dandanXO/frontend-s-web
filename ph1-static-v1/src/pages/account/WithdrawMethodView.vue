@@ -173,7 +173,7 @@
                 ></q-input>
               </div>
             </div>
-            <div class="w-form-item w-form-item--bankcard" v-if="isBankType === 'BANK' || isAddNewAccount">
+            <div class="w-form-item w-form-item--bankcard" v-if="isBankType === 'BANK'">
               <div class="top-wrapper">
                 <div class="title">Bank IFSC Code</div>
               </div>
