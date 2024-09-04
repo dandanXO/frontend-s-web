@@ -244,7 +244,7 @@
 import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
@@ -252,6 +252,7 @@ import { useRouter, useRoute } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+import { cached } from "boot/cache";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -408,8 +409,10 @@ function initPay() {
   if (route.query.extra === "true") {
     // promoParam = "?promo=1";
     isPrivilege.value = true;
+    selectedItemPrivilegeId.value = store.extraPrivilegeId;
   } else {
     isPrivilege.value = false;
+    selectedItemPrivilegeId.value = "";
   }
 
   payMethods.value = [];
@@ -554,7 +557,11 @@ async function confirmDeposit() {
           }
 
           if (selectedItemPrivilegeId.value) {
-            form.privilegeId = selectedItemPrivilegeId.value;
+            if (store.paytypeWithPrivilege.indexOf(selectedChannel.value.payType) > -1) {
+              form.privilegeId = selectedItemPrivilegeId.value;
+            } else {
+              form.privilegeId = null;
+            }
           }
 
           const copy = { ...form };
@@ -767,6 +774,21 @@ const resetSelectedMethod = () => {
   // isAddNewAccount.value = false;
 };
 
+const loadAppTabs = () => {
+  cached
+    .get("appTabs", () =>
+      api.get("/getAppTabs").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      if (data && data.deposit) {
+        store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+        store.extraPrivilegeId = data.deposit.privilegeId;
+      }
+    });
+};
+
 onActivated(() => {
   initPay();
   checkNewUser();
@@ -775,6 +797,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  loadAppTabs();
   initPay();
   checkNewUser();
   loadInfo();
