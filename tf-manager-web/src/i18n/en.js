@@ -296,6 +296,7 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
+    UCL: 'UEFA CHAMPIONS LEAGUE'
   },
   homeBannerType: {
     HOME: 'Home',
