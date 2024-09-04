@@ -207,13 +207,13 @@
       </el-row>
       <el-row>
         <el-form-item :label="t('fields.amount')" prop="amount">
-          <el-input v-model="form.amount" style="width: 350px;" :disabled="uiControl.promoAmountInput" />
+          <el-input v-model="form.amount" style="width: 350px;" />
           <br>
           <span style="margin-left: 10px" v-if="selectedPrivilege !== null && selectedPrivilege.bonusMax !== null && selectedPrivilege.bonusMax !== 0 && selectedPrivilege.bonusType !== 'FIXED'">
             {{ t('fields.maxBonus') }} : $ <span v-formatter="{data: selectedPrivilege.bonusMax,type: 'money'}" /></span>
         </el-form-item>
       </el-row>
-      <el-row>
+      <el-row :hidden="true">
         <el-form-item :label="t('fields.turnoverMultiple')" prop="rollover">
           <el-input v-model="form.rollover" style="width: 350px;" :disabled="uiControl.promoAmountInput" />
         </el-form-item>
@@ -392,7 +392,7 @@ const uiControl = reactive({
   dialogTitle: t('fields.distributePrivilege'),
   dialogVisible: false,
   dialogType: "DISTRIBUTE",
-  promoAmountInput: true,
+  promoAmountInput: false,
   progressBarVisible: false
 });
 
@@ -579,10 +579,8 @@ function selectPrivilege(val) {
       form.rollover = privilege.rollover;
       if (privilege.bonusType === "FIXED") {
         form.amount = privilege.bonusAmount;
-        uiControl.promoAmountInput = true;
       } else {
         form.amount = null;
-        uiControl.promoAmountInput = false;
       }
       selectedPrivilege.value = privilege;
     }
