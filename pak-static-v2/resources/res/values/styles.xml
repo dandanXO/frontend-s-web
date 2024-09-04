@@ -7,6 +7,8 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+
+    <item name="android:windowBackground">@color/colorPrimary</item>
   </style>
 
   <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
@@ -19,14 +21,14 @@
     <item name="android:windowBackground">@drawable/background_centered</item>
   </style>
 
-  <style name="Theme.SplashTheme" parent="Theme.SplashScreen">
-    <!-- 设置启动图标 -->
-    <item name="windowSplashScreenAnimatedIcon">@drawable/background_centered</item>
-    <!-- 设置启动背景色 -->
+
+  <!-- Splash screen theme -->
+  <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+    <!-- Set the splash screen background -->
     <item name="windowSplashScreenBackground">@color/colorPrimary</item>
-    <!-- 设置图标背景色 -->
+    <!-- Set the splash screen icon -->
+    <item name="windowSplashScreenAnimatedIcon">@drawable/icon_splash</item>
+    <!-- Set the splash screen icon background color -->
     <item name="windowSplashScreenIconBackgroundColor">@color/colorPrimary</item>
-    <!-- 设置启动后使用的主题 -->
-    <item name="postSplashScreenTheme">@style/AppTheme</item>
   </style>
 </resources>

@@ -585,6 +585,10 @@ onMounted(() => {
       opacity: 1;
       transition: 1s all;
     }
+    .download-logo img {
+      max-height: 33px;
+      max-width: 100%;
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-# NGA App (ind-h5-project)
+# PH1 App (ph1-h5-project)
 
 Philippines H5 APP
 - Node Version >= 16.17.0

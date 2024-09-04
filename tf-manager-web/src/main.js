@@ -99,6 +99,13 @@ switch (currentHost) {
     siteId = 'xf';
     break;
 }
+if (currentHost.indexOf(process.env.VUE_APP_BFY3_HOST) > -1) {
+  console.log("BFY3")
+  baseApi = process.env.VUE_APP_BFY3_API;
+  baseWss = process.env.VUE_APP_BFY3_SOCKET;
+  imageCDNUrl = process.env.VUE_APP_BFY3_IMAGE;
+  siteId = 'lh';
+}
 
 sessionStorage.setItem("IMAGE_CDN", imageCDNUrl);
 

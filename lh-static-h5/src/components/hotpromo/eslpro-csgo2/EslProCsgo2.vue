@@ -57,7 +57,7 @@
         <!--        </div>-->
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年8月24日起</div>
+          <div class="right">2024年9月3日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
@@ -170,6 +170,7 @@ import { getCompetitionBetToday, claimBonusItem2 } from "../../../api/index/prom
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const props = defineProps(["promoCode"]);
 const promoCode = ref(props.promoCode);
@@ -177,6 +178,7 @@ const promoCode = ref(props.promoCode);
 const notify = useNotify();
 const store = userStore();
 const $q = useQuasar();
+const router = useRouter();
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
