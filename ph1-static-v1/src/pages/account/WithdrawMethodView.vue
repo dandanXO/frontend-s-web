@@ -1,5 +1,5 @@
 <template>
-  <div class="withdrawal-modal-view">
+  <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="method-title q-mb-sm">Withdraw Currency</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
@@ -174,6 +174,8 @@
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
                   hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
                 ></q-input>
               </div>
             </div>
@@ -225,6 +227,8 @@
                   `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
               ]"
               hide-bottom-space
+              @focus="scrollToInput"
+              @blur="isInputFocus = false"
             >
               <template v-slot:append>
                 <q-btn-group>
@@ -337,9 +341,9 @@
 </template>
 
 <script setup>
-import { onMounted, onActivated, ref, reactive, watch, computed } from "vue";
+import { onMounted, onActivated, ref, reactive, watch, computed, nextTick } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -860,6 +864,24 @@ const toggleAmount = (type) => {
       break;
   }
 };
+
+const isInputFocus = ref(false);
+
+const scrollToInput = () => {
+  if (Platform.is.capacitor && Platform.is.android) {
+    isInputFocus.value = true;
+    nextTick(() => {
+      const input = document.activeElement;
+      if (input) {
+        input.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest"
+        });
+      }
+    });
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -1279,5 +1301,9 @@ const toggleAmount = (type) => {
   :deep(em) {
     color: #ffae00;
   }
+}
+
+.input-btm {
+  padding-bottom: 270px;
 }
 </style>

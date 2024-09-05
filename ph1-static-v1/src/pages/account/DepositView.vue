@@ -1,5 +1,5 @@
 <template>
-  <div class="deposit-wrapper">
+  <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
     <div class="method-title q-mb-sm">Deposit method</div>
     <div class="deposit-methods-container" v-if="isLoadingInitPay">
       <div>
@@ -135,6 +135,8 @@
               dense
               clearable
               @keyup.enter="confirmDeposit"
+              @focus="scrollToInput"
+              @blur="isInputFocus = false"
             >
               <template v-slot:prepend>
                 <span style="font-size: 26px" class="currency">
@@ -801,6 +803,24 @@ const loadAppTabs = () => {
     });
 };
 
+const isInputFocus = ref(false);
+
+const scrollToInput = () => {
+  if (Platform.is.capacitor && Platform.is.android) {
+    isInputFocus.value = true;
+    nextTick(() => {
+      const input = document.activeElement;
+      if (input) {
+        input.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest"
+        });
+      }
+    });
+  }
+};
+
 onActivated(() => {
   initPay();
   checkNewUser();
@@ -1221,5 +1241,9 @@ onMounted(() => {
       }
     }
   }
+}
+
+.input-btm {
+  padding-bottom: 270px;
 }
 </style>
