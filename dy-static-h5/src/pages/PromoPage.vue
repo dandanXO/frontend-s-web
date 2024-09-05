@@ -944,6 +944,7 @@ export default defineComponent({
           margin: -15px 0 0;
           background-repeat: no-repeat;
           background-size: 100% auto;
+          background-color: #eaecfd;
         }
 
         &.lpllck {
