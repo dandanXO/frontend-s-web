@@ -82,7 +82,8 @@
         <div class="content">
           <div class="bold-text">
             <div class="darkred-text">恭喜获得</div>
-            <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
+            <div class="red-text" v-if="prizePopupBonusAmt">{{ prizePopupBonusAmt }}元彩金</div>
+            <div class="red-text" v-else>豪华版【黑神话·悟空】</div>
           </div>
           <div class="action-btn" @click="showPrizePopup = false"></div>
         </div>
@@ -243,7 +244,13 @@ const spinWheel = (times) => {
     .post(`/mooncakeFestSpin/spin?spinTimes=${times}`)
     .then((res) => {
       if (res.code === 0) {
-        var bonusIndex = res.data.spinBonusVOList[0].bonus;
+        var bonusIndex = (() => {
+          if(res.data.spinBonusVOList[0].bonusName || res.data.spinBonusVOList[0].bonus === 0) {
+            return "黑神话 - 悟空";
+          }
+
+          return res.data.spinBonusVOList[0].bonus;
+        })()
         remainingDraws.value = res.data.availableSpin;
         const prizeIndex = degreesToStopAt.value.findIndex((item) => item.prize === bonusIndex);
 
@@ -545,7 +552,7 @@ onMounted(() => {
     }
     .red-text {
       color: #ff0000;
-      font-size: 25px;
+      font-size: 22px;
     }
 
     .win-text {
