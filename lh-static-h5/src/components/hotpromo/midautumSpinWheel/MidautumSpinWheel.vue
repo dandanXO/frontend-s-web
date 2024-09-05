@@ -524,8 +524,8 @@ onMounted(() => {
     position: relative;
     .close {
       position: absolute;
-      right: 0;
-      top: 38px;
+      right: 0px;
+      top: 25px;
       width: 20px;
       height: 20px;
     }
@@ -742,7 +742,7 @@ onMounted(() => {
     padding: 20px 20px 20px 10px;
     border-radius: 0 0 12px 12px;
     .item {
-      padding-left: 24px;
+      padding-left: 10px;
       display: flex;
       gap: 10px;
 
