@@ -86,7 +86,7 @@
       after the turnover is full. No deposit on the second day, but deposit on the third day, it will be recalculated as
       the first day.
       <br />
-      2. The bonus for the day can only be claimed once, for example: each account can only claim 888{{
+      2. The bonus for the day can only be claimed once, for example: each account can only claim 88{{
         store.currency.label
       }}
       on the first day.
