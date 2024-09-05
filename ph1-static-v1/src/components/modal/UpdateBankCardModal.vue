@@ -22,6 +22,7 @@
                 lazy-rules
                 :rules="[(_) => isValidCardAccount()]"
                 label-color="secondary"
+                disable
               />
             </div>
 

@@ -932,6 +932,12 @@ onMounted(() => {
         :deep(.q-field__control) {
           height: 46px;
         }
+
+        :deep(.q-field__bottom) {
+          padding-left: 0;
+          padding-right: 0;
+          margin: 0;
+        }
       }
 
       .currency {
