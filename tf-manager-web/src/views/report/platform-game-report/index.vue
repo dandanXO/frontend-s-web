@@ -42,9 +42,9 @@
         >
           <el-option
             v-for="item in platforms.list"
-            :key="item.name"
+            :key="item.code"
             :label="item.name"
-            :value="item.name"
+            :value="item.code"
           />
         </el-select>
         <el-button
