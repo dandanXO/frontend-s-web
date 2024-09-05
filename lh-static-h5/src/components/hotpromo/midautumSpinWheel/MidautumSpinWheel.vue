@@ -282,7 +282,7 @@ onMounted(() => {
 
   degreesToStopAt.value = [
     {
-      degree: 18,
+      degree: 110,
       prize: 188
     },
     {
@@ -290,7 +290,7 @@ onMounted(() => {
       prize: 888
     },
     {
-      degree: 110,
+      degree: 5,
       prize: "黑神话 - 悟空"
     },
     {
@@ -302,11 +302,11 @@ onMounted(() => {
       prize: 88
     },
     {
-      degree: 272,
+      degree: 265,
       prize: 18
     },
     {
-      degree: 324,
+      degree: 315,
       prize: 8
     }
   ];
@@ -524,8 +524,8 @@ onMounted(() => {
     position: relative;
     .close {
       position: absolute;
-      right: 0;
-      top: 38px;
+      right: 0px;
+      top: 25px;
       width: 20px;
       height: 20px;
     }
@@ -742,7 +742,7 @@ onMounted(() => {
     padding: 20px 20px 20px 10px;
     border-radius: 0 0 12px 12px;
     .item {
-      padding-left: 24px;
+      padding-left: 10px;
       display: flex;
       gap: 10px;
 

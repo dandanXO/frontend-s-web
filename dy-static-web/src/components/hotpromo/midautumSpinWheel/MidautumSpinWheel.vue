@@ -259,7 +259,7 @@ onMounted(() => {
       prize: 888
     },
     {
-      degree: 18,
+      degree: 5,
       prize: "黑神话 - 悟空"
     },
     {
@@ -271,11 +271,11 @@ onMounted(() => {
       prize: 88
     },
     {
-      degree: 272,
+      degree: 265,
       prize: 18
     },
     {
-      degree: 324,
+      degree: 315,
       prize: 8
     }
   ];
@@ -421,6 +421,7 @@ onMounted(() => {
   }
 
   .spin-wheel-stg-text {
+    display: none;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -1.25px 2.86px 0px #b1d7ff inset;
     font-size: 18px;
