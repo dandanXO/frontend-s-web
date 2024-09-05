@@ -511,6 +511,7 @@ onMounted(() => {
 
       .balance-amount {
         padding-right: 18px;
+        padding-left: 8px;
         white-space: nowrap;
       }
     }
