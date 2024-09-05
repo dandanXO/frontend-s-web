@@ -6,27 +6,27 @@ const store = useStore()
 
 export const getSiteWithPromo = () => {
   return https()
-    .request("/refer-bonus-rebate/sites", Method.GET)
-    .then(response => {
-      const site = response.data
+    .request("/refer-bonus-rebate/sites", Method.GET);
+    // .then(response => {
+    //   const site = response.data
 
-      const updateWithUserStoreSiteId = site.filter(
-        e => e.id === store.state.user.siteId
-      )
-      const mockResponse = {
-        code: 0,
-        data: updateWithUserStoreSiteId,
-      }
+    //   const updateWithUserStoreSiteId = site.filter(
+    //     e => e.id === store.state.user.siteId
+    //   )
+    //   const mockResponse = {
+    //     code: 0,
+    //     data: updateWithUserStoreSiteId,
+    //   }
 
-      return mockResponse
-    })
-    .catch(error => {
-      console.error('Error fetching site list:', error)
-      return {
-        code: 1,
-        data: [],
-      }
-    });
+    //   return mockResponse
+    // })
+    // .catch(error => {
+    //   console.error('Error fetching site list:', error)
+    //   return {
+    //     code: 1,
+    //     data: [],
+    //   }
+    // });
 }
 
 export const getEligibilitySettings = (siteId) => {
