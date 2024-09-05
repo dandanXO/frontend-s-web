@@ -237,7 +237,7 @@ onActivated(() => {
       &.isReceived {
         background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
       }
-      padding: 12px;
+      padding: 12px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -278,7 +278,7 @@ onActivated(() => {
       }
 
       .box-title {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         color: #ffffff;
         text-align: center;
