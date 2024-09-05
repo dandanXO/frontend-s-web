@@ -540,7 +540,7 @@ onMounted(() => {
     }
 
     .content {
-      height: 270px;
+      height: 225px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
