@@ -669,9 +669,9 @@ function showDialog(type) {
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 
-  // if (form.userType && form.userType === 'TENANT') {
-  //   form.siteId = store.state.user.siteId
-  // }
+  if (form.userType && form.userType === 'TENANT') {
+    form.siteId = store.state.user.siteId
+  }
 }
 
 function showEdit(user) {
