@@ -116,7 +116,12 @@
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+
+                  <div
+                    class="join-container"
+                    v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
+                    :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                  >
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
                       <div class="date-timer">
@@ -165,7 +170,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, defineComponent, computed, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -372,6 +377,15 @@ export default defineComponent({
 
     }
 
+    const selectedParam = computed( () => {
+      if(selectedPromo.value && selectedPromo.value.param){
+        const paramJson = JSON.parse(selectedPromo.value.param);
+        return paramJson;
+      }else{
+        return null;
+      }
+    })
+
     const goToJoinNow = () => {
       // console.log(selectedPromo.value);
       if (selectedPromo.value.param) {
@@ -510,6 +524,7 @@ export default defineComponent({
       isPromotionEnded,
       countdown,
       getCountdown,
+      selectedParam,
       updateCountdown,
       countdownInterval,
       goToVip,
