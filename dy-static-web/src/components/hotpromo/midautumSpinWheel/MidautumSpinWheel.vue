@@ -259,7 +259,7 @@ onMounted(() => {
       prize: 888
     },
     {
-      degree: 18,
+      degree: 5,
       prize: "黑神话 - 悟空"
     },
     {
@@ -271,11 +271,11 @@ onMounted(() => {
       prize: 88
     },
     {
-      degree: 272,
+      degree: 265,
       prize: 18
     },
     {
-      degree: 324,
+      degree: 315,
       prize: 8
     }
   ];
