@@ -73,41 +73,40 @@
         </template> -->
 
         <div class="amount">
-          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
-            <div
-              class="text"
-              v-if="
-                vipLevel + 1 &&
-                currentUpgradeBetAmt &&
-                currentUpgradeBetAmt >= currentBetAmt &&
-                vipLevel != 0 &&
-                vipLevel != 12
-              "
-            >
-              还需
-              <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
-              有效投注晋升到 VIP {{ vipLevel + 1 }}
-            </div>
-
-            <div class="text" v-else-if="vipLevel === 0">
-              还需
-              <div class="required-amount">
-                {{
-                  currentBetAmt > originalUpgradeBetAmounts[0]
-                    ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
-                    : formatNumber(originalUpgradeBetAmounts[0])
-                }}
+            <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+              <div
+                class="text"
+                v-if="
+                  vipLevel + 1 &&
+                  currentUpgradeBetAmt &&
+                  currentUpgradeBetAmt >= currentBetAmt &&
+                  vipLevel != 12
+                "
+              >
+                还需
+                <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
+                有效投注晋升到 VIP {{ vipLevel + 1 }}
               </div>
-              有效投注晋升到 VIP 1
-            </div>
 
-            <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
-            <div class="text" v-else>
-              已到达
-              <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-              有效流水 VIP {{ vipLevel + 1 }}
+              <!-- <div class="text" v-else-if="vipLevel === 0">
+                还需
+                <div class="required-amount">
+                  {{
+                    currentBetAmt > originalUpgradeBetAmounts[0]
+                      ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
+                      : formatNumber(originalUpgradeBetAmounts[0])
+                  }}
+                </div>
+                有效投注晋升到 VIP 1
+              </div> -->
+
+              <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
+              <div class="text" v-else>
+                已到达
+                <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
+                有效流水 VIP {{ vipLevel + 1 }}
+              </div>
             </div>
-          </div>
 
           <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
           <div class="text" v-show="!isDataLoaded">正在为您计算有效投注和存款</div>
@@ -158,7 +157,7 @@
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
         @click="handleClick('all', vipLevel)"
       >
-        一键领取
+        {{ isLoading['all'] ? '领取中' : '一键领取' }}
       </div>
     </div>
 
@@ -856,10 +855,16 @@ const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
+    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0]
     if (currentBetAmt.value > 0) {
       return (currentBetAmt.value / originalUpgradeBetAmounts.value[0]) * 100;
     }
     return 0;
+  }
+  if (vipItems.find((item) => item.claimAllStatus === 'CAN_CLAIM')) {
+    currentClaimAllStatus.value = 'CAN_CLAIM';
+  } else {
+    currentClaimAllStatus.value = 'CANT_CLAIM';
   }
   const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
   console.log(vipInfo);
@@ -867,7 +872,6 @@ const getVipLevelProgress = (lvl, status) => {
   const currentDeposit = +store.getCurrentDeposit();
   currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
   currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
-  currentClaimAllStatus.value = vipInfo.claimAllStatus;
   if (status === "bet") {
     if (currentBetAmt.value > currentUpgradeBetAmt.value) {
       return 100;

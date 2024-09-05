@@ -76,7 +76,6 @@
                 vipLevel + 1 &&
                 currentUpgradeBetAmt &&
                 currentUpgradeBetAmt >= currentBetAmt &&
-                vipLevel != 0 &&
                 vipLevel != 12
               "
             >
@@ -85,17 +84,19 @@
               有效投注晋升到 VIP {{ vipLevel + 1 }}
             </div>
 
-            <div class="text" v-else-if="vipLevel === 0">
+            <!-- <div class="text" v-else-if="vipLevel === 0">
               还需
               <div class="required-amount">
+                {{ currentBetAmt }}
+                {{ currentUpgradeBetAmt }}
                 {{
-                  currentBetAmt > originalUpgradeBetAmounts[0]
-                    ? formatNumber(originalUpgradeBetAmounts[0] - currentBetAmt)
-                    : formatNumber(originalUpgradeBetAmounts[0])
+                  currentBetAmt > currentUpgradeBetAmt
+                    ? formatNumber(currentUpgradeBetAmt - currentBetAmt)
+                    : formatNumber(currentUpgradeBetAmt)
                 }}
               </div>
               有效投注晋升到 VIP 1
-            </div>
+            </div> -->
 
             <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
             <div class="text" v-else>
@@ -154,7 +155,8 @@
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
         @click="handleClick('all', vipLevel)"
       >
-        一键领取
+        
+        {{ isLoading['all'] ? '领取中' : '一键领取' }}
       </div>
     </div>
     <div class="month-birthday-bonus">
@@ -816,17 +818,23 @@ const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
+    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0]
     if (currentBetAmt.value > 0) {
       return (currentBetAmt.value / originalUpgradeBetAmounts.value[0]) * 100;
     }
     return 0;
+  }
+  if (vipItems.value.find((item) => item.claimAllStatus === 'CAN_CLAIM')) {
+    currentClaimAllStatus.value = 'CAN_CLAIM';
+  } else {
+    currentClaimAllStatus.value = 'CANT_CLAIM';
   }
   const vipInfo = vipItems.value.find((item) => +item.vipLevel === lvl);
   const vipLevel = +store.vip.replace("VIP", "");
   const currentDeposit = +store.getCurrentDeposit();
   currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
   currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
-  currentClaimAllStatus.value = vipInfo.claimAllStatus;
+  
   if (status === "bet") {
     if (currentBetAmt.value > currentUpgradeBetAmt.value) {
       return 100;
