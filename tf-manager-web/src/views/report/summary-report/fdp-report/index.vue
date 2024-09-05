@@ -338,7 +338,7 @@ function checkQuery() {
       query[key] = value
     }
   })
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  timeZone = siteList.list.find(e => e.id === parseInt(request.siteId)).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
