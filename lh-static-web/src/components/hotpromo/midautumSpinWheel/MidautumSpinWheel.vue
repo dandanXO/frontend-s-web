@@ -218,7 +218,7 @@ const spinWheel = (times) => {
     .then((res) => {
       if (res.code === 0) {
         var bonusIndex = (() => {
-          if(res.data.spinBonusVOList[0].bonusName || res.data.spinBonusVOList[0].bonus === 0) {
+          if(res.data.spinBonusVOList[0].bonusName && res.data.spinBonusVOList[0].bonus === 0) {
             return "黑神话 - 悟空";
           }
 
