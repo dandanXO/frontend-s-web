@@ -191,7 +191,7 @@
             @focus="loadSites"
           >
             <el-option
-              v-for="item in siteList.list"
+              v-for="item in formSiteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
@@ -217,7 +217,7 @@
             @change="setSiteIdArray"
           >
             <el-option
-              v-for="item in siteList.list"
+              v-for="item in formSiteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
@@ -456,7 +456,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimpleOri } from '../../../api/site'
+import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -484,6 +484,7 @@ const userTypeList = computed(() => {
 })
 const today = moment(new Date()).format('YYYY-MM-DD');
 const siteList = reactive({ list: [] })
+const formSiteList = reactive({ list: [] })
 const netPhone = reactive({ list: [] })
 const userForm = ref(null)
 const uiControl = reactive({
@@ -582,7 +583,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : store.state.user.siteId
   request.role = null
 }
 
@@ -808,8 +809,12 @@ function submit() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimpleOri()
+  const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function loadDefaultSites() {
+  formSiteList.list = store.state.user.sites
 }
 
 async function loadNetPhone() {
@@ -895,6 +900,8 @@ watch(
 
 onMounted(async () => {
   await loadSites()
+  await loadDefaultSites()
+  request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false
