@@ -316,13 +316,39 @@ export default {
       updateData();
     });
 
+    // watch(() => useStore().state.socket.event, () => {
+    //   const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
+    //   if (memberStatistics.length > 0) {
+    //     const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
+    //     statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+    //   }
+    //   updateApplyWithdrawCount();
+    // }, { deep: true });
+
+    const previousStatisticsMap = {};
     watch(() => useStore().state.socket.event, () => {
       const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
       if (memberStatistics.length > 0) {
         const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
-        statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+        
+        const siteId = String(useStore().state.user.siteId);
+        const getStatisticBySiteId = parsedStatistics.find(e => String(e.siteId) === siteId);
+
+        // Store previous data specific to each siteId
+        if (!previousStatisticsMap[siteId]) {
+          previousStatisticsMap[siteId] = [];
+        }
+
+        if (getStatisticBySiteId === undefined) {
+          // If undefined, keep the previous statistics for this specific siteId
+          statisticsList.list = previousStatisticsMap[siteId];
+        } else {
+          // If valid, update and store the new data for this siteId
+          statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+          previousStatisticsMap[siteId] = statisticsList.list;
+        }
+        updateApplyWithdrawCount();
       }
-      updateApplyWithdrawCount();
     }, { deep: true });
 
     return {
