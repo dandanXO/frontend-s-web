@@ -352,7 +352,7 @@ function checkQuery() {
         timeZone,
         'end'
       )
-      query.recordTime = request.recordTime.join(',')
+      query.recordTime = query.recordTime.join(',')
     }
   }
   return query
