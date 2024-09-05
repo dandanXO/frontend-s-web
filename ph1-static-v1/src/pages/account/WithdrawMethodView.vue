@@ -96,7 +96,7 @@
 
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-          <div class="method-title">Choose {{ displayCardType }} Account</div>
+          <div class="method-title q-mb-sm">Choose {{ displayCardType }} Account</div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
               <div class="w-form-input">
@@ -149,7 +149,7 @@
           </div>
 
           <div class="bot-wrapper">
-            <div class="bank-card-item" @click="isAddNewAccount = true">
+            <div class="bank-card-item" @click="onAddNewAccount">
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
@@ -500,17 +500,25 @@ const isNoBankCard = ref(false);
 
 const filterCards = (type) => {
   isLoadingBankCard.value = true;
+
   api
     .get("/session/bankCard")
     .then((res) => {
       isLoadingBankCard.value = false;
+
       if (res.code === 0) {
-        let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        let filteredData = [];
+        if (isBankType.value === "BANK") {
+          const bankType = type.bankType;
+          filteredData = res.data.filter((item) => item.bankType === bankType);
+          const bankCodes = filteredBankList.value.map((bank) => bank.code);
+          filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
+        } else {
+          const typeCode = type.code;
+          filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
-        bankCardList.value = [];
-        bankCardList.value.push(...filteredData);
-
+        bankCardList.value = [...filteredData];
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
         }
@@ -519,7 +527,7 @@ const filterCards = (type) => {
     .catch((error) => {
       console.log("error", error);
     })
-    .then(() => {
+    .finally(() => {
       isLoadingBankCard.value = false;
     });
 };
@@ -745,6 +753,11 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+};
+
+const onAddNewAccount = () => {
+  bankCardField.cardNumber = "";
+  isAddNewAccount.value = true;
 };
 
 onMounted(() => {
