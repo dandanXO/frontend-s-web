@@ -14,28 +14,50 @@
         placeholder=""
         style="width: 150px;"
         v-model="selectedSite"
-        @change="updateData"
+        @change="changeSite"
       >
-        <el-option v-for="site in sites" :label="site.siteName" :key="site.siteCode" :value="site.siteCode" />
+        <el-option
+          v-for="site in sites"
+          :label="site.siteName"
+          :key="site.siteCode"
+          :value="site.siteCode"
+        />
       </el-select>
       <div v-if="selectedData" class="key-value-container">
         <div class="flex-div">
           <div class="green-circle-dot" />
           <div class="text-2">
-            {{ $t('realtimeStatistics.Mobile') }}: <span>{{ selectedData.Mobile ? selectedData.Mobile : 0 }}</span>
+            {{ $t('realtimeStatistics.Mobile') }}:
+            <span>{{ selectedData.Mobile ? selectedData.Mobile : 0 }}</span>
           </div>
           <div class="text-2">
-            {{ $t('realtimeStatistics.PC') }}: <span>{{ selectedData.PC ? selectedData.PC : 0 }}</span>
+            {{ $t('realtimeStatistics.PC') }}:
+            <span>{{ selectedData.PC ? selectedData.PC : 0 }}</span>
           </div>
           <div class="text-2">
-            <router-link :to="{path: `/withdraw/withdraw-process-simple/apply`, force: true}">
-              <el-link :disabled="!hasPermission(['sys:withdraw:simple:list'])" type="primary">{{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ applyWithdrawCount }}</span></el-link>
+            <router-link
+              :to="{
+                path: `/withdraw/withdraw-process-simple/apply`,
+                force: true,
+              }"
+            >
+              <el-link
+                :disabled="!hasPermission(['sys:withdraw:simple:list'])"
+                type="primary"
+              >
+                {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}:
+                <span>{{ applyWithdrawCount }}</span>
+              </el-link>
             </router-link>
           </div>
         </div>
       </div>
       <div class="key-value-container">
-        <div class="flex-div"><div class="text-2"><span style="color: red;">{{ message }}</span></div></div>
+        <div class="flex-div">
+          <div class="text-2">
+            <span style="color: red;">{{ message }}</span>
+          </div>
+        </div>
       </div>
       <el-select
         class="lang-container right-menu-item"
@@ -93,6 +115,7 @@ import { computed, reactive, toRefs, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { UserActionTypes } from '@/store/modules/user/action-types'
+import { MenuActionType } from '@/store/modules/menu/action-types'
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
@@ -100,7 +123,11 @@ import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
 import { hasPermission, hasRole } from "@/utils/util";
 import { showAlert } from '../../../api/member'
-import { getSiteListSimple } from "@/api/site";
+// import { getSiteListSimple } from '@/api/site'
+/* eslint-disable */
+import { updateDefaultSite, loadAuthMenu } from '../../../api/user'
+import { ElMessage } from 'element-plus'
+import { inject } from 'vue-demi'
 
 export default {
   methods: { hasPermission, hasRole },
@@ -129,12 +156,15 @@ export default {
     const name = computed(() => {
       return store.state.user.name
     })
-    const sites = ref([]);
-    const loadSites = async () => {
-      const response = await getSiteListSimple();
-      const { data: site } = response;
-      sites.value = site;
-    };
+    const sites = computed(() => {
+      return store.state.user.sites.filter(site => site.id !== 9999)
+    })
+    // const sites = ref([])
+    // const loadSites = async () => {
+    //   const response = await getSiteListSimple()
+    //   const { data: site } = response
+    //   sites.value = site
+    // }
     const state = reactive({
       toggleSideBar: () => {
         store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false)
@@ -177,12 +207,68 @@ export default {
     }
 
     function updateData() {
-      const selectedSiteData = statisticsList.list.find(site => site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase());
-      selectedData.value = selectedSiteData || null;
+      const selectedSiteData = statisticsList.list.find(
+        site =>
+          site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase()
+      )
+      selectedData.value = selectedSiteData || null
     }
 
     function updateApplyWithdrawCount() {
-      applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0;
+      applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0
+    }
+
+    const reload = inject('reload')
+    const changeSite = async () => {
+      const getSelectedSite = sites.value.find(
+        site =>
+          site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase()
+      )
+      getSelectedSite.value = getSelectedSite || null
+
+      const { data: token } = await updateDefaultSite(getSelectedSite.id)
+
+      await store.dispatch(UserActionTypes.ACTION_UPDATE_TOKEN, token)
+      await store.dispatch(
+        UserActionTypes.ACTION_CHANGE_SITE_ID,
+        getSelectedSite
+      )
+      ElMessage({
+        message: `switch site to ` + getSelectedSite.siteName,
+        type: 'success',
+      })
+      setTimeout(() => {
+        reload()
+        loadMenu()
+        updateData()
+        // location.reload()
+      }, 200)
+    }
+
+    function mapMenuPaths(menus, parentPath = '') {
+      const paths = [];
+      menus.forEach(menu => {
+        const fullPath = parentPath + menu.path;
+        paths.push(fullPath);
+
+        if (menu.children && menu.children.length > 0) {
+            paths.push(...mapMenuPaths(menu.children, fullPath));
+        }
+      });
+      return paths;
+    }
+
+    async function loadMenu(){
+      const { data : menus } = await loadAuthMenu()
+      await store.dispatch(MenuActionType.ACTION_SET_ROUTES, menus);
+
+      const mappedPaths = mapMenuPaths(menus);
+      const currentRoute = router.currentRoute.value;
+
+      const isRouteMatched = mappedPaths.includes(currentRoute.path);
+      if (!isRouteMatched) {
+          router.push({ path: '/welcome' });
+      }
     }
 
     async function showAlertMessage() {
@@ -195,19 +281,22 @@ export default {
 
     onMounted(async () => {
       // 根据情况赋值sites
-      if (hasRole(["ADMIN"])) {
-        sites.value = store.state.user.sites;
-      } else if (hasRole(["MANAGER"])) {
-        await loadSites();
-      } else {
-        sites.value = store.state.user.sites;
-      }
-      // 根据情况指定selectedSite
-      if (hasRole(["ADMIN", "MANAGER"])) {
-        selectedSite.value = sites.value[0]?.siteCode || null;
-      } else {
-        selectedSite.value = sites.value.find(site => site.id === store.state.user.siteId)?.siteCode || null;
-      }
+      // if (hasRole(['ADMIN'])) {
+      //   sites.value = store.state.user.sites
+      // } else if (hasRole(['MANAGER'])) {
+      //   sites.value = store.state.user.sites
+      // } else {
+      //   sites.value = store.state.user.sites
+      // }
+      sites.value = store.state.user.sites
+      // 根据情况指定selectedSite , 'MANAGER'
+      // if (hasRole(['ADMIN'])) {
+      //   selectedSite.value = sites.value[0]?.siteCode || null
+      // } else {
+      selectedSite.value =
+        sites.value.find(site => site.id === store.state.user.siteId)
+          ?.siteCode || null
+      // }
       // 根据情况捞取所需的统计资料
       if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
         loadMemberStatistics();
@@ -252,6 +341,7 @@ export default {
       selectedSite,
       selectedData,
       updateData,
+      changeSite,
       applyWithdrawCount,
       updateApplyWithdrawCount,
       message,

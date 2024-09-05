@@ -114,7 +114,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed, ref } from 'vue'
 import { getUserLoginLog } from '../../../api/user-login-log'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
@@ -123,16 +123,18 @@ import {
   convertDateToStart,
   convertDateToEnd,
 } from '@/utils/datetime'
-// import { useStore } from '@/store'
+import { useStore } from '@/store'
 // import { isKorea } from '@/utils/site'
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
-// const store = useStore()
-// const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -169,7 +171,7 @@ function resetQuery() {
     convertDateToStart(new Date()),
     convertDateToEnd(new Date()),
   ]
-  request.siteId = null
+  request.siteId = sites.list[0].id
   loadUserLoginLog()
 }
 
@@ -206,8 +208,16 @@ function changePage(page) {
   loadUserLoginLog()
 }
 
-onMounted(() => {
-  loadSites()
+onMounted(async () => {
+  await loadSites()
+
+  request.siteId = sites.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = sites.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
   loadUserLoginLog()
 })
 </script>

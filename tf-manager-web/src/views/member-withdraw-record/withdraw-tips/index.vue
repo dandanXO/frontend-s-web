@@ -129,6 +129,8 @@ onMounted(async () => {
     if (LOGIN_USER_TYPE.value === TENANT.value) {
       site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
       form.siteId = site.value.id;
+    } else {
+      form.siteId = sites.list[0].id;
     }
   }
   await loadTips();
