@@ -338,6 +338,13 @@
       </template>
     </template>
   </div>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -347,6 +354,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import KYCUserForm from "../../components/KYCUserForm.vue";
 
 // withdraw component
 const qs = require("qs");
@@ -727,7 +735,7 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/deposit`);
+    router.push(`/withdraw`);
   }
 };
 
@@ -768,12 +776,14 @@ onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 const isValidCardNumber = () => {
@@ -880,6 +890,29 @@ const scrollToInput = () => {
         });
       }
     });
+  }
+};
+
+// KYC Dialog
+const personalState = reactive({
+  memberInfo: {}
+});
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    openUserKYCDialog();
   }
 };
 </script>
