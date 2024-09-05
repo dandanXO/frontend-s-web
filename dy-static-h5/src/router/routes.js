@@ -433,6 +433,15 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/center/:path",
+    redirect: (to) => {
+      const path = to.params.path;
+      const mappedRouting = webRoutingMap[path];
+      if (mappedRouting) return `/${mappedRouting.parent}/${mappedRouting.path}`;
+      return "/";
+    }
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
@@ -441,4 +450,15 @@ const routes = [
     component: () => import("pages/ErrorNotFound.vue")
   }
 ];
+
+const webRoutingMap = {
+  deposit: { parent: "finance", path: "deposit" },
+  withdraw: { parent: "finance", path: "withdraw" },
+  transfer: { parent: "account", path: "transfer" },
+  personal: { parent: "account", path: "personal" },
+  "transit-record": { parent: "account", path: "records" },
+  mailbox: { parent: "account", path: "inbox" },
+  share: { parent: "account", path: "invite" },
+  withdrawbank: { parent: "account", path: "withdraw" }
+};
 export default routes;
