@@ -80,10 +80,16 @@
     </div>
     <div class="activities-title q-mt-md"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-rules-container">
-      1. Example: On the first day, if you deposit 10,000{{ store.currency.label }}, you will be given 888{{ store.currency.label }} after the turnover is full. No deposit
-      on the second day, but deposit on the third day, it will be recalculated as the first day.
+      1. Example: On the first day, if you deposit 1,000{{ store.currency.label }}, you will be given 88{{
+        store.currency.label
+      }}
+      after the turnover is full. No deposit on the second day, but deposit on the third day, it will be recalculated as
+      the first day.
       <br />
-      2. The bonus for the day can only be claimed once, for example: each account can only claim 888{{ store.currency.label }} on the first day.
+      2. The bonus for the day can only be claimed once, for example: each account can only claim 888{{
+        store.currency.label
+      }}
+      on the first day.
       <br />
       3. After the deposit requirement is met, you must play slot machines to start calculating the turnover, and the
       bonus will be given after the turnover is completed.
@@ -100,7 +106,7 @@ import { useRoute } from "vue-router";
 import { userStore } from "stores/index";
 
 const route = useRoute();
-const store = userStore()
+const store = userStore();
 
 const progressDeposit = ref(0);
 const progressDailyWager = ref(0);
@@ -179,6 +185,7 @@ onActivated(() => {
 
     .stats-info {
       text-align: center;
+      font-size: 12px;
 
       .info-title {
         margin-bottom: 0.5rem;
@@ -204,16 +211,11 @@ onActivated(() => {
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            font-size: 12px;
+            font-size: 10px;
             color: #ffffff;
-            text-shadow:
-              1px 1px 2px rgba(0, 0, 0, 0.7),
-              -1px -1px 2px rgba(0, 0, 0, 0.7),
-              1px -1px 2px rgba(0, 0, 0, 0.7),
-              -1px 1px 2px rgba(0, 0, 0, 0.7),
-              1px 1px 2px rgba(255, 255, 255, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.7),
-              1px -1px 2px rgba(255, 255, 255, 0.7),
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(0, 0, 0, 0.7),
+              1px -1px 2px rgba(0, 0, 0, 0.7), -1px 1px 2px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.7),
+              -1px -1px 2px rgba(255, 255, 255, 0.7), 1px -1px 2px rgba(255, 255, 255, 0.7),
               -1px 1px 2px rgba(255, 255, 255, 0.7);
           }
         }

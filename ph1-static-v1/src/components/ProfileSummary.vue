@@ -590,7 +590,7 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 0;
+  top: 2px;
   right: 10px;
 }
 
