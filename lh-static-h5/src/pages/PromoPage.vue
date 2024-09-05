@@ -2,7 +2,10 @@
   <div class="promo-container">
     <div
       class="promo"
-      :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
+      :class="{
+        unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
+        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel'
+      }"
       :style="
         isPromoDetail
           ? 'background-image: url(' +
@@ -692,6 +695,12 @@ export default defineComponent({
     background-position: bottom center;
     background-size: cover;
     background-attachment: fixed;
+
+    &.midAutumnWukong {
+      background-position: top;
+      background-size: 100% auto;
+      background-attachment: unset;
+    }
 
     &.unfixed {
       background-attachment: scroll;
