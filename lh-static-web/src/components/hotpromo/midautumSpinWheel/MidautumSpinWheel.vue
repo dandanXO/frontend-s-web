@@ -247,7 +247,7 @@ onMounted(() => {
 
   degreesToStopAt.value = [
     {
-      degree: 18,
+      degree: 110,
       prize: 188
     },
     {
@@ -255,7 +255,7 @@ onMounted(() => {
       prize: 888
     },
     {
-      degree: 110,
+      degree: 18,
       prize: "黑神话 - 悟空"
     },
     {
@@ -478,8 +478,8 @@ onMounted(() => {
 }
 
 .prizePopupContainer {
-  width: 480px;
-  height: 500px;
+  width: 336px;
+  height: 350px;
   background: url("./../../../assets/images/promotion/hotpromo/midautum-spinWheel/prize-popup.png");
   background-size: 100% 100%;
   box-shadow: none;
@@ -501,7 +501,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 470px;
+    height: 329px;
     gap: 0px;
 
     .bold-text {
@@ -543,7 +543,7 @@ onMounted(() => {
     }
 
     .content {
-      height: 340px;
+      height: 270px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

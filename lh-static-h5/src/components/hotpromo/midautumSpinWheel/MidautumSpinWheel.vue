@@ -439,6 +439,7 @@ onMounted(() => {
   }
 
   .spin-wheel-stg-text {
+    display: none;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -1.25px 2.86px 0px #b1d7ff inset;
     font-size: 18px;
@@ -508,8 +509,8 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 300px;
-    height: 345px;
+    width: 230px;
+    height: 250px;
     gap: 0px;
     background: url("./../../../assets/images/promo/hotpromo/midautum-spinWheel/prize-popup.png");
     background-size: 100% 100%;
@@ -541,11 +542,11 @@ onMounted(() => {
     }
     .darkred-text {
       color: #8c3b00;
-      font-size: 20px;
+      font-size: 18px;
     }
     .red-text {
       color: #ff0000;
-      font-size: 28px;
+      font-size: 25px;
     }
 
     .win-text {
@@ -567,7 +568,7 @@ onMounted(() => {
     }
 
     .content {
-      height: 260px;
+      height: 200px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -581,7 +582,7 @@ onMounted(() => {
         background-size: contain;
         width: 100%;
         height: 100%;
-        max-height: 70px;
+        max-height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
