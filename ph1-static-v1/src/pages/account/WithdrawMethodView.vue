@@ -1,7 +1,6 @@
 <template>
   <div class="withdrawal-modal-view">
     <div class="method-title q-mb-sm">Withdraw Currency</div>
-
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
         <q-skeleton style="height: 96px" />
@@ -953,6 +952,7 @@ const toggleAmount = (type) => {
         width: 50px;
       }
     }
+
     .item-detail {
       padding: 6px 6px 6px 8px;
       .txt-title {

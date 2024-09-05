@@ -997,15 +997,14 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoryDefault = useLocalStorage("HOME_CATEGORY", [
+const categoriesList = ref([
   { title: "Hot", icon: "hot", active: false },
   { title: "Lobby", icon: "lobby", active: false },
   { title: "Slot", icon: "slot", active: false },
   { title: "Casino", icon: "casino", active: false },
   { title: "Fishing", icon: "fishing", active: false },
   { title: "Sport", icon: "sport", active: false }
-]).value;
-const categoriesList = ref([]);
+]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -2714,7 +2713,13 @@ const loadAppTabs = () => {
       })
     )
     .then((data) => {
-      categoriesList.value = data;
+      if (data && data.tabs) {
+        categoriesList.value = data.tabs;
+      }
+      if (data && data.deposit) {
+        store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+        store.extraPrivilegeId = data.deposit.privilegeId;
+      }
 
       if (categoriesList.value.length > 0) {
         categoriesList.value.forEach(function (category, index) {
@@ -2736,6 +2741,7 @@ onActivated(() => {
 
 onMounted(() => {
   isPlatLoading.value = true;
+  loadAppTabs();
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -2743,7 +2749,6 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadCustomerAddress();
-  loadAppTabs();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {

@@ -241,7 +241,7 @@ const spinWheel = (times) => {
   }
 
   eventapi
-    .post(`/mooncakeFestSpin/spin?spinTimes=${times}`)
+    .post(`/mooncakeFestSpin/spin?spinTimes=1`)
     .then((res) => {
       if (res.code === 0) {
         var bonusIndex = res.data.spinBonusVOList[0].bonus;
