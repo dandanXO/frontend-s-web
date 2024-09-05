@@ -456,7 +456,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimple } from '../../../api/site'
+import { getSiteListSimple, getSiteListSimpleOri } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -809,8 +809,13 @@ function submit() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  let response;
+  if (store.state.user.userType === "ADMIN") {
+    response = await getSiteListSimpleOri()
+  } else {
+    response = await getSiteListSimple()
+  }
+  siteList.list = response.data
 }
 
 async function loadDefaultSites() {
@@ -901,7 +906,9 @@ watch(
 onMounted(async () => {
   await loadSites()
   await loadDefaultSites()
-  request.siteId = store.state.user.siteId
+  if (store.state.user.userType !== "ADMIN") {
+    request.siteId = store.state.user.siteId
+  }
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false
