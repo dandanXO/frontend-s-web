@@ -424,6 +424,7 @@ onMounted(() => {
   }
 
   .spin-wheel-stg-text {
+    display: none;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -1.25px 2.86px 0px #b1d7ff inset;
     font-size: 18px;
