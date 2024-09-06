@@ -279,7 +279,7 @@ export default {
     share_invitefriends: "Invite friends",
     share_table_header_01: "Account ID",
     share_table_header_02: "Registration Time",
-    share_table_header_03: "Bet",
+    share_table_header_03: "Deposit Amount",
     share_table_header_04: "Status",
     share_table_content_empty: "No matching history found",
     share_tnc: "Terms and Conditions",

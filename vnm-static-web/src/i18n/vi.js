@@ -260,7 +260,7 @@ export default {
     friendList: "Danh sách bạn bè",
     accountId: "Tên Tài Khoản",
     regTime: "Thời gian đăng ký",
-    bet: "Tổng Nạp",
+    depositAmount: "Tổng Nạp",
     status: "Trạng thái"
   },
   promo: {

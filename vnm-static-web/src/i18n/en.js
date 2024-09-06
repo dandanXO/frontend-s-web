@@ -261,7 +261,7 @@ export default {
     friendList: "Friends List",
     accountId: "Account ID",
     regTime: "Registration time",
-    bet: "Bet",
+    depositAmount: "Deposit Amount",
     status: "Status"
   },
   promo: {

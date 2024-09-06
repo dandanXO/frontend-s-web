@@ -34,8 +34,7 @@
             <tr v-for="(item, i) in referredData" :key="i">
               <td>{{ item.loginName }}</td>
               <td>{{ item.regTime }}</td>
-              <td>{{ item.totalBet }}</td>
-              <td>{{ item.status }}</td>
+              <td>{{ item.depositAmount }}</td>
             </tr>
           </template>
         </table>
@@ -220,7 +219,7 @@ export default defineComponent({
       //   }
       // });
 
-      api.get("/session/vnm/referred").then((res) => {
+      api.get("/session/vnm/newReferred").then((res) => {
         // console.log(reminderForm)
         if (res.code === 0) {
           referredData.value = res.data;

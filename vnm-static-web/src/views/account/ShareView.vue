@@ -21,7 +21,7 @@
         </template>
         <el-table-column prop="loginName" :label="$t('refer.accountId')"/>
         <el-table-column prop="regTime" :label="$t('refer.regTime')"  />
-        <el-table-column prop="totalBet" :label="$t('refer.bet')"   />
+        <el-table-column prop="depositAmount" :label="$t('refer.depositAmount')"   />
       </el-table>
     </div>
   </div>
