@@ -94,9 +94,6 @@
                 <!-- </div> -->
               </div>
               <div class="inner">
-                <div v-if="selectedPromo.hasPromo">
-                  <HotPromotion :list="selectedPromo" />
-                </div>
                 <div
                   v-if="selectedPromo.promoType"
                   :class="{
@@ -108,12 +105,16 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div class="top-float">
+                  <div class="top-float" v-if="!selectedParam || (selectedParam && !selectedParam.hidefloat)">
                     <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
-                  <div class="promo-content-inner">
+                  <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
                     <div class="content-title">{{ selectedPromo.title }}</div>
+                  </div>
+
+                  <div class="hot-promo-div" v-if="selectedPromo.hasPromo">
+                    <HotPromotion :list="selectedPromo" />
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
 
@@ -904,7 +905,7 @@ export default defineComponent({
       .inner {
         max-width: 1400px;
         width: 90%;
-        margin: 20px auto;
+        margin: 20px auto 35px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -953,10 +954,16 @@ export default defineComponent({
           display: block;
         }
 
+        .hot-promo-div img {
+          width: initial;
+          display: initial;
+          margin-bottom: initial;
+        }
+
         .hot-promo {
-          background: #272c3d;
-          border-radius: 10px;
-          display: none;
+          //background: #272c3d;
+          //border-radius: 10px;
+          //display: none;
         }
 
         .promo-view-container {

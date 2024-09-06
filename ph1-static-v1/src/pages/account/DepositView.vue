@@ -55,6 +55,10 @@
       </template>
     </template>
 
+    <div class="slot-ftd-section" v-if="isFtdPrivilege">
+      <img src="../../assets/images/bonus/slot-ftd-img.png" />
+    </div>
+
     <!-- select amount -->
     <template v-if="isSelectedMethod">
       <div class="method-title q-mt-md q-mb-sm">Payment amount</div>
@@ -143,6 +147,13 @@
                   <template v-if="isUSDT">USDT</template>
                   <template v-else>{{ store.currency.value }}</template>
                 </span>
+              </template>
+
+              <template v-slot:append>
+                <div class="amt-input-append" v-if="isFtdPrivilege">
+                  Extra:
+                  <span>888Php!</span>
+                </div>
               </template>
             </q-input>
           </div>
@@ -386,6 +397,7 @@ const selectedItemAmount = ref();
 const selectedChannel = ref();
 const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
+const isFtdPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 
@@ -430,6 +442,7 @@ function initPay() {
 
   if (route.query.privilegeId) {
     extraPrivilegeId.value = route.query.privilegeId;
+    isFtdPrivilege.value = true;
   }
 
   payMethods.value = [];
@@ -947,6 +960,15 @@ onMounted(() => {
           padding-right: 0;
           margin: 0;
         }
+
+        :deep(.amt-input-append) {
+          span {
+            font-size: 17.5px;
+            font-style: italic;
+            color: #5c46e7;
+            text-shadow: 0px 1.02px 2.04px #180b3bcc;
+          }
+        }
       }
 
       .currency {
@@ -1157,6 +1179,15 @@ onMounted(() => {
   .options-picker {
     display: flex;
     gap: 6px;
+  }
+}
+
+.slot-ftd-section {
+  width: 100%;
+  margin: 10px auto 0px;
+
+  img {
+    width: 100%;
   }
 }
 
