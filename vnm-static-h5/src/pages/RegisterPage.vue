@@ -254,19 +254,19 @@ dense
 
           <!--          </router-link>-->
         </div>
+      <div class="text-center q-mt-md q-pb-sm">
+        {{ $t("lang.already_have_acc") }}
+        <router-link to="/login">
+          {{ $t("lang.login_here") }}
+        </router-link>
+      </div>
       </div>
     </q-form>
 
-    <div class="text-center q-mt-md q-pb-lg">
-      {{ $t("lang.already_have_acc") }}
-      <router-link to="/login">
-        {{ $t("lang.login_here") }}
-      </router-link>
-    </div>
 
-    <!-- <div class="login-bottom-div">
-    <img src="../assets/images/login/register-banner.png" />
-    </div> -->
+    <div class="login-bottom-div">
+    <img src="../assets/images/login/register-banner.jpg" />
+    </div>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
@@ -746,7 +746,7 @@ function charType(num) {
   background: url(../assets/images/login/reg-bg.png) no-repeat center center;
   background-size: cover;
   height: 100%;
-  padding: 12px 0px 0px;
+  padding: 12px 0px;
 
   .login-form-container {
     width: $box-width;
@@ -791,11 +791,13 @@ function charType(num) {
 }
 
 .login-bottom-div {
-  width: 100%;
-  margin-top: 10px;
-
+  // width: 100%;
+    margin: 15px 15px 5px;
+  overflow: hidden;
+  border-radius: 10px;
   img {
     width: 100%;
+    margin: -20px 0;
   }
 }
 </style>
