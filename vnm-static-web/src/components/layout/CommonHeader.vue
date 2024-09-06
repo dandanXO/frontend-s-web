@@ -378,6 +378,7 @@
       width="1440px"
       align-center
       @close="store.regPageVisible = false"
+      style="transform: scale(.8);"
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
@@ -2702,7 +2703,7 @@ body {
 
         .acc-dialog-left {
           display: flex;
-          align-items: flex-end;
+          align-items: flex-start;
           // background-image: url(../../assets/home/acc-dialog-bg-signup-eurocup.png);
           background-size: 100% 100%;
           background-position: center center;

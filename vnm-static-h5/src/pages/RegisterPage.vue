@@ -254,19 +254,19 @@ dense
 
           <!--          </router-link>-->
         </div>
+      <div class="text-center q-mt-md q-pb-sm">
+        {{ $t("lang.already_have_acc") }}
+        <router-link to="/login">
+          {{ $t("lang.login_here") }}
+        </router-link>
+      </div>
       </div>
     </q-form>
 
-    <div class="text-center q-mt-md q-pb-lg">
-      {{ $t("lang.already_have_acc") }}
-      <router-link to="/login">
-        {{ $t("lang.login_here") }}
-      </router-link>
-    </div>
 
-    <!-- <div class="login-bottom-div">
-    <img src="../assets/images/login/register-banner.png" />
-    </div> -->
+    <div class="login-bottom-div">
+    <img src="../assets/images/login/register-banner.jpg" />
+    </div>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
@@ -791,11 +791,12 @@ function charType(num) {
 }
 
 .login-bottom-div {
-  width: 100%;
-  margin-top: 10px;
-
+  // width: 100%;
+  margin: 20px;
+  overflow: hidden;
   img {
     width: 100%;
+    border-radius: 10px;
   }
 }
 </style>
