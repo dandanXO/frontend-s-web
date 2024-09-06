@@ -1,6 +1,6 @@
 <template>
   <div class="btn-container">
-    <div class="go-deposit-btn" @click="gotoDepositPage">
+    <div class="go-deposit-btn" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
       <span>DEPOSIT</span>
     </div>
@@ -12,10 +12,14 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const props = defineProps(["params"]);
+const params = JSON.parse(props.params || "{}");
+
 onMounted(() => {});
 
 const gotoDepositPage = () => {
-  router.push("/deposit?from=/promo");
+  const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
+  router.push(redirectPage);
 };
 </script>
 <style lang="scss">

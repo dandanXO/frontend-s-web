@@ -12,7 +12,7 @@
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'ph1-slot-ftd' && store.token" />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'ph1-slot-ftd' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
