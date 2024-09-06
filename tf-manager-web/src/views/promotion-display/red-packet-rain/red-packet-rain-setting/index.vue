@@ -697,6 +697,7 @@ import {getVipList} from "@/api/vip";
 import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const router = useRouter()
 const {t} = useI18n();
@@ -721,7 +722,7 @@ const currVipList = reactive({
 const ways = reactive({
   list: [],
 })
-
+let timeZone = null;
 const singleRainRangeFrom = ref(null);
 const singleRainRangeTo = ref(null);
 
@@ -876,6 +877,8 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
+
+    timeZone = siteList.list.find(e => e.id === form.siteId).timeZone;
   })
 }
 
@@ -886,7 +889,7 @@ const goToList = (row) => {
     }
 
 function displayHourMinute(rangeString) {
-  return rangeString.startTime + ' - ' + rangeString.endTime;
+  return rangeString.startTime + ' - ' + rangeString.endTime
 }
 
 function displayVipRule(vipRule) {
@@ -918,7 +921,8 @@ function removeLastDigitRule(item) {
 
 function isExpiredTime(rangeString) {
   // rangeString.startTime + ' - ' + rangeString.endTime;
-  if (rangeString.endTime < moment().format("YYYY-MM-DD-HH:mm")) {
+
+  if (rangeString.endTime < formatInputTimeZone(moment().format("YYYY-MM-DD-HH:mm"), timeZone)) {
     return true;
   }
   if (rangeString.endTime < rangeString.startTime) {
