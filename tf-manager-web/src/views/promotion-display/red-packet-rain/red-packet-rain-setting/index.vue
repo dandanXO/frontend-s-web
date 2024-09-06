@@ -922,7 +922,7 @@ function removeLastDigitRule(item) {
 function isExpiredTime(rangeString) {
   // rangeString.startTime + ' - ' + rangeString.endTime;
 
-  if (rangeString.endTime < formatInputTimeZone(moment().format("YYYY-MM-DD-HH:mm"), timeZone)) {
+  if (rangeString.endTime < moment().format("YYYY-MM-DD-HH:mm")) {
     return true;
   }
   if (rangeString.endTime < rangeString.startTime) {
