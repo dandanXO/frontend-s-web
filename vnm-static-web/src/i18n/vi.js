@@ -258,9 +258,9 @@ export default {
   refer: {
     specifiedLink: "Liên kết giới thiệu bạn bè của bạn",
     friendList: "Danh sách bạn bè",
-    accountId: "ID Tài khoản",
+    accountId: "Tên Tài Khoản",
     regTime: "Thời gian đăng ký",
-    bet: "Cược",
+    bet: "Tổng Nạp",
     status: "Trạng thái"
   },
   promo: {

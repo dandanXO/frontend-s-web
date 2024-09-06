@@ -15,7 +15,6 @@
             <td v-html="$t('lang.share_table_header_01')" />
             <td v-html="$t('lang.share_table_header_02')" />
             <td v-html="$t('lang.share_table_header_03')" />
-            <td v-html="$t('lang.share_table_header_04')" />
           </tr>
           <template v-if="referredData.length === 0">
             <tr class="box-content-row">

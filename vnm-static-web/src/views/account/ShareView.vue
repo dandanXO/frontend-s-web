@@ -19,16 +19,9 @@
         <template #empty>
           <EmptyData />
         </template>
-        <el-table-column prop="loginName" :label="$t('refer.accountId')" width="300" />
-        <el-table-column prop="regTime" :label="$t('refer.regTime')"  width="300" />
-        <el-table-column prop="totalBet" :label="$t('refer.bet')"  width="250"   />
-        <el-table-column prop="status" :label="$t('refer.status')" >
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              {{ getStatusType(scope.row.status) }}
-            </div>
-          </template>
-        </el-table-column>
+        <el-table-column prop="loginName" :label="$t('refer.accountId')"/>
+        <el-table-column prop="regTime" :label="$t('refer.regTime')"  />
+        <el-table-column prop="totalBet" :label="$t('refer.bet')"   />
       </el-table>
     </div>
   </div>
