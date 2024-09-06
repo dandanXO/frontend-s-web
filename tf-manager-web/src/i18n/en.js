@@ -296,6 +296,7 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
+    UCL: 'UEFA CHAMPIONS LEAGUE'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1613,6 +1614,7 @@ export default {
     totalDepositAmount: 'Total Deposit Amount',
     totalDepositCount: 'Total Deposit Count',
     totalDepositMemberCount: 'Total Member Deposit Count',
+    totalWithdrawMemberCount: 'Total Member Withdraw Count',
     totalDepositedAmount: 'Total deposited amount',
     totalDepositNumber: 'Total Deposit Member',
     totalDownlineAffiliates: 'Total Downline Affiliates',
@@ -2790,6 +2792,7 @@ export default {
     'Member Point Record': 'Member Point Record',
     'Affiliate Change Log': 'Affiliate Parent Change Log',
     'Media Display Settings': 'Media Display Settings',
+    'Member Vip Upgrade Record': 'Member Vip Upgrade Record',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
     'Sites Config': 'Site Config',

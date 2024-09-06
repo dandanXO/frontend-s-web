@@ -463,6 +463,8 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     form.siteId = site.value.id;
+  } else {
+    form.siteId = siteList.list[0].id;
   }
   await loadCurrency();
   await loadPaymentType();

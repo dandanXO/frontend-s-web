@@ -38,7 +38,7 @@ $lightblue: #e7f3ff;
 
 $primary-dark: #45FDFB;
 
-$background-dark: #20242a;
+$background-dark: #1A2338;
 $background-dark-light: #2b3038;
 $background-dark-header: #3e4756;
 
@@ -63,7 +63,8 @@ $font-size: 16px;
 $small-size: 13px;
 
 @mixin content-block-dark {
-  background: $background-dark-light;
+  background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
+  border: none;
   box-shadow: none;
 }
 

@@ -5,7 +5,7 @@ export default [
     meta: { requiresAuth: true },
     component: () =>
       import(
-        /* webpackChunkName: "personal" */ "../views/account/PersonalView.vue"
+        /* webpackChunkName: "personal" */ "../views/account/personalview/index.vue"
       ),
   },
   // {

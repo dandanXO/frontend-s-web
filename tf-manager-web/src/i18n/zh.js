@@ -301,6 +301,7 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
+    UCL: '欧洲冠军联赛'
   },
   homeBannerType: {
     HOME: '首页',
@@ -1613,6 +1614,7 @@ export default {
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
     totalDepositMemberCount: '总充值人数',
+    totalWithdrawMemberCount: '总提款人数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
@@ -2738,6 +2740,7 @@ export default {
     'Member Point Record': '会员积分记录',
     'Affiliate Change Log': '更换代理日志',
     'Media Display Settings': '媒体显示设置',
+    'Member Vip Upgrade Record': '会员VIP晋级记录',
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',

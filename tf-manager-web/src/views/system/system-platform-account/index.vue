@@ -393,7 +393,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { required, checkJson } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import {
@@ -408,10 +408,13 @@ import { useStore } from '../../../store'
 import { useI18n } from 'vue-i18n'
 import { getSiteListSimple } from '../../../api/site'
 import JsonEditor from 'json-editor-vue3'
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const store = useStore()
 const { t } = useI18n()
 const sitePlatformForm = ref(null)
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -489,7 +492,7 @@ const sites = reactive({
 // })
 
 function resetQuery() {
-  request.siteId = null
+  request.siteId = sites.list[0].id
   request.platformId = null
 }
 
@@ -684,10 +687,17 @@ function removeJsonEditorElement() {
   })
 }
 
-onMounted(() => {
-  loadPlatfromAccount()
-  loadPlatforms()
-  loadSites()
+onMounted(async () => {
+  await loadSites()
+  request.siteId = sites.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = sites.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
+  await loadPlatfromAccount()
+  await loadPlatforms()
 })
 </script>
 

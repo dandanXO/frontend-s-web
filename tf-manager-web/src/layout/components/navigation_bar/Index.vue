@@ -14,28 +14,50 @@
         placeholder=""
         style="width: 150px;"
         v-model="selectedSite"
-        @change="updateData"
+        @change="changeSite"
       >
-        <el-option v-for="site in sites" :label="site.siteName" :key="site.siteCode" :value="site.siteCode" />
+        <el-option
+          v-for="site in sites"
+          :label="site.siteName"
+          :key="site.siteCode"
+          :value="site.siteCode"
+        />
       </el-select>
       <div v-if="selectedData" class="key-value-container">
         <div class="flex-div">
           <div class="green-circle-dot" />
           <div class="text-2">
-            {{ $t('realtimeStatistics.Mobile') }}: <span>{{ selectedData.Mobile ? selectedData.Mobile : 0 }}</span>
+            {{ $t('realtimeStatistics.Mobile') }}:
+            <span>{{ selectedData.Mobile ? selectedData.Mobile : 0 }}</span>
           </div>
           <div class="text-2">
-            {{ $t('realtimeStatistics.PC') }}: <span>{{ selectedData.PC ? selectedData.PC : 0 }}</span>
+            {{ $t('realtimeStatistics.PC') }}:
+            <span>{{ selectedData.PC ? selectedData.PC : 0 }}</span>
           </div>
           <div class="text-2">
-            <router-link :to="{path: `/withdraw/withdraw-process-simple/apply`, force: true}">
-              <el-link :disabled="!hasPermission(['sys:withdraw:simple:list'])" type="primary">{{ $t('realtimeStatistics.APPLY_WITHDRAW') }}: <span>{{ applyWithdrawCount }}</span></el-link>
+            <router-link
+              :to="{
+                path: `/withdraw/withdraw-process-simple/apply`,
+                force: true,
+              }"
+            >
+              <el-link
+                :disabled="!hasPermission(['sys:withdraw:simple:list'])"
+                type="primary"
+              >
+                {{ $t('realtimeStatistics.APPLY_WITHDRAW') }}:
+                <span>{{ applyWithdrawCount }}</span>
+              </el-link>
             </router-link>
           </div>
         </div>
       </div>
       <div class="key-value-container">
-        <div class="flex-div"><div class="text-2"><span style="color: red;">{{ message }}</span></div></div>
+        <div class="flex-div">
+          <div class="text-2">
+            <span style="color: red;">{{ message }}</span>
+          </div>
+        </div>
       </div>
       <el-select
         class="lang-container right-menu-item"
@@ -54,7 +76,8 @@
         trigger="click"
       >
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
+          <!-- eslint-disable -->
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
         </div>
         <template #dropdown>
           <el-dropdown-menu>
@@ -93,14 +116,19 @@ import { computed, reactive, toRefs, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { UserActionTypes } from '@/store/modules/user/action-types'
+import { MenuActionType } from '@/store/modules/menu/action-types'
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
-import { hasPermission, hasRole } from "@/utils/util";
+import { hasPermission, hasRole } from '@/utils/util'
 import { showAlert } from '../../../api/member'
-import { getSiteListSimple } from "@/api/site";
+// import { getSiteListSimple } from '@/api/site'
+/* eslint-disable */
+import { updateDefaultSite, loadAuthMenu } from '../../../api/user'
+import { ElMessage } from 'element-plus'
+import { inject } from 'vue-demi'
 
 export default {
   methods: { hasPermission, hasRole },
@@ -129,12 +157,15 @@ export default {
     const name = computed(() => {
       return store.state.user.name
     })
-    const sites = ref([]);
-    const loadSites = async () => {
-      const response = await getSiteListSimple();
-      const { data: site } = response;
-      sites.value = site;
-    };
+    const sites = computed(() => {
+      return store.state.user.sites.filter(site => site.id !== 9999);
+    })
+    // const sites = ref([])
+    // const loadSites = async () => {
+    //   const response = await getSiteListSimple()
+    //   const { data: site } = response
+    //   sites.value = site
+    // }
     const state = reactive({
       toggleSideBar: () => {
         store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false)
@@ -164,56 +195,120 @@ export default {
       list: [],
     })
 
-    const selectedSite = ref(null);
-    const selectedData = ref(null);
-    const applyWithdrawCount = ref(0);
-    const message = ref(null);
+    const selectedSite = ref(null)
+    const selectedData = ref(null)
+    const applyWithdrawCount = ref(0)
+    const message = ref(null)
 
     async function loadMemberStatistics() {
-      const response = await getMemberStatistics();
-      const { data: memberStatistics } = response;
-      const parsedStatistics = JSON.parse(memberStatistics);
-      statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
+      const response = await getMemberStatistics()
+      const { data: memberStatistics } = response
+      const parsedStatistics = JSON.parse(memberStatistics)
+      statisticsList.list = Array.isArray(parsedStatistics)
+        ? parsedStatistics
+        : []
     }
 
     function updateData() {
-      const selectedSiteData = statisticsList.list.find(site => site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase());
-      selectedData.value = selectedSiteData || null;
+      const selectedSiteData = statisticsList.list.find(
+        site =>
+          site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase()
+      )
+      selectedData.value = selectedSiteData || null
     }
 
     function updateApplyWithdrawCount() {
-      applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0;
+      applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0
     }
+
+    const reload = inject('reload')
+    const changeSite = async () => {
+      const getSelectedSite = sites.value.find(
+        site =>
+          site.siteCode.toLowerCase() === selectedSite.value?.toLowerCase()
+      )
+      getSelectedSite.value = getSelectedSite || null
+
+      const { data: token } = await updateDefaultSite(getSelectedSite.id)
+
+      await store.dispatch(UserActionTypes.ACTION_UPDATE_TOKEN, token)
+      await store.dispatch(
+        UserActionTypes.ACTION_CHANGE_SITE_ID,
+        getSelectedSite
+      )
+      ElMessage({
+        message: `switch site to ` + getSelectedSite.siteName,
+        type: 'success',
+      })
+      setTimeout(() => {
+        reload()
+        loadMenu()
+        updateData()
+        // location.reload()
+      }, 200)
+    }
+
+    function mapMenuPaths(menus, parentPath = '') {
+      const paths = [];
+      menus.forEach(menu => {
+        const fullPath = parentPath + menu.path;
+        paths.push(fullPath);
+
+        if (menu.children && menu.children.length > 0) {
+            paths.push(...mapMenuPaths(menu.children, fullPath));
+        }
+      });
+      return paths;
+    }
+
+    async function loadMenu(){
+      const { data : menus } = await loadAuthMenu()
+      await store.dispatch(MenuActionType.ACTION_SET_ROUTES, menus);
+        const mappedPaths = mapMenuPaths(menus);
+        const currentRoute = router.currentRoute.value;
+
+        const isRouteMatched = mappedPaths.includes(currentRoute.path);
+        if (!isRouteMatched) {
+            router.push({ path: '/welcome' });
+        }
+    }
+    // logout: async () => {
+    //     await store.dispatch(UserActionTypes.ACTION_LOGOUT)
+    //     location.reload()
+    //   },
 
     async function showAlertMessage() {
       const response = await showAlert()
-      const { data: alert } = response;
+      const { data: alert } = response
       if (alert) {
-        message.value = t('fields.' + alert)
+        message.value = t('fields.' + alert) 
       }
     }
 
     onMounted(async () => {
       // 根据情况赋值sites
-      if (hasRole(["ADMIN"])) {
-        sites.value = store.state.user.sites;
-      } else if (hasRole(["MANAGER"])) {
-        await loadSites();
-      } else {
-        sites.value = store.state.user.sites;
-      }
-      // 根据情况指定selectedSite
-      if (hasRole(["ADMIN", "MANAGER"])) {
-        selectedSite.value = sites.value[0]?.siteCode || null;
-      } else {
-        selectedSite.value = sites.value.find(site => site.id === store.state.user.siteId)?.siteCode || null;
-      }
+      // if (hasRole(['ADMIN'])) {
+      //   sites.value = store.state.user.sites
+      // } else if (hasRole(['MANAGER'])) {
+      //   sites.value = store.state.user.sites
+      // } else {
+      //   sites.value = store.state.user.sites
+      // }
+      sites.value = store.state.user.sites
+      // 根据情况指定selectedSite , 'MANAGER'
+      // if (hasRole(['ADMIN'])) {
+      //   selectedSite.value = sites.value[0]?.siteCode || null
+      // } else {
+      selectedSite.value =
+        sites.value.find(site => site.id === store.state.user.siteId)
+          ?.siteCode || null
+      // }
       // 根据情况捞取所需的统计资料
       if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
-        loadMemberStatistics();
-        updateApplyWithdrawCount();
-      } else if (hasRole(["ADMIN", "MANAGER"])) {
-        loadMemberStatistics();
+        loadMemberStatistics()
+        updateApplyWithdrawCount()
+      } else if (hasRole(['ADMIN', 'MANAGER'])) {
+        loadMemberStatistics()
       }
       if (hasPermission(['sys:member:alert'])) {
         showAlertMessage()
@@ -222,19 +317,27 @@ export default {
 
     watch(statisticsList, () => {
       if (statisticsList.list.length > 0) {
-        statisticsList.list.sort((a, b) => b.APPLY_WITHDRAW - a.APPLY_WITHDRAW);
+        statisticsList.list.sort((a, b) => b.APPLY_WITHDRAW - a.APPLY_WITHDRAW)
       }
-      updateData();
-    });
+      updateData()
+    })
 
-    watch(() => useStore().state.socket.event, () => {
-      const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
-      if (memberStatistics.length > 0) {
-        const parsedStatistics = JSON.parse(memberStatistics[0].statistics);
-        statisticsList.list = Array.isArray(parsedStatistics) ? parsedStatistics : [];
-      }
-      updateApplyWithdrawCount();
-    }, { deep: true });
+    watch(
+      () => useStore().state.socket.event,
+      () => {
+        const memberStatistics = useStore().state.socket.event.filter(
+          e => e.event === 'MEMBER_STATISTICS'
+        )
+        if (memberStatistics.length > 0) {
+          const parsedStatistics = JSON.parse(memberStatistics[0].statistics)
+          statisticsList.list = Array.isArray(parsedStatistics)
+            ? parsedStatistics
+            : []
+        }
+        updateApplyWithdrawCount()
+      },
+      { deep: true }
+    )
 
     return {
       sidebar,
@@ -252,13 +355,13 @@ export default {
       selectedSite,
       selectedData,
       updateData,
+      changeSite,
       applyWithdrawCount,
       updateApplyWithdrawCount,
       message,
     }
   },
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -269,7 +372,7 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
-  display:flex;
+  display: flex;
   justify-content: flex-start;
 
   .hamburger-container {
@@ -296,10 +399,10 @@ export default {
   }
 
   .right-menu {
-    margin-left:auto;
+    margin-left: auto;
     //float: right;
     height: 100%;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 4px;
@@ -332,7 +435,7 @@ export default {
         //margin-top: 5px;
         margin-right: 16px;
         margin-left: 16px;
-        width:40px;
+        width: 40px;
         height: 40px;
         position: relative;
 
@@ -352,62 +455,62 @@ export default {
         }
       }
     }
-    .statistics-container{
-      display:flex;
+    .statistics-container {
+      display: flex;
       align-items: center;
       //margin-top: 5px;
       //right: 200px;
       //position: absolute;
 
-      .el-select{
+      .el-select {
         line-height: 36px;
         height: 36px;
       }
     }
 
     .key-value-container {
-      display:flex;
+      display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap:5px;
+      gap: 5px;
       margin-right: 16px;
     }
 
-    .flex-div{
-      display:flex;
+    .flex-div {
+      display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap:10px;
+      gap: 10px;
 
-      .text-1{
+      .text-1 {
         font-size: 14px;
         line-height: 14px;
         margin-right: 8px;
         color: rgba(0, 0, 0, 0.45);
       }
 
-      .text-2{
+      .text-2 {
         color: rgba(0, 0, 0, 0.8);
 
-        span{
+        span {
           color: #000;
           font-weight: bold;
         }
       }
-      .text-3{
+      .text-3 {
         color: rgba(0, 0, 0, 0.8);
 
-        span{
+        span {
           color: #000;
           font-weight: bold;
         }
       }
     }
 
-    .green-circle-dot{
-      display:inline-block;
+    .green-circle-dot {
+      display: inline-block;
       width: 8px;
-      height:8px;
+      height: 8px;
       background: #67c23a;
       border-radius: 50%;
     }

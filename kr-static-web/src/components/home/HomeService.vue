@@ -1,6 +1,6 @@
 <template>
   <div class="service-section">
-    <HomeTitle title="CITY8 Service"></HomeTitle>
+    <HomeTitle title="DIAMOND Service"></HomeTitle>
     <div class="service-container">
       <!-- <div class="top-container" data-aos="fade-down">
         <div class="counter">

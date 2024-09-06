@@ -1,9 +1,10 @@
-import {defineStore} from "pinia";
-import {api, cashier, eventapi} from "boot/axios";
-import {SessionStorage, Notify, Platform} from "quasar";
+import { defineStore } from "pinia";
+import { api, cashier, eventapi } from "boot/axios";
+import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import {isAndroid} from "boot/utils"
+import { isAndroid } from "boot/utils";
 import { useUI } from "./ui";
+import { getVIPDetails, getVIPDetailsNotLoggedIn } from "../api/index/promo";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -32,13 +33,16 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: {value: "￥", label: "RMB"},
-      personalAddress: '',
+      gender: "",
+      currency: { value: "￥", label: "RMB" },
+      personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
+      currentBetAmt: "",
+      currentUpgradeBetAmt: "",
       visitorId: "",
       profilePhoto: "",
       isDisplayLogin: false
@@ -77,9 +81,7 @@ export const userStore = defineStore("userStore", {
     },
     isApp() {
       if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
+        (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
         (Platform.is.android && Platform.is.capacitor)
       ) {
         return true;
@@ -93,10 +95,11 @@ export const userStore = defineStore("userStore", {
     isNotAppPromo() {
       // console.log(window.location.pathname);
       //当 LH H5 在 /promotion 或者某些页面时，很多Api都不需要Call + 省时间。
-      if(
+      if (
         window.location.pathname === "/deposit" ||
         window.location.pathname === "/vip" ||
-        window.location.pathname === "/promotion"){
+        window.location.pathname === "/promotion"
+      ) {
         // console.log("IS In App")
         return false;
       }
@@ -124,7 +127,7 @@ export const userStore = defineStore("userStore", {
         } else {
           useUI().notify({
             type: "error",
-            message: ret.message,
+            message: ret.message
           });
         }
       });
@@ -151,7 +154,7 @@ export const userStore = defineStore("userStore", {
         } else {
           useUI().notify({
             type: "error",
-            message: ret.message,
+            message: ret.message
           });
         }
       });
@@ -205,6 +208,7 @@ export const userStore = defineStore("userStore", {
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
           this.emailVerified = response.data.emailVerified;
+          this.gender = response.data.gender;
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
@@ -214,10 +218,35 @@ export const userStore = defineStore("userStore", {
           this.unreadInboxMail = 0;
           // this.unreadInboxMail = 16;
           this.getBalance();
+          this.getVIPInfo();
         } else {
           this.memberLogout();
         }
       });
+    },
+    getVIPInfo() {
+      if (this.token) {
+        return getVIPDetails().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem('vipData', JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+        })
+      } else {
+        return getVIPDetailsNotLoggedIn().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem('vipData', JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+        })
+      }
+    },
+    handleVIPData(res) {
+      this.currentBetAmt = res.data.currentBetAmount;
+      const vipLevel = this.vip.replace("VIP", "");
+      if (res.data.vipBonusVOList && res.data.vipBonusVOList[vipLevel]) {
+        this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
+      }
     },
     getBalance() {
       if (this.token) {
@@ -236,14 +265,20 @@ export const userStore = defineStore("userStore", {
           });
       }
     },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
+    getLevelUpDeposit() {
+      return this.levelUpDeposit;
+    },
     getUnreadTotal() {
       if (this.token) {
-        return api.get('/session/inbox/getUnreadTotal').then((total) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
           }
-        })
+        });
       }
     },
     autoLogin(token) {
@@ -259,9 +294,10 @@ export const userStore = defineStore("userStore", {
         .then(() => {
           LocalStorage.remove("TOKEN");
           SessionStorage.remove("TOKEN");
+          SessionStorage.remove("vipData");
 
-          location.reload();
-        });
+        location.reload();
+      });
     }
   }
 });

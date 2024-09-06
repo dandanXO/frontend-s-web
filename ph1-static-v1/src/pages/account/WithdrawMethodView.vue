@@ -1,7 +1,6 @@
 <template>
   <div class="withdrawal-modal-view">
     <div class="method-title q-mb-sm">Withdraw Currency</div>
-
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
         <q-skeleton style="height: 96px" />
@@ -28,6 +27,9 @@
         >
           <div class="item-icon"><img :src="imgURL + '/payment/' + item.nodeIcon" /></div>
           <div>{{ item.code }}</div>
+          <div class="item-hot-ribbon" v-if="item.hot">
+            <img src="../../assets/images/account/ribbon-hot.png" />
+          </div>
         </div>
       </div>
 
@@ -369,6 +371,7 @@ const withdrawalMethods = reactive({
 
 const paymentMethodsItems = ref([]);
 const selectedMethodsItems = ref([]);
+const listItems = ref([]);
 
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
@@ -397,6 +400,18 @@ const getWithdrawalMethods = () => {
         }
         return acc;
       }, {});
+
+      // listItems
+      let listCurrency = res.data.withdraws
+        .map((withdraw) => {
+          return withdraw.children.map((child) => child.children).flat();
+        })
+        .flat();
+      listItems.value = listCurrency.flat().sort((a, b) => {
+        if (a.payType < b.payType) return 1;
+        if (a.payType > b.payType) return -1;
+        return 0;
+      });
 
       paymentMethodsItems.value = Object.values(groupedMethods).sort((a, b) => {
         if (a.payType < b.payType) return 1;
@@ -853,6 +868,17 @@ const toggleAmount = (type) => {
         width: 100%;
         max-width: 50px;
       }
+
+      .item-hot-ribbon {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        img {
+          display: block;
+          width: 30px;
+        }
+      }
     }
   }
 
@@ -926,6 +952,7 @@ const toggleAmount = (type) => {
         width: 50px;
       }
     }
+
     .item-detail {
       padding: 6px 6px 6px 8px;
       .txt-title {

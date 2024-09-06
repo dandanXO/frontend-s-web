@@ -388,7 +388,7 @@ function resetQuery() {
   request.queryTime = null
   request.cardType = null
   request.operationType = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 function loadPage() {
@@ -474,6 +474,8 @@ function updateSetting() {
 
 onMounted(async () => {
   await loadSites()
+
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

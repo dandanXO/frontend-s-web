@@ -281,7 +281,7 @@ const formRules = reactive({
 })
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : sites.list[0].id
   request.platformId = null
 }
 
@@ -381,6 +381,8 @@ async function showEdit(row) {
 
 onMounted(async() => {
   await loadSites()
+
+  request.siteId = sites.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;

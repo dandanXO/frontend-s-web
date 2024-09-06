@@ -1,5 +1,8 @@
 import https from "@/utils/https";
 import { ContentType, Method } from "axios-mapper";
+import { useStore } from '@/store'
+
+const store = useStore()
 
 export const getGameStepsSettings = (siteId) => {
   return https().request("/game-steps", Method.GET, { siteId: siteId }, ContentType.form);
@@ -30,7 +33,28 @@ export const getGameStepsRecordsForExport = (gameSteps) => {
 };
 
 export const getSiteWithPromo = () => {
-  return https().request("/game-steps/sites", Method.GET);
+  return https()
+    .request("/game-steps/sites", Method.GET)
+    .then(response => {
+      const site = response.data
+
+      const updateWithUserStoreSiteId = site.filter(
+        e => e.id === store.state.user.siteId
+      )
+      const mockResponse = {
+        code: 0,
+        data: updateWithUserStoreSiteId,
+      }
+
+      return mockResponse
+    })
+    .catch(error => {
+      console.error('Error fetching site list:', error)
+      return {
+        code: 1,
+        data: [],
+      }
+    });
 }
 
 export const getNextLevel = (siteId) => {

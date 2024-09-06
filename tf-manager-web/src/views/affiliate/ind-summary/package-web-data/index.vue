@@ -110,6 +110,12 @@
           width="120"
         />
         <el-table-column
+          prop="withdrawMembersCount"
+          :label="t('fields.totalWithdrawMemberCount')"
+          align="center"
+          width="120"
+        />
+        <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
           width="120"
@@ -323,13 +329,13 @@ const total = reactive({
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
 }
 
@@ -416,13 +422,14 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 3 ||
-          index === 5 ||
+          index === 4 ||
           index === 6 ||
-          index === 11 ||
-          index === 12
+          index === 7 ||
+          index === 12 ||
+          index === 13
         ) {
           sums[index] = total.data[prop]
-        } else if (index === 4) {
+        } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +
