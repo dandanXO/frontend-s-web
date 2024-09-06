@@ -422,7 +422,7 @@ const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
 const { ftd } = storeToRefs(store);
-const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd);
+const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -842,7 +842,7 @@ const loadAppTabs = () => {
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
-      if (data && data.ftd) {
+      if (data && data.hasOwnProperty('ftd')) {
         store.ftd = data.ftd;
       }
     }
