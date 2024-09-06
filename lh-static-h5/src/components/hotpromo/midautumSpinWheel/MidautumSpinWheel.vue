@@ -82,7 +82,8 @@
         <div class="content">
           <div class="bold-text">
             <div class="darkred-text">恭喜获得</div>
-            <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
+            <div class="red-text" v-if="prizePopupBonusAmt">{{ prizePopupBonusAmt }}元彩金</div>
+            <div class="red-text" v-else>豪华版【黑神话·悟空】</div>
           </div>
           <div class="action-btn" @click="showPrizePopup = false"></div>
         </div>
@@ -241,16 +242,22 @@ const spinWheel = (times) => {
   }
 
   eventapi
-    .post(`/mooncakeFestSpin/spin?spinTimes=${times}`)
+    .post(`/mooncakeFestSpin/spin?spinTimes=1`)
     .then((res) => {
       if (res.code === 0) {
-        var bonusIndex = res.data.spinBonusVOList.bonus;
+        var bonusIndex = (() => {
+          if(res.data.spinBonusVOList[0].bonusName && res.data.spinBonusVOList[0].bonus === 0) {
+            return "黑神话 - 悟空";
+          }
+
+          return res.data.spinBonusVOList[0].bonus;
+        })();
         remainingDraws.value = res.data.availableSpin;
         const prizeIndex = degreesToStopAt.value.findIndex((item) => item.prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.spinBonusVOList.bonus;
+          prizePopupBonusAmt.value = res.data.spinBonusVOList[0].bonus;
           remainingDraws.value = res.data.availableSpin;
         });
       }
@@ -275,31 +282,31 @@ onMounted(() => {
 
   degreesToStopAt.value = [
     {
-      degree: 18,
+      degree: 110,
       prize: 188
     },
     {
-      degree: 54,
+      degree: 64,
       prize: 888
     },
     {
-      degree: 90,
+      degree: 5,
       prize: "黑神话 - 悟空"
     },
     {
-      degree: 144,
+      degree: 164,
       prize: 1888
     },
     {
-      degree: 198,
+      degree: 218,
       prize: 88
     },
     {
-      degree: 252,
+      degree: 265,
       prize: 18
     },
     {
-      degree: 324,
+      degree: 315,
       prize: 8
     }
   ];
@@ -389,13 +396,13 @@ onMounted(() => {
   z-index: 25;
 }
 .draw-btn {
-  width: 100px;
+  width: 125px;
   height: auto;
   aspect-ratio: 206/220;
   z-index: 25;
   position: absolute;
-  top: calc(50%);
-  left: 50%;
+  top: 51%;
+  left: 50.5%;
   transform: translate(-50%, -50%);
 
   &.disabled {
@@ -439,6 +446,7 @@ onMounted(() => {
   }
 
   .spin-wheel-stg-text {
+    display: none;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -1.25px 2.86px 0px #b1d7ff inset;
     font-size: 18px;
@@ -508,16 +516,16 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 300px;
-    height: 345px;
+    width: 230px;
+    height: 250px;
     gap: 0px;
     background: url("./../../../assets/images/promo/hotpromo/midautum-spinWheel/prize-popup.png");
     background-size: 100% 100%;
     position: relative;
     .close {
       position: absolute;
-      right: 0;
-      top: 38px;
+      right: 0px;
+      top: 25px;
       width: 20px;
       height: 20px;
     }
@@ -541,11 +549,11 @@ onMounted(() => {
     }
     .darkred-text {
       color: #8c3b00;
-      font-size: 20px;
+      font-size: 18px;
     }
     .red-text {
       color: #ff0000;
-      font-size: 28px;
+      font-size: 22px;
     }
 
     .win-text {
@@ -567,7 +575,7 @@ onMounted(() => {
     }
 
     .content {
-      height: 260px;
+      height: 200px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -581,7 +589,7 @@ onMounted(() => {
         background-size: contain;
         width: 100%;
         height: 100%;
-        max-height: 70px;
+        max-height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -734,7 +742,7 @@ onMounted(() => {
     padding: 20px 20px 20px 10px;
     border-radius: 0 0 12px 12px;
     .item {
-      padding-left: 24px;
+      padding-left: 10px;
       display: flex;
       gap: 10px;
 

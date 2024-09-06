@@ -844,7 +844,7 @@ export default defineComponent({
       // height: 100%;
       // width: auto;
       width: 100%;
-      max-width: 100px;
+      max-width: 200px;
       // opacity: 0;
     }
   }

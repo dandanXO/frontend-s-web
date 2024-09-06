@@ -24,10 +24,11 @@
           class="landing-input"
           outlined
           placeholder="Enter your mobile number"
-          label-color="brand"
+          label-color="white"
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">+63</span>
           </template>
         </q-input>
 
@@ -682,10 +683,9 @@ function charType(num) {
   :deep(.q-field__control) {
     padding-left: 20px;
     padding-right: 20px;
-  }
-  :deep(.q-field__control):before {
-    border-color: #1e1f24;
     background-color: #1e1f24;
+    border-color: #1e1f24;
+
     border-width: 2px;
   }
 
@@ -722,5 +722,11 @@ function charType(num) {
   color: #fae576;
   text-decoration: none;
   font-weight: 700;
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
 }
 </style>

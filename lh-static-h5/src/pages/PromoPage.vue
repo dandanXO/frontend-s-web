@@ -2,7 +2,10 @@
   <div class="promo-container">
     <div
       class="promo"
-      :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
+      :class="{
+        unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
+        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel'
+      }"
       :style="
         isPromoDetail
           ? 'background-image: url(' +
@@ -36,7 +39,10 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
@@ -67,46 +73,11 @@
                     </a>
                   </div>
 
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
-                        </div>
-
-                        <div class="promo-item-side-img">
-                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                      <!-- <div class="promo-img-wrapper"> -->
-                      <!-- <div class="promo-bg"> -->
-                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
-                      <!-- </div> -->
-                      <!-- </div> -->
-                    </a>
-                  </div>
-
-                  <!--                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">-->
+                  <!--                  <div class="promo-item" v-if="tab.name === 'all'">-->
                   <!--                    <a @click="showPromoDetails(promo)">-->
                   <!--                      <div>-->
                   <!--                        <div class="promo-label">-->
-                  <!--                          <div class="promo-ribbon" v-if="promo.labelType !== 2">-->
+                  <!--                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">-->
                   <!--                            {{ getPromoLabel(promo.labelType) }}-->
                   <!--                          </div>-->
                   <!--                          <div-->
@@ -126,7 +97,7 @@
                   <!--                        </div>-->
 
                   <!--                        <div class="promo-item-side-img">-->
-                  <!--                          <img :src="imgURL + promo.mobileImgUrl" />-->
+                  <!--                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />-->
                   <!--                        </div>-->
                   <!--                      </div>-->
                   <!--                    </a>-->
@@ -692,6 +663,12 @@ export default defineComponent({
     background-position: bottom center;
     background-size: cover;
     background-attachment: fixed;
+
+    &.midAutumnWukong {
+      background-position: top;
+      background-size: 100% auto;
+      background-attachment: unset;
+    }
 
     &.unfixed {
       background-attachment: scroll;

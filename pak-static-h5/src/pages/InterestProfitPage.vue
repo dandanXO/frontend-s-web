@@ -13,7 +13,7 @@
 
         <div class="do-amount">
           <div class="amount-txt">
-            ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
+            {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
           </div>
           <img src="../assets/images/interest-profit/chevron-right.png" />
         </div>
@@ -22,13 +22,13 @@
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.unexpiredEarnings") }}</div>
             <div class="item-amount">
-              ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
+              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
             </div>
           </div>
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.cumulativeIncome") }}</div>
             <div class="item-amount">
-              ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
+              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
                   :rules="[(val) => !!val || $t('interestProfit.deposit_required')]"
                 >
                   <template v-slot:prepend>
-                    <div>₹</div>
+                    <div>{{ store.currency.value }}</div>
                   </template>
                 </q-input>
               </template>
@@ -137,7 +137,7 @@
               <div class="order-row order-row--content">
                 <div class="order-subrow">
                   <div class="order-col">
-                    <span class="txt-green">₹{{ e.amount }}</span>
+                    <span class="txt-green">{{ store.currency.value }}{{ e.amount }}</span>
                   </div>
                   <div class="order-col">
                     <q-btn
@@ -269,10 +269,12 @@ import { useI18n } from "vue-i18n";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useQuasar } from "quasar";
+import { userStore } from "stores/index";
 
 const interestProfitField = reactive({ storageTime: "", odds: "", deposits: "" });
 const $q = useQuasar();
 const { t } = useI18n();
+const store = userStore();
 const qs = require("qs");
 const isLoading = ref(false);
 const isRecordLoading = ref(false);

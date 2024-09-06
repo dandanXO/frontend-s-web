@@ -221,6 +221,12 @@
         </template>
       </el-table-column> -->
       <el-table-column
+        prop="depositCount"
+        :label="t('fields.totalDepositCount')"
+        align="center"
+        width="120"
+      />
+      <el-table-column
         prop="totalDepositNumber"
         :label="t('fields.totalDepositMemberCount')"
         align="center"
@@ -597,13 +603,12 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
 }
 

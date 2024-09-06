@@ -81,7 +81,8 @@
       <div class="content">
         <div class="bold-text">
           <div class="darkred-text">恭喜获得</div>
-          <div class="red-text">{{ prizePopupBonusAmt }}元彩金</div>
+          <div class="red-text" v-if="prizePopupBonusAmt">{{ prizePopupBonusAmt }}元彩金</div>
+          <div class="red-text" v-else>豪华版【黑神话·悟空】</div>
         </div>
         <div class="action-btn" @click="showPrizePopup = false"></div>
       </div>
@@ -216,13 +217,19 @@ const spinWheel = (times) => {
   getMidautumSpinWheelPrize(times)
     .then((res) => {
       if (res.code === 0) {
-        var bonusIndex = res.data.spinBonusVOList.bonus;
+        var bonusIndex = (() => {
+          if(res.data.spinBonusVOList[0].bonusName && res.data.spinBonusVOList[0].bonus === 0) {
+            return "黑神话 - 悟空";
+          }
+
+          return res.data.spinBonusVOList[0].bonus;
+        })();
         remainingDraws.value = res.data.availableSpin;
         const prizeIndex = degreesToStopAt.value.findIndex((item) => item.prize === bonusIndex);
 
         spin(prizeIndex, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.spinBonusVOList.bonus;
+          prizePopupBonusAmt.value = res.data.spinBonusVOList[0].bonus;
           remainingDraws.value = res.data.availableSpin;
         });
       }
@@ -247,31 +254,31 @@ onMounted(() => {
 
   degreesToStopAt.value = [
     {
-      degree: 18,
+      degree: 110,
       prize: 188
     },
     {
-      degree: 54,
+      degree: 64,
       prize: 888
     },
     {
-      degree: 90,
+      degree: 5,
       prize: "黑神话 - 悟空"
     },
     {
-      degree: 144,
+      degree: 164,
       prize: 1888
     },
     {
-      degree: 198,
+      degree: 218,
       prize: 88
     },
     {
-      degree: 252,
+      degree: 265,
       prize: 18
     },
     {
-      degree: 324,
+      degree: 315,
       prize: 8
     }
   ];
@@ -369,13 +376,13 @@ onMounted(() => {
   transform: translate(-50%, -50%);
 }
 .draw-btn {
-  width: 195px;
+  width: 250px;
   height: auto;
   aspect-ratio: 206/220;
   z-index: 25;
   position: absolute;
-  top: calc(50%);
-  left: 50%;
+  top: 51%;
+  left: 50.5%;
   transform: translate(-50%, -50%);
 
   &.disabled {
@@ -417,6 +424,7 @@ onMounted(() => {
   }
 
   .spin-wheel-stg-text {
+    display: none;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -1.25px 2.86px 0px #b1d7ff inset;
     font-size: 18px;
@@ -478,8 +486,8 @@ onMounted(() => {
 }
 
 .prizePopupContainer {
-  width: 480px;
-  height: 500px;
+  width: 336px;
+  height: 350px;
   background: url("./../../../assets/images/promotion/hotpromo/midautum-spinWheel/prize-popup.png");
   background-size: 100% 100%;
   box-shadow: none;
@@ -501,7 +509,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 470px;
+    height: 329px;
     gap: 0px;
 
     .bold-text {
@@ -543,7 +551,7 @@ onMounted(() => {
     }
 
     .content {
-      height: 340px;
+      height: 290px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

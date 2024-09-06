@@ -1103,7 +1103,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -2742,7 +2742,7 @@ const getVersionNo = async () => {
 
 const openDownloadPage = () => {
   window.open(download_url.value, "_system");
-  isAppUpdateModal.value = false;
+  // isAppUpdateModal.value = false;
 };
 const cancelUpdate = () => {
   isAppUpdateModal.value = false;
@@ -2867,6 +2867,8 @@ const loadCustomerAddress = () => {
     });
 };
 
+let intervalId;
+
 onActivated(() => {
   store.getUnreadTotal();
 });
@@ -2886,6 +2888,12 @@ onMounted(() => {
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  intervalId = setInterval(checkPlatform, 300000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
 });
 </script>
 

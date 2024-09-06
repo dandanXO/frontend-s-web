@@ -705,7 +705,7 @@ const monthlyVipReceive = ref(false);
 
 const checkMonthlyVipReceive = () => {
   eventapi
-    .get("/privi/vip/canRedeem", { params: { promoCode: "pak-vip-monthly" } })
+    .get("/privi/vip/canRedeem", { params: { promoCode: "pk2-vip-monthly" } })
     .then((res) => {
       console.log(res);
       monthlyVipReceive.value = res.data;
@@ -723,7 +723,7 @@ const checkMonthlyVipReceive = () => {
 
 const getMonthlyVip = () => {
   eventapi
-    .put("/bonus/claim/pak-vip-monthly")
+    .put("/bonus/claim/pk2-vip-monthly")
     .then((res) => {
       if (res.code === 0) {
         $q.notify({

@@ -114,6 +114,7 @@
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             esl: selectedPromo.promoCode === 'dy2-intel-esl',
             isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            dy2quiz: selectedPromo.promoCode === 'dy2-quiz',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -253,7 +254,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo' || promo.redirectUrl === 'dy2-quiz') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;
@@ -345,7 +346,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      isSpecialPromo
     };
   }
 });
@@ -410,6 +412,13 @@ export default defineComponent({
 
       border-collapse: collapse;
 
+      tr:first-child td:first-child {
+        border-top-left-radius: 10px;
+      }
+      tr:first-child td:last-child {
+        border-top-right-radius: 10px;
+      }
+
       th,
       td {
         padding: 10px;
@@ -420,7 +429,7 @@ export default defineComponent({
       }
 
       tbody {
-        //display: table;
+        display: table;
         table-layout: fixed;
         width: 100%;
       }
@@ -754,7 +763,7 @@ export default defineComponent({
 
         &.isMidAutumnWukong {
           .promo-bg {
-            height: 550px !important;
+            height: 585px !important;
           }
         }
 
@@ -803,6 +812,13 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.dy2quiz {
+          background: #e7f1fd;
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+        }
 
         &.isEurocupManual {
           background-repeat: no-repeat;

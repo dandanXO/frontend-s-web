@@ -42,9 +42,9 @@
         >
           <el-option
             v-for="item in platforms.list"
-            :key="item.name"
+            :key="item.code"
             :label="item.name"
-            :value="item.name"
+            :value="item.code"
           />
         </el-select>
         <el-button
@@ -450,7 +450,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.platform = null
   platforms.list = []
 }
@@ -500,13 +500,12 @@ function changePage(page) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   await loadSearchPlatforms()
   await loadReport(true)

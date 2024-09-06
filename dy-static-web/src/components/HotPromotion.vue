@@ -19,6 +19,7 @@
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
+    <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
     <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
     <GiftPromo v-if="list.redirectUrl === 'dy2-gift'"></GiftPromo>
     <AsianCup2024 v-if="list.redirectUrl === 'dy-promo-application-A'"></AsianCup2024>
@@ -116,6 +117,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
+import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
@@ -181,6 +183,7 @@ export default defineComponent({
     InviteFriendPromo,
     WelcomeTaskPromo,
     EsportQuiz,
+    EsportQuiz2,
     LotteryPromo,
     PrivilegeInvite,
     GiftPromo,

@@ -67,6 +67,17 @@ export const liveCasinoPlatforms = [
     gameCode: ""
   },
   {
+    code: "WON",
+    name: "Won",
+    image: "won",
+    message:
+      "WON Casino, the most potential live action video in Asia, focuses on providing customers with high-quality and safe game products. It offers many live video games such as Baccarat, Speed Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, etc., and fully supports PC, H5, APP. Simple and easy-to-operate interface, multi-platform, no need to download, fun anytime, anywhere!",
+    vimessage:
+      "WON Casino, video hành động trực tiếp tiềm năng nhất châu Á, tập trung vào việc cung cấp cho khách hàng các sản phẩm trò chơi chất lượng cao và an toàn. Nó cung cấp nhiều trò chơi video trực tiếp như Baccarat, Speed ​​Baccarat, Gongmi Baccarat, Colourful Baccarat, Dragon Tiger, Sic Bo, Roulette, Niu Niu, Fried Golden Flower, v.v. và hỗ trợ đầy đủ PC, H5, APP. Giao diện đơn giản và dễ vận hành, đa nền tảng, không cần tải xuống, vui vẻ mọi lúc, mọi nơi!",
+    caption: "",
+    gameCode: ""
+  },
+  {
     code: "AG",
     name: "AG",
     image: "ag",

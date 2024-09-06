@@ -46,7 +46,9 @@ export const useUI = defineStore("ui-store", {
       this.loggedIn = true;
     },
     getTopDownloadUrl() {
-      api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+      const siteCode = process.env.SITE;
+      const affiliateCode = "A74B03";
+      api.get(`/app/download/affiliate/url?siteCode=${siteCode}&affiliateCode=${affiliateCode}`).then((res) => {
         if (res.code === 0) {
           this.downloadAppUrl = res.data.url;
         }

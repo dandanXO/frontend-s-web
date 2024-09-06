@@ -23,7 +23,7 @@
               <img :src="imgURL + '/payment/' + item.nodeIcon" />
             </div>
             <div class="item-title">{{ item.nodeName }}</div>
-            <div class="item-ribbon" v-if="isPrivilege">
+            <div class="item-ribbon" v-if="isPrivilege && paytypeWithPrivilege.includes(item.code)">
               <img src="../../assets/images/account/ribbon-five-percent.png" />
             </div>
           </div>
@@ -61,7 +61,12 @@
       <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
-            <q-badge color="orange" floating rounded v-if="isPrivilege">
+            <q-badge
+              color="orange"
+              floating
+              rounded
+              v-if="isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
+            >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
@@ -201,7 +206,11 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
+      <div
+        class="q-mt-lg"
+        style="color: #576373"
+        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+      >
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
           Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager
@@ -244,7 +253,7 @@
 import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
@@ -252,6 +261,7 @@ import { useRouter, useRoute } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+import { cached } from "boot/cache";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -374,6 +384,7 @@ const selectedChannel = ref();
 const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
+const paytypeWithPrivilege = ref("");
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -408,8 +419,10 @@ function initPay() {
   if (route.query.extra === "true") {
     // promoParam = "?promo=1";
     isPrivilege.value = true;
+    selectedItemPrivilegeId.value = store.extraPrivilegeId;
   } else {
     isPrivilege.value = false;
+    selectedItemPrivilegeId.value = "";
   }
 
   payMethods.value = [];
@@ -554,7 +567,11 @@ async function confirmDeposit() {
           }
 
           if (selectedItemPrivilegeId.value) {
-            form.privilegeId = selectedItemPrivilegeId.value;
+            if (store.paytypeWithPrivilege.indexOf(selectedChannel.value.payType) > -1) {
+              form.privilegeId = selectedItemPrivilegeId.value;
+            } else {
+              form.privilegeId = null;
+            }
           }
 
           const copy = { ...form };
@@ -712,12 +729,12 @@ async function pDepo(deposit) {
       }
     })
     .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: error.message,
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
     })
     .then(() => {
       btnLoading.value = false;
@@ -767,6 +784,23 @@ const resetSelectedMethod = () => {
   // isAddNewAccount.value = false;
 };
 
+const loadAppTabs = () => {
+  cached
+    .get("appTabs", () =>
+      api.get("/getAppTabs").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      if (data && data.deposit) {
+        store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+        store.extraPrivilegeId = data.deposit.privilegeId;
+
+        paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
+      }
+    });
+};
+
 onActivated(() => {
   initPay();
   checkNewUser();
@@ -775,6 +809,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  loadAppTabs();
   initPay();
   checkNewUser();
   loadInfo();
