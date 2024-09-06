@@ -822,20 +822,20 @@ const resetSelectedMethod = () => {
 };
 
 const loadAppTabs = () => {
-  cached
-    .get("appTabs", () =>
-      api.get("/getAppTabs").then((res) => {
-        return res;
-      })
-    )
-    .then((data) => {
+  api.get("/opt-session/getAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
-    });
+      if (data && data.ftd) {
+        store.ftd = data.ftd;
+      }
+    }
+  });
 };
 
 const isInputFocus = ref(false);
