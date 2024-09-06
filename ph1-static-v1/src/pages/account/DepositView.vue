@@ -288,6 +288,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { cached } from "boot/cache";
+import { storeToRefs } from "pinia";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -418,9 +419,10 @@ const selectedItemAmount = ref();
 const selectedChannel = ref();
 const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
-const isFtdPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
+const { ftd } = storeToRefs(store);
+const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -463,7 +465,8 @@ function initPay() {
 
   if (route.query.privilegeId) {
     extraPrivilegeId.value = route.query.privilegeId;
-    isFtdPrivilege.value = true;
+  } else {
+    extraPrivilegeId.value = undefined;
   }
 
   payMethods.value = [];
@@ -615,7 +618,7 @@ async function confirmDeposit() {
             }
           }
 
-          if (extraPrivilegeId.value) {
+          if (isFtdPrivilege.value && extraPrivilegeId.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
 
