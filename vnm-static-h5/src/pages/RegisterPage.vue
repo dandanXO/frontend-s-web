@@ -746,7 +746,7 @@ function charType(num) {
   background: url(../assets/images/login/reg-bg.png) no-repeat center center;
   background-size: cover;
   height: 100%;
-  padding: 12px 0px 0px;
+  padding: 12px 0px;
 
   .login-form-container {
     width: $box-width;
@@ -792,11 +792,12 @@ function charType(num) {
 
 .login-bottom-div {
   // width: 100%;
-  margin: 20px;
+    margin: 15px 15px 5px;
   overflow: hidden;
+  border-radius: 10px;
   img {
     width: 100%;
-    border-radius: 10px;
+    margin: -20px 0;
   }
 }
 </style>
