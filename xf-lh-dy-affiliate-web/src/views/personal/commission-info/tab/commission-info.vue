@@ -10,10 +10,12 @@
       </p>
       <table class="custom-table">
         <thead>
-          <th scope="col">{{ t('commissionInfo.level') }}</th>
-          <th scope="col">{{ t('commissionInfo.companyMonthlyProfit') }}</th>
-          <th scope="col">{{ t('commissionInfo.activeNumberRequirement') }}</th>
-          <th scope="col">{{ t('commissionInfo.commissionRate') }}</th>
+          <tr>
+            <th scope="col">{{ t('commissionInfo.level') }}</th>
+            <th scope="col">{{ t('commissionInfo.companyMonthlyProfit') }}</th>
+            <th scope="col">{{ t('commissionInfo.activeNumberRequirement') }}</th>
+            <th scope="col">{{ t('commissionInfo.commissionRate') }}</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -55,21 +57,19 @@
         </tbody>
       </table>
       <h2>{{ t('commissionInfo.commissionCalculateFormula') }}</h2>
-      <p>
-        <ul>
-          <li>{{ t('commissionInfo.commissionFormula') }}</li>
-          <li>{{ t('commissionInfo.correctionNetProfitFormula') }}</li>
-          <li>{{ t('commissionInfo.monthlyNetProfitFormula') }}</li>
-          <li>{{ t('commissionInfo.bonusFormula') }}</li>
-          <li>{{ t('commissionInfo.rebateFormula') }}</li>
-          <li>{{ t('commissionInfo.platformFeeFormula') }}</li>
-          <li>{{ t('commissionInfo.adjustmentFormula') }}</li>
-          <li>{{ t('commissionInfo.supplementWinLossFormula') }}</li>
-          <li>{{ t('commissionInfo.depositFeeFormula') }}</li>
-          <li>{{ t('commissionInfo.withdrawalFeeFormula') }}</li>
-          <li>{{ t('commissionInfo.commissionAdjustmentNote') }}</li>
-        </ul>
-      </p>
+      <ul>
+        <li>{{ t('commissionInfo.commissionFormula') }}</li>
+        <li>{{ t('commissionInfo.correctionNetProfitFormula') }}</li>
+        <li>{{ t('commissionInfo.monthlyNetProfitFormula') }}</li>
+        <li>{{ t('commissionInfo.bonusFormula') }}</li>
+        <li>{{ t('commissionInfo.rebateFormula') }}</li>
+        <li>{{ t('commissionInfo.platformFeeFormula') }}</li>
+        <li>{{ t('commissionInfo.adjustmentFormula') }}</li>
+        <li>{{ t('commissionInfo.supplementWinLossFormula') }}</li>
+        <li>{{ t('commissionInfo.depositFeeFormula') }}</li>
+        <li>{{ t('commissionInfo.withdrawalFeeFormula') }}</li>
+        <li>{{ t('commissionInfo.commissionAdjustmentNote') }}</li>
+      </ul>
       <p class="note">{{ t('commissionInfo.commissionNote') }}</p>
     </div>
   </div>
