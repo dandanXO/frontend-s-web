@@ -354,7 +354,7 @@ export default {
     withdraw_times: "Lần",
     withdraw_realtimeexchangerates: "Tỷ giá trực tuyến",
     withdraw_estimatedarrival: "Dự kiến ​​đến",
-    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 2.00 USDT cho việc rút tiền coin!",
+    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là {fee} USDT cho việc rút tiền coin!",
     withdraw_ewalletspecialnote: "*Lưu ý đặc biệt: Tên của ví rút tiền và tài khoản game phải giống nhau.",
     withdraw_choose: "Chọn",
     withdraw_pleasechoose: "Vui lòng chọn",
@@ -437,9 +437,9 @@ export default {
     type_fish: "Cá",
     type_livecasino: "Live Casino",
     type_others: "Khác",
-    type_slot_welcome: "Chào mừng",
-    type_slot_daily: "Hàng Ngày",
-    type_slot_other: "Khác",
+    type_slot_welcome: "Chào Mừng",
+    type_slot_daily: "Hàng Ngày & Hàng Tuần",
+    type_slot_other: "Hoàn Trả & Khác",
 
     // promo -- daily-login
     daily_login_title: "Chi tiết check-in trong tháng này",
@@ -1592,6 +1592,7 @@ export default {
     35008: "Bạn không có quyền lợi này",
     35009: "Quyền lợi sẽ có hiệu lực ngay",
     35010: "35010 Thành viên không thể nhận quy",
+    37001: "Đã hết thời gian nhận Lì Xì",
     45000: "Không đạt số tiền rút tối thiểu",
     45001: "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay"
   }

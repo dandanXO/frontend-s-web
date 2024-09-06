@@ -179,6 +179,14 @@
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
     </div>
 
     <el-table
@@ -592,6 +600,7 @@ const request = reactive({
   max: null,
   reviewBy: null,
   source: null,
+  doris: false
 })
 
 const uiControl = reactive({
@@ -811,13 +820,12 @@ function getSummaries(param) {
 onMounted(async () => {
   await loadSites()
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   request.sort = sortList.list[0].value
   request.profit = profitList.list[0].value

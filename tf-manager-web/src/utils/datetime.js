@@ -194,3 +194,7 @@ export const convertDateToEnd = date => {
   m.set({ hour: 23, minute: 59, second: 59 })
   return m.format('YYYY-MM-DD HH:mm:ss')
 }
+
+export const isHistoryRecord = (date) => {
+  return moment(date).isBefore(moment().subtract(3, 'days').startOf('day'))
+}

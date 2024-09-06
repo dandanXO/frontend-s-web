@@ -296,7 +296,7 @@ export default {
     CENTERPROMO: '센터 프로모션',
     LOGIN: '로그인',
     REGISTER: '등록',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: '대기 중',
@@ -1589,6 +1589,8 @@ export default {
     upload: '업로드',
     upperName: '상위 이름',
     usdtControl: 'USDT 출금 제어',
+    usdtDepositAmount: '디지털 화폐 입금액',
+    usdtDepositCount: '디지털 통화 예금자 수',
     username: '사용자 이름',
     userType: '사용자 유형',
     validate: '유효성 검사',

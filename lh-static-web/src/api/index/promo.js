@@ -1,5 +1,7 @@
 import { server } from "@/utils/request";
 import { userStore } from "@/store";
+import cached from "@/utils/cache";
+
 
 export function loadPromo() {
   const store = userStore();
@@ -7,6 +9,10 @@ export function loadPromo() {
   const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
 
   return server.REST.get(platformApiUrl);
+}
+
+export function loadPromoTypes(category) {
+  return cached.get("PROMOTION_TYPES", () => server.REST.get("/promo/type"));
 }
 
 export function loadPromoBanner(category) {
@@ -372,6 +378,14 @@ export function footballHistroy() {
 
 export function getCompetitionBetToday(promoCode) {
   return server.EVENT.get(`/competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getDota2CompetitionBet(promoCode) {
+  return server.EVENT.get(`/dota2-competition-bet/yesterday`, {
     params: {
       promoCode
     }

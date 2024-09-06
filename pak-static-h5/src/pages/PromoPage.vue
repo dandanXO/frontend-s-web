@@ -118,7 +118,7 @@
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
-                  <template v-if="selectedPromo.promoCode === 'pak-red-envelope-rain'">
+                  <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
                     <div>asdasd</div>
                   </template>
                   <template v-else><HotPromotion :list="selectedPromo" /></template> -->
@@ -196,16 +196,16 @@
 </template>
 
 <script lang="js">
-import {ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
-import {useUI} from "stores/ui";
-import {userStore} from "stores/index";
+import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { useUI } from "stores/ui";
+import { userStore } from "stores/index";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
-import HotPromotion from 'components/HotPromotion'
+import HotPromotion from "components/HotPromotion";
 import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
@@ -218,25 +218,25 @@ export default defineComponent({
     GameModal,
     HotPromotion,
     ProfileSummary,
-    MoneyRainModal,
+    MoneyRainModal
     // MediaSettingsComponent
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + '/promo/';
+    const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
     const promoState = reactive({
-      active: {value: 'ALL', label: 'ALL'},
-      promoList: [],
+      active: { value: "ALL", label: "ALL" },
+      promoList: []
     });
     const promoTypes = ref([
-      {code: "ALL", img: 'all', label: '所有游戏'},
-      {code: "ESPORTS", img: 'esport', label: '电竞'},
-      {code: "SPORTS", img: 'sport', label: '体育'},
-      {code: "POKER", img: 'poker', label: '棋牌'},
-      {code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
-      {code: "FISH", img: 'game', label: '老虎机/捕鱼'},
+      { code: "ALL", img: "all", label: "所有游戏" },
+      { code: "ESPORTS", img: "esport", label: "电竞" },
+      { code: "SPORTS", img: "sport", label: "体育" },
+      { code: "POKER", img: "poker", label: "棋牌" },
+      { code: "LIVE CASINO", img: "live", label: "真人娱乐" },
+      { code: "FISH", img: "game", label: "老虎机/捕鱼" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
@@ -295,33 +295,42 @@ export default defineComponent({
     //   loadAll();
     // });
 
-    watch(() => route.query, () => {
-      if (route.query === null) {
-        isPromoDetail.value = false
-      } else {
-        isPromoDetail.value = route.query.name
-        ui.setScrollPosition("vertical", 0, 200);
+    watch(
+      () => route.query,
+      () => {
+        if (route.query === null) {
+          isPromoDetail.value = false;
+        } else {
+          isPromoDetail.value = route.query.name;
+          ui.setScrollPosition("vertical", 0, 200);
+        }
       }
-    });
+    );
 
-    watch(() => vipPromoTab.value, () => {
-      if (vipPromoTab.value === 'vip') {
-        router.push('/vip');
+    watch(
+      () => vipPromoTab.value,
+      () => {
+        if (vipPromoTab.value === "vip") {
+          router.push("/vip");
+        }
       }
-    })
+    );
 
-    watch(() => route.path, () => {
-      if (route.path === '/promo') {
-        vipPromoTab.value = 'promo';
+    watch(
+      () => route.path,
+      () => {
+        if (route.path === "/promo") {
+          vipPromoTab.value = "promo";
+        }
       }
-    })
+    );
 
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      router.push('/promo');
-      isPromoDetailPage.value = false
-    }
+      router.push("/promo");
+      isPromoDetailPage.value = false;
+    };
 
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
@@ -329,23 +338,21 @@ export default defineComponent({
       //       banner.value = res.data[0]
       //   }
       // })
-      api
-        .get("/promo/banner?category=PROMO")
-        .then((response) => {
-          if (response.code === 0) {
-            banner.value = response.data[0];
-            // console.log(banner.value)
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
-          }
-          // banners.value = response.data;
-        })
-    }
+      api.get("/promo/banner?category=PROMO").then((response) => {
+        if (response.code === 0) {
+          banner.value = response.data[0];
+          // console.log(banner.value)
+        } else {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: ret.message,
+          //   icon: "report_problem"
+          // });
+        }
+        // banners.value = response.data;
+      });
+    };
 
     const isMoneyRainModal = ref(false);
 
@@ -359,64 +366,66 @@ export default defineComponent({
           message: t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
-        router.push(`/login`)
+        router.push(`/login`);
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
-          router.push({path: '/account/vip'});
+          router.push({ path: "/account/vip" });
         } else {
-          if (promo.redirectUrl === 'pak-redpacketrain') {
+          if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
           } else {
             if (route.query.fromAccount) {
-              router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
             } else {
-              router.push({path: '/promo', query: {name: promo.redirectUrl}})
+              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
             }
-            isPromoDetail.value = true
-            selectedPromo.value = promo
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
           }
         }
       }
-    }
+    };
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
         filteredArray.value = promoState.promoList.filter(function (promo) {
-          return promo.promoType.toLowerCase().split(',').includes(type.value.toLowerCase());
+          return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = promoState.promoList
+        filteredArray.value = promoState.promoList;
       }
     };
 
     const loadAll = () => {
       const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
 
-      api.get(platformApiUrl).then((res) => {
-        if (res.code === 0) {
-          promoState.promoList = [];
-          var promoItems = res.data;
-          // promoState.promoList.push(...res.data);
+      api
+        .get(platformApiUrl)
+        .then((res) => {
+          if (res.code === 0) {
+            promoState.promoList = [];
+            var promoItems = res.data;
+            // promoState.promoList.push(...res.data);
 
-          promoItems.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
-              promoState.promoList.push(element);
+            promoItems.forEach((element) => {
+              if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+                // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+              } else {
+                promoState.promoList.push(element);
 
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element)
+                if (route.query.name && String(element.redirectUrl) === route.query.name) {
+                  showPromoDetails(element);
+                }
               }
-            }
-          });
+            });
 
-          switchPromoType(promoState.active)
-        }
-      }).catch((e) => {
-        console.log("error", e);
-      });
-
-    }
+            switchPromoType(promoState.active);
+          }
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+    };
 
     const goToJoinNow = () => {
       // console.log(selectedPromo.value);
@@ -425,7 +434,7 @@ export default defineComponent({
           const paramJson = JSON.parse(selectedPromo.value.param);
           console.log(paramJson);
           if (paramJson && paramJson.page) {
-            router.push(paramJson.page)
+            router.push(paramJson.page);
           } else if (paramJson && paramJson.html) {
             window.open(paramJson.html, "_blank");
           } else if (paramJson && paramJson.game) {
@@ -433,43 +442,49 @@ export default defineComponent({
             const extractedUrl = paramJson.game.match(openPattern)[1];
             const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
             playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
-          }else if (paramJson && paramJson.api) {
-            const apiParams = (paramJson && paramJson.params) ? paramJson.params : {};
-            api.get(paramJson.api, {params: apiParams}).then((res) => {
-              if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "Success.",
-                  icon: "check_circle_outline"
-                })
-              }
-            }).catch((e) => {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: e.message,
-                icon: "report_problem"
+          } else if (paramJson && paramJson.api) {
+            const apiParams = paramJson && paramJson.params ? paramJson.params : {};
+            api
+              .get(paramJson.api, { params: apiParams })
+              .then((res) => {
+                if (res.code === 0) {
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "Success.",
+                    icon: "check_circle_outline"
+                  });
+                }
               })
-            });
+              .catch((e) => {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: e.message,
+                  icon: "report_problem"
+                });
+              });
           }
         } catch (e) {
           console.log("PArse Error");
         }
       } else if (selectedPromo.value.redirectUrl === "EarnMoney") {
-        router.push('/earn-money')
+        router.push("/earn-money");
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
-        router.push('/vip')
+        router.push("/vip");
       } else if (selectedPromo.value.redirectUrl === "Deposit") {
-        router.push('/deposit?from=/promo');
+        router.push("/deposit?from=/promo");
       } else if (selectedPromo.value.redirectUrl === "Withdraw") {
-        router.push('/withdraw?from=/promo');
-      } else if (selectedPromo.value.redirectUrl.indexOf("https://") > -1 || selectedPromo.value.redirectUrl.indexOf("http://") > -1) {
+        router.push("/withdraw?from=/promo");
+      } else if (
+        selectedPromo.value.redirectUrl.indexOf("https://") > -1 ||
+        selectedPromo.value.redirectUrl.indexOf("http://") > -1
+      ) {
         window.open(selectedPromo.value.redirectUrl, "_blank");
       } else if (selectedPromo.value.redirectUrl) {
         router.push(selectedPromo.value.redirectUrl);
       }
-    }
+    };
 
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
@@ -477,12 +492,12 @@ export default defineComponent({
     };
 
     const goToVip = () => {
-      router.push('/vip')
-    }
+      router.push("/vip");
+    };
 
     // promo timer
-    const endDate = new Date('01/8/2024 12:00:00').getTime();
-    const countdown = ref('');
+    const endDate = new Date("01/8/2024 12:00:00").getTime();
+    const countdown = ref("");
     const isPromotionEnded = ref(false);
 
     function getCountdown() {
@@ -491,16 +506,16 @@ export default defineComponent({
 
       if (timeRemaining <= 0) {
         isPromotionEnded.value = true;
-        return 'Promotion Ended';
+        return "Promotion Ended";
       }
 
       const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-      const formattedHours = String(hours).padStart(2, '0');
-      const formattedMinutes = String(minutes).padStart(2, '0');
-      const formattedSeconds = String(seconds).padStart(2, '0');
+      const formattedHours = String(hours).padStart(2, "0");
+      const formattedMinutes = String(minutes).padStart(2, "0");
+      const formattedSeconds = String(seconds).padStart(2, "0");
 
       return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
@@ -528,8 +543,7 @@ export default defineComponent({
     };
 
     // Handle swipe right
-    const swipeRight = () => {
-    };
+    const swipeRight = () => {};
 
     const fullGameDialog = ref(false);
     const closeFullGameDialog = () => {
@@ -538,14 +552,14 @@ export default defineComponent({
 
     const tab = ref("all");
     const tabItems = [
-      { name: "all", label: 'promo.all' },
-      { name: "earn", label: 'promo.earn' },
-      { name: "hot", label: 'promo.hot' },
-      { name: "new user", label: 'promo.new_user' },
-      { name: "sports", label: 'promo.sports' },
+      { name: "all", label: "promo.all" },
+      { name: "earn", label: "promo.earn" },
+      { name: "hot", label: "promo.hot" },
+      { name: "new user", label: "promo.new_user" },
+      { name: "sports", label: "promo.sports" },
       { name: "live", label: "promo.live" },
       { name: "slot", label: "promo.slot" },
-      { name: "vip", label: "promo.vip" },
+      { name: "vip", label: "promo.vip" }
     ];
 
     // promo param split.
@@ -556,13 +570,13 @@ export default defineComponent({
         }
         return {};
       } catch (error) {
-        console.error('Error parsing JSON:', error);
+        console.error("Error parsing JSON:", error);
         return {};
       }
     });
 
-    const parsedParamSub = computed(() => parsedParam.value.sub || '');
-    const parsedParamDate = computed(() => parsedParam.value.date || '');
+    const parsedParamSub = computed(() => parsedParam.value.sub || "");
+    const parsedParamDate = computed(() => parsedParam.value.date || "");
 
     return {
       promoState,
@@ -597,10 +611,10 @@ export default defineComponent({
       parsedParamSub,
       parsedParamDate,
       MoneyRainModal,
-      isMoneyRainModal,
+      isMoneyRainModal
       // MediaSettingsComponent
-    }
-  },
+    };
+  }
 });
 </script>
 <style lang="scss" scoped>

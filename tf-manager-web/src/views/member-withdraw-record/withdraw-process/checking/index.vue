@@ -68,6 +68,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
     </div>
 
     <div class="btn-group">
@@ -495,7 +503,7 @@ import {
   fromCheckingToBeforePaid,
   fromCheckingToFail,
 } from '../../../../api/member-withdraw-record'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { required } from '../../../../utils/validate'
 import { getConfigList } from '../../../../api/config'
 import { getSiteListSimple } from '../../../../api/site'
@@ -556,7 +564,7 @@ const failFormRules = reactive({
 })
 
 const startDate = new Date()
-startDate.setDate(startDate.getDate() - 7)
+startDate.setDate(startDate.getDate() - 3)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
 
@@ -573,6 +581,7 @@ const request = reactive({
   maxWithdrawAmount: null,
   vipId: null,
   siteId: null,
+  doris: false,
 })
 
 /* function disabledDate(time) {
@@ -716,9 +725,23 @@ async function toApply() {
 }
 
 async function success(memberWithdrawRecord) {
-  await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-  await loadRecord()
-  ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
+  ElMessageBox.prompt(t('fields.remark'), t('fields.remark'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: "warning",
+    inputValidator: (value) => {
+      if (!value) {
+        return t('message.validateRemarkRequired');
+      }
+      return true;
+    },
+    inputErrorMessage: t('fields.remarkRequired')
+  }
+  ).then(async ({ value }) => {
+    await fromCheckingToBeforePaid(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId, value)
+    await loadRecord()
+    ElMessage({ message: t('message.updateToBeforePaidSuccess'), type: 'success' })
+  }).catch(() => {});
 }
 
 async function showDialog(type, memberWithdrawRecord) {

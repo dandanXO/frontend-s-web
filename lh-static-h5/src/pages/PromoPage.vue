@@ -2,7 +2,10 @@
   <div class="promo-container">
     <div
       class="promo"
-      :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
+      :class="{
+        unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
+        midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel'
+      }"
       :style="
         isPromoDetail
           ? 'background-image: url(' +
@@ -36,7 +39,10 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
@@ -67,46 +73,11 @@
                     </a>
                   </div>
 
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
-                      <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
-                            {{ getPromoLabel(promo.labelType) }}
-                          </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
-                        </div>
-                        <div class="promo-item-title">{{ promo.title }}</div>
-                        <div
-                          class="promo-item-deal"
-                          v-if="parsedParam(promo.param).sub"
-                          v-html="parsedParam(promo.param).sub"
-                        />
-                        <div>
-                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
-                        </div>
-
-                        <div class="promo-item-side-img">
-                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
-                        </div>
-                      </div>
-                      <!-- <div class="promo-img-wrapper"> -->
-                      <!-- <div class="promo-bg"> -->
-                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
-                      <!-- </div> -->
-                      <!-- </div> -->
-                    </a>
-                  </div>
-
-                  <!--                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">-->
+                  <!--                  <div class="promo-item" v-if="tab.name === 'all'">-->
                   <!--                    <a @click="showPromoDetails(promo)">-->
                   <!--                      <div>-->
                   <!--                        <div class="promo-label">-->
-                  <!--                          <div class="promo-ribbon" v-if="promo.labelType !== 2">-->
+                  <!--                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">-->
                   <!--                            {{ getPromoLabel(promo.labelType) }}-->
                   <!--                          </div>-->
                   <!--                          <div-->
@@ -126,7 +97,7 @@
                   <!--                        </div>-->
 
                   <!--                        <div class="promo-item-side-img">-->
-                  <!--                          <img :src="imgURL + promo.mobileImgUrl" />-->
+                  <!--                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />-->
                   <!--                        </div>-->
                   <!--                      </div>-->
                   <!--                    </a>-->
@@ -353,6 +324,7 @@ import HotPromotion from "components/HotPromotion";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import { cached } from "src/boot/cache";
 
 export default defineComponent({
   name: "PromoView",
@@ -390,19 +362,19 @@ export default defineComponent({
     // const routeQuery  = computed(() => route.query || {});
 
     const tab = ref("all");
-    const tabItems = [
+    const tabItems = ref([
       { name: "all", label: "全部优惠" },
-      // { name: "ftd", label: "首存" },
-      { name: "ftd", label: "新人" },
+      { name: "welcome", label: "新人" },
+      { name: "hot", label: "热门" },
       { name: "esport", label: "电竞" },
       { name: "sport", label: "体育" },
       // {name: "slot game", label: '老虎机'},
       // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: "真人" },
-      { name: "poker", label: "棋牌" },
-      { name: "daily", label: "日常" },
-      { name: "other", label: "其它" }
-    ];
+      { name: "slot game", label: "电游" },
+      { name: "ftd", label: "存款" },
+      { name: "vip", label: "VIP" }
+    ]);
 
     watch(
       () => route.query,
@@ -493,7 +465,23 @@ export default defineComponent({
       }
     };
 
-    const loadAll = () => {
+    const loadAll = async () => {
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).H5
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
       const platformApiUrl =
         store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)
           ? "/session/loggedInPromoPages"
@@ -675,6 +663,12 @@ export default defineComponent({
     background-position: bottom center;
     background-size: cover;
     background-attachment: fixed;
+
+    &.midAutumnWukong {
+      background-position: top;
+      background-size: 100% auto;
+      background-attachment: unset;
+    }
 
     &.unfixed {
       background-attachment: scroll;

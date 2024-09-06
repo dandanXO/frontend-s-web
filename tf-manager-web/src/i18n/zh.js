@@ -301,6 +301,7 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
+    UCL: '欧洲冠军联赛'
   },
   homeBannerType: {
     HOME: '首页',
@@ -314,7 +315,7 @@ export default {
     CENTERPROMO: '中心优惠',
     LOGIN: '登录',
     REGISTER: '注册',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: '未派发',
@@ -517,6 +518,13 @@ export default {
     main: '主站',
     slot: '电游',
   },
+  language: {
+    en: '英语',
+    zh: '汉语',
+    th: '泰语',
+    kr: '韩语',
+    vn: '越南语'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -575,6 +583,7 @@ export default {
     addPlatform: '新增平台',
     addPlatformAccount: '新增平台账号',
     addPrivilegeInfo: '新增优惠信息',
+    addPromoType: '新增优惠类型',
     addQuestionnaire: '新增问答',
     addRecipient: '新增收件人',
     addRedirect: '新增跳转页面',
@@ -953,6 +962,7 @@ export default {
     editPlatform: '编辑平台',
     editPlatformAccount: '编辑平台账号',
     editPrivilegeInfo: '编辑优惠信息',
+    editPromoType: '编辑优惠类型',
     editQuestionnaire: '编辑问答',
     editRedirect: '编辑跳转页面',
     editRemark: '编辑备注',
@@ -1084,6 +1094,7 @@ export default {
     jobType: '任务类型',
     label: '标签',
     labelCancel: '取消',
+    language: '语言',
     lastDepositTime: '最后存款时间',
     lastDigit: '尾数',
     lastDigitMinDayDeposit: '尾数红包当日最小存款',
@@ -1603,6 +1614,7 @@ export default {
     totalDepositAmount: '存款总额',
     totalDepositCount: '总存款次数',
     totalDepositMemberCount: '总充值人数',
+    totalWithdrawMemberCount: '总提款人数',
     totalDepositedAmount: '存款总额',
     totalDepositNumber: '总充值会员数',
     totalDownlineAffiliates: '总直属代理',
@@ -1689,6 +1701,8 @@ export default {
     upload: '上传',
     upperName: '所属上级',
     usdtControl: 'USDT提款限制',
+    usdtDepositAmount: '数字货币存款额',
+    usdtDepositCount: '数字货币存款次数',
     username: '用户名',
     userType: '用户类型',
     validate: '验证',
@@ -2003,6 +2017,10 @@ export default {
     fiatBalance: '法币余额',
     usdtBalance: 'USDT余额',
     toggleWallet: '切换钱包',
+    historyRecord: '历史数据',
+    nonHistoryRecord: '非历史数据',
+    productId: '产品ID',
+    dayBetRebatePercentage: '每日投注返水百分比',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2461,6 +2479,8 @@ export default {
     affiliateReactivated: '解禁成功',
     required_6_digits_code: '只能六个字符',
     required_only_digits_and_alphabet: '只许字母或数字',
+    validateProductIdRequired: '产品ID必填',
+    validateBetRebatePercentageRequired: '每日投注返水百分比必填',
   },
   menu: {
     undefined: '',
@@ -2594,6 +2614,7 @@ export default {
     'Bet Game Type Rebate Record': '投注游戏类型返水记录',
     'Site Interest Plan': '利息宝投资方案',
     'Interest Plan Order Record': '利息宝投资记录',
+    'Promo Type': '优惠类型管理',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
@@ -2722,6 +2743,8 @@ export default {
     'Vip Report': 'VIP投注汇总报表',
     'System Value Rules': '系统设置值规则',
     'Sites Config': '站点设置',
+    'Mooncake Fest Spin Record': '中秋节转盘2024',
+    'Platform WC': 'WC平台',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2869,6 +2892,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: '净盈利佣金-小游戏',
     AGENT_SHARE_PROFIT_RATIO_POKER: '净盈利佣金-棋牌',
+  },
+  gameTypeRolloverSetting: {
+    anyTypes: '所有游戏类型',
+    specifyTypes: '指定游戏类型',
+    excludeTypes: '排除游戏类型',
   },
   domainType: {
     LANDING: '落地页',

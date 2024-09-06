@@ -107,7 +107,7 @@ export default {
     realTimeExchangeRates: "Real Time Exchange Rates",
     estimatedArrival: "Estimated arrival",
     usdtSpecialNote:
-      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
     fullName: "Full Name",
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
@@ -666,7 +666,7 @@ export default {
     53008: "Unable to submit, the daily deposit limit has been reached today",
     53009: "Unable to submit, the same IP address has already been saved",
     53010: "Unable to submit, the same device has already been stored",
-    53011: "Unable to submit, insufficient cash flow",
+    53011: "Interest withdrawal turnover requirement is not completed, so you cannot deposit again",
     54000: "The collection time has not yet arrived.",
     54001: "The user has not bound a withdrawal account.",
     54002: "The user's bank card is already bound to another account."

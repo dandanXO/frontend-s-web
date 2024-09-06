@@ -118,7 +118,7 @@ export default {
     logout_cancel: "Hủy",
 
     // register
-    please_enter_your_real_name: "Vui lòng nhập tên thật của bạn",
+    please_enter_your_real_name: "Họ tên phải được viết in hoa không dấu, khớp với tên tài khoản ngân hàng và cách nhau bằng dấu cách",
     real_name: "Họ và tên",
     real_name_hints: "Tên phải khớp với số tài khoản thẻ ngân hàng rút tiền",
     real_name_validation: "Tên phải có ít nhất hai ký tự",
@@ -375,7 +375,8 @@ export default {
     withdraw_times: "Lần",
     withdraw_realtimeexchangerates: "Tỷ giá trực tuyến",
     withdraw_estimatedarrival: "Dự kiến ​​đến",
-    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 2.00 USDT cho việc rút tiền coin!",
+    withdraw_usdtspecialnote:
+      "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là {fee} USDT cho việc rút tiền coin!",
     withdraw_ewalletspecialnote: "*Lưu ý đặc biệt: Tên của ví rút tiền và tài khoản game phải giống nhau.",
     withdraw_choose: "Chọn",
     withdraw_pleasechoose: "Vui lòng chọn",
@@ -1597,6 +1598,8 @@ export default {
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
+    30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",
@@ -1614,6 +1617,7 @@ export default {
     35008: "Bạn không có quyền lợi này",
     35009: "Quyền lợi sẽ có hiệu lực ngay",
     35010: "35010 Thành viên không thể nhận quy",
+    37001: "Đã hết thời gian nhận Lì Xì",
     45000: "Không đạt số tiền rút tối thiểu",
     45001: "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay"
   }

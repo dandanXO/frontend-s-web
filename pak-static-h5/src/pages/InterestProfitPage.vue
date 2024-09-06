@@ -13,7 +13,7 @@
 
         <div class="do-amount">
           <div class="amount-txt">
-            ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
+            {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.totalDeposit) : "*****" }}
           </div>
           <img src="../assets/images/interest-profit/chevron-right.png" />
         </div>
@@ -22,13 +22,13 @@
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.unexpiredEarnings") }}</div>
             <div class="item-amount">
-              ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
+              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.unexpiredEarning) : "*****" }}
             </div>
           </div>
           <div class="content-item">
             <div class="item-title">{{ $t("interestProfit.cumulativeIncome") }}</div>
             <div class="item-amount">
-              ₹{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
+              {{ store.currency.value }}{{ isAmountVisible ? convertToTwoDecimalAmount(depositOverview.profitAmount) : "*****" }}
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
                   :rules="[(val) => !!val || $t('interestProfit.deposit_required')]"
                 >
                   <template v-slot:prepend>
-                    <div>₹</div>
+                    <div>{{ store.currency.value }}</div>
                   </template>
                 </q-input>
               </template>
@@ -137,7 +137,7 @@
               <div class="order-row order-row--content">
                 <div class="order-subrow">
                   <div class="order-col">
-                    <span class="txt-green">₹{{ e.amount }}</span>
+                    <span class="txt-green">{{ store.currency.value }}{{ e.amount }}</span>
                   </div>
                   <div class="order-col">
                     <q-btn
@@ -199,7 +199,7 @@
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.annualInterestRate") }}</div>
-          <div class="box-value">{{ recordDetails.odds * 100 }}%</div>
+          <div class="box-value">{{ convertToTwoDecimalAmount(recordDetails.odds * 100) }}%</div>
         </div>
         <div class="details-box">
           <div class="box-title">{{ $t("interestProfit.depositAmount") }}</div>
@@ -239,6 +239,21 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="errorDialog">
+    <q-card class="q-pa-md">
+      <q-card-section class="row items-center">
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-card-section class="q-mt-md">
+        <div>{{ errorDialogMsg }}</div>
+      </q-card-section>
+      <q-card-actions align="center" class="q-mt-md">
+        <q-btn no-caps v-close-popup>{{ $t("btn.confirm") }}</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -250,13 +265,16 @@ import { eventapi } from "src/boot/axios";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { t } from "src/boot/lang";
+import { useI18n } from "vue-i18n";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useQuasar } from "quasar";
+import { userStore } from "stores/index";
 
 const interestProfitField = reactive({ storageTime: "", odds: "", deposits: "" });
 const $q = useQuasar();
+const { t } = useI18n();
+const store = userStore();
 const qs = require("qs");
 const isLoading = ref(false);
 const isRecordLoading = ref(false);
@@ -268,7 +286,8 @@ const storageTimeOptions = ref([
   { label: "6 months", val: 180 },
   { label: "1 year", val: 365 }
 ]);
-
+const errorDialog = ref(false);
+const errorDialogMsg = ref("");
 const toggleAmountVisibility = () => {
   isAmountVisible.value = !isAmountVisible.value;
 };
@@ -420,6 +439,16 @@ const submitDeposit = () => {
         interestProfitField.storageTime = "";
         interestProfitField.odds = "";
         interestProfitField.deposits = "";
+      } else {
+        // $q.notify({
+        //   type: "negative",
+        //   position: "center",
+        //   message: t(`error.${res.code}`),
+        //   icon: "report_problem"
+        // });
+
+        errorDialog.value = true;
+        errorDialogMsg.value = t(`error.${res.code}`);
       }
     })
     .catch((err) => {

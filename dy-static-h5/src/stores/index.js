@@ -41,7 +41,8 @@ export const userStore = defineStore("userStore", {
       hasCheckedVersion: false,
       hasClosedDL: false,
       appDownloadUrl: "",
-      visitorId: ""
+      visitorId: "",
+      withdrawType: "",
     };
   },
   actions: {
@@ -211,6 +212,7 @@ export const userStore = defineStore("userStore", {
 
           this.unreadInboxMail = 0;
           // this.unreadInboxMail = 16;
+          this.withdrawType = response.data.withdrawType;
           this.getBalance();
         } else {
           this.memberLogout();

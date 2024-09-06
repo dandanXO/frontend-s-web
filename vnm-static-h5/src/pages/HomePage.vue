@@ -97,12 +97,17 @@
   <PushNotification :pushNotificationData="pushNotificationData" v-if="Platform.is.android && Platform.is.capacitor" />
 
   <div class="mid-announcement-section">
-    <div class="midd">
+    <div ref="marqueeWrapperRef" class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
           <img src="../assets/images/home/announce-icon.png" alt="announcement" />
         </div>
-        <marquee-text :repeat="5" :duration="announcementList.length * 120">
+        <div ref="marqueePseudoRef" class="marquee-pseudo">
+          <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+            {{ a.content }}
+          </span>
+        </div>
+        <marquee-text :repeat="5" :duration="marqueeDuration">
           <div v-if="announcementList">
             <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
@@ -398,7 +403,7 @@
 
   <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
-      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
+      <img src="../assets/images/home/redpacket.png" class="red-envelope" />
     </div>
   </q-page-sticky>
 
@@ -971,12 +976,12 @@ export default defineComponent({
 
     const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
-      router.push("/promo?name=vi-mualixi-redpacket");
+      router.push("/promo?name=phongbao-lixi2/9");
     };
 
     const getCheckRedPacket = () => {
       if (store && store.token) {
-        eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
+        eventapi("/redPacketVip/nextRainTime?promoCode=OP_SPE_quockhanh2/9_2888VNDP_1VC_082024")
           .then((res) => {
             if (res.code === 0) {
               isRedPacketShow.value = res.data.nowIsRain;
@@ -1010,8 +1015,17 @@ export default defineComponent({
           isFirstView.value = true;
         }
       } else {
+        let siteType;
+        switch (ui.edition) {
+          case EDITION.SLOT:
+            siteType = "SLOT";
+            break;
+          case EDITION.NORMAL:
+          default:
+          // siteType = "HOME";
+        }
         api
-          .get("/member/ads-popout")
+          .get("/member/ads-popout", { params: { siteType } })
           .then((res) => {
             if (res.code === 0) {
               if (isImpt === null) {
@@ -1056,7 +1070,7 @@ export default defineComponent({
     };
 
     function loadData() {
-      let params = "";
+      let params;
       switch (ui.edition) {
         case EDITION.SLOT:
           params = "SLOT";
@@ -1135,6 +1149,9 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
+              if (liveObj.alias) {
+                liveObj.name = liveObj.alias;
+              }
               if (liveObj.name === "AE") {
                 liveObj.name = "Sexy";
               }
@@ -1271,7 +1288,16 @@ export default defineComponent({
     const announcementList = ref([]);
     const announcementTypes = ref([]);
     const loadAnnouncement = () => {
-      api.get("/announcement").then((res) => {
+      let siteType;
+      switch (ui.edition) {
+        case EDITION.SLOT:
+          siteType = "SLOT";
+          break;
+        case EDITION.NORMAL:
+        default:
+        // siteType = "HOME";
+      }
+      api.get("/announcement", { params: { siteType } }).then((res) => {
         if (res.code === 0) {
           if (res.data.announcements) {
             const d = res.data.announcements;
@@ -1419,9 +1445,19 @@ export default defineComponent({
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
       // })
+      if (marqueePseudoRef.value) {
+        new ResizeObserver(calculateMarqueeDuration).observe(marqueePseudoRef.value);
+      }
     });
 
     watch(() => route.name, checkEdition);
+    watch(
+      () => ui.edition,
+      () => {
+        loadAnnouncement();
+        loadData();
+      }
+    );
 
     onActivated(() => {
       getPlatList();
@@ -1441,9 +1477,7 @@ export default defineComponent({
       } else {
         isLogined.value = false;
       }
-      if (ui.edition !== EDITION.SLOT) {
-        checkShowImgTop();
-      }
+      checkShowImgTop();
     });
 
     const runMenuFloat = () => {
@@ -1765,7 +1799,7 @@ export default defineComponent({
     };
     const fabPos = ref([18, 0]);
     const promoPos = ref([18, 108]);
-    const packetPos = ref([120, 18]);
+    const packetPos = ref([18, 18]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
@@ -1790,6 +1824,16 @@ export default defineComponent({
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       promoPos.value = [newX, newY];
+    };
+
+    const marqueePseudoRef = ref();
+    const marqueeWrapperRef = ref();
+    const marqueeDuration = ref(0);
+    const calculateMarqueeDuration = () => {
+      if (!marqueePseudoRef.value || !marqueeWrapperRef.value) return;
+      const marqueeWidth = marqueePseudoRef.value.scrollWidth;
+      const wrapperWidth = marqueeWrapperRef.value.clientWidth;
+      marqueeDuration.value = wrapperWidth / (wrapperWidth / 550);
     };
 
     return {
@@ -1936,7 +1980,10 @@ export default defineComponent({
       promoSlide: ref(0),
       tabs,
       fullGameList,
-      EDITION
+      EDITION,
+      marqueeDuration,
+      marqueePseudoRef,
+      marqueeWrapperRef
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2255,7 +2302,9 @@ export default defineComponent({
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+  box-shadow:
+    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
+    0px 4px 10px 0px;
   font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
@@ -2285,6 +2334,14 @@ export default defineComponent({
   .midd {
     position: relative;
     overflow: hidden;
+
+    .marquee-pseudo {
+      display: flex;
+      position: absolute;
+      visibility: hidden;
+      z-index: -1;
+      width: max-content;
+    }
   }
 }
 

@@ -324,6 +324,7 @@ async function changePromoPagesState(id, status) {
 }
 
 async function changeSite() {
+  request.siteType = 'main'
   if (isVnm(request.siteId)) {
     uiControl.showSiteType = true;
   } else {
@@ -338,6 +339,7 @@ onMounted(async () => {
     request.current = Number(route.query.current)
   }
   await loadSites()
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

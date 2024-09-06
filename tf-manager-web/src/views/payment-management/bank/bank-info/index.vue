@@ -435,13 +435,14 @@ import { getSiteImage } from '../../../../api/site-image'
 import { useStore } from '../../../../store';
 import { TENANT } from "../../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const bankForm = ref(null)
-const paymentDir = process.env.VUE_APP_IMAGE + '/payment/'
+const paymentDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/payment/'
 
 let bankName = ''
 let bankCode = ''

@@ -345,7 +345,7 @@ export default {
     withdraw_realtimeexchangerates: "Real Time Exchange Rates",
     withdraw_estimatedarrival: "Estimated arrival",
     withdraw_usdtspecialnote:
-      "*Special note: The third party automatically charges a handling fee of 2.00 USDT for withdrawing coins!",
+      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
     withdraw_ewalletspecialnote:
       "*Special note: The names of the withdrawal wallet and the game account must be consistent.",
     withdraw_choose: "Choose",
@@ -1592,6 +1592,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    37001: "Time to receive Lucky Money has expired",
     45000: "Not reaching the minimum withdrawal amount",
     45001: "Received random bonus today"
   }

@@ -296,6 +296,7 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
+    UCL: 'UEFA CHAMPIONS LEAGUE'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -309,7 +310,7 @@ export default {
     CENTERPROMO: 'Center Promo',
     LOGIN: 'Login',
     REGISTER: 'Register',
-    VIP: "VIP"
+    VIP: 'VIP',
   },
   distributeStatus: {
     PENDING: 'Pending',
@@ -514,6 +515,13 @@ export default {
     main: 'MAIN',
     slot: 'SLOT',
   },
+  language: {
+    en: 'English',
+    zh: 'Chinese',
+    th: 'Thai',
+    kr: 'Korean',
+    vn: 'Vietnamese'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -572,6 +580,7 @@ export default {
     addPlatform: 'Add Platform',
     addPlatformAccount: 'Add Platform Account',
     addPrivilegeInfo: 'Add Privilege Info',
+    addPromoType: 'Add Promo Type',
     addQuestionnaire: 'Add Questionnaire',
     addRecipient: 'Add Recipient',
     addRedirect: 'Add Redirect',
@@ -951,6 +960,7 @@ export default {
     editPlatform: 'Edit Platform',
     editPlatformAccount: 'Edit Platform Account',
     editPrivilegeInfo: 'Edit Privilege Info',
+    editPromoType: 'Edit Promo Type',
     editQuestionnaire: 'Edit Questionnaire',
     editRedirect: 'Edit Redirect',
     editRemark: 'Edit Remark',
@@ -1082,6 +1092,7 @@ export default {
     jobType: 'Job Type',
     label: 'Label',
     labelCancel: 'cancel',
+    language: 'Language',
     lastDepositTime: 'Last Deposit Time',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',
@@ -1603,6 +1614,7 @@ export default {
     totalDepositAmount: 'Total Deposit Amount',
     totalDepositCount: 'Total Deposit Count',
     totalDepositMemberCount: 'Total Member Deposit Count',
+    totalWithdrawMemberCount: 'Total Member Withdraw Count',
     totalDepositedAmount: 'Total deposited amount',
     totalDepositNumber: 'Total Deposit Member',
     totalDownlineAffiliates: 'Total Downline Affiliates',
@@ -1689,6 +1701,8 @@ export default {
     upload: 'Upload',
     upperName: 'Upper Name',
     usdtControl: 'USDT Withdrawal Control',
+    usdtDepositAmount: 'USDT Deposit Amount',
+    usdtDepositCount: 'USDT Deposit Count',
     username: 'Username',
     userType: 'User Type',
     validate: 'Validate',
@@ -2004,6 +2018,10 @@ export default {
     fiatBalance: 'Fiat Balance',
     usdtBalance: 'USDT Balance',
     toggleWallet: 'Toggle Wallet Type',
+    historyRecord: 'History Record',
+    nonHistoryRecord: 'Non-History Record',
+    productId: 'Product ID',
+    dayBetRebatePercentage: 'Day Bet Rebate Percentage',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2512,6 +2530,8 @@ export default {
     required_6_digits_code: 'Must be composed of 6 digits code.',
     required_only_digits_and_alphabet:
       'Must be composed of digits and alphabet',
+    validateProductIdRequired: 'Product ID is required',
+    validateBetRebatePercentageRequired: 'Bet Rebate Percentage is required',
   },
   menu: {
     undefined: '',
@@ -2646,6 +2666,7 @@ export default {
     'Bet Game Type Rebate Record': 'Bet Game Type Rebate Record',
     'Site Interest Plan': 'Site Interest Plan',
     'Interest Plan Order Record': 'Interest Plan Order Record',
+    'Promo Type': 'Promo Type',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
@@ -2773,7 +2794,9 @@ export default {
     'Media Display Settings': 'Media Display Settings',
     'Vip Report': 'Vip Report',
     'System Value Rules': 'System Value Rules',
-    'Sites Config': 'Site Config'
+    'Sites Config': 'Site Config',
+    'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
+    'Platform WC': 'Platform WC',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2922,6 +2945,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
     AGENT_SHARE_PROFIT_RATIO_CASUAL: 'Profit Ratio-CASUAL',
     AGENT_SHARE_PROFIT_RATIO_POKER: 'Profit Ratio-POKER',
+  },
+  gameTypeRolloverSetting: {
+    anyTypes: 'All Game Types',
+    specifyTypes: 'Specify Game Types',
+    excludeTypes: 'Exclude Game Types',
   },
   domainType: {
     LANDING: 'Landing',

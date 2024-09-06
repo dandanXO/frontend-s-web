@@ -295,11 +295,10 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   getSiteAppVersion,
-  getSiteList,
   createSiteAppVersion,
   updateSiteAppVersion,
   deleteSiteAppVersion,
@@ -308,9 +307,13 @@ import {
 import { nextTick } from 'process'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { required } from '../../../utils/validate'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { getSiteListSimple } from '../../../api/site'
 
 const { t } = useI18n()
-
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 
 let chooseImage = []
@@ -392,7 +395,7 @@ function resetQuery() {
   request.os = null
   request.appType = null
   request.apkType = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   loadAppVersion()
 }
 
@@ -575,7 +578,7 @@ async function attachApp(event) {
 }
 
 async function loadSites() {
-  const { data: ret } = await getSiteList()
+  const { data: ret } = await getSiteListSimple()
   siteList.list = ret
 }
 
@@ -587,8 +590,15 @@ async function loadAppVersion() {
 }
 
 onMounted(async () => {
-  await loadAppVersion()
   await loadSites()
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
+  await loadAppVersion()
 })
 </script>
 

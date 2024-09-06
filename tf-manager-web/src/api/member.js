@@ -160,14 +160,15 @@ export const deleteMemberRemark = id => {
   )
 }
 
-export const getMemberNameList = siteId => {
-  return https().request(
-    `/member/nameList/${siteId}`,
-    Method.GET,
-    siteId,
-    ContentType.form
-  )
-}
+// CANNOT USE IT
+// export const getMemberNameList = siteId => {
+//   return https().request(
+//     `/member/nameList/${siteId}`,
+//     Method.GET,
+//     siteId,
+//     ContentType.form
+//   )
+// }
 
 export const getMemberPrivilegeRecord = (id, query) => {
   return https().request(

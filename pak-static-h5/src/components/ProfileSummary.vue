@@ -290,6 +290,7 @@ import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
 
 import { defineEmits } from "vue";
+import { useCustomerTrigger } from "src/hooks/trigger";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot", "activateSlide"]);
@@ -311,7 +312,6 @@ const loadCustomerAddress = () => {
       ui.CSAUrl = url;
     });
 };
-
 
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
@@ -459,6 +459,8 @@ const handleBackBtn = () => {
 
 const isSideDownload = ref(false);
 
+const afterMounted = useCustomerTrigger(loadCustomerAddress);
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -468,7 +470,6 @@ onMounted(() => {
   }
 
   checkTopDownloadAppear();
-  loadCustomerAddress();
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
@@ -477,6 +478,7 @@ onMounted(() => {
   } else {
     isSideDownload.value = true;
   }
+  afterMounted();
 });
 </script>
 

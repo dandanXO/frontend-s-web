@@ -26,9 +26,9 @@
             </div>
 
             <div class="q-my-sm">
-              <div class="input-title">Account Number</div>
+              <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
-                type="number"
+                :type="inputType"
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
@@ -41,7 +41,7 @@
               />
             </div>
 
-            <div class="q-my-sm">
+            <div class="q-my-sm" v-if="currentCardType !== 'CRYPTO'">
               <div class="input-title">IFSC Code</div>
               <q-input
                 standout
@@ -62,8 +62,11 @@
           label="Update"
           :confirmFunc="updateCard"
           :isDisabled="
-            !(isValidCardAccount() === true && isValidCardNumber() === true && isValidCardAddress() === true) ||
-            isDisableBtn
+            !(
+              isValidCardAccount() === true &&
+              isValidCardNumber() === true &&
+              ((currentCardType === 'BANK' && isValidCardAddress() === true) || currentCardType === 'CRYPTO')
+            ) || isDisableBtn
           "
         ></ConfirmButton>
       </q-card>
@@ -72,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -86,6 +89,14 @@ const $q = useQuasar();
 const store = userStore();
 
 const refBankCardModal = ref();
+const currentCardType = ref("Bank");
+
+const accountTypeStr = ref("");
+const currBankList = ref([]);
+// cache
+const bankList = [];
+const cryptoList = [];
+const ewalletList = [];
 
 const bankCardField = reactive({
   cardId: "",
@@ -96,7 +107,13 @@ const bankCardField = reactive({
 const router = useRouter();
 
 const isUpdateCardDialogOpen = ref(false);
-const onUpdateCardClick = (bankCardDetails) => {
+const onUpdateCardClick = (bankCardDetails, type) => {
+  currentCardType.value = type;
+
+  if (currentCardType.value === "CRYPTO") {
+    dialogDisplays.accountNum = "Crypto Card Number";
+  }
+
   bankCardField.cardAccount = bankCardDetails.cardAccount;
   bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
@@ -118,7 +135,8 @@ const onUpdateCardClick = (bankCardDetails) => {
 };
 
 const dialogDisplays = reactive({
-  title: "Update Bank Card"
+  title: "Update Bank Card",
+  accountNum: "Account Number"
 });
 
 // validation
@@ -176,6 +194,8 @@ const updateCard = () => {
       isDisableBtn.value = false;
     });
 };
+
+const inputType = computed(() => (currentCardType.value === "CRYPTO" ? "text" : "number"));
 
 defineExpose({
   onUpdateCardClick

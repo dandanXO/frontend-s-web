@@ -1,5 +1,7 @@
 import { ElMessage } from "element-plus";
 import { globals } from "../main";
+import { useSessionStorage } from "@vueuse/core";
+
 export const uploadImage = (formData) => {
   const requestOptions = {
     method: 'POST',
@@ -25,7 +27,8 @@ export const uploadGameImage = (formData) => {
     method: 'POST',
     body: formData
   };
-  return fetch(`${process.env.VUE_APP_IMAGE_UPLOAD}/dir`, requestOptions)
+  const imageUrl = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value;
+  return fetch(`${imageUrl}/dir`, requestOptions)
     .then(response => {
       return response.json()
     })

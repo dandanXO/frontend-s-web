@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref, computed } from 'vue'
 import { getUserActionLog } from '../../../api/user-action-log'
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
@@ -163,8 +163,13 @@ import {
   convertDateToStart,
   convertDateToEnd,
 } from '@/utils/datetime'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
@@ -258,7 +263,7 @@ function resetQuery() {
     convertDateToStart(new Date()),
     convertDateToEnd(new Date()),
   ]
-  request.siteId = null
+  request.siteId = sites.list[0].id
   request.targetName = null
   request.dataBefore = null
   request.dataAfter = null
@@ -299,9 +304,16 @@ function changePage(page) {
   loadUserActionLog()
 }
 
-onMounted(() => {
-  loadSites()
-  loadUserActionLog()
+onMounted(async () => {
+  await loadSites()
+  request.siteId = sites.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = sites.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
+  await loadUserActionLog()
 })
 </script>
 
