@@ -733,6 +733,7 @@ import {
 } from '../../../../api/platform-competition'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { uploadImage } from '../../../../api/image'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const store = useStore()
@@ -741,7 +742,7 @@ const inputImage = ref(null)
 const imageFormRef = ref(null)
 const competitionForm = ref(null)
 const bulkCompetitionForm = ref(null)
-const gameDir = process.env.VUE_APP_IMAGE + '/promo/'
+const gameDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 
 const uiControl = reactive({
@@ -1252,6 +1253,7 @@ function submitImageUpload() {
 onMounted(async () => {
   await loadSites()
   request.siteId = sites.list[0].id
+  imageRequest.siteId = sites.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
     request.siteId = site.value.id

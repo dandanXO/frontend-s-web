@@ -142,11 +142,14 @@
             <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
+                {{
+                  selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                    ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">*提币手续费：1.00 USDT</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -161,6 +164,7 @@
               />
             </div>
           </div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
           <!-- <a-form-item
             class="select"
             name="cardId"

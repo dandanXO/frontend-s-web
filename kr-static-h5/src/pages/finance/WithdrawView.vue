@@ -201,14 +201,13 @@
                 {{
                   selectedWithdrawalMethod &&
                   (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
-                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
                     ? "0.00"
-                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
                 }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_usdtspecialnote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -223,6 +222,8 @@
               />
             </div>
           </div>
+
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("lang.withdraw_usdtspecialnote", {fee: selectedWithdrawalMethod.withdrawFee}) }}</div>
           <!-- <a-form-item
             class="select"
             name="cardId"

@@ -91,7 +91,7 @@
           </div>
           <div class="form-body">
             <el-checkbox-group v-model="form.web.financialLevels" @change="handleCheckedFinancialChange">
-              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f" :key="f.id" style="display: block; margin: 5px 0;">
+              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f.level" :key="f.id" style="display: block; margin: 5px 0;">
                 {{ f.name }}
                 <span class="deposit-class">
                   <i class="el-icon-caret-top" />: <span v-formatter="{data: getDeposit(f, 'WEB', 'max'),type: 'money'}" /> <i class="el-icon-caret-bottom" />: <span v-formatter="{data: getDeposit(f, 'WEB', 'min'),type: 'money'}" />
@@ -109,7 +109,7 @@
           </div>
           <div class="form-body">
             <el-checkbox-group v-model="form.mobile.financialLevels" @change="handleMobileCheckedFinancialChange">
-              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f" :key="f.id" style="display: block; margin: 5px 0;">
+              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f.level" :key="f.id" style="display: block; margin: 5px 0;">
                 {{ f.name }}
                 <span class="deposit-class">
                   <i class="el-icon-caret-top" />: <span v-formatter="{data: getDeposit(f, 'MOBILE', 'max'),type: 'money'}" /> <i class="el-icon-caret-bottom" />: <span v-formatter="{data: getDeposit(f, 'MOBILE', 'min'),type: 'money'}" />
@@ -140,7 +140,7 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
-import { isNumericNonRequired } from "../../../utils/validate";
+import { isNumeric } from "../../../utils/validate";
 
 const { t } = useI18n();
 const store = useStore();
@@ -212,7 +212,7 @@ const validateMobileDepositAmount = (rule, value, callback) => {
 };
 
 const validateNumeric = (rule, value, callback) => {
-  if (value && !isNumericNonRequired(value)) {
+  if (value && !isNumeric(value)) {
     callback(new Error(t('message.validateNumberOnly')))
   } else {
     callback()
@@ -221,7 +221,7 @@ const validateNumeric = (rule, value, callback) => {
 
 const handleCheckAllChange = (val) => {
   if (val) {
-    form.web.financialLevels = financialList.list;
+    form.web.financialLevels = financialList.list.map(financial => financial.level);
   } else {
     form.web.financialLevels = [];
   }
@@ -237,7 +237,7 @@ const handleCheckedFinancialChange = (value) => {
 
 const handleMobileCheckAllChange = (val) => {
   if (val) {
-    form.mobile.financialLevels = financialList.list;
+    form.mobile.financialLevels = financialList.list.map(financial => financial.level);
   } else {
     form.mobile.financialLevels = [];
   }
@@ -247,7 +247,7 @@ const handleMobileCheckAllChange = (val) => {
 
 const handleMobileCheckedFinancialChange = (value) => {
   const checkedCount = value.length
-  checkAllMobile.value = checkedCount === financialList.list.map(element => element.name).length
+  checkAllMobile.value = checkedCount === financialList.list.length
   mobileIsIndeterminate.value = checkedCount > 0 && checkedCount < financialList.list.length
 }
 
@@ -326,8 +326,8 @@ async function submit() {
       if (valid) {
         form.web.financialLevels.forEach(f => {
           const record = {};
-          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'WEB');
-          record.financialLevel = f.level;
+          const current = page.records.find((item) => item.financialLevel === f && item.way === 'WEB');
+          record.financialLevel = f;
           record.siteId = form.siteId;
           record.payType = form.payType;
           record.way = 'WEB';
@@ -343,8 +343,8 @@ async function submit() {
       if (valid) {
         form.mobile.financialLevels.forEach(f => {
           const record = {};
-          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'MOBILE');
-          record.financialLevel = f.level;
+          const current = page.records.find((item) => item.financialLevel === f && item.way === 'MOBILE');
+          record.financialLevel = f;
           record.siteId = form.siteId;
           record.payType = form.payType;
           record.way = 'MOBILE';

@@ -148,6 +148,12 @@
           width="150"
         />
         <el-table-column
+          prop="withdrawMembersCount"
+          :label="t('fields.totalWithdrawMemberCount')"
+          align="center"
+          width="150"
+        />
+        <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
           width="120"
@@ -234,6 +240,12 @@
             />
           </template>
         </el-table-column> -->
+        <el-table-column
+          prop="depositCount"
+          :label="t('fields.totalDepositCount')"
+          align="center"
+          width="120"
+        />
         <el-table-column
           prop="depositMembersCount"
           :label="t('fields.totalDepositMemberCount')"
@@ -361,13 +373,12 @@ async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
 
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-  } else {
-    request.siteId = 1
   }
   loadAffiliateList()
 }
@@ -503,13 +514,15 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 4 ||
-          index === 6 ||
+          index === 5 ||
           index === 7 ||
-          index === 12 ||
-          index === 13
+          index === 8 ||
+          index === 13 ||
+          index === 14 ||
+          index === 15
         ) {
           sums[index] = total.data[prop]
-        } else if (index === 5) {
+        } else if (index === 6) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +

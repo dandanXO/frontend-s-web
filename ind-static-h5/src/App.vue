@@ -16,6 +16,7 @@ import { useUI } from "src/stores/ui";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -23,6 +24,7 @@ export default defineComponent({
     var qs = require("qs");
     const store = userStore();
     const ui = useUI();
+    const router = useRouter();
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
@@ -250,7 +252,9 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await api.post("/memberStatistics/submit", qs.stringify({
+        const res = await api.post(
+          "/memberStatistics/submit",
+          qs.stringify({
             way: way,
             sid: theSid,
             siteCode: process.env.SITE
@@ -258,12 +262,27 @@ export default defineComponent({
       }
     };
 
+    // check server status
+    const checkServerStatus = () => {
+      axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
+        if (response.data.code === 0) {
+          console.log("responseStatus:", response.data.data.status);
+          if (response.data.data.status === "CLOSED") {
+            router.replace(`/maintenance`);
+            ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
+            ui.maintenanceEndTime = response.data.data.maintenanceEndTime;
+          }
+        }
+      });
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
-      // console.log("APP Info");
+      console.log("APP Info");
       // console.log(info);
       // checkSID();
       // getCSA();
+      checkServerStatus();
       getAppInfo();
       initOrientation();
       AOS.init();

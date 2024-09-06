@@ -467,7 +467,7 @@ const importedPage = reactive({
 })
 
 function resetQuery() {
-  request.siteId = site.value ? site.value.id : null;
+  request.siteId = site.value ? site.value.id : sites.list[0].id;
 }
 
 function handleSelectionChange(val) {

@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="dialog-footer">
-          <q-btn color="brightbtn" type="primary" @click="onChoiceSubmit('third')">提交</q-btn>
+          <q-btn color="brightbtn" type="primary" @click="onChoiceSubmit('third')" style="width: 120px;">提交</q-btn>
         </div>
       </q-card-section>
     </q-card>
@@ -76,7 +76,7 @@
 
   <div class="prize-quiz-container">
     <div><img src="../../../assets/images/promo/hotpromo/esportquiz/pattern-top.png" /></div>
-    <div class="prize-quiz-content-container" v-if="matchInfo.homeTeam && matchInfo.awayTeam || !store.token">
+    <div class="prize-quiz-content-container" v-if="(matchInfo.homeTeam && matchInfo.awayTeam) || !store.token">
       <div :class="`questions-main-title ${uiIsShowStatus.questionBox ? '' : 'hide'}`">{{ matchInfo.quizTitle }}</div>
 
       <div class="prize-quiz-jc-container" :class="`${uiIsShowStatus.startAnswerBox ? '' : 'hide'}`">
@@ -105,7 +105,7 @@
             </div>
           </div>
 
-          <div v-if="store.token"  class="team-content">
+          <div v-if="store.token" class="team-content">
             <div class="team-logo">
               <img :src="imgURL + `promo/` + matchInfo.awayTeamIcon" />
             </div>
@@ -121,19 +121,14 @@
               <div class="item-title">第一题</div>
               <div class="question-options-box">
                 <div class="item-question">{{ matchInfo.questionOne }}</div>
-                <q-btn
-                  color="brightbtn"
-                  class="btn-answer"
-                  data-question-id="2"
-                  data-question-type="select"
-                  id="firstQuestion"
-                  @click="onFirstQuestionClick(true)"
-                >
-                  {{ firstChoiceRef ? "重新选择" : "选择" }}
-                </q-btn>
-                <div class="question-ans">
-                  我的答案：
-                  <span>{{ firstChoiceRef ? firstChoiceRef : "" }}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                  <div class="question-ans">
+                    我的答案：
+                    <span>{{ firstChoiceRef ? firstChoiceRef : "" }}</span>
+                  </div>
+                  <div class="question-btn-box" @click="onFirstQuestionClick(true)">
+                    <img :src="firstChoiceRef ? reSelectBtn : selectBtn" alt="">
+                  </div>
                 </div>
               </div>
             </div>
@@ -141,19 +136,14 @@
               <div class="item-title">第二题</div>
               <div class="question-options-box">
                 <div class="item-question">{{ matchInfo.questionTwo }}</div>
-                <q-btn
-                  color="brightbtn"
-                  class="btn-answer"
-                  data-question-id="2"
-                  data-question-type="select"
-                  id="secondQuestion"
-                  @click="onSecondQuestionClick(true)"
-                >
-                  {{ secondChoiceRef ? "重新选择" : "选择" }}
-                </q-btn>
-                <div class="question-ans">
-                  我的答案：
-                  <span>{{ secondChoiceRef ? secondChoiceRef : "" }}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                  <div class="question-ans">
+                    我的答案：
+                    <span>{{ secondChoiceRef ? secondChoiceRef : "" }}</span>
+                  </div>
+                  <div class="question-btn-box" @click="onSecondQuestionClick(true)">
+                    <img :src="secondChoiceRef ? reSelectBtn : selectBtn" alt="">
+                  </div>
                 </div>
               </div>
             </div>
@@ -161,19 +151,14 @@
               <div class="item-title">第三题</div>
               <div class="question-options-box">
                 <div class="item-question">{{ matchInfo.questionThree }}</div>
-                <q-btn
-                  color="brightbtn"
-                  class="btn-answer"
-                  data-question-id="2"
-                  data-question-type="select"
-                  id="thirdQuestion"
-                  @click="onThirdQuestionClick(true)"
-                >
-                  {{ thirdChoiceRef ? "重新选择" : "选择" }}
-                </q-btn>
-                <div class="question-ans">
-                  我的答案：
-                  <span>{{ thirdChoiceRef ? thirdChoiceRef : "" }}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                  <div class="question-ans">
+                    我的答案：
+                    <span>{{ thirdChoiceRef ? thirdChoiceRef : "" }}</span>
+                  </div>
+                  <div class="question-btn-box" @click="onThirdQuestionClick(true)">
+                    <img :src="thirdChoiceRef ? reSelectBtn : selectBtn" alt="">
+                  </div>
                 </div>
               </div>
             </div>
@@ -244,13 +229,16 @@ import {
   submitMemberSportMatchQuiz,
   getMemberSportQuizTotal
 } from "../../../api/index/promo";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 
 const notify = useNotify();
 const $q = useQuasar();
 const store = userStore();
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/";
+
+const selectBtn = require("../../../assets/images/promo/hotpromo/esportquiz/select-btn.png");
+const reSelectBtn = require("../../../assets/images/promo/hotpromo/esportquiz/re-select-btn.png");
 
 onMounted(() => {
   if (!store.token) {
@@ -273,26 +261,26 @@ const uiIsShowStatus = reactive({
 function onBtnStartAnswerClick() {
   if (!store.token) {
     $q.dialog({
-        class: "q-px-md q-pt-md",
-        title: "系统提示",
-        message: "请登录后再操作",
-        ok: {
-          push: true,
-          color: 'primary',
-          label: "去登录",
-          tabindex: 1
-        },
-        cancel: {
-          push: true,
-          color: 'warning',
-          label: "取消",
-          tabindex: 0
-        },
-        persistent: true,
-      }).onOk(() => {
-        router.push('/login');
-      })
-      return
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
+    return;
   }
   uiIsShowStatus.startAnswerBox = false;
   uiIsShowStatus.questionBox = true;
@@ -491,7 +479,7 @@ function onChoiceSubmit(key) {
     if (!firstChoice) {
       notify({
         type: "error",
-        message: "请选择答案",
+        message: "请选择答案"
       });
       return;
     }
@@ -504,7 +492,7 @@ function onChoiceSubmit(key) {
     if (!secondChoice) {
       notify({
         type: "error",
-        message: "请选择答案",
+        message: "请选择答案"
       });
       return;
     }
@@ -517,7 +505,7 @@ function onChoiceSubmit(key) {
     if (!thirdChoice) {
       notify({
         type: "error",
-        message: "请选择答案",
+        message: "请选择答案"
       });
       return;
     }
@@ -534,13 +522,13 @@ function onSubmitClick() {
   if (answerOne == "" || answerTwo == -1 || answerThree == -1) {
     notify({
       type: "error",
-      message: "请完成3个答案再提交！",
+      message: "请完成3个答案再提交！"
     });
     return;
   } else if (quizId == -1) {
     notify({
       type: "error",
-      message: "提交答案失败,请刷新页面重试！",
+      message: "提交答案失败,请刷新页面重试！"
     });
     return;
   }
@@ -556,12 +544,12 @@ function onSubmitClick() {
     if (code == 0) {
       notify({
         type: "success",
-        message: "您好，您已成功提交本场竞猜答案",
+        message: "您好，您已成功提交本场竞猜答案"
       });
     } else {
       notify({
         type: "error",
-        message: message,
+        message: message
       });
     }
   });
@@ -610,7 +598,7 @@ const getMatchTimeOnly = (matchTime) => {
       background: url("../../../assets/images/promo/hotpromo/esportquiz/prize-pool-bg.png") center no-repeat;
       background-size: contain;
       padding-top: 30px;
-      margin: 0px auto;
+      margin: 16px auto 28px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -641,7 +629,7 @@ const getMatchTimeOnly = (matchTime) => {
         display: flex;
         width: 100%;
         justify-content: center;
-        background: radial-gradient(#F8FBFF, #CADFFF);
+        box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
 
         .book-img {
           text-align: center;
@@ -677,7 +665,7 @@ const getMatchTimeOnly = (matchTime) => {
         }
 
         .team-match-time {
-          color: #424F72;
+          color: #424f72;
           font-weight: 700;
           font-size: 14px;
           line-height: 1;
@@ -717,8 +705,8 @@ const getMatchTimeOnly = (matchTime) => {
         line-height: 1;
 
         height: 40px;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-        color: #FFFFFF;
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        color: #ffffff;
         border-bottom: 2px solid #fff;
       }
     }
@@ -819,7 +807,7 @@ const getMatchTimeOnly = (matchTime) => {
       .item-title {
         font-size: 12px;
         color: #ffffff;
-        background: linear-gradient(180deg, #2095FF 0%, #7ebdf7 100%);
+        background: linear-gradient(180deg, #2095ff 0%, #7ebdf7 100%);
         border-bottom: 3px solid #fff;
         // background: #2095ff;
         display: flex;
@@ -840,7 +828,7 @@ const getMatchTimeOnly = (matchTime) => {
       }
 
       .question-options-box {
-        padding: 0 16px;
+        padding: 0 16px 16px;
         color: #87898a;
         overflow: hidden;
         display: flex;
@@ -848,17 +836,31 @@ const getMatchTimeOnly = (matchTime) => {
         justify-content: center;
         align-items: center;
 
-        background: linear-gradient(0deg, #FFFFFF 0%, #eaf3fced 100%);
+        background: linear-gradient(0deg, #ffffff 0%, #eaf3fced 100%);
 
         .question-ans {
           display: flex;
-          justify-content: space-between;
+          justify-content: flex-start;
           width: 100%;
           padding: 10px;
+          flex: 1;
+          color: #7A8EB9;
 
           span {
             font-weight: 700;
-            color: #4c4c6c;
+            color: #3981FF;
+          }
+        }
+
+        .question-btn-box {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 25%;
+          max-width: 286px;
+
+          img {
+            margin: 0;
           }
         }
 
@@ -884,7 +886,7 @@ const getMatchTimeOnly = (matchTime) => {
         cursor: pointer;
         // margin: 0 auto 40px;
         border-radius: 4px;
-        margin-bottom: 16px;
+        white-space: nowrap;
       }
     }
   }
@@ -912,7 +914,7 @@ const getMatchTimeOnly = (matchTime) => {
   }
 
   .question-select-option {
-    background-color: #E7F3FF;
+    background-color: #e7f3ff;
     border-radius: 10px;
     margin-bottom: 24px;
     display: flex;
@@ -921,12 +923,12 @@ const getMatchTimeOnly = (matchTime) => {
     padding: 15px;
     cursor: pointer;
     width: 120px;
-    color: #424F72;
+    color: #424f72;
     font-size: 12px;
 
     &.active {
       color: #fff;
-      background-color: #3981FF;
+      background-color: #3981ff;
     }
   }
 }
@@ -997,9 +999,9 @@ const getMatchTimeOnly = (matchTime) => {
 
 .dialog-content {
   border-radius: 20px;
-  // background-image: url(../../../assets/images/promo/hotpromo/esportquiz/question-dialog-bg.png);
-  // background-position: center center;
-  // background-size: cover;
-  // background-repeat: no-repeat;
+  background-image: url(../../../assets/images/promo/hotpromo/esportquiz/dialog-bg.png);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>

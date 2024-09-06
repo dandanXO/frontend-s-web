@@ -89,6 +89,13 @@
                 <!-- </div> -->
               </div>
               <div class="inner">
+                <div class="top-float">
+                  <div class="top-subtitle">Get unlimited rewards!</div>
+                  <div class="top-title">{{ selectedPromo.title }}</div>
+                </div>
+                <div class="promo-content-inner">
+                  <div class="content-title">{{ selectedPromo.title }}</div>
+                </div>
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -103,32 +110,29 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div class="top-float">
-                    <div class="top-subtitle">Get unlimited rewards!</div>
-                    <div class="top-title">{{ selectedPromo.title }}</div>
-                  </div>
-                  <div class="promo-content-inner">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
-                    <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
-                      <div class="date-timer">
-                        <img src="../assets/images/promotion/timer-icon.svg" alt="" />
-                        <q-icon name="all_inclusive" size="22px"></q-icon>
-                      </div>
-                    </div>
-                    <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                  </div>
 
-                  <!-- <div class="join-container">
-                    <div class="promo-date">
-                      <div class="date-txt">Promotion Ends</div>
-                      <div class="date-timer">01/01/2024</div>
-                    </div>
-                    <q-btn class="btn-join-now" no-caps label="Join Now" />
-                  </div> -->
+                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                    <template v-if="selectedPromoDate">
+                      <div class="promo-date">
+                        <div class="date-txt">Promotion:</div>
+                        <div class="date-timer">
+                          {{ selectedPromoDate }}
+                        </div>
+                      </div>
+                      <!-- <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" /> -->
+                    </template>
+                    <template v-else>
+                      <div class="promo-date">
+                        <div class="date-txt">Promotion Ends</div>
+                        <div class="date-timer">
+                          <img src="../assets/images/promotion/timer-icon.svg" alt="" />
+                          <q-icon name="all_inclusive" size="22px"></q-icon>
+                        </div>
+                      </div>
+                      <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
+                    </template>
+                  </div>
                 </div>
               </div>
             </div>
@@ -200,6 +204,7 @@ export default defineComponent({
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
+    const selectedPromoDate = ref();
     const route = useRoute();
     const router = useRouter();
     const $q = useQuasar();
@@ -324,6 +329,16 @@ export default defineComponent({
           }
           isPromoDetail.value = true
           selectedPromo.value = promo
+
+          selectedPromoDate.value = '';
+
+          if(selectedPromo.value.param){
+            let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
+
+            if(promoDate) {
+              selectedPromoDate.value = promoDate;
+            }
+          }
         }
       }
     }
@@ -430,28 +445,38 @@ export default defineComponent({
     }
 
     // promo timer
-    const endDate = new Date('01/8/2024 12:00:00').getTime();
+    const endDate = ref('2024-08-31T00:00:00');
+    const countdownState = ref(false);
     const countdown = ref('');
     const isPromotionEnded = ref(false);
 
-    function getCountdown() {
+    const getCountdown = () => {
       const now = new Date().getTime();
-      const timeRemaining = endDate - now;
 
-      if (timeRemaining <= 0) {
-        isPromotionEnded.value = true;
-        return 'Promotion Ended';
+      if (selectedPromo.value.param) {
+        let newEndDate = JSON.parse(selectedPromo.value.param).endDate;
+
+        if (newEndDate){
+          countdownState.value = true;
+          const timeRemaining = new Date(newEndDate).getTime() - now;
+
+          if (timeRemaining <= 0) {
+            isPromotionEnded.value = true;
+            return 'Promotion Ended';
+          }
+
+          const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+          const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+          const formattedHours = String(hours).padStart(2, '0');
+          const formattedMinutes = String(minutes).padStart(2, '0');
+          const formattedSeconds = String(seconds).padStart(2, '0');
+
+          return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        }
+
       }
-
-      const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-      const formattedHours = String(hours).padStart(2, '0');
-      const formattedMinutes = String(minutes).padStart(2, '0');
-      const formattedSeconds = String(seconds).padStart(2, '0');
-
-      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
     const updateCountdown = () => {
@@ -463,7 +488,7 @@ export default defineComponent({
 
     // Cleanup the interval when the component is unmounted
     onBeforeUnmount(() => {
-      clearInterval(countdownInterval);
+      // clearInterval(countdownInterval);
     });
 
     // onMounted(() => {
@@ -494,6 +519,7 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
+      selectedPromoDate,
       banner,
       imgURL,
       store,
@@ -938,9 +964,9 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
-          border-radius: 10px;
-          display: none;
+          // background: #272c3d;
+          // border-radius: 10px;
+          // display: none;
         }
 
         .promo-view-container {

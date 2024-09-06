@@ -107,7 +107,7 @@
           </div>
           <div class="form-body">
             <el-checkbox-group v-model="form.web.financialLevels" @change="handleCheckedFinancialChange">
-              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f" :key="f.id" style="display: block; margin: 5px 0;">
+              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f.level" :key="f.id" style="display: block; margin: 5px 0;">
                 {{ f.name }}
                 <span class="withdraw-class">
                   <i class="el-icon-caret-top" />: <span v-formatter="{data: getWithdraw(f, 'WEB', 'max'),type: 'money'}" /> <i class="el-icon-caret-bottom" />: <span v-formatter="{data: getWithdraw(f, 'WEB', 'min'),type: 'money'}" /> <i class="el-icon-stopwatch" />: {{ getWithdraw(f, 'WEB', 'maxTimes') }} <i class="el-icon-wallet" />: <span v-formatter="{data: getWithdraw(f, 'WEB', 'maxAmount'),type: 'money'}" />
@@ -125,7 +125,7 @@
           </div>
           <div class="form-body">
             <el-checkbox-group v-model="form.mobile.financialLevels" @change="handleMobileCheckedFinancialChange">
-              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f" :key="f.id" style="display: block; margin: 5px 0;">
+              <el-checkbox :value-key="f.id" v-for="f in financialList.list" :label="f.level" :key="f.id" style="display: block; margin: 5px 0;">
                 {{ f.name }}
                 <span class="withdraw-class">
                   <i class="el-icon-caret-top" />: <span v-formatter="{data: getWithdraw(f, 'MOBILE', 'max'),type: 'money'}" /> <i class="el-icon-caret-bottom" />: <span v-formatter="{data: getWithdraw(f, 'MOBILE', 'min'),type: 'money'}" /> <i class="el-icon-stopwatch" />: {{ getWithdraw(f, 'MOBILE', 'maxTimes') }} <i class="el-icon-wallet" />: <span v-formatter="{data: getWithdraw(f, 'MOBILE', 'maxAmount'),type: 'money'}" />
@@ -145,7 +145,7 @@
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
-import { isNumericNonRequired, numericOnlyNonRequired } from '../../../utils/validate'
+import { isNumeric, numericOnlyNonRequired } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { getWithdrawSettingList, insertOrUpdate } from '../../../api/withdraw-setting'
 import { getSiteListSimple } from '../../../api/site'
@@ -203,7 +203,7 @@ const form = reactive({
 
 const validateWebWithdrawMin = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMinWithdrawNumber')));
     } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax > 0) {
       callback(new Error(t('message.validateMinWithdrawLesser')));
@@ -217,7 +217,7 @@ const validateWebWithdrawMin = (rule, value, callback) => {
 
 const validateWebWithdrawMax = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
     } else if (form.web.withdrawMin !== null && value - form.web.withdrawMin < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
@@ -230,7 +230,7 @@ const validateWebWithdrawMax = (rule, value, callback) => {
 };
 
 const validateWithdrawMaxTime = (rule, value, callback) => {
-  if (value && value < 1) {
+  if (value && value < 0) {
     callback(new Error(t('message.validateMaxDailyWithdrawTimesNumber')));
   } else {
     callback();
@@ -239,7 +239,7 @@ const validateWithdrawMaxTime = (rule, value, callback) => {
 
 const validateWebWithdrawMaxAmountDaily = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
     } else if (form.web.withdrawMax !== null && value - form.web.withdrawMax < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
@@ -253,7 +253,7 @@ const validateWebWithdrawMaxAmountDaily = (rule, value, callback) => {
 
 const validateMobileWithdrawMin = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMinWithdrawNumber')));
     } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax > 0) {
       callback(new Error(t('message.validateMinWithdrawLesser')));
@@ -267,7 +267,7 @@ const validateMobileWithdrawMin = (rule, value, callback) => {
 
 const validateMobileWithdrawMax = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountNumber')));
     } else if (form.mobile.withdrawMin !== null && value - form.mobile.withdrawMin < 0) {
       callback(new Error(t('message.validateMaxWithdrawAmountGreater')));
@@ -281,7 +281,7 @@ const validateMobileWithdrawMax = (rule, value, callback) => {
 
 const validateMobileWithdrawMaxAmountDaily = (rule, value, callback) => {
   if (value) {
-    if (value < 1) {
+    if (value < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawNumber')));
     } else if (form.mobile.withdrawMax !== null && value - form.mobile.withdrawMax < 0) {
       callback(new Error(t('message.validateMaxDailyWithdrawGreater')));
@@ -294,7 +294,7 @@ const validateMobileWithdrawMaxAmountDaily = (rule, value, callback) => {
 };
 
 const validateNumeric = (rule, value, callback) => {
-  if (value && !isNumericNonRequired(value)) {
+  if (value && !isNumeric(value)) {
     callback(new Error(t('message.validateNumberOnly')))
   } else {
     callback()
@@ -311,7 +311,7 @@ const validateNumericOnly = (rule, value, callback) => {
 
 const handleCheckAllChange = (val) => {
   if (val) {
-    form.web.financialLevels = financialList.list;
+    form.web.financialLevels = financialList.list.map(financial => financial.level);
   } else {
     form.web.financialLevels = [];
   }
@@ -327,7 +327,7 @@ const handleCheckedFinancialChange = (value) => {
 
 const handleMobileCheckAllChange = (val) => {
   if (val) {
-    form.mobile.financialLevels = financialList.list;
+    form.mobile.financialLevels = financialList.list.map(financial => financial.level);
   } else {
     form.mobile.financialLevels = [];
   }
@@ -337,7 +337,7 @@ const handleMobileCheckAllChange = (val) => {
 
 const handleMobileCheckedFinancialChange = (value) => {
   const checkedCount = value.length
-  checkAllMobile.value = checkedCount === financialList.list.map(element => element.name).length
+  checkAllMobile.value = checkedCount === financialList.list.length
   mobileIsIndeterminate.value = checkedCount > 0 && checkedCount < financialList.list.length
 }
 
@@ -395,8 +395,8 @@ async function submit() {
       if (valid) {
         form.web.financialLevels.forEach(f => {
           const record = {};
-          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'WEB');
-          record.financialLevel = f.level;
+          const current = page.records.find((item) => item.financialLevel === f && item.way === 'WEB');
+          record.financialLevel = f;
           record.siteId = form.siteId;
           record.currencyId = form.currencyId;
           record.way = 'WEB';
@@ -414,8 +414,8 @@ async function submit() {
       if (valid) {
         form.mobile.financialLevels.forEach(f => {
           const record = {};
-          const current = page.records.find((item) => item.financialLevel === f.level && item.way === 'MOBILE');
-          record.financialLevel = f.level;
+          const current = page.records.find((item) => item.financialLevel === f && item.way === 'MOBILE');
+          record.financialLevel = f;
           record.siteId = form.siteId;
           record.currencyId = form.currencyId;
           record.way = 'MOBILE';

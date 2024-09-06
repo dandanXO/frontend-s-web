@@ -124,7 +124,16 @@ const checkShowImgTop = () => {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
   } else {
-    loadHomePopup("")
+    let params;
+    switch (ui.edition) {
+      case EDITION.SLOT:
+        params = "SLOT";
+        break;
+      case EDITION.NORMAL:
+      default:
+      // params = "HOME";
+    }
+    loadHomePopup(params)
       .then((res) => {
         const { code, data } = res;
         if (code === 0) {
@@ -205,6 +214,10 @@ onMounted(() => {
   height: auto;
   margin-top: 25% !important;
   transform: translate(-50%, -50%);
+
+  &.el-dialog {
+    --el-dialog-width: 35%;
+  }
 
   .el-dialog__body {
     padding: 20px !important;

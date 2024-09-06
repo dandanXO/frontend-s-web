@@ -38,6 +38,14 @@ export const actions = {
     commit(UserMutationTypes.SET_TOKEN, "");
   },
 
+  [UserActionTypes.ACTION_CHANGE_SITE_ID]({ commit }, siteInfo) {
+    commit(UserMutationTypes.SET_SITE_ID, siteInfo)
+  },
+
+  [UserActionTypes.ACTION_UPDATE_TOKEN]({ commit }, token) {
+    commit(UserMutationTypes.SET_TOKEN, token)
+  },
+
   async [UserActionTypes.ACTION_GET_USER_INFO](
     { commit }
   ) {

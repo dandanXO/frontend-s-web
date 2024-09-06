@@ -11,6 +11,7 @@ export default {
     withdraw: "Rút tiền",
     transfer: "Chuyển điểm",
     vip: "VIP",
+    live: "LIVE",
     home: "Trang chủ",
     account: "Nạp tiền",
     promo: "Khuyến Mãi",
@@ -117,7 +118,7 @@ export default {
     logout_cancel: "Hủy",
 
     // register
-    please_enter_your_real_name: "Vui lòng nhập tên thật của bạn",
+    please_enter_your_real_name: "Họ tên phải được viết in hoa không dấu, khớp với tên tài khoản ngân hàng và cách nhau bằng dấu cách",
     real_name: "Họ và tên",
     real_name_hints: "Tên phải khớp với số tài khoản thẻ ngân hàng rút tiền",
     real_name_validation: "Tên phải có ít nhất hai ký tự",
@@ -195,8 +196,8 @@ export default {
 
     // maintenance
     maintenance_title: "Hệ thống đang bảo trì...",
-    maintenance_from: "Bắt đầu từ 17/04/2024 06:00 (GMT +8)",
-    maintenance_to: "đến 10:00 (GMT +8)",
+    maintenance_from: "Bắt đầu từ ",
+    maintenance_to: "đến ",
     maintenance_desc_01: "Tất cả dịch vụ và trò chơi sẽ tạm dừng trong thời gian trên, ",
     maintenance_desc_02: "thành thật xin lỗi vì sự bất tiện này!",
     maintenance_contact_01: "Gửi Email:",
@@ -374,7 +375,8 @@ export default {
     withdraw_times: "Lần",
     withdraw_realtimeexchangerates: "Tỷ giá trực tuyến",
     withdraw_estimatedarrival: "Dự kiến ​​đến",
-    withdraw_usdtspecialnote: "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là 1.00 USDT cho việc rút tiền coin!",
+    withdraw_usdtspecialnote:
+      "*Lưu ý đặc biệt: Bên thứ ba tự động tính phí xử lý là {fee} USDT cho việc rút tiền coin!",
     withdraw_ewalletspecialnote: "*Lưu ý đặc biệt: Tên của ví rút tiền và tài khoản game phải giống nhau.",
     withdraw_choose: "Chọn",
     withdraw_pleasechoose: "Vui lòng chọn",
@@ -447,6 +449,7 @@ export default {
     mine_account_info: "Thông tin tài khoản",
     mine_apply_for_partnership: "Đối tác",
     mine_logout: "Đăng xuất",
+    mine_vip: "VIP",
 
     // promo
     type_all: "Tất cả",
@@ -1100,7 +1103,7 @@ export default {
     update_app_title: "Cập nhật thành công",
     detected_new_version: "Có phiên bản mới để tải xuống ngay bây giờ?",
     update_now: "Cập nhật",
-    usdt_will_be_charged: "Lưu ý: Sẽ có phí 1.00 USDT/ giao dịch rút tiền",
+    usdt_will_be_charged: "Lưu ý: Sẽ có phí 2.00 USDT/ giao dịch rút tiền",
     estimate_arrival: "Dự kiến đến:",
     phone_verification_code: "Mã xác minh số điện thoại",
     please_enter_phone_code: "Vui lòng nhập mã xác minh số điện thoại",
@@ -1595,6 +1598,8 @@ export default {
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
+    30010: "Hệ thống bận, vui lòng thử lại sau !",
+    30101: "Người dùng cũ không được tham gia ưu đãi này",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",
@@ -1612,6 +1617,7 @@ export default {
     35008: "Bạn không có quyền lợi này",
     35009: "Quyền lợi sẽ có hiệu lực ngay",
     35010: "35010 Thành viên không thể nhận quy",
+    37001: "Đã hết thời gian nhận Lì Xì",
     45000: "Không đạt số tiền rút tối thiểu",
     45001: "Nhận được tiền thưởng ngẫu nhiên ngày hôm nay"
   }

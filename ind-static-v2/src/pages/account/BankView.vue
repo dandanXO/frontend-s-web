@@ -1,5 +1,16 @@
 <template>
   <q-page class="account-message-page">
+    <div class="bank-add-lists">
+      <div class="bank-card-add" @click="onAddCardClick()">
+        <img src="../../assets/images/account/icon-add.png" />
+        <div class="card-label">Add Bank</div>
+      </div>
+      <div class="bank-card-add" @click="onAddUSDTClick()">
+        <img src="../../assets/images/account/icon-add.png" />
+        <div class="card-label">Add Crypto</div>
+      </div>
+    </div>
+
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
       <q-card>
@@ -42,64 +53,73 @@
     <UpdateBankCardModal ref="updateBankCardModalRef" :loadCards="loadCards"></UpdateBankCardModal>
 
     <div class="bank-card-container">
-      <div
-        v-for="(bc, bcIndex) in bankCardList"
-        :key="bc.id"
-        :class="`bank-card-item card-show`"
-        @click="handleBankCardClick(bcIndex)"
-      >
-        <div class="bank-card-credentials">
-          <div class="top">
-            <div class="bank-name">{{ bc.bankName }}</div>
-          </div>
-          <div class="bottom">
-            <div class="bank-card-num-wrapper">
-              <div class="bank-card-num">{{ bc.cardNumber }}</div>
-              <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
+      <!-- Bank Section -->
+      <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'BANK')">
+        <q-expansion-item expand-separator label="Bank" default-opened>
+          <div
+            v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'BANK')"
+            :key="index"
+            class="list-item"
+          >
+            <div class="item-top">
+              <div class="item-icon">
+                <img :src="imgURL + item.bankIcon" alt="Bank Icon" style="width: 30px" />
+              </div>
+              <div class="item-title">{{ item.bankName }}</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
             </div>
-            <div class="bank-card-address">IFSC: {{ bc.cardAddress }}</div>
-          </div>
-
-          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
-            <q-icon size="sm" name="settings" />
-          </div>
-          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
-            <q-icon size="sm" name="link_off" />
-          </div>
-        </div>
-        <div class="bank-card-add" style="display:none;">
-          <!--
-            <div class="card-icon">
-              <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
+            <div class="item-content">
+              <div class="item-acc">
+                Account: {{ item.cardNumber }}
+                <br />
+                IFSC: {{ item.cardAddress }}
+              </div>
+              <div class="item-copy">
+                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(index, item.bankType)">
+                  <q-icon size="sm" name="settings" />
+                </div>
+                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+              </div>
             </div>
-          -->
-          <div class="card-label">{{ bc.bankName }}</div>
-          <!--          <div class="card-label">{{ bc.bankName }}</div>-->
-          <div class="card-num-wrapper">
-            <div class="card-num">{{ bc.cardNumber }}</div>
-            <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(bc.cardNumber)" />
           </div>
-          <div class="card-num-wrapper">
-            <div class="">IFSC: {{ bc.cardAddress }}</div>
-          </div>
-          <div class="card-update" @click.stop.prevent="onUpdateCardClick(bcIndex)">
-            <q-icon size="sm" name="settings" />
-          </div>
-          <div class="card-unlink" @click.stop.prevent="onUnbindClick(bcIndex)">
-            <q-icon size="sm" name="link_off" />
-          </div>
-        </div>
-      </div>
+        </q-expansion-item>
+      </q-list>
 
-      <div class="bank-card-item bank-addcard" @click="onAddCardClick()">
-        <div class="bank-card-add">
-          <div><img src="../../assets/images/account/icon-add.png" /></div>
-          <!-- <div class="card-icon addcard-icon-div"> -->
-          <!-- <q-icon class="add-card-icon" key="md" size="md" name="add" /> -->
-          <!-- </div> -->
-          <div class="card-label" style="margin-top: 10px">Add Bank Account</div>
-        </div>
-      </div>
+      <!-- Crypto Section -->
+      <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'CRYPTO')">
+        <q-expansion-item expand-separator label="Crypto" default-opened>
+          <div
+            v-for="(item, index) in bankCardList.filter((item) => item.bankType === 'CRYPTO')"
+            :key="index"
+            class="list-item"
+          >
+            <div class="item-top">
+              <div class="item-icon">
+                <img :src="imgURL + item.bankIcon" alt="Crypto Icon" style="width: 30px" />
+              </div>
+              <div class="item-title">{{ item.bankName }}</div>
+              <div class="item-bind" @click.stop.prevent="onUnbindClick(index)">
+                <div class="card-unlink">
+                  <q-icon size="sm" name="link_off" />
+                </div>
+              </div>
+            </div>
+            <div class="item-content">
+              <div class="item-acc">Account: {{ item.cardNumber }}</div>
+              <div class="item-copy">
+                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(index, item.bankType)">
+                  <q-icon size="sm" name="settings" />
+                </div>
+                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+              </div>
+            </div>
+          </div>
+        </q-expansion-item>
+      </q-list>
     </div>
   </q-page>
 </template>
@@ -121,6 +141,8 @@ const router = useRouter();
 const store = userStore();
 const $q = useQuasar();
 const qs = require("qs");
+
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 
 let slideList = ref(["Bank", "Message", "Personal Center", "Discount", "Record", "Order"]);
 let slideListPath = ref([
@@ -200,10 +222,16 @@ const selectedBankIndex = ref();
 const addBankCardModalRef = ref();
 const updateBankCardModalRef = ref();
 const onAddCardClick = () => {
-  addBankCardModalRef.value.onAddCardClick();
+  addBankCardModalRef.value.onAddCardClick("Bank");
 };
-const onUpdateCardClick = (bcIndex) => {
-  updateBankCardModalRef.value.onUpdateCardClick(bankCardList.value[bcIndex]);
+const onAddUSDTClick = () => {
+  addBankCardModalRef.value.onAddCardClick("Crypto");
+};
+const onUpdateCardClick = (bcIndex, bankType) => {
+  const cardItem = bankCardList.value.filter((item) => item.bankType === bankType)[bcIndex];
+  if (cardItem) {
+    updateBankCardModalRef.value.onUpdateCardClick(cardItem, bankType);
+  }
 };
 
 // init
@@ -215,6 +243,10 @@ const loadCards = () => {
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
+
+        if (bankCardList.value.length > 0) {
+          isCardShown.value[bankCardList.value.length - 1] = true;
+        }
       }
     })
     .catch((error) => {
@@ -229,10 +261,7 @@ onActivated(() => {
 
 <style lang="scss">
 .bank-card-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  padding: 8px 1rem 15px;
 
   .bank-card-item {
     padding: 3px;
@@ -272,6 +301,12 @@ onActivated(() => {
             display: block;
             width: 100%;
           }
+        }
+      }
+
+      &:last-child {
+        .bank-card-add {
+          padding: 1rem 0 1.5rem;
         }
       }
     }
@@ -388,6 +423,51 @@ onActivated(() => {
   }
 }
 
+.bank-add-lists {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  width: calc(100% - 20px);
+  margin: 16px auto 12px;
+
+  .bank-card-add {
+    flex: 1;
+    color: #fff;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 0.5rem;
+    gap: 6px;
+    background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem 8px;
+    height: 50px;
+
+    .card-update,
+    .card-unlink {
+      display: none;
+    }
+
+    .card-num-wrapper {
+      display: none;
+    }
+
+    .card-label {
+      font-size: 16px;
+    }
+
+    img {
+      width: 28px;
+    }
+    &:active {
+      opacity: 0.9;
+      filter: brightness(0.9);
+    }
+  }
+}
+
 .modal-container {
   .input-title {
     color: #fff;
@@ -416,6 +496,55 @@ onActivated(() => {
 
   .q-card__section {
     background: transparent;
+  }
+}
+
+.list-cat-item {
+  margin-bottom: 16px;
+
+  .q-item.q-item-type {
+    background-color: #263349;
+    border-radius: 8px;
+  }
+
+  .list-item {
+    background: #161f2d;
+    padding: 12px;
+    margin-top: 16px;
+    border-radius: 8px;
+
+    .item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 36px;
+    }
+    .item-icon {
+    }
+    .item-title {
+      font-weight: bold;
+    }
+    .item-bind {
+      color: #00ae00;
+      font-weight: bold;
+    }
+
+    .item-content {
+      padding-top: 6px;
+      display: flex;
+      justify-content: space-between;
+
+      .item-acc {
+        font-size: 12px;
+      }
+
+      .item-copy {
+        color: #00ae00;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+    }
   }
 }
 </style>

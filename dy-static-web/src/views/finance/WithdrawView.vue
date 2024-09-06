@@ -1,7 +1,20 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">快速提款</span>
+      <span class="menu-title">
+        {{ isAutoWithdrawal ? "快速提款" : "提款" }}
+      </span>
+      <el-button
+        v-if="!isAutoWithdrawal"
+        :loading="loadingBtn"
+        :disable="loadingBtn"
+        size="large"
+        class="common-btn upgrade-btn"
+        @click="handleUpgradeClick"
+      >
+        <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
+        <span>升级快速提款</span>
+      </el-button>
     </div>
 
     <div class="menu-title-container">
@@ -48,7 +61,13 @@
           </div>
         </el-form-item>
 
-        <el-form-item class="helptxt" prop="amount" label="提款金额" name="amount">
+        <el-form-item
+          class="helptxt"
+          :class="{ 'has-helper-text': isAutoWithdrawal }"
+          prop="amount"
+          label="提款金额"
+          name="amount"
+        >
           <el-row :gutter="10" style="align-items: center">
             <el-col :span="12">
               <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
@@ -79,6 +98,12 @@
               })
             "
           ></div> -->
+        </el-form-item>
+        <el-form-item v-if="isAutoWithdrawal" class="helptxt">
+          <div class="auto-withdraw-amount-wrapper">
+            <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+            <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+          </div>
         </el-form-item>
         <el-row>
           <el-col>
@@ -130,25 +155,22 @@
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                 ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2)
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
             }}
             USDT
           </span>
         </el-form-item>
-        <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #17cd27">
-          *提币手续费：1.00 USDT
-        </div>
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-          <el-button
-            class="common-btn"
-            v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
-            @click="openEWalletTutorial"
-          >
+          <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
+        </div>
+
+        <div v-if="selectedWithdrawalMethod.withdrawFee" class="" style="color: #17cd27">
+          *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
         </div>
 
         <!-- <div
@@ -170,12 +192,50 @@
         </div>
       </el-form>
     </div>
+
+    <!-- <el-dialog
+      width="500"
+      v-model="isShowSubmitDialog"
+      title="完成以下认证才可以取款"
+      :close-on-click-modal="false"
+      center
+      class="dialog-wrapper"
+    >
+      <div class="submit-alert-message-wrapper">
+        <div v-if="!store.realName">
+          <div class="submit-alert-message-item">
+            <div class="">
+              <p style="color: #fff; margin-top: 0px">取款需要绑定真实姓名</p>
+              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+            </div>
+
+            <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
+          </div>
+        </div>
+        <div v-if="!store.phone">
+          <div class="submit-alert-message-item">
+            <div class="">
+              <p style="color: #333; margin-top: 0px">取款需要绑定手机号</p>
+              <div style="font-size: 12px; color: #333">为了您的资金安全，请绑定手机号</div>
+            </div>
+            <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
+          </div>
+        </div>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <button class="common-btn" type="primary" style="width: 100%" @click="isShowSubmitDialog = false">
+            暂不认证
+          </button>
+        </div>
+      </template>
+    </el-dialog> -->
   </div>
 </template>
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
-import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
+import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -198,6 +258,7 @@ export default defineComponent({
     const isUSDT = ref(false);
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
+    const isShowSubmitDialog = ref(false);
     const withdrawState = reactive({
       bankCardList: [],
     });
@@ -223,9 +284,22 @@ export default defineComponent({
       // }
     ])
     onMounted(() => {
+      checkBeforeSubmit();
       getWithdrawalMethods();
     });
+
+    const checkBeforeSubmit = () => {
+      if (!store.phone || !store.realName) {
+        isShowSubmitDialog.value = true;
+        return false;
+      }
+
+      return true;
+    }
+
     const submitWithraw = () => {
+      if (!checkBeforeSubmit()) return
+
       loadingBtn.value = true;
       formRef.value
         .validate()
@@ -423,10 +497,37 @@ export default defineComponent({
         return '银行卡'
       }
     }
+
+    const handleBindRealName = () => {
+      router.push("/center/personal");
+    };
+
+    const handleBindPhoneNumber = () => {
+      router.push("/center/personal");
+    };
+
     const openEWalletTutorial = () => {
       if(!selectedWithdrawalMethod.value.url) return
       window.open(selectedWithdrawalMethod.value.url);
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === "AUTO_WITHDRAW")
+
+    const handleUpgradeClick = () => {
+      loadingBtn.value = true
+      upgradeToAutoWithdrawal().then(async (res) => {
+        if(res.code === 0) {
+          ElMessage.success({
+            type: "success",
+            message: "成功升级为快速提款！"
+          });
+          await store.getMemberInfo()
+        } else {
+          ElMessage.error(res.message)
+        }
+      }).finally(() => loadingBtn.value = false)
+    }
+
     return {
       formRef,
       withdrawInfo,
@@ -448,7 +549,12 @@ export default defineComponent({
       checkBankCards,
       cardLabel,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      handleUpgradeClick,
+      isAutoWithdrawal,
+      isShowSubmitDialog,
+      handleBindRealName,
+      handleBindPhoneNumber
     };
   },
 });
@@ -778,4 +884,52 @@ export default defineComponent({
   width: 100%;
   color: #ff7f10;
 }
+
+.upgrade-btn {
+  padding: 1px 7px;
+  height: 27px;
+  align-self: center;
+  img {
+    height: 25px;
+  }
+  span {
+    line-height: 25px;
+  }
+}
+.auto-withdraw-amount-wrapper {
+  display: flex;
+  gap: 28px;
+  justify-content: space-between;
+  width: 244px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13.58px;
+  color: #00a478;
+}
+.has-helper-text {
+  margin-bottom: 0;
+}
+.dialog-wrapper {
+  overflow: hidden;
+  border-radius: 8px !important;
+}
+
+.submit-alert-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .submit-alert-message-item {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    p {
+      flex: 1;
+    }
+  }
+}
+
 </style>

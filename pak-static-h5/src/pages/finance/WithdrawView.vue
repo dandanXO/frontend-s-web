@@ -196,9 +196,6 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-md text-neontb">
-              *特别说明：三方自动收取提币 1.00 USDT 手续费！
-            </div>
           </div>
           <div v-else-if="isEWALLET">
             <div class="q-mt-md q-mb-md text-center">
@@ -209,6 +206,8 @@
               />
             </div>
           </div>
+
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("form.usdtSpecialNote", {fee:selectedWithdrawalMethod.withdrawFee}) }}</div>
           <!-- <a-form-item
             class="select"
             name="cardId"

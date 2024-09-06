@@ -1144,6 +1144,8 @@ export default {
     upLineLoginName: 'ชื่อล็อกอินอัพไลน์',
     upload: 'ที่อัพโหลด',
     upperName: 'ชื่อของระดับที่สูงกว่า',
+    usdtDepositAmount: 'จำนวนเงินฝากสกุลเงินดิจิทัล',
+    usdtDepositCount: 'จำนวนผู้ฝากสกุลเงินดิจิทัล',
     username: 'ชื่อผู้ใช้',
     userType: 'ประเภทผู้ใช้',
     validate: 'ตรวจสอบความถูกต้อง',

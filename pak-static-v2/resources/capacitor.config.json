@@ -1,0 +1,9 @@
+{
+  "appId": "com.ind.app97pkr",
+  "appName": "97.PKR",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "7rzyd3kui.b9mega1.com"
+  }
+}

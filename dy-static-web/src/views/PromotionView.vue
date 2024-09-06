@@ -56,7 +56,8 @@
       v-else
       class="selected-promo"
       :class="{
-        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo'
+        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo',
+        'bbdacha-cs2': selectedPromo?.promoCode === 'dy2-bb-dacha-cs-bonus'
       }"
     >
       <div class="selected-promo-wrapper">
@@ -73,10 +74,12 @@
               selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
               selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
               selectedPromo.redirectUrl === 'dy2-football' ||
+              selectedPromo.redirectUrl === 'dy2-blackmyth-wukong' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
-            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
           }"
         >
           <div
@@ -107,9 +110,11 @@
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo?.promoCode === 'dy2-football' ||
               selectedPromo.promoCode === 'dy2-olympic-match',
-            isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
+            isMSI: selectedPromo.promoCode === 'dy2-msi-promo' || selectedPromo.promoCode === 'dy2-blackmyth-wukong',
             isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             esl: selectedPromo.promoCode === 'dy2-intel-esl',
+            isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            dy2quiz: selectedPromo.promoCode === 'dy2-quiz',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -117,8 +122,10 @@
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy2-intel-esl' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual',
-            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
+            duanwujie:
+              selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
             dyfootball: selectedPromo?.promoCode === 'dy2-football'
@@ -247,7 +254,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo' || promo.redirectUrl === 'dy2-quiz') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;
@@ -339,7 +346,8 @@ export default defineComponent({
       selectedPromo,
       banner,
       imgURL,
-      getPromoLabel
+      getPromoLabel,
+      isSpecialPromo
     };
   }
 });
@@ -404,6 +412,13 @@ export default defineComponent({
 
       border-collapse: collapse;
 
+      tr:first-child td:first-child {
+        border-top-left-radius: 10px;
+      }
+      tr:first-child td:last-child {
+        border-top-right-radius: 10px;
+      }
+
       th,
       td {
         padding: 10px;
@@ -414,7 +429,7 @@ export default defineComponent({
       }
 
       tbody {
-        //display: table;
+        display: table;
         table-layout: fixed;
         width: 100%;
       }
@@ -704,6 +719,20 @@ export default defineComponent({
     &.isMSIPromo {
     }
 
+    &.bbdacha-cs2 {
+      background-color: #e7f1fd;
+
+      .selected-promo-wrapper {
+        .banner-container {
+          .promo-bg.isDesktop {
+            aspect-ratio: 1920 / 568;
+            max-height: 568px;
+            height: unset;
+          }
+        }
+      }
+    }
+
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
@@ -726,9 +755,15 @@ export default defineComponent({
           height: 376px !important;
           min-height: 376px;
 
-          .promo-bg {
+          .promo-bg.isDesktop {
             height: 376px !important;
             min-height: 376px;
+          }
+        }
+
+        &.isMidAutumnWukong {
+          .promo-bg {
+            height: 585px !important;
           }
         }
 
@@ -778,10 +813,22 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
 
+        &.dy2quiz {
+          background: #e7f1fd;
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+        }
+
         &.isEurocupManual {
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;
+        }
+
+        &.isMidAutumnWukong {
+          background-repeat: no-repeat;
+          background-size: 100% auto;
         }
 
         &.isMSI {

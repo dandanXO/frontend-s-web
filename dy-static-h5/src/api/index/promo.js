@@ -211,3 +211,20 @@ export function claimLivePokerBonus(item) {
 export function footballHistroy() {
   return eventapi.get("/lh1-football/history");
 }
+
+export function getCompetitionBetToday(promoCode) {
+  return eventapi.get(`/competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getDota2CompetitionBet(promoCode) {
+  return eventapi.get(`/dota2-competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
+

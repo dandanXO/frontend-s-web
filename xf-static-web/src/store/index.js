@@ -25,7 +25,8 @@ export const userStore = defineStore("userStore", {
       currency: { value: "￥", label: "RMB" },
       loginPageVisible: false,
       regPageVisible: false,
-      visitorId: ""
+      visitorId: "",
+      withdrawType: ""
     };
   },
   actions: {
@@ -80,6 +81,7 @@ export const userStore = defineStore("userStore", {
             this.vip = ret.data.vip;
             var exclusiveurl = JSON.parse(ret.data.evip);
             this.evip = exclusiveurl;
+            this.withdrawType = ret.data.withdrawType;
           } else {
             throw new Error(ret.message);
           }

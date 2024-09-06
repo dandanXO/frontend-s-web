@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" :class="{ slot: ui.edition === EDITION.SLOT }">
     <div class="home-header">
       <div class="back-left">
         <router-link :to="'/'">
@@ -271,6 +271,7 @@ import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 import { isAndroid } from "src/boot/utils";
 import { useUI } from "stores/ui";
+import { EDITION } from "src/constant/edition";
 
 export default defineComponent({
   name: "LoginPage",
@@ -593,6 +594,7 @@ export default defineComponent({
       languageVal,
       trackRegisterClickEvent,
       ui,
+      EDITION,
       goToRegister
     };
   }
@@ -602,10 +604,15 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center 20%;
-  background-size: cover;
+  background: url(../assets/images/login/login-bg-new.png) no-repeat center 0%;
+  background-size: 100% auto;
+
   // height: 100%;
   // min-height: 100vh;
+
+  &.slot {
+    background-image: url(../assets/images/login/login-bg-slot.png);
+  }
 
   .back-left {
     // position: absolute;
@@ -658,8 +665,8 @@ export default defineComponent({
     // display: flex;
     // justify-content: center;
     // position: relative;
-    height: 20vh;
-    min-height: 140px;
+    height: 25vh;
+    min-height: 160px;
     img {
       // display: block;
       // width: 110%;

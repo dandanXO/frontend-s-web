@@ -169,7 +169,12 @@
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() + "VNDP" }}
+              {{
+                $t("lang.withdraw_withdrawtoday") +
+                ": " +
+                selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() +
+                "VNDP"
+              }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
               <br />
@@ -185,22 +190,25 @@
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 2"  class="text-neontb">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
+              <span style="flex: 2" class="text-neontb">{{ $t("lang.withdraw_realtimeexchangerates") }}:</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
-            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27;">
-              <span style="flex: 1; color: #17cd27;">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
+            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27">
+              <span style="flex: 1; color: #17cd27">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{  selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
-                ? "0.00"
-                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) }}
+                {{
+                  selectedWithdrawalMethod &&
+                  (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin ||
+                    (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2) < 0)
+                    ? "0.00"
+                    : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 2).toFixed(2)
+                }}
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">{{ $t("lang.withdraw_usdtspecialnote") }}</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -215,6 +223,8 @@
               />
             </div>
           </div>
+
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("lang.withdraw_usdtspecialnote", {fee: selectedWithdrawalMethod.withdrawFee}) }}</div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -294,22 +304,22 @@
 <script lang="js">
 /* eslint-disable */
 import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
-import {userStore} from "stores/index";
-import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
-import {useLocalStorage} from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal},
+  components: { AcctBal },
   setup() {
     const store = userStore();
     const isNewUser = ref(false);
     const { t } = useI18n();
     const $q = useQuasar();
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     const amountRef = ref();
     const withdrawPwdRef = ref();
     const cardRef = ref();
@@ -326,7 +336,7 @@ export default defineComponent({
     });
     const isLoaded = ref(false);
     const hasWithdrawCard = computed(() => {
-      return (isLoaded == true) && withdrawState.bankCardList.length === 0;
+      return isLoaded == true && withdrawState.bankCardList.length === 0;
     });
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([]);
@@ -335,7 +345,7 @@ export default defineComponent({
       if (store.phone == "") {
         isNewUser.value = true;
       } else {
-        getWithdrawalMethods()
+        getWithdrawalMethods();
       }
     };
 
@@ -347,7 +357,7 @@ export default defineComponent({
     const platforms = reactive([]);
     const loadPlatform = () => {
       api.get("/platform").then((res) => {
-        res.data.forEach(p => {
+        res.data.forEach((p) => {
           if (p.walletType !== "SEAMLESS") {
             platforms.push({
               id: p.id,
@@ -361,19 +371,20 @@ export default defineComponent({
     };
     const refreshBalance = (plat) => {
       if (plat === "all") {
-        platforms.forEach(platform => {
+        platforms.forEach((platform) => {
           platform.isLoading = true;
           if (platform.code) {
-            api.get("/session/balance", {params: {platform: platform.code}}).then((res) => {
-              if (platform) {
-                platform.amount = res.data;
+            api
+              .get("/session/balance", { params: { platform: platform.code } })
+              .then((res) => {
+                if (platform) {
+                  platform.amount = res.data;
+                  platform.isLoading = false;
+                }
+              })
+              .catch((e) => {
                 platform.isLoading = false;
-              }
-            }).catch((e) => {
-                platform.isLoading = false;
-              }
-            );
-
+              });
           }
         });
       }
@@ -383,52 +394,53 @@ export default defineComponent({
       amountRef.value.validate();
       withdrawPwdRef.value.validate();
       $q.loading.show({
-        message: t('lang.msg_confirming')
+        message: t("lang.msg_confirming")
       });
       if (cardRef.value.hasError || amountRef.value.hasError || withdrawPwdRef.value.hasError) {
         $q.loading.hide();
       } else {
-        api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
-          if (response.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: t('lang.msg_submit_successful'),
-              icon: "check_circle_outline"
-            });
-            getWithdrawalMethods();
+        api
+          .post("/session/withdraw/", qs.stringify(withdrawInfo))
+          .then((response) => {
+            if (response.code === 0) {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: t("lang.msg_submit_successful"),
+                icon: "check_circle_outline"
+              });
+              getWithdrawalMethods();
 
-            // FB tracking :: apply-withdrawal
-            // if (store.isAffiliateA) {
-            //   fbq("track", "apply-withdrawal");
-            // }
+              // FB tracking :: apply-withdrawal
+              // if (store.isAffiliateA) {
+              //   fbq("track", "apply-withdrawal");
+              // }
 
-
-            withdrawInfo.amount = "";
-            withdrawInfo.withdrawPassword = "";
-            if (amountRef.value) {
-              setTimeout(()=>{
-                amountRef.value.resetValidation();
-              },0)
+              withdrawInfo.amount = "";
+              withdrawInfo.withdrawPassword = "";
+              if (amountRef.value) {
+                setTimeout(() => {
+                  amountRef.value.resetValidation();
+                }, 0);
+              }
+            } else {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: response.message,
+                icon: "report_problem"
+              });
             }
-
-          } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: response.message,
-              icon: "report_problem"
-            });
-          }
-        }).catch((error) => {
-          console.log("error", error);
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: response.message,
-          //   icon: "report_problem"
-          // });
-        });
+          })
+          .catch((error) => {
+            console.log("error", error);
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: response.message,
+            //   icon: "report_problem"
+            // });
+          });
         $q.loading.hide();
       }
     };
@@ -440,54 +452,60 @@ export default defineComponent({
       withdrawInfo.cardId = null;
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
-      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')
-      isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
+      isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
+      isEWALLET.value =
+        withdrawInfo.withdrawCode.includes("KDPAY") ||
+        withdrawInfo.withdrawCode.includes("EBPAY") ||
+        withdrawInfo.withdrawCode.includes("OKPAY");
+      isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
       activeItem.value = index;
       loadCards();
     };
 
     const loadCards = () => {
-      api.get("/session/bankCard").then((response) => {
-        isLoaded.value = true;
-        withdrawState.bankCardList = [];
-        if (response.code === 0) {
-          // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
-          response.data.forEach(element => {
-            if (element.bankType === "BANK") {
-              if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element)
+      api
+        .get("/session/bankCard")
+        .then((response) => {
+          isLoaded.value = true;
+          withdrawState.bankCardList = [];
+          if (response.code === 0) {
+            // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
+            response.data.forEach((element) => {
+              if (element.bankType === "BANK") {
+                if (element.bankCode !== "alipay" && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element);
+                }
+                if (element.bankCode === "alipay" && selectedWithdrawalMethod.value.code === "ALIPAY") {
+                  withdrawState.bankCardList.push(element);
+                }
+              } else {
+                if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+                  withdrawState.bankCardList.push(element);
+                }
               }
-              if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-                withdrawState.bankCardList.push(element)
-              }
-            } else {
-              if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                withdrawState.bankCardList.push(element);
-              }
-            }
-          });
-          // else {
-          //   response.data.forEach(element => {
-          //     if (element.bankId !== 39) {
-          //       withdrawState.bankCardList.push(element)
-          //     }
-          //   });
-          // }
+            });
+            // else {
+            //   response.data.forEach(element => {
+            //     if (element.bankId !== 39) {
+            //       withdrawState.bankCardList.push(element)
+            //     }
+            //   });
+            // }
 
-          if (cardRef.value) {
-            cardRef.value.resetValidation();
+            if (cardRef.value) {
+              cardRef.value.resetValidation();
+            }
+            withdrawInfo.amount = "";
+            if (amountRef.value) {
+              setTimeout(() => {
+                amountRef.value.resetValidation();
+              }, 0);
+            }
           }
-          withdrawInfo.amount = "";
-          if (amountRef.value) {
-            setTimeout(()=>{
-              amountRef.value.resetValidation();
-            },0)
-          }
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      });
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     };
     const getWithdrawalMethods = () => {
       api.get("/session/withdraw/entrance").then((response) => {
@@ -516,45 +534,45 @@ export default defineComponent({
 
     const chooseLabel = () => {
       if (isUSDT.value) {
-        return t('lang.withdraw_crypto')
+        return t("lang.withdraw_crypto");
       } else if (isEWALLET.value) {
-        return t('lang.withdraw_ewallet')
+        return t("lang.withdraw_ewallet");
       } else {
-        return t('lang.withdraw_bankcard')
+        return t("lang.withdraw_bankcard");
       }
-    }
+    };
 
     const isValidUSDTAmt = (val) => {
-      if(!isUSDT.value){
+      if (!isUSDT.value) {
         return true;
       }
       const usdtPattern = /^([1-9][0-9]*)$/;
       return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
-    }
+    };
 
     const chooseCard = () => {
       if (isUSDT.value) {
-        return t('lang.withdraw_virtualwallet')
+        return t("lang.withdraw_virtualwallet");
       } else if (isEWALLET.value) {
-        return t('lang.withdraw_ewallet')
+        return t("lang.withdraw_ewallet");
       } else {
-        return t('lang.withdraw_bankcard')
+        return t("lang.withdraw_bankcard");
       }
-    }
+    };
     const tutorialLabel = () => {
-      if (selectedWithdrawalMethod.value.code === 'KDPAY') {
-        return 'K豆教程视频'
-      } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
-        return 'EB教程视频'
-      } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
-        return 'OK教程视频'
+      if (selectedWithdrawalMethod.value.code === "KDPAY") {
+        return "K豆教程视频";
+      } else if (selectedWithdrawalMethod.value.code === "EBPAY") {
+        return "EB教程视频";
+      } else if (selectedWithdrawalMethod.value.code === "OKPAY") {
+        return "OK教程视频";
       }
-    }
+    };
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com/',
-        'EBPAY': 'https://www.ebpay24.com/',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        KDPAY: "http://jiaocheng.kdpay123.com/",
+        EBPAY: "https://www.ebpay24.com/",
+        OKPAY: "https://me-qr.com/l/okpay"
       };
 
       const url = urlMap[code];
@@ -564,7 +582,7 @@ export default defineComponent({
     };
 
     return {
-      noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
+      noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || "金额应为正数",
       amountRef,
       withdrawPwdRef,
       cardRef,
@@ -594,7 +612,7 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      isPwd: ref(true),
+      isPwd: ref(true)
     };
   }
 });
@@ -673,7 +691,6 @@ export default defineComponent({
 
       .type-name {
         font-weight: bold;
-
       }
 
       // img {
@@ -682,7 +699,7 @@ export default defineComponent({
     }
 
     .type-name {
-      color:#000;
+      color: #000;
       line-height: 15px;
       // overflow-wrap: break-word;
       white-space: nowrap;
@@ -773,7 +790,7 @@ export default defineComponent({
   }
 }
 
-.text-neontb{
-  color:#17cd27;
+.text-neontb {
+  color: #17cd27;
 }
 </style>

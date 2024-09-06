@@ -220,7 +220,15 @@ export function footballHistroy() {
 }
 
 export function getCompetitionBetToday(promoCode) {
-  return eventapi.get(`/competition-bet/today`, {
+  return eventapi.get(`/competition-bet/yesterday`, {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function getDota2CompetitionBet(promoCode) {
+  return eventapi.get(`/dota2-competition-bet/yesterday`, {
     params: {
       promoCode
     }

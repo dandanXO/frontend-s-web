@@ -86,7 +86,11 @@ export default {
     findPasswordPhone: "Recover password by phone number",
     findPasswordEmail: "Recover password by Email",
     findAccountEmail: "Recover account via Email",
-    registerSuccess: "Register Success"
+    registerSuccess: "Register Success",
+    registration_hints: "Registration means you have agreed and complied",
+    user_registration_protocol: "User Registration protocol",
+    already_have_acc: "Already have account?",
+    login_here: "Login here",
   },
   common: {
     login: "Login",
@@ -145,6 +149,7 @@ export default {
     footballNews: "Football News",
     esportNews: "E-Sport News",
     bettingGuide: "Betting Guide",
+    weeklyTournament: "Weekly Baccarat Tournament",
     networkSecurity: "Network security",
     networkSecurityPt1: "Information confidential safe without loopholes",
     networkSecurityPt2: "Frequent update for protection",
@@ -342,7 +347,7 @@ export default {
     expectedAmount: "Expected amount",
     depositAmountRange: "Deposit amount should be between",
     exchangeRateExample:
-      "*Special Note: A withdrawal fee of 1.00 USDT will be automatically charged by the third party!",
+      "*Special Note: A withdrawal fee of {fee} USDT will be automatically charged by the third party!",
     startEndDate: "Please enter the start and end date",
     usdtAddress: "USDT address",
     accountNo: "Account number",
@@ -772,7 +777,12 @@ export default {
     customerService: "24/7 Customer Service",
     currentlyMaintaining: "Maintenance in progress",
     maintainenceTime: "Maintenance Time",
-    otherPlatFirst: "Kindly go to other platforms for entertainment"
+    otherPlatFirst: "Kindly go to other platforms for entertainment",
+    maintenance_title: "The system is maintenance...",
+    maintenance_from: "Starting from ",
+    maintenance_to: "to ",
+    maintenance_desc_01: "All services and games will be suspended during the above period, ",
+    maintenance_desc_02: "sincerely sorry for this inconvenience!"
   },
   welcome: {
     compatibleDevices: "Perfectly Compatible with Secure Devices",
@@ -990,6 +1000,7 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
+    37001: "Time to receive Lucky Money has expired",
     12100: "Old Withdraw password does not match.",
     45000: "Minimum withdrawal amount not reached",
     45001: "Random bonus has been claimed today."

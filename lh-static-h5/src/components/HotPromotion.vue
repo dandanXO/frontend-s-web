@@ -20,6 +20,8 @@
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" platformType="COPA" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
 
+    <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
+
     <InsuranceSubmitPromo
       v-if="list.redirectUrl === 'lh1-esport-safety' || list.redirectUrl === 'lh1-sport-safety'"
       :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : 'SPORT'"
@@ -61,6 +63,7 @@
     <LhStepGamePromo v-if="list.redirectUrl === 'lh1-game-steps'" :pageContent="list.pageContent"></LhStepGamePromo>
     <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel'" />
+    <MidautumSpinWheel v-if="list.redirectUrl === 'lh1-midautumn-spinwheel'" />
     <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match'" />
     <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024'" :promo-code="list.promoCode" />
@@ -91,6 +94,9 @@
     <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" />
     <NewFootball v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode"/>
+    <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode"/>
+    <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode"/>
+    <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -155,6 +161,9 @@ const BbDacha2024Promo = defineAsyncComponent(() => import("../components/hotpro
 const LhStepGamePromo = defineAsyncComponent(() => import("../components/hotpromo/lhstepgame/LhStepGamePromo.vue"));
 const CS2Sign = defineAsyncComponent(() => import("../components/hotpromo/CS2Sign/CS2Sign.vue"));
 const BonusSpinWheel = defineAsyncComponent(() => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue"));
+const MidautumSpinWheel = defineAsyncComponent(() =>
+  import("../components/hotpromo/midautumSpinWheel/MidautumSpinWheel.vue")
+);
 const SummonerPromo = defineAsyncComponent(() => import("../components/hotpromo/summoner/SummonerPromo.vue"));
 const AppHongBao = defineAsyncComponent(() => import("../components/hotpromo/apphongbao/AppHongBao.vue"));
 const FtdPromo = defineAsyncComponent(() => import("../components/hotpromo/ftd/FtdPromo.vue"));
@@ -192,9 +201,15 @@ const OfficialGiftPromo = defineAsyncComponent(() =>
 const OlympicFund = defineAsyncComponent(() => import("../components/hotpromo/Olympic-fund/OlympicFund.vue"));
 const DailyCheckin = defineAsyncComponent(() => import("../components/hotpromo/DailyCheckin/DailyCheckin.vue"));
 const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpl-lck/LPLLCK.vue"));
-const LivepokerRebate = defineAsyncComponent(() => import("../components/hotpromo/livepoker-rebate/LivepokerRebate.vue"));
+const LivepokerRebate = defineAsyncComponent(() =>
+  import("../components/hotpromo/livepoker-rebate/LivepokerRebate.vue")
+);
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const BbdachaCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue"));
+const EslProCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue"));
+const Dota2Ti13 = defineAsyncComponent(() => import("../components/hotpromo/dota2-ti13/Dota2Ti13.vue"));
+const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"));
+const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -228,6 +243,7 @@ export default defineComponent({
     BbDacha2024Promo,
     CS2Sign,
     BonusSpinWheel,
+    MidautumSpinWheel,
     LhStepGamePromo,
     SummonerPromo,
     AppHongBao,
@@ -255,7 +271,11 @@ export default defineComponent({
     OlympicFund,
     LPLLCK,
     LivepokerRebate,
-    BbdachaCsgo2
+    BbdachaCsgo2,
+    EslProCsgo2,
+    Dota2Ti13,
+    BlackMythWuKongPromo,
+    SubmitClaimPromo
   },
   props: {
     list: {

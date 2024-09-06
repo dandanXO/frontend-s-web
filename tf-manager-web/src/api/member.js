@@ -160,14 +160,15 @@ export const deleteMemberRemark = id => {
   )
 }
 
-export const getMemberNameList = siteId => {
-  return https().request(
-    `/member/nameList/${siteId}`,
-    Method.GET,
-    siteId,
-    ContentType.form
-  )
-}
+// CANNOT USE IT
+// export const getMemberNameList = siteId => {
+//   return https().request(
+//     `/member/nameList/${siteId}`,
+//     Method.GET,
+//     siteId,
+//     ContentType.form
+//   )
+// }
 
 export const getMemberPrivilegeRecord = (id, query) => {
   return https().request(
@@ -480,5 +481,19 @@ export const updateWithdrawType = (id, withdrawType, siteId) => {
     Method.POST,
     { withdrawType: withdrawType, siteId: siteId },
     ContentType.form
+  )
+}
+
+export const toggleMemberWallet = (id, siteId) => {
+  return https().request(
+    `/member/toggleWallet/${id}/${siteId}`,
+    Method.GET
+  )
+}
+
+export const walletBalance = (id, siteId) => {
+  return https().request(
+    `/member/all-wallet/${id}/${siteId}`,
+    Method.GET
   )
 }

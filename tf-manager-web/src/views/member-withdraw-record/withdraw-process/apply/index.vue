@@ -69,6 +69,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
     </div>
 
     <div class="btn-group">
@@ -251,6 +259,12 @@
             <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
+          align="center"
+          min-width="120"
+        />
         <el-table-column
           :label="t('fields.operate')"
           align="center"
@@ -485,6 +499,7 @@ const request = reactive({
   maxWithdrawAmount: null,
   vipId: null,
   siteId: null,
+  doris: false,
 })
 
 /* function disabledDate(time) {

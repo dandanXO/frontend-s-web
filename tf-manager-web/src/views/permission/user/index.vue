@@ -177,9 +177,7 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="
-            uiControl.siteSelectVisible
-          "
+          v-if="uiControl.siteSelectVisible && form.userType === 'TENANT'"
           :label="t('fields.site')"
           prop="siteId"
         >
@@ -193,7 +191,33 @@
             @focus="loadSites"
           >
             <el-option
-              v-for="item in siteList.list"
+              v-for="item in formSiteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-if="
+            uiControl.siteSelectVisible &&
+              (form.userType === 'MANAGER' || form.userType === 'ADMIN')
+          "
+          :label="t('fields.site')"
+          prop="siteIds"
+        >
+          <el-select
+            v-model="form.siteIdArray"
+            size="small"
+            class="filter-item"
+            style="width: 350px"
+            :placeholder="t('fields.pleaseChoose')"
+            multiple
+            filterable
+            @change="setSiteIdArray"
+          >
+            <el-option
+              v-for="item in formSiteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
@@ -213,7 +237,13 @@
             :placeholder="t('fields.pleaseChoose')"
             style="width: 350px"
             filterable
-            @focus="loadRoles(form.siteId)"
+            @focus="
+              loadRoles(
+                form.siteIdArray && form.siteIdArray !== null
+                  ? `0,${form.siteIdArray}`
+                  : form.siteId
+              )
+            "
             :disabled="uiControl.rolesSelect"
           >
             <el-option
@@ -426,7 +456,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimple } from '../../../api/site'
+import { getSiteListSimple, getSiteListSimpleOri } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -454,6 +484,7 @@ const userTypeList = computed(() => {
 })
 const today = moment(new Date()).format('YYYY-MM-DD');
 const siteList = reactive({ list: [] })
+const formSiteList = reactive({ list: [] })
 const netPhone = reactive({ list: [] })
 const userForm = ref(null)
 const uiControl = reactive({
@@ -500,6 +531,7 @@ const form = reactive({
   queryRestriction: null,
   queryNumber: 10,
   vcallId: null,
+  siteIdArray: null,
 })
 
 const validateconfirm = (rule, value, callback) => {
@@ -530,7 +562,20 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   userType: [required(t('message.validateUserTypeRequired'))],
   queryRestriction: [required(t('message.validateQueryRestrictionRequired'))],
-  queryNumber: [required(t('message.validateQueryNumberRequired')), numericOnly(t('message.validateNumberOnly'))]
+  queryNumber: [required(t('message.validateQueryNumberRequired')), numericOnly(t('message.validateNumberOnly'))],
+  siteIds: [
+    {
+      required: true,
+      validator: (rule, value, callback) => {
+        if (form.userType === 'MANAGER' && (!form.siteIdArray || form.siteIdArray.length === 0)) {
+          callback(new Error(t('message.validateSiteRequired')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'change',
+    }
+  ],
 })
 
 let chooseUser = []
@@ -538,7 +583,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : store.state.user.siteId
   request.role = null
 }
 
@@ -562,14 +607,29 @@ async function loadUser() {
   const { data: ret } = await getUsers(request)
   page.pages = ret.pages
   ret.records.forEach(data => {
-    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
-      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
-      : null
-  });
+    data.timeZone =
+      store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+        ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+        : null
+    if (data.siteIds !== null && data.siteIds !== undefined) {
+      data.siteIdArray = data.siteIds
+        .split(',')
+        .filter(Boolean)
+        .map(str => {
+          return Number(str)
+        })
+    }
+  })
   page.records = ret.records
 }
 
 async function loadRoles(siteId) {
+  if (siteId !== undefined && siteId !== null) {
+    siteId = String(siteId)
+    if (form.userType !== "TENANT" && !siteId.includes('0')) {
+      siteId = `0,${siteId}`
+    }
+  }
   const { data: roles } = await getSimpleRoles(siteId)
   options.value = roles
 }
@@ -588,6 +648,7 @@ function showDialog(type) {
     form.password = null
     form.confirm = null
     form.roles = null
+    form.siteIdArray = null
     form.siteId = null
     form.userType =
       LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
@@ -599,6 +660,8 @@ function showDialog(type) {
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = true
   } else if (type === 'EDIT') {
+    form.siteId = null
+    form.siteIdArray = null
     uiControl.dialogTitle = t('fields.editUser')
   } else {
     uiControl.dialogTitle = t('fields.updatePassword')
@@ -607,7 +670,7 @@ function showDialog(type) {
   uiControl.dialogVisible = true
 
   if (form.userType && form.userType === 'TENANT') {
-    form.siteId = store.state.user.siteId;
+    form.siteId = store.state.user.siteId
   }
 }
 
@@ -746,8 +809,17 @@ function submit() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  let response;
+  if (store.state.user.userType === "ADMIN") {
+    response = await getSiteListSimpleOri()
+  } else {
+    response = await getSiteListSimple()
+  }
+  siteList.list = response.data
+}
+
+async function loadDefaultSites() {
+  formSiteList.list = store.state.user.sites
 }
 
 async function loadNetPhone() {
@@ -756,10 +828,18 @@ async function loadNetPhone() {
 }
 
 function toSiteName(row, column, cellValue, index) {
-  if (row.siteId) {
-    return siteList.list.find(site => site.id === row.siteId).siteName
+  if (row.siteIds !== null) {
+    const siteIdsArray = row.siteIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+    const siteNames = siteIdsArray
+      .map(siteId => siteList.list.find(site => site.id === siteId)?.siteName)
+      .filter(Boolean)
+    return siteNames.join(', ');
   } else {
-    return "-";
+    if (row.siteId) {
+      return siteList.list.find(site => site.id === row.siteId).siteName
+    } else {
+      return '-'
+    }
   }
 }
 
@@ -775,14 +855,22 @@ function roleTxt(roleId) {
   }
 }
 
+function setSiteIdArray() {
+  form.siteId = form.siteIdArray[0]
+}
+
 async function siteChange() {
   await loadRoles(request.siteId)
 }
 
 watch(
-  () => form.siteId,
+  () => form.siteIdArray || form.siteId,
   async (value, oldValue) => {
-    await loadRoles(form.siteId)
+    await loadRoles(
+      form.siteIdArray && form.siteIdArray !== null
+        ? form.siteIdArray
+        : form.siteId
+    )
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
       if (value) {
@@ -790,7 +878,7 @@ watch(
       }
     } else if (uiControl.dialogType === 'EDIT') {
       if (oldValue && value && value !== oldValue) {
-        form.roles = null;
+        form.roles = null
       }
       uiControl.rolesSelect = false
     }
@@ -800,15 +888,16 @@ watch(
   () => form.userType,
   async () => {
     if (form.userType && form.userType === 'MANAGER') {
-      uiControl.siteSelectVisible = false
-      uiControl.rolesSelect = false
-      form.siteId = 0;
+      uiControl.userTypeSelect = true
+      uiControl.siteSelectVisible = true
+      uiControl.rolesSelect = true
+      form.siteId = 0
     } else if (form.userType && form.userType === 'TENANT') {
       uiControl.userTypeSelect = true
       uiControl.siteSelectVisible = true
       uiControl.rolesSelect = true
       if (form.siteId === 0) {
-        form.siteId = null;
+        form.siteId = null
       }
     }
   }
@@ -816,6 +905,10 @@ watch(
 
 onMounted(async () => {
   await loadSites()
+  await loadDefaultSites()
+  if (store.state.user.userType !== "ADMIN") {
+    request.siteId = store.state.user.siteId
+  }
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false

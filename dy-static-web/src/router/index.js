@@ -89,11 +89,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/VIPView.vue")
       },
       {
-        path: "/maintenance",
-        name: "maintenance",
-        component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
-      },
-      {
         path: "/refer/:referralCode",
         name: "referCode",
         component: () => {}
@@ -124,7 +119,24 @@ const routes = [
         path: "/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
-      }
+      },
+      {
+        path: "/finance/:path",
+        redirect: (to) => `/center/${to.params.path}`
+      },
+      {
+        path: "/account/:path",
+        redirect: (to) => {
+          const path = to.params.path;
+          if (path === "vip") return "/vip";
+          if (h5RoutingMap[path]) return `/center/${h5RoutingMap[path]}`;
+          return "/";
+        }
+      },
+      {
+        path: "/promo",
+        redirect: "/promotion"
+      },
       // {
       //   path: "/test",
       //   name: "test",
@@ -133,11 +145,25 @@ const routes = [
     ]
   },
   {
+    path: "/maintenance",
+    name: "maintenance",
+    component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
+  },
+  {
     path: "/:catchAll(.*)*",
     redirect: "/",
     component: () => {}
   }
 ];
+
+const h5RoutingMap = {
+  transfer: "transfer",
+  personal: "personal",
+  records: "transit-record",
+  inbox: "mailbox",
+  invite: "share",
+  withdraw: "withdrawbank"
+};
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

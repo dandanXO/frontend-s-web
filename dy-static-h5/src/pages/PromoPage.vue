@@ -93,7 +93,7 @@
             <div class="loader" v-if="isFetchingPromo" />
             <div
               class="selected-promo-wrapper"
-              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;' : '']"
+              :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' || selectedPromo.promoCode === 'dy2-quiz' ? 'background:#E7F1FD;' : '']"
             >
               <div
                 class="banner-container"
@@ -131,7 +131,10 @@
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
-                  lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus'
+                  wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
+                  lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
+                  midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -936,6 +939,14 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.midAutumnWukong {
+          width: 100%;
+          margin: -15px 0 0;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color: #eaecfd;
+        }
+
         &.lpllck {
           width: 100%;
           margin: 0px;
@@ -943,6 +954,13 @@ export default defineComponent({
           .hot-promo {
             border-radius: 0px;
           }
+        }
+
+        &.bbdacha-cs2 {
+          width: 100%;
+          margin: 0;
+          padding: 20px 5%;
+          background-color: #e7f1fd;
         }
 
         &.lhworldcup {
@@ -990,6 +1008,15 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           background-size: 100% 100% !important;
+          padding-top: 0px !important;
+        }
+
+        &.wukong {
+          margin: 0px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color: #100a0e;
           padding-top: 0px !important;
         }
 

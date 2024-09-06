@@ -1,6 +1,6 @@
 <template>
   <div class="promo-container">
-    <div class="all-promotions" v-if="!isPromoDetail">
+    <div class="all-promotions" v-if="!isPromoDetail" :class="{ slot: ui.edition === EDITION.SLOT }">
       <div class="promo-main-container">
         <!-- <div class="rebates-container">
           <img src="../assets/promo/rebate/coin.png" />
@@ -20,7 +20,7 @@
               <div
                 class="type-item"
                 v-for="p in currentPromoTypes"
-                :class="{ active: p.code === promoTabActive }"
+                :class="{ active: p.code === promoTabActive, slot: ui.edition === EDITION.SLOT }"
                 :key="p.code"
                 @click="switchPromoType(p.code)"
               >
@@ -186,9 +186,9 @@ export default defineComponent({
     ]);
     const promoTypesSlot = computed(() => [
     { code:"ALL", img: 'all', label: t('promo.all') },
-    { code: "SLOT WELCOME", img: 'sport', label:  t('promo.slotWelcome')},
-    { code: "SLOT DAILY", img: 'live', label: t('promo.slotDaily')},
-    { code: "SLOT OTHER", img: 'slot', label: t('promo.slotOther')},
+    { code: "SLOT WELCOME", img: 'slot-welcome', label:  t('promo.slotWelcome')},
+    { code: "SLOT DAILY", img: 'slot-daily', label: t('promo.slotDaily')},
+    { code: "SLOT OTHER", img: 'slot-other', label: t('promo.slotOther')},
     ])
     const currentPromoTypes = computed(() => {
       switch(ui.edition) {
@@ -371,7 +371,9 @@ export default defineComponent({
       imgURL,
       getPromoLabel,
       languageVal,
-      currentPromoTypes
+      currentPromoTypes,
+      ui,
+      EDITION
     }
   },
 });
@@ -388,6 +390,9 @@ export default defineComponent({
     position: relative;
     padding-top: max(270px, 15vw);
     background-color: #f3f7fd;
+    &.slot {
+      background-image: url(@/assets/promo/bg-top-slot.png);
+    }
   }
   .promo-view-container {
     line-height: 30px;
@@ -628,6 +633,19 @@ export default defineComponent({
               }
               img {
                 filter: grayscale(1) brightness(100);
+              }
+            }
+
+            &.slot {
+              &::after {
+                content: "";
+                display: block;
+                background: url(@/assets/images/promotion/slot-mask.png) no-repeat;
+                background-size: cover;
+                position: absolute;
+                right: -7px;
+                width: 61px;
+                height: 61px;
               }
             }
           }

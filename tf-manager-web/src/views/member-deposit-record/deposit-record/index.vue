@@ -199,6 +199,14 @@
           {{ t('fields.advancedSearch') }}
         </el-button>
       </div>
+      <div style="margin-top:20px;">
+        <span style="font-size: small;margin-top: 10px;margin-right:10px">
+          {{ t('fields.historyRecord') }}
+        </span>
+        <el-switch
+          v-model="request.doris"
+        />
+      </div>
     </div>
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
@@ -410,6 +418,12 @@
         <el-table-column
           prop="memberType"
           :label="t('fields.memberType')"
+          align="center"
+          min-width="110"
+        />
+        <el-table-column
+          prop="walletType"
+          :label="t('fields.walletType')"
           align="center"
           min-width="110"
         />
@@ -782,6 +796,7 @@ const request = reactive({
   siteId: null,
   clientType: null,
   sort: 1,
+  doris: false,
 })
 
 const validateDepositAmount = (rule, value, callback) => {
@@ -919,6 +934,12 @@ function checkQuery() {
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.depositDate !== null) {
     if (request.depositDate.length === 2) {
+      // if (isHistoryRecord(request.depositDate[0])) {
+      //   query.doris = true
+      //   request.doris = true
+      // } else {
+      //   query.doris = request.doris
+      // }
       query.depositDate = JSON.parse(JSON.stringify(request.depositDate));
       query.depositDate[0] = formatInputTimeZone(query.depositDate[0], timeZone);
       query.depositDate[1] = formatInputTimeZone(query.depositDate[1], timeZone);
@@ -928,6 +949,12 @@ function checkQuery() {
 
   if (request.finishDate !== null) {
     if (request.finishDate.length === 2) {
+      // if (isHistoryRecord(request.finishDate[0])) {
+      //   query.doris = true
+      //   request.doris = true
+      // } else {
+      //   query.doris = request.doris
+      // }
       query.finishDate = JSON.parse(JSON.stringify(request.finishDate));
       query.finishDate[0] = formatInputTimeZone(query.finishDate[0], timeZone);
       query.finishDate[1] = formatInputTimeZone(query.finishDate[1], timeZone);
