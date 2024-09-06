@@ -2,7 +2,7 @@
   <div class="btn-container">
     <div class="go-deposit-btn" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
-      <span>DEPOSIT</span>
+      <span>JOIN NOW</span>
     </div>
   </div>
 </template>
@@ -36,6 +36,8 @@ const gotoDepositPage = () => {
   justify-content: center;
   gap: 10px;
   border-radius: 5px;
+  background: linear-gradient(180deg, #8575e9 0%, #5c46e7 100%);
+  border: 1px solid #8d83cd;
 
   img {
     width: 28px;

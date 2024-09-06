@@ -155,7 +155,7 @@
               <template v-slot:append>
                 <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
                   Extra:
-                  <span>{{ getFtdCommaAmount(form.localAmount) }}PHP</span>
+                  <span>{{ getFtdCommaAmount(form.localAmount) }}P</span>
                 </div>
               </template>
             </q-input>
@@ -225,9 +225,17 @@
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-if="
-          isFtdPrivilege || (isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType))
-        "
+        v-if="isFtdPrivilege"
+      >
+        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
+        <div class="q-mt-sm">
+          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager in slot games
+        </div>
+      </div>
+      <div
+        class="q-mt-lg"
+        style="color: #576373"
+        v-else-if="(isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType))"
       >
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
