@@ -697,7 +697,7 @@ import {getVipList} from "@/api/vip";
 import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { formatTimeZone } from "@/utils/format-timeZone";
 
 const router = useRouter()
 const {t} = useI18n();
@@ -920,9 +920,12 @@ function removeLastDigitRule(item) {
 }
 
 function isExpiredTime(rangeString) {
-  // rangeString.startTime + ' - ' + rangeString.endTime;
+  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  console.log(timeZone);
+  const currentDateTime = formatTimeZone( moment().utc(), timeZone);
+  console.log(moment(currentDateTime).format("YYYY-MM-DD-HH:mm"))
 
-  if (rangeString.endTime < moment().format("YYYY-MM-DD-HH:mm")) {
+  if (rangeString.endTime < moment(currentDateTime).format("YYYY-MM-DD-HH:mm")) {
     return true;
   }
   if (rangeString.endTime < rangeString.startTime) {
