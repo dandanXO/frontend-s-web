@@ -1,6 +1,6 @@
 <template>
   <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">Deposit method</div>
+    <div class="method-title q-mb-sm">Deposit Method</div>
     <div class="deposit-methods-container" v-if="isLoadingInitPay">
       <div>
         <q-skeleton style="height: 96px" />
@@ -30,7 +30,7 @@
         </template>
       </div>
 
-      <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
+      <div class="method-title q-mt-md q-mb-sm">Payment Channels</div>
       <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
@@ -61,7 +61,7 @@
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-title q-mt-md q-mb-sm">Payment amount</div>
+      <div class="method-title q-mt-md q-mb-sm">Deposit Amount</div>
       <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
@@ -73,6 +73,9 @@
             >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
+
+            <q-badge color="orange" floating rounded v-if="isFtdPrivilege">+{{ getFtdCommaAmount(amount) }}</q-badge>
+
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -150,9 +153,9 @@
               </template>
 
               <template v-slot:append>
-                <div class="amt-input-append" v-if="isFtdPrivilege">
+                <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
                   Extra:
-                  <span>888Php!</span>
+                  <span>{{ getFtdCommaAmount(form.localAmount) }}PHP</span>
                 </div>
               </template>
             </q-input>
@@ -222,7 +225,9 @@
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-if="
+          isFtdPrivilege || (isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType))
+        "
       >
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
@@ -379,6 +384,14 @@ const depositItems = ref();
 
 const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
+};
+
+const getFtdCommaAmount = (amount) => {
+  if (amount < 888) {
+    return amount;
+  } else {
+    return 888;
+  }
 };
 
 const handleDepositNodeClick = (item) => {
@@ -962,11 +975,20 @@ onMounted(() => {
         }
 
         :deep(.amt-input-append) {
+          padding-left: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 700;
+
           span {
-            font-size: 17.5px;
+            font-size: 18px;
             font-style: italic;
+            font-weight: 700;
             color: #5c46e7;
-            text-shadow: 0px 1.02px 2.04px #180b3bcc;
+            text-shadow: 1px 1px 2px #180b3bcc;
           }
         }
       }
