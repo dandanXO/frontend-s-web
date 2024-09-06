@@ -1096,6 +1096,8 @@ export default defineComponent({
     display: inline-block;
     font-size: 24px;
     font-weight: 700;
+    line-height: 26px;
+    margin-bottom: 8px;
   }
 }
 

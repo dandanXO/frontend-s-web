@@ -380,6 +380,7 @@ const handleDepositNodeClick = (item) => {
 const selectedItem = ref();
 const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
+const extraPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
 const selectedChannel = ref();
@@ -425,6 +426,10 @@ function initPay() {
   } else {
     isPrivilege.value = false;
     selectedItemPrivilegeId.value = "";
+  }
+
+  if (route.query.privilegeId) {
+    extraPrivilegeId.value = route.query.privilegeId;
   }
 
   payMethods.value = [];
@@ -574,6 +579,10 @@ async function confirmDeposit() {
             } else {
               form.privilegeId = null;
             }
+          }
+
+          if (extraPrivilegeId.value) {
+            form.privilegeId = extraPrivilegeId.value;
           }
 
           const copy = { ...form };
