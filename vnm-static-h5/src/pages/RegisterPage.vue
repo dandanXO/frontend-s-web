@@ -264,10 +264,65 @@ dense
     </q-form>
 
 
-    <div class="login-bottom-div">
-    <img src="../assets/images/login/register-banner.jpg" />
+    <div class="login-bottom-div" @click="openHundredDialog">
+      <img src="../assets/images/login/register-banner.jpg" />
     </div>
   </div>
+  <q-dialog v-model="showHundredDialog" width="100%" show-close>
+    
+    <q-card width="100%" class="q-pa-md">
+      <q-card-section class="row items-end justify-end q-pb-none">
+        <div class="text-h6"></div>
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <div>
+  <p style="
+    width: 85%;
+    margin-top: -25px;"><b style="font-size: 14px; color: #46acc8;">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
+    
+  </p>
+  Thành Viên có thể tham gia khuyến mãi này tại trang nạp tiền, sau khi nhập <strong>"Số tiền nạp"</strong> ấn chọn khuyến mãi <strong>100% Chào Mừng</strong>, sau đó nhấn <strong>"Xác nhận"</strong>.
+
+
+  <table style="font-size: 13px; margin: 10px auto; min-width: 80%; text-align: center; border-collapse: collapse;">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="background: #e7f3ff; padding: 10px; border-top-left-radius: 20px;">Sản Phẩm</th>
+        <th style="background: #e7f3ff; padding: 10px;">Nạp tối thiểu</th>
+        <th style="background: #e7f3ff; padding: 10px;">Thưởng</th>
+        <th style="background: #e7f3ff; padding: 10px;">Thưởng tối đa</th>
+        <th style="background: #e7f3ff; padding: 10px; border-top-right-radius: 20px;">Vòng cược</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">Thể thao</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">200 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">100%</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">2,000 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">15</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">E-sports, Live Casino, Nổ hũ, Poker, Hashgame</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">200 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">100%</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">2,000 VNDP</td>
+        <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">25</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Để biết thêm chi tiết về khuyến mãi vui lòng liên hệ Chăm Sóc Khách Hàng trực tuyến 24/7 để được hỗ trợ
+  </p>
+</div> </q-card>
+  </q-dialog>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
     <q-card width="100%">
@@ -317,6 +372,11 @@ export default defineComponent({
     onActivated(() => {
       getCode();
     });
+    const showHundredDialog = ref(false);
+    const openHundredDialog = () => {
+      showHundredDialog.value = true
+    }
+
     const { t } = useI18n();
     const store = userStore();
     const verificationImg = ref("");
@@ -361,7 +421,6 @@ export default defineComponent({
           console.log(e);
         });
     };
-
     const getInnerCode = () => {
       api
         .get("/member/verificationEasyCode")
@@ -672,7 +731,9 @@ export default defineComponent({
       hasAffiliate,
       trackRegisterSuccessEvent,
       trackRegisterFailedEvent,
-      ui
+      ui,
+      openHundredDialog,
+      showHundredDialog
     };
   }
 });
