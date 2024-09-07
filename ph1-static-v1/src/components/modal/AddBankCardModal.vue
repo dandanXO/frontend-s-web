@@ -297,17 +297,17 @@ const isValidCardNumber = () => {
 
   const result = !cardNumber ? "Please Enter Account Number" : true;
 
-  // if (cardNumber && selectedBankMethod.value && selectedBankMethod.value.code === "GCASH") {
-  //   const gCashCheck =
-  //     cardNumber.substring(0, 2) !== "09"
-  //       ? "The GCASH card number must start with '09'"
-  //       : cardNumber.length !== 11
-  //       ? "The GCASH card number length should be 11"
-  //       : true;
-  //   if (gCashCheck !== true) {
-  //     return gCashCheck;
-  //   }
-  // }
+  if (cardNumber && selectedBankMethod.value && selectedBankMethod.value.code === "GCASH") {
+    const gCashCheck =
+      cardNumber.substring(0, 1) !== "0"
+        ? "The GCASH card number must start with '0'"
+        : cardNumber.length !== 11
+        ? "The GCASH card number length should be 11"
+        : true;
+    if (gCashCheck !== true) {
+      return gCashCheck;
+    }
+  }
 
   return result;
 };
