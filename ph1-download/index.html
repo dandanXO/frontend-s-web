@@ -250,39 +250,32 @@ const defaultScrollList = document.querySelector("#scroll-list");
 
 var imageUrls = [];
 var extraStyle = "";
-if (affidValue === "09F5B4") {
-    imageUrls = ["style/images/706/01-new.jpg", "style/images/706/02-new.jpg", "style/images/706/03-new.jpg", "style/images/706/04-new.jpg", "style/images/706/05-new.jpg"];
-    extraStyle = `style="height:400px;"`;
-} else if (affidValue === "CCF46E") {
-    imageUrls = ["style/images/705/01-new.jpg", "style/images/705/02-new.jpg", "style/images/705/03-new.jpg", "style/images/705/04-new.jpg", "style/images/705/05-new.jpg"];
+
+var fileCountLists = [12, 13, 16, 16, 6];
+var fileNum = Math.floor(Math.random() * 5) + 1;
+var fileDirec = "img" + fileNum;
+
+var fileLength = fileCountLists[fileNum - 1];
+console.log(fileDirec);
+var fileArray = [];
+for (var i = 0; i < fileLength; i++) {
+    fileArray.push(i + 1);
+}
+shuffleArray(fileArray);
+// console.log(fileArray);
+
+var fileLists = fileArray.slice(0, 5);
+console.log(fileLists);
+
+fileLists.forEach((file) => {
+    var fileName = `style/imgs/${fileDirec}/${file}.jpg`;
+    imageUrls.push(fileName);
+});
+
+if (fileNum === 2 || fileNum === 4) {
     extraStyle = `style="height:400px;"`;
 } else {
-    var fileCountLists = [19, 19, 23, 22, 6];
-    var fileNum = Math.floor(Math.random() * 5) + 1;
-    var fileDirec = "img" + fileNum;
-
-    var fileLength = fileCountLists[fileNum - 1];
-    console.log(fileDirec);
-    var fileArray = [];
-    for (var i = 0; i < fileLength; i++) {
-        fileArray.push(i + 1);
-    }
-    shuffleArray(fileArray);
-    // console.log(fileArray);
-
-    var fileLists = fileArray.slice(0, 5);
-    console.log(fileLists);
-
-    fileLists.forEach((file) => {
-        var fileName = `style/imgs/${fileDirec}/${file}.jpg`;
-        imageUrls.push(fileName);
-    });
-
-    if (fileNum === 2 || fileNum === 4) {
-        extraStyle = `style="height:400px;"`;
-    } else {
-        extraStyle = `style="height:200px;"`;
-    }
+    extraStyle = `style="height:200px;"`;
 }
 
 imageUrls.forEach((imageUrl) => {
