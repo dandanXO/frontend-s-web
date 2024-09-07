@@ -758,6 +758,7 @@ const goSelectedMethod = (item) => {
   });
   item.active = true;
   isSelectedMethod.value = true;
+  // debugger;
   selectedMethodItem.value = item;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
@@ -790,6 +791,19 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
   const result = !cardNumber ? "Please Enter Card Number" : true;
+
+  if (cardNumber && selectedMethodItem.value.code === "GCASH") {
+    const gCashCheck =
+      cardNumber.substring(0, 1) !== "0"
+        ? "The GCASH card number must start with '0'"
+        : cardNumber.length !== 11
+        ? "The GCASH card number length should be 11"
+        : true;
+    if (gCashCheck !== true) {
+      return gCashCheck;
+    }
+  }
+
   return result;
 };
 

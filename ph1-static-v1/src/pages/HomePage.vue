@@ -2719,7 +2719,7 @@ const loadAppTabs = () => {
           store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
           store.extraPrivilegeId = data.deposit.privilegeId;
         }
-        if (data && data.ftd) {
+        if (data && data.hasOwnProperty("ftd")) {
           store.ftd = data.ftd;
         }
 
