@@ -29,7 +29,7 @@
             <div class="q-my-sm">
               <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
-                :type="currentCardType === 'BANK' ? 'number' : 'text'"
+                :type="currentCardType === 'Bank' || selectedBankCode === 'GCASH' ? 'number' : 'text'"
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
