@@ -375,10 +375,9 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1440px"
+      width="1200px"
       align-center
       @close="store.regPageVisible = false"
-      style="transform: scale(.8);"
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
@@ -2709,7 +2708,7 @@ body {
           background-position: center center;
           // min-height: 750px;
           // background-color:salmon;
-
+          overflow: hidden;
           img {
             display: block;
             // width: 100%;
@@ -2718,8 +2717,13 @@ body {
             width: calc(80% + 70px);
             margin: -190px 0px -10px -20px;
             &.paris {
-              width: 100%;
               margin: 0;
+              // height: 100%;
+              // width: unset;
+              // max-width: 110%;
+              // margin-left: -5%;
+              margin-left: -5%;
+              width: 110%;
             }
           }
         }
@@ -2727,7 +2731,7 @@ body {
 
       .acc-dialog-right {
         width: 40%;
-        padding: 24px 24px 24px 0;
+        padding: 24px 24px 5px 24px;
 
         .acc-dialog-content {
           padding-top: 26px;

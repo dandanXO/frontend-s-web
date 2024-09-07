@@ -135,9 +135,11 @@
 
     <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
       {{ $t("login.already_have_acc") }}
-      <router-link to="/login">
-        {{ $t("login.login_here") }}
-      </router-link>
+      <!-- <router-link to="/login"> -->
+        <a @click="openLoginDialog">
+          {{ $t("login.login_here") }}
+        </a>
+      <!-- </router-link> -->
     </div>
   </div>
 
