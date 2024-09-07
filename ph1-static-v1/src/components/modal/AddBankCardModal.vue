@@ -44,6 +44,7 @@
                 lazy-rules
                 emit-value
                 map-options
+                @update:model-value="updateBankType"
               />
             </div>
 
@@ -66,8 +67,13 @@
             <div class="q-my-sm">
               <div class="input-title">{{ accountTypeStr }}</div>
               <q-input
-                :type="currentCardType === 'Bank' ? 'number' : 'text'"
+                :type="
+                  currentCardType === 'Bank' || (selectedBankMethod && selectedBankMethod.code === 'GCASH')
+                    ? 'number'
+                    : 'text'
+                "
                 standout
+                ref="refBankCardNum"
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
@@ -133,6 +139,8 @@ const currentCardType = ref("Bank");
 
 const accountTypeStr = ref("");
 
+const refBankCardNum = ref();
+
 // display
 const currBankList = ref([]);
 
@@ -151,6 +159,13 @@ const router = useRouter();
 
 const closeModal = () => {
   refBankCardModal.value.hide();
+};
+
+const selectedBankMethod = ref();
+const updateBankType = (val) => {
+  selectedBankMethod.value = currBankList.value.find((item) => item.id === val);
+  console.log(selectedBankMethod.value);
+  refBankCardNum.value.validate();
 };
 
 const isAddCardDialogOpen = ref(false);
@@ -190,6 +205,8 @@ const onAddCardClick = (type) => {
               });
               selectBankType();
               bankCardField.bankId = currBankList.value[0].id;
+              selectedBankMethod.value = currBankList.value[0];
+              console.log(selectedBankMethod.value);
             }
           })
           .catch((e) => {
@@ -221,7 +238,7 @@ const selectBankType = () => {
   } else if (currentCardType.value === "EWallet") {
     currBankList.value = ewalletList;
   }
-  console.log(currBankList.value);
+  // console.log(currBankList.value);
 };
 
 const selectBankStr = () => {
@@ -279,6 +296,19 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
   const result = !cardNumber ? "Please Enter Account Number" : true;
+
+  if (cardNumber && selectedBankMethod.value && selectedBankMethod.value.code === "GCASH") {
+    const gCashCheck =
+      cardNumber.substring(0, 1) !== "0"
+        ? "The GCASH card number must start with '0'"
+        : cardNumber.length !== 11
+        ? "The GCASH card number length should be 11"
+        : true;
+    if (gCashCheck !== true) {
+      return gCashCheck;
+    }
+  }
+
   return result;
 };
 

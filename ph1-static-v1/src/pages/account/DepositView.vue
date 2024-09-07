@@ -157,6 +157,11 @@
                   Extra:
                   <span>{{ getFtdCommaAmount(form.localAmount) }}P</span>
                 </div>
+
+                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                  Extra:
+                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}P</span>
+                </div>
               </template>
             </q-input>
           </div>
@@ -222,11 +227,7 @@
         </div>
       </div>
 
-      <div
-        class="q-mt-lg"
-        style="color: #576373"
-        v-if="isFtdPrivilege"
-      >
+      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
           Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager in slot games
@@ -235,7 +236,7 @@
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-else-if="(isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType))"
+        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
       >
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
@@ -842,7 +843,7 @@ const loadAppTabs = () => {
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
-      if (data && data.hasOwnProperty('ftd')) {
+      if (data && data.hasOwnProperty("ftd")) {
         store.ftd = data.ftd;
       }
     }

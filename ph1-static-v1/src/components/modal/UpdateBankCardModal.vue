@@ -29,7 +29,7 @@
             <div class="q-my-sm">
               <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
-                :type="currentCardType === 'BANK' ? 'number' : 'text'"
+                :type="currentCardType === 'Bank' || selectedBankCode === 'GCASH' ? 'number' : 'text'"
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
@@ -102,6 +102,8 @@ const bankCardField = reactive({
 const router = useRouter();
 
 const isUpdateCardDialogOpen = ref(false);
+const selectedBankCode = ref();
+
 const onUpdateCardClick = (bankCardDetails, type) => {
   currentCardType.value = type;
 
@@ -118,6 +120,8 @@ const onUpdateCardClick = (bankCardDetails, type) => {
   bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
   bankCardField.cardId = bankCardDetails.id;
+
+  selectedBankCode.value = bankCardDetails.bankCode;
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
@@ -158,6 +162,19 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
   const result = !cardNumber ? "Please Enter Card Number" : true;
+
+  if (cardNumber && selectedBankCode.value === "GCASH") {
+    const gCashCheck =
+      cardNumber.substring(0, 1) !== "0"
+        ? "The GCASH card number must start with '0'"
+        : cardNumber.length !== 11
+        ? "The GCASH card number length should be 11"
+        : true;
+    if (gCashCheck !== true) {
+      return gCashCheck;
+    }
+  }
+
   return result;
 };
 
