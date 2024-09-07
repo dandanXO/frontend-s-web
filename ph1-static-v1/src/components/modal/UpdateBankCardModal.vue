@@ -102,6 +102,8 @@ const bankCardField = reactive({
 const router = useRouter();
 
 const isUpdateCardDialogOpen = ref(false);
+const selectedBankCode = ref();
+
 const onUpdateCardClick = (bankCardDetails, type) => {
   currentCardType.value = type;
 
@@ -118,6 +120,8 @@ const onUpdateCardClick = (bankCardDetails, type) => {
   bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
   bankCardField.cardId = bankCardDetails.id;
+
+  selectedBankCode.value = bankCardDetails.bankCode;
 
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
@@ -158,6 +162,19 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
   const result = !cardNumber ? "Please Enter Card Number" : true;
+
+  // if (cardNumber && selectedBankCode.value === "GCASH") {
+  //   const gCashCheck =
+  //     cardNumber.substring(0, 2) !== "09"
+  //       ? "The GCASH card number must start with '09'"
+  //       : cardNumber.length !== 11
+  //       ? "The GCASH card number length should be 11"
+  //       : true;
+  //   if (gCashCheck !== true) {
+  //     return gCashCheck;
+  //   }
+  // }
+
   return result;
 };
 
