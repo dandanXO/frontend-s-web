@@ -248,9 +248,9 @@ dense
         <div class="text-center q-mt-md q-pb-xs">
           {{ $t("lang.registration_hints") }}
           <!--          <router-link to="/login" style="white-space: nowrap">-->
-          <a href="/about?id=info" style="white-space: nowrap">
+          <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed;">
             {{ $t("lang.user_registration_protocol") }}
-          </a>
+          </span>
 
           <!--          </router-link>-->
         </div>
@@ -264,7 +264,7 @@ dense
     </q-form>
 
 
-    <div class="login-bottom-div" @click="openHundredDialog">
+    <div class="login-bottom-div" @click="openDialog('hundred')">
       <img src="../assets/images/login/register-banner.jpg" />
     </div>
   </div>
@@ -278,7 +278,7 @@ dense
       <div>
   <p style="
     width: 85%;
-    margin-top: -25px;"><b style="font-size: 14px; color: #46acc8;">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
+    margin-top: -25px;"><b style="font-size: 14px; color: #0071ed;">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
     
   </p>
   Thành Viên có thể tham gia khuyến mãi này tại trang nạp tiền, sau khi nhập <strong>"Số tiền nạp"</strong> ấn chọn khuyến mãi <strong>100% Chào Mừng</strong>, sau đó nhấn <strong>"Xác nhận"</strong>.
@@ -322,6 +322,52 @@ dense
   <p>Để biết thêm chi tiết về khuyến mãi vui lòng liên hệ Chăm Sóc Khách Hàng trực tuyến 24/7 để được hỗ trợ
   </p>
 </div> </q-card>
+  </q-dialog>
+  
+  <q-dialog v-model="showBetRulesDialog" width="100%" show-close>
+    <q-card width="100%" class="q-pa-md">
+      <q-card-section class="row items-end justify-end q-pb-none">
+        <div class="text-h6"></div>
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+    
+    <p style="width: 85%; margin-top: -25px;"><b style="font-size: 16px; color: #0071ed;">{{ $t("lang.about.bettingRules") }}</b></p>
+    <ul>
+        <li>{{ $t("lang.about.familyRestriction") }}</li>
+        <li>{{ $t("lang.about.entertainmentPurpose2") }}</li>
+        <li>{{ $t("lang.about.modifyPromotion") }}</li>
+        <li>{{ $t("lang.about.singleDeposit") }}</li>
+        <li>
+          {{ $t("lang.about.refundBasedOnBetTurnover") }}
+          <ul class="sub-ul">
+            <li>{{ $t("lang.about.refundOptions.loseAll") }}</li>
+            <li>{{ $t("lang.about.refundOptions.loseLessThanStake") }}</li>
+            <li>{{ $t("lang.about.refundOptions.winGreaterThanOrEqualTo75") }}</li>
+            <li>{{ $t("lang.about.refundOptions.winLessThan75") }}</li>
+          </ul>
+        </li>
+        <li>{{ $t("lang.about.requiredRounds") }}</li>
+        <li>
+          {{ $t("lang.about.abuseDiscretion") }}
+          <ul class="sub-ul">
+            <li>{{ $t("lang.about.abuseExamples.excludedGames") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.multipleAccounts") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.crossAccountBets") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.oddsDifference") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.doubleBetAmount") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.betOnBothSides") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.doubleBet") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.allin") }}</li>
+            <li>{{ $t("lang.about.abuseExamples.affiliateAbuse") }}</li>
+          </ul>
+        </li>
+        <li>{{ $t("lang.about.excludedBets") }}</li>
+        <li>{{ $t("lang.about.transactionRecordsCheck") }}</li>
+        <li>{{ $t("lang.about.falsifiedContentDisqualification") }}</li>
+        <li>{{ $t("lang.about.amendTermsAndConditions") }}</li>
+        <li>{{ $t("lang.about.withdrawalVerification") }}</li>
+      </ul>
+    </q-card>
   </q-dialog>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
@@ -373,10 +419,14 @@ export default defineComponent({
       getCode();
     });
     const showHundredDialog = ref(false);
-    const openHundredDialog = () => {
-      showHundredDialog.value = true
+    const showBetRulesDialog = ref(false);
+    const openDialog = (currentDialog) => {
+      if (currentDialog === 'hundred') {
+        showHundredDialog.value = true
+      } else {
+        showBetRulesDialog.value = true
+      } 
     }
-
     const { t } = useI18n();
     const store = userStore();
     const verificationImg = ref("");
@@ -732,8 +782,9 @@ export default defineComponent({
       trackRegisterSuccessEvent,
       trackRegisterFailedEvent,
       ui,
-      openHundredDialog,
-      showHundredDialog
+      openDialog,
+      showHundredDialog,
+      showBetRulesDialog
     };
   }
 });
