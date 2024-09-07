@@ -375,9 +375,10 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1200px"
+      width="1300px"
       align-center
       @close="store.regPageVisible = false"
+      style="transform: scale(.9);"
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
@@ -2699,14 +2700,15 @@ body {
       .signup-container {
         // padding-top: 10px;
         // padding-bottom: 10px;
+        align-items: center;
 
         .acc-dialog-left {
+          width: 69%;
           display: flex;
-          align-items: flex-start;
+          align-items: flex-end;
           // background-image: url(../../assets/home/acc-dialog-bg-signup-eurocup.png);
           background-size: 100% 100%;
           background-position: center center;
-          // min-height: 750px;
           // background-color:salmon;
           overflow: hidden;
           img {
@@ -2718,14 +2720,18 @@ body {
             margin: -190px 0px -10px -20px;
             &.paris {
               margin: 0;
+              width: 100%;
               // height: 100%;
               // width: unset;
               // max-width: 110%;
               // margin-left: -5%;
-              margin-left: -5%;
-              width: 110%;
+              // margin-left: -5%;
+              // width: 110%;
             }
           }
+        }
+        .acc-dialog-right {
+          width: 31%;
         }
       }
 
