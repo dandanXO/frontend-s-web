@@ -44,7 +44,7 @@
         <img :src="badgeSrc" />
       </div>
       <div class="badge" v-show="!isDataLoaded" style="height: 200px"></div>
-      <div class="vip-progress">
+      <div class="vip-progress" :class="{load: isDataLoaded}">
         <!-- <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">
             还要
@@ -1403,12 +1403,17 @@ $border-settings: 1px solid #e5e7eb;
       display: flex;
       flex-direction: column;
       // width: calc(100% - 120px);
-      margin-left: 80px;
+      // margin-left: 80px;
+      width: 100%;
+      &.load {
+        margin-left: 65px;
+      }
       gap: 20px;
       .amount {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        // gap: 10px;
+        gap: 5px;
         .text {
           font-size: 14px;
           color: #ffffff;
@@ -1457,6 +1462,7 @@ $border-settings: 1px solid #e5e7eb;
       background: #405471;
       color: #ffffff;
       width: 74px;
+      min-width: 74px;
       text-align: center;
       display: block;
       border-radius: 8px;
@@ -2434,6 +2440,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   :deep(.carousel__prev) {
+    z-index: 1 !important;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
@@ -2441,6 +2448,7 @@ $border-settings: 1px solid #e5e7eb;
     transform: translate3d(-20px, -20px, 10px);
   }
   :deep(.carousel__next) {
+    z-index: 1 !important;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
