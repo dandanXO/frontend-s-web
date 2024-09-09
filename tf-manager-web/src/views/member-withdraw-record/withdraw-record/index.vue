@@ -145,6 +145,16 @@
           min-width="80"
         />
         <el-table-column
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
           align="center"
@@ -172,12 +182,6 @@
           min-width="110"
         />
         <el-table-column
-          prop="memberType"
-          :label="t('fields.memberType')"
-          align="center"
-          min-width="110"
-        />
-        <el-table-column
           prop="status"
           :label="t('fields.status')"
           align="center"
@@ -193,27 +197,6 @@
             <el-tag v-else>{{ t('withdrawStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="confirm status"
-          :label="t('fields.confirmStatus')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
-              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="vip"
-          :label="t('fields.vipLevel')"
-          align="center"
-          min-width="80"
-        />
         <el-table-column
           prop="financial"
           :label="t('fields.financialLevel')"
@@ -267,7 +250,6 @@
             />
           </template>
         </el-table-column>
-
         <el-table-column
           prop="localCurrencyAmount"
           :label="t('fields.localCurrencyAmount')"
@@ -284,7 +266,6 @@
             />
           </template>
         </el-table-column>
-
         <el-table-column
           prop="withdrawDate"
           :label="t('fields.withdrawDate')"
@@ -379,6 +360,21 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="confirm status"
+          :label="t('fields.confirmStatus')"
+          align="center"
+          width="160"
+        >
+          <template #default="scope">
+            <el-tag v-if="scope.row.confirmStatus === '0' && scope.row.status === 'SUCCESS'" type="danger">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+            <el-tag v-else-if="scope.row.confirmStatus === '1' && scope.row.status === 'SUCCESS'" type="success">
+              {{ t('withdrawConfirmStatus.' + scope.row.confirmStatus) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="confirmBy"
           :label="t('fields.confirmBy')"
           align="center"
@@ -408,20 +404,22 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="withdrawType"
-          :label="t('fields.withdrawType')"
+          prop="vip"
+          :label="t('fields.vipLevel')"
           align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
-          </template>
-        </el-table-column>
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
           align="center"
           min-width="120"
+        />
+        <el-table-column
+          prop="memberType"
+          :label="t('fields.memberType')"
+          align="center"
+          min-width="110"
         />
         <el-table-column
           :label="t('fields.operate')"
