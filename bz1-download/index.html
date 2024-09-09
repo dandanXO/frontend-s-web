@@ -18,8 +18,10 @@
 
 const searchParams = new URLSearchParams(window.location.search);
 let affidValue = searchParams.get("p0") || searchParams.get("id");
-const campaignname = searchParams.get("p1") || searchParams.get("campaignname");
-const campaignid = searchParams.get("p2") || searchParams.get("campaignid");
+const campaignname =
+    searchParams.get("p1") || searchParams.get("campaignname");
+const campaignid =
+    searchParams.get("p2") || searchParams.get("campaignid");
 const adsetid = searchParams.get("p3") || searchParams.get("adsetid");
 const adsetname = searchParams.get("p4") || searchParams.get("adsetname");
 const adname = searchParams.get("p5") || searchParams.get("adname");
@@ -28,7 +30,7 @@ const fbclid = searchParams.get("fbclid");
 const fbpid = searchParams.get("fbpid");
 const autoDownload = searchParams.get("autoDownload");
 
-affidValue = affidValue ?? '1DF0CB';
+affidValue = affidValue ?? "A3048D";
 
 var apiUrl = "";
 var adjustUrlCode = "";
@@ -38,11 +40,11 @@ async function getApiUrl() {
     var button;
 
     let affiliateLists = {
-        "1DF0CB": {
-            "adCode": "1cjl84xe",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/5/affiliate/1796386315862343681/android/apk/1.0.21_20240814145813.apk"
-        }
-    }
+        "A3048D": {
+            adCode: "1cjl84xe",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/5/affiliate/1796386315862343681/android/apk/1.0.21_20240814145813.apk",
+        },
+    };
 
     adjustUrlCode = affiliateLists[affidValue]["adCode"];
     apiUrl = affiliateLists[affidValue]["url"];
@@ -71,7 +73,6 @@ async function getApiUrl() {
     //     console.log(error)
     // }
 }
-
 
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
@@ -105,7 +106,9 @@ function copyUrl(_sTxt) {
 function downloadApk(code, pp, fbvar, fbpid) {
     console.log(apiUrl);
     var date = Date.now();
-    var url = `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` + date;
+    var url =
+        `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` +
+        date;
     // alert(url)
     const link = document.createElement("a");
     link.style.display = "none";
@@ -171,10 +174,22 @@ const defaultScrollList = document.querySelector("#scroll-list");
 var imageUrls = [];
 var extraStyle = "";
 if (affidValue === "09F5B4") {
-    imageUrls = ["style/images/706/01-new.jpg", "style/images/706/02-new.jpg", "style/images/706/03-new.jpg", "style/images/706/04-new.jpg", "style/images/706/05-new.jpg"];
+    imageUrls = [
+        "style/images/706/01-new.jpg",
+        "style/images/706/02-new.jpg",
+        "style/images/706/03-new.jpg",
+        "style/images/706/04-new.jpg",
+        "style/images/706/05-new.jpg",
+    ];
     extraStyle = `style="height:400px;"`;
 } else if (affidValue === "CCF46E") {
-    imageUrls = ["style/images/705/01-new.jpg", "style/images/705/02-new.jpg", "style/images/705/03-new.jpg", "style/images/705/04-new.jpg", "style/images/705/05-new.jpg"];
+    imageUrls = [
+        "style/images/705/01-new.jpg",
+        "style/images/705/02-new.jpg",
+        "style/images/705/03-new.jpg",
+        "style/images/705/04-new.jpg",
+        "style/images/705/05-new.jpg",
+    ];
     extraStyle = `style="height:400px;"`;
 } else {
     var fileCountLists = [19, 19, 23, 22, 6];
