@@ -1085,8 +1085,10 @@ const getImages = () => {
 };
 const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
-const initVIPTable = async () => {
-  isDataLoaded.value = false;
+const initVIPTable = async (wLoad) => {
+  if (wLoad !== 'noload') {
+    isDataLoaded.value = false;
+  }
   getImages();
   // const storedData = sessionStorage.getItem("vipData");
 
@@ -1212,7 +1214,7 @@ const handleClick = async (key, item) => {
       }
       notify({ type: "success", message: "领取成功！" });
       store.getBalance();
-      initVIPTable();
+      initVIPTable('noload');
       isLoading[key] = false;
     } else {
       notify({ type: "error", message: res.message });
@@ -1384,7 +1386,7 @@ $border-settings: 1px solid #e5e7eb;
     background: #212b4ae0;
     border-radius: 12px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     gap: 14px;
     padding: 14px;
