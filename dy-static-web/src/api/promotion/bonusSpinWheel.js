@@ -19,3 +19,7 @@ export function getMidautumSpinWheelData() {
 export function getMidautumSpinWheelPrize(times) {
   return server.EVENT.post(`/mooncakeFestSpin/spin?spinTimes=1`);
 }
+
+export function getMidautumSpinWheelRecords(params) {
+  return server.EVENT.get("/mooncakeFestSpin/selectMemberSpinRecords", { params: params });
+}
