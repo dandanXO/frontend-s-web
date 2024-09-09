@@ -110,7 +110,7 @@
         </el-button>
       </div>
     </div>
-
+    <!-- eslint-disable -->
     <el-table
       :data="page.records"
       ref="table"
@@ -119,7 +119,7 @@
       highlight-current-row
       v-loading="page.loading"
       height="calc(100vh - 180px)"
-      :header-cell-style="{background: 'lightgray'}"
+      :header-cell-style="{ background: 'lightgray' }"
       :empty-text="t('fields.noData')"
     >
       <el-table-column
@@ -130,7 +130,9 @@
       >
         <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
           <router-link
-            :to="`/member/details/${scope.row.siteMemberId}?site=${request.siteId}`"
+            :to="
+              `/member/details/${scope.row.siteMemberId}?site=${request.siteId}`
+            "
           >
             <el-link type="primary">{{ scope.row.member }}</el-link>
           </router-link>
@@ -229,8 +231,13 @@
       :current-page="request.current"
     />
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -253,7 +260,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
 import { getFinancialLevels } from '../../../api/financial-level'
-import { selectList } from "../../../api/risk-level"
+import { selectList } from '../../../api/risk-level'
 import {
   convertDateToEnd,
   convertDateToStart,
@@ -276,8 +283,8 @@ const financialLevelList = reactive({
   list: [],
 })
 const riskList = reactive({
-  list: []
-});
+  list: [],
+})
 // let timeZone = null;
 
 const sortList = reactive({
@@ -309,7 +316,7 @@ const request = reactive({
   max: null,
   reviewby: null,
   riskLevel: null,
-  status: 1
+  status: 1,
 })
 
 const uiControl = reactive({
@@ -341,7 +348,7 @@ function disabledDate(time) {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.sort = sortList.list[0].value
   request.financialLevel = financialLevelList.list[0].id
   request.min = ''
@@ -389,14 +396,14 @@ async function loadSites() {
 const loadRiskLevels = async () => {
   var ret = []
   ret.push({ id: '1', levelName: t('fields.allrisklevel') })
-  const { data: risk } = await selectList({ siteId: request.siteId });
+  const { data: risk } = await selectList({ siteId: request.siteId })
   risk.forEach((item, index) => {
     ret.push(item)
   })
   console.log('ret', ret)
-  riskList.list = ret;
+  riskList.list = ret
   request.riskLevel = riskList.list[0].id
-};
+}
 
 async function loadFinancialLevelList() {
   var ret = []
@@ -434,7 +441,6 @@ async function loadDetail() {
   loadFinancialLevelList()
   loadRiskLevels()
 }
-
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
