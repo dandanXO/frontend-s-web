@@ -31,6 +31,7 @@
           剩余次数：
           <span id="remaning-draw-amt" style="color: #3981ff">{{ remainingDraws }} 次</span>
         </p>
+        <span class="prize-record-btn" @click="prizeRecordPopup.init()">「中奖记录」</span>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
@@ -86,6 +87,8 @@
       </div>
     </div>
   </el-dialog>
+
+  <PrizeHistory ref="prizeRecordPopup" />
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -94,6 +97,7 @@ import { getMidautumSpinWheelPrize, getMidautumSpinWheelData } from "@/api/promo
 import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 import { ElMessage, ElMessageBox } from "element-plus";
+import PrizeHistory from "./PrizeHistory.vue";
 
 const store = userStore();
 const notify = useNotify();
@@ -114,6 +118,7 @@ const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref(0);
 const remainingDraws = ref(0);
 const winnersList = ref([]);
+const prizeRecordPopup = ref();
 
 let finalDegree = 0;
 let speed = 1;
@@ -579,12 +584,28 @@ onMounted(() => {
 }
 
 .remaining-draw-wrapper {
+  position: relative;
+
   .remaining-draw-text {
     color: #7a8eb9;
     font-size: 25px;
     margin: 100px auto 10px;
     text-align: center;
     width: 300px;
+  }
+
+  .prize-record-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #3981ff;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
   }
 }
 
