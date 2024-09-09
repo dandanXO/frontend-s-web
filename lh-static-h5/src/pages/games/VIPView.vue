@@ -23,7 +23,8 @@
                   </span> -->
                   <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
                   <span v-show="originalUpgradeBetAmounts.length != 0">
-                    <span v-if="store.token && (vipIndex < +vipLevel) || vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">已完成</span>
+                    <span v-if="store.token && (vipIndex < +vipLevel)">已完成</span>
+                    <span v-else-if="store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">待晋级</span>
                     <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
                   </span>
                 </div>
@@ -109,7 +110,7 @@
             </div>
 
           <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
-          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注和存款</div>
+          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
 
           <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
@@ -1234,7 +1235,7 @@ const handleSlideClick = (vipIndex) => {
 const slideTo = (vipIndex) => {
   if (vipIndex) {
     if (currentBetAmt.value >= currentUpgradeBetAmt.value) {
-      currentSlide.value = vipIndex + 1;
+      currentSlide.value = vipIndex;
       return;
     }
     currentSlide.value = vipIndex;
@@ -1242,7 +1243,7 @@ const slideTo = (vipIndex) => {
   }
   const vipLevel = +store.vip.replace("VIP", "");
   if (store.vip && currentBetAmt.value >= currentUpgradeBetAmt.value) {
-    currentSlide.value = vipLevel + 1;
+    currentSlide.value = vipLevel;
     return;
   }
   if (!store.vip) {
@@ -1288,7 +1289,7 @@ onActivated(() => {
 });
 </script>
 <style scoped lang="scss">
-//@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Purple+Purse&display=swap");
 $border-settings: 1px solid #e5e7eb;
 .carousel__slide {
   .vipLevelButton {
@@ -1318,10 +1319,10 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-container {
   .loading-icon {
-    width: 20px;
-    height: 20px;
-    border: 4px solid #f1dda0; /* Light gold color */
-    border-top: 4px solid transparent;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #f1dda0; /* Light gold color */
+    border-top: 2px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 2px 0;
@@ -1359,10 +1360,12 @@ $border-settings: 1px solid #e5e7eb;
     margin: 0 auto;
     width: 100%;
     text-align: center;
+    overflow: hidden;
   }
   .vip-header {
-    width: 100%;
     margin: 10px auto;
+    width: 120%;
+    margin-left: -10%;
   }
 
   .banner-container {
@@ -1379,12 +1382,12 @@ $border-settings: 1px solid #e5e7eb;
     width: 95%;
     margin: 0 auto;
     background: #212b4ae0;
-    border-radius: 30px;
+    border-radius: 12px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
+    gap: 14px;
+    padding: 14px;
     .badge {
       width: 80px;
       position: absolute;
@@ -1451,12 +1454,12 @@ $border-settings: 1px solid #e5e7eb;
       border: 2px solid #799df8;
       background: #405471;
       color: #ffffff;
-      width: 150px;
+      width: 74px;
       text-align: center;
       display: block;
       border-radius: 8px;
       font-size: 12px;
-      padding: 8px 0px;
+      padding: 5px 0px;
       text-align: center;
       // margin-left: 70px;
     }
@@ -1534,14 +1537,27 @@ $border-settings: 1px solid #e5e7eb;
           align-items: center;
           flex-direction: column;
           font-size: 10px;
-          min-height: 145px;
+          min-height: 150px;
           .vip-inner {
             border: 1px solid #799df8;
             background: #1f2231;
-            padding: 5px;
+            padding:10px;
             border-radius: 20px;
             width: 100%;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100px;
+            gap: 5px;
+            .box-det {
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 5px;
+            flex-direction: column;
+            }
           }
           &.inactive {
             .vip-inner {
@@ -1554,6 +1570,10 @@ $border-settings: 1px solid #e5e7eb;
             }
             .item-amt {
               color: #596589;
+              font-size: 10px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
             }
           }
           .icon {
@@ -1563,8 +1583,10 @@ $border-settings: 1px solid #e5e7eb;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 60px;
-            height: 60px;
+            // width: 60px;
+            // height: 60px;
+            width: 26px;
+            height: 26px;
             margin: 0 auto 5px;
             img {
               height: 50%;
@@ -1826,27 +1848,29 @@ $border-settings: 1px solid #e5e7eb;
       justify-content: space-between;
       align-items: center;
       flex-direction: column;
-      padding: 30px 30px;
+      // padding: 30px 30px;
       .title {
         color: #333;
         text-align: center;
-        font-family: Arial Narrow;
+        font-family: "PingFang";
         font-size: 24.319px;
         font-style: italic;
         font-weight: 700;
         line-height: normal;
-        top: 50px;
+        top: 32px;
         position: absolute;
         .type {
           color: #799df8;
-          font-weight: 400;
-          font-size: 24.319px;
+          font-weight: 600;
+          font-size: 18.319px;
           display: inline-block;
           font-style: normal;
         }
       }
       .badge {
-        width: 75%;
+        // width: 75%;
+        width: 70%;
+        margin-top: 15%;
         img {
           width: 100%;
         }
@@ -1854,28 +1878,29 @@ $border-settings: 1px solid #e5e7eb;
 
       .description {
         color: #ffffff;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
-        line-height: 24px;
+        line-height: 15px;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 5px;
         span {
           color: #f1dda0;
-          font-size: 20px;
+          font-size: 18px;
           font-weight: 600;
-          line-height: 26.4px;
+          line-height: 21px;
           text-align: center;
         }
       }
       .viplevel {
         color: #ffffff;
         font-family: "Purple Purse", sans-serif;
-        font-size: 30px;
+        font-size: 20px;
         font-weight: 400;
-        line-height: 33px;
+        line-height: 30px;
         text-align: center;
       }
 
@@ -1970,13 +1995,14 @@ $border-settings: 1px solid #e5e7eb;
     display: flex;
     max-width: 1200px;
     width: 95%;
-    margin: 0 auto 20px;
+    margin: 0 auto 14px;
     gap: 10px;
     justify-content: center;
     .tab {
-      max-width: 120px;
+      // max-width: 120px;
       img {
         width: 100%;
+        display: block;
       }
     }
   }
@@ -1996,10 +2022,12 @@ $border-settings: 1px solid #e5e7eb;
       width: 95%;
       text-align: center;
       margin: 0 auto;
-      border-radius: 10px;
+      // border-radius: 10px;
+      border-radius: 0 0 10px 10px;
       word-break: break-word;
       table-layout: fixed;
       font-size: 12px;
+      overflow: hidden;
       thead {
         background: linear-gradient(180deg, #4d6abe 0%, #354d93 24.31%, #16234e 100%);
         color: #ffffff;
@@ -2030,27 +2058,32 @@ $border-settings: 1px solid #e5e7eb;
       align-items: center;
       background: linear-gradient(180deg, #ffffff 18.57%, #b3d7f0 85%);
       background-clip: text;
+      font-size: 18px;
       -webkit-text-fill-color: transparent;
+      font-weight: 600;
       &:before {
         content: "";
         background: url(../../assets/images/vip/decal.png);
-        width: 70px;
-        height: 70px;
+        // width: 70px;
+        // height: 70px;
+        height: 30px;
+        width: 30px;
         display: block;
         background-size: cover;
       }
       &:after {
         content: "";
         background: url(../../assets/images/vip/decal.png);
-        width: 70px;
-        height: 70px;
+        // width: 70px;
+        // height: 70px;
+        height: 30px;
+        width: 30px;
         display: block;
         background-size: cover;
         transform: rotateY(180deg);
       }
       background-clip: text;
       text-align: center;
-      font-size: 30px;
     }
     .accordion {
       cursor: pointer;
@@ -2070,8 +2103,8 @@ $border-settings: 1px solid #e5e7eb;
     }
 
     h2 {
-      font-size: 18px;
-      line-height: 22px;
+      font-size: 12px;
+      line-height: 16px;
       color: #ffffff;
     }
     .terms-conditions-title-separator {
@@ -2083,7 +2116,7 @@ $border-settings: 1px solid #e5e7eb;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 400;
       line-height: 26px;
       background: linear-gradient(0deg, #2f3547, #2f3547ad);
@@ -2103,14 +2136,16 @@ $border-settings: 1px solid #e5e7eb;
           background: url("../../assets/images/vip/tnc-no-bg.png") no-repeat center center;
           font-weight: 600;
           padding: 10px;
-          margin-top: -8px;
+          margin-top: 4px;
           background-size: contain;
           color: #000000;
           text-align: center;
-          min-width: 30px;
-          min-height: 42px;
-          max-width: 30px;
-          max-height: 42px;
+          // min-width: 30px;
+          // min-height: 42px;
+          // max-width: 30px;
+          // max-height: 42px;
+          width: 16px;
+          height: 20px;
           font-size: 12px;
           display: flex;
           align-items: center;
@@ -2141,9 +2176,12 @@ $border-settings: 1px solid #e5e7eb;
     }
 
     .vipitem {
-      height: 320px;
+      height: 265px;
       margin: auto;
-      width: 300px;
+      width: 200px;
+      // height: 320px;
+      // margin: auto;
+      // width: 300px;
       .vipLevelReachStatus {
         margin-top: 12px;
         margin-left: 3px;
@@ -2286,7 +2324,7 @@ $border-settings: 1px solid #e5e7eb;
     }
   }
   .carousel__slide--active ~ .carousel__slide.carousel__slide--next {
-    transform: scale(0.6);
+    transform: scale(0.57);
     // margin-left: -45px;
     filter: grayscale(1) brightness(0.7);
     z-index: -3;
@@ -2307,7 +2345,7 @@ $border-settings: 1px solid #e5e7eb;
     }
   }
   .carousel__slide.carousel__slide--prev {
-    transform: scale(0.6);
+    transform: scale(0.57);
     filter: grayscale(1) brightness(0.7);
     // margin-left: 40px;
     .vipitem {
@@ -2327,7 +2365,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--prev {
     opacity: 1;
-    transform: scale(0.6);
+    transform: scale(0.57);
     z-index: -2;
     filter: grayscale(1) brightness(0.5);
     .vipcontents {
@@ -2344,7 +2382,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   .carousel__slide--next {
-    transform: scale(0.6);
+    transform: scale(0.57);
     opacity: 1;
     z-index: -2;
     filter: grayscale(1) brightness(0.5);
@@ -2396,14 +2434,14 @@ $border-settings: 1px solid #e5e7eb;
   :deep(.carousel__prev) {
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
-    padding: 5px;
+    // padding: 5px;
     margin: 0px;
     transform: translate3d(-20px, -20px, 10px);
   }
   :deep(.carousel__next) {
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
-    padding: 5px;
+    // padding: 5px;
     margin: 0px;
     transform: translate3d(20px, -20px, 10px) rotateY(180deg);
   }

@@ -21,7 +21,8 @@
                 <!-- <span>{{ formatNumber(vipItems[vipIndex].upgradeBetAmount) }}</span> -->
                 <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
                   <span v-show="originalUpgradeBetAmounts.length != 0">
-                    <span v-if="store.token && (vipIndex < +vipLevel) || vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">已完成</span>
+                    <span v-if="store.token && (vipIndex < +vipLevel)">已完成</span>
+                    <span v-else-if="store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">待晋级</span>
                     <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
                   </span>
               </div>
@@ -108,7 +109,7 @@
 
           <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
 
-          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注和存款</div>
+          <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
           <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
@@ -1049,9 +1050,11 @@ const getImages = () => {
 };
 const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
-const initVIPTable = async () => {
+const initVIPTable = async (wLoad) => {
   getImages();
-  isDataLoaded.value = false;
+  if (wLoad !== 'noload') {
+    isDataLoaded.value = false;
+  }
   originalUpgradeBetAmounts.value = [];
   var res = store.token ? await getVIPDetails() : await getVIPDetailsNotLoggedIn();
   runVipAPI(res);
@@ -1161,7 +1164,7 @@ const handleClick = async (key, item) => {
 
       notify.success("领取成功！");
       store.getBalance();
-      initVIPTable();
+      initVIPTable('noload');
       isLoading[key] = false;
     } else {
       notify.error(res.message);
@@ -1181,7 +1184,7 @@ const handleSlideClick = (vipIndex) => {
 const slideTo = (vipIndex) => {
   if (vipIndex) {
     if (currentBetAmt.value >= currentUpgradeBetAmt.value) {
-      currentSlide.value = vipIndex + 1;
+      currentSlide.value = vipIndex;
       return;
     }
     currentSlide.value = vipIndex;
@@ -1189,7 +1192,7 @@ const slideTo = (vipIndex) => {
   }
   const vipLevel = +store.vip.replace("VIP", "");
   if (store.vip && currentBetAmt.value >= currentUpgradeBetAmt.value) {
-    currentSlide.value = vipLevel + 1;
+    currentSlide.value = vipLevel;
     return;
   }
   if (!store.vip) {
