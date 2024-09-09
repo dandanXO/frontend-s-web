@@ -33,6 +33,7 @@
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">+63</span>
           </template>
         </q-input>
 
@@ -673,5 +674,12 @@ export default defineComponent({
     margin: 20px auto;
     max-width: 200px;
   }
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
+  z-index: 2;
 }
 </style>

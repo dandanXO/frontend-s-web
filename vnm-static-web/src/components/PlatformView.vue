@@ -35,9 +35,13 @@
             <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
               <img
                 :src="
-                  require(
-                    '../assets/' + platformType + '/' + platformType + '-itempg-' + item.code.toLowerCase() + '.png'
-                  )
+                  require('../assets/' +
+                    platformType +
+                    '/' +
+                    platformType +
+                    '-itempg-' +
+                    item.code.toLowerCase() +
+                    '.png')
                 "
               />
             </div>
@@ -47,9 +51,13 @@
                 <img
                   style="height: 60px"
                   :src="
-                    require(
-                      '../assets/' + platformType + '/' + platformType + '-biglogo-' + item.code.toLowerCase() + '.png'
-                    )
+                    require('../assets/' +
+                      platformType +
+                      '/' +
+                      platformType +
+                      '-biglogo-' +
+                      item.code.toLowerCase() +
+                      '.png')
                   "
                 />
               </div>
@@ -95,15 +103,13 @@
                     <span>
                       <img
                         :src="
-                          require(
-                            '../assets/' +
-                              platformType +
-                              '/' +
-                              platformType +
-                              '-logo-' +
-                              plat.code.toLowerCase() +
-                              '.png'
-                          )
+                          require('../assets/' +
+                            platformType +
+                            '/' +
+                            platformType +
+                            '-logo-' +
+                            plat.code.toLowerCase() +
+                            '.png')
                         "
                       />
                     </span>
@@ -134,8 +140,8 @@
                 >
                   {{ $t("common.maintenanceTime") }}:
                   <em>
-                    {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY hh:mm A") }} -
-                    {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY hh:mm A") }}
+                    {{ toGMT7(item.maintenanceStartTime) }} -
+                    {{ toGMT7(item.maintenanceEndTime) }}
                   </em>
                 </p>
                 <p v-else>&nbsp;</p>
@@ -168,6 +174,11 @@
                   <span v-if="item.code === 'AG'">XIN</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
+                <img
+                  v-if="item.code.toLowerCase() === 'pt'"
+                  src="@/assets/images/index/new-ribbon-sm.svg"
+                  class="new-ribbon"
+                />
               </div>
             </template>
           </div>
@@ -267,6 +278,7 @@ import moment from "moment/moment";
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
+import { toGMT7 } from "@/utils/utils";
 const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
 const platformGame = ref(null);

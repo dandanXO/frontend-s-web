@@ -47,7 +47,8 @@ export const userStore = defineStore("userStore", {
       h5Url: "https://phl.55ace.com/",
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
-      extraPrivilegeId: ""
+      extraPrivilegeId: "",
+      ftd: true
     };
   },
   actions: {

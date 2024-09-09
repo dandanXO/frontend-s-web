@@ -240,7 +240,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "ph-project"
+        appId: "bz1-project"
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

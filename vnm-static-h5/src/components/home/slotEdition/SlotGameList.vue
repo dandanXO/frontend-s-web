@@ -11,6 +11,11 @@
         @click="handlePlatformClick(platform)"
       >
         <span class="slot-game-platform-btn__text">{{ platform.code }}</span>
+        <img
+          v-if="platform.code.toLowerCase() === 'pt'"
+          src="@/assets/images/home/new-ribbon-sm.svg"
+          class="new-ribbon"
+        />
       </button>
     </div>
     <div v-if="isLoading" class="slot-game-loading-wrapper">
@@ -190,6 +195,12 @@ watch(
         font-weight: 500;
         line-height: 1.1rem;
         color: #6c7ba8;
+      }
+      .new-ribbon {
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        width: 20px;
       }
     }
   }

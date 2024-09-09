@@ -28,7 +28,7 @@
         </el-button>
       </div>
     </div>
-    <div class="table-footer" v-if="request.queryValue !== 'riskInfoBankCard'">
+    <div class="header-container" v-if="request.queryValue !== 'riskInfoBankCard'">
       <span v-if="request.queryValue !== null && request.queryValue !== 'riskInfoPassword'">{{ t('fields.queryOption') }}: </span>
       <span v-if="request.queryValue === 'riskInfoIpLogin'">
         <span style="padding-right: 10px"
