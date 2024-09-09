@@ -72,7 +72,6 @@
         :label="t('fields.memberName')"
         width="200"
       />
-      
       <el-table-column
         prop="beforeVip"
         :label="t('fields.dataBefore')"
@@ -144,7 +143,7 @@ let timeZone = null
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
-const formRef = ref(null);
+// const formRef = ref(null);
 const siteList = reactive({
   list: [],
 })
@@ -213,7 +212,6 @@ async function loadSites() {
   siteList.list = site
 }
 
-
 function changePage(page) {
   request.current = page
   loadVipUpgradeRecord()
@@ -226,10 +224,10 @@ onMounted(async () => {
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-    importForm.siteId = site.value.id
+    // importForm.siteId = site.value.id
   } else {
     request.siteId = 1
-    importForm.siteId = 1
+    // importForm.siteId = 1
   }
   await loadVipUpgradeRecord()
 })
