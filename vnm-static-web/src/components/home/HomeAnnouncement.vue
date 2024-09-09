@@ -200,9 +200,7 @@ onMounted(() => {
   color: #696d70;
   border-radius: 2.1875rem;
   background: #fff;
-  box-shadow:
-    0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset,
-    0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
   width: 80%;
   margin: 0 auto;
   max-width: 1350px;
@@ -233,6 +231,7 @@ onMounted(() => {
 
         .station-notice {
           cursor: pointer;
+          position: relative;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -252,6 +251,10 @@ onMounted(() => {
             visibility: hidden;
             width: max-content;
             z-index: -1;
+            overflow: hidden;
+            .station-notice-item {
+              flex: 0 0 auto;
+            }
           }
         }
       }

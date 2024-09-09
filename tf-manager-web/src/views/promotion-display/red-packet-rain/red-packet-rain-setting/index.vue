@@ -835,6 +835,7 @@ import { getVipList } from '@/api/vip'
 import moment from 'moment/moment'
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
+import { formatTimeZone } from "@/utils/format-timeZone";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -860,8 +861,9 @@ const ways = reactive({
   list: [],
 })
 
-const singleRainRangeFrom = ref(null)
-const singleRainRangeTo = ref(null)
+let timeZone = null;
+const singleRainRangeFrom = ref(null);
+const singleRainRangeTo = ref(null);
 
 const multiRainRangeDate = ref(null)
 const multiRainRangeTime = ref(null)
@@ -1015,6 +1017,8 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
+
+    timeZone = siteList.list.find(e => e.id === form.siteId).timeZone;
   })
 }
 
@@ -1058,9 +1062,13 @@ function removeLastDigitRule(item) {
 }
 
 function isExpiredTime(rangeString) {
-  // rangeString.startTime + ' - ' + rangeString.endTime;
-  if (rangeString.endTime < moment().format('YYYY-MM-DD-HH:mm')) {
-    return true
+  const timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  console.log(timeZone);
+  const currentDateTime = formatTimeZone( moment().utc(), timeZone);
+  console.log(moment(currentDateTime).format("YYYY-MM-DD-HH:mm"))
+
+  if (rangeString.endTime < moment(currentDateTime).format("YYYY-MM-DD-HH:mm")) {
+    return true;
   }
   if (rangeString.endTime < rangeString.startTime) {
     return true

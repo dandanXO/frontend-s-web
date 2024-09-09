@@ -138,10 +138,11 @@ function getErrorType(errorUrl) {
 }
 
 function isInApp() {
+  const hasToken = new URLSearchParams(window.location.search).get("token");
   if (
-    window.location.pathname === "/vip" ||
+    (window.location.pathname === "/vip" && hasToken) ||
     window.location.pathname === "/viptest" ||
-    window.location.pathname === "/promotion" ||
+    (window.location.pathname === "/promotion" && hasToken) ||
     window.location.pathname === "/deposit" ||
     window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||

@@ -171,6 +171,11 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.tips')" prop="tips">
+            <el-input v-model="form.tips" style="width: 600px;" />
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.feeRate')" prop="fee">
             <el-input-number
               v-model="form.fee"
@@ -342,6 +347,7 @@ const form = reactive({
   type: "",
   subtractAmount: 0,
   fee: 0,
+  tips: "",
   status: true
 });
 const formRules = reactive({

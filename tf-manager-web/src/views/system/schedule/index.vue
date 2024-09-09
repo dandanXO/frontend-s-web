@@ -22,6 +22,25 @@
           :value="item.key"
         />
       </el-select>
+      <el-input
+        v-model="request.beanName"
+        size="small"
+        style="width: 120px;margin-left: 5px"
+        :placeholder="t('fields.beanName')"
+      />
+      <el-select
+        size="small"
+        v-model="request.siteId"
+        :placeholder="t('fields.pleaseChoose')"
+        style="width: 120px;margin-left: 5px"
+      >
+        <el-option
+          v-for="item in list.sites"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
       <el-button
         style="margin-left: 20px"
         icon="el-icon-search"
@@ -579,6 +598,8 @@ const request = reactive({
   current: 1,
   jobName: null,
   state: null,
+  beanName: null,
+  siteId: null
 })
 const page = reactive({
   pages: 0,
@@ -618,6 +639,8 @@ let chooseJob = []
 function resetQuery() {
   request.jobName = null
   request.state = null
+  request.siteId = null
+  request.beanName = null
 }
 
 function handleSelectionChange(val) {

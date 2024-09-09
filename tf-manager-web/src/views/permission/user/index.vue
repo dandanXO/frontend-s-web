@@ -217,7 +217,33 @@
             @change="setSiteIdArray"
           >
             <el-option
-              v-for="item in siteList.list"
+              v-for="item in formSiteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-if="
+            uiControl.siteSelectVisible &&
+              (form.userType === 'MANAGER' || form.userType === 'ADMIN')
+          "
+          :label="t('fields.site')"
+          prop="siteIds"
+        >
+          <el-select
+            v-model="form.siteIdArray"
+            size="small"
+            class="filter-item"
+            style="width: 350px"
+            :placeholder="t('fields.pleaseChoose')"
+            multiple
+            filterable
+            @change="setSiteIdArray"
+          >
+            <el-option
+              v-for="item in formSiteList.list"
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
@@ -522,7 +548,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimpleOri } from '../../../api/site'
+import { getSiteListSimple, getSiteListSimpleOri } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -550,6 +576,7 @@ const userTypeList = computed(() => {
 })
 const today = moment(new Date()).format('YYYY-MM-DD')
 const siteList = reactive({ list: [] })
+const formSiteList = reactive({ list: [] })
 const netPhone = reactive({ list: [] })
 const userForm = ref(null)
 const uiControl = reactive({
@@ -651,7 +678,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : store.state.user.siteId
   request.role = null
 }
 
@@ -881,6 +908,10 @@ async function loadSites() {
   siteList.list = site
 }
 
+async function loadDefaultSites() {
+  formSiteList.list = store.state.user.sites
+}
+
 async function loadNetPhone() {
   const { data: ret } = await getNetPhone()
   netPhone.list = ret
@@ -912,6 +943,10 @@ function roleTxt(roleId) {
       return r.name
     }
   }
+}
+
+function setSiteIdArray() {
+  form.siteId = form.siteIdArray[0]
 }
 
 function setSiteIdArray() {
@@ -965,6 +1000,10 @@ watch(
 
 onMounted(async () => {
   await loadSites()
+  await loadDefaultSites()
+  if (store.state.user.userType !== "ADMIN") {
+    request.siteId = store.state.user.siteId
+  }
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false

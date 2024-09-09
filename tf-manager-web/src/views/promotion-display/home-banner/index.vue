@@ -781,13 +781,13 @@ function resetQuery() {
   request.title = null
   request.state = null
   request.siteType = "main"
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   uiControl.showSiteType = false;
 }
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 function changePage(page) {

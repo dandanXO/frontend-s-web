@@ -1,6 +1,6 @@
 <template>
-  <div class="deposit-wrapper">
-    <div class="method-title q-mb-sm">Deposit method</div>
+  <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
+    <div class="method-title q-mb-sm">Deposit Method</div>
     <div class="deposit-methods-container" v-if="isLoadingInitPay">
       <div>
         <q-skeleton style="height: 96px" />
@@ -30,7 +30,7 @@
         </template>
       </div>
 
-      <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
+      <div class="method-title q-mt-md q-mb-sm">Payment Channels</div>
       <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
@@ -55,9 +55,13 @@
       </template>
     </template>
 
+    <div class="slot-ftd-section" v-if="isFtdPrivilege">
+      <img src="../../assets/images/bonus/slot-ftd-img.png" />
+    </div>
+
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-title q-mt-md q-mb-sm">Payment amount</div>
+      <div class="method-title q-mt-md q-mb-sm">Deposit Amount</div>
       <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
@@ -69,6 +73,9 @@
             >
               +{{ convertToCommaAmount(amount * 0.05) }}
             </q-badge>
+
+            <q-badge color="orange" floating rounded v-if="isFtdPrivilege">+{{ getFtdCommaAmount(amount) }}</q-badge>
+
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -135,12 +142,26 @@
               dense
               clearable
               @keyup.enter="confirmDeposit"
+              @focus="scrollToInput"
+              @blur="isInputFocus = false"
             >
               <template v-slot:prepend>
                 <span style="font-size: 26px" class="currency">
                   <template v-if="isUSDT">USDT</template>
                   <template v-else>{{ store.currency.value }}</template>
                 </span>
+              </template>
+
+              <template v-slot:append>
+                <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
+                  Extra:
+                  <span>{{ getFtdCommaAmount(form.localAmount) }}P</span>
+                </div>
+
+                <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
+                  Extra:
+                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}P</span>
+                </div>
               </template>
             </q-input>
           </div>
@@ -206,10 +227,16 @@
         </div>
       </div>
 
+      <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
+        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
+        <div class="q-mt-sm">
+          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager in slot games
+        </div>
+      </div>
       <div
         class="q-mt-lg"
         style="color: #576373"
-        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
+        v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
       >
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">
@@ -234,7 +261,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
@@ -246,7 +273,7 @@
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script setup>
@@ -262,6 +289,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { cached } from "boot/cache";
+import { storeToRefs } from "pinia";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -368,6 +396,14 @@ const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
 };
 
+const getFtdCommaAmount = (amount) => {
+  if (amount < 888) {
+    return amount;
+  } else {
+    return 888;
+  }
+};
+
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
   depositItems.value = item.extra.amountArr;
@@ -378,6 +414,7 @@ const handleDepositNodeClick = (item) => {
 const selectedItem = ref();
 const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
+const extraPrivilegeId = ref();
 const selectedItemChannel = ref();
 const selectedItemAmount = ref();
 const selectedChannel = ref();
@@ -385,6 +422,8 @@ const selectedChanelExtra = ref([]);
 const isPrivilege = ref(false);
 const selectedChannelBank = ref(null);
 const paytypeWithPrivilege = ref("");
+const { ftd } = storeToRefs(store);
+const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
 
 const goSelectedMethod = (item) => {
   selectedItem.value = item;
@@ -423,6 +462,12 @@ function initPay() {
   } else {
     isPrivilege.value = false;
     selectedItemPrivilegeId.value = "";
+  }
+
+  if (route.query.privilegeId) {
+    extraPrivilegeId.value = route.query.privilegeId;
+  } else {
+    extraPrivilegeId.value = undefined;
   }
 
   payMethods.value = [];
@@ -572,6 +617,10 @@ async function confirmDeposit() {
             } else {
               form.privilegeId = null;
             }
+          }
+
+          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+            form.privilegeId = extraPrivilegeId.value;
           }
 
           const copy = { ...form };
@@ -785,25 +834,43 @@ const resetSelectedMethod = () => {
 };
 
 const loadAppTabs = () => {
-  cached
-    .get("appTabs", () =>
-      api.get("/getAppTabs").then((res) => {
-        return res;
-      })
-    )
-    .then((data) => {
+  api.get("/opt-session/getAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
       if (data && data.deposit) {
         store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
         store.extraPrivilegeId = data.deposit.privilegeId;
 
         paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
       }
+      if (data && data.hasOwnProperty("ftd")) {
+        store.ftd = data.ftd;
+      }
+    }
+  });
+};
+
+const isInputFocus = ref(false);
+
+const scrollToInput = () => {
+  if (Platform.is.capacitor && Platform.is.android) {
+    isInputFocus.value = true;
+    nextTick(() => {
+      const input = document.activeElement;
+      if (input) {
+        input.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest"
+        });
+      }
     });
+  }
 };
 
 onActivated(() => {
   initPay();
-  checkNewUser();
+  // checkNewUser();
   loadInfo();
   resetSelectedMethod();
 });
@@ -811,7 +878,7 @@ onActivated(() => {
 onMounted(() => {
   loadAppTabs();
   initPay();
-  checkNewUser();
+  // checkNewUser();
   loadInfo();
 });
 </script>
@@ -911,6 +978,30 @@ onMounted(() => {
 
         :deep(.q-field__control) {
           height: 46px;
+        }
+
+        :deep(.q-field__bottom) {
+          padding-left: 0;
+          padding-right: 0;
+          margin: 0;
+        }
+
+        :deep(.amt-input-append) {
+          padding-left: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 700;
+
+          span {
+            font-size: 18px;
+            font-style: italic;
+            font-weight: 700;
+            color: #5c46e7;
+            text-shadow: 1px 1px 2px #180b3bcc;
+          }
         }
       }
 
@@ -1125,6 +1216,15 @@ onMounted(() => {
   }
 }
 
+.slot-ftd-section {
+  width: 100%;
+  margin: 10px auto 0px;
+
+  img {
+    width: 100%;
+  }
+}
+
 .deposit-methods-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1221,5 +1321,9 @@ onMounted(() => {
       }
     }
   }
+}
+
+.input-btm {
+  padding-bottom: 270px;
 }
 </style>

@@ -2022,6 +2022,9 @@ export default {
     nonHistoryRecord: 'Non-History Record',
     productId: 'Product ID',
     dayBetRebatePercentage: 'Day Bet Rebate Percentage',
+    needUniqueDevice: 'Need Unique Device',
+    uniqueIpCount: 'Unique Ip Count',
+    uniqueDeviceCount: 'Unique Device Count',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

@@ -121,3 +121,7 @@ export const updateDefaultSite = siteId => {
     Method.POST
   )
 }
+
+export const updateDefaultSite = siteId => {
+  return https().request(`/authority/session/change/site/${siteId}`, Method.POST);
+};

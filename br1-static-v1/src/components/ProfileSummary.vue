@@ -262,8 +262,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  //TODO:: Need Change PH1 AffiliateCode.
-  api.get("/app/download/affiliate/url?siteCode=PH1&affiliateCode=A3048D").then((res) => {
+  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=A3048D`).then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
@@ -512,6 +511,7 @@ onMounted(() => {
 
       .balance-amount {
         padding-right: 18px;
+        padding-left: 8px;
         white-space: nowrap;
       }
     }
@@ -590,7 +590,7 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 0;
+  top: 2px;
   right: 10px;
 }
 

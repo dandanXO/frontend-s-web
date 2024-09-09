@@ -1233,10 +1233,18 @@ const handleSlideClick = (vipIndex) => {
 };
 const slideTo = (vipIndex) => {
   if (vipIndex) {
+    if (currentBetAmt.value >= currentUpgradeBetAmt.value) {
+      currentSlide.value = vipIndex + 1;
+      return;
+    }
     currentSlide.value = vipIndex;
     return;
   }
   const vipLevel = +store.vip.replace("VIP", "");
+  if (store.vip && currentBetAmt.value >= currentUpgradeBetAmt.value) {
+    currentSlide.value = vipLevel + 1;
+    return;
+  }
   if (!store.vip) {
     currentSlide.value = 11;
     return;
@@ -1268,13 +1276,13 @@ const tabActive = ref(1); // Bind this to the active tab
 // Conditional logic for active states
 const benefitActive = computed(() => tabActive.value === 1);
 const rebateActive = computed(() => tabActive.value === 2);
-watch(
-  () => store.token,
-  () => {
-    initVIPTable();
-  },
-  { immediate: true }
-);
+// watch(
+//   () => store.token,
+//   () => {
+//     initVIPTable();
+//   },
+//   { immediate: true }
+// );
 onActivated(() => {
   initVIPTable();
 });

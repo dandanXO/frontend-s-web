@@ -214,7 +214,7 @@ const totalRatio = computed(() => {
 
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : 1
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.vipId = null;
   request.gameName = null;
 }
