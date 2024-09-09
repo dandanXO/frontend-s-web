@@ -1085,8 +1085,10 @@ const getImages = () => {
 };
 const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
-const initVIPTable = async () => {
-  isDataLoaded.value = false;
+const initVIPTable = async (wLoad) => {
+  if (wLoad !== 'noload') {
+    isDataLoaded.value = false;
+  }
   getImages();
   // const storedData = sessionStorage.getItem("vipData");
 
@@ -1212,7 +1214,7 @@ const handleClick = async (key, item) => {
       }
       notify({ type: "success", message: "领取成功！" });
       store.getBalance();
-      initVIPTable();
+      initVIPTable('noload');
       isLoading[key] = false;
     } else {
       notify({ type: "error", message: res.message });
