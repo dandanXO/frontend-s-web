@@ -52,6 +52,7 @@ export default defineComponent({
 .dark {
   .deposit-container {
     @include content-block-dark;
+    background-color: #17223e;
   }
 
   .menu-title-container {

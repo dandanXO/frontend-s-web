@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div class="" v-if="level === 1"><strong>支付方式</strong></div>
+    <div class="" v-if="level === 1" style="padding:5px 0;"><strong>支付方式</strong></div>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
@@ -284,7 +284,7 @@ $node-color: #4873f1;
       // flex-wrap: wrap;
       display: block;
       .account-title-container {
-        margin: 0 15px 0 10px;
+        margin: 0 15px 5px 5px;
         font-weight: bold;
         display: block;
         // float: left;
@@ -530,10 +530,14 @@ $node-color: #4873f1;
       .payment-method-item {
         box-shadow: none;
         background-color: $background-content-block-lighter-dark;
-        border: unset;
+        border: 2px solid transparent;
 
         &.active {
-          border: unset;
+          border: 2px solid #a98f7c;
+
+          &:before {
+            background-image: url("../../assets/svg/checkmark-dark.svg");
+          }
         }
       }
 
