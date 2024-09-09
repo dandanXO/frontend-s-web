@@ -498,6 +498,7 @@ onMounted(async() => {
     form.siteId = site.value.id;
     request.siteId = site.value.id
   } else {
+    form.siteId = siteList.list[0].id;
     request.siteId = siteList.list[0].id;
   }
   await loadWithdrawPlatform();
