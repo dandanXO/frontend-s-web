@@ -41,6 +41,25 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "PlayBold";
+  src: url("@/assets/fonts/Play-Bold.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Play";
+  src: url("@/assets/fonts/Play-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Purple Purse";
+  src: url("@/assets/fonts/PurplePurse-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   padding: 0;
   margin: 0;
