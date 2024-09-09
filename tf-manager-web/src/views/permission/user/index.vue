@@ -548,7 +548,7 @@ import {
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
-import { getSiteListSimple, getSiteListSimpleOri } from '../../../api/site'
+import { getSiteListSimpleOri } from '../../../api/site'
 import { useStore } from '../../../store'
 import {
   ADMIN,
@@ -943,10 +943,6 @@ function roleTxt(roleId) {
       return r.name
     }
   }
-}
-
-function setSiteIdArray() {
-  form.siteId = form.siteIdArray[0]
 }
 
 function setSiteIdArray() {
