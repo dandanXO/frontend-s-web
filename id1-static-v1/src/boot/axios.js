@@ -159,10 +159,11 @@ export default boot(({ app, router }) => {
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: messageTranslated
+          message:
+            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
         });
       }
-      throw new Error(messageTranslated);
+      throw new Error(res.message || "Error");
     } else {
       Loading.hide();
       return res;
