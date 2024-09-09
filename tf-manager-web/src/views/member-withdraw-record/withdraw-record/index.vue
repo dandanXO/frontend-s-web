@@ -139,12 +139,6 @@
         v-loading="page.loading"
       >
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
-          align="center"
-          min-width="80"
-        />
-        <el-table-column
           prop="withdrawType"
           :label="t('fields.withdrawType')"
           align="center"
