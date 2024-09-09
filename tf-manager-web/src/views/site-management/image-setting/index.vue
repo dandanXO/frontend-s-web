@@ -437,6 +437,7 @@ const uiControl = reactive({
     { name: 'DESKTOP_BANNER', display: t('fields.desktopBanner') },
     { name: 'MOBILE_BANNER', display: t('fields.mobileBanner') },
     { name: 'TEAM_ICON', display: t('fields.teamIcon') },
+    { name: 'TEAM_BACKGROUND_IMAGE', display: t('fields.teamBackgroundImage') },
     { name: 'OTHER', display: t('fields.other') },
   ],
 })
