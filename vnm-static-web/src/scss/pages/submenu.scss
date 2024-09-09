@@ -161,12 +161,22 @@
     }
 
     .platform-menu-img {
+      position: relative;
       height: 200px;
       margin-top: 20px;
+
       img {
         display: block;
         height: 100%;
         width: auto;
+      }
+
+      .new-ribbon {
+        position: absolute;
+        top: 6px;
+        right: 0;
+        width: 54px;
+        height: unset;
       }
     }
 
