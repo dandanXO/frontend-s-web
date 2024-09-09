@@ -140,8 +140,16 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn no-caps @click="goLogin()">Login</q-btn>
-        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">Register</q-btn>
+        <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
+        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
+
+        <div class="btn-lang" @click="router.push('/language')">
+          <img src="../assets/images/auth/icon-globe.png" />
+        </div>
+      </div>
+
+      <div class="side-menu-item side-menu-item__transparent">
+        <!-- <LangOptions /> -->
       </div>
     </div>
   </div>
@@ -154,6 +162,8 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
+import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
@@ -669,5 +679,17 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.btn-lang {
+  display: flex;
+  width: 24px;
+  img {
+    display: block !important;
+    width: 24px !important;
+    filter: brightness(1.2) invert(20%) sepia(40%) saturate(200%) hue-rotate(280deg) brightness(130%) contrast(80%);
+    // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
+    animation: hueBlink 1s infinite;
+  }
 }
 </style>
