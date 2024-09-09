@@ -1386,7 +1386,7 @@ $border-settings: 1px solid #e5e7eb;
     background: #212b4ae0;
     border-radius: 12px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     gap: 14px;
     padding: 14px;
