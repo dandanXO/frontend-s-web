@@ -66,7 +66,7 @@
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.png" />
           </a>
-          <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
+          <a class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
@@ -4100,7 +4100,7 @@ const showCongratsModal = () => {
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 10px;
   overflow-y: auto;
-  background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
+  // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
 
   .q-tab__label {
     font-size: 18px;
@@ -4397,7 +4397,7 @@ const showCongratsModal = () => {
       top: 65px;
     }
 
-    &.tiktok {
+    &.instagram {
       left: -70px;
       top: 13px;
       transition-delay: 0.2s;
@@ -5039,15 +5039,16 @@ const showCongratsModal = () => {
 
   .q-tab__label {
     font-size: 16px;
+    color: #000;
   }
 
   .q-tab--active .q-tab__indicator {
     height: 0px;
   }
 
-  .q-item__label {
-    color: #fff;
-  }
+  // .q-item__label {
+  //   color: #fff;
+  // }
 }
 
 .alert-img {

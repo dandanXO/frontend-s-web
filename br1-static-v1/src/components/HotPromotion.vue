@@ -12,169 +12,27 @@
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
-    <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
-      <div class="tabs">
-        <q-card-section>
-          <q-tabs v-model="activeKey" dense color="black" indicator-color="black" align="justify" narrow-indicator>
-            <q-tab name="1" label="选择幸运号码" />
-            <q-tab name="2" label="记录" />
-            <!--            <q-tab-->
-            <!--              name="3"-->
-            <!--              label="获奖名单-->
-            <!--"-->
-            <!--            />-->
-          </q-tabs>
-
-          <q-separator />
-
-          <q-tab-panels v-model="activeKey" animated>
-            <q-tab-panel name="1">
-              <div class="tab1">
-                <!--                <img src="../assets/images/promotion/hotpromo/22/icon.png"/>-->
-                <div class="contents">
-                  <q-form class="q-gutter-md">
-                    <div class="q-mb-md">
-                      {{ selectedHotPromo.contents.tab1 }}
-                    </div>
-                    <q-input
-                      v-model="lucky_number"
-                      filled
-                      bg-color="white"
-                      label-color="black"
-                      color="black"
-                      :input-style="{ color: 'black' }"
-                      type="number"
-                      :rules="[(val) => (val && val.length === 3) || '号码长度应为3']"
-                      label="幸运号码"
-                    />
-                    <q-btn :loading="btnLoading" @click="submitLuckyNumber()" color="brand" label="发送" />
-                  </q-form>
-                </div>
-              </div>
-            </q-tab-panel>
-
-            <q-tab-panel name="2">
-              <q-form>
-                <q-input filled v-model="formState.dateTime" label="选择日期" readonly color="white">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="formState.dateTime" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="关闭" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:after>
-                    <q-toggle
-                      style="font-size: 12px"
-                      v-model="formState.onlyMe"
-                      color="red"
-                      label="我自己"
-                      left-label
-                      size="xs"
-                      val="xs"
-                    />
-                  </template>
-                </q-input>
-                <q-btn
-                  @click="filterLuckyNumber()"
-                  :loading="loading"
-                  class="full-width q-mt-md"
-                  color="brand"
-                  label="搜索"
-                />
-              </q-form>
-              <q-table
-                title="幸运号码记录"
-                no-data-label="没有数据"
-                loading-label="加载中..."
-                rows-per-page-label=" "
-                :loading="loading"
-                class="q-mt-md"
-                :columns="filterColumn"
-                :rows="dataSource"
-              ></q-table>
-            </q-tab-panel>
-
-            <!--            <q-tab-panel name="3">-->
-            <!--              <q-form>-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  v-model="formState.resultTime"-->
-            <!--                  label="选择日期"-->
-            <!--                  readonly-->
-            <!--                  color="white"-->
-            <!--                >-->
-            <!--                  <template v-slot:append>-->
-            <!--                    <q-icon name="event" class="cursor-pointer">-->
-            <!--                      <q-popup-proxy-->
-            <!--                        cover-->
-            <!--                        transition-show="scale"-->
-            <!--                        transition-hide="scale"-->
-            <!--                      >-->
-            <!--                        <q-date-->
-            <!--                          v-model="formState.resultTime"-->
-            <!--                          mask="YYYY-MM-DD"-->
-            <!--                        >-->
-            <!--                          <div class="row items-center justify-end">-->
-            <!--                            <q-btn-->
-            <!--                              v-close-popup-->
-            <!--                              label="关闭"-->
-            <!--                              color="white"-->
-            <!--                              flat-->
-            <!--                            />-->
-            <!--                          </div>-->
-            <!--                        </q-date>-->
-            <!--                      </q-popup-proxy>-->
-            <!--                    </q-icon>-->
-            <!--                  </template>-->
-            <!--                </q-input>-->
-            <!--                <q-btn-->
-            <!--                  @click="filterWinnerLists()"-->
-            <!--                  :loading="loading"-->
-            <!--                  class="full-width q-mt-md"-->
-            <!--                  color="brand"-->
-            <!--                  label="搜索"-->
-            <!--                />-->
-            <!--              </q-form>-->
-
-            <!--              <q-table-->
-            <!--                class="q-mt-md"-->
-            <!--                no-data-label="没有数据"-->
-            <!--                loading-label="加载中..."-->
-            <!--                rows-per-page-label=" "-->
-            <!--                :loading="loading"-->
-            <!--                :columns="winnerColumn"-->
-            <!--                :rows="winnerDataSource"-->
-            <!--              />-->
-            <!--            </q-tab-panel>-->
-          </q-tab-panels>
-        </q-card-section>
-      </div>
-    </div>
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
-          <span class="bonus-text">恭喜获得奖金</span>
+          <span class="bonus-text">You Get</span>
           <span class="claim-amt">{{ claimMsg }}</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="确定" color="primary" v-close-popup />
+        <q-btn flat label="Ok" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -186,6 +44,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
+import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -197,7 +56,8 @@ export default defineComponent({
     GoldenEggPromo,
     HongBaoYuPromo,
     WelcomeTaskPromo,
-    InviteFriendPromo
+    InviteFriendPromo,
+    SlotFtdPromo
   },
   props: {
     list: {
@@ -254,6 +114,7 @@ export default defineComponent({
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
+      this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

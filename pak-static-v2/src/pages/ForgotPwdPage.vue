@@ -256,7 +256,7 @@
     </q-form>
 
     <div class="bottom-img">
-      <img src="../assets/images/auth/login-img2.png" />
+      <img src="../assets/images/auth/login-img3.png" />
     </div>
   </div>
 </template>

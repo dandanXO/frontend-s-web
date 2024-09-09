@@ -2672,7 +2672,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
+  OneSignal.initialize("eb9ab187-5d06-46f1-9405-ef1b3124c5cf");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2706,29 +2706,37 @@ const loadCustomerAddress = () => {
 };
 
 const loadAppTabs = () => {
-  cached
-    .get("appTabs", () =>
-      api.get("/getAppTabs").then((res) => {
-        return res;
-      })
-    )
-    .then((data) => {
-      if (data && data.tabs) {
-        categoriesList.value = data.tabs;
-      }
-      if (data && data.deposit) {
-        store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
-        store.extraPrivilegeId = data.deposit.privilegeId;
-      }
+  api
+    .get("/opt-session/getAppTabs")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        const { data } = res;
+        if (data && data.tabs) {
+          categoriesList.value = data.tabs;
+        }
+        if (data && data.deposit) {
+          store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+          store.extraPrivilegeId = data.deposit.privilegeId;
+        }
+        if (data && data.hasOwnProperty("ftd")) {
+          store.ftd = data.ftd;
+        }
 
+        if (categoriesList.value.length > 0) {
+          categoriesList.value.forEach(function (category, index) {
+            if (index === 0) {
+              category.active = true;
+            } else {
+              category.active = false;
+            }
+          });
+        }
+      }
+    })
+    .catch((e) => {
       if (categoriesList.value.length > 0) {
-        categoriesList.value.forEach(function (category, index) {
-          if (index === 0) {
-            category.active = true;
-          } else {
-            category.active = false;
-          }
-        });
+        categoriesList.value[0].active = true;
       }
     });
 };

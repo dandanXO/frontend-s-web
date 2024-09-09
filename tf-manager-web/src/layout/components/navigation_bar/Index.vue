@@ -242,7 +242,7 @@ export default {
         loadMenu()
         updateData()
         // location.reload()
-      }, 200)
+      }, 500)
     }
 
     function mapMenuPaths(menus, parentPath = '') {

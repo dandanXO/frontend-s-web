@@ -1,5 +1,5 @@
 <template>
-  <div class="withdrawal-modal-view">
+  <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="method-title q-mb-sm">Withdraw Currency</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
@@ -96,12 +96,14 @@
 
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-          <div class="method-title q-mt-sm">Choose Bank Account</div>
+          <div class="method-title q-mb-sm">Choose {{ displayCardType }} Account</div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
               <div class="w-form-input">
                 <q-select
                   ref="cardRef"
+                  class="bank-select-input"
+                  :loading="isLoadingBankCard"
                   filled
                   dense
                   clearable
@@ -111,7 +113,7 @@
                   option-value="id"
                   emit-value
                   map-options
-                  :rules="[(val) => !!val || 'Please Select A Bank Card']"
+                  :rules="[(val) => !!val || validateBankCardError()]"
                   hide-bottom-space
                 >
                   <template v-slot:option="scope">
@@ -147,7 +149,7 @@
           </div>
 
           <div class="bot-wrapper">
-            <div class="bank-card-item" @click="isAddNewAccount = true">
+            <div class="bank-card-item" @click="onAddNewAccount">
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
@@ -172,26 +174,28 @@
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
                   hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
                 ></q-input>
               </div>
             </div>
-            <div class="w-form-item w-form-item--bankcard" v-if="isBankType === 'BANK'">
-              <div class="top-wrapper">
-                <div class="title">Bank IFSC Code</div>
-              </div>
-              <div class="mid-wrapper">
-                <q-input
-                  filled
-                  dense
-                  clearable
-                  ref="bankAddressRef"
-                  placeholder="Enter Bank IFSC Code"
-                  v-model="bankCardField.cardAddress"
-                  :rules="[(_) => isValidCardAddress()]"
-                  hide-bottom-space
-                ></q-input>
-              </div>
-            </div>
+            <!--            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">-->
+            <!--              <div class="top-wrapper">-->
+            <!--                <div class="title">Bank IFSC Code</div>-->
+            <!--              </div>-->
+            <!--              <div class="mid-wrapper">-->
+            <!--                <q-input-->
+            <!--                  filled-->
+            <!--                  dense-->
+            <!--                  clearable-->
+            <!--                  ref="bankAddressRef"-->
+            <!--                  placeholder="Enter Bank IFSC Code"-->
+            <!--                  v-model="bankCardField.cardAddress"-->
+            <!--                  :rules="[(_) => isValidCardAddress()]"-->
+            <!--                  hide-bottom-space-->
+            <!--                ></q-input>-->
+            <!--              </div>-->
+            <!--            </div>-->
           </template>
 
           <div class="top-wrapper">
@@ -223,6 +227,8 @@
                   `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
               ]"
               hide-bottom-space
+              @focus="scrollToInput"
+              @blur="isInputFocus = false"
             >
               <template v-slot:append>
                 <q-btn-group>
@@ -332,15 +338,23 @@
       </template>
     </template>
   </div>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, onActivated, ref, reactive, watch, computed } from "vue";
+import { onMounted, onActivated, ref, reactive, watch, computed, nextTick } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import KYCUserForm from "../../components/KYCUserForm.vue";
 
 // withdraw component
 const qs = require("qs");
@@ -469,25 +483,54 @@ const selectWithdrawCurrency = (item) => {
   if (filteredMethods.length > 0) {
     selectedWithdraw.value = filteredMethods;
   }
+  isAddNewAccount.value = false;
   goSelectedMethod(selectedWithdraw.value[0]);
 };
 
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
 
+const displayCardType = computed(() => {
+  if (selectedMethodItem.value.payType === "EWALLET") {
+    return "eWallet";
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return "Crypto";
+  }
+  return "Bank";
+});
+
+const validateBankCardError = () => {
+  if (selectedMethodItem.value.payType === "EWALLET") {
+    return "Please Select eWallet Card";
+  } else if (selectedMethodItem.value.payType === "CRYPTO") {
+    return "Please Select Crypto Card";
+  }
+  return "Please Select Bank Card";
+};
+
 const isNoBankCard = ref(false);
 
 const filterCards = (type) => {
+  isLoadingBankCard.value = true;
+
   api
     .get("/session/bankCard")
     .then((res) => {
+      isLoadingBankCard.value = false;
+
       if (res.code === 0) {
-        let typeCode = type.code;
-        let filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        let filteredData = [];
+        if (isBankType.value === "BANK") {
+          const bankType = type.bankType;
+          filteredData = res.data.filter((item) => item.bankType === bankType);
+          const bankCodes = filteredBankList.value.map((bank) => bank.code);
+          filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
+        } else {
+          const typeCode = type.code;
+          filteredData = res.data.filter((item) => item.bankCode === typeCode);
+        }
 
-        bankCardList.value = [];
-        bankCardList.value.push(...filteredData);
-
+        bankCardList.value = [...filteredData];
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
         }
@@ -496,7 +539,7 @@ const filterCards = (type) => {
     .catch((error) => {
       console.log("error", error);
     })
-    .then(() => {
+    .finally(() => {
       isLoadingBankCard.value = false;
     });
 };
@@ -507,6 +550,7 @@ const loadCards = () => {
   api
     .get("/session/bankCard")
     .then((res) => {
+      isLoadingBankCard.value = false;
       if (res.code === 0) {
         bankCardList.value = [];
         bankCardList.value.push(...res.data);
@@ -603,6 +647,7 @@ const submitWithdraw = () => {
 };
 
 const submitWithdrawBank = () => {
+  isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
 
@@ -619,6 +664,7 @@ const submitWithdrawBank = () => {
   api
     .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
     .then((response) => {
+      isSubmitDisable.value = false;
       if (response.code === 0) {
         $q.notify({
           color: "positive",
@@ -689,7 +735,7 @@ const checkNewUser = () => {
       message: "Please fill in your personal details",
       icon: "report_problem"
     });
-    router.push(`/deposit`);
+    router.push(`/withdraw`);
   }
 };
 
@@ -712,6 +758,7 @@ const goSelectedMethod = (item) => {
   });
   item.active = true;
   isSelectedMethod.value = true;
+  // debugger;
   selectedMethodItem.value = item;
   filteredBankList.value = item.bankList;
   isBankType.value = filteredBankList.value[0].bankType;
@@ -721,22 +768,42 @@ const goSelectedMethod = (item) => {
   withdrawInfo.amount = "";
 };
 
+const onAddNewAccount = () => {
+  bankCardField.cardNumber = "";
+  isAddNewAccount.value = true;
+};
+
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
   const result = !cardNumber ? "Please Enter Card Number" : true;
+
+  if (cardNumber && selectedMethodItem.value.code === "GCASH") {
+    const gCashCheck =
+      cardNumber.substring(0, 1) !== "0"
+        ? "The GCASH card number must start with '0'"
+        : cardNumber.length !== 11
+        ? "The GCASH card number length should be 11"
+        : true;
+    if (gCashCheck !== true) {
+      return gCashCheck;
+    }
+  }
+
   return result;
 };
 
@@ -819,6 +886,47 @@ const toggleAmount = (type) => {
       break;
     default:
       break;
+  }
+};
+
+const isInputFocus = ref(false);
+
+const scrollToInput = () => {
+  if (Platform.is.capacitor && Platform.is.android) {
+    isInputFocus.value = true;
+    nextTick(() => {
+      const input = document.activeElement;
+      if (input) {
+        input.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest"
+        });
+      }
+    });
+  }
+};
+
+// KYC Dialog
+const personalState = reactive({
+  memberInfo: {}
+});
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (!store.guest && personalState.memberInfo.realName === null) {
+    openUserKYCDialog();
   }
 };
 </script>
@@ -1086,6 +1194,12 @@ const toggleAmount = (type) => {
         }
       }
     }
+
+    .bank-select-input {
+      :deep(.q-field__append) {
+        height: 60px;
+      }
+    }
   }
 
   .withdrawal-amount-container {
@@ -1234,5 +1348,9 @@ const toggleAmount = (type) => {
   :deep(em) {
     color: #ffae00;
   }
+}
+
+.input-btm {
+  padding-bottom: 270px;
 }
 </style>
