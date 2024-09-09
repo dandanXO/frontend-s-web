@@ -1463,6 +1463,7 @@ export default {
     teamOneIcon: '팀 1 아이콘',
     teamTwo: '팀 2',
     teamTwoIcon: '팀 2 아이콘',
+    teamBackgroundImage: '팀 배경 이미지',
     telephone: '전화번호',
     thirtyDaysdw: '30일 입금 - 출금',
     thirdParty: '제3자',
