@@ -97,14 +97,20 @@ const https = (timeout) => {
     }
   }
 
+  const host = window.location.hostname;
+
   const token = useStore().state.user.token;
-  const config = {
+  var config = {
     baseURL: baseApi,
     headers: {
       Authorization: `Bearer ${token}`
     },
     timeout: timeout | process.env.VUE_APP_TIMEOUT,
   };
+  if (host.includes("k4y0sr02")) {
+    console.log("k4y0sr02");
+    config.credentials = "include";
+  }
   const httpClient = new HttpClient(config);
   httpClient.httpClient.interceptors.request.use(onRequest);
   httpClient.httpClient.interceptors.response.use(onResponse, onResponseError);
