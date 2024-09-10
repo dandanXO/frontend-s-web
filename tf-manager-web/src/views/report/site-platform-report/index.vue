@@ -4,10 +4,10 @@
       <div class="search">
         <el-date-picker
           v-model="request.recordTime"
-          format="DD/MM/YYYY hh:mm:ss"
-          value-format="YYYY-MM-DD hh:mm:ss"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
           size="small"
-          type="daterange"
+          type="datetimerange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
@@ -105,6 +105,18 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      class="pagination"
+      :total="page.total"
+      :page-sizes="[20, 50, 100, 150]"
+      layout="sizes,prev,next"
+      style="margin-top: 10px"
+      v-model:page-size="request.size"
+      v-model:page-count="page.pages"
+      v-model:current-page="request.current"
+      @current-change="loadRecord"
+      @size-change="loadRecord"
+    />
   </div>
 </template>
 
@@ -116,13 +128,17 @@ import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getShortcuts } from '@/utils/datetime'
+import {
+  convertDateToEnd,
+  convertDateToStart,
+  getShortcuts,
+} from '@/utils/datetime'
 import { getPlatformsBySite } from '@/api/platform'
 
 const { t } = useI18n()
 const now = new Date()
-const defaultStartDate = convertStartDate(now)
-const defaultEndDate = convertEndDate(now)
+const defaultStartDate = convertDateToStart(now)
+const defaultEndDate = convertDateToEnd(now)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
@@ -136,8 +152,9 @@ const siteList = reactive({
 })
 
 const page = reactive({
+  pages: 0,
   records: [],
-  columns: [],
+  total: 0,
   loading: false,
 })
 
@@ -167,22 +184,15 @@ async function loadRecord() {
     }
   }
   const { data: ret } = await getBetRecords(query)
-  page.records = ret.financeReportItemVOS
-  page.columns = ret.financeReportColumnVOSgetBetRecords
+  page.records = ret.records;
+  page.pages = ret.pages;
+  page.total = ret.total;
   page.loading = false
 }
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-}
-
-function convertStartDate(date) {
-  return moment(date).format('YYYY-MM-DD 00:00:00')
-}
-
-function convertEndDate(date) {
-  return moment(date).format('YYYY-MM-DD 23:59:59')
 }
 
 const shortcuts = getShortcuts(t)
