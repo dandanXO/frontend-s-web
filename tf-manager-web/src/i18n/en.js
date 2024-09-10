@@ -2801,6 +2801,7 @@ export default {
     'Sites Config': 'Site Config',
     'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
     'Platform WC': 'Platform WC',
+    'Site Platform Report': 'Site Platform Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
