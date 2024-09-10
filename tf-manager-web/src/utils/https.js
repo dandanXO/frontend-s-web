@@ -47,7 +47,7 @@ const onRequest = (config) => {
   const host = window.location.hostname;
   if (host.includes("k4y0sr02")) {
     console.log("k4y0sr02");
-    config.withCredentials = true
+    // config.withCredentials = true
 
     const cfAuthori = getCookieValue('CF_Authorization');
     console.log(cfAuthori);
