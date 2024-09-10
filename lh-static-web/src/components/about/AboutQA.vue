@@ -1,16 +1,16 @@
 <template>
   <div class="top-container">
-    <b style="color: #424F72">雷火宗旨</b>
+    <b>雷火宗旨</b>
     – 提供给顾客最佳水位和最优秀的服务；
     <ul>
-      <li style="color: #A4AABB">我们的优势：雷火网站，盘口赔率即时开出, 您不需等待交易买卖。</li>
-      <li style="color: #A4AABB">资金流动更具快捷性，让您随时随地自由分配您的资金以便投注更大金额，与此同时，享受最佳水位！</li>
+      <li>我们的优势：雷火网站，盘口赔率即时开出, 您不需等待交易买卖。</li>
+      <li>资金流动更具快捷性，让您随时随地自由分配您的资金以便投注更大金额，与此同时，享受最佳水位！</li>
     </ul>
   </div>
   <div class="bot-container">
     <div class="content">
       <img
-        :src="require(`../../assets/about/aboutus/more${isDark ? '-dark' : ''}.png`)"
+        :src="require(`../../assets/about/aboutus/group${isDark ? '-dark' : ''}.png`)"
         style="width: 33.87px; height: 34px"
       />
       <div class="title">更多产品</div>
@@ -25,7 +25,7 @@
     </div>
     <div class="content">
       <img
-        :src="require(`../../assets/about/aboutus/planet${isDark ? '-dark' : ''}.png`)"
+        :src="require(`../../assets/about/aboutus/diversity${isDark ? '-dark' : ''}.png`)"
         style="width: 33.87px; height: 34px"
       />
       <div class="title">多样产品</div>
@@ -38,7 +38,7 @@
     </div>
     <div class="content">
       <img
-        :src="require(`../../assets/about/aboutus/house${isDark ? '-dark' : ''}.png`)"
+        :src="require(`../../assets/about/aboutus/building${isDark ? '-dark' : ''}.png`)"
         style="width: 34px; height: 34px"
       />
       <div class="title">公司资料</div>
@@ -85,7 +85,7 @@ const isDark = useDark();
   .content {
     width: 33.33%;
     border-radius: 0.9375rem;
-    background: #F3F8FF;
+    background: #e7f3ff;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -93,31 +93,19 @@ const isDark = useDark();
     text-align: center;
     padding: 20px 10px;
     height: 1000px;
-    position: relative;
-    overflow: hidden;
 
     .title {
       color: #4c88f8;
       font-family: Microsoft YaHei;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 27px;
       letter-spacing: 0.05em;
       text-align: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: linear-gradient(270deg, #3080F4 0%, #70B1FF 100%);
-      color: white;
-      border-radius: 0px 0px 20px 0;
-      width: 80px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .desc {
-      color: black;
+      color: #4c88f8;
       font-family: Microsoft YaHei;
       font-size: 14px;
       font-weight: 700;
@@ -127,17 +115,13 @@ const isDark = useDark();
     }
 
     .info {
-      color: #A4AABB;
+      color: #7a80a1;
       font-family: Microsoft YaHei;
       font-size: 14px;
       font-weight: 400;
       line-height: 31px;
       letter-spacing: 0em;
       text-align: center;
-    }
-
-    img {
-      margin-bottom: 20px;
     }
   }
 }

@@ -1,54 +1,42 @@
 <template>
-  <div class="about-info">
-    <div class="info-section">
-      <div class="title">1、电子竞技规则</div>
-      <div class="desc">电子竞技比赛的开始时间日期仅供参考，并不能保证完全正确。</div>
-      <div class="desc">如赛事暂停或者推迟，没有在原定开始时间12小时内恢复比赛，所有注单将视为无效。</div>
-      <div class="desc">冠军盘口，任何投注在球员获胜/球队赛事获胜的盘口，无论比赛是否暂停或推迟，注单均视为有效。</div>
-    </div>
-    <div class="info-section">
-      <div class="title">2、让分盘</div>
-      <div class="desc">预测计算让分结果的胜者。任何形式的加时赛或额外时间均计算在内。</div>
-      <div class="desc">在电子竞技赛事中，让分可被视为让回合/地图或其他计算方式，具体取决于相关赛事。</div>
-      <div class="desc">让分盘口类型仅会显示让分。</div>
-      <div class="desc">如由于队员/队伍退赛或取消资格，而未能完成比赛，所有投注在让分盘口的注单视为无效。</div>
-      <div class="desc">如公布的比赛地图数/回合数变更，则所有投注在让分盘口的注单视为无效。。</div>
-    </div>
-    <div class="info-section">
-      <div class="title">3、单双盘</div>
-      <div class="desc">预测赛事的总地图数/回合数是单数或双数。</div>
-    </div>
+  <div class="top-container">
+    <h3 class="title">规则与条款</h3>
+    <div class="content">为了让您每一天都能尽情享受雷火娱乐提供的最佳服务与体验。</div>
+    <div class="content">雷火提醒您：在使用雷火提供的服务前，请您务必仔细阅读并透彻理解本服务条款。如果您不接受以下服务条款，请您切勿在雷火进行注册或游戏。</div>
+    <div class="content">如果您使用雷火提供的服务，您的使用行为将被视为对本服务条款全部内容的认可。</div>
+
+    <h3 class="title">定义</h3>
+    <div class="content">（一）：以下条款适用于用户使用和参与由雷火(统称 " 雷火"、"我们" 及 "我们的", 视具体情况而定) 通过https://www.leihuo16.com/经营的其他网站 ("游戏网站") 提供的网上 "玩真钱" 模式的游戏服务 ("游戏服务")。本条规须与特定游戏的游戏规则 (统称 "游戏规则") 及适用于游戏服务和游戏软件的使用及与连接进入游戏网站和其中所含游戏信息的其他条规 (统称 "本条规") 一并阅读。</div>
+    <div class="content">（二）："游戏" 就本条规而言, 包括但不限于通过游戏网站提供的任何游戏服务进行的投注、游戏及各类游戏活动; "连接设备" 指任何应用连接设备, 包括但不限于为使用和连接游戏网站、参与游戏服务而采用的个人电脑、笔记本电脑、移动电话、个人数码助理、PDA电话、手提设备。"游戏软件" 指经监管机关批准的、安装在用户连接设备上的电脑程序、数据文件或任何其他资讯及信息内容 (包括与之有关的任何用户信息), 以便用户通过用户连接设备使用、连接和参与在游戏网站上提供的游戏服务; "体育游戏" 指游戏网站下 "体育游戏" 链接或标题项下接入或提供的互联网游戏系统, 及所有与其相关的服务和网上游戏活动。</div>
+
+    <h3 class="title">同意</h3>
+    <div class="content">（三）：用户在注册过程中已阅读"相关条款和隐私政策", 勾选相关按钮点击注册后即表示用户确认并同意本条规及本条规构成用户与开云之间关于游戏服务使用的具有法律约束力的协议 ("使用协议")。</div>
+    <div class="content">（四）：如果用户不同意本条规中的任何条款, 请不要点击勾选"我已阅读并同意相关条款与隐私政策" 按钮后进行注册, 不要试图使用或继续使用任何游戏服务或下载安装游戏软件。</div>
+
+    <h3 class="title">修改</h3>
+    <div class="content">（五）：我们保留不时修订、更新和修改本条规和游戏规则 (或其任何部分) 的绝对权利。上述任何修订、更新或修改</div>
   </div>
 </template>
 
-<script setup></script>
-
 <style scoped lang="scss">
-.about-info {
-  .info-section {
-    margin: 20px 0 0 0;
-    color: #424f72;
-    font-family: Microsoft YaHei;
-    font-weight: 700;
-    line-height: 193.482%;
-
-    .title {
-      font-size: 1rem;
-      letter-spacing: 0.1rem;
-    }
-
-    .desc {
-      font-size: 0.875rem;
-      letter-spacing: 0.04375rem;
-    }
-  }
+.top-container {
+  font-family: Microsoft YaHei;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 
-.dark {
-  .about-info {
-    .info-section {
-      color: inherit;
-    }
-  }
+.title {
+  color: #424F72;
+  margin: 20px 0 0px;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.content {
+  color: #A4AABB;
+  font-size: 1.125rem;
 }
 </style>

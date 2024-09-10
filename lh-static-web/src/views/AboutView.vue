@@ -1,70 +1,116 @@
 <template>
   <div class="about-container">
-    <el-tabs v-model="activeTab" tab-position="left" @tab-click="updateTab">
-      <el-tab-pane v-for="(e, i) in tabInfo" :key="`aboutus-${i}`" :label="e.label" :name="e.id">
-        <template #label>
-          <img v-if="activeTab === e.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-          <img class="icon-img" :src="require(`../assets/about/icon_${e.id}.png`)" />
-          <div class="tab-label">{{ e.label }}</div>
-        </template>
-        <div class="about-content">
-          <div class="title">{{ e.label }}</div>
-          <div class="separator"></div>
-          <component :is="e.component"></component>
+    <el-menu default-active="1" class="el-menu-vertical-demo">
+      <el-menu-item
+        :index="index"
+        v-for="(item, index) in tabInfo.slice(0, 2)"
+        :key="item.id"
+        @click="updateTab(item.id)"
+      >
+        <img v-if="activeTab === item.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
+        <div style="display: flex; gap: 10px; justify-content: center; align-items: center">
+          <img class="icon-img" :src="require(`../assets/about/icon_${item.id}.png`)" />
+          <div class="tab-label" :class="{ active: activeTab === item.id }">{{ item.label }}</div>
         </div>
-      </el-tab-pane>
-    </el-tabs>
+      </el-menu-item>
+      <el-sub-menu index="2">
+        <template #title>
+          <img v-if="activeTab === 'qa'" class="icon-selected-img" src="../assets/about/tab_selected.png" />
+          <div style="display: flex; gap: 10px; justify-content: center; align-items: center">
+            <img class="icon-img" :src="require(`../assets/about/icon_qa.png`)" />
+            <div class="tab-label" :class="{ active: activeTab === 'qa' }">游戏问题</div>
+          </div>
+        </template>
+        <el-menu-item index="2-1" @click="updateTab('aboutQaGame')">电子竞技</el-menu-item>
+        <el-menu-item index="2-2" @click="updateTab('aboutQaSport')">体育问题</el-menu-item>
+        <el-menu-item index="2-3" @click="updateTab('aboutQaPerson')">真人问题</el-menu-item>
+        <el-menu-item index="2-4" @click="updateTab('aboutQaOther')">其他问题</el-menu-item>
+      </el-sub-menu>
+      <el-menu-item
+        :index="index + 3"
+        v-for="(item, index) in tabInfo.slice(3, 9)"
+        :key="item.id"
+        @click="updateTab(item.id)"
+      >
+        <img v-if="activeTab === item.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
+        <div style="display: flex; gap: 10px; justify-content: center; align-items: center">
+          <img class="icon-img" :src="require(`../assets/about/icon_${item.id}.png`)" />
+          <div class="tab-label" :class="{ active: activeTab === item.id }">{{ item.label }}</div>
+        </div>
+      </el-menu-item>
+    </el-menu>
+    <div class="about-content">
+      <component :is="currentComponent"></component>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import AboutUs from "../components/about/AboutUs.vue";
-import AboutInfo from "../components/about/AboutInfo.vue";
-import AboutLaw from "../components/about/AboutLaw.vue";
+import AboutResponsibility from "../components/about/AboutResponsibility.vue";
+import AboutGuide from "../components/about/AboutGuide.vue";
+import AboutQA from "../components/about/AboutQA.vue";
+import AboutPrivacy from "../components/about/AboutPrivacy.vue";
+import AboutContact from "../components/about/AboutContact.vue";
 import AboutRule from "../components/about/AboutRule.vue";
-import AboutPay from "../components/about/AboutPay.vue";
-import AboutAgent from "../components/about/AboutAgent.vue";
-import AboutBlame from "../components/about/AboutBlame.vue";
+import AboutSportRule from "../components/about/AboutSportRule.vue";
+import AboutCooperate from "../components/about/AboutCooperate.vue";
+import AboutQaGame from "../components/about/AboutQaGame.vue";
+import AboutQaSport from "../components/about/AboutQaSport.vue";
+import AboutQaOther from "../components/about/AboutQaOther.vue";
+import AboutQaPerson from "../components/about/AboutQaPerson.vue";
 
-const activeTab = ref("aboutus");
+const activeTab = ref("guide");
 
 const tabInfo = ref([
-  { id: "aboutus", label: "关于我们", component: AboutUs },
-  { id: "info", label: "资料收集", component: AboutInfo },
-  { id: "law", label: "法律依据", component: AboutLaw },
-  { id: "rule", label: "竞猜规则", component: AboutRule },
-  { id: "pay", label: "补偿", component: AboutPay },
-  { id: "agent", label: "加盟代理", component: AboutAgent },
-  { id: "blame", label: "博彩责任", component: AboutBlame }
+  { id: "guide", label: "新手引导", component: AboutGuide },
+  { id: "sportrule", label: "体育投注规则", component: AboutSportRule },
+  { id: "qa", label: "游戏问题", component: AboutQA },
+  { id: "responsibility", label: "竞猜责任", component: AboutResponsibility },
+  { id: "us", label: "关于我们", component: AboutUs },
+  { id: "cooperate", label: "合作商户", component: AboutCooperate },
+  { id: "rule", label: "规则与条款", component: AboutRule },
+  { id: "privacy", label: "隐私保护规则", component: AboutPrivacy },
+  { id: "contact", label: "联系我们", component: AboutContact },
+  { id: "aboutQaGame", label: "", component: AboutQaGame, key: 'qa' },
+  { id: "aboutQaSport", label: "", component: AboutQaSport, key: 'qa' },
+  { id: "aboutQaOther", label: "", component: AboutQaOther, key: 'qa' },
+  { id: "aboutQaPerson", label: "", component: AboutQaPerson, key: 'qa' }
 ]);
 
 const route = useRoute();
 const router = useRouter();
-const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 
-const updateTab = (pane) => {
-  if (pane.props.name === "agent")
-    window.open("https://lh1-affiliate.phoicynxeey.com/lh/login?agent=" + (affCode ? affCode : ""), "_self");
-  else router.push({ query: { id: pane.props.name } });
+const currentComponent = computed(() => {
+  const res = tabInfo.value.find((item) => item.id === route.query.id);
+  console.log(res)
+
+  return res ? res.component : AboutGuide;
+});
+
+const updateTab = (name) => {
+  router.push({ query: { id: name } });
 };
 
 watch(
   () => route.query,
   () => {
-    if (route.query === null) {
-      activeTab.value === "about";
-    } else {
-      activeTab.value = route.query.id;
+    if (route.query?.id) {
+      const res = tabInfo.value.find((item) => item.id === route.query.id)
+
+      activeTab.value = res ? res.key ?? res.id : 'guide';
       window.scrollTo(0, 0);
+    } else {
+      activeTab.value === "guide";
+      router.push({ query: { id: "guide" } });
     }
+  },
+  {
+    immediate: true
   }
 );
-
-onMounted(() => {
-  if (route.query.id) activeTab.value = route.query.id;
-});
 </script>
 
 <style scoped lang="scss">
@@ -75,6 +121,7 @@ onMounted(() => {
   padding: 10px 0;
   height: 100%;
   min-height: 1240px;
+  gap: 20px;
 
   .icon-selected-img {
     position: absolute;
@@ -84,6 +131,7 @@ onMounted(() => {
 
   .icon-img {
     width: 20px;
+    height: 20px;
   }
 
   .tab-label {
@@ -91,6 +139,11 @@ onMounted(() => {
     font-size: 1.125rem;
     font-weight: 600;
     line-height: normal;
+    color: #a4aabb;
+
+    &.active {
+      color: #424f72;
+    }
   }
 
   :deep(.el-tabs) {
@@ -105,6 +158,7 @@ onMounted(() => {
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     height: 100%;
     min-height: 1240px;
+    flex: 1;
 
     .title {
       color: #424f72;
@@ -138,6 +192,20 @@ onMounted(() => {
     background: #e7f3ff;
     height: 50px;
     color: #424f72;
+  }
+
+  :deep(.el-menu-item) {
+    height: 50px;
+    color: #A4AABB;
+  }
+
+  .el-menu-vertical-demo {
+    box-shadow: 0px 0px 10px 0px #0000001A;
+    border-radius: 20px;
+  }
+
+  :deep(.el-menu-item.is-active) {
+    color: #424F72;
   }
 }
 
