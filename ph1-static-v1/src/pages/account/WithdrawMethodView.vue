@@ -792,12 +792,17 @@ const isValidCardNumber = () => {
 
   const result = !cardNumber ? "Please Enter Card Number" : true;
 
-  if (cardNumber && selectedMethodItem.value.code === "GCASH") {
+  if (
+    cardNumber &&
+    (selectedMethodItem.value.code === "GCASH" ||
+      selectedMethodItem.value.code === "MAYAPAY" ||
+      selectedMethodItem.value.code === "GRABPAY")
+  ) {
     const gCashCheck =
       cardNumber.substring(0, 1) !== "0"
-        ? "The GCASH card number must start with '0'"
+        ? `The ${selectedMethodItem.value.code} card number must start with '0'`
         : cardNumber.length !== 11
-        ? "The GCASH card number length should be 11"
+        ? `The ${selectedMethodItem.value.code} card number length should be 11`
         : true;
     if (gCashCheck !== true) {
       return gCashCheck;
