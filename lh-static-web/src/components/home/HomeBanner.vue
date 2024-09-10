@@ -11,8 +11,7 @@
       <img :src="homePopupImg" class="alert-img" />
     </a>
   </el-dialog>
-
-  <el-carousel class="banner-slider" indicator-position="outside" :autoplay="false" :interval="5000">
+  <el-carousel v-if="banners?.length > 0" class="banner-slider" indicator-position="outside" :autoplay="true" :interval="5000">
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goBannerPage(banner.redirectUrl)">
         <div class="banner-background">
