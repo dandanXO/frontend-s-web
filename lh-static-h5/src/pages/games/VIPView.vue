@@ -1478,7 +1478,7 @@ $border-settings: 1px solid #e5e7eb;
     width: 95%;
     margin: 20px auto 0;
     background: #212b4ae0;
-    border-radius: 30px;
+    border-radius: 12px;
     display: flex;
     justify-content: stretch;
     align-items: flex-start;
@@ -1493,7 +1493,7 @@ $border-settings: 1px solid #e5e7eb;
       position: relative;
       width: 100%;
       // height: 280px;
-      height: 320px;
+      height: 230px;
       a {
         height: 100%;
         width: 100%;
@@ -1545,25 +1545,24 @@ $border-settings: 1px solid #e5e7eb;
           align-items: center;
           flex-direction: column;
           font-size: 10px;
-          min-height: 150px;
+          min-height: 112px;
           .vip-inner {
             border: 1px solid #799df8;
             background: #1f2231;
-            padding:10px;
-            border-radius: 20px;
+            // padding: 4px;
+            border-radius: 6px;
             width: 100%;
             text-align: center;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            min-height: 100px;
-            gap: 5px;
+            gap: 2px;
             .box-det {
-            min-height: 100px;
+            min-height: 70px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: 5px;
+            gap: 1px;
             flex-direction: column;
             }
           }
@@ -1595,7 +1594,7 @@ $border-settings: 1px solid #e5e7eb;
             // height: 60px;
             width: 26px;
             height: 26px;
-            margin: 0 auto 5px;
+            margin: 0 auto;
             img {
               height: 50%;
             }
@@ -1609,14 +1608,15 @@ $border-settings: 1px solid #e5e7eb;
           .claim-now {
             background: linear-gradient(90deg, #f1dda0 0%, #ffcc80 100%);
             color: #000000;
-            font-size: 12px;
+            font-size: 9px;
             font-weight: 400;
-            line-height: 28px;
+            line-height: 18px;
             text-align: center;
             padding: 0px 9px;
             border-radius: 10px;
-            margin: 10px auto 0;
-            min-width: 80px;
+            margin: 5px auto 0;
+            // min-width: 80px;
+            min-width: 80%;
             cursor: pointer;
             &.disabled {
               pointer-events: none;
@@ -1628,13 +1628,13 @@ $border-settings: 1px solid #e5e7eb;
           .expired {
             // background: linear-gradient(90deg, #F1DDA0 0%, #FFCC80 100%);
             color: #ffffff;
-            font-size: 12px;
+            font-size: 9px;
             font-weight: 400;
-            line-height: 28px;
+            line-height: 18px;
             text-align: center;
             padding: 0px 9px;
             border-radius: 10px;
-            margin: 10px auto;
+            margin: 5px auto 0;
           }
         }
       }
@@ -2267,6 +2267,14 @@ $border-settings: 1px solid #e5e7eb;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: flex-start;
+    &:first-child {
+      margin-right: 4px;
+      padding-right: 4px;
+    }
+    &:last-child {
+      margin-left: -4px;
+      padding-left: 4px;
+    }
   }
   :deep(.carousel__track) {
     transform-style: preserve-3d;
