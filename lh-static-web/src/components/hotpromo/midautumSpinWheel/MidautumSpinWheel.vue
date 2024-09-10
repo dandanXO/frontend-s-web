@@ -1,6 +1,7 @@
 <template>
   <div class="cny-spin-wheel-wrapper">
     <div class="container">
+      <h3 class="period">活动时间：2024年9月16日 ⸺ 2024年9月31日</h3>
       <div class="spin-wheel-container">
         <div
           :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
@@ -791,5 +792,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.period {
+  margin-left: 20%;
+  font-size: 25px;
 }
 </style>

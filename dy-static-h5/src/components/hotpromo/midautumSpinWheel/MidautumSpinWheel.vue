@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <span class="period">活动时间：2024年9月16日 ⸺ 2024年9月31日</span>
     <div class="spin-wheel-container">
       <div
         :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
@@ -794,5 +795,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.period {
+  margin-left: 5%;
+  font-size: 16px;
 }
 </style>
