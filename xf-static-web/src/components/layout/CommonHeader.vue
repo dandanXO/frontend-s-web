@@ -1553,6 +1553,8 @@ export default defineComponent({
                     getCode();
                     // message.error(response.message);
                   }
+                }).catch(() => {
+                  getCode();
                 })
           })();
         } else {
