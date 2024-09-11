@@ -23,8 +23,14 @@
                   </span> -->
                   <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
                   <span v-show="originalUpgradeBetAmounts.length != 0">
-                    <span v-if="store.token && (vipIndex < +vipLevel)">已完成</span>
-                    <span v-else-if="store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">待晋级</span>
+                    <span v-if="store.token && vipIndex < +vipLevel">已完成</span>
+                    <span
+                      v-else-if="
+                        store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]
+                      "
+                    >
+                      待晋级
+                    </span>
                     <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
                   </span>
                 </div>
@@ -44,7 +50,7 @@
         <img :src="badgeSrc" />
       </div>
       <div class="badge" v-show="!isDataLoaded" style="height: 200px"></div>
-      <div class="vip-progress" :class="{load: isDataLoaded}">
+      <div class="vip-progress" :class="{ load: isDataLoaded }">
         <!-- <div class="amount">
           <div class="text" v-if="vipLevel + 1 && currentUpgradeDepAmt && currentUpgradeDepAmt >= currentDepAmt">
             还要
@@ -74,22 +80,17 @@
         </template> -->
 
         <div class="amount">
-            <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
-              <div
-                class="text"
-                v-if="
-                  vipLevel + 1 &&
-                  currentUpgradeBetAmt &&
-                  currentUpgradeBetAmt >= currentBetAmt &&
-                  vipLevel != 12
-                "
-              >
-                还需
-                <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
-                有效投注晋升到 VIP {{ vipLevel + 1 }}
-              </div>
+          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+            <div
+              class="text"
+              v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
+            >
+              还需
+              <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
+              有效投注晋升到 VIP {{ vipLevel + 1 }}
+            </div>
 
-              <!-- <div class="text" v-else-if="vipLevel === 0">
+            <!-- <div class="text" v-else-if="vipLevel === 0">
                 还需
                 <div class="required-amount">
                   {{
@@ -101,13 +102,13 @@
                 有效投注晋升到 VIP 1
               </div> -->
 
-              <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
-              <div class="text" v-else>
-                已到达
-                <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
-                有效流水 VIP {{ vipLevel + 1 }}
-              </div>
+            <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
+            <div class="text" v-else>
+              已到达
+              <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
+              有效流水 VIP {{ vipLevel + 1 }}
             </div>
+          </div>
 
           <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
           <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
@@ -158,7 +159,7 @@
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
         @click="handleClick('all', vipLevel)"
       >
-        {{ isLoading['all'] ? '领取中' : '一键领取' }}
+        {{ isLoading["all"] ? "领取中" : "一键领取" }}
       </div>
     </div>
 
@@ -225,9 +226,15 @@
                           </div>
                         </div>
                       </div>
-                      <template v-if="item.redPacketClaimStatus === 'CANT_CLAIM' && category.key === 'redPacket' && +item.vipLevel === vipLevel">
+                      <template
+                        v-if="
+                          item.redPacketClaimStatus === 'CANT_CLAIM' &&
+                          category.key === 'redPacket' &&
+                          +item.vipLevel === vipLevel
+                        "
+                      >
                         <div class="claim-now disabled">
-                          {{ formatNumber(currentRedPacketAmount, 'redPacket') }}
+                          {{ formatNumber(currentRedPacketAmount, "redPacket") }}
                         </div>
                       </template>
                       <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
@@ -238,12 +245,12 @@
                         >
                           {{
                             !isLoading[category.key]
-                              ? category.key === 'redPacket'
+                              ? category.key === "redPacket"
                                 ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
-                                  ? formatNumber(currentRedPacketAmount, 'redPacket')
-                                  : '立即领取'
-                                : '立即领取'
-                              : '领取中'
+                                  ? formatNumber(currentRedPacketAmount, "redPacket")
+                                  : "立即领取"
+                                : "立即领取"
+                              : "领取中"
                           }}
                         </div>
                       </template>
@@ -605,14 +612,18 @@
       <h2>二. 生日礼金</h2>
       <ol class="terms">
         <li>
-          生日当月符合资格会员，需在申请日90天内(包含申请日) 到在线客服提供相关资料申请生日礼金；会员在注册前已过生日，本年度内将不能领取生日礼金，每年可领取一次（生日彩金1倍流水即可提款）；
+          生日当月符合资格会员，需在申请日90天内(包含申请日)
+          到在线客服提供相关资料申请生日礼金；会员在注册前已过生日，本年度内将不能领取生日礼金，每年可领取一次（生日彩金1倍流水即可提款）；
         </li>
       </ol>
 
       <h2>三. 首次保级彩金</h2>
       <ol class="terms">
-        <li>会员当月达到保级要求时，次月1日可领取首次保级彩金；
-          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；</li>
+        <li>
+          会员当月达到保级要求时，次月1日可领取首次保级彩金；
+          <br />
+          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；
+        </li>
       </ol>
 
       <h2>四. 年度保级彩金</h2>
@@ -634,7 +645,7 @@
         </li>
       </ol>
 
-      <h2>七. 会员加码充值送10%加码券</h2>
+      <h2>七. 会员充值加码10%</h2>
       <ol class="terms">
         <li class="numbered">
           VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
@@ -874,16 +885,16 @@ const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
-    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0]
+    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0];
     if (currentBetAmt.value > 0) {
       return (currentBetAmt.value / originalUpgradeBetAmounts.value[0]) * 100;
     }
     return 0;
   }
-  if (vipItems.find((item) => item.claimAllStatus === 'CAN_CLAIM')) {
-    currentClaimAllStatus.value = 'CAN_CLAIM';
+  if (vipItems.find((item) => item.claimAllStatus === "CAN_CLAIM")) {
+    currentClaimAllStatus.value = "CAN_CLAIM";
   } else {
-    currentClaimAllStatus.value = 'CANT_CLAIM';
+    currentClaimAllStatus.value = "CANT_CLAIM";
   }
   const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
   console.log(vipInfo);
@@ -1104,7 +1115,7 @@ const getImages = () => {
 const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
 const initVIPTable = async (wLoad) => {
-  if (wLoad !== 'noload') {
+  if (wLoad !== "noload") {
     isDataLoaded.value = false;
   }
   getImages();
@@ -1232,7 +1243,7 @@ const handleClick = async (key, item) => {
       }
       notify({ type: "success", message: "领取成功！" });
       store.getBalance();
-      initVIPTable('noload');
+      initVIPTable("noload");
       isLoading[key] = false;
     } else {
       notify({ type: "error", message: res.message });
@@ -1284,7 +1295,7 @@ function formatNumber(value, type) {
   const number = parseFloat(value);
 
   // Check if there are any decimal places
-  if (number % 1 !== 0 || type === 'redPacket') {
+  if (number % 1 !== 0 || type === "redPacket") {
     // Return with two decimal places
     return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   } else {
@@ -1576,12 +1587,12 @@ $border-settings: 1px solid #e5e7eb;
             align-items: flex-start;
             gap: 2px;
             .box-det {
-            min-height: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 1px;
-            flex-direction: column;
+              min-height: 70px;
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+              gap: 1px;
+              flex-direction: column;
             }
           }
           &.inactive {
@@ -1595,10 +1606,10 @@ $border-settings: 1px solid #e5e7eb;
             }
             .item-amt {
               color: #596589;
-              font-size: 10px;
-              font-style: normal;
-              font-weight: 600;
-              line-height: normal;
+              font-size: 10px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
             }
           }
           .icon {
