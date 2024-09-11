@@ -16,13 +16,12 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="10"
+          maxlength="11"
           hide-bottom-space
           ref="loginNameRef"
           v-model="loginForm.loginName"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
           ]"
           label-color="brand"
           autocomplete="username"
@@ -33,6 +32,7 @@
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">+63</span>
           </template>
         </q-input>
 
@@ -673,5 +673,12 @@ export default defineComponent({
     margin: 20px auto;
     max-width: 200px;
   }
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
+  z-index: 2;
 }
 </style>

@@ -92,6 +92,16 @@
           inactive-value="false"
         />
       </el-form-item>
+      <el-form-item :label="t('fields.uniqueIpCount')" prop="uniqueIpCount">
+        <el-input-number
+          v-model="form.uniqueIpCount"
+          style="width: 145px"
+          :min="1"
+          :max="99999"
+          :controls="false"
+          @keypress="restrictInput($event)"
+        />
+      </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.needUniqueDevice')" prop="needUniqueDevice">
@@ -101,6 +111,16 @@
           inactive-text="No"
           active-value="true"
           inactive-value="false"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.uniqueDeviceCount')" prop="uniqueDeviceCount">
+        <el-input-number
+          v-model="form.uniqueDeviceCount"
+          style="width: 145px"
+          :min="1"
+          :max="99999"
+          :controls="false"
+          @keypress="restrictInput($event)"
         />
       </el-form-item>
     </el-row>
@@ -195,7 +215,9 @@ const form = reactive({
   refereeEligibleParam: null,
   needPhoneVerified: false,
   needIpUniqueInMonth: false,
+  uniqueIpCount: 0,
   needUniqueDevice: false,
+  uniqueDeviceCount: 0,
   minTotalDeposit: 0,
   minTotalBet: 0,
   oneTimeBonusStatus: false,

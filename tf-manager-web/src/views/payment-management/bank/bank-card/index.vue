@@ -416,7 +416,7 @@ function clearCheckAll() {
 function resetQuery() {
   request.name = null
   request.code = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : list.site[0].id
 }
 
 function changePage(page) {

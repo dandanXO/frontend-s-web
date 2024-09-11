@@ -790,14 +790,7 @@
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
             <div class="q-mt-sm q-mb-md">
-              <q-btn
-                dense
-                rounded
-                icon="chevron_left"
-                class="back-btn text-white"
-                size="16px"
-                v-close-popup
-              />
+              <q-btn dense rounded icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
             </div>
             <div>
               <div class="game-logo-img">
@@ -970,7 +963,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1004,15 +997,14 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoryDefault = useLocalStorage("HOME_CATEGORY", [
+const categoriesList = ref([
   { title: "Hot", icon: "hot", active: false },
   { title: "Lobby", icon: "lobby", active: false },
   { title: "Slot", icon: "slot", active: false },
   { title: "Casino", icon: "casino", active: false },
   { title: "Fishing", icon: "fishing", active: false },
   { title: "Sport", icon: "sport", active: false }
-]).value;
-const categoriesList = ref([]);
+]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -2602,7 +2594,7 @@ const getAppData = async () => {
 
 const openDownloadPage = () => {
   window.open(download_url.value, "_system");
-  isAppUpdateModal.value = false;
+  // isAppUpdateModal.value = false;
 };
 const cancelUpdate = () => {
   isAppUpdateModal.value = false;
@@ -2680,7 +2672,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
+  OneSignal.initialize("eb9ab187-5d06-46f1-9405-ef1b3124c5cf");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2714,26 +2706,42 @@ const loadCustomerAddress = () => {
 };
 
 const loadAppTabs = () => {
-  cached
-    .get("appTabs", () =>
-      api.get("/getAppTabs").then((res) => {
-        return res;
-      })
-    )
-    .then((data) => {
-      categoriesList.value = data;
+  api
+    .get("/opt-session/getAppTabs")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        const { data } = res;
+        if (data && data.tabs) {
+          categoriesList.value = data.tabs;
+        }
+        if (data && data.deposit) {
+          store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+          store.extraPrivilegeId = data.deposit.privilegeId;
+        }
+        if (data && data.hasOwnProperty("ftd")) {
+          store.ftd = data.ftd;
+        }
 
+        if (categoriesList.value.length > 0) {
+          categoriesList.value.forEach(function (category, index) {
+            if (index === 0) {
+              category.active = true;
+            } else {
+              category.active = false;
+            }
+          });
+        }
+      }
+    })
+    .catch((e) => {
       if (categoriesList.value.length > 0) {
-        categoriesList.value.forEach(function (category, index) {
-          if (index === 0) {
-            category.active = true;
-          } else {
-            category.active = false;
-          }
-        });
+        categoriesList.value[0].active = true;
       }
     });
 };
+
+let intervalId;
 
 onActivated(() => {
   store.getUnreadTotal();
@@ -2741,6 +2749,7 @@ onActivated(() => {
 
 onMounted(() => {
   isPlatLoading.value = true;
+  loadAppTabs();
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -2748,12 +2757,17 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadCustomerAddress();
-  loadAppTabs();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  intervalId = setInterval(checkPlatform, 300000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
 });
 </script>
 

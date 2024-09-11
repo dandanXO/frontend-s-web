@@ -511,6 +511,7 @@ onMounted(() => {
 
       .balance-amount {
         padding-right: 18px;
+        padding-left: 8px;
         white-space: nowrap;
       }
     }
@@ -589,7 +590,7 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 0;
+  top: 2px;
   right: 10px;
 }
 

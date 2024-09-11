@@ -637,7 +637,7 @@ const stripHtmlTags = htmlString => {
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
 async function changeImagePage(page) {
@@ -856,6 +856,7 @@ watch(
 )
 onMounted(async () => {
   await loadSites()
+  imageRequest.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }

@@ -5,6 +5,12 @@ body {
     font-family: Inter;
 }
 
+
+body > a{
+    display:none;
+}
+
+
 .mobile {
     display: none !important;
 }
@@ -85,6 +91,7 @@ body {
 
     .landing-logo {
         padding-top: 20px;
+        padding-bottom: 10px;
     }
 
     .landing-logo img {
@@ -99,7 +106,7 @@ body {
     .landing-img img {
         display: block;
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
     }
 
     .landing-action-container {
@@ -107,5 +114,8 @@ body {
         gap: 20px;
         padding-bottom: 20px;
         margin-top: -30px;
+    }
+    .action-item img {
+        max-width: 300px;
     }
 }

@@ -23,6 +23,21 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @change="changeSiteSearch"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -87,6 +102,23 @@
         size="small"
         label-width="150px"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.name')" prop="name">
           <el-input v-model="form.name" style="width: 350px;" maxlength="20" />
         </el-form-item>
@@ -144,6 +176,7 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="name" :label="t('fields.name')" width="400" />
+      <el-table-column prop="siteName" :label="t('fields.siteName')" width="200" />
       <el-table-column
         prop="sequence"
         :label="t('fields.sequence')"
@@ -214,7 +247,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
@@ -226,11 +259,18 @@ import {
 } from '../../../../api/affiliate-announcement-type'
 import { hasRole, hasPermission } from '../../../../utils/util'
 import { useI18n } from 'vue-i18n'
-// import { useStore } from '../../../../store'
+import { getSiteListSimple } from "../../../../api/site";
+import { useStore } from '../../../../store'
+import { TENANT } from "../../../../store/modules/user/action-types";
 
-// const store = useStore()
+const store = useStore()
 const { t } = useI18n()
 const announcementTypeForm = ref(null)
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
+const site = ref(null);
+const siteList = reactive({
+  list: []
+});
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -254,6 +294,7 @@ const request = reactive({
   current: 1,
   name: null,
   status: null,
+  siteId: null
 })
 
 const form = reactive({
@@ -261,6 +302,7 @@ const form = reactive({
   name: null,
   sequence: null,
   status: 'true',
+  siteId: null
 })
 
 const formRules = reactive({
@@ -292,7 +334,6 @@ function handleSelectionChange(val) {
 async function loadAffAnnouncementType() {
   page.loading = true
   const { data: ret } = await getAffAnnouncementType(request)
-  console.log('ret : ', ret)
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
@@ -412,7 +453,18 @@ function checkNumberInput() {
   }
 }
 
-onMounted(() => {
+async function loadSites() {
+  const { data: site } = await getSiteListSimple();
+  siteList.list = site;
+}
+
+onMounted(async() => {
+  await loadSites();
+  request.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
   loadAffAnnouncementType()
 })
 </script>

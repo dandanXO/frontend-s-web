@@ -101,11 +101,15 @@
       >
         <el-table-column type="selection" width="40" />
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
           align="center"
-          min-width="80"
-        />
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -254,16 +258,6 @@
           align="center"
           min-width="100"
         />
-        <el-table-column
-          prop="withdrawType"
-          :label="t('fields.withdrawType')"
-          align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
-          </template>
-        </el-table-column>
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"

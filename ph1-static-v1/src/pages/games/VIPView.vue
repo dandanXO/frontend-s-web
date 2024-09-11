@@ -822,6 +822,7 @@ const swipeRight = () => {
 
       .bold {
         font-weight: 800;
+        white-space: nowrap;
       }
 
       .icon {
@@ -835,7 +836,7 @@ const swipeRight = () => {
 
       .title {
         color: #5c46e7;
-        font-size: 11px;
+        font-size: 10px;
         height: 35px;
         line-height: 18px;
       }
@@ -1081,8 +1082,8 @@ const swipeRight = () => {
       display: flex;
       justify-content: flex-start;
       gap: 10px;
-      font-size: 1.2em;
-      left: 25px;
+      font-size: 0.9em;
+      left: 12px;
       top: 55%;
       color: #424f72;
 

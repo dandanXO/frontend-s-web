@@ -301,6 +301,7 @@ export default {
     MSI: 'MSI季中冠军赛',
     COPA: '美洲杯',
     UEFA: '欧足联',
+    UCL: '欧洲冠军联赛'
   },
   homeBannerType: {
     HOME: '首页',
@@ -1572,6 +1573,8 @@ export default {
     teamTwo: '团队二',
     teamTwoIcon: '团队二图标',
     teamTwoResult: '团队二得分',
+    teamBackgroundImage: '团队背景图片',
+    teamBackgroundImageDark: '团队暗色背景图片',
     telephone: '电话号码',
     thirtyDaysdw: '30天存-提',
     thirdParty: '第三方',
@@ -2020,6 +2023,9 @@ export default {
     nonHistoryRecord: '非历史数据',
     productId: '产品ID',
     dayBetRebatePercentage: '每日投注返水百分比',
+    needUniqueDevice: '需要独特设备',
+    uniqueIpCount: '独特IP数量',
+    uniqueDeviceCount: '独特设备数量',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2744,6 +2750,7 @@ export default {
     'Sites Config': '站点设置',
     'Mooncake Fest Spin Record': '中秋节转盘2024',
     'Platform WC': 'WC平台',
+    'Site Platform Report': '站点平台报表',
   },
   google: {
     google_auth_menu: '谷歌验证',

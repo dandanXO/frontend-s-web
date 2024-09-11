@@ -290,7 +290,8 @@ export default defineComponent({
       if(store.token) {
           refreshBalance('MAIN')
         getLoggedInPlatformList().then((response) => {
-          response.data.filter(p => p.walletType === 'TRANSFER').forEach(p => {
+          console.log("response",response)
+          response.data.filter(p => p.walletType === 'TRANSFER' && p.underMaintenance === false).forEach(p => {
             platforms.push({
               id: p.id,
               code: p.code,
@@ -504,7 +505,6 @@ body .transferinout .el-dialog__header .el-dialog__title {
 .dark {
   .el-dialog__header {
     box-shadow: none;
-
   }
 }
 </style>
@@ -746,9 +746,9 @@ body .transferinout .el-dialog__header .el-dialog__title {
   .blue-btn {
     background: $active-color-dark-linear;
     box-shadow: $active-color-dark-shadow;
-    &.outline{
+    &.outline {
       box-shadow: none;
-      background: #394A65;
+      background: #394a65;
       :deep(span) {
         background: $active-color-dark-linear;
         background-clip: text;

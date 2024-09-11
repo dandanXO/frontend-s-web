@@ -213,7 +213,7 @@ import {
 } from '../../../../api/system-payment'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store'
-import { TENANT } from '../../../../store/modules/user/action-types'
+import { TENANT, ADMIN } from '../../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from "vue-i18n";
 import { ElMessage } from 'element-plus'
@@ -290,7 +290,7 @@ function resetQuery() {
   request.paymentName = null
   request.status = null
   request.payType = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   updatePaymentPlatform();
 }
 
@@ -359,8 +359,12 @@ async function loadSystemPayment() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  if (LOGIN_USER_TYPE.value === ADMIN.value) {
+    siteList.list = store.state.user.sites
+  } else {
+    const { data: site } = await getSiteListSimple()
+    siteList.list = site
+  }
 }
 
 async function loadPaymentType() {
@@ -377,6 +381,7 @@ onMounted(async () => {
 
   await loadSites()
   await loadPaymentType()
+  request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

@@ -347,6 +347,7 @@ const menus = reactive({
 })
 
 function showDialog(type) {
+  form.siteId = null
   if (type === 'CREATE') {
     if (rolesForm.value) {
       rolesForm.value.resetFields()
@@ -584,6 +585,7 @@ onMounted(async () => {
     request.siteId = store.state.user.siteId
     form.siteId = store.state.user.siteId
   } else {
+    request.siteId = LOGIN_USER_TYPE.value === ADMIN.value ? siteList.list[1].id : siteList.list[0].id
     uiControl.siteVisible = true
   }
   await loadData()

@@ -171,6 +171,11 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.tips')" prop="tips">
+            <el-input v-model="form.tips" style="width: 600px;" />
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.feeRate')" prop="fee">
             <el-input-number
               v-model="form.fee"
@@ -279,7 +284,7 @@ import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, u
 import { getCurrencyNames } from "../../../api/currency";
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '@/store';
-import { TENANT } from "@/store/modules/user/action-types";
+import { TENANT, ADMIN } from "@/store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { useI18n } from "vue-i18n";
@@ -342,6 +347,7 @@ const form = reactive({
   type: "",
   subtractAmount: 0,
   fee: 0,
+  tips: "",
   status: true
 });
 const formRules = reactive({
@@ -477,8 +483,12 @@ function submit() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
+  if (LOGIN_USER_TYPE.value === ADMIN.value) {
+    siteList.list = store.state.user.sites
+  } else {
+    const { data: site } = await getSiteListSimple();
+    siteList.list = site;
+  }
 }
 
 onMounted(async() => {
@@ -487,6 +497,9 @@ onMounted(async() => {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     form.siteId = site.value.id;
     request.siteId = site.value.id
+  } else {
+    form.siteId = siteList.list[0].id;
+    request.siteId = siteList.list[0].id;
   }
   await loadWithdrawPlatform();
   await loadCurrencyNames();

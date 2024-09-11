@@ -128,6 +128,7 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from "vue-i18n";
 import moment from "moment/moment";
+import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 // eslint-disable-next-line
 const { t } = useI18n();
@@ -285,18 +286,7 @@ const request = reactive({
 
 async function loadSummaryFdpRecord() {
   page.loading = true
-  const requestCopy = { ...request }
-  const query = {}
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
-    }
-  })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
-    }
-  }
+  const query = checkQuery();
 
   const { data: ret } = await getSummaryFdpReport(query)
 
@@ -348,9 +338,21 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === parseInt(request.siteId)).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = request.recordTime.join(',')
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(
+        query.recordTime[0],
+        timeZone,
+        'start'
+      )
+      query.recordTime[1] = formatInputTimeZone(
+        query.recordTime[1],
+        timeZone,
+        'end'
+      )
+      query.recordTime = query.recordTime.join(',')
     }
   }
   return query

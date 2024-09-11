@@ -1464,6 +1464,8 @@ export default {
     teamOneIcon: 'Biểu Tượng Đội 1',
     teamTwo: 'Đội 2',
     teamTwoIcon: 'Biểu Tượng Đội 2',
+    teamBackgroundImage: 'Hình nền đội',
+    teamBackgroundImageDark: 'đội hình nền tối',
     telephone: 'Điện Thoại',
     thirtyDaysdw: '30 Ngày Gửi - Rút',
     thirdParty: 'Bên Thứ Ba',

@@ -5,6 +5,10 @@ body {
     font-family: Inter;
 }
 
+body > a{
+    display:none;
+}
+
 .mobile {
     display: none !important;
 }
@@ -76,10 +80,12 @@ body {
         background: url(../images/landing-bg-mobile.png) no-repeat center center;
         align-items: center;
         justify-content: center;
+        /* align-items: flex-start; */
     }
 
     .landing-logo {
         padding-top: 20px;
+        padding-bottom: 10px;
     }
 
     .landing-logo img {
@@ -94,13 +100,16 @@ body {
     .landing-img img {
         display: block;
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
     }
 
     .landing-action-container {
         flex-direction: column;
         gap: 20px;
         padding-bottom: 20px;
-        padding-top: 30px;
+        padding-top: 10px;
+    }
+    .action-item img {
+        max-width: 300px;
     }
 }

@@ -296,6 +296,7 @@ export default {
     MSI: 'MSI',
     COPA: 'COPA AMERICA',
     UEFA: 'UEFA EUROPA',
+    UCL: 'UEFA CHAMPIONS LEAGUE'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1572,6 +1573,8 @@ export default {
     teamTwo: 'Team Two',
     teamTwoIcon: 'Team Two Icon',
     teamTwoResult: 'Team Two Result',
+    teamBackgroundImage: 'Team Background Image',
+    teamBackgroundImageDark: 'Team Background Image Dark',
     telephone: 'Telephone',
     thirtyDaysdw: 'Thirty Days deposit - withdraw',
     thirdParty: 'Third Party',
@@ -2021,6 +2024,9 @@ export default {
     nonHistoryRecord: 'Non-History Record',
     productId: 'Product ID',
     dayBetRebatePercentage: 'Day Bet Rebate Percentage',
+    needUniqueDevice: 'Need Unique Device',
+    uniqueIpCount: 'Unique Ip Count',
+    uniqueDeviceCount: 'Unique Device Count',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2796,6 +2802,7 @@ export default {
     'Sites Config': 'Site Config',
     'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
     'Platform WC': 'Platform WC',
+    'Site Platform Report': 'Site Platform Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

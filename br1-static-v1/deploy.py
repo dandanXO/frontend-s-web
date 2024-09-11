@@ -74,4 +74,3 @@ src = localDirec + "version.js"
 dst = localDirec + "dist\\spa"
 
 shutil.copy(src, dst)
-

@@ -45,7 +45,10 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       h5Url: "https://phl.55ace.com/",
-      hasUpdatedOneSignal: false
+      hasUpdatedOneSignal: false,
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
+      ftd: true
     };
   },
   actions: {

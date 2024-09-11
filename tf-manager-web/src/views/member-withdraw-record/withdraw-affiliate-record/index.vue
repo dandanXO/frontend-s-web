@@ -138,11 +138,15 @@
         v-loading="page.loading"
       >
         <el-table-column
-          prop="site"
-          :label="t('fields.site')"
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
           align="center"
-          min-width="80"
-        />
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -444,16 +448,6 @@
             <span v-if="scope.row.confirmBy !== null">
               {{ scope.row.confirmBy }}
             </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="withdrawType"
-          :label="t('fields.withdrawType')"
-          align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
           </template>
         </el-table-column>
         <el-table-column

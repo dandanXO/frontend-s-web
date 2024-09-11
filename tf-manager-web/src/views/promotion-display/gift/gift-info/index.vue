@@ -592,7 +592,7 @@ function resetQuery() {
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : sites.list[0].id
 }
 
 async function changeImagePage(page) {
@@ -649,6 +649,7 @@ onMounted(async () => {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
   } else {
     site.value = sites.list[0];
+    imageRequest.siteId = sites.list[0].id
   }
   request.siteId = site.value.id;
   await loadGift();
