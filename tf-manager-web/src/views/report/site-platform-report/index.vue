@@ -53,7 +53,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
-      :row-style="{ width: '100px' }"
+      :row-style="{width: '100px'}"
     >
       <el-table-column prop="createTime" :label="t('fields.date')" />
       <el-table-column prop="platform" :label="t('fields.date')" />
@@ -142,10 +142,6 @@ const defaultEndDate = convertDateToEnd(now)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
-
-const uiControl = reactive({
-  messageVisible: false,
-})
 
 const siteList = reactive({
   list: [],
