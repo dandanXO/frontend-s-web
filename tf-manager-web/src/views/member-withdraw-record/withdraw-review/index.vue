@@ -672,7 +672,7 @@ async function loadMemberRecord() {
 
     const { data: ret1 } = await getTotalWithdrawReview(query)
     page1.records = ret1
-
+    request.doris = ret.sums.useDoris;
     page.loading = false
   }
 }
