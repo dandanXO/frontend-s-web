@@ -20,11 +20,17 @@
                 晋级所需有效流水:
                 <!-- <span>{{ formatNumber(vipItems[vipIndex].upgradeBetAmount) }}</span> -->
                 <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
-                  <span v-show="originalUpgradeBetAmounts.length != 0">
-                    <span v-if="store.token && (vipIndex < +vipLevel)">已完成</span>
-                    <span v-else-if="store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]">待晋级</span>
-                    <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                <span v-show="originalUpgradeBetAmounts.length != 0">
+                  <span v-if="store.token && vipIndex < +vipLevel">已完成</span>
+                  <span
+                    v-else-if="
+                      store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]
+                    "
+                  >
+                    待晋级
                   </span>
+                  <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                </span>
               </div>
               <div class="viplevel">VIP {{ vip.vipLevel }}</div>
             </div>
@@ -73,12 +79,7 @@
           <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
             <div
               class="text"
-              v-if="
-                vipLevel + 1 &&
-                currentUpgradeBetAmt &&
-                currentUpgradeBetAmt >= currentBetAmt &&
-                vipLevel != 12
-              "
+              v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
             >
               还需
               <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
@@ -156,8 +157,7 @@
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
         @click="handleClick('all', vipLevel)"
       >
-        
-        {{ isLoading['all'] ? '领取中' : '一键领取' }}
+        {{ isLoading["all"] ? "领取中" : "一键领取" }}
       </div>
     </div>
     <div class="month-birthday-bonus">
@@ -211,9 +211,15 @@
                       </div>
                     </div>
                   </div>
-                  <template v-if="item.redPacketClaimStatus === 'CANT_CLAIM' && category.key === 'redPacket' && +item.vipLevel === vipLevel">
+                  <template
+                    v-if="
+                      item.redPacketClaimStatus === 'CANT_CLAIM' &&
+                      category.key === 'redPacket' &&
+                      +item.vipLevel === vipLevel
+                    "
+                  >
                     <div class="claim-now disabled">
-                      {{ formatNumber(currentRedPacketAmount, 'redPacket') }}
+                      {{ formatNumber(currentRedPacketAmount, "redPacket") }}
                     </div>
                   </template>
                   <template v-if="item[`${category.key}ClaimStatus`] === 'CAN_CLAIM'">
@@ -222,15 +228,15 @@
                       :class="{ disabled: isLoading[category.key] }"
                       @click="handleClick(category.key, item)"
                     >
-                          {{
-                            !isLoading[category.key]
-                              ? category.key === 'redPacket'
-                                ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
-                                  ? formatNumber(currentRedPacketAmount, 'redPacket')
-                                  : '立即领取'
-                                : '立即领取'
-                              : '领取中'
-                          }}
+                      {{
+                        !isLoading[category.key]
+                          ? category.key === "redPacket"
+                            ? currentRedPacketAmount !== 0 && +item.vipLevel === vipLevel
+                              ? formatNumber(currentRedPacketAmount, "redPacket")
+                              : "立即领取"
+                            : "立即领取"
+                          : "领取中"
+                      }}
                     </div>
                   </template>
                   <template v-else-if="item[`${category.key}ClaimStatus`] === 'CLAIMED'">
@@ -745,14 +751,18 @@
       <h2>二. 生日礼金</h2>
       <ol class="terms">
         <li>
-          生日当月符合资格会员，需在申请日90天内(包含申请日) 到在线客服提供相关资料申请生日礼金；会员在注册前已过生日，本年度内将不能领取生日礼金，每年可领取一次（生日彩金1倍流水即可提款）；
+          生日当月符合资格会员，需在申请日90天内(包含申请日)
+          到在线客服提供相关资料申请生日礼金；会员在注册前已过生日，本年度内将不能领取生日礼金，每年可领取一次（生日彩金1倍流水即可提款）；
         </li>
       </ol>
 
       <h2>三. 首次保级彩金</h2>
       <ol class="terms">
-        <li>会员当月达到保级要求时，次月1日可领取首次保级彩金；
-          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；</li>
+        <li>
+          会员当月达到保级要求时，次月1日可领取首次保级彩金；
+          <br />
+          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；
+        </li>
       </ol>
 
       <h2>四. 年度保级彩金</h2>
@@ -774,7 +784,7 @@
         </li>
       </ol>
 
-      <h2>七. 会员加码充值送10%加码券</h2>
+      <h2>七. 会员充值加码10%</h2>
       <ol class="terms">
         <li class="numbered">
           VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
@@ -837,23 +847,23 @@ const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
-    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0]
+    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0];
     if (currentBetAmt.value > 0) {
       return (currentBetAmt.value / originalUpgradeBetAmounts.value[0]) * 100;
     }
     return 0;
   }
-  if (vipItems.value.find((item) => item.claimAllStatus === 'CAN_CLAIM')) {
-    currentClaimAllStatus.value = 'CAN_CLAIM';
+  if (vipItems.value.find((item) => item.claimAllStatus === "CAN_CLAIM")) {
+    currentClaimAllStatus.value = "CAN_CLAIM";
   } else {
-    currentClaimAllStatus.value = 'CANT_CLAIM';
+    currentClaimAllStatus.value = "CANT_CLAIM";
   }
   const vipInfo = vipItems.value.find((item) => +item.vipLevel === lvl);
   const vipLevel = +store.vip.replace("VIP", "");
   const currentDeposit = +store.getCurrentDeposit();
   currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
   currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
-  
+
   if (status === "bet") {
     if (currentBetAmt.value > currentUpgradeBetAmt.value) {
       return 100;
@@ -1070,7 +1080,7 @@ const originalUpgradeBetAmounts = ref([]);
 const isDataLoaded = ref(false);
 const initVIPTable = async (wLoad) => {
   getImages();
-  if (wLoad !== 'noload') {
+  if (wLoad !== "noload") {
     isDataLoaded.value = false;
   }
   originalUpgradeBetAmounts.value = [];
@@ -1182,7 +1192,7 @@ const handleClick = async (key, item) => {
 
       notify.success("领取成功！");
       store.getBalance();
-      initVIPTable('noload');
+      initVIPTable("noload");
       isLoading[key] = false;
     } else {
       notify.error(res.message);
@@ -1231,7 +1241,7 @@ function formatNumber(value, type) {
 
   const number = parseFloat(value);
 
-  if (number % 1 !== 0 || type === 'redPacket') {
+  if (number % 1 !== 0 || type === "redPacket") {
     return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   } else {
     return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -2046,7 +2056,7 @@ $border-settings: 1px solid #e5e7eb;
         list-style-type: none;
         margin-bottom: 10px;
         position: relative;
-        
+
         &.numbered {
           &::before {
             content: counter(item);
