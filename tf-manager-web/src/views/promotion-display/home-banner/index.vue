@@ -305,6 +305,37 @@
             style="width: 350px"
           />
         </el-form-item>
+        <el-form-item
+          :label="t('fields.displayStartTime')"
+          prop="displayStartTime"
+        >
+          <el-date-picker
+            v-model="form.displayStartTime"
+            format="DD/MM/YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            size="small"
+            type="datetime"
+            range-separator=":"
+            :placeholder="t('fields.displayStartTime')"
+            style="width: 250px"
+            :editable="false"
+            :clearable="false"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
+          <el-date-picker
+            v-model="form.displayEndTime"
+            format="DD/MM/YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            size="small"
+            type="datetime"
+            range-separator=":"
+            :placeholder="t('fields.displayEndTime')"
+            style="width: 250px"
+            :editable="false"
+            :clearable="false"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
@@ -439,7 +470,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="state" :label="t('fields.state')">
+      <!-- <el-table-column prop="state" :label="t('fields.state')">
         <template #default="scope">
           <el-switch
             v-model="scope.row.state"
@@ -449,6 +480,19 @@
           />
           <el-tag v-if="scope.row.state" size="mini" type="success" style="margin-left: 10px;">{{ t('common.status.OPEN') }}</el-tag>
           <el-tag v-else size="mini" type="danger" style="margin-left: 10px;">{{ t('common.status.CLOSE') }}</el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="state" :label="t('fields.status')" min-width="200">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.state"
+            size="mini"
+            @change="changeBannerState(scope.row.id, scope.row.state)"
+          >
+            <el-radio-button label="1">OPEN</el-radio-button>
+            <el-radio-button label="0">CLOSE</el-radio-button>
+            <el-radio-button label="2">TEST</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')">
@@ -740,6 +784,8 @@ const form = reactive({
   siteId: null,
   remark: null,
   state: true,
+  displayStartTime: null,
+  displayEndTime: null
 })
 
 const imageForm = reactive({
