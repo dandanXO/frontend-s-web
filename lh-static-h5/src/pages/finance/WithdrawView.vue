@@ -1,6 +1,14 @@
 <template>
   <q-page>
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
+      <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
+        <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+        <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+          <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+          <span>升级快速提款</span>
+        </q-btn>
+      </div>
+
       <div class="account-content last">
         <div class="withdrawalmethod">
           <div
@@ -114,6 +122,10 @@
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
+            <div v-if="isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
+              <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+              <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+            </div>
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款: " +
@@ -164,7 +176,9 @@
               />
             </div>
           </div>
-          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">*提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT</div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
+          </div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -504,6 +518,31 @@ export default defineComponent({
       if(!selectedWithdrawalMethod.value.url) return
       window.open(selectedWithdrawalMethod.value.url);
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === 'AUTO_WITHDRAW')
+
+    const handleUpgradeClick = () => {
+      $q.loading.show({
+        message: "升级中。。。"
+      });
+      api.get("/session/updateAutoWithdraw").then(async (res) => {
+        if(res.code === 0) {
+          notify({
+            type: "success",
+            message: "成功升级为快速提款!"
+          });
+
+          await store.getMemberInfo()
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      }).finally(() => $q.loading.hide())
+    }
+
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,
@@ -535,7 +574,9 @@ export default defineComponent({
       isNewUser,
       checkNewUser,
       isValidUSDTAmt,
-      withdrawLoading
+      withdrawLoading,
+      isAutoWithdrawal,
+      handleUpgradeClick,
     };
   }
 });
@@ -672,6 +713,30 @@ export default defineComponent({
 }
 .selected-tip {
   color: $warning;
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 1rem;
+  .upgrade-btn {
+    padding: 1px 12px;
+    img {
+      height: 30px;
+    }
+  }
+}
+
+.upgraded-helper-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: #00a478;
+}
+
+.flex-direction-column {
+  flex-direction: column;
 }
 
 .quick-withdraw-btn {
