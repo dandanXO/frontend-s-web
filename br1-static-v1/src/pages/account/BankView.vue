@@ -25,10 +25,14 @@
               filled
               v-model="unbindField.bankCardNumber"
               :label="$t('form.phone')"
-              lazy-rules
               :rules="[
                 (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                (val) => (val && val === selectedUnbindCardNum) || $t('form.phone_rules_04')
+                (val) => {
+                  const cleanedSelectedNum = selectedUnbindCardNum.startsWith('+55')
+                    ? selectedUnbindCardNum.slice(3)
+                    : selectedUnbindCardNum;
+                  return val === cleanedSelectedNum || $t('form.phone_rules_04');
+                }
               ]"
               label-color="secondary"
             >
@@ -42,7 +46,7 @@
         <ConfirmButton
           :label="$t('btn.confirm')"
           :confirmFunc="unbind"
-          :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
+          :isDisabled="!isInputValidUnbind"
         ></ConfirmButton>
       </q-card>
     </q-dialog>
@@ -158,7 +162,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onActivated } from "vue";
+import { ref, reactive, onMounted, onActivated, computed } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
@@ -264,6 +268,13 @@ const onAddUSDTClick = () => {
 const onUpdateCardClick = (bankCard, bankType) => {
   updateBankCardModalRef.value.onUpdateCardClick(bankCard, bankType);
 };
+
+const isInputValidUnbind = computed(() => {
+  const cleanedSelectedNum = selectedUnbindCardNum.value.startsWith("+55")
+    ? selectedUnbindCardNum.value.slice(3)
+    : selectedUnbindCardNum.value;
+  return unbindField.bankCardNumber === cleanedSelectedNum;
+});
 
 // init
 const bankCardList = ref([]);
