@@ -5,13 +5,17 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-    <a
-      @click="clickHomePopupImg(homePopupPath)"
-    >
+    <a @click="clickHomePopupImg(homePopupPath)">
       <img :src="homePopupImg" class="alert-img" />
     </a>
   </el-dialog>
-  <el-carousel v-if="banners?.length > 0" class="banner-slider" indicator-position="outside" :autoplay="true" :interval="5000">
+  <el-carousel
+    v-if="banners?.length > 0"
+    class="banner-slider"
+    indicator-position="outside"
+    :autoplay="true"
+    :interval="5000"
+  >
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <a @click="goBannerPage(banner.redirectUrl)">
         <div class="banner-background">
@@ -45,7 +49,7 @@ import { useNotify } from "@/hooks/notify";
 
 const notify = useNotify();
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 
 const isDark = useDark();
@@ -59,7 +63,7 @@ const goBannerPage = (redirectUrl) => {
     const extractedUrl = redirectUrl.match(openPattern)[1];
     const [gameName, platformCode, gameCode] = extractedUrl.split("/");
 
-    allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+    allGames.value.open(gameName, platformCode, gameCode, "OPEN");
     return;
   } else if (redirectUrl == "app://deposit") {
     router.push("/center/deposit");
@@ -100,7 +104,6 @@ const setWithExpiry = (key, value, interval) => {
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 
-
 const getWithExpiry = (key) => {
   const itemStr = sessionStorage.getItem(key);
   if (!itemStr) return null;
@@ -126,34 +129,34 @@ const homePopupContent = ref("");
 const homePopupType = ref("");
 const homePopupId = ref(0);
 
-const clickHomePopupImg = (urlString)=>{
-  isImportantAnnoucementModal.value= false;
+const clickHomePopupImg = (urlString) => {
+  isImportantAnnoucementModal.value = false;
 
   const openPattern = /^\/open\/(.*)/;
   if (urlString.match(openPattern)) {
     const extractedUrl = urlString.match(openPattern)[1];
     const [gameName, platformCode, gameCode] = extractedUrl.split("/");
 
-    allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+    allGames.value.open(gameName, platformCode, gameCode, "OPEN");
     return;
   }
 
   // debugger;
-  let regexUrl = new RegExp(/^(https:\/\/)/g)
-  if(regexUrl.test(urlString)){
+  let regexUrl = new RegExp(/^(https:\/\/)/g);
+  if (regexUrl.test(urlString)) {
     // 跳轉
     location.href = urlString;
-    return
+    return;
   }
-  let regexName = new RegExp(/^(name|\?name)/g)
-  if(regexName.test(urlString)){
+  let regexName = new RegExp(/^(name|\?name)/g);
+  if (regexName.test(urlString)) {
     //去優惠
     router.push(`/promotion${urlString}`);
-    return
+    return;
   }
 
   router.push(`${urlString}`);
-}
+};
 
 const checkShowImgTop = () => {
   const lastTime = sessionStorage.getItem("indexImgTop");
@@ -161,24 +164,6 @@ const checkShowImgTop = () => {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
   } else {
-    // loadPromoBanner("HOMEPOP")
-    //   .then((res) => {
-    //     const { code, data } = res;
-    //     if (code === 0) {
-    //       if (data.length > 0) {
-    //         if (isImpt === null) {
-    //           isImportantAnnoucementModal.value = true;
-
-    //           homePopupImg.value = data.length > 0 ? imgURL + data[0]["desktopImageUrl"] : "";
-    //           if (homePopupImg.value) isFirstView.value = true;
-    //         }
-    //       } else {
-    //         isImportantAnnoucementModal.value = false;
-    //       }
-    //     }
-    //   })
-    //   .catch(() => {});
-
     loadHomePopup("")
       .then((res) => {
         // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
@@ -229,7 +214,7 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  if(store.token){
+  if (store.token) {
     checkShowImgTop();
   }
 });
