@@ -237,7 +237,7 @@
               size="mini"
               type="primary"
               v-permission="['sys:siteimage:add']"
-              @click="showImageDialog()"
+              @click="showImageDialog('TEAM_ICON')"
             >
               {{ t('fields.upload') }}
             </el-button>
@@ -272,7 +272,7 @@
               size="mini"
               type="primary"
               v-permission="['sys:siteimage:add']"
-              @click="showImageDialog()"
+              @click="showImageDialog('TEAM_ICON')"
             >
               {{ t('fields.upload') }}
             </el-button>
@@ -281,6 +281,70 @@
               size="mini"
               type="success"
               @click="browseImage('TEAM_TWO')"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-row>
+        </el-form-item>
+        <el-form-item :label="t('fields.teamBackgroundImage')" prop="teamBackgroundImage">
+          <el-row :gutter="10">
+            <el-col v-if="form.teamBackgroundImage" :span="18" style="width: 250px">
+              <el-image
+                v-if="form.teamBackgroundImage"
+                :src="gameDir + form.teamBackgroundImage"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[gameDir + form.teamBackgroundImage]"
+              />
+            </el-col>
+          </el-row>
+          <el-row :gutter="10">
+            <el-button
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              v-permission="['sys:siteimage:add']"
+              @click="showImageDialog('TEAM_BACKGROUND_IMAGE')"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('TEAM_BACKGROUND_IMAGE')"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-row>
+        </el-form-item>
+        <el-form-item :label="t('fields.teamBackgroundImageDark')" prop="teamBackgroundImageDark">
+          <el-row :gutter="10">
+            <el-col v-if="form.teamBackgroundImageDark" :span="18" style="width: 250px">
+              <el-image
+                v-if="form.teamBackgroundImageDark"
+                :src="gameDir + form.teamBackgroundImageDark"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[gameDir + form.teamBackgroundImageDark]"
+              />
+            </el-col>
+          </el-row>
+          <el-row :gutter="10">
+            <el-button
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              v-permission="['sys:siteimage:add']"
+              @click="showImageDialog('TEAM_BACKGROUND_IMAGE')"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('TEAM_BACKGROUND_IMAGE_DARK')"
             >
               {{ t('fields.browse') }}
             </el-button>
@@ -690,7 +754,8 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="t('fields.promoType')" prop="promoType">
-        <span style="width: 350px">{{ t('fields.teamIcon') }}</span>
+        <span v-if="imageForm.promoType === 'TEAM_BACKGROUND_IMAGE'" style="width: 350px">{{ t('fields.teamBackgroundImage') }}</span>
+        <span v-else style="width: 350px">{{ t('fields.teamIcon') }}</span>
       </el-form-item>
       <el-form-item :label="t('fields.remark')" prop="remark">
         <el-input
@@ -789,7 +854,7 @@ const imageRequest = reactive({
   name: null,
   siteId: site.value ? site.value.id : null,
   category: 'PROMO',
-  promoType: 'TEAM_ICON',
+  promoType: null,
 })
 
 const form = reactive({
@@ -805,6 +870,8 @@ const form = reactive({
   teamTwoName: null,
   teamTwoLogo: null,
   externalUrl: null,
+  teamBackgroundImage: null,
+  teamBackgroundImageDark: null,
   sequence: null,
   status: null,
 })
@@ -1131,11 +1198,16 @@ function submit() {
 }
 
 function submitImage() {
-  if (uiControl.imageSelectionType === 'TEAM_ONE') {
+  if (uiControl.imageSelectionType === 'TEAM_BACKGROUND_IMAGE') {
+    form.teamBackgroundImage = selectedImage.path
+  } else if (uiControl.imageSelectionType === 'TEAM_BACKGROUND_IMAGE_DARK') {
+    form.teamBackgroundImageDark = selectedImage.path
+  } else if (uiControl.imageSelectionType === 'TEAM_ONE') {
     form.teamOneLogo = selectedImage.path
   } else {
     form.teamTwoLogo = selectedImage.path
   }
+
   uiControl.imageSelectionVisible = false
 }
 
@@ -1172,17 +1244,27 @@ function selectImage(item) {
 }
 
 async function browseImage(type) {
-  loadSiteImage()
   switch (type) {
     case 'TEAM_ONE':
       uiControl.imageSelectionTitle = t('fields.teamOneIcon')
+      imageRequest.promoType = 'TEAM_ICON'
       break
     case 'TEAM_TWO':
       uiControl.imageSelectionTitle = t('fields.teamTwoIcon')
+      imageRequest.promoType = 'TEAM_ICON'
+      break
+    case 'TEAM_BACKGROUND_IMAGE':
+      uiControl.imageSelectionTitle = t('fields.teamBackgroundImage')
+      imageRequest.promoType = 'TEAM_BACKGROUND_IMAGE'
+      break
+    case 'TEAM_BACKGROUND_IMAGE_DARK':
+      uiControl.imageSelectionTitle = t('fields.teamBackgroundImageDark')
+      imageRequest.promoType = 'TEAM_BACKGROUND_IMAGE'
       break
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
+  loadSiteImage()
 }
 
 async function bulkAdd() {
@@ -1190,14 +1272,14 @@ async function bulkAdd() {
   uiControl.bulkAddTitle = t('fields.addSyncDefault')
 }
 
-function showImageDialog() {
+function showImageDialog(promoType) {
   if (imageFormRef.value) {
     imageFormRef.value.resetFields()
     uploadedImage.url = null
     imageForm.id = null
   }
   imageForm.category = 'PROMO'
-  imageForm.promoType = 'TEAM_ICON'
+  imageForm.promoType = promoType
   uiControl.imageDialogTitle = t('fields.addImage')
   uiControl.imageDialogVisible = true
 }

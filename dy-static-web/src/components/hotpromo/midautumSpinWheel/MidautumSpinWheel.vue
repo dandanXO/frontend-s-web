@@ -1,6 +1,7 @@
 <template>
   <div class="cny-spin-wheel-wrapper">
     <div class="container">
+      <h3 class="period">活动时间：2024年9月16日 ⸺ 2024年9月31日</h3>
       <div class="spin-wheel-container">
         <div
           :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"
@@ -31,6 +32,7 @@
           剩余次数：
           <span id="remaning-draw-amt" style="color: #3981ff">{{ remainingDraws }} 次</span>
         </p>
+        <span class="prize-record-btn" @click="prizeRecordPopup.init()">「中奖记录」</span>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
@@ -45,12 +47,14 @@
           <div class="item">
             <div class="item-num">2</div>
             <div style="font-weight: 500">
-              活动期间，用户每日最高可获得 5 次转盘次数，超出次数则不累计，转盘次数仅限当日有效，次日即清零。转盘彩金实时派发，彩金 3 倍流水即可提款；
+              活动期间，用户每日最高可获得 5
+              次转盘次数，超出次数则不累计，转盘次数仅限当日有效，次日即清零。转盘彩金实时派发，彩金 3 倍流水即可提款；
             </div>
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            若抽奖获得豪华版【黑神话·悟空】，抽取实物奖品者需联系【在线客服】进行兑换，获取CDK，也可根据游戏码实际价格的 8 折兑换彩金；
+            若抽奖获得豪华版【黑神话·悟空】，抽取实物奖品者需联系【在线客服】进行兑换，获取CDK，也可根据游戏码实际价格的
+            8 折兑换彩金；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -86,12 +90,15 @@
       </div>
     </div>
   </el-dialog>
+
+  <PrizeHistory ref="prizeRecordPopup" />
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getMidautumSpinWheelPrize, getMidautumSpinWheelData } from "@/api/promotion/bonusSpinWheel";
 import { ElMessage, ElMessageBox } from "element-plus";
+import PrizeHistory from "./PrizeHistory.vue";
 
 const store = userStore();
 
@@ -111,6 +118,7 @@ const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref(0);
 const remainingDraws = ref(0);
 const winnersList = ref([]);
+const prizeRecordPopup = ref();
 
 let finalDegree = 0;
 let speed = 1;
@@ -213,7 +221,7 @@ const spinWheel = (times) => {
     .then((res) => {
       if (res.code === 0) {
         var bonusIndex = (() => {
-          if(res.data.spinBonusVOList[0].bonusName && res.data.spinBonusVOList[0].bonus === 0) {
+          if (res.data.spinBonusVOList[0].bonusName && res.data.spinBonusVOList[0].bonus === 0) {
             return "黑神话 - 悟空";
           }
 
@@ -576,12 +584,30 @@ onMounted(() => {
 }
 
 .remaining-draw-wrapper {
+  position: relative;
+  max-width: 1150px;
+  margin: 0 auto;
+
   .remaining-draw-text {
     color: #7a8eb9;
     font-size: 25px;
     margin: 100px auto 10px;
     text-align: center;
     width: 300px;
+  }
+
+  .prize-record-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #3981ff;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
   }
 }
 
@@ -763,5 +789,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.period {
+  margin-left: 20%;
+  font-size: 25px;
 }
 </style>

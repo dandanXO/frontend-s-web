@@ -19,8 +19,8 @@ export const getAffAnnouncementType = announcementType => {
   )
 }
 
-export const getActiveAffAnnouncementType = () => {
-  return https().request('/affiliateAnnouncementType/active', Method.GET)
+export const getActiveAffAnnouncementType = (siteId) => {
+  return https().request('/affiliateAnnouncementType/active?siteId=' + siteId, Method.GET)
 }
 
 export const createAffAnnouncementType = announcementType => {
