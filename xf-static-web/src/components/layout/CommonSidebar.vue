@@ -96,7 +96,7 @@ export default defineComponent({
   position: fixed;
   bottom: 50px;
   width: 240px;
-  z-index: 99999;
+  z-index: 99;
   display: flex;
   flex-direction: row;
   // background: #e4eefe;

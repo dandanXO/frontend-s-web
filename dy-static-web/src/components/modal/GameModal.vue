@@ -1,5 +1,13 @@
 <template>
-  <el-dialog v-model="visible" width="100%" class="full-modal" :title="title" destroyOnClose :afterClose="destroyGame">
+  <el-dialog
+    v-model="visible"
+    width="100%"
+    class="full-modal"
+    :title="title"
+    destroyOnClose
+    :afterClose="destroyGame"
+    :before-close="handleClose"
+  >
     <TFLoading v-if="logoShow"></TFLoading>
     <template v-if="transferInfo.platform === 'PG'">
       <iframe
@@ -117,6 +125,13 @@
   >
     <ComingSoon></ComingSoon>
   </el-dialog>
+  <el-dialog v-model="closeGameConfirmDialog" width="500px" align-center persistent title="温馨提示">
+    <div class="dialog-header">您当前操作将会离开游戏，是否继续</div>
+    <div class="dialog-footer">
+      <el-button color="grey" @click="closeGameConfirmDialog = false">取消</el-button>
+      <el-button type="primary" @click="handleConfirmClose">确定</el-button>
+    </div>
+  </el-dialog>
 </template>
 <script setup id="GameModal">
 import { userStore } from "@/store";
@@ -140,6 +155,7 @@ const values = ref(["100", "200", "300", "500", "1000"]);
 const quickTransferTab = ref(true);
 
 const drawerVisible = ref(false);
+const closeGameConfirmDialog = ref(false);
 
 const showDrawer = () => {
   quickTransferTab.value = false;
@@ -165,6 +181,7 @@ const src = ref("");
 const logoShow = ref(true);
 const title = ref("");
 const iframeScroll = ref(false);
+const confirmDialogCloseFn = ref(null);
 
 const transferInfo = ref({
   amount: null,
@@ -196,7 +213,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   logoShow.value = true;
   src.value = "";
   if (gameName === "AGF") {
-    title.value = "AG捕鱼";
+    title.value = "AG 捕鱼";
   } else {
     title.value = gameName;
   }
@@ -298,6 +315,16 @@ const loadGame = () => {
   if (src.value !== "") {
     logoShow.value = false;
   }
+};
+
+const handleClose = (done) => {
+  closeGameConfirmDialog.value = true;
+  confirmDialogCloseFn.value = done;
+};
+
+const handleConfirmClose = () => {
+  closeGameConfirmDialog.value = false;
+  confirmDialogCloseFn.value();
 };
 
 const copyURL = () => {
@@ -697,5 +724,15 @@ defineExpose({
     height: 100%;
     // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
   }
+}
+
+.dialog-header {
+  text-align: center;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
 }
 </style>
