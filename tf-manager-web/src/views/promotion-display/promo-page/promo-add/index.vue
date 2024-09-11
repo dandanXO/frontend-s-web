@@ -1268,8 +1268,8 @@ const form = reactive({
   affiliates: null,
   startTime: null,
   endTime: null,
-  displayStartTime: null,
-  displayEndTime: null,
+  displayStartTime: "2020-01-01 00:00:00",
+  displayEndTime: "2030-01-01 23:59:59",
 })
 
 const imageForm = reactive({
