@@ -887,14 +887,15 @@ const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
-  if (selectedPayType.value === "EASYPAISA") {
-    window.open("https://docs.google.com/presentation/d/1SzP0PFCOPmxJrJoUFBgTx9XW0TrqQzA0/edit?usp=sharing&ouid=104788776916971720528&rtpof=true&sd=true", "_blank");
-  } else if (selectedPayType.value === "JAZZCASH") {
-    // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
-  } else {
-    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
-  }
+  window.open("https://docs.google.com/presentation/d/1SzP0PFCOPmxJrJoUFBgTx9XW0TrqQzA0/edit?usp=sharing&ouid=104788776916971720528&rtpof=true&sd=true", "_blank");
+  // if (selectedPayType.value === "EASYPAISA") {
+  //   window.open("https://docs.google.com/presentation/d/1SzP0PFCOPmxJrJoUFBgTx9XW0TrqQzA0/edit?usp=sharing&ouid=104788776916971720528&rtpof=true&sd=true", "_blank");
+  // } else if (selectedPayType.value === "JAZZCASH") {
+  //   // isDepositTutorial.value= true;
+  //   window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
+  // }
 };
 
 const openDepositVideo = () => {
