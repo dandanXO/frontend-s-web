@@ -178,8 +178,17 @@ function checkQuery() {
   timeZone = siteList.list.find(e => e.id === requestCopy.siteId).timeZone;
   if (request.createTime !== null) {
     if (request.createTime.length === 2) {
-      query.createTime[0] = formatInputTimeZone(query.createTime[0], timeZone);
-      query.createTime[1] = formatInputTimeZone(query.createTime[1], timeZone);
+      query.createTime = JSON.parse(JSON.stringify(request.createTime))
+      query.createTime[0] = formatInputTimeZone(
+        query.createTime[0],
+        timeZone,
+        'start'
+      )
+      query.createTime[1] = formatInputTimeZone(
+        query.createTime[1],
+        timeZone,
+        'end'
+      )
       query.createTime = query.createTime.join(',')
     }
   }
