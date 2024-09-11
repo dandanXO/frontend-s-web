@@ -1,3 +1,4 @@
+/* eslint-disable */
 import HttpClient from "axios-mapper";
 import { ElMessage } from "element-plus";
 import { useStore } from "@/store";
@@ -5,6 +6,7 @@ import { ResponseCode } from "../api/response";
 import _cloneDeep from 'lodash/cloneDeep';
 import i18n from "../i18n/index";
 import { globals } from '../main.js'
+import axios from 'axios';
 
 const toRawType = (value) => {
   return Object.prototype.toString.call(value).slice(8, -1)
@@ -41,7 +43,38 @@ const clearEmptyParam = (config) => {
 }
 const onRequest = (config) => {
   clearEmptyParam(config);
+
+  const host = window.location.hostname;
+  if (host.includes("k4y0sr02")) {
+    console.log("k4y0sr02");
+    // config.withCredentials = true
+
+    const cfAuthori = getCookieValue('CF_Authorization');
+    console.log(cfAuthori);
+
+    const cfSession = getCookieValue('CF_AppSession');
+    console.log(cfSession);
+
+    const cfBinding = getCookieValue('CF_Binding');
+    console.log(cfBinding);
+
+    config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding}`;
+  }
   return config;
+}
+
+function getCookieValue(cookieName) {
+  const name = cookieName + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return null; // 如果Cookie不存在，返回null
 }
 
 const onResponse = (response) => {
@@ -97,8 +130,9 @@ const https = (timeout) => {
     }
   }
 
+
   const token = useStore().state.user.token;
-  const config = {
+  var config = {
     baseURL: baseApi,
     headers: {
       Authorization: `Bearer ${token}`
