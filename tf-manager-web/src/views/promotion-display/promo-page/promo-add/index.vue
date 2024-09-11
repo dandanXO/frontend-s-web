@@ -227,26 +227,52 @@
             </el-button>
           </div>
         </el-form-item>
-        <el-form-item :label="t('fields.startTime')" prop="startTime">
-          <el-date-picker
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            v-model="form.startTime"
-            :disabled-date="disabledStartDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.endTime')" prop="endTime">
-          <el-date-picker
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            v-model="form.endTime"
-            :disabled-date="disabledEndDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.content')" prop="pageContent">
-          <!-- editor here -->
-          <Editor v-model:value="form.pageContent" @input="getInput" />
-        </el-form-item>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.startTime')" prop="startTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.startTime"
+                :disabled-date="disabledStartDate"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.endTime')" prop="endTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.endTime"
+                :disabled-date="disabledEndDate"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.displayStartTime"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
+              <el-date-picker
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="form.displayEndTime"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.content')" prop="pageContent">
+              <!-- editor here -->
+              <Editor v-model:value="form.pageContent" @input="getInput" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <div class="form-footer">
           <el-button type="primary" @click="submit">
             {{ t('fields.confirm') }}
@@ -1242,6 +1268,8 @@ const form = reactive({
   affiliates: null,
   startTime: null,
   endTime: null,
+  displayStartTime: null,
+  displayEndTime: null,
 })
 
 const imageForm = reactive({
