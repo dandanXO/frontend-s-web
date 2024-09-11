@@ -338,6 +338,15 @@ export const getMemberBalanceByLoginNameSite = (
   )
 }
 
+export const getMemberCryptoBalanceByLoginNameSite = (loginName, siteId) => {
+  return https().request(
+    `/member/getMemberCryptoBalanceByLoginNameSite`,
+    Method.GET,
+    { loginName: loginName, siteId: siteId },
+    ContentType.form
+  )
+}
+
 export const updateMemberType = (id, memberType, siteId) => {
   return https().request(
     `/member/${id}/memberType?_method=PUT`,
@@ -475,25 +484,19 @@ export const getMemberVipFinById = (siteId, ids, loginName) => {
   )
 }
 
+export const toggleMemberWallet = (id, siteId) => {
+  return https().request(`/member/toggleWallet/${id}/${siteId}`, Method.GET)
+}
+
+export const walletBalance = (id, siteId) => {
+  return https().request(`/member/all-wallet/${id}/${siteId}`, Method.GET)
+}
+
 export const updateWithdrawType = (id, withdrawType, siteId) => {
   return https().request(
     `/member/${id}/withdrawType?_method=PUT`,
     Method.POST,
     { withdrawType: withdrawType, siteId: siteId },
     ContentType.form
-  )
-}
-
-export const toggleMemberWallet = (id, siteId) => {
-  return https().request(
-    `/member/toggleWallet/${id}/${siteId}`,
-    Method.GET
-  )
-}
-
-export const walletBalance = (id, siteId) => {
-  return https().request(
-    `/member/all-wallet/${id}/${siteId}`,
-    Method.GET
   )
 }

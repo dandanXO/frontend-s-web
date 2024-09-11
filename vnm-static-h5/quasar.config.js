@@ -412,6 +412,7 @@ module.exports = configure(function (ctx) {
         orientation: "portrait",
         background_color: "#FCFDFE",
         theme_color: "#468CFF",
+        start_url: "/",
         icons: [
           {
             src: "icons/icon-128x128.png",
