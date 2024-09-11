@@ -59,14 +59,10 @@ const onRequest = (config) => {
     const cfBinding = getCookieValue('CF_Binding');
     console.log(cfBinding);
 
-    const testCookie = getCookieValue('access-token');
-    console.log(testCookie);
-
-    var testItem= "TSET123"
-
     config.withCredentials = true;
 
-    config.headers['Cookie'] = `CF_Authorization=${testItem}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding}; THE_TOKEN=${testCookie}`;
+    config.headers['Cookie'] = `CF_Authorization=${testItem}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding};`;
+    console.log(config);
   }
   return config;
 }
