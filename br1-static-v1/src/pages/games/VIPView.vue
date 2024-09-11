@@ -1,6 +1,5 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
   <div class="vip-promo-tab-wrapper">
     <q-tabs
       v-model="vipPromoTab"
@@ -10,11 +9,10 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promo" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('header.promotion')" />
+      <q-tab name="vip" :label="$t('header.vip')" />
     </q-tabs>
   </div>
-
   <div class="vip-container">
     <Carousel
       ref="vipCarouselRef"
@@ -37,23 +35,23 @@
                     <stop offset="100%" style="stop-color: #334ad6; stop-opacity: 1" />
                   </linearGradient>
                 </defs>
-                <text class="svgText" x="10" y="45" fill="url(#myGradient)">VIP{{ vip.vipLevel }}</text>
+                <text class="svgText" x="10" y="45" fill="url(#myGradient)">
+                  {{ $t("header.vip") }}{{ vip.vipLevel }}
+                </text>
               </svg>
             </div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
-                <span v-if="vip.vipLevel !== '0'">Accummulate Deposit</span>
+                <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
                 {{ vip.ugprade }}
               </div>
-
               <div class="progress-bar-container">
                 <div class="progress-bar-endpoint-label">
                   {{ `V${+vip.vipLevel - 1}` }}
                 </div>
                 <div class="progress-bar-outer-bar">
                   <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
-
                   <div
                     class="progress-bar-inner-bar"
                     :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }"
@@ -71,10 +69,8 @@
         <Navigation />
       </template>
     </Carousel>
-
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
       <hr class="separator-line" style="margin-bottom: 20px" />
-
       <div class="vip-rewards">
         <div class="vip-reward-item">
           <div class="reward-desc">
@@ -82,9 +78,9 @@
               <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Level Upgrade</span>
+              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
               <br />
-              Reward
+              {{ $t("vip.reward") }}
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
@@ -104,9 +100,9 @@
               <img src="../../assets/images/vip/monthly-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Monthly</span>
+              <span class="bold">{{ $t("vip.monthly") }}</span>
               <br />
-              Reward
+              {{ $t("vip.reward") }}
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
@@ -126,9 +122,9 @@
               <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Daily Withdrawal</span>
+              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
               <br />
-              Limit
+              {{ $t("vip.limit") }}
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
@@ -143,13 +139,10 @@
           </div>
         </div>
       </div>
-
       <hr class="separator-line" style="margin-top: 20px" />
-
       <div class="header-wrapper">
-        <div class="header">Monthly Cumulative Deposit An Upgrade Vip Level</div>
+        <div class="header">{{ $t("vip.monthlyCumulativeDeposit") }}</div>
       </div>
-
       <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
@@ -159,25 +152,23 @@
               <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">
-                  Monthly Cumulative Deposit An Upgrade Vip Level
+                  {{ $t("vip.monthlyCumulativeDeposit") }}
                 </div>
               </template>
             </q-th>
           </q-tr>
-
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td>Amount</q-td>
-            <q-td style="width: 60px">Turnover</q-td>
+            <q-td>{{ $t("vip.level") }}</q-td>
+            <q-td>{{ $t("vip.amount") }}</q-td>
+            <q-td style="width: 60px">{{ $t("vip.turnover") }}</q-td>
           </q-tr>
         </template>
-
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
                 <div style="text-align: center">
-                  Deposit {{ store.currency.value }}
+                  {{ $t("vip.deposit") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -185,22 +176,15 @@
             </q-td>
           </q-tr>
         </template>
-
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-              corresponding upgrade rewards.
+              {{ $t("vip.aftertheRecharge") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
-
-      <div class="hint-msg">
-        After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-        corresponding upgrade rewards.
-      </div>
-
+      <div class="hint-msg">{{ $t("vip.aftertheRecharge") }}</div>
       <q-table
         flat
         :hide-pagination="true"
@@ -216,18 +200,16 @@
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <!-- unable to adjust table width... -->
               <template v-else>
-                <div style="white-space: normal; text-align: center">VIP Promotion Bonus</div>
+                <div style="white-space: normal; text-align: center">{{ $t("vip.vipPromoBonus") }}</div>
               </template>
             </q-th>
           </q-tr>
-
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td>Amount</q-td>
-            <q-td style="width: 60px">Turnover</q-td>
+            <q-td>{{ $t("vip.level") }}</q-td>
+            <q-td>{{ $t("vip.amount") }}</q-td>
+            <q-td style="width: 60px">{{ $t("vip.turnover") }}</q-td>
           </q-tr>
         </template>
-
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -241,18 +223,15 @@
             </q-td>
           </q-tr>
         </template>
-
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.
+              {{ $t("vip.promotionBonusDesc") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
-
-      <div class="hint-msg">Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.</div>
-
+      <div class="hint-msg">{{ $t("vip.promotionBonusDesc") }}</div>
       <q-table
         flat
         :hide-pagination="true"
@@ -268,17 +247,15 @@
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
               <!-- unable to adjust table width... -->
               <template v-else>
-                <div style="text-align: center; padding-right: 60px">VIP Monthly Cash Bonus</div>
+                <div style="text-align: center; padding-right: 60px">{{ $t("vip.vipMonthlyCashBonus") }}</div>
               </template>
             </q-th>
           </q-tr>
-
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td style="text-align: right">Amount</q-td>
+            <q-td>{{ $t("vip.level") }}</q-td>
+            <q-td style="text-align: right">{{ $t("vip.amount") }}</q-td>
           </q-tr>
         </template>
-
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -292,22 +269,15 @@
             </q-td>
           </q-tr>
         </template>
-
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m.
-              on the 1st of next month.
+              {{ $t("vip.cashBonusDesc") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
-
-      <div class="hint-msg">
-        Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the
-        1st of next month.
-      </div>
-
+      <div class="hint-msg">{{ $t("vip.cashBonusDesc") }}</div>
       <q-table
         flat
         :hide-pagination="true"
@@ -326,13 +296,11 @@
               </template>
             </q-th>
           </q-tr>
-
           <q-tr class="top-header">
-            <q-td>Level</q-td>
-            <q-td style="text-align: right">Amount</q-td>
+            <q-td>{{ $t("vip.level") }}</q-td>
+            <q-td style="text-align: right">{{ $t("vip.amount") }}</q-td>
           </q-tr>
         </template>
-
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -344,15 +312,13 @@
             </q-td>
           </q-tr>
         </template>
-
         <template v-slot:bottom-row>
           <q-tr style="display: none">
-            <q-td colspan="100%" class="bottom-note text-left">Daily withdrawal limits based on VIP levels.</q-td>
+            <q-td colspan="100%" class="bottom-note text-left">{{ $t("vip.dailyWithdrawalLimits") }}</q-td>
           </q-tr>
         </template>
       </q-table>
-
-      <div class="hint-msg">Daily withdrawal limits based on VIP levels.</div>
+      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div>
     </div>
   </div>
 </template>

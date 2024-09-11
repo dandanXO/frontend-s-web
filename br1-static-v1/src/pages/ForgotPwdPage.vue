@@ -1,50 +1,9 @@
 <template>
   <div class="forgot-password-container">
-    <div class="back-left">
-      <!-- <router-link :to="'/login'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link> -->
-    </div>
-    <!--
-      <div class="text-blue-grey">
-      Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-    </div>
-  -->
-
-
+    <div class="back-left"></div>
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
-      <!-- <q-input
-        hide-bottom-space
-        ref="loginNameRef"
-        v-model="loginForm.loginName"
-        label="Login Name"
-        :rules="[(val) => (val && val.length > 0) || 'Please insert login name']"
-        label-color="brand"
-        autocomplete="username"
-        rounded
-        outlined
-        color="white"
-        class="landing-input"
-      ></q-input> -->
-
-      <!-- <q-input
-        ref="loginNameRef"
-        hide-bottom-space
-        v-model="passwordForm.loginName"
-        label="Username"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Enter Username']"
-        rounded
-        outlined
-        label-color="brand"
-        color="white"
-        class="landing-input"
-      ></q-input> -->
-
       <div class="forgot-password-form-grid">
-        <!-- <span class="forgot-password-form-title">Forgot Password</span> -->
-
-        <span class="forgot-password-form-field-label">Phone Number</span>
+        <span class="forgot-password-form-field-label">{{ $t("form.phone") }}</span>
         <q-input
           type="tel"
           pattern="\d*"
@@ -54,23 +13,27 @@
           v-model="passwordForm.phone"
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+            (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+            (val) => (val && val.length === 10) || $t('form.phone_rules_02')
           ]"
           outlined
           label-color="brand"
           color="white"
           class="landing-input"
-        ></q-input>
-
-        <span class="forgot-password-form-field-label">Verification Code</span>
+        >
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
+          </template>
+        </q-input>
+        <span class="forgot-password-form-field-label">{{ $t("form.verificationCode") }}</span>
         <q-input
           ref="ftCaptchaRef"
           hide-bottom-space
           type="text"
           v-model="passwordForm.captchaCode"
           lazy-rules
-          :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+          :rules="[(val) => (val && val.length > 3) || $t('form.verificationCode_rules_01')]"
           outlined
           label-color="brand"
           color="white"
@@ -80,28 +43,33 @@
             <img :src="verificationImg" @click="getCode()" />
           </template>
         </q-input>
-
         <div>
-          <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
+          <q-btn
+            @click.prevent="onSubmitForgotPwd"
+            type="submit"
+            class="submit-btn"
+            :label="$t('btn.submit')"
+            rounded
+            no-caps
+          />
         </div>
-
-        <div class="forgot-password-form-logo-img" style="margin-top: 50px;">
+        <div class="forgot-password-form-logo-img" style="margin-top: 50px">
           <img src="../assets/55-ace-logo.png" />
         </div>
         <span class="forgot-password-form-desc">
-          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+          {{ $t("form.forgotPassword_desc") }}
         </span>
       </div>
     </q-form>
     <q-form v-else class="q-gutter-y-md rounded-borders">
-      <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
+      <p>{{ $t("notify.otpSent") }}</p>
       <q-input
         ref="codeRef"
         hide-bottom-space
         v-model="verificationForm.code"
         label="OTP"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
+        :rules="[(val) => (val && val.length > 0) || $t('form.otp_rules_01')]"
         rounded
         outlined
         label-color="brand"
@@ -109,18 +77,16 @@
         class="landing-input"
         name="otp"
       ></q-input>
-
       <q-input
         ref="newPwdRef"
         :type="isPwd ? 'password' : 'text'"
         hide-bottom-space
         v-model="verificationForm.newPassword"
-        label="New Password"
+        :label="$t('form.newPassword')"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || 'Please Enter New Password',
-          (val) => (val.length > 5 && val.length <= 12) || 'Password Must Be 6 To 12 Character',
-          (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
+          (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('form.newPassword_rules_02')
         ]"
         rounded
         outlined
@@ -137,18 +103,17 @@
           />
         </template>
       </q-input>
-
       <q-input
         ref="newConfirmPwdRef"
         :type="isConfirmPwd ? 'password' : 'text'"
         hide-bottom-space
         v-model="newConfirmPwdVModel"
-        label="Confirm New Password"
+        :label="$t('form.confirmNewPassword')"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || 'Please Enter Confirm Password',
-          (val) => (val.length > 5 && val.length <= 12) || 'Confirm Password Must Be 6 To 12 Character',
-          (val) => (val && val === verificationForm.newPassword) || 'Confirm Password Does Not Match'
+          (val) => (val && val.length > 0) || $t('form.confirmNewPassword_rules_01'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('form.confirmNewPassword_rules_02'),
+          (val) => (val && val === verificationForm.newPassword) || $t('form.confirmNewPassword_rules_03')
         ]"
         rounded
         outlined
@@ -165,48 +130,7 @@
           />
         </template>
       </q-input>
-
-      <!-- <div v-if="verificationForm.newPassword" class="password-str-div">
-        <span
-          :class="{
-            'weak-pwd': pwdStrength == 'weak',
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }"
-        >
-          Weak
-        </span>
-        <span
-          :class="{
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }"
-        >
-          Normal
-        </span>
-        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-      </div>
-
-      <q-input
-        ref="captchaRef"
-        hide-bottom-space
-        type="text"
-        v-model="verificationForm.captchaCode"
-        label="Verification Code"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
-        rounded
-        outlined
-        label-color="brand"
-        color="white"
-        class="landing-input"
-      >
-        <template v-slot:append>
-          <img :src="verificationImg" @click="getCode()" />
-        </template>
-      </q-input> -->
-
-      <ConfirmButton label="Submit" :confirmFunc="onVerifyForgotPassword"></ConfirmButton>
+      <ConfirmButton :label="$t('btn.submit')" :confirmFunc="onVerifyForgotPassword"></ConfirmButton>
     </q-form>
   </div>
 </template>
@@ -259,43 +183,7 @@ const captchaRef = ref();
 
 // NOTE: not using for API param
 const newConfirmPwdVModel = ref();
-
-// const isValidEmail = () => {
-//   const emailPattern =
-//     /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-//   return emailPattern.test(passwordForm.email) || "Please Enter A Valid Email Address";
-// };
-
 const isRequestSent = ref(false);
-// const onSubmitForgotPwd = () => {
-//   loginNameRef.value.validate();
-//   emailRef.value.validate();
-//   ftCaptchaRef.value.validate();
-
-//   $q.loading.show({
-//     message: "Sending verification code..."
-//   });
-
-//   if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
-//     $q.loading.hide();
-//   } else {
-//     api
-//       .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
-//       .then((response) => {
-//         if (response.code === 0) {
-//           isRequestSent.value = true;
-//           SessionStorage.set("emailCodeId", response.data.codeId);
-//         }
-//       })
-//       .catch((error) => {})
-//       .then(() => {
-//         $q.loading.hide();
-//       });
-
-//     getCode();
-//   }
-// };
-
 const onSubmitForgotPwd = () => {
   // loginNameRef.value.validate();
   phoneRef.value.validate();
@@ -331,50 +219,6 @@ const onSubmitForgotPwd = () => {
   }
 };
 
-// const verificationForm = reactive({
-//   email: "",
-//   code: "",
-//   codeId: SessionStorage.getItem("emailCodeId"),
-//   newPassword: ""
-// });
-// const onVerifyForgotPassword = () => {
-//   codeRef.value.validate();
-//   newPwdRef.value.validate();
-//   captchaRef.value.validate();
-
-//   $q.loading.show({
-//     message: "Submitting..."
-//   });
-
-//   if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
-//     $q.loading.hide();
-//   } else {
-//     verificationForm.codeId = SessionStorage.getItem("emailCodeId");
-//     verificationForm.email = passwordForm.email;
-
-//     api
-//       .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
-//       .then((response) => {
-//         if (response.code === 0) {
-//           $q.notify({
-//             color: "positive",
-//             position: "top",
-//             message: "Password Reset Completed",
-//             icon: "report_problem"
-//           });
-
-//           router.push("/login");
-//         }
-//       })
-//       .catch((error) => {})
-//       .then(() => {
-//         $q.loading.hide();
-//       });
-
-//     getCode();
-//   }
-// };
-
 const verificationForm = reactive({
   phone: "",
   code: "",
@@ -391,11 +235,7 @@ const onVerifyForgotPassword = () => {
     message: "Submitting..."
   });
 
-  if (
-    codeRef.value.hasError ||
-    newPwdRef.value.hasError ||
-    newConfirmPwdRef.value.hasError
-  ) {
+  if (codeRef.value.hasError || newPwdRef.value.hasError || newConfirmPwdRef.value.hasError) {
     $q.loading.hide();
   } else {
     verificationForm.codeId = SessionStorage.getItem("emailCodeId");
@@ -408,8 +248,8 @@ const onVerifyForgotPassword = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Password Reset Completed",
-            icon: "report_problem"
+            message: $t("notify.passwordResetcompleted"),
+            icon: "check_circle_outline"
           });
 
           router.push("/login");
@@ -478,7 +318,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .forgot-password-container {
   // min-height: 100vh;
-    padding: 16px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -577,5 +417,12 @@ onMounted(() => {
     background: var(--q-positive);
     font-weight: 600;
   }
+}
+
+.prepend-number {
+  font-size: 14px;
+  color: #ffffff;
+  margin-left: 8px;
+  z-index: 1;
 }
 </style>
