@@ -46,6 +46,7 @@ const onRequest = (config) => {
 
   const host = window.location.hostname;
   if (host.includes("k4y0sr02")) {
+    // debugger;
     console.log("k4y0sr02");
     // config.withCredentials = true
 
@@ -58,7 +59,14 @@ const onRequest = (config) => {
     const cfBinding = getCookieValue('CF_Binding');
     console.log(cfBinding);
 
-    config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding}`;
+    const testCookie = getCookieValue('access-token');
+    console.log(testCookie);
+
+    var testItem= "TSET123"
+
+    config.withCredentials = true;
+
+    config.headers['Cookie'] = `CF_Authorization=${testItem}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding}; THE_TOKEN=${testCookie}`;
   }
   return config;
 }
