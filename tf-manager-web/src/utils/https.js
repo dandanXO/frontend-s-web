@@ -61,7 +61,7 @@ const onRequest = (config) => {
 
     config.withCredentials = true;
 
-    config.headers['Cookie'] = `CF_Authorization=${testItem}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding};`;
+    config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding};`;
     console.log(config);
   }
   return config;
