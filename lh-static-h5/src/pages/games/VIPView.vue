@@ -163,7 +163,7 @@
     </div>
 
     <div class="tips">
-      等级晋升后开启90天保级期，保级期内完成存款和流水要求则保级成功，未完成则降一级。
+      等级晋升后开启90天保级期，保级期内完成有效投注要求则保级成功，未完成则降一级。
       <div @click="isShowTable = !isShowTable" class="linktotable">查看升保级明细</div>
     </div>
     <div class="month-birthday-bonus">
@@ -285,84 +285,99 @@
         <thead>
           <tr>
             <th>VIP等级</th>
-            <th>会员等级</th>
+            <!-- <th>会员等级</th> -->
             <th>首次保级彩金</th>
             <th>年度保级彩金</th>
             <th>生日彩金</th>
             <th>节日礼金</th>
             <th>每日返水红包</th>
             <th>会员日每月15号</th>
-            <th>会员加码充值送10%加码券</th>
+            <th>会员充值加码10%</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>VIP1</td>
-            <td>青铜 II</td>
-            <td rowspan="2">18元</td>
-            <td rowspan="2">208</td>
-            <td rowspan="2">-</td>
-            <td rowspan="2">-</td>
+            <!-- <td>青铜 II</td> -->
+            <td>18元</td>
+            <td>208</td>
+            <td>-</td>
+            <td>-</td>
             <td>0.1%</td>
             <td>8</td>
             <td>10</td>
           </tr>
           <tr>
             <td>VIP2</td>
-            <td>青铜 I</td>
+            <!-- <td>青铜 I</td> -->
+            <td>18元</td>
+            <td>208</td>
+            <td>-</td>
+            <td>-</td>
             <td>0.2%</td>
             <td>18</td>
             <td>28</td>
           </tr>
           <tr>
             <td>VIP3</td>
-            <td>白银 III</td>
-            <td rowspan="3">58元</td>
-            <td rowspan="3">588</td>
+            <!-- <td>白银 III</td> -->
+            <td>58元</td>
+            <td>588</td>
             <td>-</td>
-            <td rowspan="3">-</td>
+            <td>-</td>
             <td>0.3%</td>
             <td>28</td>
             <td>58</td>
           </tr>
           <tr>
             <td>VIP4</td>
-            <td>白银 II</td>
+            <!-- <td>白银 II</td> -->
+            <td>58元</td>
+            <td>588</td>
             <td>38</td>
+            <td>-</td>
             <td>0.5%</td>
             <td>38</td>
             <td>88</td>
           </tr>
           <tr>
             <td>VIP5</td>
-            <td>白银 I</td>
+            <!-- <td>白银 I</td> -->
+            <td>58元</td>
+            <td>588</td>
             <td>58</td>
+            <td>-</td>
             <td>0.6%</td>
             <td>58</td>
             <td>128</td>
           </tr>
           <tr>
             <td>VIP6</td>
-            <td>黄金 III</td>
-            <td rowspan="3">288元</td>
-            <td rowspan="3">1088</td>
+            <!-- <td>黄金 III</td> -->
+            <td>288元</td>
+            <td>1088</td>
             <td>88</td>
-            <td rowspan="2">-</td>
+            <td>-</td>
             <td>0.8%</td>
             <td>68</td>
             <td>188</td>
           </tr>
           <tr>
             <td>VIP7</td>
-            <td>黄金 II</td>
+            <!-- <td>黄金 II</td> -->
+            <td>288元</td>
+            <td>1088</td>
             <td>188</td>
+            <td>-</td>
             <td>1.0%</td>
             <td>128</td>
             <td>258</td>
           </tr>
           <tr>
             <td>VIP8</td>
-            <td>黄金 I</td>
+            <!-- <td>黄金 I</td> -->
+            <td>288元</td>
+            <td>1088</td>
             <td>288</td>
             <td>188</td>
             <td>1.2%</td>
@@ -371,9 +386,9 @@
           </tr>
           <tr>
             <td>VIP9</td>
-            <td>铂金 II</td>
-            <td rowspan="2">588元</td>
-            <td rowspan="2">1888</td>
+            <!-- <td>铂金 II</td> -->
+            <td>588元</td>
+            <td>1888</td>
             <td>388</td>
             <td>288</td>
             <td>1.3%</td>
@@ -382,7 +397,9 @@
           </tr>
           <tr>
             <td>VIP10</td>
-            <td>铂金 I</td>
+            <!-- <td>铂金 I</td> -->
+            <td>588元</td>
+            <td>1888</td>
             <td>588</td>
             <td>388</td>
             <td>1.5%</td>
@@ -391,7 +408,7 @@
           </tr>
           <tr>
             <td>VIP11</td>
-            <td>钻石</td>
+            <!-- <td>钻石</td> -->
             <td>888元</td>
             <td>2888</td>
             <td>888</td>
@@ -402,7 +419,7 @@
           </tr>
           <tr>
             <td>VIP12</td>
-            <td>王者</td>
+            <!-- <td>王者</td> -->
             <td>1,888元</td>
             <td>8888</td>
             <td>1888</td>
@@ -588,13 +605,14 @@
       <h2>二. 生日礼金</h2>
       <ol class="terms">
         <li>
-          会员在注册90天内过生日，本年度内将不能领取生日礼金。另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次（生日彩金1倍流水即可提款）；
+          生日当月符合资格会员，需在申请日90天内(包含申请日) 到在线客服提供相关资料申请生日礼金；会员在注册前已过生日，本年度内将不能领取生日礼金，每年可领取一次（生日彩金1倍流水即可提款）；
         </li>
       </ol>
 
       <h2>三. 首次保级彩金</h2>
       <ol class="terms">
-        <li>当月晋级后未晋级且达到保级要求，次月1日可领取保级彩金；</li>
+        <li>会员当月达到保级要求时，次月1日可领取首次保级彩金；
+          例：会员3月晋升VIP10，90天内完成保级期的有效投注条件，则首次保级成功，7月1日即可领取保级彩金；</li>
       </ol>
 
       <h2>四. 年度保级彩金</h2>
@@ -605,23 +623,23 @@
       <h2>五. 每日返水红包</h2>
       <ol class="terms">
         <li>
-          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日反水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；
+          统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日返水加赠礼金，返水加赠礼金达到10元即可领取，礼金无流水限制；
         </li>
       </ol>
 
       <h2>六. 会员日</h2>
       <ol class="terms">
         <li>
-          从每月会员日15号00:00:00起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至24号23:59:59，仅需完成一倍流水，过期未领取视为放弃；
+          会员日为每月15日，VIP会员在上月有任意一笔有效存款即可在会员日15号00:00至24号23:59期间登录活动页面领取对应等级的会员日礼金（已领取时的等级为准），会员礼金仅需一倍流水即可出款，过期未领者则视为主动放弃
         </li>
       </ol>
 
       <h2>七. 会员加码充值送10%加码券</h2>
       <ol class="terms">
-        <li>
-          非0级玩家从会员日18号00:00:00起均可在活动页面领取一张“10%充值加码券”，领取时间截至21号23:59:59，且领取后需在7日内使用充值加码券，成功使用后需在15日内完成相应流水要求；
+        <li class="numbered">
+          VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
         </li>
-        <li>本加码券单日内不可与其他活动加码券同时使用；</li>
+        <li class="numbered">加码券使用当日不可与其他存款优惠共享</li>
       </ol>
       <div class="section-title" @click="toggleAccordion">一般规则</div>
       <button class="accordion" @click="toggleAccordion">
@@ -2138,26 +2156,29 @@ $border-settings: 1px solid #e5e7eb;
         list-style-type: none;
         position: relative;
         margin-bottom: 10px;
-        &::before {
-          content: counter(item);
-          counter-increment: item;
-          background: url("../../assets/images/vip/tnc-no-bg.png") no-repeat center center;
-          font-weight: 600;
-          padding: 10px;
-          margin-top: 4px;
-          background-size: contain;
-          color: #000000;
-          text-align: center;
-          // min-width: 30px;
-          // min-height: 42px;
-          // max-width: 30px;
-          // max-height: 42px;
-          width: 16px;
-          height: 20px;
-          font-size: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+
+        &.numbered {
+          &::before {
+            content: counter(item);
+            counter-increment: item;
+            background: url("../../assets/images/vip/tnc-no-bg.png") no-repeat center center;
+            font-weight: 600;
+            padding: 10px;
+            margin-top: 4px;
+            background-size: contain;
+            color: #000000;
+            text-align: center;
+            // min-width: 30px;
+            // min-height: 42px;
+            // max-width: 30px;
+            // max-height: 42px;
+            width: 16px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
 
