@@ -45,9 +45,9 @@ const onRequest = (config) => {
   clearEmptyParam(config);
 
   const host = window.location.hostname;
-  if (host.includes("k4y0sr02")) {
+  if (host.includes("k4y0sr02") && !host.includes("lh1.k4y0sr02")) {
     // debugger;
-    console.log("k4y0sr02");
+    console.log("k4y0sr0 12");
     // config.withCredentials = true
 
     const cfAuthori = getCookieValue('CF_Authorization');
@@ -62,7 +62,7 @@ const onRequest = (config) => {
     config.withCredentials = true;
 
     config.headers['Cookie'] = `CF_Authorization=${cfAuthori}; CF_AppSession=${cfSession}; CF_Binding=${cfBinding};`;
-    console.log(config);
+    // console.log(config);
   }
   return config;
 }
