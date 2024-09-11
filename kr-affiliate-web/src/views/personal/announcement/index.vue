@@ -277,7 +277,9 @@ function resetQuery() {
 }
 
 async function loadAffiliateAnnouncementType() {
-  const { data: ret } = await getActiveAffAnnouncementType()
+  const siteId = store.state.user.siteId
+
+  const { data: ret } = await getActiveAffAnnouncementType(siteId)
   if (ret && ret.length > 0) {
     type.getTypeList = ret
     type.getActiveTab = ret[0].id

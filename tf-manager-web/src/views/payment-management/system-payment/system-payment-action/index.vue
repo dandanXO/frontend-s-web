@@ -263,7 +263,7 @@ import { getActivePaymentTypes } from '../../../../api/payment-type';
 import { createSystemPayment, getSystemPaymentById, updateSystemPayment } from '../../../../api/system-payment';
 import { getSiteListSimple } from '../../../../api/site';
 import { useStore } from '@/store';
-import { TENANT } from "@/store/modules/user/action-types";
+import { TENANT, ADMIN } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -454,8 +454,12 @@ async function loadPaymentType() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
+  if (LOGIN_USER_TYPE.value === ADMIN.value) {
+    siteList.list = store.state.user.sites
+  } else {
+    const { data: site } = await getSiteListSimple();
+    siteList.list = site;
+  }
 }
 
 onMounted(async() => {

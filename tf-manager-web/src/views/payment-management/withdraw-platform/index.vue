@@ -284,7 +284,7 @@ import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, u
 import { getCurrencyNames } from "../../../api/currency";
 import { hasPermission } from '../../../utils/util'
 import { useStore } from '@/store';
-import { TENANT } from "@/store/modules/user/action-types";
+import { TENANT, ADMIN } from "@/store/modules/user/action-types";
 import { getSiteListSimple } from "../../../api/site";
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { useI18n } from "vue-i18n";
@@ -483,8 +483,12 @@ function submit() {
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  siteList.list = site;
+  if (LOGIN_USER_TYPE.value === ADMIN.value) {
+    siteList.list = store.state.user.sites
+  } else {
+    const { data: site } = await getSiteListSimple();
+    siteList.list = site;
+  }
 }
 
 onMounted(async() => {

@@ -1,21 +1,24 @@
 <template>
   <div class="maintenance-box" v-if="item.underMaintenance === true">
-    <p class="maintenance-title"><img src="../assets/images/home/maintenance-icon.svg" />{{ $t('lang.currently_maintaining') }}</p>
+    <p class="maintenance-title">
+      <img src="../assets/images/home/maintenance-icon.svg" />
+      {{ $t("lang.currently_maintaining") }}
+    </p>
     <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-      {{ $t('lang.maintenance_time') }}: {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY HH:mm") }} -
-      {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY HH:mm") }}
+      {{ $t("lang.maintenance_time") }}: {{ toGMT7(item.maintenanceStartTime, "DD/MM/YYYY HH:mm") }} -
+      {{ toGMT7(item.maintenanceEndTime, "DD/MM/YYYY HH:mm") }}
     </p>
   </div>
 </template>
 <script setup>
-import moment from "moment";
+import { toGMT7 } from "src/boot/utils";
 
 const props = defineProps({
   item: {
     type: Object,
     required: true
   }
-})
+});
 </script>
 <style scoped lang="scss">
 .maintenance-box {
@@ -45,15 +48,15 @@ const props = defineProps({
     text-align: center;
   }
 
-  .maintenance-title{
-    display:flex;
-    gap:12px;
+  .maintenance-title {
+    display: flex;
+    gap: 12px;
     align-items: center;
     justify-content: center;
     width: 100%;
     font-size: 1.2rem;
 
-    img{
+    img {
       width: 2.8rem;
     }
   }
@@ -63,5 +66,4 @@ const props = defineProps({
     text-align: center;
   }
 }
-
 </style>

@@ -1573,6 +1573,7 @@ export default {
     teamTwo: 'Team Two',
     teamTwoIcon: 'Team Two Icon',
     teamTwoResult: 'Team Two Result',
+    teamBackgroundImage: 'Team Background Image',
     telephone: 'Telephone',
     thirtyDaysdw: 'Thirty Days deposit - withdraw',
     thirdParty: 'Third Party',
@@ -2801,6 +2802,7 @@ export default {
     'Sites Config': 'Site Config',
     'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
     'Platform WC': 'Platform WC',
+    'Site Platform Report': 'Site Platform Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

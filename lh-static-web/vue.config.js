@@ -4,15 +4,17 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = defineConfig({
-  lintOnSave: true,
+  lintOnSave: false,
   productionSourceMap: false,
   runtimeCompiler: true,
   devServer: {
     hot: true,
+    compress: true,
     port: 8089,
     client: {
       overlay: false
-    }
+    },
+    open: true
   },
   assetsDir: "static",
   transpileDependencies: true,
@@ -27,11 +29,14 @@ module.exports = defineConfig({
       modules: [path.resolve(__dirname, "../.shared")]
     },
     optimization: {
-      splitChunks: {
-        chunks: "all"
-      },
-      runtimeChunk: true,
-      minimize: true,
+      splitChunks:
+        process.env.NODE_ENV === "development"
+          ? false
+          : {
+              chunks: "all"
+            },
+      runtimeChunk: "single",
+      minimize: process.env.NODE_ENV === "development" ? false : true,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
@@ -59,6 +64,7 @@ module.exports = defineConfig({
     });
   },
   css: {
+    extract: false,
     loaderOptions: {
       sass: {
         additionalData: `

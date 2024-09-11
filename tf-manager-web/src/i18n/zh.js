@@ -1573,6 +1573,7 @@ export default {
     teamTwo: '团队二',
     teamTwoIcon: '团队二图标',
     teamTwoResult: '团队二得分',
+    teamBackgroundImage: '团队背景图片',
     telephone: '电话号码',
     thirtyDaysdw: '30天存-提',
     thirdParty: '第三方',
@@ -2749,6 +2750,7 @@ export default {
     'Sites Config': '站点设置',
     'Mooncake Fest Spin Record': '中秋节转盘2024',
     'Platform WC': 'WC平台',
+    'Site Platform Report': '站点平台报表',
   },
   google: {
     google_auth_menu: '谷歌验证',

@@ -523,9 +523,7 @@
       padding: 0.5rem 0.5rem;
       border-radius: 3rem;
       background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-      box-shadow:
-        0px 2px 5px 0px #bbdcff inset,
-        0px -3px 4px 0px #a2bff4 inset;
+      box-shadow: 0px 2px 5px 0px #bbdcff inset, 0px -3px 4px 0px #a2bff4 inset;
     }
 
     .plat-option {
@@ -537,10 +535,9 @@
       align-items: center;
       min-height: 2rem;
       min-width: 4rem;
-      box-shadow:
-        0px -3px 6px 0px transparent inset,
-        0px -2px 4px 0px transparent inset;
+      box-shadow: 0px -3px 6px 0px transparent inset, 0px -2px 4px 0px transparent inset;
       transition: 0.3s all;
+      position: relative;
       .text {
         color: #5894ff;
         font-size: 17px;
@@ -555,9 +552,7 @@
 
       &:hover {
         background: linear-gradient(180deg, #73b2ff60 0%, #3982ff69 100%);
-        box-shadow:
-          0px -3px 6px 0px #b1d7ff inset,
-          0px -2px 4px 0px #5894ff inset;
+        box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
         .text {
           color: #ffffff;
         }
@@ -565,12 +560,17 @@
 
       &.active {
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        box-shadow:
-          0px -3px 6px 0px #b1d7ff inset,
-          0px -2px 4px 0px #5894ff inset;
+        box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
         .text {
           color: #ffffff;
         }
+      }
+
+      .new-ribbon {
+        position: absolute;
+        width: 20px;
+        right: -10px;
+        top: -12px;
       }
     }
 
@@ -886,9 +886,7 @@
       cursor: pointer;
       padding: 8px 4px;
       background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-      box-shadow:
-        0px 2px 5px 0px #bbdcff inset,
-        0px -3px 4px 0px #a2bff4 inset;
+      box-shadow: 0px 2px 5px 0px #bbdcff inset, 0px -3px 4px 0px #a2bff4 inset;
       color: #5894ff;
       font-weight: bold;
       font-size: 20px;
@@ -902,9 +900,7 @@
 
       &.active {
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        box-shadow:
-          0px -3px 6px 0px #b1d7ff inset,
-          0px -2px 4px 0px #5894ff inset;
+        box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
         color: #fff;
       }
     }

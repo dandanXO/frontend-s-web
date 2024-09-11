@@ -1,17 +1,8 @@
 <template>
   <div v-bind="$attrs">
     <div>
-      <el-select
-        v-model="selectedBankId"
-        @change="selectBank"
-        placeholder="选择银行"
-      >
-        <el-option
-          v-for="bc in props.bankList"
-          :key="bc.id"
-          :label="bc.name"
-          :value="bc.id"
-        >
+      <el-select v-model="selectedBankId" @change="selectBank" placeholder="选择银行">
+        <el-option v-for="bc in props.bankList" :key="bc.id" :label="bc.name" :value="bc.id">
           {{ bc.name }}
         </el-option>
       </el-select>
@@ -23,13 +14,12 @@
 import { ref } from "vue";
 import { postDeposit } from "@/api/personal/deposit";
 import { doIt } from "@/utils/action";
-// import { message } from "ant-design-vue";
 
 const props = defineProps({
   bankList: {
     type: Array,
-    required: true,
-  },
+    required: true
+  }
 });
 const emits = defineEmits(["selected"]);
 

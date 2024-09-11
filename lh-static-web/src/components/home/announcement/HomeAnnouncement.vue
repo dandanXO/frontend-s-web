@@ -32,14 +32,6 @@
               </template>
             </template>
           </el-collapse>
-
-          <!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
-          <!--            <template v-if="ann.typeId === tab.id">-->
-          <!--              <div class="announcement-content">-->
-          <!--                {{ ann.content }}-->
-          <!--              </div>-->
-          <!--            </template>-->
-          <!--          </template>-->
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -242,7 +234,7 @@ onMounted(() => {
 
 .dark {
   .top-bar-wrapper {
-    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
+    background: linear-gradient(180deg, #2a2e3b 0%, #1f3342 100%);
     box-shadow: none;
     .top-bar-inner {
       .station-notice-container {
