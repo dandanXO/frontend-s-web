@@ -1574,6 +1574,7 @@ export default {
     teamTwoIcon: '团队二图标',
     teamTwoResult: '团队二得分',
     teamBackgroundImage: '团队背景图片',
+    teamBackgroundImageDark: '团队暗色背景图片',
     telephone: '电话号码',
     thirtyDaysdw: '30天存-提',
     thirdParty: '第三方',

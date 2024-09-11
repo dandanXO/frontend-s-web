@@ -1574,6 +1574,7 @@ export default {
     teamTwoIcon: 'Team Two Icon',
     teamTwoResult: 'Team Two Result',
     teamBackgroundImage: 'Team Background Image',
+    teamBackgroundImageDark: 'Team Background Image Dark',
     telephone: 'Telephone',
     thirtyDaysdw: 'Thirty Days deposit - withdraw',
     thirdParty: 'Third Party',
