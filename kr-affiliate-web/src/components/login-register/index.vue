@@ -4,13 +4,15 @@
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img :src="krLogo">
+            <img :src="krLogo" />
           </div>
           <div class="first-liner">
-            Start From CITY8
+            Start From DIAMOND
           </div>
           <div class="second-liner">
-            Become a legend<br>Or become the eulogist of legend?
+            Become a legend
+            <br />
+            Or become the eulogist of legend?
           </div>
         </div>
         <div class="right">
@@ -21,18 +23,46 @@
               </div>
             </div>
             <div class="mid">
-              <el-form v-if="!isReg" ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form"
-                autocomplete="no-fill">
+              <el-form
+                v-if="!isReg"
+                ref="loginFormRef"
+                :model="loginForm"
+                :rules="loginRules"
+                class="login-form"
+                autocomplete="no-fill"
+              >
                 <el-form-item prop="userName">
-                  <el-input ref="userNameRef" v-model="loginForm.userName" :placeholder="$t('common.username')"
-                    name="username" type="text" tabindex="1" autocomplete="no-fill" />
+                  <el-input
+                    ref="userNameRef"
+                    v-model="loginForm.userName"
+                    :placeholder="$t('common.username')"
+                    name="username"
+                    type="text"
+                    tabindex="1"
+                    autocomplete="no-fill"
+                  />
                 </el-form-item>
 
-                <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+                <el-tooltip
+                  v-model="capsTooltip"
+                  content="Caps lock is On"
+                  placement="right"
+                  manual
+                >
                   <el-form-item prop="password">
-                    <el-input :key="passwordType" ref="passwordRef" v-model="loginForm.password" :type="passwordType"
-                      :placeholder="$t('common.password')" name="password" tabindex="2" autocomplete="no-fill"
-                      @keyup="checkCapslock" @blur="capsTooltip = false" @keyup.enter="handleLogin()" />
+                    <el-input
+                      :key="passwordType"
+                      ref="passwordRef"
+                      v-model="loginForm.password"
+                      :type="passwordType"
+                      :placeholder="$t('common.password')"
+                      name="password"
+                      tabindex="2"
+                      autocomplete="no-fill"
+                      @keyup="checkCapslock"
+                      @blur="capsTooltip = false"
+                      @keyup.enter="handleLogin()"
+                    />
                   </el-form-item>
                 </el-tooltip>
                 <div style="margin:20px 0px">
@@ -41,10 +71,20 @@
                   </el-link>
                 </div>
                 <div class="flex-c-center-div">
-                  <el-button class="common-btn" type="danger" style="width:50%;" @click.prevent="handleLogin">
+                  <el-button
+                    class="common-btn"
+                    type="danger"
+                    style="width:50%;"
+                    @click.prevent="handleLogin"
+                  >
                     {{ $t('common.loginnow') }}
                   </el-button>
-                  <el-button class="common-btn default-btn" type="primary" style="width:50%;" @click="isReg = !isReg">
+                  <el-button
+                    class="common-btn default-btn"
+                    type="primary"
+                    style="width:50%;"
+                    @click="isReg = !isReg"
+                  >
                     {{ $t('common.register_affi') }}
                   </el-button>
                 </div>
@@ -55,57 +95,139 @@
                   </div>
                 </div>
               </el-form>
-              <el-form v-if="isReg" ref="regFormRef" :model="regForm" :rules="regRules" class="reg-form"
-                autocomplete="on">
+              <el-form
+                v-if="isReg"
+                ref="regFormRef"
+                :model="regForm"
+                :rules="regRules"
+                class="reg-form"
+                autocomplete="on"
+              >
                 <div v-if="step === 1">
                   <el-form-item prop="userName">
-                    <el-input ref="userNameRef" v-model="regForm.userName" :placeholder="$t('common.affiliateaccount')"
-                      name="userName" type="text" tabindex="1" autocomplete="off" />
+                    <el-input
+                      ref="userNameRef"
+                      v-model="regForm.userName"
+                      :placeholder="$t('common.affiliateaccount')"
+                      name="userName"
+                      type="text"
+                      tabindex="1"
+                      autocomplete="off"
+                    />
                   </el-form-item>
-                  <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+                  <el-tooltip
+                    v-model="capsTooltip"
+                    content="Caps lock is On"
+                    placement="right"
+                    manual
+                  >
                     <el-form-item prop="password">
-                      <el-input :key="passwordType" ref="passwordRef" v-model="regForm.password" :type="passwordType"
-                        :placeholder="$t('common.password')" name="password" tabindex="2" autocomplete="on"
-                        @keyup="checkCapslock" @blur="capsTooltip = false" />
+                      <el-input
+                        :key="passwordType"
+                        ref="passwordRef"
+                        v-model="regForm.password"
+                        :type="passwordType"
+                        :placeholder="$t('common.password')"
+                        name="password"
+                        tabindex="2"
+                        autocomplete="on"
+                        @keyup="checkCapslock"
+                        @blur="capsTooltip = false"
+                      />
                     </el-form-item>
                   </el-tooltip>
-                  <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+                  <el-tooltip
+                    v-model="capsTooltip"
+                    content="Caps lock is On"
+                    placement="right"
+                    manual
+                  >
                     <el-form-item prop="confirmPwd">
-                      <el-input :key="passwordType" ref="confirmPwdRef" v-model="regForm.confirmPwd"
-                        :type="passwordType" :placeholder="$t('common.confirmpassword')" name="password" tabindex="3"
-                        autocomplete="on" @keyup="checkCapslock" @blur="capsTooltip = false" />
+                      <el-input
+                        :key="passwordType"
+                        ref="confirmPwdRef"
+                        v-model="regForm.confirmPwd"
+                        :type="passwordType"
+                        :placeholder="$t('common.confirmpassword')"
+                        name="password"
+                        tabindex="3"
+                        autocomplete="on"
+                        @keyup="checkCapslock"
+                        @blur="capsTooltip = false"
+                      />
                     </el-form-item>
                   </el-tooltip>
-                  <el-form-item prop="codeAffiliate" v-if="props.siteId === '10'">
-                    <el-input ref="codeAffiliateRef" v-model="regForm.codeAffiliate"
-                      :placeholder="$t('fields.referralCode')" name="codeAffiliate" type="text" tabindex="8"
-                      autocomplete="on" />
+                  <el-form-item
+                    prop="codeAffiliate"
+                    v-if="props.siteId === '10'"
+                  >
+                    <el-input
+                      ref="codeAffiliateRef"
+                      v-model="regForm.codeAffiliate"
+                      :placeholder="$t('fields.referralCode')"
+                      name="codeAffiliate"
+                      type="text"
+                      tabindex="8"
+                      autocomplete="on"
+                    />
                   </el-form-item>
-                  <el-form-item prop="codePersonalAffiliate" v-if="props.siteId === '10'">
-                    <el-input ref="codePersonalAffiliateRef" v-model="regForm.codePersonalAffiliate"
-                      :placeholder="$t('fields.affiliateCode') + ' (본인)'" name="codePersonalAffiliate" type="text" tabindex="8"
-                      autocomplete="on" @input="handleInput" />
+                  <el-form-item
+                    prop="codePersonalAffiliate"
+                    v-if="props.siteId === '10'"
+                  >
+                    <el-input
+                      ref="codePersonalAffiliateRef"
+                      v-model="regForm.codePersonalAffiliate"
+                      :placeholder="$t('fields.affiliateCode') + ' (본인)'"
+                      name="codePersonalAffiliate"
+                      type="text"
+                      tabindex="8"
+                      autocomplete="on"
+                      @input="handleInput"
+                    />
                   </el-form-item>
                   <el-form-item prop="captchaCode">
-                    <el-input ref="verificationRef" v-model="regForm.captchaCode"
-                      :placeholder="$t('common.verificationcode')" name="captchaCode" type="text" tabindex="7"
-                      autocomplete="on">
+                    <el-input
+                      ref="verificationRef"
+                      v-model="regForm.captchaCode"
+                      :placeholder="$t('common.verificationcode')"
+                      name="captchaCode"
+                      type="text"
+                      tabindex="7"
+                      autocomplete="on"
+                    >
                       <template #append class="verification">
-                        <img :src="verificationImg" @click="getCode()">
+                        <img :src="verificationImg" @click="getCode()" />
                       </template>
                     </el-input>
                   </el-form-item>
 
                   <div class="flex-c-center-div">
-                    <el-button class="common-btn" :loading="loading" type="danger" style="width:50%;"
-                      @click.prevent="handleRegister">
-                      {{ props.siteId === '8' || props.siteId === 8 ? $t('google.next_step') : $t('common.apply') }}
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:50%;"
+                      @click.prevent="handleRegister"
+                    >
+                      {{
+                        props.siteId === '8' || props.siteId === 8
+                          ? $t('google.next_step')
+                          : $t('common.apply')
+                      }}
                     </el-button>
-                    <el-button class="common-btn default-btn" style="width:50%;" @click="isReg = !isReg">
+                    <el-button
+                      class="common-btn default-btn"
+                      style="width:50%;"
+                      @click="isReg = !isReg"
+                    >
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div v-if="props.siteId !== '5' || props.siteId !== '8'" class="flex-c-center-div">
+                  <div
+                    v-if="props.siteId !== '5' || props.siteId !== '8'"
+                    class="flex-c-center-div"
+                  >
                     <div class="contact-div" @click="swipeToContactUs">
                       {{ $t('common.contact_us') }}
                     </div>
@@ -113,23 +235,53 @@
                 </div>
                 <div v-if="step === 2 && props.siteId === '8'">
                   <el-form-item prop="realName">
-                    <el-input ref="realNameRef" v-model="regForm.realName" :placeholder="$t('fields.realName')"
-                      name="realName" type="text" tabindex="4" autocomplete="on" />
+                    <el-input
+                      ref="realNameRef"
+                      v-model="regForm.realName"
+                      :placeholder="$t('fields.realName')"
+                      name="realName"
+                      type="text"
+                      tabindex="4"
+                      autocomplete="on"
+                    />
                   </el-form-item>
                   <el-form-item prop="telephone">
-                    <el-input ref="telephoneRef" v-model="regForm.telephone" :placeholder="$t('fields.telephone')"
-                      name="telephone" type="text" tabindex="4" autocomplete="on" />
+                    <el-input
+                      ref="telephoneRef"
+                      v-model="regForm.telephone"
+                      :placeholder="$t('fields.telephone')"
+                      name="telephone"
+                      type="text"
+                      tabindex="4"
+                      autocomplete="on"
+                    />
                   </el-form-item>
                   <el-form-item prop="email">
-                    <el-input ref="emailRef" v-model="regForm.email" :placeholder="$t('fields.email')" name="Email"
-                      type="text" tabindex="5" autocomplete="on" />
+                    <el-input
+                      ref="emailRef"
+                      v-model="regForm.email"
+                      :placeholder="$t('fields.email')"
+                      name="Email"
+                      type="text"
+                      tabindex="5"
+                      autocomplete="on"
+                    />
                   </el-form-item>
                   <div class="flex-c-center-div">
-                    <el-button class="common-btn default-btn" style="width:50%;" @click="step = 1">
+                    <el-button
+                      class="common-btn default-btn"
+                      style="width:50%;"
+                      @click="step = 1"
+                    >
                       {{ $t('google.prev_step') }}
                     </el-button>
-                    <el-button class="common-btn" :loading="loading" type="danger" style="width:50%;"
-                      @click.prevent="handleRegister">
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:50%;"
+                      @click.prevent="handleRegister"
+                    >
                       {{ $t('common.apply') }}
                     </el-button>
                   </div>
@@ -142,8 +294,12 @@
       </div>
     </div>
   </div>
-  <el-dialog v-model="showDialog" custom-class="dialog400" @close="onCloseDialog"
-    :title="$t('common.verification_title') + words.join(' , ')">
+  <el-dialog
+    v-model="showDialog"
+    custom-class="dialog400"
+    @close="onCloseDialog"
+    :title="$t('common.verification_title') + words.join(' , ')"
+  >
     <template #title>
       <span class="verification-title">
         {{ $t('common.verification_title') }}
@@ -153,41 +309,67 @@
       </span>
     </template>
     <div id="loadDiv" v-loading="dialogLoading">
-      <el-image style="cursor: pointer" id="imageRef" fit="contain" :src="img" @click="onClickImage" />
-      <div :style="{
-        width: imageOffSetWidth + 'px',
-        height: imageOffSetHeight + 'px',
-        position: 'absolute',
-        'z-index': '3000',
-        display: resultDisplay,
-        'justify-content': 'center',
-        'align-items': 'center',
-      }">
-        <i class="el-icon-success" :style="{
-          'font-size': imageOffSetHeight / 2 + 'px',
-          color: 'rgb(130, 208, 130)',
-        }" />
-        <span :style="{
-          'font-size': imageOffSetHeight / 3 + 'px',
-          color: 'rgb(130, 208, 130)',
-        }">
+      <el-image
+        style="cursor: pointer"
+        id="imageRef"
+        fit="contain"
+        :src="img"
+        @click="onClickImage"
+      />
+      <div
+        :style="{
+          width: imageOffSetWidth + 'px',
+          height: imageOffSetHeight + 'px',
+          position: 'absolute',
+          'z-index': '3000',
+          display: resultDisplay,
+          'justify-content': 'center',
+          'align-items': 'center',
+        }"
+      >
+        <i
+          class="el-icon-success"
+          :style="{
+            'font-size': imageOffSetHeight / 2 + 'px',
+            color: 'rgb(130, 208, 130)',
+          }"
+        />
+        <span
+          :style="{
+            'font-size': imageOffSetHeight / 3 + 'px',
+            color: 'rgb(130, 208, 130)',
+          }"
+        >
           {{ $t('common.verify_success') }}
         </span>
       </div>
     </div>
     <div>
-      <el-button type="info" icon="el-icon-refresh" style="margin-top: 20px;" @click="onGetImage()">
+      <el-button
+        type="info"
+        icon="el-icon-refresh"
+        style="margin-top: 20px;"
+        @click="onGetImage()"
+      >
         {{ $t('common.refresh') }}
       </el-button>
-      <el-button type="success" icon="el-icon-check" style="margin-top: 20px;" @click="userLogin()"
-        :disabled="coordinates.length === 0">
+      <el-button
+        type="success"
+        icon="el-icon-check"
+        style="margin-top: 20px;"
+        @click="userLogin()"
+        :disabled="coordinates.length === 0"
+      >
         {{ $t('common.submit') }}
       </el-button>
     </div>
   </el-dialog>
   <div v-for="(point, index) in coordinates" :key="index">
-    <div class="image-number-point" :style="{ left: point.displayLeft + 'px', top: point.displayTop + 'px' }"
-      @click="onClickNumber(index)">
+    <div
+      class="image-number-point"
+      :style="{ left: point.displayLeft + 'px', top: point.displayTop + 'px' }"
+      @click="onClickNumber(index)"
+    >
       {{ index + 1 }}
     </div>
   </div>
@@ -199,36 +381,72 @@
     </el-steps>
     <div class="auth-container" v-if="passwordStep === 1">
       <div class="auth-title">{{ $t('forgetPassword.messageAuth') }}</div>
-      <el-form ref="googleAuthFormRef" :model="googleAuthForm" :rules="googleAuthRules" class="login-form"
-        autocomplete="no-fill" label-width="100px">
+      <el-form
+        ref="googleAuthFormRef"
+        :model="googleAuthForm"
+        :rules="googleAuthRules"
+        class="login-form"
+        autocomplete="no-fill"
+        label-width="100px"
+      >
         <el-form-item prop="loginName" :label="t('fields.loginName')">
-          <el-input v-model="googleAuthForm.loginName" :placeholder="t('fields.loginName')" name="loginName" type="text"
-            autocomplete="no-fill" />
+          <el-input
+            v-model="googleAuthForm.loginName"
+            :placeholder="t('fields.loginName')"
+            name="loginName"
+            type="text"
+            autocomplete="no-fill"
+          />
         </el-form-item>
         <el-form-item prop="code" :label="t('google.auth_code')">
-          <el-input v-model="googleAuthForm.code" :placeholder="t('google.auth_code')" name="code" maxlength="6"
-            @keypress="restrictIntegerInput($event)" />
+          <el-input
+            v-model="googleAuthForm.code"
+            :placeholder="t('google.auth_code')"
+            name="code"
+            maxlength="6"
+            @keypress="restrictIntegerInput($event)"
+          />
         </el-form-item>
         <div class="flex-c-center-div">
-          <el-button class="common-btn" type="danger" @click="submitVerifyGoogle">
+          <el-button
+            class="common-btn"
+            type="danger"
+            @click="submitVerifyGoogle"
+          >
             {{ $t('forgetPassword.verify') }}
           </el-button>
         </div>
       </el-form>
     </div>
     <div class="auth-container" v-if="passwordStep === 2">
-      <el-form ref="quesAuthFormRef" :model="quesAuthForm" :rules="quesAuthRules" class="login-form"
-        autocomplete="no-fill" label-position="top">
+      <el-form
+        ref="quesAuthFormRef"
+        :model="quesAuthForm"
+        :rules="quesAuthRules"
+        class="login-form"
+        autocomplete="no-fill"
+        label-position="top"
+      >
         <div class="auth-title">{{ $t('forgetPassword.messageQues') }}</div>
         <div>
           <span>
             {{ securityQuestion.question[securityQuestion.currentIndex] }}
           </span>
-          <el-link icon="el-icon-refresh" :underline="false" style="margin:20px" @click="nextQuestion()" />
+          <el-link
+            icon="el-icon-refresh"
+            :underline="false"
+            style="margin:20px"
+            @click="nextQuestion()"
+          />
         </div>
         <el-form-item prop="answer">
-          <el-input v-model="quesAuthForm.answer" :placeholder="t('forgetPassword.answer')" name="answer" type="text"
-            autocomplete="no-fill" />
+          <el-input
+            v-model="quesAuthForm.answer"
+            :placeholder="t('forgetPassword.answer')"
+            name="answer"
+            type="text"
+            autocomplete="no-fill"
+          />
         </el-form-item>
         <div class="flex-c-center-div">
           <el-button class="common-btn" type="danger" @click="submitVerifyQues">
@@ -238,20 +456,48 @@
       </el-form>
     </div>
     <div class="auth-container" v-if="passwordStep === 3">
-      <el-form ref="resetFormRef" :model="resetForm" :rules="resetRules" class="login-form" autocomplete="no-fill"
-        label-width="100px">
+      <el-form
+        ref="resetFormRef"
+        :model="resetForm"
+        :rules="resetRules"
+        class="login-form"
+        autocomplete="no-fill"
+        label-width="100px"
+      >
         <div class="auth-title">{{ $t('forgetPassword.messageReset') }}</div>
         <el-form-item prop="password" :label="t('fields.newPassword')">
-          <el-input v-model="resetForm.password" :placeholder="t('fields.newPassword')" name="password"
-            :type="passwordType" tabindex="2" autocomplete="on" @keyup="checkCapslock" @blur="capsTooltip = false" />
+          <el-input
+            v-model="resetForm.password"
+            :placeholder="t('fields.newPassword')"
+            name="password"
+            :type="passwordType"
+            tabindex="2"
+            autocomplete="on"
+            @keyup="checkCapslock"
+            @blur="capsTooltip = false"
+          />
         </el-form-item>
-        <el-form-item prop="confirmPassword" :label="t('fields.confirmNewPassword')">
-          <el-input v-model="resetForm.confirmPassword" :placeholder="t('fields.confirmNewPassword')"
-            name="confirmPassword" :type="passwordType" tabindex="2" autocomplete="on" @keyup="checkCapslock"
-            @blur="capsTooltip = false" />
+        <el-form-item
+          prop="confirmPassword"
+          :label="t('fields.confirmNewPassword')"
+        >
+          <el-input
+            v-model="resetForm.confirmPassword"
+            :placeholder="t('fields.confirmNewPassword')"
+            name="confirmPassword"
+            :type="passwordType"
+            tabindex="2"
+            autocomplete="on"
+            @keyup="checkCapslock"
+            @blur="capsTooltip = false"
+          />
         </el-form-item>
         <div class="flex-c-center-div">
-          <el-button class="common-btn" type="danger" @click="submitResetPassword">
+          <el-button
+            class="common-btn"
+            type="danger"
+            @click="submitResetPassword"
+          >
             {{ $t('forgetPassword.reset') }}
           </el-button>
         </div>
@@ -273,7 +519,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { UserActionTypes } from '@/store/modules/user/action-types'
 import { ElNotification, ElMessage } from 'element-plus'
-import krLogo from '@/assets/images/kr/kr-logo.png'
+import krLogo from '@/assets/logo-diamond.svg'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -340,7 +586,7 @@ export default defineComponent({
             state.loginForm.codeId = res.data.id
           }
         })
-        .catch(e => { })
+        .catch(e => {})
     }
     const isReg = ref(false)
     const userNameRef = ref(null)
@@ -510,7 +756,7 @@ export default defineComponent({
             message: t('message.required_only_digits_and_alphabet'),
             trigger: 'blur',
           },
-        ]
+        ],
       },
       googleAuthForm: {
         loginName: '',
@@ -627,7 +873,12 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KRW') {
+            if (
+              state.loginForm.site === 'IND' ||
+              state.loginForm.site === 'IW2' ||
+              state.loginForm.site === 'VNM' ||
+              state.loginForm.site === 'KRW'
+            ) {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -688,7 +939,13 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA1' || state.loginForm.site === 'KRW') {
+        if (
+          state.loginForm.site === 'IND' ||
+          state.loginForm.site === 'IW2' ||
+          state.loginForm.site === 'VNM' ||
+          state.loginForm.site === 'KA1' ||
+          state.loginForm.site === 'KRW'
+        ) {
           router
             .push({
               path: state.redirect || '/',
@@ -788,7 +1045,10 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' ? 1 : 0
+        const imgType =
+          languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr'
+            ? 1
+            : 0
         const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
@@ -908,11 +1168,11 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      window.open('https://t.me/cityy88', '_blank').focus();
+      window.open('https://t.me/cityy88', '_blank').focus()
     }
 
-    const handleInput = (event) => {
-      state.regForm.codePersonalAffiliate = state.regForm.codePersonalAffiliate.toUpperCase();
+    const handleInput = event => {
+      state.regForm.codePersonalAffiliate = state.regForm.codePersonalAffiliate.toUpperCase()
     }
 
     const getCaptcha = () => {
@@ -942,7 +1202,7 @@ export default defineComponent({
         hasAffiliate.value = false
       }
       if (route.query.isreg) {
-        isReg.value = true;
+        isReg.value = true
       }
       getCode()
 
@@ -954,7 +1214,7 @@ export default defineComponent({
       var dialog = document.querySelector('.el-overlay-dialog')
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
-      setLanguage('kr');
+      setLanguage('kr')
     })
     return {
       userNameRef,
@@ -985,7 +1245,7 @@ export default defineComponent({
       getCaptcha,
       captchaImg,
       krLogo,
-      handleInput
+      handleInput,
     }
   },
 })
@@ -1168,7 +1428,8 @@ a {
   align-items: center;
   height: 100vh;
   padding: 20px;
-  background: url('../../assets/images/login/bg_login.jpg') no-repeat center center;
+  background: url('../../assets/images/login/bg_login.jpg') no-repeat center
+    center;
   background-size: cover;
 
   .inner {
@@ -1179,7 +1440,7 @@ a {
   }
 
   .logo {
-    width: 200px;
+    width: 300px;
 
     img {
       width: 100%;
@@ -1211,10 +1472,12 @@ a {
 
       .first-liner {
         margin-bottom: 1rem;
-        background: linear-gradient(180deg,
-            #f6d99e 13.1%,
-            #ffe3bd 50.03%,
-            #fbbd68 79.37%);
+        background: linear-gradient(
+          180deg,
+          #f6d99e 13.1%,
+          #ffe3bd 50.03%,
+          #fbbd68 79.37%
+        );
         text-shadow: 0px 4px 4px 0px #1c1614;
         font-size: 5rem;
         -webkit-background-clip: text;
@@ -1238,7 +1501,8 @@ a {
       }
 
       .top {
-        background: url(../../assets/images/login/top.png) no-repeat center center;
+        background: url(../../assets/images/login/top.png) no-repeat center
+          center;
         background-size: cover;
         padding: 20px;
         position: relative;
@@ -1272,7 +1536,8 @@ a {
       }
 
       .mid {
-        background: url(../../assets/images/login/mid.png) no-repeat center center;
+        background: url(../../assets/images/login/mid.png) no-repeat center
+          center;
         background-size: cover;
         margin: 0 10px;
         padding: 25px 20px;
@@ -1284,7 +1549,8 @@ a {
       }
 
       .bot {
-        background: url(../../assets/images/login/dow.png) no-repeat center bottom;
+        background: url(../../assets/images/login/dow.png) no-repeat center
+          bottom;
         background-size: cover;
         padding: 10px;
       }
