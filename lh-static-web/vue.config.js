@@ -64,7 +64,7 @@ module.exports = defineConfig({
     });
   },
   css: {
-    extract: false,
+    extract: process.env.NODE_ENV === "development" ? false : true,
     loaderOptions: {
       sass: {
         additionalData: `
