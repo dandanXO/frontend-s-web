@@ -47,6 +47,12 @@
         fixed
       />
       <el-table-column
+        prop="vipName"
+        :label="t('fields.vipLevel')"
+        width="120"
+        fixed
+      />
+      <el-table-column
         prop="source"
         :label="t('fields.sourceType')"
         width="120"
