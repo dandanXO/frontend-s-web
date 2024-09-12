@@ -309,7 +309,7 @@ export default defineComponent({
       checkIfVirtualMachine();
       checkServerStatus();
       // getCSA();
-      getAppInfo();
+      // getAppInfo();
       initOrientation();
       loadSocialMediaLinks();
 
