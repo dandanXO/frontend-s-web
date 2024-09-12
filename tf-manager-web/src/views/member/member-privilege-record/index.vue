@@ -104,7 +104,7 @@
       <el-table-column
         prop="memberName"
         :label="t('fields.memberName')"
-        width="200"
+        width="300"
       />
       <el-table-column
         prop="vipName"
@@ -532,7 +532,7 @@ function getSummaries(param) {
     columns.forEach((column, index) => {
       if (index === 0) {
         sums[index] = t('fields.noOfPrivilegeClaimed') + '   ' + page.total
-      } else if (index === 1) {
+      } else if (index === 2) {
         sums[index] = sums[index] =
           t('fields.totalPrivilegeClaimAmount') +
           '   $' +
