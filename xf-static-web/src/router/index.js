@@ -11,11 +11,11 @@ const routes = [
     path: "/",
     name: "home",
     component: LayoutView,
-    redirect: "home",
+    redirect: "homeroot",
     children: [
       {
         path: "home",
-        name: "home",
+        name: "homeroot",
         component: HomeView
       },
       {
@@ -111,16 +111,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "depositLoading" */ "../components/depositLoading.vue")
       },
       {
+        path: "/maintenance",
+        name: "maintenance",
+        component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
+      },
+      {
         path: "/:catchAll(.*)*",
         redirect: "/",
         component: () => import("../views/HomeView.vue")
       }
     ]
-  },
-  {
-    path: "/maintenance",
-    name: "maintenance",
-    component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
   }
   // {
   //   path: '/game',
