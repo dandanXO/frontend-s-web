@@ -1,6 +1,6 @@
 <template>
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">Withdraw Currency</div>
+    <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
       <div>
         <q-skeleton style="height: 96px" />
@@ -34,7 +34,7 @@
       </div>
 
       <template v-if="selectedWithdraw">
-        <div class="method-title q-mt-md q-mb-sm">Payment channels</div>
+        <div class="method-title q-mt-md q-mb-sm">{{ $t("withdraw.paymentChannels") }}</div>
         <div class="withdraw-methods-container">
           <template v-for="(item, index) in selectedWithdraw" :key="index">
             <div
@@ -46,7 +46,7 @@
                 <div class="item-detail">
                   <div class="txt-maintenance">
                     <q-icon name="build" size="16px" />
-                    This channel is under maintenance
+                    {{ $t("withdraw.channelUnderMaintenance") }}
                   </div>
                 </div>
               </template>
@@ -62,13 +62,13 @@
       </template>
 
       <template v-if="isSelectedMethod">
-        <div
+        <!-- <div
           class="bank-account-container"
           v-if="isBankType === 'BANK' && (bankCardList.length === 0 || isAddNewAccount)"
         >
           <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
-              <div class="title">Bank Name</div>
+              <div class="title">{{ $t("header.bankName") }}</div>
             </div>
             <div>
               <q-select
@@ -92,11 +92,13 @@
               ></q-select>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
-          <div class="method-title q-mb-sm">Choose {{ displayCardType }} Account</div>
+          <div class="method-title q-mb-sm">
+            {{ $t("header.choose") }} {{ displayCardType }} {{ $t("header.account") }}
+          </div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
               <div class="w-form-input">
@@ -153,7 +155,7 @@
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
-              <div class="card-label">Add New Account</div>
+              <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
             </div>
           </div>
         </div>
@@ -162,53 +164,36 @@
           <template v-if="bankCardList.length === 0 || isAddNewAccount">
             <div class="w-form-item w-form-item--bankcard">
               <div class="top-wrapper">
-                <div class="title">Account Number</div>
+                <div class="title">{{ $t("form.phone") }}</div>
               </div>
               <div class="mid-wrapper">
                 <q-input
                   filled
                   dense
                   clearable
+                  type="number"
                   ref="bankNumberRef"
-                  placeholder="Enter Account Number"
+                  :placeholder="$t('form.phone')"
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
                   hide-bottom-space
                   @focus="scrollToInput"
                   @blur="isInputFocus = false"
-                ></q-input>
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../../assets/images/auth/phone.svg" />
+                    <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                  </template>
+                </q-input>
               </div>
             </div>
-            <!--            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">-->
-            <!--              <div class="top-wrapper">-->
-            <!--                <div class="title">Bank IFSC Code</div>-->
-            <!--              </div>-->
-            <!--              <div class="mid-wrapper">-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  dense-->
-            <!--                  clearable-->
-            <!--                  ref="bankAddressRef"-->
-            <!--                  placeholder="Enter Bank IFSC Code"-->
-            <!--                  v-model="bankCardField.cardAddress"-->
-            <!--                  :rules="[(_) => isValidCardAddress()]"-->
-            <!--                  hide-bottom-space-->
-            <!--                ></q-input>-->
-            <!--              </div>-->
-            <!--            </div>-->
           </template>
-
           <div class="top-wrapper">
-            <!-- <div class="title">
-            Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-            {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
-          </div> -->
             <div class="title">
-              Withdrawal Amount ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
+              {{ $t("form.withdrawalAmount") }} ({{ convertToCommaAmount(selectedMethodItem.withdrawMin) }} -
               {{ convertToCommaAmount(selectedMethodItem.withdrawMax) }} {{ store.currency.label }})
             </div>
           </div>
-
           <div class="mid-wrapper">
             <q-input
               type="number"
@@ -219,12 +204,14 @@
               placeholder="Withdraw Amount"
               v-model="withdrawInfo.amount"
               :rules="[
-                (val) => !!val || 'Please Enter Withdraw Amount',
-                (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-                (val) => val < selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
+                (val) => !!val || $t('form.withdrawalAmount_rules_01'),
+                (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
+                (val) => val < selectedMethodItem.withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
                 (val) =>
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                  `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+                  `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${
+                    selectedMethodItem.withdrawMax
+                  }`
               ]"
               hide-bottom-space
               @focus="scrollToInput"
@@ -355,6 +342,7 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+import { t } from "src/boot/lang";
 
 // withdraw component
 const qs = require("qs");
@@ -661,8 +649,14 @@ const submitWithdrawBank = () => {
   bankCardField.withdrawCode = selectedMethodItem.value.code;
   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
+  const formData = { ...bankCardField };
+
+  if (!formData.cardNumber.startsWith("+55")) {
+    formData.cardNumber = `+55${formData.cardNumber}`;
+  }
+
   api
-    .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+    .post("/session/withdrawAndBankCard", qs.stringify(formData))
     .then((response) => {
       isSubmitDisable.value = false;
       if (response.code === 0) {
@@ -789,19 +783,15 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
+  const result = !cardNumber ? t("form.phone_rules_01") : true;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
+  if (cardNumber.startsWith("0")) {
+    return t("form.phone_rules_03");
+  }
 
-  if (cardNumber && selectedMethodItem.value.code === "GCASH") {
-    const gCashCheck =
-      cardNumber.substring(0, 1) !== "0"
-        ? "The GCASH card number must start with '0'"
-        : cardNumber.length !== 11
-        ? "The GCASH card number length should be 11"
-        : true;
-    if (gCashCheck !== true) {
-      return gCashCheck;
-    }
+  const digitCount = cardNumber.match(/\d/g)?.length || 0;
+  if (digitCount !== 11) {
+    return t("form.phone_rules_02");
   }
 
   return result;

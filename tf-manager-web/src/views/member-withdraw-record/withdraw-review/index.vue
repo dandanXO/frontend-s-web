@@ -382,7 +382,7 @@
         width="120"
       />
 
-      <el-table-column prop="remark" :label="t('fields.remark')" width="120" />
+      <el-table-column prop="remark" :label="t('fields.remark')" width="120"/>
 
       <el-table-column
         prop="review"
@@ -483,23 +483,29 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview, getExportWithdrawalReviewReport } from '../../../api/report-summary'
-import { getSiteListSimple } from '../../../api/site'
-import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
-import { useI18n } from 'vue-i18n'
-import { hasPermission } from '../../../utils/util'
-import { getVipList } from '../../../api/vip'
-import { getFinancialLevels } from '../../../api/financial-level'
+import {
+  getMemberReport,
+  addReview,
+  getTotalWithdrawReview,
+  getExportWithdrawalReviewReport
+} from '../../../api/report-summary'
+import {getSiteListSimple} from '../../../api/site'
+import {useStore} from '../../../store'
+import {TENANT} from '../../../store/modules/user/action-types'
+import {useI18n} from 'vue-i18n'
+import {hasPermission} from '../../../utils/util'
+import {getVipList} from '../../../api/vip'
+import {getFinancialLevels} from '../../../api/financial-level'
 import {
   convertDateToEnd,
   convertDateToStart,
   getShortcuts,
 } from '@/utils/datetime'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
-const { t } = useI18n()
+import {formatInputTimeZone} from "@/utils/format-timeZone"
+
+const {t} = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
@@ -526,44 +532,44 @@ const tableHeight = computed(() => {
 
 const sortList = reactive({
   list: [
-    { label: t('fields.byprofitasc'), value: '1' },
-    { label: t('fields.byprofitdesc'), value: '2' },
-    { label: t('fields.bydateasc'), value: '3' },
-    { label: t('fields.bydatedesc'), value: '4' },
+    {label: t('fields.byprofitasc'), value: '1'},
+    {label: t('fields.byprofitdesc'), value: '2'},
+    {label: t('fields.bydateasc'), value: '3'},
+    {label: t('fields.bydatedesc'), value: '4'},
   ],
 })
 
 const reviewList = reactive({
   list: [
-    { label: t('fields.reviewno'), value: '1' },
-    { label: t('fields.reviewsuccess'), value: '2' },
-    { label: t('fields.reviewfail'), value: '3' },
+    {label: t('fields.reviewno'), value: '1'},
+    {label: t('fields.reviewsuccess'), value: '2'},
+    {label: t('fields.reviewfail'), value: '3'},
   ],
 })
 
 const reviewStatusList = reactive({
   list: [
-    { label: t('fields.allreviewstatus'), value: '1' },
-    { label: t('fields.reviewno'), value: 'PENDING' },
-    { label: t('fields.reviewsuccess'), value: 'APPROVED' },
-    { label: t('fields.reviewfail'), value: 'REJECTED' },
+    {label: t('fields.allreviewstatus'), value: '1'},
+    {label: t('fields.reviewno'), value: 'PENDING'},
+    {label: t('fields.reviewsuccess'), value: 'APPROVED'},
+    {label: t('fields.reviewfail'), value: 'REJECTED'},
   ],
 })
 
 const profitList = reactive({
   list: [
-    { label: t('fields.allprofit'), value: '1' },
-    { label: t('fields.profitpositive'), value: '2' },
-    { label: t('fields.profitnegative'), value: '3' },
+    {label: t('fields.allprofit'), value: '1'},
+    {label: t('fields.profitpositive'), value: '2'},
+    {label: t('fields.profitnegative'), value: '3'},
   ],
 })
 
 const source = reactive({
   list: [
-    { label: t('fields.allSource'), value: '1' },
-    { label: 'DIRECT', value: 'DIRECT' },
-    { label: 'REFER', value: 'REFER' },
-    { label: 'AFFILIATE', value: 'AFFILIATE' }
+    {label: t('fields.allSource'), value: '1'},
+    {label: 'DIRECT', value: 'DIRECT'},
+    {label: 'REFER', value: 'REFER'},
+    {label: 'AFFILIATE', value: 'AFFILIATE'}
   ],
 })
 
@@ -648,7 +654,7 @@ async function loadMemberRecord() {
     alert(t('fields.maxno'))
   } else {
     page.loading = true
-    const requestCopy = { ...request }
+    const requestCopy = {...request}
     const query = {}
     Object.entries(requestCopy).forEach(([key, value]) => {
       if (value) {
@@ -666,26 +672,26 @@ async function loadMemberRecord() {
       }
     }
 
-    const { data: ret } = await getMemberReport(query)
+    const {data: ret} = await getMemberReport(query)
     page.pages = ret.pages
     page.records = ret.records
 
-    const { data: ret1 } = await getTotalWithdrawReview(query)
+    const {data: ret1} = await getTotalWithdrawReview(query)
     page1.records = ret1
-
+    request.doris = false
     page.loading = false
   }
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple()
+  const {data: site} = await getSiteListSimple()
   siteList.list = site
 }
 
 async function loadVipList() {
   var ret = []
-  ret.push({ id: '1', name: t('fields.allvip') })
-  const { data: vList } = await getVipList({ siteId: request.siteId })
+  ret.push({id: '1', name: t('fields.allvip')})
+  const {data: vList} = await getVipList({siteId: request.siteId})
   vList.forEach((item, index) => {
     ret.push(item)
   })
@@ -695,8 +701,8 @@ async function loadVipList() {
 
 async function loadFinancialLevelList() {
   var ret = []
-  ret.push({ id: '1', name: t('fields.allfinanciallevel') })
-  const { data: fList } = await getFinancialLevels({ siteId: request.siteId })
+  ret.push({id: '1', name: t('fields.allfinanciallevel')})
+  const {data: fList} = await getFinancialLevels({siteId: request.siteId})
   fList.forEach((item, index) => {
     ret.push(item)
   })
@@ -713,9 +719,9 @@ function getSummaries(param) {
   if (!hasPermission(['sys:report:summary:total'])) {
     return []
   }
-  const { columns } = param
+  const {columns} = param
   var sums = []
-  const requestCopy = { ...request }
+  const requestCopy = {...request}
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
@@ -837,7 +843,7 @@ onMounted(async () => {
 })
 
 function checkQuery() {
-  const requestCopy = { ...request }
+  const requestCopy = {...request}
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
@@ -860,7 +866,7 @@ async function requestExportExcel() {
   const query = checkQuery();
   query.requestBy = store.state.user.name;
   query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getExportWithdrawalReviewReport(query);
+  const {data: ret} = await getExportWithdrawalReviewReport(query);
   if (ret) {
     uiControl.messageVisible = true;
   }
@@ -970,7 +976,7 @@ async function showDialog(record) {
 }
 </style>
 <style lang="scss">
-.roles-main .el-table__footer-wrapper{
+.roles-main .el-table__footer-wrapper {
   height: 43px;
 }
 </style>

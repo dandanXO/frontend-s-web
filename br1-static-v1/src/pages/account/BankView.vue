@@ -3,43 +3,50 @@
     <div class="bank-add-lists">
       <div class="bank-card-add" @click="onAddCardClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add Bank</div>
+        <div class="card-label">{{ $t("header.addCard") }}</div>
       </div>
-      <div class="bank-card-add" @click="onAddUSDTClick()">
+      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add eWallet</div>
-      </div>
+        <div class="card-label">{{ $t("header.addEWallet") }}</div>
+      </div> -->
     </div>
 
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
       <q-card>
-        <DialogHeader title="Are You Sure To Unbind?"></DialogHeader>
-
+        <DialogHeader :title="$t('notify.areYouSureUnbind')"></DialogHeader>
         <q-card-section>
           <q-form>
-            <div class="input-title">Account Number</div>
+            <div class="input-title">{{ $t("form.phone") }}</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              label="Enter Account Number"
-              lazy-rules
+              :label="$t('form.phone')"
               :rules="[
-                (val) => (val && val.length > 0) || 'Please Enter Account Number',
-                (val) => (val && val === selectedUnbindCardNum) || 'Please Enter The Correct Account Number'
+                (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                (val) => {
+                  const cleanedSelectedNum = selectedUnbindCardNum.startsWith('+55')
+                    ? selectedUnbindCardNum.slice(3)
+                    : selectedUnbindCardNum;
+                  return val === cleanedSelectedNum || $t('form.phone_rules_04');
+                }
               ]"
               label-color="secondary"
-            />
+            >
+              <template v-slot:prepend>
+                <img class="white-svg" src="../../assets/images/auth/phone.svg" />
+                <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+              </template>
+            </q-input>
           </q-form>
         </q-card-section>
-
         <ConfirmButton
-          label="Confirm"
+          :label="$t('btn.confirm')"
           :confirmFunc="unbind"
-          :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
+          :isDisabled="!isInputValidUnbind"
         ></ConfirmButton>
       </q-card>
     </q-dialog>
@@ -72,7 +79,7 @@
             </div>
             <div class="item-content">
               <div class="item-acc">
-                Account: {{ item.cardNumber }}
+                {{ $t("header.account") }}: {{ item.cardNumber }}
                 <!--                <br />-->
                 <!--                IFSC: {{ item.cardAddress }}-->
               </div>
@@ -155,7 +162,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onActivated } from "vue";
+import { ref, reactive, onMounted, onActivated, computed } from "vue";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
@@ -261,6 +268,13 @@ const onAddUSDTClick = () => {
 const onUpdateCardClick = (bankCard, bankType) => {
   updateBankCardModalRef.value.onUpdateCardClick(bankCard, bankType);
 };
+
+const isInputValidUnbind = computed(() => {
+  const cleanedSelectedNum = selectedUnbindCardNum.value.startsWith("+55")
+    ? selectedUnbindCardNum.value.slice(3)
+    : selectedUnbindCardNum.value;
+  return unbindField.bankCardNumber === cleanedSelectedNum;
+});
 
 // init
 const bankCardList = ref([]);

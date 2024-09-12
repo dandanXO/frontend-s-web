@@ -14,6 +14,9 @@ export default {
     addCrypto: "Add crypto",
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
+    addBank: "Add Bank",
+    addEWallet: "Add eWallet",
+    vip: "VIP",
     message: "Message",
     feedback: "Feedback",
     feedbackDetail: "Feedback Detail",
@@ -50,7 +53,24 @@ export default {
     promotionRecord: "Promotion Record",
     betRecord: "Bet Record",
     referralRecord: "Referral Record",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    depositAmount: "Deposit Amount",
+    bankName: "Bank Name",
+    bankAccount: "Bank Account",
+    bankCardNumber: "Bank Card Number",
+    amount: "Amount",
+    extra: "Extra",
+    choose: "Choose",
+    account: "Account",
+    gameLobby: "Game Lobby",
+    forgotPassword: "Forgot Password",
+    liveCasino: "Live Casino",
+    poker: "Poker",
+    eSports: "E-Sports",
+    sports: "Sports",
+    fishing: "Fishing",
+    activitiesDetails: "Activities Details",
+    addCard: "Add Card"
   },
   bottomNav: {
     home: "Home",
@@ -60,17 +80,19 @@ export default {
     me: "Me"
   },
   form: {
-    phone: "Phone",
-    phone_placeholder: "Please enter your mobile number",
+    prependNumber: "+55",
+    phone: "Phone Number",
+    phone_placeholder: "Please enter your phone number",
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must have 11 digits",
-    phone_rules_03: "The phone number must start with '03'",
+    phone_rules_03: "The phone number must not start with '0'",
+    phone_rules_04: "Please insert the correct account number",
     password: "Password",
     password_placeholder: "Please enter password",
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide email, We Will Send OTP To Your Registered Email.",
+    forgotPassword_desc: "Please Provide Your Phone Number, We Will Send OTP To Your Registered Phone Number.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
@@ -92,10 +114,12 @@ export default {
     confirmNewPassword: "Confirm New Password",
     confirmNewPassword_placeholder: "Please enter new confirm password",
     confirmNewPassword_rules_01: "Please insert new confirm password",
-    confirmNewPassword_rules_02: "Confirm password does not match",
+    confirmNewPassword_rules_02: "Password Must Be 6 To 11 Character",
+    confirmNewPassword_rules_03: "Confirm password does not match",
     depositAmount: "Amount",
     depositAmount_placeholder: "Please enter the amount",
     depositAmount_rules_01: "Deposit should be between ",
+    depositAmount_rules_02: "Deposit should be more than ",
     withdrawChoose_placeholder: "Choose account",
     withdrawChoose_rules_01: "Please Select A Virtual Account",
     withdrawalAmount: "Withdrawal Amount",
@@ -160,7 +184,29 @@ export default {
     content: "Content",
     content_placeholder: "Please enter content",
     content_rules_01: "Please enter content",
-    content_rules_02: "Content length is 500 words or less"
+    content_rules_02: "Content length is 500 words or less",
+    accountNumber: "Account Number",
+    accountNumber_placeholder: "Please insert account number",
+    accountNumber_rules_01: "Please insert account number",
+    accountNumber_rules_02: "Please insert the correct account number",
+    addBankAccount: "Add Bank Account",
+    bank: "Bank",
+    selectABank: "Select A Bank",
+    pleaseSelectABank: "Please Select A Bank",
+    holderName: "Holder Name",
+    holderName_placeholder: "Please Enter Holder Name",
+    holderName_rules_01: "Please Insert Holder Name",
+    holderName_rules_02: "Please Insert 2 or More Characters",
+    addCryptoWallet: "Add Crypto Wallet",
+    selectCrypto: "Select Crypto",
+    pleaseSelectACrypto: "Please Select A Crypto",
+    cryptoCardNumber: "Crypto Card Number",
+    addEWallet: "Add eWallet",
+    eWallet: "eWallet",
+    eWalletNumber: "eWallet Number",
+    selectEWallet: "Select eWallet",
+    pleaseSelectAEWallet: "Please Select A eWallet",
+    eWalletCardNumber: "eWallet Card Number"
   },
   btn: {
     confirm: "Confirm",
@@ -186,18 +232,27 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    notAMember: "Not a member?",
+    createAccount: "Create account"
   },
   notify: {
     noRecord: "No Record",
     haventFoundAnyRecord: "Haven’t found any record",
     updatedSuccessfully: "Updated successfully",
+    newPasswordUpdatedSuccessfully: "New password updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    otpSent: "OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.",
+    passwordResetcompleted: "Password Reset Completed",
+    serialNumberCopied: "Serial Number Copied to clipboard.",
+    fillInPersonalDetails: "Please fill in your personal details",
+    addSucceed: "Add Succeed",
+    areYouSureUnbind: "Are You Sure To Unbind?"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -245,13 +300,21 @@ export default {
     vip: "VIP",
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    version: "Version"
   },
   deposit: {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
-    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
+    depositMethod: "Deposit Method",
+    paymentChannels: "Payment Channels",
+    wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
+    wagerExample: "Eg. Deposit R$1,000, require R$10,000 wager in slot games",
+    deposited: "Deposited",
+    youWillBeRedirect: "You will be redirected to your bank page to complete the deposit.",
+    afterDepositSuccessfully: "After deposited successfully, it will be reflected here."
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -262,7 +325,11 @@ export default {
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
     withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    withdrawCurrency: "Withdraw Currency",
+    paymentChannels: "Payment Channels",
+    channelUnderMaintenance: "This channel is under maintenance",
+    accountNumber: "Account Number"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -313,7 +380,20 @@ export default {
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
-      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
+      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
+    monthlyCumulativeDeposit: "Monthly Cumulative Deposit An Upgrade Vip Level",
+    level: "Level",
+    amount: "Amount",
+    turnover: "Turnover",
+    deposit: "Deposit",
+    aftertheRecharge:
+      "After the recharge on the day reaches the standard, the next day will increase the VIP level and issue corresponding upgrade rewards.",
+    vipPromoBonus: "VIP Promotion Bonus",
+    promotionBonusDesc: "Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.",
+    vipMonthlyCashBonus: "VIP Monthly Cash Bonus",
+    cashBonusDesc:
+      "Cash Bonus: Based on your VIP level at the end of this month, this reward will be sent to you at 10 a.m. on the 1st of next month.",
+    dailyWithdrawalLimits: "Daily withdrawal limits based on VIP levels"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -469,7 +549,7 @@ export default {
     amount: "Amount",
     applying: "Processing",
     failed: "Failed",
-    Success: "Success",
+    success: "Success",
     underReview: "Processing",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
@@ -483,10 +563,13 @@ export default {
     bank: "BANK",
     noRecord: "No record",
     noMoreRecord: "No more record",
+    noMessage: "No message",
     bytoday: "By Today",
     byyesterday: "By Yesterday",
     all: "All",
-    turnover_requi: "TurnOver Requirement"
+    turnover_requi: "TurnOver Requirement",
+    amount: "Amount",
+    reachTheEnd: "You have reached the end of the page."
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -501,7 +584,8 @@ export default {
     pleaseEnterCardAccount: "Please enter bank account number",
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
     nameofCardAcc: "Card Account Name",
-    insertCardAccName: "Please insert card account name"
+    insertCardAccName: "Please insert card account name",
+    accountNum: "Account Number"
   },
   promo: {
     all: "ALL",

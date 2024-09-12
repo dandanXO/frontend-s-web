@@ -1,6 +1,6 @@
 <template>
   <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">Deposit Method</div>
+    <div class="method-title q-mb-sm">{{ $t("deposit.depositMethod") }}</div>
     <div class="deposit-methods-container" v-if="isLoadingInitPay">
       <div>
         <q-skeleton style="height: 96px" />
@@ -30,7 +30,7 @@
         </template>
       </div>
 
-      <div class="method-title q-mt-md q-mb-sm">Payment Channels</div>
+      <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
       <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in selectedItemChannel" :key="index">
           <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
@@ -40,7 +40,7 @@
       </div>
 
       <template v-if="selectedChanelExtra.length > 0">
-        <div class="method-title q-mt-md q-mb-sm">Bank</div>
+        <div class="method-title q-mt-md q-mb-sm">{{ $t("header.bank") }}</div>
         <div>
           <q-select
             v-model="selectedChannelBank"
@@ -61,7 +61,7 @@
 
     <!-- select amount -->
     <template v-if="isSelectedMethod">
-      <div class="method-title q-mt-md q-mb-sm">Deposit Amount</div>
+      <div class="method-title q-mt-md q-mb-sm">{{ $t("header.depositAmount") }}</div>
       <div class="deposit-methods-container">
         <template v-for="(amount, index) in selectedItemAmount" :key="index">
           <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
@@ -86,28 +86,28 @@
       <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
         <div class="submit-message">
           <div class="line">
-            <span>Bank Name:</span>
+            <span>{{ $t("header.bankName") }}:</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
               {{ copybtntxt0 }}
             </q-btn>
           </div>
           <div class="line">
-            <span>Bank Account:</span>
+            <span>{{ $t("header.bankAccount") }}:</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
               {{ copybtntxt1 }}
             </q-btn>
           </div>
           <div class="line">
-            <span>Bank Card Number:</span>
+            <span>{{ $t("header.bankCardNumber") }}:</span>
             <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
               {{ copybtntxt2 }}
             </q-btn>
           </div>
           <div class="line">
-            <span>Deposit Amount:</span>
+            <span>{{ $t("header.depositAmount") }}:</span>
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
             <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
               {{ copybtntxt3 }}
@@ -120,7 +120,7 @@
         <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
           <div class="deposit-enter-amt" v-if="amountList.length === 0">
             <div class="lil-title">
-              Amount ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
+              {{ $t("header.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
               {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
             </div>
             <q-input
@@ -135,7 +135,7 @@
                 verifyDepositAmount,
                 (val) =>
                   (val >= selectedChannel.depositMin && val <= selectedChannel.depositMax) ||
-                  `Deposit Amount Must In Between ${convertToCommaAmount(
+                  `${$t('form.depositAmount_rules_01')} ${convertToCommaAmount(
                     selectedChannel.depositMin
                   )} - ${convertToCommaAmount(selectedChannel.depositMax)}`
               ]"
@@ -154,20 +154,20 @@
 
               <template v-slot:append>
                 <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
-                  Extra:
-                  <span>{{ getFtdCommaAmount(form.localAmount) }}P</span>
+                  {{ $t("header.extra") }}:
+                  <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
                 </div>
 
                 <div class="amt-input-append" v-if="isPrivilege && form.localAmount">
-                  Extra:
-                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}P</span>
+                  {{ $t("header.extra") }}:
+                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
                 </div>
               </template>
             </q-input>
           </div>
 
           <template v-else>
-            <div class="lil-title q-mt-lg">Select Amount</div>
+            <div class="lil-title q-mt-lg">{{ $t("deposit.selectAmount") }}</div>
             <q-select
               ref="depositAmtRef"
               label="Select Amount"
@@ -186,26 +186,12 @@
               </template>
             </q-select>
           </template>
-
-          <!-- <div class="q-mt-md q-mb-md text-grey-7">
-          Minimum Amount:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
-          <br />
-          Maximum Amount:
-          {{
-            activeMethod.depositMax
-              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : "No Limit"
-          }}
-        </div> -->
-
           <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
             <span style="color: #fff">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
-
           <BankComponent
             v-show="selectedPayType && bankCardList.length"
             ref="payTypeClass"
@@ -215,32 +201,27 @@
             @selected="selectedBank"
             @successful="isDeposited = true"
           ></BankComponent>
-
           <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
         </q-form>
       </div>
-
       <div class="q-mt-lg">
         <div :class="`btn-submit`" @click="confirmDeposit">
           <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
-          <template v-else>Submit</template>
+          <template v-else>{{ $t("btn.submit") }}</template>
         </div>
       </div>
-
       <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
-        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-        <div class="q-mt-sm">
-          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager in slot games
-        </div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
       </div>
       <div
         class="q-mt-lg"
         style="color: #576373"
         v-else-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType)"
       >
-        <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
+        <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
         <div class="q-mt-sm">
-          Eg. Deposit {{ store.currency.value }}1,000, require {{ store.currency.value }}10,000 wager
+          {{ $t("deposit.wagerExample") }}
         </div>
       </div>
     </template>
@@ -248,32 +229,20 @@
 
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">Deposited</q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">
+        {{ $t("deposit.deposited") }}
+      </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
-          You will be redirected to your bank page to complete the deposit.
+          {{ $t("deposit.youWillBeRedirect") }}
           <br />
           <br />
-          After deposited successfully, it will be reflected here.
+          {{ $t("deposit.afterDepositSuccessfully") }}
         </q-card-section>
         <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" />
       </div>
     </q-card>
   </q-dialog>
-
-  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
-    </div>
-  </q-dialog>
-
-  <q-dialog width="100%" v-model="userKYCDialog" persistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
-    </div>
-  </q-dialog> -->
 </template>
 
 <script setup>
@@ -290,6 +259,7 @@ import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { cached } from "boot/cache";
 import { storeToRefs } from "pinia";
+import { t } from "../../boot/lang";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -366,8 +336,8 @@ const blurCode = () => {
 };
 
 const verifyDepositAmount = ref([
-  (val) => !!val || "Please enter the amount",
-  (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
+  (val) => !!val || t("form.depositAmount_placeholder"),
+  (val) => val > calculatedMinDeposit.value - 1 || t("form.depositAmount_rules_02") + calculatedMinDeposit.value
   // (val) =>
   //   val < activeMethod.value.depositMax + 1 ||
   //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
