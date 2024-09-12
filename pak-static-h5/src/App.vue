@@ -3,9 +3,10 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, nextTick, watch } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
+import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
@@ -285,10 +286,27 @@ export default defineComponent({
       });
     };
 
+    const checkIfVirtualMachine = async () => {
+      const info = await Device.getInfo();
+
+      // 检测是否为虚拟机或模拟器
+      const isEmulator = info.isVirtual;
+      const model = info.model;
+      const manufacturer = info.manufacturer;
+
+      if (isEmulator || model.includes("sdk") || manufacturer.includes("Genymotion")) {
+        console.log("This is a virtual machine or emulator.");
+        App.exitApp();
+      } else {
+        console.log("This is a physical device.");
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
+      checkIfVirtualMachine();
       checkServerStatus();
       // getCSA();
       getAppInfo();
