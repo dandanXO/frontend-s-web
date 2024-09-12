@@ -152,12 +152,12 @@ watch(
 
   .about-content,
   :deep(.el-tabs__header) {
-    padding: 50px 20px;
+    padding: 25px 40px 50px;
     border-radius: 0.9375rem;
     background: #fff;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     height: 100%;
-    min-height: 1240px;
+    min-height: 1000px;
     flex: 1;
 
     .title {
@@ -202,6 +202,8 @@ watch(
   .el-menu-vertical-demo {
     box-shadow: 0px 0px 10px 0px #0000001a;
     border-radius: 20px;
+    width: 280px;
+    padding: 15px 10px;
   }
 
   :deep(.el-menu-item.is-active) {
