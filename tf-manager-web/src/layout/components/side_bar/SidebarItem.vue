@@ -164,6 +164,10 @@ export default defineComponent({
       }
       query.withdrawDate = query.withdrawDate.join(',');
       query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
+      if (!query.siteId) {
+        const store = useStore();
+        query.siteId = store.state.user.siteId;
+      }
       return query;
     }
 
