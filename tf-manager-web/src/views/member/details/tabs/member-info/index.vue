@@ -2789,15 +2789,13 @@ export default defineComponent({
 }
 
 .box-card {
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 0;
   }
 }
 
-::v-deep {
-  .el-tabs__content {
-    padding: 0;
-  }
+:deep(.el-tabs__content) {
+  padding: 0;
 }
 
 .platform {
@@ -2825,7 +2823,7 @@ export default defineComponent({
   }
 }
 
-::v-deep([class^='el-table']) {
+:deep([class^='el-table']) {
   .cell,
   .remove-padding {
     padding: 0 !important;

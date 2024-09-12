@@ -344,7 +344,7 @@ export default defineComponent({
   .el-sub-menu {
     overflow: hidden;
 
-    ::v-deep(.el-sub-menu__title) {
+    :deep(.el-sub-menu__title) {
       display: flex;
 
       & > span {
@@ -358,7 +358,7 @@ export default defineComponent({
 
 .nest-menu {
   .el-sub-menu {
-    ::v-deep(.el-sub-menu__title) {
+    :deep(.el-sub-menu__title) {
       background-color: #1f2d3d !important;
     }
   }
@@ -377,7 +377,7 @@ svg {
     }
   }
 
-  ::v-deep(.el-sub-menu__title) {
+  :deep(.el-sub-menu__title) {
     display: flex;
 
     & > span {

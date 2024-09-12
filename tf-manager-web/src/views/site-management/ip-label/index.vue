@@ -264,7 +264,7 @@ onMounted(async() => {
   padding: 4px 0;
 }
 
-.el-form-item--level-color:deep .el-form-item__content {
+.el-form-item--level-color:deep(.el-form-item__content) {
   display: flex !important;
 }
 

@@ -463,14 +463,14 @@ onMounted(async () => {
 .config_form {
   padding: 10px;
 
-  ::v-deep .withdrawal_failure_type {
+  :deep(.withdrawal_failure_type) {
     display: grid;
     grid-template-columns: repeat(2, 500px);
     grid-row-gap: 5px;
     grid-column-gap: 40px;
   }
 
-  ::v-deep .adjust_type {
+  :deep(.adjust_type) {
     display: flex;
 
     .el-input {
@@ -485,11 +485,11 @@ onMounted(async () => {
     }
   }
 
-  ::v-deep label {
+  :deep(label) {
     font-weight: 900;
   }
 
-  ::v-deep .el-input {
+  :deep(.el-input) {
     width: 200px;
   }
 }
