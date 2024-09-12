@@ -176,11 +176,12 @@
           type="primary"
           v-permission="['sys:report:summary:review:export']"
           @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
-
+    <!-- eslint-disable -->
     <el-table
       :data="page.records"
       ref="table"
@@ -189,7 +190,7 @@
       highlight-current-row
       v-loading="page.loading"
       :height="tableHeight"
-      :header-cell-style="{background: 'lightgray'}"
+      :header-cell-style="{ background: 'lightgray' }"
       :empty-text="t('fields.noData')"
       :summary-method="getSummaries"
       show-summary
@@ -264,11 +265,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column
-        prop="time"
-        :label="t('fields.date')"
-        width="120"
-      />
+      <el-table-column prop="time" :label="t('fields.date')" width="120" />
       <el-table-column
         prop="totalBet"
         :label="t('fields.totalBet')"
@@ -460,8 +457,13 @@
       </div>
     </el-dialog>
 
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -481,15 +483,15 @@ import {
   getMemberReport,
   addReview,
   getTotalWithdrawReview,
-  getExportWithdrawalReviewReport
+  getExportWithdrawalReviewReport,
 } from '../../../api/report-summary'
-import {getSiteListSimple} from '../../../api/site'
-import {useStore} from '../../../store'
-import {TENANT} from '../../../store/modules/user/action-types'
-import {useI18n} from 'vue-i18n'
-import {hasPermission} from '../../../utils/util'
-import {getVipList} from '../../../api/vip'
-import {getFinancialLevels} from '../../../api/financial-level'
+import { getSiteListSimple } from '../../../api/site'
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
+import { hasPermission } from '../../../utils/util'
+import { getVipList } from '../../../api/vip'
+import { getFinancialLevels } from '../../../api/financial-level'
 import {
   convertDateToEnd,
   convertDateToStart,
@@ -515,11 +517,11 @@ const vipList = reactive({
 const financialLevelList = reactive({
   list: [],
 })
-let timeZone = null;
+let timeZone = null
 
 const tableHeight = computed(() => {
-  const windowHeight = window.innerHeight;
-  return windowHeight - 225;
+  const windowHeight = window.innerHeight
+  return windowHeight - 225
 })
 
 const sortList = reactive({
@@ -558,10 +560,10 @@ const profitList = reactive({
 
 const source = reactive({
   list: [
-    {label: t('fields.allSource'), value: '1'},
-    {label: 'DIRECT', value: 'DIRECT'},
-    {label: 'REFER', value: 'REFER'},
-    {label: 'AFFILIATE', value: 'AFFILIATE'}
+    { label: t('fields.allSource'), value: '1' },
+    { label: 'DIRECT', value: 'DIRECT' },
+    { label: 'REFER', value: 'REFER' },
+    { label: 'AFFILIATE', value: 'AFFILIATE' },
   ],
 })
 
@@ -625,7 +627,7 @@ function submit() {
 function resetQuery() {
   request.name = null
   request.recordTime = [defaultStartDate, defaultEndDate]
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : siteList.list[0].id
   request.sort = sortList.list[0].value
 
   request.vip = vipList.list[0].id
@@ -653,7 +655,7 @@ async function loadMemberRecord() {
       }
     })
 
-    timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+    timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
     if (request.recordTime !== null) {
       if (request.recordTime.length === 2) {
         /* query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
@@ -721,9 +723,9 @@ function getSummaries(param) {
   })
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
-      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
-      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone)
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone)
       query.recordTime = query.recordTime.join(',')
     }
   }
@@ -841,12 +843,12 @@ function checkQuery() {
       query[key] = value
     }
   })
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
-      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
-      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone)
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone)
       query.recordTime = query.recordTime.join(',')
     }
   }
@@ -854,12 +856,12 @@ function checkQuery() {
 }
 
 async function requestExportExcel() {
-  const query = checkQuery();
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const {data: ret} = await getExportWithdrawalReviewReport(query);
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getExportWithdrawalReviewReport(query)
   if (ret) {
-    uiControl.messageVisible = true;
+    uiControl.messageVisible = true
   }
 }
 
