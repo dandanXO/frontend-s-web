@@ -1354,8 +1354,10 @@ $border-settings: 1px solid #e5e7eb;
     text-align: center;
   }
   .vip-header {
-    width: 1200px;
-    margin: 10px auto;
+    // width: 1200px;
+    // margin: 10px auto;
+    width: 960px;
+    margin: 0px auto 10px;
   }
 
   .banner-container {
