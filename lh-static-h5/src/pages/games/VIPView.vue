@@ -1665,6 +1665,9 @@ $border-settings: 1px solid #e5e7eb;
             border-radius: 10px;
             margin: 5px auto 0;
           }
+          .expired {
+            color: #596589;
+          }
         }
       }
     }
@@ -2168,8 +2171,7 @@ $border-settings: 1px solid #e5e7eb;
         position: relative;
         margin-bottom: 10px;
 
-        &.numbered {
-          &::before {
+        &::before {
             content: counter(item);
             counter-increment: item;
             background: url("../../assets/images/vip/tnc-no-bg.png") no-repeat center center;
@@ -2190,7 +2192,8 @@ $border-settings: 1px solid #e5e7eb;
             align-items: center;
             justify-content: center;
           }
-        }
+        // &.numbered {
+        // }
       }
 
       .term {
