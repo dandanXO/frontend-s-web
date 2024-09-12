@@ -162,18 +162,32 @@
 
         <div class="withdrawal-amount-container">
           <template v-if="bankCardList.length === 0 || isAddNewAccount">
+            <div class="type-option-container">
+              <div class="">Select Type</div>
+              <q-select
+                class="type-option"
+                v-model="typeVal"
+                :options="typeOptions"
+                option-label="label"
+                option-value="value"
+                emit-value
+                map-options
+                filled
+                @update:model-value="selectOption"
+              />
+            </div>
             <div class="w-form-item w-form-item--bankcard">
-              <div class="top-wrapper">
+              <!-- <div class="top-wrapper">
                 <div class="title">{{ $t("form.phone") }}</div>
-              </div>
+              </div> -->
               <div class="mid-wrapper">
                 <q-input
                   filled
                   dense
                   clearable
-                  type="number"
+                  :type="['phone', 'cpf', 'cnpj'].includes(typeVal) ? 'number' : 'text'"
                   ref="bankNumberRef"
-                  :placeholder="$t('form.phone')"
+                  :placeholder="cardNumberPlaceholder"
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
                   hide-bottom-space
@@ -181,8 +195,22 @@
                   @blur="isInputFocus = false"
                 >
                   <template v-slot:prepend>
-                    <img class="white-svg" src="../../assets/images/auth/phone.svg" />
-                    <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                    <template v-if="typeVal === 'phone'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-phone.png" />
+                      <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                    </template>
+                    <template v-if="typeVal === 'email'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-email.png" />
+                    </template>
+                    <template v-if="typeVal === 'cpf'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cpf.png" />
+                    </template>
+                    <template v-if="typeVal === 'cnpj'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cnpj.png" />
+                    </template>
+                    <template v-if="typeVal === 'evp'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-evp.png" />
+                    </template>
                   </template>
                 </q-input>
               </div>
@@ -651,8 +679,10 @@ const submitWithdrawBank = () => {
 
   const formData = { ...bankCardField };
 
-  if (!formData.cardNumber.startsWith("+55")) {
-    formData.cardNumber = `+55${formData.cardNumber}`;
+  if (typeVal.value === "phone") {
+    if (!formData.cardNumber.startsWith("+55")) {
+      formData.cardNumber = `+55${formData.cardNumber}`;
+    }
   }
 
   api
@@ -783,18 +813,55 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-  const result = !cardNumber ? t("form.phone_rules_01") : true;
+  let result = true;
 
-  if (cardNumber.startsWith("0")) {
-    return t("form.phone_rules_03");
-  }
-
-  const digitCount = cardNumber.match(/\d/g)?.length || 0;
-  if (digitCount !== 11) {
-    return t("form.phone_rules_02");
+  if (typeVal.value === "phone") {
+    result = !cardNumber ? t("form.phone_rules_01") : true;
+    if (cardNumber.startsWith("0")) {
+      return t("form.phone_rules_03");
+    }
+    const digitCount = cardNumber.match(/\d/g)?.length || 0;
+    if (digitCount !== 11) {
+      return t("form.phone_rules_02");
+    }
+  } else if (typeVal.value === "email") {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
+  } else if (typeVal.value === "cpf") {
+    const cpfPattern = /^\d{11}$/;
+    result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
+  } else if (typeVal.value === "cnpj") {
+    const cnpjPattern = /^\d{14}$/;
+    result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
+  } else if (typeVal.value === "evp") {
+    const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
   }
 
   return result;
+};
+
+const cardNumberLabel = ref("");
+const cardNumberPlaceholder = ref("");
+
+const selectOption = (option) => {
+  bankCardField.cardNumber = "";
+  if (option === "phone") {
+    cardNumberLabel.value = t("form.phone");
+    cardNumberPlaceholder.value = t("form.phone_placeholder");
+  } else if (option === "email") {
+    cardNumberLabel.value = t("form.email");
+    cardNumberPlaceholder.value = t("form.email_placeholder");
+  } else if (option === "cpf") {
+    cardNumberLabel.value = t("form.cpf");
+    cardNumberPlaceholder.value = t("form.cpf_placeholder");
+  } else if (option === "cnpj") {
+    cardNumberLabel.value = t("form.cnpj");
+    cardNumberPlaceholder.value = t("form.cnpj_placeholder");
+  } else if (option === "evp") {
+    cardNumberLabel.value = t("form.evp");
+    cardNumberPlaceholder.value = t("form.evp_placeholder");
+  }
 };
 
 const isValidCardAddress = () => {
@@ -919,6 +986,30 @@ const loadInfo = () => {
     openUserKYCDialog();
   }
 };
+
+const typeVal = ref("phone");
+const typeOptions = [
+  {
+    label: "Phone",
+    value: "phone"
+  },
+  {
+    label: "Email",
+    value: "email"
+  },
+  {
+    label: "CPF",
+    value: "cpf"
+  },
+  {
+    label: "CNPJ",
+    value: "cnpj"
+  },
+  {
+    label: "EVP",
+    value: "evp"
+  }
+];
 </script>
 
 <style scoped lang="scss">
@@ -1342,5 +1433,22 @@ const loadInfo = () => {
 
 .input-btm {
   padding-bottom: 270px;
+}
+
+.type-option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #98a6b4;
+  font-size: 12px;
+}
+
+.type-option {
+  width: 100px;
+  font-size: 12px;
+  min-height: 0;
+  :deep(.q-field__native, q-field--auto-height) {
+    min-height: 0px;
+  }
 }
 </style>

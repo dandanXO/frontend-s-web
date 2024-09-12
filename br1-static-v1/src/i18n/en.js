@@ -82,7 +82,7 @@ export default {
   form: {
     prependNumber: "+55",
     phone: "Phone Number",
-    phone_placeholder: "Please enter your phone number",
+    phone_placeholder: "Please enter phone number",
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must have 11 digits",
     phone_rules_03: "The phone number must not start with '0'",
@@ -206,7 +206,19 @@ export default {
     eWalletNumber: "eWallet Number",
     selectEWallet: "Select eWallet",
     pleaseSelectAEWallet: "Please Select A eWallet",
-    eWalletCardNumber: "eWallet Card Number"
+    eWalletCardNumber: "eWallet Card Number",
+    cpf: "CPF",
+    cpf_placeholder: "Please enter CPF",
+    cpf_rules_01: "Please insert CPF",
+    cpf_rules_02: "CPF must have 11 digits",
+    cnpj: "CNPJ",
+    cnpj_placeholder: "Please enter CNPJ",
+    cnpj_rules_01: "Please insert CNPJ",
+    cnpj_rules_02: "CNPJ must have 14 digits",
+    evp: "EVP",
+    evp_placeholder: "Please enter EVP",
+    evp_rules_01: "Please insert EVP",
+    evp_rules_02: "Please insert valid EVP"
   },
   btn: {
     confirm: "Confirm",
@@ -502,7 +514,7 @@ export default {
       point_03_desc:
         "You will be rewarded, regardless if they win or lose. The more friends you refer to Skyace Club, the bigger your daily reward. Start earning daily commissions",
       myReferralLink: "My Referral Link",
-      save: "Save",
+      save: "Save"
     },
     reward: {
       myTotalIncome: "My Total Income",

@@ -24,29 +24,19 @@
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              :label="$t('form.phone')"
+              :label="$t('form.accountNumber')"
               :rules="[
-                (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                (val) => {
-                  const cleanedSelectedNum = selectedUnbindCardNum.startsWith('+55')
-                    ? selectedUnbindCardNum.slice(3)
-                    : selectedUnbindCardNum;
-                  return val === cleanedSelectedNum || $t('form.phone_rules_04');
-                }
+                (val) => (val && val.length > 0) || $t('form.accountNumber_rules_01'),
+                (val) => (val && val === selectedUnbindCardNum) || $t('form.accountNumber_rules_02')
               ]"
               label-color="secondary"
-            >
-              <template v-slot:prepend>
-                <img class="white-svg" src="../../assets/images/auth/phone.svg" />
-                <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
-              </template>
-            </q-input>
+            ></q-input>
           </q-form>
         </q-card-section>
         <ConfirmButton
           :label="$t('btn.confirm')"
           :confirmFunc="unbind"
-          :isDisabled="!isInputValidUnbind"
+          :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
         ></ConfirmButton>
       </q-card>
     </q-dialog>
@@ -84,9 +74,9 @@
                 <!--                IFSC: {{ item.cardAddress }}-->
               </div>
               <div class="item-copy">
-                <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
+                <!-- <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
-                </div>
+                </div> -->
                 <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
@@ -268,13 +258,6 @@ const onAddUSDTClick = () => {
 const onUpdateCardClick = (bankCard, bankType) => {
   updateBankCardModalRef.value.onUpdateCardClick(bankCard, bankType);
 };
-
-const isInputValidUnbind = computed(() => {
-  const cleanedSelectedNum = selectedUnbindCardNum.value.startsWith("+55")
-    ? selectedUnbindCardNum.value.slice(3)
-    : selectedUnbindCardNum.value;
-  return unbindField.bankCardNumber === cleanedSelectedNum;
-});
 
 // init
 const bankCardList = ref([]);
