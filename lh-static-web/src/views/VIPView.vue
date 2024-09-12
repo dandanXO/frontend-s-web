@@ -5,7 +5,7 @@
     </div>
     <!--    <div class="banner-container" />-->
 
-    <Carousel v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
+    <Carousel class="top" v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
       <Slide @click="handleSlideClick(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -29,7 +29,7 @@
                   >
                     待晋级
                   </span>
-                  <span v-else>{{ originalUpgradeBetAmounts[vipIndex] }}</span>
+                  <span v-else>{{ formatNumber(originalUpgradeBetAmounts[vipIndex]) }}</span>
                 </span>
               </div>
               <div class="viplevel">VIP {{ vip.vipLevel }}</div>
@@ -1356,7 +1356,7 @@ $border-settings: 1px solid #e5e7eb;
   .vip-header {
     // width: 1200px;
     // margin: 10px auto;
-    width: 960px;
+    width: 800px;
     margin: 0px auto 10px;
   }
 
@@ -1369,7 +1369,6 @@ $border-settings: 1px solid #e5e7eb;
   }
   .current-vip-status {
     border: 2px solid #799df8;
-    max-width: 1200px;
     margin: 50px auto;
     background: #212b4ae0;
     border-radius: 30px;
@@ -1713,6 +1712,7 @@ $border-settings: 1px solid #e5e7eb;
     position: relative;
     width: 400px;
     height: 520px;
+    transform: scale(0.758);
     background: url("../assets/vip/cardbg.png") no-repeat top center;
     background-size: contain;
     &9,
@@ -2166,11 +2166,13 @@ $border-settings: 1px solid #e5e7eb;
 }
 </style>
 
-<style scoped>
+<style scoped lang="scss">
 .carousel {
-  max-width: 1200px;
+  // max-width: 1200px;
+  max-width: 990px;
   width: 100%;
-  margin: 0 auto;
+  // margin: 0 auto;
+  margin: -35px auto;
 }
 .carousel__slide {
   padding: 5px;
@@ -2190,7 +2192,7 @@ $border-settings: 1px solid #e5e7eb;
 
 .carousel__slide {
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0.6);
   filter: grayscale(0.5) brightness(0.9);
 }
 
@@ -2322,12 +2324,15 @@ $border-settings: 1px solid #e5e7eb;
   background: url("../assets/vip/nextprev.png");
   background-size: contain;
   padding: 15px;
+  left: -40px;
+  transform: translate3d(-20px, -40px, 10px);
 }
 :deep(.carousel__next) {
   background: url("../assets/vip/nextprev.png");
   background-size: contain;
   padding: 15px;
-  transform: translate3d(20px, -20px, 10px) rotateY(180deg);
+  right: -40px;
+  transform: translate3d(20px, -40px, 10px) rotateY(180deg);
 }
 :deep(.carousel__icon) {
   opacity: 0;
