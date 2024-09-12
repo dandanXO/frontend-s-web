@@ -164,7 +164,7 @@
       <div class="left">
         <img src="../assets/vip/img-border.png" style="pointer-events: none" />
         <div class="inner-slide">
-          <el-carousel height="350px">
+          <el-carousel height="440px">
             <el-carousel-item v-for="item in banners" :key="item">
               <h3 :href="redirectUrl" class="small justify-center" text="2xl">
                 <a :href="item.redirectUrl" target="_blank"><img :src="imgURL + item.desktopImageUrl" /></a>
@@ -1466,11 +1466,11 @@ $border-settings: 1px solid #e5e7eb;
     border-radius: 30px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
-    gap: 20px;
+    gap: 60px;
     .left {
-      flex: 1;
+      flex: 3;
       position: relative;
       width: 400px;
       img {
@@ -1488,7 +1488,7 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
     .right {
-      flex: 2;
+      flex: 5;
       .vip-boxes {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -1501,10 +1501,11 @@ $border-settings: 1px solid #e5e7eb;
           align-items: center;
           flex-direction: column;
           font-size: 20px;
+          min-height: 250px;
           .vip-inner {
             border: 2px solid #799df8;
             background: #1f2231;
-            padding: 10px;
+            padding: 10px 5px;
             border-radius: 10px;
             width: 100%;
             text-align: center;
@@ -1570,6 +1571,9 @@ $border-settings: 1px solid #e5e7eb;
             padding: 8px 15px;
             border-radius: 10px;
             margin: 10px auto;
+          }
+          .expired {
+            color: #596589;
           }
           // .expired {
           //   border: 2px solid #596589;
@@ -2057,8 +2061,7 @@ $border-settings: 1px solid #e5e7eb;
         margin-bottom: 10px;
         position: relative;
 
-        &.numbered {
-          &::before {
+        &::before {
             content: counter(item);
             counter-increment: item;
             background: url("../assets/vip/tnc-no-bg.png") no-repeat center center;
@@ -2074,7 +2077,6 @@ $border-settings: 1px solid #e5e7eb;
             align-items: center;
             justify-content: center;
           }
-        }
       }
       .term {
         max-width: 1300px;
