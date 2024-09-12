@@ -472,6 +472,7 @@
           </router-link>
         </template>
       </el-table-column>
+      <el-table-column prop="vipName" :label="t('fields.vipLevel')" min-width="100" />
       <el-table-column prop="type" :label="t('fields.type')" min-width="180">
         <template #default="scope">
           <span v-if="scope.row.amount < 0">{{ t('fields.deduct') }}</span>
