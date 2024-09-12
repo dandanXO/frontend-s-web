@@ -33,7 +33,8 @@ export const userStore = defineStore("userStore", {
       siteId: process.env.VUE_APP_SITEID,
       unreadTotal: 0,
       visitorId: "",
-      profilePhoto: ""
+      profilePhoto: "",
+      withdrawType: ""
     };
   },
   actions: {
@@ -113,6 +114,8 @@ export const userStore = defineStore("userStore", {
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
             this.profilePhoto = ret.data.profilePhoto;
+
+            this.withdrawType = ret.data.withdrawType;
           } else {
             uiStore().notify({
               type: "error",

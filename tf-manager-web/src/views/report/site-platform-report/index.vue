@@ -53,10 +53,13 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
-      :row-style="{ width: '100px' }"
+      :row-style="{width: '100px'}"
     >
       <el-table-column prop="createTime" :label="t('fields.date')" />
-      <el-table-column prop="platform" :label="t('fields.date')" />
+      <el-table-column prop="platform" :label="t('fields.platform')" />
+      <el-table-column prop="loginName" :label="t('fields.loginName')" />
+      <el-table-column prop="betId" :label="t('fields.betId')" />
+      <el-table-column prop="transactionId" :label="t('fields.transactionId')" />
 
       <el-table-column prop="bet" :label="t('fields.bet')">
         <template #default="scope1">
@@ -143,10 +146,6 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 
-const uiControl = reactive({
-  messageVisible: false,
-})
-
 const siteList = reactive({
   list: [],
 })
@@ -227,7 +226,7 @@ onMounted(async () => {
   }
   await loadSearchPlatforms()
   request.platform = platforms.list[0].name
-  // await loadRecord()
+  await loadRecord()
 })
 </script>
 

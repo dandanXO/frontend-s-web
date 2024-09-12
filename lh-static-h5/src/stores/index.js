@@ -45,7 +45,8 @@ export const userStore = defineStore("userStore", {
       currentUpgradeBetAmt: "",
       visitorId: "",
       profilePhoto: "",
-      isDisplayLogin: false
+      isDisplayLogin: false,
+      withdrawType: ""
     };
   },
   actions: {
@@ -216,6 +217,8 @@ export const userStore = defineStore("userStore", {
 
           this.profilePhoto = response.data.profilePhoto;
           this.unreadInboxMail = 0;
+
+          this.withdrawType = response.data.withdrawType;
           // this.unreadInboxMail = 16;
           this.getBalance();
           this.getVIPInfo();

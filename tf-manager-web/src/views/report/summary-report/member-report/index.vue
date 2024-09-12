@@ -47,6 +47,12 @@
         fixed
       />
       <el-table-column
+        prop="vipName"
+        :label="t('fields.vipLevel')"
+        width="120"
+        fixed
+      />
+      <el-table-column
         prop="source"
         :label="t('fields.sourceType')"
         width="120"
@@ -352,7 +358,7 @@ async function requestExportExcel() {
   padding: 4px 0;
 }
 
-.el-input-number:deep .el-input__inner {
+.el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
 </style>

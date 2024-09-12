@@ -10,23 +10,20 @@
         <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
       </div>
     </div>
-
     <div class="title-wrapper">
-      <div class="title-txt">My Team (Yesterday)</div>
-
+      <div class="title-txt">{{ $t("earnMoney.daily.myTeamYesterday") }}</div>
       <div class="subtitle-wrapper">
         <div class="chart-cat">
           <div class="square m"></div>
-          <div>Member</div>
+          <div>{{ $t("earnMoney.daily.member") }}</div>
         </div>
         <div class="chart-cat">
           <div class="square ba"></div>
-          <div>Bet Amount</div>
+          <div>{{ $t("earnMoney.daily.betAmount") }}</div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="content-wrapper">
     <div class="progress-bar-wrapper">
       <q-linear-progress size="15px" :value="progressValueM" color="#EC77FF" class="progress-bar-M">
@@ -68,8 +65,8 @@
         <div class="percentage">{{ memberVIPData.nextLevelRate }}%</div>
       </div>
       <div class="rate-wrapper">
-        <div class="rate">Rate</div>
-        <div class="rate">Rate</div>
+        <div class="rate">{{ $t("earnMoney.daily.rate") }}</div>
+        <div class="rate">{{ $t("earnMoney.daily.rate") }}</div>
       </div>
       <div class="achieve-wrapper">
         <div class="achieve"><q-icon name="check" /></div>
@@ -83,57 +80,8 @@
     </div>
   </div>
 
-  <!-- <div class="content-wrapper">
-    <div class="top-container">
-      <div class="left-container">
-        <div class="title">Betting Amount</div>
-        <div class="value">{{ store.currency.value }} {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, false) }}</div>
-        <div class="data-wrapper">
-          <div class="img-wrapper">
-            <img src="../../assets/images/earn-money/member.png" />
-          </div>
-          <div class="data-txt">Register Members:</div>
-          <div class="data-amount">{{ totalBetRabteDailyDetailsData.memberCount }}</div>
-        </div>
-      </div>
-      <div class="right-container text-right">
-        <div class="title">Rebate Amount</div>
-        <div class="value">{{ store.currency.value }} {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
-        <div class="data-wrapper right">
-          <div class="img-wrapper">
-            <img src="../../assets/images/earn-money/cash.png" />
-          </div>
-          <div class="data-txt">Cash In:</div>
-          <div class="data-amount">0</div>
-        </div>
-      </div>
-    </div>
-    <div class="chart">
-      <div class="arrow" @click="onSwiperArrowClick()"><img src="../../assets/images/earn-money/arrow_left.png" /></div>
-      <div class="swiper-container swiper-nav-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="slide-item">
-              <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="slide-item">
-              <Bar ref="chartRef2" :data="chartData2.data" :options="chartData2.options" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="arrow" @click="onSwiperArrowClick(true)">
-        <img src="../../assets/images/earn-money/arrow_right.png" />
-      </div>
-
-      <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
-    </div>
-  </div> -->
-
   <div class="info-wrapper q-pt-lg">
-    <div class="title-txt">Yesterday Report (Total)</div>
+    <div class="title-txt">{{ $t("earnMoney.daily.yesterdayReportTotal") }}</div>
     <div class="info-container">
       <div class="info-row">
         <div class="info-content-item longer-item">
@@ -143,7 +91,7 @@
               :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-06.png" /></div>
-              <div class="info-txt">Level:</div>
+              <div class="info-txt">{{ $t("earnMoney.daily.level") }}:</div>
               <div
                 class="info-amount"
                 :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'font-smaller' : ''"
@@ -159,7 +107,7 @@
               :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
-              <div class="info-txt">Rate:</div>
+              <div class="info-txt">{{ $t("earnMoney.daily.rate") }}:</div>
               <div
                 class="info-amount"
                 :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'font-smaller' : ''"
@@ -174,7 +122,7 @@
         <div class="info-content-item line-side">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
-            <div class="info-txt">Myself betting amount:</div>
+            <div class="info-txt">{{ $t("earnMoney.daily.myselfBettingAmount") }}:</div>
           </div>
           <div class="info-amount">
             {{ store.currency.value }}
@@ -185,7 +133,7 @@
         <div class="info-content-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-02.png" /></div>
-            <div class="info-txt">Myself rebate:</div>
+            <div class="info-txt">{{ $t("earnMoney.daily.myselfRebate") }}:</div>
           </div>
           <div
             class="info-amount"
@@ -201,7 +149,7 @@
         <div class="info-content-item line-side">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-03.png" /></div>
-            <div class="info-txt">Team betting amount:</div>
+            <div class="info-txt">{{ $t("earnMoney.daily.teamBettingamount") }}:</div>
           </div>
           <div class="info-amount">
             {{ store.currency.value }}
@@ -212,7 +160,7 @@
         <div class="info-content-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-04.png" /></div>
-            <div class="info-txt">Team rebate:</div>
+            <div class="info-txt">{{ $t("earnMoney.daily.teamRebate") }}:</div>
           </div>
           <div
             class="info-amount"
@@ -228,7 +176,7 @@
         <div class="info-content-item last-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
-            <div class="info-txt">Total rebate:</div>
+            <div class="info-txt">{{ $t("earnMoney.daily.totalRebate") }}:</div>
             <div
               class="info-amount"
               :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
@@ -246,7 +194,7 @@
   <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
     <div class="section-wrapper q-pt-lg">
-      <div class="title-txt">Team details (Yesterday)</div>
+      <div class="title-txt">{{ $t("earnMoney.daily.teamDetailsYesterday") }}</div>
       <div class="subtitle">{{ moment().utcOffset("+05:30").format("YYYY-MM-DD") }}</div>
     </div>
 
@@ -265,15 +213,14 @@
       </div>
       <div class="bot-container">
         <div class="amount-container">
-          <div class="amount-text">Bet Amount</div>
+          <div class="amount-text">{{ $t("earnMoney.daily.betAmount") }}</div>
           <div class="amount">
             {{ store.currency.label }}
             <span>{{ convertToCommaAmount(e.validBet, false) }}</span>
           </div>
         </div>
-
         <div class="amount-container">
-          <div class="amount-text text-right">Income</div>
+          <div class="amount-text text-right">{{ $t("earnMoney.daily.income") }}</div>
           <div class="amount text-right">
             {{ store.currency.label }}
             <span>{{ convertToCommaAmount(e.rebateAmount, false) }}</span>
@@ -467,56 +414,6 @@ const onSwiperArrowClick = (isRight) => {
   if (isRight) swiperNav.slideNext();
   else swiperNav.slidePrev();
 };
-
-// const totalBetRabteDailyDetailsData = reactive({
-//   recordTime: "",
-//   validBet: 0,
-//   rebateAmount: 0,
-//   memberCount: 0
-// });
-// const getChartAPI = () => {
-//   const startDate = moment().subtract(6, "d").format("YYYY-MM-DD");
-//   const endDate = moment().format("YYYY-MM-DD");
-
-//   api.get(`/session/member/betRebateDailyDetails?start=${startDate}&end=${endDate}`).then((res) => {
-//     const { code, data } = res;
-//     if (code === 0) {
-//       data.forEach((e, i) => {
-//         totalBetRabteDailyDetailsData.validBet += e.validBet;
-//         totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
-//         totalBetRabteDailyDetailsData.memberCount += e.memberCount;
-
-//         // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
-
-//         chartData.data.datasets[0].data[i] = e.memberCount;
-//         chartData.data.datasets[0].borderRadius[i] = 6;
-//         chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
-
-//         chartData2.data.datasets[0].data[i] = e.validBet;
-//         chartData2.data.datasets[0].borderRadius[i] = 6;
-//         chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
-//       });
-
-//       const maxChart = Math.max(...chartData.data.datasets[0].data);
-//       chartData.data.datasets[0].data.forEach((e, i) => {
-//         if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
-//         else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
-//       });
-
-//       const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
-//       chartData2.data.datasets[0].data.forEach((e, i) => {
-//         if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
-//         else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
-//       });
-
-//       chartRef.value.chart.update();
-//       chartRef.value.chart.render();
-
-//       chartRef2.value.chart.update();
-//       chartRef2.value.chart.render();
-//     }
-//   });
-// };
 
 const teamAmountData = reactive({
   myselfBetting: 0,

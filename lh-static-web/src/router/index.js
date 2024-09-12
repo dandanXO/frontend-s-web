@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: "/",
-    name: "home",
+    name: "homeRoot",
     component: LayoutView,
     redirect: "home",
     children: [

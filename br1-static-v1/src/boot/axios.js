@@ -5,6 +5,7 @@ import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
+import { t } from "./lang";
 import { errorMessages } from "./error-messages";
 
 const rstArray = Object.values(process.env.RST_API);
@@ -159,8 +160,8 @@ export default boot(({ app, router }) => {
           type: "negative",
           timeout: 1000,
           position: "top",
-          message:
-            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
+          message: t("error." + res.code)
+          // i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
         });
       }
       throw new Error(res.message || "Error");

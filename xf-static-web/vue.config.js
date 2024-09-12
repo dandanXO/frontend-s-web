@@ -1,5 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 const defaultSettings = require("./src/settings.js");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = defineConfig({
   lintOnSave: true,
@@ -7,6 +8,7 @@ module.exports = defineConfig({
   runtimeCompiler: true,
   devServer: {
     hot: true,
+    compress: true,
     port: 8089
   },
   // publicPath:
@@ -20,6 +22,7 @@ module.exports = defineConfig({
     });
   },
   css: {
+    extract: process.env.NODE_ENV === "development" ? false : true,
     loaderOptions: {
       sass: {
         additionalData: `
@@ -27,5 +30,26 @@ module.exports = defineConfig({
         `
       }
     }
+  },
+  configureWebpack: {
+    optimization: {
+      splitChunks:
+        process.env.NODE_ENV === "development"
+          ? false
+          : {
+              chunks: "all"
+            },
+      runtimeChunk: "single",
+      minimize: process.env.NODE_ENV === "development" ? false : true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: true // Remove console.* statements
+            }
+          }
+        })
+      ]
+    }
   }
-})
+});

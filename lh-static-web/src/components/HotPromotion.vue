@@ -83,6 +83,7 @@
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <OlympicFund v-if="list.redirectUrl === 'lh1-olympic-fund'" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
+    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -175,6 +176,7 @@ import LPLLCK from "@/components/hotpromo/lpllck/LPLLCK.vue";
 import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
 import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue";
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
+import DailiPromo from "@/components/hotpromo/daili/DailiPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -249,7 +251,8 @@ export default defineComponent({
     BbdachaCsgo2,
     EslProCsgo2,
     Dota2Ti13,
-    BlackMythWuKongPromo
+    BlackMythWuKongPromo,
+    DailiPromo
   },
   props: {
     list: {

@@ -1,7 +1,20 @@
 <template>
   <div class="card">
     <div class="menu-title-container">
-      <span class="menu-title">快速提款</span>
+      <span class="menu-title">
+        {{ isAutoWithdrawal ? "快速提款" : "提款" }}
+      </span>
+      <el-button
+        v-if="!isAutoWithdrawal"
+        :loading="loadingBtn"
+        :disable="loadingBtn"
+        size="large"
+        class="common-btn upgrade-btn"
+        @click="handleUpgradeClick"
+      >
+        <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
+        <span>升级快速提款</span>
+      </el-button>
     </div>
 
     <div class="menu-title-container">
@@ -48,7 +61,13 @@
           </div>
         </el-form-item>
 
-        <el-form-item class="helptxt" prop="amount" label="提款金额" name="amount">
+        <el-form-item
+          class="helptxt"
+          :class="{ 'has-helper-text': isAutoWithdrawal }"
+          prop="amount"
+          label="提款金额"
+          name="amount"
+        >
           <el-row :gutter="10" style="align-items: center">
             <el-col :span="12">
               <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
@@ -80,6 +99,14 @@
             "
           ></div> -->
         </el-form-item>
+
+        <el-form-item v-if="isAutoWithdrawal" class="helptxt">
+          <div class="auto-withdraw-amount-wrapper">
+            <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
+            <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
+          </div>
+        </el-form-item>
+
         <el-row>
           <el-col>
             <div
@@ -177,7 +204,7 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
-import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
+import { loadBankCards, confirmWithdraw, withdrawEntrance, upgradeToAutoWithdrawal } from "@/api/personal/personal";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
@@ -203,6 +230,7 @@ export default defineComponent({
     const isEWALLET = ref(false);
     const isALIPAY = ref(false);
     const isLoaded = ref(false);
+    const isShowSubmitDialog = ref(false);
     const withdrawState = reactive({
       bankCardList: []
     });
@@ -449,6 +477,29 @@ export default defineComponent({
       if(!selectedWithdrawalMethod.value.url) return
       window.open(selectedWithdrawalMethod.value.url);
     };
+
+    const isAutoWithdrawal = computed(() => store.withdrawType === "AUTO_WITHDRAW")
+
+    const handleUpgradeClick = () => {
+      loadingBtn.value = true
+      upgradeToAutoWithdrawal().then(async (res) => {
+        if(res.code === 0) {
+          notify({
+            type: "success",
+            message: "成功升级为快速提款!"
+          });
+
+          await store.getMemberInfo()
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      }).finally(() => loadingBtn.value = false)
+    }
+
+
     return {
       formRef,
       withdrawInfo,
@@ -471,7 +522,10 @@ export default defineComponent({
       cardLabel,
       openEWalletTutorial,
       isLoaded,
-      tutorialLabel
+      tutorialLabel,
+      handleUpgradeClick,
+      isAutoWithdrawal,
+      isShowSubmitDialog
     };
   }
 });
@@ -869,7 +923,24 @@ export default defineComponent({
   color: #ff7f10;
 }
 
+.upgrade-btn {
+  margin-left: 30px;
+  padding: 1px 7px;
+  height: 30px;
+  width: auto;
+  border-radius: 8px;
+  align-self: center;
+  img {
+    height: 25px;
+  }
+  span {
+    line-height: 25px;
+  }
+}
+
 .menu-title-container {
+  margin-bottom: 16px;
+
   .menu-title {
     font-size: 18px;
     color: #424f72;
