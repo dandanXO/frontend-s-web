@@ -1,5 +1,5 @@
 <template>
-  <div class="game-list-wrapper">
+  <div class="game-list-wrapper" ref="gameListWrapperRef">
     <div class="game-left-list">
       <div
         v-for="(platform, index) in platforms"
@@ -35,6 +35,7 @@
             :class="game.underMaintenance === true ? 'maintenance' : ''"
             @click="handlePlayGame(platform.name, game)"
           >
+            <!-- {{ test(platform.name, game) }} -->
             <div
               class="platform-img-frame"
               :style="{ 'background-image': getImgPlatformBg(platform.name, game) }"
@@ -67,6 +68,7 @@ const emit = defineEmits(["playGame", "openGame"]);
 const route = useRoute();
 
 const rightPlatformContainer = ref();
+const gameListWrapperRef = ref();
 const tab = ref("hot");
 const isSelecting = ref(false);
 const isScrolling = ref(false);
@@ -200,6 +202,16 @@ const onHomeScroll = (event) => {
   }
 };
 
+// const test = (platform, game) => {
+//   if (platform === "hot" && game.type === "game") {
+//     return `${game.platform.toLowerCase()}-${game.code.toLowerCase()}`;
+//   } else if (platform === "live" || platform === "sport") {
+//     return `${game.name.toLowerCase()}`;
+//   } else {
+//     return `${game.code.toLowerCase()}`;
+//   }
+// };
+
 const getImgPlatformBg = (platform, game) => {
   try {
     if (platform === "hot" && game.type === "game") {
@@ -234,7 +246,7 @@ const handlePlayGame = (platform, game) => {
       emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
     }
   } else if (platform === "slot") {
-    emit("openGame", game.name, game.code, "", game.status, game.gameType, game.id);
+    emit("openGame", game.name, game.code, "", game.status, game.gameType === "CASUAL" ? "CASUAL" : "SLOT", game.id);
   } else if (platform === "poker") {
     emit("playGame", game.name, "JILI", game.code, game.status, game.gameType, game.id);
   } else if (platform === "fish") {
@@ -263,7 +275,7 @@ onActivated(() => {
   .game-left-list {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: calc(100vh - 535px);
+    height: 100vh;
     margin-top: 0px;
     top: 0;
     flex: 2;
@@ -342,7 +354,7 @@ onActivated(() => {
     overflow-x: hidden;
     // padding-right: 2px;
     // margin-right: -4px;
-    height: calc(100vh - 535px);
+    height: 100vh;
     margin-top: 0px;
     flex: 11;
     display: flex;

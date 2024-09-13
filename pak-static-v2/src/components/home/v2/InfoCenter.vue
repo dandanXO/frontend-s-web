@@ -51,7 +51,7 @@ defineProps({
   downloadHeart: Boolean
 });
 
-defineEmits(["open-popup"]);
+defineEmits(["openPopup"]);
 
 const ui = useUI();
 const store = userStore();
@@ -155,7 +155,6 @@ const refreshBalance = () => {
         flex-direction: column;
         align-items: center;
         gap: 3px;
-        font-family: PingFang SC;
         font-size: 12px;
         font-weight: 600;
         line-height: 16px;
