@@ -5,7 +5,7 @@
     </div>
     <!--    <div class="banner-container" />-->
     <div class="vip-cards">
-      <Carousel v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
+      <Carousel ref="refCarousel" v-model="currentSlide" :items-to-show="2.99" :wrap-around="true">
         <Slide @click="handleSlideClick(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
           <div class="carousel__item">
             <div :class="`vipitem vipitem${vip.vipLevel}`">
@@ -883,6 +883,7 @@ const currentRedPacketAmount = ref(0);
 const currentUpgradeDepAmt = ref(0);
 const currentUpgradeBetAmt = ref(0);
 const currentClaimAllStatus = ref("CANT_CLAIM");
+const refCarousel = ref();
 const getVipLevelProgress = (lvl, status) => {
   if (lvl === 0 || !lvl) {
     currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0];
@@ -1257,6 +1258,13 @@ const currentSlide = ref(11);
 const currentCarousel = ref(0);
 const currentBoxes = ref(0);
 const handleSlideClick = (vipIndex) => {
+  if (currentSlide.value >= 10 && vipIndex <= 1) {
+    refCarousel.value.next();
+  }
+  if (currentSlide.value <= 1 && vipIndex >= 10) {
+    refCarousel.value.prev();
+  }
+
   if (vipIndex === currentSlide.value) {
     slideTo(vipLevel.value);
   } else {
