@@ -48,7 +48,11 @@
         </el-table-column>
         <el-table-column prop="activeMembers" :label="t('fields.dailyActiveMemberCount')" min-width="100" />
         <el-table-column prop="totalActiveMembers" :label="t('fields.totalActiveMembers')" min-width="100" />
-        <el-table-column prop="membersMonthlyTotalDeposit" :label="t('fields.membersMonthlyTotalDeposit')" min-width="200" />
+        <el-table-column prop="membersMonthlyTotalDeposit" :label="t('fields.membersMonthlyTotalDeposit')" min-width="100">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.membersMonthlyTotalDeposit,type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="recordTime" :label="t('fields.recordTime')" min-width="200">
           <template #default="scope">
             <span v-if="scope.row.recordTime === null">-</span>

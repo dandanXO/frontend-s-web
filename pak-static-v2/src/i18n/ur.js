@@ -226,7 +226,12 @@ export default {
     cat_slotsgame: "سلاٹس کھیل",
     cat_fishing: "ماہی گیری",
     cat_poker: "پوکر",
-    cat_sport: "کھیل"
+    cat_sport: "کھیل",
+    balance: "آپ کا بیلنس",
+    link_deposit: "جمع",
+    link_withdraw: "نکالنا",
+    link_share: "شئیر",
+    link_profit: "منافع"
   },
   settings: {
     totalScore: "کل اسکور",

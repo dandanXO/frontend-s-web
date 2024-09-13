@@ -267,8 +267,8 @@ a {
 }
 
 .contact-item .service-icon {
-  width: 40px;
   margin-left: auto;
+  width: 100px;
 }
 
 .contact-item img {

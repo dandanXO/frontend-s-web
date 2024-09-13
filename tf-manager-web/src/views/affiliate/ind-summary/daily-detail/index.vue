@@ -60,7 +60,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
+        height="70vh"
         size="small"
         :resizable="true"
         :data="page.records"
@@ -93,7 +93,7 @@
           :label="t('fields.platform')"
           align="left"
           min-width="100"
-          width="120"
+          width="150"
         >
           <template
             #default="scope"
@@ -156,7 +156,7 @@
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -184,7 +184,7 @@
           prop="ftdAmount"
           :label="t('fields.ftdAmount')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -195,7 +195,7 @@
           prop="bet"
           :label="t('fields.indBet')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -206,7 +206,7 @@
           prop="payout"
           :label="t('fields.payout')"
           align="center"
-          width="120"
+          width="150"
         >
           <template #default="scope">
             $
@@ -516,12 +516,19 @@ function getSummaries(param) {
           index === 4 ||
           index === 5 ||
           index === 7 ||
-          index === 8 ||
-          index === 13 ||
-          index === 14 ||
           index === 15
         ) {
           sums[index] = total.data[prop]
+        } else if (index === 8 || index === 13 || index === 14) {
+          const pageRowCount = Number(page.records.reduce((sum, row) => {
+            return sum + Number(row[prop])
+          }, 0))
+          const totalPageCount = Number(total.data[prop])
+          if (pageRowCount !== totalPageCount) {
+            sums[index] = `${total.data[prop]} (${pageRowCount})`
+          } else {
+            sums[index] = total.data[prop]
+          }
         } else if (index === 6) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =

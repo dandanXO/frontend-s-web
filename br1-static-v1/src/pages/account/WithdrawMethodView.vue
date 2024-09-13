@@ -250,7 +250,7 @@
                   dense
                   clearable
                   type="number"
-                  ref="bankAddress"
+                  ref="bankAddressRef"
                   :placeholder="$t('form.cpf_placeholder')"
                   v-model="bankCardField.cardAddress"
                   :rules="[(_) => isValidCardAddress()]"
@@ -745,10 +745,15 @@ const submitWithdrawBank = () => {
   isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
-  // bankAddressRef.value.validate();
-  // bankEmailRef.value.validate();
+  bankAddressRef.value.validate();
+  bankEmailRef.value.validate();
 
-  if (amountRef.value.hasError || bankNumberRef.value.hasError) {
+  if (
+    amountRef.value.hasError ||
+    bankNumberRef.value.hasError ||
+    bankAddressRef.value.hasError ||
+    bankEmailRef.value.hasError
+  ) {
     $q.loading.hide();
     isSubmitDisable.value = false;
     return;

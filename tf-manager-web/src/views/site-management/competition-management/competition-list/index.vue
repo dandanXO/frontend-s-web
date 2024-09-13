@@ -615,6 +615,7 @@
       highlight-current-row
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
+      border
     >
       <el-table-column
         type="selection"
