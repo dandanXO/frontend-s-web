@@ -237,7 +237,12 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 7px;
+  width: 100%;
+}
+
+.contact-group .contact-item{
+  flex: 1;
 }
 
 .contact-item {
@@ -248,8 +253,12 @@ a {
   font-size: 0.9em;
   color: white;
   gap: 8px;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.contact-item .title{
+  font-size: 0.7em;
 }
 
 .contact-item .icon {
@@ -258,6 +267,7 @@ a {
 }
 
 .contact-item .service-icon {
+  margin-left: auto;
   width: 100px;
 }
 
@@ -308,10 +318,12 @@ a {
   width: 100%;
   position: sticky;
   bottom: 0px;
-  left: 0px;
+  left: 0%;
   right: 0px;
   font-size: 18px;
   font-weight: bold;
+  max-width: 550px;
+  margin: auto;
   color: #ffffff;
   letter-spacing: 2px;
 }
