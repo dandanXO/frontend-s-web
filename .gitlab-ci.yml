@@ -618,6 +618,12 @@ deploy-lh-landing-v7:
     PROJECT: lh-landing-v7
 #===============================================================================================
 
+deploy-lh-landing-v8:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v8
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
