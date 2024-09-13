@@ -134,9 +134,8 @@
       :hot-game-list="hotGameList"
       :live-game-list="livecasino"
       :slot-game-list="slot"
-      :poker-game-list="pokerGameJILIList"
-      :fish-jili-game-list="fishGameJILIList"
-      :fish-jdb-game-list="fishGameJDBList"
+      :poker-game-list="poker"
+      :fish-game-list="fishing"
       :sport-game-list="sport"
       @play-game="playGame"
       @open-game="openGame"
@@ -2189,6 +2188,7 @@ const getPlatList = () => {
       livecasino.value = [];
       slot.value = [];
       sport.value = [];
+      fishing.value = [];
       // console.log(pf);
 
       pf.forEach((element) => {
@@ -2648,9 +2648,9 @@ onMounted(() => {
   loadAnnouncement();
   checkPlatform();
   loadCustomerAddress();
-  loadJILIFishGameList();
-  loadJDBFishGameList();
-  loadJILIPokerhGameList();
+  // loadJILIFishGameList();
+  // loadJDBFishGameList();
+  // loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();
