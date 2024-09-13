@@ -21,8 +21,10 @@
             <span class="detail-block-content-description">添加以下雷火官方客服：申请代理、特权奖金</span>
             <div class="detail-block-content-voxis">
               <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
-              <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj.voxis_url }}</span>
-              <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url)">复制</button>
+              <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj.voxis_url_1 }}</span>
+              <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_1)">复制</button>
+              <span class="detail-block-content-voxis__url">{{ paramsObj.voxis_url_2 }}</span>
+              <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_2)">复制</button>
             </div>
             <div class="detail-block-content-voxis">
               <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
@@ -31,7 +33,7 @@
             </div>
             <div class="detail-block-content-voxis">
               <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
-              <span class="detail-block-content-voxis__url">雷火官方域名地址：{{ paramsObj.voxis_id_2 }}</span>
+              <span class="detail-block-content-voxis__url">申请代理联系方式：{{ paramsObj.voxis_id_2 }}</span>
               <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_id_2)">复制</button>
             </div>
             <img class="detail-block-content-suffix" src="@/components/hotpromo/officialGift/img/detail-block-suffix.png" />
@@ -679,10 +681,11 @@ const handleCopyClick = (value) => writeClipboard(value);
       border: 1px solid #acd4f6;
       max-width: 720px;
       color: #0092ff;
+      gap: 10px;
 
       img {
         width: 32px;
-        margin-right: 12px;
+        // margin-right: 12px;
       }
 
       .detail-block-content-voxis__url {
