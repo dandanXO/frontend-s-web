@@ -45,7 +45,7 @@
         <table class="livepoker-rebate-game-info-table">
           <thead>
             <tr>
-              <th rowspan="2">当日有效总流水</th>
+              <th rowspan="2">当日有效会员</th>
               <th rowspan="2">当日有效投注</th>
               <th colspan="3">日结流水返佣比例</th>
               <th rowspan="2">投注时间</th>
