@@ -54,6 +54,7 @@
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
       :row-style="{width: '100px'}"
+      :row-class-name="setRowStyle"
     >
       <el-table-column prop="createTime" :label="t('fields.date')" />
       <el-table-column prop="platform" :label="t('fields.platform')" />
@@ -117,14 +118,14 @@
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @current-change="loadRecord"
+      @current-change="changepage"
       @size-change="loadRecord"
     />
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import moment from 'moment'
 import { getBetRecords } from '../../../api/site-platform-bet-record'
 import { getSiteListSimple } from '../../../api/site'
@@ -189,6 +190,14 @@ async function loadRecord() {
   page.loading = false
 }
 
+function changepage(page) {
+  if (request.current >= 1) {
+    request.current = page
+    loadRecord()
+    handleDuplicateTransactionIds(request.current)
+  }
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
@@ -214,9 +223,88 @@ async function loadSearchPlatforms() {
   }
 }
 
+const allTransactionIds = reactive(new Map());
+const pageTransactionIds = reactive(new Map());
+const duplicateTransactionIds = reactive(new Map());
+const colorMap = reactive({});
+const stylesInserted = reactive(new Map());
+
+function getRandomLightColor() {
+  const letters = '89ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return color;
+}
+
+function insertDynamicStyle(transactionId, color) {
+  if (!stylesInserted.has(transactionId) && duplicateTransactionIds.has(transactionId)) {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .row-${transactionId} {
+        background-color: ${color} !important;
+      }
+    `;
+    document.head.appendChild(style);
+    stylesInserted.set(transactionId, style);
+  }
+}
+
+function clearPreviousPageTransactionIds() {
+  pageTransactionIds.forEach((transactionIds, page) => {
+    transactionIds.forEach(id => {
+      if (allTransactionIds.has(id)) {
+        allTransactionIds.set(id, allTransactionIds.get(id) - 1);
+        if (allTransactionIds.get(id) === 0) {
+          allTransactionIds.delete(id);
+        }
+      }
+    });
+    pageTransactionIds.delete(page);
+  });
+}
+
+function handleDuplicateTransactionIds(currentPage) {
+  const transactionIds = page.records.map(record => record.transactionId);
+
+  setTimeout(() => {
+    clearPreviousPageTransactionIds();
+
+    pageTransactionIds.set(currentPage, transactionIds);
+    transactionIds.forEach(id => {
+      allTransactionIds.set(id, (allTransactionIds.get(id) || 0) + 1);
+    });
+
+    transactionIds.forEach(id => {
+      if (allTransactionIds.get(id) > 1) {
+        if (!duplicateTransactionIds.has(id)) {
+          duplicateTransactionIds.set(id, true);
+          if (!colorMap[id]) {
+            colorMap[id] = getRandomLightColor();
+          }
+          insertDynamicStyle(id, colorMap[id]);
+        }
+      } else {
+        if (duplicateTransactionIds.has(id)) {
+          duplicateTransactionIds.delete(id);
+          if (stylesInserted.has(id)) {
+            const styleSheet = stylesInserted.get(id);
+            styleSheet.parentNode.removeChild(styleSheet);
+            stylesInserted.delete(id);
+          }
+        }
+      }
+    });
+  }, 500);
+}
+
+function setRowStyle({ row }) {
+  return duplicateTransactionIds.has(row.transactionId) ? `row-${row.transactionId}` : '';
+}
+
 onMounted(async () => {
   await loadSites()
-
   request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
@@ -227,6 +315,11 @@ onMounted(async () => {
   await loadSearchPlatforms()
   request.platform = platforms.list[0].name
   await loadRecord()
+  handleDuplicateTransactionIds(request.current)
+})
+
+watch(() => {
+  handleDuplicateTransactionIds(request.current) // Update when the page data changes
 })
 </script>
 
