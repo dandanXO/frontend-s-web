@@ -288,6 +288,8 @@ export default defineComponent({
 
     const checkIfVirtualMachine = async () => {
       const info = await Device.getInfo();
+      //
+      // alert(JSON.stringify(info));
 
       // 检测是否为虚拟机或模拟器
       const isEmulator = info.isVirtual;
