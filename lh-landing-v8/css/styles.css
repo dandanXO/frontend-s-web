@@ -298,16 +298,17 @@ a {
 }
 
 .main-sticky-btn {
-  background: url(../imgs/sticky-btn.png)no-repeat center center;
+  /*background: url(../imgs/sticky-btn.png)no-repeat center center;*/
   background-size: contain;
-  padding: 24px 16px;
+  padding: 0px 0px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   position: sticky;
-  bottom: 20px;
-  left: 20px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
