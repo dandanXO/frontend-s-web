@@ -107,17 +107,13 @@ export const convertToGMT7 = (dateTime) => {
 
 export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (amount === null || isNaN(amount)) {
-    return "0.00";
+    return "0";
   }
   const parsedAmount = parseFloat(amount);
-  let formattedAmount = parsedAmount.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+  return parsedAmount.toLocaleString("en-US", {
+    minimumFractionDigits: isForceDecimal ? 2 : 0,
+    maximumFractionDigits: isForceDecimal ? 2 : 0
   });
-  if (isForceDecimal || parsedAmount < 100) {
-    return formattedAmount;
-  }
-  return formattedAmount.replace(/\.00$/, "");
 };
 
 export const displayPlatform = (platform) => {
