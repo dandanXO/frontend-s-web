@@ -7,19 +7,21 @@
           <div class="left">活动时间</div>
           <div class="right">永久</div>
         </div>
-        <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
+        <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
             全民代理强势上线，创造财富从这里开始，0费用0风险0投资，月入百万不是梦，与您携手共进
           </div>
         </div>
+
+        <div class="detail-block-title">
+          <img style="width:19px;" src="../../../components/hotpromo/officialGift/img/gift.svg" />
+          <span>全民代理方案</span>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
             <tr>
-              <th colspan="6">全民代理方案</th>
-            </tr>
-            <tr>
-              <th rowspan="2">当日有效总流水</th>
+              <th rowspan="2">当日有效会员</th>
               <th rowspan="2">当日有效投注</th>
               <th colspan="3">日结流水返佣比例</th>
               <th rowspan="2">投注时间</th>
@@ -127,17 +129,18 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            当日会员满足存款≥10元后定义有效活跃会员；如线下用户玩的游戏不同但满足活跃要求情况下，按照各款游戏比例进行分红。
+            <span style="color:black;font-weight:400;">当日会员满足存款≥10元后定义有效活跃会员；如线下用户玩的游戏不同但满足活跃要求情况下，按照各款游戏比例进行分红。</span>
           </div>
         </div>
 
+        <div class="detail-block-title">
+          <img style="width:19px;" src="../../../components/hotpromo/officialGift/img/gift.svg" />
+          <span>全民代理新增人头费</span>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
-            <tr>
-              <th colspan="4">全民代理新增人头费</th>
-            </tr>
             <tr>
               <th>新增人数</th>
               <th>活动要求</th>
@@ -167,9 +170,9 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~
+            <span style="color:black;font-weight:400;">若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~</span>
           </div>
         </div>
 
@@ -177,9 +180,9 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            代理申请咨询：北京时间中午12:00至22:00，其余时间咨询24小时在线客服进行咨询。
+            <span style="color:black;font-weight:400;">代理申请咨询：北京时间中午12:00至22:00，其余时间咨询24小时在线客服进行咨询。</span>
           </div>
         </div>
 
@@ -221,19 +224,45 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~
+            <span style="color:black;font-weight:400;">若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~</span>
           </div>
         </div>
 
         <div class="voxis-wrapper">
-          <span>
+          <!-- <span>
             聊天软件下载：
             <a :href="paramsObj.voxis_url" target="_blank">Voxis</a>
           </span>
           <span>申请代理联系方式：添加专员 Voxis：{{ paramsObj.voxis_id_1 }}</span>
-          <span>特权奖金联系方式：添加专员 Voxis：{{ paramsObj.voxis_id_2 }}</span>
+          <span>特权奖金联系方式：添加专员 Voxis：{{ paramsObj.voxis_id_2 }}</span> -->
+
+          <div class="daili-promo-block detail-block">
+            <div class="detail-block-title">
+              <img src="../../../components/hotpromo/officialGift/img/gift.svg" />
+              <span>认准雷火电竞官方VIP客服管理</span>
+            </div>
+            <div class="detail-block-content">
+              <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐专属红包</span>
+              <div class="detail-block-content-voxis">
+                <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
+                <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj.voxis_url }}</span>
+                <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url)">复制</button>
+              </div>
+              <div class="detail-block-content-voxis">
+                <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
+                <span class="detail-block-content-voxis__url">特权奖金联系方式：{{ paramsObj.voxis_id_1 }}</span>
+                <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_id_1)">复制</button>
+              </div>
+              <div class="detail-block-content-voxis">
+                <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
+                <span class="detail-block-content-voxis__url">雷火官方域名地址：{{ paramsObj.voxis_id_2 }}</span>
+                <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_id_2)">复制</button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -288,6 +317,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { writeClipboard } from "boot/utils";
 
 const props = defineProps({
   params: String
@@ -300,6 +330,66 @@ const paramsObj = computed(() => {
     return {};
   }
 });
+
+
+const currentVoxisId = computed(() => {
+  const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
+  return paramsObj.value[key] || "";
+});
+
+function isHuaweiBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return userAgent.includes("huawei") || userAgent.includes("honor");
+}
+
+const handleCopyClick = async (textToCopy) => {
+  if (window.location.pathname === "/promotion") {
+    // alert(textToCopy);
+
+    const notify = useNotify();
+    if (isHuaweiBrowser()) {
+      writeClipboard(textToCopy);
+    } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+      await navigator.clipboard.writeText(textToCopy);
+
+      setTimeout(() => {
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }, 100);
+    } else {
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+
+      document.body.prepend(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(textArea);
+      }
+
+      setTimeout(() => {
+        notify({
+          type: "success",
+          message: "复制成功"
+        });
+      }, 100);
+    }
+  } else {
+    writeClipboard(textToCopy);
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -427,7 +517,8 @@ const paramsObj = computed(() => {
       background-image: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 64px;
+      width: 70px;
+      min-width: 70px;
       height: 20px;
       display: flex;
       justify-content: center;
@@ -436,7 +527,7 @@ const paramsObj = computed(() => {
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
-      margin-right: 16px;
+      margin-right: 10px;
     }
     .right {
       font-size: 12px;
@@ -573,5 +664,101 @@ const paramsObj = computed(() => {
       font-weight: 400;
       line-height: 28px;
       color: #000000;
+}
+
+.daili-promo-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f2f8fe;
+  // box-shadow: 0px 0px 4px 0px #01497b0f;
+  // padding: 12px;
+  // border: 1px solid #f2f8fe;
+  border-radius: 12px;
+
+  .daili-promo-block-title {
+    background: url(../../../components/hotpromo/officialGift/img/block-title-bg.png) no-repeat;
+    background-size: contain;
+    aspect-ratio: 337 / 20;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.45rem;
+    text-align: center;
+    color: #4c4c6c;
+  }
+}
+
+.detail-block-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+
+    img {
+      max-width: 1.2rem;
+    }
+
+    span {
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.3rem;
+    }
+  }
+
+.detail-block {
+  gap: 8px;
+
+  .detail-block-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 12px;
+
+    .detail-block-content-description {
+      font-size: 0.7rem;
+      font-weight: 600;
+      line-height: 1.07rem;
+      color: #00000099;
+    }
+
+    .detail-block-content-voxis {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #acd4f6;
+      max-width: 720px;
+      color: #0092ff;
+
+      img {
+        max-width: 1.5rem;
+        margin-right: 4px;
+      }
+
+      .detail-block-content-voxis__url {
+        flex-grow: 1;
+        font-size: 1.07rem;
+        font-weight: 600;
+        line-height: 1.5rem;
+      }
+
+      .detail-block-content-voxis__btn {
+        background-color: transparent;
+        border: 1px solid #0092ff;
+        border-radius: 100px;
+        padding: 1px 18px;
+        font-size: 0.9rem;
+        line-height: 1.3rem;
+        color: #0092ff;
+        &:hover {
+          filter: brightness(0.7);
+        }
+      }
+    }
+  }
 }
 </style>
