@@ -45,7 +45,6 @@
             :editable="false"
             :clearable="false"
           />
-          ASDASDSASD
 
           <el-button
             style="margin-left: 20px"
