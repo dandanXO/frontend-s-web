@@ -74,10 +74,10 @@ const tabInfo = ref([
   { id: "rule", label: "规则与条款", component: AboutRule },
   { id: "privacy", label: "隐私保护规则", component: AboutPrivacy },
   { id: "contact", label: "联系我们", component: AboutContact },
-  { id: "aboutQaGame", label: "", component: AboutQaGame, key: 'qa' },
-  { id: "aboutQaSport", label: "", component: AboutQaSport, key: 'qa' },
-  { id: "aboutQaOther", label: "", component: AboutQaOther, key: 'qa' },
-  { id: "aboutQaPerson", label: "", component: AboutQaPerson, key: 'qa' }
+  { id: "aboutQaGame", label: "", component: AboutQaGame, key: "qa" },
+  { id: "aboutQaSport", label: "", component: AboutQaSport, key: "qa" },
+  { id: "aboutQaOther", label: "", component: AboutQaOther, key: "qa" },
+  { id: "aboutQaPerson", label: "", component: AboutQaPerson, key: "qa" }
 ]);
 
 const route = useRoute();
@@ -85,7 +85,7 @@ const router = useRouter();
 
 const currentComponent = computed(() => {
   const res = tabInfo.value.find((item) => item.id === route.query.id);
-  console.log(res)
+  console.log(res);
 
   return res ? res.component : AboutGuide;
 });
@@ -98,9 +98,9 @@ watch(
   () => route.query,
   () => {
     if (route.query?.id) {
-      const res = tabInfo.value.find((item) => item.id === route.query.id)
+      const res = tabInfo.value.find((item) => item.id === route.query.id);
 
-      activeTab.value = res ? res.key ?? res.id : 'guide';
+      activeTab.value = res ? res.key ?? res.id : "guide";
       window.scrollTo(0, 0);
     } else {
       activeTab.value === "guide";
@@ -118,9 +118,9 @@ watch(
   display: flex;
   width: 90%;
   margin: 0 auto;
-  padding: 10px 0;
+  padding: 16px 0 20px;
   height: 100%;
-  min-height: 1240px;
+  min-height: 800px;
   gap: 20px;
 
   .icon-selected-img {
@@ -152,12 +152,12 @@ watch(
 
   .about-content,
   :deep(.el-tabs__header) {
-    padding: 50px 20px;
+    padding: 25px 40px 50px;
     border-radius: 0.9375rem;
     background: #fff;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     height: 100%;
-    min-height: 1240px;
+    min-height: 1000px;
     flex: 1;
 
     .title {
@@ -196,16 +196,18 @@ watch(
 
   :deep(.el-menu-item) {
     height: 50px;
-    color: #A4AABB;
+    color: #a4aabb;
   }
 
   .el-menu-vertical-demo {
-    box-shadow: 0px 0px 10px 0px #0000001A;
+    box-shadow: 0px 0px 10px 0px #0000001a;
     border-radius: 20px;
+    width: 280px;
+    padding: 15px 10px;
   }
 
   :deep(.el-menu-item.is-active) {
-    color: #424F72;
+    color: #424f72;
   }
 }
 
