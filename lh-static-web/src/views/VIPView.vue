@@ -738,7 +738,7 @@
         </li>
       </ol> -->
       <h2>一. 会员晋级/保级/降级规则</h2>
-      <ol class="terms">
+      <ol class="terms got-bullets">
         <li>会员累计投注额达到相应级别的要求，即可在次日24点前晋级相应VIP等级；</li>
         <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
         <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
@@ -785,7 +785,7 @@
       </ol>
 
       <h2>七. 会员充值加码10%</h2>
-      <ol class="terms">
+      <ol class="terms got-bullets">
         <li class="numbered">
           VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在7日内进行使用，成功使用后需要完成相应流水即可提款
         </li>
@@ -1368,6 +1368,7 @@ $border-settings: 1px solid #e5e7eb;
     min-height: 600px;
   }
   .current-vip-status {
+    max-width: 1200px;
     border: 2px solid #799df8;
     margin: 50px auto;
     background: #212b4ae0;
@@ -2054,16 +2055,10 @@ $border-settings: 1px solid #e5e7eb;
       line-height: 30px;
       background: linear-gradient(0deg, #2f3547, #2f3547ad);
       counter-reset: item;
-      li {
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 5px;
-        list-style-type: none;
-        margin-bottom: 10px;
-        position: relative;
 
-        &::before {
+      &.got-bullets {
+        li {
+          &::before {
             content: counter(item);
             counter-increment: item;
             background: url("../assets/vip/tnc-no-bg.png") no-repeat center center;
@@ -2079,6 +2074,17 @@ $border-settings: 1px solid #e5e7eb;
             align-items: center;
             justify-content: center;
           }
+        }
+      }
+
+      li {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+        list-style-type: none;
+        margin-bottom: 10px;
+        position: relative;
       }
       .term {
         max-width: 1300px;
