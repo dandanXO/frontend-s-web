@@ -134,7 +134,7 @@
       :hot-game-list="hotGameList"
       :live-game-list="livecasino"
       :slot-game-list="slot"
-      :poker-game-list="pokerGameJILIList"
+      :poker-game-list="poker"
       :fish-game-list="fishing"
       :sport-game-list="sport"
       @play-game="playGame"
@@ -2650,7 +2650,7 @@ onMounted(() => {
   loadCustomerAddress();
   // loadJILIFishGameList();
   // loadJDBFishGameList();
-  loadJILIPokerhGameList();
+  // loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();

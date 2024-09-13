@@ -240,24 +240,23 @@ const getImgPlatformBg = (platform, game) => {
 const handlePlayGame = (platform, game) => {
   if (platform === "hot") {
     if (game.type === "game") {
-      console.log(1);
       emit("playGame", game.name, game.platformCode, game.code, game.status, game.gameType, game.id);
     } else {
-      console.log(2);
       emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
     }
-  } else if (platform === "slot" || platform === "fish") {
-    const gameType = platform === "fish" ? "FISH" : game.gameType === "CASUAL" ? "CASUAL" : "SLOT";
+  } else if (["slot", "fish", "poker"].includes(platform)) {
+    let gameType = "";
+    switch (platform) {
+      case "fish":
+        gameType = "FISH";
+        break;
+      case "poker":
+        gameType = "POKER";
+        break;
+      case "slot":
+        gameType = game.gameType === "CASUAL" ? "CASUAL" : "SLOT";
+    }
     emit("openGame", game.name, game.code, "", game.status, gameType, game.id);
-  } else if (platform === "poker") {
-    emit("playGame", game.name, "JILI", game.code, game.status, game.gameType, game.id);
-    // } else if (platform === "fish") {
-    // const isJILIGame = props.fishJiliGameList.findIndex((JILIGame) => JILIGame.id === game.id) > -1;
-    // if (isJILIGame) {
-    //   emit("playGame", game.name, "JILI", game.code, game.status, game.gameType, game.id);
-    // } else {
-    //   emit("playGame", game.name, "JDB", game.code, game.status, game.gameType, game.id);
-    // }
   } else {
     emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
   }
