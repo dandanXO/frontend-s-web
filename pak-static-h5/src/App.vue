@@ -293,35 +293,6 @@ export default defineComponent({
       const model = info.model;
       const manufacturer = info.manufacturer;
 
-      // alert(navigator.userAgent + " | " + platform + " | " + vendor);
-      // if (navigator.connection) {
-      //   alert(navigator.connection.effectiveType);
-      //   const type = navigator.connection.effectiveType;
-      //   // 检查是否使用不常见的网络类型（模拟器常见）
-      //   if (type === "ethernet" || type === "unknown") {
-      //     alert("IS Internet Unknown");
-      //     console.log("可能是模拟器/虚拟机（网络异常）");
-      //   } else {
-      //     console.log("网络正常，可能是物理设备");
-      //   }
-      // }
-      // if ("DeviceOrientationEvent" in window) {
-      //   window.addEventListener("deviceorientation", function (event) {
-      //     alert("GOT DeviceOrientationEvent");
-      //     console.log("陀螺仪存在，可能是物理设备");
-      //   });
-      // } else {
-      //   alert("NO DeviceOrientationEvent");
-      //   console.log("陀螺仪不存在，可能是模拟器");
-      // }
-      // const isEmulator3 = navigator.userAgent.includes("x86") || navigator.userAgent.includes("i686");
-      // if (isEmulator3) {
-      //   alert("IS 3");
-      //   console.log("设备可能是虚拟机/模拟器（x86 架构）");
-      // } else {
-      //   alert("Not Here");
-      // }
-
       if (isEmulator || model.includes("sdk") || manufacturer.includes("Genymotion")) {
         console.log("This is a virtual machine or emulator.");
         App.exitApp();
