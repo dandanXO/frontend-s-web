@@ -186,11 +186,12 @@
           </div>
         </div>
 
+        <div class="detail-block-title">
+          <img style="width:19px;" src="../../../components/hotpromo/officialGift/img/gift.svg" />
+          <span>代理特权</span>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
-            <tr>
-              <th colspan="4">代理特权</th>
-            </tr>
             <tr>
               <th>赠送对象</th>
               <th>下级当日累计存款</th>
