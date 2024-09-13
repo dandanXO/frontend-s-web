@@ -78,7 +78,7 @@ a {
 .top-cs {
   display: block;
   max-width: 190px;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 40px;
   width: 25%;
