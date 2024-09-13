@@ -58,8 +58,9 @@ const props = defineProps({
   slotGameList: Array,
   liveGameList: Array,
   pokerGameList: Array,
-  fishJiliGameList: Array,
-  fishJdbGameList: Array,
+  fishGameList: Array,
+  // fishJiliGameList: Array,
+  // fishJdbGameList: Array,
   sportGameList: Array
 });
 
@@ -80,7 +81,7 @@ const platforms = computed(() => [
   { name: "live", games: props.liveGameList },
   { name: "sport", games: props.sportGameList },
   { name: "poker", games: props.pokerGameList },
-  { name: "fish", games: [...props.fishJiliGameList, ...props.fishJdbGameList] }
+  { name: "fish", games: props.fishGameList }
 ]);
 
 const selectTab = (item) => {
@@ -245,17 +246,18 @@ const handlePlayGame = (platform, game) => {
       console.log(2);
       emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
     }
-  } else if (platform === "slot") {
-    emit("openGame", game.name, game.code, "", game.status, game.gameType === "CASUAL" ? "CASUAL" : "SLOT", game.id);
+  } else if (platform === "slot" || platform === "fish") {
+    const gameType = platform === "fish" ? "FISH" : game.gameType === "CASUAL" ? "CASUAL" : "SLOT";
+    emit("openGame", game.name, game.code, "", game.status, gameType, game.id);
   } else if (platform === "poker") {
     emit("playGame", game.name, "JILI", game.code, game.status, game.gameType, game.id);
-  } else if (platform === "fish") {
-    const isJILIGame = props.fishJiliGameList.findIndex((JILIGame) => JILIGame.id === game.id) > -1;
-    if (isJILIGame) {
-      emit("playGame", game.name, "JILI", game.code, game.status, game.gameType, game.id);
-    } else {
-      emit("playGame", game.name, "JDB", game.code, game.status, game.gameType, game.id);
-    }
+    // } else if (platform === "fish") {
+    // const isJILIGame = props.fishJiliGameList.findIndex((JILIGame) => JILIGame.id === game.id) > -1;
+    // if (isJILIGame) {
+    //   emit("playGame", game.name, "JILI", game.code, game.status, game.gameType, game.id);
+    // } else {
+    //   emit("playGame", game.name, "JDB", game.code, game.status, game.gameType, game.id);
+    // }
   } else {
     emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
   }
@@ -275,7 +277,7 @@ onActivated(() => {
   .game-left-list {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 100vh;
+    height: calc(100vh - 380px);
     margin-top: 0px;
     top: 0;
     flex: 2;
@@ -354,7 +356,7 @@ onActivated(() => {
     overflow-x: hidden;
     // padding-right: 2px;
     // margin-right: -4px;
-    height: 100vh;
+    height: calc(100vh - 380px);
     margin-top: 0px;
     flex: 11;
     display: flex;
