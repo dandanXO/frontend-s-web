@@ -160,37 +160,37 @@
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
-        <div class="profile-details-container">
-          <template v-if="!homeProfile">
-            <div class="profile-rating">
-              <img src="../assets/images/index/profile-rating-off.png" alt="" />
-              <img src="../assets/images/index/profile-rating-off.png" alt="" />
-              <img src="../assets/images/index/profile-rating-off.png" alt="" />
-            </div>
-            <div class="profile-agency">
-              <div class="profile-agency-lbl">Agency Level:</div>
-              <div class="profile-agency-val">1</div>
-            </div>
-          </template>
+        <!-- <div class="profile-details-container"> -->
+        <!-- <template v-if="!homeProfile"> -->
+        <!-- <div class="profile-rating"> -->
+        <!-- <img src="../assets/images/index/profile-rating-off.png" alt="" /> -->
+        <!-- <img src="../assets/images/index/profile-rating-off.png" alt="" /> -->
+        <!-- <img src="../assets/images/index/profile-rating-off.png" alt="" /> -->
+        <!-- </div> -->
+        <!-- <div class="profile-agency"> -->
+        <!-- <div class="profile-agency-lbl">Agency Level:</div> -->
+        <!-- <div class="profile-agency-val">1</div> -->
+        <!-- </div> -->
+        <!-- </template> -->
 
-          <template v-else>
-            <div class="flex-c-start">
-              <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-                <span class="currency-amount">
-                  {{ store.currency.value }}
-                </span>
-                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
-                </span>
+        <!-- <template v-else> -->
+        <!-- <div class="flex-c-start"> -->
+        <!-- <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()"> -->
+        <!-- <span class="currency-amount"> -->
+        <!-- {{ store.currency.value }} -->
+        <!-- </span> -->
+        <!-- <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`"> -->
+        <!-- {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }} -->
+        <!-- </span> -->
 
-                <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
-                <!-- <div class="btn-refresh">
+        <!-- <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" /> -->
+        <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
-              </div>
-            </div>
-          </template>
-        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </template> -->
+        <!-- </div> -->
 
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
