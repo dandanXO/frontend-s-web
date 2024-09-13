@@ -8,7 +8,9 @@
         @click="updateTab(item.id)"
       >
         <img v-if="activeTab === item.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-        <div style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px">
+        <div
+          style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px"
+        >
           <img class="icon-img" :src="require(`../assets/about/icon_${item.id}.png`)" />
           <div class="tab-label" :class="{ active: activeTab === item.id }">{{ item.label }}</div>
         </div>
@@ -16,7 +18,16 @@
       <el-sub-menu index="2">
         <template #title>
           <img v-if="activeTab === 'qa'" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-          <div style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px">
+          <div
+            style="
+              display: flex;
+              gap: 10px;
+              justify-content: flex-start;
+              align-items: center;
+              flex: 1;
+              margin-left: 50px;
+            "
+          >
             <img class="icon-img" :src="require(`../assets/about/icon_qa.png`)" />
             <div class="tab-label" :class="{ active: activeTab === 'qa' }">游戏问题</div>
           </div>
@@ -33,7 +44,9 @@
         @click="updateTab(item.id)"
       >
         <img v-if="activeTab === item.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-        <div style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px">
+        <div
+          style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px"
+        >
           <img class="icon-img" :src="require(`../assets/about/icon_${item.id}.png`)" />
           <div class="tab-label" :class="{ active: activeTab === item.id }">{{ item.label }}</div>
         </div>
@@ -175,6 +188,12 @@ watch(
       border: 1px solid rgba(0, 0, 0, 0.2);
       margin: 15px 0;
     }
+  }
+
+  .about-content {
+    background-image: url("../assets/about/white-b.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
 
   :deep(.el-tabs__content) {

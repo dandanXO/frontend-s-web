@@ -3,7 +3,7 @@
     <h3 class="title">合作商户</h3>
     <div class="content">雷火与全球顶尖提供商合作，为大家带来了全新颠覆性娱乐产品和极致的用户体验。</div>
 
-    <img style="margin-top: 20px;" src="../../assets/about/aboutcooperate/brands.png" alt="">
+    <img style="width: 100%; margin-top: 20px; max-width: 1200px" src="../../assets/about/bgbg.jpg" alt="" />
   </div>
 </template>
 
@@ -18,14 +18,14 @@
 }
 
 .title {
-  color: #424F72;
+  color: #424f72;
   margin: 20px 0 0px;
   font-weight: 600;
   font-size: 1.125rem;
 }
 
 .content {
-  color: #A4AABB;
+  color: #a4aabb;
   font-size: 1.125rem;
 }
 </style>
