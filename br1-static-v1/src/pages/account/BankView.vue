@@ -17,14 +17,14 @@
         <DialogHeader :title="$t('notify.areYouSureUnbind')"></DialogHeader>
         <q-card-section>
           <q-form>
-            <div class="input-title">{{ $t("form.phone") }}</div>
+            <div class="input-title">{{ $t("form.accountNumber") }}</div>
             <q-input
               standout
               class="q-pb-xs dialog-input"
               hide-bottom-space
               filled
               v-model="unbindField.bankCardNumber"
-              :label="$t('form.accountNumber')"
+              :placeholder="$t('form.accountNumber_placeholder')"
               :rules="[
                 (val) => (val && val.length > 0) || $t('form.accountNumber_rules_01'),
                 (val) => (val && val === selectedUnbindCardNum) || $t('form.accountNumber_rules_02')

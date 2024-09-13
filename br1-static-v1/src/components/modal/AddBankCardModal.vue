@@ -38,10 +38,9 @@
                 :label="$t('form.holderName_placeholder')"
                 :rules="[(_) => isValidCardAccount()]"
                 label-color="secondary"
-                disable
               />
             </div>
-            <div class="q-my-sm">
+            <!-- <div class="q-my-sm">
               <div class="input-options">
                 <div
                   v-for="option in options"
@@ -53,27 +52,28 @@
                   {{ option.toUpperCase() }}
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="q-my-sm">
               <div class="input-title">{{ accountTypeStr }}</div>
+              <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
               <q-input
-                :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'"
+                type="number"
                 standout
                 ref="refBankCardNum"
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardNumber"
-                :placeholder="cardNumberPlaceholder"
+                :placeholder="t('form.phone_placeholder')"
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
               >
                 <template v-slot:prepend>
-                  <template v-if="selectedOption === 'phone'">
-                    <img class="white-svg" src="../../assets/images/account/input-icon-phone-white.png" />
-                    <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
-                  </template>
-                  <template v-if="selectedOption === 'email'">
+                  <!-- <template v-if="selectedOption === 'phone'"> -->
+                  <img class="white-svg" src="../../assets/images/account/input-icon-phone-white.png" />
+                  <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                  <!-- </template> -->
+                  <!-- <template v-if="selectedOption === 'email'">
                     <img class="white-svg" src="../../assets/images/account/input-icon-email-white.png" />
                   </template>
                   <template v-if="selectedOption === 'cpf'">
@@ -84,7 +84,49 @@
                   </template>
                   <template v-if="selectedOption === 'evp'">
                     <img class="white-svg" src="../../assets/images/account/input-icon-evp-white.png" />
-                  </template>
+                  </template> -->
+                </template>
+              </q-input>
+            </div>
+
+            <div class="q-my-sm">
+              <div class="input-title">{{ $t("form.cpf") }}</div>
+              <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
+              <q-input
+                type="number"
+                standout
+                ref="refBankCardAddress"
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAddress"
+                :placeholder="t('form.cpf_placeholder')"
+                :rules="[(_) => isValidCardAddress()]"
+                label-color="secondary"
+              >
+                <template v-slot:prepend>
+                  <img class="white-svg" src="../../assets/images/account/input-icon-cpf-white.png" />
+                </template>
+              </q-input>
+            </div>
+
+            <div class="q-my-sm">
+              <div class="input-title">{{ $t("form.email") }}</div>
+              <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
+              <q-input
+                type="text"
+                standout
+                ref="refBankEmail"
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.email"
+                :placeholder="t('form.email_placeholder')"
+                :rules="[(_) => isValidEmail()]"
+                label-color="secondary"
+              >
+                <template v-slot:prepend>
+                  <img class="white-svg" src="../../assets/images/account/input-icon-email-white.png" />
                 </template>
               </q-input>
             </div>
@@ -127,6 +169,8 @@ const currentCardType = ref("Bank");
 const accountTypeStr = ref("");
 
 const refBankCardNum = ref();
+const refBankCardAddress = ref();
+const refBankCardEmail = ref();
 
 // display
 const currBankList = ref([]);
@@ -140,7 +184,8 @@ const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: ""
+  cardAddress: "",
+  email: ""
 });
 const router = useRouter();
 
@@ -251,6 +296,7 @@ const clearField = () => {
   bankCardField.cardNumber = "";
   bankCardField.cardAccount = store.realName;
   bankCardField.cardAddress = "";
+  bankCardField.email = "";
 };
 
 // validation
@@ -277,39 +323,42 @@ const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
   let result = true;
 
-  if (selectedOption.value === "phone") {
-    result = !cardNumber ? t("form.phone_rules_01") : true;
-    if (cardNumber.startsWith("0")) {
-      return t("form.phone_rules_03");
-    }
-    const digitCount = cardNumber.match(/\d/g)?.length || 0;
-    if (digitCount !== 11) {
-      return t("form.phone_rules_02");
-    }
-  } else if (selectedOption.value === "email") {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
-  } else if (selectedOption.value === "cpf") {
-    const cpfPattern = /^\d{11}$/;
-    result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
-  } else if (selectedOption.value === "cnpj") {
-    const cnpjPattern = /^\d{14}$/;
-    result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
-  } else if (selectedOption.value === "evp") {
-    const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
+  // if (selectedOption.value === "phone") {
+  result = !cardNumber ? t("form.phone_rules_01") : true;
+  if (cardNumber.startsWith("0")) {
+    return t("form.phone_rules_03");
   }
+  const digitCount = cardNumber.match(/\d/g)?.length || 0;
+  if (digitCount !== 11) {
+    return t("form.phone_rules_02");
+  }
+  // } else if (selectedOption.value === "email") {
+  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   result = emailPattern.test(cardNumber) ? true : t("form.email_rules_02");
+  // } else if (selectedOption.value === "cpf") {
+  //   const cpfPattern = /^\d{11}$/;
+  //   result = cpfPattern.test(cardNumber) ? true : t("form.cpf_rules_02");
+  // } else if (selectedOption.value === "cnpj") {
+  //   const cnpjPattern = /^\d{14}$/;
+  //   result = cnpjPattern.test(cardNumber) ? true : t("form.cnpj_rules_02");
+  // } else if (selectedOption.value === "evp") {
+  //   const evpPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  //   result = evpPattern.test(cardNumber) ? true : t("form.evp_rules_02");
+  // }
 
   return result;
 };
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
-  const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
-    : true;
+  const result = !cardAddress ? t("form.cpf_rules_01") : cardAddress.length !== 11 ? t("form.cpf_rules_02") : true;
+  return result;
+};
+
+const isValidEmail = () => {
+  const { email } = bankCardField;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const result = !email ? t("form.email_rules_01") : !emailPattern.test(email) ? t("form.email_rules_02") : true;
   return result;
 };
 
@@ -318,11 +367,11 @@ const addCard = () => {
 
   const formData = { ...bankCardField };
 
-  if (selectedOption.value === "phone") {
-    if (!formData.cardNumber.startsWith("+55")) {
-      formData.cardNumber = `+55${formData.cardNumber}`;
-    }
+  // if (selectedOption.value === "phone") {
+  if (!formData.cardNumber.startsWith("+55")) {
+    formData.cardNumber = `+55${formData.cardNumber}`;
   }
+  // }
 
   api
     .post("/session/bankCard", qs.stringify(formData))
