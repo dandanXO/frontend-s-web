@@ -8,7 +8,7 @@
         @click="updateTab(item.id)"
       >
         <img v-if="activeTab === item.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-        <div style="display: flex; gap: 10px; justify-content: center; align-items: center">
+        <div style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px">
           <img class="icon-img" :src="require(`../assets/about/icon_${item.id}.png`)" />
           <div class="tab-label" :class="{ active: activeTab === item.id }">{{ item.label }}</div>
         </div>
@@ -16,15 +16,15 @@
       <el-sub-menu index="2">
         <template #title>
           <img v-if="activeTab === 'qa'" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-          <div style="display: flex; gap: 10px; justify-content: center; align-items: center">
+          <div style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px">
             <img class="icon-img" :src="require(`../assets/about/icon_qa.png`)" />
             <div class="tab-label" :class="{ active: activeTab === 'qa' }">游戏问题</div>
           </div>
         </template>
-        <el-menu-item index="2-1" @click="updateTab('aboutQaGame')">电子竞技</el-menu-item>
-        <el-menu-item index="2-2" @click="updateTab('aboutQaSport')">体育问题</el-menu-item>
-        <el-menu-item index="2-3" @click="updateTab('aboutQaPerson')">真人问题</el-menu-item>
-        <el-menu-item index="2-4" @click="updateTab('aboutQaOther')">其他问题</el-menu-item>
+        <el-menu-item index="2-1" @click="updateTab('aboutQaGame')" style="margin-left: 70px">电子竞技</el-menu-item>
+        <el-menu-item index="2-2" @click="updateTab('aboutQaSport')" style="margin-left: 70px">体育问题</el-menu-item>
+        <el-menu-item index="2-3" @click="updateTab('aboutQaPerson')" style="margin-left: 70px">真人问题</el-menu-item>
+        <el-menu-item index="2-4" @click="updateTab('aboutQaOther')" style="margin-left: 70px">其他问题</el-menu-item>
       </el-sub-menu>
       <el-menu-item
         :index="index + 3"
@@ -33,7 +33,7 @@
         @click="updateTab(item.id)"
       >
         <img v-if="activeTab === item.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-        <div style="display: flex; gap: 10px; justify-content: center; align-items: center">
+        <div style="display: flex; gap: 10px; justify-content: flex-start; align-items: center; flex: 1; margin-left: 50px">
           <img class="icon-img" :src="require(`../assets/about/icon_${item.id}.png`)" />
           <div class="tab-label" :class="{ active: activeTab === item.id }">{{ item.label }}</div>
         </div>
@@ -116,12 +116,15 @@ watch(
 <style scoped lang="scss">
 .about-container {
   display: flex;
-  width: 90%;
   margin: 0 auto;
-  padding: 16px 0 20px;
+  padding: 50px 5% 120px;
   height: 100%;
   min-height: 800px;
   gap: 20px;
+  background-image: url(../assets/about/background-image.png);
+  background-size: 100%;
+  background-position: bottom;
+  background-repeat: no-repeat;
 
   .icon-selected-img {
     position: absolute;
@@ -157,7 +160,7 @@ watch(
     background: #fff;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     height: 100%;
-    min-height: 1000px;
+    min-height: 800px;
     flex: 1;
 
     .title {
@@ -197,6 +200,7 @@ watch(
   :deep(.el-menu-item) {
     height: 50px;
     color: #a4aabb;
+    padding-right: 44px;
   }
 
   .el-menu-vertical-demo {
