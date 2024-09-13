@@ -7,17 +7,45 @@
           <div class="left">活动时间</div>
           <div class="right">永久</div>
         </div>
-        <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
+        <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">全民代理强势上线，创造财富从这里开始，0费用0风险0投资，月入百万不是梦，与您携手共进</div>
+        </div>
+
+        <div class="daili-promo-block detail-block">
+          <div class="detail-block-title">
+            <img src="@/components/hotpromo/officialGift/img/gift.svg" />
+            <span>聊天软件下载：<span style="color: #0092ff; text-decoration: underline;">Voxis</span></span>
+          </div>
+          <div class="detail-block-content">
+            <span class="detail-block-content-description">添加以下雷火官方客服：申请代理、特权奖金</span>
+            <div class="detail-block-content-voxis">
+              <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+              <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj.voxis_url }}</span>
+              <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url)">复制</button>
+            </div>
+            <div class="detail-block-content-voxis">
+              <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+              <span class="detail-block-content-voxis__url">特权奖金联系方式：{{ paramsObj.voxis_id_1 }}</span>
+              <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_id_1)">复制</button>
+            </div>
+            <div class="detail-block-content-voxis">
+              <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+              <span class="detail-block-content-voxis__url">雷火官方域名地址：{{ paramsObj.voxis_id_2 }}</span>
+              <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_id_2)">复制</button>
+            </div>
+            <img class="detail-block-content-suffix" src="@/components/hotpromo/officialGift/img/detail-block-suffix.png" />
+          </div>
+        </div>
+        
+        <div class="detail-block-title">
+          <img src="@/components/hotpromo/officialGift/img/gift.svg" />
+          <span>全民代理方案</span>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
             <tr>
-              <th colspan="6">全民代理方案</th>
-            </tr>
-            <tr>
-              <th rowspan="2">当日有效总流水</th>
+              <th rowspan="2">当日有效会员</th>
               <th rowspan="2">当日有效投注</th>
               <th colspan="3">日结流水返佣比例</th>
               <th rowspan="2">投注时间</th>
@@ -125,17 +153,18 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            当日会员满足存款≥10元后定义有效活跃会员；如线下用户玩的游戏不同但满足活跃要求情况下，按照各款游戏比例进行分红。
+            <span style="color:black;">当日会员满足存款≥10元后定义有效活跃会员；如线下用户玩的游戏不同但满足活跃要求情况下，按照各款游戏比例进行分红。</span>
           </div>
         </div>
 
+        <div class="detail-block-title">
+          <img src="@/components/hotpromo/officialGift/img/gift.svg" />
+          <span>全民代理新增人头费</span>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
-            <tr>
-              <th colspan="4">全民代理新增人头费</th>
-            </tr>
             <tr>
               <th>新增人数</th>
               <th>活动要求</th>
@@ -165,9 +194,9 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~
+            <span style="color:black;">若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~</span>
           </div>
         </div>
 
@@ -175,17 +204,18 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            代理申请咨询：北京时间中午12:00至22:00，其余时间咨询24小时在线客服进行咨询。
+            <span style="color:black;">代理申请咨询：北京时间中午12:00至22:00，其余时间咨询24小时在线客服进行咨询。</span>
           </div>
         </div>
 
+        <div class="detail-block-title">
+          <img src="@/components/hotpromo/officialGift/img/gift.svg" />
+          <span>代理特权</span>
+        </div>
         <table class="livepoker-rebate-game-info-table">
           <thead>
-            <tr>
-              <th colspan="4">代理特权</th>
-            </tr>
             <tr>
               <th>赠送对象</th>
               <th>下级当日累计存款</th>
@@ -219,13 +249,13 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
-              <span>注</span>
+              <span>注意</span>
             </div>
-            若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~
+            <span style="color:black;">若满足当日线下会员≥1且返利金≥10元，可以联系在线客服申请，每天限定100名（领取时间：当日18:00-次日18:00），领取时间保留【72小时】，逾期作废，请多加关注信息通知~</span>
           </div>
         </div>
 
-        <div class="voxis-wrapper">
+        <div class="voxis-wrapper" style="display:none;">
           <span>
             聊天软件下载：
             <a :href="paramsObj.voxis_url" target="_blank">Voxis</a>
@@ -263,19 +293,19 @@
             返利领取时间 ，北京时间每日09:30后领取。
           </div>
           <div class="item">
-            <div class="item-num">6</div>
+            <div class="item-num">7</div>
             代理人头费彩金将在当日审核后，24小时内派发至合营伙伴游戏账号优惠余额中自行领取。
           </div>
           <div class="item">
-            <div class="item-num">6</div>
+            <div class="item-num">8</div>
             会员必须是真实有需要玩家，如发现有利用我司平台进行，刷水，套利，洗黑钱等行为，我司有权终止其全民代理合作，并不予发放、返利金。
           </div>
           <div class="item">
-            <div class="item-num">6</div>
+            <div class="item-num">9</div>
             如遇不可抗拒或超出控制范围的因素，本站有权在无事先通知的情况下对活动进行修改、停止、取消或禁止的行为，并不承担任何责任。
           </div>
           <div class="item">
-            <div class="item-num">6</div>
+            <div class="item-num">10</div>
             活动最终解释权归本站所有。
           </div>
         </div>
@@ -286,6 +316,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { writeClipboard } from "@/utils/clipboard";
 
 const props = defineProps({
   params: String
@@ -298,6 +329,8 @@ const paramsObj = computed(() => {
     return {};
   }
 });
+
+const handleCopyClick = (value) => writeClipboard(value);
 </script>
 
 <style scoped lang="scss">
@@ -581,5 +614,101 @@ const paramsObj = computed(() => {
   font-weight: 400;
   line-height: 28px;
   color: #000000;
+}
+
+.daili-promo-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f2f8fe;
+
+  .daili-promo-block-title {
+    max-width: 966px;
+    margin: 0 auto;
+    // background: url(@/components/hotpromo/officialGift/img/block-title-bg.png) no-repeat;
+    // background-size: contain;
+    // aspect-ratio: 966 / 44;
+    // margin: 0 auto;
+    // font-size: 32px;
+    // font-weight: 400;
+    // line-height: 44px;
+    // text-align: center;
+    // color: #4c4c6c;
+  }
+}
+
+.detail-block-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+
+  img {
+    width: 32px;
+  }
+
+  span {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 33.6px;
+  }
+}
+
+.detail-block {
+  .detail-block-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    padding: 20px;
+    background-color: $color-white;
+    border-radius: 12px;
+
+    .detail-block-content-description {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22.4px;
+      color: #00000099;
+    }
+
+    .detail-block-content-voxis {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #acd4f6;
+      max-width: 720px;
+      color: #0092ff;
+
+      img {
+        width: 32px;
+        margin-right: 12px;
+      }
+
+      .detail-block-content-voxis__url {
+        flex-grow: 1;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+      }
+
+      .detail-block-content-voxis__btn {
+        background-color: transparent;
+        border: 1px solid #0092ff;
+        border-radius: 100px;
+        padding: 3px 24px;
+        &:hover {
+          filter: brightness(0.7);
+        }
+      }
+    }
+
+    .detail-block-content-suffix {
+      position: absolute;
+      width: 272px;
+      bottom: 20px;
+      right: 48px;
+    }
+  }
 }
 </style>

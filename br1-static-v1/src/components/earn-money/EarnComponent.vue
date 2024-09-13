@@ -1,43 +1,33 @@
 <template>
   <div class="earn">
     <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
-
-    <div class="title">Invite to Earn</div>
+    <div class="title">{{ $t("earnMoney.earn.inviteToEarn") }}</div>
     <div class="desc-title-wrapper">
       <div class="number">1</div>
-      <div class="desc-title">Share your referral link or QR code below</div>
+      <div class="desc-title">{{ $t("earnMoney.earn.point_01_title") }}</div>
     </div>
-    <div class="desc-content">Just copy or screenshot and send it to your friends</div>
-
+    <div class="desc-content">{{ $t("earnMoney.earn.point_01_desc") }}</div>
     <div class="desc-title-wrapper">
       <div class="number">2</div>
-      <div class="desc-title">Get your friends to start playing</div>
+      <div class="desc-title">{{ $t("earnMoney.earn.point_02_title") }}</div>
     </div>
-    <div class="desc-content">You can check your referred friends who registered with your code.</div>
-
+    <div class="desc-content">{{ $t("earnMoney.earn.point_02_desc") }}</div>
     <div class="desc-title-wrapper">
       <div class="number">3</div>
-      <div class="desc-title">Start earning daily commissions</div>
+      <div class="desc-title">{{ $t("earnMoney.earn.point_03_title") }}</div>
     </div>
-    <div class="desc-content">
-      You will be rewarded, regardless if they win or lose. The more friends you refer to Skyace Club, the bigger your
-      daily reward. Start earning daily commissions
-    </div>
-
+    <div class="desc-content">{{ $t("earnMoney.earn.point_03_desc") }}</div>
     <div class="earn-separator"></div>
-    <div class="earn-title">My Referral Link</div>
+    <div class="earn-title">{{ $t("earnMoney.earn.myReferralLink") }}</div>
     <div class="earn-separator"></div>
-
     <div class="referral-link-wrapper">
       <q-icon size="xs" name="insert_link" />
       <div class="link">{{ selfTgurl }}</div>
       <q-icon class="copy-btn" name="content_copy" @click="copyShareLink(selfTgurl)" />
     </div>
-
     <div class="qr-wrapper">
       <VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
-
-      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <q-btn :label="$t('earnMoney.earn.save')" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
 </template>
