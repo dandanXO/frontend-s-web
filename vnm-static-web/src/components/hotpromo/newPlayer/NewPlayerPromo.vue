@@ -101,10 +101,11 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
 import { getNewPlayerMission, submitNewPlayerMission } from "@/api/promotion/newPlayer";
+import { userStore } from "@/store";
 
 import AccountSvg from "@/assets/images/promotion/hotpromo/newPlayer/account.svg";
 import transferSvg from "@/assets/images/promotion/hotpromo/newPlayer/transfer.svg";
@@ -112,41 +113,81 @@ import depositSvg from "@/assets/images/promotion/hotpromo/newPlayer/deposit.svg
 import walletSvg from "@/assets/images/promotion/hotpromo/newPlayer/wallet.svg";
 
 const { t } = useI18n();
+const store = userStore();
 
-const missions = ref([
-  {
-    code: "newbie-mission-t1",
-    description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
-    reward: 18,
-    icon: AccountSvg,
-    missionProgress: "0/0",
-    status: "Incomplete"
-  },
-  {
-    code: "newbie-mission-t2",
-    description: "Thực hiện rút tiền thành công 1 lần.",
-    reward: 28,
-    icon: transferSvg,
-    missionProgress: "0/0",
-    status: "Incomplete"
-  },
-  {
-    code: "newbie-mission-t3",
-    description: "Tích lũy tổng nạp tiền 700 VNDP, có tổng cộng 20 vé cược hợp lệ tại Thể Thao hoặc Live casino.",
-    reward: 70,
-    icon: depositSvg,
-    missionProgress: "0/0",
-    status: "Incomplete"
-  },
-  {
-    code: "newbie-mission-t4",
-    description: "Tích lũy tổng nạp tiền 3,500 VNDP, tích lũy tổng tiền cược hợp lệ 7,000 VNDP.",
-    reward: 175,
-    icon: walletSvg,
-    missionProgress: "0/0",
-    status: "Incomplete"
+const missions = computed(() => {
+  if(store.token) {
+    return [
+      {
+        code: "newbie-mission-t1",
+        description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
+        reward: 8,
+        icon: AccountSvg,
+        missionProgress: "0/0",
+        status: "Incomplete"
+      },
+      {
+        code: "newbie-mission-t2",
+        description: "Thực hiện rút tiền thành công 1 lần.",
+        reward: 28,
+        icon: transferSvg,
+        missionProgress: "0/0",
+        status: "Incomplete"
+      },
+      {
+        code: "newbie-mission-t3",
+        description: "Tích lũy tổng nạp tiền 700 VNDP, có tổng cộng 20 vé cược hợp lệ tại Thể Thao hoặc Live casino.",
+        reward: 38,
+        icon: depositSvg,
+        missionProgress: "0/0",
+        status: "Incomplete"
+      },
+      {
+        code: "newbie-mission-t4",
+        description: "Tích lũy tổng nạp tiền 3,500 VNDP, tích lũy tổng tiền cược hợp lệ 7,000 VNDP.",
+        reward: 188,
+        icon: walletSvg,
+        missionProgress: "0/0",
+        status: "Incomplete"
+      }
+    ]
   }
-]);
+
+  return [
+    {
+      code: "newbie-mission-t1",
+      description: "Cập nhật thông tin tài khoản ngân hàng, xác nhận số điện thoại.",
+      reward: 18,
+      icon: AccountSvg,
+      missionProgress: "0/0",
+      status: "Incomplete"
+    },
+    {
+      code: "newbie-mission-t2",
+      description: "Thực hiện rút tiền thành công 1 lần.",
+      reward: 28,
+      icon: transferSvg,
+      missionProgress: "0/0",
+      status: "Incomplete"
+    },
+    {
+      code: "newbie-mission-t3",
+      description: "Tích lũy tổng nạp tiền 700 VNDP, có tổng cộng 20 vé cược hợp lệ tại Thể Thao hoặc Live casino.",
+      reward: 70,
+      icon: depositSvg,
+      missionProgress: "0/0",
+      status: "Incomplete"
+    },
+    {
+      code: "newbie-mission-t4",
+      description: "Tích lũy tổng nạp tiền 3,500 VNDP, tích lũy tổng tiền cược hợp lệ 7,000 VNDP.",
+      reward: 175,
+      icon: walletSvg,
+      missionProgress: "0/0",
+      status: "Incomplete"
+    }
+  ]
+})
 
 const handleClaimClick = (mission, index) => {
   if (mission.status !== "Claim") return;
