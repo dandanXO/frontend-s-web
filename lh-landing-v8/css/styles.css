@@ -307,6 +307,10 @@ a {
   justify-content: center;
   align-items: center;
   width: 100%;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
   position: sticky;
   bottom: 0px;
   left: 0px;
