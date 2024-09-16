@@ -1336,7 +1336,7 @@ $border-settings: 1px solid #e5e7eb;
     border-top: 4px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 10px 0;
+    margin: 9px 0;
   }
   .loading-blue-icon {
     width: 20px;
