@@ -112,7 +112,11 @@
                 >
                   <div v-html="selectedPromo.pageContent"></div>
 
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <div
+                    class="join-container"
+                    v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
+                    :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`"
+                  >
                     <template v-if="selectedPromoDate">
                       <div class="promo-date">
                         <div class="date-txt">Promotion:</div>
@@ -304,7 +308,7 @@ export default defineComponent({
       //   }
       // })
       api
-        .get("/promo/banner?category=PROMO")
+        .get("/opt-session/promo/banner?category=PROMO")
         .then((response) => {
           if (response.code === 0) {
             banner.value = response.data[0];
@@ -369,7 +373,7 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = store.token ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = "/opt-session/promo/page";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -396,6 +400,15 @@ export default defineComponent({
       });
 
     }
+
+    const selectedParam = computed( () => {
+      if(selectedPromo.value && selectedPromo.value.param){
+        const paramJson = JSON.parse(selectedPromo.value.param);
+        return paramJson;
+      }else{
+        return null;
+      }
+    })
 
     const goToJoinNow = () => {
       // console.log(selectedPromo.value);
@@ -556,7 +569,8 @@ export default defineComponent({
       route,
       allGames,
       closeFullGameDialog,
-      isFtdPromoEnded
+      isFtdPromoEnded,
+      selectedParam
     }
   },
 });

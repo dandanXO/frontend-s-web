@@ -40,6 +40,7 @@ const gotoDepositPage = () => {
 .btn-container {
   width: 100%;
   margin: 8px auto 10px;
+  position: relative;
 }
 .text-warning {
   padding: 8px 0px;
@@ -62,7 +63,7 @@ const gotoDepositPage = () => {
   }
 
   img {
-    width: 28px;
+    width: 28px !important;
     margin: 0px;
     display: inline-block;
     height: auto;

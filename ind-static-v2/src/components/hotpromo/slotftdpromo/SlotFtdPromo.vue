@@ -47,14 +47,18 @@ const gotoDepositPage = () => {
 .go-deposit-btn {
   width: 100%;
   height: 48px;
-  background-color: #5c46e7;
+  // background-color: #5c46e7;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   border-radius: 5px;
-  background: linear-gradient(180deg, #8575e9 0%, #5c46e7 100%);
-  border: 1px solid #8d83cd;
+  // background: linear-gradient(180deg, #8575e9 0%, #5c46e7 100%);
+  background-image: url(./img/btn-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  // border: 1px solid #8d83cd;
 
   &.is-disabled {
     pointer-events: none;
@@ -62,7 +66,7 @@ const gotoDepositPage = () => {
   }
 
   img {
-    width: 28px;
+    width: 28px !important;
     margin: 0px;
     display: inline-block;
     height: auto;

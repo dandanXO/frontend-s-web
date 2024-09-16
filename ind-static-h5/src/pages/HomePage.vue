@@ -1497,7 +1497,7 @@ const setWithExpiry = (key, value, interval) => {
 
 function loadData() {
   api
-    .get("/promo/banner?category=HOME")
+    .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
         banners.value = res.data;
