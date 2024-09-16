@@ -1643,8 +1643,9 @@ $border-settings: 1px solid #e5e7eb;
       position: absolute;
       width: auto;
       z-index: 2;
-      right: 2%;
+      right: 0%;
       // width: 98%;
+      max-width: 90vw;
     }
     .arrow_box {
       top: 40px;
@@ -1659,7 +1660,7 @@ $border-settings: 1px solid #e5e7eb;
       padding: 10px;
       border-radius: 10px;
       .overflow-table {
-        // overflow-x: auto;
+        overflow-x: auto;
         width: 100%; /* Make the scrollbar thin */
         &::-webkit-scrollbar {
           width: 8px; /* Change this value to your desired width */
