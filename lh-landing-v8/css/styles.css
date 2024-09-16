@@ -313,6 +313,8 @@ a {
   font-weight: bold;
   color: #ffffff;
   letter-spacing: 2px;
+  max-width: 550px;
+  margin: auto;
 }
 
 /* Overlay Styles */
