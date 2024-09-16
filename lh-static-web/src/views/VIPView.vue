@@ -1277,9 +1277,7 @@ function formatNumber(value, type) {
     return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 }
-const tabActive = ref(1); // Bind this to the active tab
-
-// Conditional logic for active states
+const tabActive = ref(1); 
 const benefitActive = computed(() => tabActive.value === 1);
 const rebateActive = computed(() => tabActive.value === 2);
 watch(
