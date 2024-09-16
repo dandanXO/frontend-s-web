@@ -4,43 +4,44 @@
       <img src="../assets/vip/vip-header.png" class="vip-header" />
     </div>
     <!--    <div class="banner-container" />-->
-
-    <Carousel class="top" ref="refCarousel" v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
-      <Slide @click="handleSlideClick(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
-        <div class="carousel__item">
-          <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div class="vipcontents">
-              <div class="title">
-                <span class="type">{{ vip.vipTitle }}</span>
-              </div>
-              <div class="badge">
-                <img :src="require(`../assets/vip/badge/${vip.vipTitle}.png`)" />
-              </div>
-              <div class="description">
-                晋级所需有效流水:
-                <!-- <span>{{ formatNumber(vipItems[vipIndex].upgradeBetAmount) }}</span> -->
-                <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
-                <span v-show="originalUpgradeBetAmounts.length != 0">
-                  <span v-if="store.token && vipIndex < +vipLevel">已完成</span>
-                  <span
-                    v-else-if="
-                      store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]
-                    "
-                  >
-                    待晋级
+    <div class="top">
+      <Carousel ref="refCarousel" v-model="currentSlide" :items-to-show="4.99" :wrap-around="true">
+        <Slide @click="handleSlideClick(vipIndex)" v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
+          <div class="carousel__item">
+            <div :class="`vipitem vipitem${vip.vipLevel}`">
+              <div class="vipcontents">
+                <div class="title">
+                  <span class="type">{{ vip.vipTitle }}</span>
+                </div>
+                <div class="badge">
+                  <img :src="require(`../assets/vip/badge/${vip.vipTitle}.png`)" />
+                </div>
+                <div class="description">
+                  晋级所需有效流水:
+                  <!-- <span>{{ formatNumber(vipItems[vipIndex].upgradeBetAmount) }}</span> -->
+                  <div v-show="originalUpgradeBetAmounts.length == 0" class="loading-icon" />
+                  <span v-show="originalUpgradeBetAmounts.length != 0">
+                    <span v-if="store.token && vipIndex < +vipLevel">已完成</span>
+                    <span
+                      v-else-if="
+                        store.token && vipIndex === +vipLevel && currentBetAmt >= +originalUpgradeBetAmounts[vipIndex]
+                      "
+                    >
+                      待晋级
+                    </span>
+                    <span v-else>{{ formatNumber(originalUpgradeBetAmounts[vipIndex]) }}</span>
                   </span>
-                  <span v-else>{{ formatNumber(originalUpgradeBetAmounts[vipIndex]) }}</span>
-                </span>
+                </div>
+                <div class="viplevel">VIP {{ vip.vipLevel }}</div>
               </div>
-              <div class="viplevel">VIP {{ vip.vipLevel }}</div>
             </div>
           </div>
-        </div>
-      </Slide>
-      <template #addons>
-        <Navigation />
-      </template>
-    </Carousel>
+        </Slide>
+        <template #addons>
+          <!-- <Navigation /> -->
+        </template>
+      </Carousel>
+    </div>
     <div class="current-vip-status" v-if="store.token">
       <div class="badge" v-show="isDataLoaded">
         <img :src="badgeSrc" />
@@ -177,7 +178,7 @@
         <div class="vip-boxes">
           <template v-for="category in categories" :key="category.key">
             <template v-for="(item, index) in vipItems" :key="index">
-              <template v-if="+item.vipLevel === currentSlide + 1">
+              <template v-if="store.token && isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
                 <div
                   class="box"
                   :class="{
@@ -1146,6 +1147,7 @@ const runVipAPI = (res) => {
     isDataLoaded.value = true;
   }
   slideTo();
+  changeSlideToIsFirstTime();
 };
 const categories = ref([
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
@@ -1203,14 +1205,15 @@ const handleClick = async (key, item) => {
 };
 const refCarousel = ref();
 const currentSlide = ref(11);
+const isFirstTime = ref(true);
 const handleSlideClick = (vipIndex) => {
   // debugger;
-  if (currentSlide.value >= 10 && vipIndex <= 1) {
-    refCarousel.value.next();
-  }
-  if (currentSlide.value <= 1 && vipIndex >= 10) {
-    refCarousel.value.prev();
-  }
+  // if (currentSlide.value >= 10 && vipIndex <= 0) {
+  //   refCarousel.value.next();
+  // }
+  // if (currentSlide.value <= 0 && vipIndex >= 10) {
+  //   refCarousel.value.prev();
+  // }
 
   if (vipIndex === currentSlide.value) {
     slideTo(vipLevel.value);
@@ -1218,9 +1221,15 @@ const handleSlideClick = (vipIndex) => {
     slideTo(vipIndex); // If you still want to slide to the clicked item
   }
 };
+const changeSlideToIsFirstTime = () => {
+  isFirstTime.value = true;
+}
 const slideTo = (vipIndex) => {
-  if (vipIndex) {
-    if (currentBetAmt.value >= currentUpgradeBetAmt.value) {
+  console.log(vipIndex)
+  isFirstTime.value = false;
+  if (vipIndex || vipIndex === 0) {
+    console.log('i came in vip index');
+    if (store.token && currentBetAmt.value >= currentUpgradeBetAmt.value) {
       currentSlide.value = vipIndex;
       return;
     }
@@ -1321,10 +1330,10 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-container {
   .loading-icon {
-    width: 40px;
-    height: 40px;
-    border: 5px solid #f1dda0; /* Light gold color */
-    border-top: 5px solid transparent;
+    width: 25px;
+    height: 25px;
+    border: 4px solid #f1dda0; /* Light gold color */
+    border-top: 4px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 10px 0;
@@ -1620,10 +1629,10 @@ $border-settings: 1px solid #e5e7eb;
     }
     .absolute-box {
       position: absolute;
-      // width: auto;
+      width: auto;
       z-index: 2;
       right: 2%;
-      width: 98%;
+      // width: 98%;
     }
     .arrow_box {
       top: 40px;
@@ -1663,7 +1672,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       table {
         width: 100%;
-        table-layout: fixed;
+        // table-layout: fixed;
         word-break: break-all;
         tr {
           th {
@@ -1673,6 +1682,7 @@ $border-settings: 1px solid #e5e7eb;
           td {
             padding: 20px 10px;
             border: 2px solid #799df8;
+            white-space: nowrap;
           }
           &:first-child {
             background: #2f3547;
@@ -1714,15 +1724,13 @@ $border-settings: 1px solid #e5e7eb;
       margin-left: -20px;
     }
   }
-
   .vipitem {
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
     position: relative;
-    width: 400px;
-    height: 520px;
-    transform: scale(0.758);
+    width: 301px;
+    height: 394px;
     background: url("../assets/vip/cardbg.png") no-repeat top center;
     background-size: contain;
     &9,
@@ -1822,7 +1830,7 @@ $border-settings: 1px solid #e5e7eb;
         color: #333;
         text-align: center;
         font-family: Arial Narrow;
-        font-size: 51.319px;
+        // font-size: 51.319px;
         font-style: italic;
         font-weight: 700;
         line-height: normal;
@@ -1831,14 +1839,16 @@ $border-settings: 1px solid #e5e7eb;
         .type {
           color: #799df8;
           font-weight: 400;
-          font-size: 30.84px;
+          font-size: 24.84px;
           display: inline-block;
           font-style: normal;
         }
       }
       .badge {
-        width: 270px;
-        margin-top: 35px;
+        // width: 270px;
+        // margin-top: 35px;
+        width: 215px;
+        margin-top: 10px;
         img {
           width: 100%;
         }
@@ -1846,28 +1856,30 @@ $border-settings: 1px solid #e5e7eb;
 
       .description {
         color: #ffffff;
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 400;
-        line-height: 28px;
+        line-height: 18px;
+        margin-top: 20px;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-bottom: 10px;
         span {
           color: #f1dda0;
-          font-size: 36px;
+          font-size: 30px;
           font-weight: 600;
-          line-height: 50.4px;
+          line-height: 40.4px;
           text-align: center;
         }
       }
       .viplevel {
         color: #ffffff;
         font-family: "Purple Purse", sans-serif;
-        font-size: 40px;
+        font-size: 36px;
         font-weight: 400;
-        line-height: 50px;
+        line-height: 40px;
         text-align: center;
       }
 
@@ -2186,8 +2198,8 @@ $border-settings: 1px solid #e5e7eb;
   // max-width: 1200px;
   max-width: 990px;
   width: 100%;
-  // margin: 0 auto;
-  margin: -35px auto;
+  margin: 0 auto;
+  // margin: -35px auto;
 }
 .carousel__slide {
   padding: 5px;

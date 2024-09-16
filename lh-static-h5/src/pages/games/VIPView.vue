@@ -40,7 +40,7 @@
           </div>
         </Slide>
         <template #addons>
-          <Navigation />
+          <!-- <Navigation /> -->
         </template>
       </Carousel>
     </div>
@@ -189,7 +189,7 @@
             <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex">
               <template v-for="category in categoryPair" :key="category.key">
                 <template v-for="item in vipItems" :key="item">
-                  <template v-if="+item.vipLevel === currentSlide + 1">
+                  <template v-if="isFirstTime ? +item.vipLevel === currentSlide : +item.vipLevel === currentSlide + 1">
                     <div
                       class="box"
                       :class="{
@@ -1191,6 +1191,7 @@ const runVipAPI = (res) => {
     notify({ type: "error", message: res.message });
   }
   slideTo();
+  changeSlideToIsFirstTime();
 };
 const categories = [
   { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
@@ -1255,15 +1256,16 @@ const handleClick = async (key, item) => {
   }
 };
 const currentSlide = ref(11);
+const isFirstTime = ref(true);
 const currentCarousel = ref(0);
 const currentBoxes = ref(0);
 const handleSlideClick = (vipIndex) => {
-  if (currentSlide.value >= 10 && vipIndex <= 1) {
-    refCarousel.value.next();
-  }
-  if (currentSlide.value <= 1 && vipIndex >= 10) {
-    refCarousel.value.prev();
-  }
+  // if (currentSlide.value >= 10 && vipIndex <= 1) {
+  //   refCarousel.value.next();
+  // }
+  // if (currentSlide.value <= 1 && vipIndex >= 10) {
+  //   refCarousel.value.prev();
+  // }
 
   if (vipIndex === currentSlide.value) {
     slideTo(vipLevel.value);
@@ -1271,9 +1273,13 @@ const handleSlideClick = (vipIndex) => {
     slideTo(vipIndex); // If you still want to slide to the clicked item
   }
 };
+const changeSlideToIsFirstTime = () => {
+  isFirstTime.value = true;
+}
 const slideTo = (vipIndex) => {
-  if (vipIndex) {
-    if (currentBetAmt.value >= currentUpgradeBetAmt.value) {
+  isFirstTime.value = false;
+  if (vipIndex || vipIndex === 0) {
+    if (store.token && currentBetAmt.value >= currentUpgradeBetAmt.value) {
       currentSlide.value = vipIndex;
       return;
     }
