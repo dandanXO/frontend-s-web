@@ -130,7 +130,14 @@
                           <q-icon name="all_inclusive" size="22px"></q-icon>
                         </div>
                       </div>
-                      <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
+                      <q-btn
+                        class="btn-join-now"
+                        :class="isFtdPromoEnded ? 'btn-disabled' : ''"
+                        :disable="isFtdPromoEnded"
+                        no-caps
+                        label="Join Now"
+                        @click="goToJoinNow()"
+                      />
                     </template>
                   </div>
                 </div>
@@ -164,7 +171,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -281,6 +288,14 @@ export default defineComponent({
       router.push('/promo');
       isPromoDetailPage.value = false
     }
+
+    const isFtdPromoEnded = computed(() => {
+      if(selectedPromo.value && selectedPromo.value.promoCode==="indwin2-slot-ftd" && store.ftd===true){
+        return true;
+      }
+
+      return false;
+    })
 
     const loadBanner = () => {
       // loadPromoBanner("PROMO").then((res) => {
@@ -540,7 +555,8 @@ export default defineComponent({
       swipeRight,
       route,
       allGames,
-      closeFullGameDialog
+      closeFullGameDialog,
+      isFtdPromoEnded
     }
   },
 });
