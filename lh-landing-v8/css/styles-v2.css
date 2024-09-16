@@ -31,7 +31,7 @@ a {
 }
 
 .full-container {
-  height: 100dvh;
+  height: 100vh;
   overflow: auto;
   /* margin-bottom: 20px; */
 }
