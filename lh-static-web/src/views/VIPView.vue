@@ -39,6 +39,10 @@
         </Slide>
         <template #addons>
           <!-- <Navigation /> -->
+          <div>
+            <button @click="prev" class="carousel__prev"></button>
+            <button @click="next" class="carousel__next"></button>
+          </div>
         </template>
       </Carousel>
     </div>
@@ -1223,6 +1227,14 @@ const handleSlideClick = (vipIndex) => {
 };
 const changeSlideToIsFirstTime = () => {
   isFirstTime.value = true;
+}
+const next = () => {
+  refCarousel.value.next();
+  isFirstTime.value = false;
+}
+const prev = () => {
+  refCarousel.value.prev();
+  isFirstTime.value = false;
 }
 const slideTo = (vipIndex) => {
   console.log(vipIndex)
