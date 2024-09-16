@@ -902,7 +902,7 @@ const openDepositVideo = () => {
   if (langSelect === "ur") {
     window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+    window.open("https://drive.google.com/file/d/1CgUruqNA7fEKTcTfskFOgagswVIF-7J1/view?usp=sharing", "_blank");
   }
   // if (selectedPayType.value === "EASYPAISA") {
   //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
