@@ -37,7 +37,7 @@
             </template>
 
             <div class="item-amount" v-if="item.depositMin && item.depositMax">
-              {{ item.depositMin }}~{{ item.depositMax }} RS
+              {{ convertToCommaAmount(item.depositMin) }}~{{ convertToCommaAmount(item.depositMax) }} RS
             </div>
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
