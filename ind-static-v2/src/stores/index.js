@@ -47,7 +47,8 @@ export const userStore = defineStore("userStore", {
       h5Url: "https://m.indwin7.com/",
       hasUpdatedOneSignal: false,
       walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
-      multipleBalance: []
+      multipleBalance: [],
+      ftd: true
     };
   },
   actions: {
