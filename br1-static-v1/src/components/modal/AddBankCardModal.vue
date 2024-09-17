@@ -138,7 +138,12 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true)
+              (
+                isValidCardAccount() === true &&
+                isValidCardNumber() === true &&
+                isValidCardAddress() === true &&
+                isValidEmail() === true
+              )
             ) || isDisableBtn
           "
         ></ConfirmButton>

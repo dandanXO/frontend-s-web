@@ -822,6 +822,7 @@ export default {
     currentPassword: 'Current Password',
     currentPlace: 'Current Place',
     customerSupportAddress: 'Customer Support Address',
+    dailyActiveMemberCount: 'Daily Active Members',
     dailyDeposit: 'Daily Deposit',
     dailyDepositAmount: 'Daily Deposit Amount',
     dailyMin: 'Daily Minimum Spin',
@@ -1176,6 +1177,7 @@ export default {
     memberInviteLimit: 'Member Invite Limit',
     memberList: 'Member List',
     memberMessage: 'Member Message',
+    membersMonthlyTotalDeposit: 'Member Current Month Total Deposit',
     memberName: 'Member Name',
     memberPlatformAction: 'Action（Manual Register/Delete）',
     memberPlatformUpdate: 'Sync Password',
@@ -1602,6 +1604,7 @@ export default {
     toreview: 'To Review',
     toSuspend: 'To Suspend',
     total: 'Total',
+    totalActiveMembers: 'Total Active Member Count',
     totalActualRate: 'Total Interest Amount',
     totalAdjustment: 'Total Adjustment',
     totalBalance: 'Total Balance',
@@ -2810,6 +2813,7 @@ export default {
     'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
     'Platform WC': 'Platform WC',
     'Site Platform Report': 'Site Platform Report',
+    'Refer Friend Eligibility': 'Refer Friend Eligibility'
   },
   google: {
     google_auth_menu: 'Google Authenticator',

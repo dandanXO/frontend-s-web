@@ -227,7 +227,12 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    balance: "Your balance",
+    link_deposit: "Deposit",
+    link_withdraw: "Withdraw",
+    link_share: "Share",
+    link_profit: "PROFIT"
   },
   settings: {
     totalScore: "Total Score",

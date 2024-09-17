@@ -105,7 +105,7 @@ export const convertToGMT7 = (dateTime) => {
   return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD");
 };
 
-export const convertToCommaAmount = (amount, isForceDecimal) => {
+export const convertToCommaAmount = (amount, isForceDecimal = false) => {
   if (amount === null || isNaN(amount)) {
     return "0.00";
   }
@@ -114,7 +114,8 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
-  if (isForceDecimal || parsedAmount < 100) {
+
+  if (isForceDecimal) {
     return formattedAmount;
   }
   return formattedAmount.replace(/\.00$/, "");

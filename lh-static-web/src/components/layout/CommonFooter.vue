@@ -83,22 +83,24 @@
       <div class="bottom-footer-inner">
         <ul>
           <li>
-            <router-link to="/about?id=aboutus">
+            <router-link to="/about?id=us">
               <div style="display: flex; align-items: center; gap: 5px">
                 <img src="@/assets/footer/footer-lh-logo.png" />
                 <div>关于雷火</div>
               </div>
             </router-link>
           </li>
-          <li><router-link to="/about?id=info">资料收集</router-link></li>
-          <li><router-link to="/about?id=law">法律依据</router-link></li>
-          <li><router-link to="/about?id=aboutus">关于我们</router-link></li>
-          <li><router-link to="/about?id=rule">竞猜规则</router-link></li>
-          <li><router-link to="/about?id=pay">补偿</router-link></li>
+          <li><router-link to="/about?id=guide">新手引导</router-link></li>
+          <li><router-link to="/about?id=sportrule">体育投注规则</router-link></li>
+          <li><router-link to="/about?id=aboutQaGame">游戏问题</router-link></li>
+          <li><router-link to="/about?id=responsibility">竞猜责任</router-link></li>
+          <li><router-link to="/about?id=cooperate">合作商户</router-link></li>
           <li>
             <a :href="'https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : '')">加盟代理</a>
           </li>
-          <li><router-link to="/about?id=blame">博彩责任</router-link></li>
+          <li><router-link to="/about?id=rule">规则与条款</router-link></li>
+          <li><router-link to="/about?id=privacy">隐私保护规则</router-link></li>
+          <li><router-link to="/about?id=contact">联系我们</router-link></li>
         </ul>
         <!-- <div class="tagline">雷火是全球领先的合法博彩公司，拥有菲律宾政府PAGCOR 所颁发的离岸博彩许可证，并受其监管</div> -->
       </div>
@@ -338,7 +340,7 @@ export default defineComponent({
     .bottom-footer-inner {
       color: #ffffff;
       display: flex;
-      width: 600px;
+      width: 1000px;
       margin: 0 auto;
       flex-direction: column;
       ul {

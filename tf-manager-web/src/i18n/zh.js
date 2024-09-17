@@ -824,6 +824,7 @@ export default {
     currentPassword: '当前密码',
     currentPlace: '当前位置',
     customerSupportAddress: '客服地址',
+    dailyActiveMemberCount: '当日活跃会员数',
     dailyDeposit: '每日存款数量',
     dailyDepositAmount: '每日存款金额',
     dailyMin: '每日最低转盘次数',
@@ -1175,6 +1176,7 @@ export default {
     memberInfo: '会员信息',
     memberList: '会员列表',
     memberMessage: '发件箱',
+    membersMonthlyTotalDeposit: '会员当月总存款',
     memberName: '会员名',
     memberPlatformAction: '操作（手动注册/删除）',
     memberPlatformUpdate: '同步密码',
@@ -1602,6 +1604,7 @@ export default {
     toreview: '正在复查',
     toSuspend: '至中止',
     total: '总计',
+    totalActiveMembers: '总活跃会员数',
     totalActualRate: '总利息金额',
     totalAdjustment: '总调整金额',
     totalBalance: '总余额',
@@ -2758,6 +2761,7 @@ export default {
     'Mooncake Fest Spin Record': '中秋节转盘2024',
     'Platform WC': 'WC平台',
     'Site Platform Report': '站点平台报表',
+    'Refer Friend Eligibility': '全民代理'
   },
   google: {
     google_auth_menu: '谷歌验证',

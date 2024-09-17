@@ -77,7 +77,7 @@
             <q-badge color="orange" floating rounded v-if="isFtdPrivilege">+{{ getFtdCommaAmount(amount) }}</q-badge>
 
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
-              {{ convertToCommaAmount(amount) }}
+              {{ convertToCommaAmount(amount, false) }}
             </div>
           </div>
         </template>
@@ -242,6 +242,13 @@
         <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" />
       </div>
     </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
   </q-dialog>
 </template>
 
