@@ -36,6 +36,7 @@
             @click="handlePlayGame(platform.name, game)"
           >
             <!-- {{ test(platform.name, game) }} -->
+            <MaintenanceBox :item="game" />
             <div
               class="platform-img-frame"
               :style="{ 'background-image': getImgPlatformBg(platform.name, game) }"
@@ -49,6 +50,7 @@
 <script setup>
 import { computed, onActivated, ref } from "vue";
 import { useRoute } from "vue-router";
+import MaintenanceBox from "./MaintenanceBox.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 const imgURLGame = imgURL + "/game/";
@@ -413,7 +415,7 @@ onActivated(() => {
       &.maintenance:after {
         content: "";
         position: absolute;
-        background: #012c6a50;
+        background: #00000069;
         top: 0%;
         width: 100%;
         height: 100%;
