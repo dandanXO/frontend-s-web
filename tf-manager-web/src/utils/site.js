@@ -10,6 +10,8 @@ const PAK_SITE_ID = 11;
 const BGD_SITE_ID = 12;
 const NGA_SITE_ID = 14;
 const KAKA_SITE_ID = 15;
+const PH1_SITE_ID = 16;
+const BR1_SITE_ID = 18;
 const PAK2_SITE_ID = 19;
 
 export const isIndiaSite = (siteId) => {
@@ -70,4 +72,12 @@ export const isNga = (siteId) => {
 
 export const isKaka = (siteId) => {
   return parseInt(siteId) === KAKA_SITE_ID;
+}
+
+export const isPh1 = (siteId) => {
+  return parseInt(siteId) === PH1_SITE_ID;
+}
+
+export const isBr1 = (siteId) => {
+  return parseInt(siteId) === BR1_SITE_ID;
 }
