@@ -48,6 +48,8 @@ export const userStore = defineStore("userStore", {
       hasUpdatedOneSignal: false,
       walletCurrency: sessionStorage.getItem("WALLET_TYPE") ? sessionStorage.getItem("WALLET_TYPE") : "INR",
       multipleBalance: [],
+      paytypeWithPrivilege: "",
+      extraPrivilegeId: "",
       ftd: true
     };
   },
