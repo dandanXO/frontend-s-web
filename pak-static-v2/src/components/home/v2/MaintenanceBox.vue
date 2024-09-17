@@ -24,23 +24,21 @@ const props = defineProps({
 <style scoped lang="scss">
 .maintenance-box {
   position: absolute;
-  top: 3%;
-  bottom: 3%;
   padding-top: 0px;
   padding-bottom: 0px;
   color: #cae4ff;
   font-size: 1.2em;
   font-weight: bold;
-  width: 90%;
-  left: 5%;
-  right: 5%;
-  height: 94%;
+  width: 100%;
+  height: 100%;
   z-index: 33;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
+  background: #00000069;
+  border-radius: 12px;
 
   p {
     font-size: 1.1em;
