@@ -14,6 +14,7 @@
 import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
+import { api } from "boot/axios";
 
 const router = useRouter();
 
@@ -22,19 +23,32 @@ const store = userStore();
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
-onMounted(() => {});
-
 const isFtdPromoEnded = computed(() => {
   if (store.ftd === true) {
     return true;
   }
-
   return false;
 });
+
 const gotoDepositPage = () => {
   const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
   router.push(redirectPage);
 };
+
+const loadAppTabs = () => {
+  api.get("/opt-session/getAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      if (data && data.hasOwnProperty("ftd")) {
+        store.ftd = data.ftd;
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  loadAppTabs();
+});
 </script>
 <style lang="scss">
 .btn-container {
