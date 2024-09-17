@@ -4166,12 +4166,12 @@ const showCongratsModal = () => {
 }
 
 .congrats-container {
-  background-color: #113413;
+  background-color: #111934;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
-  overflow: visible;
+  overflow: visible !important; // override quasar default value
   border-radius: 12px;
 
   &:before {
