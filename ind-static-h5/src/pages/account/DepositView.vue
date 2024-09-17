@@ -1,6 +1,6 @@
 <template>
   <div class="deposit-wrapper">
-    <div class="slot-ftd-section" v-if="isFtdPrivilege">
+    <div class="slot-ftd-section" v-if="isFtdPrivilege && depositType === 'flat'">
       <img src="../../assets/images/bonus/slot-ftd-img.png" />
     </div>
 
@@ -110,7 +110,9 @@
             <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
               +{{ convertToTwoDecimalAmount(amount * selectedItemPrivilege) }}
             </q-badge>
-            <q-badge color="orange" floating rounded v-if="isFtdPrivilege">+{{ getFtdCommaAmount(amount) }}</q-badge>
+            <q-badge color="orange" floating rounded v-if="isFtdPrivilege && depositType === 'flat'">
+              +{{ getFtdCommaAmount(amount) }}
+            </q-badge>
 
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
@@ -713,7 +715,7 @@ async function confirmDeposit() {
             form.privilegeId = selectedItemPrivilegeId.value;
           }
 
-          if (isFtdPrivilege.value && extraPrivilegeId.value) {
+          if (isFtdPrivilege.value && extraPrivilegeId.value && depositType.value === "flat") {
             form.privilegeId = extraPrivilegeId.value;
           }
 
