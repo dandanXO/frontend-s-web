@@ -234,3 +234,11 @@ export function getDota2CompetitionBet(promoCode) {
     }
   });
 }
+
+export function getBlastCoupon() {
+  return eventapi.get('/session/blastCoupon/init');
+}
+
+export function claimBlastCoupon(promoCode) {
+  return eventapi.post(`/session/blastCoupon/claim`, qs.stringify({ promoCode }));
+}
