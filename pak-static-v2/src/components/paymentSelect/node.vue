@@ -373,11 +373,11 @@ $node-color: #4877f6;
       }
 
       .node-txt-img {
-        background-color: transparent;
+        background-color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        // box-shadow: inset 0 0 8px 0 #a9c9ea;
+        box-shadow: 0px 0px 2.92px 0px #a9c9ea inset;
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
