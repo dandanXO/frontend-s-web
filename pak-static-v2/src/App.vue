@@ -34,7 +34,6 @@ export default defineComponent({
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
 
         store.visitorId = visitorId;
-
         console.log("SID");
         console.log(visitorId);
 
