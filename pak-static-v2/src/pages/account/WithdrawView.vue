@@ -1033,7 +1033,7 @@ const openWithdrawTutorialVideo = () => {
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        border: 3px solid #4877f6;
+        border: 3px solid #468cff;
         border-radius: 10px;
       }
 
