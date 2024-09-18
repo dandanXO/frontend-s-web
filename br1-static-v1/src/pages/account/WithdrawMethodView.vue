@@ -2,18 +2,10 @@
   <div class="withdrawal-modal-view" :class="isInputFocus && 'input-btm'">
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <div class="withdraw-methods-currency" v-if="isLoadingWithdrawalMethod">
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
+      <div><q-skeleton style="height: 96px" /></div>
     </div>
 
     <template v-else>
@@ -303,7 +295,7 @@
               filled
               dense
               clearable
-              placeholder="Withdraw Amount"
+              :placeholder="$t('form.withdrawalAmount')"
               v-model="withdrawInfo.amount"
               :rules="[
                 (val) => !!val || $t('form.withdrawalAmount_rules_01'),
@@ -372,7 +364,7 @@
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">Withdrew Amount</div>
+                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
@@ -381,7 +373,7 @@
             </div>
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ store.vip }} Daily Limit</div>
+                <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->

@@ -3959,7 +3959,7 @@ onBeforeUnmount(() => {
   }
 
   .cat-title {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     color: #bfc3c9;
     font-family: "Poppins", sans-serif;

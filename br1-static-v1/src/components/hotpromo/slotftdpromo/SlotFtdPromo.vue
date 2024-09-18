@@ -2,11 +2,11 @@
   <div class="btn-container">
     <div class="go-deposit-btn" :class="isFtdPromoEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
-      <span>JOIN NOW</span>
+      <span>{{ $t("promo_br1SlotFtd.joinNow") }}</span>
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">
-      Sorry, account have already get bouns. Please join to our other activity .
+      {{ $t("promo_br1SlotFtd.sorryDesc") }}
     </div>
   </div>
 </template>
