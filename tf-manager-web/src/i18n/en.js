@@ -733,6 +733,7 @@ export default {
     bydateasc: 'Sort by date ASC',
     bydatedesc: 'Sort by date DESC',
     bulkApprove: 'Bulk Approve',
+    bulkWithdraw: 'Bulk Withdraw',
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelAll: 'Cancel All',

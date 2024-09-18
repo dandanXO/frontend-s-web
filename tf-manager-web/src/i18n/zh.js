@@ -736,6 +736,7 @@ export default {
     bydateasc: '日期高到低',
     bydatedesc: '日期低到高',
     bulkApprove: '批量批准',
+    bulkWithdraw: '批量提款',
     callbackUrl: '回调地址',
     cancel: '取消',
     cancelAll: '全部取消',
