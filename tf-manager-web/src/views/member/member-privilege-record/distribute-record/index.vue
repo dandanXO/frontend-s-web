@@ -517,6 +517,7 @@ const uiControl = reactive({
     { key: 5, displayName: 'ESPORT', value: 'esport' },
     { key: 6, displayName: 'POKER', value: 'poker' },
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
+    { key: 8, displayName: 'CASUAL', value: 'casual' },
   ],
   displayExpiryTime: false,
   selectedGameTypeRolloverType: null,
