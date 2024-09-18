@@ -2,12 +2,12 @@
   <div class="no-info-container" :class="shortenContainer && 'shorten-container'">
     <img class="" src="../assets/images/account/nodata-folder.png" alt="" />
     <div class="no-info-text">{{ noInfoTitle }}</div>
-    <p>Haven’t found any record</p>
+    <p>{{ $t("notify.haventFoundAnyRecord") }}</p>
   </div>
 </template>
 
 <script setup>
-const props = defineProps(["noInfoTitle","shortenContainer"]);
+const props = defineProps(["noInfoTitle", "shortenContainer"]);
 </script>
 
 <style scoped lang="scss">
@@ -20,7 +20,7 @@ const props = defineProps(["noInfoTitle","shortenContainer"]);
   justify-content: center;
   gap: 10px;
 
-  &.shorten-container{
+  &.shorten-container {
     min-height: calc(50vh - 130px);
   }
 

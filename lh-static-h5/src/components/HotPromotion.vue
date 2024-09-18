@@ -97,6 +97,7 @@
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode"/>
     <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode"/>
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'"/>
+    <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param"/>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -210,6 +211,7 @@ const EslProCsgo2 = defineAsyncComponent(() => import("../components/hotpromo/es
 const Dota2Ti13 = defineAsyncComponent(() => import("../components/hotpromo/dota2-ti13/Dota2Ti13.vue"));
 const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"));
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
+const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/daili/DailiPromo.vue"))
 
 export default defineComponent({
   name: "HotPromo",
@@ -275,7 +277,8 @@ export default defineComponent({
     EslProCsgo2,
     Dota2Ti13,
     BlackMythWuKongPromo,
-    SubmitClaimPromo
+    SubmitClaimPromo,
+    DailiPromo
   },
   props: {
     list: {

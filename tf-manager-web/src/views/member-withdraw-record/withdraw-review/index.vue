@@ -477,7 +477,12 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getMemberReport, addReview, getTotalWithdrawReview, getExportWithdrawalReviewReport } from '../../../api/report-summary'
+import {
+  getMemberReport,
+  addReview,
+  getTotalWithdrawReview,
+  getExportWithdrawalReviewReport
+} from '../../../api/report-summary'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
@@ -491,6 +496,7 @@ import {
   getShortcuts,
 } from '@/utils/datetime'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+
 const { t } = useI18n()
 const startDate = new Date()
 startDate.setDate(startDate.getDate())
@@ -663,7 +669,7 @@ async function loadMemberRecord() {
 
     const { data: ret1 } = await getTotalWithdrawReview(query)
     page1.records = ret1
-    request.doris = ret.sums.useDoris;
+    request.doris = false
     page.loading = false
   }
 }
@@ -961,7 +967,7 @@ async function showDialog(record) {
 }
 </style>
 <style lang="scss">
-.roles-main .el-table__footer-wrapper{
+.roles-main .el-table__footer-wrapper {
   height: 43px;
 }
 </style>

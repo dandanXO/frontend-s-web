@@ -186,6 +186,11 @@ function refresh() {
 }
 
 onMounted(async () => {
+  // 返回前一页如果用户换站点
+  if (store.state.user.siteId !== Number(siteIdFromParam)) {
+    back()
+  }
+
   await loadSites()
   // tenant 只可以看到本身site的资料
   if (LOGIN_USER_TYPE.value === TENANT.value) {

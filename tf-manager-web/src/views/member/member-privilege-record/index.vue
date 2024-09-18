@@ -6,8 +6,7 @@
       :key="item.key"
       :label="item.displayName"
       :name="item.name"
-    >
-      <!-- eslint-disable -->
+    ><!-- eslint-disable -->
       <component v-bind:is="item.componentName" v-if="activeName === item.name" />
     </el-tab-pane>
   </el-tabs>

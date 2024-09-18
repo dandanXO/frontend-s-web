@@ -7,25 +7,22 @@
 
       <q-card>
         <DialogHeader :title="dialogDisplays.title"></DialogHeader>
-
         <q-card-section>
           <q-form>
             <div class="q-my-sm">
-              <div class="input-title">Holder Name</div>
+              <div class="input-title">{{ $t("form.holderName") }}</div>
               <q-input
                 standout
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardAccount"
-                label="Enter Holder Name"
-                lazy-rules
+                :label="$t('form.holderName_placeholder')"
                 :rules="[(_) => isValidCardAccount()]"
                 label-color="secondary"
                 disable
               />
             </div>
-
             <div class="q-my-sm">
               <div class="input-title">{{ dialogDisplays.accountNum }}</div>
               <q-input
@@ -35,30 +32,18 @@
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardNumber"
-                label="Enter Account Number"
-                lazy-rules
+                :label="$t('form.phone_placeholder')"
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
-              />
+              >
+                <template v-slot:prepend>
+                  <img class="white-svg" src="../../assets/images/auth/phone.svg" />
+                  <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                </template>
+              </q-input>
             </div>
-
-            <!--            <div class="q-my-sm" v-if="currentCardType === 'BANK'">-->
-            <!--              <div class="input-title">IFSC Code</div>-->
-            <!--              <q-input-->
-            <!--                standout-->
-            <!--                class="q-pb-xs dialog-input"-->
-            <!--                hide-bottom-space-->
-            <!--                filled-->
-            <!--                v-model="bankCardField.cardAddress"-->
-            <!--                label="Enter Bank IFSC Code"-->
-            <!--                lazy-rules-->
-            <!--                :rules="[(_) => isValidCardAddress()]"-->
-            <!--                label-color="secondary"-->
-            <!--              />-->
-            <!--            </div>-->
           </q-form>
         </q-card-section>
-
         <ConfirmButton
           label="Update"
           :confirmFunc="updateCard"
@@ -76,6 +61,7 @@ import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import ConfirmButton from "../../atoms/ConfirmButton.vue";
 import { useRouter } from "vue-router";
+import { t } from "src/boot/lang";
 
 const props = defineProps(["loadCards"]);
 
@@ -108,16 +94,22 @@ const onUpdateCardClick = (bankCardDetails, type) => {
   currentCardType.value = type;
 
   if (currentCardType.value === "CRYPTO") {
-    dialogDisplays.accountNum = "Crypto Card Number";
+    dialogDisplays.accountNum = t("form.cryptoAccount");
   } else if (currentCardType.value === "EWALLET") {
-    dialogDisplays.accountNum = "eWallet Number";
+    dialogDisplays.accountNum = t("form.eWalletNumber");
   } else if (currentCardType.value === "BANK") {
-    dialogDisplays.accountNum = "Account Number";
+    dialogDisplays.accountNum = t("form.phone");
   }
   // debugger;
 
   bankCardField.cardAccount = bankCardDetails.cardAccount;
-  bankCardField.cardNumber = bankCardDetails.cardNumber;
+  // Remove +55 prefix if present
+  let cardNumber = bankCardDetails.cardNumber;
+  if (cardNumber.startsWith("+55")) {
+    cardNumber = cardNumber.slice(3); // Remove '+55'
+  }
+  bankCardField.cardNumber = cardNumber;
+  // bankCardField.cardNumber = bankCardDetails.cardNumber;
   bankCardField.cardAddress = bankCardDetails.cardAddress;
   bankCardField.cardId = bankCardDetails.id;
 
@@ -150,9 +142,9 @@ const isValidCardAccount = () => {
   const { cardAccount } = bankCardField;
 
   const result = !cardAccount
-    ? "Please Enter Holder Name"
+    ? t("form.holderName_rules_01")
     : cardAccount.length < 2
-    ? "Please Insert 2 or More Characters"
+    ? t("form.holderName_rules_02")
     : true;
 
   return result;
@@ -160,19 +152,15 @@ const isValidCardAccount = () => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
+  const result = !cardNumber ? t("form.phone_rules_01") : true;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
+  if (cardNumber.startsWith("0")) {
+    return t("form.phone_rules_03");
+  }
 
-  if (cardNumber && selectedBankCode.value === "GCASH") {
-    const gCashCheck =
-      cardNumber.substring(0, 1) !== "0"
-        ? "The GCASH card number must start with '0'"
-        : cardNumber.length !== 11
-        ? "The GCASH card number length should be 11"
-        : true;
-    if (gCashCheck !== true) {
-      return gCashCheck;
-    }
+  const digitCount = cardNumber.match(/\d/g)?.length || 0;
+  if (digitCount !== 11) {
+    return t("form.phone_rules_02");
   }
 
   return result;
@@ -191,8 +179,14 @@ const isValidCardAddress = () => {
 const updateCard = () => {
   isDisableBtn.value = true;
 
+  const formData = { ...bankCardField };
+
+  if (!formData.cardNumber.startsWith("+55")) {
+    formData.cardNumber = `+55${formData.cardNumber}`;
+  }
+
   api
-    .post("/session/bankCard/update", qs.stringify(bankCardField))
+    .post("/session/bankCard/update", qs.stringify(formData))
     .then((response) => {
       if (response.code === 0) {
         isUpdateCardDialogOpen.value = false;
@@ -210,6 +204,12 @@ const updateCard = () => {
       console.log("error", error);
       isDisableBtn.value = false;
     });
+};
+
+const removePrefix = () => {
+  if (bankCardField.cardNumber.startsWith("+55")) {
+    bankCardField.cardNumber = bankCardField.cardNumber.slice(3);
+  }
 };
 
 defineExpose({

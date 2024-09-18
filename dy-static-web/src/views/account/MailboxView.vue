@@ -370,7 +370,7 @@ const readAllMsg = (m) => {
     .then((res) => {
       if (res.code === 0) {
         ElMessage({
-          message: "已全读部消息",
+          message: "已全部已读",
           type: "success"
         });
 
