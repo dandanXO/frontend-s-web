@@ -51,7 +51,7 @@
           <div class="date">{{ e.betTime }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+            :label="`${e.payout > 0 ? $t('btn.profit') : $t('btn.loss')}`"
           ></q-btn>
         </q-card-section>
 

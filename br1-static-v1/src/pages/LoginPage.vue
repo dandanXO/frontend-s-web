@@ -83,6 +83,7 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 import { App } from "@capacitor/app";
+import { t } from "src/boot/lang";
 
 export default defineComponent({
   name: "LoginPage",
@@ -228,7 +229,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       $q.loading.show({
-        message: "Logging in"
+        message: t("btn.logging_in")
       });
       const fpPromise = FingerprintJS.load();
       (async () => {
@@ -246,7 +247,7 @@ export default defineComponent({
           passwordRef.value.validate();
           // verificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("btn.logging_in")
           });
           // || verificationRef.value.hasError
           if (loginNameRef.value.hasError || passwordRef.value.hasError) {
@@ -295,7 +296,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t("btn.logging_in")
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
