@@ -372,10 +372,7 @@ const store = userStore();
 const router = useRouter();
 const emits = defineEmits(["closeModal"]);
 
-const { userKYCDialog, closeUserKYCDialog } = useCheckKYC([
-  "mounted",
-  "activated"
-]);
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
 
 // const checkNewUser = () => {
 //   if (store.realName == "" || store.realName == null) {
@@ -1243,7 +1240,7 @@ onMounted(() => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  // background-color: #0e1412;
+  background-color: #e9f2fd;
   // margin: 16px;
 }
 

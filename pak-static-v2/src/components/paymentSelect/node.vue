@@ -175,7 +175,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $group-color: #76c034;
 // $node-color: #dd4645;
-$node-color: #4877f6;
+$node-color: #468cff;
 .title {
   color: $group-color;
   margin: 10px auto;
@@ -234,7 +234,7 @@ $node-color: #4877f6;
       // background: rgba(255,255,255, .2);
       .node-text {
         .node-txt-img {
-          border-color: $node-color;
+          border: 2px solid $node-color;
           border-width: 2px;
           box-shadow: unset;
 
@@ -373,15 +373,15 @@ $node-color: #4877f6;
       }
 
       .node-txt-img {
-        background-color: transparent;
+        background-color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        // box-shadow: inset 0 0 8px 0 #a9c9ea;
+        box-shadow: 0px 0px 2.92px 0px #a9c9ea inset;
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
-        border: 2px solid transparent;
+        // border: 2px solid transparent;
         border-radius: 10px;
         padding: 4px 4px;
 
