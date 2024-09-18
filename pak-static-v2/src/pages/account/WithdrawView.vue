@@ -967,7 +967,7 @@ const openWithdrawTutorialVideo = () => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  // background-color: #0e1412;
+  background-color: #e9f2fd;
 }
 
 .tutorial-link {
@@ -1017,6 +1017,9 @@ const openWithdrawTutorialVideo = () => {
     }
 
     img {
+      background-color: #fff;
+      box-shadow: 0px 0px 2.92px 0px #a9c9ea inset;
+      border-radius: 10px;
       width: 100%;
       padding: 5px;
     }
@@ -1027,7 +1030,7 @@ const openWithdrawTutorialVideo = () => {
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        border: 3px solid #4877f6;
+        border: 3px solid #468cff;
         border-radius: 10px;
       }
 
