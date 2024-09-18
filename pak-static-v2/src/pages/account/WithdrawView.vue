@@ -1150,7 +1150,7 @@ const openWithdrawTutorialVideo = () => {
   }
 
   .title {
-    color: #9f9f9f;
+    color: #000;
     font-weight: 700;
   }
 }
