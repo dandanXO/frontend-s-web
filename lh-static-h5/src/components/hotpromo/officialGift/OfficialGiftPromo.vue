@@ -9,7 +9,7 @@
         <span class="download-block-description">
           请
           <a :href="paramsObj.voxis_url" target="_blank">下载</a>
-          “Voxis”立即添加可申请专属红包
+          “Amico”立即添加可申请专属红包
         </span>
       </div>
       <!-- <div class="download-block-qr-code-wrapper">
@@ -26,7 +26,7 @@
         <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐专属红包</span>
         <div class="detail-block-content-voxis">
           <img src="./img/voxis.svg" />
-          <span class="detail-block-content-voxis__url">Voxis客服号：{{ currentVoxisId }}</span>
+          <span class="detail-block-content-voxis__url">Amico客服号：{{ currentVoxisId }}</span>
           <button class="detail-block-content-voxis__btn" @click="handleCopyClick">复制</button>
         </div>
       </div>

@@ -248,7 +248,7 @@
               <span class="detail-block-content-description">添加以下您的雷火专属VIP客服：福利咨询，专属服务，赛事推荐专属红包</span>
               <div class="detail-block-content-voxis">
                 <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
-                <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj.voxis_url_1 }}</span>
+                <span class="detail-block-content-voxis__url">Amico客服号：{{ paramsObj.voxis_url_1 }}</span>
                 <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_1)">复制</button>
                 <span class="detail-block-content-voxis__url">{{ paramsObj.voxis_url_2 }}</span>
                 <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_2)">复制</button>
