@@ -1180,6 +1180,7 @@ export default {
     memberPrivilegeBlacklist: 'Member Privilege Blacklist',
     memberProfitDownlineProfitUnsettleCommission:
       'Member Profit / Downline Profit / Unsettle Commission',
+    memberPrivilegeRecord: 'Member Privilege Record',
     memberReport: 'Member Report',
     memberType: 'Member Type',
     memberWithdrawLog: 'Member Withdraw Log',
@@ -2956,6 +2957,7 @@ export default {
     anyTypes: 'All Game Types',
     specifyTypes: 'Specify Game Types',
     excludeTypes: 'Exclude Game Types',
+    specifyTypesAmount: 'Specify Game Types Amount',
   },
   domainType: {
     LANDING: 'Landing',

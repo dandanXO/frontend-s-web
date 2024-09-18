@@ -1179,6 +1179,7 @@ export default {
     memberPrivilegeBlacklist: '会员优惠黑名单',
     memberProfit: '代理盈利',
     memberProfitDownlineProfitUnsettleCommission: '代理盈利/下线盈利/上月结余',
+    memberPrivilegeRecord: '会员优惠记录',
     memberRemark: '玩家备注',
     memberReport: '会员报表',
     memberType: '会员类型',
@@ -2902,6 +2903,7 @@ export default {
   gameTypeRolloverSetting: {
     anyTypes: '所有游戏类型',
     specifyTypes: '指定游戏类型',
+    specifyTypesAmount: '指定游戏类型及流水',
     excludeTypes: '排除游戏类型',
   },
   domainType: {
