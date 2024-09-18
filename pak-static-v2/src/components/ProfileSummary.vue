@@ -2,7 +2,9 @@
   <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
   <div style="height: 70px"></div>
 
-  <div class="top-download" :class="{ shadow: !!store.token }" v-if="topDownload && !ui.hideDownload">
+  <div class="shadow-pseudo" :class="{ 'with-top-download': topDownload && !ui.hideDownload }"></div>
+
+  <div class="top-download shadow" v-if="topDownload && !ui.hideDownload">
     <div class="download-container">
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
@@ -490,6 +492,23 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.shadow-pseudo {
+  position: fixed;
+  z-index: 2004;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 500px;
+  width: 100%;
+  height: 60px;
+  background-color: transparent;
+  box-shadow: 0px -5px 8px 0px #c3d4e6 inset, 0px 2px 0px 0px #a7c2dd;
+  pointer-events: none;
+
+  &.with-top-download {
+    height: 115px;
+  }
+}
 .top-download {
   position: fixed;
   top: 0;
@@ -504,9 +523,9 @@ onMounted(() => {
   // backdrop-filter: blur(6px);
   z-index: 2003;
 
-  &.shadow {
-    box-shadow: 0px -5px 8px 0px #c3d4e6 inset, 0px 2px 0px 0px #a7c2dd;
-  }
+  // &.shadow {
+  //   box-shadow: -5px 4px 8px -5px #c3d4e6 inset, 5px 4px 8px -5px #c3d4e6 inset;
+  // }
 
   .download-container {
     display: flex;
@@ -757,16 +776,15 @@ onMounted(() => {
   z-index: 2003;
   transition: 0.3s all;
   height: 60px;
-  box-shadow: 0px -5px 8px 0px #c3d4e6 inset, 0px 2px 0px 0px #a7c2dd;
 
   &.with-top-download {
     // border-top-right-radius: 25px;
     // border-top-left-radius: 25px;
-    top: 56px;
+    top: 55px;
   }
 
   &.logged-in {
-    background-color: #e9f2fd;
+    // background-color: #e9f2fd;
     box-shadow: none;
   }
 

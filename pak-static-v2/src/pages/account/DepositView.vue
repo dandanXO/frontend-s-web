@@ -1250,7 +1250,7 @@ onMounted(() => {
 }
 
 .step-desc-div {
-  color: #9f9f9f;
+  color: #000;
 
   p {
     margin: 5px 0px;
