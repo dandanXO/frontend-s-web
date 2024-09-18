@@ -303,7 +303,11 @@
         </el-table-column>
         <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
         <el-table-column prop="rule" :label="t('fields.rule')" v-if="uiControl.useRule" />
-        <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" align="center" v-if="!uiControl.useRule" />
+        <el-table-column prop="withdrawAmountMax" :label="t('fields.maxWithdrawAmount')" align="center" v-if="!uiControl.useRule">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.withdrawAmountMax, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
           <template #default="scope">
             <el-switch
