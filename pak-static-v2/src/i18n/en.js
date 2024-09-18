@@ -610,6 +610,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
+    11000: "The entered amount exceeds the allowed limit.",
     11003: "Deposit failed",
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
