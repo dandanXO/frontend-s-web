@@ -1820,6 +1820,7 @@ export default {
     updateShareRatio: 'Cập nhật tỷ lệ hoàn trả',
     displayStartTime: 'Hiển thị thời gian bắt đầu',
     displayEndTime: 'Hiển thị thời gian kết thúc',
+    batchFrozenMember: 'Đóng băng thành viên hàng loạt',
   },
   message: {
     startenddatemore3months:

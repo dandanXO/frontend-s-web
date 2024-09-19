@@ -2037,6 +2037,7 @@ export default {
     needUniqueDevice: '需要独特设备',
     uniqueIpCount: '独特IP数量',
     uniqueDeviceCount: '独特设备数量',
+    batchFrozenMember: '批量冻结会员',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
