@@ -88,7 +88,7 @@
       icon="el-icon-upload"
       size="mini"
       type="primary"
-      v-permission="['sys:game:add']"
+      v-permission="['sys:member-refer-pak:import-freeze']"
       @click="uiControl.importDialogVisible = true"
     >
       {{ t('fields.batchFrozenMember') }}
