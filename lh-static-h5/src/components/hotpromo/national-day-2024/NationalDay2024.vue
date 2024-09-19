@@ -66,7 +66,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024年10月01日~2024年10月07日</div>
+          <div class="right">2024 年 10 月 01 日~2024 年 10 月 07 日</div>
         </div>
         <div class="little-title">
           <div class="left">活动对象</div>
@@ -75,32 +75,32 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的3倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达8,888元，仅需3倍流水即可取款！
+            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3 倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 8,888 元，仅需 3 倍流水即可取款！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
-            <th>达成条件(流水仅限雷火电竞场馆)</th>
+            <th>达成条件 (流水仅限雷火电竞场馆)</th>
             <th>应发彩金</th>
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>当日存款3倍流水</td>
+            <td>当日存款 3 倍流水</td>
             <td>当日存款 1.0%</td>
             <td>188</td>
           </tr>
           <tr>
-            <td>当日存款5倍流水</td>
+            <td>当日存款 5 倍流水</td>
             <td>当日存款 2.0%</td>
             <td>588</td>
           </tr>
           <tr>
-            <td>当日存款8倍流水</td>
+            <td>当日存款 8 倍流水</td>
             <td>当日存款 3.0%</td>
             <td>888</td>
           </tr>
           <tr>
-            <td>当日存款15倍流水</td>
+            <td>当日存款 15 倍流水</td>
             <td>当日存款 5.0%</td>
             <td>1,888</td>
           </tr>
@@ -116,7 +116,7 @@
               />
               <span>示例</span>
             </div>
-            会员A当日存款100元并且在雷火电竞累计有效投注300元即可获得 100*1%=1元彩金。
+            会员 A 当日存款 100 元并且在雷火电竞累计有效投注 300 元即可获得 100*1%=1 元彩金。
           </div>
         </div>
       </div>
@@ -132,11 +132,11 @@
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            当日完成对应存款流水后即可点击活动页面“立即领取”领取彩金，彩金仅需3倍流水即可出款；
+            当日完成对应存款流水后即可点击活动页面“立即领取”领取彩金，彩金仅需 3 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            本活动仅计算活动时间内存款，活动时间为10月01日00:00~10月07日23:59:59，活动时间外达成条件不予计算此优惠;
+            本活动仅计算活动时间内存款，活动时间为 10 月 01 日 00:00~10 月 07 日 23:59:59，活动时间外达成条件不予计算此优惠;
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -144,7 +144,7 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">6</div>
