@@ -78,7 +78,7 @@
     </div>
     <div class="activities-title q-mt-md"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
     <div class="activities-rules-container">
-      1. Example: On the first day, if you deposit 1,000{{ store.currency.label }}, you will be given 88{{
+      1. Example: On the first day, if you deposit 100{{ store.currency.label }}, you will be given 88{{
         store.currency.label
       }}
       after the turnover is full. No deposit on the second day, but deposit on the third day, it will be recalculated as
