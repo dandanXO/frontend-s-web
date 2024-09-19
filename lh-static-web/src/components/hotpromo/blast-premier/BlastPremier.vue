@@ -5,15 +5,15 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div><img src="../../../assets/promo/lh1-blast-premier/section-title-img.png" /></div>
-            包赔卷
+            包赔金
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
               <img src="../../../assets/promo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日充值：
-              <span class="amount">{{ totalValidBet }}元</span>
+              昨日负盈利金额：
+              <span class="amount">{{ winAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -21,13 +21,13 @@
               <img src="../../../assets/promo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              可领包赔卷：
-              <span class="amount">{{ couponNumber }}张</span>
+              今日可领取彩金：
+              <span class="amount">{{ bonusAmount }}元</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonusAmount <= 0 }">
             <img src="../../../assets/promo/lh1-blast-premier/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -41,9 +41,9 @@
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
-            活动内容：活动期间，会员当日
+            活动期间，会员当日
             <span style="color: #00a1ff; font-weight: bold">首充</span>
-            ≥1,000 元即可自动获得一张 BLAST 秋季总决赛包赔券。使用包赔券即可获得对应档位的包赔金额；
+            1,000 元并投注 BLAST Premier 秋季总决赛赛事结算为负盈利即可在活动页面领取对应档位彩金；
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -75,7 +75,7 @@
           </tr>
           <tr>
             <td>Lv.4</td>
-            
+
             <td>88</td>
           </tr>
           <tr>
@@ -119,12 +119,18 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              <div>活动期间，会员每日<span style="color: #00a1ff; font-weight: bold" >首充</span>金额≥1,000 元，即可自动获得一张 BLAST Premier 秋季总决赛赛事的包赔券。会员在符合活动条件后次日 24 小时内在活动页面点击【点击领取】即可领取对应档位彩金，逾期未领取则视为自动放弃；注：彩金仅计算当日输赢相加后产生的金额，若金额为负数即可使用；</div>
+              <div>
+                活动期间，会员当日
+                <span style="color: #00a1ff; font-weight: bold">首充</span>
+                金额≥1,000 元且投注BLAST Premier
+                秋季总决赛赛事结算金额为负盈利，即可在次日24小时内前往活动页面点击【点击领取】按钮即可获得包赔金，包赔金3倍流水即可出款；
+              </div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，每位会员每日仅可获得与使用一张包赔券，若有未使用的包赔券则无法领取使用下一张包赔券，包赔券自发放日起，24 小时内使用有效；
+            负盈利计算：仅计算电竞场馆所有BLAST Premier
+            秋季总决赛赛事注单相加后为负盈利金额，根据会员对应等级与负盈利金额领取对应包赔金；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -132,7 +138,8 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
@@ -140,7 +147,8 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">7</div>
@@ -153,7 +161,7 @@
 </template>
 
 <script setup>
-import { getBlastCoupon, claimBlastCoupon, getBlastCouponInit } from "@/api/index/promo";
+import { claimBlastCoupon, getBlastCouponInit } from "@/api/index/promo";
 import { onMounted, ref, defineProps } from "vue";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
@@ -163,14 +171,14 @@ const props = defineProps(["promoCode"]);
 const notify = useNotify();
 
 const store = userStore();
-const totalValidBet = ref(888);
-const couponNumber = ref(0);
+const winAmount = ref(0);
+const bonusAmount = ref(0);
 
-getBlastCouponInit().then(res=>{
-  if(res.code === 0){
-    totalValidBet.value  = res.data.totalDepositAmount
-  }
-})
+// getBlastCouponInit().then((res) => {
+//   if (res.code === 0) {
+//     totalValidBet.value = res.data.totalDepositAmount;
+//   }
+// });
 const handleClaimBonus = () => {
   if (!store.hasToken()) {
     ElMessageBox.alert("请登录后再操作", "系统提示", {
@@ -186,7 +194,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimBlastCoupon(props.promoCode)
+  claimBlastCoupon()
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -208,8 +216,9 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   try {
-    const res = await getBlastCoupon();
-    couponNumber.value = res.data.couponCount;
+    const res = await getBlastCouponInit();
+    winAmount.value = res.data.winAmount;
+    bonusAmount.value = res.data.bonusAmount;
   } catch (error) {
     console.log(error);
   }
@@ -255,6 +264,8 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-right {
+    margin-top: auto;
+    margin-bottom: auto;
     width: 254px;
 
     .bonus-image {
@@ -267,6 +278,12 @@ onMounted(() => {
       &:active {
         transform: translate(0px, 1px);
         opacity: 0.9;
+      }
+
+      &.disabled {
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }
