@@ -56,7 +56,7 @@
           <div class="right">
             活动期间，会员当日
             <span style="color: #00a1ff; font-weight: bold">首充</span>
-            1,000 元并投注 BLAST Premier 秋季总决赛赛事结算为负盈利即可在活动页面领取对应档位彩金；
+            ≥1,000 元并投注 BLAST Premier 秋季总决赛赛事结算为负盈利即可在活动页面领取对应档位彩金；
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
