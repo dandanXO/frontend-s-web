@@ -399,3 +399,11 @@ export function getCompetitionToday() {
 export function getCompetitionYesterday() {
   return server.EVENT.get('/session/competition/yesterday')
 }
+
+export function getNationalDayRecords() {
+  return server.EVENT.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return server.EVENT.post('/session/nationalDay/claimBonus')
+}
