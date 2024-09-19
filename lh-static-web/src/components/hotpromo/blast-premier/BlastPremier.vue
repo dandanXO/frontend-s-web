@@ -209,7 +209,7 @@ const handleClaimBonus = () => {
 const fetchData = async () => {
   try {
     const res = await getBlastCoupon();
-    couponNumber.value = res.data;
+    couponNumber.value = res.data.couponCount;
   } catch (error) {
     console.log(error);
   }
