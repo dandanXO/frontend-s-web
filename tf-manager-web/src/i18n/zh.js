@@ -2037,6 +2037,12 @@ export default {
     needUniqueDevice: '需要独特设备',
     uniqueIpCount: '独特IP数量',
     uniqueDeviceCount: '独特设备数量',
+    referFriendAnalysis: '邀请返佣分析',
+    referRelationQuery: '邀请关系查询',
+    referCount: '邀请人数',
+    referBonus: '邀请奖金',
+    successCount: '合格人数',
+    betBonus: '投注返佣',
     batchFrozenMember: '批量冻结会员',
   },
   message: {
@@ -2764,7 +2770,8 @@ export default {
     'Mooncake Fest Spin Record': '中秋节转盘2024',
     'Platform WC': 'WC平台',
     'Site Platform Report': '站点平台报表',
-    'Refer Friend Eligibility': '全民代理'
+    'Refer Friend Eligibility': '全民代理',
+    'Member Refer Analysis': '邀请返佣分析',
   },
   google: {
     google_auth_menu: '谷歌验证',

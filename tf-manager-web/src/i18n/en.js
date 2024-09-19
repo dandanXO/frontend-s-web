@@ -2038,6 +2038,12 @@ export default {
     needUniqueDevice: 'Need Unique Device',
     uniqueIpCount: 'Unique Ip Count',
     uniqueDeviceCount: 'Unique Device Count',
+    referFriendAnalysis: 'Refer Friend Analysis',
+    referRelationQuery: 'Refer Relation Query',
+    referCount: 'Refer Count',
+    referBonus: 'Refer Bonus',
+    successCount: 'Success Count',
+    betBonus: 'Bet Bonus',
     batchFrozenMember: 'Batch Frozen Member',
   },
   message: {
@@ -2816,7 +2822,8 @@ export default {
     'Mooncake Fest Spin Record': 'Mooncake Fest Spin Record 2024',
     'Platform WC': 'Platform WC',
     'Site Platform Report': 'Site Platform Report',
-    'Refer Friend Eligibility': 'Refer Friend Eligibility'
+    'Refer Friend Eligibility': 'Refer Friend Eligibility',
+    'Member Refer Analysis': 'Member Refer Analysis',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

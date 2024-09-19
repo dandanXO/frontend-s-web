@@ -751,7 +751,6 @@
         >
           <span
             v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
-            style="color:red"
           >
             {{ memberDetail.regIp }}
           </span>
