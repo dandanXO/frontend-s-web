@@ -84,6 +84,15 @@
         >
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          icon="el-icon-upload"
+          size="mini"
+          type="success"
+          v-permission="['sys:member:freeze:import']"
+          @click="uiControl.importDialogVisible = true"
+        >
+          {{ t('fields.massImport') }}
+        </el-button>
       </div>
     </div>
     <el-table
@@ -170,18 +179,161 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog
+    :title="t('fields.massImport')"
+    v-model="uiControl.importDialogVisible"
+    append-to-body
+    width="800px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <el-button
+      icon="el-icon-download"
+      size="mini"
+      type="primary"
+      @click="downloadTemplate"
+    >
+      {{ t('fields.downloadTemplate') }}
+    </el-button>
+    <el-button
+      icon="el-icon-upload"
+      size="mini"
+      type="success"
+      @click="chooseFile"
+    >
+      {{ t('fields.import') }}
+    </el-button>
+    <input 
+      id="importFile"
+      type="file"
+      accept=".xlsx, .xls"
+      @change="importToTable"
+      hidden
+    />
+    <el-form
+      ref="importRefForm"
+      :model="importForm"
+      :rules="importRules"
+      :inline="true"
+      size="small"
+      label-width="150px"
+      style="padding-top: 20px;"
+    >
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="importForm.siteId"
+          :placeholder="t('fields.site')"
+          style="width: 350px;"
+          filterable
+          default-first-option
+          @change="loadFormImportSelect"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.freezeType')" prop="freezeType">
+        <el-select
+          v-model="importForm.freezeType"
+          :placeholder="t('fields.freezeType')"
+          style="width: 350px;"
+        >
+          <el-option 
+            v-for="item in uiControl.freezeType"
+            :key="item.key"
+            :label="item.name"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.reason')" prop="reason">
+        <el-select
+          v-model="importForm.reason"
+          :placeholder="t('fields.reason')"
+          style="width: 350px;"
+        >
+          <el-option 
+            v-for="item in uiControl.freezeReason"
+            :key="item.key"
+            :label="item.name"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <el-table 
+      :data="importedPage.records.slice(
+        importedPage.size * (importedPage.current - 1),
+        importedPage.size * importedPage.current
+      )"
+      v-loading="importedPage.loading"
+      ref="table"
+      row-key="id"
+      size="small"
+      :empty-text="t('fields.noData')"
+    >
+      <el-table-column 
+        prop="memberId"
+        :label="t('fields.memberId')"
+        width="250"
+      />
+      <el-table-column 
+        prop="loginName"
+        :label="t('fields.loginName')"
+        width="250"
+      />
+      <el-table-column 
+        prop="remark"
+        :label="t('fields.remark')"
+        width="250"
+      />
+    </el-table>
+    <el-pagination
+        class="pagination"
+        @current-change="changeImportedPage"
+        layout="prev, pager, next"
+        :page-size="importedPage.size"
+        :page-count="importedPage.pages"
+        :current-page="importedPage.current"
+    />
+    <div class="dialog-footer">
+      <el-button
+        type="primary"
+        :disabled="importedPage.records.length === 0"
+        @click="confirmImport"
+        :loading="importedPage.buttonLoading"
+      >
+        {{ t('fields.confirmAndImport') }}
+      </el-button>
+      <el-button @click="clearImport">{{ t('fields.cancel') }}</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
 import moment from 'moment'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed, ref } from 'vue'
 import { getFreezeRecords } from '../../../api/freeze'
 import { useI18n } from 'vue-i18n'
+import { useStore } from '../../../store'
 import { getSiteListSimple } from '../../../api/site'
 import { getShortcuts } from '@/utils/datetime'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { TENANT } from '../../../store/modules/user/action-types'
+// import { title } from '../../../config/vue.custom.config'
+import * as XLSX from 'xlsx'
+import { findIdByLoginName, freezeMemberBatchUpdate } from '../../../api/member'
+import { ElMessage } from 'element-plus'
+import { required } from '../../../utils/validate'
 
 const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const page = reactive({
   pages: 0,
   records: [],
@@ -195,6 +347,7 @@ startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
 let timeZone = null
+const importRefForm = ref(null)
 
 const request = reactive({
   size: 30,
@@ -210,6 +363,13 @@ const siteList = reactive({
   list: [],
 })
 
+const importRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
+  freezeType: [required(t('message.validateFreezeTypeRequired'))],
+  reason: [required(t('message.validateReasonRequired'))],
+  remark: [required(t('message.validateRemarkRequired'))],
+})
+
 const freezeType = reactive({
   list: [
     { key: 1, name: t('freeze.NORMAL'), value: 'NORMAL' },
@@ -218,6 +378,38 @@ const freezeType = reactive({
     { key: 4, name: t('freeze.UNFREEZE'), value: 'UNFREEZE' },
   ],
 })
+
+const uiControl = reactive({
+  importDialogVisible: false,
+  freezeType: [
+    { key: 1, name: t('types.NORMAL'), value: 'NORMAL' },
+    { key: 2, name: t('types.TEMPORARY'), value: 'TEMPORARY' },
+    { key: 3, name: t('types.PERMANENT'), value: 'PERMANENT' },
+  ],
+  freezeReason: [
+    { key: 1, name: t('types.gameViolation'), value: 'Game Violation' },
+    { key: 2, name: t('types.memberRequest'), value: 'Member Request' },
+    { key: 3, name: t('types.others'), value: 'Others' },
+  ]
+})
+
+const importForm = reactive({
+  siteId: null,
+  freezeType: null,
+  reason: null,
+  remark: null
+})
+
+const importedPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  size: 10,
+  current: 1,
+  buttonLoading: false
+})
+
+const IMPORT_FREEZE_LIST = ["loginName", "remark"]
 
 function resetQuery() {
   request.memberName = null
@@ -281,9 +473,155 @@ function changePage(page) {
   loadFreezeRecords()
 }
 
+async function downloadTemplate() {
+  const exportAmountAdjust = [IMPORT_FREEZE_LIST]
+  const maxLengthAdmountAdjust = []
+  const mFreezeRecord = XLSX.utils.aoa_to_sheet(exportAmountAdjust)
+  setWidth(exportAmountAdjust, maxLengthAdmountAdjust)
+  const wsAdmountAdjustCols = maxLengthAdmountAdjust.map(w => {
+    return { width: w }
+  })
+  mFreezeRecord['!cols'] = wsAdmountAdjustCols
+
+  const wb = XLSX.utils.book_new()
+  wb.SheetNames.push('Member_Freeze_Record')
+  wb.Sheets.Member_Freeze_Record = mFreezeRecord
+  XLSX.writeFile(wb, 'member_freeze_template.xlsx')
+}
+
+/* eslint-disable */
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key]
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+          ? maxLength[key]
+          : value.length + 2
+    })
+  })
+}
+
+function chooseFile() {
+  document.getElementById('importFile').click()
+}
+
+function importToTable(file) {
+  importedPage.loading = true
+  importedPage.buttonLoading = false
+  const files = file.target.files[0]
+  const allowFileType = [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-excel',
+  ]
+  if (allowFileType.find(ftype => ftype.includes(files.type))) {
+    const fileReader = new FileReader()
+
+    fileReader.onload = async event => {
+      const { result } = event.target
+      const workbook = XLSX.read(result, { type: 'binary' })
+      let data = []
+      for (const sheet in workbook.Sheets) {
+        data = data.concat(
+          XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+            header: IMPORT_FREEZE_LIST,
+            range: 1,
+          })
+        )
+        for (const d of data) {
+          const { data: id } = await findIdByLoginName(
+            d.loginName,
+            importForm.siteId
+          )
+          d.memberId = id
+        }
+        break
+      }
+      importedPage.records = data
+      importedPage.pages = Math.ceil(
+        importedPage.records.length / importedPage.size
+      )
+    }
+    fileReader.readAsBinaryString(files)
+    document.getElementById('importFile').value = ''
+  } else {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  }
+  importedPage.loading = false
+}
+
+function changeImportedPage(page) {
+  importedPage.current = page
+}
+
+function clearImport() {
+  uiControl.importDialogVisible = false
+  importForm.freezeType = null
+  importForm.reason = null
+  importRefForm.value = null
+  importedPage.records = []
+  importedPage.pages = 0
+  importedPage.current = 1
+  importedPage.size = 10
+}
+
+async function confirmImport() {
+  importRefForm.value.validate(async valid => {
+    if (valid) {
+      importedPage.buttonLoading = true
+      const recordCopy = { ...importedPage.records }
+      const data = []
+      Object.entries(recordCopy).forEach(([key, value]) => {
+        const item = {}
+        if (value) {
+          item.site = importForm.siteId
+          item.freezeType = importForm.freezeType
+          item.reason = importForm.reason
+          item.remark = importForm.remark
+          Object.entries(value).forEach(([k, v]) => {
+            if (k !== 'loginName') {
+              item[k] = v
+            }
+          })
+        }
+        data.push(item)
+      })
+
+      const records = [...data]
+      do {
+        if (records.length > 10000) {
+          await freezeMemberBatchUpdate(records.slice(0, 10000))
+          records.splice(0, 10000)
+        } else {
+          await freezeMemberBatchUpdate(records)
+          records.splice(0, records.length)
+        }
+      } while (records.length > 0)
+      importedPage.buttonLoading = false
+      ElMessage({ message: t('message.importSuccess'), type: 'success' })
+      clearImport()
+      loadFreezeRecords()
+      importForm.freezeType = null
+      importForm.reason = null
+    }
+  })
+}
+
 onMounted(async () => {
   await loadSites()
   request.siteId = siteList.list[0].id
+  importForm.siteId = siteList.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+    importForm.siteId  = site.value.id
+  }
   loadFreezeRecords()
 })
 </script>
