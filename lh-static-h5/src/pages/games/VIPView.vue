@@ -661,17 +661,17 @@
         {{ isOpenTerms ? "收起详细规则" : "查看详细规则" }}
       </button>
       <div v-if="isOpenTerms" class="panel">
-        <ol class="terms">
-          <li>
+        <ol class="terms got-bullets">
+          <li class="numbered">
             有效流水仅计算在游戏中产生输赢结果的注单，香港盘&lt;0.75（中国盘&lt;0.75）、欧洲盘&lt;1.75、美洲盘&lt;-133、马来盘&lt;0.75且&gt;0，负赔率&gt;-0.75且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；
           </li>
-          <li>
+          <li class="numbered">
             根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </li>
-          <li>
+          <li class="numbered">
             此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
           </li>
-          <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li class="numbered">为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
         </ol>
       </div>
     </div>
@@ -1375,6 +1375,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
+  z-index: 0;
   .loading-icon {
     width: 10px;
     height: 10px;
@@ -2512,7 +2513,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   :deep(.carousel__prev) {
-    z-index: 1 !important;
+    // z-index: 2001 !important;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
@@ -2520,7 +2521,7 @@ $border-settings: 1px solid #e5e7eb;
     transform: translate3d(-20px, -20px, 10px);
   }
   :deep(.carousel__next) {
-    z-index: 1 !important;
+    // z-index: 2001 !important;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
