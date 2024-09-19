@@ -242,3 +242,7 @@ export function getBlastCoupon() {
 export function claimBlastCoupon(promoCode) {
   return eventapi.post(`/session/blastCoupon/claim`, qs.stringify({ promoCode }));
 }
+
+export function getBlastCouponInit() {
+  return eventapi.get("/session/blastCoupon/init");
+}

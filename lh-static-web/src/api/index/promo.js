@@ -403,3 +403,7 @@ export function claimBlastCoupon(promoCode) {
     }
   })
 }
+
+export function getBlastCouponInit() {
+  return server.EVENT.get("/session/blastCoupon/init");
+}
