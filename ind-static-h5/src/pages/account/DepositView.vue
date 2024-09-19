@@ -1,17 +1,15 @@
 <template>
   <div class="deposit-wrapper">
+    <div class="slot-ftd-section" v-if="isFtdPrivilege && depositType === 'flat'">
+      <img src="../../assets/images/bonus/slot-ftd-img.png" />
+    </div>
+
     <template v-if="!isSelectedMethod">
       <div class="method-title q-mb-md" v-if="depositType !== 'usdt'">Choose a payment method</div>
       <div class="withdraw-methods-container" v-if="isLoadingInitPay">
-        <div>
-          <q-skeleton style="height: 76px" />
-        </div>
-        <div>
-          <q-skeleton style="height: 76px" />
-        </div>
-        <div>
-          <q-skeleton style="height: 76px" />
-        </div>
+        <div><q-skeleton style="height: 76px" /></div>
+        <div><q-skeleton style="height: 76px" /></div>
+        <div><q-skeleton style="height: 76px" /></div>
       </div>
       <div class="withdraw-methods-container" v-else>
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
@@ -39,7 +37,7 @@
             </template>
 
             <div class="item-amount" v-if="item.depositMin && item.depositMax">
-              {{ item.depositMin }}~{{ item.depositMax }} RS
+              {{ convertToCommaAmount(item.depositMin) }}~{{ convertToCommaAmount(item.depositMax) }} RS
             </div>
             <div class="item-arrow"><q-icon name="chevron_right" size="30px" color="grey" /></div>
           </div>
@@ -112,6 +110,10 @@
             <q-badge v-if="selectedItemPrivilege" color="orange" floating rounded>
               +{{ convertToTwoDecimalAmount(amount * selectedItemPrivilege) }}
             </q-badge>
+            <q-badge color="orange" floating rounded v-if="isFtdPrivilege && depositType === 'flat'">
+              +{{ getFtdCommaAmount(amount) }}
+            </q-badge>
+
             <div :class="['deposit-amt', form.localAmount === amount && 'active']">
               {{ convertToCommaAmount(amount) }}
             </div>
@@ -243,7 +245,7 @@
         </div>
       </div>
 
-      <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege">
+      <div class="q-mt-lg" style="color: #576373" v-if="selectedItemPrivilege || isFtdPrivilege">
         <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
         <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
       </div>
@@ -284,7 +286,7 @@
 import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { cashier } from "boot/axios";
+import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { userStore } from "stores/index";
@@ -292,6 +294,7 @@ import { useRouter, useRoute } from "vue-router";
 import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
+import { storeToRefs } from "pinia";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -408,6 +411,14 @@ const handleDepositItemClick = (amount) => {
   form.localAmount = amount;
 };
 
+const getFtdCommaAmount = (amount) => {
+  if (amount < 888) {
+    return amount;
+  } else {
+    return 888;
+  }
+};
+
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
   depositItems.value = item.extra.amountArr;
@@ -420,6 +431,12 @@ const selectedItemAmount = ref();
 const selectedItemPrivilege = ref();
 const selectedItemPrivilegeId = ref();
 const selectedItemPaymentId = ref();
+
+const isPrivilege = ref(false);
+const extraPrivilegeId = ref();
+const paytypeWithPrivilege = ref("");
+const { ftd } = storeToRefs(store);
+const isFtdPrivilege = computed(() => extraPrivilegeId.value && ftd.value === false);
 
 const goSelectedMethod = (item) => {
   activeMethod.value = item;
@@ -450,7 +467,18 @@ function initPay() {
   let promoParam = "";
 
   if (route.query.extra === "true") {
-    promoParam = "&promo=1";
+    // promoParam = "?promo=1";
+    isPrivilege.value = true;
+    selectedItemPrivilegeId.value = store.extraPrivilegeId;
+  } else {
+    isPrivilege.value = false;
+    selectedItemPrivilegeId.value = "";
+  }
+
+  if (route.query.privilegeId) {
+    extraPrivilegeId.value = route.query.privilegeId;
+  } else {
+    extraPrivilegeId.value = undefined;
   }
 
   payMethods.value = [];
@@ -687,6 +715,10 @@ async function confirmDeposit() {
             form.privilegeId = selectedItemPrivilegeId.value;
           }
 
+          if (isFtdPrivilege.value && extraPrivilegeId.value && depositType.value === "flat") {
+            form.privilegeId = extraPrivilegeId.value;
+          }
+
           const copy = { ...form };
           const data = {};
           Object.entries(copy).forEach(([key, value]) => {
@@ -897,6 +929,23 @@ const resetSelectedMethod = () => {
   // isAddNewAccount.value = false;
 };
 
+const loadAppTabs = () => {
+  api.get("/opt-session/getAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      if (data && data.deposit) {
+        store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+        store.extraPrivilegeId = data.deposit.privilegeId;
+
+        paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
+      }
+      if (data && data.hasOwnProperty("ftd")) {
+        store.ftd = data.ftd;
+      }
+    }
+  });
+};
+
 const convertToTwoDecimalAmount = (amount) => {
   if (amount < 3) {
     let formattedAmount = parseFloat(amount).toFixed(2);
@@ -919,6 +968,7 @@ onMounted(() => {
   initPay();
   checkNewUser();
   loadInfo();
+  loadAppTabs();
 });
 </script>
 
@@ -1370,6 +1420,15 @@ onMounted(() => {
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
+  }
+}
+
+.slot-ftd-section {
+  width: 100%;
+  margin: 10px auto 10px;
+
+  img {
+    width: 100%;
   }
 }
 </style>

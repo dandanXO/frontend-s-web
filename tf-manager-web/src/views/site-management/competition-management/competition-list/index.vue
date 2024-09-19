@@ -318,6 +318,38 @@
             </el-button>
           </el-row>
         </el-form-item>
+        <el-form-item :label="t('fields.teamBackgroundImageDark')" prop="teamBackgroundImageDark">
+          <el-row :gutter="10">
+            <el-col v-if="form.teamBackgroundImageDark" :span="18" style="width: 250px">
+              <el-image
+                v-if="form.teamBackgroundImageDark"
+                :src="gameDir + form.teamBackgroundImageDark"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[gameDir + form.teamBackgroundImageDark]"
+              />
+            </el-col>
+          </el-row>
+          <el-row :gutter="10">
+            <el-button
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              v-permission="['sys:siteimage:add']"
+              @click="showImageDialog('TEAM_BACKGROUND_IMAGE')"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('TEAM_BACKGROUND_IMAGE_DARK')"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-row>
+        </el-form-item>
         <el-form-item :label="t('fields.externalUrl')" prop="externalUrl">
           <el-input v-model="form.externalUrl" style="width: 350px" />
         </el-form-item>
@@ -583,6 +615,7 @@
       highlight-current-row
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
+      border
     >
       <el-table-column
         type="selection"
@@ -839,6 +872,7 @@ const form = reactive({
   teamTwoLogo: null,
   externalUrl: null,
   teamBackgroundImage: null,
+  teamBackgroundImageDark: null,
   sequence: null,
   status: null,
 })
@@ -1167,6 +1201,8 @@ function submit() {
 function submitImage() {
   if (uiControl.imageSelectionType === 'TEAM_BACKGROUND_IMAGE') {
     form.teamBackgroundImage = selectedImage.path
+  } else if (uiControl.imageSelectionType === 'TEAM_BACKGROUND_IMAGE_DARK') {
+    form.teamBackgroundImageDark = selectedImage.path
   } else if (uiControl.imageSelectionType === 'TEAM_ONE') {
     form.teamOneLogo = selectedImage.path
   } else {
@@ -1220,6 +1256,10 @@ async function browseImage(type) {
       break
     case 'TEAM_BACKGROUND_IMAGE':
       uiControl.imageSelectionTitle = t('fields.teamBackgroundImage')
+      imageRequest.promoType = 'TEAM_BACKGROUND_IMAGE'
+      break
+    case 'TEAM_BACKGROUND_IMAGE_DARK':
+      uiControl.imageSelectionTitle = t('fields.teamBackgroundImageDark')
       imageRequest.promoType = 'TEAM_BACKGROUND_IMAGE'
       break
   }

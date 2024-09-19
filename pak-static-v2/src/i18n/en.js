@@ -227,7 +227,12 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    balance: "Your balance",
+    link_deposit: "Deposit",
+    link_withdraw: "Withdraw",
+    link_share: "Share",
+    link_profit: "PROFIT"
   },
   settings: {
     totalScore: "Total Score",
@@ -605,6 +610,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
+    11000: "The entered amount exceeds the allowed limit.",
     11003: "Deposit failed",
     11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",

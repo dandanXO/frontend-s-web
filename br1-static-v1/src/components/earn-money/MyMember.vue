@@ -3,12 +3,13 @@
     <div class="history-summary">
       <div class="frame">
         <div class="content-wrapper">
-          <div class="title">Total Rebates</div>
-          <div class="amount">{{ store.currency.value }} {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
+          <div class="title">{{ $t("earnMoney.history.totalRebates") }}</div>
+          <div class="amount">
+            {{ store.currency.value }} {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}
+          </div>
         </div>
       </div>
     </div>
-
     <q-tabs
       v-model="activeKey"
       class="history-tabs q-mb-lg"
@@ -17,47 +18,43 @@
       narrow-indicator
       indicator-color="white"
     >
-      <q-tab name="month" label="Month"></q-tab>
-      <q-tab name="week" label="Week"></q-tab>
+      <q-tab name="month" :label="$t('earnMoney.history.month')"></q-tab>
+      <q-tab name="week" :label="$t('earnMoney.history.week')"></q-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="history-panels">
       <q-tab-panel name="month">
         <div v-for="(e, i) in monthlyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
           <div class="amount-container">
-            <div class="amount-text">Date</div>
+            <div class="amount-text">{{ $t("earnMoney.history.date") }}</div>
             <div class="amount">
               <span>{{ e.recordTime }}</span>
             </div>
           </div>
-
           <div class="amount-container">
-            <div class="amount-text text-right">Rebate Amount</div>
+            <div class="amount-text text-right">{{ $t("earnMoney.history.rebateAmount") }}</div>
             <div class="amount text-right">
               <span>{{ store.currency.value }} {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
-
         <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
       <q-tab-panel name="week">
         <div v-for="(e, i) in weeklyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
           <div class="amount-container">
-            <div class="amount-text">Date</div>
+            <div class="amount-text">{{ $t("earnMoney.history.date") }}</div>
             <div class="amount">
               <span>{{ e.recordTime }}</span>
             </div>
           </div>
-
           <div class="amount-container">
-            <div class="amount-text text-right">Rebate Amount</div>
+            <div class="amount-text text-right">{{ $t("earnMoney.history.rebateAmount") }}</div>
             <div class="amount text-right">
               <span>{{ store.currency.value }} {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
-
         <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
     </q-tab-panels>

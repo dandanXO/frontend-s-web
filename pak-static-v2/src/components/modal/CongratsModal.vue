@@ -36,7 +36,7 @@ const ui = useUI();
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
+  background-color: #111934;
   max-width: 400px;
   width: 100%;
   padding: 16px;

@@ -50,6 +50,15 @@
               </div>
             </el-col>
             <el-col :span="6" class="icons">
+              <el-switch
+                v-model="item.status"
+                size="mini"
+                active-value="true"
+                inactive-value="false"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                @change="changePaymentStatus()"
+              />
               <i
                 class="el-icon-edit"
                 size="mini"
@@ -734,6 +743,9 @@ export default defineComponent({
         )
       }
     },
+    changePaymentStatus() {
+      bus.emit('exportNodes')
+    }
     // async loadNote() {
     //   const { data: note } = await getSystemPaymentShowBySiteIdGroupByNodeName({
     //     financialLevel: this.ruleForm.level,

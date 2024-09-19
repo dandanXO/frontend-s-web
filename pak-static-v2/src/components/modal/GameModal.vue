@@ -882,6 +882,7 @@ defineExpose({
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  color: #fff;
 
   .loader-logo {
     max-width: 130px;

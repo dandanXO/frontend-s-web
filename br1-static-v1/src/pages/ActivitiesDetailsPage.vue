@@ -4,9 +4,7 @@
       <img src="../assets/images/promotion/activities/deposit-promo-topbanner.jpg" />
     </div>
     <div class="activities-title"><img src="../assets/images/promotion/activities/title-activities.png" /></div>
-    <div class="activities-content">
-      The more consecutive days of deposit requirements you complete, the more extra bonus you will get
-    </div>
+    <div class="activities-content">{{ $t("promo_activitiesDetails.activitiesContent") }}</div>
     <router-link :to="`/deposit?from=${route.path}`" class="activities-btn">
       <img src="../assets/images/promotion/activities/deposit-btn-1.png" />
     </router-link>

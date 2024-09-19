@@ -28,6 +28,7 @@
           size="mini"
           type="success"
           @click="loadTelephones"
+          :disabled="isSearchDisabled"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -383,9 +384,12 @@ const importedPage = reactive({
 const request = reactive({
   size: 30,
   current: 1,
-  name: null,
-  platform: null,
+  telephone: null,
   siteId: null,
+})
+
+const isSearchDisabled = computed(() => {
+  return !request.telephone
 })
 
 const form = reactive({
@@ -671,7 +675,6 @@ onMounted(async () => {
   } else {
     request.siteId = sites.list[0].id
   }
-  await loadTelephones()
 })
 </script>
 

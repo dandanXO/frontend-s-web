@@ -633,6 +633,7 @@ const uiControl = reactive({
     { key: 5, displayName: 'ESPORT', value: 'esport' },
     { key: 6, displayName: 'POKER', value: 'poker' },
     { key: 7, displayName: 'LOTTERY', value: 'lottery' },
+    { key: 8, displayName: 'CASUAL', value: 'casual' },
   ],
   gameTypeRolloverTypes: [
     { key: 1, displayName: t('gameTypeRolloverSetting.anyTypes'), value: 'ANY_TYPES' },

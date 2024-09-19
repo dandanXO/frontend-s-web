@@ -112,34 +112,34 @@ const depositCards = ref([
   {
     code: "blbpay",
     title: "808钱包",
-    content: `充值即送<em class="light-bg">1.5%</em>彩金 808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的1.0%加码彩金，单日优惠最高上限200元。`,
+    content: `充值即送<em class="light-bg">1.0%</em>彩金，808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的1.0%加码彩金，单日优惠最高上限188元！`,
     lesson: "http://808.com/tutorial.html"
   },
   {
     code: "ebpay",
     title: "EBPAY",
-    content: `充值即送<em class="light-bg">1.0%</em>彩金 仅只支持银行卡。活动期间，每位玩家每笔使用EBpay单笔充值成功存款即可享受存款金额的1.0%加码彩金，单日优惠最高上限200元`,
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 只支持银行卡。活动期间，每位玩家每笔使用EBpay单笔充值成功存款即可享受存款金额的1.0%加码彩金，单日优惠最高上限188元！`,
     lesson: "https://fil2e5sal.vmip991b92n.com/media/intro.mp4"
   },
   {
     code: "kdou",
     title: "K豆",
     content:
-      "充值即送<em>1.0%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的<em>1.0%</em>加码彩金，单日优惠最高上限200元",
+      "充值即送<em>1.0%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限188元！",
     lesson: "https://kdxz1848.com/"
   },
   {
     code: "okpay",
     title: "OKpay",
-    content: `充值即送<em class="light-bg">1.0%</em>彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。`,
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限188元。`,
     lesson: "https://me-qr.com/l/okpayjiaocheng"
   },
 
   // {
-  //     "code": "jdpay",
-  //     "title": "JDpay",
-  //     "content": "充值即送1.0%彩金JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
-  //     "lesson": "https://www.jdpay01.com/#/transactionFlow"
+  //   "code": "jdpay",
+  //   "title": "JDpay",
+  //   "content": "充值即送1.0%彩金 JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
+  //   "lesson": "https://www.jdpay01.com/#/transactionFlow"
   // },
   {
     code: "szrmb",
@@ -149,9 +149,8 @@ const depositCards = ref([
   // {
   //   code: "zfb",
   //   title: "支付宝转卡",
-  //   content:
-  //     "充值即送<em>0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em>0.5%</em>的彩金返还，单日优惠最高上限50元。"
-  // }
+  //   content: `充值即送<em class="light-bg">0.5%</em>彩金活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的<em class="light-bg">0.5%</em>的彩金返还，单日优惠最高上限50元。`
+  // },
 ]);
 </script>
 <style lang="scss">

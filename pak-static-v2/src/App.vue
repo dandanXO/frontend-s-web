@@ -32,8 +32,8 @@ export default defineComponent({
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
-        store.visitorId = visitorId;
 
+        store.visitorId = visitorId;
         console.log("SID");
         console.log(visitorId);
 
