@@ -391,3 +391,19 @@ export function getDota2CompetitionBet(promoCode) {
     }
   });
 }
+
+export function getCompetitionToday() {
+  return server.EVENT.get('/session/competition/today')
+}
+
+export function getCompetitionYesterday() {
+  return server.EVENT.get('/session/competition/yesterday')
+}
+
+export function getNationalDayRecords() {
+  return server.EVENT.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return server.EVENT.post('/session/nationalDay/claimBonus')
+}
