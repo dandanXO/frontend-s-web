@@ -228,6 +228,12 @@
           align="center"
           min-width="50"
         />
+        <el-table-column prop="ftdAmount" :label="t('fields.ftdAmount')" align="center" width="120">
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="newMemberCount"
           :label="t('fields.newMemberCount')"
