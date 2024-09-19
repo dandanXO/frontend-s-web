@@ -2044,6 +2044,7 @@ export default {
     referBonus: 'Refer Bonus',
     successCount: 'Success Count',
     betBonus: 'Bet Bonus',
+    batchFrozenMember: 'Batch Frozen Member',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

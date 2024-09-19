@@ -1838,6 +1838,7 @@ export default {
     withdrawPassword: '비밀번호 철회',
     updateWithdrawPassword: '출금 비밀번호 업데이트',
     self: '(본인)',
+    batchFrozenMember: '회원 일괄 동결',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',

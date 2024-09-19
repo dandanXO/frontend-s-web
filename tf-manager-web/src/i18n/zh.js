@@ -2043,6 +2043,7 @@ export default {
     referBonus: '邀请奖金',
     successCount: '合格人数',
     betBonus: '投注返佣',
+    batchFrozenMember: '批量冻结会员',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
