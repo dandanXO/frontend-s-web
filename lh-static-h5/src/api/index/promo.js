@@ -242,3 +242,11 @@ export function getCompetitionToday() {
 export function getCompetitionYesterday() {
   return eventapi.get('/session/competition/yesterday')
 }
+
+export function getNationalDayRecords() {
+  return eventapi.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return eventapi.post('/session/nationalDay/claimBonus')
+}
