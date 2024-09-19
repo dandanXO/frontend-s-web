@@ -40,7 +40,7 @@
           clearable
           v-model="request.withdrawCode"
           size="small"
-          :placeholder="t('fields.pleaseChoose')"
+          :placeholder="t('fields.paymentType')"
           class="filter-item"
           style="width: 150px;margin-left:10px"
         >
