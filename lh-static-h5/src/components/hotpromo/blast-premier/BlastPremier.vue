@@ -56,13 +56,13 @@
           <div class="right">
             活动内容：活动期间，会员当日
             <span style="color: #00a1ff; font-weight: bold">首充</span>
-            ≥1,000元即可自动获得一张BLAST秋季总决赛包赔券。使用包赔券即可获得对应档位的包赔金额；
+            ≥1,000 元即可自动获得一张 BLAST 秋季总决赛包赔券。使用包赔券即可获得对应档位的包赔金额；
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
             <th>等级</th>
-            <th>首冲要求(元)</th>
+            <th>首冲要求 (元)</th>
             <th>包赔比例</th>
             <th>彩金上限</th>
             <th>流水要求</th>
@@ -134,15 +134,15 @@
               <div>
                 活动期间，会员每日
                 <span style="color: #00a1ff; font-weight: bold">首充</span>
-                金额≥1,000元，即可自动获得一张BLAST Premier
-                秋季总决赛赛事的包赔券。会员在符合活动条件后次日24小时内在活动页面点击【点击领取】即可领取对应档位彩金，逾期未领取则视为自动放弃；
+                金额≥1,000 元，即可自动获得一张 BLAST Premier
+                秋季总决赛赛事的包赔券。会员在符合活动条件后次日 24 小时内在活动页面点击【点击领取】即可领取对应档位彩金，逾期未领取则视为自动放弃；
                 注：彩金仅计算当日输赢相加后产生的金额，若金额为负数即可使用；
               </div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，每位会员每日仅可获得与使用一张包赔券，若有未使用的包赔券则无法领取使用下一张包赔券，包赔券自发放日起，24小时内使用有效；
+            活动期间，每位会员每日仅可获得与使用一张包赔券，若有未使用的包赔券则无法领取使用下一张包赔券，包赔券自发放日起，24 小时内使用有效；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -159,7 +159,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">7</div>
@@ -173,7 +173,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { getBlastCoupon, claimBlastCoupon } from "../../../api/index/promo";
+import { getBlastCoupon, claimBlastCoupon, getBlastCouponInit } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -189,6 +189,13 @@ const router = useRouter();
 
 const totalValidBet = ref(888);
 const couponNumber = ref(0);
+
+getBlastCouponInit().then(res=>{
+  if(res.code === 0){
+    totalValidBet.value = res.data.totalDepositAmount
+  }
+  
+})
 
 const handleClaimBonus = () => {
   if (!store.token) {
@@ -237,7 +244,7 @@ const handleClaimBonus = () => {
 const fetchData = async () => {
   try {
     const res = await getBlastCoupon();
-    couponNumber.value = res.data;
+    couponNumber.value = res.data.couponCount;
   } catch (error) {
     console.log(error);
   }
