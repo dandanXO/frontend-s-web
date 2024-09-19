@@ -87,6 +87,13 @@ const onResponse = (response) => {
     res = JSON.parse(response.data);
   }
   if (res.code !== ResponseCode.SUCCESS) {
+    const store = useStore()
+    // const siteId = store.state.user.siteId
+    if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
+      sessionStorage.setItem('myIPAddress', res.data)
+      router.push('/403');
+      return;
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
