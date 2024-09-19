@@ -57,7 +57,7 @@
         <div
           class="bank-account-container"
           v-if="isBankType === 'BANK' && (bankCardList.length === 0 || isAddNewAccount)"
-          style="display: none"
+          style="opacity: 0; visibility: hidden; position: absolute"
         >
           <div class="w-form-item w-form-item--bankcard">
             <div class="top-wrapper">
