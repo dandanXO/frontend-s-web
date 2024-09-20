@@ -45,7 +45,7 @@ const onRequest = (config) => {
   clearEmptyParam(config);
 
   const host = window.location.hostname;
-  if (host.includes("k4y0sr02") && !host.includes("lh1.k4y0sr02")) {
+  if (host.includes("www.k4y0sr02")) {
     // debugger;
     console.log("k4y0sr0 12");
     // config.withCredentials = true
