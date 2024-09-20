@@ -750,15 +750,7 @@
           class-name="member-context"
         >
           <span
-            v-if="memberDetail.regIp !== null && memberDetail.dupIp === 'red'"
-          >
-            {{ memberDetail.regIp }}
-            <template v-if="selectedIpRemark.registerIpRemark">
-              ( {{ selectedIpRemark.registerIpRemark }} )
-            </template>
-          </span>
-          <span
-            v-if="memberDetail.regIp !== null && memberDetail.dupIp !== 'red'"
+            v-if="memberDetail.regIp !== null"
             :style="[
               selectedIpColor.registerIpColor !== null
                 ? {color: selectedIpColor.registerIpColor}
