@@ -286,7 +286,7 @@ $node-color: #468cff;
     .account-title-container {
       margin: 0 -30px;
       background: none;
-      color: #424f72;
+      color: #000;
     }
 
     &.node-group {
@@ -318,7 +318,7 @@ $node-color: #468cff;
 
         & > div {
           font-size: 12px;
-          color: #424f72;
+          color: #000;
         }
         img {
           border: 0;
@@ -369,7 +369,7 @@ $node-color: #468cff;
       .txt-title {
         // font-size: 11px !important;
         white-space: nowrap;
-        color: #424f72;
+        color: #000;
       }
 
       .node-txt-img {

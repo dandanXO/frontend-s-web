@@ -26,12 +26,29 @@
           style="width: 120px;margin-left:10px"
           default-first-option
           @focus="loadSites"
+          @change="filterPayTypeByCurrency(request.siteId)"
         >
           <el-option
             v-for="item in siteList.list"
             :key="item.id"
             :label="item.siteName"
             :value="item.id"
+          />
+        </el-select>
+        <el-select
+          filterable
+          clearable
+          v-model="request.withdrawCode"
+          size="small"
+          :placeholder="t('fields.paymentType')"
+          class="filter-item"
+          style="width: 150px;margin-left:10px"
+        >
+          <el-option
+            v-for="item in list.filteredPayTypes"
+            :key="item.id"
+            :label="item.code"
+            :value="item.code"
           />
         </el-select>
         <el-input
@@ -521,6 +538,8 @@ import { getConfigList } from '../../../../api/config'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { isPak } from '@/utils/site'
 import { getWithdrawPlatformsSimpleBySiteId } from "../../../../api/withdraw-platform";
+import { getActivePaymentTypes } from "../../../../api/payment-type";
+import { getCurrencyNames } from "../../../../api/currency";
 
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
@@ -581,6 +600,7 @@ const request = reactive({
   vipId: null,
   siteId: null,
   doris: false,
+  withdrawCode: null,
 })
 const failForm = reactive({
   id: null,
@@ -597,6 +617,14 @@ const reasonTypeList = reactive({
 })
 const reasonTemplateList = reactive({
   list: [],
+})
+const list = reactive({
+  payTypes: [],
+  filteredPayTypes: [],
+  siteCurrencyIds: [],
+})
+const currencyNames = reactive({
+  list: []
 })
 function disabledDate(time) {
   return (
@@ -699,6 +727,38 @@ async function loadReasonTemplates() {
 async function loadWithdrawPlatform() {
   const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId);
   withdrawPlatformList.list = ret
+}
+
+async function loadCurrencyNames() {
+  const { data: ret } = await getCurrencyNames();
+  currencyNames.list = ret;
+}
+
+async function loadPayTypes() {
+  const { data: payType } = await getActivePaymentTypes()
+  list.payTypes = payType
+}
+
+function filterPayTypeByCurrency(siteId) {
+  const currentSite = siteList.list.find(s => s.id === siteId)
+  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
+  console.log(currencyCodeList)
+  list.siteCurrencyIds = [
+    ...currencyCodeList.map(currencyName => {
+      const currency = currencyNames.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
+      return currency ? currency.id : null;
+    }).filter(Boolean)
+  ]
+  console.log(list.siteCurrencyIds)
+  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
+  console.log(list.filteredPayTypes)
+}
+
+function payTypeByCurrencyID (record) {
+  if (record.currencyIds) {
+    const currencyIdsList = record.currencyIds.split(',')
+    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
+  }
 }
 
 async function loadRecord() {
@@ -837,6 +897,9 @@ onMounted(async () => {
   loadFinancialLevels()
   loadBanks()
   loadRecord()
+  await loadCurrencyNames();
+  await loadPayTypes();
+  filterPayTypeByCurrency(request.siteId)
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>

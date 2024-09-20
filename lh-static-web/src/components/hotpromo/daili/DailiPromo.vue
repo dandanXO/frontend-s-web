@@ -15,13 +15,13 @@
         <div class="daili-promo-block detail-block">
           <div class="detail-block-title">
             <img src="@/components/hotpromo/officialGift/img/gift.svg" />
-            <span>聊天软件下载：<span style="color: #0092ff; text-decoration: underline;">Voxis</span></span>
+            <span>聊天软件下载：<span style="color: #0092ff; text-decoration: underline;">Amico</span></span>
           </div>
           <div class="detail-block-content">
             <span class="detail-block-content-description">添加以下雷火官方客服：申请代理、特权奖金</span>
             <div class="detail-block-content-voxis">
               <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
-              <span class="detail-block-content-voxis__url">Voxis客服号：{{ paramsObj.voxis_url_1 }}</span>
+              <span class="detail-block-content-voxis__url">Amico客服号：{{ paramsObj.voxis_url_1 }}</span>
               <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_1)">复制</button>
               <span class="detail-block-content-voxis__url">{{ paramsObj.voxis_url_2 }}</span>
               <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_2)">复制</button>
@@ -260,10 +260,10 @@
         <div class="voxis-wrapper" style="display:none;">
           <span>
             聊天软件下载：
-            <a :href="paramsObj.voxis_url" target="_blank">Voxis</a>
+            <a :href="paramsObj.voxis_url" target="_blank">Amico</a>
           </span>
-          <span>申请代理联系方式：添加专员 Voxis：{{ paramsObj.voxis_id_1 }}</span>
-          <span>特权奖金联系方式：添加专员 Voxis：{{ paramsObj.voxis_id_2 }}</span>
+          <span>申请代理联系方式：添加专员 Amico：{{ paramsObj.voxis_id_1 }}</span>
+          <span>特权奖金联系方式：添加专员 Amico：{{ paramsObj.voxis_id_2 }}</span>
         </div>
       </div>
 

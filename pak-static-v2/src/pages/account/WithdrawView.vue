@@ -817,8 +817,8 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialPage = () => {
-  window.open("https://drive.google.com/file/d/1--lKiZGWQ71yFRLTP5Mj4GvFW6jSBZce/view?usp=sharing", "_blank")
-}
+  window.open("https://drive.google.com/file/d/1--lKiZGWQ71yFRLTP5Mj4GvFW6jSBZce/view?usp=sharing", "_blank");
+};
 
 const openWithdrawTutorialVideo = () => {
   window.open("https://drive.google.com/file/d/1uSYmuE0Dx4YW-zrU9CH7x-Sx_Vp2qvTd/view?usp=sharing", "_blank");
@@ -975,7 +975,7 @@ const openWithdrawTutorialVideo = () => {
   text-decoration: underline;
 }
 .step-desc-div {
-  color: #9f9f9f;
+  color: #000;
 
   p {
     margin: 5px 0px;
@@ -1150,7 +1150,7 @@ const openWithdrawTutorialVideo = () => {
   }
 
   .title {
-    color: #9f9f9f;
+    color: #000;
     font-weight: 700;
   }
 }

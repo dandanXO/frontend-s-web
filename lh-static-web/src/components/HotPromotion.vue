@@ -48,6 +48,7 @@
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'lh1-national-day-2024'" :promo-code="list.promoCode" />
     <LoLS14 v-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
     <Dota2Ti13 v-if="list.redirectUrl === 'lh1-dota2-ti13'" :promo-code="list.promoCode" />
@@ -130,6 +131,7 @@ import FootballFight from "../components/hotpromo/footballfight/FootballFight.vu
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
 import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
+import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue"
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue"
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
@@ -254,6 +256,7 @@ export default defineComponent({
     LivepokerRebate,
     BbdachaCsgo2,
     EslProCsgo2,
+    BlastPremier,
     NationalDay2024,
     LoLS14,
     Dota2Ti13,

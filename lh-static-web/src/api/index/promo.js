@@ -392,6 +392,22 @@ export function getDota2CompetitionBet(promoCode) {
   });
 }
 
+export function getBlastCoupon() {
+  return server.EVENT.get('/session/blastCoupon/init');
+}
+
+export function claimBlastCoupon(promoCode) {
+  return server.EVENT.post('/session/blastCoupon/claim', {
+    params: {
+      promoCode
+    }
+  })
+}
+
+export function getBlastCouponInit() {
+  return server.EVENT.get("/session/blastCoupon/init");
+}
+
 export function getCompetitionToday() {
   return server.EVENT.get('/session/competition/today')
 }
