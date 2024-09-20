@@ -400,6 +400,9 @@ export function getCompetitionYesterday() {
   return server.EVENT.get('/session/competition/yesterday')
 }
 
+export function getNationalDayinit() {
+  return server.EVENT.get('/session/nationalDay/init')
+}
 export function getNationalDayRecords() {
   return server.EVENT.get('/session/nationalDay/records')
 }

@@ -250,3 +250,7 @@ export function getNationalDayRecords() {
 export function claimNationalDayBonus() {
   return eventapi.post('/session/nationalDay/claimBonus')
 }
+
+export function getNationalDayinit() {
+  return eventapi.get('/session/nationalDay/init')
+}

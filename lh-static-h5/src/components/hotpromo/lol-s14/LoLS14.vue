@@ -10,7 +10,7 @@
                 style="width: 20px; height: 20px; margin-bottom: 0px"
               />
             </div>
-            每日彩金
+            每日礼金
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
@@ -21,8 +21,8 @@
               />
             </div>
             <div class="reward-info-content">
-              当日存款金额：
-              <span class="amount">{{ depositAmount }}元</span>
+              昨日赛事有效投注：
+              <span class="amount">{{ betAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -34,20 +34,7 @@
               />
             </div>
             <div class="reward-info-content">
-              当日流水/倍数：
-              <span class="amount">{{ betAmount }}元/{{ times }}倍</span>
-            </div>
-          </div>
-          <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png"
-                alt=""
-                width="100%"
-              />
-            </div>
-            <div class="reward-info-content">
-              当日可领彩金：
+              可领彩金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -64,59 +51,58 @@
       </div>
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
-        <div class="little-title">
+        <div class="little-title" style="flex-direction: column; align-items: flex-start">
           <div class="left">活动时间</div>
-          <div class="right">2024 年 10 月 01 日~2024 年 10 月 07 日</div>
-        </div>
-        <div class="little-title">
-          <div class="left">活动对象</div>
-          <div class="right">全体会员</div>
-        </div>
-        <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
-          <div class="left">活动内容</div>
-          <div class="right">
-            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3 倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 8,888 元，仅需 3 倍流水即可取款！
-          </div>
+          <div class="right">活动期间，当日S14全球总决赛有效投注≥1,500元即可获得10%有效投注反比。</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
-            <th>达成条件 (流水仅限雷火电竞场馆)</th>
-            <th>应发彩金</th>
+            <th>有效投注</th>
+            <th>彩金比例</th>
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>当日存款 3 倍流水</td>
-            <td>当日存款 1.0%</td>
-            <td>188</td>
+            <td>≥1,500</td>
+            <td rowspan="9" style="font-weight: bold; font-size: 24px;">10%</td>
+            <td>8元</td>
           </tr>
           <tr>
-            <td>当日存款 5 倍流水</td>
-            <td>当日存款 2.0%</td>
-            <td>588</td>
+            <td>≥5,000</td>
+            <td>28元</td>
           </tr>
           <tr>
-            <td>当日存款 8 倍流水</td>
-            <td>当日存款 3.0%</td>
-            <td>888</td>
+            <td>≥10,000</td>
+            <td>58元</td>
           </tr>
           <tr>
-            <td>当日存款 15 倍流水</td>
-            <td>当日存款 5.0%</td>
-            <td>1,888</td>
+            <td>≥15,000</td>
+            <td>88元</td>
+          </tr>
+          <tr>
+            <td>≥30,000</td>
+            <td>168元</td>
+          </tr>
+          <tr>
+            <td>≥50,000</td>
+            <td>288元</td>
+          </tr>
+          <tr>
+            <td>≥100,000</td>
+            <td>588元</td>
+          </tr>
+          <tr>
+            <td>≥300,000</td>
+            <td>1,288元</td>
+          </tr>
+          <tr>
+            <td>≥500,000</td>
+            <td>1,888元</td>
           </tr>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            <div class="livepoker-rebate-game-bottom-left-btn">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png"
-                alt=""
-                style="width: 10px"
-              />
-              <span>示例</span>
-            </div>
-            会员 A 当日存款 100 元并且在雷火电竞累计有效投注 300 元即可获得 100*1%=1 元彩金。
+            例：用户A在06月30日投注S14全球总决赛有效投注5,000元，用户A在次日24小时内可获得彩金：5000*10%=50元，由于对应档位上限为28元，用户A最终可获得28元彩金。
           </div>
         </div>
       </div>
@@ -126,37 +112,27 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            <div style="display: flex; flex-direction: column">
-              <div>活动仅计算雷火电竞场馆有效投注，其他场馆有效投注不参与本次活动；</div>
-            </div>
+            活动期间，活动仅计算电竞场馆中S14全球总决赛赛事，会员在当日S14全球总决赛中累计有效投注≥1,500元即可获得对应彩金，当日未达到则不符合彩金派发条件，彩金达到对应档位彩金上限则按彩金上限派发。有效投注次日清零；
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            当日完成对应存款流水后即可点击活动页面“立即领取”领取彩金，彩金仅需 3 倍流水即可出款；
+            活动期间，活动仅计算当日S14全球总决赛已结算的赛事总有效投注，次日24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金3倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            本活动仅计算活动时间内存款，活动时间为 10 月 01 日 00:00~10 月 07 日 23:59:59，活动时间外达成条件不予计算此优惠;
+            任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
-          </div>
-          <div class="item">
-            <div class="item-num">7</div>
-            任何用户或团体以不正常的方式进行套取活动优惠，平台方保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
-          </div>
-          <div class="item">
-            <div class="item-num">8</div>
-            为避免文字理解差异，本站保留本活动最终解释权。
+            为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -166,7 +142,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { getNationalDayRecords, claimNationalDayBonus, getNationalDayinit } from "../../../api/index/promo";
+import { getCompetitionToday, getCompetitionYesterday } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -180,9 +156,7 @@ const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 
-const betAmount = ref(188)
-const times = ref(1)
-const depositAmount = ref(188)
+const betAmount = ref(888);
 const bonus = ref(8);
 
 const handleClaimBonus = () => {
@@ -209,30 +183,30 @@ const handleClaimBonus = () => {
     });
     return;
   }
-  claimNationalDayBonus()
-    .then((res) => {
-      if (res.code === 0) {
-        notify({
-          type: "success",
-          message: `成功领取`
-        });
-        fetchData();
-      } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    // claimNationalDayBonus(promoCode.value)
+    //   .then((res) => {
+    //     if (res.code === 0) {
+    //       notify({
+    //         type: "success",
+    //         message: `成功领取`
+    //       });
+    //       fetchData();
+    //     } else {
+    //       notify({
+    //         type: "error",
+    //         message: res.message
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 };
 
 const fetchData = async () => {
   try {
-    const res = await getNationalDayRecords();
-    console.log(res)
+    const todayData = await getCompetitionToday();
+    const yesterDayData = await getCompetitionYesterday();
   } catch (error) {
     console.log(error);
   }
@@ -242,14 +216,6 @@ onMounted(() => {
   if (!store.token) {
     return;
   }
-  getNationalDayinit().then(res=>{
-    if(res.code === 0){
-      depositAmount.value = res.data.depositAmount || 0
-      betAmount.value= res.data.bonusAmount || 0
-      times.value= res.data.turnOverRequirement || 0
-      bouns.value = res.data.validBetAmount || 0
-    }
-  })
   fetchData();
 });
 </script>
@@ -332,9 +298,9 @@ onMounted(() => {
   align-items: center;
   .livepoker-rebate-game-bottom-left-title {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 22.4px;
-    color: #ff0000;
+    color: black;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
