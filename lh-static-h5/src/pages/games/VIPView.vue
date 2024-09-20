@@ -2515,19 +2515,21 @@ $border-settings: 1px solid #e5e7eb;
 
   :deep(.carousel__prev) {
     // z-index: 2001 !important;
+    z-index: 0;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
     margin: 0px;
-    transform: translate3d(-20px, -20px, 10px);
+    transform: translate3d(-20px, -20px, 0px);
   }
   :deep(.carousel__next) {
     // z-index: 2001 !important;
+    z-index: 0;
     background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
     margin: 0px;
-    transform: translate3d(20px, -20px, 10px) rotateY(180deg);
+    transform: translate3d(20px, -20px, 0px) rotateY(180deg);
   }
   :deep(.carousel__icon) {
     opacity: 0;
