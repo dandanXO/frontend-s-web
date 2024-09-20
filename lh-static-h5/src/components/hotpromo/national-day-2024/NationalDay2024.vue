@@ -77,7 +77,7 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3 倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 8,888 元，仅需 3 倍流水即可取款！
+            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3 倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 1,888 元，仅需 3 倍流水即可取款！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -175,7 +175,7 @@ import { useQuasar } from "quasar";
 
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
-import { getNationalDayRecords, claimNationalDayBonus, getNationalDayinit } from "../../../api/index/promo";
+import { claimNationalDayBonus, getNationalDayinit } from "../../../api/index/promo";
 import AppliedRecordsPopup from "./AppliedRecordsPopup.vue";
 
 const props = defineProps(["promoCode"]);
