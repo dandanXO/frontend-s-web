@@ -407,3 +407,22 @@ export function claimBlastCoupon(promoCode) {
 export function getBlastCouponInit() {
   return server.EVENT.get("/session/blastCoupon/init");
 }
+
+export function getCompetitionToday() {
+  return server.EVENT.get('/session/competition/today')
+}
+
+export function getCompetitionYesterday() {
+  return server.EVENT.get('/session/competition/yesterday')
+}
+
+export function getNationalDayinit() {
+  return server.EVENT.get('/session/nationalDay/init')
+}
+export function getNationalDayRecords() {
+  return server.EVENT.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return server.EVENT.post('/session/nationalDay/claimBonus')
+}
