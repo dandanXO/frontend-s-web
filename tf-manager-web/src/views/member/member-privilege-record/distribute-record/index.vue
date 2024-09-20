@@ -771,6 +771,8 @@ async function showMassImport() {
 }
 
 function selectPrivilege(val) {
+  rollover.value = []
+  uiControl.selectedGameTypeRolloverType = null
   privilegeInfoList.list.forEach(privilege => {
     if (privilege.id === val) {
       form.rollover = privilege.rollover;
