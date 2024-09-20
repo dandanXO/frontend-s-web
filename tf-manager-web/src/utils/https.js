@@ -91,7 +91,7 @@ const onResponse = (response) => {
     // const siteId = store.state.user.siteId
     if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
       sessionStorage.setItem('myIPAddress', res.data)
-      router.push('/403');
+      window.location.href = '/403';
       return;
     }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
