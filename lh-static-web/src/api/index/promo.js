@@ -416,6 +416,10 @@ export function getCompetitionYesterday() {
   return server.EVENT.get('/session/competition/yesterday')
 }
 
+export function claimCompetitionBonus() {
+  return server.EVENT.post('/session/competition/claimBonus')
+}
+
 export function getNationalDayinit() {
   return server.EVENT.get('/session/nationalDay/init')
 }

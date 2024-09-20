@@ -183,11 +183,8 @@ const handleClaimBonus = () => {
           type: "success",
           message: `成功领取`
         });
-      } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
+
+        init();
       }
     })
     .catch((err) => {
@@ -199,14 +196,7 @@ const onClickAppliedRecordsBtn = () => {
   appliedRecordsPopupRef.value.openPopup();
 }
 
-onMounted(() => {
-  if (!store.token) {
-    // notify({
-    //   message: "请登录后操作",
-    //   type: "error"
-    // });
-    return;
-  }
+const init = () => {
   getNationalDayinit().then(res => {
     if (res.code === 0) {
       // 当日存款金额
@@ -217,6 +207,18 @@ onMounted(() => {
       turnOverRequirement.value = res.data.turnOverRequirement || 0;
     }
   })
+}
+
+onMounted(() => {
+  if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
+    return;
+  }
+  
+  init();
 });
 </script>
 
