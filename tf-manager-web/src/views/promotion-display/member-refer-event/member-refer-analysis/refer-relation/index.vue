@@ -246,9 +246,7 @@ import { TENANT } from '@/store/modules/user/action-types'
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
 
-const startDate = new Date()
-startDate.setDate(startDate.getDate() - 2)
-const defaultStartDate = convertDateToStart(startDate)
+const defaultStartDate = convertDateToStart(new Date())
 const defaultEndDate = convertDateToEnd(new Date())
 const site = ref(null)
 const store = useStore()
@@ -258,13 +256,13 @@ const props = defineProps({
   referrerName: {
     type: String,
     required: false,
+    default: "",
   },
 })
 watch(
   () => props.referrerName,
   (newVal, oldVal) => {
     request.referrerName = newVal
-    props.referrerName = null
     loadRecord()
   }
 )
