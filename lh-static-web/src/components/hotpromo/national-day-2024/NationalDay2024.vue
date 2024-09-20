@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               当日流水/倍数：
-              <span class="amount">{{ betAmount }}元/{{ times }}倍</span>
+              <span class="amount">{{ validBetAmount }}元 / {{ turnOverRequirement }}倍</span>
             </div>
           </div>
           <div class="reward-info">
@@ -31,7 +31,7 @@
             </div>
             <div class="reward-info-content">
               当日可领彩金：
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ bonusAmount }}元</span>
             </div>
           </div>
         </div>
@@ -39,6 +39,7 @@
           <div class="bonus-image" @click="handleClaimBonus">
             <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
           </div>
+          <span class="applied-records-btn" @click="onClickAppliedRecordsBtn">申请记录</span>
         </div>
       </div>
       <div class="livepoker-rebate-game-info">
@@ -137,23 +138,28 @@
       </div>
     </div>
   </div>
+
+  <AppliedRecordsPopup ref="appliedRecordsPopupRef" />
 </template>
 
 <script setup>
-import { getNationalDayRecords, claimNationalDayBonus, getNationalDayinit } from "@/api/index/promo";
-import { onMounted, ref, defineProps } from "vue";
+import { onMounted, ref, defineProps, computed } from "vue";
+import { ElMessageBox } from "element-plus";
+
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
-import { ElMessageBox } from "element-plus";
+import { claimNationalDayBonus, getNationalDayinit } from "@/api/index/promo";
+import AppliedRecordsPopup from "./AppliedRecordsPopup.vue";
+
 const props = defineProps(["promoCode"]);
-
 const notify = useNotify();
-
 const store = userStore();
-const betAmount = ref(188)
-const times = ref(1)
-const depositAmount = ref(188)
-const bonus = ref(8);
+
+const depositAmount = ref(0);
+const bonusAmount = ref(0);
+const turnOverRequirement = ref(0);
+const validBetAmount = computed(() => (bonusAmount.value * turnOverRequirement.value) || 0);
+const appliedRecordsPopupRef = ref();
 
 const handleClaimBonus = () => {
   if (!store.hasToken()) {
@@ -177,12 +183,8 @@ const handleClaimBonus = () => {
           type: "success",
           message: `成功领取`
         });
-        fetchData();
-      } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
+
+        init();
       }
     })
     .catch((err) => {
@@ -190,13 +192,22 @@ const handleClaimBonus = () => {
     });
 };
 
-const fetchData = async () => {
-  try {
-    const res = await getNationalDayRecords();
-  } catch (error) {
-    console.log(error);
-  }
-};
+const onClickAppliedRecordsBtn = () => {
+  appliedRecordsPopupRef.value.openPopup();
+}
+
+const init = () => {
+  getNationalDayinit().then(res => {
+    if (res.code === 0) {
+      // 当日存款金额
+      depositAmount.value = res.data.depositAmount || 0;
+      // 奖金
+      bonusAmount.value = res.data.bonusAmount || 0;
+      // 流水倍数
+      turnOverRequirement.value = res.data.turnOverRequirement || 0;
+    }
+  })
+}
 
 onMounted(() => {
   if (!store.token) {
@@ -206,15 +217,8 @@ onMounted(() => {
     // });
     return;
   }
-  getNationalDayinit().then(res=>{
-    if(res.code === 0){
-      depositAmount.value = res.data.depositAmount || 0
-      betAmount.value= res.data.bonusAmount || 0
-      times.value= res.data.turnOverRequirement || 0
-      bouns.value = res.data.validBetAmount || 0
-    }
-  })
-  fetchData();
+  
+  init();
 });
 </script>
 
@@ -246,7 +250,17 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-right {
+    position: relative;
     width: 254px;
+
+    .applied-records-btn {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      color: #00a1ff;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
     .bonus-image {
       cursor: pointer;

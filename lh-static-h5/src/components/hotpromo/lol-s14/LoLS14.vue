@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               昨日赛事有效投注：
-              <span class="amount">{{ betAmount }}元</span>
+              <span class="amount">{{ ytdCompetitionValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -35,7 +35,7 @@
             </div>
             <div class="reward-info-content">
               可领彩金：
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ claimableBonus }}元</span>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { getCompetitionToday, getCompetitionYesterday } from "../../../api/index/promo";
+import { getCompetitionToday, getCompetitionYesterday, claimCompetitionBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -156,8 +156,8 @@ const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 
-const betAmount = ref(888);
-const bonus = ref(8);
+const ytdCompetitionValidBet = ref(0);
+const claimableBonus = ref(0);
 
 const handleClaimBonus = () => {
   if (!store.token) {
@@ -183,40 +183,40 @@ const handleClaimBonus = () => {
     });
     return;
   }
-    // claimNationalDayBonus(promoCode.value)
-    //   .then((res) => {
-    //     if (res.code === 0) {
-    //       notify({
-    //         type: "success",
-    //         message: `成功领取`
-    //       });
-    //       fetchData();
-    //     } else {
-    //       notify({
-    //         type: "error",
-    //         message: res.message
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
+  claimCompetitionBonus().then((res) => {
+    if (res.code === 0) {
+      notify({
+        type: "success",
+        message: `成功领取`
+      });
+      
+      init();
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
-const fetchData = async () => {
-  try {
-    const todayData = await getCompetitionToday();
-    const yesterDayData = await getCompetitionYesterday();
-  } catch (error) {
-    console.log(error);
-  }
-};
+const init = () => {
+  Promise.all([getCompetitionToday(), getCompetitionYesterday()]).then(([resTdy, resYtd]) => {
+    if(resTdy.code === 0) {
+      claimableBonus.value = resTdy.data || 0;
+    }
+
+    if(resYtd.code === 0) {
+      ytdCompetitionValidBet.value = resYtd.data || 0;
+    }
+  })
+}
 
 onMounted(() => {
   if (!store.token) {
     return;
   }
-  fetchData();
+  
+  init();
 });
 </script>
 
