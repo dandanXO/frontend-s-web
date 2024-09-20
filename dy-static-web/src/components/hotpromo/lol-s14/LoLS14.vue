@@ -5,15 +5,15 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div><img src="../../../assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
-            每日彩金
+            每日礼金
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日存款金额：
-              <span class="amount">{{ depositAmount }}元</span>
+              昨日赛事有效投注：
+              <span class="amount">{{ ytdCompetitionValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -21,17 +21,8 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              当日流水/倍数：
-              <span class="amount">{{ validBetAmount }}元 / {{ turnOverRequirement }}倍</span>
-            </div>
-          </div>
-          <div class="reward-info">
-            <div class="reward-info-icon">
-              <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
-            </div>
-            <div class="reward-info-content">
-              当日可领彩金：
-              <span class="amount">{{ bonusAmount }}元</span>
+              可领彩金：
+              <span class="amount">{{ claimableBonus }}元</span>
             </div>
           </div>
         </div>
@@ -39,60 +30,62 @@
           <div class="bonus-image" @click="handleClaimBonus">
             <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
           </div>
-          <span class="applied-records-btn" @click="onClickAppliedRecordsBtn">申请记录</span>
         </div>
       </div>
       <div class="livepoker-rebate-game-info">
         <div class="title"></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2024 年 10 月 01 日~2024 年 10 月 07 日</div>
-        </div>
-        <div class="little-title">
-          <div class="left">活动对象</div>
-          <div class="right">全体会员</div>
-        </div>
-        <div class="little-title" style="flex-direction: column; align-items: flex-start">
-          <div class="left">活动内容</div>
-          <div class="right">
-            活动期间，会员当日东赢场馆累计效投注金额达到当日总存款金额的 3 倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 1,888 元，仅需 3 倍流水即可取款！
-          </div>
+          <div class="right">活动期间，当日 S14 全球总决赛有效投注≥1,500 元即可获得 10% 有效投注反比。</div>
         </div>
         <table class="livepoker-rebate-game-info-table">
           <tr>
-            <th>达成条件 (流水仅限东赢场馆)</th>
-            <th>应发彩金</th>
+            <th>有效投注</th>
+            <th>彩金比例</th>
             <th>彩金上限</th>
           </tr>
           <tr>
-            <td>当日存款 3 倍流水</td>
-            <td>当日存款 1.0%</td>
-            <td>188</td>
+            <td>≥1,500</td>
+            <td rowspan="9">10%</td>
+            <td>8 元</td>
           </tr>
           <tr>
-            <td>当日存款 5 倍流水</td>
-            <td>当日存款 2.0%</td>
-            <td>588</td>
+            <td>≥5,000</td>
+            <td>28 元</td>
           </tr>
           <tr>
-            <td>当日存款 8 倍流水</td>
-            <td>当日存款 3.0%</td>
-            <td>888</td>
+            <td>≥10,000</td>
+            <td>58 元</td>
           </tr>
           <tr>
-            <td>当日存款 15 倍流水</td>
-            <td>当日存款 5.0%</td>
-            <td>1,888</td>
+            <td>≥15,000</td>
+            <td>88 元</td>
+          </tr>
+          <tr>
+            <td>≥30,000</td>
+            <td>168 元</td>
+          </tr>
+          <tr>
+            <td>≥50,000</td>
+            <td>288 元</td>
+          </tr>
+          <tr>
+            <td>≥100,000</td>
+            <td>588 元</td>
+          </tr>
+          <tr>
+            <td>≥300,000</td>
+            <td>1,288 元</td>
+          </tr>
+          <tr>
+            <td>≥500,000</td>
+            <td>1,888 元</td>
           </tr>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
-            <div class="livepoker-rebate-game-bottom-left-btn">
-              <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
-              <span>示例</span>
-            </div>
-            会员 A 当日存款 100 元并且在东赢累计有效投注 300 元即可获得 100*1%=1 元彩金。
+            例：用户 A 在 06 月 30 日投注 S14 全球总决赛有效投注 5,000 元，用户 A 在次日 24 小时内可获得彩金：5000*10%=50 元，由于对应档位上限为 28 元，用户 A 最终可获得 28 元彩金。
           </div>
         </div>
       </div>
@@ -102,62 +95,46 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            <div style="display: flex; flex-direction: column">
-              <div>活动仅计算东赢场馆有效投注，其他场馆有效投注不参与本次活动；</div>
-            </div>
+            活动期间，活动仅计算电竞场馆中 S14 全球总决赛赛事，会员在当日 S14 全球总决赛中累计有效投注≥1,500 元即可获得对应彩金，当日未达到则不符合彩金派发条件，彩金达到对应档位彩金上限则按彩金上限派发。有效投注次日清零；
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            当日完成对应存款流水后即可点击活动页面“立即领取”领取彩金，彩金仅需 3 倍流水即可出款；
+            活动期间，活动仅计算当日 S14 全球总决赛已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 3 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            本活动仅计算活动时间内存款，活动时间为 10 月 01 日 00:00~10 月 07 日 23:59:59，活动时间外达成条件不予计算此优惠;
-          </div>
-          <div class="item">
-            <div class="item-num">4</div>
-            本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；
-          </div>
-          <div class="item">
-            <div class="item-num">5</div>
             任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
+            <div class="item-num">4</div>
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+          </div>
+          <div class="item">
+            <div class="item-num">5</div>
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+          </div>
+          <div class="item">
             <div class="item-num">6</div>
-            同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
-          </div>
-          <div class="item">
-            <div class="item-num">7</div>
-            任何用户或团体以不正常的方式进行套取活动优惠，平台方保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
-          </div>
-          <div class="item">
-            <div class="item-num">8</div>
-            为避免文字理解差异，本站保留本活动最终解释权。
+            为避免文字理解差异，东赢保留此活动最终解释权；
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <AppliedRecordsPopup ref="appliedRecordsPopupRef" />
 </template>
 
 <script setup>
-import { onMounted, ref, defineProps, computed } from "vue";
+import { onMounted, ref, defineProps } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
+import { getCompetitionToday, getCompetitionYesterday, claimCompetitionBonus } from "@/api/index/promo";
 import { userStore } from "@/store";
-import { claimNationalDayBonus, getNationalDayinit } from "@/api/index/promo";
-import AppliedRecordsPopup from "./AppliedRecordsPopup.vue";
 
 const props = defineProps(["promoCode"]);
 const store = userStore();
 
-const depositAmount = ref(0);
-const bonusAmount = ref(0);
-const turnOverRequirement = ref(0);
-const validBetAmount = computed(() => (bonusAmount.value * turnOverRequirement.value) || 0);
-const appliedRecordsPopupRef = ref();
+const ytdCompetitionValidBet = ref(0);
+const claimableBonus = ref(0);
 
 const handleClaimBonus = () => {
   if (!store.hasToken()) {
@@ -174,7 +151,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimNationalDayBonus()
+  claimCompetitionBonus()
     .then((res) => {
       if (res.code === 0) {
         ElMessage.success('成功领取');
@@ -187,28 +164,26 @@ const handleClaimBonus = () => {
     });
 };
 
-const onClickAppliedRecordsBtn = () => {
-  appliedRecordsPopupRef.value.openPopup();
-}
-
 const init = () => {
-  getNationalDayinit().then(res => {
-    if (res.code === 0) {
-      // 当日存款金额
-      depositAmount.value = res.data.depositAmount || 0;
-      // 奖金
-      bonusAmount.value = res.data.bonusAmount || 0;
-      // 流水倍数
-      turnOverRequirement.value = res.data.turnOverRequirement || 0;
+  Promise.all([getCompetitionToday(), getCompetitionYesterday()]).then(([resTdy, resYtd]) => {
+    if(resTdy.code === 0) {
+      claimableBonus.value = resTdy.data || 0;
+    }
+
+    if(resYtd.code === 0) {
+      ytdCompetitionValidBet.value = resYtd.data || 0;
     }
   })
 }
 
 onMounted(() => {
   if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
     return;
   }
-  
   init();
 });
 </script>
@@ -241,17 +216,7 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-right {
-    position: relative;
     width: 254px;
-
-    .applied-records-btn {
-      position: absolute;
-      top: -20px;
-      right: -20px;
-      color: #00a1ff;
-      font-size: 16px;
-      cursor: pointer;
-    }
 
     .bonus-image {
       cursor: pointer;
@@ -297,7 +262,7 @@ onMounted(() => {
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;
-    color: #ff0000;
+    color: black;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 16px;

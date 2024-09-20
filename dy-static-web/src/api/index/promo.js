@@ -325,3 +325,42 @@ export function getDota2CompetitionBet(promoCode) {
     }
   });
 }
+
+export function getBlastCoupon() {
+  return server.EVENT.get('/session/blastCoupon/init');
+}
+
+export function claimBlastCoupon(promoCode) {
+  return server.EVENT.post('/session/blastCoupon/claim', {
+    params: {
+      promoCode
+    }
+  })
+}
+
+export function getBlastCouponInit() {
+  return server.EVENT.get("/session/blastCoupon/init");
+}
+
+export function getCompetitionToday() {
+  return server.EVENT.get('/session/competition/today')
+}
+
+export function getCompetitionYesterday() {
+  return server.EVENT.get('/session/competition/yesterday')
+}
+
+export function claimCompetitionBonus() {
+  return server.EVENT.post('/session/competition/claimBonus')
+}
+
+export function getNationalDayinit() {
+  return server.EVENT.get('/session/nationalDay/init')
+}
+export function getNationalDayRecords() {
+  return server.EVENT.get('/session/nationalDay/records')
+}
+
+export function claimNationalDayBonus() {
+  return server.EVENT.post('/session/nationalDay/claimBonus')
+}
