@@ -11,6 +11,7 @@ const BGD_SITE_ID = 12;
 const NGA_SITE_ID = 14;
 const KAKA_SITE_ID = 15;
 const PH1_SITE_ID = 16;
+const ID1_SITE_ID = 17;
 const BR1_SITE_ID = 18;
 const PAK2_SITE_ID = 19;
 
@@ -80,4 +81,8 @@ export const isPh1 = (siteId) => {
 
 export const isBr1 = (siteId) => {
   return parseInt(siteId) === BR1_SITE_ID;
+}
+
+export const isId1 = (siteId) => {
+  return parseInt(siteId) === ID1_SITE_ID;
 }

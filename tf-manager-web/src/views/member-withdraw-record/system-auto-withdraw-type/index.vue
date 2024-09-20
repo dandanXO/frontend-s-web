@@ -363,7 +363,7 @@ import { useStore } from '../../../store'
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
-import { isPak, isIndiaSite, isPh1, isBr1, isNga } from '@/utils/site'
+import { isPak, isIndiaSite, isPh1, isBr1, isNga, isId1 } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -682,7 +682,7 @@ function changePage(page) {
 }
 
 function checkUseRule() {
-  if (isIndiaSite(request.siteId) || isPh1(request.siteId) || isBr1(request.siteId) || isNga(request.siteId)) {
+  if (isIndiaSite(request.siteId) || isPh1(request.siteId) || isBr1(request.siteId) || isNga(request.siteId) || isId1(request.siteId)) {
     uiControl.useRule = false;
   } else {
     uiControl.useRule = true;
