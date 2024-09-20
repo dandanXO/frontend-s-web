@@ -142,7 +142,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { getCompetitionToday, getCompetitionYesterday } from "../../../api/index/promo";
+import { getCompetitionToday, getCompetitionYesterday, claimCompetitionBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -183,24 +183,20 @@ const handleClaimBonus = () => {
     });
     return;
   }
-    // claimNationalDayBonus(promoCode.value)
-    //   .then((res) => {
-    //     if (res.code === 0) {
-    //       notify({
-    //         type: "success",
-    //         message: `成功领取`
-    //       });
-    //       fetchData();
-    //     } else {
-    //       notify({
-    //         type: "error",
-    //         message: res.message
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
+  claimCompetitionBonus().then((res) => {
+    if (res.code === 0) {
+      notify({
+        type: "success",
+        message: `成功领取`
+      });
+      
+      init();
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 const fetchData = async () => {
