@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               昨日赛事有效投注：
-              <span class="amount">{{ betAmount }}元</span>
+              <span class="amount">{{ ytdCompetitionValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -35,7 +35,7 @@
             </div>
             <div class="reward-info-content">
               可领彩金：
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ claimableBonus }}元</span>
             </div>
           </div>
         </div>
@@ -156,8 +156,8 @@ const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 
-const betAmount = ref(888);
-const bonus = ref(8);
+const ytdCompetitionValidBet = ref(0);
+const claimableBonus = ref(0);
 
 const handleClaimBonus = () => {
   if (!store.token) {
@@ -199,20 +199,24 @@ const handleClaimBonus = () => {
   });
 };
 
-const fetchData = async () => {
-  try {
-    const todayData = await getCompetitionToday();
-    const yesterDayData = await getCompetitionYesterday();
-  } catch (error) {
-    console.log(error);
-  }
-};
+const init = () => {
+  Promise.all([getCompetitionToday(), getCompetitionYesterday()]).then(([resTdy, resYtd]) => {
+    if(resTdy.code === 0) {
+      claimableBonus.value = resTdy.data || 0;
+    }
+
+    if(resYtd.code === 0) {
+      ytdCompetitionValidBet.value = resYtd.data || 0;
+    }
+  })
+}
 
 onMounted(() => {
   if (!store.token) {
     return;
   }
-  fetchData();
+  
+  init();
 });
 </script>
 
