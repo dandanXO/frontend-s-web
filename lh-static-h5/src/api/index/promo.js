@@ -250,8 +250,12 @@ export function getCompetitionToday() {
   return eventapi.get('/session/competition/today')
 }
 
-export function getCompetitionYesterday() {
-  return eventapi.get('/session/competition/yesterday')
+export function getCompetitionYesterday(promoCode) {
+  return eventapi.get('/session/competition/yesterday', {
+    params: {
+      promoCode
+    }
+  })
 }
 
 export function claimCompetitionBonus() {
