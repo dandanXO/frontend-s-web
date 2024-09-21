@@ -45,6 +45,7 @@
     "moment": "^2.29.4",
     "onesignal-cordova-plugin": "^5.1.3",
     "pinia": "^2.0.17",
+    "process": "^0.11.10",
     "qs": "^6.11.0",
     "quasar": "^2.14.3",
     "sitemap-webpack-plugin": "^1.1.1",
