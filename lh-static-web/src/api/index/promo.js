@@ -412,8 +412,12 @@ export function getCompetitionToday() {
   return server.EVENT.get('/session/competition/today')
 }
 
-export function getCompetitionYesterday() {
-  return server.EVENT.get('/session/competition/yesterday')
+export function getCompetitionYesterday(promoCode) {
+  return server.EVENT.get('/session/competition/yesterday', {
+    params: {
+      promoCode
+    }
+  })
 }
 
 export function claimCompetitionBonus() {
