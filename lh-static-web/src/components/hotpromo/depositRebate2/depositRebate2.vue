@@ -39,15 +39,15 @@
         </tr>
         <tr>
           <td>808钱包</td>
-          <td>1.5%</td>
+          <td>1.0%</td>
           <td>任意金额</td>
-          <td>200</td>
+          <td>188</td>
         </tr>
         <tr>
           <td>EBPAY</td>
           <td>1.0%</td>
           <td>任意金额</td>
-          <td>200</td>
+          <td>188</td>
         </tr>
         <!-- <tr>
                     <td>JDPAY</td>
@@ -59,13 +59,13 @@
           <td>K豆</td>
           <td>1.0%</td>
           <td>任意金额</td>
-          <td>200</td>
+          <td>188</td>
         </tr>
         <tr>
           <td>OKPAY</td>
           <td>1.0%</td>
           <td>任意金额</td>
-          <td>200</td>
+          <td>188</td>
         </tr>
         <tr>
           <td>数字人民币</td>
