@@ -226,7 +226,7 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
-      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED) {
+      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code === ResponseCode.ERROR_PROMO_NOT_STARTED || ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT) {
         ui.notify({
           type: "error",
           message: res.message
