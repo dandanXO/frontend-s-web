@@ -154,7 +154,7 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus()
+  claimCompetitionBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({

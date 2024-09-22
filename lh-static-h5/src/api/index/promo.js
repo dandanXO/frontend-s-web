@@ -258,8 +258,8 @@ export function getCompetitionYesterday(promoCode) {
   })
 }
 
-export function claimCompetitionBonus() {
-  return eventapi.post('/session/competition/claimBonus')
+export function claimCompetitionBonus(promoCode) {
+  return eventapi.post('/session/competition/claimBonus', qs.stringify({ promoCode }))
 }
 
 export function getNationalDayRecords() {

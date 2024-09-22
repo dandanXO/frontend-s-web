@@ -184,13 +184,13 @@ const handleClaimBonus = () => {
     return;
   }
 
-  claimCompetitionBonus().then((res) => {
+  claimCompetitionBonus(promoCode.value).then((res) => {
     if (res.code === 0) {
       notify({
         type: "success",
         message: `成功领取`
       });
-      
+
       init();
     }
   })
@@ -215,7 +215,7 @@ onMounted(() => {
   if (!store.token) {
     return;
   }
-  
+
   init();
 });
 </script>

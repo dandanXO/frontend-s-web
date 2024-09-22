@@ -420,8 +420,8 @@ export function getCompetitionYesterday(promoCode) {
   })
 }
 
-export function claimCompetitionBonus() {
-  return server.EVENT.post('/session/competition/claimBonus')
+export function claimCompetitionBonus(promoCode) {
+  return server.EVENT.post('/session/competition/claimBonus', { promoCode })
 }
 
 export function getNationalDayinit() {
