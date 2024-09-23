@@ -88,6 +88,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("1");
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
