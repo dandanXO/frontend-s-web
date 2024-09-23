@@ -749,7 +749,22 @@ export default {
   },
   promo_activitiesDetails: {
     activitiesContent:
-      "Quanto mais dias consecutivos você cumprir os requisitos de depósito, mais bônus extra você receberá"
+      "Quanto mais dias consecutivos você cumprir os requisitos de depósito, mais bônus extra você receberá",
+    depositOftheDay: "Depósitos do dia",
+    numberOfDailyWager: "Número de apostas diárias",
+    day: "Dia",
+    free: "Grátis",
+    received: "Recebido",
+    wagerX5: "Aposta x5",
+    deposit: "Depósito",
+    noticeDesc: "Aviso: Esta promoção não conta para apostas no CASINO e SPORTS!",
+    rules_01:
+      "1. Exemplo: No primeiro dia, se você depositar 100BRL, receberá 88BRL após o turnover ser completado. Se não houver depósito no segundo dia, mas houver no terceiro dia, será recalculado como o primeiro dia.",
+    rules_02:
+      "2. O bônus do dia pode ser reivindicado apenas uma vez, por exemplo: cada conta pode reivindicar apenas 88BRL no primeiro dia.",
+    rules_03:
+      "3. Após cumprir o requisito de depósito, você deve jogar em máquinas caça-níqueis para começar a calcular o turnover, e o bônus será concedido após o turnover ser concluído.",
+    rules_04: "4. Depois que os requisitos forem atendidos, o sistema emitirá automaticamente o bônus."
   },
   error: {
     101: "Plataforma não encontrada",
