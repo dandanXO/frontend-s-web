@@ -90,6 +90,9 @@
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
     <BbdachaCsgo2 v-if="list.redirectUrl === 'dy2-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'dy2-eslpro-csgo2'" :promo-code="list.promoCode" />
+    <BlastPremier v-if="list.redirectUrl === 'dy2-blast-premier'" :promo-code="list.promoCode" />
+    <NationalDay2024 v-if="list.redirectUrl === 'dy2-national-day-2024'" :promo-code="list.promoCode" />
+    <LoLS14 v-if="list.redirectUrl === 'dy2-lol-s14'" :promo-code="list.promoCode" />
     <Dota2Ti13 v-if="list.redirectUrl === 'dy2-dota2-ti13'" :promo-code="list.promoCode" />
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'dy2-blackmyth-wukong'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
@@ -189,6 +192,9 @@ const LPLLCK = defineAsyncComponent(() => import("../components/hotpromo/lpllck/
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const BbdachaCsgo2 = defineAsyncComponent(() => import("./hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue"));
 const EslProCsgo2 = defineAsyncComponent(() => import("./hotpromo/eslpro-csgo2/EslProCsGo2.vue"));
+const BlastPremier = defineAsyncComponent(() => import("../components/hotpromo/blast-premier/BlastPremier.vue"))
+const NationalDay2024 = defineAsyncComponent(() => import("../components/hotpromo/national-day-2024/NationalDay2024.vue"));
+const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
 const Dota2Ti13 = defineAsyncComponent(() => import("../components/hotpromo/dota2-ti13/Dota2Ti13.vue"));
 const BlackMythWuKongPromo = defineAsyncComponent(() => import("./hotpromo/blackMythWuKong/BlackMythWuKongPromo.vue"));
 const SubmitClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/submitclaim/SubmitClaimPromo.vue"));
@@ -243,6 +249,9 @@ export default defineComponent({
     NewFootball,
     BbdachaCsgo2,
     EslProCsgo2,
+    BlastPremier,
+    NationalDay2024,
+    LoLS14,
     BlackMythWuKongPromo,
     Dota2Ti13,
     SubmitClaimPromo
