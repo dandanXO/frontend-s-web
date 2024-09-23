@@ -77,7 +77,9 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="left">活动内容</div>
           <div class="right">
-            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3 倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 1,888 元，仅需 3 倍流水即可取款！
+            活动期间，会员当日雷火电竞场馆累计效投注金额达到当日总存款金额的 3
+            倍即可获得对应存款反比，满足活动要求的会员可在活动页面点击“立即领取”领取彩金，彩金上限高达 1,888 元，仅需 3
+            倍流水即可取款！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table">
@@ -138,7 +140,8 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            本活动仅计算活动时间内存款，活动时间为 10 月 01 日 00:00~10 月 07 日 23:59:59，活动时间外达成条件不予计算此优惠;
+            本活动仅计算活动时间内存款，活动时间为 10 月 01 日 00:00~10 月 07 日
+            23:59:59，活动时间外达成条件不予计算此优惠;
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -146,7 +149,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -189,7 +193,7 @@ const router = useRouter();
 const depositAmount = ref(0);
 const bonusAmount = ref(0);
 const turnOverRequirement = ref(0);
-const validBetAmount = computed(() => (bonusAmount.value * turnOverRequirement.value) || 0);
+const validBetAmount = ref(0);
 const appliedRecordsPopupRef = ref();
 
 const handleClaimBonus = () => {
@@ -234,20 +238,22 @@ const handleClaimBonus = () => {
 
 const onClickAppliedRecordsBtn = () => {
   appliedRecordsPopupRef.value.openPopup();
-}
+};
 
 const init = () => {
-  getNationalDayinit().then(res=>{
-    if(res.code === 0){
+  getNationalDayinit().then((res) => {
+    if (res.code === 0) {
       // 当日存款金额
       depositAmount.value = res.data.depositAmount || 0;
       // 奖金
       bonusAmount.value = res.data.bonusAmount || 0;
       // 流水倍数
       turnOverRequirement.value = res.data.turnOverRequirement || 0;
+
+      validBetAmount.value = res.data.validBetAmount || 0;
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
   if (!store.token) {
