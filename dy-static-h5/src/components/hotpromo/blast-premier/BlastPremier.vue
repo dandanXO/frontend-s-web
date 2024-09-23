@@ -112,20 +112,20 @@
             <td>Lv.8</td>
             <td>288</td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td>Lv.9</td>
             <td>328</td>
           </tr>
           <tr>
             <td>Lv.10</td>
             <td>388</td>
-          </tr>
+          </tr> -->
           <tr>
-            <td>Lv.11</td>
+            <td>Lv.9</td>
             <td>588</td>
           </tr>
           <tr>
-            <td>Lv.12</td>
+            <td>Lv.10</td>
             <td>888</td>
           </tr>
         </table>
