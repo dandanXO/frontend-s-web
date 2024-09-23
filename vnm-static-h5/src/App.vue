@@ -339,6 +339,7 @@ export default defineComponent({
       }
     }
     onMounted(() => {
+      console.log("22");
       checkServerStatus();
       console.log('in on mounted dan')
       window.addEventListener('beforeinstallprompt', (e) => {
