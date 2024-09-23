@@ -39,6 +39,12 @@
         <!--          <div class="right">真人场馆、棋牌场馆</div>-->
         <!--        </div>-->
         <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">
+            2024年9月25日起
+          </div>
+        </div>
+        <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
             活动期间，会员当日
@@ -111,6 +117,11 @@
             <td>888</td>
           </tr>
         </table>
+        <div class="livepoker-rebate-game-bottom">
+          <div class="livepoker-rebate-game-bottom-left-title">
+            例：vip10会员A当日投注 BLAST Premier 秋季总决赛赛事结算为负盈利10,000元，则次日可领取最高388元彩金。
+          </div>
+        </div>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule">
