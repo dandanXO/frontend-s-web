@@ -3,10 +3,9 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onMounted, ref, nextTick, watch } from "vue";
 import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
-import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
@@ -33,19 +32,19 @@ export default defineComponent({
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
-        store.visitorId = visitorId;
 
+        store.visitorId = visitorId;
         console.log("SID");
         console.log(visitorId);
 
-        const obj = {
-          identifier: store.visitorId,
-          affiliateCode: affiliateItem
-        };
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
+        // const obj = {
+        //   identifier: store.visitorId,
+        //   affiliateCode: affiliateItem
+        // };
+        // api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+        //   if (res.code === 0) {
+        //   }
+        // });
       })();
     };
 
@@ -307,6 +306,7 @@ export default defineComponent({
       // console.log(info);
       checkIfVirtualMachine();
       checkServerStatus();
+      checkSID();
       // getCSA();
       // getAppInfo();
       initOrientation();
@@ -334,11 +334,6 @@ export default defineComponent({
     watch(
       () => ui.shouldFetchDownloadAppUrl,
       (value) => value && ui.getTopDownloadUrl()
-    );
-
-    watch(
-      () => ui.firstScreenLoading,
-      (val) => !val && checkSID()
     );
   }
 });
