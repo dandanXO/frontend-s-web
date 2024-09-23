@@ -48,26 +48,26 @@
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="referCount" :label="t('fields.referCount')" sortable>
+      <el-table-column prop="referCount" :label="t('fields.referCount')" sortable :sort-orders="sortOrders">
         <template #default="scope">
           <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referCount }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="referBonus" :label="t('fields.referBonus')" sortable>
+      <el-table-column prop="referBonus" :label="t('fields.referBonus')" sortable :sort-orders="sortOrders">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.referBonus, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="successCount" :label="t('fields.successCount')" sortable />
-      <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable />
-      <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable>
+      <el-table-column prop="successCount" :label="t('fields.successCount')" sortable :sort-orders="sortOrders" />
+      <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable :sort-orders="sortOrders" />
+      <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable :sort-orders="sortOrders">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.depositBonus, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="betBonus" :label="t('fields.betBonus')" sortable>
+      <el-table-column prop="betBonus" :label="t('fields.betBonus')" sortable :sort-orders="sortOrders">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.betBonus, type: 'money'}" />
         </template>
@@ -109,6 +109,8 @@ const emits = defineEmits(["switch-to-relation-tab"]);
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
 }
+
+const sortOrders = ['descending', 'ascending', null]
 
 const request = reactive({
   size: 20,
