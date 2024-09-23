@@ -39,6 +39,7 @@
       :summary-method="getSummaries"
       show-summary
       :empty-text="t('fields.noData')"
+      @sort-change="sort"
     >
       <el-table-column prop="referrerName" :label="t('fields.referrer')">
         <template #default="scope">
@@ -47,26 +48,26 @@
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="referCount" :label="t('fields.referCount')">
+      <el-table-column prop="referCount" :label="t('fields.referCount')" sortable>
         <template #default="scope">
           <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referCount }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="referBonus" :label="t('fields.referBonus')">
+      <el-table-column prop="referBonus" :label="t('fields.referBonus')" sortable>
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.referBonus, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="successCount" :label="t('fields.successCount')"/>
-      <el-table-column prop="depositCount" :label="t('fields.depositCount')"/>
-      <el-table-column prop="depositBonus" :label="t('fields.depositBonus')">
+      <el-table-column prop="successCount" :label="t('fields.successCount')" sortable />
+      <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable />
+      <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable>
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.depositBonus, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="betBonus" :label="t('fields.betBonus')">
+      <el-table-column prop="betBonus" :label="t('fields.betBonus')" sortable>
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.betBonus, type: 'money'}" />
         </template>
@@ -88,8 +89,8 @@
 
 <script setup>
 
-import { computed, reactive, ref } from "vue";
-import { nextTick, onMounted } from "@vue/runtime-core";
+import { computed, reactive, ref, defineEmits } from "vue";
+import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
@@ -115,12 +116,13 @@ const request = reactive({
   siteId: null,
   referrerName: null,
   recordTime: [convertDate(new Date()), convertDate(new Date())],
+  orderBy: null,
+  sortType: null,
 });
 
 const sites = reactive({
   list: []
 });
-let timeZone = null
 
 const page = reactive({
   pages: 0,
@@ -147,7 +149,6 @@ async function loadStatsAnalysis() {
   const { data: ret } = await getAnalysisRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;
-  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   page.total = ret.total;
   page.sums = ret.sums;
   page.loading = false;
@@ -196,6 +197,17 @@ function getSummaries(param) {
 function redirectToReferPane(name) {
   emits('switch-to-relation-tab', name)
 }
+
+const sort = (column) => {
+  request.orderBy = column.prop;
+  console.log(column)
+  if (column.order === "descending") {
+    request.sortType = "DESC";
+  } else {
+    request.sortType = "ASC";
+  }
+  loadStatsAnalysis();
+};
 
 onMounted(async () => {
   await loadSites();
