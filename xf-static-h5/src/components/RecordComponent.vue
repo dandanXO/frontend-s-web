@@ -16,12 +16,12 @@
                 <div v-if="obj === 'type'">
                   {{ translateRecord(det[obj], "") }}
                 </div>
-                <div v-else-if="obj === 'betId'">
+                <div v-else-if="obj === 'transactionId'">
                   <q-link @click="copyText(det[obj], '注单号')">
-                    <span style="color: #468CFF">复制</span>
-                    {{ det[obj].slice(0,1) }}...
+                    <span style="color: #468cff">复制</span>
+                    {{ det[obj].slice(0, 1) }}...
                     <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
-                    {{ det[obj] }}
+                      {{ det[obj] }}
                     </q-tooltip>
                   </q-link>
                 </div>
