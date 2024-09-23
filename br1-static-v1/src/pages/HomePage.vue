@@ -109,7 +109,7 @@
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-title">{{ item.title }}</div>
+            <div class="cat-title">{{ translateTitle(item.icon) }}</div>
           </div>
         </swiper-slide>
       </template>
@@ -2687,6 +2687,18 @@ const loadCustomerAddress = () => {
     });
 };
 
+const translateTitle = (title) => {
+  const translations = {
+    hot: t("home.menu_hot"),
+    lobby: t("home.menu_lobby"),
+    slot: t("home.menu_slot"),
+    casino: t("home.cat_livecasino"),
+    fishing: t("home.menu_fish"),
+    sport: t("home.menu_sport")
+  };
+  return translations[title.toLowerCase()] || title;
+};
+
 const loadAppTabs = () => {
   api
     .get("/opt-session/getAppTabs")
@@ -3964,6 +3976,7 @@ onBeforeUnmount(() => {
     color: #bfc3c9;
     font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 }
 
