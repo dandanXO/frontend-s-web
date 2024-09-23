@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <span class="period">活动时间：2024年9月16日 ⸺ 2024年9月31日</span>
+    <span class="period">活动时间：2024年9月13日00:00起</span>
     <div class="spin-wheel-container">
       <div
         :class="`draw-btn click-pointer ${remainingDraws <= 0 || spinButtonDisable ? 'disabled' : ''}`"

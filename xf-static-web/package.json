@@ -1,6 +1,6 @@
 {
   "name": "xf",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "cross-env NODE_ENV=development dotenv -e .env.development vue-cli-service serve",

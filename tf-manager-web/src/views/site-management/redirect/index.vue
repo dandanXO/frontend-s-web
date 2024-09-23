@@ -628,7 +628,7 @@ onMounted(async () => {
   justify-content: flex-end;
 }
 
-.el-form-item--level-color:deep .el-form-item__content {
+.el-form-item--level-color:deep(.el-form-item__content) {
   display: flex !important;
 }
 
