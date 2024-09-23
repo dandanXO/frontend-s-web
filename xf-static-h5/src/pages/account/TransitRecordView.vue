@@ -558,7 +558,7 @@ const tableColumns = {
   betRecord: [
     {
       label: "Bet ID",
-      field: "transactionId"
+      field: "betId"
     },
     {
       label: "Transaction ID",

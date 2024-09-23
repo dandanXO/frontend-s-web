@@ -17,7 +17,7 @@
                 <div v-if="obj === 'type'">
                   {{ translateRecord(det[obj], recordType) }}
                 </div>
-                <div v-else-if="obj === 'transactionId'">
+                <div v-else-if="obj === 'betId'">
                   <q-link @click="copyText(det[obj], '注单号')">
                     <span style="color: #468cff">复制</span>
                     {{ det[obj].slice(0, 1) }}...

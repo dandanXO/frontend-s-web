@@ -558,7 +558,7 @@ const tableColumns = {
   betRecord: [
     {
       label: "下注 ID",
-      field: "transactionId"
+      field: "betId"
     },
     {
       label: "交易 ID",
