@@ -58,7 +58,7 @@
     font-family: "PingFang SC";
     background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
     background-size: 100% 100%;
-    aspect-ratio: 1826 / 1354;
+    aspect-ratio: 1826 / 1150;
     padding: 8% 5%;
   
     .header {
@@ -136,6 +136,10 @@
           &.active {
             background: url("../../assets/images/home/site-popout/list-item-bg-active.png") no-repeat center center;
             background-size: 100% 100%;
+
+            .title {
+              color: #2792fd;
+            }
           }
         }
       }
