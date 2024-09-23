@@ -250,7 +250,7 @@ const loadPlatformLists = () => {
 
 const tableHeaders = [
   {
-    key: "betId",
+    key: "transactionId",
     label: "注单号"
   },
   {

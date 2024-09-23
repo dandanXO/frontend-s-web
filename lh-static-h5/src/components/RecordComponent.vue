@@ -17,12 +17,12 @@
                 <div v-if="obj === 'type'">
                   {{ translateRecord(det[obj], recordType) }}
                 </div>
-                <div v-else-if="obj === 'betId'">
+                <div v-else-if="obj === 'transactionId'">
                   <q-link @click="copyText(det[obj], '注单号')">
-                    <span style="color: #468CFF">复制</span>
-                    {{ det[obj].slice(0,1) }}...
+                    <span style="color: #468cff">复制</span>
+                    {{ det[obj].slice(0, 1) }}...
                     <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
-                    {{ det[obj] }}
+                      {{ det[obj] }}
                     </q-tooltip>
                   </q-link>
                 </div>
@@ -288,7 +288,7 @@ export default defineComponent({
             isConfirmWithdraw.value = false;
             notify({
               type: "success",
-              message: "已经确认到账",
+              message: "已经确认到账"
             });
             removeSessionKeys("/session/member/withdraw");
           }
@@ -325,7 +325,7 @@ export default defineComponent({
             isCancelWithdraw.value = false;
             notify({
               type: "success",
-              message: "已经取消提款",
+              message: "已经取消提款"
             });
             removeSessionKeys("/session/member/withdraw");
           }
@@ -359,7 +359,7 @@ export default defineComponent({
 
         notify({
           type: "success",
-          message: `${msgTitle}复制成功！`,
+          message: `${msgTitle}复制成功！`
         });
       }, 100);
     };
@@ -390,7 +390,7 @@ export default defineComponent({
           } else {
             notify({
               type: "error",
-              message: "已有3个正在催收催单。",
+              message: "已有3个正在催收催单。"
             });
           }
         }
@@ -408,7 +408,7 @@ export default defineComponent({
         // Display an error message here
         notify({
           type: "error",
-          message: "请上传图片",
+          message: "请上传图片"
         });
         return;
       }
@@ -419,7 +419,7 @@ export default defineComponent({
         if (res.code === 0) {
           notify({
             type: "success",
-            message: "催单提交成功！",
+            message: "催单提交成功！"
           });
           reminderDialog.value = false;
           reminderForm.value = {};
@@ -431,11 +431,11 @@ export default defineComponent({
 
     const removeSessionKeys = (prefix) => {
       var keys = SessionStorage.getAllKeys();
-      keys.forEach(key => {
-        if(key.indexOf(prefix) > -1) {
+      keys.forEach((key) => {
+        if (key.indexOf(prefix) > -1) {
           SessionStorage.remove(key);
         }
-      })
+      });
     };
     return {
       humanDatetime(ts) {
