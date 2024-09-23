@@ -62,6 +62,14 @@ a {
   /* padding: 20px 20px 0 20px; */
 }
 
+.top-bg .click-to-claim-btn {
+  width: 38%;
+  max-width: 200px;
+  position: absolute;
+  top: 76%;
+  left: 10%;
+}
+
 .top-logo {
   display: block;
   width: 25%;

@@ -55,10 +55,19 @@ a {
 
 .top-bg {
   width: 100%;
+  position: relative;
 }
 
 .top-bg img {
   width: 100%;
+}
+
+.top-bg .click-to-claim-btn {
+  width: 38%;
+  max-width: 200px;
+  position: absolute;
+  top: 78%;
+  left: 10%;
 }
 
 .top-logo {
