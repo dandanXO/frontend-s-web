@@ -3,12 +3,15 @@
       <div class="header">{{ $t('sitePopout.sitePopout') }}</div>
       <div class="content">
         <div class="left">
-          <div class="left-item" :class="selectedItem?.title === popoutListItem.title ? 'active' : ''" v-for="popoutListItem in popoutList" v-html="popoutListItem.title" @click="selectedItem = popoutListItem" />
+          <div class="left-item" :class="index === selectedItemIndex ? 'active' : ''" v-for="popoutListItem, index in popoutList" @click="selectedItemIndex = index">
+            <div class="title">{{ popoutListItem.title }}</div>
+            <div class="period" v-if="popoutListItem.displayStartTime">{{ popoutListItem.displayStartTime }} - {{ popoutListItem.displayEndTime }}</div>
+          </div>
         </div>
         <div class="right">
           <div v-if="selectedItem?.desktopImgUrl">
             <img :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
-            <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link>
+            <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
           </div>
         </div>
       </div>
@@ -16,18 +19,23 @@
   </template>
   
   <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, computed } from "vue";
   import { getSitePopoutList } from "@/api/personal/common";
   import { useLocalStorage } from "@vueuse/core";
   
   const popoutList = ref([]);
-  const selectedItem = ref();
+  const selectedItemIndex = ref();
+  const selectedItem = computed(() => popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined)
   const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
   
   onMounted(() => {
     getSitePopoutList().then((res) => {
       if(res.code === 0) {
         popoutList.value = res.data;
+
+        if(res.data.length > 0) {
+          selectedItemIndex.value = 0;
+        }
       }
     })
   });
@@ -45,9 +53,13 @@
   .container {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    // background-color: white;
     align-items: center;
     font-family: "PingFang SC";
+    background: url("../../assets/images/home/site-popout/popout-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    aspect-ratio: 1826 / 1354;
+    padding: 8% 5%;
   
     .header {
       border-bottom: 1px solid black;
@@ -58,7 +70,8 @@
       color: black;
       font-size: 2rem;
       font-weight: 700;
-      line-height: 4rem;
+      line-height: 1rem;
+      visibility: hidden;
     }
   
     .content {
@@ -67,42 +80,62 @@
       width: 100%;
       height: 100%;
       min-height: 300px;
-      background-color: white;
+      gap: 2%;
   
       .left {
         display: flex;
         flex-direction: column;
-        border-right: 1px solid black;
         cursor: pointer;
         height: 300px;
-        overflow-y: auto;
+        overflow: auto;
         height: 100%;
+        gap: 2px;
 
-        &::-webkit-scrollbar {
-          -webkit-appearance: none;
-          width: 8px;
-          background-color: #ededed;
-        }
+        // &::-webkit-scrollbar {
+        //   -webkit-appearance: none;
+        //   width: 8px;
+        //   background-color: #ededed;
+        // }
 
-        &::-webkit-scrollbar-thumb {
-          border-radius: 4px;
-          background-color: #D1D1D1;
-          border: 1px solid #808080;
-          box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-        }
+        // &::-webkit-scrollbar-thumb {
+        //   border-radius: 4px;
+        //   background-color: #D1D1D1;
+        //   border: 1px solid #808080;
+        //   box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+        // }
   
         .left-item {
           font-size: 1rem;
           display: flex;
-          align-items: center;
-          padding: 5% 10%;
-          color: black;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          padding: 2% 6%;
           font-weight: 700;
-          border-bottom: 1px solid black;
+          background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
+          background-size: 100% 100%;
+          aspect-ratio: 300 / 100;
+
+          .title {
+            font-family: 'PingFang SC';
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 22.4px;
+            color: #414252;
+          }
+
+          .period {
+            font-family: 'PingFang SC';
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 19.6px;
+            color: #414252;
+          }
           
   
-          &.active, &:hover {
-            background-color: #D1D1D1;
+          &.active {
+            background: url("../../assets/images/home/site-popout/list-item-bg-active.png") no-repeat center center;
+            background-size: 100% 100%;
           }
         }
       }

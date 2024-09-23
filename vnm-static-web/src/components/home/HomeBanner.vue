@@ -218,13 +218,23 @@ onMounted(() => {
   transform: translate(-50%, -50%);
 
   &.el-dialog {
-    --el-dialog-width: 35%;
+    // --el-dialog-width: 35%;
   }
 
   .el-dialog__body {
     padding: 20px !important;
     border-radius: 12px;
   }
+
+  .el-dialog__headerbtn {
+    background: #ffffff99;
+    border: 1px solid #ffffffb3;
+  }
+
+  .el-dialog__close {
+    color: #2792FD !important;
+  }
+
 
   .alert-img {
     display: block;
